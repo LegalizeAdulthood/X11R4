@@ -1,6 +1,4 @@
-#ifndef lint
-static char Xrcsid[] = "$XConsortium: EventUtil.c,v 1.4 89/12/19 08:36:09 swick Exp $";
-#endif
+/* $XConsortium: EventUtil.c,v 1.6 90/07/26 10:11:17 swick Exp $ */
 
 /********************************************************
 
@@ -32,47 +30,6 @@ SOFTWARE.
 #include "PassivGraI.h"
 #include "StringDefs.h"
 
-/*
- * This routine gets the passive key list assiciated with the widget
- * from the context manager. If the key list does not exist it creates
- * an empty one.
- */
-XtPerDisplayInput _XtGetPerDisplayInput(dpy)
-    Display	*dpy;
-{
-    static XContext 	pdiContext = NULL;
-    XtPerDisplayInput 	pdi;
-    
-    if (pdiContext == NULL)
-      pdiContext = XUniqueContext();
-    
-    if (XFindContext(dpy, 
-		     (Window)0, 
-		     pdiContext, 
-		     (caddr_t *)&pdi)) 
-      {
-	  pdi = (XtPerDisplayInputRec *) 
-	    XtMalloc((unsigned) sizeof(XtPerDisplayInputRec));	
-	  pdi->grabList = NULL;
-	  pdi->trace = NULL;
-	  pdi->traceDepth = 0;
-	  pdi->traceMax = 0;
-	  pdi->focusWidget = NULL;
-	  pdi->activatingKey = 0;
-
-	  pdi->keyboard.grabType = XtNoServerGrab;
-
-	  pdi->pointer.grabType  = XtNoServerGrab;
-	  
-	  (void) XSaveContext(dpy, 
-			      (Window)0, 
-			      pdiContext, 
-			      (caddr_t) pdi);
-      }
-    return pdi;
-}
-
-
 static XContext 	perWidgetInputContext = NULL;
 
 void _XtFreePerWidgetInput(w, pwi)
@@ -85,8 +42,6 @@ void _XtFreePerWidgetInput(w, pwi)
     
     XtFree((char *)pwi);
 }
-
-
 
 /*
  * This routine gets the passive list assiciated with the widget
@@ -108,8 +63,6 @@ XtPerWidgetInput _XtGetPerWidgetInput(widget, create)
 		     (caddr_t *)&pwi) &&
 	create) 
       {
-	  extern void _XtDestroyServerGrabs();
-
 	  pwi = (XtPerWidgetInput) 
 	    XtMalloc((unsigned) sizeof(XtPerWidgetInputRec));
 	  
@@ -163,7 +116,7 @@ void _XtFillAncestorList(listPtr, maxElemsPtr, numElemsPtr, start, breakWidget)
 	    /* This should rarely happen, but if it does it'll probably
 	       happen again, so grow the ancestor list */
 	    *maxElemsPtr += CACHESIZE;
-	    trace = (Widget *) XtRealloc(trace, 
+	    trace = (Widget *) XtRealloc((char*)trace,
 					 sizeof(Widget) * (*maxElemsPtr));
 	}
 	trace[i] = w;
@@ -190,29 +143,12 @@ Widget _XtFindRemapWidget(event, widget, mask, pdi)
 				      cache */
       }
     if (mask & (KeyPressMask | KeyReleaseMask))
-      {
-	  extern Widget _XtProcessKeyboardEvent();
-
-	  dspWidget = _XtProcessKeyboardEvent(event, widget,
-					      pdi);
-      }
+	  dspWidget = _XtProcessKeyboardEvent((XKeyEvent*)event, widget, pdi);
     else if (mask &(ButtonPressMask | ButtonReleaseMask))
-      {
-	  extern Widget _XtProcessPointerEvent();
+	  dspWidget = _XtProcessPointerEvent((XButtonEvent*)event, widget,pdi);
 
-	  dspWidget = _XtProcessPointerEvent((XButtonEvent*)event, widget,
-					     pdi);
-      }
     return dspWidget;
 }
-
-
-XtGrabList * _XtGetGrabList(pdi)
-    XtPerDisplayInput pdi;
-{
-    return &pdi->grabList;
-}
-
 
 void _XtUngrabBadGrabs(event, widget, mask, pdi)
     XEvent	*event;
@@ -221,7 +157,6 @@ void _XtUngrabBadGrabs(event, widget, mask, pdi)
     XtPerDisplayInput pdi;
 {
     XKeyEvent	* ke = (XKeyEvent *) event;
-    extern	Boolean _XtOnGrabList();
 
     if (mask & (KeyPressMask | KeyReleaseMask))
       {

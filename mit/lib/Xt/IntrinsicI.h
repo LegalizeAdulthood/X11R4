@@ -1,5 +1,5 @@
 /*
-* $XConsortium: IntrinsicI.h,v 1.41 90/04/03 10:51:57 swick Exp $
+* $XConsortium: IntrinsicI.h,v 1.42 90/07/26 10:05:52 swick Exp $
 * $oHeader: IntrinsicI.h,v 1.5 88/08/31 16:21:08 asente Exp $
 */
 
@@ -42,9 +42,10 @@ SOFTWARE.
 #include "CallbackI.h"
 #include "CompositeI.h"
 #include "ConvertI.h"
+#include "EventI.h"
+#include "PassivGraI.h"
 #include "InitialI.h"
 #include "ResourceI.h"
-#include "EventI.h"
 
 #define RectObjClassFlag	0x02
 #define WidgetClassFlag		0x04

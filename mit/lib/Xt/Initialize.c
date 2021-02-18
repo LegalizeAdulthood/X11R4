@@ -1,7 +1,5 @@
-#ifndef lint
-static char Xrcsid[] = "$XConsortium: Initialize.c,v 1.155 89/12/12 18:56:39 swick Exp $";
+/* "$XConsortium: Initialize.c,v 1.158 90/08/23 12:58:40 swick Exp $"; */
 /* $oHeader: Initialize.c,v 1.7 88/08/31 16:33:39 asente Exp $ */
-#endif /* lint */
 
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -43,6 +41,12 @@ SOFTWARE.
 #include "ShellP.h"
 #include "Quarks.h"
 
+#ifdef __STDC__
+#define Const const
+#else
+#define Const /**/
+#endif
+
 extern void _XtConvertInitialize();
 
 #if defined(SUNSHLIB) && defined(SHAREDCODE)
@@ -56,10 +60,12 @@ extern void _XtConvertInitialize();
 #define XtInitialize _XtInitialize
 #endif /* SUNSHLIB && SHAREDCODE */
 
+/*
+ * hpux
+ * Hand-patched versions of HP-UX prior to version 7.0 can usefully add
+ * -DUSE_UNAME in the appropriate config file to get long hostnames.
+ */
 
-#ifdef hpux
-#define USE_UNAME
-#endif
 #ifdef USG
 #define USE_UNAME
 #endif
@@ -79,7 +85,7 @@ extern void _XtConvertInitialize();
  policy, which the toolkit avoids but I hate differing programs at this level.
 */
 
-static XrmOptionDescRec opTable[] = {
+static XrmOptionDescRec Const opTable[] = {
 {"+rv",		"*reverseVideo", XrmoptionNoArg,	(XtPointer) "off"},
 {"+synchronous","*synchronous",	XrmoptionNoArg,		(XtPointer) "off"},
 {"-background",	"*background",	XrmoptionSepArg,	(XtPointer) NULL},
@@ -137,7 +143,7 @@ static int _XtGetHostname (buf, maxlen)
 
 void _XtInherit()
 {
-    XtErrorMsg("invalidProcedure","inheritanceProc","XtToolkitError",
+    XtErrorMsg("invalidProcedure","inheritanceProc",XtCXtToolkitError,
             "Unresolved inheritance operation",
               (String *)NULL, (Cardinal *)NULL);
 }
@@ -670,7 +676,7 @@ ArgList args_in;
 			options, num_options, argc_in_out, argv_in_out);
 
     if (dpy == NULL)
-	XtErrorMsg("invalidDisplay","xtInitialize","XtToolkitError",
+	XtErrorMsg("invalidDisplay","xtInitialize",XtCXtToolkitError,
                    "Can't Open display", (String *) NULL, (Cardinal *)NULL);
 
     XtSetArg(args[num], XtNscreen, DefaultScreenOfDisplay(dpy)); num++;

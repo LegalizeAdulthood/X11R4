@@ -1,5 +1,5 @@
 /*
-* $XConsortium: PassivGraI.h,v 1.4 89/12/16 19:23:09 rws Exp $
+* $XConsortium: PassivGraI.h,v 1.5 90/07/26 10:13:08 swick Exp $
 */
 
 /********************************************************
@@ -108,11 +108,62 @@ typedef struct XtPerDisplayInputRec{
 
 #define IsPseudoGrab(g) ((g == XtPseudoPassiveServerGrab))
 
-extern XtPerWidgetInput _XtGetPerWidgetInput();
+extern void _XtDestroyServerGrabs(
+#if NeedFunctionPrototypes
+    Widget		/* w */,
+    XtPointer		/* pwi */, /*XtPerWidgetInput*/
+    XtPointer		/* call_data */
+#endif
+);
 
-extern XtPerDisplayInput _XtGetPerDisplayInput();
+#if NeedWidePrototypes
+#define Boolean int
+#endif
 
-extern XtServerGrabPtr _XtCheckServerGrabsOnWidget();
+extern XtPerWidgetInput _XtGetPerWidgetInput(
+#if NeedFunctionPrototypes
+    Widget	/* widget */,
+    Boolean	/* create */
+#endif
+);
 
+extern XtServerGrabPtr _XtCheckServerGrabsOnWidget(
+#if NeedFunctionPrototypes
+    XEvent*		/* event */,
+    Widget		/* widget */,
+    Boolean		/* isKeyboard */
+#endif
+);
+
+#undef Boolean
+
+/*
+extern XtGrabList* _XtGetGrabList( XtPerDisplayInput );
+*/
+
+#define _XtGetGrabList(pdi) (&(pdi)->grabList)
+
+extern void _XtFreePerWidgetInput(
+#if NeedFunctionPrototypes
+    Widget		/* w */,
+    XtPerWidgetInput	/* pwi */
+#endif
+);
+
+extern Widget _XtProcessKeyboardEvent(
+#if NeedFunctionPrototypes
+    XKeyEvent*		/* event */,
+    Widget		/* widget */,
+    XtPerDisplayInput	/* pdi */
+#endif
+);
+
+extern Widget _XtProcessPointerEvent(
+#if NeedFunctionPrototypes
+    XButtonEvent*	/* event */,
+    Widget		/* widget */,
+    XtPerDisplayInput	/* pdi */
+#endif
+);
 
 #endif /* _PDI_h_ */

@@ -1,4 +1,4 @@
-/* $XConsortium: NextEvent.c,v 1.84 90/07/15 21:44:05 swick Exp $ */
+/* $XConsortium: NextEvent.c,v 1.91 90/09/28 11:51:06 swick Exp $ */
 
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -33,18 +33,6 @@ extern int errno;
 
 static TimerEventRec* freeTimerRecs;
 static WorkProcRec* freeWorkRecs;
-
-#if defined(USG) && !defined(CRAY)
-static int gettimeofday (tvp, tzp)
-    struct timeval *tvp;
-    struct timezone *tzp;
-{
-    time (&tvp->tv_sec);
-    tvp->tv_usec = 0L;
-
-    /* ignore tzp for now since this file doesn't use it */
-}
-#endif
 
 /* Some systems running NTP daemons are known to return strange usec
  * values from gettimeofday.  At present (3/90) this has only been
@@ -128,7 +116,7 @@ static void QueueTimerEvent(app, ptr)
  * has not already been enqueued.
  *
  *
- * _XtWaitForSomething( ignoreTimers, ignoreInputs, ignoreEvents,
+ * _XtwaitForSomething( ignoreTimers, ignoreInputs, ignoreEvents,
  *			block, howlong, appContext)
  * Boolean ignoreTimers;     (Don't return if a timer would fire
  *				Also implies forget timers exist)
@@ -159,7 +147,6 @@ int _XtwaitForSomething(ignoreTimers, ignoreInputs, ignoreEvents,
 	unsigned long *howlong;
 	XtAppContext app;
 {
-	struct timezone cur_timezone;
 	struct timeval  cur_time;
 	struct timeval  start_time;
 	struct timeval  wait_time;
@@ -176,7 +163,7 @@ int _XtwaitForSomething(ignoreTimers, ignoreInputs, ignoreEvents,
 #endif
 	
  	if (block) {
-		(void) gettimeofday (&cur_time, &cur_timezone);
+		(void) gettimeofday (&cur_time, NULL);
 		FIXUP_TIMEVAL(cur_time);
 		start_time = cur_time;
 		if(howlong == NULL) { /* special case for ever */
@@ -230,8 +217,10 @@ int _XtwaitForSomething(ignoreTimers, ignoreInputs, ignoreEvents,
 			 */
 			if (errno == EINTR) {
 			    errno = 0;  /* errno is not self reseting */
-			    if(block && wait_time_ptr != NULL) {
-				(void)gettimeofday (&new_time, &cur_timezone);
+			    if (block) {
+				if (wait_time_ptr == NULL) /*howlong == NULL*/
+				    continue;
+				(void)gettimeofday (&new_time, NULL);
 				FIXUP_TIMEVAL(new_time);
 				TIMEDELTA(time_spent, new_time, cur_time);
 				cur_time = new_time;
@@ -261,7 +250,7 @@ int _XtwaitForSomething(ignoreTimers, ignoreInputs, ignoreEvents,
 					 wait_time_ptr->tv_sec,
 					 wait_time_ptr->tv_usec,
 					 loop_count );
-				XtWarning( msg );
+				XtAppWarning( app, msg );
 			    }
 #endif /*DEBUG_SELECT*/
 			    continue;
@@ -275,7 +264,7 @@ int _XtwaitForSomething(ignoreTimers, ignoreInputs, ignoreEvents,
 		return -1;
 	}
 	if(block && howlong != NULL) { /* adjust howlong */
-	    (void) gettimeofday (&new_time, &cur_timezone);
+	    (void) gettimeofday (&new_time, NULL);
 	    FIXUP_TIMEVAL(new_time);
 	    TIMEDELTA(time_spent, new_time, start_time);
 	    if(*howlong <= (time_spent.tv_sec*1000+time_spent.tv_usec/1000))
@@ -391,7 +380,6 @@ XtIntervalId XtAppAddTimeOut(app, interval, proc, closure)
 {
 	TimerEventRec *tptr;
         struct timeval current_time;
-	struct timezone timezone;
 
 	if (freeTimerRecs) {
 	    tptr = freeTimerRecs;
@@ -405,7 +393,7 @@ XtIntervalId XtAppAddTimeOut(app, interval, proc, closure)
 	tptr->app = app;
 	tptr->te_timer_value.tv_sec = interval/1000;
 	tptr->te_timer_value.tv_usec = (interval%1000)*1000;
-        (void) gettimeofday(&current_time,&timezone);
+        (void) gettimeofday(&current_time, NULL);
 	FIXUP_TIMEVAL(current_time);
         ADD_TIME(tptr->te_timer_value,tptr->te_timer_value,current_time);
 	QueueTimerEvent(app, tptr);
@@ -550,12 +538,24 @@ void XtRemoveInput( id )
 	if(app->input_list && (sptr = app->input_list[source]) != NULL) {
 		for( lptr = NULL ; sptr; sptr = sptr->ie_next ){
 			if(sptr == (InputEvent *) id) {
+				XtInputMask condition;
 				if(lptr == NULL) {
-					app->input_list[source] = sptr->ie_next;
-					FD_CLR(source, &app->fds.rmask);
+				    app->input_list[source] = sptr->ie_next;
 				} else {
-					lptr->ie_next = sptr->ie_next;
+				    lptr->ie_next = sptr->ie_next;
 				}
+				for (condition = 0, lptr = sptr->ie_next;
+				     lptr; lptr = lptr->ie_next)
+				    condition |= lptr->ie_condition;
+				if ((sptr->ie_condition & XtInputReadMask) &&
+				    !(condition & XtInputReadMask))
+				   FD_CLR(source, &app->fds.rmask);
+				if ((sptr->ie_condition & XtInputWriteMask) &&
+				    !(condition & XtInputWriteMask))
+				   FD_CLR(source, &app->fds.wmask);
+				if ((sptr->ie_condition & XtInputExceptMask) &&
+				    !(condition & XtInputExceptMask))
+				   FD_CLR(source, &app->fds.emask);
 				XtFree((char *) sptr);
 				found = True;
 				break;
@@ -572,6 +572,20 @@ void XtRemoveInput( id )
 		   (String *)NULL, (Cardinal *)NULL);
 }
 
+void _XtRemoveAllInputs(app)
+    XtAppContext app;
+{
+    int i;
+    for (i = 0; i < NOFILE; i++) {
+	InputEvent* ep = app->input_list[i];
+	while (ep) {
+	    InputEvent *next = ep->ie_next;
+	    XtFree( (char*)ep );
+	    ep = next;
+	}
+    }
+}
+
 /* Do alternate input and timer callbacks if there are any */
 
 static void DoOtherSources(app)
@@ -580,7 +594,6 @@ static void DoOtherSources(app)
 	TimerEventRec *te_ptr;
 	InputEvent *ie_ptr;
 	struct timeval  cur_time;
-	struct timezone cur_timezone;
 
 #define DrainQueue() \
 	for (ie_ptr = app->outstandingQueue; ie_ptr != NULL;) { \
@@ -598,7 +611,7 @@ static void DoOtherSources(app)
 	    DrainQueue();
 	}
 	if (app->timerQueue != NULL) {	/* check timeout queue */
-	    (void) gettimeofday (&cur_time, &cur_timezone);
+	    (void) gettimeofday (&cur_time, NULL);
 	    FIXUP_TIMEVAL(cur_time);
 	    while(IS_AFTER (app->timerQueue->te_timer_value, cur_time)) {
 		te_ptr = app->timerQueue;
@@ -718,19 +731,18 @@ void XtAppProcessEvent(app, mask)
 	int i, d;
 	XEvent event;
 	struct timeval cur_time;
-	struct timezone curzone;
 
 	if (mask == 0) return;
 
 	for (;;) {
 	    if (mask & XtIMTimer && app->timerQueue != NULL) {
-		(void) gettimeofday (&cur_time, &curzone);
+		(void) gettimeofday (&cur_time, NULL);
 		FIXUP_TIMEVAL(cur_time);
 		if (IS_AFTER(app->timerQueue->te_timer_value, cur_time)) {
 		    TimerEventRec *te_ptr = app->timerQueue;
 		    app->timerQueue = app->timerQueue->te_next;
 		    te_ptr->te_next = NULL;
-                    if (te_ptr->te_proc != 0)
+                    if (te_ptr->te_proc != NULL)
 		        TeCallProc(te_ptr);
 		    te_ptr->te_next = freeTimerRecs;
 		    freeTimerRecs = te_ptr;
@@ -800,7 +812,6 @@ XtInputMask XtAppPending(app)
 	XtAppContext app;
 {
 	struct timeval cur_time;
-	struct timezone curzone;
 	int d;
 	XtInputMask ret = 0;
 
@@ -826,7 +837,7 @@ XtInputMask XtAppPending(app)
  * Check for pending alternate input
  */
 	if (app->timerQueue != NULL) {	/* check timeout queue */ 
-	    (void) gettimeofday (&cur_time, &curzone);
+	    (void) gettimeofday (&cur_time, NULL);
 	    FIXUP_TIMEVAL(cur_time);
 	    if ((IS_AFTER(app->timerQueue->te_timer_value, cur_time))  &&
                 (app->timerQueue->te_proc != 0)) {
@@ -851,7 +862,6 @@ Boolean PeekOtherSources(app)
 	XtAppContext app;
 {
 	struct timeval  cur_time;
-	struct timezone cur_timezone;
 
 	if (app->outstandingQueue != NULL) return TRUE;
 
@@ -863,7 +873,7 @@ Boolean PeekOtherSources(app)
 	}
 
 	if (app->timerQueue != NULL) {	/* check timeout queue */
-	    (void) gettimeofday (&cur_time, &cur_timezone);
+	    (void) gettimeofday (&cur_time, NULL);
 	    FIXUP_TIMEVAL(cur_time);
 	    if (IS_AFTER (app->timerQueue->te_timer_value, cur_time)) return TRUE;
 	}
@@ -900,7 +910,7 @@ Boolean XtAppPeekEvent(app, event)
 	    if (foundCall) {
 		event->xany.type = 0;
 		event->xany.display = NULL;
-		event->xany.window = NULL;
+		event->xany.window = 0;
 		return FALSE;
 	    }
 

@@ -1,5 +1,5 @@
 /*
-* $XConsortium: Intrinsic.h,v 1.136 90/04/03 11:37:20 swick Exp $
+* $XConsortium: Intrinsic.h,v 1.139 90/08/22 14:21:01 swick Exp $
 * $oHeader: Intrinsic.h,v 1.10 88/09/01 10:33:34 asente Exp $
 */
 
@@ -157,7 +157,12 @@ typedef unsigned char	XtEnum;
 typedef unsigned int	Cardinal;
 typedef unsigned short	Dimension;  /* Size in pixels			*/
 typedef short		Position;   /* Offset from 0 coordinate		*/
+
+#ifdef __STDC__
+typedef void*		XtPointer;
+#else
 typedef char*		XtPointer;
+#endif
 
 typedef XtPointer	Opaque;
 
@@ -693,7 +698,7 @@ extern XtGeometryResult XtMakeResizeRequest(
 #endif
 );
 
-extern void XtTransformCoords(
+extern void XtTranslateCoords(
 #if NeedFunctionPrototypes
     Widget 		/* widget */,
 #if NeedWidePrototypes
@@ -703,8 +708,8 @@ extern void XtTransformCoords(
     Position		/* x */,
     Position		/* y */,
 #endif /* NeedWidePrototypes */
-    Position*		/* rootx */,
-    Position*		/* rooty */
+    Position*		/* rootx_return */,
+    Position*		/* rooty_return */
 #endif
 );
 
@@ -753,8 +758,13 @@ extern void XtDisplayStringConversionWarning(
 #endif
 );
 
+#if defined(__STDC__)
+externalref XtConvertArgRec const colorConvertArgs[];
+externalref XtConvertArgRec const screenConvertArg[];
+#else
 externalref XtConvertArgRec colorConvertArgs[];
 externalref XtConvertArgRec screenConvertArg[];
+#endif
 
 extern void XtAppAddConverter( /* obsolete */
 #if NeedFunctionPrototypes

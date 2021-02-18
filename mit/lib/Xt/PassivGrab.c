@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: PassivGrab.c,v 1.11 90/04/03 20:14:33 swick Exp $";
+static char Xrcsid[] = "$XConsortium: PassivGrab.c,v 1.14 90/07/26 10:07:39 swick Exp $";
 #endif
 
 /********************************************************
@@ -33,6 +33,7 @@ SOFTWARE.
 #include "StringDefs.h"
 #include "PassivGraI.h"
 
+static String XtNinvalidWidget = "invalidWidget";
 
 /* typedef unsigned long Mask; */
 #define BITMASK(i) (((Mask)1) << ((i) & 31))
@@ -487,12 +488,13 @@ static void DestroyPassiveList(passiveListPtr)
  * This function is called at widget destroy time to clean up
  */
 /*ARGSUSED*/
-void _XtDestroyServerGrabs(w, pwi, call_data)
+void _XtDestroyServerGrabs(w, closure, call_data)
     Widget		w;
-    XtPerWidgetInput	pwi;
+    XtPointer		closure;
     XtPointer		call_data; /* unused */
 {
-    XtPerDisplayInput		pdi;
+    XtPerWidgetInput	pwi = (XtPerWidgetInput)closure;
+    XtPerDisplayInput	pdi;
     
     pdi = _XtGetPerDisplayInput(XtDisplay(w));
     
@@ -515,11 +517,10 @@ void _XtDestroyServerGrabs(w, pwi, call_data)
  * the grab.  The grab will remain in effect until the key is released.
  */
 
-XtServerGrabPtr _XtCheckServerGrabsOnWidget (event, widget, isKeyboard, pdi)
-    XKeyEvent 		* event;
+XtServerGrabPtr _XtCheckServerGrabsOnWidget (event, widget, isKeyboard)
+    XEvent 		*event;
     Widget		widget;
     Boolean		isKeyboard;
-    XtPerDisplayInput	pdi;
 {
     register XtServerGrabPtr grab;
     XtServerGrabRec 	tempGrab;
@@ -543,8 +544,8 @@ XtServerGrabPtr _XtCheckServerGrabsOnWidget (event, widget, isKeyboard, pdi)
     
     
     tempGrab.widget = widget;
-    tempGrab.detail.exact = event->keycode; /* also button */
-    tempGrab.modifiersDetail.exact = event->state;
+    tempGrab.detail.exact = event->xkey.keycode; /* also xbutton.button */
+    tempGrab.modifiersDetail.exact = event->xkey.state; /*also xbutton.state*/
     tempGrab.detail.pMask = NULL;
     tempGrab.modifiersDetail.pMask = NULL;
 
@@ -710,7 +711,7 @@ void GrabKeyOrButton (widget, keyOrButton, modifiers, owner_events,
     
     if (!XtIsWidget(widget)){
 	XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-		     "invalidWidget", "grabKeyOrButton", "XtToolkitError",
+		     XtNinvalidWidget, "grabKeyOrButton", XtCXtToolkitError,
 		     "Widget specified in grab is not a widget",
 		     (String *)NULL, (Cardinal *)NULL);
 	return;
@@ -763,7 +764,7 @@ void   UngrabKeyOrButton (widget, keyOrButton, modifiers, isKeyboard)
     
     if (!XtIsWidget(widget)){
 	XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-		     "invalidWidget", "ungrabKeyOrButton", "XtToolkitError",
+		     XtNinvalidWidget, "ungrabKeyOrButton", XtCXtToolkitError,
 		     "Widget specified in ungrab is not a widget",
 		     (String *)NULL, (Cardinal *)NULL);
 	return;
@@ -785,7 +786,7 @@ void   UngrabKeyOrButton (widget, keyOrButton, modifiers, isKeyboard)
     if (!pwi)
       {
 	  XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-		       "invalidGrab", "ungrabKeyOrButton", "XtToolkitError",
+		       "invalidGrab", "ungrabKeyOrButton", XtCXtToolkitError,
 		       "Attempt to remove non-existant passive grab",
 		       (String *)NULL, (Cardinal *)NULL);
 	  return;
@@ -887,7 +888,7 @@ static int GrabDevice (widget, owner_events,
     
     if (!XtIsWidget(widget) || !XtIsRealized(widget))
       XtAppErrorMsg(XtWidgetToApplicationContext(widget),
-		    "invalidWidget", "grabDevice", "XtToolkitError",
+		    XtNinvalidWidget, "grabDevice", XtCXtToolkitError,
 		    "Grab widget must be a realized widget",
 		    (String*)NULL, (Cardinal*)NULL);
     
@@ -937,7 +938,7 @@ static void   UngrabDevice(widget, time, isKeyboard)
 
     if (!XtIsWidget(widget) || !XtIsRealized(widget))
       XtAppErrorMsg(XtWidgetToApplicationContext(widget),
-		    "invalidWidget", "ungrabDevice", "XtToolkitError",
+		    XtNinvalidWidget, "ungrabDevice", XtCXtToolkitError,
 		    "Grab widget must be a realized widget",
 		    (String*)NULL, (Cardinal*)NULL);
      

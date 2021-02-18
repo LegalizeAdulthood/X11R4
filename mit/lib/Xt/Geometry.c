@@ -1,7 +1,4 @@
-#ifndef lint
-static char Xrcsid[] = "$XConsortium: Geometry.c,v 1.46 90/04/10 17:07:18 swick Exp $";
-/* $oHeader: Geometry.c,v 1.3 88/08/23 11:37:50 asente Exp $ */
-#endif /* lint */
+/* $XConsortium: Geometry.c,v 1.49 90/09/05 10:26:16 swick Exp $ */
 
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -436,6 +433,7 @@ void XtTranslateCoords(w, x, y, rootx, rooty)
     register Position *rootx, *rooty;	/* return */
 {
     Position garbagex, garbagey;
+    Widget passed = w;
 
     if (rootx == NULL) rootx = &garbagex;
     if (rooty == NULL) rooty = &garbagey;
@@ -449,7 +447,8 @@ void XtTranslateCoords(w, x, y, rootx, rooty)
     }
 
     if (w == NULL)
-        XtWarningMsg("invalidShell","xtTranslateCoords",XtCXtToolkitError,
+        XtAppWarningMsg(XtWidgetToApplicationContext(passed),
+		"invalidShell","xtTranslateCoords",XtCXtToolkitError,
                 "Widget has no shell ancestor",
 		(String *)NULL, (Cardinal *)NULL);
     else {

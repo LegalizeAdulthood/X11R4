@@ -1,4 +1,4 @@
-/* $XConsortium: Intrinsic.c,v 1.150 90/07/12 17:50:41 swick Exp $ */
+/* $XConsortium: Intrinsic.c,v 1.153 90/08/22 12:48:37 swick Exp $ */
 
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -382,7 +382,7 @@ static Widget MatchWildChildren(names, bindings, children, num,
     int in_depth, *out_depth, *found_depth;
 {
     register Cardinal   i;
-    Widget w, result;
+    Widget w, result = NULL;
     int d, min = 10000;
 
     for (i = 0; i < num; i++) {
@@ -435,6 +435,11 @@ static Widget NameListToWidget(root, names, bindings,
     if (names[0] == NULLQUARK) {
 	*out_depth = *found_depth = in_depth;
 	return root;
+    }
+
+    if (! XtIsWidget(root)) {
+	*out_depth = 10000;
+	return NULL;
     }
 
     if (*bindings == XrmBindTightly) {
@@ -572,16 +577,16 @@ Boolean XtIsSensitive(object)
  * Internal routine; must be called only after XtIsWidget returns false
  */
 Widget _XtWindowedAncestor(object)
-	Widget object;
+    register Widget object;
 {
+    Widget obj = object;
     for (object = XtParent(object); object && !XtIsWidget(object);)
 	object = XtParent(object);
 
     if (object == NULL) {
-	String params = XtName(object);
+	String params = XtName(obj);
 	Cardinal num_params = 1;
-	XtAppErrorMsg(XtWidgetToApplicationContext(object),
-		   "noWidgetAncestor", "windowedAncestor", XtCXtToolkitError,
+	XtErrorMsg("noWidgetAncestor", "windowedAncestor", XtCXtToolkitError,
 		   "Object \"%s\" does not have windowed ancestor",
 		   &params, &num_params);
     }
