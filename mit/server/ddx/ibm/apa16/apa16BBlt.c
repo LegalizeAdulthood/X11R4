@@ -67,7 +67,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $XConsortium: mfbbitblt.c,v 5.5 89/07/16 10:45:08 rws Exp $ */
+/* $XConsortium: apa16BBlt.c,v 1.2 90/03/05 13:52:48 swick Exp $ */
 #include "X.h"
 #include "Xprotostr.h"
 
@@ -252,7 +252,9 @@ freeRegions:
 	w= pbox->x2-pbox->x1;\
 	h= pbox->y2-pbox->y1;\
 	pptSrc->x+= w;\
-	pptSrc->y+= h;
+	pptSrc->y+= h;\
+        if(w == 0) w=1;\
+        if(h == 0) h=1;
 
 #define	NEXT_RECT() \
 	pbox++;\

@@ -67,11 +67,11 @@ SOFTWARE.
 
 ******************************************************************/
 
-/* $Header: /afs/testers.athena.mit.edu/src/x11r4/src/mit/server/ddx/ibm/apa16/RCS/apa16IGBlt.c,v 3.2 89/11/04 16:05:06 probe Exp $ */
-/* $Source: /afs/testers.athena.mit.edu/src/x11r4/src/mit/server/ddx/ibm/apa16/RCS/apa16IGBlt.c,v $ */
+/* $Header: apa16IGBlt.c,v 1.2 90/03/05 13:53:37 swick Exp $ */
+/* $Source: /xsrc/mit/server/ddx/ibm/apa16/RCS/apa16IGBlt.c,v $ */
 
 #ifndef lint
-static char *rcsid = "$Header: /afs/testers.athena.mit.edu/src/x11r4/src/mit/server/ddx/ibm/apa16/RCS/apa16IGBlt.c,v 3.2 89/11/04 16:05:06 probe Exp $";
+static char *rcsid = "$Header: apa16IGBlt.c,v 1.2 90/03/05 13:53:37 swick Exp $";
 static char sccsid[] = "@(#)apa16igblt.c	2.1 88/09/19 11:55:57";
 #endif
 
@@ -131,7 +131,7 @@ apa16ImageGlyphBlt(pDrawable, pGC, x, y, nglyph, ppci, pGlyphBase)
 {
     ExtentInfoRec info;	/* used by QueryGlyphExtents() */
     BoxRec bbox;	/* string's bounding box */
-    xRectangle backrect;/* backing rectangle to paint.
+    BoxRec box;		/* backing rectangle to paint.
 			   in the general case, NOT necessarily
 			   the same as the string's bounding box
 			*/
@@ -161,6 +161,8 @@ apa16ImageGlyphBlt(pDrawable, pGC, x, y, nglyph, ppci, pGlyphBase)
     int rrop;
     CARD16	cmd;
     CARD16	new_mode;
+    mfbPrivGC	*priv;
+    BoxPtr	pextent;
 
     TRACE(("apa16ImageGlyphBlt(pDrawable= 0x%x, pGC= 0x%x, x= %d, y= %d, nglyph= %d, ppci= %d, pGlyphBase= 0x%x )\n",pDrawable,pGC,x,y,nglyph,ppci,pGlyphBase));
 
@@ -200,13 +202,18 @@ apa16ImageGlyphBlt(pDrawable, pGC, x, y, nglyph, ppci, pGlyphBase)
 
     x += xorg;
     y += yorg;
+ 
+    /* The following gross hack is because backrect.width is unsigned, 
+     * but in mfbfillarea is converted back to signed int's. This caused 
+     * problems in filling regions 65532 wide.
+     */ 
 
-    backrect.x = x;
-    backrect.y = y - pGC->font->pFI->fontAscent;
-    backrect.width = info.overallWidth;
-    backrect.height = pGC->font->pFI->fontAscent + 
-		      pGC->font->pFI->fontDescent;
-    if ((backrect.width==0)||(backrect.height==0))
+    box.x1 = x;
+    box.y1 = y - pGC->font->pFI->fontAscent;
+    box.x2 = box.x1 + info.overallWidth;
+    box.y2 = box.y1 + pGC->font->pFI->fontAscent + pGC->font->pFI->fontDescent;
+    if ((pGC->font->pFI->fontAscent==0) ||
+	(pGC->font->pFI->fontAscent + pGC->font->pFI->fontDescent == 0))
 	return;
 
     bbox.x1 = x + info.overallLeft;
@@ -221,8 +228,22 @@ apa16ImageGlyphBlt(pDrawable, pGC, x, y, nglyph, ppci, pGlyphBase)
       case rgnOUT:
 	break;
       case rgnIN:
-	FILL_RECT(cmd,backrect.x+backrect.width,backrect.y+backrect.height,
-				backrect.width,backrect.height);
+	/* The following is stollen from mfbfillrct.c */
+	priv = (mfbPrivGC *) pGC->devPrivates[mfbGCPrivateIndex].ptr;
+	pextent = (*pGC->pScreen->RegionExtents)(priv->pCompositeClip);
+
+	if (box.x1 < pextent->x1)
+		box.x1 = pextent->x1;
+	if (box.y1 < pextent->y1)
+		box.y1 = pextent->y1;
+	if (box.x2 > pextent->x2)
+		box.x2 = pextent->x2;
+	if (box.y2 > pextent->y2)
+		box.y2 = pextent->y2;
+
+	if ((box.x1 < box.x2) && (box.y1 < box.y2)) 
+	    FILL_RECT(cmd, box.x2, box.y2, box.x2-box.x1, box.y2 - box.y1);
+    
         pDstBase = pDstBase + (widthDst * y) + (x >> 5);
         xchar = x & 0x1f;
 

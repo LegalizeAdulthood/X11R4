@@ -67,11 +67,11 @@ SOFTWARE.
 
 ******************************************************************/
 
-/* $Header: /afs/testers.athena.mit.edu/src/x11r4/src/mit/server/ddx/ibm/apa16/RCS/apa16Text.c,v 3.1 89/11/04 16:03:08 probe Exp $ */
-/* $Source: /afs/testers.athena.mit.edu/src/x11r4/src/mit/server/ddx/ibm/apa16/RCS/apa16Text.c,v $ */
+/* $Header: apa16Text.c,v 1.2 90/03/05 13:53:41 swick Exp $ */
+/* $Source: /xsrc/mit/server/ddx/ibm/apa16/RCS/apa16Text.c,v $ */
 
 #ifndef lint
-static char *rcsid = "$Header: /afs/testers.athena.mit.edu/src/x11r4/src/mit/server/ddx/ibm/apa16/RCS/apa16Text.c,v 3.1 89/11/04 16:03:08 probe Exp $";
+static char *rcsid = "$Header: apa16Text.c,v 1.2 90/03/05 13:53:41 swick Exp $";
 static char sccsid[] = "@(#)apa16text.c	3.1 88/09/22 09:31:14";
 #endif
 
@@ -153,8 +153,9 @@ TRACE(("apa16ImageText( 0x%x, 0x%x, (%d,%d), %d, 0x%x, 0x%x)\n",
 	 *  the character as stored on the adapter....)
 	 */
 
-    if ( ( ( (CARD32) font->devPriv[pDraw->pScreen->myNum] ) < 40 )
-	  || ( pDraw->type != DRAWABLE_WINDOW ) ) {
+    if ( pGC->alu != GXcopy || 
+	( ( (CARD32) font->devPriv[pDraw->pScreen->myNum] ) < 40 )
+	|| ( pDraw->type != DRAWABLE_WINDOW ) ) {
 	miImageText( pDraw, pGC, x, y, count, chars, fontEncoding ) ;
 	return;
     }
@@ -222,10 +223,10 @@ TRACE(("apa16ImageText: GetGlyphsCharsAndExtents returns n=%d\n", n));
 
 		for ( ; nbox-- ; pbox++ ) {
 		    int	left,right,top,bottom;
-		    left=	MAX(pbox->x1,bbox.x1);
-		    right=	MIN(pbox->x2,bbox.x2);
-		    top=	MAX(pbox->y1,bbox.y1);
-		    bottom=	MIN(pbox->y2,bbox.y2);
+		    left=	MAX(pbox->x1,backbox.x1);
+		    right=	MIN(pbox->x2,backbox.x2);
+		    top=	MAX(pbox->y1,backbox.y1);
+		    bottom=	MIN(pbox->y2,backbox.y2);
 		    if ((left<right)&&(top<bottom)) {
 			FILL_RECT(rectCmd,	right,	bottom,
 					right-left, bottom-top);

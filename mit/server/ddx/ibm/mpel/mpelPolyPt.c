@@ -20,11 +20,11 @@
  * SOFTWARE.
  *
 */
-/* $Header: /andrew/X11/r3src/r3plus/server/ddx/ibm/mpel/RCS/mpelPolyPt.c,v 6.9 89/05/30 20:35:20 jeff Exp $ */
-/* $Source: /andrew/X11/r3src/r3plus/server/ddx/ibm/mpel/RCS/mpelPolyPt.c,v $ */
+/* $Header: mpelPolyPt.c,v 1.2 90/03/05 14:18:08 swick Exp $ */
+/* $Source: /xsrc/mit/server/ddx/ibm/mpel/RCS/mpelPolyPt.c,v $ */
 
 #ifndef lint
-static char *rcsid = "$Header: /andrew/X11/r3src/r3plus/server/ddx/ibm/mpel/RCS/mpelPolyPt.c,v 6.9 89/05/30 20:35:20 jeff Exp $" ;
+static char *rcsid = "$Header: mpelPolyPt.c,v 1.2 90/03/05 14:18:08 swick Exp $" ;
 #endif
 
 #include "X.h"
@@ -52,6 +52,9 @@ extern int mpelcursorSemaphore ;
 extern int mpelCheckCursor() ;
 extern void mpelReplaceCursor() ;
 
+/* The maximum number of points in a Polymarker request. */
+#define MAXRQPTS	(32760 / sizeof(mpelPoint))
+
 void
 mpelPolyPoint( pDrawable, pGC, mode, npt, pptInit )
 DrawablePtr	pDrawable ;
@@ -65,10 +68,11 @@ xPoint		*pptInit ;
 	register RegionPtr pRegion = devPriv->pCompositeClip ;
 	int	cursor_saved ;
 
-	TRACE( ("mpelPolyPoint(0x%x,0x%x,%d,%d,0x%x)\n",
-		pDrawable, pGC, mode, npt, pptInit ) ) ;
+	TRACE( ("mpelPolyPoint(0x%x,0x%x,\"%s\",%d,0x%x)\n",
+		pDrawable, pGC, (mode == CoordModePrevious) ?
+		"Relative" : "Absolute", npt, pptInit));
 
-	if ( pGC->alu == GXnoop || REGION_NIL(pRegion) )
+	if ( pGC->alu == GXnoop || REGION_NIL(pRegion) || npt == 0)
 		return ;
 
 	if ( pDrawable->type == DRAWABLE_PIXMAP ) {
@@ -81,48 +85,49 @@ xPoint		*pptInit ;
 	 * AND adjust for the Mpel's Backward Y coordinates
 	 */
 	{
-	register const int xorg = pDrawable->x ;
-	register const int yorg =
-		( MPEL_HEIGHT - 1 ) - pDrawable->y ;
-	register int nptTmp = npt ;
-	if ( mode == CoordModePrevious )
-		for ( ppt = pptInit ; --nptTmp ; ) {
-			ppt++ ;
-			ppt->x += (ppt-1)->x + xorg ;
-			ppt->y = yorg - ( ppt->y + (ppt-1)->y ) ;
-		}
-	else
-		for ( ppt = pptInit ; nptTmp-- ; ppt++ ) {
-			ppt->x += xorg ;
-			ppt->y = yorg - ppt->y ;
-		}
-	}
+	register const int xorg = pDrawable->x;
+	register const int yorg = pDrawable->y;
+	register int nptTmp = npt;
+	register xPoint *mpt = pptInit;
+	register int (* PointInRegion)() = pDrawable->pScreen->PointInRegion;
+	BoxRec box;
 
-	{ /* Validate & Translate the point list */
-		register int (* PointInRegion)() = 
-			pDrawable->pScreen->PointInRegion ;
-        	register xPoint *mpt ; /* xPoint is the same as mpelPoint */
-		BoxRec box ; /* Scratch Space */
-
-		/* NOTE: pGC->miTranslate is always TRUE in mpel */
-		for ( ppt = pptInit ;
-		      npt-- && (* PointInRegion)( pRegion, ppt->x,
-						  MPEL_HEIGHT - 1 - ppt->y,
-						  &box ) ;
-		      ppt++ )
-			/* Do Nothing */ ;
-		if ( npt > 0 )
-			{
-			for ( mpt = ppt ; npt-- ; ppt++ )
-				if ( (* PointInRegion)( pRegion, ppt->x,
-							ppt->y, &box ) )
-					*mpt++ = *ppt ;
+	if ( mode == CoordModePrevious ) {
+		ppt = pptInit;
+		ppt->x += xorg;
+		ppt->y += yorg;
+		if((* PointInRegion)( pRegion, ppt->x, ppt->y, &box)) {
+			mpt->x = ppt->x;
+			mpt->y = (MPEL_HEIGHT - 1) - ppt->y;
+			mpt++;
+		}
+		while (--nptTmp) {
+			ppt++;
+			ppt->x += xorg + (ppt-1)->x;
+			ppt->y = yorg + ppt->y + (ppt-1)->y;
+			if((* PointInRegion)( pRegion, ppt->x, ppt->y, &box)) {
+				mpt->x = ppt->x;
+				mpt->y = (MPEL_HEIGHT - 1) - ppt->y;
+				mpt++;
 			}
-
-		if ( !( npt = mpt - pptInit) )
-			return ;
-
+		}
+		npt = mpt - pptInit;
+	} else {
+		for ( ppt = pptInit ; nptTmp-- ; ppt++ ) {
+			ppt->x += xorg;
+			ppt->y += yorg;
+			if((* PointInRegion)( pRegion, ppt->x, ppt->y, &box)) {
+				mpt->x = ppt->x;
+				mpt->y = (MPEL_HEIGHT - 1) - ppt->y;
+				mpt++;
+			}
+		}
+		npt = mpt - pptInit;
 	}
+	}
+	TRACE(("mpelPolyPoint: %d points\n", npt));
+	if(!npt)	/* Nothing to do */
+		return;
 	/* If Cursor Is In The Way Remove It */
 	cursor_saved = !mpelcursorSemaphore
 		&& mpelCheckCursor(
@@ -146,8 +151,14 @@ xPoint		*pptInit ;
 		MPELSetPolymarkerColor( pGC->fgPixel ) ;
 	}
 	MPELSetMarkerType( 1 ) ; /* Magic number for solid dots */
-	MPELPolymarker( npt, pptInit ) ;
-
+	/* Break into bite-sized pieces */
+	{
+	  register int rem;
+	  /* MPELPolymarker does not evaluate any of its arguments
+	     more than once. */
+	  for(rem = npt;rem > 0;rem -= MAXRQPTS, pptInit+=MAXRQPTS)
+	    MPELPolymarker((rem>MAXRQPTS)?MAXRQPTS:rem, pptInit);
+	}
 	if ( cursor_saved )
 		mpelReplaceCursor() ;
 

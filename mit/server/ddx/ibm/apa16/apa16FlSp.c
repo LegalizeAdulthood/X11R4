@@ -67,7 +67,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $XConsortium: mfbfillsp.c,v 5.2 89/07/28 11:58:00 rws Exp $ */
+/* $XConsortium: apa16FlSp.c,v 1.2 90/03/05 13:53:30 swick Exp $ */
 #include "X.h"
 #include "Xmd.h"
 #include "gcstruct.h"
@@ -191,115 +191,6 @@ apa16SolidFS(pDrawable, pGC, nInit, pptInit, pwidthInit, fSorted)
     DEALLOCATE_LOCAL(pwidthFree);
     return ;
 }
-
-
-
-void
-apa16StippleFS(pDrawable, pGC, nInit, pptInit, pwidthInit, fSorted)
-DrawablePtr pDrawable;
-GC *pGC;
-int nInit;			/* number of spans to fill */
-DDXPointPtr pptInit;		/* pointer to list of start points */
-int *pwidthInit;		/* pointer to list of n widths */
-int fSorted;
-{
-				/* next three parameters are post-clip */
-    int n;			/* number of spans to fill */
-    register DDXPointPtr ppt;	/* pointer to list of start points */
-    register int *pwidth;	/* pointer to list of n widths */
-				/* pointer to start of bitmap */
-    int nlwidth;		/* width in longwords of bitmap */
-				/* pointer to current longword in bitmap */
-    register volatile unsigned int *addrl;	
-    register int startmask;
-    register int endmask;
-    register int nlmiddle;
-    int rop;			/* reduced rasterop */
-    PixmapPtr pStipple;
-    int *psrc;
-    int src;
-    int tileHeight;
-    int *pwidthFree;		/* copies of the pointers to free */
-    DDXPointPtr pptFree;
-
-    if (!(pGC->planemask & 1))
-	return;
-
-    rop = ((mfbPrivGC *)(pGC->devPrivates[mfbGCPrivateIndex].ptr))->rop;
-    if (rop==RROP_NOP)	return;
-
-    if (pDrawable->type!=DRAWABLE_WINDOW) {
-	if (rop==RROP_WHITE)
-	    mfbWhiteStippleFS(pDrawable,pGC,nInit,pptInit,pwidthInit,fSorted);
-	else if (rop==RROP_BLACK)
-	    mfbWhiteStippleFS(pDrawable,pGC,nInit,pptInit,pwidthInit,fSorted);
-	else if (rop==RROP_INVERT)
-	    mfbWhiteStippleFS(pDrawable,pGC,nInit,pptInit,pwidthInit,fSorted);
-	return;
-    }
-
-    n = nInit * miFindMaxBand(((mfbPrivGC *)
-	       (pGC->devPrivates[mfbGCPrivateIndex].ptr))->pCompositeClip);
-    pwidth = (int *)ALLOCATE_LOCAL(n * sizeof(int));
-    ppt = (DDXPointRec *)ALLOCATE_LOCAL(n * sizeof(DDXPointRec));
-    if(!ppt || !pwidth)
-    {
-	if (ppt) DEALLOCATE_LOCAL(ppt);
-	if (pwidth) DEALLOCATE_LOCAL(pwidth);
-	return;
-    }
-    pwidthFree = pwidth;
-    pptFree = ppt;
-    n = miClipSpans(((mfbPrivGC *)
-	      (pGC->devPrivates[mfbGCPrivateIndex].ptr))->pCompositeClip,
-		     pptInit, pwidthInit, nInit, 
-		     ppt, pwidth, fSorted);
-
-    nlwidth = (int)
-		  (((PixmapPtr)(pDrawable->pScreen->devPrivate))->devKind) >> 2;
-
-    pStipple = ((mfbPrivGC *)(pGC->devPrivates[mfbGCPrivateIndex].ptr))->pRotatedPixmap;
-    tileHeight = pStipple->drawable.height;
-    psrc = (int *)(pStipple->devPrivate.ptr);
-
-    if		(rop == RROP_BLACK)	{ SET_MERGE_MODE(MERGE_BLACK); }
-    else if	(rop == RROP_WHITE)	{ SET_MERGE_MODE(MERGE_WHITE); }
-    else if	(rop == RROP_INVERT)	{ SET_MERGE_MODE(MERGE_INVERT); }
-    else if	(rop == RROP_NOP)	return;
-    else {
-	ErrorF("Unexpected rrop %d in apa16StippleFS\n",rop);
-    }
-
-    while (n--)
-    {
-        addrl = ((volatile unsigned int *)SCREEN_ADDR(0,ppt->y))+(ppt->x>>5);
-	src = psrc[ppt->y % tileHeight];
-
-        /* all bits inside same longword */
-        if ( ((ppt->x & 0x1f) + *pwidth) < 32)
-        {
-	    maskpartialbits(ppt->x, *pwidth, startmask);
-	    *addrl = (src & startmask);
-        }
-        else
-        {
-	    maskbits(ppt->x, *pwidth, startmask, endmask, nlmiddle);
-	    if (startmask)
-		*addrl++ = (src & startmask);
-	    Duff (nlmiddle, *addrl++ |= src);
-	    if (endmask)
-		*addrl = (src & endmask);
-        }
-	pwidth++;
-	ppt++;
-    }
-    DEALLOCATE_LOCAL(pptFree);
-    DEALLOCATE_LOCAL(pwidthFree);
-
-    QUEUE_SET_MERGE_MODE(MERGE_COPY);
-    return ;
-}
-
 
 /* this works with tiles of width == 32 */
 #define FILLSPAN32(ROP) \

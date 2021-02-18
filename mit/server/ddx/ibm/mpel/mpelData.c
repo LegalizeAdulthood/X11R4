@@ -21,11 +21,11 @@ SOFTWARE.
 
 ******************************************************************/
 
-/* $Header: mpelData.c,v 1.2 89/12/07 20:34:28 keith Exp $ */
+/* $Header: mpelData.c,v 1.3 90/03/05 14:17:22 swick Exp $ */
 /* $Source: /xsrc/mit/server/ddx/ibm/mpel/RCS/mpelData.c,v $ */
 
 #ifndef lint
-static char *rcsid = "$Header: mpelData.c,v 1.2 89/12/07 20:34:28 keith Exp $";
+static char *rcsid = "$Header: mpelData.c,v 1.3 90/03/05 14:17:22 swick Exp $";
 #endif
 
 #include "X.h"
@@ -242,8 +242,8 @@ ScreenRec mpelScreenRec = {
 	0,			/* ATOM id */
 	MPEL_WIDTH,		/* short		width */
 	MPEL_HEIGHT,		/* short		height */
-	(MPEL_WIDTH * 254)/800,	/* short		mmWidth */
-	(MPEL_HEIGHT*254)/800,	/* short		mmHeight */
+	(MPEL_WIDTH * 254)/880,	/* short		mmWidth */
+	(MPEL_HEIGHT*254)/880,	/* short		mmHeight */
 	sizeof mpelDepths/sizeof (DepthRec),	/* short	numDepths */
 	MPELMAXPLANES,		/* short		rootDepth */
 	mpelDepths,		/* DepthPtr       	allowedDepths */

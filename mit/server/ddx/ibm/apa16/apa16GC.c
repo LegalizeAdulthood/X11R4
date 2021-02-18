@@ -66,7 +66,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $XConsortium: mfbgc.c,v 5.6 89/07/19 09:30:40 rws Exp $ */
+/* $XConsortium: apa16GC.c,v 1.2 90/03/05 13:53:33 swick Exp $ */
 #include "X.h"
 #include "Xmd.h"
 #include "Xproto.h"
@@ -855,21 +855,26 @@ apa16ValidateGC(pGC, changes, pDrawable)
 	{
 	    if(pGC->lineWidth == 0)
 	    {
-	        if (pGC->fillStyle == FillSolid)
+	        if (pGC->fillStyle == FillSolid) {
 		    pGC->ops->Polylines = apa16LineSS;
-	        else
+		    pGC->ops->PolySegment = apa16PolySegment;
+	        } else {
 		    pGC->ops->Polylines = miZeroLine;
+		    pGC->ops->PolySegment = miPolySegment;
+		}
 	    }
 	    else
 	    {
 		pGC->ops->Polylines = miWideLine;
+		pGC->ops->PolySegment = miPolySegment;
 	    }
-	}
-	else
-	    if(pGC->lineWidth == 0)
+	} else {
+	    pGC->ops->PolySegment = miPolySegment;
+	    if(pGC->lineWidth == 0) 
 	        pGC->ops->Polylines = apa16DashLine;
 	    else
 	        pGC->ops->Polylines = miWideDash;
+	}
     }
 
     if (new_text || new_fill)
@@ -888,9 +893,11 @@ apa16ValidateGC(pGC, changes, pDrawable)
 	}
 	else
 	{
-	    pGC->ops->PolyGlyphBlt	= apa16PolyGlyphBlt;
-	    pGC->ops->PolyText8		= apa16PolyText8;
-	    pGC->ops->PolyText16	= apa16PolyText16;
+	    pGC->ops->PolyGlyphBlt	= miPolyGlyphBlt;
+	    pGC->ops->PolyText8		= miPolyText8;
+	    pGC->ops->PolyText16	= miPolyText16;
+	    pGC->ops->ImageText8	= miImageText8;
+	    pGC->ops->ImageText16	= miImageText16;
 	}
     }
 
@@ -929,9 +936,13 @@ apa16ValidateGC(pGC, changes, pDrawable)
 	    switch(devPriv->rop)
 	    {
 	      case RROP_WHITE:
+		pGC->ops->FillSpans = mfbWhiteStippleFS;
+		break;
 	      case RROP_INVERT:
+		pGC->ops->FillSpans = mfbInvertStippleFS;
+		break;
 	      case RROP_BLACK:
-		pGC->ops->FillSpans = apa16StippleFS;
+		pGC->ops->FillSpans = mfbBlackStippleFS;
 		break;
 	      case RROP_NOP:
 		pGC->ops->FillSpans = NoopDDA;

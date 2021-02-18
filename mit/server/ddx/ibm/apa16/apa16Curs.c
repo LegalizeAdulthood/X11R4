@@ -43,11 +43,11 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $Header: /afs/testers.athena.mit.edu/src/x11r4/src/mit/server/ddx/ibm/apa16/RCS/apa16Curs.c,v 3.0 89/11/02 15:18:16 probe Exp $ */
-/* $Source: /afs/testers.athena.mit.edu/src/x11r4/src/mit/server/ddx/ibm/apa16/RCS/apa16Curs.c,v $ */
+/* $Header: apa16Curs.c,v 1.2 90/03/05 13:53:27 swick Exp $ */
+/* $Source: /xsrc/mit/server/ddx/ibm/apa16/RCS/apa16Curs.c,v $ */
 
 #ifndef lint
-static char *rcsid = "$Header: /afs/testers.athena.mit.edu/src/x11r4/src/mit/server/ddx/ibm/apa16/RCS/apa16Curs.c,v 3.0 89/11/02 15:18:16 probe Exp $";
+static char *rcsid = "$Header: apa16Curs.c,v 1.2 90/03/05 13:53:27 swick Exp $";
 #endif
 
 #include "X.h"
@@ -235,7 +235,8 @@ static	int	obscured= TRUE;
 
     TRACE(("apa16ShowCursor( x= %d, y= %d )\n",x,y));
 
-    if ( ibmScreenState(ibmCurrentScreen)!= SCREEN_ACTIVE) {
+    if (ibmScreenState(ibmCurrentScreen)!= SCREEN_ACTIVE ||
+	currentCursor == NULL) {
 	return;
     }
 
