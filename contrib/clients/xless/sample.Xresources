@@ -1,0 +1,34 @@
+!$Header: /mit/tax/Xless/RCS/sample.Xresources,v 1.1 89/08/06 21:09:15 carlo Exp $
+
+! In order to cause changes to this file to take effect
+! before the next login, you must execute the command
+! xrdb -load ~/.Xresources (or xrdb -load <filename>).
+
+Xless*standardFont:     fixed
+Xless*textFont:         -adobe-new century schoolbook-medium-r-normal--12-120-*-*-p-70-iso8859-1
+Xless*labelFont:        -adobe-times-bold-i-normal--24-240-*-*-p-128-iso8859-1
+Xless*buttonFont:       -adobe-times-bold-r-normal--14-140-*-*-p-77-iso8859-1
+Xless*standardCur:      left_ptr
+Xless*dialogCur:        center_ptr
+Xless*helpFile:         /mit/carlo/xless/xless.help
+
+!For color monitor remove the comment char on next lines
+
+!Xless*Background:	steel blue
+!Xless*Text.background:	slate blue
+!Xless*Command.background:	lime green
+!Xless*title.background:	medium aquamarine
+!Xless*Quit.background:	red
+!Xless*Help.background:	violet red
+!Xless*Close window.background:	magenta
+!Xless*confirm.background:	sea green
+!Xless*Cancel.background:	orange red
+!Xless*Ok !.background:	spring green
+!Xless*Search.background:	cyan
+!Xless*Search Next.background:	medium turquoise
+!Xless*Editor.background:	light blue
+!Xless*Reload.background:	yellow green
+!Xless*Change file.background:	medium spring green
+!Xless*New window.background:	spring green
+
+

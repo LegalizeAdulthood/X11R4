@@ -1,0 +1,353 @@
+/* $Header: /u/04c/mnt/integ/externs/include/RCS/sstring.ext,v 1.2 89/10/20 14:50:26 bmc Exp $ */
+
+/*--------------------------------------------------------------------------*\
+|   
+|  Name:  sstring.ext
+|
+|  Description:  
+|     This file defines string functions for use with Slang programs.
+|     These functions operate on Slang strings, which are subscripted from
+|     '1'.
+|
+|  Component of:
+|     External function libraries.
+|
+|  Related files:
+|     sstring.c        - the C implementation of the functions
+|     sstring.h - shared macro and constant definitions
+|
+|  Project:
+|     Serpent
+|     User Interface Project
+|     Software Engineering Institute
+|     Carnegie Mellon University
+|     Pittsburgh, PA  15213
+|
+|  Version: 1.0
+|
+|  Project Leader:  
+|     Len Bass
+|     ljb@sei.cmu.edu
+|
+|  Author:  
+|     Brian M. Clapper
+|     bmc@sei.cmu.edu  
+|
+$Log:	sstring.ext,v $
+Revision 1.2  89/10/20  14:50:26  bmc
+Updated documentation to reflect shorter file names.
+
+Revision 1.1  89/10/08  23:08:13  serpent
+Initial revision
+
+Revision 1.2  89/09/11  10:52:21  bmc
+Updated function documentation to be consistent with changes in source.
+
+Revision 1.1  89/09/07  10:03:12  bmc
+Initial revision
+
+|
+\*--------------------------------------------------------------------------*\
+|
+|   Distribution: Approved for public release; distribution is unlimited.
+|
+|   Copyright (c) 1989  by  Carnegie  Mellon  University, Pittsburgh, PA.  The
+|  Software Engineering  Institute  (SEI) is a federally  funded  research and
+|  development center established  and  operated by Carnegie Mellon University
+|  (CMU).  Sponsored  by  the  U.S.  Department  of   Defense  under  contract
+|  F19628-85-C-0003,  the  SEI  is  supported  by  the  services  and  defense
+|  agencies, with the U.S. Air Force as the executive contracting agent.
+|
+|    Permission to use,  copy,  modify, or  distribute  this  software and its
+|  documentation for  any purpose and without fee  is hereby granted, provided
+|  that  the above copyright notice appear  in  all copies and that both  that
+|  copyright  notice  and   this  permission  notice  appear   in   supporting
+|  documentation.   Further,  the  names  Software  Engineering  Institute  or
+|  Carnegie  Mellon  University  may  not be used in  advertising or publicity
+|  pertaining to distribution of the software without specific, written  prior
+|  permission.  CMU makes no claims  or representations  about the suitability
+|  of this software for any purpose.  This software is provided "as is" and no
+|  warranty,  express  or  implied,  is  made  by  the  SEI  or CMU, as to the
+|  accuracy  and  functioning of the program and related program material, nor
+|  shall   the  fact of  distribution   constitute  any   such  warranty.   No
+|  responsibility is assumed by the SEI or CMU in connection herewith.
+|
+\*--------------------------------------------------------------------------*/
+
+#ifndef _STRING_EXT_
+#define _STRING_EXT_
+
+EXTERNALS:
+
+/*--------------------------------------------------------------------------*\
+|  Additional string functionality is available through the macros defined
+|  in the following include file.  The macros are defined in a separate file
+|  so that they can be shared between the Slang function bindings (in this
+|  file) and the C implementations of the functions.
+\*--------------------------------------------------------------------------*/
+
+#include "sstring.h"
+
+/*--------------------------------------------------------------------------*\
+|  Routine: string_insert
+|
+|  Description:
+|     Inserts one string inside another.
+|
+|  Syntax:
+\*                                                                          */
+
+	string string_insert
+	    (
+	    /* base_string     : in */ string,
+	    /* insert_string   : in */ string,
+	    /* insert_position : in */ integer
+	    );
+/*
+|  Parameters:
+|     base_string     - The string in which to insert.
+|     insert_string   - The string to be inserted.
+|     insert_position - The subscript in base_string where insert_string
+|                       should begin.  Constraints:
+|
+|		        1. If insert_position is less than 1, it is in error.
+|
+|		        2. If insert_position is 1 past the last character
+|			   in base_string (i.e., string_length(base_string)+1),
+|			   insert_string is concatenated to base_string.
+|                          NOTE: The string_append() macro (defined in
+|                          "sstring.h") works by doing just this.
+|
+|		        3. If insert_position is more than 1 past the last
+|			   character in base_string, it is an error.
+|
+|  Result:
+|     A new string is returned containing the result.  If any of the 
+|     parameters are in error (e.g., insert_position is past the end of the
+|     string), "" is returned.  If a system error such as a memory allocation
+|     failure occurs, NULL is returned.
+\*--------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------*\
+|  Routine: string_delete
+|
+|  Description:
+|     Deletes a substring from a string.
+|
+|  Syntax:
+\*                                                                          */
+	string string_delete
+	    (
+	    /* target_string     : in */ string,
+	    /* starting_position : in */ integer,
+	    /* substring_length  : in */ integer
+	    );
+/*                                                                          *\
+|  Parameters:
+|     target_string     - The string from which to delete.
+|     starting_position - The position within target_string where the substring
+|			  to be deleted begins.  This value must be between 1
+|			  and string_length(target_string); otherwise, an error
+|			  is flagged.
+|     substring_length  - The length of the substring to be deleted.  The value
+|			  of (substring_length + starting_position) cannot
+|			  exceed string_length(target_string); otherwise, an
+|			  error is flagged.
+|
+|                         This length may alternatively be specified using
+|                         the STRING_END constant (defined in "sstring.h"),
+|                         signifying that all characters from starting_position
+|                         to the end of the string should be deleted.
+|
+|  Result:
+|     A new string is returned containing the result.  If any of the 
+|     parameters are in error (e.g., starting_position is past the end of the
+|     string), "" is returned.  If a system error such as a memory allocation
+|     failure occurs, NULL is returned.
+\*--------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------*\
+|  Routine: string_length
+|
+|  Description:
+|     Returns the length of the specified string.
+|
+|  Syntax:
+\*                                                                          */
+	integer string_length
+	    (
+	    /* target_string : in */ string
+	    );
+/*                                                                          *\
+|  Parameters:
+|     target_string - The string for which a length is to be returned.
+|                     This parameter must be a valid string; a value of NULL
+|                     is interpreted as an error.
+|
+|  Result:
+|     The length of the string, in characters, is returned.  A value of 0
+|     indicates the string is empty.  A value less than 0 indicates that
+|     an error occurred.
+\*--------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------*\
+|  Routine: substring
+|
+|  Description:
+|     The substring function returns the specified portion from a string.
+|
+|  Syntax:
+\*                                                                          */
+	string substring
+	    (
+	    /* source_string     : in */ string,
+	    /* starting_position : in */ integer,
+	    /* length            : in */ integer
+	    );
+/*                                                                          *\
+|  Parameters:
+|     source_string     - The string from which to extract the substring.
+|     starting_position - The subscript in source_string from which to take
+|                         the substring.  This parameter must be between 1
+|                         and string_length(source_string); otherwise, an
+|                         error is flagged.
+|     length            - The length of the substring.  This parameter must
+|                         be greater than starting_position and must not
+|                         exceed string_length(source_string); otherwise, an
+|                         error is flagged.
+|
+|                         This length may alternatively be specified using
+|                         the TO_STRING_END constant (defined in "sstring.h"),
+|                         signifying that all characters from starting_position
+|                         to the end of the string should be returned.
+|
+|  Result:
+|     A new string is returned containing the result.  If any of the 
+|     parameters are in error (e.g., starting_position is past the end of the
+|     string), "" is returned.  If a system error such as a memory allocation
+|     failure occurs, NULL is returned.
+\*--------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------*\
+|  Routine: string_index
+|
+|  Description:
+|     The index function finds the first occurrence of a substring within
+|     another string, returning the postion of the substring.
+|
+|  Syntax:
+\*                                                                          */
+	integer string_index
+	    (
+	    /* source_string : in */ string,
+	    /* substring     : in */ string
+	    );
+/*                                                                          *\
+|  Parameters:
+|     source_string - The string in which to search.
+|     substring     - The string for which to search.
+|
+|  Result:
+|     If the substring exists within source_string, its location (i.e.,
+|     substring) is returned.  Otherwise, a 0 is returned.  (N.B.:  Specifying
+|     a substring that is longer than the source_string is not an error.
+|     Since the substring can never be found in this case a 0 will be
+|     returned.)
+\*--------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------*\
+|  Routine:  string_upper
+|
+|  Description:
+|     Converts every lower-case character in a string to upper-case.
+|
+|  Syntax:
+\*                                                                          */
+	string string_upper
+	    (
+	    /* the_string : in */ string
+	    );
+/*                                                                          *\
+|  Parameters:
+|     the_string - The string to be converted.
+|
+|  Result:
+|     A new string is returned containing the result.  If any of the 
+|     parameters are in error (e.g., the_string is NULL), "" is returned.
+|     If a system error such as a memory allocation failure occurs, NULL
+|     is returned.
+\*--------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------*\
+|  Routine:  string_lower
+|
+|  Description:
+|     Converts every upper-case character in a string to lower-case.
+|
+|  Syntax:
+\*                                                                          */
+	string string_lower
+	    (
+	    /* the_string : in */ string
+	    );
+/*                                                                          *\
+|  Parameters:
+|     the_string - The string to be converted.
+|
+|  Result:
+|     A new string is returned containing the result.  If any of the 
+|     parameters are in error (e.g., the_string is NULL), "" is returned.
+|     If a system error such as a memory allocation failure occurs, NULL
+|     is returned.
+\*--------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------*\
+|  Routine:  string_is_integer
+|
+|  Description:
+|     Determines whether a string contains only digits.
+|
+|  Syntax:
+\*                                                                          */
+	boolean string_is_integer
+	    (
+	    /* the_string : in */ string
+	    );
+/*                                                                          *\
+|  Parameters:
+|     the_string - The string to be checked.
+|
+|  Result:
+|     false - The string does not represent a valid integer.
+|     true  - The string represents a valid integer.
+\*--------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------*\
+|  Routine:  string_count_chars
+|
+|  Description:
+|     Counts the number of occurrences of a single character or a set of
+|     characters in a string.
+|
+|  Syntax:
+\*                                                                          */
+	integer string_count_chars
+	    (
+	    /* the_string : in */ string,
+	    /* char_set   : in */ string
+	    );
+/*                                                                          *\
+|  Parameters:
+|     the_string - The string to be checked.
+|     char_set   - A string containing characters to be counted.  The function
+|                  counts the number of times any character from this string
+|                  appears in the_string.  (I.e., to count only occurrences
+|                  of a single character, this string should only contain one
+|                  character.)
+|
+|  Result:
+|     A count of the number of occurrences of all characters in char_set is
+|     returned.  0 means none were found.
+\*--------------------------------------------------------------------------*/
+
+#endif  _STRING_EXT_

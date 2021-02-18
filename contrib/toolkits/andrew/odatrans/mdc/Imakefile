@@ -1,0 +1,39 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES	=	-I${BASEDIR}/include/oda
+
+OBJS   = ckcontent.o \
+	errormsg.o \
+	fontwalk.o \
+	procchar.o \
+	rt_fin.o \
+	rt_fin2.o \
+	rt_goa.o \
+	rt_iop.o \
+	rt_ior.o \
+	rt_pin.o \
+	rt_prc.o \
+	rt_rev.o
+
+HFILES =  ckcontent.h \
+	rx_con.h \
+	rx_dat.h \
+	rx_ful.h \
+	sample.h
+
+ODALIBS = \
+	$(DESTDIR)/lib/oda/libisode.a \
+	$(DESTDIR)/lib/oda/liboda.a \
+	$(DESTDIR)/lib/oda/libraster.a \
+	$(DESTDIR)/lib/oda/liblocal.a
+
+NormalObjectRule()
+
+DependTarget()
+
+ProgramTarget(odaileaf, $(OBJS), $(ODALIBS), )
+
+InstallProgram(odaileaf, $(DESTDIR)/bin)
+

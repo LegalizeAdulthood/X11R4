@@ -1,0 +1,210 @@
+.TH xmessage 1 "20 October 1988" "X Version 11"
+.SH NAME
+xmessage - X window system message display program.
+.SH SYNOPSIS
+.B xmessage
+[-options ...] -m <message>
+.SH DESCRIPTION
+.I Xmessage
+opens a window on the screen that will contain the text of a message
+from either the command line or stdin.  This text may have a scroll
+bar along the left side to allow the user to browse through
+relatively long messages.  Along the lower edge of the message is list
+of words with boxes around them, clicking the left mouse button
+on any of these "buttons" (words with boxes around them) will cause the
+message to go away.  If there is more than one "button" then some
+state will be returned to the invoker of the xmessage process via a
+change of the exit status of the program.
+.PP
+This program serves two functions, firstly it can be a method for shell
+scripts to present the user with information much as 'echo' allows in a
+tty environment, as well as allowing the user you answer simple questinos.
+Secondly it allows much of the functionality of 'cat' again in a windowing
+verses tty environment.
+.PP
+It should be noted that this program is intended for short messages,
+and will be quite slow when asked to handle long files from stdin.
+Although xmessage can accept input from stdin, this input is not
+allowed to come from a tty, if this is attempted, and error message
+will be printed. If xmessage is executed with an incorrect argument
+then it will print a usage message to standard out, as well as to an
+xmessage window.
+.PP
+.SH "COMMAND LINE OPTIONS"
+.PP
+These are the command line options that xmessage understands.  Please note
+that some of these are inherited from the XToolkit and as the list of
+default toolkit options changes xman will follow.
+.PP
+.TP 16
+.B -printlabel
+.br
+This will case the program to print the label of the button pressed to
+standard output (stdout), I envision this to be useful when popping up a 
+message to a friend, as in: "ready to go to lunch".  This allows you to 
+know if he clicked the yes or the no button.
+.PP
+.TP 16
+.B -noscroll (-nsb)
+.br
+The scroll bar is active on the text window by default, this causes it
+to be removed.
+.PP
+.TP 16
+.B -buttons <button> <button> ...
+.br
+This option will cause xmessage to create one button for each arguement
+the follows it until something starts with a '-'.  The string passed to the
+button is the name of the Command button widget created and will be the 
+default text displayed to the user.  Since this is the name of the widget
+it may be used to change any of the Xresources associated with that button.
+.PP
+.TP 16
+.B -message <word> <word> ...
+.br
+This must be the last argument in the command list, as every argument after 
+this one is assumed to be part of the message.  There is no limit to the
+length of this message.
+.PP
+.TP 16
+.B -geometery (height)x(width)+(x_offset)+(y_offset)
+.br
+Sets the size and location of the window created by xmessage.
+.PP
+.B -bw <pixels>
+.TP 16
+.B -borderwidth <pixels>
+.br
+Specifies the width of the border for all windows in xmessage.
+.PP
+.B -bd <color>
+.TP 16
+.B -bordercolor <color>
+.br
+Specifies the color of the borders of all windows in xmessage.
+.PP
+.B -fg <color>
+.TP 16
+.B -foreground <color>
+.br
+Specifies the foreground color to be used.
+.PP
+.B -bg <color>
+.TP 16
+.B -background <color>
+.br
+Specifies the background color to be used.
+.PP
+.B -fn <font>
+.TP 16
+.B -font <font>
+.br
+Specifies the font to use for all buttons and text.
+.TP 16
+.B -display <host:display[.screen]>
+.br
+Specifies a display other than the default specified by the DISPLAY
+environment variable to use to use.
+.TP 16
+.B -name <name>
+.br
+Specifies the name to use when retrieving resources.
+.PP
+.TP 16
+.B -title <title>
+.br
+Specifies the title of this application.
+.PP
+.TP 16
+.B -xrm <resource>
+.br
+Allows a resource to be specified on the command line.
+.PP
+.SH "WIDGET AND RESOURCE NAMES"
+
+Resource management is an important part of X Toolkit applications, and
+xmessage is not exception, all objects in xmessage can have many of their 
+distinguishing characteristics changed by changing the resources associated 
+with them, below is a brief list of the resources and what they modify.
+.TP 35
+foreground			
+- foreground color
+.TP 35
+background			
+- background color
+.TP 35
+width & height			
+- size
+.TP 35
+borderWidth			
+- border width
+.TP 35
+borderColor			
+- border color
+.PP
+In order to change the default values for the widget resources you need
+to have the names, thus, below I have specified the names of some of the
+most common widgets.
+.TP 35
+xmessage - (argv[0])
+- shell widget that contains everything displayed.
+.TP 35
+text
+- the text window.
+.TP 35
+<button name>
+- each of the buttons. "okay" is default.
+.PP
+You can also reference Widgets by class, The important classes for this 
+application are: Command and Text.
+.PP
+Here are a few example of how to string all this information together into
+a resource specification, that can be used on the command line with the -xrm
+flag, or added to your .Xresource file.
+.TP 35
+.B xmessage*Command.foreground: Blue
+All command buttons will be blue.
+.TP 35
+.B xmessage*foreground: Blue
+Everything in the xmessage window has a blue foreground.
+.TP 35
+.B xmessage*Text.border: Red
+The text widget has a red border.
+.PP
+In addition Xmessage has a few specific application resources, that allow
+customizations that are specific to xmessage. 
+.PP
+.TP 8
+.B ScrollText
+A Boolean reasource that determines whether you are allowed to scroll
+the text widget the default value is TRUE.
+.PP
+.TP 8
+.B printLabel
+A Boolean resource that determines whether or not the label of the 
+buton pressed to exit the program is printed, default value is FALSE.
+.PP
+.SH ERROR MESSAGES
+Xmessage errors may be printed into their owm xmessage window, this
+invocation of xmessage has a different name.  This allows its
+resources to be specified seperatly, the name of xmessage error
+program is xmessage_error.
+.PP
+.SH EXIT STATUS
+Xmessage will exit with status zero (0) when there is only one button
+in the list, and it is clicked to exit.  If there is more than one
+button in the list then the exit status will corrospond the number of
+the button pressed, starting at one hundred and one (101) for the 
+first button, and counting up.  Zero (0) is not used because no 
+button should have a prefered place over the others.
+.PP
+.SH "SEE ALSO"
+X(1), X(8C), echo(1), cat(1)
+.PP
+.SH BUGS
+There must be some, somewhere.
+.PP
+.SH AUTHORS
+Copyright 1988 by Massachusetts Institute of Technology.
+.br
+Chris Peterson, MIT Project Athena 

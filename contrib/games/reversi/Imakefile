@@ -1,0 +1,54 @@
+DEPLIBS = $(DEPXAWLIB) $(DEPXTOOLLIB) $(DEPXMULIB) $(DEPXLIB)
+LOCAL_LIBRARIES = $(XAWLIB) $(XTOOLLIB) $(XMULIB) $(XLIB)
+#ifdef SYSV
+SYS_LIBRARIES = -lcurses
+#else
+SYS_LIBRARIES = -lcurses -ltermlib
+#endif
+
+COMMON=move.o hasmove.o fini.o \
+	minmax.o edges.o corners.o count.o game.o
+CURSES=$(COMMON) user.o ulex.o display.o
+XDISPLAY=$(COMMON) xreversi.o Reversi.o transform.o
+
+OBJS = move.o hasmove.o fini.o \
+	minmax.o edges.o corners.o count.o game.o \
+	xreversi.o Reversi.o transform.o \
+	user.o ulex.o display.o switch.o 
+
+SRCS =  corners.c count.c edges.c fini.c genedge.c \
+	hasmove.c makeedge.y minmax.c move.c reversi.h\
+	xreversi.c Reversi.c ReversiP.h Reversi.h \
+ 	switch.c display.c ulex.l user.y
+
+all:: reversi
+
+depend:: edges.data
+
+depend:: y.tab.h
+
+clean::
+	rm -f edges.data makeedge.c ulex.c user.c y.tab.h
+
+ComplexProgramTarget(reversi)
+
+NormalProgramTarget(genedge,genedge.o,,,)
+
+NormalProgramTarget(makeedge,makeedge.o,,,)
+
+edges.o: edges.data
+
+edges.data: genedge makeedge
+	genedge | makeedge > edges.data
+
+makeedge.c: makeedge.y
+	yacc makeedge.y
+	mv y.tab.c makeedge.c
+
+user.c y.tab.h: user.y
+	yacc -d user.y
+	mv y.tab.c user.c
+
+ulex.c: ulex.l
+	lex ulex.l
+	mv lex.yy.c ulex.c

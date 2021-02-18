@@ -1,0 +1,54 @@
+.TH BLITSTONES 1 "June 1989" "X Version 11"
+.SH NAME
+blitstones -- tests the performance of blits.
+.SH SYNOPSIS
+.B blitstones
+[-option ...]
+.SH DESCRIPTION
+.PP
+\fIblitstones\fP uses XCopyArea() library function.  The default
+test tests a window to window blit.  A pixmap to window blit is
+accomplished by using the \fI-pix\fP flag.
+.SH OPTIONS
+.TP 8
+.B \-wd \fInum\fP
+This option specifies the width of the rectangle to be blitted.
+The default value is 40.
+.TP 8
+.B \-ht \fInum\fP
+This option specifies the height of the rectangle to be blitted.
+The default value is 40.
+.TP 8
+.B \-pix
+This option specifies a pixmap to window blit.
+.TP 8 
+.B \-tile
+This option specifies a tile fill.
+The bitmap used for the tile is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-stip
+This option specifies a stipple fill.
+The bitmap used for the stipple is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-opaqstipbg
+This option specifies an opaque stipple fill.
+The bitmap used for the stipple is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-opaqstip \fIcolor\fP
+This option specifies an a background color to use for an the opaque
+stipple fill.
+.TP 8
+.B \-help
+This option displays the help menu for the common options to all
+stones programs.
+.TP 8
+.B \-h
+This option displays the help menu for the options specific
+to the blitstones program.
+.SH "SEE ALSO"
+X(1)
+.SH "COPYRIGHT"
+International Business Machines--1989

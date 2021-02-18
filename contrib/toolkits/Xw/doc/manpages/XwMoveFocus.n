@@ -1,0 +1,66 @@
+
+
+
+     XWMOVEFOCUS(3X)                                   XWMOVEFOCUS(3X)
+
+
+
+
+     NAME
+          XwMoveFocus - move the keyboard focus (and the pointer) to a
+          new toplevel widget.
+
+     SYNOPSIS
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+
+          void XwMoveFocus (w)
+          Widget w;
+
+
+     ARGUMENTS
+          w    This is the ID of the widget to which the application
+               wishes to move the focus. It should be the toplevel
+               widget in a widget hierarchy and it should be a
+               subclass of XwManager.
+
+     DESCRIPTION
+          XwMoveFocus is a very specialized function which can be used
+          to move the keyboard and pointer focus to another toplevel
+          widget hierarchy.  It is useful when an application using
+          keyboard traversal has multiple toplevel widget hierarchies
+          and wishes to be able to move between these hierarchies
+          without using the pointer device.  Specifically, this
+          function will warp the pointer to (1,1) in the specified
+          widget and will also make a call to XSetInputFocus (this is
+          necessary for use with window managers using an explicit
+          listener mode).
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+

@@ -1,0 +1,26 @@
+#include "./../WnnImake.def"
+
+       INCLUDES = -I$(WNNINCLUDESRC) -I$(TOP)
+        DEFINES = $(WNNDEFINES)
+       LINTLIBS = 
+
+SRCS= strings.c sstrings.c bdic.c hindo.c gethinsi.c revdic.c pwd.c \
+      bcopy.c xutoj.c dic_atojis.c
+OBJS= strings.o sstrings.o bdic.o hindo.o gethinsi.o revdic.o pwd.o \
+      bcopy.o xutoj.o dic_atojis.o
+
+#if DebugLibEtc && ProfileLibEtc
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugLibEtc
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileLibEtc
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+AllTarget($(OBJS))

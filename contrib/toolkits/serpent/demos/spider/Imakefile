@@ -1,0 +1,26 @@
+#include "../../Serpent.tmpl"
+DIR = spider
+
+DIALOGUE = spider
+
+SRC = spider_app.c
+
+OBJ = spider_app.o
+
+BIN = spider_app
+
+LIBS = $(SERPENTLIBS)
+
+DEPENDINCS = -I$(SERPENTBASEDIR)/data
+
+ILLFILES = $(DIALOGUE).ill
+
+SerpentSddRule()
+
+SerpentObjectRule()
+
+all:	$(ILLFILES) $(DIALOGUE) $(BIN)
+
+SerpentAppSerpent()
+
+SerpentDependDialogueApp()

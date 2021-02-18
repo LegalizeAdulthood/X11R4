@@ -1,0 +1,65 @@
+.TH xrsh 1
+\" $Id: xrsh.man,v 1.2 89/10/13 14:06:54 hakanson Rel $
+.SH NAME
+.I xrsh - 
+frontend to rsh, for starting remote X clients.
+.SH SYNOPSIS
+.B xrsh host cmd [arg ...]
+.SH DESCRIPTION
+.I Xrsh
+is a shell-script frontend for the \fIrsh\fP (remote shell) facility,
+designed to be used for starting X client processes on remote hosts.
+Note that the usual \fIrsh\fP and \fIxhost\fP access controls apply.
+.PP
+In particular,
+.I xrsh
+propagates the \fBDISPLAY\fP variable
+from the invoker's environment to the remote session,
+in order that the remote client will know with which X server
+to communicate.
+It also arranges the standard input, output, and error streams
+so that the session is not associated with a tty,
+thus allowing the local \fIrsh\fP and remote \fIrshd\fP processes
+to exit immediately.
+.PP
+Output from the remote session is directed to a file called
+.B .xrsh.out
+in the user's home directory on the remote host.
+This file is overwritten for each such session on the remote host,
+and is only kept around to capture diagnostics.
+.SH "OPTIONS"
+.TP 8
+None (yet).
+.SH "SEE ALSO"
+X(1), xhost(1), rsh(1)
+.SH ENVIRONMENT
+.TP 10
+.B DISPLAY
+if set, is passed on to the remote session's environment.
+If \fBDISPLAY\fP is not set,
+\fIxrsh\fP will complain about it and exit.
+If \fBDISPLAY\fP is set to "\fBunix:n.n\fP" or "\fB:n.n\fP"
+then \fBDISPLAY\fP is exported as "\fBhostname:n.n\fP".
+All of this is done to avoid inadvertent
+display to "\fBunix:n.n\fP" on the remote machine.
+.TP 10
+.B HOSTNAME
+if set,
+is used when appropriate to rewrite the \fBDISPLAY\fP variable
+before passing it on to the remote host.
+If \fBHOSTNAME\fP is not set,
+the \fIhostname\fP command is run to supply the appropriate value.
+.br
+.SH BUGS
+.I Xrsh
+does not understand (or pass on) \fIrsh\fP options.
+.PP
+Care must be taken with quoting shell arguments for the remote session,
+since some layers of quoting are already present,
+and further I/O redirection will prove to be unproductive.
+.SH AUTHOR
+Based on a version by suggested by Chris Torek, University of Maryland
+(chris@mimsy.umd.edu).
+.br
+This implementation and manual page are by Marion Hakanson,
+Oregon Graduate Center (hakanson@cse.ogc.edu).

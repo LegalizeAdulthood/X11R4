@@ -1,0 +1,16 @@
+!ada library
+ADAPATH= /usr/local/vads.V5R5/verdixlib /usr/local/vads.V5R5/standard
+WITH2:LINK:ERPENT_BASE_PATH/lib/vax/libdm.a:
+WITH3:LINK:ERPENT_BASE_PATH/lib/vax/libint.a:
+WITH4:LINK:ERPENT_BASE_PATH/lib/vax/libutl.a:
+WITH5:LINK:ERPENT_BASE_PATH/lib/vax/liblist.a:
+c_types:NLPB:c_types02:
+c_types:BNLPS:c_types01:
+c_to_ada_types:NLPB:C_to_ada_types02:
+c_to_ada_types:BNLPS:C_to_ada_types01:
+serpent_type_definitions:NLPB:serpent_type_definitions02:
+serpent_type_definitions:BNLPS:serpent_type_definitions01:
+c_serpent:NLPB:c_serpent02:
+c_serpent:BNLPS:c_serpent01:
+serpent:NLPB:serpent02:
+serpent:NLPS:serpent01:

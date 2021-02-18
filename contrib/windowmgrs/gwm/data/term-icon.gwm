@@ -1,0 +1,48 @@
+; ICON WITH COMPUTER LOOK
+; =======================
+
+;;File: term-icon.gwm -- little computer whith name in screen
+;;Author: colas@mirsa.inria.fr (Colas NAHABOO) -- Bull Research FRANCE
+;;Revision: 1.0 -- Feb 1 1989
+;;State: Exp
+;;GWM Version: 1.4
+
+(: term-icon.old-menu menu)
+(: menu 'icon-pop)
+(defaults-to term-icon.font small-font)
+
+(de corner (name) 
+    (plug-make (pixmap-make name)))
+
+(: icon-plug-fsm (fsm-make (state-make
+	icon-behavior
+	(on (user-event 'get-title) 
+	    (progn (with (font term-icon.font)
+			 (wob-tile (label-make s)))
+		   (update-placements))))))))))
+
+(: term-icon.result
+    '(with (borderwidth 0 fsm icon-fsm grabs icon-grabs)
+	  (window-make 
+	      (with (tile (pixmap-make "xterm-t")
+			  bar-min-width 0 bar-max-width 32)
+		    (bar-make   (corner "xterm-tl") () (corner "xterm-tr")))
+	      (with (tile (pixmap-make "xterm-l")
+			  bar-min-width 8 bar-max-width 8)
+		    (bar-make  ))
+	      (with (tile (pixmap-make "xterm-r")
+			  bar-min-width 8 bar-max-width 8)
+		    (bar-make  ))
+	      (with (tile (pixmap-make "xterm-b")
+			  bar-min-width 0 bar-max-width 32)
+		    (bar-make  (corner "xterm-bl") () (corner "xterm-br")))
+	      '(with (borderwidth 0 fsm icon-plug-fsm)
+		     (with (fsm icon-plug-fsm)
+			   (plug-make 
+			       (label-make window-icon-name term-icon.font))))
+	  )))))))))))))
+
+(defname 'term-icon.data screen. ())
+(df term-icon () (if term-icon.data term-icon.data
+		     (: term-icon.data (eval term-icon.result))))
+(: menu term-icon.old-menu)

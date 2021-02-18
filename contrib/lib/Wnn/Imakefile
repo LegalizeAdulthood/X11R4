@@ -1,0 +1,33 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#include "./WnnImake.def"
+
+SUBDIRS= conv etc romkan jlib jlib.V3 \
+         fuzokugo jserver jutil pubdic uum
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+install::
+	@A=`egrep "^$(WNNOWNER):" /etc/passwd | cat` ;\
+	if [ -z "$$A" ] ;\
+	then \
+		echo "!!  Stop install" ;\
+		echo "!!  Please make an entry of 'wnn' id in /etc/passwd" ;\
+		exit 1 ;\
+	fi
+
+MakeDirectories(install,$(USRLIBDIR))
+MakeDirectories(install,$(WNNINCDIR))
+MakeDirectories(install,$(WNNBINDIR))
+MakeDirectories(install,$(WNNWNNDIR)/rk)
+MakeDirectories(install,$(WNNWNNDIR)/rk.vi)
+MakeDirectories(install,$(WNNPUBDICDIR))
+
+install::
+	@chown $(WNNOWNER) $(WNNPUBDICDIR)
+	@chown $(WNNOWNER) $(WNNDICDIR)
+	@chown $(WNNOWNER) $(WNNWNNDIR)/rk
+	@chown $(WNNOWNER) $(WNNWNNDIR)/rk.vi
+	@chown $(WNNOWNER) $(WNNWNNDIR)

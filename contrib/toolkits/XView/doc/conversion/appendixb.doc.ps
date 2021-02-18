@@ -1,0 +1,1155 @@
+%!
+%%Pages: (atend)
+%%DocumentFonts: (atend)
+%%EndComments
+%
+% Frame Maker PostScript Prolog 1.3, for use with Maker 1.3
+% Copyright (c) 1986-1988 by Frame Technology, Inc.  All rights reserved.
+%
+% Known Problems:
+%	Due to bugs in Transcript, the 'PS-Adobe-' is omitted from line 1
+/FMversion (1.2) def 
+/FrameDict 123 dict def 
+% The readline in 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} def
+	} if
+/FMVERSION {
+	FMversion ne {
+		/Times-Roman findfont 18 scalefont setfont
+		100 100 moveto
+		(Maker version does not match postscript_prolog!)
+		dup =
+		show showpage
+		} if
+	} def 
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/landscape FMLOCAL
+	/docheight FMLOCAL
+	/docwidth FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/organgle FMLOCAL
+	/orgfreq FMLOCAL
+/FMDOCUMENT {
+	array /FMfonts exch def
+	/#copies exch def
+	FrameDict begin
+	0 ne /landscape exch def 
+	/docheight exch def
+	/docwidth exch def
+	/yscale exch def
+	/xscale exch def
+	currenttransfer cvlit /orgxfer exch def
+	currentscreen cvlit /orgproc exch def
+		/organgle exch def /orgfreq exch def
+	end 
+	} def 
+	/pagesave FMLOCAL
+	/orgmatrix FMLOCAL
+/FMBEGINPAGE {
+	FrameDict begin 
+	/pagesave save def
+	
+	2 setlinecap
+	xscale yscale scale
+	landscape {
+		90 rotate
+		0 docheight neg translate
+		/fillprocs /fillprocs90 load store
+		}
+		{/fillprocs /fillprocs0 load store}
+		ifelse
+	/orgmatrix matrix def
+	gsave 
+	} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+	/fontname FMLOCAL
+	/fontscale FMLOCAL
+	/fontnum FMLOCAL
+	/fontdict FMLOCAL
+/FMDEFINEFONT {
+	FrameDict begin
+	/fontname exch def
+	/fontscale exch def
+	/fontnum exch def
+	/fontdict fontname findfont fontscale scalefont def
+	fontdict /Encoding get StandardEncoding eq
+	{
+		fontdict DiacriticEncode 
+		/fontdict exch def
+	} {
+		fontdict NonDiacriticEncode
+		/fontdict exch def
+	} ifelse
+	FMfonts fontnum
+		fontnum fontdict definefont
+	put
+	end 
+	} def 
+/FMLINEWIDTHS { 
+	FrameDict begin
+	dup array /FMlinewidths exch def 
+	1 sub -1 0 {exch FMlinewidths 3 1 roll lnormalize put} for
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 setgray
+	} bind def
+/FMBEGINEPSF {
+	end 
+	/FMEPSF save def
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fy translate 
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	} bind def
+ 
+/FMENDEPSF {
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+ 
+FrameDict begin 
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi	72 0 dmatrix defaultmatrix dtransform
+	dup mul exch   dup mul add   sqrt
+def
+/max	{2 copy lt {exch} if pop} bind def
+/min	{2 copy gt {exch} if pop} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+	/basefontdict FMLOCAL
+	/newfontdict FMLOCAL
+/DiacriticEncode {
+	/basefontdict exch def
+	/newfontdict basefontdict maxlength dict def
+	basefontdict
+	{exch dup /FID ne
+		{dup /Encoding eq
+			{exch pop DiacriticEncoding}
+			{exch}
+			ifelse
+			newfontdict 3 1 roll put
+			}
+		{pop pop}
+		ifelse
+		} forall
+	newfontdict
+	} bind def
+/NonDiacriticEncode {
+	/basefontdict exch def
+	/newfontdict basefontdict maxlength dict def
+	basefontdict
+	{exch dup /FID ne
+		{exch newfontdict 3 1 roll put}
+		{pop pop}
+		ifelse
+		} forall
+	newfontdict
+	} bind def
+	/freq FMLOCAL
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setpattern {
+	 /freq    exch def
+	 /bwidth  exch def
+	 /bpside  exch def
+	 /bstring exch def
+	 /onbits 0 def  /offbits 0 def
+	 freq 0 {/y exch def
+		 /x exch def
+		 /xindex x 1 add 2 div bpside mul cvi def
+		 /yindex y 1 add 2 div bpside mul cvi def
+		 bstring yindex bwidth mul xindex 8 idiv add get
+		 1 7 xindex 8 mod sub bitshift and 0 ne
+		 {/onbits  onbits  1 add def 1}
+		 {/offbits offbits 1 add def 0}
+		 ifelse
+		}
+		setscreen
+	 {} settransfer
+	 offbits offbits onbits add div setgray
+	} bind def
+/grayness {
+	setgray
+	orgxfer cvx settransfer
+	orgfreq organgle orgproc cvx setscreen
+	} bind def
+/normalize {
+	transform cvi exch cvi exch itransform
+	} bind def
+/dnormalize {
+	dtransform cvi exch cvi exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/fillprocs0
+	[{0.00 grayness}
+	 {0.10 grayness}
+	 {0.30 grayness}
+	 {0.50 grayness} 
+	 {0.70 grayness}
+	 {0.90 grayness}
+	 {0.97 grayness} 
+	 {1.00 grayness} 
+	 {<0F1E3C78F0E1C387> 8 1 dpi 16 div setpattern} 
+	 {<0F87C3E1F0783C1E> 8 1 dpi 16 div setpattern} 
+	 {<CCCCCCCCCCCCCCCC> 8 1 dpi 16 div setpattern} 
+	 {<FFFF0000FFFF0000> 8 1 dpi 16 div setpattern} 
+	 {<8142241818244281> 8 1 dpi 16 div setpattern} 
+	 {<03060C183060C081> 8 1 dpi 16 div setpattern} 
+	 {<8040201008040201> 8 1 dpi 16 div setpattern} 
+	 {}
+	 {1.00 grayness}
+	 {0.90 grayness}
+	 {0.70 grayness}
+	 {0.50 grayness} 
+	 {0.30 grayness}
+	 {0.10 grayness}
+	 {0.03 grayness} 
+	 {0.00 grayness} 
+	 {<F0E1C3870F1E3C78> 8 1 dpi 16 div setpattern} 
+	 {<F0783C1E0F87C3E1> 8 1 dpi 16 div setpattern} 
+	 {<3333333333333333> 8 1 dpi 16 div setpattern} 
+	 {<0000FFFF0000FFFF> 8 1 dpi 16 div setpattern} 
+	 {<7EBDDBE7E7DBBD7E> 8 1 dpi 16 div setpattern} 
+	 {<FCF9F3E7CF9F3F7E> 8 1 dpi 16 div setpattern} 
+	 {<7FBFDFEFF7FBFDFE> 8 1 dpi 16 div setpattern} 
+	 {}
+	] def
+/fillprocs90
+	 [{0.00 grayness}
+	 {0.10 grayness}
+	 {0.30 grayness}
+	 {0.50 grayness}
+	 {0.70 grayness}
+	 {0.90 grayness}
+	 {0.97 grayness}
+	 {1.00 grayness}
+	 {<87c3e1f0783c1e0f> 8 1 dpi 16 div setpattern}
+	 {<f0e1c3870f1e3c78> 8 1 dpi 16 div setpattern}
+	 {<0000ffff0000ffff> 8 1 dpi 16 div setpattern}
+	 {<cccccccccccccccc> 8 1 dpi 16 div setpattern}
+	 {<8142241818244281> 8 1 dpi 16 div setpattern}
+	 {<81c06030180c0603> 8 1 dpi 16 div setpattern}
+	 {<0102040810204080> 8 1 dpi 16 div setpattern}
+	 {}
+	 {1.00 grayness}
+	 {0.90 grayness}
+	 {0.70 grayness}
+	 {0.50 grayness}
+	 {0.30 grayness}
+	 {0.10 grayness}
+	 {0.03 grayness}
+	 {0.00 grayness}
+	 {<783c1e0f87c3e1f0> 8 1 dpi 16 div setpattern}
+	 {<0f1e3c78f0e1c387> 8 1 dpi 16 div setpattern}
+	 {<ffff0000ffff0000> 8 1 dpi 16 div setpattern}
+	 {<3333333333333333> 8 1 dpi 16 div setpattern}
+	 {<7ebddbe7e7dbbd7e> 8 1 dpi 16 div setpattern}
+	 {<7e3f9fcfe7f3f9fc> 8 1 dpi 16 div setpattern}
+	 {<fefdfbf7efdfbf7f> 8 1 dpi 16 div setpattern}
+	 {}
+	] def
+/fillprocs /fillprocs0 load def
+/H { 
+	FMlinewidths exch get setlinewidth
+	} bind def
+/X { 
+	fillprocs exch get exec
+	} bind def
+/V { 
+	gsave eofill grestore
+	} bind def
+/N { 
+	gsave stroke grestore 
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+/K { 
+ 	/n exch def
+	newpath
+	moveto 
+	3 1 n {pop curveto} for
+	} bind def
+/J { 
+ 	/n exch def
+	newpath
+	moveto 
+	1 1 n {pop curveto} for
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	} bind def
+/U { 
+	grestore
+	gsave
+	} bind def
+/F { 
+	FMfonts exch get
+	setfont
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/Q { 
+	moveto
+	gsave show grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/dx FMLOCAL
+	/dy FMLOCAL
+	/dl FMLOCAL
+	/t FMLOCAL
+	/t2 FMLOCAL
+	/Cos FMLOCAL
+	/Sin FMLOCAL
+	/r FMLOCAL
+/W { 
+	dnormalize
+	/dy exch def
+	/dx exch def
+	normalize
+	/y  exch def
+	/x  exch def
+	/dl dx dx mul dy dy mul add sqrt def
+	dl 0.0 gt {
+		/t currentlinewidth def
+		savematrix
+		/Cos dx dl div def
+		/Sin dy dl div def
+		/r [Cos Sin Sin neg Cos 0.0 0.0] def
+		/t2 t 2.5 mul 3.5 max def
+		newpath
+		x y translate
+		r concat
+		0.0 0.0 moveto
+		dl t 2.7 mul sub 0.0 rlineto
+		stroke
+		restorematrix
+		x dx add y dy add translate
+		r concat
+		t 0.67 mul setlinewidth
+		t 1.61 mul neg  0.0 translate
+		0.0 0.0 moveto
+		t2 1.7 mul neg  t2 2.0 div     moveto
+		0.0 0.0 lineto
+		t2 1.7 mul neg  t2 2.0 div neg lineto
+		stroke
+		t setlinewidth
+		restorematrix
+		} if
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath eofill
+	grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+/A { 
+	/y exch def
+	/x exch def
+	/h exch def
+	/w exch def
+	x y normalize /yy exch def /xx exch def
+	w h dnormalize /hh exch def /ww exch def
+	ww abs hh abs xx ww add yy hh sub
+	gsave
+	savematrix
+	newpath
+	translate
+	scale
+	0.0 0.0 1.0 5 3 roll arc
+	0 setlinecap
+	restorematrix
+	stroke
+	grestore
+	} bind def
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE {
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 6 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	translate
+	FMNORMALIZEGRAPHICS
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/BEGINBITMAP { 
+	gsave
+	translate scale /h exch def /w exch def
+	/lb w 7 add 8 idiv def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h 1 [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+%%EndProlog
+%%BeginSetup
+(1.2) FMVERSION
+1. 1. 612. 792. 0 1 10 FMDOCUMENT
+0 7. /Helvetica  FMDEFINEFONT
+1 24. /Times-Bold  FMDEFINEFONT
+2 10. /Times-Roman  FMDEFINEFONT
+3 11. /Times-Roman  FMDEFINEFONT
+4 11. /Courier  FMDEFINEFONT
+5 12. /Times-Roman  FMDEFINEFONT
+6 14. /Times-Bold  FMDEFINEFONT
+7 10. /Courier  FMDEFINEFONT
+8 24. /Times-Roman  FMDEFINEFONT
+9 36. /Times-Roman  FMDEFINEFONT
+0.5 1. 3. 4. 4 FMLINEWIDTHS
+%%EndSetup
+%%Page: "124" 4
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Appendix B\321Performance Hints) 239.07 731. T
+(124) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+FMENDPAGE
+%%Page: "123" 3
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Appendix B\321Performance Hints) 239.07 731. T
+(123) 543. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(As a rule, create resources such as pop-ups only at the time they are ) 216. 694. T
+(required.  For example, command and property pop-ups might not be used ) 216. 681. T
+(on every invocation of an application. Delaying the creation of such ) 216. 668. T
+(objects until they are actually requested helps to reduce resource ) 216. 655. T
+(utilization. Once such objects have been created they can simply be ) 216. 642. T
+(mapped and unmapped on demand, instead of having to be created and ) 216. 629. T
+(destroyed each time.) 216. 616. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Be careful when retaining the canvas paint window:  this increases the ) 216. 595. T
+(overall working set especially on color where eight planes might be ) 216. 582. T
+(retained.) 216. 569. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Use straight X graphics over the) 216. 548. T
+( ) 358.05 548. T
+4 F
+(pw_*) 360.8 548. T
+3 F
+( calls.  They require more ) 387.2 548. T
+(understanding of X and Xlib, but usually carry less overhead.) 216. 535. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Avoid unnecessary syncing with the server \050) 216. 514. T
+4 F
+(SERVER_SYNC, ) 411.51 514. T
+(SERVER_SYNC_AND_PROCESS_EVENTS) 216. 501. T
+3 F
+(\051 as each instance requires a reply ) 414. 501. T
+(from the server and thus can become expensive if overused.) 216. 488. T
+(If you plan to bypass ) 216. 467. T
+4 F
+(xv_main_loop\050\051) 311.02 467. T
+3 F
+( by using ) 403.42 467. T
+4 F
+(notify_start\050\051) 446.51 467. T
+3 F
+(, or by ) 538.9 467. T
+(using explicit dispatching via ) 216. 454. T
+4 F
+(notify_dispatch\050\051) 348. 454. T
+3 F
+(, be sure to sync ) 460.2 454. T
+(with the server to insure all requests have been delivered and processed.  ) 216. 441. T
+(Xlib and XView provide ways of doing this.  The Xlib calls you can use ) 216. 428. T
+(are ) 216. 415. T
+4 F
+(XSync) 232.18 415. T
+3 F
+( or ) 265.18 415. T
+4 F
+(XFlush) 279.84 415. T
+3 F
+(, for example:) 319.44 415. T
+( ) 216. 394. T
+4 F
+(XSync\050\050Display *\051 xv_default_display, 0\051;) 218.75 394. T
+3 F
+(In XView, use the attributes ) 216. 373. T
+4 F
+(SERVER_SYNC) 342.48 373. T
+3 F
+( and ) 415.08 373. T
+4 F
+(SERVER_SYNC_AND_PROCESS_EVENTS) 216. 360. T
+3 F
+(, for example:) 414. 360. T
+4 F
+(xv_set\050xv_default_server, SERVER_SYNC, 1\051;. ) 216. 339. T
+3 F
+( ) 506.4 339. T
+4 F
+(SERVER_SYNC) 216. 318. T
+3 F
+( is equivalent to) 288.6 318. T
+4 F
+( ) 358.57 318. T
+(XSync) 365.17 318. T
+3 F
+(;  ) 398.17 318. T
+4 F
+(SERVER_SYNC_PROCESS_EVENTS) 216. 305. T
+3 F
+( does an ) 387.6 305. T
+4 F
+(XSync) 426.4 305. T
+3 F
+( and then insures that ) 459.4 305. T
+(all the events are handled and dispatched to the appropriate client ) 216. 292. T
+(callbacks.  Be careful not to overuse these sync\325ing mechanisms.  Since ) 216. 279. T
+(all but the ) 216. 266. T
+4 F
+(XFlush) 262.75 266. T
+3 F
+( require a reply from the server before they will ) 302.35 266. T
+(return, they can adversely affect performance.  This can get very ) 216. 253. T
+(expensi) 216. 239. T
+5 F
+(ve if it is done too often.) 249.6 239. T
+55. 654. 198. 702. C
+55. 654. 198. 702. R
+7 X
+V
+6 F
+0 X
+(Create Resources ) 59. 686. T
+(Only When Needed) 59. 671. T
+U
+55. 572. 198. 611. C
+55. 572. 198. 611. R
+7 X
+V
+6 F
+0 X
+(Canvas Paint ) 59. 595. T
+(Window) 59. 580. T
+U
+55. 534. 198. 561. C
+55. 534. 198. 561. R
+7 X
+V
+6 F
+0 X
+(Straight X Graphics) 59. 548. T
+U
+55. 491. 198. 530. C
+55. 491. 198. 530. R
+7 X
+V
+6 F
+0 X
+(Unnecessary Syncing) 59. 514. T
+U
+FMENDPAGE
+%%Page: "122" 2
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Appendix B\321Performance Hints) 239.07 731. T
+(122) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+7 F
+(#include  <xview/xview.h>) 72. 647. T
+(#include  <xview/canvas.h>) 72. 635. T
+(#include  <xview/svrimage.h>) 72. 623. T
+(/* create a memory pixrect containing the chesstool.icon bitmap */) 72. 599. T
+(static short chess_bits[] = {) 72. 587. T
+(#include <images/chesstool.icon>) 72. 575. T
+(};) 72. 563. T
+(mpr_static\050chess_pixrect, 64, 64, 1, chess_bits\051;) 72. 551. T
+(Server_image) 72. 527. T
+(chess_server_image;) 144. 527. T
+(main\050\051) 72. 503. T
+({) 72. 491. T
+(    Frame  ) 72. 479. T
+(frame;) 144. 479. T
+(    Canvas ) 72. 467. T
+(canvas;) 144. 467. T
+(    void) 72. 455. T
+(canvas_repaint_proc\050\051;) 144. 455. T
+(    frame = xv_create\0500, FRAME, ) 72. 443. T
+(WIN_HEIGHT, 200, ) 144. 431. T
+(WIN_WIDTH,  200,) 144. 419. T
+(0\051;) 144. 407. T
+(    /* create a server image containing the chesstool.icon bitmap */) 72. 383. T
+(    chess_server_image = xv_create\050XV_NULL, SERVER_IMAGE) 72. 371. T
+(XV_HEIGHT, ) 144. 359. T
+(64,) 279. 359. T
+(XV_WIDTH, ) 144. 347. T
+(64,) 279. 347. T
+(SERVER_IMAGE_BITS,) 144. 335. T
+(chess_bits,) 279. 335. T
+(0\051;) 144. 323. T
+(    canvas = xv_create\050frame, CANVAS, ) 72. 311. T
+(CANVAS_REPAINT_PROC, canvas_repaint_proc,) 144. 299. T
+(0\051;) 144. 287. T
+(    xv_main_loop\050frame\051;) 72. 275. T
+(}) 72. 263. T
+(void) 72. 251. T
+(canvas_repaint_proc\050canvas, paint_window, repaint_area\051) 72. 239. T
+(Canvas ) 99. 227. T
+(canvas;) 189. 227. T
+(Xv_window ) 99. 215. T
+(paint_window;) 189. 215. T
+(Rectlist ) 99. 203. T
+(*repaint_area;) 189. 203. T
+({) 72. 191. T
+(    xv_rop\050paint_window, 10, 10, 64, 64, PIX_SRC, &chess_pixrect, 0, 0\051;) 72. 179. T
+(    xv_rop\050paint_window, 75, 75, 64, 64, PIX_SRC, chess_server_image, 0, 0\051;) 72. 167. T
+(}) 72. 155. T
+86. 710. 529. 710. 2 L
+N
+78. 73. 524. 73. 2 L
+N
+53. 678. 53. 106. 2 L
+N
+561. 107. 561. 673. 2 L
+N
+0. 90. -35. 37.5 561. 710. A
+90. 90.1 -32. 34.5 117. 710. A
+90. 180. 32. 34.5 53. 710. A
+270. 270.1 37. -35.5 487. 73. A
+270. 0. -37. -35.5 561. 73. A
+180. 180.1 27. 35.5 53. 144. A
+180. 270. 27. -35.5 53. 73. A
+FMENDPAGE
+%%Page: "121" 1
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+54. 90. 558. 619. C
+216. 539. 558. 619. C
+216. 539. 564. 619. R
+7 X
+V
+8 F
+0 X
+(Performance Hints) 378.38 598. T
+54. 90. 558. 619. C
+U
+3 F
+0 X
+(This appendix consists of some hints to help you fine-tune XView\325s ) 216. 527. T
+(performance.) 216. 514. T
+54. 90. 558. 619. C
+U
+3 F
+0 X
+(Use ) 216. 493. T
+(server images instead of memory ) 235.85 493. T
+(pixrects.  A server image is ) 384.63 493. T
+(different from a memory pixrect in that the pixel values \050the data bits\051 ) 216. 480. T
+(are stored on the X11 server, not on the client side.  Thus, the pixel ) 216. 467. T
+(values do not have to be shipped over the wire each time they are drawn. ) 216. 454. T
+(The following program demonstrates he use of ) 216. 433. T
+4 F
+(xv_rop\050\051) 424.66 433. T
+3 F
+( with either ) 477.46 433. T
+(memory pixrects or server images as the source for the operations.) 216. 420. T
+55. 470. 198. 509. C
+55. 470. 198. 509. R
+7 X
+V
+6 F
+0 X
+(Use Server Images) 59. 493. T
+U
+9 F
+0 X
+(B) 534.99 669. T
+216. 642. 560. 650. R
+4 X
+V
+0 H
+N
+216. 651. 560. 651. 2 L
+1 H
+0 X
+N
+36. 724. 576. 738. C
+36. 724. 576. 738. R
+7 X
+V
+U
+444. 29. 575. 50. R
+7 X
+V
+FMENDPAGE
+%%Trailer
+%%Pages: 4 -1
+%%DocumentFonts: Helvetica
+%%+ Times-Bold
+%%+ Times-Roman
+%%+ Courier

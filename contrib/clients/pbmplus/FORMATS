@@ -1,0 +1,43 @@
+PBM handles the following formats:
+
+    Sun icon file				reading	writing
+    Sun raster file				reading	writing
+    X10 and X11 bitmap file			reading	writing
+    MacPaint					reading	writing
+    CMU window manager format			reading	writing
+    MGR format					reading	writing
+    Group 3 FAX					reading	writing
+    X11 window dump file			reading	writing
+    X10 window dump file			reading
+    Xerox doodle brushes			reading
+    GEM .img format				reading
+    PC paintbrush (.pcx) format			reading
+    PICT					reading
+    ASCII graphics					writing
+    HP LaserJet format					writing
+    GraphOn graphics					writing
+    BBN BitGraph graphics				writing
+    Printronix format					writing
+
+PGM handles the following formats:
+
+    TIFF					reading
+    Usenix FaceSaver file			reading
+    HIPS					reading
+    FITS					reading	writing
+    PostScript "image" data			reading
+    raw grayscale bytes				reading
+    Encapsulated PostScript				writing
+
+PPM handles the following formats:
+
+    color Sun raster file			reading	writing
+    GIF						reading	writing
+    Amiga IFF ILBM				reading	writing
+    color X11 window dump file			reading	writing
+    color X10 window dump file			reading
+    MTV ray-tracer output			reading
+    QRT ray-tracer output			reading
+    TrueVision Targa file			reading
+    Img-whatnot file				reading
+    color Encapsulated PostScript			writing

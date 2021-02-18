@@ -1,0 +1,321 @@
+===============================================================================
+=======                                                                 =======
+=======		   Module Imgcredel  --  Create/Delete Images		=======
+=======			      File imgcredel.c				=======
+=======                                                                 =======
+===============================================================================
+
+
+  Functions:
+
+	Create and delete images.  This includes the ability to
+	create a new image by copying an existing image.
+
+	All code here is part of the layer of image processing 
+	functions which is independent of the underlying window
+	system, graphics support layer, or operating system.
+
+
+  Public Routines:
+
+	create_img	Create image
+	delete_img	Delete image
+	copy_img	Copy image
+	change_img	Change image type
+
+
+  Local Routines:
+
+	None
+
+
+  Module History:
+
+	11-21-89	Paul Raveling
+	Finalized version for contribution to X11R4.  Changes not
+	documented in this header have been made within the last
+	3 weeks.
+
+	8-28-89		Paul Raveling
+	Fixed bug in copy_img:  When going from mapped to RGB image,
+	pixel data was converted to 0's due to necessary but omitted
+	parentheses (operator precedence slipup).
+
+	8-21-89		Paul Raveling
+	Fixed potential bugs in create_img & copy_img, which hadn't
+	initialized an image pointer before checking it in certain
+	abort situations.
+
+	3-16-89		Paul Raveling
+	Created file, based partly on older utility definitions.
+
+===============================================================================
+=======                                                                 =======
+=======			  create_img  --  Create  Image			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	image = create_img ( imgtype, width, height, asdlen, asdata,
+			     num_colors, colormap, pixdata )
+
+
+  Functions:
+
+	Create an image by allocating an Img structure and filling
+	in fields with the given parameters.  The created image
+	can be refer to either color-mapped 8-bit pixels or
+	32-bit RGB (unmapped) pixels.  It can also omit pixel data  
+	to supply only information concerning an image.
+
+	32-bit pixels actually contain 24 bits of color, 8 bits each
+	for red, green and blue components, and an 8-bit tag for use
+	during various processing operations.
+
+	RGB images are allowed to have color maps.  If present,
+	such a map is for convenience in color-related processing
+	functions; it is not used in displaying the image unless
+	the system-dependent display function is such a processing
+	function.
+
+	If a pointer to any related block of data (associated data,
+	color map, or pixel data) is NULL but the corresponding size
+	or count parameter is nonzero, create_img allocates a
+	block of memory of the required size.  Such blocks are
+	"owned" by the image, and will be freed when delete_img
+	deletes it.
+
+	Blocks (associated data, color map, or pixel data) with
+	non-NULL addresses and nonzero sizes are property of the
+	caller; delete_img will NOT free them when it deletes
+	the image.  If the caller wishes to transfer ownership of
+	these blocks to the image, the calling routine must set
+	the appropriate "alloc" bits in the returned Img -- See
+	Img definition in imglib.h.
+
+	Size of the pixel data is inferred to be width*height pixels.
+
+	If color management functions will be used on the new image,
+	it is necessary for the caller to invoke init_colman after
+	ceate_img returns.
+
+
+  Input:
+
+	imgtype		int
+			Type of image, as defined in imglib.h:
+
+			  mapped_img	Color mapped
+			  mapped_info	Color mapped, Info only:  No pixel data
+			  rgb_img	32-bit RGB, unmapped
+			  rgb_info	RGB, Info only:  No pixel data
+
+	width		int
+			Width of image in pixels
+
+	height		int
+			Height of image in pixels
+
+	asdlen		int
+			Length of associated data in bytes
+
+	asdata		Byte *
+			Pointer to associated data
+
+	num_colors	int
+			Number of colors in color map
+
+	colormap	Col *
+			Pointer to color map  (array of num_colors Col's)
+
+	pixdata		Byte *
+			Pointer to pixel data (array of width*height
+			indices to color map)
+
+
+  Output:
+
+	image		Img *
+	[return value]	Pointer to Img structure for new image;
+			NULL => insufficient memory for image
+
+
+===============================================================================
+=======                                                                 =======
+=======			  delete_img  --  Delete Image			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	delete_img ( image )
+
+
+  Functions:
+
+	Delete an image.  Release the Img structure's memory and
+	that of all subordinate structures "owned" by the image.
+
+
+
+  Input:
+
+	image		Img	*
+			Pointer to Img structure for image to delete
+
+
+  Output:	None
+
+===============================================================================
+=======                                                                 =======
+=======			  copy_img  --  Copy  Image			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	newimage = copy_img ( imgtype, oldimage )
+
+
+  Functions:
+
+	Create an image and copy an existing image to it.
+	All data related to the old image is replicated in
+	newly allocated memory for the new image, EXCEPT
+	system-dependent resources.
+
+	This can produce a new image of a different type than
+	the old image.  If the image types are abbreviated to:
+
+		cm	Color mapped image
+		cmi	Color mapped image info (no pixel data)
+		rgb	RGB unmapped image
+		rgbi	RGB unmapped image info (no pixel data)
+
+	Possible special actions are:
+
+		Old	New	Special actions
+		---	---	---------------
+
+		cm	rgb	Color map is retained.  Pixel tags
+				are set to the original pixel values
+				(i.e., indices to color map).
+
+		rgb	cm	Color map must be present in RGB image.
+				Pixel tags must be indices to color map
+				(i.e., new pixel values).
+
+		cm	cmi \__/Pixel data is not copied --
+		rgb	rgbi/  \New image's pixdata pointer is NULL.
+
+		cm	rgbi	Color map is retained.
+
+		rgb	cmi	Color map must be present in RGB image.
+
+		cmi	cm \
+		cmi	rgb \_/ New image has no pixel data,
+		rgbi	cm  / \ even though its type indicates it does
+		rgbi	rgb/
+
+
+  Input:
+
+	imgtype		int
+			Type of new image, as defined in imglib.h:
+
+			  mapped_img	Color mapped
+			  mapped_info	Color mapped, Info only:  No pixel data
+			  rgb_img	32-bit RGB, unmapped
+			  rgb_info	RGB, Info only:  No pixel data
+
+	oldimage	Img *
+			Pointer to Img structure for old (source) image
+
+
+  Output:
+
+	newimage	Img *
+	[return value]	Pointer to Img structure for new (destination) image;
+			NULL => insufficient memory for image,
+			or attempted to copy RGB image without
+			a color map to a color-mapped image.
+
+===============================================================================
+=======                                                                 =======
+=======			  change_img  --  Change  Image			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = change_img ( imgtype, image )
+
+
+  Functions:
+
+	Change an existing image from one type to another.
+	This normally is used to change image data between
+	color mapped and RGB formats.
+
+	CAUTION:  change_img does not touch system-dependent
+	data associated with the image.  Do this to an image
+	that's currently displayed and you may be shocked.
+
+	If the image types are abbreviated to:
+
+		cm	Color mapped image
+		cmi	Color mapped image info (no pixel data)
+		rgb	RGB unmapped image
+		rgbi	RGB unmapped image info (no pixel data)
+
+	Possible special actions are:
+
+		Old	New	Special actions
+		---	---	---------------
+
+		cm	rgb	Color map is retained.  Pixel tags
+				are set to the original pixel values
+				(i.e., indices to color map).
+
+		rgb	cm	Color map must be present in RGB image.
+				Pixel tags must be indices to color map
+				(i.e., new pixel values).
+
+		cm	cmi \
+		cm	rgbi \_/ Pixel data
+		rgb	cmi  / \ is discarded
+		rgb	rgbi/
+
+
+		cm	rgbi	Color map is retained.
+
+		rgb	cmi	Color map must be present in RGB image.
+
+		cmi	cm \
+		cmi	rgb \_/ New image has no pixel data,
+		rgbi	cm  / \ even though its type indicates it does
+		rgbi	rgb/
+
+
+  Input:
+
+	imgtype		int
+			Type of new image, as defined in imglib.h:
+
+			  mapped_img	Color mapped
+			  mapped_info	Color mapped, Info only:  No pixel data
+			  rgb_img	32-bit RGB, unmapped
+			  rgb_info	RGB, Info only:  No pixel data
+
+	image		Img *
+			Pointer to Img structure for image
+
+
+  Output:
+
+	status		int
+	[return value]	Status code:
+			0 => insufficient memory for image,
+			or attempted to change RGB image without
+			a color map to a color-mapped image.

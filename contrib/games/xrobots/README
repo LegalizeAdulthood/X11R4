@@ -1,0 +1,43 @@
+
+README -- xrobots
+
+  xrobots is a game that runs on X Windows.  It is based on the robots
+game found on unix.  See the man page for a description of the options 
+and game play.
+
+  Both an Imakefile and a traditional makefile (Makefile.tra) included.  
+If you use the traditional makefile, you'll have to edit two lines as a 
+minimum.  (The lines which define "INCDIR" and "LIBDIR")  If you don't 
+want to go through that hassle, you can always use imake.
+ 
+Compile time parameters:  
+ 	  MAXX, MAXY -- these control the number of 'cells' in the playfield.
+ 	the default is 35x20.  The realistic maximum these can be on a 
+ 	1152x900 screen (ie most sun 3/50's) is about 50x40.  With a larger 
+ 	playfield, the scores will be higher and the game length longer, but
+ 	some graphics may appear slower.  With the default playfield, scores 
+	in the 6000 range can be achieved.
+
+ 	  MAXSCORES -- the number of high scores that you want to keep.
+ 	The default is 20.
+
+ 	  The default directory for the binary and score file is the current 
+	directory.  You'll have to modify the makefile or copy the binary
+	if you want it to install elsewhere.  xrobots will attempt to
+	create the scorefile (SCOREFILE) at runtime.  
+
+  There is a little bsd-ish stuff in score.c.  flock is used to stop a race 
+condition.  If you don't have a bsd-like flock, you could probably 
+comment it out.  The race condition (multiple users writing to the 
+score file) is probably rare.  If SYSV is defined, this will be ifndef'd
+out.
+
+  If your compiling this under X11R3, define the term R3 in the makefile or
+imakefile.  This will make the include references look like those expected
+by X11R3 instead of X11R4.
+
+-----
+
+This insomnia killer was written by Brian Warkentine.  Send comments, 
+bug reports, etc. to brianw@Sun.COM.
+

@@ -1,0 +1,10 @@
+This extension to the R3 server (it will take some reworking to fit into the
+R4 server) provides a way for clients to obtain an "idle time" for the server.
+This is useful for watchdog daemons that want to clean up after people who
+forget to logout.
+
+Author:
+	Tim Theisen             Department of Computer Sciences
+	tim@cs.wisc.edu         University of Wisconsin-Madison
+	uwvax!tim               1210 West Dayton Street
+	(608)262-0438           Madison, WI   53706

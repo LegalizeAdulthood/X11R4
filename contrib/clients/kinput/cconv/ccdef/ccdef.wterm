@@ -1,0 +1,62 @@
+# $Id: ccdef.wterm,v 1.1 89/10/19 21:07:23 ishisone Rel $
+
+#
+#	ccdef for wterm
+#
+
+# モードの宣言
+defmode Ascii ZenkakuAscii Roma JIS Through1 Through2 All
+
+# 初期モードの指定
+initialmode Through1
+
+# スルー (何もしない)
+mode Through1	"--"
+	""	shift-space	""	goto Roma
+	""	@ascii		"&"	fix
+endmode
+mode Through2	"--"
+	""	ENTERMODE	""	fix2
+	""	shift-space	""	goto PREV
+	""	@ascii		"&"	fix
+endmode
+
+# ローマ字
+mode Roma	"ローマ"	fallthrough All
+    include 'rule.roma'
+	""	Tab		""	goto Ascii
+	""	shift-Tab	""	goto ZenkakuAscii
+	"n"	EXITMODE	"ん"
+endmode
+
+# アスキー
+mode Ascii	"Ascii"	fallthrough All
+#	特にルールを記述する必要はない
+	""	Tab		""	goto ZenkakuAscii
+	""	shift-Tab	""	goto Roma
+endmode
+
+# 全角アスキー
+mode ZenkakuAscii	"Ａscii"	fallthrough All
+    include 'rule.zascii'
+	""	Tab		""	goto Roma
+	""	shift-Tab	""	goto Ascii
+endmode
+
+# JISコード入力
+mode JIS	"JISコード"
+	""	ENTERMODE	""	jiscode-begin
+	""	F3		""	goto PREV
+	""	'x'		""	goto PREV
+	""	'X'		""	goto PREV
+	""	'^X'		""	goto PREV
+	""	EXITMODE	""	jiscode-end
+	""	@ascii		"&"
+endmode
+
+# All -- 共通定義
+mode All	"?"
+	""	shift-space	""	goto Through2
+	""	F3		""	goto JIS
+    include 'rule.func'
+endmode

@@ -1,0 +1,35 @@
+#
+# @(#)Imakefile 1.2 89/12/06 SMI
+#
+# Imakefile for dbxtool
+#
+# LIBRARY_DEST is the location of the XView libraries
+# HEADER_DEST is the location of the XView header files
+# LIBDIR is the directory containing the X11 library (libX11.a)
+# LIBINC is the directory containing the X11 header files
+#
+
+#include "../../XView.config"
+
+HELP_DEST=$(USRLIBDIR)/help
+LIBDIR=/home/X11/lib
+LIBINC=/home/X11/include
+MISCINC=./dbx
+LDFLAGS=-L$(LIBRARY_DEST) -L$(LIBDIR) -lxview -lX11
+INCLUDES= -I$(HEADER_DEST) -I$(LIBINC) -I$(MISCINC) -DSTANDALONE
+
+# Uncomment the following line to use libxvol.a and libxvin.a
+#
+#LDFLAGS=-L$(LIBRARY_DEST) -L$(LIBDIR) -lxvol -lxvin -lX11
+
+SRCS = bp.c buttons.c cmd.c dbxenv.c dbxtool.c dbxlib.c \
+	 decorations.c disp.c pipe.c  selection.c src.c \
+	 status.c confirm.c menu.c
+OBJS = bp.o buttons.o cmd.o dbxenv.o dbxtool.o dbxlib.o \
+	 decorations.o disp.o pipe.o  selection.o src.o \
+	 status.o confirm.o menu.o
+
+ComplexProgramTarget(dbxtool)
+
+install::
+	-$(INSTALL) -c $(INSTALLFLAGS) dbxtool.info $(HELP_DEST)

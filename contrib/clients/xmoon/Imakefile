@@ -1,0 +1,8 @@
+       INCLUDES	= -I$(TOP) -I$(TOP)/X11
+LOCAL_LIBRARIES	= $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+  SYS_LIBRARIES	= -lm
+
+           SRCS = xmoon.c calc.c Image.c
+           OBJS = xmoon.o calc.o Image.o
+
+ComplexProgramTarget(xmoon)

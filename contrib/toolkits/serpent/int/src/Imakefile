@@ -1,0 +1,27 @@
+#include "../../Serpent.tmpl"
+DIR = int
+
+INC = global.h idd.h ids.h iid.h ipb.h ipc.h isc.h isd.h isd1.h isd_priv.h ism.h serpent.h ubs.h ush.h usl.h
+
+SRC = isc.c ism.c ubs.c usl.c ush.c iid.c ids.c ipc.c idd.c isd1.c isd2.c ipb.c ipb3.c s22_clean.c s22_init.c
+
+OBJ = isc.o ism.o ubs.o usl.o ush.o iid.o ids.o ipc.o idd.o isd1.o isd2.o ipb.o ipb3.o
+
+LIB = libint.a
+
+BIN = s22_init s22_clean
+
+LIBS = $(SERPENTLIBDIR)/libutl.a $(SERPENTLIBDIR)/liblist.a
+
+SerpentObjectRule()
+
+all:	$(LIB) $(BIN) install_lib install_bin
+
+SerpentLibrary()
+
+SerpentSimpleProgramLib(s22_init,libint.a)
+SerpentSimpleProgramLib(s22_clean,libint.a)
+
+SerpentInstallIncLibBin()
+
+SerpentDepend()

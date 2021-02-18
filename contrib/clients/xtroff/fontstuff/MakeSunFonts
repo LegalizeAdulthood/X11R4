@@ -1,0 +1,146 @@
+#!/bin/sh
+#
+#	This file can be used to make all the reduced fonts needed
+#	by SunTroff.  The VFONTS variable points to the location of
+#	the Versatec fonts provided by Sun.  Finally the SUNTROFF_FONTS
+#	variable points to the final location of the reduced fonts.
+#	Usage: MakeSunFonts VfontDir SuntroffFontDir Percent Xwin FontCompiler
+#
+VFONTS=${1-/usr/lib/vfont}
+SUNTROFF_FONTS=${2-/usr/local/lib/suntroff/devsun}
+#
+#	The "correct" percentage is 66% (120/200) but if you are trying
+#	to simulate unknown typesetters then it is better to use fonts
+#	too small in case the other typesetter has narrow spacing.  This
+#	way the characters might be small but there shouldn't be too
+#	much overlap on the screen.
+#	
+#	Because of scalech this number must be a TWO digit percentage!!
+#
+PERCENT=${3-50}
+dpi=120
+
+XWIN=${4}
+if test x$XWIN != x ; then
+	if test $XWIN != suntroff ; then
+		XWIN=x
+		FC=${5-bdftosnf}
+		extension='.snf'
+	else
+		XWIN=
+		FC=
+		extension=
+	fi
+fi
+DEVICE=${6-devsun}
+
+#	If you don't have the current directory in your path (.) then
+#	you will need to change the BIN_DIR variable to point to the
+#	location of this directory.  Many thanks to Len at Sentry for
+#	pointing this potential problem out.
+#
+BIN_DIR=.
+
+#	You might want to change this next variable to "ln -s" so
+#	that fonts are linked instead of copying.  Copying is the
+#	safest thing to do since there really isn't a need to keep
+#	/usr/lib/vfont on all your servers.  Many thanks to Len at 
+#	Sentry for pointing this one out.
+#
+COPY_COMMAND=cp
+TEMP=/tmp/sunfont
+TEMP2=/tmp/sunfont2
+
+if [ ! -d $SUNTROFF_FONTS ]
+then
+	mkdir $SUNTROFF_FONTS
+else
+	echo Font Directory already in place.
+fi
+
+
+#
+#	Now create those fonts that we can make by renaming.....
+#
+
+for i in `cd $VFONTS;echo [a-zA-Z].[0-9] [a-zA-Z].[0-9][0-9] \
+			  [a-zA-Z][a-zA-Z].[0-9] [a-zA-Z][a-zA-Z].[0-9][0-9]`
+do
+	if [ -r $VFONTS/$i ]
+	then
+		Size=`echo $i | sed "s/.*\.//"`
+		Font=`echo $i | sed "s/\..*//"`
+		NewSize=`expr $Size \* 100 / $PERCENT`
+		if test x$XWIN != x ; then
+			fname=`echo $Font | tr A-Z a-z`
+			fontname=$DEVICE.$fname.$NewSize.$dpi
+			fname=$fname$NewSize$extension
+		else
+			fname=$Font.$NewSize
+		fi
+		if [ ! -r $SUNTROFF_FONTS/$fname ]
+		then
+			echo 'converting ' $VFONTS/$i ' to ' \
+				$SUNTROFF_FONTS/$fname
+			if [ x$XWIN = x ] ; then 
+				$COPY_COMMAND $VFONTS/$i \
+					      $SUNTROFF_FONTS/$fname
+			else
+				$BIN_DIR/vf2bdf $VFONTS/$i $NewSize | \
+				sed 's?^FONT .*$?FONT '$fontname'?' | \
+				$FC > $SUNTROFF_FONTS/$fname
+			fi
+		fi
+	fi
+done
+
+
+#
+#	Now create the fonts that we need to make by bit reduction.
+#	First check to see if we have a font "close enough".  Close
+#	enough is defined here to be within one point size.
+#
+for i in `cd $VFONTS;echo [a-zA-Z].[0-9] [a-zA-Z].[0-9][0-9] \
+			  [a-zA-Z][a-zA-Z].[0-9] [a-zA-Z][a-zA-Z].[0-9][0-9]`
+do
+	if [ -r $VFONTS/$i ]
+	then
+		Size=`echo $i | sed "s/.*\.//"`
+		Font=`echo $i | sed "s/\..*//"`
+		if [ x$XWIN = x ]
+		then
+			f1=$SUNTROFF_FONTS/$Font.`expr $Size - 1`
+			f2=$SUNTROFF_FONTS/$Font.`expr $Size`
+			f3=$SUNTROFF_FONTS/$Font.`expr $Size + 1`
+			fname=$Font.$Size
+		else
+			Font=`echo $Font | tr A-Z a-z`
+			f1=$SUNTROFF_FONTS/$Font`expr $Size - 1`$extension
+			f2=$SUNTROFF_FONTS/$Font`expr $Size`$extension
+			f3=$SUNTROFF_FONTS/$Font`expr $Size + 1`$extension
+			fontname=$DEVICE.$Font.$Size.$dpi
+			fname=$Font$Size$extension
+		fi
+
+		if [ -r $f1 -o -r $f2 -o -r $f3 ]
+		then
+			true
+		else
+			echo scaling and converting $VFONTS/$i to \
+				$SUNTROFF_FONTS/$fname
+			$BIN_DIR/vft2ch $VFONTS/$i > $TEMP
+			$BIN_DIR/scalech -s$PERCENT  $TEMP > $TEMP2
+			if test x$XWIN = x ; then
+				$BIN_DIR/ch2vft $TEMP2 > $SUNTROFF_FONTS/$i
+			else
+				$BIN_DIR/ch2vft $TEMP2 > $TEMP
+				$BIN_DIR/vf2bdf $TEMP $Size |
+				sed 's?^FONT .*$?FONT '$fontname'?' | \
+				$FC > $SUNTROFF_FONTS/$fname
+			fi
+		fi
+	fi
+done
+if [ x$XWIN != x ]; then
+	mkfontdir $SUNTROFF_FONTS
+fi

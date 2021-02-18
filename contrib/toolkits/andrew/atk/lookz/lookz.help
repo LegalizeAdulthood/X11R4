@@ -1,0 +1,346 @@
+\begindata{text,268624292}
+\textdsversion{12}
+\template{help}
+
+
+\chapter{LookZ: Customize Styles in a document}
+
+                           
+
+\section{What LookZ is}
+
+
+\leftindent{With LookZ, you can change the attributes of the styles used to 
+format text in a document.  Changing style attributes changes the way that a 
+style formats the text to which it is applied.  For example, the \bold{Section} 
+style on the \italic{Title} menu card has the attributes Bold, Left flush and 
+a font size that is two points larger (+2) than the bodyfont of the document. 
+ With LookZ, you could change these attributes and your changes will apply to 
+all text in the document which has the \bold{Section} style.
+
+
+The changes you make with LookZ remain in effect each time you edit the same 
+document.  If you want style changes in other documents, you have to use LookZ 
+for each of those documents.  In this way, you can store a customized set of 
+styles for each document that you write. 
+
+
+\flushleft{\bold{Note:  }}You cannot use LookZ to add styles to selected 
+pieces of text.  To do that, you must use EZ.  For details about using styles 
+to format text, see the \italic{ez} or \italic{styles} help documents.
+
+
+This help document is composed of the following sections:
+
+}\leftindent{\leftindent{
+Enabling and Starting LookZ
+
+Changing style attributes
+
+What the attributes mean
+
+Adding styles to your menus
+
+Warnings/Bugs
+
+Pop-Up Menu Meanings
+
+Program Author
+
+Related Tools
+
+}
+}\section{Enabling LookZ}
+
+\leftindent{
+Before you start Lookz for the first time, you must add a new menu option to 
+your EZ menus.  You can do this by editing a file called .ezinit in your home 
+directory and copying the following lines into it:
+
+
+#Add a "Customizing Styles" menu option to the File Menu
+
+addmenu textview-edit-styles "File,Customize Styles~30"
+
+
+The first line, starting with a #, is a comment.  The second line is a command 
+for the EZ text view that tells it to add a menu option called "Customize 
+Styles" on the File menu card.  This new menu option will appear the next time 
+you start EZ.  
+
+
+\bold{Note:}  Read the \italic{ initfiles  }help document if you have never 
+used an .ezinit file before.
+
+}
+\section{Starting Lookz}
+
+\leftindent{
+To start Lookz, place the text caret in the text of your EZ document.  Then, 
+choose the \bold{Customize Styles} menu option from the \italic{File} menu 
+card in EZ. 
+
+
+\bold{Parts of LookZ. } LookZ appears as a rectangle that contains a series of 
+boxes.  There are three boxes in the top row.  The small box on the left 
+contains the shrink-icon.  To shrink LookZ, click on the shrink icon with the 
+left mouse button; to reexpose it, click again. If you click outside the 
+shrink icon to continue working in your text, the shrink-icon changes to a 
+Kilroy (a face peering over the a wall).  The Kilroy indicates that a LookZ 
+has been opened, but is not currently being used.
+
+  
+
+The middle box,\bold{ menu card}, lets you choose the name of the menu card 
+whose styles you want to edit.  When you click the left button on the name of 
+a menu card, the name is darkened and the styles contained on that menu card 
+are displayed in the right box.   For example, you can click on "Title" to see 
+the styles listed in the Title menu card.  These include Chapter, Section, 
+Paragraph, and other styles. 
+
+
+The right box, \bold{name on menu card}, lets you choose a particular style 
+and display its attributes.  When you click the left mouse button on one of 
+the styles displayed here, its attributes are displayed in the bottom three 
+rows of boxes.  The attributes that apply to the style are darkened.   For 
+example, you can click on "Section" to display the attributes for the Section 
+style, which include Bold, Left flush, and +2. }
+
+
+\section{Changing style attributes}
+
+\leftindent{
+When the attributes of a style are displayed in the bottom three rows of 
+boxes, you can change them.  
+
+\leftindent{
+\bold{To add an attribute:} click on an undarkened attribute.  This darkens 
+the attribute and associates it with the style name.
+
+
+\bold{To remove an attribute:} click on a darkened attribute.  This undarkens 
+the attribute, meaning that it no longer applies to the style name.
+
+}
+To show the effects of changed styles, choose \bold{Update Document} from the 
+menus.  Your document  redisplays to show the effects of the style changes you 
+have made.  Note that using \bold{Update Document} has exactly the same effect 
+as redisplaying the window by any other means.  (In other words, if you change 
+some style, say Quotation, to mean bold and then redisplay some text that is 
+marked as a Quotation, the text will be bold even if you have not yet chosen 
+UpdateDocument.)
+
+}
+\section{What the attributes mean}
+
+\leftindent{
+Below is a listing of the attribute boxes and their functions.
+
+
+\bold{font }contains the attribute for the font family used in your document. 
+ There are three choices:
+
+\leftindent{
+Andy is a serif font.
+
+
+AndySans is a sans serif font.
+
+
+AndyType is a typewriter-style, fixed width font.  (When you choose this, you 
+must also choose "Fixed Width from the Enable box.)}
+
+
+\bold{font size }contains numbers that you can use to set the size of text. 
+ Some numbers have no sign; this means they constrain the font size to the 
+specified absolute size.  The font size numbers with plus and minus signs are 
+relative font size changes, which make the text bigger or smaller than the 
+surrounding text.  Good choices are +2 , +4 , -2 or -4.  Not all devices have 
+all font sizes, so you may have to experiment to see if the font size you want 
+is available.
+
+
+\bold{enable }and\bold{ disable }turn on or off a set of four attributes which 
+can be combined.  If you enable an attribute, you turn it on for the style. 
+ If you disable an attribute, you turn off an attribute that was turned on by 
+some other style.  For example, you might want to create a style that, when it 
+appears inside an italicized region, turns off the italic print.  You could 
+accomplish that by disabling italics for the new style.  Disabling is seldom 
+necessary, however.  
+
+
+\leftindent{Bold, Italic, and Fixed Width modify the current font. 
+
+
+PassThru is an attribute of the Format Note style; it passes commands through 
+EZ to other formatting systems, such as troff.}
+
+
+\bold{justify} contains attributes for justification of a style.  The 
+following options are available: 
+
+
+\leftindent{Center fills each line with as many words from the selected region 
+as possible, then fills out the line with whitespace on both sides and starts 
+a new centered line. 
+
+
+Left flush fills each line with as many words from the selected region as 
+possible, then fills out the line with whitespace on the right and starts a 
+new flushleft line. 
+
+
+Right flush fills each line with as many words from the selected region as 
+possible, then fills out the line with whitespace on the left and starts a new 
+flushright line. 
+
+
+Justified causes left and right justification. 
+
+
+Left-right justifies the first line to the left, subsequent lines to the 
+right.  
+
+}
+\bold{baseline} contains attributes for raising and lowering scripted text 
+from the normal baseline of the document.  Use these attributes to make 
+superscripts and subscripts.
+
+
+\bold{relative margins and paragraph indent} contains two ruler segments on 
+which you set the margins and indentations for the current styles.  Clicking 
+on the whirlwind icon at the left of the ruler changes the ruler units between 
+inches, centimeters, and points.  
+
+
+The ruler segments specify relative distances rather than absolute distances. 
+ For instance, when the left margin icon is at "+1", the left margin will be 
+indented one unit from the surrounding text.  When there is no value for a 
+margin or the paragraph indent, the icon is shown parked on a grey background. 
+ If an icon has a value and the value is outside the visible portion of the 
+ruler, then the icon is shown in white on a black background.
+
+
+If both the left indent and paragraph indent icons have values, the paragraph 
+indentation becomes relative to the left margin.  You can see this by trying 
+to use a paragraph indent and a left margin at the same time.  Note that when 
+you move the left margin, the paragraph indent moves too. 
+
+}
+\section{Adding styles to your menus}
+
+\leftindent{
+You can use LookZ to create new styles and add them to the selected-region 
+menus in the document you are editing.  
+
+
+\bold{To add a style to the menus: }
+
+
+\leftindent{1. Choose \bold{Add Style} from the LookZ menus.  A prompt similar 
+to the following appears, containing the name of the menu you have currently 
+selected.  The menu that is listed (in this case, Title) is the one on which 
+your new menu option will appear. 
+
+
+Name for new style: \bold{Title,}
+
+
+2. Type in the name of the style you want to add. 
+
+
+\leftindent{(Optional: When typing in a name, you can add a tilde (\bold{~}) 
+and a menu priority number to specify where the style appears in the menu. 
+ Priority numbers range from 10 to 99, with lower numbers appearing closer to 
+the top of the menu card.  If the two priority numbers differ in the tens 
+digit, a blank line is inserted between them in the menu.  For example, if you 
+want to add a two new styles called "Newstyle" and "Nextstyle" to the bottom 
+of the \italic{Title} menu, you might use \bold{Add Styles} twice and type in 
+lines like these:
+
+
+Name for new style: Title, Newstyle~40
+
+
+Name for new style: Title, Nextstyle~50
+
+
+If both of these menus were inserted, they would appear with a line separating 
+them at the bottom of the \italic{Title} menu.)
+
+}
+3. Press Enter to add the style, which then appears in the "name on menu card" 
+box.  To choose attributes 
+
+for the new style, move the mouse cursor into the attribute boxes and click on 
+the ones you want.  
+
+
+4. Choose \bold{Update document} to list the new style in your menus. 
+
+}
+\bold{To modify the menu location of a style name:} 
+
+\leftindent{
+Use \bold{Add Style} to add the style again, but with a new priority number. 
+ Then, update the document, save it, and use "Switch to File" to reread the 
+file and relist the menus.  The new menu priority number you assigned to the 
+style will then take effect.  }
+
+}
+\section{Warnings/Bugs
+
+}\leftindent{
+A change to the style alone is not sufficient to cause the editor to consider 
+the file as having been modified.  Thus after the style is changed a 
+\bold{Switch File} request will not itself cause the prompt to save the 
+existing changes.
+
+
+Because some of the screen display fonts differ in size by four points instead 
+of two, something made bigger or smaller by only 2 points may not necessarily 
+appear that way on the screen.  Previewing or printing the document should 
+achieve the desired result, though.}\bold{
+
+}
+\section{Pop-Up Menu Meanings}
+
+
+Except for the two menu options below, the pop-up menus in LookZ resemble 
+those in EZ.  If you are working in your document instead of LookZ, click the 
+left mouse button once inside LookZ before trying to display the menus.
+
+
+\italic{Front Menu Card}
+
+\leftindent{
+\bold{Update Document:} Redisplays the current document and shows the effects 
+of style changes you have made using LookZ.
+
+
+\bold{Add Style:} Prompts you for the name of a new style and adds the 
+corresponding style to the men}u.\leftindent{
+
+}
+\section{Author}
+
+
+\leftindent{Fred Hansen}\leftindent{
+
+}
+\section{Related tools}  
+
+
+Select (highlight) one of the italicized names and choose "Show Help on 
+Selected Word" from the pop-up menu to see the help file for:
+
+
+\leftindent{\italic{ez
+
+styles}
+
+}
+
+\leftindent{
+}
+\enddata{text,268624292}

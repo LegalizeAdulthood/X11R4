@@ -1,0 +1,63 @@
+\begindata{text,268933684}
+\textdsversion{12}
+\template{help}
+\chapter{odaatk
+
+}
+\section{What odaatk is
+
+}\leftindent{
+odaatk is a translator from ODA format to Andrew Tool Kit format. It works 
+only for text and rasters. See the documentation for the \italic{atkoda}
+translator for more information.
+
+}
+\section{Starting odaatk
+
+}\leftindent{
+The command is
+
+
+\typewriter{odaatk -o <output file specification> <inputfile specification>}
+
+
+}
+\section{Warnings
+
+}\leftindent{
+This is a prototype translator.
+
+}\leftindent{
+}
+\section{Related tools}  
+
+
+Select (highlight) one of the italicized names and choose "Show Help on 
+Selected Word" from the pop-up menu to see the help file for:
+
+
+\leftindent{\italic{ODA}
+
+\italic{ODA-Toolkit
+
+}\italic{Raster}\italic{-Toolkit
+
+Local-Toolkit}
+
+\italic{atkoda}
+
+\italic{odatroff}
+
+\italic{odaileaf}}
+
+\leftindent{\italic{ileafoda}}
+
+\leftindent{\italic{proda}}
+
+\leftindent{\italic{prodif}}
+
+\leftindent{\italic{prtext}}
+
+\leftindent{\italic{convert}
+
+}\enddata{text,268933684}

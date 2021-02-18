@@ -1,0 +1,194 @@
+-*- Mode:Text -*-
+
+
+                              CLUE Examples
+
+                               LaMott Oren
+                             Suzanne McBride
+                             Craig Timmerman
+
+                     Texas Instruments Incorporated
+
+                              Version 1.15
+                            September 1, 1988
+
+
+
+
+
+
+        Copyright 1988, Texas Instruments Incorporated
+
+      Permission is granted to any individual or institution
+      to use, copy, modify, and distribute this document,
+      provided that this complete copyright and permission
+      notice is maintained, intact, in all copies and
+      supporting documentation.  Texas Instruments
+      Incorporated makes no representations about the
+      suitability of the software described herein for any
+      purpose.  It is provided "as is" without express or
+      implied warranty.
+
+
+
+MENU                                                    Contact Class
+
+   MENU is a composite contact whose geometry manager puts children in a
+   single vertical column (it may be extended someday to do multi-column
+   menus).
+   
+   MENU has a ORDERING slot of type (OR (MEMBER :first :last) function)
+   for determining the menu items (children).  The default is :last,
+   which puts new children at the bottom of the menu.  Using :first will
+   reverse the order of menu items.  ORDRING may be a "lessp" predicate,
+   called with 2 parameters, a child to add, and some other child of the
+   menu (similar to the predicate passed to the CL SORT function).
+   
+   MENU defaults border-width to 0, and cursor to the "arrow" cursor.
+
+
+MULTIPLE-MENU                                           Contact Class
+
+   MULTIPLE-MENU is a menu that can have more then one item selected at
+   once. It simply alters event-translations in add-child.
+
+
+SPRING-LOADED-MENU                                      Contact Class
+
+   SPRING-LOADED-MENU is a menu where a mouse button is always pressed
+   and an item is selected when the button is released.  It simply
+   alters event-translations in add-child.
+
+
+LABEL                                                   Contact Class
+
+   LABEL is a contact that displays a one line string in a single font
+   with different styles and justification.  It has the following
+   options:
+   (title :initform nil :type stringable) ;; Defaults to name string
+   (style :initform :normal :type (member :normal :box :reverse :box-reverse))
+   (justify :initform :center :type (member :left :center :right)
+            :accessor button-justify)
+   (font :type font :initform "fg-18")
+   (foreground :type pixel)
+   (border-width :type card16 :initform 0)
+   (inside-border-width :initform 3 :type integer
+                        :accessor inside-border-width)
+   Plus all options inherited from CONTACT, including
+   :documentation :background :border :cursor :sensitive :name :callbacks
+
+   When style is :BOX or :BOX-REVERSE, a border INSIDE-BORDER-WIDTH is
+   displayed around the label.
+
+
+BUTTON                                                  Contact Class
+
+   BUTTON is a label with event-translations for setting style depending
+   on pointer enter/leave and button press/release events.  It has the
+   following options in addition to those for LABEL:
+  (command-key :initform nil :type (or null character))
+  (selected :initform nil :type boolean :accessor selected)
+  (highlighted :initform nil :type boolean :accessor highlighted)
+  (select :initform nil :type (or null symbol function list))
+  (doit   :initform nil :type (or null symbol function list))
+  (key    :initform nil :type (OR null character list))
+
+  COMMAND-KEY is the character that will cause the button's SELECT
+              callback to be invoked.
+  SELECTED    is T when the button is selected (button-press)
+  HIGHLIGHTED is T when the button is highlighted (enter-notify)
+  SELECT      defines a :select callback in the button's callback
+              list, if one isn't already defined.
+  DOIT        defines a :doit callback in the button's callback
+              list, if one isn't already defined.
+
+  BUTTON has the following callbacks.  All callbacks are called with the
+  button as a parameter.
+  :SELECT     Called when the button enters the "select" state.
+  :DOIT       When button is a part of a multiple-menu, the :DOIT
+              callback is called on all selected buttons.
+  :CASCADE    Called when the pointer slides off the right edge of the
+              button.
+
+
+MENU-CHOOSE                                             Function
+
+   (defun menu-choose (parent alist &rest options
+                       &key label
+                            (handler #'menu-exit)
+                            (menu-type 'menu)
+                            (item-type 'button)
+                            (justify :center)
+                            (font "fg-18")
+                       &allow-other-keys)
+
+  Build a menu on parent with items from alist.  Options include any
+  allowable parameter to make-contact for the MENU-TYPE class.
+  ITEM-TYPE is the default menu-item class, HANDLER is the default
+  button :SELECT callback function, JUSTIFY is the default item :JUSTIFY
+  parameter, and FONT is the default item :FONT parameter.
+
+  Alist entries are (name . options) where NAME is the name symbol for
+  the menu-item, and options are keyword options to make-contact on the
+  ITEM-TYPE class.
+
+
+POPUP-CHOOSE                                            Function
+
+  (defun popup-choose (alist &rest options
+        &key parent
+             x y
+             border
+             spring-loaded
+        &allow-other-keys)
+
+   Popup a menu on parent from alist.
+   Returns NIL if aborted (pointer moved outside the menu), else the
+   value returned by the :SELECT callback of the selected button.
+
+   PARENT is the window to pop-up the menu on top-of (the menu will be a
+          top-level window of the same root as parent).  When PARENT is
+          missing or NIL, it defaults to the value of *parent*.  This
+          makes popup-choose a possible button callback for implementing
+          cascading menus.
+   X & Y  are the coordinates of the upper-left hand corner of the popup
+          window.  They default to having the menu centered over the
+          mouse, or when parent is unspecified, to the right of the
+          mouse.
+   BORDER The border color for the popup window
+   SPRING-LOADED  a boolean indicating whether or not a spring-loaded
+                  menu is wanted.
+
+   popup-choose calls menu-choose with alist and options.
+
+
+POPUP-CHOOSE                                            Function
+
+   Same as popup-choose, except SPRING-LOADED is T
+
+
+CONTACT-ROOT-POSITION                                   Function
+
+   (defun contact-root-position (contact)
+     "Return the position of CONTACT relative to the root."
+     (declare (type contact contact)
+              (values x y)))
+
+
+POSITION-OVER-MOUSE                                     Function
+
+   (defun position-over-mouse (contact)
+     "Position CONTACT centered over the mouse.
+    Ensures CONTACT remains inside its parent."
+     (declare (type contact contact)))
+
+
+POSITION-RIGHT-OF                                       Function
+
+   (defun position-right-of (contact relative-to)
+     "Position CONTACT (usually a cascading menu) to the right of
+     RELATIVE-TO (usually CONTACT's parent).
+     CONTACT is constrained to be within the root window."
+     (declare (type contact contact relative-to)))
+   
+

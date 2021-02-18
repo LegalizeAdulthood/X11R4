@@ -1,0 +1,268 @@
+Tue Dec 12 14:06:54 1989  Dirk Grunwald  (grunwald at foobar)
+
+	* renamed TeXxResources -> xtexResources
+
+	* no longer use TEXFONTS in the makefile; now uses
+	  xtexResources.tfmPath to find TFM fonts.
+
+Sun Nov 26 22:19:49 1989  Dirk Grunwald  (grunwald at foobar)
+
+	* Argle. XeT taken. Use xtex instead.
+
+Fri Nov 24 17:20:08 1989  Dirk Grunwald  (grunwald at foobar)
+
+	* Repackage Imakefiles for X11R4
+
+	* Renamed texx2 -> XeT for X11R4
+
+Tue Nov 14 10:20:16 1989  Dirk Grunwald  (grunwald at foobar)
+
+	* Fix problem in DviPage::DviDisplay, where I forgot to initialize
+	startHH and startVV when starting a new cached string. Also, flush
+	the string cache before more actions (specials & the like).
+
+Mon Oct 30 11:25:31 1989  Dana A. Chee  (dana at dino)
+
+	* (mark.c) add parens around summation so that amount of space
+	  malloced is correct.
+
+	* (file.c) add amounts to strncpys
+
+Fri Oct 27 20:38:53 1989  Dirk Grunwald  (grunwald at foobar)
+
+	* Change DviPage::spPerDot to long from double.
+
+Thu Oct 26 11:24:41 1989  Dirk Grunwald  (grunwald at foobar)
+
+	* Released as 2.10
+
+	* Added a menu box showing the pages marked for printing.
+
+	* Flush pending character cache when doing right/down movements.
+	This makes umlates work correctly.
+
+	* Clean up ``flushing the pending character cache'' in DviPage.c,
+	adding routine DviDisplayFlush & wrapping much stuff in structure.
+
+	* Fixed computation of spPerDot in DviPage - makes for longer runs
+	of characters (typically entire words now). Much faster.
+
+	* Make dialog clear box an option, since the dialog code works
+	correctly now.
+
+	* Allow use of the Table widget rather than form.
+
+Thu Oct  5 15:16:17 1989  Dirk Grunwald  (grunwald at foobar)
+
+	* (many files) made all interaction with the program occur
+	  though action procedures. Enhanced printing options, page
+	  marking (now has stack & push/pop of marked pages),
+	  magnification interface, etc. Now *requires* application
+	  default file.
+
+	* (dialog.c) improved dialog code by deleteing top lines
+	  rather than entire dialog when dialog is full.
+
+	* (all files) renamed files
+
+	* (texx2-error.c) includes Ultrix as knowing about vsprintf.
+
+	* Following bugfixes from: Hiroto Kagotani (kagotani@cs.titech.ac.jp)
+
+	* (dvi-simple.c) FALSE incorrectly defined, but not used.
+
+	* (DviPage.c) possible to over-run dvi stack space,
+	  increase allocate stack space.
+
+	* (dvi-simple.c) free resources allocated in tfm.c
+
+Sun Aug  6 23:39:11 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* (DviPage.c) Check that charwidth table exists before
+	  ref'ing it. If it doesn't, assume chars take maximum
+	  width (does this always exist?). Fix for PC/RT AIX/X11R2.
+
+	* (texx2-error.c) From: Mark Davies <mark@comp.vuw.ac.nz>
+	  Include hpux as knowing about vsprintf.
+
+Wed Jul  5 08:47:06 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* Added distinction between horizontal and vertical dpi
+	  because many monitors (Sun lores) aren't uniform.
+
+Sat Jun 10 16:34:59 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* Released as 2.9
+
+	* (texx2-page.c) when reloading document, you return to proper
+	  logical page, not the physical page.
+
+Tue Jun  6 12:16:55 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* (texx2-font.c) make font names always be in lower-case
+
+	* (many) added actions & ability to not show buttons on the
+	  dvi page. This lets us view entire pages at once.
+
+	* (many) added options to set topOffset & leftOffset.
+
+Wed May 31 08:47:18 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* (texx2.c) add -pageMaxWd and -pageMaxHt options to set max
+	  popup size of dvipage.
+
+	* (texx2-page.c) used TeXxResources.pageMaxWd, etc
+
+	* (texx2-font.c) round font sizes properly, allow +/- 1 slop
+
+	* (texx2-page.c) remove ``mag'' button, it's not used enough
+
+	* (texx2-page.c) removed ``resize'' and ``resizable'' attributes,
+	  putting them into the .ad file.
+
+	* (dvi-simple.c) regiserFont - fix OBO in font width compute loop.
+
+Tue May 16 12:01:12 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* repackaged as 2.8.7
+
+	* made glyph placement know about actual width of glyphs;
+	  improves placement, making document look better.
+
+	* added MaxDrift resource to DviPage.h
+
+Mon May 15 15:10:36 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* repackaged as 2.8.6
+
+	* installed accelerators, provided default Texx2.ad.
+	  accelerators between the DviPage and every button
+	  on that page. accelerators between the filename
+	  input buffer and everything on that page.
+
+	* fixed texx2-page.c, file pushForwardButton to not let you
+	  walk past last page (OBO).
+
+Tue Feb 28 18:41:45 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* repackeged as 2.8.5
+
+	* (texx2-font.c) Calculation of mag ignored mag specified in
+	  document. Fixed.
+
+	* (texx2-file.c) Made the file name be stuffed into the input box
+
+Sun Feb 26 16:44:46 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* Compensate for scroll-bars. Now, mag=333 on a sun3 gets rid
+	  of horiz scroll.
+
+Sat Feb 25 13:19:50 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* texx2-page.c - added TeXPageSlamPages, in case we fail
+	  to open a file and need to close exising windows. If we
+	  don't, they can move around or redisplay, referencing dead
+	  data structures.
+
+	* texx2-page.c - reopening a file now leaves pages at the same
+	  page number in the new file. this means you don't have to
+	  reposition yourself when you open a file.
+
+	* Released as 2.8
+
+	* texx2-page.c - split TeXPageNewFile into two parts, because
+	  value of DviTotalPages changes after an open, causing
+	  bogus free().
+
+	* texx2.c - stat the command line file name to make certain
+	  it's a regular file before doing a setFile
+
+	* texx2-mark.c - plug last double free? Now explicitly zero variables
+	  after *all* frees.
+
+Fri Feb 24 14:47:13 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+        * Released as 2.7
+
+	* texx2.c - allow single argument to set the file name
+
+	* DviPage.c - fix problem with inlines & optimization. Fontdefs
+	  weren't being skipper properly, causing font names to be displayed.
+
+	* texx2-page.c - optimize tied pages for single-page-ahead
+	  with foreward travel (avoid freeing next page until it gets it)
+
+	* texx2-page.c - fix double free in TeXPageNewFile (forgot to zero)
+
+	* dvi-simple.c - fix double free for DviCount (forgot to zero)
+
+	* dvi-simple.c - use strncpy
+
+	* texx2-page.c - found out about XtNallowShellResize.
+	  remove include of ShellP.h
+
+	* texx2-font.c - reverse order of -mag and -scaled in error
+	  message to make cut & paste buildfonts easier
+
+	* Imakefile - remove tabs
+
+	* texx2-error.c - Apply patch from Dana to fix over-write of
+	  dialog box.
+
+	* DviPage.c, DviPage2.c - removed setGC, use single globalGC
+	  which is rebuilt on each redisplay.
+
+	* DviPageP.h - removed `clearGC', renamed setGC to globalGC
+
+	* texx2-file.c - merged BuildPageLevel into BuildFileLevel.
+
+Fri Feb 24 14:50:36 1989  Dana A. Chee  (dana at dino)
+
+	* texx2-error.c - removed unneeded resource XtNresize (not used in
+	  text widgets).
+	  
+	* texx2-file.c - changed strcpy to proper strncpy; created widgets
+	  in order used for chaining (Form widget goes through child list
+	  once to place children, if the order of their chaining is
+	  different from their creation order, the results will not be
+	  satisfactory).
+
+	* texx2-widgets.c - let widgets dimension the form; build widgets
+	  in correct order for chaining (Page within File now, see above
+	  reasons).
+
+	* texx2.c - use proper program and class names for XtInitialize.
+
+Thur Feb 23 17:30:10 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* texx2-page.c - Added `large' and `small' buttons
+	* texx2.c - Added `largeMag' and `smallMag' resources
+
+Sun Feb 19 17:30:10 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* Released as 2.5
+
+	* Added `clear marks' button
+
+	* Fixed error in DviPageWidget - wasn't setting the setGC
+	  properly, causing redraws to fail when not using backing store
+
+Fri Feb 17 17:30:10 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+        * Added ``tied'' pages, Imakefile, man page
+
+Tue Feb 14 11:49:11 1989  Dirk Grunwald  (grunwald at flute.cs.uiuc.edu)
+
+	* Changed all args to widgets to be built use XtSetArg instead of
+	automatic aggregate initializations.
+
+	* Changed all callbacks to be built using XtAddCallback instead
+	of automatic aggregate initializations.
+
+	* Changes texx2-error.c to build a temporary _iobuf structure
+	for _doprnt to print erorr messages if vsprintf is unavailable.
+
+	* (texx2-page.c) made pushGotoButton goto the page with a count[0]
+	field matching the selected page number, as opposed to the ordinal
+	page number.
+

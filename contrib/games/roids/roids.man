@@ -1,0 +1,273 @@
+.\" Man page for roids, by Terry Weissman.
+.TH roids 1 "10 March 1989"
+.SH NAME
+\fIroids\fR \- Dodge and shoot the flying rocks.
+.SH SYNOPSIS
+.B roids
+[-display display:number]
+.SH DESCRIPTION
+.I roids
+is an implementation of the old Atari Asteroids game, on top of the
+X11 window system.  Be warned that it only works on
+.B very
+fast workstations.
+
+.SH PLAYING ROIDS
+Initially, you will be presented with a black window.  Nothing will
+happen until you give input focus to that window.  (How you do this
+depends on your window manager; in most of them, you just move the
+mouse into the
+.I roids
+window.  In some, you'll have to click the mouse as well.)
+
+Once you get things going, you'll find yourself in control of a small
+triangular ship, dodging big rocks.  Your controls are:
+
+.PP
+.TP 8
+.B z
+Rotate the ship to the left.  It will continue rotating as long as the
+key stays depressed.
+.PP
+.TP 8
+.B x
+Rotate the ship to the right.  It will continue rotating as long as the
+key stays depressed.
+.PP
+.TP 8
+.B ,
+Apply thrust.  Thrusting will continue as long as the key remains depressed.
+.PP
+.TP 8
+.B .
+Fire a bullet.  You may have up to four bullets flying at once.
+.PP
+.TP 8
+.B Q
+Abort the game.  This must be entered as a capital Q (the shift key
+must be down).
+
+If you prefer, you may control your ship with the mouse.  The controls
+here are:
+
+.PP
+.TP 8
+.B Left
+Rotate the ship to point towards the mouse arrow.
+.PP
+.TP 8
+.B Middle
+Apply thrust.
+.PP
+.TP 8
+.B Right
+Fire a bullet.
+
+
+.SH SCORING
+
+Big rocks are worth 50 points.  Medium rocks are worth 100 points.
+Small rocks are worth 200 points.
+
+You have three ships.  You get a free ship every 10,000 points.
+
+
+
+
+.SH CUSTOMIZING COLORS
+
+As with all standard X applications,
+.I roids
+may be customized through entries in the resource manager.  This
+almost always means editing your .Xdefaults file.  [Note: the entry names
+must be entered in either all lower-case, or in the exact
+case shown below.]
+
+.PP
+.TP 8
+.B ShipColor
+The color to paint your ship.  (Default is green.)
+.PP
+.TP 8
+.B RockColor
+The color to paint rocks.  (Default is gold.)
+.PP
+.TP 8
+.B ShotColor
+The color to paint shots.  (Default is red.)
+.PP
+.TP 8
+.B ScoreColor
+The color to paint the score.  (Default is violetred.)
+
+
+.SH CUSTOMIZING MOUSE AND KEYBOARD
+
+If you wish to set up your own interpretation of the mouse and
+keyboard, the following actions are provided:
+
+.PP
+.TP 8
+.B grab-focus
+Grab the input focus.  This is only useful if bound to a mouse action.
+.PP
+.TP 8
+.B rotate-left
+Start rotating the ship to the left.
+.PP
+.TP 8
+.B rotate-right
+Start rotating the ship to the right.
+.PP
+.TP 8
+.B rotate-off
+Stop any rotation.
+.PP
+.TP 8
+.B thrust-on
+Begin thrusting.
+.PP
+.TP 8
+.B thrust-off
+Stop thrusting.
+.PP
+.TP 8
+.B rotate-to-point
+Begin rotating to point to where the mouse is pointing.  This may only be
+bound to a mouse-down action.
+.PP
+.TP 8
+.B stop-rotate
+Cancel a currently executing rotate-to-point.  This may only be bound
+to a mouse-up action.
+.PP
+.TP 8
+.B rotate-moved
+Change the point to rotate to.  This may only be bound to a
+mouse-motion action.
+.PP
+.TP 8
+.B fire
+Fire a shot.
+.PP
+.TP 8
+.B quit
+Quit the game.
+.PP
+
+It is beyond the scope of this document to describe how to use these
+actions in your .Xdefaults file to change the keyboard and mouse
+interpretation.  As an example, though, here is what you would use to
+get the default behavior:
+
+Roids*Roids*translation:	\\n\\
+     <Btn1Down>:	grab-focus() rotate-to-point()\\n\\
+     Button1<PtrMoved>:	rotate-moved()\\n\\
+     <Btn1Up>:		stop-rotate()\\n\\
+     <Btn2Down>:	thrust-on()\\n\\
+     <Btn2Up>:		thrust-off()\\n\\
+     <Btn3Down>:	fire()\\n\\
+     <KeyDown>z:	rotate-left()\\n\\
+     <KeyUp>z:		rotate-off()\\n\\
+     <KeyDown>x:	rotate-right()\\n\\
+     <KeyUp>x:		rotate-off()\\n\\
+     <KeyDown>\\\\,:	thrust-on()\\n\\
+     <KeyUp>\\\\,:	thrust-off()\\n\\
+     <KeyDown>.:	fire()\\n\\
+     Shift<KeyDown>q:	quit()
+
+
+.SH MOTIVATION
+
+I've always wanted to write one of these games.  Unfortunately, I
+don't enjoy optimizing code to be very fast, and that's what has
+always been necessary for good arcade games on every machine I've
+used.
+
+Until I got my DECstation 3100.  This machine is fast enough that I
+didn't have to write efficient code.
+.I Roids
+does stupid things like repainting the ships location 100 times a second, and
+it doesn't matter.
+
+Thus, I have written a game that (probably unnecessarily) requires a
+very fast workstation.  Please don't interpret this as snobbishness on
+my part ("your workstation isn't as fast as mine so you can't play my
+game, nyah nyah"); it is just laziness.
+
+.SH NOTES
+
+There are lots more resources.  The ones above are the only ones I
+want documented; the rest change the behavior of the game.  The
+curious should look at the source.
+
+The mouse controls are, in my opinion, useless.  I'd be very
+interested if anyone actually likes them.  (I implemented them for a
+friend who refuses to use his keyboard to play games.)
+
+Collision detection is very good.  I actually check to see if things
+touch; I refused to use the standard method of just seeing if the centers
+of objects are close.  Of course, this is a large part of why
+.I roids
+needs a fast workstation.
+
+.I Roids 
+works only on very fast workstations.  Don't try and play it over a
+network; it won't work.
+
+.SH BUGS
+
+The rocks look really stupid.  Anyone have some good rock designs?
+
+You shouldn't have to re-run the program to play another game.
+
+There should be high-score mechanisms.
+
+Doesn't handle different visuals like a good X client should.  In
+particular, if you play this on a display with a StaticGrey visual,
+you will probably not be able to see anything.
+
+The default colors don't show up well on all displays.
+
+No enemy ships.  In a way, this is a feature; I always despised the
+fact that people could get lots of points in the original Asteroids by
+leaving one tiny little rock and blasting all the enemy ships.
+
+The code really could be a lot more efficient, and therefore work well
+over a larger variety of machines.
+
+
+.SH COPYRIGHT
+
+
+Copyright 1989 Digital Equipment Corporation
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation, and that the name of Digital Equipment
+Corporation not be used in advertising or publicity pertaining to
+distribution of the software without specific, written prior
+permission.  Digital Equipment Corporation makes no representations
+about the suitability of this software for any purpose.  It is
+provided "as is" without express or implied warranty.
+
+DIGITAL EQUIPMENT CORPORATION DISCLAIMS ALL WARRANTIES WITH REGARD TO
+THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS, IN NO EVENT SHALL DIGITAL EQUIPMENT CORPORATION BE LIABLE FOR
+ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+.SH AUTHOR
+
+Terry Weissman
+.br
+Western Software Laboratory
+.br
+Digital Equipment Corporation
+.br
+weissman@wsl.dec.com

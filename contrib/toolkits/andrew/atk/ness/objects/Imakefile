@@ -1,0 +1,86 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+YFLAGS = -d -v
+CYFLAGS = -DYYDEBUG
+
+LOCALINCLUDES = -I../tokens/
+
+INTERPOBJS = interp.o gen.o dump.o search.o  error.o  nevent.o  call.o real.o
+NESSOBJS =  ness.o  nesscomp.o   ${INTERPOBJS}
+
+DOBJS = ness.do nessv.do nessmark.do nesssym.do 
+IHFILES = ness.ih nessv.ih nessmark.ih nesssym.ih 
+OBJS = ${NESSOBJS} nessv.o nessmark.o 
+
+ATKLIBS=	${BASEDIR}/lib/atk/libframe.a  \
+		${BASEDIR}/lib/atk/libtext.a  \
+		${BASEDIR}/lib/atk/libsupport.a  \
+		${BASEDIR}/lib/atk/libsupviews.a \
+		${BASEDIR}/lib/atk/libbasics.a
+LIBS =		${ATKLIBS}  \
+		${BASEDIR}/lib/libclass.a  \
+		${MALLOCLIB}  \
+		${BASEDIR}/lib/liberrors.a  \
+		${UTILLIB} 
+
+all:: init
+
+NormalObjectRule()
+NormalATKRule()
+NormalYaccRule()
+
+.SUFFIXES: .h .hn
+.hn.h:
+	$(RM) $*.h
+	./nodeclass $*.hn
+
+call.h nevent.h gen.h compdefs.h: nodeclass
+
+init:: call.h nevent.h gen.h compdefs.h
+
+ProgramTarget(nodeclass, nodeclss.o, , )
+
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+DynamicMultiObject(ness.do, ${NESSOBJS}, ${BASEDIR}/lib/atk/libbasics.a ${UTILLIB}, -lm)
+DynamicMultiObject(nessv.do, nessv.o, ${BASEDIR}/lib/atk/libbasics.a, -lm)
+
+nesscomp.y: ../tokens/buildy nesscomp.gra
+	../tokens/buildy nesscomp.gra nesscomp.y
+
+nesscomp.c: nesscomp.y
+	$(YACC) ${YFLAGS} $*.y
+	-$(RM) $*.c
+	$(MV) y.tab.c $*.c	
+
+nesscomp.o: nesscomp.c yypshpop.c
+	-$(RM) /tmp/nesscomp.c
+	echo '#include "yypshpop.c"' | cat nesscomp.c -  > /tmp/nesscomp.c
+	${CC} -c -I. ${LOCALINCLUDES} ${CFLAGS} ${CYFLAGS} /tmp/nesscomp.c
+	-$(RM) /tmp/nesscomp.c
+
+LibraryTarget(libness.a, $(OBJS))
+InstallLibrary(libness.a, ${DESTDIR}/lib/atk)
+
+TestProgramTarget(nesst, nesst.o, ${LIBS} /usr/lib/libm.a,)
+TestProgramTarget(goodness, goodness.o ${NESSOBJS} nessmark.o  nesssym.o , ../tokens/libtokens.a ${LIBS}, -lm)
+ProgramTarget(nessrun, nessrun.o ${NESSOBJS} nessmark.o  nesssym.o , ../tokens/libtokens.a ${LIBS}, -lm)
+
+InstallProgram(nessrun, ${DESTDIR}/bin)
+InstallLink(runapp, ${DESTDIR}/bin/ness)
+InstallFile(nesswarn.d, ${INSTMANFLAGS}, ${DESTDIR}/lib/ness)
+
+DependTarget(init)
+
+checkin:	 Imakefile  nesscomp.gra  nodeclss.n  *.ch  *.hn      \
+		call.c dump.c  error.c   gen.c    goodness.c  interp.c  interpt.c   \
+		ness.c    nessmark.c   nessrun.c  nesssym.c   nessv.c  nevent.c   \
+		real.c  search.c  yypshpop.c  \
+		call.h  compdefs.h  envt.h  error.h  gen.h  interp.h   nesscomp.h  \
+		nessrun.ci    nevent.h  nodeclss.h  nessmrkt.c  nesswarn.d nesst.c notes.d
+	ci   -l  $?
+	touch checkin
+
+

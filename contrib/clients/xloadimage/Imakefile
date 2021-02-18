@@ -1,0 +1,13 @@
+        DEFINES = -DSYSPATHFILE=\"/usr/lib/X11/xloadimage/xloadimagerc\"
+        DEPLIBS = $(DEPXLIB)
+LOCAL_LIBRARIES = $(XLIB)
+           SRCS = bright.c clip.c compress.c dither.c faces.c fill.c \
+		  imagetypes.c merge.c misc.c new.c options.c path.c \
+		  pbm.c reduce.c root.c send.c sunraster.c value.c \
+		  window.c xbitmap.c xloadimage.c zio.c zoom.c
+           OBJS = bright.o clip.o compress.o dither.o faces.o fill.o \
+		  imagetypes.o merge.o misc.o new.o options.o path.o \
+		  pbm.o reduce.o root.o send.o sunraster.o value.o \
+		  window.o xbitmap.o xloadimage.o zio.o zoom.o
+
+ComplexProgramTarget(xloadimage)

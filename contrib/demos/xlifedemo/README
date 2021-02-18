@@ -1,0 +1,59 @@
+This is an interactive demo of John Conway's game of Life. This
+implementation was inspired by the one on a DEC Firefly. (We have only
+one Firefly, but lots of X workstations:-)
+
+I wrote it as a skeleton framework/demo on which people could base
+applications that they wanted to port quickly to X, which were
+basically single window things that took a few key/mouse commands,
+and did mostly continuous output. Usually, these applications had
+their own main loop, or suchlike, and couldn't call XtMainLoop. To
+do all the WM/Normal/IconHints, options, defaults stuff right
+without the Toolkit is cumbersome, but trying to do basic graphics
+requires Xlib calls. And everyone whom I gave the Xt documents came
+back shaking their heads saying "No thanks - we'll use the Tek
+window".
+
+Anyway, this attempts to answer the question
+	How do I put up a window and draw stuff to it?
+but uses the Toolkit.
+
+xlifedemo.c is interesting as a simple Tookit demo which does
+CONTINUOUS graphic output, and uses the SIGIO signal to process
+events. (expose, mouse). Much code stolen from contrib/gnuplot.
+Warning: using signals this way is dangerous since large parts
+of the C library are not re-entrant, not to mention many other
+libraries and pieces of code. You may not get away with this for more
+complex applications -- beware.
+
+xlife2.c uses ordinary event handling, processing events only between
+iterations. Simpler, but less responsive. Probably more robust than
+xlifedemo.c.
+
+xlife3.c uses X Toolkit Workprocs. This is the simplest alternative.
+Also probably more robust than xlifedemo.c.
+
+Makes a neat game. Start it off, and try to kill off all life by
+adding cells while the game is running - you're not allowed to stop it
+in between except to answer the phone or suchlike :-).
+
+If you want a real, fast, large scale Life simulation, see the xlife
+program.
+
+To compile, edit the Imakefile to define HAVE_RANDOM if you have it, and to
+uncomment the lines for xlife2 if you want that as well, make Makefile, make
+depend, and make. Try it with 'xlifedemo -pat xlife.pat'. If you want, then
+'make install'.
+
+Have fun. Send additions to the xlife.pat file, enhancements, fixes,
+comments, criticism etc. to 
+
+                                        Mark Moraes
+                                        Computer Systems Research Institute,
+                                        University of Toronto,
+                                        Toronto, Canada M5S 1A4
+                                        
+                                        {your favourite backbone}!utcsri!moraes
+                                        moraes@utcsri.UUCP (new style)
+                                        moraes@csri.toronto.edu
+                                        moraes@csri.utoronto.ca
+                                        moraes@csri.utoronto (bitnet)

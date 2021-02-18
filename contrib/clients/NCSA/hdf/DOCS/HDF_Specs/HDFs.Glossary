@@ -1,0 +1,143 @@
+
+
+
+Glossary
+
+
+
+
+
+
+Calling Interface
+A collection of related subroutines and perhaps utilities that 
+provide users with needed functionality for working with a 
+particular type of set. For each supported set, there is a 
+corresponding calling interface.
+
+
+Data Descriptor (DD)
+A record containing the data identifier (tag/ref), the offset to the 
+data, and the length of the data.
+
+
+Data Descriptor Block
+(DD Block)
+A series of data descriptors placed in the file and prefixed by a data 
+descriptor header. All of the descriptors are assumed to contain 
+significant data unless they have a tag which is equal to ND (no 
+data).
+
+
+Data Descriptor Header 
+(DDH)
+A record that prefixes the data descriptor block. It has two fields:  a 
+size field giving the number of DDs in the following block, and a 
+link field giving the offset of the next DD block, if there is one, or 0, 
+if there is none.
+
+
+Data Element 
+One unit of data in the file. Each data element has a unique data 
+identifier and data descriptor entry which points to it.
+
+
+Data Identifier
+A quantity that uniquely defines a data element from all other data 
+elements within a file. It is the concatenation of the reference 
+number after the tag.
+
+
+Data Object
+Basic unit of information in HDF file, consisting of a data 
+descriptor and the data element that it points to. 
+
+
+File Header (FH)
+A four-byte magic number that indicates that the file is an HDF 
+file. The contents of the file header is the ASCII code for the four 
+characters ^N, ^C, ^S, and ^A.
+
+
+Group
+A collection of data identifiers (tag/refs) that identify all of the 
+objects contained in a given instance of a set.
+
+
+Length
+The number of bytes occupied by a data element.
+
+
+Offset 
+A pointer to a specific location in the file relative to the first byte of 
+the file. For purposes of numbering, the offset is the byte in the file 
+after the offset (e.g. the first byte in the file is offset 0).
+
+
+Raster Image Set
+An HDF set that provides a general framework for storing raster 
+images and other data related to the display of a raster image.
+
+
+Raster-8 Set
+An HDF set that provides the basic information needed to store 8-bit 
+raster images. The raster-8 set is supported, but has been 
+superseded by the more general raster image set.
+
+
+Reference Number
+A number that distinguishes a data element from others with the 
+same tag within the file. A reference number may never be zero.
+
+
+Scientific Data Set
+An HDF set for storing scientific data organized in rectangular 
+grid arrays, together with such information as array rank and 
+dimensions, labels and units for interpreting dependent and 
+independent variables and axis scales.
+
+
+Set
+A collection of related data objects that are grouped together to give 
+full information about a particular type of application. The exact 
+collection of objects that are stored together can vary, but for a 
+given type of set certain object must always be included.
+
+
+String
+A series of ASCII bytes (fewer than 256) used as a text message. 
+Strings always end with an ASCII NULL character and do not 
+contain end-of-lines. The purpose of the string type is to allow the 
+unique identification of data elements, tags, and other quantities 
+by a name.
+
+
+Tag
+A number used to designate what kind of data is contained in a 
+data element. This specification defines a particular syntax and 
+semantics for each tag number. Tags are also usually given a 
+name programs can refer to instead of the number. A tag may 
+never be zero.
+
+
+Text
+A series of ASCII bytes of any length used as a text message. Like 
+strings, text always ends with a NULL character. Unlike strings, 
+text may contain end-of-line's that are symbolized by the ASCII 
+CR-LF pair. The purpose of the text type is to allow for detailed 
+descriptions of data elements, tags, and other quantities.
+
+
+
+G.1	NCSA HDF Specifications
+
+Glossary	G.1
+
+National Center for Supercomputing Applications
+
+February 1989
+
+                                                                
+
+
+
+

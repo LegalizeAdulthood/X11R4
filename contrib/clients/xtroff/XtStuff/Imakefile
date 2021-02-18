@@ -1,0 +1,18 @@
+    STD_DEFINES = LibraryDefines
+    CDEBUGFLAGS = LibraryCDebugFlags
+        DEFINES = -DXWINDOWS # -DDIRENT
+       INCLUDES = -I. -I$(XLIBSRC) \
+		-I$(TOP) -I$(TOP)/X11
+   INSTALLFLAGS = $(INSTINCFLAGS)
+       LINTLIBS = $(LINTXLIB)
+
+HEADERS = Menu.h MenuP.h CheckItem.h CheckItemP.h MenuItem.h MenuItemP.h \
+	Window.h WindowP.h Minibuf.h MinibufP.h
+# Some systems don't have usleep - we provide a substitute
+OBJS = Menu.o CheckItem.o MenuItem.o Window.o Minibuf.o ask.o util.o usleep.o
+SRCS = Menu.c CheckItem.c MenuItem.c Window.c Minibuf.c ask.c util.c usleep.c
+
+NormalLibraryTarget(XtStuff,$(OBJS))
+LintLibraryTarget(XtStuff,$(SRCS))
+
+depend:

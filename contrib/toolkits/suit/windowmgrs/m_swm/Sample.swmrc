@@ -1,0 +1,236 @@
+/************************************************************
+Copyright 1989 by Information-Technology Promotion Agency Japan (IPA),
+Mitsubishi Research Institute, Inc. (MRI), and Fuji Xerox Co., Ltd. (FX)
+
+                        All Rights Reserved
+
+Permission to use, copy, modify and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation, and that the names of IPA, MRI or FX not be
+used in advertising or publicity pertaining to distribution of the
+software without specific, written prior permission.
+
+IPA, MRI or FX DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
+EVENT SHALL IPA, MRI or FX BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+
+********************************************************/
+
+#******
+#
+#    .swmrc 
+#                 
+#*****
+
+WarpCursor
+NoRaiseOnMove
+EdgeWidth	4
+Zoom 10 
+TitleFont  "serifb12"
+MenuFont   "serif10"
+IconFont   "serif10"
+
+
+color
+{
+	BorderColor     "medium blue"
+	TitleForeground "turquoise"
+	TitleBackground "sky blue"
+	MenuForeground   "white"
+	MenuBackground  "cadet blue"
+	MenuTitleForeground "white"
+	MenuTitleBackground "sky blue"
+	MenuShadowColor	 "lightgray"
+	IconForeground   "white"
+	IconBackground  "dark turquoise"
+	IconBorderColor "midnight blue"
+}
+
+# Button =  KEYS  : CONTEXT   :  FUNCTION
+#-----------------------------------------
+ Button1  =        : root      : f.unfocus
+ Button2  =        : root      : f.menu "rootmenu"
+#Button3  =        : root      : f.nop
+#Button1  =        : window    : f.nop
+#Button2  =        : window    : f.menu "desktopmenu"
+#Button3  =        : window    : f.nop
+#Button1  =  s     : window    : f.nop 
+#Button2  =  s     : window    : f.nop
+#Button3  =  s     : window    : f.nop
+ Button1  =        : title     : f.function "winselect"  
+ Button2  =        : title     : f.menu "windowmenu"
+ Button3  =        : title     : f.raise
+ Button1  =  s     : title     : f.move
+ Button2  =  s     : title     : f.menu "desktopmenu"	
+#Button3  =  s     : title     : f.nop
+#Button1  =        : icon      : f.nop
+ Button2  =        : icon      : f.menu "iconmenu"
+#Button3  =        : icon      : f.nop
+ Button1  =  s     : icon      : f.move
+#Button2  =  s     : icon      : f.nop
+#Button3  =  s     : icon      : f.nop
+
+ForceIcons
+IconDirectory  "~/suit/icons"
+Icons 
+{
+	"xterm"   "xterm.icon"
+	"kterm"   "kterm.icon"
+	"login"   "login.icon"
+        "desktop" "desktop.icon"
+}
+UnknownIcon    "default.icon"
+
+
+AutoRaise
+{
+	"nothing"
+}
+
+NoTitle
+{
+	"xcalendar"
+        "xman"
+        "rootDesktop"
+}
+
+Function "winselect"
+{
+	f.focus
+	f.raise
+}
+
+Function "clock"
+{
+	!"xclock -analog -update 1 -chime -bg white  -geometry 90x90 &"
+}
+
+menu "rootmenu"
+{
+        "root desktop menu"     f.title
+        "desktop"               f.desktop
+        "desktop accessories"   f.menu "rda"
+        "property"              f.nop
+        "refresh all"           f.refresh
+        "unfocus window"        f.unfocus
+        "window manipulation"	f.menu "anotherwmenu"
+        "exit"                  f.quit
+}
+
+menu "rda"
+{
+	"kterm"			!"kterm -sb &"
+	"xterm"                 !"xterm -sb &"
+	"clock"			!"xclock -analog -update 1 -chime -bg white  -geometry 90x90-2+2 &"
+	"load"			!"xload -update 5 -fg MidnightBlue  &" 
+	"calc"			!"xcalc &"
+        "calendar"		!"xcalendar &"
+	"xeyes"			!"xeyes -geometry 80x50 &"
+        "others"	        f.menu "dasothers"
+	"set root"		f.menu "setrootmenu"
+        "set rcfile"            f.swmrc
+	"rlogin"		f.menu "rhosts" 
+}
+
+menu "desktopmenu"
+{
+        "desktop menu" 		f.title
+        "kterm"          	!"kterm -sb &" 
+        "desktop accessories"   f.menu "da"
+        "property"              f.nop
+        "window refresh"        f.winrefresh
+        "unfocus window"        f.unfocus
+        "erase"                 f.destroy
+}
+
+menu "da"
+{
+	"kterm"			!"kterm -sb &"
+	"xterm"                 !"xterm -sb &"
+	"clock"			f.function "clock"
+	"load"			!"xload -update 5 -fg MidnightBlue  &" 
+	"calc"			!"xcalc &"
+        "calendar"		!"xcalendar &"
+	"xeyes"			!"xeyes -geometry 80x50 &"
+        "set rcfile"            f.swmrc
+	"rlogin"		f.menu "rlogin" 
+}
+
+menu "dasothers"
+{
+	"bitmap"		!"bitmap icon_bitmap 45x45 &"
+	"xbiff"			!"xbiff -update 60 -bg Wheat -fg MidnightBlue -geometry 100x80 &"
+	"xlogo"			!"xlogo -fg Blue  -bg MediumTurquoise &"
+	"xman"			!"xman &"
+	"mail handler"		!"xmh &"
+}
+
+menu "rhosts"
+{
+	"nikumaru"		!"kterm -sb -T nikumaru -e rlogin nikumaru &"
+	"zoumaru"		!"kterm -sb -T zoumaru  -e rlogin zoumaru  &"
+	"hidemaru"		!"kterm -sb -T hidemaru -e rlogin hidemaru &"
+}
+
+menu "rlogin"
+{
+	"nikumaru"		!"kterm -sb -T nikumaru -e rlogin nikumaru &"
+	"hidemaru"		!"kterm -sb -T hidemaru -e rlogin hidemaru &"
+	"tentyan"		!"kterm -sb -T hidemaru -e rlogin hidemaru -l midori &"
+}
+
+menu "windowmenu"
+{
+	"window menu"		f.title
+	"move"			f.move
+	"resize"		f.resize
+	"zoom"			f.fullzoom
+	"shrink"		f.iconify
+	"window shift"		f.menu "shiftmenu"
+	"property"		f.nop
+	"erase"			f.destroy
+}
+
+menu "shiftmenu"
+{
+	"top"			f.raise
+	"bottom"		f.lower
+	"pop"			f.circleup
+	"push"			f.circledown
+}
+
+menu "iconmenu"
+{
+	"icon menu"		f.title
+	"move"			f.move
+	"copy"			f.nop
+	"expand"		f.iconify
+	"property"		f.nop
+	"erase"			f.destroy
+}
+
+menu "anotherwmenu"
+{
+	"move"			f.move
+	"resize"		f.resize
+	"zoom"			f.fullzoom
+	"shrink"		f.iconify
+	"window shift"		f.menu "anothershiftmenu"
+	"property"		f.nop
+	"erase"			f.destroy
+}
+
+menu "anothershiftmenu"
+{
+	"top"			f.raise
+	"bottom"		f.lower
+	"pop"			f.circleup
+	"push"			f.circledown
+}
+

@@ -1,0 +1,107 @@
+\begindata{text,270025272}
+\textdsversion{12}
+\template{default}
+\define{bold
+menu:[Font~1,Bold~10]
+attr:[FontFace Bold Int Set]}
+\define{section
+menu:[Title~3,Section~21]
+attr:[Justification LeftJustified Point 0]
+attr:[Flags KeepPriorNL Int Set]
+attr:[Flags KeepNextNL Int Set]
+attr:[FontFace Bold Int Set]
+attr:[FontFamily AndySans Int 0]
+attr:[FontSize ConstantFontSize Point 14]}
+\define{fixedtext
+menu:[Region~4,Fixedtext]
+attr:[Justification LeftJustified Point 0]
+attr:[FontFace FixedFace Int Set]
+attr:[FontFamily AndyType Int 0]
+attr:[FontSize ConstantFontSize Point 10]}
+\define{fixedindent
+menu:[Region~4,Fixedindent]
+attr:[LeftMargin LeftMargin Cm 83230]
+attr:[Justification LeftJustified Point 0]
+attr:[FontFace FixedFace Int Set]
+attr:[FontFamily AndyType Int 0]
+attr:[FontSize ConstantFontSize Point 10]}
+\define{paramname
+menu:[Font~1,Paramname]
+attr:[FontFace Italic Int Set]}
+\chapter{Panel}
+
+
+This file is intended to contain programmer's documentation for panel.  There 
+are no short-term plans to complete this document.
+
+
+
+
+\section{Quick reference list for }panel
+
+
+
+\fixedtext{struct panel_Entry *\bold{panel_}Add }\fixedindent{(struct panel 
+*\paramname{panel}, char *\paramname{item}, char *\paramname{tag}, int 
+\paramname{showNow});} 
+
+\fixedtext{void \bold{panel_}AssignKey }\fixedindent{(struct panel 
+*\paramname{panel}, char \paramname{c}, void (*proc)(\paramname{)}, long 
+\paramname{rock});} 
+
+\fixedtext{void \bold{panel_}ClearSelection }\fixedindent{(struct panel 
+*\paramname{panel});} 
+
+\fixedtext{\bold{panel_}CurrentHighlight }\fixedindent{(struct panel 
+*\paramname{panel});} 
+
+\fixedtext{void \bold{panel_}FinalizeObject }\fixedindent{(struct panel 
+*\paramname{self});} 
+
+\fixedtext{void \bold{panel_}FullUpdate }\fixedindent{(struct panel 
+*\paramname{panel}, enum view_UpdateType \paramname{type}, long \paramname{x}, 
+long \paramname{y}, long \paramname{w}, long \paramname{h});} 
+
+\fixedtext{struct view *\bold{panel_}Hit }\fixedindent{(struct panel 
+*\paramname{panel}, enum view_MouseAction \paramname{action}, long 
+\paramname{x}, long \paramname{y}, long \paramname{numberOfClicks});} 
+
+\fixedtext{boolean \bold{panel_}InitializeClass }\fixedindent{();} 
+
+\fixedtext{boolean \bold{panel_}InitializeObject }\fixedindent{(struct panel 
+*\paramname{self});} 
+
+\fixedtext{void \bold{panel_}MakeSelection }\fixedindent{(struct panel 
+*\paramname{panel}, struct panel_Entry *\paramname{entry});} 
+
+\fixedtext{void \bold{panel_}PostKeyState }\fixedindent{(struct panel 
+*\paramname{panel}, struct keystate *\paramname{ks});} 
+
+\fixedtext{void \bold{panel_}PostMenus }\fixedindent{(struct panel 
+*\paramname{panel}, struct menulist *\paramname{ml});} 
+
+\fixedtext{void \bold{panel_}RemoveAll }\fixedindent{(struct panel 
+*\paramname{panel});} 
+
+\fixedtext{void \bold{panel_}Remove }\fixedindent{(struct panel 
+*\paramname{panel}, struct panel_Entry *\paramname{entry});} 
+
+\fixedtext{void \bold{panel_}SelectNext }\fixedindent{(struct panel 
+*\paramname{panel});} 
+
+\fixedtext{void \bold{panel_}SelectPrevious }\fixedindent{(struct panel 
+*\paramname{panel});} 
+
+\fixedtext{\bold{panel_}SetCursorFont }\fixedindent{(struct panel 
+*\paramname{panel}, struct fontdesc *\paramname{cf});} 
+
+\fixedtext{\bold{panel_}SetCursorIcon }\fixedindent{(struct panel 
+*\paramname{panel}, char \paramname{c});} 
+
+\fixedtext{\bold{panel_}SetHandler }\fixedindent{(struct panel 
+*\paramname{panel}, void (*proc)(\paramname{)}, char *\paramname{gt});} 
+
+\fixedtext{\bold{panel_}SetHighlightStyle }\fixedindent{(struct panel 
+*\paramname{panel}, struct style *\paramname{s});} 
+
+\enddata{text,270025272}

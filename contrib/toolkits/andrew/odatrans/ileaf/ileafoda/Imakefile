@@ -1,0 +1,36 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES	= -I$(BASEDIR)/include/oda -I../ascii-reader/src
+
+OBJS   = attsup.o \
+	content.o \
+	doit.o \
+	error.o \
+	main.o \
+	samecmpn.o \
+	styles.o
+
+HFILES =  attsup.h \
+	error.h \
+	ext.h
+
+ODALIBS = \
+	$(DESTDIR)/lib/oda/libisode.a \
+	$(DESTDIR)/lib/oda/liboda.a \
+	$(DESTDIR)/lib/oda/libraster.a \
+	$(DESTDIR)/lib/oda/liblocal.a
+
+ILEAFLIBS = \
+	../ascii-reader/src/libAR5_0.a
+
+NormalObjectRule()
+
+ProgramTarget(ileafoda, $(OBJS), $(ODALIBS) $(ILEAFLIBS), )
+
+InstallProgram(ileafoda, $(DESTDIR)/bin)
+
+
+
+

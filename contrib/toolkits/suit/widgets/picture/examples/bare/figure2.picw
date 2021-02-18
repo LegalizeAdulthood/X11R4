@@ -1,0 +1,287 @@
+#FIG 1.4
+80 2
+#StPicture 0.1
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   3 33 -22 1x1
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   3 77 -22 2x2
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   5 119 -22 black
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   5 170 -22 boxes
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   8 225 -21 cntr_ptr
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   11 270 -20 cntr_ptrmsk
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   11 328 -19 cross_weave
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   7 56 -80 dimple1
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   7 103 -79 dimple3
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   3 149 -78 dot
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   8 199 -68 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   6 278 -69 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   12 366 -82 flipped_gray
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   4 410 -84 gray
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   5 80 -152 gray1
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   5 136 -151 gray3
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   4 195 -150 icon
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   8 253 -150 left_ptr
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   11 303 -151 left_ptrmsk
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   10 350 -156 light_gray
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   11 5 -197 mensetmanus
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   7 191 -200 opendot
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   11 232 -200 opendotMask
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   9 274 -199 right_ptr
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   12 321 -198 right_ptrmsk
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   10 373 -198 root_weave
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   6 426 -198 scales
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   4 186 -245 sipb
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   4 242 -243 star
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   8 283 -243 starMask
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   7 325 -244 stipple
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   6 376 -244 target
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   11 426 -244 tie_fighter
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   10 186 -298 wide_weave
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   8 235 -298 wingdogs
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   5 298 -289 woman
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   8 401 -289 xfd_icon
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   7 82 -395 xlogo16
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   7 143 -390 xlogo32
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   7 223 -386 xlogo64
+#StFIG_0.1  Text Primitive
+#!!  figure_type
+#!   11
+4 0 11 11 3 0 0 0.000 11 0 7 311 -410 Bitmaps

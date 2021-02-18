@@ -1,0 +1,8302 @@
+%!
+%%Pages: (atend)
+%%DocumentFonts: (atend)
+%%EndComments
+%
+% Frame Maker PostScript Prolog 1.3, for use with Maker 1.3
+% Copyright (c) 1986-1988 by Frame Technology, Inc.  All rights reserved.
+%
+% Known Problems:
+%	Due to bugs in Transcript, the 'PS-Adobe-' is omitted from line 1
+/FMversion (1.2) def 
+/FrameDict 123 dict def 
+% The readline in 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} def
+	} if
+/FMVERSION {
+	FMversion ne {
+		/Times-Roman findfont 18 scalefont setfont
+		100 100 moveto
+		(Maker version does not match postscript_prolog!)
+		dup =
+		show showpage
+		} if
+	} def 
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/landscape FMLOCAL
+	/docheight FMLOCAL
+	/docwidth FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/organgle FMLOCAL
+	/orgfreq FMLOCAL
+/FMDOCUMENT {
+	array /FMfonts exch def
+	/#copies exch def
+	FrameDict begin
+	0 ne /landscape exch def 
+	/docheight exch def
+	/docwidth exch def
+	/yscale exch def
+	/xscale exch def
+	currenttransfer cvlit /orgxfer exch def
+	currentscreen cvlit /orgproc exch def
+		/organgle exch def /orgfreq exch def
+	end 
+	} def 
+	/pagesave FMLOCAL
+	/orgmatrix FMLOCAL
+/FMBEGINPAGE {
+	FrameDict begin 
+	/pagesave save def
+	
+	2 setlinecap
+	xscale yscale scale
+	landscape {
+		90 rotate
+		0 docheight neg translate
+		/fillprocs /fillprocs90 load store
+		}
+		{/fillprocs /fillprocs0 load store}
+		ifelse
+	/orgmatrix matrix def
+	gsave 
+	} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+	/fontname FMLOCAL
+	/fontscale FMLOCAL
+	/fontnum FMLOCAL
+	/fontdict FMLOCAL
+/FMDEFINEFONT {
+	FrameDict begin
+	/fontname exch def
+	/fontscale exch def
+	/fontnum exch def
+	/fontdict fontname findfont fontscale scalefont def
+	fontdict /Encoding get StandardEncoding eq
+	{
+		fontdict DiacriticEncode 
+		/fontdict exch def
+	} {
+		fontdict NonDiacriticEncode
+		/fontdict exch def
+	} ifelse
+	FMfonts fontnum
+		fontnum fontdict definefont
+	put
+	end 
+	} def 
+/FMLINEWIDTHS { 
+	FrameDict begin
+	dup array /FMlinewidths exch def 
+	1 sub -1 0 {exch FMlinewidths 3 1 roll lnormalize put} for
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 setgray
+	} bind def
+/FMBEGINEPSF {
+	end 
+	/FMEPSF save def
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fy translate 
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	} bind def
+ 
+/FMENDEPSF {
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+ 
+FrameDict begin 
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi	72 0 dmatrix defaultmatrix dtransform
+	dup mul exch   dup mul add   sqrt
+def
+/max	{2 copy lt {exch} if pop} bind def
+/min	{2 copy gt {exch} if pop} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+	/basefontdict FMLOCAL
+	/newfontdict FMLOCAL
+/DiacriticEncode {
+	/basefontdict exch def
+	/newfontdict basefontdict maxlength dict def
+	basefontdict
+	{exch dup /FID ne
+		{dup /Encoding eq
+			{exch pop DiacriticEncoding}
+			{exch}
+			ifelse
+			newfontdict 3 1 roll put
+			}
+		{pop pop}
+		ifelse
+		} forall
+	newfontdict
+	} bind def
+/NonDiacriticEncode {
+	/basefontdict exch def
+	/newfontdict basefontdict maxlength dict def
+	basefontdict
+	{exch dup /FID ne
+		{exch newfontdict 3 1 roll put}
+		{pop pop}
+		ifelse
+		} forall
+	newfontdict
+	} bind def
+	/freq FMLOCAL
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setpattern {
+	 /freq    exch def
+	 /bwidth  exch def
+	 /bpside  exch def
+	 /bstring exch def
+	 /onbits 0 def  /offbits 0 def
+	 freq 0 {/y exch def
+		 /x exch def
+		 /xindex x 1 add 2 div bpside mul cvi def
+		 /yindex y 1 add 2 div bpside mul cvi def
+		 bstring yindex bwidth mul xindex 8 idiv add get
+		 1 7 xindex 8 mod sub bitshift and 0 ne
+		 {/onbits  onbits  1 add def 1}
+		 {/offbits offbits 1 add def 0}
+		 ifelse
+		}
+		setscreen
+	 {} settransfer
+	 offbits offbits onbits add div setgray
+	} bind def
+/grayness {
+	setgray
+	orgxfer cvx settransfer
+	orgfreq organgle orgproc cvx setscreen
+	} bind def
+/normalize {
+	transform cvi exch cvi exch itransform
+	} bind def
+/dnormalize {
+	dtransform cvi exch cvi exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/fillprocs0
+	[{0.00 grayness}
+	 {0.10 grayness}
+	 {0.30 grayness}
+	 {0.50 grayness} 
+	 {0.70 grayness}
+	 {0.90 grayness}
+	 {0.97 grayness} 
+	 {1.00 grayness} 
+	 {<0F1E3C78F0E1C387> 8 1 dpi 16 div setpattern} 
+	 {<0F87C3E1F0783C1E> 8 1 dpi 16 div setpattern} 
+	 {<CCCCCCCCCCCCCCCC> 8 1 dpi 16 div setpattern} 
+	 {<FFFF0000FFFF0000> 8 1 dpi 16 div setpattern} 
+	 {<8142241818244281> 8 1 dpi 16 div setpattern} 
+	 {<03060C183060C081> 8 1 dpi 16 div setpattern} 
+	 {<8040201008040201> 8 1 dpi 16 div setpattern} 
+	 {}
+	 {1.00 grayness}
+	 {0.90 grayness}
+	 {0.70 grayness}
+	 {0.50 grayness} 
+	 {0.30 grayness}
+	 {0.10 grayness}
+	 {0.03 grayness} 
+	 {0.00 grayness} 
+	 {<F0E1C3870F1E3C78> 8 1 dpi 16 div setpattern} 
+	 {<F0783C1E0F87C3E1> 8 1 dpi 16 div setpattern} 
+	 {<3333333333333333> 8 1 dpi 16 div setpattern} 
+	 {<0000FFFF0000FFFF> 8 1 dpi 16 div setpattern} 
+	 {<7EBDDBE7E7DBBD7E> 8 1 dpi 16 div setpattern} 
+	 {<FCF9F3E7CF9F3F7E> 8 1 dpi 16 div setpattern} 
+	 {<7FBFDFEFF7FBFDFE> 8 1 dpi 16 div setpattern} 
+	 {}
+	] def
+/fillprocs90
+	 [{0.00 grayness}
+	 {0.10 grayness}
+	 {0.30 grayness}
+	 {0.50 grayness}
+	 {0.70 grayness}
+	 {0.90 grayness}
+	 {0.97 grayness}
+	 {1.00 grayness}
+	 {<87c3e1f0783c1e0f> 8 1 dpi 16 div setpattern}
+	 {<f0e1c3870f1e3c78> 8 1 dpi 16 div setpattern}
+	 {<0000ffff0000ffff> 8 1 dpi 16 div setpattern}
+	 {<cccccccccccccccc> 8 1 dpi 16 div setpattern}
+	 {<8142241818244281> 8 1 dpi 16 div setpattern}
+	 {<81c06030180c0603> 8 1 dpi 16 div setpattern}
+	 {<0102040810204080> 8 1 dpi 16 div setpattern}
+	 {}
+	 {1.00 grayness}
+	 {0.90 grayness}
+	 {0.70 grayness}
+	 {0.50 grayness}
+	 {0.30 grayness}
+	 {0.10 grayness}
+	 {0.03 grayness}
+	 {0.00 grayness}
+	 {<783c1e0f87c3e1f0> 8 1 dpi 16 div setpattern}
+	 {<0f1e3c78f0e1c387> 8 1 dpi 16 div setpattern}
+	 {<ffff0000ffff0000> 8 1 dpi 16 div setpattern}
+	 {<3333333333333333> 8 1 dpi 16 div setpattern}
+	 {<7ebddbe7e7dbbd7e> 8 1 dpi 16 div setpattern}
+	 {<7e3f9fcfe7f3f9fc> 8 1 dpi 16 div setpattern}
+	 {<fefdfbf7efdfbf7f> 8 1 dpi 16 div setpattern}
+	 {}
+	] def
+/fillprocs /fillprocs0 load def
+/H { 
+	FMlinewidths exch get setlinewidth
+	} bind def
+/X { 
+	fillprocs exch get exec
+	} bind def
+/V { 
+	gsave eofill grestore
+	} bind def
+/N { 
+	gsave stroke grestore 
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+/K { 
+ 	/n exch def
+	newpath
+	moveto 
+	3 1 n {pop curveto} for
+	} bind def
+/J { 
+ 	/n exch def
+	newpath
+	moveto 
+	1 1 n {pop curveto} for
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	} bind def
+/U { 
+	grestore
+	gsave
+	} bind def
+/F { 
+	FMfonts exch get
+	setfont
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/Q { 
+	moveto
+	gsave show grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/dx FMLOCAL
+	/dy FMLOCAL
+	/dl FMLOCAL
+	/t FMLOCAL
+	/t2 FMLOCAL
+	/Cos FMLOCAL
+	/Sin FMLOCAL
+	/r FMLOCAL
+/W { 
+	dnormalize
+	/dy exch def
+	/dx exch def
+	normalize
+	/y  exch def
+	/x  exch def
+	/dl dx dx mul dy dy mul add sqrt def
+	dl 0.0 gt {
+		/t currentlinewidth def
+		savematrix
+		/Cos dx dl div def
+		/Sin dy dl div def
+		/r [Cos Sin Sin neg Cos 0.0 0.0] def
+		/t2 t 2.5 mul 3.5 max def
+		newpath
+		x y translate
+		r concat
+		0.0 0.0 moveto
+		dl t 2.7 mul sub 0.0 rlineto
+		stroke
+		restorematrix
+		x dx add y dy add translate
+		r concat
+		t 0.67 mul setlinewidth
+		t 1.61 mul neg  0.0 translate
+		0.0 0.0 moveto
+		t2 1.7 mul neg  t2 2.0 div     moveto
+		0.0 0.0 lineto
+		t2 1.7 mul neg  t2 2.0 div neg lineto
+		stroke
+		t setlinewidth
+		restorematrix
+		} if
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath eofill
+	grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+/A { 
+	/y exch def
+	/x exch def
+	/h exch def
+	/w exch def
+	x y normalize /yy exch def /xx exch def
+	w h dnormalize /hh exch def /ww exch def
+	ww abs hh abs xx ww add yy hh sub
+	gsave
+	savematrix
+	newpath
+	translate
+	scale
+	0.0 0.0 1.0 5 3 roll arc
+	0 setlinecap
+	restorematrix
+	stroke
+	grestore
+	} bind def
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE {
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 6 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	translate
+	FMNORMALIZEGRAPHICS
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/BEGINBITMAP { 
+	gsave
+	translate scale /h exch def /w exch def
+	/lb w 7 add 8 idiv def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h 1 [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+%%EndProlog
+%%BeginSetup
+(1.2) FMVERSION
+1. 1. 612. 792. 0 1 21 FMDOCUMENT
+0 7. /Helvetica  FMDEFINEFONT
+1 24. /Times-Bold  FMDEFINEFONT
+2 10. /Times-Roman  FMDEFINEFONT
+3 11. /Times-Roman  FMDEFINEFONT
+4 11. /Courier  FMDEFINEFONT
+5 11. /Times-Italic  FMDEFINEFONT
+6 14. /Times-Bold  FMDEFINEFONT
+7 12. /Times-Bold  FMDEFINEFONT
+8 12. /Courier  FMDEFINEFONT
+9 12. /Times-Roman  FMDEFINEFONT
+10 12. /Times-Italic  FMDEFINEFONT
+11 11. /Times-BoldItalic  FMDEFINEFONT
+12 12. /Helvetica-Bold  FMDEFINEFONT
+13 10. /Courier  FMDEFINEFONT
+14 10. /Helvetica  FMDEFINEFONT
+15 11. /Courier-Bold  FMDEFINEFONT
+16 12. /Symbol  FMDEFINEFONT
+17 12. /Courier-Oblique  FMDEFINEFONT
+18 12. /Courier-Bold  FMDEFINEFONT
+19 24. /Times-Roman  FMDEFINEFONT
+20 36. /Times-Roman  FMDEFINEFONT
+0.5 1. 3. 4. 4 FMLINEWIDTHS
+%%EndSetup
+%%Page: "78" 32
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(78) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Those run-time incompatibilities that affect advanced clients are ) 216. 648. T
+(noted in this section.) 216. 635. T
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+4 F
+0 X
+(win_setrect\050\051) 216. 595. T
+3 F
+( used to guarantee that the rect would change as ) 301.8 595. T
+(requested, since the kernel never rejected or modified a request.  The ) 216. 582. T
+(X11 window manager might alter the new size request.  This means the ) 216. 569. T
+(semantics of ) 216. 556. T
+4 F
+(win_setrect\050\051) 274.05 556. T
+3 F
+( will change.  The behavior of ) 359.85 556. T
+4 F
+(win_setrect\050\051) 216. 543. T
+3 F
+( followed by ) 301.8 543. T
+4 F
+(win_getrect\050\051) 360.15 543. T
+3 F
+( depends on external ) 445.96 543. T
+(window managers.  Sun will provide an external window manager which ) 216. 530. T
+(can be used with XView or other X11/NeWS applications.  The XView ) 216. 517. T
+(toolkit is designed to run with every true X11window manager.) 216. 504. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(\050This is an old, pre-SunView, SunWindows routine.\051  ) 216. 481. T
+3 F
+(The flush mask ) 450.37 481. T
+(argument is ignored; no events are flushed. ) 216. 468. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(This no longer sets ) 216. 445. T
+4 F
+(errno) 302.16 445. T
+3 F
+( in case of error, and only returns 0 if the ) 335.16 445. T
+(client code specifies non-blocking mode. ) 216. 432. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Clients must draw in screen coordinates in XView, rather than in the ) 216. 404. T
+(coordinates of the window that was used to go full-screen. Events are ) 216. 391. T
+(still reported in the coordinates of the window that becomes full-) 216. 378. T
+(screen.  They must also use the new functions ) 216. 365. T
+4 F
+(fullscreen_set_cursor\050\051) 216. 352. T
+3 F
+( and ) 367.8 352. T
+4 F
+(fullscreen_set_inputmask\050\051) 389.18 352. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(XView has only one input reading function per server, not one per ) 216. 329. T
+(window ) 216. 316. T
+4 F
+(FD) 254.19 316. T
+3 F
+(.) 267.39 316. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The timestamp of events returned by ) 216. 293. T
+4 F
+(event_time\050\051) 380.36 293. T
+3 F
+( is the same ) 459.56 293. T
+4 F
+(timeval) 216. 280. T
+3 F
+( structure as before.  However, in X11, event timestamp ) 262.2 280. T
+(resolution is in milliseconds.  Also, the timestamp of the event is ) 216. 267. T
+(measured as time since the server started, not the time-of-day.  If you ) 216. 254. T
+(are using event timestamps as the time-of-day in SunView, you can ) 216. 241. T
+(simulate this approximately in XView with the following fix:  at ) 216. 228. T
+(initialization, compare the timestamp of the first X11 event with ) 216. 215. T
+4 F
+(localtime\050\051) 216. 202. T
+3 F
+(, then offset subsequent event times accordingly. ) 288.6 202. T
+55. 633. 198. 702. C
+55. 633. 198. 702. R
+7 X
+V
+6 F
+0 X
+(4.6) 58. 686. T
+(Run-Time ) 89. 686. T
+(Incompatibilities) 89. 671. T
+(\321Advanced ) 89. 656. T
+(Clients) 89. 641. T
+U
+55. 610. 198. 628. C
+55. 610. 198. 628. R
+7 X
+V
+7 F
+0 X
+(Windows) 59. 614. T
+U
+55. 566. 198. 600. C
+55. 566. 198. 600. R
+7 X
+V
+8 F
+0 X
+(win_setrect\050\051) 60. 588. T
+9 F
+( and ) 153.6 588. T
+8 F
+(win_getrect\050\051) 60. 575. T
+U
+55. 459. 198. 494. C
+55. 459. 198. 494. R
+7 X
+V
+8 F
+0 X
+(win_setinputmask\050\051) 59. 481. T
+U
+55. 425. 198. 457. C
+55. 425. 198. 457. R
+7 X
+V
+8 F
+0 X
+(input_readevent\050\051 ) 59. 445. T
+9 F
+( ) 188.6 445. T
+U
+55. 386. 198. 413. C
+55. 386. 198. 413. R
+7 X
+V
+7 F
+0 X
+(Full-Screen Mode) 59. 399. T
+U
+55. 317. 198. 343. C
+55. 317. 198. 343. R
+7 X
+V
+7 F
+0 X
+(Input) 59. 331. T
+U
+55. 275. 198. 309. C
+55. 275. 198. 309. R
+7 X
+V
+7 F
+0 X
+(Event Timestamps) 59. 295. T
+U
+FMENDPAGE
+%%Page: "77" 31
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(77) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+9 F
+(Table 4-27) 145.68 693. T
+10 F
+(Unimplemented Cursor RasterOps) 216. 693. T
+11 F
+(Unimplemented Cursor RasterOps) 216. 675. T
+216. 673.33 372.46 673.92 R
+V
+4 F
+(PIX_SRC XOR PIX_DST) 216. 654. T
+(PIX_SRC AND PIX_NOT\050PIX_DST\051) 216. 641. T
+(PIX_NOT\050PIX_SRC\051 AND PIX_NOT\050PIX_DST\051) 216. 628. T
+(PIX_NOT\050PIX_SRC\051 XOR PIX_DST) 216. 615. T
+(PIX_SRC OR PIX_NOT\050PIX_DST\051) 216. 602. T
+(PIX_NOT\050PIX_SRC\051 OR PIX_NOT\050PIX_DST\051) 216. 589. T
+(PIX_NOT\050PIX_DST\051) 216. 576. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(In SunView, each window has its own unique cursor.  In XView, cursors ) 216. 553. T
+(are shared.  Thus, if you change a window\325s cursor but do not use ) 216. 540. T
+4 F
+(cursor_copy\050\051) 216. 527. T
+3 F
+( to create a copy of a cursor, the cursor may change in ) 301.8 527. T
+(other windows as well.) 216. 514. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Since icons are separate windows in XView, if a frame is iconic and you ) 216. 491. T
+(change its icon, its image on-screen will change immediately; in ) 216. 478. T
+(SunView the image would not change until you called ) 216. 465. T
+4 F
+(window_set\050frame, FRAME_ICON, icon, 0\051;) 216. 452. T
+3 F
+( ) 473.4 452. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Certain run-time incompatibilities have consequences for ) 216. 406. T
+(intermediate clients.  They are listed in this section.) 216. 393. T
+54. 90. 558. 702. C
+U
+4 F
+0 X
+(pf_default\050\051) 216. 365. T
+3 F
+( no longer examines the environment variable ) 295.2 365. T
+4 F
+(DEFAULT_FONT,) 216. 352. T
+3 F
+( but takes the default font from the defaults database.   ) 301.8 352. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Be sure to use the fonts package.  See function name changes under \324\324fonts\325\325 ) 216. 339. T
+(in ) 216. 326. T
+5 F
+(Section 4.3) 227.31 326. T
+3 F
+(.) 276.19 326. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The damage list field of the ) 216. 303. T
+4 F
+(pixwin) 340.04 303. T
+3 F
+( ) 379.64 303. T
+4 F
+(struct) 382.39 303. T
+3 F
+( is no longer available. Thus, ) 421.99 303. T
+4 F
+(pw_read\050\051) 216. 290. T
+3 F
+( and ) 275.4 290. T
+4 F
+(pw_copy\050\051) 296.78 290. T
+3 F
+( do not provide a fix-up list.  However, a new ) 356.18 290. T
+(function, ) 216. 277. T
+4 F
+(win_get_damage\050\051) 258.16 277. T
+3 F
+( can help clients to determine the damage ) 363.76 277. T
+(list when processing a ) 216. 264. T
+4 F
+(WIN_REPAINT) 316.21 264. T
+3 F
+( event. ) 388.81 264. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Scrollbars are now windows rather than ) 216. 241. T
+4 F
+(pixwin) 393.79 241. T
+3 F
+( regions.  In particular, ) 433.39 241. T
+(they now receive ) 216. 228. T
+4 F
+(WIN_REPAINT) 293.89 228. T
+3 F
+( and ) 366.49 228. T
+4 F
+(WIN_RESIZE) 387.88 228. T
+3 F
+( events independently ) 453.88 228. T
+(of the windows they are attached to, and  they process these events ) 216. 215. T
+(correctly.  This means that clients should not call ) 216. 202. T
+4 F
+(scrollbar_paint\050\051) 434.76 202. T
+3 F
+( ) 546.96 202. T
+(when they change the size of a scrollbar or repaint a window containing ) 216. 189. T
+(scrollbars.  Calling ) 216. 176. T
+4 F
+(scrollbar_paint\050\051) 302.16 176. T
+3 F
+( will result in ) 414.36 176. T
+(unnecessary ) 475.48 176. T
+(flicker. ) 216. 163. T
+(The SunView 1 routine ) 216. 145. T
+4 F
+(scrollbar_create\050\051) 321.71 145. T
+3 F
+( is still usable, but it ) 440.51 145. T
+(will not let you specify the scrollbar as splittable.  For full scrollbar ) 216. 132. T
+(functionality, use ) 216. 119. T
+4 F
+(xv_create) 295.13 119. T
+3 F
+( instead.) 354.53 119. T
+55. 535. 198. 564. C
+55. 535. 198. 564. R
+7 X
+V
+9 F
+0 X
+(Changing Cursors) 59. 552. T
+U
+55. 473. 198. 507. C
+55. 473. 198. 507. R
+7 X
+V
+7 F
+0 X
+(Icons) 59. 493. T
+U
+55. 374. 198. 445. C
+55. 374. 198. 445. R
+7 X
+V
+6 F
+0 X
+(4.5) 58. 429. T
+(Run-Time ) 89. 429. T
+(Incompatibilities) 89. 414. T
+(\321Intermediate ) 89. 399. T
+(Clients) 89. 384. T
+U
+55. 364. 198. 381. C
+55. 364. 198. 381. R
+7 X
+V
+7 F
+0 X
+(Fonts) 59. 367. T
+U
+55. 309. 198. 363. C
+55. 309. 198. 363. R
+7 X
+V
+12 F
+0 X
+(Note:) 59. 350. T
+13 F
+(  pf_*) 89.66 350. T
+2 F
+( ) 125.66 350. T
+14 F
+(is now ) 128.16 350. T
+13 F
+(xv_pf_* ) 59. 338. T
+14 F
+(and must be ) 107. 338. T
+13 F
+(extern) 59. 326. T
+14 F
+(ed in the client code ) 95. 326. T
+(\050cannot include a header file\051.) 59. 314. T
+U
+55. 285. 198. 307. C
+55. 285. 198. 307. R
+7 X
+V
+7 F
+0 X
+(Pixwin) 59. 295. T
+U
+55. 205. 198. 257. C
+55. 205. 198. 257. R
+7 X
+V
+9 F
+0 X
+(Scrollbar is a Real ) 59. 243. T
+(Window) 59. 230. T
+U
+53. 571. 554. 688. R
+0 H
+0 X
+N
+FMENDPAGE
+%%Page: "76" 30
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(76) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The) 216. 694. T
+( ) 233.1 694. T
+4 F
+(pw_polygon2\050\051) 235.85 694. T
+3 F
+( routine is implemented for its simple cases, but ) 321.65 694. T
+(some of its more complicated semantics are not implemented.  Source ) 216. 681. T
+(for filling the polygon can be either a ) 216. 668. T
+4 F
+(pixrect) 382.8 668. T
+3 F
+( or a ) 429. 668. T
+4 F
+(server_image) 451.3 668. T
+3 F
+(.) 530.5 668. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(XView does not support separate keyboard and pick input masks.  For ) 216. 645. T
+(compile-time compatibility, we have defined all the window attributes ) 216. 632. T
+(dealing with keyboard and pick input masks to map to a new set of ) 216. 619. T
+(attributes which manipulate a single input mask.  The following ) 216. 606. T
+(attributes therefore have changed run-time semantics.) 216. 593. T
+9 F
+(Table 4-26) 145.68 572. T
+10 F
+(Changed Inputmask Attributes) 216. 572. T
+11 F
+(Window Attribute) 216. 554. T
+216. 552.33 296.39 552.92 R
+V
+(Comments) 431. 554. T
+431. 552.33 479.29 552.92 R
+V
+4 F
+(WIN_CONSUME_KBD_EVENTS) 216. 533. T
+3 F
+(Use) 414. 533. T
+4 F
+(WIN_CONSUME_PICK_EVENT) 216. 520. T
+(WIN_CONSUME_EVENT) 414. 520. T
+(WIN_IGNORE_KBD_EVENT) 216. 494. T
+3 F
+(Use) 414. 494. T
+4 F
+(WIN_IGNORE_PICK_EVENT) 216. 481. T
+(WIN_IGNORE_EVENT) 414. 481. T
+3 F
+(A sample code fragment affected by this change is listed below.) 216. 445. T
+4 F
+(window_set\050window,     ) 90. 414. T
+(  ) 72. 401. T
+(WIN_CONSUME_PICK_EVENTS, LOC_DRAG,0, ) 180. 401. T
+(  ) 72. 388. T
+(WIN_CONSUME_KBD_EVENTS, WIN_NO_EVENTS, ) 180. 388. T
+(  ) 72. 375. T
+(WIN_ASCII_EVENTS, 0, 0\051; ) 180. 375. T
+3 F
+(In SunView, this code would have resulted in ) 216. 334. T
+4 F
+(LOC_DRAG) 419.17 334. T
+3 F
+( events being ) 471.97 334. T
+(enabled for the window.  In XView, since the two input mask attributes ) 216. 321. T
+(map to a single input mask, specifying ) 216. 308. T
+4 F
+(WIN_NO_EVENTS) 388.33 308. T
+3 F
+( clears the single ) 474.13 308. T
+(input mask and disables ) 216. 295. T
+4 F
+(LOC_DRAG) 324.16 295. T
+3 F
+( events. ) 376.96 295. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The default images supplied for graphic panel components \050buttons, ) 216. 272. T
+(choice items, and so on\051 are different in XView.  Consequently,  ) 216. 259. T
+(SunView applications which explicitly lay out their panel items in ) 216. 246. T
+(pixel coordinates will end up with overlapping or otherwise jumbled ) 216. 233. T
+(panel items until the program is changed to specify new pixel ) 216. 220. T
+(coordinates or, better yet, to use row/column positioning. ) 216. 207. T
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(In XView, if the hot spot coordinates are greater than the cursor\325s ) 216. 172. T
+(pixrect, the pixrect\325s size is increased to include the hot spot; however, ) 216. 159. T
+(this does not handle cursors with negative hot spot coordinates. ) 216. 146. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(X11/NeWS does not directly support cursor raster ops.  All but seven of ) 216. 123. T
+(these have been implemented with a cursor source and mask.  The ) 216. 110. T
+(unimplemented cursor rasterops are:) 216. 97. T
+55. 668. 198. 702. C
+55. 668. 198. 702. R
+7 X
+V
+9 F
+0 X
+(pw_polygon2\050\051) 59. 688. T
+U
+55. 627. 198. 661. C
+55. 627. 198. 661. R
+7 X
+V
+9 F
+0 X
+(Input Masks) 59. 647. T
+U
+55. 254. 198. 288. C
+55. 254. 198. 288. R
+7 X
+V
+7 F
+0 X
+(Panels) 59. 274. T
+U
+55. 181. 198. 207. C
+55. 181. 198. 207. R
+7 X
+V
+7 F
+0 X
+(Cursor) 59. 188. T
+U
+55. 158. 198. 183. C
+55. 158. 198. 183. R
+7 X
+V
+9 F
+0 X
+(Hot Spots) 59. 169. T
+U
+55. 98. 198. 139. C
+55. 98. 198. 139. R
+7 X
+V
+9 F
+0 X
+(Some Cursor RasterOps ) 59. 125. T
+(Not Supported) 59. 112. T
+U
+49. 469. 564. 566. R
+0 H
+0 X
+N
+51. 355. 51. 355. 51. 394.5 562. 355. 562. 355. 306.5 355. 562. 434. 562. 434. 562. 394.5 51. 434. 51. 434. 306.5 434. 51. 394.5 4 J
+N
+FMENDPAGE
+%%Page: "75" 29
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(75) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(XView now takes advantage of bit gravity on resize and repaint events.  ) 216. 694. T
+(This helps to improve performance by eliminating unnecessary ) 216. 681. T
+(repaints.  With ) 216. 668. T
+(bit gravity, when a window is resized, only the changed ) 283.83 668. T
+(area \050the difference between the old and new regions\051 is repainted.  The ) 216. 655. T
+(default for bit gravity is ) 216. 642. T
+4 F
+(NorthWestGravity) 323.24 642. T
+3 F
+(.  See Section 2.3 in this ) 428.84 642. T
+(manual as well as ) 216. 629. T
+4 F
+(WIN_BIT_GRAVITY) 296.65 629. T
+3 F
+( and ) 395.65 629. T
+4 F
+(WIN_WINDOW_GRAVITY) 417.04 629. T
+3 F
+( in the ) 535.84 629. T
+5 F
+(Summary of the XView API.) 216. 616. T
+3 F
+(Figure 4-1) 151.87 596. T
+5 F
+(The Canvas Model) 216. 596. T
+4 F
+( ) 299.11 596. T
+54. 90. 558. 702. C
+54. 415. 558. 592. C
+54. 415. 558. 592. R
+7 X
+V
+266. 498. 335. 531. 2 L
+1 H
+0 X
+N
+266. 498. 403. 498. 2 L
+N
+403. 498. 472. 531. 2 L
+N
+335. 531. 472. 531. 2 L
+N
+3 F
+(View Window) 72. 515. T
+(Canvas Subwindow) 72. 563. T
+(Paint Window) 72. 469. T
+186. 437. 437. 437. 2 L
+N
+186. 437. 300. 489. 2 L
+N
+300. 489. 540. 489. 2 L
+N
+437. 437. 540. 489. 2 L
+N
+266. 543. 266. 450. 2 L
+3 X
+N
+403. 541. 403. 450. 2 L
+N
+472. 579. 472. 482. 2 L
+N
+335. 579. 335. 482. 2 L
+N
+0 X
+151. 465. 81. 0. W
+151. 515. 138. 0. W
+266. 543. 335. 579. 2 L
+3 H
+N
+266. 543. 403. 543. 2 L
+N
+403. 543. 472. 579. 2 L
+N
+335. 579. 472. 579. 2 L
+N
+1 H
+173. 560. 109. 0. W
+266. 450. 335. 482. 2 L
+0 H
+4 X
+N
+266. 450. 403. 450. 2 L
+N
+403. 450. 472. 482. 2 L
+N
+335. 482. 472. 482. 2 L
+N
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The ) 216. 395. T
+(canvas subwindow event function now only gets events for the ) 235.85 395. T
+(canvas subwindow itself, so interposers on the canvas subwindow event ) 216. 382. T
+(function will not see events in the canvas ) 216. 369. T
+5 F
+(paint) 399.92 369. T
+3 F
+( window. Most clients ) 422.54 369. T
+(will need to interpose on the paint window, which they can retrieve ) 216. 356. T
+(with the ) 216. 343. T
+4 F
+(CANVAS_NTH_PAINT_WINDOW) 254.5 343. T
+3 F
+( attribute.) 406.3 343. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following routines are replaced or become no-ops.  Programs that ) 216. 320. T
+(refer to them will compile but their semantics are no longer the same.  ) 216. 307. T
+(The exact functionality of ) 216. 294. T
+4 F
+(pixwin) 332.7 294. T
+3 F
+( batching, as with ) 372.3 294. T
+4 F
+(pw_batch\050\051) 452.65 294. T
+3 F
+(, is ) 518.65 294. T
+(not provided; however the X11/NeWS server batches the drawing ) 216. 281. T
+(operations automatically until the next event is read or until a request ) 216. 268. T
+(which requires a reply is made to the server.  XView flushes these ) 216. 255. T
+(batched operations when ) 216. 242. T
+4 F
+(pw_batch_off\050\051) 328.11 242. T
+3 F
+( is invoked, thus forcing the ) 420.51 242. T
+(drawing operations to take place.  Also see ) 216. 229. T
+5 F
+(Pixwins) 407.54 229. T
+3 F
+( in Section 2.3.) 442.38 229. T
+9 F
+(Table 4-25) 145.68 208. T
+10 F
+(Changed Pixwin Functions) 216. 208. T
+11 F
+(Pixwin Function) 216. 190. T
+216. 188.33 292.72 188.92 R
+V
+(Comments) 431. 190. T
+431. 188.33 479.29 188.92 R
+V
+4 F
+(pw_batch\050\051) 216. 169. T
+3 F
+(Batching is not) 404. 169. T
+4 F
+( ) 470.62 169. T
+(pw_batch_on\050\051) 216. 156. T
+3 F
+(supported by X11/NeWS.) 404. 156. T
+4 F
+(pw_reset\050\051) 216. 143. T
+(pw_preparesurface_full\050\051) 216. 130. T
+3 F
+(There is no need to prepare a ) 404. 130. T
+4 F
+(pw_preparesurface\050\051) 216. 117. T
+3 F
+(surface, since all drawing ) 404. 117. T
+(takes place in a real window.) 404. 104. T
+55. 668. 198. 702. C
+55. 668. 198. 702. R
+7 X
+V
+9 F
+0 X
+(Bit Gravity) 59. 688. T
+U
+55. 377. 198. 411. C
+55. 377. 198. 411. R
+7 X
+V
+9 F
+0 X
+(Canvas Subwindow ) 59. 397. T
+(Events) 59. 384. T
+U
+55. 302. 198. 336. C
+55. 302. 198. 336. R
+7 X
+V
+7 F
+0 X
+(Pixwin) 59. 322. T
+U
+49. 95. 564. 201. R
+0 H
+0 X
+N
+FMENDPAGE
+%%Page: "74" 28
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(74) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+188. 293. 188. 293. 188. 302. 560. 293. 560. 293. 374. 293. 560. 311. 560. 311. 560. 302. 188. 311. 188. 311. 374. 311. 188. 302. 4 J
+6 X
+V
+0 X
+N
+9 F
+(Table 4-24) 145.68 693. T
+10 F
+(Removed Ttysw Functions) 216. 693. T
+11 F
+(Ttysw Function) 216. 675. T
+216. 673.33 287.21 673.92 R
+V
+(Comments) 431. 675. T
+431. 673.33 479.29 673.92 R
+V
+4 F
+(ttysw_create\050\051) 216. 654. T
+3 F
+(Use) 429. 654. T
+4 F
+(xv_create\050frame,) 429. 641. T
+3 F
+( ) 534.6 641. T
+4 F
+(TTY\051) 537.35 641. T
+(ttysw_fork\050\051) 216. 628. T
+3 F
+(Use) 429. 628. T
+4 F
+( TTY_ARGV) 446.1 628. T
+(ttysw_createtoolsubwindow\050\051) 216. 615. T
+3 F
+(All replaced by) 429. 615. T
+4 F
+(ttytlsw_createtoolsubwindow\050\051) 216. 602. T
+(xv_create\050\051) 429. 602. T
+(ttysw_start\050\051) 216. 589. T
+3 F
+(processing) 429. 589. T
+4 F
+(ttysw_init\050\051) 216. 576. T
+(ttysw_selected\050\051) 216. 563. T
+(ttysw_sigwinch\050\051) 216. 550. T
+(ttysw_handlesigwinch\050\051) 216. 537. T
+3 F
+(In addition, the unsupported but released header files ) 216. 514. T
+4 F
+(ttysw_impl.h) 452.15 514. T
+3 F
+( ) 531.35 514. T
+(and ) 216. 501. T
+4 F
+(ttytlsw_impl.h) 234.63 501. T
+3 F
+( are no longer available.  In particular, the ) 327.03 501. T
+4 F
+(ttysw) 514.29 501. T
+3 F
+( ) 547.29 501. T
+(structure has been removed.  There are attributes of the ) 216. 488. T
+4 F
+(tty) 461.29 488. T
+3 F
+( object ) 481.09 488. T
+(which replace most of this ) 216. 475. T
+4 F
+(struct) 334.84 475. T
+3 F
+(s fields. ) 374.44 475. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(This section describes XView incompatibilities with SunView that ) 216. 451. T
+(become apparent at run-time, that is, after the program has been ) 216. 438. T
+(successfully compiled under XView.) 216. 425. T
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The frame no longer gets events when iconic, since a frame\325s icon has its ) 216. 389. T
+(own window. ) 216. 376. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Only the very first object created will process the ) 216. 358. T
+4 F
+(FRAME_ARGS) 435.65 358. T
+3 F
+( or) 501.65 358. T
+4 F
+( ) 513.56 358. T
+(FRAME_ARGC_PTR_ARGV) 216. 345. T
+3 F
+( attributes.  The command line is parsed into ) 341.4 345. T
+(entries in the defaults database, which are then queried by the ) 216. 332. T
+(appropriate packages, as in) 216. 319. T
+4 F
+( % ) 216. 298. T
+15 F
+(-Wh) 235.8 298. T
+16 F
+( \256) 255.6 298. T
+3 F
+( ) 270.44 298. T
+5 F
+(/XView/Cmdline/Height) 273.19 298. T
+3 F
+(  ) 378.31 298. T
+(Most of the command line arguments refer to frame defaults.  The ) 216. 280. T
+(frame package applies the command line defaults only to the first base ) 216. 267. T
+(frame that is created.  For example, ) 216. 254. T
+15 F
+(-Wp 100 150) 374.54 254. T
+3 F
+(  positions the first ) 447.14 254. T
+(base frame that is created at ) 216. 241. T
+4 F
+(\050100,150\051) 341.24 241. T
+3 F
+(.  The window manager ) 400.63 241. T
+(computes a default position for each subsequently created base frame. ) 216. 228. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(As shown in the following diagram, canvases are implemented as three ) 216. 205. T
+(separate windows, the ) 216. 192. T
+5 F
+(canvas subwindow) 316.2 192. T
+3 F
+(, the ) 399.01 192. T
+5 F
+(view window) 420.7 192. T
+3 F
+( and the ) 477.84 192. T
+5 F
+(paint window) 216. 179. T
+3 F
+(. ) 275.6 179. T
+(The paint window is a child of the view window, which is in turn a child ) 216. 161. T
+(of the canvas subwindow.  The view window clips the paint window to ) 216. 148. T
+(that area of the canvas subwindow unobscured by the scrollbars. The ) 216. 135. T
+(paint window may be much larger than either the view window or the ) 216. 122. T
+(canvas subwindow, in which case only a small portion of it will be ) 216. 109. T
+(visible at a given time.) 216. 96. T
+55. 424. 198. 474. C
+55. 424. 198. 474. R
+7 X
+V
+6 F
+0 X
+(4.4) 55. 459. T
+(Run-Time ) 86. 459. T
+(Incompatibilities) 86. 444. T
+(\321Basic Clients) 86. 429. T
+U
+55. 404. 198. 423. C
+55. 404. 198. 423. R
+7 X
+V
+7 F
+0 X
+(Frame ) 59. 409. T
+U
+55. 378. 198. 398. C
+55. 378. 198. 398. R
+7 X
+V
+9 F
+0 X
+(Iconic Frame Events ) 59. 385. T
+U
+55. 340. 198. 374. C
+55. 340. 198. 374. R
+7 X
+V
+9 F
+0 X
+(Frame Command Line ) 59. 360. T
+(Arguments) 59. 347. T
+U
+55. 187. 198. 221. C
+55. 187. 198. 221. R
+7 X
+V
+7 F
+0 X
+(Canvas) 59. 207. T
+U
+49. 530. 564. 688. R
+0 H
+0 X
+N
+FMENDPAGE
+%%Page: "73" 27
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(73) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+9 F
+(Table 4-21) 145.68 693. T
+10 F
+(Removed Screen Functions) 216. 693. T
+11 F
+(Screen Function) 216. 675. T
+216. 673.33 292.1 673.92 R
+V
+(Comments) 431. 675. T
+431. 673.33 479.29 673.92 R
+V
+4 F
+(win_screennew\050\051) 216. 654. T
+3 F
+(These are replaced by) 409. 654. T
+4 F
+(win_initscreenfromargv\050\051) 216. 641. T
+3 F
+(the ) 409. 641. T
+4 F
+(SERVER) 425.19 641. T
+3 F
+( and ) 464.79 641. T
+4 F
+(SCREEN) 486.18 641. T
+(win_screenget\050\051) 216. 628. T
+3 F
+(objects.) 409. 628. T
+4 F
+(win_screendestroy\050\051) 216. 615. T
+(win_set/getscreenpositions\050\051) 216. 602. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following routines have been removed.  They are documented in the ) 216. 579. T
+5 F
+(SunView 1 System Programmer\325s Guide) 216. 566. T
+3 F
+(.) 393.2 566. T
+9 F
+(Table 4-22) 145.68 545. T
+10 F
+(Removed Workstation Functions) 216. 545. T
+11 F
+(Workstation Function) 216. 527. T
+216. 525.33 316.56 525.92 R
+V
+(Comments) 431. 527. T
+431. 525.33 479.29 525.92 R
+V
+4 F
+(win_setkbd\050\051) 216. 506. T
+3 F
+(All handled \050or not\051 by ) 431. 506. T
+4 F
+(win_setms\050\051) 216. 494. T
+3 F
+(the X11/NeWS server.) 431. 494. T
+4 F
+(win_set/remove_input_device\050\051) 216. 482. T
+(win_is_input_device\050\051) 216. 470. T
+(win_enum_input_device\050\051) 216. 458. T
+(win_set/get_focus_event\050\051) 216. 446. T
+(win_set/get_swallow_event\050\051) 216. 434. T
+(win_release_event_lock\050\051) 216. 422. T
+(win_set/get_event_timeout\050\051) 216. 410. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following routines have been removed.  They are documented in the ) 216. 388. T
+5 F
+(SunView 1 System Programmer\325s Guide) 216. 375. T
+3 F
+(.) 393.2 375. T
+9 F
+(Table 4-23) 145.68 354. T
+10 F
+(Removed Window Manager Functions) 216. 354. T
+11 F
+(wmgr_ Function) 216. 336. T
+216. 334.33 292.11 334.92 R
+V
+(Comments) 431. 336. T
+431. 334.33 479.29 334.92 R
+V
+4 F
+(wmgr_confirm\050\051) 216. 315. T
+3 F
+(Use notices) 432. 315. T
+4 F
+(wmgr_winandchildrenexposed\050\051) 216. 302. T
+3 F
+(Use) 432. 302. T
+4 F
+( WIN_SHOW) 449.1 302. T
+(wmgr_iswindowopen\050\051) 216. 289. T
+3 F
+(Use) 432. 289. T
+4 F
+( FRAME_CLOSED) 449.1 289. T
+(wmgr_setrectalloc\050\051) 216. 276. T
+(wmgr_getrectalloc\050\051) 216. 263. T
+(win_computeclipping\050\051) 216. 250. T
+(win_partialrepair\050\051) 216. 237. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Pre-SunView supported the creation of a ) 216. 214. T
+4 F
+(tty) 398.07 214. T
+3 F
+( subwindow that did not ) 417.87 214. T
+(have to be a child of a frame.  In XView a ) 216. 201. T
+4 F
+(tty) 403.86 201. T
+3 F
+( subwindow is always a ) 423.66 201. T
+(child of a frame.  The following routines have been removed, but are ) 216. 188. T
+(documented in the ) 216. 175. T
+5 F
+(SunView 1 System Programmer\325s Guide) 300.02 175. T
+3 F
+( and ) 477.22 175. T
+5 F
+(SunWindows Reference Manual) 216. 162. T
+3 F
+(.) 356.54 162. T
+55. 570. 198. 595. C
+55. 570. 198. 595. R
+7 X
+V
+9 F
+0 X
+(Workstations) 59. 581. T
+U
+55. 370. 198. 403. C
+55. 370. 198. 403. R
+7 X
+V
+9 F
+0 X
+(Window Manager) 59. 390. T
+(\050wmgr_\051) 59. 377. T
+U
+55. 196. 198. 229. C
+55. 196. 198. 229. R
+7 X
+V
+9 F
+0 X
+(Ttysw) 59. 216. T
+U
+49. 596. 564. 687. R
+0 H
+0 X
+N
+49. 405. 564. 540. R
+N
+49. 231. 564. 347. R
+N
+FMENDPAGE
+%%Page: "72" 26
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(72) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+9 F
+(Table 4-19) 145.68 693. T
+10 F
+(Removed Low-Level Window Functions) 216. 693. T
+11 F
+(Low-Level Window Function) 216. 675. T
+216. 673.33 348.63 673.92 R
+V
+(Comments) 431. 675. T
+431. 673.33 479.29 673.92 R
+V
+4 F
+(win_set/getsavedrect\050\051) 216. 654. T
+3 F
+(These are not needed, since ) 396. 654. T
+(icons are separate windows in) 396. 641. T
+(X11/NeWS.  Use) 396. 628. T
+4 F
+( xv_set/get) 472.68 628. T
+(\050icon/window,) 396. 615. T
+3 F
+( ) 481.8 615. T
+4 F
+(WIN_RECT, ) 484.55 615. T
+3 F
+(...) 550.55 615. T
+4 F
+(\051) 558.8 615. T
+(window_default_event_proc\050\051) 216. 602. T
+3 F
+(Not supported.) 396. 602. T
+4 F
+(window_loop\050\051) 216. 589. T
+(window_return\050\051) 216. 576. T
+(window_release_event_lock\050\051) 216. 563. T
+(win_set/getuserflags\050\051) 216. 550. T
+(win_setuserflag\050\051) 216. 537. T
+3 F
+(Use) 396. 537. T
+4 F
+( XV_KEY_DATA) 413.1 537. T
+(we_set/getgfxwindow\050\051) 216. 524. T
+(gfx) 396. 524. T
+3 F
+(_* is totally defunct.) 415.8 524. T
+4 F
+(win_insert/removeblanket\050\051) 216. 511. T
+3 F
+(No blanket windows.) 396. 511. T
+4 F
+(win_isblanket\050\051) 216. 498. T
+(win_set/getowner\050\051) 216. 485. T
+(xv_get\050window,) 396. 485. T
+3 F
+( ) 488.4 485. T
+4 F
+(WIN_OWNER\051;) 491.15 485. T
+(we_set/getparentwindow\050\051) 216. 472. T
+3 F
+(Environment variables unused.) 396. 472. T
+4 F
+( ) 532.57 472. T
+(win_errorhandler\050\051) 216. 459. T
+(win_set_button_order\050\051) 216. 446. T
+3 F
+(Not supported) 396. 446. T
+4 F
+(.  ) 458.63 446. T
+(win_get_button_order\050\051) 216. 433. T
+(win_get_scaling\050\051) 216. 420. T
+(win_set_scaling\050\051) 216. 407. T
+54. 90. 564. 702. C
+U
+3 F
+0 X
+(The following routines that enumerate the window tree have been ) 216. 384. T
+(removed but are documented in the ) 216. 371. T
+5 F
+(SunView 1 System Programmer\325s ) 374.25 371. T
+(Guide) 216. 358. T
+3 F
+(.  They are usually of interest to window managers, not window ) 242.88 358. T
+(application programs. You can still determine a window\325s relatives one-) 216. 345. T
+(by-one with ) 216. 332. T
+4 F
+(win_getlink\050\051) 271.6 332. T
+3 F
+(.) 357.4 332. T
+9 F
+(Table 4-20) 145.68 311. T
+10 F
+(Removed Window Tree Enumeration Functions) 216. 311. T
+11 F
+(Window Tree Enumeration Function) 216. 293. T
+216. 291.33 385.01 291.92 R
+V
+(Comments) 450. 293. T
+450. 291.33 498.29 291.92 R
+V
+4 F
+(win_enumall\050\051) 216. 272. T
+3 F
+(Use the) 450. 272. T
+4 F
+(win_enumscreen\050\051) 216. 259. T
+3 F
+(X11/NeWS ) 450. 259. T
+4 F
+(win_enumerate_children\050\051) 216. 246. T
+3 F
+(server call) 450. 246. T
+4 F
+(win_enumerate_subtree\050\051) 216. 233. T
+(XQueryTree\050\051) 450. 233. T
+(win_get_tree_layer\050\051) 216. 220. T
+3 F
+(instead.) 450. 220. T
+54. 90. 564. 702. C
+U
+3 F
+0 X
+(The following routines have been removed.  They are documented in the ) 216. 197. T
+5 F
+(SunView 1 System Programmer\325s Guide) 216. 184. T
+3 F
+(.) 393.2 184. T
+55. 366. 198. 398. C
+55. 366. 198. 398. R
+7 X
+V
+9 F
+0 X
+(Window Enumeration) 59. 386. T
+U
+55. 179. 198. 211. C
+55. 179. 198. 211. R
+7 X
+V
+9 F
+0 X
+(Screens) 59. 199. T
+U
+49. 403. 571. 688. R
+0 H
+0 X
+N
+49. 214. 570. 304. R
+N
+FMENDPAGE
+%%Page: "71" 25
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(71) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+9 F
+(Table 4-16) 145.68 693. T
+10 F
+(Removed Command Line Functions) 216. 693. T
+11 F
+(Command Line Function) 216. 675. T
+216. 673.33 331.53 673.92 R
+V
+(Comments) 431. 675. T
+431. 673.33 479.29 673.92 R
+V
+4 F
+(tool_parse_all\050\051) 216. 654. T
+3 F
+(Use) 387. 654. T
+4 F
+( XV_ARGC_PTR_ARGV) 404.1 654. T
+(tool_parse_one\050\051) 216. 641. T
+3 F
+(Use) 387. 641. T
+4 F
+( XV_ARGS ) 404.1 641. T
+(tool_usage\050\051) 216. 628. T
+3 F
+(Use) 387. 628. T
+4 F
+( xv_usage\050\051) 404.1 628. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following routines have been removed.  They are documented in the ) 216. 605. T
+5 F
+(SunView 1 System Programmer\325s Guide) 216. 592. T
+3 F
+(.) 393.2 592. T
+9 F
+(Table 4-17) 145.68 571. T
+10 F
+(Removed Tile/Agent Functions) 216. 571. T
+11 F
+(Tile/Agent Function) 216. 553. T
+216. 551.33 308.61 551.92 R
+V
+(Comments) 431. 553. T
+431. 551.33 479.29 551.92 R
+V
+4 F
+(win_register/unregister\050\051) 216. 532. T
+(win_set/get_flags\050\051) 216. 519. T
+(win_get_fd\050\051) 216. 506. T
+3 F
+(Use) 414. 506. T
+4 F
+( xv_get\050window,) 431.1 506. T
+(WIN_FD\051) 414. 493. T
+3 F
+(; or just pass the) 460.2 493. T
+(window object wherever ) 414. 480. T
+(you use ) 414. 467. T
+4 F
+(WIN_FD) 450.66 467. T
+(win_get_pixwin\050\051) 216. 454. T
+3 F
+(Use ) 414. 454. T
+4 F
+(xv_get\050window,) 433.85 454. T
+(WIN_PIXWIN\051) 414. 441. T
+3 F
+(; or just pass the) 486.6 441. T
+(window object wherever  ) 414. 428. T
+(you use) 414. 415. T
+4 F
+( WIN_PIXWIN) 447.91 415. T
+(win_set/get_kbd/pick_mask\050\051) 216. 402. T
+3 F
+(Use ) 414. 402. T
+4 F
+(WIN_CONSUME_EVENT) 433.85 402. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following routines have been removed.  They are only documented in ) 216. 366. T
+(the ) 216. 353. T
+5 F
+(SunView 1 System Programmer\325s Guide) 232.19 353. T
+3 F
+( or the \050obsolete\051 ) 409.39 353. T
+5 F
+(SunWindows Reference Manual) 216. 340. T
+3 F
+(.) 356.54 340. T
+9 F
+(Table 4-18) 145.68 319. T
+10 F
+(Removed Panel Functions) 216. 319. T
+54. 90. 558. 702. C
+U
+11 F
+0 X
+(Panel Function) 216. 301. T
+216. 299.33 287.21 299.92 R
+V
+(Comments) 431. 301. T
+431. 299.33 479.29 299.92 R
+V
+4 F
+(panel_make_list\050\051) 216. 280. T
+3 F
+(Use) 396. 280. T
+4 F
+( attr_create_list\050\051) 413.1 280. T
+(panel_fit_height\050\051) 216. 267. T
+3 F
+(Use) 396. 267. T
+4 F
+( window_fit_height\050\051) 413.1 267. T
+(panel_fit_width\050\051) 216. 254. T
+3 F
+(Use) 396. 254. T
+4 F
+( window_fit_width\050\051) 413.1 254. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The handling of the window tree is somewhat different in XView. ) 216. 213. T
+(Windows have links to their parent and siblings as soon as they are ) 216. 200. T
+(created, and these links persist whether a window is mapped \050visible\051 or ) 216. 187. T
+(not. ) 216. 174. T
+4 F
+( win_insert\050\051) 235.56 174. T
+3 F
+( and ) 321.36 174. T
+4 F
+(win_remove\050\051) 342.74 174. T
+3 F
+( are equivalent to ) 421.94 174. T
+4 F
+(xv_set\050window, WIN_MAP, TRUE, 0\051;) 216. 161. T
+3 F
+( and ) 433.8 161. T
+4 F
+(xv_set\050window,) 216. 148. T
+3 F
+( ) 308.4 148. T
+4 F
+(WIN_MAP, FALSE, 0\051;) 311.15 148. T
+3 F
+( respectively. ) 436.55 148. T
+(The following routines have been removed.  They are documented in the ) 216. 125. T
+5 F
+(SunView 1 System Programmer\325s Guide) 216. 112. T
+3 F
+(.) 393.2 112. T
+55. 587. 198. 621. C
+55. 587. 198. 621. R
+7 X
+V
+9 F
+0 X
+(Agent & ) 59. 607. T
+(Tiles) 103.66 607. T
+U
+55. 348. 198. 382. C
+55. 348. 198. 382. R
+7 X
+V
+9 F
+0 X
+(Panels) 59. 368. T
+U
+55. 232. 198. 312. C
+55. 232. 198. 312. R
+7 X
+V
+12 F
+0 X
+(Note:) 60. 299. T
+14 F
+(  If your SunView ) 90.66 299. T
+(code used ) 60. 287. T
+13 F
+(PANEL_LABEL_IMAGE) 60. 276. T
+14 F
+( in ) 162. 276. T
+(conjunction with ) 60. 264. T
+13 F
+(panel_button_image\050\051) 60. 253. T
+14 F
+(, ) 180. 253. T
+(use ) 60. 241. T
+13 F
+(PANEL_LABEL_STRING.) 78.9 241. T
+U
+55. 195. 198. 222. C
+55. 195. 198. 222. R
+7 X
+V
+9 F
+0 X
+(Windows) 59. 211. T
+U
+49. 624. 564. 688. R
+0 H
+0 X
+N
+49. 397. 564. 566. R
+N
+210. 247. 564. 315. R
+N
+FMENDPAGE
+%%Page: "70" 24
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(70) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+5 F
+(Removed Pixwin Functions \050cont\325d\051) 216. 694. T
+11 F
+(Removed Pixwin Function) 216. 670. T
+216. 668.33 337.02 668.92 R
+V
+(Comments) 387. 670. T
+387. 668.33 435.29 668.92 R
+V
+4 F
+(pw_preparesurface\050\051) 216. 658. T
+3 F
+(unnecessary) 387. 658. T
+4 F
+(pw_set/get_region_rect\050\051) 216. 646. T
+3 F
+(Most regions in SunView1 have ) 387. 646. T
+(become full-fledged windows in ) 387. 634. T
+(XView, so you can often use) 387. 622. T
+4 F
+( ) 514.08 622. T
+(WIN_RECT ) 387. 610. T
+3 F
+(instead.) 446.4 610. T
+4 F
+(pw_dbl_get\050\051) 216. 598. T
+(pw_dbl_access\050\051) 216. 586. T
+3 F
+(Double-buffering is not) 387. 586. T
+4 F
+(pw_dbl_release\050\051) 216. 574. T
+3 F
+(supported.) 387. 574. T
+4 F
+(pw_dbl_flip\050\051) 216. 562. T
+(pw_dbl_set\050\051) 216. 550. T
+(pw_traprop\050\051) 216. 538. T
+3 F
+(Not implemented.) 387. 538. T
+4 F
+(pw_use_fast_monochrome\050\051) 216. 526. T
+3 F
+(No substitute.  Set the new) 387. 526. T
+4 F
+( ) 504.94 526. T
+(WIN_VISUAL) 387. 514. T
+3 F
+( attribute to) 453. 514. T
+4 F
+(WIN_MONOCHROME.) 387. 502. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Since X11/NeWS doesn\325t support double-buffering, the following ) 216. 480. T
+(double-buffering attributes have been removed:) 216. 467. T
+9 F
+(Table 4-14) 145.68 446. T
+10 F
+(Removed Double-Buffering Attributes) 216. 446. T
+11 F
+(Double-Buffering Attribute) 216. 428. T
+216. 426.33 340.38 426.92 R
+V
+(Comments) 431. 428. T
+431. 426.33 479.29 426.92 R
+V
+4 F
+(PW_DBL_ERROR) 216. 407. T
+3 F
+(All gone) 415. 407. T
+4 F
+(PW_DBL_FORE) 216. 394. T
+(PW_DBL_BACK) 216. 381. T
+(PW_DBL_BOTH) 216. 368. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Be sure to use the font package \050i.e., use ) 216. 340. T
+4 F
+(FONT_STRING_DIMS) 396.24 340. T
+3 F
+( instead of ) 501.83 340. T
+4 F
+(pw_text) 216. 327. T
+3 F
+(\051.  Here is a list of changed functions:) 262.2 327. T
+9 F
+(Table 4-15) 145.68 306. T
+10 F
+(Changed pf_* Functions) 216. 306. T
+11 F
+(Old Function Name ) 216. 290. T
+216. 288.33 309.82 288.92 R
+V
+(New Function Name) 378. 290. T
+378. 288.33 472.73 288.92 R
+V
+4 F
+(pf_sys) 216. 273. T
+(xv_pf_sys ) 378. 273. T
+(pf_open\050\051) 216. 260. T
+(xv_pf_open\050\051 ) 378. 260. T
+(pf_close\050\051) 216. 247. T
+(xv_pf_close\050\051==>) 378. 247. T
+3 F
+(actually defunct) 483.6 247. T
+4 F
+(pf_text\050\051) 216. 234. T
+(xv_pf_text\050\051 ) 378. 234. T
+(pf_textbatch\050\051) 216. 221. T
+(xv_pf_textbatch\050\051 ) 378. 221. T
+(pf_textbound\050\051) 216. 208. T
+(xv_pf_textbound\050\051 ) 378. 208. T
+(pf_textwidth\050\051) 216. 195. T
+(xv_pf_textwidth\050\051 ) 378. 195. T
+(pf_ttext\050\051) 216. 182. T
+(xv_pf_ttext\050\051 ) 378. 182. T
+(pf_default\050\051) 216. 169. T
+(xv_pf_default\050\051 ) 378. 169. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following routines have been removed. They are only documented in ) 216. 146. T
+(the ) 216. 133. T
+5 F
+(SunWindows Reference Manual) 232.19 133. T
+3 F
+(.) 372.73 133. T
+55. 462. 198. 496. C
+55. 462. 198. 496. R
+7 X
+V
+9 F
+0 X
+(Double-Buffering) 59. 482. T
+U
+55. 322. 198. 356. C
+55. 322. 198. 356. R
+7 X
+V
+9 F
+0 X
+(Fonts) 59. 342. T
+U
+55. 128. 198. 160. C
+55. 128. 198. 160. R
+7 X
+V
+9 F
+0 X
+(Command Line Processing) 59. 148. T
+U
+49. 164. 564. 301. R
+0 H
+0 X
+N
+49. 498. 564. 682. R
+N
+49. 360. 564. 440. R
+N
+FMENDPAGE
+%%Page: "69" 23
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(69) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 694. T
+4 F
+(<sunwindow/win_input.h>.) 265.49 694. T
+3 F
+( This structure is not removed ) 423.89 694. T
+(but changed. The fields no longer supported are:) 216. 681. T
+9 F
+(Table 4-11) 145.68 660. T
+10 F
+(Unsupported struct inputmask Fields) 216. 660. T
+11 F
+(Struct inputmask) 216. 642. T
+216. 640.33 293.95 640.92 R
+V
+(Comments) 431. 642. T
+431. 640.33 479.29 640.92 R
+V
+4 F
+(im_inputcode) 216. 621. T
+3 F
+(Access the ) 396. 621. T
+4 F
+(im_shifts) 216. 608. T
+3 F
+(inputmask through ) 396. 608. T
+4 F
+(im_shiftcodes) 216. 595. T
+(WIN_CONSUME_EVENT) 396. 595. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(These  ) 216. 572. T
+4 F
+(<sunwindow/pw_dblbuf.h>typedefs) 247.77 572. T
+3 F
+(  are not supported.) 452.37 572. T
+9 F
+(Table 4-12) 145.68 551. T
+10 F
+(Unsupported Type Definitions) 216. 551. T
+11 F
+(Typedef) 216. 533. T
+216. 531.33 252.04 531.92 R
+V
+(Comments) 431. 533. T
+431. 531.33 479.29 531.92 R
+V
+4 F
+(Pw_attribute_value) 216. 512. T
+3 F
+(Basically, X11/NeWS does not ) 396. 512. T
+(support ) 396. 499. T
+(double-buffering.) 431.75 499. T
+4 F
+(Pw_dbl_attribute) 216. 486. T
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+4 F
+0 X
+(Pixwins) 216. 435. T
+3 F
+( are now opaque objects. When you ask for a window\325s ) 262.2 435. T
+4 F
+(pixwin) 509.03 435. T
+3 F
+(, ) 548.63 435. T
+(you actually get the window handle back, since you can draw directly on ) 216. 422. T
+(windows.  Clients cannot access to the fields in a ) 216. 409. T
+4 F
+(pixwin) 434.45 409. T
+3 F
+( ) 474.05 409. T
+4 F
+(struct) 476.8 409. T
+3 F
+(.  Some ) 516.4 409. T
+(new window attributes have been added to provide similar ) 216. 396. T
+(functionality.   ) 216. 383. T
+4 F
+(Pixwin) 283.22 383. T
+3 F
+( regions are not supported:  use real windows ) 322.82 383. T
+(instead.  Double-buffering is not supported, either.  The following ) 216. 370. T
+(routines no longer exist; all references must be removed from programs.) 216. 357. T
+9 F
+(Table 4-13) 145.68 336. T
+10 F
+(Removed Pixwin Functions) 216. 336. T
+11 F
+(Removed Pixwin Function) 216. 318. T
+216. 316.33 337.02 316.92 R
+V
+(Comments) 431. 318. T
+431. 316.33 479.29 316.92 R
+V
+4 F
+(pw_open/close\050\051) 216. 297. T
+3 F
+(No need to open/close a window.  ) 387. 297. T
+(Since the ) 387. 285. T
+4 F
+(pixwin) 430.38 285. T
+3 F
+( is the window, it ) 469.98 285. T
+(goes away when the window goes ) 387. 273. T
+(away.) 387. 261. T
+4 F
+(pw_destroy\050\051) 216. 249. T
+(pw_region\050\051) 216. 237. T
+3 F
+(Use real windows instead.) 387. 237. T
+4 F
+(pw_restrictclipping\050\051) 216. 225. T
+3 F
+(Use ) 387. 225. T
+4 F
+(win_set_clip) 406.85 225. T
+3 F
+(  instead.) 486.06 225. T
+4 F
+(pw_exposed\050\051) 216. 213. T
+3 F
+(windows are clipped for you by ) 387. 213. T
+(the X11/NeWS server, so just ) 387. 201. T
+(set clipping to the whole window:) 387. 189. T
+4 F
+(win_set_clip\050window) 387. 177. T
+3 F
+(,) 512.4 177. T
+4 F
+(RECTLIST_NULL\051) 387. 165. T
+(pw_damaged\050\051) 216. 153. T
+3 F
+(Use) 387. 153. T
+4 F
+( win_get_damage) 404.1 153. T
+3 F
+(.) 503.11 153. T
+4 F
+(pw_donedamaged\050\051) 216. 141. T
+3 F
+(Use) 387. 141. T
+4 F
+( win_get_damage) 404.1 141. T
+3 F
+(.) 503.11 141. T
+4 F
+(pw_repairretained\050\051) 216. 129. T
+(pw_set/get_x_offset\050\051) 216. 117. T
+3 F
+(Offsetting is not supported.) 387. 117. T
+4 F
+(pw_set/get_y_offset\050\051) 216. 105. T
+(pw_set/get_xy_offset\050\051) 216. 93. T
+55. 668. 198. 702. C
+55. 668. 198. 702. R
+7 X
+V
+9 F
+0 X
+(struct inputmask) 59. 688. T
+U
+55. 566. 198. 588. C
+55. 566. 198. 588. R
+7 X
+V
+9 F
+0 X
+(Type Definitions) 59. 574. T
+U
+55. 445. 198. 477. C
+55. 445. 198. 477. R
+7 X
+V
+7 F
+0 X
+(Functions and ) 59. 465. T
+(Procedures) 59. 452. T
+U
+55. 417. 198. 443. C
+55. 417. 198. 443. R
+7 X
+V
+9 F
+0 X
+(Pixwins) 59. 431. T
+U
+49. 589. 564. 654. R
+0 H
+0 X
+N
+49. 481. 564. 544. R
+N
+49. 87. 564. 332. R
+N
+FMENDPAGE
+%%Page: "68" 22
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(68) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+( ) 216. 694. T
+(This section enumerates the consequences for advanced clients of the ) 216. 671. T
+(following structures, type definitions, functions, and procedures.) 216. 658. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following ) 216. 635. T
+4 F
+(struct) 281.38 635. T
+3 F
+(s either have been removed, are no longer public ) 320.98 635. T
+(information or are changed.  Programs that refer to these structures ) 216. 622. T
+(must remove the references and use appropriate ) 216. 609. T
+4 F
+(get/set) 428.9 609. T
+3 F
+( calls. ) 475.11 609. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(This ) 216. 586. T
+4 F
+(struct) 238.31 586. T
+3 F
+( is defined in ) 277.91 586. T
+4 F
+(<sunwindow/win_cursor.h>) 337.79 586. T
+3 F
+(.  Clients ) 496.19 586. T
+(should use cursor attributes to manipulate cursors instead. ) 216. 573. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 550. T
+4 F
+(<suntool/icon.h>) 265.49 550. T
+3 F
+(.   Clients should use icon attributes ) 371.09 550. T
+(instead.  Icons are separate windows in XView, not different states of ) 216. 537. T
+(frames. ) 216. 524. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 501. T
+4 F
+(<sunwindow/pixwin.h>) 265.49 501. T
+3 F
+(.  A ) 397.49 501. T
+4 F
+(pixwin) 416.43 501. T
+3 F
+( is now an opaque object.  ) 456.03 501. T
+(The type is only  provided for compatibility.  All the ) 216. 488. T
+4 F
+(pixwin) 450.05 488. T
+3 F
+( drawing ) 489.65 488. T
+(routines can still be called but the fields of the structure are no longer ) 216. 475. T
+(available.) 216. 462. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 439. T
+4 F
+(<suntool/tool.h>) 265.49 439. T
+3 F
+(.  This is an old, pre-SunView structure ) 371.09 439. T
+(from the ) 216. 426. T
+5 F
+(SunWindows Reference Manual) 256.33 426. T
+3 F
+(.) 396.86 426. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 403. T
+4 F
+(<suntool/tool_struct.h>) 265.49 403. T
+3 F
+(.  This is also pre-SunView. ) 417.29 403. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 380. T
+4 F
+(<sunwindow/win_screen.h>) 265.49 380. T
+3 F
+(.  Replaced by the ) 423.89 380. T
+4 F
+(SERVER) 505.76 380. T
+3 F
+( and ) 545.36 380. T
+4 F
+(SCREEN) 216. 367. T
+3 F
+( objects. ) 255.6 367. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 344. T
+4 F
+(<suntool/fullscreen.h>) 265.49 344. T
+3 F
+(.  This structure is changed, not ) 410.69 344. T
+(removed.  ) 216. 331. T
+(In XView, you take over the root window, and can draw on it in screen ) 216. 313. T
+(coordinates, but you still receive events in the coordinates of the ) 216. 300. T
+(window taking over the screen.  There are special routines to set the ) 216. 287. T
+(cursor and input mask:  ) 216. 274. T
+4 F
+(fullscreen_setcursor\050\051) 322.02 274. T
+3 F
+( and ) 467.22 274. T
+4 F
+(fullscreen_setinputmask\050\051) 216. 261. T
+3 F
+(.  The fields in the ) 381. 261. T
+4 F
+(fullscreen) 463.8 261. T
+3 F
+( ) 529.8 261. T
+(structure that are no longer supported are:) 216. 248. T
+9 F
+(Table 4-10) 145.68 227. T
+10 F
+(Unsupported Struct Fullscreen Fields) 216. 227. T
+11 F
+(Struct Fullscreen Fields) 216. 209. T
+216. 207.33 326.02 207.92 R
+V
+(Comments) 431. 209. T
+431. 207.33 479.29 207.92 R
+V
+4 F
+(fs_pixwin) 216. 188. T
+3 F
+(Instead you can draw directly on ) 395. 188. T
+(screen using the window handle ) 395. 175. T
+4 F
+(fs_rootwindow) 395. 162. T
+3 F
+(.) 480.8 162. T
+4 F
+(fs_cachedcursor) 216. 136. T
+3 F
+(No need to restore state since ) 395. 136. T
+4 F
+(fs_cachedim) 216. 123. T
+3 F
+(fullscreen no longer uses your ) 395. 123. T
+4 F
+(fs_cachedinputnext) 216. 110. T
+3 F
+(window.) 395. 110. T
+4 F
+(fs_cachedkbdim) 216. 97. T
+52. 639. 198. 702. C
+52. 639. 198. 702. R
+7 X
+V
+6 F
+0 X
+(4.3) 55. 689. T
+(Compile-Time ) 86. 689. T
+(Incompatibilities) 86. 674. T
+(\321Advanced ) 86. 659. T
+(Clients) 86. 644. T
+U
+55. 617. 198. 640. C
+55. 617. 198. 640. R
+7 X
+V
+7 F
+0 X
+(Structures) 59. 627. T
+U
+55. 568. 198. 602. C
+55. 568. 198. 602. R
+7 X
+V
+9 F
+0 X
+(struct cursor) 59. 588. T
+U
+55. 532. 198. 566. C
+55. 532. 198. 566. R
+7 X
+V
+9 F
+0 X
+(struct icon) 59. 552. T
+U
+55. 483. 198. 517. C
+55. 483. 198. 517. R
+7 X
+V
+9 F
+0 X
+(struct pixwin) 59. 503. T
+U
+55. 421. 198. 455. C
+55. 421. 198. 455. R
+7 X
+V
+9 F
+0 X
+(struct tool) 59. 441. T
+U
+55. 385. 198. 419. C
+55. 385. 198. 419. R
+7 X
+V
+9 F
+0 X
+(struct toolsw) 59. 405. T
+U
+55. 362. 198. 396. C
+55. 362. 198. 396. R
+7 X
+V
+9 F
+0 X
+(struct screen) 59. 382. T
+U
+55. 326. 198. 360. C
+55. 326. 198. 360. R
+7 X
+V
+9 F
+0 X
+(struct fullscreen) 59. 346. T
+U
+49. 90. 564. 221. R
+0 H
+0 X
+N
+FMENDPAGE
+%%Page: "67" 21
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(67) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+4 F
+(action procs) 216. 694. T
+3 F
+(:) 295.2 694. T
+9 F
+(\245) 234. 673. T
+3 F
+(allow the menu to be pinned automatically \050via ) 252. 673. T
+4 F
+(MENU_GEN_PIN_WINDOW) 253. 660. T
+3 F
+(\051;) 378.4 660. T
+9 F
+(\245) 234. 644. T
+3 F
+(involve less code; you do not have to do ) 252. 644. T
+4 F
+(xv_get) 431.96 644. T
+3 F
+( to find the ) 471.56 644. T
+(selected item;) 253. 631. T
+9 F
+(\245) 234. 615. T
+3 F
+(work no matter how the menu item was selected.) 252. 615. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The Empty Subwindow package is pre-SunView.  Its functionality was ) 216. 592. T
+(replaced by the XView Canvas package.  The following) 216. 579. T
+4 F
+( structs) 462.52 579. T
+3 F
+( and ) 515.32 579. T
+(functions are no longer supported.  \050They are only documented in the ) 216. 566. T
+5 F
+(SunWindows Reference Manual) 216. 553. T
+3 F
+( last shipped in SunOS Release 2.0.\051) 356.54 553. T
+9 F
+(Table 4-8) 151.68 532. T
+10 F
+(Obsolete Empty Subwindow Items) 216. 532. T
+11 F
+(Struct/Functions) 216. 514. T
+216. 512.33 293.03 512.92 R
+V
+(Comments) 431. 514. T
+431. 512.33 479.29 512.92 R
+V
+4 F
+(struct emptysubwindow) 216. 493. T
+3 F
+(Use) 396. 493. T
+4 F
+(xv_create\0500,CANVAS,.) 396. 480. T
+17 F
+(..) 528. 480. T
+4 F
+(\051) 542.4 480. T
+3 F
+(and) 396. 466. T
+4 F
+( xv_set/get\050\051) 411.88 466. T
+(esw_createtoolsubwindow\050\051) 216. 453. T
+(esw_begin\050\051) 216. 440. T
+(esw_init\050\051) 216. 427. T
+(esw_handlesigwinch\050\051) 216. 414. T
+(esw_done ) 216. 401. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The ) 216. 378. T
+4 F
+(gfx) 235.85 378. T
+3 F
+( subwindow no longer exists; ) 255.65 378. T
+4 F
+(gfx_*) 387.35 378. T
+3 F
+( is entirely gone.) 420.35 378. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The Message Subwindow package is pre-SunView.  Its functionality ) 216. 355. T
+(was replaced by the canvas, panel, or text packages in SunView \050as ) 216. 342. T
+(appropriate to the usage of the Message Subwindow\051.  The following ) 216. 329. T
+4 F
+(structs) 216. 316. T
+3 F
+( and functions are no longer supported.  \050They are only ) 262.2 316. T
+(documented in the ) 216. 303. T
+5 F
+(SunWindows Reference Manual) 300.02 303. T
+3 F
+(.\051) 440.55 303. T
+9 F
+(Table 4-9) 151.68 282. T
+10 F
+(Obsolete Message Subwindow Items) 216. 282. T
+11 F
+(Struct/Functions) 216. 264. T
+216. 262.33 293.03 262.92 R
+V
+(Comments) 431. 264. T
+431. 262.33 479.29 262.92 R
+V
+4 F
+(struct msgsubwindow) 216. 243. T
+3 F
+(For all of these,) 422. 243. T
+4 F
+(msgsw_createtoolsubwindow\050\051) 216. 230. T
+3 F
+(use panel and) 422. 230. T
+4 F
+( ) 481.87 230. T
+(msgsw_create\050\051) 216. 217. T
+(PANEL_MESSAGE ) 422. 217. T
+3 F
+(items) 514.4 217. T
+4 F
+(msgsw_setstring\050\051) 216. 204. T
+3 F
+(instead) 422. 204. T
+4 F
+(msgsw_display\050\051) 216. 191. T
+(msgsw_init\050\051) 216. 178. T
+(msgsw_handlesigwinch\050\051) 216. 165. T
+(msgsw_done\050\051) 216. 152. T
+55. 571. 198. 608. C
+55. 571. 198. 608. R
+7 X
+V
+7 F
+0 X
+(Empty Subwindow) 59. 594. T
+U
+55. 372. 198. 394. C
+55. 372. 198. 394. R
+7 X
+V
+18 F
+0 X
+(gfx) 59. 380. T
+7 F
+( Subwindow) 80.6 380. T
+U
+55. 337. 198. 371. C
+55. 337. 198. 371. R
+7 X
+V
+7 F
+0 X
+(Message Subwindow) 59. 357. T
+U
+49. 396. 564. 526. R
+0 H
+0 X
+N
+49. 144. 564. 277. R
+N
+FMENDPAGE
+%%Page: "66" 20
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(66) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following input events are no longer generated by the system:) 216. 694. T
+9 F
+(Table 4-6) 151.68 673. T
+10 F
+(Obsolete Input Events) 216. 673. T
+11 F
+(Event Name) 216. 655. T
+216. 653.33 271.91 653.92 R
+V
+(Comments) 431. 655. T
+431. 653.33 479.29 653.92 R
+V
+4 F
+(KBD_REQUEST) 216. 634. T
+3 F
+(Click-to-type input focus handled by an ex-) 343. 634. T
+(ternal window manager; this event is not ) 342. 621. T
+(generated.) 342. 608. T
+4 F
+(LOC_STILL) 216. 591. T
+3 F
+(This cannot be generated \050easily\051 on top of ) 343. 591. T
+(the X11/NeWS server.) 342. 578. T
+4 F
+(LOC_TRAJECTORY) 216. 561. T
+3 F
+(The X11/NeWS server automatically com-) 343. 561. T
+(presses events; compression can only be dis-) 342. 548. T
+(abled for ) 342. 535. T
+5 F
+(all) 384.15 535. T
+3 F
+( windows \050which is very ) 395.77 535. T
+(expensive for performance\051.) 342. 522. T
+4 F
+(LOC_RGNENTER) 216. 505. T
+3 F
+(There are no ) 343. 505. T
+4 F
+(pixwin) 401.33 505. T
+3 F
+( regions in) 440.93 505. T
+4 F
+(LOC_RGNEXIT) 216. 492. T
+3 F
+(XView \321 everything is a window.) 343. 492. T
+4 F
+(WIN_STOP) 216. 475. T
+3 F
+(This is now an ordinary function key event; ) 343. 475. T
+(in SunView, it is generated asynchronously ) 342. 462. T
+(via a signal which isn\325t supported by the ) 342. 449. T
+(X11/NeWS server.  \050Signals are valid in a ) 342. 436. T
+(kernel-based window system but have no ) 342. 423. T
+(place in a networked window system, so ) 342. 410. T
+(there is no more ) 342. 397. T
+4 F
+(SIGURG) 415.93 397. T
+3 F
+(, either.\051  In XView, ) 455.53 397. T
+(since ) 342. 384. T
+4 F
+(WIN_STOP) 367.35 384. T
+3 F
+( is equated to ) 420.15 384. T
+4 F
+(KEY_LEFT\0501\051) 481.26 384. T
+3 F
+(,  ) 553.86 384. T
+4 F
+(WIN_STOP) 342. 371. T
+3 F
+( events are generated by the ) 394.8 371. T
+4 F
+(L1) 520.04 371. T
+3 F
+( ) 533.24 371. T
+(\050) 342. 358. T
+4 F
+(Stop) 345.66 358. T
+3 F
+(\051  function key.) 372.06 358. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Stacking menus and prompt boxes are no longer supported.  Stacking ) 216. 335. T
+(menus are replaced by the Walking Menu Package.  Prompt boxes are ) 216. 322. T
+(replaced by the Notices package.  The following ) 216. 309. T
+4 F
+(structs) 431.97 309. T
+3 F
+( and functions ) 478.17 309. T
+(are no longer supported:) 216. 296. T
+9 F
+(Table 4-7) 151.68 275. T
+10 F
+(Unsupported Menu Structures and Functions) 216. 275. T
+11 F
+(Struct/Functions) 216. 257. T
+216. 255.33 293.03 255.92 R
+V
+(Comments) 431. 257. T
+431. 255.33 479.29 255.92 R
+V
+4 F
+(struct menu) 216. 236. T
+3 F
+(Use) 349. 236. T
+4 F
+( xv_create\0500,MENU,...\051) 366.1 236. T
+3 F
+(and) 511.3 236. T
+4 F
+(xv_set/get\050\051) 349. 223. T
+(struct menu_item) 216. 210. T
+3 F
+(Use) 349. 210. T
+4 F
+( xv_create\0500,MENU_ITEM,...\051) 366.1 210. T
+(menu_display\050\051) 216. 197. T
+3 F
+(Use) 349. 197. T
+4 F
+( menu_show\050\051) 366.1 197. T
+(struct prompt) 216. 184. T
+3 F
+(Use) 349. 184. T
+4 F
+( notice_prompt\050\051 ) 366.1 184. T
+3 F
+(with its) 478.3 184. T
+4 F
+( ) 511.01 184. T
+(menu_prompt\050\051) 216. 171. T
+3 F
+(various attributes.) 349. 171. T
+(Also, ) 216. 148. T
+4 F
+(menu_done_proc) 242.28 148. T
+3 F
+(s are only called in response to a ) 334.68 148. T
+4 F
+(menu_show) 480.7 148. T
+3 F
+(.  ) 540.1 148. T
+(Clicking ) 216. 135. T
+4 F
+(Select) 256.65 135. T
+3 F
+( \050) 296.25 135. T
+4 F
+(Left) 302.66 135. T
+3 F
+( button\051 on a menu button to select the default ) 329.06 135. T
+(menu item does not cause the attached menu\325s ) 216. 122. T
+4 F
+(done) 423.13 122. T
+3 F
+( proc to be called; no ) 449.53 122. T
+(menu is shown.  For better results, use ) 216. 109. T
+4 F
+(action procs) 387.71 109. T
+3 F
+( on each item.  ) 466.91 109. T
+55. 684. 198. 702. C
+55. 684. 198. 702. R
+7 X
+V
+7 F
+0 X
+(Input Events) 59. 688. T
+U
+55. 316. 198. 351. C
+55. 316. 198. 351. R
+7 X
+V
+7 F
+0 X
+(Menus and Prompts) 59. 337. T
+U
+49. 354. 564. 667. R
+0 H
+0 X
+N
+49. 165. 564. 269. R
+N
+FMENDPAGE
+%%Page: "65" 19
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(65) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+(In addition, the following pre-SunView attributes have been removed.) 216. 694. T
+9 F
+(Table 4-4) 151.68 673. T
+10 F
+(Removed Pre-SunView Panel Attributes) 216. 673. T
+11 F
+(Panel Attribute) 216. 655. T
+216. 653.33 285.38 653.92 R
+V
+(Comments) 431. 655. T
+431. 653.33 479.29 653.92 R
+V
+4 F
+(PANEL_WIDTH) 216. 634. T
+3 F
+(Use) 404. 634. T
+4 F
+( XV_WIDTH) 421.1 634. T
+(PANEL_HEIGHT) 216. 621. T
+3 F
+(Use) 404. 621. T
+4 F
+( XV_HEIGHT) 421.1 621. T
+(PANEL_VERTICAL_SCROLLBAR) 216. 608. T
+3 F
+(Use) 404. 608. T
+4 F
+(WIN_VERTICAL_SCROLLBAR) 404. 595. T
+(PANEL_HORIZONTAL_SCROLLBAR) 216. 582. T
+3 F
+(Use) 404. 582. T
+4 F
+(WIN_HORIZONTAL_SCROLLBAR) 404. 569. T
+(PANEL_PIXWIN) 216. 556. T
+3 F
+(Use) 404. 556. T
+4 F
+( WIN_PIXWIN) 421.1 556. T
+(PANEL_CU) 216. 543. T
+3 F
+(Use the new) 404. 543. T
+4 F
+( xv_row\050\051) 458.37 543. T
+3 F
+(and) 404. 530. T
+4 F
+( xv_col\050\051) 419.88 530. T
+3 F
+(functions instead) 404. 517. T
+4 F
+(PANEL_FIT_HEIGHT) 216. 504. T
+3 F
+(Use) 404. 504. T
+4 F
+( WIN_FIT_HEIGHT) 421.1 504. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The ) 216. 469. T
+4 F
+(cursor) 235.85 469. T
+3 F
+( and) 275.46 469. T
+5 F
+( ) 294.09 469. T
+4 F
+(icon) 296.84 469. T
+3 F
+( objects are no longer public ) 323.24 469. T
+4 F
+(structs) 450.94 469. T
+3 F
+(, so the ) 497.14 469. T
+(following ) 216. 456. T
+4 F
+(#DEFINEs) 261.53 456. T
+3 F
+( are removed:) 314.33 456. T
+9 F
+(Table 4-5) 151.68 435. T
+10 F
+(Removed #DEFINE Items) 216. 435. T
+11 F
+(#DEFINE) 216. 417. T
+216. 415.33 263.67 415.92 R
+V
+(Comments) 431. 417. T
+431. 415.33 479.29 415.92 R
+V
+4 F
+(DEFINE_CURSOR) 216. 396. T
+3 F
+(Use) 412. 396. T
+4 F
+( xv_create\0500,) 429.1 396. T
+(DEFINE_CURSOR_FROM_IMAGE  ) 216. 383. T
+(CURSOR,...\051) 412. 383. T
+(DEFINE_ICON_FROM_IMAGE) 216. 370. T
+3 F
+(Use) 412. 370. T
+4 F
+( xv_create) 429.1 370. T
+(\0500,ICON,...\051 ) 412. 357. T
+3 F
+(In addition, the following definitions have been removed from ) 216. 339. T
+4 F
+(<sunwindow/rect.h>) 216. 326. T
+3 F
+(:) 334.8 326. T
+11 F
+(#DEFINE) 216. 307. T
+216. 305.33 263.67 305.92 R
+V
+(Comments) 431. 307. T
+431. 305.33 479.29 305.92 R
+V
+4 F
+(min) 216. 286. T
+3 F
+(Use) 413. 286. T
+4 F
+( ) 430.1 286. T
+(MIN ) 436.7 286. T
+3 F
+(in) 463.1 286. T
+4 F
+( base.h) 471.66 286. T
+(max) 216. 273. T
+3 F
+(Use) 413. 273. T
+4 F
+( ) 430.1 273. T
+(MAX ) 436.7 273. T
+3 F
+(in) 463.1 273. T
+4 F
+( base.h) 471.66 273. T
+(bool) 216. 260. T
+(TRUE) 216. 247. T
+3 F
+(Moved to) 413. 247. T
+4 F
+( base.h) 455.47 247. T
+(FALSE) 216. 234. T
+55. 461. 198. 485. C
+55. 461. 198. 485. R
+7 X
+V
+18 F
+0 X
+(DEFINE) 59. 471. T
+7 F
+( Macros) 102.2 471. T
+U
+49. 494. 564. 667. R
+0 H
+0 X
+N
+49. 223. 564. 429. R
+N
+FMENDPAGE
+%%Page: "64" 18
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(64) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(X11/NeWS will not support ) 216. 694. T
+(cursor crosshairs, so all crosshair ) 342.5 694. T
+(attributes from the cursor package in ) 216. 681. T
+4 F
+(<sunwindow/win_cursor.h>) 380.35 681. T
+3 F
+( are ) 538.75 681. T
+(unsupported.) 216. 668. T
+9 F
+(Table 4-2) 151.68 647. T
+10 F
+(Removed Cursor Attributes) 216. 647. T
+11 F
+(Cursor Attribute) 216. 629. T
+216. 627.33 290.89 627.92 R
+V
+(Comments) 450. 629. T
+450. 627.33 498.29 627.92 R
+V
+4 F
+(CURSOR_SHOW_CROSSHAIRS) 216. 608. T
+3 F
+(None of these) 450. 608. T
+4 F
+( ) 511.09 608. T
+(CURSOR_SHOW_HORIZ_HAIR) 216. 595. T
+3 F
+(attributes exits) 450. 595. T
+4 F
+(CURSOR_SHOW_VERT_HAIR ) 216. 582. T
+3 F
+(in XView) 450. 582. T
+4 F
+(CURSOR_CROSSHAIR_BORDER_GRAVITY) 216. 569. T
+(CURSOR_HORIZ_HAIR_BORDER_GRAVITY) 216. 556. T
+(CURSOR_VERT_HAIR_BORDER_GRAVITY) 216. 543. T
+(CURSOR_CROSSHAIR_COLOR) 216. 530. T
+(CURSOR_CROSSHAIR_OP) 216. 517. T
+(CURSOR_CROSSHAIR_THICKNESS) 216. 504. T
+(CURSOR_CROSSHAIR_LENGTH) 216. 491. T
+(CURSOR_CROSSHAIR_GAP) 216. 478. T
+(CURSOR_HORIZ_HAIR_COLOR) 216. 465. T
+(CURSOR_HORIZ_HAIR_OP) 216. 452. T
+(CURSOR_HORIZ_HAIR_THICKNESS) 216. 439. T
+(CURSOR_HORIZ_HAIR_LENGTH) 216. 426. T
+(CURSOR_HORIZ_HAIR_GAP) 216. 413. T
+(CURSOR_VERT_HAIR_COLOR) 216. 400. T
+(CURSOR_VERT_HAIR_OP) 216. 387. T
+(CURSOR_VERT_HAIR_THICKNESS) 216. 374. T
+(CURSOR_VERT_HAIR_LENGTH) 216. 361. T
+(CURSOR_VERT_HAIR_GAP) 216. 348. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The panel menu package is not supported in XView.  Clients should use ) 216. 325. T
+(the menu package to replace the semantics of the following ) 216. 312. T
+4 F
+(PANEL_MENU) 479.95 312. T
+3 F
+( ) 545.95 312. T
+(attributes.) 216. 299. T
+9 F
+(Table 4-3) 151.68 278. T
+10 F
+(Removed PANEL_MENU Attributes) 216. 278. T
+11 F
+(Panel Attribute) 216. 260. T
+216. 258.33 285.38 258.92 R
+V
+(Comments) 431. 260. T
+431. 258.33 479.29 258.92 R
+V
+4 F
+(PANEL_MENU_CHOICE_FONTS) 216. 239. T
+3 F
+(Use ) 405. 239. T
+4 F
+(XV_FONT) 424.85 239. T
+3 F
+( to set the ) 471.06 239. T
+(font of each menu item.) 405. 226. T
+4 F
+(PANEL_MENU_CHOICE_IMAGES) 216. 209. T
+3 F
+(Use) 405. 209. T
+4 F
+( MENU_IMAGE) 422.1 209. T
+(PANEL_MENU_CHOICE_STRINGS) 216. 192. T
+3 F
+(Use) 405. 192. T
+4 F
+( MENU_STRING) 422.1 192. T
+(PANEL_MENU_CHOICE_VALUES) 216. 175. T
+3 F
+(Use) 405. 175. T
+4 F
+( MENU_VALUE) 422.1 175. T
+(PANEL_MENU_TITLE_FONT) 216. 158. T
+3 F
+(Unsupported:   menu titles ) 405. 158. T
+(can\325t be given a different font.) 405. 145. T
+4 F
+(PANEL_MENU_TITLE_IMAGE) 216. 128. T
+3 F
+(Use) 405. 128. T
+4 F
+( MENU_TITLE_IMAGE) 422.1 128. T
+(PANEL_MENU_TITLE_STRING) 216. 111. T
+3 F
+(Use) 405. 111. T
+4 F
+( MENU_TITLE_STRING) 422.1 111. T
+55. 668. 198. 702. C
+55. 668. 198. 702. R
+7 X
+V
+9 F
+0 X
+(Crosshair Cursor ) 59. 690. T
+(Attributes) 59. 677. T
+U
+55. 312. 198. 339. C
+55. 312. 198. 339. R
+7 X
+V
+9 F
+0 X
+(Panel Package) 59. 327. T
+U
+49. 343. 564. 640. R
+0 H
+0 X
+N
+49. 90. 564. 272. R
+N
+FMENDPAGE
+%%Page: "63" 17
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+54. 90. 558. 623. C
+210. 543. 558. 623. C
+210. 543. 558. 623. R
+7 X
+V
+19 F
+0 X
+(Incompatibilities and ) 347.67 602. T
+(Removed Functions) 358.33 576. T
+54. 90. 558. 623. C
+U
+54. 90. 558. 623. C
+U
+3 F
+0 X
+(This chapter lists all known incompatibilities between the SunView ) 216. 517. T
+(and XView toolkits.  It first describes incompatibilities that become ) 216. 504. T
+(apparent at compile-time, such as code not compiling, then turns to run-) 216. 491. T
+(time incompatibilities.  The reference point, for comparison purposes, ) 216. 478. T
+(is the version of SunView released with SunOS Release 4.0.) 216. 465. T
+54. 90. 558. 623. C
+U
+3 F
+0 X
+(In each case, the incompatibilities are separated according to the class ) 216. 442. T
+(of client or programmer they will affect.  A basic client uses only the ) 216. 429. T
+(higher-level building blocks, such as frames, panels, or cursors.  An ) 216. 416. T
+(intermediate client might use the canvas package to draw images and ) 216. 403. T
+(handle input events.  An advanced client delves into lower-level ) 216. 390. T
+(functionality described in the ) 216. 377. T
+5 F
+(SunView 1 System Programmer\325s Guide) 347.37 377. T
+3 F
+( ) 524.57 377. T
+(and ) 216. 364. T
+5 F
+(SunWindows Reference Manual) 234.63 364. T
+3 F
+(, or uses undocumented features.) 375.17 364. T
+54. 90. 558. 623. C
+U
+3 F
+0 X
+(The following incompatibilities between SunView and XView result ) 216. 341. T
+(in compilation errors when you compile an unmodified SunView ) 216. 328. T
+(application.) 216. 315. T
+54. 90. 558. 623. C
+U
+3 F
+0 X
+(The attributes in this section are no longer supported.) 216. 292. T
+54. 90. 558. 623. C
+U
+3 F
+0 X
+(The following frame attribute is no longer supported.) 216. 269. T
+9 F
+(Table 4-1) 151.68 235. T
+10 F
+(Unsupported Frame Attributes) 216. 235. T
+11 F
+(Frame Attribute) 216. 217. T
+216. 215.33 289.66 215.92 R
+V
+(Comments) 431. 217. T
+431. 215.33 479.29 215.92 R
+V
+4 F
+(FRAME_NTH_WINDOW) 216. 196. T
+3 F
+(can be replaced by iteration over the ) 343. 196. T
+(\050supported\051 attributes) 342. 183. T
+4 F
+( ) 436.4 183. T
+(FRAME_NTH_SUBFRAME ) 342. 170. T
+3 F
+(and) 467.4 170. T
+4 F
+( ) 483.28 170. T
+(FRAME_NTH_SUBWINDOW) 342. 157. T
+55. 476. 198. 533. C
+55. 476. 198. 533. R
+7 X
+V
+6 F
+0 X
+(4.1) 59. 516. T
+(Overview) 90. 516. T
+U
+55. 401. 198. 458. C
+55. 401. 198. 458. R
+7 X
+V
+7 F
+0 X
+(Basic, Intermediate, ) 59. 444. T
+(Advanced Clients) 59. 431. T
+U
+55. 305. 198. 357. C
+55. 305. 198. 357. R
+7 X
+V
+6 F
+0 X
+(4.2) 57. 341. T
+(Compile-Time ) 88. 341. T
+(Incompatibilities) 88. 326. T
+(\321Basic Clients) 88. 311. T
+U
+55. 284. 198. 305. C
+55. 284. 198. 305. R
+7 X
+V
+7 F
+0 X
+(Attributes) 59. 293. T
+U
+55. 259. 198. 283. C
+55. 259. 198. 283. R
+7 X
+V
+9 F
+0 X
+(Frame Package) 59. 271. T
+U
+20 F
+0 X
+(4) 541. 668. T
+216. 642. 560. 650. R
+4 X
+V
+0 H
+N
+216. 651. 560. 651. 2 L
+1 H
+0 X
+N
+36. 724. 576. 738. C
+36. 724. 576. 738. R
+7 X
+V
+U
+444. 29. 575. 50. R
+7 X
+V
+49. 138. 564. 230. R
+0 H
+0 X
+N
+FMENDPAGE
+%%Page: "78" 16
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(78) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Those run-time incompatibilities that affect advanced clients are ) 216. 648. T
+(noted in this section.) 216. 635. T
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+4 F
+0 X
+(win_setrect\050\051) 216. 595. T
+3 F
+( used to guarantee that the rect would change as ) 301.8 595. T
+(requested, since the kernel never rejected or modified a request.  The ) 216. 582. T
+(X11 window manager might alter the new size request.  This means the ) 216. 569. T
+(semantics of ) 216. 556. T
+4 F
+(win_setrect\050\051) 274.05 556. T
+3 F
+( will change.  The behavior of ) 359.85 556. T
+4 F
+(win_setrect\050\051) 216. 543. T
+3 F
+( followed by ) 301.8 543. T
+4 F
+(win_getrect\050\051) 360.15 543. T
+3 F
+( depends on external ) 445.96 543. T
+(window managers.  Sun will provide an external window manager which ) 216. 530. T
+(can be used with XView or other X11/NeWS applications.  The XView ) 216. 517. T
+(toolkit is designed to run with every true X11window manager.) 216. 504. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(\050This is an old, pre-SunView, SunWindows routine.\051  ) 216. 481. T
+3 F
+(The flush mask ) 450.37 481. T
+(argument is ignored; no events are flushed. ) 216. 468. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(This no longer sets ) 216. 445. T
+4 F
+(errno) 302.16 445. T
+3 F
+( in case of error, and only returns 0 if the ) 335.16 445. T
+(client code specifies non-blocking mode. ) 216. 432. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Clients must draw in screen coordinates in XView, rather than in the ) 216. 404. T
+(coordinates of the window that was used to go full-screen. Events are ) 216. 391. T
+(still reported in the coordinates of the window that becomes full-) 216. 378. T
+(screen.  They must also use the new functions ) 216. 365. T
+4 F
+(fullscreen_set_cursor\050\051) 216. 352. T
+3 F
+( and ) 367.8 352. T
+4 F
+(fullscreen_set_inputmask\050\051) 389.18 352. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(XView has only one input reading function per server, not one per ) 216. 329. T
+(window ) 216. 316. T
+4 F
+(FD) 254.19 316. T
+3 F
+(.) 267.39 316. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The timestamp of events returned by ) 216. 293. T
+4 F
+(event_time\050\051) 380.36 293. T
+3 F
+( is the same ) 459.56 293. T
+4 F
+(timeval) 216. 280. T
+3 F
+( structure as before.  However, in X11, event timestamp ) 262.2 280. T
+(resolution is in milliseconds.  Also, the timestamp of the event is ) 216. 267. T
+(measured as time since the server started, not the time-of-day.  If you ) 216. 254. T
+(are using event timestamps as the time-of-day in SunView, you can ) 216. 241. T
+(simulate this approximately in XView with the following fix:  at ) 216. 228. T
+(initialization, compare the timestamp of the first X11 event with ) 216. 215. T
+4 F
+(localtime\050\051) 216. 202. T
+3 F
+(, then offset subsequent event times accordingly. ) 288.6 202. T
+55. 633. 198. 702. C
+55. 633. 198. 702. R
+7 X
+V
+6 F
+0 X
+(4.6) 58. 686. T
+(Run-Time ) 89. 686. T
+(Incompatibilities) 89. 671. T
+(\321Advanced ) 89. 656. T
+(Clients) 89. 641. T
+U
+55. 610. 198. 628. C
+55. 610. 198. 628. R
+7 X
+V
+7 F
+0 X
+(Windows) 59. 614. T
+U
+55. 566. 198. 600. C
+55. 566. 198. 600. R
+7 X
+V
+8 F
+0 X
+(win_setrect\050\051) 60. 588. T
+9 F
+( and ) 153.6 588. T
+8 F
+(win_getrect\050\051) 60. 575. T
+U
+55. 459. 198. 494. C
+55. 459. 198. 494. R
+7 X
+V
+8 F
+0 X
+(win_setinputmask\050\051) 59. 481. T
+U
+55. 425. 198. 457. C
+55. 425. 198. 457. R
+7 X
+V
+8 F
+0 X
+(input_readevent\050\051 ) 59. 445. T
+9 F
+( ) 188.6 445. T
+U
+55. 386. 198. 413. C
+55. 386. 198. 413. R
+7 X
+V
+7 F
+0 X
+(Full-Screen Mode) 59. 399. T
+U
+55. 317. 198. 343. C
+55. 317. 198. 343. R
+7 X
+V
+7 F
+0 X
+(Input) 59. 331. T
+U
+55. 275. 198. 309. C
+55. 275. 198. 309. R
+7 X
+V
+7 F
+0 X
+(Event Timestamps) 59. 295. T
+U
+FMENDPAGE
+%%Page: "77" 15
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(77) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+9 F
+(Table 4-27) 145.68 693. T
+10 F
+(Unimplemented Cursor RasterOps) 216. 693. T
+11 F
+(Unimplemented Cursor RasterOps) 216. 675. T
+216. 673.33 372.46 673.92 R
+V
+4 F
+(PIX_SRC XOR PIX_DST) 216. 654. T
+(PIX_SRC AND PIX_NOT\050PIX_DST\051) 216. 641. T
+(PIX_NOT\050PIX_SRC\051 AND PIX_NOT\050PIX_DST\051) 216. 628. T
+(PIX_NOT\050PIX_SRC\051 XOR PIX_DST) 216. 615. T
+(PIX_SRC OR PIX_NOT\050PIX_DST\051) 216. 602. T
+(PIX_NOT\050PIX_SRC\051 OR PIX_NOT\050PIX_DST\051) 216. 589. T
+(PIX_NOT\050PIX_DST\051) 216. 576. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(In SunView, each window has its own unique cursor.  In XView, cursors ) 216. 553. T
+(are shared.  Thus, if you change a window\325s cursor but do not use ) 216. 540. T
+4 F
+(cursor_copy\050\051) 216. 527. T
+3 F
+( to create a copy of a cursor, the cursor may change in ) 301.8 527. T
+(other windows as well.) 216. 514. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Since icons are separate windows in XView, if a frame is iconic and you ) 216. 491. T
+(change its icon, its image on-screen will change immediately; in ) 216. 478. T
+(SunView the image would not change until you called ) 216. 465. T
+4 F
+(window_set\050frame, FRAME_ICON, icon, 0\051;) 216. 452. T
+3 F
+( ) 473.4 452. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Certain run-time incompatibilities have consequences for ) 216. 406. T
+(intermediate clients.  They are listed in this section.) 216. 393. T
+54. 90. 558. 702. C
+U
+4 F
+0 X
+(pf_default\050\051) 216. 365. T
+3 F
+( no longer examines the environment variable ) 295.2 365. T
+4 F
+(DEFAULT_FONT,) 216. 352. T
+3 F
+( but takes the default font from the defaults database.   ) 301.8 352. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Be sure to use the fonts package.  See function name changes under \324\324fonts\325\325 ) 216. 339. T
+(in ) 216. 326. T
+5 F
+(Section 4.3) 227.31 326. T
+3 F
+(.) 276.19 326. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The damage list field of the ) 216. 303. T
+4 F
+(pixwin) 340.04 303. T
+3 F
+( ) 379.64 303. T
+4 F
+(struct) 382.39 303. T
+3 F
+( is no longer available. Thus, ) 421.99 303. T
+4 F
+(pw_read\050\051) 216. 290. T
+3 F
+( and ) 275.4 290. T
+4 F
+(pw_copy\050\051) 296.78 290. T
+3 F
+( do not provide a fix-up list.  However, a new ) 356.18 290. T
+(function, ) 216. 277. T
+4 F
+(win_get_damage\050\051) 258.16 277. T
+3 F
+( can help clients to determine the damage ) 363.76 277. T
+(list when processing a ) 216. 264. T
+4 F
+(WIN_REPAINT) 316.21 264. T
+3 F
+( event. ) 388.81 264. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Scrollbars are now windows rather than ) 216. 241. T
+4 F
+(pixwin) 393.79 241. T
+3 F
+( regions.  In particular, ) 433.39 241. T
+(they now receive ) 216. 228. T
+4 F
+(WIN_REPAINT) 293.89 228. T
+3 F
+( and ) 366.49 228. T
+4 F
+(WIN_RESIZE) 387.88 228. T
+3 F
+( events independently ) 453.88 228. T
+(of the windows they are attached to, and  they process these events ) 216. 215. T
+(correctly.  This means that clients should not call ) 216. 202. T
+4 F
+(scrollbar_paint\050\051) 434.76 202. T
+3 F
+( ) 546.96 202. T
+(when they change the size of a scrollbar or repaint a window containing ) 216. 189. T
+(scrollbars.  Calling ) 216. 176. T
+4 F
+(scrollbar_paint\050\051) 302.16 176. T
+3 F
+( will result in ) 414.36 176. T
+(unnecessary ) 475.48 176. T
+(flicker. ) 216. 163. T
+(The SunView 1 routine ) 216. 145. T
+4 F
+(scrollbar_create\050\051) 321.71 145. T
+3 F
+( is still usable, but it ) 440.51 145. T
+(will not let you specify the scrollbar as splittable.  For full scrollbar ) 216. 132. T
+(functionality, use ) 216. 119. T
+4 F
+(xv_create) 295.13 119. T
+3 F
+( instead.) 354.53 119. T
+55. 535. 198. 564. C
+55. 535. 198. 564. R
+7 X
+V
+9 F
+0 X
+(Changing Cursors) 59. 552. T
+U
+55. 473. 198. 507. C
+55. 473. 198. 507. R
+7 X
+V
+7 F
+0 X
+(Icons) 59. 493. T
+U
+55. 374. 198. 445. C
+55. 374. 198. 445. R
+7 X
+V
+6 F
+0 X
+(4.5) 58. 429. T
+(Run-Time ) 89. 429. T
+(Incompatibilities) 89. 414. T
+(\321Intermediate ) 89. 399. T
+(Clients) 89. 384. T
+U
+55. 364. 198. 381. C
+55. 364. 198. 381. R
+7 X
+V
+7 F
+0 X
+(Fonts) 59. 367. T
+U
+55. 309. 198. 363. C
+55. 309. 198. 363. R
+7 X
+V
+12 F
+0 X
+(Note:) 59. 350. T
+13 F
+(  pf_*) 89.66 350. T
+2 F
+( ) 125.66 350. T
+14 F
+(is now ) 128.16 350. T
+13 F
+(xv_pf_* ) 59. 338. T
+14 F
+(and must be ) 107. 338. T
+13 F
+(extern) 59. 326. T
+14 F
+(ed in the client code ) 95. 326. T
+(\050cannot include a header file\051.) 59. 314. T
+U
+55. 285. 198. 307. C
+55. 285. 198. 307. R
+7 X
+V
+7 F
+0 X
+(Pixwin) 59. 295. T
+U
+55. 205. 198. 257. C
+55. 205. 198. 257. R
+7 X
+V
+9 F
+0 X
+(Scrollbar is a Real ) 59. 243. T
+(Window) 59. 230. T
+U
+53. 571. 554. 688. R
+0 H
+0 X
+N
+FMENDPAGE
+%%Page: "76" 14
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(76) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The) 216. 694. T
+( ) 233.1 694. T
+4 F
+(pw_polygon2\050\051) 235.85 694. T
+3 F
+( routine is implemented for its simple cases, but ) 321.65 694. T
+(some of its more complicated semantics are not implemented.  Source ) 216. 681. T
+(for filling the polygon can be either a ) 216. 668. T
+4 F
+(pixrect) 382.8 668. T
+3 F
+( or a ) 429. 668. T
+4 F
+(server_image) 451.3 668. T
+3 F
+(.) 530.5 668. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(XView does not support separate keyboard and pick input masks.  For ) 216. 645. T
+(compile-time compatibility, we have defined all the window attributes ) 216. 632. T
+(dealing with keyboard and pick input masks to map to a new set of ) 216. 619. T
+(attributes which manipulate a single input mask.  The following ) 216. 606. T
+(attributes therefore have changed run-time semantics.) 216. 593. T
+9 F
+(Table 4-26) 145.68 572. T
+10 F
+(Changed Inputmask Attributes) 216. 572. T
+11 F
+(Window Attribute) 216. 554. T
+216. 552.33 296.39 552.92 R
+V
+(Comments) 431. 554. T
+431. 552.33 479.29 552.92 R
+V
+4 F
+(WIN_CONSUME_KBD_EVENTS) 216. 533. T
+3 F
+(Use) 414. 533. T
+4 F
+(WIN_CONSUME_PICK_EVENT) 216. 520. T
+(WIN_CONSUME_EVENT) 414. 520. T
+(WIN_IGNORE_KBD_EVENT) 216. 494. T
+3 F
+(Use) 414. 494. T
+4 F
+(WIN_IGNORE_PICK_EVENT) 216. 481. T
+(WIN_IGNORE_EVENT) 414. 481. T
+3 F
+(A sample code fragment affected by this change is listed below.) 216. 445. T
+4 F
+(window_set\050window,     ) 90. 414. T
+(  ) 72. 401. T
+(WIN_CONSUME_PICK_EVENTS, LOC_DRAG,0, ) 180. 401. T
+(  ) 72. 388. T
+(WIN_CONSUME_KBD_EVENTS, WIN_NO_EVENTS, ) 180. 388. T
+(  ) 72. 375. T
+(WIN_ASCII_EVENTS, 0, 0\051; ) 180. 375. T
+3 F
+(In SunView, this code would have resulted in ) 216. 334. T
+4 F
+(LOC_DRAG) 419.17 334. T
+3 F
+( events being ) 471.97 334. T
+(enabled for the window.  In XView, since the two input mask attributes ) 216. 321. T
+(map to a single input mask, specifying ) 216. 308. T
+4 F
+(WIN_NO_EVENTS) 388.33 308. T
+3 F
+( clears the single ) 474.13 308. T
+(input mask and disables ) 216. 295. T
+4 F
+(LOC_DRAG) 324.16 295. T
+3 F
+( events. ) 376.96 295. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The default images supplied for graphic panel components \050buttons, ) 216. 272. T
+(choice items, and so on\051 are different in XView.  Consequently,  ) 216. 259. T
+(SunView applications which explicitly lay out their panel items in ) 216. 246. T
+(pixel coordinates will end up with overlapping or otherwise jumbled ) 216. 233. T
+(panel items until the program is changed to specify new pixel ) 216. 220. T
+(coordinates or, better yet, to use row/column positioning. ) 216. 207. T
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(In XView, if the hot spot coordinates are greater than the cursor\325s ) 216. 172. T
+(pixrect, the pixrect\325s size is increased to include the hot spot; however, ) 216. 159. T
+(this does not handle cursors with negative hot spot coordinates. ) 216. 146. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(X11/NeWS does not directly support cursor raster ops.  All but seven of ) 216. 123. T
+(these have been implemented with a cursor source and mask.  The ) 216. 110. T
+(unimplemented cursor rasterops are:) 216. 97. T
+55. 668. 198. 702. C
+55. 668. 198. 702. R
+7 X
+V
+9 F
+0 X
+(pw_polygon2\050\051) 59. 688. T
+U
+55. 627. 198. 661. C
+55. 627. 198. 661. R
+7 X
+V
+9 F
+0 X
+(Input Masks) 59. 647. T
+U
+55. 254. 198. 288. C
+55. 254. 198. 288. R
+7 X
+V
+7 F
+0 X
+(Panels) 59. 274. T
+U
+55. 181. 198. 207. C
+55. 181. 198. 207. R
+7 X
+V
+7 F
+0 X
+(Cursor) 59. 188. T
+U
+55. 158. 198. 183. C
+55. 158. 198. 183. R
+7 X
+V
+9 F
+0 X
+(Hot Spots) 59. 169. T
+U
+55. 98. 198. 139. C
+55. 98. 198. 139. R
+7 X
+V
+9 F
+0 X
+(Some Cursor RasterOps ) 59. 125. T
+(Not Supported) 59. 112. T
+U
+49. 469. 564. 566. R
+0 H
+0 X
+N
+51. 355. 51. 355. 51. 394.5 562. 355. 562. 355. 306.5 355. 562. 434. 562. 434. 562. 394.5 51. 434. 51. 434. 306.5 434. 51. 394.5 4 J
+N
+FMENDPAGE
+%%Page: "75" 13
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(75) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(XView now takes advantage of bit gravity on resize and repaint events.  ) 216. 694. T
+(This helps to improve performance by eliminating unnecessary ) 216. 681. T
+(repaints.  With ) 216. 668. T
+(bit gravity, when a window is resized, only the changed ) 283.83 668. T
+(area \050the difference between the old and new regions\051 is repainted.  The ) 216. 655. T
+(default for bit gravity is ) 216. 642. T
+4 F
+(NorthWestGravity) 323.24 642. T
+3 F
+(.  See Section 2.3 in this ) 428.84 642. T
+(manual as well as ) 216. 629. T
+4 F
+(WIN_BIT_GRAVITY) 296.65 629. T
+3 F
+( and ) 395.65 629. T
+4 F
+(WIN_WINDOW_GRAVITY) 417.04 629. T
+3 F
+( in the ) 535.84 629. T
+5 F
+(Summary of the XView API.) 216. 616. T
+3 F
+(Figure 4-1) 151.87 596. T
+5 F
+(The Canvas Model) 216. 596. T
+4 F
+( ) 299.11 596. T
+54. 90. 558. 702. C
+54. 415. 558. 592. C
+54. 415. 558. 592. R
+7 X
+V
+266. 498. 335. 531. 2 L
+1 H
+0 X
+N
+266. 498. 403. 498. 2 L
+N
+403. 498. 472. 531. 2 L
+N
+335. 531. 472. 531. 2 L
+N
+3 F
+(View Window) 72. 515. T
+(Canvas Subwindow) 72. 563. T
+(Paint Window) 72. 469. T
+186. 437. 437. 437. 2 L
+N
+186. 437. 300. 489. 2 L
+N
+300. 489. 540. 489. 2 L
+N
+437. 437. 540. 489. 2 L
+N
+266. 543. 266. 450. 2 L
+3 X
+N
+403. 541. 403. 450. 2 L
+N
+472. 579. 472. 482. 2 L
+N
+335. 579. 335. 482. 2 L
+N
+0 X
+151. 465. 81. 0. W
+151. 515. 138. 0. W
+266. 543. 335. 579. 2 L
+3 H
+N
+266. 543. 403. 543. 2 L
+N
+403. 543. 472. 579. 2 L
+N
+335. 579. 472. 579. 2 L
+N
+1 H
+173. 560. 109. 0. W
+266. 450. 335. 482. 2 L
+0 H
+4 X
+N
+266. 450. 403. 450. 2 L
+N
+403. 450. 472. 482. 2 L
+N
+335. 482. 472. 482. 2 L
+N
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The ) 216. 395. T
+(canvas subwindow event function now only gets events for the ) 235.85 395. T
+(canvas subwindow itself, so interposers on the canvas subwindow event ) 216. 382. T
+(function will not see events in the canvas ) 216. 369. T
+5 F
+(paint) 399.92 369. T
+3 F
+( window. Most clients ) 422.54 369. T
+(will need to interpose on the paint window, which they can retrieve ) 216. 356. T
+(with the ) 216. 343. T
+4 F
+(CANVAS_NTH_PAINT_WINDOW) 254.5 343. T
+3 F
+( attribute.) 406.3 343. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following routines are replaced or become no-ops.  Programs that ) 216. 320. T
+(refer to them will compile but their semantics are no longer the same.  ) 216. 307. T
+(The exact functionality of ) 216. 294. T
+4 F
+(pixwin) 332.7 294. T
+3 F
+( batching, as with ) 372.3 294. T
+4 F
+(pw_batch\050\051) 452.65 294. T
+3 F
+(, is ) 518.65 294. T
+(not provided; however the X11/NeWS server batches the drawing ) 216. 281. T
+(operations automatically until the next event is read or until a request ) 216. 268. T
+(which requires a reply is made to the server.  XView flushes these ) 216. 255. T
+(batched operations when ) 216. 242. T
+4 F
+(pw_batch_off\050\051) 328.11 242. T
+3 F
+( is invoked, thus forcing the ) 420.51 242. T
+(drawing operations to take place.  Also see ) 216. 229. T
+5 F
+(Pixwins) 407.54 229. T
+3 F
+( in Section 2.3.) 442.38 229. T
+9 F
+(Table 4-25) 145.68 208. T
+10 F
+(Changed Pixwin Functions) 216. 208. T
+11 F
+(Pixwin Function) 216. 190. T
+216. 188.33 292.72 188.92 R
+V
+(Comments) 431. 190. T
+431. 188.33 479.29 188.92 R
+V
+4 F
+(pw_batch\050\051) 216. 169. T
+3 F
+(Batching is not) 404. 169. T
+4 F
+( ) 470.62 169. T
+(pw_batch_on\050\051) 216. 156. T
+3 F
+(supported by X11/NeWS.) 404. 156. T
+4 F
+(pw_reset\050\051) 216. 143. T
+(pw_preparesurface_full\050\051) 216. 130. T
+3 F
+(There is no need to prepare a ) 404. 130. T
+4 F
+(pw_preparesurface\050\051) 216. 117. T
+3 F
+(surface, since all drawing ) 404. 117. T
+(takes place in a real window.) 404. 104. T
+55. 668. 198. 702. C
+55. 668. 198. 702. R
+7 X
+V
+9 F
+0 X
+(Bit Gravity) 59. 688. T
+U
+55. 377. 198. 411. C
+55. 377. 198. 411. R
+7 X
+V
+9 F
+0 X
+(Canvas Subwindow ) 59. 397. T
+(Events) 59. 384. T
+U
+55. 302. 198. 336. C
+55. 302. 198. 336. R
+7 X
+V
+7 F
+0 X
+(Pixwin) 59. 322. T
+U
+49. 95. 564. 201. R
+0 H
+0 X
+N
+FMENDPAGE
+%%Page: "74" 12
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(74) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+188. 293. 188. 293. 188. 302. 560. 293. 560. 293. 374. 293. 560. 311. 560. 311. 560. 302. 188. 311. 188. 311. 374. 311. 188. 302. 4 J
+6 X
+V
+0 X
+N
+9 F
+(Table 4-24) 145.68 693. T
+10 F
+(Removed Ttysw Functions) 216. 693. T
+11 F
+(Ttysw Function) 216. 675. T
+216. 673.33 287.21 673.92 R
+V
+(Comments) 431. 675. T
+431. 673.33 479.29 673.92 R
+V
+4 F
+(ttysw_create\050\051) 216. 654. T
+3 F
+(Use) 429. 654. T
+4 F
+(xv_create\050frame,) 429. 641. T
+3 F
+( ) 534.6 641. T
+4 F
+(TTY\051) 537.35 641. T
+(ttysw_fork\050\051) 216. 628. T
+3 F
+(Use) 429. 628. T
+4 F
+( TTY_ARGV) 446.1 628. T
+(ttysw_createtoolsubwindow\050\051) 216. 615. T
+3 F
+(All replaced by) 429. 615. T
+4 F
+(ttytlsw_createtoolsubwindow\050\051) 216. 602. T
+(xv_create\050\051) 429. 602. T
+(ttysw_start\050\051) 216. 589. T
+3 F
+(processing) 429. 589. T
+4 F
+(ttysw_init\050\051) 216. 576. T
+(ttysw_selected\050\051) 216. 563. T
+(ttysw_sigwinch\050\051) 216. 550. T
+(ttysw_handlesigwinch\050\051) 216. 537. T
+3 F
+(In addition, the unsupported but released header files ) 216. 514. T
+4 F
+(ttysw_impl.h) 452.15 514. T
+3 F
+( ) 531.35 514. T
+(and ) 216. 501. T
+4 F
+(ttytlsw_impl.h) 234.63 501. T
+3 F
+( are no longer available.  In particular, the ) 327.03 501. T
+4 F
+(ttysw) 514.29 501. T
+3 F
+( ) 547.29 501. T
+(structure has been removed.  There are attributes of the ) 216. 488. T
+4 F
+(tty) 461.29 488. T
+3 F
+( object ) 481.09 488. T
+(which replace most of this ) 216. 475. T
+4 F
+(struct) 334.84 475. T
+3 F
+(s fields. ) 374.44 475. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(This section describes XView incompatibilities with SunView that ) 216. 451. T
+(become apparent at run-time, that is, after the program has been ) 216. 438. T
+(successfully compiled under XView.) 216. 425. T
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The frame no longer gets events when iconic, since a frame\325s icon has its ) 216. 389. T
+(own window. ) 216. 376. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Only the very first object created will process the ) 216. 358. T
+4 F
+(FRAME_ARGS) 435.65 358. T
+3 F
+( or) 501.65 358. T
+4 F
+( ) 513.56 358. T
+(FRAME_ARGC_PTR_ARGV) 216. 345. T
+3 F
+( attributes.  The command line is parsed into ) 341.4 345. T
+(entries in the defaults database, which are then queried by the ) 216. 332. T
+(appropriate packages, as in) 216. 319. T
+4 F
+( % ) 216. 298. T
+15 F
+(-Wh) 235.8 298. T
+16 F
+( \256) 255.6 298. T
+3 F
+( ) 270.44 298. T
+5 F
+(/XView/Cmdline/Height) 273.19 298. T
+3 F
+(  ) 378.31 298. T
+(Most of the command line arguments refer to frame defaults.  The ) 216. 280. T
+(frame package applies the command line defaults only to the first base ) 216. 267. T
+(frame that is created.  For example, ) 216. 254. T
+15 F
+(-Wp 100 150) 374.54 254. T
+3 F
+(  positions the first ) 447.14 254. T
+(base frame that is created at ) 216. 241. T
+4 F
+(\050100,150\051) 341.24 241. T
+3 F
+(.  The window manager ) 400.63 241. T
+(computes a default position for each subsequently created base frame. ) 216. 228. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(As shown in the following diagram, canvases are implemented as three ) 216. 205. T
+(separate windows, the ) 216. 192. T
+5 F
+(canvas subwindow) 316.2 192. T
+3 F
+(, the ) 399.01 192. T
+5 F
+(view window) 420.7 192. T
+3 F
+( and the ) 477.84 192. T
+5 F
+(paint window) 216. 179. T
+3 F
+(. ) 275.6 179. T
+(The paint window is a child of the view window, which is in turn a child ) 216. 161. T
+(of the canvas subwindow.  The view window clips the paint window to ) 216. 148. T
+(that area of the canvas subwindow unobscured by the scrollbars. The ) 216. 135. T
+(paint window may be much larger than either the view window or the ) 216. 122. T
+(canvas subwindow, in which case only a small portion of it will be ) 216. 109. T
+(visible at a given time.) 216. 96. T
+55. 424. 198. 474. C
+55. 424. 198. 474. R
+7 X
+V
+6 F
+0 X
+(4.4) 55. 459. T
+(Run-Time ) 86. 459. T
+(Incompatibilities) 86. 444. T
+(\321Basic Clients) 86. 429. T
+U
+55. 404. 198. 423. C
+55. 404. 198. 423. R
+7 X
+V
+7 F
+0 X
+(Frame ) 59. 409. T
+U
+55. 378. 198. 398. C
+55. 378. 198. 398. R
+7 X
+V
+9 F
+0 X
+(Iconic Frame Events ) 59. 385. T
+U
+55. 340. 198. 374. C
+55. 340. 198. 374. R
+7 X
+V
+9 F
+0 X
+(Frame Command Line ) 59. 360. T
+(Arguments) 59. 347. T
+U
+55. 187. 198. 221. C
+55. 187. 198. 221. R
+7 X
+V
+7 F
+0 X
+(Canvas) 59. 207. T
+U
+49. 530. 564. 688. R
+0 H
+0 X
+N
+FMENDPAGE
+%%Page: "73" 11
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(73) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+9 F
+(Table 4-21) 145.68 693. T
+10 F
+(Removed Screen Functions) 216. 693. T
+11 F
+(Screen Function) 216. 675. T
+216. 673.33 292.1 673.92 R
+V
+(Comments) 431. 675. T
+431. 673.33 479.29 673.92 R
+V
+4 F
+(win_screennew\050\051) 216. 654. T
+3 F
+(These are replaced by) 409. 654. T
+4 F
+(win_initscreenfromargv\050\051) 216. 641. T
+3 F
+(the ) 409. 641. T
+4 F
+(SERVER) 425.19 641. T
+3 F
+( and ) 464.79 641. T
+4 F
+(SCREEN) 486.18 641. T
+(win_screenget\050\051) 216. 628. T
+3 F
+(objects.) 409. 628. T
+4 F
+(win_screendestroy\050\051) 216. 615. T
+(win_set/getscreenpositions\050\051) 216. 602. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following routines have been removed.  They are documented in the ) 216. 579. T
+5 F
+(SunView 1 System Programmer\325s Guide) 216. 566. T
+3 F
+(.) 393.2 566. T
+9 F
+(Table 4-22) 145.68 545. T
+10 F
+(Removed Workstation Functions) 216. 545. T
+11 F
+(Workstation Function) 216. 527. T
+216. 525.33 316.56 525.92 R
+V
+(Comments) 431. 527. T
+431. 525.33 479.29 525.92 R
+V
+4 F
+(win_setkbd\050\051) 216. 506. T
+3 F
+(All handled \050or not\051 by ) 431. 506. T
+4 F
+(win_setms\050\051) 216. 494. T
+3 F
+(the X11/NeWS server.) 431. 494. T
+4 F
+(win_set/remove_input_device\050\051) 216. 482. T
+(win_is_input_device\050\051) 216. 470. T
+(win_enum_input_device\050\051) 216. 458. T
+(win_set/get_focus_event\050\051) 216. 446. T
+(win_set/get_swallow_event\050\051) 216. 434. T
+(win_release_event_lock\050\051) 216. 422. T
+(win_set/get_event_timeout\050\051) 216. 410. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following routines have been removed.  They are documented in the ) 216. 388. T
+5 F
+(SunView 1 System Programmer\325s Guide) 216. 375. T
+3 F
+(.) 393.2 375. T
+9 F
+(Table 4-23) 145.68 354. T
+10 F
+(Removed Window Manager Functions) 216. 354. T
+11 F
+(wmgr_ Function) 216. 336. T
+216. 334.33 292.11 334.92 R
+V
+(Comments) 431. 336. T
+431. 334.33 479.29 334.92 R
+V
+4 F
+(wmgr_confirm\050\051) 216. 315. T
+3 F
+(Use notices) 432. 315. T
+4 F
+(wmgr_winandchildrenexposed\050\051) 216. 302. T
+3 F
+(Use) 432. 302. T
+4 F
+( WIN_SHOW) 449.1 302. T
+(wmgr_iswindowopen\050\051) 216. 289. T
+3 F
+(Use) 432. 289. T
+4 F
+( FRAME_CLOSED) 449.1 289. T
+(wmgr_setrectalloc\050\051) 216. 276. T
+(wmgr_getrectalloc\050\051) 216. 263. T
+(win_computeclipping\050\051) 216. 250. T
+(win_partialrepair\050\051) 216. 237. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Pre-SunView supported the creation of a ) 216. 214. T
+4 F
+(tty) 398.07 214. T
+3 F
+( subwindow that did not ) 417.87 214. T
+(have to be a child of a frame.  In XView a ) 216. 201. T
+4 F
+(tty) 403.86 201. T
+3 F
+( subwindow is always a ) 423.66 201. T
+(child of a frame.  The following routines have been removed, but are ) 216. 188. T
+(documented in the ) 216. 175. T
+5 F
+(SunView 1 System Programmer\325s Guide) 300.02 175. T
+3 F
+( and ) 477.22 175. T
+5 F
+(SunWindows Reference Manual) 216. 162. T
+3 F
+(.) 356.54 162. T
+55. 570. 198. 595. C
+55. 570. 198. 595. R
+7 X
+V
+9 F
+0 X
+(Workstations) 59. 581. T
+U
+55. 370. 198. 403. C
+55. 370. 198. 403. R
+7 X
+V
+9 F
+0 X
+(Window Manager) 59. 390. T
+(\050wmgr_\051) 59. 377. T
+U
+55. 196. 198. 229. C
+55. 196. 198. 229. R
+7 X
+V
+9 F
+0 X
+(Ttysw) 59. 216. T
+U
+49. 596. 564. 687. R
+0 H
+0 X
+N
+49. 405. 564. 540. R
+N
+49. 231. 564. 347. R
+N
+FMENDPAGE
+%%Page: "72" 10
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(72) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+9 F
+(Table 4-19) 145.68 693. T
+10 F
+(Removed Low-Level Window Functions) 216. 693. T
+11 F
+(Low-Level Window Function) 216. 675. T
+216. 673.33 348.63 673.92 R
+V
+(Comments) 431. 675. T
+431. 673.33 479.29 673.92 R
+V
+4 F
+(win_set/getsavedrect\050\051) 216. 654. T
+3 F
+(These are not needed, since ) 396. 654. T
+(icons are separate windows in) 396. 641. T
+(X11/NeWS.  Use) 396. 628. T
+4 F
+( xv_set/get) 472.68 628. T
+(\050icon/window,) 396. 615. T
+3 F
+( ) 481.8 615. T
+4 F
+(WIN_RECT, ) 484.55 615. T
+3 F
+(...) 550.55 615. T
+4 F
+(\051) 558.8 615. T
+(window_default_event_proc\050\051) 216. 602. T
+3 F
+(Not supported.) 396. 602. T
+4 F
+(window_loop\050\051) 216. 589. T
+(window_return\050\051) 216. 576. T
+(window_release_event_lock\050\051) 216. 563. T
+(win_set/getuserflags\050\051) 216. 550. T
+(win_setuserflag\050\051) 216. 537. T
+3 F
+(Use) 396. 537. T
+4 F
+( XV_KEY_DATA) 413.1 537. T
+(we_set/getgfxwindow\050\051) 216. 524. T
+(gfx) 396. 524. T
+3 F
+(_* is totally defunct.) 415.8 524. T
+4 F
+(win_insert/removeblanket\050\051) 216. 511. T
+3 F
+(No blanket windows.) 396. 511. T
+4 F
+(win_isblanket\050\051) 216. 498. T
+(win_set/getowner\050\051) 216. 485. T
+(xv_get\050window,) 396. 485. T
+3 F
+( ) 488.4 485. T
+4 F
+(WIN_OWNER\051;) 491.15 485. T
+(we_set/getparentwindow\050\051) 216. 472. T
+3 F
+(Environment variables unused.) 396. 472. T
+4 F
+( ) 532.57 472. T
+(win_errorhandler\050\051) 216. 459. T
+(win_set_button_order\050\051) 216. 446. T
+3 F
+(Not supported) 396. 446. T
+4 F
+(.  ) 458.63 446. T
+(win_get_button_order\050\051) 216. 433. T
+(win_get_scaling\050\051) 216. 420. T
+(win_set_scaling\050\051) 216. 407. T
+54. 90. 564. 702. C
+U
+3 F
+0 X
+(The following routines that enumerate the window tree have been ) 216. 384. T
+(removed but are documented in the ) 216. 371. T
+5 F
+(SunView 1 System Programmer\325s ) 374.25 371. T
+(Guide) 216. 358. T
+3 F
+(.  They are usually of interest to window managers, not window ) 242.88 358. T
+(application programs. You can still determine a window\325s relatives one-) 216. 345. T
+(by-one with ) 216. 332. T
+4 F
+(win_getlink\050\051) 271.6 332. T
+3 F
+(.) 357.4 332. T
+9 F
+(Table 4-20) 145.68 311. T
+10 F
+(Removed Window Tree Enumeration Functions) 216. 311. T
+11 F
+(Window Tree Enumeration Function) 216. 293. T
+216. 291.33 385.01 291.92 R
+V
+(Comments) 450. 293. T
+450. 291.33 498.29 291.92 R
+V
+4 F
+(win_enumall\050\051) 216. 272. T
+3 F
+(Use the) 450. 272. T
+4 F
+(win_enumscreen\050\051) 216. 259. T
+3 F
+(X11/NeWS ) 450. 259. T
+4 F
+(win_enumerate_children\050\051) 216. 246. T
+3 F
+(server call) 450. 246. T
+4 F
+(win_enumerate_subtree\050\051) 216. 233. T
+(XQueryTree\050\051) 450. 233. T
+(win_get_tree_layer\050\051) 216. 220. T
+3 F
+(instead.) 450. 220. T
+54. 90. 564. 702. C
+U
+3 F
+0 X
+(The following routines have been removed.  They are documented in the ) 216. 197. T
+5 F
+(SunView 1 System Programmer\325s Guide) 216. 184. T
+3 F
+(.) 393.2 184. T
+55. 366. 198. 398. C
+55. 366. 198. 398. R
+7 X
+V
+9 F
+0 X
+(Window Enumeration) 59. 386. T
+U
+55. 179. 198. 211. C
+55. 179. 198. 211. R
+7 X
+V
+9 F
+0 X
+(Screens) 59. 199. T
+U
+49. 403. 571. 688. R
+0 H
+0 X
+N
+49. 214. 570. 304. R
+N
+FMENDPAGE
+%%Page: "71" 9
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(71) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+9 F
+(Table 4-16) 145.68 693. T
+10 F
+(Removed Command Line Functions) 216. 693. T
+11 F
+(Command Line Function) 216. 675. T
+216. 673.33 331.53 673.92 R
+V
+(Comments) 431. 675. T
+431. 673.33 479.29 673.92 R
+V
+4 F
+(tool_parse_all\050\051) 216. 654. T
+3 F
+(Use) 387. 654. T
+4 F
+( XV_ARGC_PTR_ARGV) 404.1 654. T
+(tool_parse_one\050\051) 216. 641. T
+3 F
+(Use) 387. 641. T
+4 F
+( XV_ARGS ) 404.1 641. T
+(tool_usage\050\051) 216. 628. T
+3 F
+(Use) 387. 628. T
+4 F
+( xv_usage\050\051) 404.1 628. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following routines have been removed.  They are documented in the ) 216. 605. T
+5 F
+(SunView 1 System Programmer\325s Guide) 216. 592. T
+3 F
+(.) 393.2 592. T
+9 F
+(Table 4-17) 145.68 571. T
+10 F
+(Removed Tile/Agent Functions) 216. 571. T
+11 F
+(Tile/Agent Function) 216. 553. T
+216. 551.33 308.61 551.92 R
+V
+(Comments) 431. 553. T
+431. 551.33 479.29 551.92 R
+V
+4 F
+(win_register/unregister\050\051) 216. 532. T
+(win_set/get_flags\050\051) 216. 519. T
+(win_get_fd\050\051) 216. 506. T
+3 F
+(Use) 414. 506. T
+4 F
+( xv_get\050window,) 431.1 506. T
+(WIN_FD\051) 414. 493. T
+3 F
+(; or just pass the) 460.2 493. T
+(window object wherever ) 414. 480. T
+(you use ) 414. 467. T
+4 F
+(WIN_FD) 450.66 467. T
+(win_get_pixwin\050\051) 216. 454. T
+3 F
+(Use ) 414. 454. T
+4 F
+(xv_get\050window,) 433.85 454. T
+(WIN_PIXWIN\051) 414. 441. T
+3 F
+(; or just pass the) 486.6 441. T
+(window object wherever  ) 414. 428. T
+(you use) 414. 415. T
+4 F
+( WIN_PIXWIN) 447.91 415. T
+(win_set/get_kbd/pick_mask\050\051) 216. 402. T
+3 F
+(Use ) 414. 402. T
+4 F
+(WIN_CONSUME_EVENT) 433.85 402. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following routines have been removed.  They are only documented in ) 216. 366. T
+(the ) 216. 353. T
+5 F
+(SunView 1 System Programmer\325s Guide) 232.19 353. T
+3 F
+( or the \050obsolete\051 ) 409.39 353. T
+5 F
+(SunWindows Reference Manual) 216. 340. T
+3 F
+(.) 356.54 340. T
+9 F
+(Table 4-18) 145.68 319. T
+10 F
+(Removed Panel Functions) 216. 319. T
+54. 90. 558. 702. C
+U
+11 F
+0 X
+(Panel Function) 216. 301. T
+216. 299.33 287.21 299.92 R
+V
+(Comments) 431. 301. T
+431. 299.33 479.29 299.92 R
+V
+4 F
+(panel_make_list\050\051) 216. 280. T
+3 F
+(Use) 396. 280. T
+4 F
+( attr_create_list\050\051) 413.1 280. T
+(panel_fit_height\050\051) 216. 267. T
+3 F
+(Use) 396. 267. T
+4 F
+( window_fit_height\050\051) 413.1 267. T
+(panel_fit_width\050\051) 216. 254. T
+3 F
+(Use) 396. 254. T
+4 F
+( window_fit_width\050\051) 413.1 254. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The handling of the window tree is somewhat different in XView. ) 216. 213. T
+(Windows have links to their parent and siblings as soon as they are ) 216. 200. T
+(created, and these links persist whether a window is mapped \050visible\051 or ) 216. 187. T
+(not. ) 216. 174. T
+4 F
+( win_insert\050\051) 235.56 174. T
+3 F
+( and ) 321.36 174. T
+4 F
+(win_remove\050\051) 342.74 174. T
+3 F
+( are equivalent to ) 421.94 174. T
+4 F
+(xv_set\050window, WIN_MAP, TRUE, 0\051;) 216. 161. T
+3 F
+( and ) 433.8 161. T
+4 F
+(xv_set\050window,) 216. 148. T
+3 F
+( ) 308.4 148. T
+4 F
+(WIN_MAP, FALSE, 0\051;) 311.15 148. T
+3 F
+( respectively. ) 436.55 148. T
+(The following routines have been removed.  They are documented in the ) 216. 125. T
+5 F
+(SunView 1 System Programmer\325s Guide) 216. 112. T
+3 F
+(.) 393.2 112. T
+55. 587. 198. 621. C
+55. 587. 198. 621. R
+7 X
+V
+9 F
+0 X
+(Agent & ) 59. 607. T
+(Tiles) 103.66 607. T
+U
+55. 348. 198. 382. C
+55. 348. 198. 382. R
+7 X
+V
+9 F
+0 X
+(Panels) 59. 368. T
+U
+55. 232. 198. 312. C
+55. 232. 198. 312. R
+7 X
+V
+12 F
+0 X
+(Note:) 60. 299. T
+14 F
+(  If your SunView ) 90.66 299. T
+(code used ) 60. 287. T
+13 F
+(PANEL_LABEL_IMAGE) 60. 276. T
+14 F
+( in ) 162. 276. T
+(conjunction with ) 60. 264. T
+13 F
+(panel_button_image\050\051) 60. 253. T
+14 F
+(, ) 180. 253. T
+(use ) 60. 241. T
+13 F
+(PANEL_LABEL_STRING.) 78.9 241. T
+U
+55. 195. 198. 222. C
+55. 195. 198. 222. R
+7 X
+V
+9 F
+0 X
+(Windows) 59. 211. T
+U
+49. 624. 564. 688. R
+0 H
+0 X
+N
+49. 397. 564. 566. R
+N
+210. 247. 564. 315. R
+N
+FMENDPAGE
+%%Page: "70" 8
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(70) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+5 F
+(Removed Pixwin Functions \050cont\325d\051) 216. 694. T
+11 F
+(Removed Pixwin Function) 216. 670. T
+216. 668.33 337.02 668.92 R
+V
+(Comments) 387. 670. T
+387. 668.33 435.29 668.92 R
+V
+4 F
+(pw_preparesurface\050\051) 216. 658. T
+3 F
+(unnecessary) 387. 658. T
+4 F
+(pw_set/get_region_rect\050\051) 216. 646. T
+3 F
+(Most regions in SunView1 have ) 387. 646. T
+(become full-fledged windows in ) 387. 634. T
+(XView, so you can often use) 387. 622. T
+4 F
+( ) 514.08 622. T
+(WIN_RECT ) 387. 610. T
+3 F
+(instead.) 446.4 610. T
+4 F
+(pw_dbl_get\050\051) 216. 598. T
+(pw_dbl_access\050\051) 216. 586. T
+3 F
+(Double-buffering is not) 387. 586. T
+4 F
+(pw_dbl_release\050\051) 216. 574. T
+3 F
+(supported.) 387. 574. T
+4 F
+(pw_dbl_flip\050\051) 216. 562. T
+(pw_dbl_set\050\051) 216. 550. T
+(pw_traprop\050\051) 216. 538. T
+3 F
+(Not implemented.) 387. 538. T
+4 F
+(pw_use_fast_monochrome\050\051) 216. 526. T
+3 F
+(No substitute.  Set the new) 387. 526. T
+4 F
+( ) 504.94 526. T
+(WIN_VISUAL) 387. 514. T
+3 F
+( attribute to) 453. 514. T
+4 F
+(WIN_MONOCHROME.) 387. 502. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Since X11/NeWS doesn\325t support double-buffering, the following ) 216. 480. T
+(double-buffering attributes have been removed:) 216. 467. T
+9 F
+(Table 4-14) 145.68 446. T
+10 F
+(Removed Double-Buffering Attributes) 216. 446. T
+11 F
+(Double-Buffering Attribute) 216. 428. T
+216. 426.33 340.38 426.92 R
+V
+(Comments) 431. 428. T
+431. 426.33 479.29 426.92 R
+V
+4 F
+(PW_DBL_ERROR) 216. 407. T
+3 F
+(All gone) 415. 407. T
+4 F
+(PW_DBL_FORE) 216. 394. T
+(PW_DBL_BACK) 216. 381. T
+(PW_DBL_BOTH) 216. 368. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Be sure to use the font package \050i.e., use ) 216. 340. T
+4 F
+(FONT_STRING_DIMS) 396.24 340. T
+3 F
+( instead of ) 501.83 340. T
+4 F
+(pw_text) 216. 327. T
+3 F
+(\051.  Here is a list of changed functions:) 262.2 327. T
+9 F
+(Table 4-15) 145.68 306. T
+10 F
+(Changed pf_* Functions) 216. 306. T
+11 F
+(Old Function Name ) 216. 290. T
+216. 288.33 309.82 288.92 R
+V
+(New Function Name) 378. 290. T
+378. 288.33 472.73 288.92 R
+V
+4 F
+(pf_sys) 216. 273. T
+(xv_pf_sys ) 378. 273. T
+(pf_open\050\051) 216. 260. T
+(xv_pf_open\050\051 ) 378. 260. T
+(pf_close\050\051) 216. 247. T
+(xv_pf_close\050\051==>) 378. 247. T
+3 F
+(actually defunct) 483.6 247. T
+4 F
+(pf_text\050\051) 216. 234. T
+(xv_pf_text\050\051 ) 378. 234. T
+(pf_textbatch\050\051) 216. 221. T
+(xv_pf_textbatch\050\051 ) 378. 221. T
+(pf_textbound\050\051) 216. 208. T
+(xv_pf_textbound\050\051 ) 378. 208. T
+(pf_textwidth\050\051) 216. 195. T
+(xv_pf_textwidth\050\051 ) 378. 195. T
+(pf_ttext\050\051) 216. 182. T
+(xv_pf_ttext\050\051 ) 378. 182. T
+(pf_default\050\051) 216. 169. T
+(xv_pf_default\050\051 ) 378. 169. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following routines have been removed. They are only documented in ) 216. 146. T
+(the ) 216. 133. T
+5 F
+(SunWindows Reference Manual) 232.19 133. T
+3 F
+(.) 372.73 133. T
+55. 462. 198. 496. C
+55. 462. 198. 496. R
+7 X
+V
+9 F
+0 X
+(Double-Buffering) 59. 482. T
+U
+55. 322. 198. 356. C
+55. 322. 198. 356. R
+7 X
+V
+9 F
+0 X
+(Fonts) 59. 342. T
+U
+55. 128. 198. 160. C
+55. 128. 198. 160. R
+7 X
+V
+9 F
+0 X
+(Command Line Processing) 59. 148. T
+U
+49. 164. 564. 301. R
+0 H
+0 X
+N
+49. 498. 564. 682. R
+N
+49. 360. 564. 440. R
+N
+FMENDPAGE
+%%Page: "69" 7
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(69) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 694. T
+4 F
+(<sunwindow/win_input.h>.) 265.49 694. T
+3 F
+( This structure is not removed ) 423.89 694. T
+(but changed. The fields no longer supported are:) 216. 681. T
+9 F
+(Table 4-11) 145.68 660. T
+10 F
+(Unsupported struct inputmask Fields) 216. 660. T
+11 F
+(Struct inputmask) 216. 642. T
+216. 640.33 293.95 640.92 R
+V
+(Comments) 431. 642. T
+431. 640.33 479.29 640.92 R
+V
+4 F
+(im_inputcode) 216. 621. T
+3 F
+(Access the ) 396. 621. T
+4 F
+(im_shifts) 216. 608. T
+3 F
+(inputmask through ) 396. 608. T
+4 F
+(im_shiftcodes) 216. 595. T
+(WIN_CONSUME_EVENT) 396. 595. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(These  ) 216. 572. T
+4 F
+(<sunwindow/pw_dblbuf.h>typedefs) 247.77 572. T
+3 F
+(  are not supported.) 452.37 572. T
+9 F
+(Table 4-12) 145.68 551. T
+10 F
+(Unsupported Type Definitions) 216. 551. T
+11 F
+(Typedef) 216. 533. T
+216. 531.33 252.04 531.92 R
+V
+(Comments) 431. 533. T
+431. 531.33 479.29 531.92 R
+V
+4 F
+(Pw_attribute_value) 216. 512. T
+3 F
+(Basically, X11/NeWS does not ) 396. 512. T
+(support ) 396. 499. T
+(double-buffering.) 431.75 499. T
+4 F
+(Pw_dbl_attribute) 216. 486. T
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+4 F
+0 X
+(Pixwins) 216. 435. T
+3 F
+( are now opaque objects. When you ask for a window\325s ) 262.2 435. T
+4 F
+(pixwin) 509.03 435. T
+3 F
+(, ) 548.63 435. T
+(you actually get the window handle back, since you can draw directly on ) 216. 422. T
+(windows.  Clients cannot access to the fields in a ) 216. 409. T
+4 F
+(pixwin) 434.45 409. T
+3 F
+( ) 474.05 409. T
+4 F
+(struct) 476.8 409. T
+3 F
+(.  Some ) 516.4 409. T
+(new window attributes have been added to provide similar ) 216. 396. T
+(functionality.   ) 216. 383. T
+4 F
+(Pixwin) 283.22 383. T
+3 F
+( regions are not supported:  use real windows ) 322.82 383. T
+(instead.  Double-buffering is not supported, either.  The following ) 216. 370. T
+(routines no longer exist; all references must be removed from programs.) 216. 357. T
+9 F
+(Table 4-13) 145.68 336. T
+10 F
+(Removed Pixwin Functions) 216. 336. T
+11 F
+(Removed Pixwin Function) 216. 318. T
+216. 316.33 337.02 316.92 R
+V
+(Comments) 431. 318. T
+431. 316.33 479.29 316.92 R
+V
+4 F
+(pw_open/close\050\051) 216. 297. T
+3 F
+(No need to open/close a window.  ) 387. 297. T
+(Since the ) 387. 285. T
+4 F
+(pixwin) 430.38 285. T
+3 F
+( is the window, it ) 469.98 285. T
+(goes away when the window goes ) 387. 273. T
+(away.) 387. 261. T
+4 F
+(pw_destroy\050\051) 216. 249. T
+(pw_region\050\051) 216. 237. T
+3 F
+(Use real windows instead.) 387. 237. T
+4 F
+(pw_restrictclipping\050\051) 216. 225. T
+3 F
+(Use ) 387. 225. T
+4 F
+(win_set_clip) 406.85 225. T
+3 F
+(  instead.) 486.06 225. T
+4 F
+(pw_exposed\050\051) 216. 213. T
+3 F
+(windows are clipped for you by ) 387. 213. T
+(the X11/NeWS server, so just ) 387. 201. T
+(set clipping to the whole window:) 387. 189. T
+4 F
+(win_set_clip\050window) 387. 177. T
+3 F
+(,) 512.4 177. T
+4 F
+(RECTLIST_NULL\051) 387. 165. T
+(pw_damaged\050\051) 216. 153. T
+3 F
+(Use) 387. 153. T
+4 F
+( win_get_damage) 404.1 153. T
+3 F
+(.) 503.11 153. T
+4 F
+(pw_donedamaged\050\051) 216. 141. T
+3 F
+(Use) 387. 141. T
+4 F
+( win_get_damage) 404.1 141. T
+3 F
+(.) 503.11 141. T
+4 F
+(pw_repairretained\050\051) 216. 129. T
+(pw_set/get_x_offset\050\051) 216. 117. T
+3 F
+(Offsetting is not supported.) 387. 117. T
+4 F
+(pw_set/get_y_offset\050\051) 216. 105. T
+(pw_set/get_xy_offset\050\051) 216. 93. T
+55. 668. 198. 702. C
+55. 668. 198. 702. R
+7 X
+V
+9 F
+0 X
+(struct inputmask) 59. 688. T
+U
+55. 566. 198. 588. C
+55. 566. 198. 588. R
+7 X
+V
+9 F
+0 X
+(Type Definitions) 59. 574. T
+U
+55. 445. 198. 477. C
+55. 445. 198. 477. R
+7 X
+V
+7 F
+0 X
+(Functions and ) 59. 465. T
+(Procedures) 59. 452. T
+U
+55. 417. 198. 443. C
+55. 417. 198. 443. R
+7 X
+V
+9 F
+0 X
+(Pixwins) 59. 431. T
+U
+49. 589. 564. 654. R
+0 H
+0 X
+N
+49. 481. 564. 544. R
+N
+49. 87. 564. 332. R
+N
+FMENDPAGE
+%%Page: "68" 6
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(68) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+( ) 216. 694. T
+(This section enumerates the consequences for advanced clients of the ) 216. 671. T
+(following structures, type definitions, functions, and procedures.) 216. 658. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following ) 216. 635. T
+4 F
+(struct) 281.38 635. T
+3 F
+(s either have been removed, are no longer public ) 320.98 635. T
+(information or are changed.  Programs that refer to these structures ) 216. 622. T
+(must remove the references and use appropriate ) 216. 609. T
+4 F
+(get/set) 428.9 609. T
+3 F
+( calls. ) 475.11 609. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(This ) 216. 586. T
+4 F
+(struct) 238.31 586. T
+3 F
+( is defined in ) 277.91 586. T
+4 F
+(<sunwindow/win_cursor.h>) 337.79 586. T
+3 F
+(.  Clients ) 496.19 586. T
+(should use cursor attributes to manipulate cursors instead. ) 216. 573. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 550. T
+4 F
+(<suntool/icon.h>) 265.49 550. T
+3 F
+(.   Clients should use icon attributes ) 371.09 550. T
+(instead.  Icons are separate windows in XView, not different states of ) 216. 537. T
+(frames. ) 216. 524. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 501. T
+4 F
+(<sunwindow/pixwin.h>) 265.49 501. T
+3 F
+(.  A ) 397.49 501. T
+4 F
+(pixwin) 416.43 501. T
+3 F
+( is now an opaque object.  ) 456.03 501. T
+(The type is only  provided for compatibility.  All the ) 216. 488. T
+4 F
+(pixwin) 450.05 488. T
+3 F
+( drawing ) 489.65 488. T
+(routines can still be called but the fields of the structure are no longer ) 216. 475. T
+(available.) 216. 462. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 439. T
+4 F
+(<suntool/tool.h>) 265.49 439. T
+3 F
+(.  This is an old, pre-SunView structure ) 371.09 439. T
+(from the ) 216. 426. T
+5 F
+(SunWindows Reference Manual) 256.33 426. T
+3 F
+(.) 396.86 426. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 403. T
+4 F
+(<suntool/tool_struct.h>) 265.49 403. T
+3 F
+(.  This is also pre-SunView. ) 417.29 403. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 380. T
+4 F
+(<sunwindow/win_screen.h>) 265.49 380. T
+3 F
+(.  Replaced by the ) 423.89 380. T
+4 F
+(SERVER) 505.76 380. T
+3 F
+( and ) 545.36 380. T
+4 F
+(SCREEN) 216. 367. T
+3 F
+( objects. ) 255.6 367. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Defined in ) 216. 344. T
+4 F
+(<suntool/fullscreen.h>) 265.49 344. T
+3 F
+(.  This structure is changed, not ) 410.69 344. T
+(removed.  ) 216. 331. T
+(In XView, you take over the root window, and can draw on it in screen ) 216. 313. T
+(coordinates, but you still receive events in the coordinates of the ) 216. 300. T
+(window taking over the screen.  There are special routines to set the ) 216. 287. T
+(cursor and input mask:  ) 216. 274. T
+4 F
+(fullscreen_setcursor\050\051) 322.02 274. T
+3 F
+( and ) 467.22 274. T
+4 F
+(fullscreen_setinputmask\050\051) 216. 261. T
+3 F
+(.  The fields in the ) 381. 261. T
+4 F
+(fullscreen) 463.8 261. T
+3 F
+( ) 529.8 261. T
+(structure that are no longer supported are:) 216. 248. T
+9 F
+(Table 4-10) 145.68 227. T
+10 F
+(Unsupported Struct Fullscreen Fields) 216. 227. T
+11 F
+(Struct Fullscreen Fields) 216. 209. T
+216. 207.33 326.02 207.92 R
+V
+(Comments) 431. 209. T
+431. 207.33 479.29 207.92 R
+V
+4 F
+(fs_pixwin) 216. 188. T
+3 F
+(Instead you can draw directly on ) 395. 188. T
+(screen using the window handle ) 395. 175. T
+4 F
+(fs_rootwindow) 395. 162. T
+3 F
+(.) 480.8 162. T
+4 F
+(fs_cachedcursor) 216. 136. T
+3 F
+(No need to restore state since ) 395. 136. T
+4 F
+(fs_cachedim) 216. 123. T
+3 F
+(fullscreen no longer uses your ) 395. 123. T
+4 F
+(fs_cachedinputnext) 216. 110. T
+3 F
+(window.) 395. 110. T
+4 F
+(fs_cachedkbdim) 216. 97. T
+52. 639. 198. 702. C
+52. 639. 198. 702. R
+7 X
+V
+6 F
+0 X
+(4.3) 55. 689. T
+(Compile-Time ) 86. 689. T
+(Incompatibilities) 86. 674. T
+(\321Advanced ) 86. 659. T
+(Clients) 86. 644. T
+U
+55. 617. 198. 640. C
+55. 617. 198. 640. R
+7 X
+V
+7 F
+0 X
+(Structures) 59. 627. T
+U
+55. 568. 198. 602. C
+55. 568. 198. 602. R
+7 X
+V
+9 F
+0 X
+(struct cursor) 59. 588. T
+U
+55. 532. 198. 566. C
+55. 532. 198. 566. R
+7 X
+V
+9 F
+0 X
+(struct icon) 59. 552. T
+U
+55. 483. 198. 517. C
+55. 483. 198. 517. R
+7 X
+V
+9 F
+0 X
+(struct pixwin) 59. 503. T
+U
+55. 421. 198. 455. C
+55. 421. 198. 455. R
+7 X
+V
+9 F
+0 X
+(struct tool) 59. 441. T
+U
+55. 385. 198. 419. C
+55. 385. 198. 419. R
+7 X
+V
+9 F
+0 X
+(struct toolsw) 59. 405. T
+U
+55. 362. 198. 396. C
+55. 362. 198. 396. R
+7 X
+V
+9 F
+0 X
+(struct screen) 59. 382. T
+U
+55. 326. 198. 360. C
+55. 326. 198. 360. R
+7 X
+V
+9 F
+0 X
+(struct fullscreen) 59. 346. T
+U
+49. 90. 564. 221. R
+0 H
+0 X
+N
+FMENDPAGE
+%%Page: "67" 5
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(67) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+4 F
+(action procs) 216. 694. T
+3 F
+(:) 295.2 694. T
+9 F
+(\245) 234. 673. T
+3 F
+(allow the menu to be pinned automatically \050via ) 252. 673. T
+4 F
+(MENU_GEN_PIN_WINDOW) 253. 660. T
+3 F
+(\051;) 378.4 660. T
+9 F
+(\245) 234. 644. T
+3 F
+(involve less code; you do not have to do ) 252. 644. T
+4 F
+(xv_get) 431.96 644. T
+3 F
+( to find the ) 471.56 644. T
+(selected item;) 253. 631. T
+9 F
+(\245) 234. 615. T
+3 F
+(work no matter how the menu item was selected.) 252. 615. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The Empty Subwindow package is pre-SunView.  Its functionality was ) 216. 592. T
+(replaced by the XView Canvas package.  The following) 216. 579. T
+4 F
+( structs) 462.52 579. T
+3 F
+( and ) 515.32 579. T
+(functions are no longer supported.  \050They are only documented in the ) 216. 566. T
+5 F
+(SunWindows Reference Manual) 216. 553. T
+3 F
+( last shipped in SunOS Release 2.0.\051) 356.54 553. T
+9 F
+(Table 4-8) 151.68 532. T
+10 F
+(Obsolete Empty Subwindow Items) 216. 532. T
+11 F
+(Struct/Functions) 216. 514. T
+216. 512.33 293.03 512.92 R
+V
+(Comments) 431. 514. T
+431. 512.33 479.29 512.92 R
+V
+4 F
+(struct emptysubwindow) 216. 493. T
+3 F
+(Use) 396. 493. T
+4 F
+(xv_create\0500,CANVAS,.) 396. 480. T
+17 F
+(..) 528. 480. T
+4 F
+(\051) 542.4 480. T
+3 F
+(and) 396. 466. T
+4 F
+( xv_set/get\050\051) 411.88 466. T
+(esw_createtoolsubwindow\050\051) 216. 453. T
+(esw_begin\050\051) 216. 440. T
+(esw_init\050\051) 216. 427. T
+(esw_handlesigwinch\050\051) 216. 414. T
+(esw_done ) 216. 401. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The ) 216. 378. T
+4 F
+(gfx) 235.85 378. T
+3 F
+( subwindow no longer exists; ) 255.65 378. T
+4 F
+(gfx_*) 387.35 378. T
+3 F
+( is entirely gone.) 420.35 378. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The Message Subwindow package is pre-SunView.  Its functionality ) 216. 355. T
+(was replaced by the canvas, panel, or text packages in SunView \050as ) 216. 342. T
+(appropriate to the usage of the Message Subwindow\051.  The following ) 216. 329. T
+4 F
+(structs) 216. 316. T
+3 F
+( and functions are no longer supported.  \050They are only ) 262.2 316. T
+(documented in the ) 216. 303. T
+5 F
+(SunWindows Reference Manual) 300.02 303. T
+3 F
+(.\051) 440.55 303. T
+9 F
+(Table 4-9) 151.68 282. T
+10 F
+(Obsolete Message Subwindow Items) 216. 282. T
+11 F
+(Struct/Functions) 216. 264. T
+216. 262.33 293.03 262.92 R
+V
+(Comments) 431. 264. T
+431. 262.33 479.29 262.92 R
+V
+4 F
+(struct msgsubwindow) 216. 243. T
+3 F
+(For all of these,) 422. 243. T
+4 F
+(msgsw_createtoolsubwindow\050\051) 216. 230. T
+3 F
+(use panel and) 422. 230. T
+4 F
+( ) 481.87 230. T
+(msgsw_create\050\051) 216. 217. T
+(PANEL_MESSAGE ) 422. 217. T
+3 F
+(items) 514.4 217. T
+4 F
+(msgsw_setstring\050\051) 216. 204. T
+3 F
+(instead) 422. 204. T
+4 F
+(msgsw_display\050\051) 216. 191. T
+(msgsw_init\050\051) 216. 178. T
+(msgsw_handlesigwinch\050\051) 216. 165. T
+(msgsw_done\050\051) 216. 152. T
+55. 571. 198. 608. C
+55. 571. 198. 608. R
+7 X
+V
+7 F
+0 X
+(Empty Subwindow) 59. 594. T
+U
+55. 372. 198. 394. C
+55. 372. 198. 394. R
+7 X
+V
+18 F
+0 X
+(gfx) 59. 380. T
+7 F
+( Subwindow) 80.6 380. T
+U
+55. 337. 198. 371. C
+55. 337. 198. 371. R
+7 X
+V
+7 F
+0 X
+(Message Subwindow) 59. 357. T
+U
+49. 396. 564. 526. R
+0 H
+0 X
+N
+49. 144. 564. 277. R
+N
+FMENDPAGE
+%%Page: "66" 4
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(66) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The following input events are no longer generated by the system:) 216. 694. T
+9 F
+(Table 4-6) 151.68 673. T
+10 F
+(Obsolete Input Events) 216. 673. T
+11 F
+(Event Name) 216. 655. T
+216. 653.33 271.91 653.92 R
+V
+(Comments) 431. 655. T
+431. 653.33 479.29 653.92 R
+V
+4 F
+(KBD_REQUEST) 216. 634. T
+3 F
+(Click-to-type input focus handled by an ex-) 343. 634. T
+(ternal window manager; this event is not ) 342. 621. T
+(generated.) 342. 608. T
+4 F
+(LOC_STILL) 216. 591. T
+3 F
+(This cannot be generated \050easily\051 on top of ) 343. 591. T
+(the X11/NeWS server.) 342. 578. T
+4 F
+(LOC_TRAJECTORY) 216. 561. T
+3 F
+(The X11/NeWS server automatically com-) 343. 561. T
+(presses events; compression can only be dis-) 342. 548. T
+(abled for ) 342. 535. T
+5 F
+(all) 384.15 535. T
+3 F
+( windows \050which is very ) 395.77 535. T
+(expensive for performance\051.) 342. 522. T
+4 F
+(LOC_RGNENTER) 216. 505. T
+3 F
+(There are no ) 343. 505. T
+4 F
+(pixwin) 401.33 505. T
+3 F
+( regions in) 440.93 505. T
+4 F
+(LOC_RGNEXIT) 216. 492. T
+3 F
+(XView \321 everything is a window.) 343. 492. T
+4 F
+(WIN_STOP) 216. 475. T
+3 F
+(This is now an ordinary function key event; ) 343. 475. T
+(in SunView, it is generated asynchronously ) 342. 462. T
+(via a signal which isn\325t supported by the ) 342. 449. T
+(X11/NeWS server.  \050Signals are valid in a ) 342. 436. T
+(kernel-based window system but have no ) 342. 423. T
+(place in a networked window system, so ) 342. 410. T
+(there is no more ) 342. 397. T
+4 F
+(SIGURG) 415.93 397. T
+3 F
+(, either.\051  In XView, ) 455.53 397. T
+(since ) 342. 384. T
+4 F
+(WIN_STOP) 367.35 384. T
+3 F
+( is equated to ) 420.15 384. T
+4 F
+(KEY_LEFT\0501\051) 481.26 384. T
+3 F
+(,  ) 553.86 384. T
+4 F
+(WIN_STOP) 342. 371. T
+3 F
+( events are generated by the ) 394.8 371. T
+4 F
+(L1) 520.04 371. T
+3 F
+( ) 533.24 371. T
+(\050) 342. 358. T
+4 F
+(Stop) 345.66 358. T
+3 F
+(\051  function key.) 372.06 358. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Stacking menus and prompt boxes are no longer supported.  Stacking ) 216. 335. T
+(menus are replaced by the Walking Menu Package.  Prompt boxes are ) 216. 322. T
+(replaced by the Notices package.  The following ) 216. 309. T
+4 F
+(structs) 431.97 309. T
+3 F
+( and functions ) 478.17 309. T
+(are no longer supported:) 216. 296. T
+9 F
+(Table 4-7) 151.68 275. T
+10 F
+(Unsupported Menu Structures and Functions) 216. 275. T
+11 F
+(Struct/Functions) 216. 257. T
+216. 255.33 293.03 255.92 R
+V
+(Comments) 431. 257. T
+431. 255.33 479.29 255.92 R
+V
+4 F
+(struct menu) 216. 236. T
+3 F
+(Use) 349. 236. T
+4 F
+( xv_create\0500,MENU,...\051) 366.1 236. T
+3 F
+(and) 511.3 236. T
+4 F
+(xv_set/get\050\051) 349. 223. T
+(struct menu_item) 216. 210. T
+3 F
+(Use) 349. 210. T
+4 F
+( xv_create\0500,MENU_ITEM,...\051) 366.1 210. T
+(menu_display\050\051) 216. 197. T
+3 F
+(Use) 349. 197. T
+4 F
+( menu_show\050\051) 366.1 197. T
+(struct prompt) 216. 184. T
+3 F
+(Use) 349. 184. T
+4 F
+( notice_prompt\050\051 ) 366.1 184. T
+3 F
+(with its) 478.3 184. T
+4 F
+( ) 511.01 184. T
+(menu_prompt\050\051) 216. 171. T
+3 F
+(various attributes.) 349. 171. T
+(Also, ) 216. 148. T
+4 F
+(menu_done_proc) 242.28 148. T
+3 F
+(s are only called in response to a ) 334.68 148. T
+4 F
+(menu_show) 480.7 148. T
+3 F
+(.  ) 540.1 148. T
+(Clicking ) 216. 135. T
+4 F
+(Select) 256.65 135. T
+3 F
+( \050) 296.25 135. T
+4 F
+(Left) 302.66 135. T
+3 F
+( button\051 on a menu button to select the default ) 329.06 135. T
+(menu item does not cause the attached menu\325s ) 216. 122. T
+4 F
+(done) 423.13 122. T
+3 F
+( proc to be called; no ) 449.53 122. T
+(menu is shown.  For better results, use ) 216. 109. T
+4 F
+(action procs) 387.71 109. T
+3 F
+( on each item.  ) 466.91 109. T
+55. 684. 198. 702. C
+55. 684. 198. 702. R
+7 X
+V
+7 F
+0 X
+(Input Events) 59. 688. T
+U
+55. 316. 198. 351. C
+55. 316. 198. 351. R
+7 X
+V
+7 F
+0 X
+(Menus and Prompts) 59. 337. T
+U
+49. 354. 564. 667. R
+0 H
+0 X
+N
+49. 165. 564. 269. R
+N
+FMENDPAGE
+%%Page: "65" 3
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(65) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+(In addition, the following pre-SunView attributes have been removed.) 216. 694. T
+9 F
+(Table 4-4) 151.68 673. T
+10 F
+(Removed Pre-SunView Panel Attributes) 216. 673. T
+11 F
+(Panel Attribute) 216. 655. T
+216. 653.33 285.38 653.92 R
+V
+(Comments) 431. 655. T
+431. 653.33 479.29 653.92 R
+V
+4 F
+(PANEL_WIDTH) 216. 634. T
+3 F
+(Use) 404. 634. T
+4 F
+( XV_WIDTH) 421.1 634. T
+(PANEL_HEIGHT) 216. 621. T
+3 F
+(Use) 404. 621. T
+4 F
+( XV_HEIGHT) 421.1 621. T
+(PANEL_VERTICAL_SCROLLBAR) 216. 608. T
+3 F
+(Use) 404. 608. T
+4 F
+(WIN_VERTICAL_SCROLLBAR) 404. 595. T
+(PANEL_HORIZONTAL_SCROLLBAR) 216. 582. T
+3 F
+(Use) 404. 582. T
+4 F
+(WIN_HORIZONTAL_SCROLLBAR) 404. 569. T
+(PANEL_PIXWIN) 216. 556. T
+3 F
+(Use) 404. 556. T
+4 F
+( WIN_PIXWIN) 421.1 556. T
+(PANEL_CU) 216. 543. T
+3 F
+(Use the new) 404. 543. T
+4 F
+( xv_row\050\051) 458.37 543. T
+3 F
+(and) 404. 530. T
+4 F
+( xv_col\050\051) 419.88 530. T
+3 F
+(functions instead) 404. 517. T
+4 F
+(PANEL_FIT_HEIGHT) 216. 504. T
+3 F
+(Use) 404. 504. T
+4 F
+( WIN_FIT_HEIGHT) 421.1 504. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The ) 216. 469. T
+4 F
+(cursor) 235.85 469. T
+3 F
+( and) 275.46 469. T
+5 F
+( ) 294.09 469. T
+4 F
+(icon) 296.84 469. T
+3 F
+( objects are no longer public ) 323.24 469. T
+4 F
+(structs) 450.94 469. T
+3 F
+(, so the ) 497.14 469. T
+(following ) 216. 456. T
+4 F
+(#DEFINEs) 261.53 456. T
+3 F
+( are removed:) 314.33 456. T
+9 F
+(Table 4-5) 151.68 435. T
+10 F
+(Removed #DEFINE Items) 216. 435. T
+11 F
+(#DEFINE) 216. 417. T
+216. 415.33 263.67 415.92 R
+V
+(Comments) 431. 417. T
+431. 415.33 479.29 415.92 R
+V
+4 F
+(DEFINE_CURSOR) 216. 396. T
+3 F
+(Use) 412. 396. T
+4 F
+( xv_create\0500,) 429.1 396. T
+(DEFINE_CURSOR_FROM_IMAGE  ) 216. 383. T
+(CURSOR,...\051) 412. 383. T
+(DEFINE_ICON_FROM_IMAGE) 216. 370. T
+3 F
+(Use) 412. 370. T
+4 F
+( xv_create) 429.1 370. T
+(\0500,ICON,...\051 ) 412. 357. T
+3 F
+(In addition, the following definitions have been removed from ) 216. 339. T
+4 F
+(<sunwindow/rect.h>) 216. 326. T
+3 F
+(:) 334.8 326. T
+11 F
+(#DEFINE) 216. 307. T
+216. 305.33 263.67 305.92 R
+V
+(Comments) 431. 307. T
+431. 305.33 479.29 305.92 R
+V
+4 F
+(min) 216. 286. T
+3 F
+(Use) 413. 286. T
+4 F
+( ) 430.1 286. T
+(MIN ) 436.7 286. T
+3 F
+(in) 463.1 286. T
+4 F
+( base.h) 471.66 286. T
+(max) 216. 273. T
+3 F
+(Use) 413. 273. T
+4 F
+( ) 430.1 273. T
+(MAX ) 436.7 273. T
+3 F
+(in) 463.1 273. T
+4 F
+( base.h) 471.66 273. T
+(bool) 216. 260. T
+(TRUE) 216. 247. T
+3 F
+(Moved to) 413. 247. T
+4 F
+( base.h) 455.47 247. T
+(FALSE) 216. 234. T
+55. 461. 198. 485. C
+55. 461. 198. 485. R
+7 X
+V
+18 F
+0 X
+(DEFINE) 59. 471. T
+7 F
+( Macros) 102.2 471. T
+U
+49. 494. 564. 667. R
+0 H
+0 X
+N
+49. 223. 564. 429. R
+N
+FMENDPAGE
+%%Page: "64" 2
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 4\321Incompatibilities and Removed Functions) 197.67 731. T
+(64) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(X11/NeWS will not support ) 216. 694. T
+(cursor crosshairs, so all crosshair ) 342.5 694. T
+(attributes from the cursor package in ) 216. 681. T
+4 F
+(<sunwindow/win_cursor.h>) 380.35 681. T
+3 F
+( are ) 538.75 681. T
+(unsupported.) 216. 668. T
+9 F
+(Table 4-2) 151.68 647. T
+10 F
+(Removed Cursor Attributes) 216. 647. T
+11 F
+(Cursor Attribute) 216. 629. T
+216. 627.33 290.89 627.92 R
+V
+(Comments) 450. 629. T
+450. 627.33 498.29 627.92 R
+V
+4 F
+(CURSOR_SHOW_CROSSHAIRS) 216. 608. T
+3 F
+(None of these) 450. 608. T
+4 F
+( ) 511.09 608. T
+(CURSOR_SHOW_HORIZ_HAIR) 216. 595. T
+3 F
+(attributes exits) 450. 595. T
+4 F
+(CURSOR_SHOW_VERT_HAIR ) 216. 582. T
+3 F
+(in XView) 450. 582. T
+4 F
+(CURSOR_CROSSHAIR_BORDER_GRAVITY) 216. 569. T
+(CURSOR_HORIZ_HAIR_BORDER_GRAVITY) 216. 556. T
+(CURSOR_VERT_HAIR_BORDER_GRAVITY) 216. 543. T
+(CURSOR_CROSSHAIR_COLOR) 216. 530. T
+(CURSOR_CROSSHAIR_OP) 216. 517. T
+(CURSOR_CROSSHAIR_THICKNESS) 216. 504. T
+(CURSOR_CROSSHAIR_LENGTH) 216. 491. T
+(CURSOR_CROSSHAIR_GAP) 216. 478. T
+(CURSOR_HORIZ_HAIR_COLOR) 216. 465. T
+(CURSOR_HORIZ_HAIR_OP) 216. 452. T
+(CURSOR_HORIZ_HAIR_THICKNESS) 216. 439. T
+(CURSOR_HORIZ_HAIR_LENGTH) 216. 426. T
+(CURSOR_HORIZ_HAIR_GAP) 216. 413. T
+(CURSOR_VERT_HAIR_COLOR) 216. 400. T
+(CURSOR_VERT_HAIR_OP) 216. 387. T
+(CURSOR_VERT_HAIR_THICKNESS) 216. 374. T
+(CURSOR_VERT_HAIR_LENGTH) 216. 361. T
+(CURSOR_VERT_HAIR_GAP) 216. 348. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The panel menu package is not supported in XView.  Clients should use ) 216. 325. T
+(the menu package to replace the semantics of the following ) 216. 312. T
+4 F
+(PANEL_MENU) 479.95 312. T
+3 F
+( ) 545.95 312. T
+(attributes.) 216. 299. T
+9 F
+(Table 4-3) 151.68 278. T
+10 F
+(Removed PANEL_MENU Attributes) 216. 278. T
+11 F
+(Panel Attribute) 216. 260. T
+216. 258.33 285.38 258.92 R
+V
+(Comments) 431. 260. T
+431. 258.33 479.29 258.92 R
+V
+4 F
+(PANEL_MENU_CHOICE_FONTS) 216. 239. T
+3 F
+(Use ) 405. 239. T
+4 F
+(XV_FONT) 424.85 239. T
+3 F
+( to set the ) 471.06 239. T
+(font of each menu item.) 405. 226. T
+4 F
+(PANEL_MENU_CHOICE_IMAGES) 216. 209. T
+3 F
+(Use) 405. 209. T
+4 F
+( MENU_IMAGE) 422.1 209. T
+(PANEL_MENU_CHOICE_STRINGS) 216. 192. T
+3 F
+(Use) 405. 192. T
+4 F
+( MENU_STRING) 422.1 192. T
+(PANEL_MENU_CHOICE_VALUES) 216. 175. T
+3 F
+(Use) 405. 175. T
+4 F
+( MENU_VALUE) 422.1 175. T
+(PANEL_MENU_TITLE_FONT) 216. 158. T
+3 F
+(Unsupported:   menu titles ) 405. 158. T
+(can\325t be given a different font.) 405. 145. T
+4 F
+(PANEL_MENU_TITLE_IMAGE) 216. 128. T
+3 F
+(Use) 405. 128. T
+4 F
+( MENU_TITLE_IMAGE) 422.1 128. T
+(PANEL_MENU_TITLE_STRING) 216. 111. T
+3 F
+(Use) 405. 111. T
+4 F
+( MENU_TITLE_STRING) 422.1 111. T
+55. 668. 198. 702. C
+55. 668. 198. 702. R
+7 X
+V
+9 F
+0 X
+(Crosshair Cursor ) 59. 690. T
+(Attributes) 59. 677. T
+U
+55. 312. 198. 339. C
+55. 312. 198. 339. R
+7 X
+V
+9 F
+0 X
+(Panel Package) 59. 327. T
+U
+49. 343. 564. 640. R
+0 H
+0 X
+N
+49. 90. 564. 272. R
+N
+FMENDPAGE
+%%Page: "63" 1
+FMBEGINPAGE
+0 X
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+558. 726. 54. 726. 2 L
+0 H
+N
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+54. 90. 558. 623. C
+210. 543. 558. 623. C
+210. 543. 558. 623. R
+7 X
+V
+19 F
+0 X
+(Incompatibilities and ) 347.67 602. T
+(Removed Functions) 358.33 576. T
+54. 90. 558. 623. C
+U
+54. 90. 558. 623. C
+U
+3 F
+0 X
+(This chapter lists all known incompatibilities between the SunView ) 216. 517. T
+(and XView toolkits.  It first describes incompatibilities that become ) 216. 504. T
+(apparent at compile-time, such as code not compiling, then turns to run-) 216. 491. T
+(time incompatibilities.  The reference point, for comparison purposes, ) 216. 478. T
+(is the version of SunView released with SunOS Release 4.0.) 216. 465. T
+54. 90. 558. 623. C
+U
+3 F
+0 X
+(In each case, the incompatibilities are separated according to the class ) 216. 442. T
+(of client or programmer they will affect.  A basic client uses only the ) 216. 429. T
+(higher-level building blocks, such as frames, panels, or cursors.  An ) 216. 416. T
+(intermediate client might use the canvas package to draw images and ) 216. 403. T
+(handle input events.  An advanced client delves into lower-level ) 216. 390. T
+(functionality described in the ) 216. 377. T
+5 F
+(SunView 1 System Programmer\325s Guide) 347.37 377. T
+3 F
+( ) 524.57 377. T
+(and ) 216. 364. T
+5 F
+(SunWindows Reference Manual) 234.63 364. T
+3 F
+(, or uses undocumented features.) 375.17 364. T
+54. 90. 558. 623. C
+U
+3 F
+0 X
+(The following incompatibilities between SunView and XView result ) 216. 341. T
+(in compilation errors when you compile an unmodified SunView ) 216. 328. T
+(application.) 216. 315. T
+54. 90. 558. 623. C
+U
+3 F
+0 X
+(The attributes in this section are no longer supported.) 216. 292. T
+54. 90. 558. 623. C
+U
+3 F
+0 X
+(The following frame attribute is no longer supported.) 216. 269. T
+9 F
+(Table 4-1) 151.68 235. T
+10 F
+(Unsupported Frame Attributes) 216. 235. T
+11 F
+(Frame Attribute) 216. 217. T
+216. 215.33 289.66 215.92 R
+V
+(Comments) 431. 217. T
+431. 215.33 479.29 215.92 R
+V
+4 F
+(FRAME_NTH_WINDOW) 216. 196. T
+3 F
+(can be replaced by iteration over the ) 343. 196. T
+(\050supported\051 attributes) 342. 183. T
+4 F
+( ) 436.4 183. T
+(FRAME_NTH_SUBFRAME ) 342. 170. T
+3 F
+(and) 467.4 170. T
+4 F
+( ) 483.28 170. T
+(FRAME_NTH_SUBWINDOW) 342. 157. T
+55. 476. 198. 533. C
+55. 476. 198. 533. R
+7 X
+V
+6 F
+0 X
+(4.1) 59. 516. T
+(Overview) 90. 516. T
+U
+55. 401. 198. 458. C
+55. 401. 198. 458. R
+7 X
+V
+7 F
+0 X
+(Basic, Intermediate, ) 59. 444. T
+(Advanced Clients) 59. 431. T
+U
+55. 305. 198. 357. C
+55. 305. 198. 357. R
+7 X
+V
+6 F
+0 X
+(4.2) 57. 341. T
+(Compile-Time ) 88. 341. T
+(Incompatibilities) 88. 326. T
+(\321Basic Clients) 88. 311. T
+U
+55. 284. 198. 305. C
+55. 284. 198. 305. R
+7 X
+V
+7 F
+0 X
+(Attributes) 59. 293. T
+U
+55. 259. 198. 283. C
+55. 259. 198. 283. R
+7 X
+V
+9 F
+0 X
+(Frame Package) 59. 271. T
+U
+20 F
+0 X
+(4) 541. 668. T
+216. 642. 560. 650. R
+4 X
+V
+0 H
+N
+216. 651. 560. 651. 2 L
+1 H
+0 X
+N
+36. 724. 576. 738. C
+36. 724. 576. 738. R
+7 X
+V
+U
+444. 29. 575. 50. R
+7 X
+V
+49. 138. 564. 230. R
+0 H
+0 X
+N
+FMENDPAGE
+%%Trailer
+%%Pages: 32 -1
+%%DocumentFonts: Helvetica
+%%+ Times-Bold
+%%+ Times-Roman
+%%+ Courier
+%%+ Times-Italic
+%%+ Times-BoldItalic
+%%+ Helvetica-Bold
+%%+ Courier-Bold
+%%+ Symbol
+%%+ Courier-Oblique

@@ -1,0 +1,58 @@
+\begindata{text,268962644}
+\textdsversion{12}
+\template{help}
+\chapter{prodif
+
+}
+\section{What prodif is
+
+}\leftindent{
+prodif produces a human readable listing of an ODIF file using ASN.1 
+notations.
+
+}
+\section{Starting prodif
+
+}\leftindent{
+prodif reads from standard input and produces standard output.
+
+
+}\section{Warnings
+
+}\leftindent{
+This is a prototype tool.
+
+}\leftindent{
+}
+\section{Related tools}  
+
+
+Select (highlight) one of the italicized names and choose "Show Help on 
+Selected Word" from the pop-up menu to see the help file for:
+
+
+\leftindent{\italic{ODA}
+
+\italic{ODA-Toolkit
+
+}\italic{Raster}\italic{-Toolkit
+
+Local-Toolkit}
+
+\italic{atkoda}
+
+\italic{odaatk}
+
+\italic{odatroff}}
+
+\leftindent{\italic{ileafoda
+
+odaileaf
+
+}}\leftindent{\italic{proda}}
+
+\leftindent{\italic{prtext}}
+
+\leftindent{\italic{convert}
+
+}\enddata{text,268962644}

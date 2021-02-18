@@ -1,0 +1,83 @@
+/**/#########################################################
+/**/# definitions common to all WNN Makefiles  - do not  edit
+/*
+   WNN Imakefiles written by TOSHIBA Corp.
+   Modefind for WNN by OMRON Corp.
+*/
+       WNNOWNER = wnn
+
+      WNNBINDIR = $(DESTDIR)/usr/local/bin/Wnn4
+      WNNINCDIR = $(DESTDIR)/usr/include/wnn
+      WNNLIBDIR = $(DESTDIR)/usr/local/lib
+      WNNWNNDIR = $(WNNLIBDIR)/wnn
+      WNNDICDIR = $(WNNWNNDIR)/dic
+   WNNPUBDICDIR = $(WNNDICDIR)/pubdic
+   WNNSYSDICDIR = $(WNNDICDIR)/sys
+
+         WNNSRC = $(CONTRIBSRC)/lib/Wnn
+     WNNCONVSRC = $(WNNSRC)/conv
+      WNNETCSRC = $(WNNSRC)/etc
+ WNNFUZOKUGOSRC = $(WNNSRC)/fuzokugo
+  WNNINCLUDESRC = $(WNNSRC)/include
+       WNNJDSRC = $(WNNSRC)/jd
+     WNNJLIBSRC = $(WNNSRC)/jlib
+   WNNJLIBV3SRC = $(WNNSRC)/jlib.V3
+    WNNJUTILSRC = $(WNNSRC)/jutil
+   WNNPUBDICSRC = $(WNNSRC)/pubdic
+   WNNROMKANSRC = $(WNNSRC)/romkan
+      WNNUUMSRC = $(WNNSRC)/uum
+
+     CONVKEYLIB = $(WNNCONVSRC)/libconvkey.a
+      GETOPTLIB = $(WNNJLIBSRC)/libgetopt.a
+          JDLIB = $(WNNJLIBV3SRC)/libjd.a
+         WNNLIB = $(WNNJLIBSRC)/libwnn.a
+
+#if SystemV
+      WNNSYSTEM = -DSYSV -DSYSVR2
+        WNNTERM = -DTERMINFO
+    WNNTERM_LIB = -lcurses
+#else
+      WNNSYSTEM = -DBSD42
+        WNNTERM = -DTERMCAP
+    WNNTERM_LIB = -ltermcap
+#endif
+/**/#########################################################
+/**/# start of WNN's Imakefile
+
+#define WNNSX9100BSD 1
+/* WNNDEFINES general WNN defines */
+
+#ifdef WNNEWS4800 /* for NEC workstation */
+     WNNDEFINES = $(WNNSYSTEM) -DEWS -DINET
+#undef WNNEWS4800
+#endif /* WNNEWS4800 */
+
+#ifdef WNNSUN /* for SUN workstation */
+     WNNDEFINES = $(WNNSYSTEM) -DSUN -DINET
+#undef WNNSUN
+#endif /* WNNSUN */
+
+#ifdef WNNSX8870 /* for OMRON workstation */
+     WNNDEFINES = $(WNNSYSTEM) -DSX8870
+#undef WNNSX8870
+#endif /* WNNSX8870 */
+
+#ifdef WNNSX9100BSD /* for OMRON BSD workstation */
+     WNNDEFINES = $(WNNSYSTEM) -f -20
+#undef WNNSX9100BSD
+#endif /* WNNSX9100BSD */
+
+#ifdef WNNSigma230 /* for FACOM workstation */
+     WNNDEFINES = $(WNNSYSTEM) -DFACOM -DINET
+#undef WNNSigma230
+#endif /* WNNSigma230 */
+
+#ifdef WNNUX386 /* for TOSHIBA workstation */
+     WNNDEFINES = $(WNNSYSTEM) -DUX386 -DINET -DUXSYSVR3
+#define UXSYSVR3 1
+#undef WNNUX386
+#endif /* WNNUX386 */
+
+#define WnnSpecialObjectRule(obj,depends,direct)	@@\
+obj : depends						@@\
+	$(CC) -c $(CFLAGS) direct/`basename $@  .o`.c	@@\

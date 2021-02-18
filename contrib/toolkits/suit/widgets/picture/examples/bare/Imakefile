@@ -1,0 +1,7 @@
+#include "./../../PWImake.defs"
+
+       INCLUDES = -I$(PWINCLUDESRC) -I$(TOP)
+LOCAL_LIBRARIES = $(PWLIB) $(MENULIB) $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+  SYS_LIBRARIES = -lm
+
+SimpleProgramTarget(PicDemo)

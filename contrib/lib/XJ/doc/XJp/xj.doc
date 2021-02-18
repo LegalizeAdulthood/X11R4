@@ -1,0 +1,1980 @@
+.TL
+A XJp Specification for International Input Method
+.sp 1
+November 18, 1989
+.sp 1
+.AU
+Masato Morisaki
+.AU
+Etsuo Kawada
+.AU
+Shinichiro Katsuragi
+.AI
+Nippon Telegraph and Telephone Corporation
+.AU
+Hiroshi Kuribayashi
+.AU
+Seiji Kuwari
+.AI
+Omron Tateisi Electronics Co.
+.AU
+Masahiko Narita
+.AU
+Yoshitaka Kakuta
+.AI
+Fujitsu Limited
+.AU
+Akio Inaba
+.AI
+TOSHIBA CORPORATION
+.AU
+Akira Kon
+.AI
+NEC Corporation
+.PP
+.bp
+.OH ''''
+.EH ''''
+.OF ''\-%\-''
+.EF ''\-%\-''
+.bp
+.LP
+.nf
+/************************************************************
+.sp 1
+Copyright  1989
+.RS
+.nf
+Nippon Telegraph and Telephone Corporation
+OMRON TATEISI ELECTRONICS CO.
+FUJITSU LIMITED
+TOSHIBA CORPORATION
+NEC Corporation
+.RE
+.sp 1
+.nf
+        All Rights Reserved
+.sp 1
+.LP
+Permission to use, modify, and distribute this documentation
+for any purpose and without fee is hereby granted, provided
+that the above copyright notice appear in all copies and
+that both that copyright notice and this permission notice
+appear in supporting documentation, and that the names of
+NTT, OMRON, FUJITSU, TOSHIBA or NEC not be used in advertising
+or publicity pertaining to distribution of the software
+without specific, written prior permission.
+.sp 1
+.LP
+NTT, OMRON, FUJITSU, TOSHIBA AND NEC DISCLAIM ALL WARRANTIES
+WITH REGARD TO THIS DOCUMENTATION, INCLUDING ALL IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+NTT, OMRON, FUJITSU, TOSHIBA AND NEC BE LIABLE FOR ANY
+SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER
+RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
+IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTUOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS DOCUMENTATION.
+.sp 1
+************************************************************/
+.bp
+.LP
+The following copyright and permission notice are English
+translation of the original documentation written in
+Japanese:
+.sp 1
+.nf
+/************************************************************
+.sp 1
+Copyright  1988, 1989
+.RS
+.nf
+X-Window Japanese Version Working Group
+Nippon Telegraph and Telephone Corporation
+FUJITSU LIMITED
+OMRON TATEISI ELECTRONICS CO.
+DIGITAL COMPUTER LIMITED
+dit. Co., Ltd.
+NEC Corporation
+TOSHIBA CORPORATION
+Information-technology Promotion Agency, Japan
+        Sigma System Project
+.RE
+.sp 1
+.LP
+Permission to use and distribute all or part of this
+documentation is granted, provided that the above copyright and
+this permission notice appear in all copies. But this
+documentation may be modified or changed without prior
+notice.
+.sp 1
+.LP
+Permission to use this documentation in order to make any
+software based on this documentation is granted. But X-Window
+Japanese Version Working Group makes no representation
+about any damages of the software whatsoever resulting
+from the fault of this documentation.
+.sp 1
+************************************************************/
+.bp
+.SH
+Acknowledgements
+.sp 1
+.LP
+The following persons should be acknowledged for their contribution
+to the design of this documentation:
+.RS
+.sp 1
+.nf
+Akira Sato
+Takuji Hori
+Makoto Yoshizaki
+Information-technology Promotion Agency, Japan
+     Sigma System Project
+.sp 1
+Yoshihiro Hongo
+NEC Corporation
+.sp 1
+Kaoru Mitsuhashi
+dit.Co.,Ltd.
+.sp 1
+Yuji Takagi
+DIGITAL COMPUTER LIMITED
+.RE
+.bp
+.NH 1
+Introduction
+.LP
+On the X Window system, the library for multi-byte output is
+prepared on X11R3 and the Asian Language codes are possible on
+windows. However, the method to pass these language character
+strings to the application on the window is not offered with the
+X11R3 original X window System.
+.LP
+This document will define the XJp input method
+interface. This will be interested for vendors who will ship their
+own products to the Asian Language countries and for programmers
+who want to write system programs or applications that will use X
+libraries interface.
+.LP
+The XJp specification provides a programming interface,
+which is vendor independent and supports network co-operating with
+many multi-vendor environments. 
+For example, an Application program is running on a host machine,
+an Input Manager on end user's workstation, and a PIC on
+some server machine, where input manager provides user interface of
+interaction
+and the PIC server provides Phonetic to Ideographic conversion. 
+Although, in single vendor
+environment there is no license problem for sharing 
+dictionaries, font files and so on, in multi-vendor
+environment, the license problem should be considered very much.
+An input method needs a lot of know-how for AI
+knowledge. In real world, all vendors do not support these same
+programs, but end users want to use his or her own educated
+programs on multi-vendor environment.
+.LP
+The XJp specification is based on Front-End method and
+well defined on Xlib interface. But for transporting
+programs which are written on English language world or for
+programmers who want the writing style to use the ordinary input
+method such as XLookupString, the XJp specification provides 
+a library that is based on Back-End method.
+.LP
+The sample implementation of this XJp specification was
+made for the Japanese and so are the motivations. But there is an
+experiment on Chinese.
+.LP
+Chapter 2 describes the general multi-byte input interactions and
+interface architecture models between an end user and a general
+input method interface.
+.LP
+Chapter 3 is defined in detail for this input method interface for 
+Japanese, Chinese, Korean and so on. This definitions can be easily 
+extended to another Asian languages.
+.bp
+.NH 1
+System Architecture
+.NH 2
+Requirements
+.LP
+When the multi-byte input function is achieved, the following respects
+are considered.
+.LP
+Users want:
+.IP (1) 4
+To use Input Manager through the network,
+because they can use X Window System through the network.
+.IP (2) 4
+To use some clients simultaneously with one input manager
+to be complete of harmony with multi-window.
+.IP (3) 4
+To keep some clients in the different status/context respectively.
+.IP (4) 4
+To have practical performance.
+.IP (5) 4
+To use several applications with different code set simultaneously,
+for example, ISO2022, EUC and so on.
+.LP
+To satisfy these above requirements, some of the characteristics of XJp 
+specification are the followings:
+.IP (1) 4
+One of the important things about multi-byte input
+is the network connectivity among multi-vendors.
+Because all the vendors cannot support all kinds of
+Phonetic to Ideographic conversion processors.
+XJp specification defines the network protocol to solve 
+this problem.
+.IP (2) 4
+XJp specification adopts the front-end method and
+multiple process. To realize multi-byte input with 
+same Look & Feel in different applications.
+.IP (3) 4
+XJp specification supports multi encoding scheme such as
+ISO 2022, EUC and so on concurrently.
+.sp 1
+.NH 2
+Architecture Model
+.LP
+In general, the multi-byte input system needs
+the following functionalities:
+.IP (1) 4
+The application which needs the multi-byte input.
+.IP (2) 4
+Phonetic to Phonetic Conversion (PPC) 
+.IP (3) 4
+User interface for interactive operation.
+.IP (4) 4
+Phonetic to Ideographic Conversion (PIC) 
+.IP (5) 4
+Dictionary
+.LP
+For example, the PPC is a kind of dead-key operation or
+Japanese Romaji-to-Kana conversion, and the PIC is a kind of Japanese
+Kana-to-Kanji conversion or Chinese Pin-Yin.
+.LP
+This specification assumes that the above functionalities are provided
+by the following components:
+.IP \  20
+preceding elements
+.IP (a)Client: 20
+(1)
+.IP (b)Input\ Manager: 20
+(2),(3)
+.IP (c)PIC\ server: 20
+(4)
+.IP (d)Dictionary: 20
+(5)
+.LP
+Figure 1 and 2 show the system structure.
+The figure 1 is a component model and the figure 2 is layer model.
+.IP (1): 5
+Library interface for client
+.IP (2): 5
+Library interface for PIC server
+.IP (3): 5
+Protocol between PIC server and Input Manager
+.IP (4): 5
+Protocol between client(XJp-library) and X-Server
+.IP (5): 5
+Protocol between Input Manager and X-Server
+.IP (6): 5
+Protocol between client and Input Manager through X-Server
+.IP (7): 5
+Dictionary interface(Dictionary format)
+.IP (8): 5
+Protocol between client and Input Manager directly
+.LP
+This specification describes (1), (4), (5), (6), (8).
+.KS
+.nf
+
+				+--------------------+
+	+-----------------+ (5)	|  +---------------+ |
+	|          	  |<------>| Input Manager | |
+	| X-Server   	  |     |  |	           | |
+	|          +-------------->|        (2)    | |
+	|          |	  |     |  |  +------------+ |
+	|          |      |  +---->|  |            | |
+	+----------|------+  |	|  +--+------------+ |
+		A  |	     |	|         A          |
+	     (4)|  |(6)   (8)|  |         |(3)       |
+		V  V	     |  |   	  V 	     |
+	+---+-------------+  |	|  +---------------+ |
+	|   | XJp-library |<-+ 	|  |               | |
+	|   +-------------+  	|  |               | |
+	|	(1)	  |  	|  | PIC server    | |
+	|  Client	  |  	|  |               | |
+	|                 |  	|  |               | |
+	+-----------------+  	|  +---------------+ |
+				|         A          |
+				|         |(7)       |
+				|   	  V	     |
+				|  +---------------+ |
+				|  |               | |
+				|  | Dictionary    | |
+				|  |               | |
+				|  +---------------+ |
+				+--------------------+
+
+       Figure 1   Multi-byte Input System (component model)
+.KE
+.KS
+.nf
+
+                                         >-- User I/F --<
++---+  +------------------------+      (for multi-byte input)
+|   |  |   Application Program  |
+| A |  +------------------------+
+| n |  |   Toolkits             |
+| o |  +---+--------------------+
+| t |  |   |
+| h |  | R | >--- AP I/F ----<
+| e |  | A |   (XJp-library I/F)   V     + - - - - - - - - - - - - - - - - - - +
+| r |  | W | +----------------+    |       +---------------+    +------------+
+|   |  |   | |  XJp-library   |  XJp     | | Input Manager |    | PIC server | |
+| C |  | I | |                | protocol   |  (Xwnmo)      |<-->| (Jserver)  |
+| l |  | N | |                |    |     | |               |    |            | |
+| i |  | P | |                |    |       |               |    |            |
+| e |  | U | |                |    |     | |               |    |            | |
+| n |  | T | |                |    |       |               |    |            |
+| t |  +---+ +----------------+    |     | +---------------+    +------------+ |
+|   |  +-------------------------+ |       +------------------+
+|   |  |          X-lib          | |     | |    X-lib         |                |
++---+  +-------------------------+ A       +------------------+
+                                         + - - - - - - - - - - - - - - - - - - +
++-------------------------------------------------------------+
+|				X-server		      |
++-------------------------------------------------------------+
+
+       Figure 2   Multi-byte Input System (layer model)
+
+.KE
+.NH 2
+Rationale
+.NH 3
+Multiple process architecture
+.LP
+Input Manager is composed as another process as mentioned above.
+This input method assumes that Input Manager is separated from 
+an application process.
+The reasons are:
+.IP (1) 4
+To realize the same Look & Feel among some applications.
+.IP (2) 4
+To change Look & Feel easily by replacing the input manager 
+with some other.
+.IP (3) 4
+To enable to use the remote Input Manager in heterogeneous environment.
+.sp 1
+.NH 3
+Front-end Method
+.LP
+There are three methods for multi-byte input system regarding
+to the key press event.
+.IP (1) 4
+Front-end Method
+.br
+In the Front-end Method, key event occurred on the 
+client window is intercepted by Input Manager. 
+Then Input Manager sends converted string to client.
+.IP (2) 4
+Back-end Method
+.br
+In the Back-end Method, key event occurred on the client window is
+received by
+application.  Then application decide whether the key event should be sent
+to Input Manager or not.  And selected key event is sent to Input Manager.
+.IP (3) 4
+Filtering Method
+.br
+In the Filtering Method, to place a filter in Xlib, key event occurred
+on the 
+client window is received by filter.  Filter decide whether the key
+event 
+should be sent to Input Manager or not by mode of Input Manager.
+And selected key event is sent to Input Manager.
+.LP
+In method (2) and (3), there is a problem. It is a large number of
+process switching occurred at each key events.
+Moreover, each method has another problem that
+method (2) mismatches to the translation manager and the method (3) has
+synchronization problem between the filter and Input Manager.
+.LP
+So, this specification decides to use method (1).
+.sp 1
+.NH 3
+Intercepting of the key event by Input Manager
+.LP
+There are following ways for Input Manager to intercept
+key events occurred on the client window.
+.IP (1) 4
+Input Manager uses XGrabKeyboard(), XSetInputFocus()
+and so on, in order to gets all key events.
+When Input Manager doesn't need a key event, 
+Input Manager sends the key event to client using XSendEvent().
+.IP (2) 4
+Client resets the mask of key events and
+Input Manager sets the mask of the key event on
+the client window.
+.IP (3) 4
+Input Manager puts the input-only window on the top of the
+client window and intercepts key events of this client window.
+.IP (4) 4
+Extend the X protocol for intercepting key events.
+.LP
+Method (1) has two problems:
+.RS
+.IP \- 3
+Input Manager probably competes with the window manager for key events.
+.IP \- 3
+Input Manager intercepts the key events of the clients even though
+they have no interest in multi-byte input.
+.RE
+.LP
+Method (3) has a problem that
+the child windows of the client window probably
+compete with the input-only window for key events.
+.LP
+Method (4) is a future work.
+.LP
+So, in our sample implementation, we use the method (2).
+.sp 1
+.NH 3
+Sending of converted strings by Input Manager.
+.LP
+There are the following ways to send the converted string.
+.IP (1) 4
+Using the property
+.IP (2) 4
+Using the event(ClientMessageEvent)
+.LP
+In method (1), there is a synchronization problem between 
+Input Managers and clients.
+.LP
+So, in our sample implementation, we use the method (2).
+.sp 1
+.NH 2
+Overview of XJp_Library
+.LP
+XJp_Library is a library of Xlib level providing multi-byte
+input facility.
+It is composed by two interfaces, one is the Communication Kit,
+the other is the Back-end Library.
+.IP (1) 4
+Communication Kit
+.RS
+.IP XJp_open() 20
+connect to I.M. and initialize
+.IP XJp_visible() 20
+make conversion window visible
+.IP XJp_begin() 20
+start of conversion
+.IP XJp_read() 20
+get converted string(1)
+.IP XJp_string() 20
+get converted string(2)
+.IP XJp_invisible() 20
+make conversion window invisible
+.IP XJp_end() 20
+end of conversion
+.IP XJp_close() 20
+disconnect from I.M.
+.IP XJp_move() 20
+move conversion window
+.IP XJp_change() 20
+control of I.M.
+.IP XJp_error() 20
+get error message
+.IP XJp_reset() 20
+reset of XJp_Library
+.RE
+.IP (2) 4
+Back-end Library
+.RS
+.IP XJp_convertLookup() 20
+convert key event into string
+.RE
+.sp 1
+.NH 3
+Communication Kit
+.LP
+Communication Kit provides application interface of the communication to
+Input Manager through X Server, using ICCCM.
+.LP
+Input Manager and Communication Kit uses X property as the information 
+for conversion window. 
+.LP
+ClientMessage is used to communicate between Input Manager and
+application.
+.SH
+(1) XJp_open
+.LP
+XJp_open request to connect to I.M.
+Input Manager and client transfer information each other using by
+property, and synchronize by using ClientMessage.
+.LP
+Contents of information are as follows:
+.RS
+.nf
+Width and height of conversion request window
+Position of conversion window
+Width and height of conversion window
+Color of foreground, background and border of conversion window
+Informations of fonts(font-name and font-id)
+Position of status indicator
+Width and height of status indicator
+Display mode
+.RE
+.KS
+.nf
+
+    +---+                           +---+                           +---+ 
+    |   |                           |   |                           |   | 
+    | X |  client register  request |   |          get event        | I | 
+    | J |-------------------------->| X |-------------------------->| n | 
+    | p |  (event and property)     | s | (client register request) | p | 
+    | l |                           | e |                           | u | 
+    | i |                           | r |  get client information   | t | 
+    | b |                           | v |-------------------------->|   | 
+    | r |                           | e |      (property)           | M | 
+    | a |                           | r |                           | a | 
+    | r |                           |   |  create conversion window | n | 
+    | y |                           |   |<--------------------------| a | 
+    |   |                           |   |    (not mapped)           | g | 
+    |   |                           |   |                           | e | 
+    |   |          get event        |   | send connection ID        | r |
+    |   |<--------------------------|   |<--------------------------|   |
+    +---+ (get connection ID)       +---+      (ClientMessage)      +---+ 
+
+.KE
+.SH
+(2) XJp_begin
+.LP
+Input Manager intercepts the key event which is supposed to be
+sent to the
+focussed client. This is done as follows. First client(library) free
+the mask of key event,
+and then Input Manager set the mask of key event of client.
+.KS
+.nf
+
+    +---+                           +---+                           +---+ 
+    | X |  conversion start request |   |          get event        | I | 
+    | J |-------------------------->| X |-------------------------->| n | 
+    | p |  (ClientMessage)          | s | (conversion start request)| p | 
+    | l |                           | e |                           | u | 
+    | i |     free key event mask   | r |                           | t | 
+    | b |-------------------------->| v |                           |   | 
+    | r |                           | e |     set key event mask    | M | 
+    | a |                           | r |<--------------------------| a | 
+    | r |                           |   |                           | n | 
+    | y |                           |   |                           | a | 
+    |   |                           |   |                           | g | 
+    |   |                           |   |                           | e |
+    |   |                           |   |                           | r |
+    +---+                           +---+                           +---+ 
+
+.KE
+.SH
+(3) XJp_read
+.LP
+The key event which were going to be send to client is being
+intercepted by Input Manager. 
+.IP (a) 4
+Input Manager executes conversion according to the key inputs.
+.IP (b) 4
+Converted string is completed when pressing Execute key.
+.IP (c) 4
+Input Manager sends Converted string to the client by using ClientMessage.
+.IP (d)
+Client calls read request function XJp_read to get converted
+string when receiving the client message mentioned above.
+.KS
+.nf
+
+         +---+              +---+                           +---+ 
+         |   |              |   |     get key event  "a"    |   | 
+         |   |              |   |-------------------------->|   | 
+         |   |              |   |     get key event  "i"    | I | 
+         |   |              |   |-------------------------->| n | 
+         | X |              | X |   get key event "Execute" | p | 
+         | J |              | s |-------------------------->| u | multi-byte
+         | p |              | e |                           | t |-----------
+         | l |              | r | send converted string     |   | conversion
+         | i |  get event   | v |<--------------------------| M | 
+ read of | b |<-------------| e |   (ClientMessage)         | a | 
+ <-------| r |              | r |                           | n | 
+ data    | a |              |   |                           | a | 
+         | r |              |   | send converted string     | g | 
+         | y |  get event   |   |<--------------------------| e | 
+ read of |   |<-------------|   |   (ClientMessage)         | r | 
+ <-------|   |              |   |                           |   | 
+ data    |   |              |   |                           |   | 
+         +---+              +---+                           +---+ 
+
+.KE
+.SH
+(4) XJp_end
+.LP
+When client wants to quit conversion, it calls XJp_end.
+Input manager quits intercepting
+client's key event and client sets its key event mask.
+.LP
+When client wants to proceed conversion again, it may call 
+XJp_begin() (2).
+.KS
+.nf
+
+    +---+                           +---+                           +---+ 
+    |   |                           |   |                           |   |
+    |   |                           |   |                           | I |
+    | X |   conversion end request  |   |          get event        | n | 
+    | J |-------------------------->| X |-------------------------->| p | 
+    | p |  (ClientMessage)          | s |  (conversion end request) | u | 
+    | l |                           | e |                           | t | 
+    | i |                           | r |     free key event mask   |   | 
+    | b |                           | v |<--------------------------| M | 
+    | r |     set key event mask    | e |                           | a | 
+    | a |-------------------------->| r |                           | n | 
+    | r |                           |   |                           | a | 
+    | y |                           |   |                           | g | 
+    |   |                           |   |                           | e |
+    |   |                           |   |                           | r |
+    |   |                           |   |                           |   |
+    +---+                           +---+                           +---+ 
+
+.KE
+.SH
+(5) XJp_close
+.LP
+XJp_close requests to disconnect with Input Manager. And it also
+frees the resources.
+.KS
+.nf
+
+    +---+                           +---+                           +---+ 
+    |   |                           |   |                           |   |
+    |   |                           |   |                           | I |
+    | X |   free resources          |   |                           | n | 
+    | J |-------------------------->| X |                           | p | 
+    | p |                           | s |                           | u | 
+    | l | session end request       | e |       get event           | t | 
+    | i |-------------------------->| r |-------------------------->|   | 
+    | b |     (ClientMessage)       | v |  (session end request)    | M | 
+    | r |                           | e |                           | a | 
+    | a |                           | r | destroy conversion Window | n | 
+    | r |                           |   |<--------------------------| a | 
+    | y |                           |   |                           | g | 
+    |   |                           |   |        free resources     | e |
+    |   |                           |   |<--------------------------| r |
+    |   |                           |   |                           |   |
+    +---+                           +---+                           +---+
+
+.KE
+.KS
+.LP
+*Flow diagram of using Communication Kit
+.nf
+
+	    +--------------+ 
+	    |  XJp_open    | 	connect to I.M. and initialize
+	    +--------------+ 
+		   |
+		   V
+	    +--------------+ 
+      +---->|  XJp_begin   | 	start of conversion
+      |     +--------------+ 	
+      |            |
+      |            |		
+      |   +----->  V		
+      |   | +--------------+ 
+      |   | |  XJp_read	   | 	get converted string
+      |   | +--------------+ 
+      |   |        |
+      |   |        V
+      |   | +--------------+ 
+      |   | | (XJp_move)   | 	change the position of the conversion Window
+      |   | +--------------+ 	 (if needed)
+      |   |        |
+      |   +------  V
+      |     +--------------+ 
+      +-----|  XJp_end	   | 	end of conversion
+	    +--------------+ 
+		   |
+		   V
+	    +--------------+ 
+	    |  XJp_close   | 	disconnect to I.M.
+	    +--------------+ 
+
+.KE
+.NH 3
+Back-end Library
+.LP
+Back-end Library is called as a back-end function just like
+XLookupString.
+You can get multi-byte string by calling the function XJp_convertLookup()
+instead of XLookupString.
+The connection between Input Manager and client is implemented
+by Inter Process Communication.
+Back-end Library is synchronous communication.
+.br
+Note that Communication Kit is asynchronous 
+communication using X-protocol.
+.LP
+And Back-end Library may have the user interaction response problem.
+.KS
+.LP
+*Communication diagram in XJp_convertLookup()
+.nf
+
+	    Inter Process Communication I/F
+    +---+                                                 +---+ 
+    | X |               input key-code                    |   | 
+    | J |------------------------------------------------>| I | 
+    | p |                   NULL                          | n | 
+    | c |<------------------------------------------------| p | 
+    | o |               input key-code                    | u | 
+    | n |------------------------------------------------>| t | 
+    | v |                   NULL                          |   | 
+    | e |<------------------------------------------------| M | 
+    | r |               input key-code(Execute)           | a | 
+    | t |------------------------------------------------>| n | multi-byte
+    | L |                                                 | a |-----------
+    | o |             Converted string                    | g | conversion
+    | o |<------------------------------------------------| e |
+    | k |                                                 | r |
+    | u |                                                 |   |
+    | p |                                                 +---+
+    +---+
+
+.KE
+.NH 2
+Sample implementation of Input Manager: Xwnmo
+.LP
+Xwnmo is a Kana-to-Kanji conversion Input Manager for the X
+Window System.
+.LP
+Xwnmo is designed according to this specification.
+Xwnmo is based on uum (TTY based front-end processor of Wnn).  
+It runs on X Window System and it supports multi clients.  
+Features of Xwnmo is as follows:
+.IP \- 3
+High tailorability.
+.IP \- 3
+Network\-transparency.
+.IP \- 3
+Good user interface and powerful Kana-to-Kanji conversion
+facility using Wnn/jserver.
+.IP \- 3
+Simple editing facility which permits users to edit Kana
+string and/or Kanji string without invoking a text editor.
+.sp 1
+.NH 3
+Conversion Window
+.LP
+A conversion window is dedicated to Kana-to-Kanji conversion. You can
+select three kinds of Look & Feel for a conversion window according
+to the request of the client.
+.IP (1) 4
+Position where indicated by the client
+.IP (2) 4
+Beneath the client window
+.IP (3) 4
+Bottom of the root window
+.LP
+(1) is used for on-the-spot conversion
+.LP
+(2) and (3) have a disadvantage that a user must perpendicularly
+move his/her view point between the bottom line and the cursor
+position of the application program.
+.LP
+In case of (1), the conversion window appears at the cursor position.
+.LP
+Keyboard inputs to the client are directed to the conversion window,
+where the conversions can be performed.
+.LP
+When one conversion is completed, converted string is sent to the
+client by ClientMessage.
+.sp 1
+.NH 3
+Display Full Candidate
+.LP
+Xwnmo can create another window when a list of candidates is
+requested.  You can select one among many candidates by mouse or key
+operation.
+.sp 1
+.NH 3
+Registration to Dictionary
+.LP
+Xwnmo can create another window to register new word, to Kana-to-Kanji
+conversion dictionary.  It requests user to select dictionary to
+register new word and grammar information of it.
+.bp
+.NH 1
+XJp Library Interface
+.LP
+There are two library interfaces for application programs.
+One is Communication Kit, and the other is Back-end library.
+They are called "XJp_library" altogether.
+.LP
+Communication Kit is a library by which an application communicates
+to Input Manager (XJp I.M). An application can control a conversion
+window, get a multi-byte string and so on, using it.
+.LP
+Back-end library is such a function as XLookupString which is called
+as a back-end procedure for KeyEvent.
+A ready-made application can input multi-byte strings by replacing
+XLookupString with XJp_convertLookup of Back-end library.
+Back-end library does not provide any control functions for a conversion
+window.
+.LP
+Manuals of this library are written in the following format:
+
+
+.EH 'INTRO(3K)'XJp_library Manual'INTRO(3K)'
+.OH 'INTRO(3K)'XJp_library Manual'INTRO(3K)'
+.bp
+.SH
+NAME
+.RS
+intro \- XJp_library introduction
+.RE
+.SH
+SYNOPSIS
+.RS
+The SYNOPSIS section presents the calling syntax for the routine including the
+declarations of the arguments and return type.
+For example:
+.nf
+.ft B
+#include <X11/Xlib.h>
+#include <X11/XJplib.h>
+.sp
+returntype XJpFunctionName(\fIarg\fP);
+.RS
+.nf
+.ft B
+type \fIarg\fP;
+.ft R
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+The ARGUMENTS section describes each of the arguments used by the function.
+.RE
+.SH
+DESCRIPTION
+.RS
+The DESCRIPTION section describes what the function does, what it returns.
+These functions construct XJp_library "libXJp.a".
+This library is linked to an application program, using cc(1) with option
+"-lXJp".
+
+(1) Function Overview
+
+Functions of Communication Kit are classified as follows:
+
+o Control and manage the communication between Input Manager and an application
+.RS
+XJp_open, XJp_begin, XJp_end, XJp_close
+.RE
+o Get Converted string
+.RS
+XJp_read, XJp_string
+.RE
+o Control a conversion window
+.RS
+XJp_visible, XJp_invisible, XJp_move, XJp_change
+.RE
+o Get error message and reset this library
+.RS
+XJp_error, XJp_reset
+.RE
+
+(2) General Usage
+
+General usage(function calling sequence) of Communication Kit is as follows:
+.RS
+.nf
+.IP XJp_open() 20
+Connect to Input Manager and initialize
+.IP "   |"
+.IP XJp_visible() 20
+Make a conversion window visible
+.IP "   |"
+.IP XJp_begin() 20
+Start the conversion
+.IP "   |"
+.IP "[loop]"
+.IP XJp_string() 20
+Get Converted string
+.IP "   |"
+.IP XJp_end() 20
+End the conversion
+.IP "   |"
+.IP XJp_close() 20
+Disconnect from Input Manager
+.RE
+.IP "" 0
+The other functions are used as follows:
+
+o \fIXJp_read\fP can be used instead of \fIXJp_string\fP.
+.br
+o \fIXJp_visible\fP, \fIXJp_invisible\fP, \fIXJp_move\fP and \fIXJp_change\fP
+can be used any time between \fIXJp_begin\fP and \fIXJp_close\fP.
+.br
+o \fIXJp_begin\fP and \fIXJp_end\fP can be used any time between \fIXJp_open\fP
+and \fIXJp_close\fP.
+
+(3) Handling error
+
+There are two functions for handling error in XJp_library.
+.RS
+.RS
+.IP XJp_error() 14
+Get error message
+.IP XJp_reset() 14
+Reset XJp_library when generating some errors in Input Manager and so on.
+.RE
+.RE
+
+When a conversion window of Input Manager is destroyed accidentally
+with keeping the key event mask for the application window of the client, the
+client can not find it nor receive any key event from X server. To avid this,
+the client must set the event mask for DestroyNotify of the 
+conversion window and receive the event.  
+.br
+You may do as follows:
+.RS
+.nf
+	xjpid = XJp_open( ... );
+	XSelectInput(\fIdisplay\fP, \fIxjpid\fP, \fIStructureNotifyMask\fP);
+.RE
+And when receiving the DestroyNotify event, the client must call \fIXJp_reset\fP.
+The client is reset to the state before calling \fIXJp_open\fP.
+
+The following is the example of implement.
+
+[include file XJplib.h]
+.RS
+.nf
+/* Communication Kit include file */
+
+/* Code system */
+.fi
+.IP #define\ XJP_JIS7 30
+0
+.IP #define\ XJP_JIS8 30
+1
+.IP #define\ XJP_EUC 30
+2
+.IP #define\ XJP_SJIS 30
+3
+.IP #define\ XJP_GB 30
+4
+.IP #define\ XJP_KSC 30
+5
+.IP #define\ XJP_big5 30
+6
+
+.RE
+.RS
+.nf
+/* Character set */
+.fi
+.IP #define\ XJP_ascii 30
+"(B"
+.IP #define\ XJP_romanX0201 30
+"(J"
+.IP #define\ XJP_kanaX0201 30
+"(I"
+.IP #define\ XJP_hanjiGB2312 30
+"$A"
+.IP #define\ XJP_kanjiX0208 30
+"$B"
+.IP #define\ XJP_hanjaKSC5601 30
+"$C"
+.IP #define\ XJP_gaiji1byte 30
+"(0"
+.IP #define\ XJP_gaiji2byte 30
+"$0"
+
+.RE
+.RS
+.nf
+/* conversion window display mode */
+.fi
+.IP #define\ XJP_UNDER 30
+0
+.IP #define\ XJP_XY 30
+1
+.IP #define\ XJP_ROOT 30
+2
+
+.RE
+.RS
+.nf
+/* conversion window attribute value mask bits */
+.fi
+.IP #define\ XJP_PWIDTH 30
+0x00000001L 
+.IP #define\ XJP_PHEIGHT 30
+0x00000002L 
+.IP #define\ XJP_X 30
+0x00000004L 
+.IP #define\ XJP_Y 30
+0x00000008L 
+.IP #define\ XJP_WIDTH 30
+0x00000010L 
+.IP #define\ XJP_HEIGHT 30
+0x00000020L 
+.IP #define\ XJP_FG 30
+0x00000040L 
+.IP #define\ XJP_BG 30
+0x00000080L 
+.IP #define\ XJP_BP 30
+0x00000100L 
+.IP #define\ XJP_FONTS 30
+0x00000200L 
+.IP #define\ XJP_STATUS 30
+0x00000400L 
+
+.RE
+.RS
+.nf
+/* Font information structure */
+typedef struct {
+	char	*id;
+	char	*fontname;
+} XJp_fontInfo;
+
+/* conversion window attribute structure */
+typedef struct {
+	long	p_width;
+	long	p_height;
+	long	x;
+	long	y;
+	long	width;
+	long	height;
+	unsigned long	fg;
+	unsigned long	bg;
+	long	bp;
+	long	status_x;
+	long	status_y;
+	long	status_width;
+	long	status_height;
+	XJp_fontInfo	*fonts;
+	int	num_fonts;
+} XJp_attributes;
+
+typedef	unsigned long	XJp_id;
+extern int		XJp_errno;
+.RE
+.RE
+.SH
+DIAGNOSTICS
+.RS
+The DIAGNOSTICS section contains a list of the error value that XJp Function
+can generate.
+.RE
+
+
+.EH 'XJp_open(3K)'XJp_library Manual'XJp_open(3K)'
+.OH 'XJp_open(3K)'XJp_library Manual'XJp_open(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_open \- connect to Input Manager and initialize
+.RE
+.SH
+SYNOPSIS
+.RS
+.nf
+.ft B
+#include <X11/Xlib.h> 
+#include <X11/XJplib.h> 
+.sp
+XJp_id XJp_open(\fIdisplay, w, valuemask, values, dispmode, aux_data\fP)
+.RS
+.nf
+.ft B
+Display \fI*display\fP;
+Window \fIw\fP; 
+unsigned long \fIvaluemask\fP;
+XJp_attributes \fI*values\fP;
+int \fIdispmode\fP;
+char *\fIaux_data\fP;
+.ft R
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+.IP \fIdisplay\fP 14
+Specifies the connection to the X server.
+.IP \fIw\fP 14
+Specifies the window ID.
+.IP \fIvaluemask\fP 14
+Specifies the attributes defined in values. This mask is bit OR of the bitmask
+of the effective attributes. When the valuemask is zero, the next parameter
+values is ignored.
+As the mask, the followings can be specified.
+.RS
+.IP XJP_PWIDTH 20
+Width of the conversion request window
+.IP XJP_PHEIGHT 20
+Height of the conversion request window
+.IP XJP_X 20
+Position of the conversion window
+.IP XJP_Y 20
+Position of the conversion window
+.IP XJP_WIDTH 20
+Width of the conversion window
+.IP XJP_HEIGHT 20
+Height of the conversion window
+.IP XJP_FG 20
+Foreground color
+.IP XJP_BG 20
+Background color
+.IP XJP_BP 20
+Border width of the conversion window
+.IP XJP_FONTS 20
+Font name
+.IP XJP_STATUS 20
+Position of the status indicator (This is ignored in \fIXJp_open\fP.
+It is valid only in \fIXJp_change\fP)
+.RE
+.IP \fIvalues\fP 14
+Specifies the attributes in this structure. We have to specify the bitmask
+correspond to attributes which are specified in values.
+The elements of this structure are as follows:
+.RS
+.IP long\ p_width; 20
+Width of the conversion request window (pixel unit)
+.IP long\ p_height; 20
+Height of the conversion request window (pixel unit)
+.IP long\ x; 20
+Position of the conversion window (pixel unit)
+.br
+The coordinate is relative to conversion request window.
+.IP long\ y; 20
+Position of the conversion window (pixel unit)
+.IP long\ width; 20
+Width of the conversion window (pixel unit)
+.IP long\ height; 20
+Height of the conversion window (pixel unit)
+.IP unsigned\ long\ fg; 20
+Foreground color of the conversion window
+.IP unsigned\ long\ bg; 20
+Background color of the conversion window
+.IP long\ bp; 20
+Border width of the conversion window (pixel unit)
+.IP XJp_fontInfo\ *fonts; 20
+Pointer to the array of the font information structure
+.IP int\ num_fonts; 20
+Number of the array of the font information structure
+.IP long\ status_x; 20
+Position of the status indicator (pixel unit)
+.IP long\ status_y; 20
+Position of the status indicator (pixel unit)
+.IP long\ status_width; 20
+Width of the status indicator (pixel unit)  return value
+.IP long\ status_height; 20
+Height of the status indicator (pixel unit)  return value
+.IP char\ *aux_data; 20
+pointer to the private data for Input Manager. The maximum size of the data
+is 128 bytes.
+The contents of this data are dependent on Input Manager.
+.RE
+.IP \fIdispmode\fP 14
+Specifies the display mode of conversion window by the 
+following values.
+.RS
+.IP XJP_UNDER 20
+conversion window is opened at the bottom of the specified window.
+.IP XJP_XY 20
+conversion window is opened at the specified position of
+the specified window.
+.IP XJP_ROOT 20
+conversion window is opened at the specified position of
+the root window.
+.RE
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_open\fP function connects to Input Manager and 
+initializes the conversion window.
+We have to call this function before conversion.
+Usually, this function is called after creating the main window of
+each client.
+.br
+The possible \fIvalues\fP differ from the
+corresponding \fIdispmode\fP\, as
+described below.
+.RS
+.IP XJP_UNDER 20
+The client must allocate the space for the conversion window which
+Input Manager creates.
+The client does not need to specify anything in order to create the status
+indicator.
+.IP XJP_XY 20
+After calling this function, the width and the height of the status indicator
+are returned in \fIstatus_width\fP and \fIstatus_height\fP of \fIvalues\fP\.
+When we specify the position of the status indicator, we have to call
+\fIXJp_change\fP after \fIXJp_open\fP\.
+.IP XJP_ROOT 20
+The client does not need to specify anything for the conversion
+window and it's status indicator.
+.RE
+.IP "" 0
+We specify the array of the font information structure in \fIfonts\fP.
+We prepare the number of the array of the font information structurer which we
+need.
+We can specify the followings in the element \fIid\fP of the structure.
+.RS
+.RS
+.IP XJP_ascii 20
+ASCII font
+.IP XJP_romanX0201 20
+JIS-X0201 roman font
+.IP XJP_kanaX0201 20
+JIS-X0201 katakana font
+.IP XJP_hanjiGB2312 20
+GB-2312 hanji font
+.IP XJP_kanjiX0208 20
+JIS-X0208 kanji font
+.IP XJP_hanjaKSC5601 20
+KSC-5601 hanja font
+.IP XJP_gaiji1byte 20
+Single byte supplementary font
+.IP XJP_gaiji2byte 20
+Double byte supplementary font
+.RE
+.RE
+.RE
+.SH
+RETURN VALUE
+.RS
+Upon successful completion, this function returns a connection ID that
+indicates the connection to Input Manager.
+Otherwise, a value of \-1 is returned.
+.RE
+.SH
+SEE ALSO
+.RS
+XJp_change(3K)
+.RE
+
+
+.EH 'XJp_begin(3K)'XJp_library Manual'XJp_begin(3K)'
+.OH 'XJp_begin(3K)'XJp_library Manual'XJp_begin(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_begin \- start conversion
+.RE
+.SH
+SYNOPSIS
+.RS
+.nf
+.ft B
+#include <X11/Xlib.h> 
+#include <X11/XJplib.h> 
+.sp
+int XJp_begin(\fIrequest_id, w_key\fP)
+.RS
+.nf
+.ft B
+XJp_id \fIrequest_id\fP; 
+Window \fIw_key\fP;
+.ft R
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+.IP \fIrequest_id\fP 14
+Specifies the return value of \fIXJp_open\fP.
+.IP \fIw_key\fP 14
+Specifies the window that request key-input.
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_begin\fP function enables conversion.
+.RE
+.SH
+DIAGNOSTICS
+.RS
+Upon successful completion, a value of 0 is returned. Otherwise, a value of \-1 is returned.
+.RE
+
+
+.EH 'XJp_visible(3K)'XJp_library Manual'XJp_visible(3K)'
+.OH 'XJp_visible(3K)'XJp_library Manual'XJp_visible(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_visible \- make conversion window visible
+.RE
+.SH
+SYNOPSIS
+.RS
+.nf
+.ft B
+#include <X11/XJplib.h> 
+.sp
+int XJp_visible(\fIrequest_id\fP) 
+.RS
+.nf
+.ft B
+XJp_id \fIrequest_id\fP; 
+.ft R
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+.IP \fIrequest_id\fP 14
+Specifies the return value of \fIXJp_open\fP.
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_visible\fP function displays the conversion window that
+corresponds to specify the return value of \fIXJp_open\fP.
+.br
+But,this call is invalid if the dispmode is a \fIXJP_ROOT\fP.
+.RE
+.SH
+DIAGNOSTICS
+.RS
+Upon successful completion, a value of 0 is returned.
+Otherwise, a value of \-1 is returned.
+.RE
+
+
+.EH 'XJp_read(3K)'XJp_library Manual'XJp_read(3K)'
+.OH 'XJp_read(3K)'XJp_library Manual'XJp_read(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_read \- obtain the result of conversion
+.RE
+.SH
+SYNOPSIS
+.RS
+.nf
+.ft B
+#include <X11/Xlib.h>
+#include <X11/XJplib.h>
+.sp
+int XJp_read(\fIxEv, buffer, buffer_size, code_length, character_set\fP)
+.RS
+.nf
+.ft B
+XClientMessageEvent \fI*xEv\fP;
+unsigned char \fI*buffer\fP;
+int \fIbuffer_size\fP;
+int \fIcode_length\fP;
+char \fIcharacter_set[]\fP;
+.fi
+.ft R
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+.IP \fIxEv\fP 14
+Specifies the client message event which includes the result of 
+conversion.
+.IP \fIbuffer\fP 14
+Specifies that the converted string will be stored here.
+.IP \fIbuffer_size\fP 14
+Specifies the size of above buffer. The minimum size is 17 bytes.
+.IP \fIcode_length\fP 14
+Specifies the code length of one character.
+.IP \fIcharacter_set\fP 14
+Specifies the character set of converted string. The minimum size of this
+buffer is 4 bytes.
+.RS
+.IP XJP_ascii 20
+ASCII characters
+.IP XJP_romanX0201 20
+JIS-X0201 Roman characters
+.IP XJP_kanaX0201 20
+JIS-X0201 Katakana characters
+.IP XJP_hanjiGB2312 20
+GB-2312 Hanji characters
+.IP XJP_kanjiX0208 20
+JIS-X0208 Kanji characters
+.IP XJP_hanjaKSC5601 20
+KSC-5601 Hanja characters
+.IP XJP_gaiji1byte 20
+Single byte supplementary characters
+.IP XJP_gaiji2byte 20
+Double byte supplementary characters
+.RE
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_read\fP function returns a converted string in the
+\fIbuffer\fP.  The string is terminated by NULL character.
+\fICode_length\fP and \fIcharacter_set\fP contain the length of code used to
+express the characters in the string and the kind of the character set
+respectively.
+This function should be called after receiving the result of converted 
+(ClientMessage Event) from Input Manager.
+.RE
+.SH
+RETURN VALUE
+.RS
+The number of characters in the \fIbuffer\fP is returned if no error occurred.
+\-1 is returned otherwise.
+.RE
+
+
+.EH 'XJp_string(3K)'XJp_library Manual'XJp_string(3K)'
+.OH 'XJp_string(3K)'XJp_library Manual'XJp_string(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_string \- obtain the result of conversion
+.RE
+.SH
+SYNOPSIS
+.RS
+.nf
+.ft B
+#include <X11/Xlib.h>
+#include <X11/XJplib.h>
+.sp
+int XJp_string(\fIxEv, buffer, buffer_size, code\fP)
+.RS
+.nf
+.ft B
+XClientMessageEvent \fI*xEv\fP;
+unsigned char \fI*buffer\fP;
+int \fIbuffer_size\fP;
+int \fIcode\fP;
+.ft R
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+.IP \fIxEv\fP 14
+Specifies the client message event which includes the result of 
+conversion.
+.IP \fIbuffer\fP 14
+Specifies that the converted string will be stored here.
+.IP \fIbuffer_size\fP 14
+Specifies the size of above buffer. The minimum size is 17 bytes.
+.IP \fIcode\fP 14
+Specifies that the character encoding of the string returned
+.RS
+.IP XJP_JIS7 20
+JIS 7bit encoding
+.IP XJP_JIS8 20
+JIS 8bit encoding
+.IP XJP_EUC 20
+EUC encoding
+.IP XJP_SJIS 20
+Shift JIS encoding
+.IP XJP_GB 20
+GB encoding
+.IP XJP_KSC 20
+KSC encoding
+.IP XJP_big5 20
+big5 encoding
+.RE
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_string\fP function stores a converted string into the
+\fIbuffer\fP using specified encoding scheme.
+This function should be called after receiving the result of converted 
+(ClientMessage Event) from Input Manager program 
+.RE
+.SH
+RETURN VALUE
+.RS
+Upon successful completion, the length of data in the \fIbuffer\fP is returned. Otherwise, a value of \-1 is returned.
+.RE
+
+
+.EH 'XJp_invisible(3K)'XJp_library Manual'XJp_invisible(3K)'
+.OH 'XJp_invisible(3K)'XJp_library Manual'XJp_invisible(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_invisible \- make conversion window invisible
+.RE
+.SH
+SYNOPSIS
+.RS
+.nf
+.ft B
+#include <X11/XJplib.h> 
+.sp
+int XJp_invisible(\fIrequest_id\fP)
+.RS
+.nf
+.ft B
+XJp_id \fIrequest_id\fP; 
+.ft R
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+.IP \fIrequest_id\fP 14
+Specifies the return value of \fIXJp_open\fP.
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_invisible\fP function makes the conversion window invisible
+that corresponds to specify the return value of \fIXJp_open\fP.
+.br
+But,this call is invalid if the dispmode is a \fIXJP_ROOT\fP.
+.RE
+.SH
+DIAGNOSTICS
+.RS
+Upon successful completion, a value of 0 is returned.
+Otherwise, a value of \-1 is returned.
+.RE
+
+
+.EH 'XJp_end(3K)'XJp_library Manual'XJp_end(3K)'
+.OH 'XJp_end(3K)'XJp_library Manual'XJp_end(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_end \- end conversion
+.RE
+.SH
+SYNOPSIS
+.RS
+.nf
+.ft B
+#include <X11/Xlib.h> 
+#include <X11/XJplib.h> 
+.sp
+int XJp_end(\fIrequest_id, w_key\fP)
+.RS
+.nf
+.ft B
+XJp_id \fIrequest_id\fP; 
+Window \fIw_key\fP;
+.ft R
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+.IP \fIrequest_id\fP 14
+Specifies the return value of \fIXJp_open\fP.
+.IP \fIw_key\fP 14
+Specifies the window that requested key-input.
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_end\fP function disables conversion.
+.RE
+.SH
+DIAGNOSTICS
+.RS
+Upon successful completion, a value of 0 is returned.
+Otherwise, a value of \-1 is returned.
+.RE
+
+
+.EH 'XJp_close(3K)'XJp_library Manual'XJp_close(3K)'
+.OH 'XJp_close(3K)'XJp_library Manual'XJp_close(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_close \- disconnect from Input Manager
+.RE
+.SH
+SYNOPSIS
+.RS
+.nf
+.ft B
+#include <X11/XJplib.h> 
+.sp
+XJp_close(\fIrequest_id\fP)
+.RS
+.nf
+.ft B
+XJp_id \fIrequest_id\fP; 
+.ft R
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+.IP \fIrequest_id\fP 14
+Specifies the return value of \fIXJp_open\fP.
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_close\fP function ends the conversion specified by the return value
+of \fIXJp_open\fP.
+.RE
+.SH
+DIAGNOSTICS
+.RS
+Upon successful completion, a value of 0 is returned.
+Otherwise, a value of \-1 is returned.
+.RE
+
+
+.EH 'XJp_move(3K)'XJp_library Manual'XJp_move(3K)'
+.OH 'XJp_move(3K)'XJp_library Manual'XJp_move(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_move \- move the conversion window
+.RE
+.SH
+SYNOPSIS
+.RS
+.nf
+.ft B
+#include <X11/XJplib.h>
+.sp
+int XJp_move(\fIrequest_id\fP, \fIx\fP, \fIy\fP)
+.RS
+.nf
+.ft B
+XJp_id \fIrequest_id\fP;
+int \fIx\fP, \fIy\fP;
+.ft R
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+.IP \fIrequest_id\fP 14
+Specifies the return value of \fIXJp_open\fP.
+.IP \fIx\fP 14
+.br
+.IP \fIy\fP 14
+Specifies the x and y coordinates.
+These coordinates are the upper left corner of the conversion
+window and are relative to the insize of the window that requests the
+conversion.
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_move\fP function changes the attributes of conversion
+window which were specified at \fIXJp_open\fP or last \fIXJp_change\fP.
+.br
+This function is effective only when the \fIdispmode\fP of the 
+conversion window is a \fIXJP_XY\fP.
+.RE
+.SH
+DIAGNOSTICS
+.RS
+Upon successful completion, a value of 0 is returned.
+Otherwise, a value of \-1 is returned.
+.RE
+.SH
+SEE ALSO
+.RS
+XJp_open(3K)
+.RE
+
+
+.EH 'XJp_change(3K)'XJp_library Manual'XJp_change(3K)'
+.OH 'XJp_change(3K)'XJp_library Manual'XJp_change(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_change \- control for the XJp Input Manager
+.RE
+.SH
+SYNOPSIS
+.RS
+.nf
+.ft B
+#include <X11/XJplib.h> 
+.sp
+int XJp_change(\fIrequest_id, valuemask, values\fP)
+.RS
+.nf
+.ft B
+XJp_id \fIrequest_id\fP;
+unsigned long \fIvaluemask\fP;
+XJp_attributes \fI*values\fP;
+.ft R
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+.IP \fIrequest_id\fP 14
+Specifies the return value of \fIXJp_open\fP.
+.IP \fIvaluemask\fP 14
+Specifies the attributes defined in values. This mask is bit OR of the bitmask
+of the effective attributes. When the valuemask is zero, the next parameter
+values is ignored.
+See \fIXJp_open\fP to know the details of the bitmask.
+.IP \fIvalues\fP 14
+Specifies the attributes which we want to change in this structure.
+We have to specify the bitmask correspond to attributes
+which are specified in values.
+See \fIXJp_open\fP to know the details of this structure.
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_change\fP function changes the attributes of conversion
+window which were specified at \fIXJp_open\fP or last \fIXJp_change\fP.
+.br
+The possible \fIvalues\fP differ from the corresponding \fIdispmode\fP which
+was specified in \fIXJp_open\fP.
+.RE
+.SH
+DIAGNOSTICS
+.RS
+Upon successful completion, a value of 0 is returned.
+Otherwise, a value of \-1 is returned.
+.RE
+.SH
+SEE ALSO
+.RS
+XJp_open(3K)
+.RE
+
+
+.EH 'XJp_error(3K)'XJp_library Manual'XJp_error(3K)'
+.OH 'XJp_error(3K)'XJp_library Manual'XJp_error(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_error \- error messages of communication kit
+.RE
+.SH
+SYNOPSIS
+.RS
+.nf
+.ft B
+char *XJp_error()
+.ft R
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_error\fP function returns an error message describing the last error
+encountered during a call to the communication kit.
+The error number is taken from the external variable \fIXJp_errno\fP,
+which is set when errors occur in the communication kit but not exchanged when
+nonerroneus calls are made.
+.RE
+.SH
+DIAGNOSTICS
+.RS
+Upon successful completion, a pointer to a error message is returned. Otherwise,
+a value of 0 is returned.
+.RE
+
+.EH 'XJp_reset(3K)'XJp_library Manual'XJp_reset(3K)'
+.OH 'XJp_reset(3K)'XJp_library Manual'XJp_reset(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_reset \- resets XJp library
+.RE
+.SH
+SYNOPSIS
+.RS
+\fB#include <X11/Xlib.h>\fP
+.sp
+\fBint XJp_reset(\fIevent\fP)\;
+.br
+.RS
+\fBXDestroyWindowEvent *\fIevent\fP;
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+.IP \fIevent\fP 14
+Specifies the pointer to the XDestroyWindowEvent structure.
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_reset\fP function resets XJp library to the situation (of
+\fISelectInputMask\fP, etc.) that is the same as before \fIXJp_open\fP
+is called. This function is just for a DestroyNotify event but returns
+error otherwise. 
+.RE
+.SH
+DIAGNOSTICS
+.RS
+Upon successful completion, a value of 0 is returned. Otherwise, a value of \-1
+is returned.
+.RE
+.SH
+EXAMPLES
+.RS
+.nf
+/* An example of cording error disposition (ignore arguments etc.) */
+main()
+{
+    Window wid;
+    XJp_id request_id;
+
+    wid = XCreateWindow(...);	/* conversion request window */
+    XSelectInput(display, wid, KeyPressMask);
+    request_id = XJp_open(...);	/* initialize conversion window */
+    XSelectInput(display, request_id, StructureNotifyMask);
+    ...
+    XJp_begin(...);	/* start key-input */
+    XJp_visible(...);	/* display conversion Window */
+    ...
+    while(1) {
+	XEvent event;
+
+	XNextEvent(&event);
+	switch(event.type) {
+	case DestroyNotify:
+	    if(event.XDestroyWindowEvent.window == request_id) { /* check window */
+		XJp_reset(&event);	/* reset XJp */
+		fprintf(stderr, "XJp Input Manager illegal complete.\\n");
+		...
+	    }
+	    break;
+	    ...
+	}
+    }
+}
+.RE
+
+.EH 'XJp_convertLookup(3K)'XJp_library Manual'XJp_convertLookup(3K)'
+.OH 'XJp_convertLookup(3K)'XJp_library Manual'XJp_convertLookup(3K)'
+.bp
+.SH
+NAME
+.RS
+XJp_convertLookup \- convert keyboard input into a multi-byte string
+.RE
+.SH
+SYNOPSIS
+.RS
+.nf
+.ft B
+#include <X11/Xlib.h>
+.sp
+int XJp_convertLookup(\fIevent_struct, buffer_return, bytes_buffer,\fP
+                   \fIkeysym_return, status_return\fP)
+.RS
+.nf
+.ft B
+XKeyEvent \fI*event_struct\fP;
+char \fI*buffer_return\fP;
+int \fIbytes_buffer\fP;
+KeySym \fI*keysym_return\fP;
+XComposeStatus \fI*status_return\fP;
+.ft R
+.RE
+.RE
+.SH
+ARGUMENTS
+.RS
+.IP \fIevent_struct\fP 14
+Specifies the key event structure to be used.
+.IP \fIbuffer_return\fP 14
+Returns the converted string.
+.IP \fIbytes_buffer\fP 14
+Specifies the length of the buffer.
+No more than bytes_buffer of conversion are returned.
+.IP \fIkeysym_return\fP 14
+If this argument is not NULL, returns the keysym computed from the event.
+.IP \fIstatus_return\fP 14
+Specifies either the pointer to the XCompose structure that is no contain
+compose key state information and that allows compose key processing to take
+place, or NULL.
+.RE
+.SH
+DESCRIPTION
+.RS
+The \fIXJp_convertLookup\fP function is to
+maps a key event to an EUC string, using the modifier bits in the key event
+to deal with shift, lock, and control.
+\fIXJp_convertLookup\fP treats the 8 bit characters as ASCII characters
+and 16 bit characters as a multi-byte string.
+In treating ASCII characters, \fIXJp_convertLookup\fP behaves just as same
+as \fIXLookupString\fP.
+.LP
+In treating multi-byte character, conversion is processed inside this function.
+If a conversion has been completed, the converted string is stored
+in the \fIbuffer\fP and the byte length of the converted string is returned.
+NoSymbol is returned as a keysym at the same time.
+.RE
+.SH
+DIAGNOSTICS
+.RS
+If the key event does not complete a conversion, nothing is
+stored into the \fIbuffer\fP and 0 is returned.
+\-1 is returned if some error is detected, and error number is set in the
+variable \fIXJp_errno\fP.
+.RE
+.SH
+EXAMPLES
+.RS
+.nf
+
+XNextEvent(dpy, &ev);
+switch(ev.xany.type) {
+case Expose:
+    proc_expose(&ev);
+    break;
+case KeyPress:
+    proc_keypress(&ev);
+    break;
+case ButtonPress:
+    proc_buttonpress(&ev);
+    break;
+default:
+    UnknownProc(&ev);
+}
+
+proc_keypress(ev)
+    XKeyEvent *ev;
+{
+    char buffer[BUFFERSIZE];
+    int len;
+    KeySym ks;
+    XComposeStatus xcs;
+
+    len = \fIXJp_convertLookup\fP(ev, buffer, BUFFERSIZE, &ks, &xcs);
+    if(len > 0)
+	output_string(buffer, len);
+}
+.RE

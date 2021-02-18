@@ -1,0 +1,76 @@
+.\" @(#)xfade.man 1.3 89/08/02; Copyright (c) 1989 - Sun Microsystems
+.TH xfade 1 "25 July 1989"
+.SH NAME
+xfade \- xfade fade between two strings
+
+.SH SYNOPSIS
+.B xfade
+[
+.BI \-display " connection"
+]
+[
+.BI \-string " string1 string2"
+]
+[
+.BI \-sleep " sleeptime"
+]
+[
+.BI \-pause " pausetime"
+]
+[
+.BI \-fg " foreground1 foreground2"
+]
+[
+.BI \-bg " background"
+]
+[
+.BI \-p " font_pattern"
+]
+.SH DESCRIPTION
+.I xfade
+uses colormap double buffering to fade between two strings.  It requires
+a dynamic visual to run.  As the window is resized, its does its best
+to find a font in \fIfont_pattern\fR to best fit the window.
+.SH OPTIONS
+.TP 5
+.BI \-display " connection"
+Connect to X server display,
+.IR connection.
+.TP 5
+.BI \-string " string1 string2"
+Use
+.IR string1
+and
+.IR string2
+as the strings to fade between.
+.TP 5
+.BI \-sleep " sleeptime"
+Microseconds to sleep between changes in the colormap.  The default
+is 100000.  Two small a sleeptime can overwhelm the server.
+.TP 5
+.BI \-pause " pasuetime"
+Microseconds to pause at the end of a cycle.  The default
+is 400000.
+.TP 5
+.BI \-fg " foreground1 foreground2"
+The colors of the two strings.
+.TP 5
+.BI \-bg " background"
+The color of the window.
+.TP 5
+.BI \-pattern " font_pattern"
+Use
+.IR font_pattern
+as the font family.  The default is
+.IR *times-medium-r*.
+.SH SEE ALSO
+    X(1)
+.SH COPYRIGHT
+ Copyright (c) 1988 by Sun Microsystems, Inc.
+ David Lemke (lemke@wirehead.sun.com)
+
+ Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation. 

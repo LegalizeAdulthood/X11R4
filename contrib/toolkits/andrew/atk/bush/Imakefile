@@ -1,0 +1,23 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+DOBJS		=	bush.do \
+			bushv.do \
+			bushapp.do
+
+IHFILES		=	bush.ih bushv.ih bushapp.ih
+
+NormalObjectRule()
+NormalATKRule()
+DependTarget()
+
+DynamicObject(bush,,$(UTILLIB))
+InstallClassFiles($(DOBJS),$(IHFILES))
+InstallLink(runapp, ${DESTDIR}/bin/bush)
+
+NormalHelpRule()
+InstallDocs(bush.help bshproc.help, ${DESTDIR}/help)
+InstallHelpAlias(bshproc, bushproc bushprocs)
+
+

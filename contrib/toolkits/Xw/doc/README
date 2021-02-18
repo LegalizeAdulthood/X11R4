@@ -1,0 +1,22 @@
+-----------------------------------------------------------------------------
+
+	This directory contains files that make up the HP Widget manual
+	for X11.
+
+	The basic manual files are in this directory and the manpages
+	are included in the "manpages" subdirectory.  All of these files
+	are ready for printing using any line printer.
+
+	To print any file, use the command:
+
+		lp <filename>
+	
+-----------------------------------------------------------------------------
+
+
+[The PostScript versions of these have been tared and compressed as ps.tar.Z.
+ To extract, type:
+
+	zcat ps.tar.Z | tar xvf -
+
+ and then print the files in ps/* and ps/man3/* as normal.]

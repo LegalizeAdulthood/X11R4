@@ -1,0 +1,26 @@
+
+(Version Page\ Numbering 1)
+(Version Auto\ Numbering 1)
+(Page\ Numbering
+  (Starting 147)
+  (Begin Odd)
+  (Pages 17))
+(Auto\ Numbering
+  (Stream REFstream
+    (Levels 3)
+    (Level 0
+      (Symtype 2)
+      (Suffix \.)
+      (Show 0))
+    (Level 1
+      (Symtype 4)
+      (Prefix \ )
+      (Suffix \.)
+      (Show 0))
+    (Level 2
+      (Prefix \ )
+      (Suffix \.)
+      (Show 0))
+    (Deltas 1 0 0)
+    (Restart 1)
+    (FirstLevel 0)))

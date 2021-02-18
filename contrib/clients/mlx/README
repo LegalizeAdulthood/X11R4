@@ -1,0 +1,305 @@
+/*----------------------------------------------------------------------*/
+ *	This is a simple usage document to tell you how to use our	*
+ *	Multilingual X Window software package. Please refer to the	*	
+ *	original X documets for those utilities (e.g. xfd) which	* 
+ *	haven't been explained carefully here.				*
+ *									*
+ *	If you have any problems about the package, please don't	*	
+ *	hestitate to contact us.					*
+ *									*
+ *	Multilingual X Window Group, 					*
+ *	Institute of Systems Science					*
+ *	National University of Singapore				*
+ *	Singapore 0511							*
+ *									*
+ *	Bitnet Address: ISSMLX@NUSVM					*
+ *      Bugs Report to: HU Xian Xiang & ZENG Yu				*
+ *									*
+ *	NOVEMBER 1989							*
+/*----------------------------------------------------------------------*/
+
+I.  THE PACKAGE COMPONENTS
+
+This Multi-Lingual(ML) X Window package includes the following key parts:
+
+ML XTERM Window
+An Common Input Window
+ML Fonts
+A ML Calls Library
+ML Input Tables
+Utilities for Font Management
+
+For all the existing X applications and widgets, if they are required to 
+support ML characters, all of them should be modified.
+
+
+II.  MLXTERM
+
+MLXTERM is derived from XTERM of MIT X11R2. Mlxterm provides a ML input/
+output emulator terminal environment, and includes tty I/O with ML internal 
+code. 
+
+II.1 Since the original XTERM does not support varied-width font, when more 
+than one fonts are used in Mlxterm, one requirement exists: the width of 
+character in all non-ASCII fonts should double that of character in ASCII 
+fonts. Otherwise, a ugly-looking display may appear.
+
+II.2 Because the CTRL key + Right Mouse Button is not used in the original 
+XTERM, Mlxterm uses this key-combination to set the window to ML Receiving 
+Mode (or MLR mode). The functions of other keyboard and mouse events are 
+compatible with XTERM.
+
+II.3 When the Mlxterm window is in MLR mode, the mouse cursor is a box labelled `ISS'. If the mouse leaves the Mlxterm window, the flag 'ML' will be displayed 
+in reverse mode at the upper left corner of the window indicating that the 
+window is in MLR mode.
+
+II.4 If another window is selected as the Ml input window, namely the CTRL+RightButton event happens in that window, the MLR mode in the current window will be automatically cancelled. Meanwhile, the `ML' flag in the upper left corner disappears. This means that only one window can accept ML characters at any one time .
+
+II.6 When highlighting a ML character or string, the ML character or string 
+should be completely covered. Otherwise, the first character or last one
+may be lost.
+
+II.7 Since a ML internal code is an 8-bit code string, the transmission bit 
+mode of MLXTERM should be set to 8.
+
+
+III. INPUT
+
+In our system, the ML character input mechanism is a common input window which 
+can be shared by all other ML windows created by other servers in the network, 
+as well as by the local server.
+
+The Input module is written based on the HP Widgets. So make sure the Xhp widgetexists in your X System before you recompile this part.
+
+Cursor.h defines the mouse pointer's bitmap shape. This file can be replaced by any other .h files created by the bitmap command. Both Input and Mlxterm use 
+this pointer cursor.
+
+
+IV. ML FONTS
+
+IV.1 Bitmap Distribution Format (BDF) fonts in the X Window System
+
+Bitmap Distribution Format (BDF), defined by Adobe System, Inc., has been 
+accepted as a non-exclusive standard by the X Consortium of MIT for Release 3.0 of X Window System Version 11. However, the BDF fonts cannot be used directly byan X server. They must be compiled by the BDFTOSNF compiler on the server to SNFfonts which are usable by the sample server. This compiler and the SNF format 
+are not the part of the X Window System standards.
+
+IV.2 Naming Convention for BDF and SNF ML fonts in this environment
+
+The following are naming convention for the BDF and SNF font files respectively:
+
+[language][style][size].bdf
+[language][style][size].snf
+
+language:	"C"stand for Simplified Chinese.
+		"T" stand for Traditional Chinese(Taiwan).
+		"J" stand for Japanese.
+		"K" stand for Korean.
+
+size:  bits needed for describing a graphic character in the X and Y directions.
+
+style: Typeface name in Hanyu Pinyin.
+
+Examples: Csong16.bdf, Txian16.snf, Jsong24.bdf.
+
+IV.3 ML Fonts available in this environment
+
+We provide five Simplified Chinese, Traditional Chinese and Japanese BDF fonts with this package. They are:
+
+Csong16.bdf	Csong24.bdf 	Txian16.bdf
+Jming16.bdf	Jsong24.bdf
+
+When the package is being installed, the above fonts will be compiled 
+automatically to SNF format and installed to the standard font directory 
+(e.g. /lib/X11/fonts/misc) in the X environment. Therefore, besides MLXTERM, 
+other X applications can also access these fonts.
+
+If any user wishes to get more Oriental fonts other than ones mentioned above, 
+please contact us.
+
+
+V.  ML CALLS
+
+There are two types of ML applications in an X Window environment. One is the 
+ML Input/Output done by just calling getchar() and printf() functions when this application runs in the MLXTERM. An example of this type of application is the 
+file xtermtest.c (Sample). The other is the ML I/O done by calling MLlib when 
+the apploication runs in a non-MLXTERM window. An example is the file windowtest.c (Sample0).
+
+ML library includes some functions which support ML character I/O in a 
+application program. They are:
+
+XSetMLInput(display,window)
+Display	*display;
+Window	window;
+
+function: Set up the connection between a window and the ML Input Window. Beforeinputting ML characters to a window, you should call this function.
+
+XReadMLCode(display,window,event)
+Display	*display;
+Window	window;
+
+function: After setting up the connection between a window and the Input Window,you may use this call to get a ML character from the Input Window. A ML internalcode is a 3-byte string. The first byte is the language flag, and the last 2 
+bytes are the National Standard Interchange Code for that language. For Japanese, the standard is JIS C 6226. For both simplified and traditional Chinese, the 
+standard is GB2312.
+
+XLookforGC(display,window,string,direction)
+Display	*display;
+Window	window;
+char		*string;
+char		*direction;
+
+function: 'String' is a ML code string. After analyzing the codes, the call 
+returns a GC value and a writing direction flag for the correponding language 
+in the `direction' output parameter.
+
+Direction Value 			Meaning
+ L					from Left to right
+ R					from Right to left
+ U					from Up to down
+
+XDrawImageMLString(display,drawable,x,y,string,length)
+ or 		
+XDrawMLString     (display,drawable,x,y,string,length)
+Display	*display;
+Drawable	drawable;
+int		x,y;
+char		*string;
+int		length;
+
+function: Displays a ML code string at coordinates (x,y) inside the 'drawable'. 'Length' is the length of the given string. These two functions are similar to 
+the corresponding functions in original XLib but does not contain a GC parameter.
+
+A ML input is an XPropertyChange event.
+
+ML Input procedure in user's window:
+
+0. Set XSelectInput.
+
+1. Set a flag in the user's programme (a box, a special key, or a button), and 
+monitor the XPropertyChange event in the MainLoop part. 
+
+2. When ML characters are required, press the flag to call XSetMLInput() to 
+enter receiving ML character status.
+
+3. Call XGetMLCode() to return ML characters (3 bytes each character) to the 
+program, while move mouse to the input window and input ML character as required.
+
+4. If another window selects ML input, this user's window will returns NULL from XGetMLCode(). Otherwise, this window can get ML code forever.
+
+5. After getting a ML code, you can display it in your window by calling XDrawImageString().
+
+6.Make sure the XLibml.a joined the linking.
+
+More details can be found in the examples file: windowtest.c
+
+ML library is generated from "mlcalls.c" 
+   
+
+VI. ML FONT UTILITIES
+
+Two font utilities are provided with the package:
+
+BDF font editor: xfed
+	This utility provides the capability for editing Oriental BDF fonts. 
+
+SNF font browser: xfd
+	A utility for displaying the characters in an SNF font. It is not only 
+available for general fonts but also available for Ml fonts.
+
+
+VII.   CONFIGURATION  
+
+The configuration file `mlconfig' provides the basic multilingual configuration.The current configuration only supports simplified Chinese, traditional Chinese,and Japanese.  Other files include Input Methods Registration, Input Tables. Allthese files should be put under the same directory which must be as same as the user's environment variable $MLDIR. 
+
+We offer two `mlconfig' files. One supports 16x16 Chinese and Japanese fonts, 
+and the other supports both 16x16 and 24x24 fonts. 
+
+The 'Zhu Yin Fu Hao Keyboard Layout' is shown as APPENDEX A.
+
+
+VIII.  USAGE
+
+a. Environment
+
+No special requirement is needed for using ML X Windows. It works well in X11R2 or higher version. Make sure that you have set the environment variable $MLDIR 
+to the directory which includes a `mlconfig' file.
+
+b. System Making
+
+An Imakefile is included in the package. When the package has been loaded, A 
+Makefile file can be automatically generated using the "imake" command. Users 
+only need to issue a "make" command for generating all executable code; 
+meanwhile, the fonts available to the user is also being copied to the standard font directory.
+
+Users can also make individual executable programs (e.g. xfed) or mlfonts to 
+suit different requirements.
+
+c. Usage:
+
+1. Login from a user.
+2  Run Xinit to set up an X window environment.
+3. Run Mlterm in an xterm as a background process.
+4. Run Input in an xterm as a background process.
+5. Press CTRL + RightButton to set the Mlxterm window to the MLR mode, and the 
+   mouse cursor will change its shape.
+6. When a ML character is required, move the mouse to the input window, select 
+   a language by pressing the LeftButton, and then select an input method if it    can be supported.
+7. Input ML character according to the input method rule. If more than one ML 
+   character appear, choose those you want by pressing a function key from the     keyboard or point the mouse to the button above the character and press the 
+   the LeftButton.
+8. More than one Mlxterm windows can be set up, but only one Mlxterm window can
+   accept the ML characters at any one time.
+
+d. SAMPLE
+
+The SAMPLE file is an example which shows how an X application running in a ML 
+window processes ML characters. A user may follow these steps to write his 
+application. 
+
+This sample receives the key event of itself and display it in its window. When you want to input an ML code, press the Left Mouse Button inside 
+the window, and then move the mouse to the input window. The ML characters will be automatically passed to the sample window. Press the Right Mouse Button 
+inside the window to save the contents of the window to a .TEXT file. The next 
+time when the sample is run again, the contents of the .TEXT file will be 
+displayed in the window. Press the Middle Mouse Button inside the sample window to clear the contents of the window. 
+
+
+APPENDEX A
+
+KEYBOARD KEY	ZHUYIN FUHAO (Romanized)
+1			b
+2			p	
+3			m
+4			f
+5			d
+6			t
+7			n
+8			l
+9			g
+0			k
+-			h
+q			ji
+w			chi
+e			shi
+r			j
+t			ch
+y			sh
+u			r
+i			tz
+o			ts
+p			s
+a			i
+s			u
+d			iu
+f			a
+g			o
+h			e
+j			e'
+k			ai
+l			ei
+z			au
+x			ou
+c			an
+v			en
+b			ang
+n			eng
+m			el
+

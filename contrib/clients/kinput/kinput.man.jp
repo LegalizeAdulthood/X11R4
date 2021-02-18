@@ -1,0 +1,299 @@
+.\" $Id: kinput.man,v 1.7 89/10/27 21:06:00 ishisone Rel $
+.TH KINPUT 1 "27 October 1989" "X Version 11"
+.SH NAME
+kinput - kanji input front-end processor for X11
+.SH SYNOPSIS
+\fBkinput\fP [-options...]
+.SH DESCRIPTION
+.I kinput
+は、Xウィンドウ上で簡単に日本語の入力をするためのツールで、
+他のアプリケーションに対するフロントプロセッサとして動作します。
+.I kinput
+は、起動されると必要な初期化をした後、他のアプリケーションが
+日本語入力のリクエストをするのを待ちます。
+アプリケーションが入力をリクエストすると、\fIkinput\fP は変換ウィンドウを
+リクエストしたウィンドウ(リクエストウィンドウ)の下にポップアップします。
+この変換ウィンドウで \fIkinput\fP は変換を行ない、変換結果が確定すると
+それを変換をリクエストしたアプリケーションに送ります。
+.PP
+変換時には \fIkinput\fP はリクエストウィンドウの上に透明な InputOnly
+ウィンドウを作り、リクエストウィンドウのキーイベントを横取りします。
+したがって、一々ポインタを変換ウィンドウに持ってくる必要はありません。
+.PP
+変換ウィンドウは 3つのサブウィンドウからできています。
+一番大きいのが変換中の文字列を表示・編集する変換テキストウィンドウです。
+残りの2つのウィンドウは、同音語の候補を表示するための
+候補表示ウィンドウと、現在の入力モードを示すモードウィンドウです。
+.PP
+かな漢字変換には Wnn Version 4 を使用しています。
+ですから、実際のかな漢字変換は jserver によって行なわれます。
+かな漢字変換の環境設定の詳細については Wnn の
+ドキュメントを参照して下さい。
+.PP
+入力文字変換 (ローマ字かな変換など) の動作は \fIccdef\fP ファイルで
+定義することができます。
+.SH PROTOCOL
+.I kinput
+は、X11 に用意されているクライアント間通信機能(\fIselection, property,
+client-message\fP) を用いて
+変換をリクエストしたアプリケーションと通信します。
+その通信プロトコルは公開されています。詳しくはプロトコルのドキュメント
+(X11 Input Conversion) を御覧ください。
+このプロトコルを実装したアプリケーションであれば、どれでも
+.I kinput
+によって日本語の入力が可能です。
+.I kterm
+にはこのプロトコルが実装されているので
+.I kterm
+と
+.I kinput
+を組み合わせて日本語の表示と入力を行なうことができます。
+.SH OPTIONS
+.I kinput
+は、\fI-display\fPなどツールキットに共通なオプションの他に、次のような
+オプションを受け付けます。
+.TP 8
+\fB\-jserver\fP \fIjserver-host\fP
+使用する jserver をホスト名で指定します。
+.TP 8
+\fB\-ccdef\fP \fIccdef-file\fP
+入力文字変換定義ファイルを指定します。
+.TP 8
+\fB\-wnnenvname\fP \fIwnnenv-name\fP
+変換に使用する環境名を指定します。
+.TP 8
+\fB\-wnnenvrc\fP \fIwnnenvrc-file\fP
+変換環境初期化ファイルを指定します。
+.TP 8
+\fB\-nl\fP \fInumber-of-lines\fP
+変換ウィンドウの、テキスト入力部分の行数を指定します。
+.TP 8
+\fB\-font\fP \fIascii-font\fP
+使用する ASCIIフォント名を指定します。
+.TP 8
+\fB\-kanjifont\fP \fIkanji-font\fP
+使用する漢字フォント名を指定します。
+.SH RESOURCES
+主なリソースについて説明します。
+.TP 8
+.B font
+使用する ASCII フォント名を指定します。
+デフォルトは \fBfixed\fP です。
+.TP 8
+.B kanjiFont
+使用する漢字フォント名を指定します。
+デフォルトは \fBk14\fP です。
+.TP 8
+.B kanaFont
+使用する半角かなフォント名を指定します。
+デフォルトは設定されていません。したがってデフォルト状態では半角かなは
+表示されません。
+.TP 8
+.B nlines
+変換ウィンドウの、テキスト入力部分の行数を指定します。
+デフォルトは \fB2行\fPです。
+.TP 8
+.B jserver
+使用する jserver を指定します。
+デフォルトでは環境変数 \fB$JSERVER\fP が使われます。
+.TP 8
+.B ccdef
+入力文字変換定義ファイルを指定します。
+デフォルトでは、
+.br
+	1. 環境変数 \fB$CC_DEF\fP に指定されたファイル
+.br
+	2. \fB/usr/lib/X11/ccdef/ccdef.kinput\fP
+.br
+が、この順で使われます。
+.TP 8
+.B wnnEnvname
+かな漢字変換環境名を指定します。
+デフォルトではユーザのログイン名が使われます。
+.TP 8
+.B wnnEnvrc
+かな漢字変換環境初期化ファイルを指定します。
+デフォルトでは、
+.br
+	1. 環境変数 \fB$WNNENVRC\fP
+.br
+	2. \fB/usr/local/lib/wnn/wnnenvrc\fP
+.br
+が、この順で使われます。
+.TP 8
+.B wnnOverrideEnv
+指定された名前の環境がすでにサーバに存在した時に、初期化を行なうかどうか
+を指定します。\fBTrue\fP ならばすでに存在する / しないにかかわらず
+変換環境初期化ファイルにしたがって環境を初期化します。\fBFalse\fP だと
+すでにその環境が存在する時には初期化を行なわないので、起動が速くなります。
+デフォルトは \fIFalse\fP です。
+.SH "CONVERSION START"
+すでに述べたように
+.I kinput
+はクライアントから変換がリクエストされるとサービスを始めます。
+従って、変換を開始するための方法はクライアントに依存します。
+ですから、変換の開始方法については各クライアントのマニュアルをお読み下さい。
+.PP
+例えば kterm の場合、リソースファイルに
+.nf
+
+.ft CW
+	kterm*vt100*translations: #override \e
+		Shift<Key>space: begin-conversion(JAPANESE_CONVERSION)
+
+.ft
+.fi
+と書くことによってシフト-スペースで変換を開始させることができます。
+.SH "TEXT INPUT"
+変換ウィンドウがポップアップされると、入力を行なうことができます。
+テキストの入力方法は \fBccdef\fP リソースで指定される
+入力文字変換定義ファイルによって全く変わってきます。
+そこでデフォルトの変換定義ファイル (/usr/lib/X11/ccdef/ccdef.kinput) での
+入力方法について簡単に説明します。
+.PP
+初期入力モードはローマ字モードです。ローマ字で入力するとかなに変換されて
+表示されます。
+.PP
+タブキー (^I ではだめです) を押すと入力モードが
+.nf
+
+	ローマ字 \-> アスキー \-> 全角アスキー \-> ローマ字
+
+.fi
+と変化します。シフト-タブキーだと逆方向に変化します。現在のモードは
+右下のモード表示ウィンドウに表示されています。
+.PP
+入力された文字はアンダーラインつきで表示されますが、これは
+まだ変換されていないことを示します。
+変換するとアンダーラインがとれます。
+.PP
+現在注目しているところを示すためにテキストカーソルが表示されます。
+変換されていないところでは文字が反転して、文字の挿入位置を示します。
+変換された部分では文節が反転します。
+テキストカーソルのある文節をカレント文節と呼び、変換操作は主にこの
+カレント文節に対して行なわれます。
+.SH "CONVERSION FUNCTIONS AND KEY BINDINGS"
+.I kinput
+が変換に使用するファンクションとそのキーバインディングについて説明します。
+キーバインディングも \fBccdef\fP リソースで指定される
+入力文字変換定義ファイルで定義するため、
+デフォルトの変換定義ファイルのバインディングを簡単に説明します。
+括弧の中に書かれているのがデフォルトのバインディングです。
+.TP 8
+\fBconvert\fP (Kanji, ^J), \fBconvert-s\fP (^C)
+カレント文節から後ろを連文節変換します。
+convert はカレント文節として大文節、convert-s は小文節を使用します。
+文節がすでに変換されていた場合には、カレント文節の候補一覧を表示し、
+候補選択モードになります。
+.TP 8
+\fBunconvert\fP (^G)
+カレント文節を変換されていない状態に戻します。
+.TP 8
+\fBfix\fP (^L)
+文を確定し、変換結果をクライアントに送ります。
+.TP 8
+\fBcarriage-return\fP (^M)
+文を確定し、変換結果と改行コードをクライアントに送ります。
+候補選択モードや記号入力モードでは候補や記号を選択します。
+.TP 8
+\fBbackspace\fP (^H)
+テキストカーソルの前の文字を消します。変換されていれば、まず
+変換されていない状態に戻されます。
+.TP 8
+\fBdelete\fP (Delete)
+テキストカーソルのある文字を消します。変換されていれば、まず
+変換されていない状態に戻されます。
+.TP 8
+\fBclear\fP (^U)
+文全体を消去します。
+.TP 8
+\fBforward\fP (Right, ^F)
+テキストカーソルを右に移動させます。カーソルは変換された部分に対しては
+文節単位で、変換されていない部分では文字単位で移動します。
+カーソルのある位置は反転表示されます。
+候補選択モードでは次の候補にカーソルを移動させます。
+.TP 8
+\fBbackward\fP (Left, ^B)
+テキストカーソルを左に移動させます。
+候補選択モードでは前の候補にカーソルを移動させます。
+.TP 8
+\fBnext\fP (Down, ^N), \fBnext-s\fP (mod1-n)
+next はカレント大文節、next-s はカレント小文節を次候補で置き換えます。
+候補選択モードでは次のページに進みます。
+.TP 8
+\fBprevious\fP (Up, ^P), \fBprevious-s\fP (mod1-p)
+previous はカレント大文節、previous-s はカレント小文節を前候補で置き換えます。
+候補選択モードでは前のページに戻ります。
+.TP 8
+\fBmove-top\fP (^A)
+テキストカーソルを文の先頭に移動させます。
+候補選択モードではページの先頭にカーソルを移動させます。
+.TP 8
+\fBmove-bottom\fP (^E)
+テキストカーソルを文の最後に移動させます。
+候補選択モードではページの最後にカーソルを移動させます。
+.TP 8
+\fBexpand\fP (shift-Right), \fBexpand-s\fP
+expand はカレント大文節、expand-s はカレント小文節の長さを一文字伸ばし、
+再変換します。
+.TP 8
+\fBshrink\fP (shift-Left), \fBshrink-s\fP
+shrink はカレント大文節、shrink-s はカレント小文節の長さを一文字縮め、
+再変換します。
+.TP 8
+\fBto-katakana\fP (F1, mod1-1)
+カレント大文節をカタカナに直します。
+.TP 8
+\fBto-hiragana\fP (F2, mod1-2)
+カレント大文節をひらがなに直します。
+.TP 8
+\fBto-hankaku\fP (F3, mod1-3)
+カレント大文節を半角かなに直します。
+.TP 8
+\fBto-zenkaku\fP (F4, mod1-4)
+カレント大文節を全角かなに直します。
+.TP 8
+\fBsymbol-input\fP (shift-Escape)
+JIS コードに含まれている記号を入力します。
+候補表示ウィンドウに記号が表示され、候補選択モードと同じように
+カーソルを移動させ、carriage-return でその記号が入力されます。
+.TP 8
+\fBend-conversion\fP (control-Kanji, shift-space)
+変換を終了します。確定されていないテキストがあればクライアントに送られ、
+変換ウィンドウがポップダウンします。
+.SH EXAMPLE
+以下に、サンプル・リソースファイルを載せておきます。
+
+.nf
+.ft CW
+kinput*ccdef:	/usr/home/someone/.ccdef.kinput
+kinput*jserver:	jserverhost
+kinput*conv*width:	500
+.ft
+.fi
+
+.SH FILES
+.nf
+/usr/lib/X11/ccdef/	ccdef ファイルのデフォルト・ディレクトリ
+/usr/lib/X11/ccdef/ccdef.kinput	デフォルトの ccdef ファイル
+/usr/local/lib/wnn/wnnenvrc	デフォルトの変換環境初期化ファイル
+.fi
+.SH COPYRIGHT
+Copyright 1988, Software Research Associates, Inc.
+.PP
+.I kinput
+は京都大学数理解析研究所、立石電機株式会社、
+株式会社アステックによって開発された Wnn をもとにして開発されたものです。
+.nf
+Copyright 1987,1988,1989, Kyoto University Research Institute for Mathematical Sciences
+Copyright 1987,1988,1989, OMRON TATEISI ELECTRONICS CO.
+Copyright 1987,1988,1989, ASTEC, Inc.
+.fi
+.SH BUGS
+ccdef ファイルの書き方についてのドキュメントはありません。
+kinput のソースディレクトリの下の cconv/cconv.c のコメントに
+詳しく書かれていますので、そちらを御覧下さい。ただし日本語です。
+.SH "SEE ALSO"
+.I kinput
+と変換クライアントとの通信のプロトコルについてはプロトコルのドキュメント
+`X11 Input Conversion' を御覧下さい。

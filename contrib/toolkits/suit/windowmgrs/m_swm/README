@@ -1,0 +1,7 @@
+	Swm(SIGMA User Inteface Tools window manager) is a twm based window
+manager following the SUIT guideline.
+
+	This directory contains the modified source code.
+
+	Files with the suffix '.icons' are bitmap files for the sample start up
+file 'Sample.swmrc'.

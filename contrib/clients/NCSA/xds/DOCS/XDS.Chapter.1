@@ -1,0 +1,628 @@
+
+
+
+
+Chapter 1	Getting Started
+
+
+
+
+
+
+
+Chapter Overview
+
+Installing X DataSlice
+
+Specifying a Display Host
+
+Identifying the Current Display Host
+
+Invoking X DataSlice
+
+Loading a 3D Scientific Dataset
+
+Windows in NCSA X DataSlice
+
+Displaying Your Dataset
+
+Attributes Window
+
+Cartesian Dicer Display Window
+
+Working with Palettes
+
+Changing Palettes in One Raster Window
+
+Changing Palettes in Multiple Raster Windows
+
+Saving Generated Images
+
+Exiting the Application
+
+Chapter Overview
+
+
+
+This chapter explains how you should install and invoke NCSA X DataSlice.
+The chapter contains a tutorial that introduces you to the basic procedures
+involved in using the application, explains similarities among the
+program's windows, and familiarizes you with the program's user
+interface:
+
+
+
+%	installing and
+invoking the application
+
+%	loading a 3D
+scientific Dataset
+
+%	performing basic
+imaging operations
+
+%	loading a palette
+
+%	saving generated
+images
+
+%	exiting the
+application
+
+
+
+
+
+Installing NCSA X DataSlice
+
+
+
+Before using NCSA X DataSlice, you must install the program somewhere
+within your path on the client system (the machine on which you want to
+run the application) and specify your display host (the machine from which
+you wish to control and view the application). Next, define the path
+environment variable to include the appropriate path, as shown below:
+
+
+
+For example, if you were to install NCSA X DataSlice on the CRAY-2 using
+C shell, you would set the path by entering a command of the form:
+
+
+
+set path=($path /pathname)
+
+
+
+where /pathname is the path to NCSA X DataSlice.
+
+
+
+
+
+Specifying a Display Host
+
+If you are running the program off a remote client machine, e.g. Cray 2, you
+must first register the client machine on your X-Window host server by
+typing the following on your local host:
+
+
+
+xhost clientmachinename
+
+
+
+where clientmachinename is the name of the remote client.
+
+
+
+
+
+To specify your display host on your local client machine, enter a command
+of the following form:
+
+
+
+setenv DISPLAY hostname:monitornumber
+
+
+
+where hostname is the name assigned to the desired machine, and
+monitornumber is the number assigned to the monitor on which you wish to
+view the program.
+
+
+
+For example, to specify a machine named babbage as the display host and
+use the first of the monitors connected to babbage as the display monitor,
+you would enter:
+
+
+
+setenv DISPLAY babbage:0
+
+
+
+
+
+Identifying the Current Display Host
+
+To identify the current display host, enter:
+
+
+
+printenv $DISPLAY
+
+
+
+The return specifies the server that is currently set as your display host.
+For example, the return message
+
+
+
+babbage:0
+
+
+
+informs you that NCSA X DataSlice will be displayed on the machine dubbed
+babbage, using monitor 0Qthe first of the monitors connected to babbage.
+
+
+
+
+
+Invoking X DataSlice
+
+
+
+To invoke NCSA X DataSlice, enter:
+
+
+
+xds
+
+
+
+The control window appears as the first frame (see Figure 1.1). It contains
+the LogBook and several control buttons you will use to initiate the main
+operations performed by NCSA X DataSlice:  loading a 3D scientific
+dataset, loading an 8-bit raster image set, processing a scientific dataset,
+and quitting the application. Thus, you may want to keep it in direct view.
+You may move the window using mouse movements and operations that are
+dependent on the type of window manager that you are currently running.
+
+
+
+
+
+Figure 1.1	Control Window
+
+
+
+ 
+
+The LogBook records and displays every non-trivial action you make while
+running NCSA X DataSlice. It provides feedback such as instructions,
+explanations, or warnings regarding your actions, and functions as a
+notebook in which you may record your observations and comments for
+future reference.
+
+
+
+To enter text, position the pointer in the LogBook, click once, and begin to
+type. Note that once you enter text into the notebook, you are unable to
+delete it.
+
+
+
+The contents of the LogBook are preserved in the file xdsLog, which should
+be stored in the same directory as the application, even after you exit the
+program. Consequently, you can review a session with X DataSlice by
+reading the contents of the file xdsLog, and you can use vi or other text
+editors to alter the contents of the file.
+
+
+
+
+
+Loading a 3D Scientific Dataset
+
+
+
+To load a three-dimensional scientific dataset stored in an HDF file into
+NCSA X DataSlice:
+
+
+
+1.	Click the Load 3D
+SDS button in the control window. A file window appears, displaying the
+current directory (see Figure 1.2).
+
+
+
+Figure 1.2	Load SDS File
+Window
+
+ 
+
+
+
+
+
+The file window and its contents depend on the particular type of
+operation you are performing. In brief, if you want to save a file, then the
+Load buttons are not present, and vice versa. Only one file window may be
+opened at a time, so you must close the opened window by clicking Cancel
+if you decide not to use it. The file window automatically closes after
+each affirmed file operation.
+
+
+
+2.	Change the current
+directory, if necessary, by entering the path to a new directory in the text
+box labeled, Current Directory being displayed. Click Change to access the
+new directory and its file contents. If an error message appears in the
+LogBook, the current directory remains unchanged.
+
+
+
+3.	Choose the desired
+dataset to be viewed by scrolling up or down the file list window and
+clicking on its filename. The name appears in the Current Filename text
+box. The LogBook reports if the file is indeed a 3D SDS HDF file or a
+Raster8 HDF file. If the file is of HDF format, the message shows the
+number of scientific datasets contained in the file. For this tutorial,
+select cloud57x57x57.hdf, which contains three 3D scientific datasets
+that depict the X, Y, and Z wind velocities in a thunderstorm.
+
+
+
+4.	Specify which
+scientific dataset you wish to load into memory from the selected file by
+entering a number in the text box labeled SDS #. Notice that the text box
+SDS # reads 1 by default, indicating that the first SDS in the file will be
+loaded unless you specify otherwise. Be aware that if you enter a value
+above the designated number of datasets present, the file window closes
+and an error appears in the LogBook:  ***HDF ERROR:  Cannot load SDS 4.
+
+
+
+To load all the datasets, check the option, Load all SDSs.
+
+
+
+NOTE:  A 3D SDS usually requires a few megabytes of memory, so although
+it is possible to load up to ten SDSs together, it is not advisable to load
+more that three datasets into memory at any one time.
+
+
+
+5.	Click Cancel to
+leave the box without implementing your entries or LOAD SDS to continue
+with the imaging of your dataset(s). The file window disappears and an
+Attributes window appears (Figure 1.3).
+
+
+
+
+
+Windows in NCSA X DataSlice
+
+
+
+Most windows in this program, with the exception of the Control and file
+windows, have certain elements in common. When describing these
+similarities, this manual will use the Attributes window (Figure 1.3) as a
+representative for most other windows contained in the X DataSlice
+program.
+
+
+
+In this program you issue commands by clicking buttons in windows,
+turning toggle buttons on and off, selecting within or moving scrollbars,
+and entering values.
+
+
+
+Figure 1.3	Attributes Window
+
+ 
+
+
+
+All windows created by X DataSlice are movable under uwm or twm. Each
+contains a Close, Quit, or Cancel button at the top-left corner for exiting
+and disposing of the window, and features a title bar that identifies the
+window according to the following convention:
+
+
+
+filename,	#n
+:	function
+
+
+
+where filename is the name of the HDF file whose 3D scientific dataset is
+represented in the window, n indicates the position of the SDS or raster
+image in the file in relation to any other SDSs or raster images the file
+may contain, and function is the function of the window. For example in
+the Attributes window, the title bar reads, cloud 57x57x57.hdf, #1:
+Attributes, which identifies an Attributes window for the first scientific
+dataset in the HDF file, cloud57x57x57.
+
+
+
+All windows other than the control and file windows are spawned in a
+hierarchical format after the initial loading of a dataset. If you close a
+parent window, all its children are then automatically closed by NCSA X
+DataSlice, saving you the trouble of tracking which window belongs to
+which dataset. Closing a window at the bottom of the hierarchy closes
+only that particular window.
+
+
+
+NOTE:  Each time you close an Attributes window, you free up a lot of
+memory for additional imaging options.
+
+
+
+Most image windows in X DataSlice offer buttons for changing palettes and
+saving images named Palette and Save, respectively. Refer to the later
+sections of this chapter for more information on these options.
+
+
+
+To activate a window you are not presently in, or to bring a background
+screen to the foreground, position the arrow in the desired window and
+click the mouse once. Note that these actions are dependent on the window
+manager that you are currently running.
+
+
+
+
+
+Displaying Your Dataset
+
+
+
+The Attributes Window
+
+An attributes window (Figure 1.3) appears for each scientific dataset
+successfully loaded from a specified HDF file and contains information
+about that particular dataset including:  the dimensions of the dataset, the
+labels and units of measurement of the respective axes, and the maximum
+and minimum values of the dataset. If you have clicked the option, Load all
+SDSs, an Attributes window appears for each separate dataset.
+
+
+
+Note that when the minimum and maximum values are not specified in the
+file, NCSA X DataSlice calculates them automatically. The time required
+for calculation is contingent upon the size of the dataset, so several
+minutes may elapse before the values are calculated. To avoid this delay,
+you should pre-calculate and store the values for your dataset, using the
+program "move" in the samples directory. Instructions as to how move can
+
+be used are given in the source file move.c itself.
+
+
+
+Besides giving information about the current SDS dataset being examined,
+the Attributes window also contains a dicer scale and various display
+modes from which you may choose to view your dataset.
+
+
+
+Dicer Scale
+
+The value you enter in the dicer scale text window determines the size of
+the generated dicer image and its surrounding window. 1 is the smallest
+number you may enter, and although there is no maximum limit for the
+scale, 10 is the recommended upper limit. The generation time for the
+image is contingent upon the dataset and the dicer scale; the larger the
+dataset and scale, the longer the program takes to generate the image.
+Note that you should enter the dicer scale value before choosing the
+Cartesian Dicer display mode. If you fail to enter a number, the scale
+defaults to 3.
+
+
+
+Display Modes
+
+Display modes available to the user are:  Planes Along Axes, Arbitrary
+Planes, and Cartesian Dicer. Planes Along Axes, which portrays 2D slices
+of data along the three major cartesian coordinate axes, also contains an
+option to view 3D images generated from a V-Buffer Algorithm. The
+Arbitrary Planes mode presents arbitrarily selected 2D oblique slices,
+while the Cartesian Dicer displays a 2D volume slice of data as shown in
+its relative location in the 3D matrix. For this tutorial, the Cartesian
+Dicer mode is examined.
+
+
+
+To generate a small image with the Cartesian Dicer:
+
+
+
+1.	Enter a 2 in the
+text box labeled, Dicer Scale.
+
+
+
+2.	Click the diamond
+toggle next to Cartesian Dicer. Notice that all of these diamond-shaped
+buttons toggle on and off.
+
+
+
+The Cartesian Dicer Display window opens.
+
+
+
+
+
+Cartesian Dicer Display window
+
+The Cartesian Dicer window appears as shown in Figure 1.4. The Cartesian
+Dicer permits you to view 2D slices of data in their relative positions in
+the 3D matrix and to manipulate their axes for the particular view you
+desire. You may also designate the thickness of your slice. To choose a
+thickness of one, simply click once on a particular point of the designated
+slider. To choose a thickness greater than one, click on the Frame Control
+Slider, and drag to the desired position. For instance, if your plane begins
+at point 25 on the Y axis and ends at point 56, your dataslice will have a
+thickness of 31. In both instances, the text boxes labeled Start and End
+reflect the range of your dataslice. For a more detailed discussion on the
+Cartesian Dicer mode, refer to Chapter 5, "Cartesian Dicer."
+
+
+
+For this demonstration, you will manipulate the y slider to identify a data
+slice with a thickness greater than one.
+
+
+
+1.	Click and drag to a
+desired point within the Frame Control Slider text box for the Y axis.
+Notice the text boxes labeled Start and End reflect the beginning and
+ending point of your plane, illustrating the thickness of your slice.
+
+
+
+2.	Click the View
+button. You must always click View after each slice selection. X DataSlice
+now generates a new slice visible in the Cartesian Dicer window as shown
+in Figure 1.5.
+
+
+
+
+
+Figure 1.4	Empty
+
+	Cartesian
+
+	Dicer
+
+	Window
+
+ 
+
+
+
+
+
+Figure 1.5	Cartesian
+
+	Dicer
+
+	(View
+
+	Slice)
+
+ 
+
+Working with Palettes
+
+
+
+You can change the palette in your Dicer window, or in any window which
+contains a generated dataset image (raster image) by clicking the palette
+button. A file window labeled, Load a color map, opens.
+
+
+
+
+
+Changing Palettes in One Raster Window
+
+To change the palette in a single raster window:
+
+
+
+1.	Change the current
+directory, if necessary, by entering the path to a new directory in the text
+box labeled Current Directory being displayed.
+
+
+
+2.	Click Change to
+access the new directory and its file contents. If an error message appears
+in the LogBook, the current directory remains unchanged.
+
+
+
+3.	Choose the desired
+palette to be activated by scrolling up or down the file list window and
+clicking its filename, in this case, carl.pal. The name appears in the
+Current Filename text box (see Figure 1.6).
+
+
+
+Figure 1.6	Load a color
+
+	map
+
+	File Window
+
+ 
+
+
+
+
+
+4.	Click LOAD
+PALETTE. When you move the mouse into the raster image window, the
+former palette changes to the palette you specified.
+
+
+
+Note that many image windows contain shading bars with which you may
+manipulate your palette to create a better view of your image.
+
+
+
+
+
+Changing Palettes in Multiple Windows
+
+When you change the palette file for a single raster window, X DataSlice
+provides you the option of changing the palette in every other previously
+opened raster windows. To do so, activate the Global Change toggle (in the
+Load a color map file window) by clicking in its box. The designated
+palette file will now be loaded into all opened raster windows. For more
+information on raw palette files see Chapter 2, "File Formats in X
+DataSlice."
+
+
+
+
+
+Saving Generated Images
+
+
+
+To save the Cartesian Dicer image along with its palette, click the Save
+button located in the lower right-hand corner of the Cartesian Dicer
+window. A file window, here labeled, Save a Dicer Image, appears. In the
+text box, Current Filename, enter the HDF filename that will store your
+Dicer image, and click the Save button to save the image; or, if you want to
+append an image to the end of an existing file, simply select a filename
+from the file list (see Figure 1.7), and click Save.
+
+
+
+Exiting the Application
+
+
+
+To exit NCSA X DataSlice, click Quit in the control window.
+
+
+
+Figure 1.7	Save a Dicer 
+Image File Window
+
+ 
+
+

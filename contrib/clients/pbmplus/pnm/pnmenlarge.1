@@ -1,0 +1,24 @@
+.TH pnmenlarge 1 "26 February 1989"
+.SH NAME
+pnmenlarge - read a portable anymap and enlarge it N times
+.SH SYNOPSIS
+pnmenlarge N [pnmfile]
+.SH DESCRIPTION
+Reads a portable anymap as input.
+Replicates its pixels N times, and produces a portable anymap as output.
+.PP
+pnmenlarge can only enlarge by integer factors.
+The slower but more general ppmscale can enlarge or reduce by arbitrary
+factors, and pbmreduce can reduce by integer factors, but only for
+bitmaps.
+.SH "SEE ALSO"
+pbmreduce(1), ppmscale(1), pnm(5)
+.SH AUTHOR
+Copyright (C) 1989 by Jef Poskanzer.
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided
+that the above copyright notice appear in all copies and that both that
+copyright notice and this permission notice appear in supporting
+documentation.  This software is provided "as is" without express or
+implied warranty.

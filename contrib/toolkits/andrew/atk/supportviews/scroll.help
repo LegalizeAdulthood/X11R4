@@ -1,0 +1,135 @@
+\begindata{text,269136484}
+\textdsversion{12}
+\template{help}
+\chapter{The Scroll Bar}
+
+
+\section{What is the Scroll Bar?}
+
+
+\leftindent{The scroll bar is the column on the left of your Typescript, EZ, 
+Help and other windows.  It represents the entire document that is in the 
+window.  When a document is too long to show its entire contents in a window, 
+you can use the scroll bar to bring different parts of the document into view.}
+
+
+\section{Moving Around in a Window}
+
+
+\leftindent{\bold{Moving up.}  Move the mouse cursor into the scrollbar and 
+align it with the heading "Moving Around in a Window", directly above.  Click 
+the \italic{left} mouse button.
+
+
+Notice that the line of text directly opposite the cursor ("Moving Around in a 
+Window") moves up to become the top line in the window.
+
+
+\bold{Moving down.}  Move the mouse cursor in the scrollbar so that it aligns 
+with this subheading, "Moving down."  Click the \italic{right} mouse button.
+
+
+Notice that the line of text that was at the top of the window ("Moving Around 
+in a Window") moves down so that it is directly opposite the position of the 
+cursor.
+
+
+}\section{Moving More than a Screenful}\leftindent{
+
+
+If you can only move the line next to the cursor to the top of the window, and 
+move the line at the top of the window to the cursor, it is impossible to move 
+more than one screenful at a time using the single click mechanism described 
+above.  Fortunately, there is another way to move around in a document.
+
+
+If you place the mouse cursor in the white bar inside of the scrollbar, press 
+and hold the\italic{ left} mouse button, the cursor becomes a ball when you 
+move it.  You can move the ball up and down, dragging the white box with it. 
+ When the white box is positioned in the portion of the document you want to 
+see (relative to the whole length of the scrollbar), release the mouse button 
+and the document "jumps" to the position.  The piece of the document 
+corresponding to the new position of the white bar appears in the window. 
+
+}
+\section{Moving to the Beginning or End of a Document}
+
+
+\leftindent{The striped areas at either end of the scroll bar represent the 
+beginning and end of the document in the window.  You can use the striped 
+areas to go immediately to either end of the document.
+
+
+\bold{To see the beginning} of the document, place the mouse cursor in the top 
+striped area and click either mouse button.
+
+
+\bold{To see the end} of the document, place the mouse cursor in the bottom 
+striped area and click either mouse button.
+
+}
+\section{The Scrollbar and the Text Caret}
+
+
+\leftindent{Move the mouse cursor to the end of this sentence and click the 
+\italic{left} mouse button.  This moves the text caret to the end of the 
+sentence.
+
+
+Look for the small black rectangle inside the scroll bar, somewhere in the 
+white box.  This small black rectangle is the text caret marker which 
+indicates the position of the text caret in the document.  The text caret 
+remains in one place in the document until you move it to another location (by 
+putting the mouse cursor where you would like the text caret to be, and 
+clicking the left mouse button).   This means that the text caret is not 
+always visible on the screen, but you can always see where it is by using the 
+scrollbar.}
+
+
+\section{The Scrollbar and Selected Regions}
+
+
+\leftindent{Move the mouse cursor to the beginning of this paragraph and click 
+the \italic{left} mouse button.  This moves the text caret to the beginning of 
+the paragraph.  Now move the mouse cursor to the end of this paragraph and 
+click the \italic{right} mouse button.  This selects the paragraph.  (If you 
+want to learn more about selecting text, see the  \italic{selecting } help 
+file.)
+
+
+Look for the text caret marker in the scrollbar.  It is no longer there! 
+ Instead, it has becomes a hollow rectangle.  The hollow rectangle in the 
+scrollbar represents a selected region within in the document.  Like the text 
+caret, a selected region may not be visible in the window, but you can always 
+tell where it is in the document by looking at the scrollbar.}
+
+
+\section{Horizontal Scrollbars}
+
+
+\leftindent{Some programs, like  \italic{raster}  and  \italic{table}  have 
+horizontal scrollbars along the top or bottom of the window.  They work in the 
+same way as the vertical scrollbars, except that they are horizontal: 
+
+
+Left click means move the point above the cursor to the left edge of the 
+window.
+
+
+Right click means move what is at the left edge of the window to above the 
+cursor.}
+
+
+\section{Related Tools}
+
+
+Select (highlight) one of the italicized words below and choose "Show Help on 
+Selected Word" from the pop-up menus to see the Help document for
+
+
+\leftindent{\italic{andrew}              (the tour)}
+
+\leftindent{\italic{selecting
+
+menus\
+}}\enddata{text,269136484}

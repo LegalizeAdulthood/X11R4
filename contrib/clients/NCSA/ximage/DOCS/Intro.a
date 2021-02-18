@@ -1,0 +1,162 @@
+i	NCSA X Image
+
+Introduction	i
+
+National Center for Supercomputing Applications
+
+November 1989
+
+                                                                
+
+November l989
+
+
+
+
+
+Introduction
+
+
+
+
+
+Overview
+This introduction provides an overview of the capabilities and 
+purpose of NCSA X Image and directs you to sources that offer 
+detailed information regarding the X Window System. The 
+organization and purpose of this manual are described and 
+notational conventions explained.
+
+
+About NCSA X Image
+
+NCSA X Image is a color imaging and data analysis tool based on 
+the X Window System. The current release of NCSA X Image 
+features:
+
+¥	display of actual data values in spreadsheet form
+¥	cartesian and polar color raster display of data images
+¥	black-and-white contour and shaded data plots
+¥	color palette creation and manipulation capabilities
+¥	color histogram display for frequency distribution studies
+¥	animation of multiple color raster images
+¥	synchronized selection between corresponding image and data 
+windows
+
+
+System Requirements
+
+In order to run NCSA X Image, you must have (1) a system and 
+server that support color X Windows, and (2) X version 11 and 
+server release 2 or later installed on your system.
+
+NCSA X Image is written for use with window managers that 
+conform to the specifications of the Inter-Client Communications 
+Conventions Manual (ICCCM).
+
+Check that you have the most current version of NCSA X Image. 
+Failure to use the appropriate version of NCSA X Image for your 
+window manager will most noticeably result in improper setting 
+of the color maps.
+
+
+Use of This Manual
+
+This section describes the organization of this manual, and the 
+conventions and nomenclature used in developing it. Although the 
+instructions in this manual should enable you to successfully use 
+NCSA X Image, the manual assumes that you are familiar with the 
+X Window System, your local machine, and your window 
+manager.
+
+Before using NCSA X Image, you should be familiar with mouse 
+devices and button-driven commands. For more information 
+regarding the X Window System, refer to the guides listed at the 
+end of this chapter under "Suggested Reading."
+
+
+Manual Contents
+This manual is organized into the following chapters:
+
+Chapter 1, "Getting Started," introduces NCSA X Image and 
+provides a brief tutorial to get you started using the program. The 
+tutorial describes the basics involved in using NCSA X Image:  
+installing and invoking the program, loading a dataset, 
+generating images, manipulating the palette, saving a palette, and 
+exiting the program.
+
+Chapter 2, "File Formats in NCSA X Image," describes the basic 
+file formats used in NCSA X Image:  raw raster, raw palette/non-
+HDF, and HDF files. Information is included for obtaining HDF 
+software from NCSA and the program's process of reading and 
+displaying data files is outlined.
+
+Chapter 3, "Display Options," explains the procedures for 
+generating and manipulating images, generating contour and 
+data plots, and creating histograms.
+
+Chapter 4, "Palette Manipulations," describes palettes as they are 
+used in NCSA X Image and explains how you may customize 
+palettes for your particular image data.
+
+Chapter 5, "Animating a Series of Raster Images"gives the 
+procedures for animating multiple images.
+
+
+Form of Presentation
+The material in this manual is presented in text, screen displays, 
+or entry format notation.
+
+
+Text
+In explaining various features and commands, this manual often 
+presents a word within a paragraph in italics to indicate that the 
+word is defined within the paragraph.
+
+Portions of this manual refer to other sections or chapters of the 
+manual where related topics are discussed. These cross references 
+usually indicate the title of sections or chapters enclosed in 
+quotation marks, such as, See Chapter 1, "Getting Started."
+
+
+Screen Displays
+Screen displays in this manual are presented in courier type.
+
+Entry Format Notation
+Throughout this manual, several explanations instruct you to 
+make entries by typing on the keyboard. These entry instructions 
+are printed in courier bold type and appear within a screen 
+display, paragraph, or separate line.
+
+Figure I.1 shows you how to read and enter a command line.
+
+Figure I.1	Reading and 
+Entering a 
+Command Line
+                                       
+
+
+
+Suggested Reading
+
+This document is not a manual on the X Window System. If you 
+need detailed information regarding X Windows, refer to the 
+following works:
+
+¥	The Definitive Guides to the X Window System, published and 
+copyrighted by O'Reilly & Associates, Inc., 1988. This book is a 
+#3 user guide to X Windows.
+
+¥	X Window System, by Robert W. Scheifler, James Gettys, and 
+Ron Newman, published and copyrighted by the Massachusetts 
+Institute of Technology and Digital Equipment Corporation, 
+1988.
+
+¥	Introduction to the Window X System, by Oliver Jones, 
+published and copyrighted by Prentice Hall, 1988. This book is a 
+good introduction to  programming XLIB.
+
+¥	X Window Systems Programing and Applications with Xt, by 
+Douglas A. Young, published and copyrighted by Prentice Hall, 
+l989. This book is a good introduction to programming with 
+Intrinsic toolkit.

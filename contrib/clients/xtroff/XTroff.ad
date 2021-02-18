@@ -1,0 +1,142 @@
+/*
+ * Default resources for xtroff -- the ditroff previewer. Modify this file
+ * in preference to trying to change the program source code
+ */
+/* $Header$ */
+
+/* *************************** Program resources ***************************/
+
+/* To have scrollbars or not */
+XTroff.scrollbars:			on
+
+/*
+ * The printer command to use for PrintPage and PrintDocument. It may
+ * have one %s in it which will be replaced by the printer name.
+ */
+XTroff.lprcommand:			lpr -n -P%s
+
+/* The printer name to be substituted in the lprcommand above */
+XTroff.printer:				PostScript
+
+/* The ditroff font family name to the X font pattern mappings */
+XTroff.fontMap: \
+R	-*-times-medium-r-normal--*-*-75-75-*-*-iso8859-1\n\
+I	-*-times-medium-i-normal--*-*-75-75-*-*-iso8859-1\n\
+B	-*-times-bold-r-normal--*-*-75-75-*-*-iso8859-1\n\
+BI	-*-times-bold-i-normal--*-*-75-75-*-*-iso8859-1\n\
+TR	-*-times-medium-r-normal--*-*-75-75-*-*-iso8859-1\n\
+TI	-*-times-medium-i-normal--*-*-75-75-*-*-iso8859-1\n\
+TB	-*-times-bold-r-normal--*-*-75-75-*-*-iso8859-1\n\
+TD	-*-times-bold-i-normal--*-*-75-75-*-*-iso8859-1\n\
+C	-*-courier-medium-r-normal--*-*-75-75-*-*-iso8859-1\n\
+CO	-*-courier-medium-o-normal--*-*-75-75-*-*-iso8859-1\n\
+CB	-*-courier-bold-r-normal--*-*-75-75-*-*-iso8859-1\n\
+CD	-*-courier-bold-o-normal--*-*-75-75-*-*-iso8859-1\n\
+H	-*-helvetica-medium-r-normal--*-*-75-75-*-*-iso8859-1\n\
+HO	-*-helvetica-medium-o-normal--*-*-75-75-*-*-iso8859-1\n\
+HB	-*-helvetica-bold-r-normal--*-*-75-75-*-*-iso8859-1\n\
+HD	-*-helvetica-bold-o-normal--*-*-75-75-*-*-iso8859-1\n\
+nc	-*-new century schoolbook-medium-r-normal--*-*-75-75-*-*-iso8859-1\n\
+nC	-*-new century schoolbook-medium-i-normal--*-*-75-75-*-*-iso8859-1\n\
+Nc	-*-new century schoolbook-bold-r-normal--*-*-75-75-*-*-iso8859-1\n\
+NC	-*-new century schoolbook-bold-i-normal--*-*-75-75-*-*-iso8859-1\n\
+A	-*-charter-medium-r-normal--*-*-75-75-*-*-iso8859-1\n\
+AI	-*-charter-medium-i-normal--*-*-75-75-*-*-iso8859-1\n\
+AB	-*-charter-bold-r-normal--*-*-75-75-*-*-iso8859-1\n\
+AD	-*-charter-bold-i-normal--*-*-75-75-*-*-iso8859-1\n\
+S	-*-symbol-medium-r-normal--*-*-75-75-*-*-adobe-fontspecific\n\
+SS	-*-symbol-medium-r-normal--*-*-75-75-*-*-adobe-fontspecific
+
+/***************************** Widget resources ****************************/
+
+/* 
+ * Normally the window in which xtroff draws the troff output is called
+ * 'canvas'. If the -full option is specified, then it is called 'full'
+ * instead, so one can specify different sizes for the two options. If
+ * one wants to specify the same thing for both -full and normal, use
+ * the class name "Window" instead.
+ */
+XTroff.form.canvas.width:		950
+XTroff.form.canvas.height:		830
+XTroff.form.full.width:			647
+XTroff.form.full.height:		850
+
+/* If we don't specify "fixed", it chooses some HUGE default font */
+XTroff.form.Window.popupShell*Font:	fixed
+
+/*
+ * This positioning information should probably be hardcoded into xtroff
+ * -- if a users messes it up, things will look weird
+ */
+XTroff.form.Window.top:			ChainTop
+XTroff.form.Window.bottom:		ChainBottom
+XTroff.form.Window.right:		ChainRight
+XTroff.form.Window.left:		ChainLeft
+XTroff.form.minibuf.bottom:		ChainBottom
+XTroff.form.minibuf.top:		ChainBottom
+XTroff.form.minibuf.right:		ChainRight
+XTroff.form.minibuf.left:		ChainLeft
+XTroff.form.vscroll.bottom:		ChainBottom
+XTroff.form.vscroll.top:		ChainTop
+XTroff.form.vscroll.right:		ChainRight
+XTroff.form.vscroll.left:		ChainRight
+XTroff.form.hscroll.bottom:		ChainBottom
+XTroff.form.hscroll.top:		ChainBottom
+XTroff.form.hscroll.right:		ChainRight
+XTroff.form.hscroll.left:		ChainLeft
+
+/* No spacing between the widgets on the Form */
+XTroff.form.defaultDistance:		0
+
+/* 
+ *  These are default bindings for the actions in the canvas window. All
+ *  actions except MenuPopup and MenuPopdown are defined in the action
+ *  table in xtroff, and have corresp callback routines.
+ */
+XTroff.form.Window.translations: \
+	<Btn3Down>:	SetMenuPos() MenuPopup(popupShell)\n\
+	<Btn3Up>:	MenuPopdown(popupShell)\n\
+	<Btn2Down>:	start-pan()\n\
+	<Btn2Up>:	end-pan()\n\
+	<LeaveWindow>:	end-pan()\n\
+	<Btn2Motion>:	page-pan()\n\
+     	Ctrl<Key>S:	search-forward() \n\
+     	Ctrl<Key>\\\\:	search-forward() \n\
+     	Ctrl<Key>R:	search-backward() \n\
+	<Key>0x30:	number()\n\
+	<Key>0x31:	number()\n\
+	<Key>0x32:	number()\n\
+	<Key>0x33:	number()\n\
+	<Key>0x34:	number()\n\
+	<Key>0x35:	number()\n\
+	<Key>0x36:	number()\n\
+	<Key>0x37:	number()\n\
+	<Key>0x38:	number()\n\
+	<Key>0x39:	number()\n\
+	<Key>0xff1b:	escape()\n\
+	Shift<Key>P:	print-page()\n\
+	<Key>P:		back-page()\n\
+	<Key>B:		back-page()\n\
+	<Key>-:		back-page()\n\
+	<Key>0xff7f:	back-page()\n\
+	<Key>0xff08:	back-page()\n\
+	<Key>0xffff:	back-page()\n\
+	Ctrl<Key>H:	back-page()\n\
+	<Key>0xff51:	back-page()\n\
+	<Key>N:		forward-page()\n\
+	<Key>F:		forward-page()\n\
+	<Key>+:		forward-page()\n\
+	<Key>0xff0d:	forward-page()\n\
+	Ctrl<Key>M:	forward-page()\n\
+	<Key>0xff0a:	forward-page()\n\
+	Ctrl<Key>J:	forward-page()\n\
+	<Key>0xff53:	forward-page()\n\
+	Shift<Btn1Down>:prev-section()\n\
+	<Key>0xff52:	prev-section()\n\
+	<Btn1Down>:	next-section()\n\
+	<Key>0x20:	next-section()\n\
+	<Key>0xff54:	next-section()\n\
+	<Key>G:		go-to-page()\n\
+	<Key>R:		rerasterize()\n\
+     	<Key>/:		search-forward() \n\
+	<Key>Q:		quit()

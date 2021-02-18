@@ -1,0 +1,151 @@
+#
+# XXXX-XXX (C) COPYRIGHT IBM CORPORATION 1988
+# LICENSED MATERIALS - PROPERTY OF IBM
+# REFER TO COPYRIGHT INSTRUCTIONS FORM NUMBER G120-2083
+#
+# Makefile for the XGKS vector font data base.
+#
+# $Header: Makefile,v 3.16 88/08/26 05:57:02 amy Exp $
+#
+# $Log:	Makefile,v $
+# Revision 3.16  88/08/26  05:57:02  amy
+# Fixed typo in Log label
+# 
+#
+SHELL=/bin/sh
+
+ILIBDIR = $(INSTALLHOME)/lib
+IHIDIR = $(INSTALLHOME)/include
+FONTDBDIR = $(ILIBDIR)/fontdb
+
+ALLIVARS = INSTALLHOME=$(INSTALLHOME) ILIBDIR=$(ILIBDIR) IHDIR=$(IHDIR) \
+	FONTDBDIR=$(FONTDBDIR)
+
+FONTS= r.gksfont R.gksfont b.gksfont B.gksfont i.gksfont I.gksfont sc.gksfont SC.gksfont G.gksfont
+
+H=../../include
+# The following line added for AIX port
+INCLUDES = -I/usr/include/bsd -I$(H)
+
+# use up to 8 cpus on the Encore Multimax	AUG
+#PARALLEL=8
+
+# add -fswitch to CFLAGS on a Sun
+#CFLAGS= -O -I$(H) -DFONTDBDIR=\"$(FONTDBDIR)\"
+# The above line commented out and the following line added for AIX prot
+CFLAGS = -O $(INCLUDES) -DFONTDBDIR=\"$(FONTDBDIR)\" -DBSD_INCLUDES -DBSD_REMAP_SIGNAL_TO_SIGVEC -Nd4000 -Nn2500
+
+SRCS= mkfont.c
+
+all : mkfont $(FONTS)
+
+install: all idir fonts
+
+idir:
+	@-mkdir $(FONTDBDIR) 
+	@-chmod 775 $(FONTDBDIR)
+
+clean:
+	-rm -f *.o core a.out *.gksfont mkfont
+	
+mkfont: mkfont.o
+	$(CC) $(CFLAGS) $@.o -o $@ -lm
+
+fonts: one two three four five six seven eight nine
+
+#1 : r.gksfont
+#	install -c -m 644 $? $(FONTDBDIR)
+#	install -c $? $(FONTDBDIR)
+#	chmod 644 $(FONTDBDIR)/$@
+#	-rm -f $(FONTDBDIR)/$@
+#	ln -s $? $(FONTDBDIR)/$@
+# The above lines commented out and the following lines added for AIX port
+one : r.gksfont
+	-install -c  "$(FONTDBDIR)"  "$?"
+	-chmod 644 $(FONTDBDIR)/$?
+	-rm -f $(FONTDBDIR)/1
+	-ln -s $? $(FONTDBDIR)/1
+
+r.gksfont : r.src mkfont
+	mkfont r.src $@
+
+two : R.gksfont
+	-install -c "$(FONTDBDIR)" "$?"
+	-rm -f $(FONTDBDIR)/2
+	-ln -s $? $(FONTDBDIR)/2
+
+R.gksfont : R.src mkfont
+	mkfont R.src $@
+
+three : b.gksfont
+	-install -c  "$(FONTDBDIR)" "$?"
+	-rm -f $(FONTDBDIR)/3
+	-ln -s $? $(FONTDBDIR)/3
+
+b.gksfont : b.src mkfont
+	mkfont b.src $@
+
+four : B.gksfont
+	-install -c "$(FONTDBDIR)" "$?"
+	-rm -f $(FONTDBDIR)/4
+	-ln -s $? $(FONTDBDIR)/4
+
+B.gksfont : B.src mkfont
+	mkfont B.src $@
+
+five : i.gksfont
+	-install -c "$(FONTDBDIR)" "$?"
+	-rm -f $(FONTDBDIR)/5
+	-ln -s $? $(FONTDBDIR)/5
+
+i.gksfont : i.src mkfont
+	mkfont i.src $@
+
+six : I.gksfont
+	-install -c "$(FONTDBDIR)" "$?"
+	-rm -f $(FONTDBDIR)/6
+	-ln -s $? $(FONTDBDIR)/6
+
+I.gksfont : I.src mkfont
+	mkfont I.src $@
+
+seven : sc.gksfont
+	-install -c "$(FONTDBDIR)" "$?"
+	-rm -f $(FONTDBDIR)/7
+	-ln -s $? $(FONTDBDIR)/7
+
+sc.gksfont : sc.src mkfont
+	mkfont sc.src $@
+
+eight : SC.gksfont
+	-install -c "$(FONTDBDIR)" "$?"
+	-rm -f $(FONTDBDIR)/8
+	-ln -s $? $(FONTDBDIR)/8
+
+SC.gksfont : SC.src mkfont
+	mkfont SC.src $@
+
+nine : G.gksfont
+	-install -c "$(FONTDBDIR)" "$?"
+	-rm -f $(FONTDBDIR)/9
+	-ln -s $? $(FONTDBDIR)/9
+
+G.gksfont : G.src mkfont
+	mkfont G.src $@
+
+
+depend:
+	(../../utils/makedepend/makedepend -I$(INCLUDES) *.c);
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+mkfont.o: /usr/include/stdio.h /usr/include/fcntl.h /usr/include/sys/file.h
+mkfont.o: /usr/include/sys/types.h /usr/include/sys/param.h
+mkfont.o: /usr/include/sys/sysmacros.h /usr/include/sys/seg.h
+mkfont.o: /usr/include/sys/pri.h /usr/include/sys/proc.h
+mkfont.o: /usr/include/sys/low.h ../../include/font.h
+rshowfont.o: /usr/include/stdio.h /usr/include/sys/file.h
+rshowfont.o: /usr/include/sys/types.h /usr/include/sys/param.h
+rshowfont.o: /usr/include/sys/sysmacros.h /usr/include/sys/seg.h
+rshowfont.o: /usr/include/sys/pri.h /usr/include/sys/proc.h
+rshowfont.o: /usr/include/sys/low.h ../../include/font.h

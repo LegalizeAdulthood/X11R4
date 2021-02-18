@@ -1,0 +1,20 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+#if SY_AIX221
+install::
+	${RM} ${DESTDIR}/X11fonts/fonts.alias
+	${RM} ${DESTDIR}/X11fonts/fonts.dir
+	${XMKFONTDIR} $(DESTDIR)/X11fonts
+	./aixrt.csh ${DESTDIR}/X11fonts .rtx
+#else /* SY_AIX221 */
+#ifndef RELEASE2_ENV
+install::
+	${RM} ${DESTDIR}/X11fonts/fonts.alias
+	${XMKFONTDIR} $(DESTDIR)/X11fonts
+	./mkfntdir.csh ${DESTDIR}/X11fonts .snf
+#endif
+#endif /* SY_AIX221 */
+
+

@@ -1,0 +1,374 @@
+#!	/bin/csh  -f
+
+echo " "
+echo "Serpent Alpha Release 0.7 Version "
+set PROGRAM       	= $0 ; set PROGRAM = $PROGRAM:t 
+
+if ("$1" == "") then
+
+goofup:
+  echo "Usage:"
+  echo " $PROGRAM [-cdlg] [-L user_defined_lib] [-I user_defined_header] dialogue_name"
+  echo " "
+  echo "      where     c => compile a dialogue,"
+  echo "	        d => compile a dialogue w/debug output,"
+  echo "                l => link a dialogue and"
+  echo "	        g => execute a dialogue"
+  echo "	        L => link a user defined library "
+  echo "	        I => link a user defined header file "
+  echo " "
+  echo "                c and d CANNOT be specified together."
+  echo "	        default is g"
+  exit (1)
+endif
+
+# NOT YET IMPLEMENTED
+#  echo "   [-p file_to_play_back process_to_replace mailbox]        "
+#  echo "   r => turn on recording facility with output to record_filename"
+#  echo "                     (only 1 r-option allowed)"
+
+# some SET-UP stuff
+set COMPILE_OPT   	= "c"
+set DEBUG_COMPILE_OPT   = "d"
+set LINK_OPT      	= "l"
+set EXEC_OPT      	= "g"
+ 
+# new (and future) options
+set USER_LIB_OPT      	= "L"
+set RECORD_OPT      	= "r"
+set PLAYBACK_OPT    	= "p"
+set USER_INC_OPT    	= "I"
+set TAP_PARM_OPT	= "a"
+
+unset do_compile
+unset do_link
+unset do_debug_compile
+unset do_compile_args
+unset do_link_args
+unset do_inc_args
+unset do_exec_args
+
+unset do_tap_parm_args
+unset do_record_args
+unset do_playback_args
+unset do_user_libs
+unset do_user_incs
+unset more_options
+unset goofy
+
+set do_go
+set comp_args = ""
+set link_args = ""
+set exec_args = ""
+
+set tap_parm_args	= "run-a"
+set record_args		= "run-r"
+set playback_args	= "run-p"
+set user_lib_args	= ""
+set user_inc_args	= ""
+
+set USER_LIBS		= ""
+set USER_INCS		= ""
+set DUMMY_STRING	=  "This is a recording from PID = $$."
+
+set suffix_test		= ""
+set head_test		= ""
+set tail_test		= ""
+set link_file		= ""
+set comp_dialogue_name	= ""
+
+# replace embedded spaces with control-a characters.  this 
+# allows single parameters to be made from quoted strings
+# with embedded blanks.  each option which receives a string
+# with embedded blanks will have to replace the control-a chars
+# with blanks in switch case for that option
+
+set argies = ()
+
+foreach a ( $argv:q ) 
+  set argies = ( $argies:q `echo $a | sed 's/ //g'` )
+end
+
+# Set up the options in the positional parameters
+set temp =  ( `getit cldgL:I:r:2p:2a:2  $argies:q` )
+
+set argies = ( $temp:q )
+
+if ($status) then
+  echo "Problem in GETOPT. Exiting."
+  exit(11)
+endif
+
+##########
+# GET READY
+# Process any of the new available options
+if ("${argies[1]}" != "") then
+  set more_options
+  while ( $?more_options ) 
+    switch ("${argies[1]}")
+      case -"$COMPILE_OPT":
+	set do_compile
+	unset do_go
+ 	shift argies
+	breaksw
+
+      case -"$LINK_OPT":
+	set do_link
+	unset do_go
+ 	shift argies
+	breaksw
+
+      case -"$DEBUG_COMPILE_OPT":
+
+	set do_debug_compile
+	unset do_go
+	shift argies
+	breaksw
+
+      case -"$EXEC_OPT":
+	set do_go
+	shift argies
+	breaksw
+
+      case -"$RECORD_OPT":
+	if ( $?do_record_args ) then
+	  echo 'Too many  "-r"  options used.'
+	  echo "EXITING."
+	  unset more_options
+	  set goofy
+	  continue
+	endif
+	set do_record_args
+	shift argies
+
+# RECORD has 2 options. Add it onto other args if present
+	set record_args = ($record_args ${argies[1]} ${argies[2]})
+	shift argies; shift argies; 
+	breaksw
+
+      case -"$PLAYBACK_OPT":
+	if ( $?do_playback_args ) then
+	  echo 'Too many  "-p"  options used.'
+	  echo "EXITING."
+	  set goofy
+	  continue
+	endif
+        set do_playback_args
+        shift argies
+
+# playback has 3 options
+	set playback_args = ($playback_args ${argies[1]} ${argies[2]})
+        shift argies ;  shift argies;
+	breaksw
+
+# TAP_PARM_OPT might not handle arguments with imbedded quotes or spaces
+
+      case -"$TAP_PARM_OPT":
+	set do_tap_parms
+	shift argies
+
+# ARGUMENT has 2 options. Add it onto other args if present
+	set tap_parm_args = ($tap_parm_args ${argies[1]} ${argies[2]})
+	shift argies; shift argies; 
+
+# replace embedded ^a's with blanks
+#   		set temp = ()
+#		foreach a ( $tap_parm_args:q ) 
+#		  set temp = ( $temp:q `echo $a | sed 's// /g'` )
+#		end
+#		set tap_parm_args = ( $temp )
+	breaksw
+
+      case -"$USER_LIB_OPT":
+	set do_user_libs
+	shift argies
+
+# Add it onto other args if present
+	set user_lib_args = ($user_lib_args ${argies[1]})
+	shift argies
+	breaksw
+
+      case -"$USER_INC_OPT":
+	set do_user_incs
+	shift argies
+
+# Add it onto other args if present
+	set user_inc_args = ($user_inc_args -I${argies[1]})
+	setenv SERPENT_DATA_PATH "$SERPENT_DATA_PATH ${argies[1]}"
+	shift argies
+	breaksw
+
+      case --:
+# the "end options" option
+	shift argies
+	unset more_options
+	break
+	breaksw
+
+      default:
+# Unknown options
+	unset more_options
+	set goofy
+	breaksw
+    endsw
+  end
+endif
+
+# check to see if we bombed anywhere above.
+if ($?goofy) then
+  goto goofup
+endif
+
+# The only option left is the DIALOGUE NAME.
+
+if (${#argies} != 0) then
+  if (${argies[1]} != "") then
+
+# remove any suffix and leave just the tail for the dialogue name
+    set dialogue_name = ${argies[1]}
+    set dialogue_name = $dialogue_name:r
+    set dialogue_name = $dialogue_name:t
+ 
+# check to see if full pathname was entered; if so, link into current
+# directory for "slang" run
+    set head_test = ${argies[1]}
+    set head_test = $head_test:h
+    set tail_test = ${argies[1]}
+    set tail_test = $tail_test:t
+    set suffix_test = ${argies[1]}
+    set suffix_test = $suffix_test:e
+
+# if the head and tail aren't equal, then an abs/relative path used
+    if ($head_test != $tail_test) then
+      set link_file = (${argies[1]})
+
+# if no suffix used, then add the ".sl" extension
+      if ($suffix_test == "") then
+	set link_file = ($link_file.sl)
+      endif
+
+# there's a pathname pre-pended. link it to current directory
+      ln -s  $link_file
+    endif
+
+
+# set the source file for the following slang compile
+    set comp_dialogue_name = ${argies[1]}
+    set comp_dialogue_name = $comp_dialogue_name:r
+    set comp_dialogue_name = $comp_dialogue_name:t
+    set comp_dialogue_name = ($comp_dialogue_name.sl)
+
+    shift argies
+  else
+    echo "No DIALOGUE name present, or not enough PARAMETERS for flags."
+    echo "EXITING."
+    set goofy
+  endif
+else
+  echo "No DIALOGUE name present, or not enough PARAMETERS for flags."
+  echo "EXITING."
+  set goofy
+endif
+
+# Do some error checking (not too much!)
+
+# can't RECORD if no GO
+if ($?do_record_args &&  (! $?do_go)) then
+  echo "Can't RECORD if no execute (g) command."
+  set goofy
+endif
+
+# can't LINK USER LIBS if no LINK requested	
+if ($?do_user_libs &&  (! $?do_link)) then
+  echo "Can't LINK USER LIBS if no link (-l) option."
+  set goofy
+endif
+
+# can't SPECIFY USER INCS if no COMPILE requested	
+if ($?do_user_incs &&  (! $?do_compile)) then
+  echo "Can't specify USER HEADER FILES if no compile (-c or -d) option."
+  set goofy
+endif
+
+# can't have DEBUG and COMPILE together
+if ($?do_compile && $?do_debug_compile) then
+  echo "d and c options cannot be secified together."
+  set goofy
+endif
+
+# if any options left, we're lost. just exit and get help.
+if (${#argies} != 0) then
+  echo "SERPENT is lost. Double check options entered."
+  set goofy
+endif
+
+# check to see if we bombed somewhere
+if ($?goofy) then
+  goto goofup
+endif
+
+# Check option settings and execute them
+
+# compile
+if ($?do_compile) then
+  if (-e .${dialogue_name}e.d) then
+    rm -f .$dialogue_name*
+  endif
+  slang $comp_dialogue_name
+  if ($status) then
+    echo "compile of $dialogue_name failed."
+    exit (1)
+  endif
+  chmod a+rx .$dialogue_name*
+endif
+
+# debug compile
+if ($?do_debug_compile) then
+  if (-e .${dialogue_name}e.d) then
+    rm -f .$dialogue_name*
+  endif
+  slang $comp_dialogue_name -c
+  if ($status) then
+    echo "compile of $dialogue_name failed."
+    exit (1)
+  endif
+  chmod 755 .$dialogue_name*
+endif
+
+# link
+if ($?do_link) then
+  make -f $SERPENT_BASE_PATH/bin/dial_make BASE_PATH=$SERPENT_BASE_PATH \
+	DIALOGUE=$dialogue_name USER_LIBS="$user_lib_args"
+  if ($status) then
+    echo "link of $dialogue_name failed."
+    exit (1)
+  endif
+endif
+
+# GO
+if ($?do_go) then
+
+# WARNING: Call to s22_init CANNOT happen in a sub-process!
+  s22_init $dialogue_name
+  if ($status != 0) then
+    echo "unable to initialize Serpent environment."
+    exit (1)
+  endif
+
+# Environment file name is built using following template:
+#   /tmp/ + <user-name> + <my-process-id>
+  set env_file_name = /tmp/$USER.$$
+  onintr cleanup
+  source $env_file_name
+  runit $dialogue_name $tap_parm_args $playback_args
+cleanup:
+  echo "cleaning up"
+  onintr
+  s22_clean $dialogue_name
+  rm $env_file_name
+  if ($link_file != "") then
+    rm $comp_dialogue_name
+  endif
+endif
+
+exit (0)

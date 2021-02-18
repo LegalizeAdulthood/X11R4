@@ -1,0 +1,38 @@
+.TH XLOGOUT 1 "29 November 1989" "X Version 11"
+.SH NAME
+xlogout - simple logout button 
+.SH SYNOPSIS
+.B xlogout
+[-\fItoolkitoption\fP ...] [-label string]
+.SH DESCRIPTION
+The
+.I xlogout
+program displays a small button that simply waits until being pressed before
+exiting.  This can be useful when run as the initial client (usually with the
+\fI-iconic\fP option so that it doesn't take up any screen space) from \fIxdm\fP
+or \fIxinit\fP (if a real session manager isn't available).  By default, 
+pressing the pointer button will cause the program to exit.
+.SH DEFAULTS
+This program uses the 
+.I Command
+width in the Athena widget set and the X Toolkit Intrinsics.
+.SH ENVIRONMENT
+.PP
+.TP 8
+.B DISPLAY
+to get the default host and display number.
+.TP 8
+.B XENVIRONMENT
+to get the name of a resource file that overrides the global resources
+stored in the RESOURCE_MANAGER property.
+.SH "SEE ALSO"
+X(1), twm(1), xrdb(1), Athena Widget Set documentation
+.SH BUGS
+This is a hack that should be replaced with a real session manager.
+.SH COPYRIGHT
+Copyright 1988, Massachusetts Institute of Technology.
+.br
+See \fIX(1)\fP for a full statement of rights and permissions.
+.SH AUTHOR
+Jim Fulton, MIT X Consortium
+

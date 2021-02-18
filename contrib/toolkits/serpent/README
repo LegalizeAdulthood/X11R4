@@ -1,0 +1,3 @@
+See notes/README and notes/* for details on how to build and run Serpent.  You
+*must* read the directions before trying to build since serpent requires
+certain environment variables and a different top-level build command.

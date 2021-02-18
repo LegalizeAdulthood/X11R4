@@ -1,0 +1,16 @@
+This is version 1.1 of xdir, an X-based directory browser.  It was written by
+
+	Win Treese
+	Cambridge Research Lab/MIT Project Athena
+	Digital Equipment Corporation
+	treese@crl.DEC.COM or treese@athena.MIT.EDU
+
+Xdir is copyright 1988 by Digital Equipment Corporation and the Massachusetts
+Institute of Technology.
+
+Acknowledgements:
+
+Thanks to Chris Peterson of Project Athena and Ralph Swick of DEC/Project
+Athena for putting up with incessant questions on how to get the X toolkit
+and the Athena widget set to do the right things.
+

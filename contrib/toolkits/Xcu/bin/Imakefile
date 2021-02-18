@@ -1,0 +1,10 @@
+#ifdef RtArchitecture
+             CC = pcc
+#endif
+       INCLUDES = 
+           SRCS = incl_trunc.c
+LOCAL_LIBRARIES =
+
+SingleProgramTarget(incl_trunc,incl_trunc.o,$(LOCAL_LIBRARIES),)
+
+DependTarget()

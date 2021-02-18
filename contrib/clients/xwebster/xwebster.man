@@ -1,0 +1,130 @@
+.TH XWEBSTER 1 "March 6, 1989" "X Version 11"
+.SH NAME
+xwebster \- X interface to look up words in the dictionary
+.SH SYNOPSIS
+.B xwebster
+[\fBX Toolkit option\fP]
+.SH DESCRIPTION
+.PP
+\fIXwebster\fP is used to look up words in the online copy of Webster's 7th
+dictionary.  It puts up an application window that contains subwindows to
+interact with the user and display the results. The top half has a browser
+window in which alternative words will be shown, below that is a row of
+windows consisting of an interaction window where the user may enter words
+to be looked up, and buttons which the user may click on to select a
+program function. The lower window is used to display the definitions that
+are found.
+.PP
+Just type the word you want defined in the interaction window and hit
+Return to see the definition (or click on the \fB[Define]\fP button).  If
+the word is found, \fIxwebster\fP will then provide the complete dictionary
+entry for the word including definitions, pronunciation, and derivation.
+If the specified word was not found, \fIxwebster\fP will try to find close
+matches, as if you spelled the word wrong.  The possibilities are displayed
+in buttons.  To select one of them, you can just click on it.
+.PP
+Additionally, \fIxwebster\fP can match words using wildcards.
+The character
+`%' in a word means match exactly one character,
+so ``w%n'' matches
+``win'',
+``won'',
+``wan'',
+etc.
+The character `*' matches zero or more characters,
+so ``a*d''matches
+``ad'',
+``and'',
+``abound'',
+``absentminded'',
+and so on.
+Any number of wildcards can be used,
+and in any arrangement.
+.PP
+Typing \fB'?'\fP or mousing \fB[Endings]\fP following part of a word will
+cause \fIxwebster\fP to list all words beginning with the partial word in
+the word browser panel. The program will beep and give an error message if
+nothing matches.
+.PP
+Typing \fB<esc>\fP or mousing \fB[Complete]\fP causes the program to
+attempt to complete the word.  If the word can be completed, the new word
+is placed in the TextEdit widget; otherwise, the program beeps and displays
+a message indicating that the word is ambiguous.
+.SH CUSTOMIZING
+All the resources for \fIxwebster\fP are specified in the application
+default file Xwebster.ad, which MUST be installed in
+APPDEFAULTSDIR/Xwebster.  Fully qualified resource names are used in this
+app-defaults file so as to document the widget hierarchy in the
+application. Documentation on customizing \fIxwebster\fP also appears in
+this defaults file.  (APPDEFAULTSDIR is set in the imake defaults, it is
+usually /usr/lib/X11/app-defaults/)
+.PP
+Parameters for connecting to a webster server are contained in the
+resources \fB``hostAddrList''\fP, \fB``hostPort''\fP, and
+\fB``hostServiceName''\fP. See the aforementioned Xwebster.ad file for
+details and documentation.
+.PP
+\FIXwebster\FP allows dictionary definitions to be viewed in either a
+scrolled StaticText widget (for those who like scrollbars), or in a
+TextEdit widget (for those who like Emacs, and need better control of
+cut/paste operations). The resource that controls this is
+\fB``useEditorAsDisplay''\fP
+.SH HISTORY
+This program was inspired by the webster(1) tty-based client to a webster
+server written by Dave Curry <davy@riacs.edu>, although most of the code
+was written from scratch because I didn't find the webster(1) source code
+until after the application was prototyped. The original webster
+client/server was written in MIDAS and ran under Tops-20, it was probably
+done by someone at SRI-NIC.
+.PP
+\fIXwebster\fP was originally written and released by Niels Mayer
+<mayer@hplabs.hp.com> on the X11r3 contrib tape. Mark Moraes
+<moraes@csri.toronto.edu> took that version, updated it to work with the r3
+HP Xwidgets and r3 Toolkit Intrinsics, and fixed a bunch of stupid bugs
+that were making \fIxwebster\fP dump core an a SUN. He also showed me how
+to let \fIxwebster\fP disconnect gracefully after the webster dictionary
+server times out.  Finally, he wrote up a manual page and put together an
+Imake file. I am very grateful for Mark Moraes' contributions.
+.PP
+If you have contributions to make to \fIxwebster\fP, please send them to
+mayer@hplabs.hp.com.
+.SH SEE ALSO
+look(1), spell(1), webster(1), websterd(8)
+.SH FILES
+/usr/lib/X11/app-defaults/Xwebster
+$HOME/.Xdefaults
+.SH AUTHORS
+Niels Mayer (mayer@hplabs.hp.com or hplabs!mayer)
+.PP
+Mark Moraes (moraes@csri.toronto.edu)
+.SH BUGS
+The first word takes a longer time to define, because there is a
+non-trivial setup time involved on initially starting the server.
+Likewise, if the server times out (you'll note error messages to this
+effect), the next word will take a longer time to define since
+\fIxwebster\fP must reconnect to a server.
+.PP
+The translation between all the neat special characters in the dictionary
+such as upside-down e's, cedillas, accent marks, etc. and a simple ASCII
+terminal is marginal at best.  Most of the characters are fairly well
+faked, but a few of them are impossible.  In particular, the schwa
+(upside-down e) is represented by an asterisk.
+.PP
+There are fixed internal limits on the number of words that can be
+displayed in the browser (16384), and the number of characters of text in
+the lower window (16384). The defaults should be adequate given the number
+of words and the description sizes of the standard webster dictionary
+database. If you end up trying to get the dictionary to return all the
+words available by abusing the wildcarding feature, then expect \fIxwebster\fP
+to crash.
+.PP
+
+There is no documentation on the available X defaults except in the file
+/usr/lib/X11/app-defaults/Xwebster. Like most Toolkit programs, this is
+just too configurable to document. The app default file does however indicate
+the widget hierarchy of the application, the widget class of each widget in
+the application, and the values of resources that have been hardwired inside
+the source to \fIxwebster\fP. Use the documentation available for the HP Xwidgets
+to look up what resources are defined by each widget class. See
+\fI``Programming With the HP X Widgets and the Xt Intrinsics''\fP
+(HP Part Number 5959-6155) for details.

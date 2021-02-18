@@ -1,0 +1,198 @@
+
+
+
+     XWCREATETILE(3X)                                 XWCREATETILE(3X)
+
+
+
+
+     NAME
+          XwCreateTile - create a tile suitable for area filling or
+          patterned text.
+
+     SYNOPSIS
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+
+          Pixmap XwCreateTile (screen, foreground, background,
+          tileType)
+          Screen * screen;
+          Pixel foreground;
+          Pixel background;
+          int tileType;
+
+
+     ARGUMENTS
+          screen
+               This parameter contains the screen for which the tile
+               is to be created.
+
+          foreground
+               This is the foreground color to use for creating the
+               tile.
+
+          background
+               This is the background color to use for creating the
+               tile.
+
+          tileType
+               This is an integer value representing a particular
+               pattern to use when creating the tile.
+
+     DESCRIPTION
+          XwCreateTile is a function (not a widget) that creates and
+          returns a pixmap of screen depth, using the foreground and
+          background colors specified.  The tileType parameter is used
+          to select the particular tile to create.  Duplicate requests
+          for the same tile, screen, foreground and background are
+          cached to reduce overhead.
+
+          There are nine available tile types.  They are defined by a
+          set of #define statements in the file Xw.h and are described
+          in the following table.
+
+
+     Define              Description
+     ________________________________________________________________
+     XwFOREGROUND        A tile of solid foreground
+     XwBACKGROUND        A tile of solid background
+     Xw25_FOREGROUND     A tile of 25% foreground, 75% background
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWCREATETILE(3X)                                 XWCREATETILE(3X)
+
+
+
+
+     Xw50_FOREGROUND     A tile of 50% foreground, 50% background
+     Xw75_FOREGROUND     A tile of 75% foreground, 25% background
+     XwHORIZONTAL_TILE   A tile of horizontal lines of the two colors
+     XwVERTICAL_TILE     A tile of vertical lines of the two colors
+     XwSLANT_RIGHT       A tile of slanting lines of the two colors
+     XwSLANT_LEFT        A tile of slanting lines of the two colors
+
+
+     To use a tile created by this function, the returned tile should
+     be placed into the tile field of a graphics context, and the
+     fill_style should be set to FillTiled.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWCREATETILE(3X)                                 XWCREATETILE(3X)
+
+
+
+
+     RESOURCES
+          XwCreateTile gives the application or widget writer an easy
+          mechanism to specify the tile type to use.  The tile type
+          can be specified within the .Xdefaults file or an argument
+          list.  A resource converter is present to convert .Xdefault
+          strings into the matching defined value for each of the
+          tiles.  The strings to be contained within the .Xdefaults
+          file are as follows.
+
+
+                    Xdefault String   Define
+                    ___________________________________
+                    foreground        XwFOREGROUND
+                    background        XwBACKGROUND
+                    25_foreground     Xw25_FOREGROUND
+                    50_foreground     Xw50_FOREGROUND
+                    75_foreground     Xw75_FOREGROUND
+                    horizontal_tile   XwHORIZONTAL_TILE
+                    vertical_tile     XwVERTICAL_TILE
+                    slant_right       XwSLANT_RIGHT
+                    slant_left        XwSLANT_LEFT
+
+
+     For widget writers who wish to incorporate settable tiles within
+     their resource set, the representation member of the resource
+     definition should be set to the define XtRTileType.
+
+     RETURN VALUES
+          XwCREATETILE returns a pixmap if successful.  If an invalid
+          tile type or screen is specified, 0 is returned.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+

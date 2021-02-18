@@ -1,0 +1,118 @@
+
+
+
+	Table of Contents
+
+
+
+
+Introduction
+Overview  v
+What Is HDF  vi
+Chapter 1	The Basic Structure of HDF Files
+Chapter Overview  1.1
+File Header  1.1
+Data Object  1.1
+Physical Organization of HDF Files  1.4
+Chapter 2	The NCSA HDF General Purpose Interface
+Chapter Overview  2.1
+Introduction  2.1
+Opening and Closing Files  2.1
+Finding Tags, Refs, and Element Lengths  2.1
+Reading and Writing Entire Data Elements  2.2
+Reading and Writing Part of a Data Element  2.2
+Manipulating Data Descriptors  2.2
+
+Chapter 3	Sets and Groups
+Chapter Overview  3.1
+Sets  3.1
+Groups  3.2
+Raster Image Sets  3.4
+Scientific Data Sets  3.6
+Chapter 4	HDF Conventions
+Chapter Overview  4.1
+Byte Order  4.1
+Naming and Assigning Tags 4.1 
+Using Reference Numbers to Organize Data 
+Objects  4.2
+Multiple References and File Compaction  4.3
+Chapter 5	Other Formats
+Chapter Overview  5.1
+File Formats  5.1
+Appendix A	NCSA HDF Tags
+Appendix B	Header Files
+Glossary
+
+Figures and Tables
+Figure 1	Raster Image Sets in an HDF File  
+	vi
+Figure 1.1	Three Data Objects  1.1
+Figure 1.2	A Data Descriptor  1.2
+Figure 1.3	Model of a Data Descriptor Block  1.3
+Figure 1.4	Example Data Descriptor Block  1.4
+Figure 1.5	Physical Representation of Data 
+	Objects  1.5
+Figure 3.1	Physical Organization of Example 
+	RIG Groupings  3.3
+Figure B.1	FORTRAN Header File:  dfF.h  
+	B.2ÐB3
+Figure B.2	C Header File:  df.h  B.4ÐB.8
+
+Table 1.1	Parts of a Data Descriptor  1.2
+Table 1.2	Summary of the Relationships 
+	among Parts of an HDF File  1.4
+Table 1.3	Sample Data Objects in an HDF File  
+	1.5
+Table 3.1	Tags for Raster-8 Sets  3.4
+Table 3.2	Tags for Raster Image Sets  3.5
+Table 3.3	Additional Tags for Raster Image 
+	Sets  3.6
+Table 3.4	Required Tags for Scientific Data 
+	Sets  3.6
+Table 3.5	Optional Tags for Scientific Data 
+	Sets  3.7
+Table 4.1	Sample Grouping of Data Objects in 
+	an HDF File  4.1
+Table A.1	Number Type Fields  A.3
+Table A.2	Number Type Values  A.4
+Table A.3	Possible Machine Types  A.5
+Table A.4	Possible Tag Types in an RIG  A.7
+Table A.5	Dimension Record Fields  A.8
+Table A.6	Color Correction Field Types  A.9
+Table A.7	Color Format String Values  A.9
+Table A.8	Possible Tag Types in an SDG  A.12
+Table A.9	Scientific Data Dimension Record 
+	Fields  A.12
+
+i	NCSA 
+HDF 
+Speci
+ficati
+ons
+
+Table 
+of 
+Conte
+nts	i
+
+Nation
+al 
+Cente
+r 
+for 
+Superc
+omputi
+ng 
+Appl
+icatio
+ns
+
+March 
+1989
+
+                                                                
+
+
+
+
+

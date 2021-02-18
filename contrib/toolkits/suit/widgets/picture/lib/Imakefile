@@ -1,0 +1,45 @@
+#include "./../PWImake.defs"
+
+       INCLUDES = -I$(PWINCLUDESRC) -I$(TOP)
+       DEFINES = $(PWDEFINES)
+       LINTLIBS = 
+
+SRCS=	StPicAtr.c StPicDraw.c StPicIo.c StPicMisc.c StPicMod.c \
+	StPicObj.c StPicPf.c StPicPopup.c StPicSel.c StPicUi.c \
+	StPicUndo.c StPicUtl.c StPicture.c
+
+OBJS=	StPicAtr.o StPicDraw.o StPicIo.o StPicMisc.o StPicMod.o \
+	StPicObj.o StPicPf.o StPicPopup.o StPicSel.o StPicUi.o \
+	StPicUndo.o StPicUtl.o StPicture.o
+
+#if DebugLibPicture && ProfileLibPicture
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugLibPicture
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileLibPicture
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+NormalLibraryTarget(Picture,$(OBJS))
+LintLibraryTarget(Picture,$(SRCS))
+InstallLibrary(Picture,$(USRLIBDIR))
+InstallLintLibrary(Picture,$(LINTLIBDIR))
+
+#if ProfileLibPicture
+ProfiledLibraryTarget(Picture,$(OBJS))
+InstallLibrary(Picture_p,$(USRLIBDIR))
+#endif
+
+#if DebugLibPicture
+DebuggedLibraryTarget(Picture,$(OBJS))
+#endif
+
+DependTarget()
+
+NormalLintTarget($(SRCS))

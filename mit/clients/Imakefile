@@ -1,0 +1,20 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#ifndef CrayArchitecture
+#ifdef ATTArchitecture
+OTHERSUBDIRS = xhost
+#else
+OTHERSUBDIRS = xdm xhost
+#endif
+#endif
+
+SUBDIRS = \
+	appres bitmap listres oclock twm xauth xbiff xcalc xclipboard xclock \
+	xditview xdpyinfo xedit xfd xinit xkill xload xlogo \
+	xlsatoms xlsclients xlsfonts xlswins xmag xman xmh \
+	xmodmap xpr xprop xrdb xrefresh xfontsel $(OTHERSUBDIRS) \
+ 	xset xsetroot xstdcmap xterm xwd xwininfo xwud
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

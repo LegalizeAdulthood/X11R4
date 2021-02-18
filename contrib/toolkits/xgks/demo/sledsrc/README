@@ -1,0 +1,45 @@
+#
+#		Copyright IBM Corporation 1989
+#
+#                      All Rights Reserved
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted,
+# provided that the above copyright notice appear in all copies and that
+# both that copyright notice and this permission notice appear in
+# supporting documentation, and that the name of IBM not be
+# used in advertising or publicity pertaining to distribution of the
+# software without specific, written prior permission.
+#
+# IBM DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+# ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+# IBM BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+# ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+# WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+# ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+# SOFTWARE.
+#
+Before you can run sled, you need the following files:
+	sled
+	palette_clrs
+	text_bndl_tbl
+	char_hts_n_wds
+	menu
+
+
+To run SLED just type: sled <workstation name>
+
+/* sled e 9460 */
+
+/* (make sure to start up the workstation server r9460_ddgks first.
+If you plan to create a pic file, you must also start up
+dipic_ddgks FROM THE DIRECTORY YOU WILL BE RUNNING SLED FROM) */
+
+For more information on sled, see the users' manual
+or my thesis in MS/manual and MS/thesis, respectively.
+
+To compile sled:
+
+1) check out everything in RCS directory (i.e. co RCS/*)
+
+2) execute makefile (i.e. make).

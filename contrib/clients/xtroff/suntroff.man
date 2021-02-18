@@ -1,0 +1,179 @@
+.IX "suntroff"
+.IX "SunWindows" "suntroff"
+.TH SUNTROFF 1 "1 December 1986"
+.SH NAME
+suntroff - Sun Device Independent Troff Previewer
+.SH SYNOPSIS
+.br
+.B suntroff
+[
+.B Shell-Tool Arguments
+] [
+.B -scrollbars
+] [
+.B -command "Ditroff Command Pipe"
+]
+.sp
+.B
+suntroff 
+[
+.B Shell-Tool Arguments
+] [
+.B -scrollbars
+] [
+.B ditroff output file
+]
+.SH DESCRIPTION
+\fISuntroff\fR reads \fIditroff\fR(1) output files and displays
+an approximation of the typeset output in a window on a Sun workstation.
+Using the mouse the user can pan each page image within the window,
+move to other pages, look at different files and finally send the
+file to \fIlpr\fR(1) for typesetting.
+.PP
+The program can be used in two different ways.
+Perhaps the most efficient way to use this program is to execute
+\fIsuntroff\fR in the command mode (first example in the
+synopsis above).
+In the command mode a ditroff command string is specified that includes
+all the processing steps (\fIeqn, tbl, pic, ideal, troff)\fR
+that are needed to transform a user's document into ditroff output.
+Then whenever a change is made in the document 
+a "rerasterize" command 
+can be used to rerun
+the command string and show the new document on the screen.
+The "rerasterize" command is an option available on a menu that pops
+up when the right mouse button is pressed or in a status panel.
+The status panel is also enabled using the menu that pops up with the
+right mouse button.
+It is important that the \fIditroff\fR command that ends the pipe include
+the \fI-t\fR flag so that \fIsuntroff\fR can read the output.
+.PP
+Alternatively, the output from \fIditroff\fR can be used as input
+to this program (second example in the synopsis above.)
+In this case, each time the document changes it is up to the user 
+to rerun the \fIditroff\fR pipe to produce input for the \fIsuntroff\fR
+program.
+This can be easily done using the "rerasterize" command.
+.PP
+Fonts used by \fIsuntroff\fR are rough approximations to those that
+will be printed in the final typesetter output.
+Currently only the 300 dot per inch (dpi) Imagen fonts and the
+200 dpi Versatec fonts have been properly scaled for \fIsuntroff\fR.
+All output destined for printers other than the Imagens will be
+shown using Versatec fonts.
+Although the actual bit maps used for the
+characters might not be correct
+all \fIsuntroff\fR output will have the correct horizontal
+and vertical spacing.
+.PP
+\fISuntroff\fR can be controlled using a combination of mouse, menu and
+typed commands.  
+Within the main text window when the middle button of the mouse is
+pressed the cursor is changed into the shape of a hand that grabs the
+text.  
+As the mouse is moved around inside the window the displayed text (and
+the hand) move accordingly.
+When the right button is pressed a menu pops up that contains options
+for moving to different pages, print parts of the document, rerasterizing
+the input and finally popping up a more extensive status and command window.
+.PP
+The \fIsuntroff\fR command and status window allows the user to
+specify the source of input, search for text within the document,
+move to any page within the document and to print either one page or the
+entire document.
+This panel is hidden at first and is displayed when the user picks the
+"show status" option on the right mouse button menu.
+.SH HOW TO
+.IP "Move Around within Page" 15
+Use the middle mouse button.  
+When it is first pressed a hand will appear on the page and effectively
+grab the text.
+As the mouse (and hand) move the page will move within the frame.
+.IP "Go To Another Page"
+Enter the page number in the appropiate field of the status panel.
+Then click on the "Goto Page" button.
+
+Alternatively you can type the desired page number to the main \fISunTroff\fR
+window followed by a carriage return (or new-line).
+
+Also, you can go forward and backward a page using the entries in the 
+right button pop up menu.
+.IP "Search for a Pattern"
+To find a pattern in the output enter the desired search pattern in
+the status panel.
+Note, the only valid characters in a search pattern are printable ascii
+characters and the space character.
+Forward and backward searches are performed using the appropriate button
+in the status panel.
+A search ignores the current page and will find the next page that
+contains the desired words.  
+Hopefully, at some point in the future the desired pattern will be
+highlighted.
+.IP "Print Part of Document"
+Either a single page or the entire document can be printed using 
+buttons on the status panel or entries in the right button pop up
+menu.
+The printer name entered in the status panel will be 
+passed directly to the \fIlpr\fR(1).  It is important that the
+user verify it is correct otherwise typesetting commands meant for
+one type of printer might be sent to the wrong printer.
+.IP "Rerasterize"
+After changes are made to a document it is necessary to tell 
+\fISunTroff\fR to rerasterize the file. 
+This can be done using either a button on the status panel or
+an entry in the right mouse button pop up menu.
+.SH "EXAMPLES"
+To preview a file that has already been processed by ditroff (using
+the -t option)
+.br
+	suntroff file-containing-ditroff-output
+.br
+When the "rerasterize" command is issued then the indicated file will
+be reopened and its new contents displayed.
+.sp
+To typeset and preview a document use the following command
+.br
+	suntroff -command "deqn -Plw1 ditroff-input-file | ditroff -ms -Plw1 -t"
+.br
+Note that it is important to specify the "-t" option to ditroff so that
+the \fISunTroff\fR program can capture the output.
+The "rerasterize" command will close any open files (or pipes) and
+open a new pipe.
+The indicated command will be run on the input side of the pipe to
+provide \fISunTroff\fR with its input.
+The command providing input to \fISunTroff\fR can contain any combination
+of programs as long as the final output is \fIditroff\fR output.
+.SH "SEE ALSO"
+.LP
+.IR suntools (1)
+.IR ditroff (1)
+.br
+.SH BUGS
+Due to bugs in SunView, scrollbars do not work.  
+Hopefully this problems will be fixed in a future release
+of Sun software.
+.PP
+Someday, the search commands will highlight the text that they find.
+This will be much easier on the user.
+.SH AUTHOR
+Credit for this program goes to a number of people including
+Brian Kernighan (Bell Labs) for first developing Device Independent
+Troff, U. C. Berkeley for developing the original \fIvcat\fR program.
+Richard L. Hyde, Purdue University, and David Slattengren, U.C. Berkeley,
+wrote the original version of this program to rasterize \fIditroff\fR
+output for the Suns.
+Finally Malcolm Slaney, Schlumberger Palo Alto Research, rewrote most
+of the code to make it run under Sun-3 Unix and to extend the
+user interface.
+Needless to say, credit for all good portions of this program should
+go to the first authors; blame for the bad sections rests with the
+final author.
+.SH SUPPORT
+This command was developed as an independent project to satisfy a need
+of the author.
+This program may contain bugs and the user is cautioned to independently
+verify that the program is suitable for the user's intended purpose.
+The program is made available on an ``as is'' basis with all
+faults and without any implied or expressed warranties or support
+from either the author, Malcolm Slaney, or the Schlumberger
+Palo Alto Research Laboratory.

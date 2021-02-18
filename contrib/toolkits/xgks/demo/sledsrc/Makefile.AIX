@@ -1,0 +1,216 @@
+# makefile for graphic editor xGKS version
+
+# home directory for graphics related work
+PROJ = /mntm/1/kubitz/graphics
+
+ILIBDIR = $(INSTALLHOME)/lib
+IHDIR = $(INSTALLHOME)/include
+FONTDBDIR = $(ILIBDIR)/fontdb
+
+ALLIVARS = INSTALLHOME=$(INSTALLHOME) ILIBDIR=$(ILIBDIR) IHDIR=$(IHDIR) \
+	FONTDBDIR=$(FONTDBDIR)
+
+INCLUDES = -I$(IHDIR) -I.
+CFLAGS = $(INCLUDES) -DBSD_INCLUDES -Nd4000 -Nn3000
+LFLAGS = -vxu
+
+# matrix film recorder library
+# MATRIX = $(PROJ)/matrix/lib/libmatrix
+
+# for the loader
+LIBS = $(ILIBDIR)/libxgks.a -lX11 -lm  
+
+INC = add_obj_func.h clr_selector.h \
+	clr_sel_draw.h clr_sel_func.h clr_sel_key.h \
+	changes.h color.h \
+	conversions.h defs.h draw.h \
+	func.h functbl.h key.h \
+	menu.h object_defs.h object_tbl.h \
+	objects.h objects_func.h palette.h \
+	popup.h screen_items.h trans.h ws.h
+# attributes.h	debug.h
+SRC = add_objects.c add_obj_subs.c \
+	clr_sel_draw.c \
+	clr_sel_exec.c color.c \
+	conversions.c draw.c draw_menu.c \
+	draw_palette.c dummies.c edit_picture.c \
+	error.c functbl.c \
+	grid.c \
+	init_tbls.c input.c \
+	io.c main.c main_menu.c \
+	menu.c object_list.c object_tbl.c \
+	objects_copy.c \
+	obj_detect.c objects_draw.c objects_free.c \
+	obj_rotate.c \
+	palette.c photodummy.c \
+	picture.c popup.c prompt.c \
+	read_input.c read_menu.c \
+	screen_items.c trans.c trans_subs.c undo.c \
+	write_output.c
+# attributes.c
+# photo.c
+OBJ = add_objects.o add_objects_subs.o\
+	clr_selector_draw.o \
+	clr_selector_exec.o color.o \
+	conversions.o draw.o draw_menu.o \
+	draw_palette.o dummies.o edit_picture.o \
+	error.o functbl.o \
+	grid.o \
+	init_tbls.o input.o  \
+	io.o main.o main_menu.o \
+	menu.o object_list.o object_tbl.o \
+	objects_copy.o \
+	objects_detect.o objects_draw.o objects_free.o \
+	objects_rotate.o \
+	palette.o photodummy.o \
+	picture.o popup.o prompt.o \
+	read_input.o read_menu.o \
+	screen_items.o trans.o trans_subs.o undo.o \
+	write_output.o
+# attributes.o
+# photo.o
+
+all: sled
+
+sled: $(OBJ)
+	@echo "Getting libxgks from" $(CLIBDIR)
+	cc -g $(OBJ) $(LIBS) -lm  -o sled
+
+.c.o:	;	cc $(CFLAGS) -c $<
+
+lintinc: $(INC)
+	lint $(LFLAGS) $(INC)
+
+lint: $(SRC)
+	lint $(LFLAGS) $(SRC)
+
+depend:	
+	../../utils/makedepend/makedepend $(INCLUDES) *.c
+
+clean: 
+	-rm *.o core
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+GKS_LINT.o: /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+add_obj_subs.o: /u/amy/xgks/include/xgks.h /usr/include/stdio.h changes.h
+add_obj_subs.o: ws.h
+add_objects.o: /usr/include/math.h /usr/include/values.h
+add_objects.o: /usr/include/sys/ioctl.h /usr/include/sys/ttychars.h
+add_objects.o: /usr/include/sys/ttydev.h /usr/include/stdio.h color.h
+add_objects.o: /u/amy/xgks/include/xgks.h changes.h functbl.h screen_items.h
+add_objects.o: key.h clr_sel_key.h defs.h /usr/include/strings.h draw.h
+add_objects.o: clr_sel_draw.h objects.h trans.h ws.h add_obj_func.h
+add_objects.o: object_defs.h object_list.h popup.h
+attributes.o: attributes.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+attributes.o: ws.h changes.h
+clr_sel_draw.o: /usr/include/math.h /usr/include/values.h key.h clr_sel_key.h
+clr_sel_draw.o: defs.h /usr/include/strings.h /u/amy/xgks/include/xgks.h
+clr_sel_draw.o: /usr/include/stdio.h draw.h screen_items.h changes.h
+clr_sel_draw.o: clr_sel_draw.h functbl.h clr_selector.h color.h trans.h
+clr_sel_exec.o: screen_items.h /u/amy/xgks/include/xgks.h
+clr_sel_exec.o: /usr/include/stdio.h changes.h functbl.h draw.h
+clr_sel_exec.o: clr_sel_draw.h /usr/include/math.h /usr/include/values.h
+clr_sel_exec.o: clr_selector.h defs.h /usr/include/strings.h key.h
+clr_sel_exec.o: clr_sel_key.h color.h
+color.o: /u/amy/xgks/include/xgks.h /usr/include/stdio.h defs.h
+color.o: /usr/include/strings.h ws.h changes.h color.h
+conversions.o: /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+draw.o: screen_items.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+draw.o: changes.h color.h draw.h clr_sel_draw.h ws.h trans.h defs.h
+draw.o: /usr/include/strings.h /usr/include/math.h /usr/include/values.h
+draw_menu.o: color.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+draw_menu.o: changes.h defs.h /usr/include/strings.h key.h clr_sel_key.h
+draw_menu.o: screen_items.h draw.h clr_sel_draw.h menu.h trans.h functbl.h
+draw_palette.o: /usr/include/strings.h palette.h screen_items.h
+draw_palette.o: /u/amy/xgks/include/xgks.h /usr/include/stdio.h changes.h
+draw_palette.o: color.h defs.h key.h clr_sel_key.h trans.h draw.h
+draw_palette.o: clr_sel_draw.h
+dummies.o: trans.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+dummies.o: screen_items.h changes.h
+edit_picture.o: draw.h screen_items.h /u/amy/xgks/include/xgks.h
+edit_picture.o: /usr/include/stdio.h changes.h clr_sel_draw.h objects.h
+edit_picture.o: popup.h trans.h functbl.h key.h clr_sel_key.h defs.h
+edit_picture.o: /usr/include/strings.h
+error.o: /usr/include/stdio.h
+functbl.o: screen_items.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+functbl.o: changes.h functbl.h defs.h /usr/include/strings.h
+grid.o: trans.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+grid.o: screen_items.h changes.h popup.h functbl.h key.h clr_sel_key.h defs.h
+grid.o: /usr/include/strings.h ws.h draw.h clr_sel_draw.h objects.h color.h
+grid.o: /usr/include/math.h /usr/include/values.h
+init_tbls.o: /usr/include/stdio.h defs.h /usr/include/strings.h
+init_tbls.o: /u/amy/xgks/include/xgks.h func.h clr_sel_func.h add_obj_func.h
+init_tbls.o: changes.h edit_picture.h adjust_grid.h photo_func.h key.h
+init_tbls.o: clr_sel_key.h color.h draw.h screen_items.h clr_sel_draw.h ws.h
+init_tbls.o: functbl.h palette.h add_objects.h
+input.o: color.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h changes.h
+input.o: ws.h defs.h /usr/include/strings.h trans.h screen_items.h
+io.o: /usr/include/stdio.h /usr/include/strings.h /u/amy/xgks/include/xgks.h
+io.o: changes.h
+main.o: changes.h /usr/include/stdio.h /usr/include/strings.h
+main.o: /u/amy/xgks/include/xgks.h key.h clr_sel_key.h screen_items.h
+main.o: functbl.h ws.h
+main_menu.o: /usr/include/strings.h /usr/include/stdio.h color.h
+main_menu.o: /u/amy/xgks/include/xgks.h changes.h defs.h key.h clr_sel_key.h
+main_menu.o: ws.h popup.h menu.h screen_items.h trans.h draw.h clr_sel_draw.h
+main_menu.o: functbl.h
+menu.o: screen_items.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+menu.o: changes.h functbl.h key.h clr_sel_key.h defs.h /usr/include/strings.h
+menu.o: menu.h
+obj_detect.o: objects.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+obj_detect.o: changes.h key.h clr_sel_key.h ws.h object_tbl.h screen_items.h
+obj_detect.o: /usr/include/math.h /usr/include/values.h defs.h
+obj_detect.o: /usr/include/strings.h trans.h
+obj_rotate.o: objects.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+obj_rotate.o: changes.h object_tbl.h screen_items.h
+object_list.o: defs.h /usr/include/strings.h /u/amy/xgks/include/xgks.h
+object_list.o: /usr/include/stdio.h draw.h screen_items.h changes.h
+object_list.o: clr_sel_draw.h popup.h trans.h key.h clr_sel_key.h objects.h
+object_list.o: object_tbl.h
+object_tbl.o: defs.h /usr/include/strings.h /u/amy/xgks/include/xgks.h
+object_tbl.o: /usr/include/stdio.h objects.h changes.h object_tbl.h
+object_tbl.o: screen_items.h objects_func.h
+objects_copy.o: objects.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+objects_copy.o: changes.h object_tbl.h screen_items.h
+objects_draw.o: popup.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+objects_draw.o: color.h changes.h objects.h object_tbl.h screen_items.h key.h
+objects_draw.o: clr_sel_key.h trans.h draw.h clr_sel_draw.h ws.h
+objects_free.o: objects.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+objects_free.o: changes.h object_tbl.h screen_items.h
+palette.o: /usr/include/stdio.h ws.h changes.h color.h
+palette.o: /u/amy/xgks/include/xgks.h key.h clr_sel_key.h defs.h
+palette.o: /usr/include/strings.h trans.h screen_items.h palette.h
+photo.o: key.h clr_sel_key.h trans.h /u/amy/xgks/include/xgks.h
+photo.o: /usr/include/stdio.h screen_items.h changes.h draw.h clr_sel_draw.h
+photo.o: ws.h functbl.h
+photodummy.o: screen_items.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+photodummy.o: changes.h
+picture.o: key.h clr_sel_key.h draw.h screen_items.h
+picture.o: /u/amy/xgks/include/xgks.h /usr/include/stdio.h changes.h
+picture.o: clr_sel_draw.h trans.h
+popup.o: key.h clr_sel_key.h draw.h screen_items.h /u/amy/xgks/include/xgks.h
+popup.o: /usr/include/stdio.h changes.h clr_sel_draw.h color.h trans.h
+popup.o: popup.h functbl.h
+prompt.o: /usr/include/strings.h key.h clr_sel_key.h draw.h screen_items.h
+prompt.o: /u/amy/xgks/include/xgks.h /usr/include/stdio.h changes.h
+prompt.o: clr_sel_draw.h trans.h color.h popup.h functbl.h
+read_input.o: /usr/include/stdio.h io.h defs.h /usr/include/strings.h
+read_input.o: /u/amy/xgks/include/xgks.h screen_items.h changes.h color.h
+read_input.o: palette.h objects.h object_tbl.h object_list.h conversions.h
+read_menu.o: /usr/include/stdio.h /u/amy/xgks/include/xgks.h screen_items.h
+read_menu.o: changes.h menu.h key.h clr_sel_key.h /usr/include/strings.h
+screen_items.o: defs.h /usr/include/strings.h /u/amy/xgks/include/xgks.h
+screen_items.o: /usr/include/stdio.h popup.h key.h clr_sel_key.h draw.h
+screen_items.o: screen_items.h changes.h clr_sel_draw.h menu.h functbl.h
+screen_items.o: trans.h
+trans.o: trans.h /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+trans.o: screen_items.h changes.h functbl.h defs.h /usr/include/strings.h
+trans.o: ws.h
+trans_subs.o: /usr/include/math.h /usr/include/values.h
+trans_subs.o: /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+undo.o: defs.h /usr/include/strings.h /u/amy/xgks/include/xgks.h
+undo.o: /usr/include/stdio.h functbl.h screen_items.h changes.h
+write_output.o: /usr/include/stdio.h io.h screen_items.h
+write_output.o: /u/amy/xgks/include/xgks.h changes.h color.h palette.h
+write_output.o: objects.h object_tbl.h object_list.h conversions.h

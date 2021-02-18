@@ -1,0 +1,25 @@
+# -DTCPCONN allows TCP connections
+#    (you only need -DDUALTCP if you have both big and little Indian machines)
+# -DUNIXCONN allows Unix domain connections
+# -DDNETCONN allows DECnet connections
+# -DDEBUG turns on debug capabilities
+
+           SRCS = io.c subr.c proto1.c proto2.c proto3.c proto4.c data.c \
+		  debug.c image.c eventdebug.c events.c sequence.c window.c \
+		  access.c dispatch.c main.c startup.c
+           OBJS = io.o subr.o proto1.o proto2.o proto3.o proto4.o data.o \
+		  debug.o image.o eventdebug.o events.o sequence.o window.o \
+		  access.o dispatch.o main.o startup.o
+#       DEFINES = -DDEBUG -DDUALTCP ConnectionFlags
+        DEFINES = -DDUALTCP ConnectionFlags
+LOCAL_LIBRARIES = $(OLDXLIB) $(XLIB)
+       LINTLIBS = $(LINTXLIB)
+
+ComplexProgramTarget(x10tox11)
+InstallNonExec(README,$(LIBDIR)/x10tox11.help)
+
+xlibtags: tags
+	sed -e 's,	\([^	]*\)	,	$(XLIBSRC)/\1	,' \
+		< $(XLIBSRC)/tags | sort -o tags - tags
+
+NormalLintTarget($(SRCS))

@@ -1,0 +1,68 @@
+.TH EXHIBIT 1 "27 November 1989" "X Version 11"
+.SH NAME
+exhibit \- Exhibit an image collection
+.SH SYNOPSIS
+.PP
+.B exhibit
+.I file
+[
+.B exhibit_options
+]
+[
+.B standard_options
+]
+.br
+.SH DESCRIPTION
+.PP
+.B exhibit
+displays a set of images.  It cycles through a list of image
+names in either random or sequential order, leaving each image
+on view for a given minimum time period.  Image placement on
+the screen is random.  Normally
+.B exhibit
+covers the current screen image with a black background window;
+optionally it can omit that window, or it can grab the mouse and
+keyboard to lock the display.  When the display is locked, it can
+be released by typing either the password for either the user who
+invoked
+.B exhibit
+or the super-user's password.
+.PP
+For each image,
+.B exhibit
+may convert the image automatically to a different representation
+to suit the screen's default visual.  This may involve converting
+in either direction between RGB and color-mapped format, and
+it may involve quantizing the image to force it to use only the
+maximum number of colors available.  Similarly, it may convert
+color to grayscale or monochrome (dithered black and white).
+.PP
+The
+.I file
+argument is the name of a file containing a list of image names.
+Each line contains the name of one image file, using the same conventions
+as are used by
+.B dispimg.
+.SH OPTIONS
+At the time of release this program is in transition between two
+forms of option setting, and looks for two types of options.
+Those identified as
+.B exhibit_options
+are identified by their first character, and appear only on
+the command line.  Those identified as
+.B standard_options
+are identified as either command line switches or X resources.
+.PP
+Until a future version finishes this transition, it would be
+safest to use X resources to specify
+.B standard_options.
+For summary information on
+.B exhibit_options
+invoke the program with "exhibit \\?".
+.SH AUTHOR
+Paul Raveling, USC Information Sciences Institute
+.SH CAVEAT EMPTOR
+This is program is in its infancy:  Surprises
+are possible.  Please report problems
+and suggestions to Raveling@isi.edu; if that address doesn't work
+try Raveling@venera.isi.edu.

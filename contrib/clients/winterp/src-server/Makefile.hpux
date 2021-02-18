@@ -1,0 +1,706 @@
+################################################################################
+#
+# File:         Makefile
+# RCS:          $Header: Makefile.hpux,v 1.1 89/11/25 04:04:05 mayer Exp $
+# Description:  Mkmf-generated makefile for WINTERP
+# Author:       Niels Mayer, HPLabs
+# Created:      Mon Oct 23 20:47:37 1989
+# Modified:     Sat Nov 25 02:45:54 1989 (Niels Mayer) mayer@hplnpm
+# Language:     N/A
+# Package:      N/A
+# Status:       X11r4 contrib tape release
+#
+# (c) Copyright 1989, Hewlett-Packard Company.
+#
+################################################################################
+
+# USER_DEFINES = -DDEBUG_WINTERP_1
+DEFINES = -DSYSV -Dhpux -DWINTERP $(USER_DEFINES)
+##############################################################################
+LINT = /usr/bin/lint
+.SUFFIXES: .ln .c
+.c.ln:
+	$(LINT) -c $*.c -Nd4000 -Ns3000 -Na50000 $(DEFINES)
+##############################################################################
+CFLAGS = -Wc,-Nd7000,-Ns6000,-Np300,-Nw4000,-Nt100000 $(DEFINES)
+# OPTIMIZER = -g
+.c.o:
+	$(CC) -c $(OPTIMIZER) $*.c $(CFLAGS)
+##############################################################################
+HDRS	      = user_prefs.h \
+		w_funtab.h \
+		winterp.h
+
+SRCS	      = w_XmString.c \
+		w_callbacks.c \
+		w_classes.c \
+		w_evnthndlr.c \
+		w_funtab.c \
+		w_libXm.c \
+		w_libXt.c \
+		w_pixmap.c \
+		w_resources.c \
+		w_savedobjs.c \
+		w_timeouts.c \
+		w_txlations.c \
+		w_utils.c \
+		wc_ArrowB.c \
+		wc_BulletinB.c \
+		wc_CascadeB.c \
+		wc_Command.c \
+		wc_DrawingA.c \
+		wc_DrawnB.c \
+		wc_FileSB.c \
+		wc_Form.c \
+		wc_Frame.c \
+		wc_Label.c \
+		wc_List.c \
+		wc_MainW.c \
+		wc_MessageB.c \
+		wc_PanedW.c \
+		wc_PushB.c \
+		wc_RowColumn.c \
+		wc_SHELL.c \
+		wc_Scale.c \
+		wc_ScrollBar.c \
+		wc_ScrolledW.c \
+		wc_SelectioB.c \
+		wc_Separator.c \
+		wc_Text.c \
+		wc_ToggleB.c \
+		wc_WIDGET.c \
+		winterp.c
+
+OBJS	      = $(SRCS:.c=.o)
+
+LINTS	      =	$(SRCS:.c=.ln)
+
+##############################################################################
+DEST	      = .
+
+EXTHDRS	      = /usr/include/X11/CompObj.h \
+		/usr/include/X11/Composite.h \
+		/usr/include/X11/Constraint.h \
+		/usr/include/X11/Core.h \
+		/usr/include/X11/Intrinsic.h \
+		/usr/include/X11/Object.h \
+		/usr/include/X11/RectObj.h \
+		/usr/include/X11/Shell.h \
+		/usr/include/X11/Vendor.h \
+		/usr/include/X11/WindowObj.h \
+		/usr/include/X11/X.h \
+		/usr/include/X11/Xlib.h \
+		/usr/include/X11/Xos.h \
+		/usr/include/X11/Xresource.h \
+		/usr/include/X11/Xutil.h \
+		/usr/include/X11/cursorfont.h \
+		/usr/include/Xm/ArrowB.h \
+		/usr/include/Xm/ArrowBG.h \
+		/usr/include/Xm/BulletinB.h \
+		/usr/include/Xm/CascadeB.h \
+		/usr/include/Xm/CascadeBG.h \
+		/usr/include/Xm/Command.h \
+		/usr/include/Xm/DialogS.h \
+		/usr/include/Xm/DrawingA.h \
+		/usr/include/Xm/DrawnB.h \
+		/usr/include/Xm/FileSB.h \
+		/usr/include/Xm/Form.h \
+		/usr/include/Xm/Frame.h \
+		/usr/include/Xm/Label.h \
+		/usr/include/Xm/LabelG.h \
+		/usr/include/Xm/List.h \
+		/usr/include/Xm/MainW.h \
+		/usr/include/Xm/MenuShell.h \
+		/usr/include/Xm/MessageB.h \
+		/usr/include/Xm/PanedW.h \
+		/usr/include/Xm/PushB.h \
+		/usr/include/Xm/PushBG.h \
+		/usr/include/Xm/RowColumn.h \
+		/usr/include/Xm/Scale.h \
+		/usr/include/Xm/ScrollBar.h \
+		/usr/include/Xm/ScrolledW.h \
+		/usr/include/Xm/SelectioB.h \
+		/usr/include/Xm/SeparatoG.h \
+		/usr/include/Xm/Separator.h \
+		/usr/include/Xm/Text.h \
+		/usr/include/Xm/ToggleB.h \
+		/usr/include/Xm/ToggleBG.h \
+		/usr/include/Xm/Xm.h \
+		/usr/include/ctype.h \
+		/usr/include/fcntl.h \
+		/usr/include/netdb.h \
+		/usr/include/netinet/in.h \
+		/usr/include/setjmp.h \
+		/usr/include/stdio.h \
+		/usr/include/string.h \
+		/usr/include/sys/fcntl.h \
+		/usr/include/sys/file.h \
+		/usr/include/sys/ioctl.h \
+		/usr/include/sys/socket.h \
+		/usr/include/sys/stdsyms.h \
+		/usr/include/sys/time.h \
+		/usr/include/sys/types.h \
+		/usr/include/time.h \
+		/usr/include/values.h \
+		xlisp/xldmem.h \
+		xlisp/xlisp.h
+
+INSTALL	      = install
+
+LD	      = cc
+
+LDFLAGS	      = 
+
+LIBS	      = 
+
+MAKEFILE      = Makefile.hpux
+
+
+PRINT	      = pr
+
+PROGRAM       = winterp
+
+SHELL	      = /bin/sh
+
+all::		$(PROGRAM)
+
+$(PROGRAM):     $(OBJS) xlisp/libXlisp.a
+		@echo "Linking $(PROGRAM) ..."
+		$(LD) $(LDFLAGS) $(OBJS) xlisp/libXlisp.a -lXm -lXt -lX11 -lPW -lm -lmalloc -o $(PROGRAM)
+		@echo "done"
+
+xlisp/libXlisp.a::
+	(cd $(@D) ; make -f Makefile.hpux "USER_DEFINES=$(USER_DEFINES)" "OPTIMIZER=$(OPTIMIZER)" $(@F) ; cd ..)
+
+lint:	$(LINTS) xlisp/llib-Xlisp.ln
+	$(LINT) $(LINTS) xlisp/llib-Xlisp.ln -lXm -lXt -lX11 -lm -lmalloc -Zn8192 -Zt16384 -Zf500 > lint 2>&1
+
+xlisp/llib-Xlisp.ln::
+	(cd $(@D) ; make -f Makefile.hpux "USER_DEFINES=$(USER_DEFINES)" $(@F) ; cd ..)
+
+TAGS: $(HDRS) $(SRCS) xlisp/libXlisp.a
+	etags -et $(HDRS) $(SRCS) xlisp/*.h xlisp/*.c
+
+cscope::
+	cscope-x -I. -Ixlisp/. -S. -S xlisp/. -name Winterp -iconic & 
+
+run:;		winterp
+
+clean:;		rm -f $(OBJS) $(LINTS) core
+
+clobber:;	rm -f $(OBJS) $(PROGRAM)  $(LINTS) lint TAGS core tags
+
+depend:;	mkmf -f $(MAKEFILE) ROOT=$(ROOT)
+
+echo:;		@echo $(HDRS) $(SRCS)
+
+index:;		ctags -wx $(HDRS) $(SRCS)
+
+install:	$(PROGRAM)
+		@echo Installing $(PROGRAM) in $(DEST)
+		-strip $(PROGRAM)
+		if [ $(DEST) != . ]; then \
+		(rm -f $(DEST)/$(PROGRAM); $(INSTALL) -f $(DEST) $(PROGRAM)); fi
+
+print:;		$(PRINT) $(HDRS) $(SRCS)
+
+tags:           $(HDRS) $(SRCS); @ctags $(HDRS) $(SRCS)
+
+update:		$(DEST)/$(PROGRAM)
+
+$(DEST)/$(PROGRAM): $(SRCS) $(LIBS) $(HDRS) $(EXTHDRS)
+		$(MAKE) -f $(MAKEFILE) ROOT=$(ROOT) DEST=$(DEST) install
+###
+w_XmString.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h winterp.h user_prefs.h \
+	xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h
+w_callbacks.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h /usr/include/Xm/List.h \
+	/usr/include/Xm/Text.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h
+w_classes.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h winterp.h user_prefs.h \
+	xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h
+w_evnthndlr.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h winterp.h \
+	user_prefs.h xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h
+w_funtab.o: xlisp/xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h w_funtab.h
+w_libXm.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h winterp.h user_prefs.h \
+	xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h
+w_libXt.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h winterp.h \
+	user_prefs.h xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h
+w_pixmap.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h winterp.h user_prefs.h \
+	xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h
+w_resources.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/X11/Shell.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/Xm.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h \
+	/usr/include/values.h
+w_savedobjs.o: xlisp/xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h
+w_timeouts.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h winterp.h \
+	user_prefs.h xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h
+w_txlations.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h winterp.h \
+	user_prefs.h xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h
+w_utils.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/X11/cursorfont.h /usr/include/Xm/Xm.h \
+	/usr/include/X11/Vendor.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h
+wc_ArrowB.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/ArrowB.h /usr/include/Xm/ArrowBG.h winterp.h \
+	user_prefs.h xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h
+wc_BulletinB.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/BulletinB.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h
+wc_CascadeB.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/CascadeB.h /usr/include/Xm/CascadeBG.h winterp.h \
+	user_prefs.h xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h 
+wc_Command.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/Command.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h 
+wc_DrawingA.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/DrawingA.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h 
+wc_DrawnB.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/DrawnB.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h 
+wc_FileSB.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/FileSB.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h 
+wc_Form.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h /usr/include/Xm/Form.h \
+	winterp.h user_prefs.h xlisp/xlisp.h /usr/include/ctype.h \
+	/usr/include/setjmp.h xlisp/xldmem.h 
+wc_Frame.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/Frame.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h
+wc_Label.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/Label.h /usr/include/Xm/LabelG.h winterp.h \
+	user_prefs.h xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h
+wc_List.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h /usr/include/Xm/List.h \
+	winterp.h user_prefs.h xlisp/xlisp.h /usr/include/ctype.h \
+	/usr/include/setjmp.h xlisp/xldmem.h 
+wc_MainW.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/MainW.h /usr/include/Xm/ScrolledW.h winterp.h \
+	user_prefs.h xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h 
+wc_MessageB.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/MessageB.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h 
+wc_PanedW.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/PanedW.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h
+wc_PushB.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/PushB.h /usr/include/Xm/PushBG.h winterp.h \
+	user_prefs.h xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h
+wc_RowColumn.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/RowColumn.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h 
+wc_SHELL.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/X11/Shell.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/Xm.h /usr/include/Xm/DialogS.h \
+	/usr/include/Xm/MenuShell.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h 
+wc_Scale.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/Scale.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h 
+wc_ScrollBar.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/ScrollBar.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h 
+wc_ScrolledW.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/ScrolledW.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h 
+wc_SelectioB.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/SelectioB.h winterp.h user_prefs.h xlisp/xlisp.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xlisp/xldmem.h 
+wc_Separator.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/SeparatoG.h /usr/include/Xm/Separator.h winterp.h \
+	user_prefs.h xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h
+wc_Text.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h /usr/include/Xm/Text.h \
+	winterp.h user_prefs.h xlisp/xlisp.h /usr/include/ctype.h \
+	/usr/include/setjmp.h xlisp/xldmem.h 
+wc_ToggleB.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h \
+	/usr/include/Xm/ToggleB.h /usr/include/Xm/ToggleBG.h winterp.h \
+	user_prefs.h xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h 
+wc_WIDGET.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/X11/X.h \
+	/usr/include/X11/Xutil.h /usr/include/X11/Xresource.h \
+	/usr/include/X11/Xos.h /usr/include/string.h /usr/include/fcntl.h \
+	/usr/include/sys/fcntl.h /usr/include/sys/file.h /usr/include/time.h \
+	/usr/include/sys/time.h /usr/include/X11/Core.h \
+	/usr/include/X11/Composite.h /usr/include/X11/Constraint.h \
+	/usr/include/X11/Object.h /usr/include/X11/RectObj.h \
+	/usr/include/X11/WindowObj.h /usr/include/X11/CompObj.h \
+	/usr/include/Xm/Xm.h /usr/include/X11/Vendor.h winterp.h user_prefs.h \
+	xlisp/xlisp.h /usr/include/ctype.h /usr/include/setjmp.h \
+	xlisp/xldmem.h 
+winterp.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/sys/types.h \
+	/usr/include/sys/socket.h /usr/include/sys/ioctl.h \
+	/usr/include/netinet/in.h /usr/include/netdb.h \
+	/usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/X11/X.h /usr/include/X11/Xutil.h \
+	/usr/include/X11/Xresource.h /usr/include/X11/Xos.h \
+	/usr/include/string.h /usr/include/fcntl.h /usr/include/sys/fcntl.h \
+	/usr/include/sys/file.h /usr/include/time.h /usr/include/sys/time.h \
+	/usr/include/X11/Core.h /usr/include/X11/Composite.h \
+	/usr/include/X11/Constraint.h /usr/include/X11/Object.h \
+	/usr/include/X11/RectObj.h /usr/include/X11/WindowObj.h \
+	/usr/include/X11/CompObj.h /usr/include/Xm/Xm.h \
+	/usr/include/X11/Vendor.h /usr/include/Xm/PushB.h winterp.h \
+	user_prefs.h xlisp/xlisp.h /usr/include/setjmp.h xlisp/xldmem.h \
+	w_funtab.h

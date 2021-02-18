@@ -1,0 +1,20 @@
+to be released 
+
+- Minibuf now understands cut, emacs style - by clicking to set the mark
+  with the right button. (Also sets selection owner to none, so you can paste
+  the cut text into xterm)
+
+- xfonts/Imakefile improved slightly - assumes your bdftosnf rejects
+  .bdf files. (It should)
+
+- suntroff.c fixed by dac to stop it dumping core on long dotted lines
+
+- xwindows.c fixed by Steve Losen to stop accumulating child processes
+  on each Rerasterize
+
+- updated README to mention psroff
+
+- Fixes from Andreas Stolcke to make it possible to compile suntroff
+  from this again. Just realized how ugly all the "ifdef SUNTOOLS"s
+  that I stuck in when porting look. Sigh. I should have done it
+  more cleanly.

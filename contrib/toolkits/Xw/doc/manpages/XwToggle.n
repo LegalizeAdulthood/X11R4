@@ -1,0 +1,330 @@
+
+
+
+     XWTOGGLE(3X)                                         XWTOGGLE(3X)
+
+
+
+
+     NAME
+          XwtoggleWidgetClass - the X Widgets toggle button widget
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/Toggle.h>
+
+
+     CLASSES
+          The toggle widget is built from the Core, XwPrimitive and
+          XwButton classes.
+
+          The widget class to use when creating a toggle is
+          XwtoggleWidgetClass.  The class name is Toggle.
+
+     DESCRIPTION
+          The toggle widget implements a button which consists of a
+          graphic and a label.  The label can be positioned either to
+          the right (the default) or the left of the graphic.  The
+          size of the graphic is based on the height of the font used
+          for the label.  The space between the graphic and the label
+          is equal to 1/3 the font height. The default graphic is a
+          square box and this may be changed to a diamond shape.  It
+          is intended that application writers can put a group of
+          square buttons into a Row Column manager with its mode set
+          to the default n_of_many to get the checkbox, or N of Many,
+          selection semantic and then put a group of diamond buttons
+          into a Row Column manager with its mode set to one_of_many
+          to get the radiobutton, or One of Many, selection semantic.
+
+          The default semantic for this button is that button 1 down
+          will toggle the state of the toggle. When in a selected
+          state, the interior of the graphic will be filled with the
+          foreground color; when not selected the interior of the
+          graphic will be filled with the background color; when
+          insensitive, the label will be drawn with the patterned tile
+          (the default is a 75/25 mix of the foreground and background
+          colors).
+
+          Callbacks can be attached to the widget to report selection
+          (XtNselect) and unselection (XtNrelease).  This widget can
+          be set to respond to Enter and Leave window events by
+          highlighting and unhighlighting the button.  This widget is
+          also capable of handling  keyboard traversal.  See the
+          translations below for the default traversal keycodes.
+
+     NEW RESOURCES
+          The toggle widget class defines a set of resource types that
+          can be used by the programmer to specify data for widgets of
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTOGGLE(3X)                                         XWTOGGLE(3X)
+
+
+
+
+          this class. Recall that the string to be used when setting
+          any of these resources in an application defaults file (like
+          .Xdefaults) can be obtained by stripping the preface "XtN"
+          off of the resource name.  For instance, XtNfont becomes
+          font.
+
+
+                           Toggle Resource Set
+            Name             Class           Type      Default
+            __________________________________________________
+            XtNsquare        XtCSquare       Boolean   True
+            XtNselectColor   XtCForeground   Pixel     Black
+
+
+
+          XtNsquare
+               If True, forces the button to draw a square box,
+               otherwise it will draw a diamond shape box.  One
+               possible usage for this resource is to make the
+               convention that row column managers containing diamond
+               shaped toggles have their XtNmode resource set to
+               one_of_many which will only allow one of the buttons to
+               be set at any one time, while row column managers
+               containing square buttons use the default mode setting
+               of n_of_many which allows any or all of the buttons to
+               be set.
+
+          XtNselectColor
+               Allows the application to specify what color should be
+               used to fill in the center of the square (or the
+               diamond) when it is set.
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses: The defaults used for the toggle when being
+          created are as follows:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTOGGLE(3X)                                         XWTOGGLE(3X)
+
+
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightColor       XtCForeground           Pixel     Black
+     XtNhighlightTile        XtCHighlightTile        int       50_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNrecomputeSize        XtCRecomputeSize        Boolean   TRUE
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTOGGLE(3X)                                         XWTOGGLE(3X)
+
+
+
+
+                     Button Resource Set -- XWBUTTON(3X)
+     Name               Class              Type            Default
+     ___________________________________________________________________
+     XtNfont            XtCFont            XFontStruct *   Fixed
+     XtNlabel           XtCLabel           caddr_t         NULL
+     XtNlabelLocation   XtCLabelLocation   int             right
+     XtNvSpace          XtCVSpace          int             2
+     XtNhSpace          XtCHSpace          int             2
+     XtNset             XtCSet             Boolean         False
+     XtNsensitiveTile   XtCSensitiveTile   int             75_foreground
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalType resource is set to
+          highlight_traversal (XwHIGHLIGHT_TRAVERSAL in an argument
+          list) at either create time or during a call to XtSetValues,
+          the XwPrimitive superclass will automatically augment the
+          primitive widget's translations to support keyboard
+          traversal.  Refer to the XwPrimitive man page for a complete
+          description of these translations.  Refer to the
+          TRANSLATIONS section in this man page for a description of
+          the translations local to the toggle widget.
+
+     TRANSLATIONS
+          The input to the toggle is driven by the mouse buttons.  The
+          default translation set defining this button is listed
+          below.  Note that for the specific key symbols used in
+          traversal, the HP Key Cap which corresponds to this key
+          symbol appears to the right of the definition.
+
+
+                <Btn1Down>:      toggle()
+                <EnterWindow>:   enter()
+                <LeaveWindow>:   leave()
+                <Key>Select:     toggle()   HP "Select" key
+
+
+     ACTIONS
+          Note that this widget contains some actions which are not
+          bound to any events by the default translations.  The
+          purpose of these additional actions are to allow advanced
+          users to alter the button semantics to their liking.
+
+
+          toggle:
+               Toggle the set state of the button (make it TRUE if it
+               was FALSE, FALSE if it was TRUE).  Redraw only the
+               toggle part (not the label) of the button. If the
+               current state of the button is set (TRUE) issue the
+               XtNselect callbacks, if not set (FALSE) issue the
+               XtNrelease callbacks.  No additional data beyond the
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTOGGLE(3X)                                         XWTOGGLE(3X)
+
+
+
+
+               widget id and the specified closure is sent with these
+               callbacks.
+
+          enter:
+               If the XtNtraversalType resource has been set to
+               XwHIGHLIGHT_ENTER then the button will be highlighted.
+               Otherwise no action is taken.
+
+          leave:
+               If the XtNtraversalType resouces has been set to
+               XwHIGHLIGHT_ENTER then the button will be
+               unhighlighted.  Otherwise no action is taken.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWPRIMITIVE(3X), XWBUTTON(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+

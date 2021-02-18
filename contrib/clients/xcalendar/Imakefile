@@ -1,0 +1,7 @@
+           SRCS = xcalendar.c dayeditor.c lists.c
+           OBJS = xcalendar.o dayeditor.o lists.o
+LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+
+ComplexProgramTarget(xcalendar)
+
+InstallAppDefaults(XCalendar)

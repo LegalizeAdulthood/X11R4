@@ -1,0 +1,128 @@
+.de EX		\"Begin example
+.ne 5
+.if n .sp 1
+.if t .sp .5
+.nf
+.in +.5i
+..
+.de EE
+.fi
+.in -.5i
+.if n .sp 1
+.if t .sp .5
+..
+.TH XJPUWM 1
+.SH NAME
+xjpuwm - EUC 対応版 uwm
+.SH SYNTAX
+.PP
+\fBxjpuwm \fP[-display \fIdisplay\fP] [-f \fIfilename\fP]
+.PP
+.SH DESCRIPTION
+.PP
+\fIxjpuwm\fP は \fIuwm\fP に EUC 文字列処理機能と日本語入力機能を追加したものです。
+\fIxjpuwm\fP ではメニューやアイコンで EUC 文字列を表示することができます。
+.PP
+\fIxjpuwm\fP で EUC 文字列を扱う場合は、\fIxjpuwm\fP を起動する前に環境変数 CSWIDTH を正しく設定する必要があります。
+また、スタートアップ・ファイルに EUC 文字列で使用するフォントを各コードセットごとに指定しなければなりません。
+\fIxjpuwm\fP では各コードセットごとに２種類（標準、拡張）のフォントを指定することができます。
+EUC 文字列を処理する際はデフォルトで標準フォントを使用しますが、標準フォントで用意されている範囲外のコードの文字については拡張フォントを使用します。
+システムで設定するデフォルト・フォントはコードセット０に対応するフォントのみです。
+EUC 文字列中にフォントが用意されていないコードセットの文字が現れた場合、コードセット０のフォントが使用されます。
+.PP
+\fIxjpuwm\fP におけるスタートアップ・ファイルのサーチパスは次の通りです。
+.sp
+  \fI/usr/lib/X11/uwm/system.uwmrc
+  $HOME/.uwmrc
+  $HOME/.xjpuwmrc\fP
+.PP
+文字列処理以外の部分は \fIuwm\fP と互換性があります。
+.PP
+.SH OPTIONS
+.IP "-f \fIfilename\fP"
+指定されたファイルがスタートアップ・ファイルとして使用されます。
+.PP
+.SH STARTUP FILE VARIABLES
+.PP
+ここでは \fIuwm\fP にない変数についてのみ説明します。
+.IP "\fBiconfonteuc0,iconfonteuc1,iconfonteuc2,iconfonteuc3\fP=\fIfontname\fP"
+アイコンの中で標準フォントとして使用するフォント名を、各コードセットごとに指定します。
+\fBiconfont\fP は \fBiconfonteuc0\fP と同じです。
+.IP "\fBiconfonteuc0ext,iconfonteuc1ext,iconfonteuc2ext,iconfonteuc3ext\fP=\fIfontname\fP"
+アイコンの中で拡張フォントとして使用するフォント名を、各コードセットごとに指定します。
+.IP \fBmenufonteuc0,menufonteuc1,menufonteuc2,menufonteuc3\fP=\fIfontname\fP
+メニューの中で標準フォントとして使用するフォント名を、各コードセットごとに指定します。
+\fBmenufont\fP は \fBmenufonteuc0\fP と同じです。
+.IP \fBmenufonteuc0ext,menufonteuc1ext,menufonteuc2ext,menufonteuc3ext\fP=\fIfontname\fP
+メニューの中で拡張フォントとして使用するフォント名を、各コードセットごとに指定します。
+.IP \fBresizefonteuc0,resizefonteuc1,resizefonteuc2,resizefonteuc3\fP=\fIfontname\fP
+コーナー・ウィンドウの中で標準フォントとして使用するフォント名を、各コードセットごとに指定します。
+\fBresizefont\fP は \fBresizefonteuc0\fP と同じです。
+.IP \fBresizefonteuc0ext,resizefonteuc1ext,resizefonteuc2ext,resizefonteuc3ext\fP=\fIfontname\fP
+コーナー・ウィンドウの中で拡張フォントとして使用するフォント名を、各コードセットごとに指定します。
+.PP
+.SH MENU DEFINITION 
+.PP
+メニューのタイトルと各項目で EUC 文字列を使用することができます。
+.PP
+.bp
+.SH Customizing Icon Names
+.PP
+アイコン名に EUC 文字列を使用することができます。
+またアイコンに日本語入力をすることもできます。この場合、日本語フロントエンドである xwnmo をアイコン化に先だって起動しておく必要があります。
+.SH EXAMPLES
+.PP
+フォント名の指定の例を示します。
+.EX
+# 日本語フォントの使用例
+#
+iconfont=a14
+iconfonteuc1=k14
+iconfonteuc2=kana14
+menufont=a14
+menufonteuc1=k14
+menufonteuc2=kana14
+resizefont=a14
+resizefonteuc1=k14
+resizefonteuc2=kana14
+.EE
+.PP
+.SH FILES
+.PP
+ /usr/lib/X11/uwm/system.uwmrc
+ $HOME/.uwmrc
+ $HOME/.xjpuwmrc
+.PP 
+.SH SEE ALSO
+.PP
+uwm(1), xwnmo(1)
+
+.SH COPYRIGHT
+.ce 3
+Copyright 1989 TOSHIBA CORPORATION
+.LP
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided
+that the above copyright notice appear in all copies and that both that
+copyright notice and this permission notice appear in supporting
+documentation, and that the name of TOSHIBA Corporation not be used in 
+advertising or publicity pertaining to distribution of the software 
+without specific, written prior permission. TOSHIBA Corporation makes no 
+representations about the suitability of this software for any purpose.  
+It is provided "as is" without express or implied warranty.
+.LP
+TOSHIBA DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING 
+ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL 
+TOSHIBA BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR 
+ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, 
+WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, 
+ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS 
+SOFTWARE.
+.SH AUTHOR
+.nf
+	Katsuhisa Yano
+	Personal Computer Design Dept.
+	TOSHIBA CORPORATION OME WORKS
+	5-20-7 SORD BLD. MASAGO 
+	CHIBA-CITY CHIBA 260 JAPAN
+.fi

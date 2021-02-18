@@ -1,0 +1,56 @@
+.TH LINESTONES 1 "June 1989" "X Version 11"
+.SH NAME
+linestones -- tests the performance of line drawing
+.SH SYNOPSIS
+.B "linestones"
+[-option ...]
+.SH DESCRIPTION
+.PP
+\fILinestones\fP tests the performance of the XDrawLine() library routine.
+The default pattern is a polyline sweep.  Input files may be used to
+specify an alternate pattern.
+.PP
+The following is a sample of input file data:
+    100 140
+    150 180
+    160 200
+.PP
+In this sample the flags \fB-npts 2\fP and \fB-file sample\fP would be
+used.  Two lines would be drawn.  One from position 100,140 to 150,180 and
+one from position 150,180 to 160,200.
+.SH OPTIONS
+.TP 8
+.B \-npts \fInum\fP
+This option specifies the number of points per cal to XDrawLines.
+The default value is 3200.
+.TP 8
+.B \-maxpts
+This option specifies the use of the maximum number of points.
+This value is 8190.
+.TP 8
+.B \-wide \fInum\fP
+This option specifies the width of the lines.  If "0" is specified,
+the server will use a machine dependent algorithm for drawing the lines.
+"0" is the default value.
+.TP 8 
+.B \-length \fInum\fP
+This option specifies the length of each line segment.
+The default value is 200.
+.TP 8
+.B \-dash \fI(1) (2) (3) ... (N)\fP
+This option specifies the use of patterned lines.  The (1) specifies
+the number of values.  The (2) specifies the number of pixels to
+draw on.  The (3) specifies the number of pixels to draw off.
+.TP 8
+.B \-file \fIfilename\fP
+This option specifies the name of a file to use that contains input data..
+.TP 8
+.B \-help
+This option displays the help menu.
+.TP 8
+.B \-h
+This option displays the help menu.
+.SH "SEE ALSO"
+X(1)
+.SH "COPYRIGHT"
+International Business Machines

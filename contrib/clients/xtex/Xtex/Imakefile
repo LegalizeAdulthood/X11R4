@@ -1,0 +1,119 @@
+/*
+ *	Configureation options:
+ *	USE_TABLE
+ *		define to use the Table widget rather than form widget.
+ *		this allows more control over layout, but I fint the
+ *		table widget hard to control precisely. You'll also need
+ *		to check the defines & includes list in the #ifdef below
+ *		to make sure they poitn to the Table widget.
+ *
+ *	USE_CLEARBUTTON
+ *		In this version, the dialog box has been fixed to scroll
+ *		text off the top. So you don't need to clear it any more.
+ *
+ *	X11R4
+ *		Define this if you're using X11R4alpha, otherwise
+ *		undef it.
+ *
+ *	TEXFONTS - *see Xtex.ad to set this now*
+ *		This should point to the directory housing the .tfm files
+ *		for your fonts.
+ */
+
+
+#undef XVERSION_DEC
+#undef XVERSION_X11R3
+#define XVERSION_X11R4
+
+#undef USE_CLEARBUTTON
+#undef USE_TABLE
+
+#ifdef USE_TABLE
+  TABLE_INCLUDES= -I../Table
+  TABLE_LIBS	= -L../Table -lTable
+  TABLE_DEFINES	= -DUSE_TABLE
+#endif
+
+#ifdef USE_CLEARBUTTON
+  CLEAR_DEFINES	= -DUSE_CLEARBUTTON
+#endif
+
+
+/***************************************************************************/
+/*	You shouldn't have to change anything below this line		   */
+/***************************************************************************/
+
+      LIBTEXROOT= ../
+      LIBTEXSRC	= ../libtex
+         LIBTEX	= $(LIBTEXSRC)/libtex.a
+      DEPLIBTEX	= $(LIBTEX)
+        DEPLIBS = $(DEPLIBTEX) $(DEPXAWLIB) $(DEPXMULIB) $(DEPXTOOLLIB) $(DEPXLIB)
+LOCAL_LIBRARIES = $(LIBTEX)
+
+SRCS = xtex.c widgets.c \
+                  file.c dialog.c dvi-simple.c \
+                  page.c x11fonts.c mark.c \
+                  DviPage.c DviPage2.c
+
+HDRS	= DviPage.h dvi-simple.h mio.h xtex.h x11fonts.h \
+	DviPageP.h mark.h page.h widgets.h
+
+OBJS = xtex.o widgets.o \
+                  file.o dialog.o dvi-simple.o \
+                  page.o x11fonts.o mark.o \
+                  DviPage.o DviPage2.o
+
+PROGRAMS = xtex
+
+FILES = $(SRCS) $(SRCS2) $(HDRS) \
+	xtex.man Xtex.ad Imakefile Makefile ChangeLog FontMakefile
+
+DEFINES = $(TABLE_DEFINES) $(CLEAR_DEFINES) $(XVERSION_DEFINES)
+
+VERSION	=2.11#
+RCS_VERSION=2p11#
+
+#ifdef XVERSION_DEC
+   XVERSION_DEFINES	=-I/usr/include/mit -DX11R3
+   USRLIBDIR		=/usr/lib
+   INCLUDES		= $(TABLE_INCLUDES) -I$(LIBTEXROOT) -I/usr/include/mit
+   SYS_LIBRARIES	= $(TABLE_LIBS) -L$(USRLIBDIR) -lXaw -lXt -lXmu -lX11 -lm
+#endif
+
+#ifdef XVERSION_X11R3
+   XVERSION_DEFINES	=-DX11R3
+   INCLUDES		= $(TABLE_INCLUDES) -I$(LIBTEXROOT) -I$(INCROOT)
+   SYS_LIBRARIES	= $(TABLE_LIBS) -L$(USRLIBDIR) -lXaw -lXt -lXmu -lX11 -lm
+#endif
+
+#ifdef XVERSION_X11R4
+   XVERSION_DEFINES	=-DX11R4
+   INCLUDES		= $(TABLE_INCLUDES) -I$(LIBTEXROOT) -I$(INCROOT)
+   SYS_LIBRARIES	= $(TABLE_LIBS) -L$(USRLIBDIR) -lXaw -lXt -lXmu -lXext -lX11 -lm
+#endif
+
+all:	xtex
+
+SingleProgramTarget(xtex,$(OBJS),$(LOCAL_LIBRARIES),$(SYSLIBS))
+InstallProgram(xtex, $(BINDIR))
+InstallManPage(xtex, $(MANDIR))
+InstallAppDefaults(Xtex)
+
+dvi-simple.c: Makefile Imakefile
+
+ci:
+	ci -l -f -m"xtex $(VERSION)" -ntexx$(RCSVESION) $(FILES)
+
+new-ad:: Xtex.ad
+	$(INSTALL) -c $(INSTAPPFLAGS) Xtex.ad $(XAPPLOADDIR)/xtex
+
+tar:
+	cd ../..;\
+	for file in $(FILES); \
+	do \
+	  tar rf $(TARFILE) $(PRODUCT)/Xtex/$$file; \
+	done
+
+DependTarget()
+CleanTarget()
+TagsTarget()

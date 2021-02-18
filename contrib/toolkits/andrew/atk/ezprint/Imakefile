@@ -1,0 +1,20 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+DOBJS = ezprinta.do
+IHFILES = ezprinta.ih
+
+NormalObjectRule()
+NormalATKRule()
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+InstallLink(runapp, ${DESTDIR}/bin/ezprint)
+InstallFileToFile(prscribe.csh,${INSTPROGFLAGS},${DESTDIR}/bin/printscribe)
+
+DependTarget()
+
+NormalHelpRule()
+InstallDocs(ezprint.help ezprint.chng, ${DESTDIR}/help)
+InstallHelpAlias(ezprint, ez-print prez printez)

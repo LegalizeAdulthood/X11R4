@@ -1,0 +1,43 @@
+#
+# Imakefile for olwm
+#
+# OLGXLIBDIR is the location of the olgx library.  This must be built before
+#	olwm.  Currently this is setup for building in the X11R4 release
+#	hierarchy.  
+# OLGXINCDIR is the location of the olgx include files.
+#
+# These paths do not have to be relative.
+
+OLGXINCDIR = ../../lib/olgx
+OLGXLIBDIR = ../../lib/olgx
+
+# It is necessary to define void=int on systems that do not handle
+# the (void *) construct properly.  This includes PCC-based MIPS compilers,
+# such as on the DECstation 3100.
+
+INCLUDES = -I. -I$(OLGXINCDIR) -I$(TOP)
+DEPLIBS = $(OLGXLIBDIR)/libolgx.a $(DEPXLIB)
+LOCAL_LIBRARIES = -L$(OLGXLIBDIR) -lolgx $(XLIB)
+
+HEADERS	= menu.h olwm.h st.h
+
+SRCS = 	AdFooter.c AdFrame.c AdPushPin.c AdResize.c AdShineMark.c AdTitleBar.c \
+	CheckMap.c Debug.c Dialogue.c Error.c Icon.c InitGraphics.c MenuWin.c \
+	RootWin.c RubberWin.c Select.c WinInfo.c defaults.c menu.c olwm.c \
+	st.c usermenu.c usleep.c
+
+OBJS = 	AdFooter.o AdFrame.o AdPushPin.o AdResize.o AdShineMark.o AdTitleBar.o \
+	CheckMap.o Debug.o Dialogue.o Error.o Icon.o InitGraphics.o MenuWin.o \
+	RootWin.o RubberWin.o Select.o WinInfo.o defaults.o menu.o olwm.o \
+	st.o usermenu.o usleep.o
+
+BITMAPS = \ 
+	bitmaps/icon.h bitmaps/llresize.h bitmaps/lrresize.h \
+	bitmaps/pushpin.h bitmaps/pushpinin.h bitmaps/shinemark.h \
+	bitmaps/ulresize.h bitmaps/urresize.h bitmaps/windowmark.h
+
+MISC 	= .olwmmenu Readme Makefile
+
+ComplexProgramTarget(olwm)
+
+DependTarget()

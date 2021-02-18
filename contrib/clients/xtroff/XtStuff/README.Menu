@@ -1,0 +1,58 @@
+Menu Widget
+
+To create a menu widget, the application first builds a table of the menu
+items to be used to construct the menu. This table is passed to the Menu
+Widget at the menu creation time. Each menu item in the table conveys four
+pieces of information and has the following structure:
+
+   {String text; XtCallback proc; caddr_t closure; Boolean flags}
+
+	Where text 	: the text string to be displayed for this menu item.
+	      proc	: the callback procedure associated with this item.
+	      closure	: the closure to be returned by this item's callback
+			  procedure.
+	      flags	: the flag indicates the sensitivity and check states
+			  of this item. For simple applications, just pass NULL
+			  here. The format of this field will be explained later.
+
+For example, the following segment of C program shows how to build a simple
+menu of three menu items.
+/****************************************************************************/
+...
+
+void procedure_a (widget, closure, call_data)
+ { 
+	...
+ }
+
+void procedure_b (widget, closure, call_data)
+{
+	...
+}
+
+static MenuItemsList menu_list [] = {
+	{"menu item 1", procedure_a, 1, NULL},
+	{"menu item 2", procedure_a, 2, NULL},
+	{"menu item 3", procedure_b, 1, NULL},
+	{NULL, NULL, NULL, NLL}
+	};
+
+	{XtNmenuItemsList, (XtArgVal) menu_list}
+	};
+
+...
+
+menu = XtCreateManagedWidget("my_menu", menuWidgetClass, parent_widget,
+			 (ArgList) args, XtNumber(args));
+/****************************************************************************/
+
+The following new fields are created for the Menu Widget Part and are accessible
+to the application
+Name			Type		Default		  Description
+
+XtNorientation		XtOrientation	XtorientVertical  Row/Column layout
+XtNxMargin		Dimension	0		  x margin between items
+XtNyMargin		Dimension	0		  y margin between items
+XtNmenuForeground	Pixel		Black		  color for menu item
+XtNcheckForeground	Pixel		Black		  color for check item
+_______________________________________________________________________________

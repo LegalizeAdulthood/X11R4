@@ -1,0 +1,136 @@
+
+
+			     R4 Errata
+
+
+1.  You are building servers on 680x0 or VAX platforms, you should probably
+    use GCC if you have it, especially for the server.  However, please note
+    that the system has only been tested with gcc version 1.35.  It is known
+    that the XtNewString macro in Xt miscompiles under gcc 1.36.  It is also
+    known that some parts of the system miscompile under gcc 1.36 on the SPARC.
+    Make sure you have run "fixincludes" from the gcc distribution before you
+    build the system, or ioctl() calls will miscompile.  If you have installed
+    your gcc-include files somewhere besides /usr/local/lib/gcc-include, you
+    will have to edit line 197 of the file mit/util/makedepend/main.c to
+    point at the proper directory.
+
+
+2.  If you are trying to install library files into a directory other than
+    /usr/lib/X11, you'll need to change XFILESEARCHPATHDEFAULT and ERRORDB
+    in the file mit/lib/Xt/IntrinsicI.h to point at the correct directories.
+    You'll also need to change SYSTEM_INIT_FILE in mit/clients/twm/parse.c.
+    You'll also need to add the following line to mit/lib/Xmu/Imakefile:
+
+	DEFINES = -DBITMAPDIR=\"$(INCDIR)/bitmaps\"
+
+
+3.  Do not turn on InstallXdmConfig as there is no longer a default directory
+    under mit/clients/xdm/config/.  Install xdm configuration files by hand.
+
+
+4.  Some versions of tcsh erroneously set the eighth bit on characters they 
+    emit.  If you are not seeing text in your xterm windows and are using 
+    tcsh, try using a different shell (e.g. xterm -e /bin/sh).
+
+
+5.  Sites running BSD 4.3 on vaxes will need to enable the qvss and/or qdss
+    servers and will need to specify -DX11R4 in the ServerDefines line in
+    mit/config/bsd.cf if building the qdss server:
+
+	#ifdef VaxArchitecture
+	#define XqvssServer Xqvss
+	#define XqdssServer Xqdss
+	#define ServerDefines StandardDefines ExtensionDefines -DXDMCP -DNOSTDHDRS -DX11R4
+	#endif
+
+
+6.  If you are building on a macII without gcc, you need to define CcCmd in 
+    mit/config/macII.cf as follows:
+
+	#define CcCmd	cc -B /usr/lib/big/
+
+7.  If you are building on a vax, the lucida typewriter fonts will not
+    display correctly.  To correct this, change line 410 of the file
+    mit/fonts/bdftosnf/fontutil.c from:
+
+	inwidth = GLWIDTHBYTESPADDED (pCI->metrics.characterWidth, glyphPad);
+
+    to:
+
+	inwidth = GLWIDTHBYTESPADDED (pCI->metrics.rightSideBearing -
+				      pCI->metrics.leftSideBearing, glyphPad);
+
+
+8.  If you are building with shared libraries on a Sun (we suggest that you
+    do), remember that you need to run "ldconfig" as root after installing
+    the shared libraries.  While building and installing the distribution,
+    you need to be careful to avoid linking against any existing X shared
+    libraries you might have (e.g. those distributed with OpenWindows).  You
+    should make sure you do not have LD_LIBRARY_PATH set in your environment
+    during the build or the installation.  If you are going to keep xterm and
+    xload as setuid programs, please note that the shared libraries must be
+    installed in /usr/lib, /usr/5lib, or /usr/local/lib for these programs to
+    work (or else those programs must be linked statically).
+
+
+9.  The IBM server does run on the RT under AIX.  It should work under AOS
+    on the RT, and under AIX on the PS/2.
+
+
+10. Make sure your own resource files don't try to specify xterm geometry with
+	xterm*geometry: <...>
+    This will cause menu geometries to be incorrect.  Instead, use one of:
+	xterm.geometry: <...>
+	xterm*VT100.geometry: <...>
+    The same problem may exist with other clients.
+
+
+11. Various R3 clients will get protocol errors when run against an R4 server.
+    If you need to run these clients without fixing them, try "xset bc".
+
+
+12.  When the "utmpInhibit" resource is turned on, xterm exits with no error
+     message.  To fix, change lines 1784 and 1785 of mit/clients/xterm/main.c
+     to:
+	if ((pw = getpwuid(screen->uid)) &&
+	    !resource.utmpInhibit &&
+     Also change line 1855 to read:
+	if (geteuid() == 0 && pw)
+
+
+13.  If you are building the server on an old SunOS (e.g. 3.5), you will have
+     to add the following defines to mit/server/ddx/sun/sunCG3C.c to get it
+     to compile:
+
+	#define CG3AC_MONOLEN (128*1024)
+	#define CG3AC_ENBLEN  CG3AC_MONOLEN
+	#define CG3BC_MONOLEN CG3AC_MONOLEN
+	#define CG3BC_ENBLEN  CG3AC_MONOLEN
+
+
+14.  The twm feature to use window borders to highlight the active window is
+     broken.  The fix is to replace lines 2468-2471 of 
+     mit/clients/twm/menus.c with the following:
+
+	if (onoroff) {
+	    XSetWindowBorder (dpy, tmp->frame, tmp->border);
+	    if (tmp->title_w)
+	      XSetWindowBorder (dpy, tmp->title_w, tmp->border);
+	} else {
+	    XSetWindowBorderPixmap (dpy, tmp->frame, tmp->gray);
+	    if (tmp->title_w)
+	      XSetWindowBorderPixmap (dpy, tmp->title_w, tmp->gray);
+	}
+
+
+15.  The AsciiDiskSource compatibility has bugs that may cause contributed
+     clients to fail.  Change the expression "TWO" to "ONE" on line 1309 of 
+     mit/lib/Xaw/AsciiSrc.c, and move the call to XtMergeArgLists from 
+     line 1302 to line 1307 (just before the call to XtCreateWidget).
+
+16.  A SunOS 4.0.3 include file (/usr/include/sundev/vuid_event.h) does not
+     compile under GCC because it breaks an ANSI C rule.  Replace line 42
+     of that file with the following:
+
+        have to be concerned.  In fact, the vuid interface doesn''t
+

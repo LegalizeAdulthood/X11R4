@@ -1,0 +1,108 @@
+#ifndef LINT
+#ifdef RCS_ID
+static char *rcsid=  "$Header: StoreZap.c,v 5.4 89/11/22 15:13:08 glennw Exp $";
+#endif /* RCS_ID */
+#endif /* LINT */
+
+/*
+ * Copyright 1987, 1988 by Digital Equipment Corporation, Maynard,
+ * Massachusetts, and the Massachusetts Institute of Technology, Cambridge,
+ * Massachusetts.  Copyright 1987 by Jordan Hubbard.  Copyright 1987, 1988 by
+ * Ardent Computer Corporation, Sunnyvale, Ca.  Copyright 1989 by Tektronix,
+ * Inc., Beaverton, Oregon.
+ *
+ * Permission to use, copy, modify, distribute, and sell this software and
+ * its documentation for any purpose is hereby granted without fee, provided
+ * that the above copyright notice appear in all copies and that both that
+ * copyright notice and this permission notice appear in supporting
+ * documentation, and that the names of Ardent Computer Corporation, Jordan
+ * Hubbard, Digital Equipment, Tektronix or M.I.T.  not be used in
+ * advertising or publicity pertaining to distribution of the software
+ * without specific, written prior permission.  Ardent Computer Corporation,
+ * Jordan Hubbard, Digital Equipment, Tektronix and M.I.T.  make no
+ * representations about the suitability of this software for any purpose.
+ * It is provided "as is" without express or implied warranty.
+ *
+ * ARDENT COMPUTER CORPORATION, JORDAN HUBBARD, DIGITAL EQUIPMENT, TEKTRONIX,
+ * AND M.I.T.  DISCLAIM ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+ * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
+ * EVENT SHALL ARDENT COMPUTER CORPORATION, JORDAN HUBBARD, DIGITAL
+ * EQUIPMENT, TEKTRONIX, OR M.I.T.  BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+ * CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
+ * USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+ * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+ * PERFORMANCE OF THIS SOFTWARE.
+ *
+ * Author:  Glenn Widener, Tektronix, Inc.
+ *          P.O. Box 1000
+ *          Wilsonville, OR, 97070
+ *          glennw@orca.wv.tek.com
+ */
+
+/*
+ * MODIFICATION HISTORY
+ *
+ * 000 -- M. Gancarz, DEC Ultrix Engineering Group
+ * 001 -- Loretta Guarino Reid, DEC Ultrix Engineering Group,
+    Western Software Lab. Convert to X11.
+ */
+
+/*
+ *	StoreZap - This subroutine is used by the X Window Manager (xwm)
+ *	to store the vertices for the iconify, uniconify zap.
+ *
+ */
+
+#include "awm.h"
+
+/*
+ * Store the vertices for the zap effect.
+ */
+int StoreZap(zap, ulx_1, uly_1, lrx_1, lry_1, ulx_2, uly_2, lrx_2, lry_2)
+    register XSegment zap[];
+    int ulx_1;		/* From window, upper left X coordinate. */
+    int uly_1;		/* From window, upper left Y coordinate. */
+    int lrx_1;		/* From window, lower right X coordinate. */
+    int lry_1;		/* From window, lower right Y coordinate. */
+    int ulx_2;		/* To window, upper left X coordinate. */
+    int uly_2;		/* To window, upper left Y coordinate. */
+    int lrx_2;		/* To window, lower right X coordinate. */
+    int lry_2;		/* To window, lower right Y coordinate. */
+{
+
+    Entry("StoreZap")
+
+    /*
+     * Xor in.
+     */
+    zap[0].x1 = ulx_1;	zap[0].y1 = uly_1;
+    zap[0].x2 = ulx_2;	zap[0].y2 = uly_2;
+
+    zap[1].x1 = lrx_1;	zap[1].y1 = uly_1;
+    zap[1].x2 = lrx_2;	zap[1].y2 = uly_2;
+
+    zap[2].x1 = lrx_1;	zap[2].y1 = lry_1;
+    zap[2].x2 = lrx_2;	zap[2].y2 = lry_2;
+
+    zap[3].x1 = ulx_1;	zap[3].y1 = lry_1;
+    zap[3].x2 = ulx_2;	zap[3].y2 = lry_2;
+
+    /*
+     * Xor out.
+     */
+    zap[4].x1 = ulx_1;	zap[4].y1 = uly_1;
+    zap[4].x2 = ulx_2;	zap[4].y2 = uly_2;
+
+    zap[5].x1 = lrx_1;	zap[5].y1 = uly_1;
+    zap[5].x2 = lrx_2;	zap[5].y2 = uly_2;
+
+    zap[6].x1 = lrx_1;	zap[6].y1 = lry_1;
+    zap[6].x2 = lrx_2;	zap[6].y2 = lry_2;
+
+    zap[7].x1 = ulx_1;	zap[7].y1 = lry_1;
+    zap[7].x2 = ulx_2;	zap[7].y2 = lry_2;
+    /*
+     * Total number of vertices is 8.
+     */
+    Leave(8)
+}

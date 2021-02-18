@@ -1,0 +1,41 @@
+DEFINES = -I/usr/new/include -DX11
+SYS_LIBRARIES = -lm
+SYSAUX_LIBRARIES = -L/usr/new/lib -lXaw -lXt -lXmu -lX11
+
+SRCS=	addpt.c arc.c arrow.c autoarrow.c\
+	bitmap.c blink.c bound.c box.c break.c\
+	canvas.c char.c color.c copy.c cursor.c curve.c\
+	deletept.c dir.c drag.c draw.c ellipse.c\
+	file.c flip.c font.c free.c\
+	geom.c global.c glue.c graphics.c grid.c\
+	intspline.c latex_line.c line.c list.c\
+	main.c move.c movept.c msgsw.c\
+	panel.c popup.c puterr.c\
+	read.c read1_3.c redisplay.c remove.c rotate.c ruler.c\
+	save.c scale.c search.c spline.c\
+	text.c trans.c turn.c undo.c util.c xtra.c
+
+OBJS=	addpt.o arc.o arrow.o autoarrow.o\
+	bitmap.o blink.o bound.o box.o break.o\
+	canvas.o char.o color.o copy.o cursor.o curve.o\
+	deletept.o dir.o drag.o draw.o ellipse.o\
+	file.o flip.o font.o free.o\
+	geom.o global.o glue.o graphics.o grid.o\
+	intspline.o latex_line.o line.o list.o\
+	main.o move.o movept.o msgsw.o\
+	panel.o popup.o puterr.o\
+	read.o read1_3.o redisplay.o remove.o rotate.o ruler.o\
+	save.o scale.o search.o spline.o\
+	text.o trans.o turn.o undo.o util.o xtra.o
+
+F2PSRC =	arrow.c f2p.c free.c read.c read1_3.c
+F2POBJ =	arrow.o f2p.o free.o read.o read1_3.o
+
+F2PSSRC =	arrow.c bound.c f2ps.c free.c read.c read1_3.c
+F2PSOBJ =	arrow.o bound.o f2ps.o free.o read.o read1_3.o
+
+ComplexProgramTarget(xfig)
+
+SingleProgramTarget(f2p,$(F2POBJ),,)
+
+SingleProgramTarget(f2ps,$(F2PSOBJ),,)

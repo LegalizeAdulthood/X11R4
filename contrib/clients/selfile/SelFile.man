@@ -1,0 +1,192 @@
+.\" $Header: SelFile.man,v 1.4 89/08/30 16:01:31 erik Exp $
+.\"
+.\" Copyright 1989 Software Research Associates, Inc., Tokyo, Japan
+.\"
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation, and that the name of Software Research Associates not be used
+.\" in advertising or publicity pertaining to distribution of the software
+.\" without specific, written prior permission.  Software Research Associates
+.\" makes no representations about the suitability of this software for any
+.\" purpose.  It is provided "as is" without express or implied warranty.
+.\"
+.\" SOFTWARE RESEARCH ASSOCIATES DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS
+.\" SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS,
+.\" IN NO EVENT SHALL SOFTWARE RESEARCH ASSOCIATES BE LIABLE FOR ANY SPECIAL,
+.\" INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+.\" LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+.\" OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+.\" PERFORMANCE OF THIS SOFTWARE.
+.\"
+.\" Author: Erik M. van der Poel
+.\"         Software Research Associates, Inc., Tokyo, Japan
+.\"         erik@sra.co.jp
+.\"
+.TH XSRASELFILE 3X "April 24 1989" SRA
+.SH NAME
+\fIXsraSelFile\fR \- select a file
+.sp
+.SH SYNOPSIS
+.nf
+.ft B
+#include <stdio.h>
+#include <X11/Intrinsic.h>
+.PP
+.ft B
+.ta +\w'unsigned char  'u
+ret = XsraSelFile(display, prompt, ok, cancel, init_path, show_entry, path_return)
+int	ret;
+Display	*display;
+unsigned char	*prompt;
+unsigned char	*ok;
+unsigned char	*cancel;
+char	*init_path;
+int	(*show_entry)();
+char	**path_return;
+.fi
+.sp
+.SH DESCRIPTION
+.I XsraSelFile
+allows an X11 user to select a file by typing the path or by browsing in
+directory listings and selecting entries with the mouse.
+.sp
+The space bar can be pressed to complete filenames, and tilde is used for home
+directories.
+All of the usual key bindings can be used in the text widget, except for Return
+and Control-M, which are equivalent to pressing the OK button.
+The path can be scrolled using the large horizontal scroll bar, or by moving
+the insertion cursor in the text widget.
+The directory entries can be scrolled using the vertical scroll bars, or by
+holding a mouse button down and moving out of the listing.
+The scrolling speed varies with the distance from the listing.
+.sp
+The directory entries are terminated with special characters that indicate the
+kind of entry, similar to the
+.I \-F
+option of
+.IR ls (1).
+.sp
+The programmer's interface is simple, providing an easy way for the application
+to obtain a filename from the user.
+.sp
+.I XsraSelFile
+does not allow X events to be generated on any other widgets in the application
+by adding a grab for the dialog widget while it is active.
+.sp
+.SH ARGUMENTS
+The
+.B display
+argument specifies the display on which to create the new application shell
+dialog widget.
+If it is specified as NULL, the default display is opened by initializing the X
+toolkit.
+.sp
+The
+.B prompt
+argument specifies the prompt to print near the top of the new widget.
+This should be a string containing no newlines.
+If the prompt is specified as NULL, the string "Pathname:" is used.
+.sp
+The
+.B ok
+argument specifies the string to print in the OK button.
+If it is specified as NULL, "OK" is used.
+.sp
+The
+.B cancel
+argument specifies the string to print in the Cancel button.
+If it is specified as NULL, "Cancel" is used.
+.sp
+The initial path may be set using
+.BR init_path .
+If it is specified as NULL, the initial path will be the current directory.
+.sp
+The
+.B show_entry
+argument is a pointer to a function that is called to decide whether or not to
+display a particular directory entry.
+If this argument is specified as NULL, all entries will be displayed.
+Otherwise, the function is called with arguments as follows.
+.sp
+.nf
+.ft I
+.ta +\w'struct stat  'u
+int show_entry(real_name, shown_name_return, entry_stat)
+char	*real_name;
+char	**shown_name_return;
+struct stat	*entry_stat;
+.ft R
+.fi
+.sp
+The
+.I real_name
+argument is the name of the entry, and the
+.I entry_stat
+argument is a pointer to the stat buffer of the entry.
+The contents of the real_name and entry_stat arguments should not be altered.
+The
+.I shown_name_return
+argument is to be filled in by the function if a name other than the real name
+is to be shown.
+The function should return true if the entry is to be displayed.
+An example of a show_entry function can be found in
+.IR callback.c .
+.sp
+When the return key or the OK button is pressed,
+.I XsraSelFile
+returns, putting the full path of the selected file in
+.B path_return
+unless it is NULL.
+.I XtMalloc
+is used to make a copy of the path.
+The application writer is responsible for freeing the space.
+.sp
+.SH RETURN VALUE
+The
+.B ret
+return value is 0 if the user presses the return key or the OK button.
+Otherwise, the user has pressed the Cancel button and a value of \-1 is
+returned.
+.sp
+.SH COMPILATION
+The XsraSelFile package can be linked with Athena (Xaw) and/or Hewlett-Packard
+(Xw) widgets, by choosing the appropriate defines. See the Imakefile for
+details.
+.sp
+.SH RESOURCES
+The font to be used by
+.I XsraSelFile
+is specified by putting the following in a resource file:
+.sp
+.ft H
+	selFile*font	:9x15
+.ft R
+.sp
+(The default font is
+.IR 9x15 .)
+.sp
+.SH ENVIRONMENT
+DISPLAY \- the default host and display to use.
+.sp
+.SH "SEE ALSO"
+X(1), xrdb(1), X Toolkit
+.sp
+.SH BUGS
+.I XsraSelFile
+must always be called with the same
+.I display
+argument.
+.sp
+When a directory is modified by a third party while the pointer is in that
+directory's listing, the display will be updated and the pointer will be warped
+away to prevent the user from selecting `the wrong file', which can be
+considered dangerous if the application is about to delete whatever the user
+selects.
+.sp
+.SH COPYRIGHT
+Copyright 1989 Software Research Associates, Inc., Tokyo, Japan
+.sp
+.SH AUTHOR
+Erik M. van der Poel, Software Research Associates, Inc., Tokyo, Japan

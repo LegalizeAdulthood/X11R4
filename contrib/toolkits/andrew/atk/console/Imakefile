@@ -1,0 +1,9 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+#define	IHaveSubdirs
+
+SUBDIRS = lib stats cmd consoles fonts doc
+
+MkdirTarget($(COMMON)/$(DESTDIR)/lib/ $(COMMON)/$(DESTDIR)/lib/consoles)

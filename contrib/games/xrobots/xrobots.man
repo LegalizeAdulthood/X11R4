@@ -1,0 +1,224 @@
+.\" Man page for xrobots.
+.TH XROBOTS 6 "30 Sep 1989"
+.SH NAME
+xrobots \- fight off villainous robots (X Windows)
+.SH SYNOPSIS
+.B /usr/games/xrobots 
+.SH DESCRIPTION
+.LP
+As in robots(6), xrobots puts you into a world of evil robots (but in
+an X window, of course).
+It's your intellect against the robots, who have numbers on their side.
+Fortunately for you, these robots have a bad habit of crashing into 
+each other, destroying themselves and temporarily improving your
+chances of survival.
+.LP
+You have a the following abilities: 
+.LP
+.RS
+You can move one square at a time (but so can the robots).  
+The direction of possible moves are indicated by the dots near your man
+and by the shape of the cursor.
+Clicking the left mouse button selects the direction.
+.LP
+You can wait for robots to reach you.  Do this by clicking on
+the button labeled "Wait" below the main playfield or by 
+pressing 'w' while the mouse pointer is within the playfield.
+.LP
+You can use your teleportation device.  This defensive weapon
+is not without risk.  This can be invoked by clicking on 
+"Teleport" or by pressing 't'.
+.LP
+You have a "sonic screwdriver" which wipes out any robots 
+within close proximity.  This offensive weapon recharges once for 
+each level.  This can be invoked by the "Sonic Screwdiver" button
+or by pressing 's'.
+.LP
+The default keyboard setup is similar to the original robots:
+.RS
+.TP
+.B h
+move one square left
+.TP
+.B l
+move one square right
+.TP
+.B k
+move one square up
+.TP
+.B j
+move one square down
+.TP
+.B y
+move one square up and left
+.TP
+.B u
+move one square up and right
+.TP
+.B b
+move one square down and left
+.TP
+.B n
+move one square down and right
+.TP
+.B \&.
+(also space) do nothing for one turn
+.TP
+.SB HJKLBNYU
+run as far as possible in the given direction
+.B t
+teleport to a random location
+.TP
+.B w
+wait until they reach you
+.TP
+.B s
+use your sonic screwdriver
+.TP
+.B control-C is quit
+.RE
+.RE
+.LP
+.SH RESOURCES
+.LP
+If you don't like 's' for the sonic screwdriver and 't' for teleport
+you can change this.  xrobots is programmed using the X Toolkit and 
+takes advantage of the toolkit's resources and translation schemes.  
+The following are resources that are used by xrobots and should probably
+be set in your .Xdefaults file. 
+.LP
+.RS
+xrobots.autoteleport
+.RS
+If set to true, you teleport automatically when there is no
+other option.  This does not autoteleport if the sonic screwdriver has not
+been used.  The default is false.
+.RE
+.LP
+xrobots.autoteleportalways
+.RS
+This is similar to autoteleport, but teleports automatically even
+if you have a sonic screwdriver available.  The default is false.
+.RE
+.LP
+xrobots.diewaiting
+.RS
+Setting this to true adds a little risk to your life and makes the
+game play a little more like BSD robots.  The default is false.
+.RE
+.LP
+xrobots.scorefile
+.RS
+Set this to the path of your personal score file.  The file will be
+created if it does not exist.  The default: /usr/games/lib/xrobots_scores
+.RE
+.LP
+xrobots.showmovement
+.RS
+If set to false, intermediate movements will not be shown.
+This may be useable for very slow servers or very fast players.
+The default is true.
+.RE
+.LP
+xrobots.spiffy
+.RS
+If set to false, some of the graphics will not be shown.  This is
+helpful for slow servers.  The default is true.
+.RE
+.RE
+.LP
+Additionally, all the key bindings can be changed.  Here's a sample
+set of translation bindings that you can modify to your preferences:
+.LP
+.RS
+xrobots*Translations:   #augment     \\n\\ 
+.RS
+.nf
+<Btn1Up>:    move()             \\n\\ 
+:<Key>u:     move(right, up)    \\n\\ 
+:<Key>l:     move(right)        \\n\\ 
+:<Key>n:     move(right, down)  \\n\\ 
+:<Key>y:     move(left, up)     \\n\\ 
+:<Key>h:     move(left)         \\n\\ 
+:<Key>b:     move(left, down)   \\n\\ 
+:<Key>k:     move(up)           \\n\\ 
+:<Key>j:     move(down)         \\n\\ 
+:<Key>U:     jump(right, up)    \\n\\ 
+:<Key>L:     jump(right)        \\n\\ 
+:<Key>N:     jump(right, down)  \\n\\ 
+:<Key>Y:     jump(left, up)     \\n\\ 
+:<Key>H:     jump(left)         \\n\\ 
+:<Key>B:     jump(left, down)   \\n\\ 
+:<Key>K:     jump(up)           \\n\\ 
+:<Key>J:     jump(down)         \\n\\ 
+<Key>.:      move(nowhere)      \\n\\ 
+<Key>\\\\ :    move(nowhere)      \\n\\ 
+<Btn2Up>:    go_here()          \\n\\ 
+<Btn3Up>:    wait()             \\n\\ 
+<Key>s:      sonic()            \\n\\ 
+<Key>t:      teleport()         \\n\\ 
+<Key>w:      wait()             \\n\\ 
+<Key>z:      new_game()         \\n\\ 
+Ctrl<Key>c:  quit()
+.fi
+.RE
+.RE
+.RE
+.LP
+.SH ACTIONS
+.LP
+Here's what each action that can be referenced via translations
+is and what it does:
+.RS
+.LP
+The move() action with no parameters uses the relative position of the 
+mouse pointer to determine the direction in which to go.  Otherwise,
+a combination of "left", "right", "up", "down", and "nowhere" will 
+direct the direction.  If "nowhere" is used, the player's icon will
+remain still while the robots take their turn.
+.LP
+The jump() action does the same thing as move(), except it causes
+the player to move in a direction until it can't go any farther.
+This is used in the default translations when a key is shifted.
+.LP
+The go_here() action directs the player's icon to the location where the
+mouse button was released.  Of course, the robots will chase you, and
+if doom is impending, go_here() will stop.
+.LP 
+The wait() action causes the robots to move until they are breathing
+right down your neck.
+.LP  
+The sonic() action invokes the sonic screwdriver.
+.LP
+The teleport() action invokes the teleportation device.
+.LP
+The new_game() and quit() actions do what you would expect them to. 
+.LP
+.SH OPTIONS
+.LP
+In addition to the normal XToolkit options, xrobots accepts command line
+options for the following resources: spiffy, autoteleport, 
+autoteleportalways, showmovement, diewaiting, and scorefile.  These correspond
+to the resources as described above.  
+.LP
+.RS
+For example: xrobots -scorefile myscorefile
+.RE
+.LP
+.SH SCORING
+.LP
+Each robot that is wasted is worth ten points.  Additionally, 
+bonuses are awarded for each teleportation, and for not using the 
+sonic screwdriver.  The name for the high score list comes from
+the USER environment variable.
+.LP
+.SH FILES
+.LP
+/usr/games/lib/xrobots_scores \-\- the score file
+.LP
+.SH AUTHOR
+.LP
+There are many versions of robots floating around.  So many that it
+would be difficult to say who the original author is.  This version was
+written from scratch by Brian Warkentine (brianw@Sun.COM).
+

@@ -1,0 +1,50 @@
+.TH STRINGSTONES 1 "June 1989" "X Version 11"
+.SH NAME
+stringstones -- tests the performace of strings
+.SH SYNOPSIS
+.B "stringstones"
+[-option ...]
+.SH DESCRIPTION
+.PP
+Stringstones uses the XDrawString or XDrawImageString function calls.
+.SH OPTIONS
+.TP 8
+.B \-nchars \fInum\fP
+This option specifies the number of characters per line if all fit
+in the window.  The default value is 115.
+.TP 8
+.B \-image
+This option specifies the use of the XDrawImageString call.  The
+default value is XDrawString.
+.TP 8
+.B \-tile
+This option specifies a tile fill.
+The bitmap used for the tile is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8 
+.B \-stip
+This option specifies a stipple fill.
+The bitmap used for the stipple is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-opaqstip
+This option specifies an opaque stipple fill.
+The bitmap used for the stipple is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-opaqstipbg \fIcolorname\fP
+This option specifies the color to use for the
+background of the opaque stipple
+.TP 8
+.B \-string \fIstring\fP
+This option specifies string to use instead of the default.
+.TP 8
+.B \-help
+This option displays the help menu.
+.TP 8
+.B \-h
+This option displays the help menu.
+.SH "SEE ALSO"
+X(1)
+.SH "COPYRIGHT"
+Copyright 1989 International Business Machines

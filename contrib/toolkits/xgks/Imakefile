@@ -1,0 +1,12 @@
+#
+# $XConsortium: Imakefile,v 1.1 89/09/18 16:11:29 jim Exp $
+#
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+SUBDIRS = lib fontdb demo
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+

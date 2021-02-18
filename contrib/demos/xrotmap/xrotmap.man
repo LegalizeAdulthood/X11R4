@@ -1,0 +1,34 @@
+.\" %Z%%M% %I% %E%; Copyright (c) 1988 - Sun Microsystems
+.TH xrotmap 1 "15 Aug 1988"
+.SH NAME
+xrotmap \- rotate an HSB colormap
+
+.SH SYNOPSIS
+.B xrotmap
+[
+.BI \-display " connection"
+]
+.SH DESCRIPTION
+.I xrotmap
+installs an HSB ramp colormap and then rotates it as fast as it can.
+It will reinstall its colormap if any other application uninstalls it.
+NB:  This is highly anti-social.
+.SH OPTIONS
+.TP 5
+.BI \-display " connection"
+Connect to X server display,
+.IR connection.
+.SH SEE ALSO
+    X(1)
+.SH BUGS
+The executable is useful only for vandalism, though the source
+may be educational.
+.SH COPYRIGHT
+ Copyright (c) 1988 by Sun Microsystems, Inc.
+ David Lemke (lemke@wirehead.sun.com)
+
+ Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation. 

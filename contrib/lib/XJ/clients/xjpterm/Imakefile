@@ -1,0 +1,19 @@
+#include "../../XJImake.defs"
+
+       INCLUDES = -I$(XJINCLUDESRC) -I$(TOP)
+        DEFINES = $(XJDEFINES) -DMODEMENU -DUTMP -DKANJI -DXWNMO -DXJP -DX11R3 -DBcopy=bcopy
+   INSTALLFLAGS = $(INSTUIDFLAGS)
+LOCAL_LIBRARIES = $(XJPLIB) $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+  SYS_LIBRARIES = $(XJTERM_LIB)
+
+SRCS= button.c charproc.c cursor.c data.c input.c \
+      main.c menu.c misc.c screen.c scrollbar.c tabs.c \
+      TekPrsTbl.c Tekproc.c util.c VTPrsTbl.c \
+      convert.c jistouj.c patchlevel.c
+OBJS= main.o input.o charproc.o cursor.o util.o tabs.o \
+      screen.o scrollbar.o button.o Tekproc.o misc.o \
+      VTPrsTbl.o TekPrsTbl.o data.o menu.o \
+      convert.o jistouj.o patchlevel.o
+
+ComplexProgramTarget(xjpterm)
+

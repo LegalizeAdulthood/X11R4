@@ -1,0 +1,52 @@
+#
+# %Z%%M% %I% %E% SMI
+#
+# Imakefile for conversion
+#
+# LIBRARY_DEST is the location of the XView libraries
+# HEADER_DEST is the location of the XView header files
+# LIBDIR is the directory containing the X11 library (libX11.a)
+#
+
+#include "../../XView.config"
+
+HELP_DEST=$(USRLIBDIR)/help
+LIBDIR=/home/X11/lib
+LDFLAGS=-L$(LIBRARY_DEST) -L$(LIBDIR) -lxview -lX11 -lm
+INCLUDES= -I$(HEADER_DEST) -I$(TOP) -DSTANDALONE
+SEDFILES=	full1.sed		\
+		full2.sed		\
+		minimal1.sed 		\
+		minimal2.sed		\
+		minimal3.sed 		\
+		minimal4.sed 
+
+CMDS=convert_to_xview convert_to_Xdefaults
+SRCSALL= ${CMDS} $(SEDFILES) Makefile
+READMEFILE=convert_to_xview.README
+INFOFILE=
+
+
+# Uncomment this line to use libxvol.a and libxvin.a
+#
+#LDFLAGS=-L$(LIBRARY_DEST) -L$(LIBDIR) -lxvol -lxvin -lX11 -lm
+
+all::
+install::  ${SRCSALL} ${READMEFILE} install_conversion 
+
+install_conversion:
+	-@for i in ${SEDFILES} ; do \
+		echo "install $$i"; \
+		if [ -f ${BINDIR}/.$$i ]; then \
+		rm ${BINDIR}/.$$i; \
+		fi; \
+		install -m 755 $$i ${BINDIR}/.$$i; \
+	done
+	-install -m 444 ${READMEFILE} ${BINDIR}
+
+
+install_sources:
+
+clean::
+	rm -f *.o *.pg core $(CMDS)  $(SEDFILES)
+

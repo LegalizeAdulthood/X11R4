@@ -1,0 +1,120 @@
+.\" $Header: x10tox11.man,v 6.3 88/10/26 15:50:15 rws Exp $
+.TH X10TOX11 1 "21 October 1988" "X Version 11"
+.SH NAME
+x10tox11 \- X version 10 to version 11 protocol converter
+.SH SYNOPSIS
+.B x10tox11
+[-display host:display]
+.SH DESCRIPTION
+.I x10tox11
+masquerades as an X Window System Version 10 server.
+It enables an X Version 10 client to run unchanged under X Version 11
+by converting Version 10 requests into appropriate Version 11 requests,
+and by converting all Version 11 events received from the server into
+Version 10 events.
+From the perspective of Version 10 clients,
+all Version 11 clients look like Version 10 clients;
+and from the perspective of Version 11 clients,
+all Version 10 clients just look like Version 11 clients.
+Hence, a Version 11 window manager can manipulate Version 10 clients.
+.PP
+This program does NOT use the X10 
+.I libnest
+ddX library.  It does actual protocol translation, rather than simply using
+X11 graphics calls to implement X10 low level operations.  As a result, it
+is both faster and more robust than the X10 Xnest server.
+.SH "TYPICAL USAGE"
+The protocol converter must be run after the X11 server is running
+and should be run in the background:
+.PP
+.I x10tox11 &
+.PP
+The program
+will continue to run until you intentionally kill it or the X11 server
+is shut down.
+.SH "OPTIONS"
+.TP .5i
+-display host:display
+Standard option for specifying the X11 display
+to which you wish to be connected.
+By default, it uses unix:0.0.
+Note that
+.I x10tox11
+will always pretend to be an X10 server with the same display number as 
+the X11 server to which it connects.
+For example, if the DISPLAY environment variable or the \fI-display\fP
+option specifies \fIfizzle:1.0\fP, then
+.I x10tox11
+will connect to the X11 server on host \fIfizzle\fP
+for display 1 and then will pretend
+to the the X10 server for display 1.
+Consequently, your X10 clients will expect to have the environment
+variable DISPLAY set to \fIfizzle:1\fP (but they should still work even
+if your X10 clients use \fIfizzle:1.0\fP).
+.TP .5i
+MinimumTileSize=n
+Set minimum acceptable tile size to \fIn\fP.
+There is a difference in semantics between X10's XQueryShape and X11's
+XQueryBestSize such that X11 will allow any tile size but will
+return the optimum whereas X10 enforced a minimum tile size.
+Usually this minimum tile size was 16 and this is the default
+for
+.I x10tox11.
+If you find that this makes your X10 clients break, then
+you can override it with this option.
+.TP .5i
+help
+.br
+This prints out a usage message and exits.
+.TP .5i
+NoOverrideRedirect
+This instructs
+.I x10tox11
+to make every effort not to use OverrideRedirect
+when creating and mapping windows.
+Normally,
+.I x10tox11
+creates all windows with the OverrideRedirect attribute set to true.
+Placing this option on the command line
+will cause
+.I x10tox11
+not to use OverrideRedirect
+except for windows that look like they
+might be menus.
+This will allow window managers that provide title bars to do so.
+Unfortunately, it is impossible to determine ahead of time what an
+X10 client intends to do with windows.
+In addition, X10 clients are known to spontaneously unmap their windows
+which upsets X11 window managers unless the OverrideRedirect attribute
+is true.
+Further, some X11 window managers may refuse to resize or move windows
+that are marked with OverrideRedirect.
+This may can be fixed to some extent when an Inter Client Communications
+Convention Manual (ICCCM) is adopted by the X11 community.
+.SH "SEE ALSO"
+X(1), Xserver(1)
+.SH BUGS
+There are limitations with respect
+to emulating Version 10 through a Version 11 server.
+See the file /usr/lib/X/x10tox11.help for more details.
+.PP
+Some window managers may refuse to move, resize or perform any
+operations on X10 client windows because, by default,
+.PP
+If the source is compiled with certain flags,
+there are significant debugging facilities available.
+Using the \fIhelp\fP option will tell you whether
+debugging facilities are available.
+.I x10tox11
+marks them with OverrideRedirect.
+See \fBOPTIONS\fP above.
+.SH COPYRIGHT
+Copyright 1988, Tektronix Inc.
+.PP
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation. 
+.SH AUTHOR
+Todd Brunhoff, Visual Systems Laboratory, Tektronix.

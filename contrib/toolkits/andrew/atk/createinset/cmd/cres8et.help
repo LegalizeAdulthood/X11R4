@@ -1,0 +1,355 @@
+\begindata{text, 268806424}
+\textdsversion{12}
+\template{help}
+
+
+\chapter{CreateInset: Generate Source Files for a New Inset
+
+}
+\section{What CreateInset is
+
+}\leftindent{
+To create a new inset, one must create seven or eight files, much of the 
+initial contents of which are rather standard.  The -createinset- program 
+creates a directory and copies a standard set of files into it, changing names 
+systematically to a name of your choice.  To create your own inset, change the 
+parts marke '$$$' in each source file.}
+
+
+\section{Quick reference
+
+}\leftindent{
+}\leftindent{The command is 
+
+
+	createinset \italic{insetname}
+
+
+where \italic{insetname} is the desired name for the inset.  This creates a 
+subdirectory of the current directory with the name \italic{insetname} and 
+copies eight files to it from /usr/andrew/lib/dummy/, changing file names and 
+contents to reflect the chosen inset name.}
+
+
+\section{Warning}
+
+
+\leftindent{The \italic{insetname} should be nine (9) letters or fewer.  
+Although there may be some good psychological reasons for short names, there 
+is an obscure technical reason as well:  the name \italic{insetname}view.o is 
+one of the modules put in .../lib/lib\italic{insetname}.a, and the library 
+manager does not work properly if names exceed fifteen letters.  (In practice, 
+the library is only used if someone wants to statically link your inset.)}
+
+
+\section{Files Installed
+
+}\leftindent{
+The command 
+
+
+	createinset \italic{inset} 
+
+
+creates directory ./\italic{inset} and installs the following files in it:
+
+
+	Makefile		controls the -make- program
+
+
+	\italic{inset}.H		class header file for data object
+
+	\italic{inset}.c		implementation of data object
+
+	\italic{inset}test.c	test driver for data object
+
+
+	\italic{inset}view.H	class header for view
+
+	\italic{inset}view.c	implementation of the view
+
+	\italic{inset}viewtest.c	test driver for the view
+
+
+	\italic{inset}.help	prototypical help file
+
+
+In each file there are places to change to create your own inset.  These 
+places are marked '$$$', either just before an entire section to change or at 
+the end of a line to change.
+
+
+Instead of using inset.help, you can delete it and edit inset.help;  because 
+of the extension the standard .be2init or .ezinit or preferences or .Xdefaults 
+or .preferences file or whatever will cause it to be editted with the help 
+template.
+
+	
+
+}
+\section{Makefile Targets
+
+}\leftindent{
+The Makefile installed in the new directory has the following targets for 
+compilation:
+
+
+\description{\leftindent{insets - Makes the .do objects.
+
+siblings - Installs the include files and .do files into ../include and 
+../dlib.
+
+drivers - Makes two test driver programs. 
+
+test - This target makes all three of the other targets.}}
+
+
+For installation in subtrees other than /usr/andrew/..., there are 
+instructions in the Makefile.  In particular, the definition of 
+DESTDIR=/usr/andrew/ can be changed to some other directory; for example, 
+DESTDIR=/usr/contrib/.  Installed files can also be collected in families like 
+the be2 family.  To select a family, change FAMILY=/be2 to some other value.   
+\italic{WARNING:} The directories mentioned by DESTDIR and FAMILY must be 
+created by some highlevel Makefile in your installation tree.
+
+}
+
+\section{Programming Environment
+
+}\leftindent{
+The Makefile in the new directory assumes an environment that makes it 
+possible to develop multiple insets, possibly cooperating.  The test versions 
+of them all will be used.  In order for this to work, do this:
+
+
+1. All of the insets should be developed in directories which are children of 
+one parent.  For example, to work on insets I and J, they could be in 
+directories ~/b/I and ~/b/J.
+
+
+2.  The parent directory should also have child directories dlib and include.  
+In the example, these would be ~/b/dlib and ~/b/include.
+
+
+3.  In order to utilize the include files from the ../include directory, its 
+location has to be passed to the Makefile.  (It is preferable not to modify 
+the Makefile to do this.)  If your are using csh, you can use an alias of make 
+in your .cshrc file:
+
+
+	alias make make OTHERINCLUDES=-I../include
+
+
+After this, whenever you give the `make`command, the csh will invoke make as 
+though you had typed `make OTHERINCLUDES=-I../include`.
+
+
+4.  In order to utilize the new .do files from the .dlib, you need to tell the 
+dynamic loader where to find them.  This is done with a CLASSPATH; the lines 
+in your ~/.cshrc would look something like this:
+
+
+	setenv CLASSPATH /cmu/itc/wjh/b/dlib:/usr/andrew/dlib/be2
+
+
+If you are using /usr/andy, be sure to change 'andrew' to 'andy' in your 
+CLASSPATH.
+
+
+5.  When making tests, be sure to say `make test` or `make siblings` in order 
+to get the dlib and include files installed in ../dlib and ../include.
+
+
+
+If you have added objects or .h files, you will want to run `make depend` so 
+changes to header files will cause the appropriate recompilation of source 
+files.
+
+
+
+}
+\section{Debugging}
+
+
+\leftindent{To debug insets one useful tool is to print out information at 
+crucial points in the code.   For example, typing ESC-^D-D to genericinset 
+will turn on the 'debug' switch in genericinsetview and cause a trace of entry 
+to and exit from routines.  
+
+
+For more serious problems, the gdb debugger has proven useful.  You can apply 
+gdb to either of the test drivers installed by createinset:
+
+
+	gdb newinsettest
+
+	gdb newinsetviewtest
+
+
+
+The most useful gdb commands are help, run, bt, frame, print, next, continue, 
+and break.  Control-c halts execution of the program.
+
+
+If your inset works fine in the drivers but fails when loaded into a document 
+or application, you can debug it by loading `runapp`:
+
+
+	gdb /cmu/unix/`sys`/itcobjects/itc/be2/apps/runapp
+
+
+After gdb has read this program and its symbol tables, you run ezapp, or some 
+other app, like this:
+
+	run -d ezapp -d filename
+
+
+The first -d prints information about dynamic objects as they are loaded.  The 
+second -d prevents the application from forking, so it stays connected to the 
+debugger.
+
+}
+
+\section{Debugging Dynamically Loaded Objects}
+
+\leftindent{
+To debug dynamically loaded objects, the .gdbinit file listed below can be 
+stored in your home directory.  Here is what is pieces are for:
+
+
+The \bold{dir} commands specify the locations of source files for the most 
+important parts of the toolkit.   Because of access to source, gdb can show 
+the line associated with any point in the code.
+
+
+Give the \bold{name }command immediately after printing a pointer to an 
+object.  The name command traces through the object header to the field giving 
+its name as a character string.  This gives a way of checking to see that a 
+pointer points to an object of a sepcific type.
+
+
+To debug dynamically loaded files, their symbol tables need to be given to 
+gdb.  This requires two commands:  
+
+	set-rel \italic{address}
+
+	add-file \italic{filepath}
+
+If you have loaded runapp and said `run -d ezapp ...`, the \italic{address} is 
+the value printed after "text=" when the dynamic object is loaded.  The 
+\italic{filepath} should be the full or relative pathname to an object file 
+containing a symbol table;  from `makedo -g ...`, the object file has the 
+extension .dog.  Be careful in giving the add-file command: if 
+\italic{filepath} does not exist, gdb itself dumps core.  
+
+
+The XXXdog commands are another way to set the relocation address for loading 
+symbols of a dynamic object.  \bold{lastdog} will print the name of the most 
+recently loaded module.  \bold{prevdog} must be given after lastdog, prevdog, 
+or nextdog; it prints the name of the precedingly loaded dynamic object.  
+\bold{nextdog} is similar to prevdog, but goes in the opposite direction in 
+the list.  Finally, \bold{setdog} sets the relocation factor for the module 
+whose name has just been printed by the last command, which must have been 
+lastdog, prevdog, or nextdog.  \bold{firstdog} prints the name of the first 
+object module, but this and its immediate nextdog successors have been 
+statically loaded and do not need to have their symbol tables read separately.
+
+
+After giving the setdog command, use `add-file \italic{filepath}` to load the 
+symbol table.  Be careful: if filepath does not exist, gdb itself dumps core.  
+
+
+Sample .gdbinit file:
+
+\leftindent{
+dir /cmu/unix/itcsrc/itc/class
+
+dir /cmu/unix/itcsrc/itc/be2/support
+
+dir /cmu/unix/itcsrc/itc/be2/supportviews
+
+dir /cmu/unix/itcsrc/itc/be2/text
+
+dir /cmu/unix/itcsrc/itc/be2/basics
+
+dir /cmu/unix/itcsrc/itc/be2/frame
+
+
+define name
+
+print ((struct basicobject *) $)->methods->info.name
+
+end
+
+define lastdog
+
+print ClassList[ClassListEntries-1].className
+
+print &$
+
+end
+
+
+define firstdog
+
+print ClassList[0].className
+
+print &$
+
+end
+
+define prevdog
+
+print ((struct classload *)$ - 1).className
+
+print &$
+
+end
+
+define nextdog
+
+print ((struct classload *)$ + 1).className
+
+print &$
+
+end
+
+define setdog
+
+set-rel ((struct classload *)$).baseaddr
+
+echo done.\\nNow use 'add-file <filename.dog>' to add the symbol table. \\n
+
+end}
+
+}
+
+\section{Recent changes to CreateInset
+
+}\leftindent{
+Added gdb information.
+
+}
+\section{Advice
+
+}\leftindent{
+Use `createinset` to begin work on a new inset.  Modify the contents as 
+desired to give it the behavior you want.  In each file there are places to 
+change to create your own inset.  These places are marked '$$$', either just 
+before an entire section to change or at the end of a line to change.
+
+
+}
+\section{Related tools}  
+
+
+Select (put a box around) one of the italicized names and choose "Get Help on 
+Selected Word" from the pop-up menu to see the help file for:
+
+
+\leftindent{\keyword{class}
+\keyword{Imakefile}
+\keyword{ATK programming}
+
+}
+\enddata{text,268806424}

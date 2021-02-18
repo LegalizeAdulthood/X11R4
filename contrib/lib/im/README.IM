@@ -1,0 +1,33 @@
+IMCORE	(Input Method CORE)
+
+This directory and its sub-directories contains IMCORE source files and
+stubs for load() function to realize the static binding instead of
+dynamic one.
+
+./IMCORE/include
+	includes the header files.
+./IMCORE/source/imcore.c
+	contains IM API functions.
+./IMCORE/source/imkeybind.c
+	contains keymap lookup mapping functions which can be used by the
+	IMFEP.
+./IMCORE/source/imutil.c
+	contains miscelenious functions used by the IMCORE.
+./IMCORE/source/imload.c
+./IMCORE/source/imloadable.c
+	contain stubs for load() function.
+	To link your IMFEP with an application, do the followings.
+	1) Make a function, NEWStaticLoad() function, which takes IMLanguage
+	   as a argument and returns a pointer to NEWIMInitialize() function
+	   if the passed language is supported.
+	2) Add the following statement to the file, imloadable.c.
+		if (ret = NEWStaticLoad(lang)) return ret;
+	   This process will usually be done by the installation procedure
+	   likely as follows.
+		echo 'if (ret = NEWStaticLoad(lang)) return ret;' >> \
+		imloadable.c
+	3) Compile the file, imload.c, with a parameter -DIMSTATICLOAD.
+	   imloadable.c is included by the imload.c.
+	4) Add the object file imload.o to the library, libIM.a
+	5) like the application, IMCORE and IMFEP,
+	   cc appl.c -lIM -lNEWFEP -o appl

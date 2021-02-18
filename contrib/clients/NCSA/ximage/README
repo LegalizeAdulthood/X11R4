@@ -1,0 +1,53 @@
+This directory contains source code for NCSA X Image Version 1.0.3.
+At the time of this writing (11/29/89), this source code has been 
+successfully compiled on the following platforms.
+
+	Sun 3 (SunOS 3.x, 4.0)
+	Sun 4 (SunOS 4.0)
+	Cray 2 (UNICOS 5.0)
+	Silicon Graphics Eclipse (OS 3.2A)
+
+In each case, the MIT X.V11R3 libraries were used to compile X Image
+along with the HP 2D widget set with R3 patches.
+
+Should you decide to compile X Image, you will also need HDF 
+(Hierarchical Data Format) version 2.8 or later.  Source code is 
+available from anonymous ftp server (128.174.20.50).   
+
+If you successfully port NCSA X Image to a machine not currently supported,
+we would be interested in getting a copy of your patches and binaries.
+
+This NCSA software product is public domain software.  Permission
+is granted to do whatever you like with it. Should you feel compelled 
+to make a contribution for the use of this software, please send 
+it in the form of comments as to what you like or don't like about 
+the software, how you use it, how it helps your work, etc. to 
+softdev@ncsa.uiuc.edu.
+
+Please send bug reports/fixes to:
+Dave Thompson
+davet@ncsa.uiuc.edu
+or bugs@ncsa.uiuc.edu
+
+--------
+The latest version of all NCSA software is kept on the anonymous ftp 
+server ftp.ncsa.uiuc.edu (128.174.20.50).  If you don't have access to
+the anonymous ftp server, you can obtain a copies through the 
+NCSA Technical Resources Catalog.  NCSA software and manuals 
+are available for purchase.  To obtain a copy of the catalog, contact:
+
+NCSA Documentation Orders
+152 Computing Applications Building
+605 East Springfield Avenue
+Champaign, IL 61820
+(217) 244-0072
+
+--------
+
+Sample data files may be picked up from ftp.ncsa.uiuc.edu (128.174.20.50)
+
+--------
+Compile instructions:
+
+	Edit the Makefile to fit your system.  Type 'make'.  
+

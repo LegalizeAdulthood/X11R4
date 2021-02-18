@@ -1,0 +1,34 @@
+!
+! Appearance Resources
+!
+*quit.label:	Quit
+*label.label:	This is a Pretend Main Window; Press in here.
+*menulabel.label:	MAIN MENU
+! make all entries in menu same width 
+! (needs adjusting for longest entry)
+*menulabel.width:	80
+*menubox.Command.width:  80
+*menupane0.label:  Good
+*menupane1.label:  Google
+*menupane2.label:  Goolash
+*menupane3.label:  Goop
+*menupane4.label:  Garp
+*menupane5.label:  Grunch
+*menupane6.label:  Garbage
+*menupane7.label:  Greek
+*menupane8.label:  Green
+*menupane9.label:  Gretsch
+! make Box leave no space around Command widgets in menu
+*pshell.Box.hSpace: 0
+*pshell.Box.vSpace: 0
+!
+! Functional Resources
+!
+*menubox.Command.translations:\
+   <EnterWindow>:     highlight()             \n\
+   <LeaveWindow>:     reset()                 \n\
+   <BtnUp>:          set() notify() unset()
+*label.translations:\
+	<BtnDown>: placeMenu() MenuPopup(pshell)
+*pshell.translations:\
+	<BtnUp>: MenuPopdown(pshell)

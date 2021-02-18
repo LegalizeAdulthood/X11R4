@@ -1,0 +1,590 @@
+%!
+%%Creator: root@bay.csri (Operator)
+%%Title: test.xpic.land (xpic)
+%%CreationDate: Thu May  5 00:33:12 1988
+%%Pages: 1
+%%DocumentFonts: (atend)
+%%BoundingBox: 115.2 28.8 612 806.4
+%	(in inches) at 1.6 0.4, width 6.9, height 10.8
+%%EndComments
+% Prolog for xpic to PostScript converter
+% Author: Mark Moraes
+% $Header: x2ps.pro,v 1.2 88/03/19 16:50:09 moraes Exp 
+%	%d D - change style SOLID, DOTTED, SHORT-DASH, LONG-DASH, DOT-DASH
+%	%d F - change font ROMAN, BOLD, ITALIC, SPECIAL
+%	%d S - change size (font size in points)
+%	(%s) rj %d t - text right just. (%d is TOPLINE, MIDLINE, BOTLINE)
+%	(%s) lj %d t - text left just. (%d is TOPLINE, MIDLINE, BOTLINE)
+%	(%s) ce %d t - text centered (%d is TOPLINE, MIDLINE, BOTLINE)
+%	%d %d l - lineto
+%	%d %d m - moveto
+%	%d %d s - spline segment
+%	x - flush line, spline
+%	<wid> <ht> <x> <y> b - box
+%	<wid> <ht> <x> <y> e - ellipse
+%	%d ss - setscale
+%	%d W - change linewidth
+save 50 dict begin /xpic exch def
+/StartXpic {newpath 0 0 moveto [] 0 setdash 0 setgray 1 setlinecap} def
+% Set defaults
+/fontname /Times-Roman def
+/ptsize 12 def
+% xpic has 4 fonts R, B, I, S
+/nfonts 4 def
+/fonts /Times-Roman /Times-Bold /Times-Italic /Symbol nfonts array astore def
+% halign has the values for MIDLINE, TOPLINE, BOTLINE
+/halign 3 array def
+/s {rcurveto} def
+/x {stroke} def
+/l {lineto} def
+/m {moveto} def
+/b {
+	/ury exch def /urx exch def /lly exch def /llx exch def 
+	llx lly moveto urx lly lineto urx ury lineto 
+	llx ury lineto llx lly lineto stroke
+} def
+/mtrx matrix def
+/e {
+	/yc exch def /xc exch def /yrad exch def /xrad exch def
+	xc xrad add yc moveto
+	/savematrix mtrx currentmatrix def
+	xc yc translate
+	xrad yrad scale
+	0 0 1 0 360 arc
+	savematrix setmatrix stroke
+} def
+% The next three take the text string, and moveto the right horiz. position
+% leaving the string on the stack.
+/lj {} def
+/rj {dup stringwidth pop neg 0 rmoveto} def
+/ce {dup stringwidth pop 2 div neg 0 rmoveto} def
+% And this is invoked after one of the three above, and 
+% computes the vert. pos, and then displays the string.
+/t {halign exch get 0 exch rmoveto show newpath} def
+% Store an array of patterns in /styles - a pattern is an array consisting 
+% of an array and an offset. Corresp to xpic patterns
+% solid, dotted, short-dashed, long-dashed, dot-dashed
+/styles [ [] 0 ] [ [1 3] 0 ] [ [4 4] 0 ] [ [8 4] 0 ] [ [1 4 4 4] 0 ]
+	5 array astore def
+% change style to arg.
+/D {stroke styles exch get aload pop setdash newpath} def
+/W {stroke setlinewidth newpath} def
+% fontbox takes a fontname of the stack, and returns an array
+% containing the values of the bottom line of the bounding box, the
+% mid line of the bounding box, and the top line of the bounding box
+% of that font, taken from the baseline, scaled to a font of size 1
+/fontbox {
+	findfont dup /FontMatrix get /fm exch def /FontBBox get aload pop
+	/ytop exch def pop /ybot exch def pop
+	/ymid ytop ybot sub 2 div def
+	0 ybot fm dtransform exch pop % botline
+	dup neg exch % midline - this works better than (ytop-ybot)/2!
+	0 ytop fm dtransform exch pop exch %topline
+	% now in the order midline, topline, botline.
+	3 array astore
+} def
+% fontboxes stores the fontbox of each of the fontnames in the 'fonts'
+% array
+/fontboxes nfonts array def
+0 1 nfonts 1 sub {
+	fontboxes exch dup fonts exch get fontbox put
+} for
+% select font
+/F {
+	dup fonts exch get /fontname exch def fontboxes exch get
+	/thisfontbox exch def SF 
+} def
+% set point size
+/S {/ptsize exch def SF} def
+% actually set font
+/SF {
+	fontname findfont ptsize curscale div scalefont setfont
+	thisfontbox aload pop
+	1 1 3 {
+		pop ptsize mul curscale div neg 3 1 roll
+	} for
+	halign astore pop
+} def
+% sets the scale to 72 / n, where n is on the stack, and stores the value
+% in curscale for font scaling
+/curscale 1 def
+/ss {/curscale exch 72 exch div dup dup scale def} def
+/land {8.5 72 mul curscale div 0 translate 90 rotate} def
+StartXpic
+%%EndProlog
+land
+1 1 scale
+100 ss
+4 D
+195 130 275 110 b
+0 F
+12 S
+185 80 m
+(hello world) rj 1 t
+2 D
+785 280 m
+0 D
+795 279 m
+785 280 l
+793 286 l
+2 D
+785 280 m
+0 0 6 1 20 5 s
+13 3 20 -1 20 -15 s
+0 -13 1 -20 5 -20 s
+3 0 10 1 20 5 s
+10 3 18 10 25 20 s
+6 10 11 1 15 -25 s
+3 -26 3 -43 0 -50 s
+-3 -6 -10 -10 -20 -10 s
+-10 0 -15 3 -15 10 s
+0 6 -6 5 -20 -5 s
+-13 -10 -20 -18 -20 -25 s
+0 -6 16 -10 50 -10 s
+0 D
+857 164 m
+865 160 l
+857 157 l
+2 D
+865 160 m
+x
+3 F
+235 90 m
+(hello world) ce 0 t
+4 D
+185 100 285 80 b
+0 D
+40 20 555 270 e
+2 D
+60 20 575 200 e
+0 F
+18 S
+595 110 m
+(hello world) lj 2 t
+1 D
+75 10 690 260 e
+12 S
+445 140 m
+(top center) ce 1 t
+3 D
+55 35 700 185 e
+4 D
+355 140 545 90 b
+445 90 m
+(bottom center) ce 2 t
+545 90 m
+(lj top \(moved\)) lj 1 t
+925 190 m
+0 D
+935 189 m
+925 190 l
+933 196 l
+4 D
+925 190 m
+0 0 15 3 45 10 s
+30 6 40 -5 30 -35 s
+-10 -30 -21 -43 -35 -40 s
+-13 3 -20 8 -20 15 s
+0 6 18 5 55 -5 s
+36 -10 56 -21 60 -35 s
+3 -13 -13 -26 -50 -40 s
+-36 -13 -63 -13 -80 0 s
+-16 13 -25 21 -25 25 s
+0 3 3 5 10 5 s
+6 0 18 -3 35 -10 s
+16 -6 41 16 75 70 s
+0 D
+1017 146 m
+1025 150 l
+1025 141 l
+4 D
+1025 150 m
+x
+3 D
+915 280 m
+0 D
+925 280 m
+915 280 l
+922 287 l
+3 D
+915 280 m
+0 0 10 3 30 10 s
+20 6 30 -6 30 -40 s
+0 -33 -11 -46 -35 -40 s
+-23 6 -35 11 -35 15 s
+0 3 11 5 35 5 s
+23 0 56 5 100 15 s
+43 10 60 20 50 30 s
+-10 10 -23 10 -40 0 s
+-16 -10 -11 -38 15 -85 s
+0 D
+1065 200 m
+1065 190 l
+1058 196 l
+3 D
+1065 190 m
+x
+1 D
+985 480 m
+0 D
+994 478 m
+985 480 l
+993 486 l
+1 D
+985 480 m
+0 0 13 1 40 5 s
+26 3 31 -10 15 -40 s
+-16 -30 -25 -36 -25 -20 s
+0 16 10 25 30 25 s
+20 0 33 -3 40 -10 s
+6 -6 -3 -25 -30 -55 s
+-26 -30 -66 -45 -120 -45 s
+0 D
+944 337 m
+935 340 l
+944 344 l
+1 D
+935 340 m
+x
+0 D
+805 440 m
+0 D
+814 437 m
+805 440 l
+814 444 l
+0 D
+805 440 m
+0 0 13 0 40 0 s
+26 0 33 -8 20 -25 s
+-13 -16 -15 -26 -5 -30 s
+10 -3 25 -5 45 -5 s
+20 0 16 -10 -10 -30 s
+-26 -20 -50 -30 -70 -30 s
+0 D
+834 317 m
+825 320 l
+834 324 l
+0 D
+825 320 m
+x
+835 600 m
+0 D
+844 597 m
+835 600 l
+844 604 l
+0 D
+835 600 m
+0 0 15 0 45 0 s
+30 0 48 -10 55 -30 s
+6 -20 -1 -33 -25 -40 s
+-23 -6 -35 -5 -35 5 s
+0 10 11 11 35 5 s
+23 -6 43 -13 60 -20 s
+16 -6 26 0 30 20 s
+3 20 1 33 -5 40 s
+-6 6 -20 -3 -40 -30 s
+-20 -26 -31 -45 -35 -55 s
+-3 -10 -18 -15 -45 -15 s
+x
+865 730 m
+0 0 -10 -6 -30 -20 s
+-20 -13 -13 -18 20 -15 s
+33 3 63 8 90 15 s
+26 6 41 1 45 -15 s
+3 -16 -13 -33 -50 -50 s
+-36 -16 -61 -18 -75 -5 s
+-13 13 -26 21 -40 25 s
+-13 3 -3 5 30 5 s
+33 0 76 1 130 5 s
+53 3 66 18 40 45 s
+0 D
+1028 712 m
+1025 720 l
+1034 718 l
+0 D
+1025 720 m
+x
+185 100 m
+(hello world) rj 2 t
+4 D
+195 160 275 140 b
+195 200 275 180 b
+1 F
+235 120 m
+(hello world) ce 0 t
+2 F
+235 150 m
+(hello world) ce 0 t
+0 F
+235 190 m
+(hello world) ce 0 t
+65 40 100 160 e
+60 60 435 250 e
+3 D
+40 40 335 260 e
+2 D
+40 40 235 260 e
+1 D
+40 40 155 260 e
+0 D
+40 40 65 270 e
+4 D
+715 320 m
+715 420 l
+765 320 l
+765 420 l
+725 310 l
+0 D
+732 317 m
+725 310 l
+725 320 l
+4 D
+725 310 m
+x
+645 320 m
+0 D
+649 329 m
+645 320 l
+642 329 l
+4 D
+645 320 m
+645 420 l
+685 320 l
+685 420 l
+x
+515 420 m
+0 D
+515 411 m
+515 420 l
+523 415 l
+4 D
+515 420 m
+565 320 l
+565 420 l
+615 320 l
+615 370 l
+0 D
+612 362 m
+615 370 l
+619 362 l
+4 D
+615 370 m
+x
+3 D
+415 420 m
+0 D
+407 418 m
+415 420 l
+413 412 l
+3 D
+415 420 m
+365 370 l
+415 370 l
+415 320 l
+465 370 l
+455 320 l
+515 320 l
+455 420 l
+0 D
+456 411 m
+455 420 l
+463 416 l
+3 D
+455 420 m
+x
+265 420 m
+365 420 l
+265 320 l
+365 320 l
+0 D
+357 324 m
+365 320 l
+357 317 l
+3 D
+365 320 m
+x
+165 420 m
+0 D
+162 412 m
+165 420 l
+169 412 l
+3 D
+165 420 m
+165 320 l
+215 420 l
+215 320 l
+265 370 l
+x
+2 D
+65 420 m
+0 D
+74 417 m
+65 420 l
+74 424 l
+2 D
+65 420 m
+125 420 l
+65 370 l
+125 370 l
+55 320 l
+0 D
+65 322 m
+55 320 l
+60 329 l
+2 D
+55 320 m
+x
+745 570 m
+745 470 l
+785 570 l
+785 470 l
+745 450 l
+0 D
+755 450 m
+745 450 l
+751 458 l
+2 D
+745 450 m
+x
+695 470 m
+0 D
+699 479 m
+695 470 l
+692 479 l
+2 D
+695 470 m
+695 570 l
+725 470 l
+725 570 l
+695 590 l
+x
+1 D
+635 470 m
+0 D
+639 479 m
+635 470 l
+632 479 l
+1 D
+635 470 m
+635 570 l
+665 470 l
+665 570 l
+0 D
+662 562 m
+665 570 l
+669 562 l
+1 D
+665 570 m
+x
+585 470 m
+585 570 l
+615 470 l
+615 570 l
+0 D
+612 562 m
+615 570 l
+619 562 l
+1 D
+615 570 m
+x
+485 470 m
+0 D
+489 479 m
+485 470 l
+482 479 l
+1 D
+485 470 m
+485 560 l
+515 470 l
+515 570 l
+565 470 l
+x
+0 D
+415 570 m
+0 D
+415 561 m
+415 570 l
+423 565 l
+0 D
+415 570 m
+465 470 l
+415 470 l
+465 570 l
+465 520 l
+0 D
+469 529 m
+465 520 l
+462 529 l
+0 D
+465 520 m
+x
+365 570 m
+375 490 l
+385 560 l
+395 470 l
+0 D
+398 479 m
+395 470 l
+391 478 l
+0 D
+395 470 m
+x
+295 570 m
+0 D
+292 562 m
+295 570 l
+299 562 l
+0 D
+295 570 m
+295 470 l
+325 570 l
+325 470 l
+345 570 l
+x
+4 D
+215 470 m
+215 570 l
+265 470 l
+265 570 l
+x
+3 D
+135 470 m
+135 570 l
+185 470 l
+185 570 l
+x
+2 D
+65 570 m
+65 470 l
+115 570 l
+115 470 l
+x
+1 D
+745 720 m
+745 620 l
+795 620 l
+795 720 l
+x
+0 D
+665 720 m
+665 620 l
+715 620 l
+715 720 l
+x
+4 D
+495 680 585 650 b
+3 D
+475 690 605 640 b
+2 D
+455 710 625 620 b
+1 D
+275 730 395 690 b
+0 D
+225 660 425 620 b
+65 720 185 630 b
+%%Trailer
+showpage
+% Trailer for xpic to PostScript converter
+% $Header: x2ps.tra,v 1.1 87/11/21 20:33:03 moraes Exp $
+xpic end restore
+%%DocumentFonts: Times-Roman Times-Italic Times-Bold Special

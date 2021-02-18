@@ -1,0 +1,32 @@
+<< /usr/rcs/serpent/dea/src/de>>
+
+!*****************************************************************************
+! This defines the shared data for the visual calculator
+!*****************************************************************************
+
+vis_calc: shared data
+
+arg_sdd: record
+  output:	 	id of line_sdd; 	!id of output line
+  value:                string[32];     	!value on output line
+  create:              	boolean;		!should vc be created
+end record;
+
+component_sdd: record
+  input1_value_id:	id;			!id of sdds which has value
+  input2_value_id:	id;			!for input to component
+  operator:		string[5];		!operator of component
+  value:		string[32];		!value on output line
+  create:              	boolean;		!should vc be created
+end record;
+
+line_sdd: record
+  start_x:		integer;		!x coord of start of line
+  start_y:		integer;		!y coord of start of line
+
+  end_x:		integer;		!x coord of end of line
+  end_y:		integer;		!y coord of end of line
+  color:		string[20];		!color of line
+end record;
+
+end shared data;

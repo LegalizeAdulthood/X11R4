@@ -1,0 +1,5 @@
+LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+           SRCS = Plaid.c confirm.c menu.c note.c plaid.c util.c xpostit.c
+           OBJS = Plaid.o confirm.o menu.o note.o plaid.o util.o xpostit.o
+
+ComplexProgramTarget(xpostit)

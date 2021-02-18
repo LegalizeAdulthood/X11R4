@@ -1,0 +1,107 @@
+E.1	NCSA HDF
+
+ERRATA	E.1
+
+National Center for Supercomputing Applications
+
+March 1989
+
+                                                                
+
+
+
+
+
+
+
+NCSA HDF Version 2.0 Errata
+
+
+
+
+
+Table E.1 lists corrections to errors discovered in the 
+documentation for NCSA HDF Version 2.0.
+
+
+Table E.1	Corrections
+
+Page	Location	Correction
+
+2.8	Figure 2.2, line 7	Change  
+	ret = DFR8getdim('testrig1.df', rows, cols, ispal);
+to
+	ret = DFR8getdims('testrig1.df', rows, cols, ispal);
+
+
+2.9	Figure 2.3, 8 lines from bottom	Change  
+	DFR8getdim("testrig1.df",&rows, &cols, &ispal);
+to
+	DFR8getdims("testrig1.df",&rows, &cols, &ispal);
+
+
+3.3	SDS Routines in the HDF	Add the following as the last paragraph:
+	Library section 	
+	In the following discussions, the variable rank gives the number 
+of dimensions of the data set. A two-dimensional array has rank 2, 
+a three-dimensional array has rank 3, and so forth. The variables 
+sizes and dimsizes refer to arrays that contain the sizes of the 
+dimensions of the data array. So if the rank of an array is 3, then 
+the corresponding sizes array is a three-element array with one 
+number for each of the three dimensions.
+
+
+3.8	Example 3, 3rd line	Change
+	'pfile.hdf'
+to
+	'SDex3.hdf'
+
+
+3.8	Example 3, last line of program	Change
+	ret = DFSDputdata('SDex3.hdf',2, shape, points)
+to
+	ret = DFSDputdata('SDex3.hdf',3, shape, points)
+
+
+Table E.1	Corrections (Continued)
+
+3.9	Example 4, last line,	Change
+	3rd from last line, and 6th		ret = DFSDputdata('SDex4.hdf', 2, shape, den2)
+	from last line of code		ret = DFSDputdata('SDex4.hdf', 2, shape, den1)
+	ret = DFSDputdata('SDex4.hdf', 2, shape, press2)
+to
+	ret = DFSDadddata('SDex4.hdf', 2, shape, den2)
+	ret = DFSDadddata('SDex4.hdf', 2, shape, den1)
+	ret = DFSDadddata('SDex4.hdf', 2, shape, press2)
+
+
+4.7	DFdel section	Add the following after the last paragraph:
+
+Warning:  If there are no other references to a data element, 
+DFdel may implicitly leave the data without any reference to it, 
+effectively making the data inaccessible.
+
+
+5.7	DFdel section 	Add the following after the first paragraph:
+
+Warning: If there are no other references to a data element, 
+DFdel may implicitly leave the data without any reference to it, 
+effectively making the data inaccessible.
+
+
+5.11	DFSDgetmaxmin section	Add the following paragraph to the end of the explanation for 
+DFSDgetmaxmin:
+
+Return value:  If successful, 0. If there is no max/min or an error 
+occurs, -1.
+
+
+6.5	Example 7	Add the following to the end of the section:
+
+IMPORTANT NOTE:  A bug has been discovered in the way 
+that the current version of hdfseq that runs under SunView deals 
+with odd-width images. To make hdfseq work correctly on an 
+image whose width is odd, pad the image with an extra column of 
+pixels. In later versions of hdfseq, odd-width images will 
+automatically be padded.
+

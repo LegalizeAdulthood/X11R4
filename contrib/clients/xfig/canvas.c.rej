@@ -1,0 +1,18 @@
+***************
+*** 171,177
+  	String		*params;
+  	Cardinal	*nparams;
+  {
+! 	Position	x, y;
+  	Window		w;
+  	extern TOOL	menu;
+  	
+
+--- 171,177 -----
+  	String		*params;
+  	Cardinal	*nparams;
+  {
+! 	int		x, y;
+  	Window		w;
+  	extern TOOL	menu;
+  	

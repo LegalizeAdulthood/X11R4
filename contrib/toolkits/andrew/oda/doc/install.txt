@@ -1,0 +1,895 @@
+                                                                             21
+
+
+                                   Chapter 4
+                     Building and Installing the Tool Kit
+
+
+
+The  CMU  ODA  Tool  Kit  is  being  distributed  as  part  of  the MIT X.V11R4
+            12
+Distribution   This document provides details on how to build and  install  the
+Tool  Kit  on  several  machine types and operating systems: BSD Unix, System V
+Unix, MS-DOS, Macintosh MPW and VAX/VMS.  This document is  a  chapter  from  a
+book about our experiences with ODA to be published by Springer Verlag sometime
+                                         13
+during  the  first  few  months  of  1990  .   Until the book is published, the
+complete application programmer's interface documentation for this Tool Kit can
+be obtained, for a modest fee to cover costs, from the following address:
+
+     CMU ODA Tool Kit
+     Information Technology Center
+     4910 Forbes Ave
+     Pittsburgh, PA 15213
+     U.S.A.
+
+Once  the book is available, we are by contract no longer allowed to distribute
+copies of the Tool Kit documentation.  You  must  then  purchase  the  book  to
+obtain the documentation.
+
+4.1. Contents of the oda Directory
+The  CMU  ODA  Tool  Kit contribution to the X.V11R4 Distribution is located at
+path contrib/andrew/oda.  The  Tool  Kit  directory  contains  seven  top-level
+subdirectories, as follows:
+
+doc             The  only  files  of any concern in this directory are the file
+                COPYRITE (which contains the full text  of  the  copyright  for
+                most of the software in the oda directory) and this document.
+
+site            This  is  the  root  directory  for  all  of the site-dependent
+                sources for the Tool Kit.  Under this directory is a  directory
+                for each configuration that is currently supported.
+
+src             This  directory  contains  the  source for the main part of the
+                Tool Kit.
+
+valid           This directory contains files necessary  for  constructing  and
+                executing  a  program  to validate the installation of the Tool
+                Kit.  This is not a validation of the correctness of  the  Tool
+                Kit  with  respect  to the ODA standard, but simply a means for
+                checking  that  the   local   dependencies   specified   during
+                installation (chapter 5) are correct.
+
+raster          This  directory  contains the source code for building a raster
+                toolkit library (described in chapter  RASTER-TOOLKIT).    This
+                library  contains  routines  for  translating among a number of
+
+_______________
+
+12
+  For information about the MIT X Distribution call (617) 258-8330.
+
+13
+  Working  title:  Multi-media  Document  Interchange:  ODA  and   the   EXPRES
+Experience.
+22
+
+
+                common  raster  formats.    The  raster  library  may  be  used
+                independently of the ODA Tool Kit.
+
+isode           This   directory  contains  the  sources  for  constructing  an
+                alternate ODIF parser/unparser for the ODA Tool Kit.  The  ODIF
+                parser/unparser  that  is  integral  to  the  Tool  Kit has the
+                advantage of being  portable  to  non-Unix  machines.    Unfor-
+                tunately,  the  integral  ODIF  support is not at all complete.
+                The ODIF support in this directory, although it  can  be  built
+                only on Unix machines, is more complete and robust.
+
+prog            This  directory  contains  several  programs that we have found
+                useful in using the ODA Tool Kit and the raster toolkit.
+
+
+
+4.1.1. Local Directory Structures
+If you will be compiling the tool kits on a Unix machine, you may simply  build
+directly  in the directories as they are unpacked from the tape.  On a non-Unix
+machine, however, you must copy the  contents  of  the  ODA  directories  to  a
+directory structure on the machine that mimics that on the tape.
+
+Even though the contents of the isode directory can not be built on a Macintosh
+configuration, you must still create this director, although you may leave them
+both empty.
+
+4.2. Building
+Instructions for building the contents of each top-level directory are provided
+in the next sections.  Each section contains a description of the  contents  of
+the directory and a discussion of whether you may want to build that directory.
+In addition, for each supported configuration, the commands  for  building  are
+specified.
+
+
+
+4.2.1. The site Directory
+The  site  directory  contains  a  directory  for each supported configuration.
+There are currently five directories:
+
+site/bsdunix    for BSD Unix
+
+site/sysvunix   for System V Unix (includes IBM AIX)
+
+site/mac        for Macintosh MPW
+
+site/pcdos      for IBM PC-compatible MS-DOS
+
+site/vms        for VAX VMS
+
+
+
+4.2.2. Disk Space and Memory Requirements
+The purpose of this section is to provide an idea of the  amount  of  resources
+that will be required to build parts of the ODA contribution.
+
+The  exact hardware configuration that you will require to build things depends
+on a number of factors: what  compile-time  switches  you  use  (section  4.7),
+whether  you  turn  on compiler debugging, what is running on the machine, etc.
+In order to give you an idea of the configuration required, the following lists
+the  hardware  and  software  configurations  we  used in building this release
+during our last round of testing:
+                                                                             23
+
+
+BSD Unix        IBM RT-PC, BSD 4.3, 8MB main memory, 40MB hard disk (connection
+                to central file system), HC compiler version 1.2.
+
+System V Unix   IBM   RT-PC,  AIX  2.2.1,  8MB  main  memory,  40MB  hard  disk
+                (connection to central file system).
+
+Macintosh MPW   Macintosh II, 4MB main memory, 20MB hard disk, System 6.03, MPW
+                3.0
+
+MS-DOS          MS-DOS version 3.30, Make version 4.07, C compiler version 5.10
+
+VAX/VMS         VAX/VMS version V5.1, C compiler version V3.0-031
+
+Table  4-1  specifies  the  amount of disk space required for each directory on
+each configuration.  The figure reported  includes  all  source  files,  object
+files and resultant libraries or executables.
+
+
+                                                   14      15
+                  site    src   valid raster  isode    prog  
+BSD Unix          0.04    5.6   1.7   0.8     6.1      2.1
+SysV Unix         0.05    8.1   3.2   0.8     8.9      7.2
+   16
+Mac               0.03    3.0   0.3   0.5     2.8      0.7
+MS-DOS            0.03    6.1   0.6   0.4     n/a      0.9
+VMS               0.06    3.1   0.5   0.5     2.5      0.5
+
+
+                    Table 4-1:  Disk Space Requirements, MB
+
+
+
+
+4.2.2.1. Building in the site Directory
+If you want to build  the  Tool  Kit  on  a  configuration  that  is  currently
+unsupported,  read  section  4.6 first and create the necessary files.  You may
+also want to read section 4.7 at this time, which describes a number of actions
+that  may  be  modified at compile time and must be done within the appropriate
+subdirectory of site.  We expect, however, that the  default  actions  will  be
+found satisfactory for most situations.
+
+In  order  to build the library for your configuration, you must first position
+yourself in the appropriate subdirectory of site.  The commands to  issue  then
+depend on your configuration, as follows:
+
+
+BSD Unix
+
+_______________
+
+14
+  The  isode  sources  can  not  be compiled on non-Unix configurations, so the
+figure given is for sources only.
+
+15
+  The programs prodif and convert can not be built on non-Unix  configurations,
+so the figure given does not include these programs on non-Unix machines.
+
+16
+  The  Macintosh  C  compiler  was  run  so  that  no debugging information was
+generated.
+24
+
+
+    make -f Make.bsd_unix liblocal.a
+
+
+System V Unix
+
+    make -f Make.sysv_unix liblocal.a
+
+
+VAX VMS
+
+    mms liblocal.olb
+
+
+MS-DOS
+
+    make make.dos
+
+
+Macintosh MPW
+
+    duplicate Make.mac makefile
+    BuildProgram liblocal.a
+
+
+
+4.2.3. The src Directory
+The  src directory contains the source files for the primary library comprising
+the CMU ODA Tool Kit.  Unless you are only interested in the standalone  raster
+toolkit  (section  RASTER-TOOLKIT)  you  should proceed to build the library in
+this directory.
+
+
+4.2.3.1. Building in the src Directory
+Once you are positioned in the src directory,  issue  the  following  commands,
+dependent on configuration:
+
+
+BSD Unix
+
+    make -f Make.bsd_unix liboda.a
+
+
+System V Unix
+
+    make -f Make.sysv_unix liboda.a
+
+
+VAX VMS
+
+    mms liboda.olb
+
+
+MS-DOS
+
+    make make1.dos objects
+    make make2.dos liboda.lib
+
+
+Macintosh MPW
+                                                                             25
+
+
+    duplicate Make.mac makefile
+    BuildProgram liboda.a
+
+
+
+4.2.4. The valid Directory
+See section 4.4 for details on running the validation program.
+
+
+4.2.4.1. Building in the valid Directory
+Once  you  are positioned in the valid directory, issue the following commands,
+dependent on configuration:
+
+
+BSD Unix
+
+    make -f Make.bsd_unix valid
+
+
+System V Unix
+
+    make -f Make.sysv_unix valid
+
+
+VAX VMS
+
+    mms valid
+
+
+MS-DOS
+
+    make make.dos
+
+
+Macintosh MPW
+
+    duplicate Make.mac makefile
+    BuildProgram valid
+
+
+
+4.2.5. The raster Directory
+The  raster  toolkit,  described  in  chapter  RASTER-TOOLKIT,  is  a  set   of
+subroutines  that are useful for converting between a number of raster formats.
+The ODA Tool Kit and the raster Toolkit are independent of each other (although
+both  are  dependent on the library built in the local directory).  You may, in
+fact, find the raster toolkit to be of use in a  program  manipulating  an  ODA
+document.    In  that case, you would include the raster toolkit library during
+the link phase (section 4.7).
+
+
+4.2.5.1. Building in the raster Directory
+After positioning yourself in the raster directory, the appropriate commands to
+issue depend on the configuration, as follows:
+
+
+BSD Unix
+
+    make -f Make.bsd_unix libraster.a
+26
+
+
+System V Unix
+
+    make -f Make.sysv_unix libraster.a
+
+
+VAX VMS
+
+    mms libraster.olb
+
+
+MS-DOS
+
+    make make.dos
+
+
+Macintosh MPW
+
+    duplicate Make.mac makefile
+    BuildProgram libraster.a
+
+
+
+4.2.6. The isode Directory
+The  isode  directory  contains  source code for building a set of routines for
+parsing/unparsing ODIF.  These routines are  an  alternative  to  the  standard
+routines  provided  with  the  ODA  Tool Kit (chapter 14).  The ODA Tool Kit is
+independent of this library, but this library can only be used  in  conjunction
+with the ODA Tool Kit.
+
+
+4.2.6.1. Building in the isode Directory
+The  contents  of  this  library  may  only be compiled on Unix configurations.
+After positioning yourself in the isode directory, the appropriate commands  to
+issue depend on the configuration, as follows:
+
+
+BSD Unix
+
+    make -f Make.bsd_unix libisode.a
+
+
+System V Unix
+
+    make -f Make.sysv_unix libisode.a
+
+
+VAX VMS
+
+Not applicable.
+
+
+MS-DOS
+
+Not applicable.
+
+
+Macintosh MPW
+
+Not applicable.
+                                                                             27
+
+
+4.2.7. The prog Directory
+The prog directory contains four programs that we have found to be useful:
+
+   - proda: given an ODIF stream (on standard input), proda will write (on
+     standard output) a  human-readable  representation  of  the  document
+                              17
+     denoted  by  the  stream.      This  program  uses  the standard ODIF
+     parser/unparser.
+
+   - prtext: given an ODIF stream (on standard input), prtext  will  write
+     (on  standard  output)  the  printable  characters from the character
+     content portions.
+
+   - prodif: given an ODIF stream (on standard input),  proda  will  write
+     (on  standard  output) a human-readable representation of the stream.
+     This differs from proda in that this representation is a trace of the
+     ASN.1  stream  and  displays  the  components  in  the order of their
+     appearance in the stream.  prodif uses the alternate  parser/unparser
+     included  in the isode directory and, thus, can be built only on Unix
+     configurations.
+
+   - convert: converts between raster formats(convert will prompt for  its
+     inputs and outputs).
+
+Be  aware  that proda and prodif do not accept the same set of datastreams.  In
+particular, proda will accept only those streams produced by the standard  ODIF
+parser and prodif will accpet only those produced by the isode unparser.
+
+The  use of these programs is further restricted in that prodif and convert can
+only be built on Unix configurations.  In addition, the  convert  program  will
+                                                                 18
+not compile as is on VAX VMS, Macintosh or MS-DOS configurations.  
+
+
+4.2.7.1. Building in the prog Directory
+After  positioning  yourself in the prog directory, the appropriate commands to
+issue depend on the configuration, as follows:
+
+
+BSD Unix
+
+
+_______________
+
+17
+  The representation is described in chapter 16.
+
+18
+  The  program  can be modified to compile (we believe) on these configurations
+by changing the line
+
+    #include <fcntl.h>
+
+
+to be
+
+    #include <file.h>
+
+
+For the Macintosh, it is only necessary to remove the third parameter on  calls
+to open.
+28
+
+
+    make -f Make.bsd_unix proda prtext prodif convert
+
+
+System V Unix
+
+    make -f Make.sysv_unix proda prtext prodif convert
+
+
+VAX VMS
+
+    mms proda, prtext
+
+
+MS-DOS
+
+    make make.dos
+
+
+Macintosh MPW
+
+    duplicate Make.mac makefile
+    BuildProgram proda prtext
+
+
+4.3. Installing the Tool Kit
+After building as desired you may wish to install the tools and  include  files
+in  a  location  other  then  the  directories  in  which they were built.  The
+following is a description for each directory  of  the  files  that  should  be
+installed elsewhere for use by application programs.
+
+site:           The subdirectory of the site directory that corresponds to your
+                configuration (section 4.2.1) contains both include  files  and
+                an  object  library.    You  should  always install these files
+                regardless of the particular parts of the ODA suite  that  yopu
+                wish to use.
+
+                Copy the files *.h to an appropriate include directory.
+
+                Copy the file liblocal.* to an appropriate library directory.
+
+src:This directory contains a large number of include files and a single object
+                library.  You should install these files if you  wish  to  make
+                use of the ODA Tool Kit.
+
+                Copy the files *.h to an appropriate include directory.
+
+                Copy the file liboda.* to an appropriate library directory.
+
+isode:This  directory  contains  a  number of include files and a single object
+                library.  You should install these files if you  wish  to  make
+                use  of  the  alternate  ODIF parser/unparser with the ODA Tool
+                Kit.
+
+                Copy the files *.h to an appropriate include directory.
+
+                Copy the file libisode.* to an appropriate library directory.
+
+raster:This directory contains a number of include files and  a  single  object
+                library.    You  should install these files if you wish to make
+                use of the raster toolkit.
+
+                Copy the files *.h to an appropriate include directory.
+                                                                             29
+
+
+                Copy the file libraster.* to an appropriate library directory.
+
+4.4. Validating the Installation
+The distribution comes with  a  program  that  may  be  used  to  validate  the
+installation  of  the  Tool  Kit at your site.  Note that this program does not
+attempt to validate the correctness of the Tool Kit (that is,  its  conformance
+to ODA).
+
+To  build  the validation suite, there is a set of site-dependent routines that
+must be defined, all of which are in the file vlocal.c.  These routines,  which
+are  only  necessary  for  building the validator and not for the Tool Kit, are
+described in section 4.5.
+
+Once these routines have been created (they already  exist  for  the  supported
+sites)  and  the validation suite has been built (section 4.2), the program may
+be run by typing its name with no arguments:
+
+    valid
+
+
+The validation suite checks the  installed  Tool  Kit  by  building  a  set  of
+documents  using  a  subset  of  Tool  Kit routines considered essential to the
+functionality of the Tool Kit.  The suite then writes them  out  in  ODIF,  and
+compares the resulting files to standard ones shipped with the Tool Kit.
+
+The   manner   in   which   the  validation  program  is  executed  depends  on
+configuration, as follows:
+
+
+BSD Unix
+
+    valid
+
+
+System V Unix
+
+    valid
+
+
+VAX VMS
+
+    run valid
+
+
+MS-DOS
+
+    valid
+
+
+Macintosh MPW
+
+    valid
+
+
+The output from running validshould be as follows:
+
+    **Starting Validation Suite**
+
+    Running test "test0": simple TK link test
+    Test succeeded
+30
+
+
+    Running test "test1": empty document test
+    Creating output for comparison...
+    Storing output...
+    Comparing files...
+    Test succeeded
+
+    Running test "test2": document profile test
+    Creating output for comparison...
+    >>> Tool Kit warning <<<
+                                                                     19
+    [INT_PAIR_CkVal]: Attribute dp_UNIT_SCALING - can not check value  
+    Storing output...
+    Comparing files...
+    Test succeeded
+
+    Running test "test3": presentation-style test
+    Creating output for comparison...
+    Storing output...
+    Comparing files...
+    Test succeeded
+
+    Running test "test4": character-content test
+    Creating output for comparison...
+    Storing output...
+    Comparing files...
+    Test succeeded
+
+    Running test "test5": SEQUENCE test
+    Creating output for comparison...
+    Storing output...
+    Comparing files...
+    Test succeeded
+
+    Running test "test6": ASN.1 object ident. test
+    Creating output for comparison...
+    Storing output...
+    Comparing files...
+    Test succeeded
+
+    Running test "test7": undefined
+    Creating output for comparison...
+    Storing output...
+    Comparing files...
+    Test succeeded
+
+    All tests successful.
+    Exited validation suite.
+
+
+If  any  errors are reported by the validation suite, the Tool Kit has not been
+built correctly on your system.
+
+
+
+
+
+_______________
+
+19
+  This warning message will not appear if you have undefined the  FORMAT_ERRORS
+switch (section 4.7).
+                                                                             31
+
+
+4.5. Site-dependent Validation Routines
+There are three site-dependent routines that must be implemented  in  order  to
+build and execute the validation program.  Whenever possible, it is recommended
+that these rotuines be written and that the validation program be run  whenever
+a new Tool Kit is built.
+
+These  routines,  which are described in the next three sections, are separated
+from the rest of  the  site-dependent  routines  because  these  routines  make
+assumptions  about  file  names  and  file  i/o.  For this reason, there may be
+installations at which these routines can not be defined without making changes
+to  the validation program.  At these sites, the validation program need not be
+built.
+32
+
+
+4.5.1. Validation Routine to Return Output Descriptor: VALID_GetStdout
+
+
+    INT_type VALID_GetStdout()
+
+
+Real Name
+
+    vlstd
+
+Synopsis
+
+    This routine should return an output descriptor  that  corresponds  to  the
+    desired location for output from the validation program.
+
+Return Value
+
+    ERROR_INT       An error has ocurred.
+
+    otherwise       An output descriptor to which all informational output from
+                    the validation progam will be sent.
+
+Side Effects
+
+    The side effects to this routine are site dependent.
+
+Semantics
+
+    All human-readable output from the  validation  program  will  go  to  this
+    descriptor.    It should probably refer to the terminal device on which the
+    validation program is being run.
+
+Errors
+
+    LOCAL_err       A locally-defined error, not covered by any other available
+                    error, has occurred.
+                                                                             33
+
+
+4.5.2. Validation Routine to Open a File for Reading: VALID_ReadOpen
+
+
+    INT_type VALID_ReadOpen(name)
+       CHAR_type *name;
+
+
+Real Name
+
+    vlrdo
+
+Synopsis
+
+    This routine is used to open a file name for reading and associate the open
+    file with an input descriptor.
+
+Parameters
+
+    name            The name of the file to open.  The file is assumed to be in
+                    the current directory.
+
+Return Value
+
+    ERROR_INT       An error has ocurred.
+
+    otherwise       An input descriptor associated with the specified file.
+
+Side Effects
+
+    The side effects to this routine are site dependent.
+
+Semantics
+
+    The  validation  program  assumes that the file names used are legal at all
+    sites.  This may be a bad assumption for some environments.
+
+    The file must be positioned at its beginning.
+
+Errors
+
+    LOCAL_err       A locally-defined error, not covered by any other available
+                    error, has occurred.
+34
+
+
+4.5.3. Validation Routine to Open a File for Writing: VALID_WriteOpen
+
+
+    INT_type VALID_WriteOpen(name)
+       CHAR_type *name;
+
+
+Real Name
+
+    vlwro
+
+Synopsis
+
+    This routine is used to open a file name for writing and associate the open
+    file with an input descriptor.
+
+Parameters
+
+    name            The name of the file to open.  The file is assumed to be in
+                    the current directory.
+
+Return Value
+
+    ERROR_INT       An error has ocurred.
+
+    otherwise       An input descriptor associated with the specified file.
+
+Side Effects
+
+    A file with the appropriate name will be created if one does not exist.
+
+    Other side effects to this routine are site dependent.
+
+Semantics
+
+    The  validation  program  assumes that the file names used are legal at all
+    sites.  This may be a bad assumption for some environments.
+
+    The file must be opened so that any previous contents of the file  will  be
+    discarded.
+
+Errors
+
+    LOCAL_err       A locally-defined error, not covered by any other available
+                    error, has occurred.
+                                                                             35
+
+
+4.6. Supporting a New Site
+The minimum requirements for supporting a new site (one without  a  valid  site
+subdirectory)  are that appropriate versions of the files lcsite.h, local.c and
+local.h must be created.  Descriptions of the requirements of these  files  may
+be found in chapter 5.
+
+It   is  also  recommended  that  the  site-dependent  validation  routines  be
+implemented so that the build can be validated (section 4.4).
+
+The site installer may use the files in site/bsdunix or site/pcdos as examples.
+
+4.7. Compile-time Switches
+
+
+
+4.7.1. The DEBUG Switch
+This switch is currently unused.
+
+
+
+4.7.2. The FORMAT_ERRORS Switch
+The default action of the routines in the Tool Kit in the presence of an  error
+is to format a descriptive error message, which is then written to a designated
+output descriptor if specified (section 8.1).  Although useful and descriptive,
+the  construction of these error messages requires a non-trivial amount of code
+and data space.  Should you wish to eliminate this space, you  should  undefine
+the  symbol  FORMAT_ERRORS  in  lcsite.h  (by  commenting  out its #define, for
+example).  Be aware that, in this case, not will only will no error messages be
+constructed,  but  that  no  message  at  all  will  be displayed (although the
+appropriate error value will be returned).
+
+
+
+4.7.3. The SWAPPING Switch
+This switch is currently unused.
+
+
+
+4.7.4. The STRUCT_ASSIGN Switch
+This switch is currently unused.
+
+
+
+4.7.5. The USE_BCOPY Switch
+This switch is currently unused.
+
+
+
+4.7.6. The USE_LONG_NAMES Switch
+To be portable to many environments the ODA Tool Kit  ensures  that  all  names
+that  are  visible  to  the  linker  consist  of six or fewer characters from a
+restricted character set.  The longer names that appear in the source code  are
+mapped  to  these  shorter  names  using  macros.    While  this  mapping  aids
+portability, it also makes interactive debugging  more  difficult  because  the
+actual name of a routine is a cryptic string that must be found in the manual.
+
+On  machines  with  relaxed linker restrictions (specifically, where mixed-case
+character strings including the character `_' up to length 31 are  allowed)  it
+is  desirable  to define the switch USE_LONG_NAMES.  If this symbol is defined,
+the Tool Kit will not perform the name mapping  and  this  may  make  debugging
+easier.
+                                                                              i
+
+
+                               Table of Contents
+
+
+
+4. Building and Installing the Tool Kit                                      21
+
+   4.1. Contents of the oda Directory                                        21
+       4.1.1. Local Directory Structures                                     22
+   4.2. Building                                                             22
+       4.2.1. The site Directory                                             22
+       4.2.2. Disk Space and Memory Requirements                             22
+           4.2.2.1. Building in the site Directory                           23
+       4.2.3. The src Directory                                              24
+           4.2.3.1. Building in the src Directory                            24
+       4.2.4. The valid Directory                                            25
+           4.2.4.1. Building in the valid Directory                          25
+       4.2.5. The raster Directory                                           25
+           4.2.5.1. Building in the raster Directory                         25
+       4.2.6. The isode Directory                                            26
+           4.2.6.1. Building in the isode Directory                          26
+       4.2.7. The prog Directory                                             27
+           4.2.7.1. Building in the prog Directory                           27
+   4.3. Installing the Tool Kit                                              28
+   4.4. Validating the Installation                                          29
+   4.5. Site-dependent Validation Routines                                   31
+       4.5.1. Validation Routine to Return Output Descriptor:                32
+              VALID_GetStdout
+       4.5.2. Validation Routine to Open a File for Reading:                 33
+              VALID_ReadOpen
+       4.5.3. Validation Routine to Open a File for Writing:                 34
+              VALID_WriteOpen
+   4.6. Supporting a New Site                                                35
+   4.7. Compile-time Switches                                                35
+       4.7.1. The DEBUG Switch                                               35
+       4.7.2. The FORMAT_ERRORS Switch                                       35
+       4.7.3. The SWAPPING Switch                                            35
+       4.7.4. The STRUCT_ASSIGN Switch                                       35
+       4.7.5. The USE_BCOPY Switch                                           35
+       4.7.6. The USE_LONG_NAMES Switch                                      35
+ii
+
+
+                                List of Tables
+
+
+
+   Table 4-1:   Disk Space Requirements, MB                                  23

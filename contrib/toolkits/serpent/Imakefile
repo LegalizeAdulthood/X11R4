@@ -1,0 +1,59 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#include "Serpent.tmpl"
+
+DIR = $(ARCH)
+
+INCDIRS = c_toolkit/src utilities/src int/src compiler/src dm/src
+
+LIBDIRS = c_toolkit/src utilities/src int/src dm/src externs/src
+
+LIBS = c_toolkit/src/liblist.a utilities/src/libutl.a int/src/libint.a dm/src/libdm.a externs/src/libsext.a
+
+BINDIRS = int/src compiler/src saddle/src saw/src tools/src
+
+PERMDIRS = compiler/src saddle/src tools/src
+
+DATADIRS = saw/src
+
+SRCDIRS = c_toolkit/src utilities/src int/src compiler/src dm/src saddle/src saw/src tools/src externs/src
+
+SUBDIRS = $(SRCDIRS) demos man/cat1
+
+GLOBALS = bin data include lib compiler/include dm/include
+
+all:	source
+
+build:	dirs install_inc install_perm all demo manual depend
+	@echo "Serpent built successfully"
+
+exec:	install
+	@for i in $(LIBS); do \
+		ranlib $$i; done
+	@echo "Serpent installed successfully"
+
+SerpentSourceTop()
+
+demo:
+	@(cd demos; echo "making demos"; \
+	$(MAKE) $(MFLAGS) all )
+
+manual:
+	@(cd man/cat1; echo "making man pages"; \
+	$(MAKE) $(MFLAGS) all )
+
+install::	dirs install_inc install_perm install_lib install_bin install_data
+
+dirs:
+	-@for i in $(GLOBALS); do \
+		if [ ! -d $$i ] ; then mkdir $$i ; fi ;\
+	done
+
+SerpentInstallTop(inc,$(INCDIRS))
+SerpentInstallTop(perm,$(PERMDIRS))
+SerpentInstallTop(lib,$(LIBDIRS))
+SerpentInstallTop(bin,$(BINDIRS))
+SerpentInstallTop(data,$(DATADIRS))
+
+SerpentDependTop()

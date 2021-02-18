@@ -1,0 +1,18 @@
+*** Imake.tmpl.org	Wed Aug 16 14:58:00 1989
+--- Imake.tmpl	Mon Aug 21 14:14:15 1989
+***************
+*** 104,109 ****
+--- 104,116 ----
+  #define MipsArchitecture
+  #endif /* mips */
+  
++ #ifdef SX9100
++ #define MacroIncludeFile "OMRON.macros"
++ #define MacroFile OMRON.macros
++ #undef SX9100
++ #define SX9100Architecture
++ #endif /* SX9100 */
++ 
+  #ifndef MacroIncludeFile
+  /**/# WARNING:  Imake.tmpl not configured; guessing at definitions!!!
+  /**/# This might mean that BOOTSTRAPCFLAGS wasn't set when building imake.

@@ -1,0 +1,7 @@
+#!/bin/ksh
+
+while [ 1 ] ; do
+	read a
+	if [ ! "$a" ] ; then break ; fi
+	echo "XcuCommand { name \"$a\" cursor \"$a\" }"
+    done

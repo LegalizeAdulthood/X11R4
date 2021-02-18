@@ -1,0 +1,23 @@
+################################################################################
+#
+# File:         Imakefile
+# RCS:          $Header: $
+# Description:  IMAKEFILE FOR WINTERP TOPLEVEL DIRECTORY
+# Author:       Niels Mayer, HPLabs
+# Created:      Fri Nov 24 19:47:38 1989
+# Modified:     Fri Nov 24 21:00:14 1989 (Niels Mayer) mayer@hplnpm
+# Language:     N/A
+# Package:      N/A
+# Status:       X11r4 contrib tape release
+#
+# (c) Copyright 1989, Hewlett-Packard Company.
+#
+################################################################################
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+SUBDIRS = src-client src-server
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

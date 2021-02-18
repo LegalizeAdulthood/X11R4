@@ -1,0 +1,363 @@
+ALIGN	ar5printf.c	/^#define ALIGN(p)  { int r; r = (int)p; if(r&1) ++r/
+ArAnGetLevel	ar5read.c	/^ArAnGetLevel(fiP)$/
+ArAnStreamInfoWrite	ar5dump.c	/^ArAnStreamInfoWrite( anP, ofile )$/
+ArAtoi	ar5shrutils.c	/^ArAtoi(str)			\/* old Mdtoi	*\/$/
+ArAtoiS	ar5shrutils.c	/^int $/
+ArAttrFree	ar5free.c	/^void ArAttrFree(atP)$/
+ArAttrValsWrite	ar5dump.c	/^ArAttrValsWrite( avP, ofile )$/
+ArAutonumFree	ar5autonum.c	/^ArAutonumFree(anP)$/
+ArAutonumWrite	ar5autonum.c	/^ArAutonumWrite(anP, ofile)$/
+ArAutosizeWrite	ar5dump.c	/^void ArAutosizeWrite(autosizeP, ofile)$/
+ArBinaryShr	ar5lex.c	/^ArBinaryShr(word, tab, tabsiz, precision, prefix)$/
+ArBodyFree	ar5cmpn.c	/^bool ArBodyFree(bodyP)$/
+ArBufGetCmd	ar5cmpn.c	/^ArBufGetCmd(fiP, topLevel, ssP, ilP)$/
+ArBuildAnStreamInfo	ar5read.c	/^ArBuildAnStreamInfo(fiP)$/
+ArBuildAutonum	ar5autonum.c	/^ArBuildAutonum(fiP)$/
+ArBuildCell	ar5table.c	/^Cell_t *ArBuildCell(fiP, ilP)$/
+ArBuildClass	ar5cmpn.c	/^ArBuildClass(fiP, ilP)$/
+ArBuildClassDef	ar5cmpn.c	/^ArBuildClassDef(fiP, ilP)$/
+ArBuildCmpn	ar5cmpn.c	/^ArBuildCmpn(fiP, ilP)$/
+ArBuildCmpnCmd	ar5cmpn.c	/^ArBuildCmpnCmd(fiP, cmdP, prevP, ilP)$/
+ArBuildCmpnName	ar5cmpn.c	/^ArBuildCmpnName(fiP, sP, topLevel, prevP, ilP)$/
+ArBuildCmpnShar	ar5cmpn.c	/^ArBuildCmpnShar(fiP, s, prevP, ilP)$/
+ArBuildColorInfo	ar5read.c	/^ArBuildColorInfo(fiP)$/
+ArBuildComment	ar5read.c	/^ArBuildComment(fiP)$/
+ArBuildDocumentInfo	ar5read.c	/^ArBuildDocumentInfo(fiP)$/
+ArBuildFontDefs	ar5read.c	/^ArBuildFontDefs(fiP)$/
+ArBuildFrame	ar5frameread.c	/^Frame_t *ArBuildFrame(fiP, isMaster, isCell)$/
+ArBuildFromCmd	ar5cmpn.c	/^ArBuildFromCmd(fiP, cmd, word, ilP)$/
+ArBuildHeaderFooter	ar5read.c	/^ArBuildHeaderFooter(fiP, type)$/
+ArBuildMicrodoc	ar5cmpn.c	/^ArBuildMicrodoc(fiP)$/
+ArBuildOPSDecl	ar5read.c	/^ArBuildOPSDecl(fiP, ilP)$/
+ArBuildObject	ar5read.c	/^NullObj_t *ArBuildObject(fiP, c, ilP)$/
+ArBuildPageInfo	ar5read.c	/^ArBuildPageInfo(fiP)$/
+ArBuildPatternInfo	ar5read.c	/^ArBuildPatternInfo(fiP)$/
+ArBuildRow	ar5table.c	/^Row_t *ArBuildRow(fiP, tblP, ilP)$/
+ArBuildTable	ar5table.c	/^NullObj_t *ArBuildTable(fiP, ilP, isMaster)$/
+ArBuildUnknownDecl	ar5unknowns.c	/^NullObj_t *ArBuildUnknownDecl(fiP)$/
+ArBuildUnknownProp	ar5unknowns.c	/^ArBuildUnknownProp(fiP, unkP)$/
+ArBuildUnknownPropEq	ar5unknowns.c	/^Unknown_t *ArBuildUnknownPropEq(fiP, sP, unkP)$/
+ArBuildUnknownPropPrefixEq	ar5unknowns.c	/^Unknown_t *ArBuildUnknownPropPrefixEq(fiP, prefix,/
+ArCellFree	ar5table.c	/^bool ArCellFree(cellP) $/
+ArCellWrite	ar5table.c	/^void ArCellWrite(cellP, ilP, ofile)$/
+ArCheckKeytbl	ar5lex.c	/^ArCheckKeytbl(keytbl, length)$/
+ArClassDefaultsWrite	ar5dump.c	/^ArClassDefaultsWrite( cdP, ofile )$/
+ArCmpnFree	ar5cmpn.c	/^bool ArCmpnFree(cmP) $/
+ArCmpnGetBody	ar5cmpn.c	/^Ssave_t ArCmpnGetBody(fiP, topLevel, tkP, cmpn_fil/
+ArCmpnGetch	ar5io.c	/^shar ArCmpnGetch()$/
+ArCmpnGetchNW	ar5io.c	/^ArCmpnGetchNW()	\/* return next non-white character/
+ArCmpnInit	ar5init.c	/^Cmpn_t *ArCmpnInit( cmP )$/
+ArCmpnMastersWrite	ar5dump.c	/^ArCmpnMastersWrite( cmP, ofile )$/
+ArCmpnName2Master	ar5cmpn.c	/^ArCmpnName2Master(sP, masterP)$/
+ArCmpnProfileFree	ar5cmpn.c	/^static void ArCmpnProfileFree(profP)$/
+ArCmpnSetDefaults	ar5init.c	/^void ArCmpnSetDefaults( cmP )$/
+ArCmpnTableFree	ar5cmpn.c	/^static void ArCmpnTableFree(tblP)$/
+ArCmpnTabsWrite	ar5dump.c	/^ArCmpnTabsWrite(tlP, ofile)$/
+ArCmpnWrite	ar5dump.c	/^bool $/
+ArColorInfoWrite	ar5dump.c	/^ArColorInfoWrite( clrP, ofile )$/
+ArCommentWrite	ar5dump.c	/^ArCommentWrite(comP, ofile)$/
+ArCvtIntShr	ar5cvt.c	/^ArCvtIntShr(shr, value, term)$/
+ArCvtUnits	ar5lex.c	/^ArCvtUnits(units, measure)$/
+ArDefaultTabline	ar5read.c	/^Tabline_t ArDefaultTabline() { };$/
+ArDefaultsSetAntiMetric	ar5init.c	/^void ArDefaultsSetAntiMetric( ilP )$/
+ArDefaultsSetMetric	ar5init.c	/^void ArDefaultsSetMetric( ilP )$/
+ArDgArcFree	ar5freeDg.c	/^static bool ArDgArcFree( info)$/
+ArDgBoxFree	ar5freeDg.c	/^static bool ArDgBoxFree( info)$/
+ArDgChartFree	ar5freeDg.c	/^static bool ArDgChartFree( info)$/
+ArDgEditFree	ar5freeDg.c	/^static bool ArDgEditFree( info)$/
+ArDgEllipseFree	ar5freeDg.c	/^static bool ArDgEllipseFree( info)$/
+ArDgEqnFree	ar5freeDg.c	/^static bool ArDgEqnFree( info)$/
+ArDgGroupFree	ar5freeDg.c	/^static bool ArDgGroupFree( info)$/
+ArDgHexFree	ar5freeDg.c	/^static bool ArDgHexFree( hex)$/
+ArDgImageFree	ar5freeDg.c	/^int  ArDgImageFree( info)$/
+ArDgLineFree	ar5freeDg.c	/^static bool ArDgLineFree( info)$/
+ArDgMicroFree	ar5freeDg.c	/^static bool ArDgMicroFree( info)$/
+ArDgObjectFree	ar5freeDg.c	/^static bool ArDgObjectFree(obj)$/
+ArDgOutlineFree	ar5freeDg.c	/^static bool ArDgOutlineFree( info)$/
+ArDgPolyFree	ar5freeDg.c	/^static bool ArDgPolyFree( info)$/
+ArDgRasterFree	ar5freeDg.c	/^static bool ArDgRasterFree( raster)$/
+ArDgSplineFree	ar5freeDg.c	/^static bool ArDgSplineFree( info)$/
+ArDgSplineSegFree	ar5freeDg.c	/^static bool ArDgSplineSegFree( info)$/
+ArDgTextstrFree	ar5freeDg.c	/^static bool ArDgTextstrFree( info)$/
+ArDgVectorListFree	ar5freeDg.c	/^static bool ArDgVectorListFree( info)$/
+ArDgputs	ar5dumpDg.c	/^int ArDgputs(ofp, s, level, pos)$/
+ArDiagramFree	ar5freeDg.c	/^bool ArDiagramFree(dgP)$/
+ArDoHex	ar5cvt.c	/^int ArDoHex(fiP)$/
+ArDocBodyWrite	ar5dump.c	/^bool ArDocBodyWrite(ilP, ofile)$/
+ArDocDeclWrite	ar5dump.c	/^bool ArDocDeclWrite(ilP, ofile)$/
+ArDocInfoWrite	ar5dump.c	/^ArDocInfoWrite( diP, ofile )$/
+ArDocRead	ar5docread.c	/^ArDocRead(fiP, ilP)$/
+ArDocWrite	ar5dump.c	/^ArDocWrite(ilP, ofile)$/
+ArEmitArcInfo	ar5dumpDg.c	/^int ArEmitArcInfo(ofp, info, level, pos)$/
+ArEmitBoxInfo	ar5dumpDg.c	/^int ArEmitBoxInfo(ofp, info, level, pos)$/
+ArEmitChar	ar5io.c	/^void ArEmitChar(uc, mapP, ofile)$/
+ArEmitChartInfo	ar5dumpDg.c	/^int ArEmitChartInfo(ofp, info, level, pos)$/
+ArEmitDg	ar5dumpDg.c	/^int ArEmitDg(ofp, dgP)$/
+ArEmitEditInfo	ar5dumpDg.c	/^int ArEmitEditInfo(ofp, info, level, pos)$/
+ArEmitEllipseInfo	ar5dumpDg.c	/^int ArEmitEllipseInfo(ofp, info, level, pos)$/
+ArEmitEqnInfo	ar5dumpDg.c	/^int ArEmitEqnInfo(ofp, info, level, pos)$/
+ArEmitGroupInfo	ar5dumpDg.c	/^int ArEmitGroupInfo(ofp, info, level, pos)$/
+ArEmitHexInfo	ar5dumpDg.c	/^int ArEmitHexInfo(ofp, hex, level, pos)$/
+ArEmitImageInfo	ar5dumpDg.c	/^int  ArEmitImageInfo(ofp, info, level, pos)$/
+ArEmitLineInfo	ar5dumpDg.c	/^int ArEmitLineInfo(ofp, info, level, pos)$/
+ArEmitMicroInfo	ar5dumpDg.c	/^int ArEmitMicroInfo(ofp, info, level, pos)$/
+ArEmitObject	ar5dumpDg.c	/^int ArEmitObject(ofp, obj, level, pos)$/
+ArEmitOutlineInfo	ar5dumpDg.c	/^int ArEmitOutlineInfo(ofp, info, level, pos)$/
+ArEmitPolyInfo	ar5dumpDg.c	/^int ArEmitPolyInfo(ofp, info, level, pos)$/
+ArEmitRasterInfo	ar5dumpDg.c	/^int ArEmitRasterInfo(ofp, raster, level, pos)$/
+ArEmitSplineInfo	ar5dumpDg.c	/^int ArEmitSplineInfo(ofp, info, level, pos)$/
+ArEmitSplineSegInfo	ar5dumpDg.c	/^int ArEmitSplineSegInfo(ofp, info, level, pos)$/
+ArEmitTextstrInfo	ar5dumpDg.c	/^int ArEmitTextstrInfo(ofp, info, level, pos)$/
+ArEmitVectorListInfo	ar5dumpDg.c	/^int ArEmitVectorListInfo(ofp, info, level, pos)$/
+ArError	ar5error.c	/^ArError(msg)$/
+ArFileInfoWrite	ar5dump.c	/^ArFileInfoWrite( fiP, ofile )$/
+ArFileInit	ar5init.c	/^ArFileInit(ifile)$/
+ArFontGetValue	ar5font.c	/^ArFontGetValue(fiP, fvP)$/
+ArFontInfoWrite	ar5dump.c	/^ArFontInfoWrite( fdP, ofile )$/
+ArFontToken2Definition	ar5font.c	/^ArFontToken2Definition( font_token, fnP )$/
+ArFontTokenPreAttrShr	ar5font.c	/^ArFontTokenPreAttrShr(word)$/
+ArFontTokenShr	ar5font.c	/^ArFontTokenShr(fiP, word, precision, type)$/
+ArFontValueEqual	ar5font.c	/^ArFontValueEqual(lfP, rfP)$/
+ArFontValueInheritAll	ar5font.c	/^ArFontValueInheritAll(fvP)$/
+ArFontValueInit	ar5init.c	/^Font_value_t ArFontValueInit( )$/
+ArFontValueWrite	ar5font.c	/^ArFontValueWrite(fvP, fnP, ofile)$/
+ArForceCap	ar5lex.c	/^ArForceCap(c)  \/* change lower case char to cap *\//
+ArFprintf	ar5printf.c	/^long ArFprintf(ofile, fmtP, arg)$/
+ArFrameAutoHeight	ar5frameread.c	/^ArFrameAutoHeight(fiP, autosizeP, autoheight)$/
+ArFrameAutoWidth	ar5frameread.c	/^ArFrameAutoWidth(fiP, autosizeP, autowidth)$/
+ArFrameMastersWrite	ar5dump.c	/^ArFrameMastersWrite( frP, ofile )$/
+ArFrameWrite	ar5dump.c	/^ArFrameWrite(frP, ofile)$/
+ArGetAlign	ar5lex.c	/^ArGetAlign(fiP,flagptr)$/
+ArGetAlphaWord	ar5lex.c	/^ArGetAlphaWord(fiP, w, lim)$/
+ArGetColorSep	ar5lex.c	/^ArGetColorSep(sP)$/
+ArGetDouble	ar5cvt.c	/^ArGetDouble(fiP, number, digits)  $/
+ArGetFloat	ar5cvt.c	/^ArGetFloat(fiP, number)$/
+ArGetFormSpace	ar5lex.c	/^ArGetFormSpace(fiP, flagptr)$/
+ArGetHex	ar5cvt.c	/^ArGetHex(fiP, num, nibbles)$/
+ArGetInCharMap	ar5incharmap.c	/^In_char_map_t * ArGetInCharMap(cmpn_nameP, ilP, fn/
+ArGetInt	ar5cvt.c	/^ArGetInt(fiP, number, gobble_comma, gobble_ws)$/
+ArGetLR	ar5lex.c	/^ArGetLR(fiP)$/
+ArGetLines	ar5cvt.c	/^ArGetLines(fiP, num)$/
+ArGetOrient	ar5lex.c	/^ArGetOrient(fiP,flagptr)$/
+ArGetPRsu	ar5cvt.c	/^ArGetPRsu(fiP, num)  \/* get Rsu value > 0 *\/$/
+ArGetPZRsu	ar5cvt.c	/^ArGetPZRsu(fiP, num)  \/* get Rsu value >= 0 *\/$/
+ArGetRsu	ar5lex.c	/^ArGetRsu(fiP,num)      \/* get distance in Rsu's *\//
+ArGetRulingColor	ar5table.c	/^ArGetRulingColor(fiP, ruleP)$/
+ArGetRulingPattern	ar5table.c	/^ArGetRulingPattern(fiP, ruleP)$/
+ArGetRulingVis	ar5table.c	/^ArGetRulingVis(fiP, ruleP)$/
+ArGetRulingWidth	ar5table.c	/^ArGetRulingWidth(fiP, ruleP)$/
+ArGetTab	ar5cmpn.c	/^ArGetTab(fiP, ttype, cmP)$/
+ArGetTextShr	ar5lex.c	/^ArGetTextShr(fiP, buf, buf_size)$/
+ArGetTokenAlpha	ar5lex.c	/^ArGetTokenAlpha(fiP, keytbl, length)$/
+ArGetTokenComma	ar5lex.c	/^ArGetTokenComma(fiP, keytbl, length)$/
+ArGetTokenEq	ar5lex.c	/^ArGetTokenEq(fiP, keytbl, length)$/
+ArGetUnitMeas	ar5lex.c	/^ArGetUnitMeas(fiP)$/
+ArGetWordShrC	ar5lex.c	/^ArGetWordShrC(fiP, c, w, lim, term)$/
+ArGetYesNoShort	ar5lex.c	/^ArGetYesNoShort(fiP,flagptr)$/
+ArGetYesNoShortInv	ar5lex.c	/^ArGetYesNoShortInv(fiP,flagptr)$/
+ArGetYesNoShortOpt	ar5lex.c	/^ArGetYesNoShortOpt(fiP,flagptr, msg, inv)$/
+ArGetch	ar5io.c	/^ArGetch(fiP)$/
+ArGetchNW	ar5io.c	/^ArGetchNW( fiP )			\/* return next non-white charac/
+ArGlobalsReset	ar5read.c	/^void $/
+ArGobbleComma	ar5error.c	/^ArGobbleComma(fiP)$/
+ArGobblePastTerm	ar5error.c	/^ArGobblePastTerm(fiP)$/
+ArGobbleTerm	ar5error.c	/^ArGobbleTerm(fiP)$/
+ArHdrFtrRotation	ar5read.c	/^ArHdrFtrRotation(fiP)$/
+ArHeaderFooterWrite	ar5dump.c	/^ArHeaderFooterWrite( hfP, ofile )$/
+ArIndexFree	ar5index.c	/^ArIndexFree(inP)$/
+ArIndexWrite	ar5index.c	/^ArIndexWrite(inP, ofile)$/
+ArInit	ar5init.c	/^void ArInit( initP )$/
+ArIoReset	ar5io.c	/^void ArIoReset( fiP )$/
+ArIsCommandName	ar5cmpn.c	/^ArIsCommandName(fiP, word, precision)$/
+ArLRTBPrefix	ar5lex.c	/^ArLRTBPrefix(fiP)$/
+ArMapGetch	ar5incharmap.c	/^shar ArMapGetch(ciP)$/
+ArMapGetchInit	ar5incharmap.c	/^In_char_info_t *ArMapGetchInit(ifile, mapP)$/
+ArMapUnGetch	ar5incharmap.c	/^shar ArMapUnGetch(c, ciP)$/
+ArMicrodocWrite	ar5dump.c	/^void ArMicrodocWrite( mdP, ofile)$/
+ArNextObject	ar5read.c	/^ArNextObject(fiP, ilP)$/
+ArObjectCopy	ar5read.c	/^ArObjectCopy( destP, srcP, free_src )$/
+ArObjectFree	ar5free.c	/^bool $/
+ArObjectWrite	ar5dump.c	/^ArObjectWrite( srcP, ilP, ofile )$/
+ArOpsInfoWrite	ar5dump.c	/^ArOpsInfoWrite( opsP, ofile )$/
+ArPageInfoInit	ar5init.c	/^ArPageInfoInit(pgP)$/
+ArPageInfoSetContext	ar5init.c	/^void $/
+ArPageInfoWrite	ar5dump.c	/^ArPageInfoWrite( pgP, isMicroDoc, ofile )$/
+ArParseCell	ar5cell.c	/^bool ArParseCell(fiP)$/
+ArParseCmpn	ar5cmpn.c	/^Cmpn_t *ArParseCmpn(fiP, cmP)$/
+ArParseRow	ar5table.c	/^ArParseRow(fiP, rowP)$/
+ArParseTable	ar5table.c	/^ArParseTable(fiP, tblP)$/
+ArPatternInfoWrite	ar5dump.c	/^ArPatternInfoWrite( patP, ofile )$/
+ArPopRead	ar5stubs.c	/^ArPopRead() {ArFprintf(stderr, "ArPopRead() stub c/
+ArRefFree	ar5ref.c	/^void ArRefFree(refP)$/
+ArRefWrite	ar5ref.c	/^ArRefWrite(refP, ofile)$/
+ArReportError	ar5error.c	/^ArReportError(errnum, arg1, arg2)$/
+ArRowFree	ar5table.c	/^bool ArRowFree(rowP) $/
+ArRowWrite	ar5table.c	/^void ArRowWrite(rowP, tblP, ilP, ofile)$/
+ArRulingWrite	ar5table.c	/^void ArRulingWrite(ruleP, masterP, labelP, ofile)$/
+ArSafeMalloc	ar5memory.c	/^char *ArSafeMalloc(n)$/
+ArSafeRealloc	ar5memory.c	/^char *ArSafeRealloc(cP, n)$/
+ArSaveArcInfo	ar5loadDg.c	/^ArcTSD_t *ArSaveArcInfo(fiP)$/
+ArSaveBoxInfo	ar5loadDg.c	/^BoxTSD_t *ArSaveBoxInfo(fiP)$/
+ArSaveChartInfo	ar5loadDg.c	/^ChartTSD_t *ArSaveChartInfo(fiP)$/
+ArSaveDg	ar5loadDg.c	/^ArDgHead_t *ArSaveDg(fiP) $/
+ArSaveEditInfo	ar5loadDg.c	/^EditStateTSD_t *ArSaveEditInfo(fiP)$/
+ArSaveEllipseInfo	ar5loadDg.c	/^EllipseTSD_t *ArSaveEllipseInfo(fiP)$/
+ArSaveEqnInfo	ar5loadDg.c	/^EqnTSD_t *ArSaveEqnInfo(fiP)$/
+ArSaveGroupInfo	ar5loadDg.c	/^ArDgObject_t *ArSaveGroupInfo(fiP)$/
+ArSaveHex	ar5loadDg.c	/^HEX_t *ArSaveHex(fiP)$/
+ArSaveImageInfo	ar5loadDg.c	/^ImageTSD_t *ArSaveImageInfo(fiP)$/
+ArSaveLineInfo	ar5loadDg.c	/^LineTSD_t *ArSaveLineInfo(fiP)$/
+ArSaveMicroInfo	ar5loadDg.c	/^MicroTSD_t *ArSaveMicroInfo(fiP)$/
+ArSaveObject	ar5loadDg.c	/^ArDgObject_t *ArSaveObject(fiP)$/
+ArSaveOutlineInfo	ar5loadDg.c	/^OutlineTSD_t *ArSaveOutlineInfo(fiP)$/
+ArSavePolyInfo	ar5loadDg.c	/^PolyTSD_t *ArSavePolyInfo(fiP)$/
+ArSaveRaster	ar5loadDg.c	/^RASTER_t *ArSaveRaster(fiP)$/
+ArSaveSplineInfo	ar5loadDg.c	/^SplineTSD_t *ArSaveSplineInfo(fiP)$/
+ArSaveSplineSegInfo	ar5loadDg.c	/^SplineSegTSD_t *ArSaveSplineSegInfo(fiP)$/
+ArSaveTextstrInfo	ar5loadDg.c	/^TextstrTSD_t *ArSaveTextstrInfo(fiP)$/
+ArSaveVectorListInfo	ar5loadDg.c	/^VectorListTSD_t *ArSaveVectorListInfo(fiP)$/
+ArShrcat	ar5shrutils.c	/^ArShrcat(s1, s2)$/
+ArShrcmp	ar5shrutils.c	/^ArShrcmp(s1, s2)$/
+ArShrcpy	ar5shrutils.c	/^ArShrcpy( s1, s2)$/
+ArShrindex	ar5shrutils.c	/^ArShrindex(sp, c)$/
+ArShrlen	ar5shrutils.c	/^ArShrlen( shr)$/
+ArShrncat	ar5shrutils.c	/^ArShrncat(s1, s2, n)$/
+ArShrncmp	ar5shrutils.c	/^ArShrncmp(s1, s2, n)$/
+ArShrncmpShr	ar5lex.c	/^ArShrncmpShr(s, t, lim, precision)$/
+ArShrncpy	ar5shrutils.c	/^ArShrncpy(s1, s2, n)$/
+ArShrnstr	ar5shrutils.c	/^ArShrnstr(d, s, n)$/
+ArShrrindex	ar5shrutils.c	/^ArShrrindex(sp, sh)$/
+ArShrstrcat	ar5shrutils.c	/^ArShrstrcat(to, from)$/
+ArShrstrcmp	ar5shrutils.c	/^ArShrstrcmp(s1, s2)$/
+ArShrstrcpy	ar5shrutils.c	/^ArShrstrcpy( s1, s2)$/
+ArShrstrncmp	ar5shrutils.c	/^ArShrstrncmp(s1, s2, n)$/
+ArSkipBTObject	ar5read.c	/^NullObj_t *ArSkipBTObject(fiP, sP)$/
+ArSkipDg	ar5loadDg.c	/^void ArSkipDg(fiP, error)$/
+ArSkipDiagram	ar5read.c	/^int ArSkipDiagram() { return(0); }$/
+ArSkipFrame	ar5read.c	/^int ArSkipFrame() { return(0); }$/
+ArSkipObject	ar5loadDg.c	/^void ArSkipObject(fiP, type)$/
+ArSkipPastComma	ar5error.c	/^void $/
+ArSkipPastTab	ar5cmpn.c	/^ArSkipPastTab(fiP)$/
+ArSkipPastTerm	ar5error.c	/^void $/
+ArSprintf	ar5printf.c	/^long ArSprintf(strP, fmtP, arg)$/
+ArStateInit	ar5init.c	/^Il_state_t *ArStateInit( stateP )$/
+ArStrncmp	ar5lex.c	/^ArStrncmp(s, t, lim, precision)$/
+ArStrncmpShr	ar5lex.c	/^ArStrncmpShr(s, t, lim, precision)$/
+ArStrtoshr	ar5shrutils.c	/^ArStrtoshr(sP, cP)$/
+ArTableColumnFree	ar5table.c	/^bool ArTableColumnFree(tcolP)$/
+ArTableFree	ar5table.c	/^bool ArTableFree(tblP)$/
+ArTableMastersWrite	ar5table.c	/^void ArTableMastersWrite(tblP, ofile)$/
+ArTableWrite	ar5table.c	/^void ArTableWrite(tblP, ilP, ofile)$/
+ArTablineFinish	ar5cmpn.c	/^ArTablineFinish(tlP)$/
+ArTablineStart	ar5cmpn.c	/^ArTablineStart()$/
+ArTabsEqual	ar5dump.c	/^bool $/
+ArTellError	ar5error.c	/^ArTellError(errnum)$/
+ArTellError2	ar5error.c	/^ArTellError2(errnum, arg1, arg2)$/
+ArTextBodyWrite	ar5dump.c	/^ArTextBodyWrite( ssP, ilP, ofile )$/
+ArTextReadInt	ar5incharmap.c	/^ArTextReadInt(ssP, numP)$/
+ArTextReadch	ar5incharmap.c	/^shar ArTextReadch(ssP)$/
+ArTextReadchNW	ar5incharmap.c	/^shar ArTextReadchNW(ssP)$/
+ArTextReturn	ar5incharmap.c	/^bool ArTextReturn(s, ssP)$/
+ArTokenFree	ar5token.c	/^bool ArTokenFree(tkP)$/
+ArTokenPrefix	ar5lex.c	/^ArTokenPrefix(fiP, keytbl, length)$/
+ArTokenShr	ar5lex.c	/^ArTokenShr(fiP, word, keytbl, length, precision)$/
+ArTokenWrite	ar5token.c	/^void $/
+ArUnGetch	ar5io.c	/^ArUnGetch(s, fiP)$/
+ArUnGetshr	ar5io.c	/^ArUnGetshr(sP, fiP)$/
+ArUnknownFree	ar5unknowns.c	/^ArUnknownFree(unkP)$/
+ArUnknownWrite	ar5unknowns.c	/^ArUnknownWrite(unkP, ofile)$/
+ArVersionControl	ar5read.c	/^ArVersionControl(saw_version)$/
+CsAlign	ar5csave.c	/^void CsAlign(csP, boundary, value)$/
+CsAmount	ar5csave.c	/^long CsAmount(csP)$/
+CsFree	ar5csave.c	/^void CsFree(csP)$/
+CsGetC	ar5csave.c	/^short CsGetC(csP)$/
+CsInit	ar5csave.c	/^void CsInit(init, grow)$/
+CsNew	ar5csave.c	/^Csave_t *CsNew()$/
+CsPeekC	ar5csave.c	/^short CsPeekC(csP)$/
+CsReset	ar5csave.c	/^void CsReset(csP)$/
+CsSaveC	ar5csave.c	/^short CsSaveC(c, csP)$/
+CsSaveCFront	ar5csave.c	/^short CsSaveCFront(c, csP)$/
+CsSaveStr	ar5csave.c	/^short CsSaveStr(cP, csP)$/
+EcInherFontBold	ar5font.c	/^int         EcInherFontBold(){fprintf(stderr, "stu/
+EcInherFontCaps	ar5font.c	/^Font_attr_t EcInherFontCaps(){fprintf(stderr, "stu/
+EcInherFontColor	ar5font.c	/^Font_attr_t EcInherFontColor(){fprintf(stderr, "st/
+EcInherFontItalic	ar5font.c	/^int         EcInherFontItalic(){fprintf(stderr, "s/
+EcInherFontLang	ar5font.c	/^Font_attr_t EcInherFontLang(){fprintf(stderr, "stu/
+EcInherFontOver	ar5font.c	/^Font_attr_t EcInherFontOver(){fprintf(stderr, "stu/
+EcInherFontPair	ar5font.c	/^Font_attr_t EcInherFontPair(){fprintf(stderr, "stu/
+EcInherFontRev	ar5font.c	/^Font_attr_t EcInherFontRev(){fprintf(stderr, "stub/
+EcInherFontSize	ar5font.c	/^int         EcInherFontSize(){fprintf(stderr, "stu/
+EcInherFontStrike	ar5font.c	/^Font_attr_t EcInherFontStrike(){fprintf(stderr, "s/
+EcInherFontSub	ar5font.c	/^Font_attr_t EcInherFontSub(){fprintf(stderr, "stub/
+EcInherFontSuper	ar5font.c	/^Font_attr_t EcInherFontSuper(){fprintf(stderr, "st/
+EcInherFontTrack	ar5font.c	/^Font_attr_t EcInherFontTrack(){fprintf(stderr, "st/
+EcInherFontUnder	ar5font.c	/^Font_attr_t EcInherFontUnder(){fprintf(stderr, "st/
+EcInheritAlloc	ar5font.c	/^Font_attr_t EcInheritAlloc(){fprintf(stderr, "stub/
+ListAddatEnd	ar5docread.c	/^ListAddatEnd(listPP, thingP)$/
+LookupPairsFree	ar5ref.c	/^LookupPairsFree(lkP)$/
+Mar5csave	ar5csave.c	/^main(argc, argv, env)$/
+Mar5freetest	ar5freetest.c	/^main(argc, argv, env)$/
+Mar5printf	ar5printf.c	/^main()$/
+Mar5strip	ar5strip.c	/^main(argc, argv, env)$/
+Mar5test	ar5test.c	/^main(argc, argv, env)$/
+NSH	ar5csave.c	/^#define NSH(nshorts) (sizeof(short)*(nshorts))$/
+PUT	ar5printf.c	/^#   define PUT(ch, printstore, outFILE, strP) \\$/
+RSUMM	ar5init.c	/^#define RSUMM(x) ((Rsu)(((x) * DEF_RSUINCH) \/ MM_P/
+SHOW	ar5io.c	/^#define SHOW(str)$/
+SsAlign	ar5csave.c	/^void SsAlign(ssP, boundary, value)$/
+SsAmount	ar5csave.c	/^long SsAmount(ssP)$/
+SsFree	ar5csave.c	/^void SsFree(ssP)$/
+SsGetS	ar5csave.c	/^short SsGetS(ssP)$/
+SsNew	ar5csave.c	/^Ssave_t *SsNew()$/
+SsPeekS	ar5csave.c	/^short SsPeekS(ssP)$/
+SsReset	ar5csave.c	/^void SsReset(ssP)$/
+SsSaveS	ar5csave.c	/^short SsSaveS(s, ssP)$/
+SsSaveSFront	ar5csave.c	/^short SsSaveSFront(s, ssP)$/
+SsSaveShr	ar5csave.c	/^short SsSaveShr(sP, ssP)$/
+advance	ar5incharmap.c	/^static bool advance(match, ssP)$/
+arBufGetAutonum	ar5buf.c	/^arBufGetAutonum(fiP, ssP)$/
+arBufGetComment	ar5buf.c	/^arBufGetComment(fiP, ssP)$/
+arBufGetFJ	ar5buf.c	/^arBufGetFJ(fiP, ssP)$/
+arBufGetFontCmd	ar5buf.c	/^arBufGetFontCmd(fiP, ssP)$/
+arBufGetFontValue	ar5buf.c	/^arBufGetFontValue(fiP, ssP)$/
+arBufGetFrame	ar5buf.c	/^arBufGetFrame(fiP, ssP)$/
+arBufGetHR	ar5buf.c	/^arBufGetHR(fiP, ssP)$/
+arBufGetIndex	ar5index.c	/^arBufGetIndex(fiP, ssP)$/
+arBufGetNoOp	ar5buf.c	/^arBufGetNoOp(fiP, ssP)$/
+arBufGetPageBreak	ar5buf.c	/^arBufGetPageBreak(fiP, ssP)$/
+arBufGetRef	ar5ref.c	/^arBufGetRef(fiP, ssP)$/
+arBufGetSP	ar5buf.c	/^arBufGetSP(fiP, ssP)$/
+arBufGetSR	ar5buf.c	/^arBufGetSR(fiP, ssP)$/
+arBufGetTab	ar5buf.c	/^arBufGetTab(fiP, tempint, ssP)$/
+arNameSearch	ar5strings.c	/^short arNameSearch(sP, cPP, limit)$/
+arObjectPreFetch	ar5read.c	/^arObjectPreFetch()$/
+arObjectPushBack	ar5read.c	/^arObjectPushBack(thingP)$/
+arParseFontName	ar5read.c	/^arParseFontName(fiP, nameP, sizeP, faceP)$/
+arParseUserAttr	ar5read.c	/^arParseUserAttr(fiP,avheadptr)$/
+chEmitSpecial	ar5printf.c	/^chEmitSpecial(printstore, outFILE, targetP, startP/
+chprintf	ar5printf.c	/^chprintf(fmt, printstore, outFILE, outSTR, adx)$/
+directory	ar5read.c	/^*  if include fails, try alternate directory (as i/
+dumpCmpnProps	ar5dump.c	/^static bool $/
+dump_inmap	ar5incharmap.c	/^static void dump_inmap(mapP)$/
+entry_length	ar5incharmap.c	/^static int entry_length(mapP)$/
+fnLookup	ar5incharmap.c	/^static bool (*(fnLookup(sP, fnListP)))()$/
+ftoapwr	ar5cvt.c	/^ftoapwr(n, e)$/
+get_ct_record	ar5loadDg.c	/^CtRecord_t *get_ct_record(fiP)$/
+get_ct_value	ar5loadDg.c	/^CtValue_t *get_ct_value(fiP, id, field_no)$/
+get_id_str	ar5dumpDg.c	/^char *get_id_str(id, s)  \/* used to convert the "i/
+get_lhs	ar5incharmap.c	/^static bool get_lhs(text_ssP, mapP)$/
+get_range	ar5incharmap.c	/^static bool get_range(text_ssP, map_ssP)$/
+get_rhs	ar5incharmap.c	/^static bool get_rhs(text_ssP, mapP, fnListP)$/
+map_match	ar5incharmap.c	/^static int map_match(ciP, mapP)$/
+map_merge	ar5incharmap.c	/^static In_char_map_t *map_merge(newP, listP)$/
+out_direct	ar5font.c	/^#define out_direct(ofile, thing) ArFprintf(ofile, /
+out_inh_direct	ar5font.c	/^#define out_inh_direct(ofile, thing) ArFprintf(ofi/
+out_inh_with	ar5font.c	/^#define out_inh_with(ofile, way, thing) ArFprintf(/
+out_value	ar5font.c	/^#define out_value(ofile, way, val) ArFprintf(ofile/
+refGetLookupPairs	ar5ref.c	/^refGetLookupPairs(fiP)$/
+show_Ssave	ar5csave.c	/^show_Ssave(ssP)$/
+show_inqueue	ar5io.c	/^static void show_inqueue(fiP, cP)$/
+skip_middle	ar5incharmap.c	/^static bool skip_middle(ssP)$/
+tableColsSetup	ar5table.c	/^static void tableColsSetup(tblP, current_col)$/
+tableColumnN	ar5table.c	/^Table_column_t *tableColumnN(tblP, col)$/
+xxxxxxxxxxxxListAddatEnd	ar5docread.c	/^#define xxxxxxxxxxxxListAddatEnd(listP, thingP) \\$/

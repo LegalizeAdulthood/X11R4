@@ -1,0 +1,19 @@
+################################################################################
+#
+# File:         Imakefile
+# RCS:          $Header: Imakefile,v 1.1 89/11/25 03:53:42 mayer Exp $
+# Description:  IMAKEFILE FOR WINTERP-CLIENT DIRECTORY
+# Author:       Niels Mayer, HPLabs
+# Created:      Fri Nov 24 19:47:38 1989
+# Modified:     Fri Nov 24 23:00:24 1989 (Niels Mayer) mayer@hplnpm
+# Language:     N/A
+# Package:      N/A
+# Status:       X11r4 contrib tape release
+#
+# (c) Copyright 1989, Hewlett-Packard Company.
+#
+################################################################################
+
+ INCLUDES = -I/usr/include -I.
+
+SimpleProgramTarget(wl)

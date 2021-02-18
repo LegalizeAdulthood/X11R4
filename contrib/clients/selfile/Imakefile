@@ -1,0 +1,51 @@
+#
+# This file describes how to build xdir, a simple application that uses the
+# XsraSelFile file selection dialog package.
+#
+# The program is linked with Athena widgets (Xaw) by default. It can be linked
+# with Hewlett-Packard widgets (Xw) by defining one or more of the defines below
+# and adding Xw to the list of libraries. Defining `SEL_FILE_XW' is equivalent
+# to defining all of them.
+#
+# -DSEL_FILE_XWFORM
+# -DSEL_FILE_XWPUSHBUTTON
+# -DSEL_FILE_XWSCROLLBAR
+# -DSEL_FILE_XWSTATICTEXT
+# -DSEL_FILE_XWTEXTEDIT
+#
+# -DSEL_FILE_XW
+#
+# By default, the program compiles correctly in the R4 environment, where Xaw
+# header files are under <X11/Xaw/>. To compile in an earlier environment, use:
+#
+# -DSEL_FILE_PRE_R4_XAW_XMU
+#
+# Normally, the program should be linked with the R3 or a later version of the
+# Xt Intrinsics, but it can be linked with the R2 Xt by defining the following:
+#
+# -DSEL_FILE_R2_XT
+#
+# System V Release 2 users will need something like Doug Gwyn's directory
+# package (posted to comp.sources.unix), and will need to define the following:
+#
+# -DSYSV
+#
+# System V Release 3 users will need to define the following:
+#
+# -DUSG
+#
+#------------------------------------------------------------------------------
+#
+#        DEFINES = -DSEL_FILE_XW
+        DEFINES = CompatibilityFlags
+
+           SRCS = xdir.c SelFile.c Dir.c Path.c Draw.c
+           OBJS = xdir.o SelFile.o Dir.o Path.o Draw.o
+
+          XWLIB = $(CONTRIBSRC)/widgets/Xhp/lib/libXw.a
+LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+#LOCAL_LIBRARIES = $(XWLIB) $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+
+ComplexProgramTarget(xdir)
+
+NormalLintTarget($(SRCS))

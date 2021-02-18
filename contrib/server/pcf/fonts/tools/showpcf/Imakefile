@@ -1,0 +1,22 @@
+#
+# Make file for the PCF font file dumper
+#
+
+# 6/14/89 (ef) -- blech.  libfontos pulls in something from libbdf
+#                 need to fix that.
+
+       INCLUDES = -I. -I$(FONTSRC)/include -I$(TOP)
+LOCAL_LIBRARIES = $(FONTSRC)/lib/os/libfontos.a \
+		  $(FONTSRC)/lib/bdf/libbdf.a \
+		  $(FONTSRC)/lib/pcf/libpcf.a \
+		  $(FONTSRC)/lib/utils/libfontutils.a 
+           SRCS = showpcf.c
+           OBJS = showpcf.o 
+    CDEBUGFLAGS = -g
+
+#ifdef UWSBuild
+ComplexProgramTarget(dxshowfont)
+#else
+ComplexProgramTarget(showpcf)
+#endif
+

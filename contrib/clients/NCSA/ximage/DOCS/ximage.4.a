@@ -1,0 +1,276 @@
+                                                                
+
+November l989
+
+4.1	NCSA X Image
+
+Palette Manipulations	4.1
+
+National Center for Supercomputing Applications
+
+November 1989
+
+
+
+
+Chapter 4	Palette Manipulations
+
+
+
+Chapter Overview
+Palettes in NCSA X Image
+Palettes and the System CLUT
+Linking Images and Palettes
+Using the Palette Window
+Understanding the Color Models
+Creating a Palette
+Editing Individual Color Entries
+Editing the Palette as a Whole
+Editing Reserved Color Entries
+Undoing Changes to the Palette
+Closing the Palette Window
+
+Chapter Overview
+
+This chapter describes palettes as they are used in NCSA X Image  
+and explains how you may tailor palettes for your particular image 
+data.
+
+
+Palettes in NCSA X Image
+
+A palette is a color lookup table (CLUT) that specifies which color to 
+associate with each pixel value on the screen. A palette created or 
+modified in NCSA X Image consists of 256 color entries.
+
+
+Palettes and the System 
+CLUT
+Your system hardware uses a default CLUT to display color. 
+While working in NCSA X Image, you can replace the system 
+CLUT with a palette better suited to your analysis and imaging 
+needs.
+
+Only a single palette may be in control of the system color table at 
+any given time. When you load a new palette into NCSA X Image, 
+that palette becomes associated with the palette window.
+
+While the cursor is in the palette window or in an image window 
+whose Lock Palette option is enabled, the palette associated with the 
+palette window replaces the system CLUT. (The Lock Palette option 
+is discussed in the following section.) This lets you observe how the 
+changes you make to the palette affect your images. When the 
+cursor is outside of these windows or you suspend or exit the 
+application, the system CLUT returns to its default state.
+
+
+Linking Images and 
+Palettes
+NCSA X Image allows you to link an image to whatever palette is 
+associated with the palette window (i.e., the last palette loaded into 
+NCSA X Image), so that while you are working within the image's 
+window, the image is displayed with the desired palette. You can 
+associate any image with any palette.
+
+To link an image to the palette associated with the palette window, 
+enable the Lock Palette option in that image's window.
+
+
+Using the Palette Window
+
+NCSA X Image supports three color models:  RGB, CMY, and HSV. 
+Using the palette window, you can specify the value of individual 
+color components from these color models, customizing the colors 
+of the palette to suit your needs or preferences.
+
+The following sections describe the color models and how you can 
+use them to create and modify palettes in NCSA X Image.
+
+Understanding the Color 
+Models
+The RGB color model describes a particular color as a sum of the 
+three primary colors—red, green, and blue. The CMY color model 
+describes a color as a sum of the complements of the primary 
+colors—cyan, magenta, and yellow. These complements are 
+called subtractive primary colors because they result from 
+subtracting the corresponding primary colors from white light.
+
+The HSV color model is based on the artist's concepts of tint, shade, 
+and tone—here called hue, saturation, and value, respectively. 
+Hue is the pure color and ranges continuously from red to 
+magenta, encompassing the colors yellow, green, cyan, and blue 
+in a full cycle around the spectrum. Saturation refers to the purity 
+of color, and value to the brightness.
+
+For more information about these color models, see a reference 
+book such as Fundamentals of Interactive Computer Graphics by J. 
+D. Foley and A. Van Dam, published by Addison-Wesley, 1982.
+
+
+Creating a Palette
+To create a palette using colors from a single color model or from 
+several color models, click the Palette button at the Control 
+window. A Palette Editing window appears (See Figure 4.1):
+
+1.	Plot a color in the component plot by clicking on the box to the left 
+of it. Figure 4.1 depicts the plots for the RGB color components 
+red, green, and blue of the default palette, and identifies the 
+component plot.
+
+Click on a box that is already highlighted, to clear the plot of the 
+associated component.
+
+2.	Activate the color component whose plot you wish to change by 
+clicking on the diamond to the left of it. If the box for this color 
+component is not already highlighted, clicking the diamond 
+highlights it automatically and plots the color component in the 
+component plot. Red is the active color component in Figure 4.1.
+
+3.	Change the values of the active color component in the 
+component plot by clicking or dragging the pencil cursor within 
+the color window.
+
+Figure 4.1	Plots for RGB Components
+
+                                            
+
+
+An Example Palette
+For example, to create a palette that has a smooth gradation from 
+red to blue:
+
+1.	Activate the red component by clicking the diamond labeled 
+Red.
+
+2.	Drag from the upper-left to the lower-right corner of the 
+component plot window to modify the red component. The 
+segment drawn in the component plot (see Figure 4.2) and the 
+corresponding change in the palette reflect a gradual decrease 
+in the value of red.
+
+Figure 4.2	Decreasing the Red 
+Component
+                          
+
+
+3.	Activate the green component by clicking the diamond labeled 
+Green.
+
+4.	Drag from the lower-left to lower-right corner of the component 
+plot window to zero out the green component (see Figure 4.3).
+
+Figure 4.3	Eliminating the 
+Green Component
+                          
+
+
+5.	Activate the blue component by clicking the diamond labeled 
+Blue.
+
+6.	Drag from the lower-left to the upper-right corner of the 
+component plot window. The segment drawn in the component 
+plot (see Figure 4.4) and the corresponding change in the palette 
+reflect a gradual increase in the value of blue.
+
+Figure 4.4	Increasing the Blue 
+Component
+                          
+
+
+
+Editing the Palette as a 
+Whole
+Several palette manipulations affect the palette as a whole, rather 
+than individual color entries in the palette:  smoothing, fiddling, 
+flipping, and rotating.
+
+
+Smooth
+Smoothing averages the nearest neighboring values of the active 
+color component in the palette, producing a smoother palette.
+
+To smooth the palette, click the Smooth button.
+
+
+
+Fiddle
+Fiddling compresses or expands the spectrum within the color 
+palette. This allows you to alter which regions or ranges of values 
+in your image are represented with the greatest detail. Moreover, 
+fiddling lets you shift the center of compression or expansion.
+
+To fiddle the palette:
+
+1.	Click the Fiddle button. The cursor becomes a fiddle tool.
+
+2.	Drag the fiddle tool vertically to expand or compress the 
+spectrum of colors in the palette.
+
+3.	Drag the fiddle tool horizontally to shift the palette entries in 
+either direction.
+
+4.	Click the mouse button when you are satisfied with the changes 
+or wish to stop fiddling.
+
+
+Flip
+Flipping reverses the spectrum of colors across the center of the 
+palette.
+
+To flip the palette, click the Flip button.
+
+
+Rotate
+To rotate color entries within the palette, drag the cursor 
+horizontally within the color bar. The palette entries rotate a 
+distance and direction relative to the movement of the cursor. Note 
+that when the cursor is in the color bar of the palette window, it 
+becomes a rotation tool.
+
+
+Editing Reserved Color 
+Entries
+Each system reserves color entries in palettes for the colors black 
+and white to ensure that two contrasting colors will be available so 
+that the system can at all times draw a visible screen and 
+communicate with you.
+
+So that you may create color tables in NCSA X Image for various 
+machines, NCSA X Image allows you to edit the entire palette, 
+including those entries which your machine has reserved for white 
+and black. Moreover, NCSA X Image allows you to view the results 
+of editing the reserved palette entries. To view your images as they 
+would appear on the machine meant to use the edited palette, enable 
+the Lock Palette option for the images and move the cursor into an 
+image window.
+
+To permit editing of reserved entries, click the diamond labeled 
+"Don't use entire palette." This toggles the option to "Use entire 
+palette." When you enable this option, the screen reverts to the 
+current palette color and all windows become transparent. If you 
+wish to look at a digitized image, for example, you must use the 
+entire palette.
+To disable the option, click the diamond again.
+
+
+Undoing Changes to the 
+Palette
+For your convenience, NCSA X Image allows you to undo your last 
+editing action or revert the palette to its initial state.
+
+To undo your last editing action, click the Undo button.
+
+To return the palette to its original state, click the Reset button.
+
+
+Closing the Palette Window
+If you wish to save your changes to the palette, you must do so before 
+closing the palette window. For information regarding saving 
+palettes, see the section entitled "Saving a Modified Palette," in 
+Chapter 1.
+
+To close the palette window, simply click the Done button located in 
+the upper-right corner of the window.
+
+For additional information on creating and editing custom 
+palettes, refer to the documentation for NCSA PalEdit, version 1.1.

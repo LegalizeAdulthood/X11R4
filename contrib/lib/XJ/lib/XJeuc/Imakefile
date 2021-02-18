@@ -1,0 +1,40 @@
+#include "./../../XJImake.defs"
+
+       INCLUDES = -I$(XJINCLUDESRC) -I$(TOP)
+        DEFINES = $(XJDEFINES) -DANKFONT
+       LINTLIBS = 
+
+OBJS= XJDrawEuc.o
+SRCS= XJDrawEuc.c
+
+#if DebugLibEuc && ProfileLibEuc
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugLibEuc
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileLibEuc
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+NormalLibraryTarget(XJeuc,$(OBJS))
+LintLibraryTarget(XJeuc,$(SRCS))
+InstallLibrary(XJeuc,$(USRLIBDIR))
+InstallLintLibrary(XJeuc,$(LINTLIBDIR))
+
+#if ProfileLibEuc
+ProfiledLibraryTarget(XJeuc,$(OBJS))
+InstallLibrary(XJeuc_p,$(USRLIBDIR))
+#endif
+
+#if DebugLibEuc
+DebuggedLibraryTarget(XJeuc,$(OBJS))
+#endif
+
+DependTarget()
+
+NormalLintTarget($(SRCS))

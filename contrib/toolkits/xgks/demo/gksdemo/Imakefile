@@ -1,0 +1,95 @@
+#
+#
+#		Copyright IBM Corporation 1989
+#
+#                      All Rights Reserved
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted,
+# provided that the above copyright notice appear in all copies and that
+# both that copyright notice and this permission notice appear in
+# supporting documentation, and that the name of IBM not be
+# used in advertising or publicity pertaining to distribution of the
+# software without specific, written prior permission.
+#
+# IBM DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+# ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+# IBM BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+# ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+# WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+# ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+# SOFTWARE.
+#
+# Demo/gksdemo Imakefile for XGKS tree
+#
+# Author:  Bruce Greer
+#
+# $Header: Imakefile,v 1.1 89/09/18 18:52:31 jim Exp $
+#
+# $Log:	Imakefile,v $
+# Revision 1.1  89/09/18  18:52:31  jim
+# Initial revision
+# 
+# Revision 4.10  89/09/07  11:55:42  amy
+# make dependencies
+# 
+# Revision 4.9  89/09/07  11:35:32  amy
+# make dependencies
+# 
+# Revision 4.8  89/09/06  16:35:52  amy
+# make dependencies
+# 
+# Revision 4.7  89/09/06  16:27:05  amy
+# make dependencies
+# 
+# Revision 4.6  89/09/06  16:21:04  amy
+# make dependencies
+# 
+# Revision 4.5  89/09/06  16:04:26  amy
+# make dependencies
+# 
+# Revision 4.4  89/09/06  15:42:23  amy
+# make dependencies
+# 
+# Revision 4.3  89/09/06  14:36:15  amy
+# make dependencies
+# 
+# Revision 4.2  89/09/06  12:50:50  amy
+# make dependencies
+# 
+# Revision 4.1  89/09/06  12:42:33  amy
+# make dependencies
+# 
+# Revision 4.0  89/08/31  11:20:45  amy
+# Changed IBM copyright for MIT distribution.
+# 
+# Revision 1.2  89/05/12  15:35:41  bruce
+# make dependencies
+# 
+# Revision 1.1  89/05/12  15:21:39  bruce
+# Initial revision
+# 
+#
+
+GKSLIB = $(LIBDIR)/libxgks.a
+LOCAL_LIBRARIES = $(LIBDIR)/libxgks.a
+FORTLIB = $(LIBDIR)/fortxgks.a
+LDFLAGS = -lX11 -lm
+INCLUDES = -I../../include -I.
+CC = f77
+FC = f77
+
+OBJS1 = gksdemo.o
+SRCS1 = gksdemo.f
+OBJS2 = star.o
+SRCS2 = star.f
+SRCS = $(SRCS1) $(SRCS2)
+OBJS = $(OBJS1) $(OBJS2)
+
+PROGRAMS = gksdemo star
+
+FORTRAN_LIB = $(FORTLIB) $(LOCAL_LIBRARIES)
+
+ComplexProgramTarget_1(gksdemo,$(FORTRAN_LIB),)
+ComplexProgramTarget_2(star,$(FORTRAN_LIB),)
+# DO NOT DELETE

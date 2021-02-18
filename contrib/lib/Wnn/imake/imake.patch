@@ -1,0 +1,78 @@
+*** imake.c.org	Thu Aug 24 18:10:26 1989
+--- imake.c	Mon Aug 21 14:00:20 1989
+***************
+*** 105,111 ****
+  #define	FALSE		0
+  #define	ARGUMENTS	50
+  
+! #if defined(sun) || defined(hpux) || defined(macII) || defined(CRAY)
+  #define REDUCED_TO_ASCII_SPACE
+  #endif
+  #ifdef REDUCED_TO_ASCII_SPACE
+--- 105,111 ----
+  #define	FALSE		0
+  #define	ARGUMENTS	50
+  
+! #if defined(sun) || defined(hpux) || defined(macII) || defined(CRAY) || defined(SX9100)
+  #define REDUCED_TO_ASCII_SPACE
+  #endif
+  #ifdef REDUCED_TO_ASCII_SPACE
+***************
+*** 154,159 ****
+--- 154,170 ----
+  #ifdef macII
+  	"-DmacII",		/* default cpp has no unique symbol */
+  #endif /* macII (Apple) */
++ #ifdef SX9100
++ 	"-DSX9100",		/* default cpp has no unique symbol */
++ #ifdef SYSV
++ 	"-DSYSV",		/* for SX9100.macros */
++ #else
++ 	"-DBSD",		/* for SX9100.macros */
++ #endif /* SYSV */
++ #endif /* SX9100 (Omron) */
++ #ifdef SX9100DT
++ 	"-DSX9100DT",		/* default cpp has no unique symbol */
++ #endif /* SX9100DT (Omron) */
+  };
+  int	make_argindex;
+  int	cpp_argindex;
+***************
+*** 183,188 ****
+--- 194,215 ----
+  	char	makeMacro[ BUFSIZ ];
+  	char	makefileMacro[ BUFSIZ ];
+  
++ #ifdef SX9100DT
++ #ifdef SYSV
++ 	message("...This is imake for Unios-U DT.");
++ #else
++ 	message("...This is imake for Unios-B DT.");
++ #endif
++ #else
++ #ifdef SX9100
++ #ifdef SYSV
++ 	message("...This is imake for Unios-U DS.");
++ #else
++ 	message("...This is imake for Unios-B DS.");
++ #endif
++ #endif
++ #endif
++ 
+  	init();
+  	SetOpts(argc, argv);
+  
+***************
+*** 781,783 ****
+--- 808,818 ----
+  	strcpy(new, cp);
+  	return new;
+  }
++ 
++ #ifdef SX9100
++ message(string)
++ char *string;
++ {
++ 	fprintf(stderr,"%s\n",string);
++ }
++ #endif

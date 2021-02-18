@@ -1,0 +1,72 @@
+/**/#
+/**/# This library contains miscellaneous utility routines and is not part
+/**/# of the Xlib standard.
+/**/#
+
+STD_DEFINES = LibraryDefines -DSYSV -DBSD_INCLUDES -D_NO_PROTO
+CDEBUGFLAGS = LibraryCDebugFlags
+INCLUDES = -I. -I$(TOP) -I$(TOP)/X11 -I../include
+   INSTALLFLAGS = $(INSTINCFLAGS)
+       LINTLIBS = $(LINTXLIB) 
+
+#ifdef OsNameDefines
+OS_NAME_DEFINES = OsNameDefines
+#endif
+
+HEADERS = \
+	mbX.h
+
+SRCS = mbX.c       \
+       mbXDraw.c   \
+       mbXText.c   \
+       mbXLoad.c   \
+       mbXibm.c
+
+OBJS = mbX.o       \
+       mbXDraw.o   \
+       mbXText.o   \
+       mbXLoad.o   \
+       mbXibm.o
+
+
+all::
+
+#if DebugLibXmu && ProfileLibXmu
+DebuggedAndProfiledLibraryObjectRule()
+SpecialDebuggedAndProfiledObjectRule(CvtStdSel.o,$(ICONFIGFILES),$(OS_NAME_DEFINES))
+#else
+# if DebugLibXmu
+DebuggedLibraryObjectRule()
+SpecialDebuggedObjectRule(CvtStdSel.o,$(ICONFIGFILES),$(OS_NAME_DEFINES))
+# else
+#  if ProfileLibXmu
+ProfiledLibraryObjectRule()
+SpecialProfiledObjectRule(CvtStdSel.o,$(ICONFIGFILES),$(OS_NAME_DEFINES))
+#  else
+NormalLibraryObjectRule()
+SpecialObjectRule(CvtStdSel.o,$(ICONFIGFILES),$(OS_NAME_DEFINES))
+#  endif
+# endif
+#endif
+
+NormalLibraryTarget(Xmu,$(OBJS))
+LintLibraryTarget(Xmu,$(SRCS))
+InstallLibrary(Xmu,$(USRLIBDIR))
+InstallLintLibrary(Xmu,$(LINTLIBDIR))
+
+#if ProfileLibXmu
+ProfiledLibraryTarget(Xmu,$(OBJS))
+InstallLibrary(Xmu_p,$(USRLIBDIR))
+#endif
+
+#if DebugLibXmu
+DebuggedLibraryTarget(Xmu,$(OBJS))
+#endif
+
+InstallMultiple($(HEADERS),$(INCDIR))
+
+DependTarget()
+
+NormalLintTarget($(SRCS))
+
+UTILSRC=/u/jeanne/X/X.V11R3/util

@@ -1,0 +1,133 @@
+# $Header: /andrew/X11/r3src/r3plus/server/ddx/ibm/vga/RCS/Imakefile,v 30.1 89/05/07 15:33:56 paul Exp $
+# $Source: /andrew/X11/r3src/r3plus/server/ddx/ibm/vga/RCS/Imakefile,v $
+
+#include <Server.tmpl>
+
+SRCS =		vgaScrInfo.c	\
+		vgaData.c	\
+		vgaHWCntl.c	\
+		vgaIO.c		\
+		vgaGC.c		\
+		vgaOSD.c	\
+		vgaSuspScr.c	\
+\
+		vgaCurs.c	\
+		vgaBitBlt.c	\
+		vgaGlyph.c	\
+		vgaImages.c	\
+		vgaLine.c	\
+		vgaStipple.c	\
+		vgaSolid.c
+
+ASM_SRCS =	vgaLine.386.s
+
+OTHER_FILES =	vgaAddr.c
+
+C_OBJS =	vgaScrInfo.o	\
+		vgaData.o	\
+		vgaHWCntl.o	\
+		vgaIO.o		\
+		vgaGC.o		\
+		vgaOSD.o	\
+		vgaSuspScr.o	\
+\
+		vgaCurs.o	\
+		vgaBitBlt.o	\
+		vgaGlyph.o	\
+		vgaImages.o	\
+		vgaLine.o	\
+		vgaStipple.o	\
+		vgaSolid.o
+
+#if defined(PS2Architecture) || defined(iAPX286) || defined(DOS)
+ASM_OBJS =	vgaLine.386.o
+#else
+ASM_OBJS =
+#endif
+
+OBJS =		$(C_OBJS)	$(ASM_OBJS)
+
+#if defined(PS2Architecture) || defined(iAPX286) || defined(DOS)
+STD_DEFINES = ServerDefines -DPCIO
+#else
+STD_DEFINES = ServerDefines -DATRIO -DUSE_PORTABLE_FAST_LINES=1
+#endif
+
+INCLUDES =	-I. -I../OPERATING_SYSTEM -I../ppc -I../../../include \
+		-I$(INCLUDESRC) -I../common -I../../mfb -I../../mi
+
+LINTLIBS =	../../mfb/llib-lmfb.ln ../../mi/llib-lmi.ln \
+		../ppc/llib-lppc.ln ../common/llib-libmcomm.ln
+
+#if DebugServer && ProfileServer
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugServer
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileServer
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+NormalRelocatableTarget(vga,$(OBJS))
+
+#ifdef LCGBUILD
+COMPILE_LIST = $(OBJS)
+BUILD_LIST = vga.o
+#endif
+
+#if ProfileServer
+ProfiledRelocatableTarget(vga,$(OBJS))
+#endif
+#if DebugServer
+DebuggedRelocatableTarget(vga,$(OBJS))
+#endif
+
+#if DebugServer && ProfileServer
+DebuggedAndProfiledLibraryObjectRule()
+.s.o:
+	$(RM) -f m.s $@ debugger/$@ profiled/$@
+	$(CPP) $(CFLAGS) $*.s > m.s
+	$(AS) -o $@ m.s
+	$(CP) $@ debugger/$@
+	$(CP) $@ profiled/$@
+	$(RM) -f m.s
+#else
+# if DebugServer
+DebuggedLibraryObjectRule()
+.s.o:
+	$(RM) -f m.s $@ debugger/$@
+	$(CPP) $(CFLAGS) $*.s > m.s
+	$(AS) -o $@ m.s
+	$(CP) $@ debugger/$@
+	$(RM) -f m.s
+# else
+#  if ProfileServer
+ProfiledLibraryObjectRule()
+.s.o:
+	$(RM) -f m.s $@ profiled/$@
+	$(CPP) $(CFLAGS) $*.s > m.s
+	$(AS) -o $@ m.s
+	$(CP) $@ profiled/$@
+	$(RM) -f m.s
+#  else
+NormalLibraryObjectRule()
+.s.o:
+	$(RM) -f m.s $@
+	$(CPP) -E $(CFLAGS) $*.s > m.s
+	$(AS) -o $@ m.s
+	$(RM) -f m.s
+#  endif
+# endif
+#endif
+
+DependTarget()
+
+#ifndef LCGBUILD
+LintLibraryTarget(vga,$(SRCS))
+NormalLintTarget($(SRCS))
+#endif

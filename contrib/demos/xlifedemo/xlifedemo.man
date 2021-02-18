@@ -1,0 +1,106 @@
+.TH XLIFEDEMO 6 "13 July 1988" "X Version 11"
+.SH NAME
+xlifedemo - game of Life in a window with interaction
+.SH SYNTAX
+\fBxlifedemo\fP [\fI-toolkitoption\fP ...] [\fI-width\fP width] 
+[\fI-height\fP height] [\fI-random number-of-random-patterns]
+[\fI-patfile\fP patternfile]
+.SH OPTIONS
+.I Xlifedemo
+accepts all of the standard X Toolkit command line options, plus:
+.TP 8
+.IR -width " width"
+Sets the width of the window
+.TP 8
+.IR -height " height"
+sets the height of the window
+.TP 8
+.IR -random " number"
+starts the game off with a suitable number of random patterns.
+Zero means a program default.
+.TP 8
+.IR -patfile " patternfile"
+reads in the list of patterns to use when generating the random
+startup screen. The default is 
+.I LIBDIR/xlife.pat.
+.SH DESCRIPTION
+.I Xlifedemo
+simulates the game of Life, described as follows:
+.IP \-
+if a "live" cell has one neighbour among the eight adjacent cells, it "dies".
+(Isolation)
+.IP \-
+if a "live" cell has two neighbours, it continues to "live". (Survival)
+.IP \-
+if an empty cell has three neighbours, it comes "alive". (Reproduction)
+.IP \-
+if a "live" cell has four or more neighbours, it "dies" (Suffocation)
+.PP
+The following commands are available:
+.IP "Set"
+Bound to the left mouse button, it makes a cell come alive.
+.IP "Start/Stop"
+Bound to the middle mouse button, it starts and stops the simulation.
+.IP "Kill"
+Bound to the right mouse button, it clears a cell. This is only
+available when the simulation is stopped.
+.IP "Quit"
+Bound to the 'q' key.
+.IP "Redraw" 
+Bound to the 'r' key.
+.IP "Clear"
+Bound to the 'c' key, it clears the screen and board.
+.PP
+When played as a game, the objective is to clear the board of all life
+using the Set command only (Stopping, using the Kill key, and restarting is
+not fair!). 
+.PP
+Life randomly initializes the board using a set of standard patterns that
+cause reasonable carnage - they are well known growing, quasi-static
+or moving patterns. The patterns are found in the patterns file
+.I xlife.pat.
+.SH X DEFAULTS
+For
+.I xlifedemo
+the available class identifiers are:
+.sp
+.nf
+XLife
+.fi
+.PP
+For
+.I xlifedemo,
+the available name identifiers are:
+.sp
+.nf
+xlifedemo
+.fi
+.sp
+.LP
+For
+.I xlifedemo,
+the available resources are:
+.IP background
+Specifies the background color to be displayed.
+The default is white.
+.IP foreground
+Specifies the foreground color of the
+.I xlifedemo
+window.
+The default is black.
+.IP width
+width of the window.
+.IP height
+height of the window.
+.IP random
+number of random cells to initialize with
+.SH SEE ALSO
+X(1), xrdb(1)
+.SH FILES
+LIBDIR/xlife.pat
+.SH AUTHOR
+Mark Moraes, University of Toronto
+.SH BUGS
+Lacks numerous features -- this set of programs was written mostly as
+a set of demos for doing continuous graphics in X windows. For a much
+better Life simulator, see xlife.

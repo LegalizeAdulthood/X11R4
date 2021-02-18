@@ -1,0 +1,30 @@
+#
+# @(#)Imakefile 1.5 89/12/06 SMI
+#
+# Imakefile for clock
+#
+# LIBRARY_DEST is the location of the XView libraries
+# HEADER_DEST is the location of the XView header files
+# LIBDIR is the directory containing the X11 library (libX11.a)
+#
+
+#include "../../XView.config"
+
+HELP_DEST=$(USRLIBDIR)/help
+LIBDIR=/home/X11/lib
+LDFLAGS=-L$(LIBRARY_DEST) -L$(LIBDIR) -lxview -lX11 -lm
+INCLUDES= -I$(HEADER_DEST) -I$(TOP) -DSTANDALONE
+DEPLIBS= $(TOP)/../lib/libxview.a $(DEPXLIB)
+LOCAL_LIBRARIES = $(TOP)/../lib/libxview.a $(XLIB) -lm
+
+# Uncomment the following line to use libxvol.a and libxvin.a
+#
+#LDFLAGS=-L$(LIBRARY_DEST) -L$(LIBDIR) -lxvol -lxvin -lX11 -lm
+
+OBJS= clock.o clockhands.o clockhands.rom.o
+SRCS= clock.c clockhands.c clockhands.rom.c
+
+ComplexProgramTarget(clock)
+
+install::
+	-$(INSTALL) -c $(INSTALLFLAGS) clock.info $(HELP_DEST)

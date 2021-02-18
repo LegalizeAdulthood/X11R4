@@ -1,0 +1,62 @@
+.TH SMOOTHIM 1 "February 3,  1989"
+.UC 5
+.SH NAME
+smoothim \- smooth out and reduce noise in a 24 bit/pixel image.
+.SH SYNOPSIS
+.B smoothim
+[-in 
+.I file
+] [-out
+.I file
+] [-thresh
+.I level]
+
+.SH DESCRIPTION
+.I Smoothim
+is a program for reducing the noise often found in scanned or digitized  images.
+We use it here primarily for reducing noise from digitized video images.
+At the heart of this program is the
+.I scancols
+algorithm written at the USC Information Sciences Institute.
+It does a weighted averaging of pixels in a 5x5 cell around each target pixel, but only for those pixels within some given RGB range of the target.
+A decrease in overall image sharpness may result.
+.SH OPTIONS
+.TP "\w'\f3\-m\f1name 'u"
+.B -in \fIfile\fP
+This option allows the user to explicitly specify the 24 bit/pixel file on the command line.
+The default is to read input from standard in.
+.TP "\w'\f3\-m\f1name 'u"
+.B -out \fIfile\fP
+This option allows the user to explicitly specify the output file on the command line.
+The default is to write output to standard out.
+.TP "\w'\f3\-m\f1name 'u"
+.B -thresh \fIdist\fP
+dist is the RGB distance threshold, defaulted to 50.
+Neighboring pixels are averaged only if their RGB displacement
+from the target pixel is less than dist.
+Higher distances have a more pronounced effect, but may increase blurring of the image.
+.PP
+.I Note:
+All of the command line options can be abbreviated to their shortest unique spelling.
+.br
+ex: %  smoothin -in colord24.xim -out smooth.xim -th=25
+
+.SH "SEE ALSO"
+xim(1), quantizim(1)
+
+.SH BUGS
+This program takes a lot of memory.
+.SH COPYRIGHTS
+Copyright 1989, Massachusetts Institute of Technology.
+Copyright 1988, University of Southern California
+.SH AUTHORS
+Paul Raveling (vaxa.isi.edu) - scancols.c
+.PP
+Philip R. Thompson (phils@athena.mit.edu) - smoothim.c
+.br
+Computer Resource Laboratory,  
+Dept. of Architecture and Planning,  
+.br
+Massachusetts Institute of Technology,  
+Cambridge, MA  02139
+

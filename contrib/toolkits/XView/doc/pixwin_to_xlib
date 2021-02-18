@@ -1,0 +1,888 @@
+
+	Converting Your SunView Application's Pixwin/Pixrect Graphics
+		     to XView and Xlib Graphics
+
+
+GOAL:
+
+	The purpose of this guide is to assist programmers in
+	converting their SunView applications to the XView toolkit.
+	This guide will help them to convert their Pixwin graphics
+	function calls into Xlib graphics function calls.  This
+	conversion will allow the resulting converted application to
+	run with improved performance and additionally to allow their
+	application to be much more portable (and/or displayable) to
+	other X11 environments.
+
+BACKGROUND:
+
+	In SunView applications, the standard graphics interface was
+	called Pixwin.  Pixwin is a logical windowing interface to
+	the raster-op style Pixrect graphics interface.  The Pixwin
+	and Xlib graphics interfaces are very similar and nearly any
+	graphics written for Pixrect can be easily rewritten to
+	Xlib graphics interfaces (and vice-versa).
+
+HOW TO USE THIS GUIDE:
+
+	This guide provides a simple function-by-function conversion
+	recipe.  In order to use this guide, first find the pw_*()
+	function that you wish to convert (functions are in
+	alphabetical order), then examine the recipe.  Each function
+	will include: one (possibly more) Xlib equivalent and example
+	code showing usage of the Xlib function to perform the same
+	graphics operation, notes relating to converting function
+	specific arguments and descriptions of other Xlib functions
+	necessary to make use of the Xlib graphics function. 
+
+	At the end of this document, there is section which pertains to
+	creating X Graphics Contexts for your converted graphics.  You
+	may need to consult this section as a result of converting many
+	of your Pixwin function calls.
+
+	NOTE:  	This document assumed the reader has other documentation
+	       	available which fully document the Pixwin graphics
+		and Xlib graphics interfaces.  Please be sure to have 
+		these other documents available to consult when you
+		have any questions about Pixwin or Xlib graphics.
+
+FUNCTIONS:
+
+***********************************************
+* pw_char(pw, x, y, op, fontname, character); *
+***********************************************
+
+	Use the XLib calls XDrawImageString() after converting 
+	the character into a string.
+
+	See the section on pw_text() for more details.
+
+*********************
+* pw_get(pw, x, y); *
+*********************
+
+Approximate Xlib Equivalent:
+
+	XGetImage(display, drawable, x, y, 1, 1, planemask, format);
+	XGetPixel(image, 0, 0);
+
+Example Code:
+
+	Display *display;
+	Drawable drawable;
+	XImage *image;
+	int value;
+
+	/* Get display and drawable */
+	display=(Display *)xv_get(pw, XV_DISPLAY);
+	drawable=(Drawable)xv_get(pw, XV_XID);
+
+	/* Get image using XGetImage() */
+	image = XGetImage(display, drawable, x, y, 1, 1, AllPlanes, ZPixmap);
+
+	/* Get pixel value from image using XGetPixel() */
+	value = (int)XGetPixel(image, 0, 0);
+
+Functions used:
+
+	XGetImage(display, drawable, x, y, width, height, plane_mask, format);
+		display, drawable -	see example code.
+		x, y -			same as pw_get call.
+		width, height -		should be 1.
+		format -		(1) XYPixmap: gets only the bit planes 
+					    specified in the plane_mask
+					    argument.
+					(2) ZPixmap : Sets to 0 the bits in all 
+					    planes not specified in the
+					    plane_mask argument. No range
+					    checking is done.
+		plane_mask -		(1) AllPlanes.
+					(2) or you can specify the planes, 
+					    you want to be returned.
+
+	XGetPixel(image, x, y);
+		image -			returned from XGetImage call.
+		x, y - 			should be 0's.
+
+************************************************
+* pw_line(pw, x0, y0, x1, y1, brush, tex, op); *
+************************************************
+
+Approximate Xlib Equivalent:
+
+	XDrawLine(display, drawable, gc, x0, y0, x1, y1);
+
+Example Code:
+
+	Display *display;
+	Drawable drawable;
+	GC gc;
+	XGCValues gc_val;
+
+	/* Get display and drawable. */
+	display=(Display *)xv_get(pw, XV_DISPLAY);
+	drawable=(Drawable)xv_get(pw, XV_XID);
+
+	/* Create a graphics context /
+	gc_val.foreground = value;
+	gc_val.function = op;
+	gc_val.line_width = brush->width;
+	gc_val.line_style = LineSolid;
+	gc = XCreateGC(display, drawable, 
+		GCForeground|GCFunction|GCLineWidth|GCLineStyle, &gc_val);
+
+	/* Used the graphics context to draw the line */
+	XDrawLine(display, drawable, gc, x0, y0, x1, y1);
+
+Notes:
+
+	XDrawLine() uses the foreground pixel and function 
+	attributes of the graphics context to draw the line.
+
+	Refer to section on graphics contexts for mapping pw ops 
+	to gc_val.functions.
+
+	SunView attribute	->	Graphics context attribute
+	-----------------		--------------------------
+	op				gc.function
+	brush->width			gc_val.line_width
+	tex->pattern			gc_val.line_style
+
+	NULL				LineSolid
+	pw_tex_dashed			LineOnOffDash
+	
+	pw_tex_dashdot       ---
+	pw_tex_dashdotdotted   |	Create an array of chars of the
+	pw_tex_longdashed    ---	    list of penup and pendowns and use
+					    gc_val.dashes on your GC
+					    
+	tex->offset			gc_val.dash_offset
+
+********If you don't care about line width, use line_width of 0
+	which is faster.
+
+	For more information see section on graphics contexts.
+
+Functions used:
+
+	XDrawLine(display, drawable, gc, x, y);
+		display, drawable -	see example code.
+		gc -			graphics context to use.
+		x, y -			coordinate to draw point.
+
+******************************************************************
+* pw_polygon_2 (pw, dx, dy, nbds, npts, vlist, op, spr, sx, sy); *
+******************************************************************
+
+Approximate Xlib Equivalent:
+	
+	XFillPolygon(display, drawable, gc, points, npoints, shape, mode);
+
+Example Code:
+
+	Display *display;
+	Drawable drawable;
+	GC gc;
+	XGCValues gc_val;
+	XPoint *points;
+	insigned long valuemask = 0;
+	int i;
+
+	/* Get display and drawable */
+	display=(Display *)xv_get(pw, XV_DISPLAY);
+	drawable=(Drawable)xv_get(pw, XV_XID);
+
+	/*
+	 * Allocate memory for your XPoint struct.
+	 * Initialise Xpoint struct with the corresponding 
+	 * fields from vtlist.
+	 * remember Xlib uses shorts instead of integers,
+	 * and you need to add the offset dx or dy
+	 */
+	points = (XPoint *)malloc(sizeof(short) * 2 * npts);
+	for (i = 0; i < npts; ++i) {
+		points[i].x = (short) vtlist[i].x + dx;
+		points[i].y = (short) vtlist[i].y + dy;
+	}
+
+	/* Create a graphics context */
+	gc_val.function = op;
+	valuemask |= GCFunction;
+	if (spr == NULL) {
+		/* fill polygon with a solid color */
+		gc_val.foreground = whatever_fg_color_you_desire;
+		valuemask |= GCForeground;
+		gc_val.fill_style = FillSolid;
+		valuemask |= GCFillStyle;
+
+	} else {	/* spr == Server Image */
+		/* 
+		 * if it is not see the 'notes' section below on 
+		 * how to convert from a pixrect to a Server Image
+		 */
+
+		int src_depth = (int)xv_get(spr, WIN_DEPTH);
+		int dst_depth = (int)xv_get(pw, WIN_DEPTH);
+
+		if (scr_depth == dst_depth) {
+			gc_val.tile = xv_get(spr, XV_XID);
+			valuemask |= GCTile;
+			gc_val.fill_style = FillTiled;
+		} else{
+			gc_val.stipple = xv_get(spr, XV_XID);
+			valuemask |= GCStipple;
+			gc_val.fill_style = FillOpaqueStipple;
+		}
+
+		gc_val.ts_x_origin = dx - sx;
+		gc_val.ts_y_origin = dy - sy;
+
+		valuemask |= (GCFillStype|CGTileStipXOrigin|CGTileStipYOrigin);
+	}
+
+	gc = XCreateGC(display, drawable, valuemask, &gc_val);
+
+	/* draw a filled polygon */
+	XFillPolygon(display, drawable, gc,
+		points, npts, Complex, CoordModeOrigin);
+
+	If there are many polygons to be drawn, split the
+	points and use a "for" loop with the above call.
+
+Notes:
+
+	Refer to section on graphics contexts for mapping pw ops 
+	to gc_val.functions.
+
+	If the spr is a pixrect and not a Server Image, you can
+	convert it as follows:
+
+		Server_image tile;
+
+		tile = xv_create(NULL,
+			SERVER_IMAGE,
+			XV_HEIGHT,		spr->pr_height,
+			XV_WIDTH,		spr->pr_width,
+			SERVER_IMAGE_DEPTH,	spr->pr_depth,
+			SERVER_IMAGE_BITS,	(mpr_d(spr))->md_image,
+			0);
+
+	** Refer to the section on XFillPolygon() in any X
+	book for more details. 
+
+Functions used:
+
+	XFillPolygon(display, drawable, gc, points, npoints, shape, mode);
+
+		display, drawable -	see example code.
+		gc -			graphics context to use.
+		points -		pointer to an array of vertices.
+		npoints -		# of points in the array.
+		shape -			a hint to help the server improve
+					preformance.
+		. Complex		(slowest)
+		. Nonconvex
+		. Convex		(fastest)
+		mode -			should be CoordModeOrigin.
+
+******************************************************************
+* pw_polyline(pw, dx, dy, npts, ptlist, mvlist, brush, tex, op); *
+******************************************************************
+
+Approximate Xlib Equivalent:
+
+	XDrawLines(display, drawable, gc, points, npoints, mode);
+
+Example Code:
+
+	Display *display;
+	Drawable drawable;
+	GC gc;
+	XGCValues gc_val;
+	XPoint *points;
+
+	/* Get display and drawable */
+	display=(Display *)xv_get(pw, XV_DISPLAY);
+	drawable=(Drawable)xv_get(pw, XV_XID);
+
+	/*
+	 * Load the point list with npts coordinates.
+	 * remember Xlib uses shorts instead of integers,
+	 * and you need to add the offset dx or dy
+	 */
+	points = (XPoint *)malloc(sizeof(short) * 2 * npts);
+	for (i = 0; i < npts; ++i) {
+		points[i].x = (short) ptlist[i].x + dx;
+		points[i].y = (short) ptlist[i].y + dy;
+	}
+
+	/* Create a graphics context */
+	gc_val.foreground = value;
+	gc_val.function = op;
+	gc_val.line_width = brush->width;
+	gc_val.line_style = LineSolid;
+	gc = XCreateGC(display, drawable,
+		GCForeground|GCFunction|GCLineWidth|GCLineStyle, &gc_val);
+
+	XDrawLines(display, drawable, gc, points, npts, CoordModeOrigin);
+
+Notes:
+
+	Refer to section on graphics contexts for mapping pw ops 
+	to gc_val.functions.
+
+	Use brush and tex to set gc_val.line_width, gc_val.line_style, 
+	gc_val.dashes, and gc_val.dash_offset.  See pw_line for more
+	details.
+
+	if mvlist equals POLY_CLOSE set the last and first points the 
+	same in XDrawLines().
+
+	There are lot of things which can be done efficiently if the
+	developer reads the section of any X book on XDrawLines(). 
+
+Functions used:
+
+	XDrawLines(display, drawable, gc, points, npoints, mode);
+		display, drawable -	see example code.
+		gc -			graphics context to use.
+		points -		pointer to an array of points.
+		npoints -		# of points in the array.
+		mode -			should be CoordModeOrigin.
+
+***********************************************
+* pw_polypoint(pw, dx, dy, npts, ptlist, op); *
+***********************************************
+
+Approximate Xlib Equivalent:
+
+	XDrawPoints(display, drawable, gc, points, npoints, mode);
+
+Example Code:
+
+	Display *display;
+	Drawable drawable;
+	GC gc;
+	XGCValues gc_val;
+	XPoint *points;
+
+	/* Get display and drawable */
+	display=(Display *)xv_get(pw, XV_DISPLAY);
+	drawable=(Drawable)xv_get(pw, XV_XID);
+
+	/*
+	 * Load the point list with npts coordinates.
+	 * remember Xlib uses shorts instead of integers,
+	 * and you need to add the offset dx or dy
+	 */
+	points = (XPoint *)malloc(sizeof(short) * 2 * npts);
+	for (i = 0; i < npts; ++i) {
+		points[i].x = (short) ptlist[i].x + dx;
+		points[i].y = (short) ptlist[i].y + dy;
+	}
+
+	/* Create a graphics context */
+	gc_val.function = op;
+	gc_val.foreground = foreground_value;
+	gc = XCreateGC(display, drawable, GCFunction, &gc_val);
+
+	XDrawPoints(display, drawable, gc, points, npts, CoordModeOrigin);
+
+Notes:
+
+	Refer to section on graphics contexts for mapping pw ops 
+	to gc_val.functions.
+
+	gc_val.foreground should be set appropriately.
+
+	See graphics contexts for more details.
+
+Functions used:
+
+	XDrawPoints(display, drawable, gc, points, npoints, mode);
+		display, drawable -	see example code.
+		gc -			graphics context to use.
+		points -		pointer to an array of points.
+		npoints -		# of points in the array.
+		mode -			should be CoordModeOrigin.
+
+****************************
+* pw_put(pw, x, y, value); *
+****************************
+
+Approximate Xlib Equivalent:
+
+	XDrawPoint(display, drawable, gc, x, y);
+
+Example Code:
+
+	Display *display;
+	Drawable drawable;
+	GC gc;
+	XGCValues gc_val;
+
+	/* Get display and drawable. */
+	display=(Display *)xv_get(pw, XV_DISPLAY);
+	drawable=(Drawable)xv_get(pw, XV_XID);
+
+	/* Create a graphics context */
+	gc_val.foreground = value;
+	gc = XCreateGC(display, drawable, GCForeground, &gc_val);
+
+	/* Used the graphics context to draw the point. */
+	XDrawPoint(display, drawable, gc, x, y);
+
+Notes:
+
+	XDrawPoint() uses the foreground pixel and function 
+	attributes of the graphics context to draw the point.
+
+	For more information see section on graphics contexts.
+
+Functions used:
+
+	XDrawPoint(display, drawable, gc, x, y);
+		display, drawable -	see example code.
+		gc -			graphics context to use.
+		x, y -			coordinate to draw point.
+
+************************************************
+* pw_read(pr, dx, dy, dw, dh, op, pw, sx, sy); *
+************************************************
+
+Approximate Xlib Equivalent:
+
+	XGetImage(display, drawable, sx, sy, dw, dh, planemask, format);
+
+Example Code:
+
+	Display *display;
+	Drawable drawable;
+	XImage *image;
+
+	/* Get display and drawable */
+	display=(Display *)xv_get(pw, XV_DISPLAY);
+	drawable=(Drawable)xv_get(pw, XV_XID);
+
+	/* Get image using XGetImage() */
+	image = XGetImage(display, drawable,
+			sx, sy, dw, dh, AllPlanes, ZPixmap);
+
+Notes:
+
+	To convert a XImage struct to a memory Pixrect:
+
+	image_mpr.pr_depth = image->depth;
+	image_mpr.pr_height = image->height;
+	image_mpr.pr_width = image->width;
+	image_mpr.pr_data = (caddr_t) (&image_mpr_data);
+	image_mpr_data.md_linebytes = image->bytes_per_line;
+	image_mpr_data.md_image = (short *) image->data;
+	image_mpr_data.md_offset.x = 0;
+	image_mpr_data.md_offset.y = 0;
+	image_mpr_data.md_primary = 0;
+	image_mpr_data.md_flags = 0;
+  
+
+Functions used:
+
+	XGetImage(display, drawable, x, y, width, height, plane_mask, format);
+		display,drawable -	see example code.
+		x, y -			same as pw_read call.
+		width, height -		same as pw_read call.
+		format -		(1) XYPixmap: gets only the bit planes 
+					    specified in the plane_mask
+					    argument.
+					(2) ZPixmap : Sets to 0 the bits in all 
+					    planes not specified in the
+					    plane_mask argument. No range
+					    checking is done.
+		plane_mask -		(1) AllPlanes.
+					(2) or you can specify the planes, 
+					    you want to be returned.
+
+***********************************************
+* pw_rop(pw, dx, dy, dw, dh, op, pr, sx, sy); *
+***********************************************
+
+Approximate Xlib Equivalent:
+
+	XFillRectangle(display, drawable, gc, dx, dy, w, h);
+
+Example Code:
+
+	Display *display;
+	Drawable drawable;
+	GC gc;
+	XGCValues gc_val;
+
+	/* Get display and drawable */
+	display=(Display *)xv_get(pw, XV_DISPLAY);
+	drawable=(Drawable)xv_get(pw, XV_XID);
+
+	/* Create a graphics context,
+	 * this example will only handle NULL src pr's
+	 * for non-NULL src pr's see below
+	 */
+	gc_val.foreground = foreground_color;
+	gc_val.function = op;
+	gc = XCreateGC(display, drawable, GCForeground|GCFunction, &gc_val);
+
+	/* Used the graphics context to do the rop */
+	XFillRectangle(display, drawable, gc, dx, dy, dw, dh);
+
+Notes:
+
+	Refer to section on graphics contexts for mapping pw ops 
+	to gc_val.functions.
+
+	For more information see section on graphics contexts.
+
+	Get the src_info using DRAWABLE_INFO_MACRO(src,src_info);
+	where src = (Xv_Opaque) pr;
+
+	The source pr can be NULL, a Server Image, a Client Pixrect,
+	or a Window.  The case of a NULL pr is handled in the
+	above example.  The other cases are handled as follows.
+
+	(1) pr == Server Image
+
+		int src_depth,dest_depth;
+
+		gc_val.ts_x_origin = x;
+		gc_val.ts_y_origin = y;
+
+		Compare the depths of the destination display
+		and source server image using xv_depth(..).
+
+		if (dest_depth == 1 && src_depth == 1) {
+			gc_val.foreground = 1;
+			gc_val.background = 0;
+			gc_val.stipple = xv_get(pr, XV_XID);
+			gc_val.fill_style = FillOpaqueStippled;
+			gc = XCreateGC(display, drawable, flags, &gc_val);
+			Remember to set the flags correctly.
+			Refer to section on GCs.
+
+		} else if (dest_depth == 8 && src_depth == 1) {
+			gc_val.stipple = xv_get(pr, XV_XID);
+			gc_val.fill_style = FillOpaqueStippled;
+			gc = XCreateGC(display, drawable, flags, &gc_val);
+			Remember to set the flags correctly.
+			Refer to section on GCs.
+  
+		} else if (dest_depth == src_depth) {
+			gc_val.tile = xv_get(pr, XV_XID);
+			gc_val.fill_style = FillTile;
+			gc = XCreateGC(display, drawable, flags, &gc_val);
+			Remember to set the flags correctly.
+			Refer to section on GCs.
+		}
+
+		XFillRectangle(display, drawable, gc, dx, dy, dw, dh);
+
+	(2) pr == Window
+
+		Here the destination display depth and the
+		source Window depth need to be equal.
+
+		XCopyArea(display, (Drawable)xv_get(pr, XV_XID),
+			drawable, gc, sx, sy, dw, dh, dx, dy); 
+
+	(3) pr == client Pixrect;
+
+		This is what needs to be done.
+
+		a) Create the image using XCreateImage().
+
+		b) If the image is a color image the pixel value (indexes)
+			must be corrected to reflect the way colormap segments
+			are handled in X.  Consult the XView documentation
+			regarding colormaps.
+
+		c) Draw the Ximage to the screen using XPutImage().
+
+*********************************************************************
+* pw_stencil(dpw, dx, dy, dw, dh, op, stpr, stx, sty, spr, sx, sy); *
+*********************************************************************
+
+Approximate Xlib Equivalent:
+
+	XFillRectangle(display, drawable, gc, dx, dy, dw, dh);
+
+Example Code:
+
+	Display *display;
+	Drawable drawable;
+	GC gc;
+	XGCValues gc_val;
+
+	/* Get display and drawable */
+	display=(Display *)xv_get(dpw, XV_DISPLAY);
+	drawable=(Drawable)xv_get(dpw, XV_XID);
+
+	/* Create a graphics context */
+	/* set the fg color, bg color and function appropriately */
+	gc_val.function = op;
+	gc_val.foreground = foreground_color;
+	gc_val.background = background_color;
+	/* set the clip_mask, here we are assuming spr is a 1 bit
+	 * Pixmap.  If it is not you will need to convert it.
+	 */
+	gc_val.clip_mask = stpr;
+
+	gc = XCreateGC(display, drawable, 
+		GCFunction|GCForeground|GCBackground|GCClipMask, &gc_val);
+
+	if (spr) {
+		/* do approximately the same thing as pw_rop() */
+	} else {
+		/* Used the graphics context to do the stencil */
+		XFillRectangle(display, drawable, gc, dx, dy, dw, dh);
+	}
+
+Notes:
+
+	The Xlib code for pw_stencil is basicly the same code as
+	pw_rop with a clipmask add to the graphics context.
+
+	This example assumes that the stencil (stpr) is a 1 bit Pixmap.  
+	If that is not the case stpr needs to be converted into a Pixmap.
+	Pixmaps are created using XCreatePixmap().  See any X manual
+	for documentation on how this is done.  Once you have this
+	the Pixmap can use it in your XCreateGC().
+
+	Refer to section on graphics contexts for mapping pw ops 
+	to gc_val.functions.
+
+Functions used:
+
+	XFillRectangle(display, drawable, gc, dx, dy, w, h);
+		display, drawable -	see example code.
+		gc -			graphics context to use.
+		dx, dy -		upper-left hand corner of the rectangle.
+					    this should be dx and dy.
+		w, h -			dimensions of the rectangle to be
+					    filled.  This should be dw and dh.
+
+*********************************************
+* pw_text(pw, x, y, op, font, string);  *
+* pw_ttext(pw, x, y, op, font, string); *
+*********************************************
+
+Approximate Xlib Equivalent:
+
+  pw_text =>  XDrawImageString(display, drawable, gc, x, y, string, length);
+
+  pw_ttext => XDrawString(display, drawable, gc, x, y, string, length);
+
+Example Code:
+
+	Display *display;
+	Drawable drawable;
+	GC gc;
+	XGCValues gc_val;
+	XFontStruct *font;
+
+	/* Get display and drawable */
+	display=(Display *)xv_get(pw, XV_DISPLAY);
+	drawable=(Drawable)xv_get(pw, XV_XID);
+
+	/* load and query font */
+	font = XLoadQueryFont(display, fontname);
+
+	/* Create a graphics context */
+	gc_val.font  = font->fid;
+	gc_val.foreground = foreground_value;
+	gc_val.background = background_value;
+	gc_val.function = op;
+ 
+	gc = XCreateGC(display, drawable, 
+		GCFunction|GCForeground|GCBackground, &gc_val);
+
+	XDrawString(display, drawable, gc, x, y, string, strlen(string));
+	/* 
+	XDrawImageString(display, drawable, gc, x, y, string, strlen(string));
+	 */
+
+Notes:
+
+	XDrawImageString() draws non-transparent text using both
+	foreground and background attributes in the graphics context.
+
+	XDrawString() draws transparent text using only
+	the foreground attribute in the graphics context.
+	It does not affect any other pixels in the bounding box.
+
+	Use XLoadQueryFont(display, fontname) to load a font 
+	instead of pf_open(fontname).  There may not be a one
+	to one correspondence between your SunView font name
+	and a X font name.  Use the utilities xlsfonts and 
+	xfd to select a new X font.
+
+	gc_val.foreground and gc_val.background should be set 
+	to the respective pixel values.
+
+	Refer to section on graphics contexts for mapping pw ops 
+	to gc_val.functions.
+
+	For more information see section on graphics contexts.
+
+Functions used:
+
+	XDrawString(display, drawable, gc, x, y, string, length);
+		display, drawable -	see example code.
+		gc -			graphics context to use.
+		x, y -			starting position of string.
+		string -		the character string.
+		length -		size of the character string.
+
+*********************************************
+* pw_vector(pw, x0, y0, x1, y1, op, value); *
+*********************************************
+
+Approximate Xlib Equivalent:
+
+	XDrawLine(display, drawable, gc, x0, y0, x1, y1);
+
+Example Code:
+
+	Display *display;
+	Drawable drawable;
+	GC gc;
+	XGCValues gc_val;
+
+	/* Get display and drawable */
+	display=(Display *)xv_get(pw, XV_DISPLAY);
+	drawable=(Drawable)xv_get(pw, XV_XID);
+
+	/* Create a graphics context */
+	gc_val.foreground = value;
+	gc_val.function = op;
+ 
+	gc = XCreateGC(display, drawable, 
+		GCFunction|GCForeground, &gc_val);
+
+	XDrawLine(display, drawable, gc, x0, y0, x1, y1);
+
+Notes:
+
+	XDrawLine() uses the foreground pixel and function 
+	attributes of the graphics context to draw the line.
+
+	Refer to section on graphics contexts for mapping pw ops 
+	to gc_val.functions.
+
+	For more information see section on graphics contexts.
+
+Functions used:
+
+	XDrawLine(display, drawable, gc, x, y);
+		display, drawable -	see example code.
+		gc -			graphics context to use.
+		x, y -			coordinate to draw point.
+
+*********************************************
+* pw_writebackground(pw, dx, dy, w, h, op); *
+*********************************************
+
+Approximate Xlib Equivalent:
+
+	XFillRectangle(display, drawable, gc, dx, dy, w, h);
+
+Example Code:
+
+	Display *display;
+	Drawable drawable;
+	GC gc;
+	XGCValues gc_val;
+
+	/* Get display and drawable */
+	display=(Display *)xv_get(pw, XV_DISPLAY);
+	drawable=(Drawable)xv_get(pw, XV_XID);
+
+	/* Create a graphics context */
+	/* set foreground pixel to actual background pixel value */
+	gc_val.foreground = background;
+	gc = XCreateGC(display, drawable, GCForeground, &gc_val);
+
+	/* Used the graphics context to paint the background */
+	XFillRectangle(display, drawable, gc, dx, dy, w, h);
+
+Notes:
+
+	In this example XFillRectangle() use the foreground pixel and 
+	function attributes of the graphics context to paint the 
+	background.
+
+	The function attribute of the graphics context should be 
+	set according to the SunView op required.
+	GXcopy is the default function.
+	
+	The foreground and background attributes should be set 
+	appropriately.
+
+	See graphics contexts for more details.
+
+Functions used:
+
+	XFillRectangle(display, drawable, gc, dx, dy, w, h);
+		display, drawable -	see example code.
+		gc -			graphics context to use.
+		dx, dy -		upper-left hand corner of the rectangle
+		w, h -			dimensions of the rectangle to be
+					filled.
+
+*********************
+* Graphics Contexts *
+*********************
+
+All Xlib graphics routines use graphics contexts to draw images.
+Graphics contexts can be created, changed, used and reused.
+
+This is the Pixwin ops to logical functions (gc_val.function) mapping.
+
+	Pixwin					Xlib
+	=======================================================
+	PIX_CLR 				= GXclear
+	PIX_SET 				= GXset
+	PIX_DST 				= GXnoop
+	PIX_NOT(PIX_DST) 			= GXinvert
+	PIX_SRC 				= GXcopy
+	PIX_NOT(PIX_SRC) 			= GXcopyInverted
+	PIX_SRC & PIX_DST) 			= GXand
+	PIX_SRC & PIX_NOT(PIX_DST)) 		= GXandReverse
+	PIX_NOT(PIX_SRC) & PIX_DST) 		= GXandInverted
+	PIX_SRC ^ PIX_DST) 			= GXxor
+	PIX_SRC | PIX_DST) 			= GXor
+	PIX_NOT(PIX_SRC) & PIX_NOT(PIX_DST)) 	= GXnor
+	PIX_NOT(PIX_SRC) ^ PIX_DST) 		= GXequiv
+	PIX_SRC | PIX_NOT(PIX_DST)) 		= GXorReverse
+	PIX_NOT(PIX_SRC) | PIX_DST) 		= GXorInverted
+	PIX_NOT(PIX_SRC) | PIX_NOT(PIX_DST)) 	= GXnand
+
+Example of creating a graphics context.
+
+	GC gc;
+	XGCValues gc_val;
+
+	gc_val.foreground = 1;
+	gc_val.background = 0;
+	gc = XCreateGC(display, drawable, 
+		GCForeground|GCBackground, &gc_val);
+
+Example of changing an existing graphics context.
+
+	XGCValues gc_val;
+
+	gc_val.foreground = 0;
+	XChangeGC(display, gc, GCForeground, &gc_val);
+
+Functions used:
+
+	XCreateGC(display, drawable, valuemask, values);
+		display -	specifies the display.
+		drawable -	specifies the drawable.
+		valuemask -	attributes of the gc you want to change.
+		value -		pointer to the XGCValues structure.
+

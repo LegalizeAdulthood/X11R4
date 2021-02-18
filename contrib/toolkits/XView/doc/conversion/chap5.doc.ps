@@ -1,0 +1,3959 @@
+%!
+%%Pages: (atend)
+%%DocumentFonts: (atend)
+%%EndComments
+%
+% Frame Maker PostScript Prolog 1.3, for use with Maker 1.3
+% Copyright (c) 1986-1988 by Frame Technology, Inc.  All rights reserved.
+%
+% Known Problems:
+%	Due to bugs in Transcript, the 'PS-Adobe-' is omitted from line 1
+/FMversion (1.2) def 
+/FrameDict 123 dict def 
+% The readline in 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} def
+	} if
+/FMVERSION {
+	FMversion ne {
+		/Times-Roman findfont 18 scalefont setfont
+		100 100 moveto
+		(Maker version does not match postscript_prolog!)
+		dup =
+		show showpage
+		} if
+	} def 
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/landscape FMLOCAL
+	/docheight FMLOCAL
+	/docwidth FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/organgle FMLOCAL
+	/orgfreq FMLOCAL
+/FMDOCUMENT {
+	array /FMfonts exch def
+	/#copies exch def
+	FrameDict begin
+	0 ne /landscape exch def 
+	/docheight exch def
+	/docwidth exch def
+	/yscale exch def
+	/xscale exch def
+	currenttransfer cvlit /orgxfer exch def
+	currentscreen cvlit /orgproc exch def
+		/organgle exch def /orgfreq exch def
+	end 
+	} def 
+	/pagesave FMLOCAL
+	/orgmatrix FMLOCAL
+/FMBEGINPAGE {
+	FrameDict begin 
+	/pagesave save def
+	
+	2 setlinecap
+	xscale yscale scale
+	landscape {
+		90 rotate
+		0 docheight neg translate
+		/fillprocs /fillprocs90 load store
+		}
+		{/fillprocs /fillprocs0 load store}
+		ifelse
+	/orgmatrix matrix def
+	gsave 
+	} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+	/fontname FMLOCAL
+	/fontscale FMLOCAL
+	/fontnum FMLOCAL
+	/fontdict FMLOCAL
+/FMDEFINEFONT {
+	FrameDict begin
+	/fontname exch def
+	/fontscale exch def
+	/fontnum exch def
+	/fontdict fontname findfont fontscale scalefont def
+	fontdict /Encoding get StandardEncoding eq
+	{
+		fontdict DiacriticEncode 
+		/fontdict exch def
+	} {
+		fontdict NonDiacriticEncode
+		/fontdict exch def
+	} ifelse
+	FMfonts fontnum
+		fontnum fontdict definefont
+	put
+	end 
+	} def 
+/FMLINEWIDTHS { 
+	FrameDict begin
+	dup array /FMlinewidths exch def 
+	1 sub -1 0 {exch FMlinewidths 3 1 roll lnormalize put} for
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 setgray
+	} bind def
+/FMBEGINEPSF {
+	end 
+	/FMEPSF save def
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fy translate 
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	} bind def
+ 
+/FMENDEPSF {
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+ 
+FrameDict begin 
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi	72 0 dmatrix defaultmatrix dtransform
+	dup mul exch   dup mul add   sqrt
+def
+/max	{2 copy lt {exch} if pop} bind def
+/min	{2 copy gt {exch} if pop} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+	/basefontdict FMLOCAL
+	/newfontdict FMLOCAL
+/DiacriticEncode {
+	/basefontdict exch def
+	/newfontdict basefontdict maxlength dict def
+	basefontdict
+	{exch dup /FID ne
+		{dup /Encoding eq
+			{exch pop DiacriticEncoding}
+			{exch}
+			ifelse
+			newfontdict 3 1 roll put
+			}
+		{pop pop}
+		ifelse
+		} forall
+	newfontdict
+	} bind def
+/NonDiacriticEncode {
+	/basefontdict exch def
+	/newfontdict basefontdict maxlength dict def
+	basefontdict
+	{exch dup /FID ne
+		{exch newfontdict 3 1 roll put}
+		{pop pop}
+		ifelse
+		} forall
+	newfontdict
+	} bind def
+	/freq FMLOCAL
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setpattern {
+	 /freq    exch def
+	 /bwidth  exch def
+	 /bpside  exch def
+	 /bstring exch def
+	 /onbits 0 def  /offbits 0 def
+	 freq 0 {/y exch def
+		 /x exch def
+		 /xindex x 1 add 2 div bpside mul cvi def
+		 /yindex y 1 add 2 div bpside mul cvi def
+		 bstring yindex bwidth mul xindex 8 idiv add get
+		 1 7 xindex 8 mod sub bitshift and 0 ne
+		 {/onbits  onbits  1 add def 1}
+		 {/offbits offbits 1 add def 0}
+		 ifelse
+		}
+		setscreen
+	 {} settransfer
+	 offbits offbits onbits add div setgray
+	} bind def
+/grayness {
+	setgray
+	orgxfer cvx settransfer
+	orgfreq organgle orgproc cvx setscreen
+	} bind def
+/normalize {
+	transform cvi exch cvi exch itransform
+	} bind def
+/dnormalize {
+	dtransform cvi exch cvi exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/fillprocs0
+	[{0.00 grayness}
+	 {0.10 grayness}
+	 {0.30 grayness}
+	 {0.50 grayness} 
+	 {0.70 grayness}
+	 {0.90 grayness}
+	 {0.97 grayness} 
+	 {1.00 grayness} 
+	 {<0F1E3C78F0E1C387> 8 1 dpi 16 div setpattern} 
+	 {<0F87C3E1F0783C1E> 8 1 dpi 16 div setpattern} 
+	 {<CCCCCCCCCCCCCCCC> 8 1 dpi 16 div setpattern} 
+	 {<FFFF0000FFFF0000> 8 1 dpi 16 div setpattern} 
+	 {<8142241818244281> 8 1 dpi 16 div setpattern} 
+	 {<03060C183060C081> 8 1 dpi 16 div setpattern} 
+	 {<8040201008040201> 8 1 dpi 16 div setpattern} 
+	 {}
+	 {1.00 grayness}
+	 {0.90 grayness}
+	 {0.70 grayness}
+	 {0.50 grayness} 
+	 {0.30 grayness}
+	 {0.10 grayness}
+	 {0.03 grayness} 
+	 {0.00 grayness} 
+	 {<F0E1C3870F1E3C78> 8 1 dpi 16 div setpattern} 
+	 {<F0783C1E0F87C3E1> 8 1 dpi 16 div setpattern} 
+	 {<3333333333333333> 8 1 dpi 16 div setpattern} 
+	 {<0000FFFF0000FFFF> 8 1 dpi 16 div setpattern} 
+	 {<7EBDDBE7E7DBBD7E> 8 1 dpi 16 div setpattern} 
+	 {<FCF9F3E7CF9F3F7E> 8 1 dpi 16 div setpattern} 
+	 {<7FBFDFEFF7FBFDFE> 8 1 dpi 16 div setpattern} 
+	 {}
+	] def
+/fillprocs90
+	 [{0.00 grayness}
+	 {0.10 grayness}
+	 {0.30 grayness}
+	 {0.50 grayness}
+	 {0.70 grayness}
+	 {0.90 grayness}
+	 {0.97 grayness}
+	 {1.00 grayness}
+	 {<87c3e1f0783c1e0f> 8 1 dpi 16 div setpattern}
+	 {<f0e1c3870f1e3c78> 8 1 dpi 16 div setpattern}
+	 {<0000ffff0000ffff> 8 1 dpi 16 div setpattern}
+	 {<cccccccccccccccc> 8 1 dpi 16 div setpattern}
+	 {<8142241818244281> 8 1 dpi 16 div setpattern}
+	 {<81c06030180c0603> 8 1 dpi 16 div setpattern}
+	 {<0102040810204080> 8 1 dpi 16 div setpattern}
+	 {}
+	 {1.00 grayness}
+	 {0.90 grayness}
+	 {0.70 grayness}
+	 {0.50 grayness}
+	 {0.30 grayness}
+	 {0.10 grayness}
+	 {0.03 grayness}
+	 {0.00 grayness}
+	 {<783c1e0f87c3e1f0> 8 1 dpi 16 div setpattern}
+	 {<0f1e3c78f0e1c387> 8 1 dpi 16 div setpattern}
+	 {<ffff0000ffff0000> 8 1 dpi 16 div setpattern}
+	 {<3333333333333333> 8 1 dpi 16 div setpattern}
+	 {<7ebddbe7e7dbbd7e> 8 1 dpi 16 div setpattern}
+	 {<7e3f9fcfe7f3f9fc> 8 1 dpi 16 div setpattern}
+	 {<fefdfbf7efdfbf7f> 8 1 dpi 16 div setpattern}
+	 {}
+	] def
+/fillprocs /fillprocs0 load def
+/H { 
+	FMlinewidths exch get setlinewidth
+	} bind def
+/X { 
+	fillprocs exch get exec
+	} bind def
+/V { 
+	gsave eofill grestore
+	} bind def
+/N { 
+	gsave stroke grestore 
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+/K { 
+ 	/n exch def
+	newpath
+	moveto 
+	3 1 n {pop curveto} for
+	} bind def
+/J { 
+ 	/n exch def
+	newpath
+	moveto 
+	1 1 n {pop curveto} for
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	} bind def
+/U { 
+	grestore
+	gsave
+	} bind def
+/F { 
+	FMfonts exch get
+	setfont
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/Q { 
+	moveto
+	gsave show grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/dx FMLOCAL
+	/dy FMLOCAL
+	/dl FMLOCAL
+	/t FMLOCAL
+	/t2 FMLOCAL
+	/Cos FMLOCAL
+	/Sin FMLOCAL
+	/r FMLOCAL
+/W { 
+	dnormalize
+	/dy exch def
+	/dx exch def
+	normalize
+	/y  exch def
+	/x  exch def
+	/dl dx dx mul dy dy mul add sqrt def
+	dl 0.0 gt {
+		/t currentlinewidth def
+		savematrix
+		/Cos dx dl div def
+		/Sin dy dl div def
+		/r [Cos Sin Sin neg Cos 0.0 0.0] def
+		/t2 t 2.5 mul 3.5 max def
+		newpath
+		x y translate
+		r concat
+		0.0 0.0 moveto
+		dl t 2.7 mul sub 0.0 rlineto
+		stroke
+		restorematrix
+		x dx add y dy add translate
+		r concat
+		t 0.67 mul setlinewidth
+		t 1.61 mul neg  0.0 translate
+		0.0 0.0 moveto
+		t2 1.7 mul neg  t2 2.0 div     moveto
+		0.0 0.0 lineto
+		t2 1.7 mul neg  t2 2.0 div neg lineto
+		stroke
+		t setlinewidth
+		restorematrix
+		} if
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath eofill
+	grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+/A { 
+	/y exch def
+	/x exch def
+	/h exch def
+	/w exch def
+	x y normalize /yy exch def /xx exch def
+	w h dnormalize /hh exch def /ww exch def
+	ww abs hh abs xx ww add yy hh sub
+	gsave
+	savematrix
+	newpath
+	translate
+	scale
+	0.0 0.0 1.0 5 3 roll arc
+	0 setlinecap
+	restorematrix
+	stroke
+	grestore
+	} bind def
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE {
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 6 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	translate
+	FMNORMALIZEGRAPHICS
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/BEGINBITMAP { 
+	gsave
+	translate scale /h exch def /w exch def
+	/lb w 7 add 8 idiv def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h 1 [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+%%EndProlog
+%%BeginSetup
+(1.2) FMVERSION
+1. 1. 612. 792. 0 1 17 FMDOCUMENT
+0 7. /Helvetica  FMDEFINEFONT
+1 24. /Times-Bold  FMDEFINEFONT
+2 10. /Times-Roman  FMDEFINEFONT
+3 10. /Courier  FMDEFINEFONT
+4 12. /Times-Roman  FMDEFINEFONT
+5 11. /Times-Roman  FMDEFINEFONT
+6 12. /Times-Bold  FMDEFINEFONT
+7 11. /Courier  FMDEFINEFONT
+8 11. /Times-Italic  FMDEFINEFONT
+9 12. /Helvetica-Bold  FMDEFINEFONT
+10 10. /Helvetica  FMDEFINEFONT
+11 11. /Courier-Bold  FMDEFINEFONT
+12 14. /Times-Bold  FMDEFINEFONT
+13 24. /Times-Roman  FMDEFINEFONT
+14 12. /Times-Italic  FMDEFINEFONT
+15 11. /Times-BoldItalic  FMDEFINEFONT
+16 36. /Times-Roman  FMDEFINEFONT
+0.5 1. 3. 4. 4 FMLINEWIDTHS
+%%EndSetup
+%%Page: "104" 24
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(104) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+FMENDPAGE
+%%Page: "103" 23
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(103) 543. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+(/* draw the logos in red, green and blue */) 90. 671. T
+(pixel_value = \050long\051pixel_table[RED];) 90. 659. T
+(XSetForeground\050display, gc, pixel_value\051;) 90. 647. T
+(XFillRectangle\050display, xid, gc, 64, 64, xlogo64_width, xlogo64_height\051;) 90. 635. T
+(pixel_value = \050long\051pixel_table[GREEN];) 90. 611. T
+(XSetForeground\050display, gc, pixel_value\051;) 90. 599. T
+(XFillRectangle\050display, xid, gc, 192, 64, xlogo64_width, xlogo64_height\051;) 90. 587. T
+(pixel_value = \050long\051pixel_table[BLUE];) 90. 563. T
+(XSetForeground\050display, gc, pixel_value\051;) 90. 551. T
+(XFillRectangle\050display, xid, gc, 320, 64, xlogo64_width, xlogo64_height\051;) 90. 539. T
+(}) 61. 527. T
+(/*) 61. 503. T
+( *) 61. 491. T
+(initialize_cms_data\050\051) 126. 491. T
+( *    Initialize the colormap segment data and setup the RGB values.) 61. 479. T
+( */) 61. 467. T
+(initialize_cms_data\050cms_data, red, green, blue\051) 61. 455. T
+(    Xv_cmsdata      *cms_data;) 61. 443. T
+(    unsigned char   *red, *green, *blue;) 61. 431. T
+({) 61. 419. T
+(    \050red\051[WHITE] = 255;       \050green\051[WHITE] = 255;       \050blue\051[WHITE] = 255;) 61. 407. T
+(    \050red\051[RED] = 255;         \050green\051[RED] = 0;           \050blue\051[RED] = 0;) 61. 395. T
+(    \050red\051[GREEN] = 0;         \050green\051[GREEN] = 255;       \050blue\051[GREEN] = 0;) 61. 383. T
+(    \050red\051[BLUE] = 0;          \050green\051[BLUE] = 0;          \050blue\051[BLUE] = 255;) 61. 371. T
+(    cms_data->type = XV_STATIC_CMS;) 61. 347. T
+(    cms_data->size = 4;) 61. 335. T
+(    cms_data->rgb_count = 4;) 61. 323. T
+(    cms_data->index = 0;) 61. 311. T
+(    cms_data->red = red;) 61. 299. T
+(    cms_data->green = green;) 61. 287. T
+(    cms_data->blue = blue;) 61. 275. T
+(}) 61. 263. T
+85. 720. 528. 720. 2 L
+N
+77. 72. 523. 72. 2 L
+N
+52. 687. 52. 106. 2 L
+N
+560. 107. 560. 682. 2 L
+N
+0. 90. -35. 38. 560. 720. A
+90. 90.1 -32. 35. 116. 720. A
+90. 180. 32. 35. 52. 720. A
+270. 270.1 37. -36. 486. 72. A
+270. 0. -37. -36. 560. 72. A
+180. 180.1 27. 36. 52. 144. A
+180. 270. 27. -36. 52. 72. A
+FMENDPAGE
+%%Page: "102" 22
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(102) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+3 F
+(        /* setup gc for rendering logos to screen */) 61. 671. T
+(        gcvalues.function = GXcopy;) 61. 659. T
+(        gcvalues.stipple = xlogo;) 61. 647. T
+(        gcvalues.fill_style = FillStippled;) 61. 635. T
+(        gcvalues.graphics_exposures = False;) 61. 623. T
+(        gcvaluemask = GCFunction | GCStipple | GCFillStyle | GCGraphicsExposures;) 61. 611. T
+( ) 61. 599. T
+(        /* create normal render gc for logo rendering */) 61. 587. T
+(        gc = XCreateGC\050display, xid, gcvaluemask, &gcvalues\051;) 61. 575. T
+(        if\050gc == NULL\051 {) 61. 563. T
+(                printf\050"Error allocating render graphics context!\134n"\051;) 61. 551. T
+(                exit\0501\051;) 61. 539. T
+(        }) 61. 527. T
+(/* Start event loop */) 90. 503. T
+(xv_main_loop\050frame\051;) 90. 491. T
+(return\0500\051;) 90. 479. T
+(}) 61. 467. T
+(/*) 61. 431. T
+( *              canvas_repaint_proc\050\051) 61. 419. T
+( *      Draws onto the canvas using Xlib drawing functions.) 61. 407. T
+( *      Use the current clipping rectangle to) 61. 395. T
+( *      1. Restrict graphics output by setting the clip_mask) 61. 383. T
+( *         in the graphics context.) 61. 371. T
+( *      2. Do "smart repainting" by only painting the objects) 61. 359. T
+( *         that lie within the damaged region \050not being done in) 61. 347. T
+( *         this example\051.) 61. 335. T
+( */) 61. 323. T
+(void) 61. 311. T
+(canvas_repaint_proc\050canvas, pw, display, xid, xrects\051) 61. 299. T
+(    Canvas      canvas;) 61. 287. T
+(    Xv_Window   pw;) 61. 275. T
+(    Display     *display;) 61. 263. T
+(    Window      xid;) 61. 251. T
+(    Xv_xrectlist *xrects;) 61. 239. T
+({) 61. 227. T
+(        XGCValues   ) 61. 215. T
+(gc_val;) 198. 215. T
+(unsigned long) 90. 203. T
+(pixel_value;) 198. 203. T
+(        /* Set clip rects, if any */) 61. 179. T
+(        if \050xrects\051 {) 61. 167. T
+(                XSetClipRectangles\050display, gc, 0, 0, xrects->rect_array,) 61. 155. T
+(                                   xrects->count, Unsorted\051;) 61. 143. T
+(        } else {) 61. 131. T
+(                gc_val.clip_mask = None;) 61. 119. T
+(                XChangeGC\050display, gc, GCClipMask, &gc_val\051;) 61. 107. T
+(        }) 61. 95. T
+84. 720. 527. 720. 2 L
+N
+76. 72. 522. 72. 2 L
+N
+51. 687. 51. 106. 2 L
+N
+559. 107. 559. 682. 2 L
+N
+0. 90. -35. 38. 559. 720. A
+90. 90.1 -32. 35. 115. 720. A
+90. 180. 32. 35. 51. 720. A
+270. 270.1 37. -36. 485. 72. A
+270. 0. -37. -36. 559. 72. A
+180. 180.1 27. 36. 51. 144. A
+180. 270. 27. -36. 51. 72. A
+FMENDPAGE
+%%Page: "101" 21
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(101) 543. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+({) 61. 671. T
+(Frame) 90. 659. T
+(frame;) 198. 659. T
+(Canvas) 90. 647. T
+(canvas;) 198. 647. T
+(Xv_cmsdata) 90. 635. T
+(cms_data;) 198. 635. T
+(unsigned char) 90. 623. T
+(red[NUM_COLORS], green[NUM_COLORS], blue[NUM_COLORS];) 198. 623. T
+(Display         ) 90. 611. T
+(*display;) 198. 611. T
+(        XGCValues       ) 61. 599. T
+(gc_val;) 233. 599. T
+(        XID             ) 61. 587. T
+(xid;) 233. 587. T
+(Pixmap) 90. 575. T
+(xlogo;) 198. 575. T
+(XGCValues) 90. 563. T
+(gcvalues;) 198. 563. T
+(int) 90. 551. T
+(gcvaluemask, *xpixels;) 198. 551. T
+(void) 90. 539. T
+(canvas_repaint_proc\050\051;) 198. 539. T
+(register int) 90. 527. T
+(i;) 198. 527. T
+(xv_init\050XV_INIT_ARGS, argc, argv, 0\051;) 90. 503. T
+(/* initalize the colormap segment data and set the required RGB values */) 90. 479. T
+(initialize_cms_data\050&cms_data, red, green, blue\051;) 90. 467. T
+(frame = xv_create\050XV_NULL, FRAME,) 90. 443. T
+(  FRAME_LABEL,) 163. 431. T
+("xv_color",) 270. 431. T
+(  XV_WIDTH,) 163. 419. T
+(WIDTH,) 270. 419. T
+(  XV_HEIGHT,) 163. 407. T
+(HEIGHT,) 270. 407. T
+(  0\051;) 163. 395. T
+(canvas = xv_create\050frame, CANVAS, ) 90. 371. T
+(   CANVAS_X_PAINT_WINDOW,   TRUE,) 163. 359. T
+(   CANVAS_REPAINT_PROC,     canvas_repaint_proc,) 163. 347. T
+(   WIN_CMS_NAME, ) 163. 335. T
+(    "palette",) 265. 335. T
+(   WIN_CMS_DATA, ) 163. 323. T
+(    &cms_data,) 265. 323. T
+(   0\051; ) 163. 311. T
+(/* Get the actual indices into the colormap and store */) 90. 287. T
+(xpixels = \050int *\051xv_get\050canvas, WIN_X_COLOR_INDICES\051;) 90. 275. T
+(for \050i = 0; i <= NUM_COLORS; i++\051 {) 90. 263. T
+(    pixel_table[i] = xpixels[i];) 90. 251. T
+(}) 90. 239. T
+( ) 61. 215. T
+(/* Get display and the XID of the canvas */) 90. 215. T
+(        display = \050Display *\051xv_get\050canvas, XV_DISPLAY\051;) 61. 203. T
+(        xid = \050XID\051xv_get\050canvas, XV_XID\051;) 61. 191. T
+(/* create the stipple xlogo */) 90. 167. T
+(        xlogo = XCreateBitmapFromData\050display, xid, xlogo64_bits, ) 61. 155. T
+(      xlogo64_width, xlogo64_height\051;) 198. 143. T
+(        if\050 xlogo == NULL \051 {) 61. 131. T
+(                printf\050 "Error allocating Pixmap for logo!\134n"\051;) 61. 119. T
+(                exit\0501\051;) 61. 107. T
+(        }) 61. 95. T
+85. 720. 528. 720. 2 L
+N
+77. 72. 523. 72. 2 L
+N
+52. 687. 52. 106. 2 L
+N
+560. 107. 560. 682. 2 L
+N
+0. 90. -35. 38. 560. 720. A
+90. 90.1 -32. 35. 116. 720. A
+90. 180. 32. 35. 52. 720. A
+270. 270.1 37. -36. 486. 72. A
+270. 0. -37. -36. 560. 72. A
+180. 180.1 27. 36. 52. 144. A
+180. 270. 27. -36. 52. 72. A
+FMENDPAGE
+%%Page: "100" 20
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(100) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(/*) 61. 631. T
+( * xv_x_color.c) 61. 619. T
+( *    This program demonstrates the combined use of the XView color model/API) 61. 607. T
+( *    and Xlib graphics calls. The program uses XView to create and manage ) 61. 595. T
+( *    its colormap segment while doing its actual drawing using Xlib.) 61. 583. T
+( *    The program draws the X logo in red, green and blue.) 61. 571. T
+( */) 61. 559. T
+(#include <X11/Xlib.h>) 61. 547. T
+(#include <X11/bitmaps/xlogo64>) 61. 535. T
+(#include <xview/xview.h>) 61. 523. T
+(#include <xview/canvas.h>) 61. 511. T
+(#include <xview/cms.h>) 61. 499. T
+(#include <xview/xv_xrect.h>) 61. 487. T
+(#define WIDTH) 61. 463. T
+(448) 198. 463. T
+(#define HEIGHT) 61. 451. T
+(192) 198. 451. T
+(/* Color definitions */) 61. 427. T
+(#define WHITE) 61. 415. T
+(0) 198. 415. T
+(#define RED   ) 61. 403. T
+(1) 198. 403. T
+(#define GREEN) 61. 391. T
+(2) 198. 391. T
+(#define BLUE) 61. 379. T
+(3) 198. 379. T
+(#define NUM_COLORS) 61. 367. T
+(4) 198. 367. T
+(/* graphics context used for rendering logos */) 61. 343. T
+(GC) 61. 331. T
+(gc;) 90. 331. T
+(/* conversion table for pixel values from XView to X11 */) 61. 307. T
+(int) 61. 295. T
+(pixel_table[NUM_COLORS];) 90. 295. T
+(/*) 61. 271. T
+( *) 61. 259. T
+(main\050\051) 126. 259. T
+( *    Create a frame and a canvas.) 61. 247. T
+( *    Allocate read-only colors \050called a static colormap segment in XView ) 61. 235. T
+( *    parlance\051 and associate colors with the canvas.) 61. 223. T
+( *    The indices into an XView colormap segment always range from 0 to ) 61. 211. T
+( *    size-1, where size is the number of colors allocated in the colormap ) 61. 199. T
+( *    segment. These logical index values translate into actual indices into ) 61. 187. T
+( *    the colormap map as allocated by the X server. The WIN_X_COLOR_INDICES ) 61. 175. T
+( *    attribute returns the actual colormap indices. The indices are returned ) 61. 163. T
+( *    as an array of integers.) 61. 151. T
+( */) 61. 139. T
+(main\050argc,argv\051) 61. 127. T
+(    int) 61. 115. T
+(argc;) 126. 115. T
+(    char) 61. 103. T
+(*argv[];) 126. 103. T
+55. 655. 198. 702. C
+55. 655. 198. 702. R
+7 X
+V
+4 F
+0 X
+(Using the XView Color ) 58. 689. T
+(Model with Xlib graphics ) 58. 676. T
+(calls) 58. 663. T
+U
+94. 662. 512. 662. 2 L
+0 H
+0 X
+N
+87. 90. 521. 90. 2 L
+N
+52. 612. 52. 125. 2 L
+N
+560. 136. 560. 613. 2 L
+N
+0. 90. -50. 52.5 560. 662. A
+270. 270.1 39. -46. 482. 90. A
+270. 0. -39. -46. 560. 90. A
+90. 90.1 -41. 51.5 134. 662. A
+90. 180. 41. 51.5 52. 662. A
+180. 180.1 40. 36. 52. 162. A
+180. 270. 40. -36. 52. 90. A
+FMENDPAGE
+%%Page: "99" 19
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(99) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+(void) 61. 683. T
+(object_notify\050panel_item, event\051) 61. 671. T
+(    Panel_item      panel_item;) 61. 659. T
+(    Event           *event;) 61. 647. T
+({) 61. 635. T
+(    current_selection = \050int\051 xv_get\050panel_item, PANEL_VALUE\051;) 61. 623. T
+(}) 61. 611. T
+(/*) 61. 587. T
+( *) 61. 575. T
+(get_current_object\050\051) 126. 575. T
+( *    This routine returns the XView handle to the currently selected ) 61. 563. T
+( *    object.) 61. 551. T
+( */) 61. 539. T
+(Xv_opaque) 61. 527. T
+(get_current_object\050\051) 61. 515. T
+({) 61. 503. T
+(    Xv_opaque) 61. 491. T
+(current_object;) 139. 491. T
+(    switch\050current_selection\051 {) 61. 467. T
+(case SELECT_TEXTSW:) 90. 455. T
+(    current_object = \050Xv_opaque\051textsw;) 90. 443. T
+(    break;) 90. 431. T
+(case SELECT_TEXTSW_VIEW:) 90. 407. T
+(    current_object = ) 90. 395. T
+(\050Xv_opaque\051xv_get\050textsw, OPENWIN_NTH_VIEW, 0\051;) 126. 383. T
+(    break;) 90. 371. T
+(case SELECT_SCROLLBAR:) 90. 347. T
+(    current_object = ) 90. 335. T
+(\050Xv_opaque\051xv_get\050textsw, OPENWIN_VERTICAL_SCROLLBAR,) 126. 323. T
+(  xv_get\050textsw, OPENWIN_NTH_VIEW, 0\051\051;) 198. 311. T
+(    break;) 90. 299. T
+(case SELECT_PANEL:) 90. 275. T
+(    current_object = \050Xv_opaque\051panel;) 90. 263. T
+(    break;) 90. 251. T
+(case SELECT_ICON:) 90. 227. T
+(    current_object = \050Xv_opaque\051icon;) 90. 215. T
+(    break;) 90. 203. T
+(default:) 90. 179. T
+(    current_object = \050Xv_opaque\051textsw;) 90. 167. T
+(    break;) 90. 155. T
+(    }) 61. 143. T
+(    return\050current_object\051;) 61. 131. T
+(}) 61. 119. T
+82. 719. 525. 719. 2 L
+N
+74. 71. 520. 71. 2 L
+N
+49. 686. 49. 105. 2 L
+N
+557. 106. 557. 681. 2 L
+N
+0. 90. -35. 38. 557. 719. A
+90. 90.1 -32. 35. 113. 719. A
+90. 180. 32. 35. 49. 719. A
+270. 270.1 37. -36. 483. 71. A
+270. 0. -37. -36. 557. 71. A
+180. 180.1 27. 36. 49. 143. A
+180. 270. 27. -36. 49. 71. A
+FMENDPAGE
+%%Page: "98" 18
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(98) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+3 F
+(/*) 61. 683. T
+( *) 61. 671. T
+(color_notify\050\051) 126. 671. T
+( *    This routine gets called when a color selection is made.) 61. 659. T
+( *    Set the foreground or background on the currently selected object.) 61. 647. T
+( *    WIN_FOREGROUND_COLOR & WIN_BACKGROUND_COLOR allow the application ) 61. 635. T
+( *    to specify indices into the colormap segment as the foreground and ) 61. 623. T
+( *    background values.) 61. 611. T
+( */) 61. 599. T
+(void) 61. 587. T
+(color_notify\050panel_item, event\051) 61. 575. T
+(    Panel_item      panel_item;) 61. 563. T
+(    Event           *event;) 61. 551. T
+({) 61. 539. T
+(    int ) 61. 527. T
+(choice;) 109. 527. T
+(    Xv_opaque) 61. 515. T
+(current_object, get_current_object\050\051;) 139. 515. T
+(    current_object = \050Xv_opaque\051get_current_object\050\051;) 61. 491. T
+(    choice = \050int\051 xv_get\050panel_item, PANEL_VALUE\051;) 61. 467. T
+(    if \050fg\051 {) 61. 455. T
+(xv_set\050current_object, WIN_FOREGROUND_COLOR, choice, 0\051;) 90. 443. T
+(    } else {) 61. 431. T
+(xv_set\050current_object, WIN_BACKGROUND_COLOR, choice, 0\051;) 90. 419. T
+(    }) 61. 407. T
+(}) 61. 395. T
+(/*) 61. 371. T
+( *) 61. 359. T
+(fg_bg_notify\050\051) 126. 359. T
+( *    This routine gets called when a foreground/background selection is made.) 61. 347. T
+( */   ) 61. 335. T
+(void) 61. 323. T
+(fg_bg_notify\050panel_item, event\051) 61. 311. T
+(    Panel_item      panel_item;) 61. 299. T
+(    Event           *event;) 61. 287. T
+({) 61. 275. T
+(    int ) 61. 263. T
+(choice;) 109. 263. T
+(    choice = \050int\051 xv_get\050panel_item, PANEL_VALUE\051;) 61. 239. T
+(    if \050choice == 0\051 {) 61. 227. T
+(fg = TRUE;) 90. 215. T
+(    } else {) 61. 203. T
+(fg = FALSE;) 90. 191. T
+(    }) 61. 179. T
+(}) 61. 167. T
+(/*) 61. 143. T
+( *) 61. 131. T
+(object_notify\050\051) 126. 131. T
+( *    This routine gets called when an object selction is made.) 61. 119. T
+( *    Store this selection as the current object. ) 61. 107. T
+( */) 61. 95. T
+85. 719. 528. 719. 2 L
+N
+77. 71. 523. 71. 2 L
+N
+52. 686. 52. 105. 2 L
+N
+560. 106. 560. 681. 2 L
+N
+0. 90. -35. 38. 560. 719. A
+90. 90.1 -32. 35. 116. 719. A
+90. 180. 32. 35. 52. 719. A
+270. 270.1 37. -36. 486. 71. A
+270. 0. -37. -36. 560. 71. A
+180. 180.1 27. 36. 52. 143. A
+180. 270. 27. -36. 52. 71. A
+FMENDPAGE
+%%Page: "97" 17
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(97) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+(window_fit\050frame\051;) 90. 683. T
+(/* Start event loop */) 90. 659. T
+(xv_main_loop\050frame\051;) 90. 647. T
+(return\0500\051;) 90. 635. T
+(}) 61. 623. T
+(/*) 61. 599. T
+( *) 61. 587. T
+(initialize_cms_data\050\051) 126. 587. T
+( *    Initialize the colormap segment data and setup the RGB values.) 61. 575. T
+( */) 61. 563. T
+(initialize_cms_data\050cms_data, red, green, blue\051) 61. 551. T
+(    Xv_cmsdata      *cms_data;) 61. 539. T
+(    unsigned char   *red, *green, *blue;) 61. 527. T
+({) 61. 515. T
+(    \050red\051[WHITE] = 255;       \050green\051[WHITE] = 255;       \050blue\051[WHITE] = 255;) 61. 503. T
+(    \050red\051[RED] = 255;         \050green\051[RED] = 0;           \050blue\051[RED] = 0;) 61. 491. T
+(    \050red\051[GREEN] = 0;         \050green\051[GREEN] = 255;       \050blue\051[GREEN] = 0;) 61. 479. T
+(    \050red\051[BLUE] = 0;          \050green\051[BLUE] = 0;          \050blue\051[BLUE] = 255;) 61. 467. T
+(    \050red\051[YELLOW] = 255;      \050green\051[YELLOW] = 255;      \050blue\051[YELLOW] = 0;) 61. 455. T
+(    \050red\051[PINK] = 188;        \050green\051[PINK] = 143;        \050blue\051[PINK] = 143;) 61. 443. T
+(    \050red\051[GRAY] = 220;        \050green\051[GRAY] = 220;        \050blue\051[GRAY] = 220;) 61. 431. T
+(    \050red\051[BLACK] = 0;         \050green\051[BLACK] = 0;         \050blue\051[BLACK] = 0;) 61. 419. T
+(    cms_data->type = XV_STATIC_CMS;) 61. 395. T
+(    cms_data->size = 8;) 61. 383. T
+(    cms_data->rgb_count = 8;) 61. 371. T
+(    cms_data->index = 0;) 61. 359. T
+(    cms_data->red = red;) 61. 347. T
+(    cms_data->green = green;) 61. 335. T
+(    cms_data->blue = blue;) 61. 323. T
+(}) 61. 311. T
+(/*) 61. 287. T
+( *) 61. 275. T
+(initialize_chips\050\051) 126. 275. T
+( *    Create colored memory pixrects to be used as panel choice images.) 61. 263. T
+( */) 61. 251. T
+(initialize_chips\050chips\051) 61. 239. T
+(    Pixrect) 61. 227. T
+(**chips;) 127. 227. T
+({) 61. 215. T
+(    register int    i;) 61. 203. T
+(    for\050i = 0; i < NUM_COLORS; i++\051 {) 61. 179. T
+(chips[i] = mem_create\05016,16, 8\051;) 90. 167. T
+(pr_rop\050chips[i], 0, 0, 16, 16, PIX_SRC|PIX_COLOR\050i\051, NULL, 0, 0\051;) 90. 155. T
+(    }) 61. 143. T
+(}) 61. 131. T
+83. 718. 526. 718. 2 L
+N
+75. 70. 521. 70. 2 L
+N
+50. 685. 50. 104. 2 L
+N
+558. 105. 558. 680. 2 L
+N
+0. 90. -35. 38. 558. 718. A
+90. 90.1 -32. 35. 114. 718. A
+90. 180. 32. 35. 50. 718. A
+270. 270.1 37. -36. 484. 70. A
+270. 0. -37. -36. 558. 70. A
+180. 180.1 27. 36. 50. 142. A
+180. 270. 27. -36. 50. 70. A
+FMENDPAGE
+%%Page: "96" 16
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(96) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+3 F
+(panel_fg_bg = xv_create\050panel, PANEL_CHOICE,) 90. 683. T
+(PANEL_LABEL_STRING, "Fg/Bg",) 198. 671. T
+(PANEL_LABEL_BOLD, TRUE,) 198. 659. T
+(PANEL_CHOICE_STRINGS,) 198. 647. T
+(    "Foreground",) 198. 635. T
+(    "Background",) 198. 623. T
+(    0,) 198. 611. T
+(PANEL_NOTIFY_PROC, fg_bg_notify,) 198. 599. T
+(0\051;) 198. 587. T
+(panel_palette = xv_create\050panel, PANEL_CHOICE,) 90. 551. T
+(                ) 61. 539. T
+(  PANEL_LABEL_STRING, "Colors",) 157. 539. T
+(                ) 61. 527. T
+(  PANEL_LABEL_BOLD, TRUE,) 157. 527. T
+(  XV_X, \050int\051xv_get\050panel_fg_bg, XV_X\051,) 198. 515. T
+(  PANEL_NEXT_ROW, 15,) 198. 503. T
+(                ) 61. 491. T
+(  PANEL_CHOICE_IMAGES,) 157. 491. T
+(                ) 61. 479. T
+(      chips[0],) 157. 479. T
+(                ) 61. 467. T
+(      chips[1],) 157. 467. T
+(                ) 61. 455. T
+(      chips[2],) 157. 455. T
+(                ) 61. 443. T
+(      chips[3],) 157. 443. T
+(                ) 61. 431. T
+(      chips[4],) 157. 431. T
+(                ) 61. 419. T
+(      chips[5],) 157. 419. T
+(                ) 61. 407. T
+(      chips[6],) 157. 407. T
+(                ) 61. 395. T
+(      chips[7],) 157. 395. T
+(                ) 61. 383. T
+(      0,) 157. 383. T
+(                ) 61. 371. T
+(PANEL_NOTIFY_PROC, color_notify,) 157. 371. T
+(                ) 61. 359. T
+(0\051;) 157. 359. T
+(\050void\051window_fit_height\050panel\051;) 90. 335. T
+(/* create textsw and set the colormap segment for it */) 90. 311. T
+(textsw = xv_create\050frame, TEXTSW, ) 90. 299. T
+(   WIN_CMS_NAME, "palette",) 163. 287. T
+(   WIN_BELOW, panel,) 163. 275. T
+(   WIN_ROWS, 45,) 163. 263. T
+(   WIN_COLUMNS, 80,) 163. 251. T
+(   0\051; ) 163. 239. T
+(/* adjust panel dimensions */) 90. 215. T
+(textsw_width = \050int\051xv_get\050textsw, WIN_WIDTH\051;) 90. 203. T
+(\050void\051xv_set\050panel, WIN_WIDTH, textsw_width, 0\051;) 90. 191. T
+(/* associate icon with the base frame */) 90. 167. T
+(icon = xv_create\050XV_NULL, ICON,) 90. 155. T
+( ICON_IMAGE, &icon_image,) 163. 143. T
+( WIN_CMS_NAME, "palette",) 163. 131. T
+( 0\051;) 163. 119. T
+(xv_set\050frame, FRAME_ICON, icon, 0\051;) 90. 107. T
+85. 720. 528. 720. 2 L
+N
+77. 72. 523. 72. 2 L
+N
+52. 687. 52. 106. 2 L
+N
+560. 107. 560. 682. 2 L
+N
+0. 90. -35. 38. 560. 720. A
+90. 90.1 -32. 35. 116. 720. A
+90. 180. 32. 35. 52. 720. A
+270. 270.1 37. -36. 486. 72. A
+270. 0. -37. -36. 560. 72. A
+180. 180.1 27. 36. 52. 144. A
+180. 270. 27. -36. 52. 72. A
+FMENDPAGE
+%%Page: "95" 15
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(95) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+(/*) 61. 695. T
+( *) 61. 683. T
+(main\050\051) 126. 683. T
+( *    Create a panel and panel items. The application uses panel items ) 61. 671. T
+( *    to choose a particular object and change its foreground and background) 61. 659. T
+( *    colors in an interactive manner. Create a textsw. Create an icon.) 61. 647. T
+( *    All the objects share the same colormap segment.) 61. 635. T
+( */) 61. 623. T
+(main\050argc,argv\051) 61. 611. T
+(    int) 61. 599. T
+(argc;) 126. 599. T
+(    char) 61. 587. T
+(*argv[];) 109. 587. T
+({) 61. 575. T
+(Frame) 90. 563. T
+(frame;) 198. 563. T
+(Panel_item) 90. 551. T
+(panel_palette, panel_fg_bg, panel_object;) 198. 551. T
+(Xv_cmsdata) 90. 539. T
+(cms_data;) 198. 539. T
+(int) 90. 527. T
+(textsw_width;) 198. 527. T
+(unsigned char) 90. 515. T
+(red[NUM_COLORS], green[NUM_COLORS], blue[NUM_COLORS];) 198. 515. T
+(        Pixrect) 61. 503. T
+(*chips[NUM_COLORS];) 198. 503. T
+(void) 90. 491. T
+(color_notify\050\051, fg_bg_notify\050\051, object_notify\050\051;) 163. 491. T
+(xv_init\050XV_INIT_ARGS, argc, argv, 0\051;) 90. 467. T
+(/* Set up the RGB values and initialize the colormap segment data */) 90. 443. T
+(initialize_cms_data\050&cms_data, red, green, blue\051;) 90. 431. T
+(/* Initialize colored chips to be used as panel choice images */) 90. 407. T
+(initialize_chips\050chips\051;) 90. 395. T
+(frame = xv_create\050XV_NULL, FRAME,) 90. 371. T
+(  FRAME_LABEL,"xv_color",) 163. 359. T
+(  0\051;) 163. 347. T
+(/* Create panel and set the colormap segment on the panel */) 90. 323. T
+(panel = xv_create\050frame, PANEL,) 90. 311. T
+(  PANEL_LAYOUT, PANEL_HORIZONTAL,) 163. 299. T
+(  WIN_CMS_NAME, "palette",) 163. 287. T
+(  WIN_CMS_DATA, &cms_data,) 163. 275. T
+(  0\051;) 163. 263. T
+(/* Create panel items */) 90. 239. T
+(panel_object = xv_create\050panel, PANEL_CHOICE_STACK,) 90. 227. T
+(PANEL_LABEL_STRING, "Object",) 198. 215. T
+(PANEL_LABEL_BOLD, TRUE,) 198. 203. T
+(PANEL_CHOICE_STRINGS,) 198. 191. T
+(    "Textsw",) 198. 179. T
+(    "Textsw View",) 198. 167. T
+(    "Scrollbar",) 198. 155. T
+(    "Panel",) 198. 143. T
+(    "Icon",) 198. 131. T
+(    0,) 198. 119. T
+(PANEL_NOTIFY_PROC, object_notify,) 198. 107. T
+(0\051;) 198. 95. T
+85. 720. 528. 720. 2 L
+N
+77. 72. 523. 72. 2 L
+N
+52. 687. 52. 106. 2 L
+N
+560. 107. 560. 682. 2 L
+N
+0. 90. -35. 38. 560. 720. A
+90. 90.1 -32. 35. 116. 720. A
+90. 180. 32. 35. 52. 720. A
+270. 270.1 37. -36. 486. 72. A
+270. 0. -37. -36. 560. 72. A
+180. 180.1 27. 36. 52. 144. A
+180. 270. 27. -36. 52. 72. A
+FMENDPAGE
+%%Page: "94" 14
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(94) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(/*) 61. 645. T
+( * xv_color.c) 61. 633. T
+( *    This program demonstrates the use of color in XView. It allows the ) 61. 621. T
+( *    user to choose the foreground and background colors of the various ) 61. 609. T
+( *    objects in an interactive manner. ) 61. 597. T
+( *) 61. 585. T
+( */) 61. 573. T
+(#include <xview/xview.h>) 61. 561. T
+(#include <xview/textsw.h>) 61. 549. T
+(#include <xview/panel.h>) 61. 537. T
+(#include <xview/icon.h>) 61. 525. T
+(#include <xview/cms.h>) 61. 513. T
+(#define WHITE           0) 61. 489. T
+(#define RED          ) 61. 477. T
+(1) 187. 477. T
+(#define GREEN) 61. 465. T
+(2) 139. 465. T
+(#define BLUE) 61. 453. T
+(3) 133. 453. T
+(#define YELLOW) 61. 441. T
+(4) 145. 441. T
+(#define PINK) 61. 429. T
+(5) 133. 429. T
+(#define GRAY) 61. 417. T
+(6) 133. 417. T
+(#define BLACK) 61. 405. T
+(7) 139. 405. T
+(#define NUM_COLORS) 61. 393. T
+(8) 169. 393. T
+(#define HEIGHT) 61. 369. T
+(500) 145. 369. T
+(#define WIDTH) 61. 357. T
+(500) 139. 357. T
+(#define SELECT_TEXTSW           0) 61. 333. T
+(#define SELECT_TEXTSW_VIEW      1) 61. 321. T
+(#define SELECT_SCROLLBAR) 61. 309. T
+(2) 205. 309. T
+(#define SELECT_PANEL) 61. 297. T
+(3) 181. 297. T
+(#define SELECT_ICON) 61. 285. T
+(4) 175. 285. T
+(/* Icon data */) 61. 261. T
+(static short icon_bits[256]={) 61. 249. T
+(#include <images/cardback.icon>) 61. 237. T
+(};) 61. 225. T
+(mpr_static\050icon_image, ICON_DEFAULT_WIDTH, ICON_DEFAULT_HEIGHT, 1, icon_bits\051;) 61. 213. T
+(/* object currently selected for color change */) 61. 189. T
+(int) 61. 177. T
+(current_selection = SELECT_TEXTSW;) 126. 177. T
+(/* flag to indicate if foreground or background is to be changed */) 61. 153. T
+(int) 61. 141. T
+(fg = TRUE;) 126. 141. T
+(Textsw) 61. 129. T
+(textsw;) 126. 129. T
+(Panel      panel;) 61. 117. T
+(Icon) 61. 105. T
+(icon;) 126. 105. T
+55. 668. 198. 702. C
+55. 668. 198. 702. R
+7 X
+V
+4 F
+0 X
+(Choosing Foreground and ) 58. 689. T
+(Background Colors) 58. 676. T
+U
+92. 672. 510. 672. 2 L
+0 H
+0 X
+N
+85. 83. 519. 83. 2 L
+N
+50. 621. 50. 119. 2 L
+N
+558. 130. 558. 622. 2 L
+N
+0. 90. -50. 54. 558. 672. A
+270. 270.1 39. -47.5 480. 83. A
+270. 0. -39. -47.5 558. 83. A
+90. 90.1 -41. 53. 132. 672. A
+90. 180. 41. 53. 50. 672. A
+180. 180.1 40. 37. 50. 157. A
+180. 270. 40. -37. 50. 83. A
+FMENDPAGE
+%%Page: "93" 13
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(93) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+(/*) 61. 659. T
+( *    initialize_cms_data\050\051) 61. 647. T
+( *    Initialize the colormap segment data and setup the RGB values.) 61. 635. T
+( */) 61. 623. T
+(initialize_cms_data\050cms_data, red, green, blue\051) 61. 611. T
+(    Xv_cmsdata      *cms_data;) 61. 599. T
+(    unsigned char   *red, *green, *blue;) 61. 587. T
+({) 61. 575. T
+(    \050red\051[WHITE] = 255;\050green\051[WHITE] = 255;) 61. 563. T
+(\050blue\051[WHITE] = 255;) 360. 563. T
+(    \050red\051[RED] = 255;) 61. 551. T
+(\050green\051[RED] = 0;      ) 198. 551. T
+(\050blue\051[RED] = 0;) 360. 551. T
+(    \050red\051[GREEN] = 0;) 61. 539. T
+(\050green\051[GREEN] = 255;  ) 198. 539. T
+(\050blue\051[GREEN] = 0;) 360. 539. T
+(    \050red\051[BLUE] = 0;) 61. 527. T
+(\050green\051[BLUE] = 0;  ) 198. 527. T
+(\050blue\051[BLUE] = 255;) 360. 527. T
+(    cms_data->type = XV_STATIC_CMS;    ) 61. 503. T
+(    cms_data->size = 4;) 61. 491. T
+(    cms_data->rgb_count = 4;) 61. 479. T
+(    cms_data->index = 0;   ) 61. 467. T
+(    cms_data->red = red;) 61. 455. T
+(    cms_data->green = green;) 61. 443. T
+(    cms_data->blue = blue;) 61. 431. T
+(}) 61. 419. T
+83. 684. 505. 684. 2 L
+N
+80. 360. 503. 360. 2 L
+N
+540. 648. 540. 398. 2 L
+N
+53. 648. 53. 396. 2 L
+N
+0. 90. -35. 36. 540. 684. A
+270. 270.1 36. -37. 468. 360. A
+270. 0. -36. -37. 540. 360. A
+90. 90.1 -33. 36. 119. 684. A
+90. 180. 33. 36. 53. 684. A
+180. 180.1 32. 36. 53. 432. A
+180. 270. 32. -36. 53. 360. A
+FMENDPAGE
+%%Page: "92" 12
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(92) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+3 F
+(   ) 61. 678. T
+( /* Create the text subwindow and the canvas */) 61. 666. T
+(    text = xv_create\050frame, TEXTSW,) 61. 654. T
+(     WIN_HEIGHT, 300,) 126. 642. T
+(     WIN_WIDTH, 500,) 126. 630. T
+(     WIN_CMS_NAME, "colors",) 126. 618. T
+(     WIN_CMS_DATA, &cms_data,) 126. 606. T
+(     0\051;) 126. 594. T
+(    /*) 61. 570. T
+(     * Simply name the colormap segment to be used since it has ) 61. 558. T
+(     * already been created.) 61. 546. T
+(     */) 61. 534. T
+(    canvas = xv_create\050frame, CANVAS,) 61. 522. T
+(WIN_HEIGHT, 200,) 163. 510. T
+(WIN_WIDTH,  500,) 163. 498. T
+(XV_X, 0,) 163. 486. T
+(XV_Y, 300,) 163. 474. T
+(WIN_CMS_NAME, "colors",) 163. 462. T
+(CANVAS_REPAINT_PROC, canvas_repaint_proc,) 163. 450. T
+(        0,) 126. 438. T
+(    0\051;) 126. 426. T
+(    xv_main_loop\050frame\051;) 61. 402. T
+(}) 61. 390. T
+(/*) 61. 366. T
+( *              canvas_repaint_proc\050\051) 61. 354. T
+( *      Called to repaint the canvas window.  Display the colors in the ) 61. 342. T
+( *      colormap segment associated with the canvas. ) 61. 330. T
+( */) 61. 318. T
+(void) 61. 306. T
+(canvas_repaint_proc\050canvas, paint_window, repaint_area\051) 61. 294. T
+(    Canvas      canvas;) 61. 282. T
+(    Xv_window   paint_window;) 61. 270. T
+(    Rectlist    *repaint_area;) 61. 258. T
+({) 61. 246. T
+(    xv_rop\050paint_window, 10, 10, 50, 50, PIX_SRC|PIX_COLOR\050WHITE\051, NULL, 0, 0\051;) 61. 234. T
+(    xv_rop\050paint_window, 70, 10, 50, 50, PIX_SRC|PIX_COLOR\050RED\051, NULL, 0, 0\051;) 61. 222. T
+(    xv_rop\050paint_window, 130, 10, 50, 50, PIX_SRC|PIX_COLOR\050GREEN\051, NULL, 0, 0\051;) 61. 210. T
+(    xv_rop\050paint_window, 190, 10, 50, 50, PIX_SRC|PIX_COLOR\050BLUE\051, NULL, 0, 0\051;) 61. 198. T
+(}) 61. 174. T
+86. 721. 529. 721. 2 L
+N
+78. 73. 524. 73. 2 L
+N
+53. 688. 53. 107. 2 L
+N
+561. 108. 561. 683. 2 L
+N
+0. 90. -35. 38. 561. 721. A
+90. 90.1 -32. 35. 117. 721. A
+90. 180. 32. 35. 53. 721. A
+270. 270.1 37. -36. 487. 73. A
+270. 0. -37. -36. 561. 73. A
+180. 180.1 27. 36. 53. 145. A
+180. 270. 27. -36. 53. 73. A
+FMENDPAGE
+%%Page: "91" 11
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(91) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(The following examples show typical usage of ) 216. 693. T
+(colormaps. ) 424.05 693. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+( ) 216. 657. T
+3 F
+(/*) 61. 584. T
+( *xv_simple_color.c) 61. 572. T
+( *    This simple application demonstrates the use of color in XView. ) 61. 560. T
+( *    A text subwindow and a canvas share a colormap segment. The ) 61. 548. T
+( *    colors in the colormap segment are displayed on the canvas.) 61. 536. T
+( */) 61. 524. T
+(#include  <stdio.h>) 61. 512. T
+(#include  <xview/xview.h>) 61. 500. T
+(#include  <xview/textsw.h>) 61. 488. T
+(#include  <xview/canvas.h>) 61. 476. T
+(#include  <xview/cms.h>) 61. 464. T
+(/* color definitions */) 61. 440. T
+(#define WHITE    ) 61. 428. T
+(0) 198. 428. T
+(#define RED          ) 61. 416. T
+(1) 198. 416. T
+(#define GREEN         ) 61. 404. T
+(2) 198. 404. T
+(#define BLUE         ) 61. 392. T
+( ) 187. 392. T
+(3) 198. 392. T
+(#define NUM_COLORS) 61. 380. T
+(4) 198. 380. T
+(main\050argc,argv\051) 61. 356. T
+(    int         argc;) 61. 344. T
+(    char        *argv[];) 61. 332. T
+({) 61. 320. T
+(    Frame     ) 61. 308. T
+(frame;) 163. 308. T
+(    Textsw) 61. 296. T
+(text;) 163. 296. T
+(    Canvas) 61. 284. T
+(canvas;) 163. 284. T
+(    Xv_cmsdata) 61. 272. T
+(cms_data;) 163. 272. T
+(    unsigned char       red     [NUM_COLORS],) 61. 260. T
+(                        green   [NUM_COLORS],) 61. 248. T
+(                        blue    [NUM_COLORS];) 61. 236. T
+(    void) 61. 224. T
+(canvas_repaint_proc\050\051;) 126. 224. T
+(    /* Initialize the colormap segment data and setup the RGB values */) 61. 200. T
+(    initialize_cms_data\050&cms_data, red, green, blue\051;) 61. 188. T
+(    xv_init\050XV_INIT_ARGS, argc,argv, 0\051;) 61. 164. T
+(    frame = xv_create\0500, FRAME, ) 61. 140. T
+(            WIN_HEIGHT, 500, ) 90. 128. T
+(    ) 90. 116. T
+(      WIN_WIDTH, 500,) 126. 116. T
+(    ) 90. 104. T
+(      0\051;) 126. 104. T
+55. 679. 198. 702. C
+55. 679. 198. 702. R
+7 X
+V
+6 F
+0 X
+(Examples ) 58. 689. T
+U
+55. 632. 198. 676. C
+55. 632. 198. 676. R
+7 X
+V
+4 F
+0 X
+(Sharing a Static Colormap ) 58. 665. T
+(Segment Between a ) 58. 652. T
+(Canvas and a Textsw) 58. 639. T
+U
+93. 612. 511. 612. 2 L
+0 H
+0 X
+N
+86. 89. 520. 89. 2 L
+N
+51. 566. 51. 121. 2 L
+N
+559. 131. 559. 567. 2 L
+N
+0. 90. -50. 48. 559. 612. A
+270. 270.1 39. -42. 481. 89. A
+270. 0. -39. -42. 559. 89. A
+90. 90.1 -41. 47. 133. 612. A
+90. 180. 41. 47. 51. 612. A
+180. 180.1 40. 33. 51. 155. A
+180. 270. 40. -33. 51. 89. A
+FMENDPAGE
+%%Page: "90" 10
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(90) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+7 F
+(WIN_X_COLOR_INDICES) 216. 694. T
+5 F
+(Translates the logical indices of the window\325s colormap segment ) 252. 676. T
+(\050from ) 252. 663. T
+7 F
+(0) 279.8 663. T
+5 F
+( to ) 286.4 663. T
+7 F
+(size-1) 300.46 663. T
+5 F
+(\051 into the actual indices into the colormap.  ) 340.06 663. T
+(This attribute is used when the application uses the XView ) 252. 650. T
+(color API in combination with direct Xlib graphics.  The actual ) 252. 637. T
+(indices are returned as a array of integers of the size of the ) 252. 624. T
+(colormap segment.) 252. 611. T
+(Value Type:) 288. 593. T
+7 F
+(int *) 378. 593. T
+5 F
+(Default:) 288. 578. T
+(none) 378. 578. T
+(Procedures:) 288. 563. T
+7 F
+(xv_get) 378. 563. T
+FMENDPAGE
+%%Page: "89" 9
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(89) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+7 F
+(WIN_CMS_NAME) 216. 694. T
+5 F
+(Specifies the colormap segment to be associated with the ) 252. 676. T
+(window.  It the named colormap segment already exists, it is ) 252. 663. T
+(shared.  If not, the name is stored until the data for the colormap ) 252. 650. T
+(segment is supplied.) 252. 637. T
+(Value Type:) 288. 619. T
+7 F
+(char *) 378. 619. T
+5 F
+(Default: ) 288. 604. T
+(None) 378. 604. T
+(Procedures: ) 288. 589. T
+7 F
+(xv_get/xv_set/xv_create) 378. 589. T
+(WIN_BACKGROUND_COLOR) 216. 541. T
+5 F
+(Specifies the background color of a window as an index into the ) 252. 523. T
+(colormap segment associated with the window.) 252. 510. T
+(Value Type:) 288. 492. T
+7 F
+(int) 378. 492. T
+5 F
+(Default:) 288. 477. T
+7 F
+(0 ) 378. 477. T
+5 F
+(\050first element in the colormap  ) 391.2 477. T
+(segment associated with the ) 378. 464. T
+(window\051) 378. 451. T
+(Procedures:) 288. 436. T
+7 F
+(xv_get/xv_set/xv_create) 378. 436. T
+(WIN_DYNAMIC_VISUAL) 216. 388. T
+5 F
+(Specifies the type of the colormap segment to be used with ) 252. 370. T
+(window.  This attribute needs to be set on the actual drawing ) 252. 357. T
+(window of an object.) 252. 344. T
+(Value Type:) 288. 326. T
+( ) 378. 326. T
+7 F
+(Boolean) 380.75 326. T
+5 F
+(Default:) 288. 311. T
+7 F
+(FALSE) 378. 311. T
+5 F
+(Procedures:) 288. 296. T
+7 F
+(xv_create) 378. 296. T
+(WIN_FOREGROUND_COLOR) 216. 248. T
+5 F
+(Specifies the foreground color of a window as an index into the ) 252. 230. T
+(colormap segment associated with the window.) 252. 217. T
+(Value Type:) 288. 199. T
+7 F
+(int) 387. 199. T
+5 F
+(Default:) 288. 184. T
+7 F
+(size-1 ) 387. 184. T
+5 F
+(\050where size is the ) 433.2 184. T
+(number of colors in the colormap ) 387. 171. T
+(segment associated with the ) 387. 158. T
+(window\051) 387. 145. T
+(Procedures:) 288. 130. T
+7 F
+(xv_get/xv_set/xv_create) 387. 130. T
+FMENDPAGE
+%%Page: "88" 8
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(88) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+7 F
+(FRAME_FOREGROUND_COLOR) 216. 694. T
+5 F
+(Specifies the frame\325s background colors.  The window manager is ) 252. 676. T
+(responsible for painting the application\325s frame.  Currently, ) 252. 663. T
+(there exists no defined protocol for propagating the frame color ) 252. 650. T
+(from the application to the window manager.  However, ) 252. 637. T
+7 F
+(FRAME_FOREGROUND_COLOR) 252. 624. T
+5 F
+( can be used in conjunction with ) 397.2 624. T
+7 F
+(FRAME_INHERIT_COLORS) 252. 611. T
+5 F
+( to propagate the specified colors to all ) 384. 611. T
+(subwindows of the frame.) 252. 598. T
+(Value Type:) 288. 580. T
+7 F
+(Xv_singlecolor *) 387. 580. T
+5 F
+(Default:) 288. 565. T
+7 F
+(0, 0, 0) 387. 565. T
+5 F
+(Procedures:) 288. 550. T
+7 F
+(xv_get/xv_set) 387. 550. T
+( ) 216. 502. T
+(FRAME_INHERIT_COLORS) 222.6 502. T
+5 F
+(Make child windows inherit the colors of the frame.) 252. 484. T
+(Value Type:) 288. 466. T
+( None) 378. 466. T
+(Default:   ) 288. 451. T
+( ) 378. 451. T
+7 F
+(FALSE) 380.75 451. T
+5 F
+(Procedures: ) 288. 436. T
+7 F
+(xv_get/xv_create) 378. 436. T
+(WIN_CMS_DATA) 216. 388. T
+5 F
+(Specifies the data for the colormap segment associated with the ) 252. 370. T
+(window.   If the colormap segment of the window is ) 252. 357. T
+(uninitialized, the name should be set before setting ) 252. 344. T
+7 F
+(WIN_CMS_DATA) 252. 331. T
+5 F
+(.  If not, the supplied data is written into the ) 331.2 331. T
+(currently allocated colormap segment.  Any attempt to write ) 252. 318. T
+(into a previously allocated static colormap segment cell will be ) 252. 305. T
+(ignored.) 252. 292. T
+(Value Type:) 288. 274. T
+7 F
+(Xv_cmsdata *) 378. 274. T
+5 F
+(Default:) 288. 259. T
+(None) 378. 259. T
+(Procedures:) 288. 244. T
+7 F
+(xv_get/xv_set/xv_create) 378. 244. T
+FMENDPAGE
+%%Page: "87" 7
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(87) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(These new attributes are also documented in the ) 216. 693. T
+8 F
+(XView Reference ) 430.46 693. T
+(Manual:  Summary of the XView API) 216. 680. T
+5 F
+(.) 379.76 680. T
+7 F
+(CURSOR_BACKGROUND_COLOR) 216. 637. T
+5 F
+(Specifies the background color of a cursor as an RGB triplet.) 252. 619. T
+(Value Type:) 288. 601. T
+7 F
+(Xv_singelcolor *) 378. 601. T
+5 F
+(Default:) 288. 586. T
+7 F
+(white \050255, 255, 255\051) 378. 586. T
+5 F
+(Procedures:) 288. 571. T
+7 F
+(xv_get/xv_set/xv_create) 378. 571. T
+(CURSOR_FOREGROUND_COLOR) 216. 523. T
+4 F
+(Specifies the foreground color of a cursor as an RGB triplet.) 252. 504. T
+5 F
+(Value Type:) 288. 486. T
+7 F
+(Xv_singelcolor *) 378. 486. T
+5 F
+(Default:) 288. 471. T
+7 F
+(black \0500, 0, 0\051) 378. 471. T
+5 F
+(Procedures:) 288. 456. T
+7 F
+(xv_get/xv_set/xv_create) 378. 456. T
+(FRAME_BACKGROUND_COLOR) 216. 408. T
+5 F
+(Specifies the frame\325s background colors.  The window manager is ) 252. 390. T
+(responsible for painting the application\325s frame.  Currently, ) 252. 377. T
+(there exists no defined protocol for propagating the frame color ) 252. 364. T
+(from the application to the window manager.  However, ) 252. 351. T
+7 F
+(FRAME_BACKGROUND_COLOR) 252. 338. T
+5 F
+( can be used in conjunction with ) 397.2 338. T
+7 F
+(FRAME_INHERIT_COLORS) 252. 325. T
+5 F
+( to propagate the specified colors to all ) 384. 325. T
+(subwindows of the frame.) 252. 312. T
+(Value Type:) 288. 294. T
+7 F
+(Xv_singlecolor *) 387. 294. T
+5 F
+(Default:) 288. 279. T
+7 F
+(255, 255, 255) 387. 279. T
+5 F
+(Procedures:) 288. 264. T
+7 F
+(xv_create/xv_get) 387. 264. T
+55. 675. 198. 702. C
+55. 675. 198. 702. R
+7 X
+V
+6 F
+0 X
+(Color API:  Attributes ) 58. 689. T
+U
+FMENDPAGE
+%%Page: "86" 6
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(86) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+7 F
+(/*    ) 216. 694. T
+(/* setting colors on a textsw view after it has ) 216. 681. T
+(  been created */) 253. 668. T
+(*/) 216. 655. T
+(   view = xv_get\050text, OPENWIN_NTH_VIEW, 0\051;) 216. 642. T
+(   xv_set\050view,) 216. 629. T
+(   WIN_CMS_NAME, "rainbow",) 253. 616. T
+(   WIN_CMS_DATA, &cms_data,) 253. 603. T
+(   0\051;) 253. 590. T
+5 F
+(The X11 protocol specifies that the Visual type of a window must be ) 216. 568. T
+(declared at create time.  Therefore, XView objects that allocate ) 216. 555. T
+(colormap segments are required, at create time, to specify the type of ) 216. 542. T
+(the colormap segment they propose to use.  By default, windows are ) 216. 529. T
+(created using a static visual.  However, you can change this with the ) 216. 516. T
+54. 90. 558. 702. C
+U
+7 F
+0 X
+(WIN_DYNAMIC_VISUAL) 216. 502. T
+5 F
+(  attribute.  For example:) 334.8 502. T
+7 F
+(    canvas = xv_create\050frame, CANVAS,) 216. 479. T
+(WIN_HEIGHT, 500,) 306. 466. T
+(WIN_WIDTH, 500,) 306. 453. T
+(WIN_DYNAMIC_VISUAL, TRUE,) 306. 440. T
+(0\051;) 306. 427. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(The header file ) 216. 404. T
+7 F
+(<xview/cms.h>) 285.33 404. T
+5 F
+( defines ) 371.13 404. T
+7 F
+(Xv_cmsdata) 408.4 404. T
+5 F
+( as:) 474.4 404. T
+7 F
+(typedef struct xv_cmsdata {) 216. 381. T
+(    short                type;) 216. 368. T
+(    short                size;) 216. 355. T
+(    short                index;) 216. 342. T
+(    short                rgb_count;) 216. 329. T
+(    unsigned char       *red;) 216. 316. T
+(    unsigned char       *green;) 216. 303. T
+(    unsigned char       *blue;) 216. 290. T
+(} Xv_cmsdata;) 216. 277. T
+5 F
+(The type of a colormap segment is defined as ) 216. 255. T
+7 F
+(XV_STATIC_CMS) 418.54 255. T
+5 F
+( or ) 504.34 255. T
+7 F
+(XV_DYNAMIC_CMS) 216. 242. T
+5 F
+(.) 308.4 242. T
+(The ) 216. 224. T
+7 F
+(size) 235.85 224. T
+5 F
+( field specifies the size of the colormap segment during ) 262.26 224. T
+(creation and cannot be changed later.  The ) 216. 211. T
+7 F
+(index) 405.08 211. T
+5 F
+( specifies the starting ) 438.08 211. T
+(origin to load ) 216. 198. T
+7 F
+(rgb_count) 278.03 198. T
+5 F
+( entries from the red/green/blue arrays into ) 337.43 198. T
+(the colormap segment.) 216. 185. T
+(Attributes that require RGB values take values of the type ) 216. 167. T
+7 F
+(Xv_singlecolor) 216. 154. T
+5 F
+(, as in the following example :) 308.4 154. T
+7 F
+(typedef struct xv_singlecolor {) 216. 131. T
+(    u_char     red, green, blue;) 216. 118. T
+(} Xv_singlecolor;) 216. 105. T
+55. 488. 198. 588. C
+55. 488. 198. 588. R
+7 X
+V
+9 F
+0 X
+(NOTE:) 58. 577. T
+10 F
+(  ) 95.33 577. T
+3 F
+(pw_putcolormap\050\051) 58. 565. T
+10 F
+( creates ) 154. 565. T
+(a dynamic colormap ) 58. 553. T
+(segment.  Canvases that use ) 58. 542. T
+(the ) 58. 531. T
+3 F
+(pw_putcolormap\050\051) 74.68 531. T
+10 F
+( call ) 170.68 531. T
+(must be created with ) 58. 519. T
+3 F
+(WIN_DYNAMIC_VISUAL) 58. 508. T
+10 F
+( set ) 166. 508. T
+(to ) 58. 496. T
+3 F
+(TRUE) 69.12 496. T
+10 F
+(.) 93.12 496. T
+U
+55. 390. 198. 417. C
+55. 390. 198. 417. R
+7 X
+V
+6 F
+0 X
+(Color API:  Types ) 58. 404. T
+U
+213. 705. 542. 705. 2 L
+0 H
+0 X
+N
+213. 583. 542. 583. 2 L
+N
+200. 687. 200. 601. 2 L
+N
+557. 601. 557. 691. 2 L
+N
+0. 90. -17. 17. 557. 705. A
+270. 270.1 15.5 -18.5 526. 583. A
+270. 0. -15.5 -18.5 557. 583. A
+90. 90.1 -11.5 19.5 223. 705. A
+90. 180. 11.5 19.5 200. 705. A
+180. 180.1 13.5 18.5 200. 620. A
+180. 270. 13.5 -18.5 200. 583. A
+213. 493. 545. 493. 2 L
+N
+213. 417. 542. 416. 2 L
+N
+200. 482. 200. 428. 2 L
+N
+557. 428. 557. 482. 2 L
+N
+0. 90. -17. 10.5 557. 493. A
+270. 270.1 14.5 -12.5 528. 416. A
+270. 0. -14.5 -12.5 557. 416. A
+90. 90.1 -11.5 12. 223. 493. A
+90. 180. 11.5 12. 200. 493. A
+180. 180.1 13.5 11.5 200. 440. A
+180. 270. 13.5 -11.5 200. 417. A
+213. 144. 545. 144. 2 L
+N
+213. 94. 545. 94. 2 L
+N
+200. 137. 200. 101. 2 L
+N
+557. 107. 557. 137. 2 L
+N
+0. 90. -17. 7. 557. 144. A
+90. 90.1 -11.5 8. 223. 144. A
+90. 180. 11.5 8. 200. 144. A
+180. 180.1 13.5 7.5 200. 109. A
+180. 270. 13.5 -7.5 200. 94. A
+270. 270.1 12. -12. 533. 94. A
+270. 0. -12. -12. 557. 94. A
+FMENDPAGE
+%%Page: "85" 5
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(85) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+5 F
+(requested color, it is returned.  If an exact match is not found and free ) 218. 694. T
+(unallocated cells are available, a cell is allocated and initialized with ) 218. 681. T
+(the required RGB values.  If there are no free cells and an exact match is ) 218. 668. T
+(not found, an error is returned.\051) 218. 655. T
+(Applications must) 218. 637. T
+8 F
+( always) 298.37 637. T
+5 F
+( use static colormap segments unless they ) 331.67 637. T
+8 F
+(absolutely require) 218. 624. T
+5 F
+( read-write color cells.  Static colormap segments, by ) 298.36 624. T
+(sharing color cells across applications, use the shared hardware ) 218. 611. T
+(colormap resource more efficiently; they  also eliminate flashing. ) 218. 598. T
+(You can change the color cells in a dynamic colormap segment at will; ) 218. 580. T
+(full compatibility is maintained with the SunView 1 API and ) 218. 567. T
+(semantics. The API has been generalized using the standard XView ) 218. 554. T
+(interface \050) 218. 541. T
+7 F
+(xv_create\050\051) 262.89 541. T
+5 F
+(, ) 335.49 541. T
+7 F
+(xv_get\050\051) 340.99 541. T
+5 F
+(, and ) 393.79 541. T
+7 F
+(xv_set\050\051) 417.93 541. T
+5 F
+(\051.) 470.73 541. T
+(Any object subclassed from the window object can allocate and use ) 218. 523. T
+(colormap segments, thereby removing the SunView restriction of ) 218. 510. T
+(colors to canvases.  Objects subclassed from the window object should ) 218. 497. T
+(implement the appropriate color inheritance model.  For example, ) 218. 484. T
+(setting colors on a text subwindow will propagate the colors to all the ) 218. 471. T
+(views of the text subwindow.  However, the colors can also be set on a ) 218. 458. T
+(particular view, as the following code fragments demonstrate:) 218. 445. T
+7 F
+( /*   ) 218. 422. T
+( *Setting colors on a textsw during create-time; ) 218. 409. T
+(* All current views and other views that may be ) 218. 396. T
+(* created later will inherit the colors of the ) 218. 383. T
+(* text subwindow.) 218. 370. T
+(     */) 218. 357. T
+(   text = xv_create\050frame, TEXTSW, ) 218. 330. T
+(      WIN_CMS_NAME, "rainbow", ) 308. 317. T
+(      WIN_CMS_DATA,  &cms_data,) 308. 304. T
+(            0\051;) 255. 291. T
+(/*) 218. 237. T
+(/* setting colors on the default view of a ) 218. 224. T
+( ) 553. 224. T
+(textsw during create-time */) 218. 211. T
+(*/) 218. 198. T
+( text = xv_create\050frame, TEXTSW,) 218. 171. T
+(      OPENWIN_VIEW_ATTRS,) 308. 158. T
+(                         WIN_CMS_NAME, "rainbow",) 218. 145. T
+(                         WIN_CMS_DATA,  &cms_data,) 218. 132. T
+(        0,) 308. 119. T
+(                     0\051;) 218. 106. T
+202. 435. 548. 435. 2 L
+N
+204. 277. 548. 277. 2 L
+N
+192. 420. 192. 293. 2 L
+N
+561. 300. 561. 413. 2 L
+N
+0. 90. -15.5 23. 561. 435. A
+270. 270.1 16. -22.5 529. 277. A
+270. 0. -16. -22.5 561. 277. A
+180. 180.1 13.5 16.5 192. 310. A
+180. 270. 13.5 -16.5 192. 277. A
+90. 90.1 -10. 15. 212. 435. A
+90. 180. 10. 15. 192. 435. A
+202. 256. 548. 256. 2 L
+N
+204. 98. 548. 98. 2 L
+N
+192. 241. 192. 114. 2 L
+N
+561. 121. 561. 234. 2 L
+N
+0. 90. -15.5 23. 561. 256. A
+270. 270.1 16. -22.5 529. 98. A
+270. 0. -16. -22.5 561. 98. A
+180. 180.1 13.5 16.5 192. 131. A
+180. 270. 13.5 -16.5 192. 98. A
+90. 90.1 -10. 15. 212. 256. A
+90. 180. 10. 15. 192. 256. A
+FMENDPAGE
+%%Page: "84" 4
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(84) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(Cursors and menus can be created without specifying an owner; it is ) 216. 694. T
+(only when the cursor or menu is actually rendered that it is bound to a ) 216. 681. T
+(particular server or screen.) 216. 668. T
+(On the other hand, frames, windows, and fonts are bound to a particular ) 216. 650. T
+(display when they are created.  If you do not specify a particular server ) 216. 637. T
+(or screen, they are bound to the default server/screen. If you later try to ) 216. 624. T
+(use them on another server or screen, the attempt will fail. ) 216. 611. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(XView command-line options are loaded into the in-memory defaults ) 216. 588. T
+(database when they are parsed.  To see whether the user tried to override ) 216. 575. T
+(some particular setting, you no longer need to pre-scan the command ) 216. 562. T
+(line yourself; instead call ) 216. 549. T
+7 F
+(default_exists\050\051) 329.65 549. T
+5 F
+( on command line options ) 435.25 549. T
+(to see whether the option was set from the command line.  For example:) 216. 536. T
+7 F
+(if \050defaults_exists\050"xview.Cmdline.Columns",0\051\051 {) 216. 513. T
+(    ) 216. 500. T
+8 F
+(/* user specified ) 242.4 500. T
+11 F
+(-Ww) 317.25 500. T
+8 F
+( */) 337.06 500. T
+7 F
+(}) 216. 487. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(New input-related window attributes ) 216. 465. T
+7 F
+(WIN_META_EVENTS) 380.36 465. T
+5 F
+( and ) 479.36 465. T
+7 F
+(WIN_UP_META_EVENTS) 216. 452. T
+5 F
+( let you enable) 334.8 452. T
+7 F
+( <Meta>) 399.26 452. T
+5 F
+( key press and release ) 445.46 452. T
+(events.  You can also inquire directly as to the state of the mouse ) 216. 439. T
+(buttons from any input event you receive, with the new event state ) 216. 426. T
+(macros, ) 216. 413. T
+7 F
+(event_left_is_down\050\051) 253.27 413. T
+5 F
+(, ) 385.27 413. T
+7 F
+(event_middle_is_down\050\051) 390.77 413. T
+5 F
+(, ) 535.97 413. T
+7 F
+(event_right_is_down\050\051) 216. 400. T
+5 F
+(, and ) 354.6 400. T
+7 F
+(event_button_is_down\050\051) 378.73 400. T
+5 F
+(.  You can ) 523.93 400. T
+(now get as well as set) 216. 387. T
+7 F
+( ) 311.62 387. T
+(WIN_MOUSE_XY.) 318.22 387. T
+5 F
+( ) 404.02 387. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(The X11/NeWS server provides the capability of creating bitmap ) 216. 364. T
+(objects that are stored in the server.  This reduces the memory usage in ) 216. 351. T
+(the client\325s process and reduces the communication overhead to the ) 216. 338. T
+(server.  To take advantage of this, XView provides a ) 216. 325. T
+7 F
+(SERVER_IMAGE) 450.61 325. T
+5 F
+( ) 529.81 325. T
+(object \050essentially a memory pixrect whose bitmap is stored in the ) 216. 312. T
+(server\051. ) 216. 299. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(XView applications deal with color by allocating ) 216. 275. T
+(colormap segments.  A ) 435.05 275. T
+(colormap segment is a subset of the available cells in a colormap. ) 216. 262. T
+(Applications define and refer to a colormap segment by assigning the ) 216. 249. T
+(segment a name. Colormap segments can be allocated either ) 216. 236. T
+8 F
+(dynamic) 484.22 236. T
+5 F
+( ) 521.49 236. T
+(\050read-write\051 or ) 216. 223. T
+8 F
+(static) 283.19 223. T
+5 F
+( \050read-only\051. ) 307.03 223. T
+(The cells in a static colormap segment are initialized once  and  are read-) 216. 205. T
+(only from then onwards, although it is not necessary for all the cells to ) 216. 192. T
+(be initialized at the same time.  The XView library will try to return ) 216. 179. T
+(the closest \050or exact\051 matching color cells from the default colormap of ) 216. 166. T
+(the X11 server.) 216. 153. T
+(\050If the X11 server supports ) 216. 135. T
+7 F
+(StaticColor) 337.28 135. T
+5 F
+( as the default, the closest ) 409.88 135. T
+(matching color will be returned.  If the server supports ) 216. 122. T
+7 F
+(PseudoColor) 458.87 122. T
+5 F
+( as ) 531.47 122. T
+(the default, the returned colormap cell may be allocated in one of ) 216. 109. T
+(several ways. If a previously allocated read-only cell matches the ) 216. 96. T
+55. 646. 198. 702. C
+55. 646. 198. 702. R
+7 X
+V
+6 F
+0 X
+(Creating Objects in a ) 58. 689. T
+(Multiple Server/Screen ) 58. 676. T
+(Environment) 58. 663. T
+U
+55. 561. 198. 601. C
+55. 561. 198. 601. R
+7 X
+V
+12 F
+0 X
+(5.4) 58. 586. T
+(Initialization) 89. 586. T
+U
+55. 438. 198. 478. C
+55. 438. 198. 478. R
+7 X
+V
+12 F
+0 X
+(5.5) 58. 463. T
+(Input) 89. 463. T
+U
+55. 337. 198. 377. C
+55. 337. 198. 377. R
+7 X
+V
+12 F
+0 X
+(5.6) 58. 362. T
+(Server Images) 89. 362. T
+U
+55. 261. 198. 288. C
+55. 261. 198. 288. R
+7 X
+V
+12 F
+0 X
+(5.7) 58. 273. T
+(Color) 89. 273. T
+U
+179. 480. 179. 480. 179. 504.5 561. 480. 561. 480. 370. 480. 561. 529. 561. 529. 561. 504.5 179. 529. 179. 529. 370. 529. 179. 504.5 4 J
+0 H
+0 X
+N
+FMENDPAGE
+%%Page: "83" 3
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(83) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+5 F
+(Here is an example of a more general XView application that ) 216. 694. T
+(manipulates windows on ) 216. 681. T
+(multiple servers:) 328.13 681. T
+7 F
+(main\050argc, argv\051) 216. 658. T
+(    int         argc;) 216. 645. T
+(    char      **argv;) 216. 632. T
+({) 216. 619. T
+(    Xv_Server      server1, server2;) 216. 606. T
+(    Xv_Screen      screen;) 216. 593. T
+(    Xv_Window   ) 216. 580. T
+(   root1, root2;) 321.6 580. T
+(    Frame          frame1, frame2;) 216. 567. T
+(    Panel          panel1, panel2;) 216. 554. T
+(    /* initialize and parse command line */) 216. 527. T
+(    xv_init\050XV_INIT_ARGS, argc, argv, 0\051;) 216. 514. T
+(    /* now create the two servers */) 216. 487. T
+(    server1 = xv_create\050NULL, SERVER,) 216. 474. T
+(                           XV_NAME, "hitec:0",) 216. 461. T
+(                           0\051;) 216. 448. T
+(    server2 = xv_create\050NULL, SERVER,) 216. 435. T
+(                           XV_NAME, "markiv:0",) 216. 422. T
+(                           0\051;) 216. 409. T
+(    /* now get the root windows */) 216. 382. T
+(    screen = xv_get\050server1, ) 216. 369. T
+(SERVER_NTH_SCREEN, 0\051;) 360. 356. T
+(    root1 = xv_get\050screen,  XV_ROOT\051;) 216. 343. T
+(    screen = xv_get\050server2, ) 216. 316. T
+(SERVER_NTH_SCREEN, 0\051;) 360. 303. T
+(    root2 = xv_get\050screen,  XV_ROOT\051;) 216. 290. T
+(    /* now create the frame with a panel */) 216. 263. T
+(    frame1 = xv_create\050root1, FRAME, 0\051;) 216. 250. T
+(    panel1 = xv_create\050frame1, PANEL, 0\051;) 216. 237. T
+(    frame2 = xv_create\050root2, FRAME, 0\051;) 216. 210. T
+(    panel2 = xv_create\050frame2, PANEL, 0\051;) 216. 197. T
+(}) 216. 170. T
+5 F
+(The client has connected to two X11/NeWS servers and created a frame ) 216. 148. T
+(with a panel on each.  If the client does not call ) 216. 135. T
+7 F
+(xv_init\050\051) 426.49 135. T
+5 F
+( or create a ) 485.89 135. T
+(server object, XView will initialize itself and create a default server ) 216. 122. T
+(object the first time the client calls ) 216. 109. T
+7 F
+(xv_create\050\051) 370.9 109. T
+5 F
+(.) 443.5 109. T
+204. 674. 536. 674. 2 L
+N
+198. 163. 534. 163. 2 L
+N
+179. 648. 179. 190. 2 L
+N
+560. 191. 560. 643. 2 L
+N
+0. 90. -26. 30.5 560. 674. A
+90. 90.1 -24. 28. 227. 674. A
+90. 180. 24. 28. 179. 674. A
+270. 270.1 27. -29. 506. 163. A
+270. 0. -27. -29. 560. 163. A
+180. 180.1 20.5 29. 179. 221. A
+180. 270. 20.5 -29. 179. 163. A
+FMENDPAGE
+%%Page: "82" 2
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(Chapter 5\321New Features) 253.79 731. T
+(82) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+5 F
+(table for each object, which you can use this to define attributes ) 216. 694. T
+(peculiar to your application. ) 216. 681. T
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(Server objects  allow one XView client to create windows and operate ) 216. 645. T
+(on multiple X11/NeWS servers simultaneously.  This was not possible ) 216. 632. T
+(in SunView.  There are attributes to enumerate the list of screen ) 216. 619. T
+(objects attached to each server. ) 216. 606. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(Screen objects let XView clients create windows on several screens on ) 216. 583. T
+(one server; this is possible in SunView using low-level calls, but very ) 216. 570. T
+(difficult. ) 216. 557. T
+54. 90. 558. 702. C
+U
+5 F
+0 X
+(The simplest XView application is similar to the SunView style.) 216. 534. T
+7 F
+(main\050argc, argv\051) 216. 430. T
+(    int) 216. 417. T
+(argc;) 306. 417. T
+(    char) 216. 404. T
+(**argv;) 306. 404. T
+({) 216. 391. T
+(    Frame) 216. 378. T
+(frame1;) 306. 378. T
+(    Panel) 216. 365. T
+(panel1;) 306. 365. T
+(    /* Create a frame with a panel) 216. 338. T
+(     * specifying) 216. 325. T
+5 F
+( ) 328.2 325. T
+7 F
+(a) 330.95 325. T
+5 F
+( ) 337.55 325. T
+7 F
+(root window of NULL) 340.3 325. T
+5 F
+( ) 465.7 325. T
+7 F
+(defaults) 468.45 325. T
+5 F
+( ) 521.25 325. T
+7 F
+(to) 524. 325. T
+(     * the root window on the default screen of) 216. 312. T
+(     * the default server. */) 216. 299. T
+(    frame1 = xv_create\050NULL, FRAME, 0\051;) 216. 286. T
+(    panel1 = xv_create\050frame1, PANEL, 0\051;) 216. 273. T
+(.}) 216. 246. T
+55. 658. 198. 680. C
+55. 658. 198. 680. R
+7 X
+V
+12 F
+0 X
+(5.2) 58. 665. T
+(Other Objects) 89. 665. T
+U
+55. 618. 198. 651. C
+55. 618. 198. 651. R
+7 X
+V
+6 F
+0 X
+(Server Objects) 58. 639. T
+U
+55. 570. 198. 596. C
+55. 570. 198. 596. R
+7 X
+V
+6 F
+0 X
+(Screen Objects) 58. 583. T
+U
+55. 507. 198. 547. C
+55. 507. 198. 547. R
+7 X
+V
+12 F
+0 X
+(5.3) 58. 532. T
+(Sample Client ) 89. 532. T
+(Code) 89. 517. T
+U
+200. 466. 533. 466. 2 L
+0 H
+0 X
+N
+194. 215. 529. 215. 2 L
+N
+175. 453. 175. 227. 2 L
+N
+557. 228. 557. 451. 2 L
+N
+0. 90. -26.5 15. 557. 466. A
+90. 90.1 -24. 14. 223. 466. A
+90. 180. 24. 14. 175. 466. A
+270. 270.1 27.5 -14. 502. 215. A
+270. 0. -27.5 -14. 557. 215. A
+180. 180.1 20.5 14. 175. 243. A
+180. 270. 20.5 -14. 175. 215. A
+FMENDPAGE
+%%Page: "81" 1
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+54. 90. 558. 622. C
+216. 542. 558. 622. C
+216. 542. 564. 622. R
+7 X
+V
+13 F
+0 X
+(New Features) 424.38 601. T
+54. 90. 558. 622. C
+U
+5 F
+0 X
+(This section describes new XView features.  Some of these features ) 216. 530. T
+(provide similar functionality to SunView, though through a different ) 216. 517. T
+(mechanism; others are only possible in a networked, server-based ) 216. 504. T
+(environment.) 216. 491. T
+54. 90. 558. 622. C
+U
+5 F
+0 X
+(Every XView object is created using the new Generic Object package.  ) 216. 468. T
+(This allows clients to use a single ) 216. 455. T
+7 F
+(create) 366.63 455. T
+5 F
+(, ) 406.23 455. T
+7 F
+(set) 411.73 455. T
+5 F
+(, ) 431.53 455. T
+7 F
+(get) 437.03 455. T
+5 F
+(, and ) 456.83 455. T
+7 F
+(destroy) 480.97 455. T
+5 F
+( ) 527.17 455. T
+(interface. The new functions are listed below.) 216. 442. T
+4 F
+(Table 5-1) 151.68 421. T
+14 F
+(Generic Functions) 216. 421. T
+15 F
+(Generic Function) 214. 398. T
+214. 396.33 294.98 396.92 R
+V
+(Comments) 396. 398. T
+396. 396.33 444.29 396.92 R
+V
+7 F
+(xv_create\050\051) 216. 377. T
+5 F
+(create any object.) 396. 377. T
+7 F
+(xv_set\050\051) 216. 360. T
+5 F
+(set attributes.) 396. 360. T
+7 F
+(xv_find\050\051) 216. 343. T
+5 F
+(locate an object; if unsuccessful, ) 396. 343. T
+(revert to ) 396. 330. T
+7 F
+(xv_create\050\051) 435.71 330. T
+5 F
+(.) 508.31 330. T
+7 F
+(xv_get\050\051) 216. 313. T
+5 F
+(get value of attribute.) 396. 313. T
+7 F
+(xv_destroy\050\051) 216. 296. T
+5 F
+(destroy any object.) 396. 296. T
+7 F
+(xv_init\050\051) 216. 279. T
+5 F
+(initialize the notifier, read ) 396. 279. T
+(passed attributes, initialize ) 396. 266. T
+(defaults/resource-manager ) 396. 253. T
+(database, load server resource-) 396. 240. T
+(manager database, and read ) 396. 227. T
+7 F
+(~/.Xdefaults) 396. 214. T
+5 F
+( database.) 475.2 214. T
+(For compatibility, the SunView individual object routines, such as  ) 216. 191. T
+7 F
+(window_create\050\051) 216. 178. T
+5 F
+( and ) 315. 178. T
+7 F
+(icon_create\050\051) 336.38 178. T
+5 F
+(, are provided.  These routines in ) 422.18 178. T
+(turn call ) 216. 165. T
+7 F
+(xv_create/xv_set/xv_get/xv_destroy\050\051) 255.1 165. T
+5 F
+( as appropriate.   ) 492.7 165. T
+(Since all XView objects are at least generic objects, generic attributes ) 216. 152. T
+(can be applied to any object. ) 216. 139. T
+54. 90. 558. 622. C
+U
+5 F
+0 X
+(Two generic attributes provide the client with arbitrary key-value ) 216. 116. T
+(storage on any object.  The generic object package manages an association ) 216. 103. T
+55. 439. 198. 484. C
+55. 439. 198. 484. R
+7 X
+V
+12 F
+0 X
+(5.1) 59. 468. T
+(The Generic ) 90. 468. T
+(Object) 90. 453. T
+U
+55. 90. 198. 130. C
+55. 90. 198. 130. R
+7 X
+V
+6 F
+0 X
+(Arbitrary Key Data ) 58. 117. T
+(Storage) 58. 104. T
+U
+16 F
+0 X
+(5) 541. 668. T
+216. 642. 560. 650. R
+4 X
+V
+0 H
+N
+216. 651. 560. 651. 2 L
+1 H
+0 X
+N
+36. 724. 576. 738. C
+36. 724. 576. 738. R
+7 X
+V
+U
+49. 209. 564. 413. R
+0 H
+0 X
+N
+FMENDPAGE
+%%Trailer
+%%Pages: 24 -1
+%%DocumentFonts: Helvetica
+%%+ Times-Bold
+%%+ Times-Roman
+%%+ Courier
+%%+ Times-Italic
+%%+ Helvetica-Bold
+%%+ Courier-Bold
+%%+ Times-BoldItalic

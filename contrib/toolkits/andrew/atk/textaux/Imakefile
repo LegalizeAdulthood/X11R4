@@ -1,0 +1,21 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+DOBJS = contentv.do
+IHFILES = contentv.ih
+
+NormalObjectRule()
+NormalATKRule()
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+DependTarget()
+
+NormalHelpRule()
+InstallDocs(cntproc.help, ${DESTDIR}/help)
+InstallHelpAlias(cntproc, contentproc contentprocs)
+
+MkdirTarget(${DESTDIR}/doc/atk/text)
+
+InstallDocs(contentv.doc,${DESTDIR}/doc/atk/text)

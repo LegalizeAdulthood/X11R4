@@ -1,0 +1,21 @@
+#
+# Make file for the BDF to PCF font compiler
+#
+       INCLUDES = -I. -I$(FONTSRC)/include -I$(TOP)
+LOCAL_LIBRARIES = $(FONTSRC)/lib/bdf/libbdf.a \
+		  $(FONTSRC)/lib/os/libfontos.a \
+		  $(FONTSRC)/lib/pcf/libpcf.a \
+		  $(FONTSRC)/lib/utils/libfontutils.a
+           SRCS = bdftopcf.c
+           OBJS = bdftopcf.o
+    CDEBUGFLAGS = -g
+
+ComplexProgramTarget(bdftopcf)
+clean::
+	$(RM) *.pcf
+
+#ifdef UWSBuild
+install:: bdftopcf
+	$(RM) $(DESTDIR)/usr/bin/dxfc
+	$(LN) $(BINDIR)/bdftopcf $(DESTDIR)/usr/bin/dxfc
+#endif

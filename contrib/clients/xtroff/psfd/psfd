@@ -1,0 +1,113 @@
+:
+:  psfd - PostScript font display
+:  generate pic drawing from font discription
+:  psfd file | pic | troff
+:
+awk 'BEGIN {
+}
+
+# enable copy
+
+/^charset/ {
+	charset = 1
+	next
+}
+
+# skip space codes
+
+$4 == 0 {
+	next
+}
+
+# troff alias (ch	")
+
+$2 == "\"" {
+	tr = $1
+	if (tr ~ /^\\/)
+		ditmap[ch] = ditmap[ch] " \\\\\\" tr
+	else
+		ditmap[ch] = ditmap[ch] " " $1
+	next
+}
+
+#  character (ch   width kerning index   name)
+
+charset == 1 {
+	ch = $4
+	tr = $1
+	if (tr ~ /^\\/)
+		ditmap[ch] = "\\\\\\" tr
+	else
+		ditmap[ch] = tr
+	name[ch] = $1
+	desc[ch] = $5
+}
+END {
+	print ".PS"
+	print "boxwid = .4375"
+	print "boxht = .64"
+	print "box invisible"
+	print ".PE"
+	print ".PS"
+	print "boxwid = .4375"
+	print "boxht = .64"
+
+	for (i = 32; i < 256; i++) {
+		j = sprintf("0%o", i)
+		tr = name[j]
+
+		#  put 16 characters horizontally
+
+		if (n++ == 16) {
+			print ".ns"
+			print ".PE"
+			print ".rs"
+			print ".sp .64i"
+			print ".PS"
+			print "boxwid = .4375"
+			print "boxht = .64"
+			n = 1
+		}
+		if (n == 1)
+			print "box"
+		else
+			print "box at last box + (boxwid,0)"
+		
+		#  missing troff codes
+		
+		if (length(tr) == 0) {
+			if (i == 32) {
+				print "\"space\" at last box.s above"
+			}
+		
+		#  one character troff codes
+		
+		} else if (length(tr) == 1) {
+			if (tr == "\"") {
+				tr = "\\" tr
+				ditmap[j] = "\\" ditmap[j]
+			} else if (tr == "\\") {
+				tr = "\\\\\\" tr
+			}
+			print ".ps 24"
+			print "\"" tr "\" at last box.c"
+			print ".ps 6"
+			print "\"\\fC\\s8" ditmap[j] "\\s0\\fR\" at last box.n below"
+			print "\"" desc[j] "\" at last box.s above"
+
+		#  two character troff codes
+
+		} else {
+			print ".ps 24"
+			print "\"\\(" tr "\" at last box.c"
+			print ".ps 6"
+			print "\"\\fC\\s8" ditmap[j] "\\s0\\fR\" at last box.n below"
+			print "\"" desc[j] "\" at last box.s above"
+		}
+		print ".ps 10"
+	}
+
+#  terminate pic
+
+	print ".PE"
+}' $1

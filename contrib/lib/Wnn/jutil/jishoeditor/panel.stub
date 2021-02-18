@@ -1,0 +1,7 @@
+panel {
+	get_value(name; int)
+	set_value(name, int)
+	get_string(name; v_char)
+	set_string(name, v_char)
+	get_tool_by_name(name; oop)
+}

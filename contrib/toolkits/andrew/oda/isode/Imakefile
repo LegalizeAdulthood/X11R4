@@ -1,0 +1,158 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES	=	-I${BASEDIR}/include/oda
+
+OBJS   = UPEPY-01.o \
+	UPEPY-02.o \
+	UPEPY-03.o \
+	UPEPY-07.o \
+	UPEPY-08.o \
+	UPEPY-09.o \
+	UPEPY-10.o \
+	UPEPY-11.o \
+	UPEPY-12.o \
+	UPEPY-34.o \
+	UPEPY-35.o \
+	UPEPY-36.o \
+	UPEPY-46.o \
+	UPEPY-47.o \
+	UPEPY-48.o \
+	UPEPY-49.o \
+	UPEPY-50.o \
+	UPEPY-51.o \
+	UPEPY-52.o \
+	asprintf.o \
+	bit_ops.o \
+	isobject.o \
+	isofiles.o \
+	ispr1.o \
+	ispr10.o \
+	ispr11.o \
+	ispr12.o \
+	ispr13.o \
+	ispr14.o \
+	ispr15.o \
+	ispr16.o \
+	ispr17.o \
+	ispr18.o \
+	ispr19.o \
+	ispr2.o \
+	ispr3.o \
+	ispr4.o \
+	ispr5.o \
+	ispr6.o \
+	ispr7.o \
+	ispr8.o \
+	ispr9.o \
+	isrd1.o \
+	isrd10.o \
+	isrd11.o \
+	isrd12.o \
+	isrd13.o \
+	isrd14.o \
+	isrd15.o \
+	isrd16.o \
+	isrd17.o \
+	isrd18.o \
+	isrd19.o \
+	isrd2.o \
+	isrd20.o \
+	isrd3.o \
+	isrd4.o \
+	isrd5.o \
+	isrd6.o \
+	isrd7.o \
+	isrd8.o \
+	isrd9.o \
+	iswr1.o \
+	iswr10.o \
+	iswr11.o \
+	iswr12.o \
+	iswr13.o \
+	iswr14.o \
+	iswr15.o \
+	iswr16.o \
+	iswr17.o \
+	iswr18.o \
+	iswr19.o \
+	iswr2.o \
+	iswr20.o \
+	iswr3.o \
+	iswr4.o \
+	iswr5.o \
+	iswr6.o \
+	iswr7.o \
+	iswr8.o \
+	iswr9.o \
+	logger.o \
+	num2prim.o \
+	obj2prim.o \
+	objectbyoid.o \
+	oid2ode.o \
+	oid_cmp.o \
+	oid_cpy.o \
+	oid_free.o \
+	pe2ps.o \
+	pe_alloc.o \
+	pe_error.o \
+	pe_free.o \
+	pl_tables.o \
+	prim2bit.o \
+	prim2flag.o \
+	prim2num.o \
+	prim2oid.o \
+	prim2set.o \
+	prim2str.o \
+	ps2pe.o \
+	ps_alloc.o \
+	ps_flush.o \
+	ps_free.o \
+	ps_get_abs.o \
+	ps_io.o \
+	ps_prime.o \
+	py_advise.o \
+	seq_add.o \
+	seq_addon.o \
+	seq_del.o \
+	seq_find.o \
+	serror.o \
+	set_add.o \
+	set_find.o \
+	sprintoid.o \
+	std2ps.o \
+	str2elem.o \
+	str2oid.o \
+	str2prim.o \
+	str2vec.o \
+	tailor.o \
+	vprint.o
+
+HFILES	= config.h \
+	general.h \
+	ishsh.h \
+	isoaddrs.h \
+	ispr.h \
+	ispr19.h \
+	isrd.h \
+	isrd19.h \
+	isrd20.h \
+	iswr.h \
+	iswr19.h \
+	iswr20.h \
+	logger.h \
+	manifest.h \
+	odaiso.h \
+	psap.h \
+	tailor.h
+
+NormalObjectRule()
+
+LibraryTarget(libisode.a, $(OBJS) )
+
+InstallLibrary(libisode.a, $(DESTDIR)/lib/oda)
+
+InstallMultiple( $(HFILES), $(INSTINCFLAGS), $(DESTDIR)/include/oda)
+
+DependTarget()

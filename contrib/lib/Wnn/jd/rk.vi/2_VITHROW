@@ -1,0 +1,6 @@
+(defvar char (all))
+
+;(char)	(char)(off vithrow)
+
+(if VIzenkaku)(char)		(char)(off vithrow)(on zenkaku)(off VIzenkaku)
+(unless VIzenkaku)(char)	(char)(off vithrow)

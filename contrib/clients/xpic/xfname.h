@@ -1,0 +1,19 @@
+#define FONTNAME_REGISTRY    0
+#define FOUNDRY		    (FONTNAME_REGISTRY+1)
+#define FAMILY_NAME	    (FOUNDRY+1)
+#define WEIGHT_NAME	    (FAMILY_NAME+1)
+#define SLANT		    (WEIGHT_NAME+1)
+#define SETWIDTH_NAME	    (SLANT+1)
+#define ADD_STYLE_NAME	    (SETWIDTH_NAME+1)
+#define PIXEL_SIZE	    (ADD_STYLE_NAME+1)
+#define POINT_SIZE	    (PIXEL_SIZE+1)
+#define RESOLUTION_X	    (POINT_SIZE+1)
+#define RESOLUTION_Y	    (RESOLUTION_X+1)
+#define SPACING		    (RESOLUTION_Y+1)
+#define AVERAGE_WIDTH	    (SPACING+1)
+#define CHARSET_REGISTRY    (AVERAGE_WIDTH+1)
+#define CHARSET_ENCODING    (CHARSET_REGISTRY+1)
+
+#define NCOMPONENTS	    (CHARSET_ENCODING+1)
+
+extern char ** getfontname();

@@ -1,0 +1,17 @@
+## ###################################################################### ##
+##         Copyright IBM Corporation 1988,1989 - All Rights Reserved      ##
+##        For full copyright information see:'andrew/config/COPYRITE'     ##
+## ###################################################################### ##
+addfiletype .c ctext
+addfiletype .h ctext
+addfiletype .eq eq
+addfiletype .fad fad
+addfiletype .raster raster
+addfiletype .table table
+addfiletype .zip zip
+addfiletype .template text
+addfiletype .overview text "template=help"
+addfiletype .help text "template=help"
+addfiletype .letter text "template=letter"
+addfiletype .memo text "template=memo"
+addfiletype * text "template=default"

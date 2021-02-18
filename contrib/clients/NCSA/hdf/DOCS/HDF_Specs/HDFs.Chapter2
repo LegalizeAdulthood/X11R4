@@ -1,0 +1,174 @@
+
+
+Chapter 2	The NCSA HDF General Purpose Interface
+
+
+
+Chapter Overview
+Introduction
+Opening and Closing Files
+Finding Tags, Refs, and Element Lengths
+Reading and Writing Entire Data Elements
+Reading and Writing Part of a Data Element
+Manipulating Data Descriptors (DDs)
+
+Chapter Overview
+
+This chapter contains a list of the routines that make up the low 
+level interface. The interface is described in detail in the HDF 
+manual.
+
+
+Introduction
+
+NCSA supports interfaces for HDF users—both high level 
+interfaces to support certain application areas, such as image 
+processing, and a low level general purpose interface for 
+performing basic operations on HDF files.
+
+Since the NCSA user community programs primarily in C and 
+Fortran, all of the HDF interfaces developed at NCSA are callable 
+from both C and Fortran programs. Accordingly, all of the 
+functions have both a C and a Fortran definition. For details, see 
+the NCSA HDF manual.
+
+The routines in the general purpose interface enable you to build 
+and manipulate HDF files of any type, including those of your own 
+invention. All HDF applications developed at NCSA use these 
+routines as their basic building blocks. 
+
+
+Opening and Closing Files
+
+The following calls are used to open and close HDF files.
+
+DFopen	provides an access path to an HDF file. It also reads 
+into primary memory all of the DD blocks in the file. 
+In the current implementation, only one file can be 
+open at a time.
+
+DFclose	updates the DD blocks, then closes the access path to 
+the file.
+
+
+Finding Tags, Refs, and Element Lengths
+
+These routines make it possible to locate elements without 
+previously knowing their tags and reference numbers.
+
+DFsetfind	initializes searches for elements using tags and 
+reference numbers. DFsetfind is closely tied to the 
+operation of DFfind.
+
+DFfind	gets the results from searches of tags and reference 
+numbers.
+
+Reading and Writing Entire Data Elements
+
+There are two sets of routines for reading and writing data 
+elements. The first set of routines described here is used to store 
+and retrieve entire data elements. A second set of routines, 
+described in the next section, may be used if you wish to access only 
+part of a data element at a time.
+
+DFputelement	adds or replaces elements in a file.
+
+DFgetelement	obtains the data referred to by the tag/ref 
+combination that is passed to it.
+
+
+Reading and Writing Part of a Data Element
+
+The second set of routines for reading and writing data elements 
+makes it possible to read or write all or part of a data element, in 
+contrast to the routines described above which can only read or 
+write an entire element.
+
+DFaccess	initiates a read or write on the data element with the 
+specified tag/ref combination.
+
+DFread	reads a portion of a data element. It starts at the last 
+position left by a DFaccess, DFread, or DFseek 
+command and reads any data that remains in the 
+element up to a specified number of bytes.
+
+DFwrite	appends data to a data element. It starts at the last 
+position left by a DFaccess or DFwrite command, 
+writes up to a specified number of bytes, then leaves 
+the write pointer at the end of the element.
+
+DFseek	sets the read pointer to an offset within a data 
+element. The next time DFread is called, the read 
+occurs from the new position.
+
+
+Manipulating Data Descriptors (DDs)
+
+These routines perform operations on DDs without doing anything 
+with the data to which the DDs refer.
+
+DFupdate	writes out the DD blocks necessary to update the file. 
+All data elements that have been written or partially 
+written to the file are given valid DDs.
+
+DFdup	is used to generate new references to data that is 
+already referenced from somewhere else.
+
+DFdel	deletes a tag/ref from the list of DDs.
+2.1	NCSA HDF 
+Specific
+ations
+
+The NCSA 
+HDF 
+Gene
+ral 
+Purpose 
+Inter
+face	2.1
+
+Nationa
+l 
+Cente
+r for 
+Supercomp
+uting 
+Applicat
+ions
+
+March 
+1989
+
+                                                                
+
+
+
+2.1	NCSA HDF 
+Specific
+ations
+
+The NCSA 
+HDF 
+Gene
+ral 
+Purpose 
+Inter
+face	2.1
+
+Nationa
+l 
+Cente
+r for 
+Supercomp
+uting 
+Applicat
+ions
+
+March 
+1989
+
+                                                                
+
+
+
+

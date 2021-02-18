@@ -1,0 +1,11 @@
+
+         IMGINC = ../..
+         IMGLIB = ../../imglib/libimg.a
+
+LOCAL_LIBRARIES = $(IMGLIB) $(XLIB)
+           SRCS = savewin.c
+           OBJS = savewin.o
+
+       INCLUDES = -I$(IMGINC)
+
+ComplexProgramTarget(savewin)

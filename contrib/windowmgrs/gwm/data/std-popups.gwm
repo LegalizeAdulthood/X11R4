@@ -1,0 +1,69 @@
+; STANDARD GWM PROFILE
+; ====================
+
+;;File: std-popups.gwm -- the GWM standard pop-up menus
+;;Author: colas@mirsa.inria.fr (Colas NAHABOO) -- Bull Research FRANCE
+;;Revision: 1.4 -- June 12 1989
+;;State: Exp
+;;GWM Version: 1.4
+
+
+; Pop-ups
+; =======
+
+(defname 'pop-item.font screen. (font-make "9x15"))
+(defname 'pop-item.height screen. 18)
+(defname 'pop-label.font screen. (font-make "9x15"))
+(defname 'pop-label.foreground screen. white)
+(defname 'pop-label.background screen. black)
+(defname 'pop-item.foreground screen. black)
+(defname 'pop-item.background screen. white)
+
+(setq std-popups.fsm  (fsm-make 
+			  (: closed 
+			     (state-make 
+				 (on enter-window (wob-invert) opened)))
+			  (: opened
+			     (state-make
+				 (on (buttonrelease any any)
+				     (progn
+					   (setq std-popups.action
+						 (# 'action wob-property))
+					   (wob wob-parent)
+					   (unpop-menu wob)
+					   (wob wob-parent)
+					   (eval std-popups.action)
+				     )
+				     closed)
+				 (on enter-window (wob-invert))
+				 (on leave-window (wob-invert))))))
+
+(df item-make (label action)
+    (with (fsm std-popups.fsm property (+ (list 'action action) property)
+	       borderwidth 1 borderpixel pop-label.background
+	       background pop-item.background
+	       foreground pop-item.foreground
+	       )		       
+	  (bar-make
+	      ()
+	      (with (borderwidth 0 fsm () font pop-item.font
+			bar-min-width pop-item.height)
+		    (plug-make (label-make label) 
+		    ))()))
+    ))))))
+
+(df pop-label-make (label)
+    (with (fsm () borderwidth 1 borderpixel pop-label.background
+	      background pop-label.background
+	      foreground pop-label.foreground) 
+	  (bar-make
+	      (with (borderwidth 0 font pop-label.font) 
+		    (plug-make (label-make label))))))))))))
+
+(: pop-fsm 
+   (fsm-make 
+    (state-make
+     (on enter-window (: invert-color
+			 (bitwise-xor pop-item.foreground
+				      pop-item.background)))
+     (on (buttonrelease any any) (unpop-menu)))))))

@@ -1,0 +1,375 @@
+#WLDL
+3
+
+6 XcuWlm
+6
+16 brightFacetColor 9 (SlateBlue) 6 Global
+13 dimFacetColor 13 (DarkSlateBlue) 6 Global
+10 foreground 5 (Black) 6 Global
+16 Label.background 9 (Goldenrod) 6 Global
+20 Label.internalHeight 1 (5) 6 Global
+10 facetWidth 1 (0) 6 Global
+0
+0
+1
+
+  6 XcuTbl
+  3
+  10 background 5 (White) 5 Local
+  12 equalColumns 5 (False) 5 Local
+  12 formatString 19 (padding(5);c c c c.) 5 Local
+  0
+  0
+  44
+
+    8 XcuLabel
+    2
+    4 font 7 (vshd-40) 5 Local
+    4 name 7 (vshd-40) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (vsgn-57) 5 Local
+    4 name 7 (vsgn-57) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (vsg-114) 5 Local
+    4 name 7 (vsg-114) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 9 (t16.24x24) 5 Local
+    4 name 9 (t16.24x24) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 9 (t16.16x18) 5 Local
+    4 name 9 (t16.16x18) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (sym-s53) 5 Local
+    4 name 7 (sym-s53) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (sym-s25) 5 Local
+    4 name 7 (sym-s25) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 5 (plunk) 5 Local
+    4 name 5 (plunk) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 6 (oldera) 5 Local
+    4 name 6 (oldera) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 9 (math.8x18) 5 Local
+    4 name 9 (math.8x18) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 9 (math.8x16) 5 Local
+    4 name 9 (math.8x16) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 8 (math.6x8) 5 Local
+    4 name 8 (math.6x8) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 10 (math.18x30) 5 Local
+    4 name 10 (math.18x30) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 9 (line.8x16) 5 Local
+    4 name 9 (line.8x16) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (lat-s30) 5 Local
+    4 name 7 (lat-s30) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 5 (krivo) 5 Local
+    4 name 5 (krivo) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 6 (kana14) 5 Local
+    4 name 6 (kana14) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 9 (k16.24x24) 5 Local
+    4 name 9 (k16.24x24) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 9 (k16.16x18) 5 Local
+    4 name 9 (k16.16x18) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 3 (k14) 5 Local
+    4 name 3 (k14) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 9 (j16.32x32) 5 Local
+    4 name 9 (j16.32x32) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 9 (j16.24x24) 5 Local
+    4 name 9 (j16.24x24) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 9 (j16.16x18) 5 Local
+    4 name 9 (j16.16x18) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (hbr-s40) 5 Local
+    4 name 7 (hbr-s40) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (hbr-s25) 5 Local
+    4 name 7 (hbr-s25) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (grk-s30) 5 Local
+    4 name 7 (grk-s30) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (grk-s25) 5 Local
+    4 name 7 (grk-s25) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (ger-s35) 5 Local
+    4 name 7 (ger-s35) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (cyr-s38) 5 Local
+    4 name 7 (cyr-s38) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (cyr-s30) 5 Local
+    4 name 7 (cyr-s30) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (cyr-s25) 5 Local
+    4 name 7 (cyr-s25) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 6 (cursor) 5 Local
+    4 name 6 (cursor) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (chs-s50) 5 Local
+    4 name 7 (chs-s50) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (chp-s25) 5 Local
+    4 name 7 (chp-s25) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 9 (c16.24x24) 5 Local
+    4 name 9 (c16.24x24) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 9 (c16.16x18) 5 Local
+    4 name 9 (c16.16x18) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (apl-s25) 5 Local
+    4 name 7 (apl-s25) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (9x21apl) 5 Local
+    4 name 7 (9x21apl) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 7 (9x16apl) 5 Local
+    4 name 7 (9x16apl) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 8 (12x28apl) 5 Local
+    4 name 8 (12x28apl) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 8 (12x21apl) 5 Local
+    4 name 8 (12x21apl) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 8 (12x21apl) 5 Local
+    4 name 8 (12x21apl) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 8 (12x21apl) 5 Local
+    4 name 8 (12x21apl) 5 Local
+    0
+    0
+    0
+
+    8 XcuLabel
+    2
+    4 font 8 (12x21apl) 5 Local
+    4 name 8 (12x21apl) 5 Local
+    0
+    0
+    0

@@ -1,0 +1,179 @@
+
+#
+#		(c) Copyright Carnegie Mellon University
+#
+# See "The CMU ODA Tool Kit" (available as CMU/ITC tech report
+# CMU-ITC-071) for full text & permitted uses.
+#
+
+#
+# Makefile for site type 'pc-dos', directory 'raster'
+# Generated on Thu Nov  2 10:21:44 1989
+#
+
+# Std definitions
+CC = cl
+INCLUDES = -I. -I../valid -I../prog -I../isode -I../src -I../site/pcdos
+CFLAGS = -c -Gt16 -AL $(INCLUDES) -Fo$@
+LDFLAGS = -link /SE:1000 /ST:50000
+RM = del
+AR1 = lib
+AR2 = lib
+
+# Default compilation rule
+.c.o:
+	   $(CC) $(CFLAGS) $*.c
+
+
+# Rules for LIB "libraster.lib"
+
+rgmem.o:  rgmem.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rginit.h  \
+	     raster.h rgmem.h
+
+rglist.o:  rglist.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rgmem.h  \
+	     rglist.h
+
+rginit.o:  rginit.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rginit.h  \
+	     raster.h
+
+rgdbg.o:  rgdbg.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h
+
+raster.o:  raster.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rgmem.h  \
+	     pel.h rglist.h raster.h
+
+rasio.o:  rasio.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rginit.h  \
+	     raster.h rasio.h iog3.h iog4.h  \
+	     ioobm.h iopbm.h iomacp.h iops.h  \
+	     ioandy.h iox.h iofbm.h ioetc.h
+
+pel.o:    pel.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h raster.h  \
+	     pel.h
+
+iox.o:    iox.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rgmem.h  \
+	     raster.h rasio.h iog3.h iog4.h  \
+	     ioobm.h iopbm.h iomacp.h iops.h  \
+	     ioandy.h iox.h iofbm.h ioetc.h  \
+	     rglist.h
+
+iops.o:   iops.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h raster.h  \
+	     rasio.h iog3.h iog4.h ioobm.h  \
+	     iopbm.h iomacp.h iops.h ioandy.h  \
+	     iox.h iofbm.h ioetc.h
+
+iopbm.o:  iopbm.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rgmem.h  \
+	     raster.h rasio.h iog3.h iog4.h  \
+	     ioobm.h iopbm.h iomacp.h iops.h  \
+	     ioandy.h iox.h iofbm.h ioetc.h  \
+	     pel.h
+
+ioobm.o:  ioobm.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h raster.h  \
+	     rasio.h iog3.h iog4.h ioobm.h  \
+	     iopbm.h iomacp.h iops.h ioandy.h  \
+	     iox.h iofbm.h ioetc.h rglist.h
+
+iomacp.o:  iomacp.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rgmem.h  \
+	     raster.h rasio.h iog3.h iog4.h  \
+	     ioobm.h iopbm.h iomacp.h iops.h  \
+	     ioandy.h iox.h iofbm.h ioetc.h  \
+	     pel.h rglist.h
+
+iog4.o:   iog4.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rgmem.h  \
+	     raster.h rasio.h iog3.h iog4.h  \
+	     ioobm.h iopbm.h iomacp.h iops.h  \
+	     ioandy.h iox.h iofbm.h ioetc.h  \
+	     iog32.h iog33.h rglist.h
+
+iog33.o:  iog33.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rgmem.h  \
+	     raster.h rasio.h iog3.h iog4.h  \
+	     ioobm.h iopbm.h iomacp.h iops.h  \
+	     ioandy.h iox.h iofbm.h ioetc.h  \
+	     iog32.h iog33.h rglist.h
+
+iog32.o:  iog32.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h raster.h  \
+	     rasio.h iog3.h iog4.h ioobm.h  \
+	     iopbm.h iomacp.h iops.h ioandy.h  \
+	     iox.h iofbm.h ioetc.h iog32.h  \
+	     rglist.h
+
+iog3.o:   iog3.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rgmem.h  \
+	     raster.h rasio.h iog3.h iog4.h  \
+	     ioobm.h iopbm.h iomacp.h iops.h  \
+	     ioandy.h iox.h iofbm.h ioetc.h  \
+	     iog32.h iog33.h rglist.h
+
+iofbm.o:  iofbm.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rgmem.h  \
+	     pel.h raster.h rasio.h iog3.h  \
+	     iog4.h ioobm.h iopbm.h iomacp.h  \
+	     iops.h ioandy.h iox.h iofbm.h  \
+	     ioetc.h fbm.h
+
+ioetc.o:  ioetc.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h raster.h  \
+	     rasio.h iog3.h iog4.h ioobm.h  \
+	     iopbm.h iomacp.h iops.h ioandy.h  \
+	     iox.h iofbm.h ioetc.h
+
+ioandy.o:  ioandy.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h rgmem.h  \
+	     pel.h raster.h rasio.h iog3.h  \
+	     iog4.h ioobm.h iopbm.h iomacp.h  \
+	     iops.h ioandy.h iox.h iofbm.h  \
+	     ioetc.h
+
+g3code.o:  g3code.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h raster.h  \
+	     iog3.h
+
+flsun.o:  flsun.c fbm.h rgsite.h rgreal.h  \
+	     ../site/pcdos/lcsite.h ../site/pcdos/local.h rgdbg.h rgerr.h
+
+fliff.o:  fliff.c fbm.h rgsite.h rgreal.h  \
+	     ../site/pcdos/lcsite.h ../site/pcdos/local.h rgdbg.h rgerr.h
+
+flgifw.o:  flgifw.c fbm.h rgsite.h rgreal.h  \
+	     ../site/pcdos/lcsite.h ../site/pcdos/local.h rgdbg.h rgerr.h
+
+flgifr.o:  flgifr.c fbm.h rgsite.h rgreal.h  \
+	     ../site/pcdos/lcsite.h ../site/pcdos/local.h rgdbg.h rgerr.h
+
+flgife.o:  flgife.c fbm.h rgsite.h rgreal.h  \
+	     ../site/pcdos/lcsite.h ../site/pcdos/local.h rgdbg.h rgerr.h
+
+flgifc.o:  flgifc.c rgsite.h rgreal.h ../site/pcdos/lcsite.h  \
+	     ../site/pcdos/local.h rgdbg.h rgerr.h fbm.h
+
+flbyte.o:  flbyte.c fbm.h rgsite.h rgreal.h  \
+	     ../site/pcdos/lcsite.h ../site/pcdos/local.h rgdbg.h rgerr.h
+
+flalfb.o:  flalfb.c fbm.h rgsite.h rgreal.h  \
+	     ../site/pcdos/lcsite.h ../site/pcdos/local.h rgdbg.h rgerr.h
+
+libraster.lib:    rgmem.o rglist.o rginit.o rgdbg.o raster.o rasio.o  \
+	    pel.o iox.o iops.o iopbm.o ioobm.o iomacp.o  \
+	    iog4.o iog33.o iog32.o iog3.o iofbm.o ioetc.o  \
+	    ioandy.o g3code.o flsun.o fliff.o flgifw.o flgifr.o  \
+	    flgife.o flgifc.o flbyte.o flalfb.o
+	   $(RM) libraster.lib
+	   $(AR1) libraster.lib +rgmem.o+rglist.o+rginit.o+rgdbg.o+raster.o ;
+	   $(AR2) libraster.lib +rasio.o+pel.o+iox.o+iops.o+iopbm.o ,,libraster.lib;
+	   $(AR2) libraster.lib +ioobm.o+iomacp.o+iog4.o+iog33.o+iog32.o ,,libraster.lib;
+	   $(AR2) libraster.lib +iog3.o+iofbm.o+ioetc.o+ioandy.o+g3code.o ,,libraster.lib;
+	   $(AR2) libraster.lib +flsun.o+fliff.o+flgifw.o+flgifr.o+flgife.o ,,libraster.lib;
+	   $(AR2) libraster.lib +flgifc.o+flbyte.o+flalfb.o,,libraster.lib;

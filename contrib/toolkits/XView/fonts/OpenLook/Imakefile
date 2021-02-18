@@ -1,0 +1,31 @@
+#
+# Imakefile for fonts.
+#
+# This will look in the standard place for mkfontdir
+# and bdftosnf (in the X11 source tree). If you wish to get the
+# binaries from elsewhere, define MKFONTDIR to be the location of mkfontdir
+# and FC to be the location of bdftosnf.
+#
+
+#include "../../XView.config"
+
+SRCS = \
+	olcursor.bdf olglyph10.bdf olglyph12.bdf olglyph14.bdf olglyph19.bdf
+
+OBJS = \
+	olcursor.snf olglyph10.snf olglyph12.snf olglyph14.snf olglyph19.snf
+
+MakeFonts()
+
+FontTarget(olcursor)
+FontTarget(olglyph10)
+FontTarget(olglyph12)
+FontTarget(olglyph14)
+FontTarget(olglyph19)
+
+InstallFonts($(OPENLOOK_FONTINSTDIR))
+
+install:: 
+	cd $(OPENLOOK_FONTINSTDIR); chmod +w fonts.dir; $(MKFONTDIR) .
+
+depend::

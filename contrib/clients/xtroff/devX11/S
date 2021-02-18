@@ -1,0 +1,208 @@
+# STARTFONT 2.1
+# 
+#  Copyright 1984, 1987 Adobe Systems, Inc.
+#  Portions Copyright 1988 Digital Equipment Corporation
+# 
+#  Adobe is a registered trademark of Adobe Systems, Inc. Permission
+#  to use these trademarks is hereby granted only in association with the
+#  images described in this file.
+# 
+#  Permission to use, copy, modify, and distribute this software and
+#  its documentation for any purpose and without fee is hereby granted,
+#  provided that the above copyright notices appear in all copies and
+#  that both those copyright notices and this permission notice appear
+#  in supporting documentation, and that the names of Adobe Systems and
+#  Digital Equipment Corporation not be used in advertising or
+#  publicity pertaining to distribution of the software without
+#  specific, written prior permission. Adobe Systems and Digital
+#  Equipment Corporation make no representations about the suitability
+#  of this software for any purpose. It is provided "as is" without
+#  express or implied warranty.
+# 
+#  ADOBE SYSTEMS AND DIGITAL EQUIPMENT CORPORATION DISCLAIM ALL
+#  WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED
+#  WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL ADOBE
+#  SYSTEMS AND DIGITAL EQUIPMENT CORPORATION BE LIABLE FOR ANY SPECIAL,
+#  INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER
+#  RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF
+#  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+#  CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# 
+# 
+#  -Adobe-Symbol-Medium-R-Normal--24-240-75-75-P-142-ADOBE-FONTSPECIFIC
+name S
+ligatures 0
+spacewidth 50
+charset
+\|	33 0 000	1/6 em space
+\^	17 0 000	1/12 em space
+\&	00 0 000	no space
+!	67 2 041	exclam
+fa	143 2 042	universal
+#	100 2 043	numbersign
+te	110 2 044	existential
+%	167 2 045	percent
+&	156 2 046	ampersand
+cm	88 0 047	suchthat
+(	67 3 050	parenleft
+)	67 3 051	parenright
+**	100 2 052	asteriskmath
++	110 0 053	plus
+,	50 1 054	comma
+\-	110 0 055	minus
+mi	"
+.	50 0 056	period
+/	56 2 057	slash
+sl	"
+0	100 2 060	zero
+1	100 2 061	one
+2	100 2 062	two
+3	100 2 063	three
+4	100 2 064	four
+5	100 2 065	five
+6	100 2 066	six
+7	100 2 067	seven
+8	100 2 070	eight
+9	100 2 071	nine
+:	56 0 072	colon
+;	56 1 073	semicolon
+<	110 0 074	less
+=	110 0 075	equal
+>	110 0 076	greater
+?	89 2 077	question
+=~	110 0 0100	congruent
+*A	144 2 0101	Alpha
+*B	133 2 0102	Beta
+*X	144 2 0103	Chi
+*D	122 2 0104	Delta
+*E	122 2 0105	Epsilon
+*F	153 2 0106	Phi
+*G	121 2 0107	Gamma
+*Y	144 2 0110	Eta
+*I	67 2 0111	Iota
+*K	144 2 0113	Kappa
+*L	137 2 0114	Lambda
+*M	178 2 0115	Mu
+*N	144 2 0116	Nu
+*O	144 2 0117	Omicron
+*P	154 2 0120	Pi
+*H	148 2 0121	Theta
+*R	111 2 0122	Rho
+*S	118 2 0123	Sigma
+*T	122 2 0124	Tau
+*U	138 2 0125	Upsilon
+ts	88 1 0126	sigma1
+*W	154 2 0127	Omega
+*C	129 2 0130	Xi
+*Q	159 2 0131	Psi
+*Z	122 2 0132	Zeta
+[	67 3 0133	bracketleft
+tf	173 0 0134	therefore
+]	67 3 0135	bracketright
+bt	132 2 0136	perpendicular
+_	100 1 0137	underscore
+ul	"
+\_	"
+rn	100 2 0140	radicalex
+*a	126 0 0141	alpha
+*b	110 3 0142	beta
+*x	110 1 0143	chi
+*d	99 2 0144	delta
+*e	88 0 0145	epsilon
+*f	104 3 0146	phi
+*g	82 1 0147	gamma
+*y	121 1 0150	eta
+*i	66 0 0151	iota
+*k	110 0 0153	kappa
+*l	110 2 0154	lambda
+*m	115 1 0155	mu
+*n	104 0 0156	nu
+*o	110 0 0157	omicron
+*p	110 0 0160	pi
+*h	104 2 0161	theta
+*r	110 1 0162	rho
+*s	121 0 0163	sigma
+*t	88 0 0164	tau
+*u	115 0 0165	upsilon
+*w	137 0 0167	omega
+*c	99 3 0170	xi
+*q	137 1 0171	psi
+*z	99 3 0172	zeta
+{	96 3 0173	braceleft
+|	40 3 0174	bar
+or	"
+}	96 3 0175	braceright
+ap	110 0 0176	similar
+fm	49 2 0242	minute
+mt	"
+<=	110 2 0243	lessequal
+if	143 0 0245	infinity
+$D	100 3 0246	florin
+Cc	151 0 0247	club
+Cd	151 0 0250	diamond
+bs	151 0 0251	heart
+Ch	"
+Cs	151 0 0252	spade
+<>	208 0 0253	arrowboth
+<-	197 0 0254	arrowleft
+ua	121 3 0255	arrowup
+->	197 0 0256	arrowright
+da	121 3 0257	arrowdown
+de	80 2 0260	degree
++-	110 2 0261	plusminus
+sd	82 2 0262	second
+>=	110 2 0263	greaterequal
+mu	110 0 0264	multiply
+pt	143 0 0265	proportional
+pd	99 2 0266	partialdiff
+bu	92 0 0267	bullet
+di	110 0 0270	divide
+!=	110 0 0271	notequal
+==	110 0 0272	equivalence
+~=	110 0 0273	approxequal
+cr	132 2 0277	carriagereturn
+al	165 2 0300	aleph
+ax	154 2 0304	circlemultiply
+a+	154 2 0305	circleplus
+es	165 2 0306	emptyset
+ca	154 0 0307	intersection
+cu	154 0 0310	union
+sp	143 0 0311	propersuperset
+ip	143 1 0312	reflexsuperset
+!s	143 3 0313	notsubset
+sb	143 0 0314	propersubset
+ib	143 1 0315	reflexsubset
+mo	143 0 0316	element
+!m	143 3 0317	notelement
+ag	154 2 0320	angle
+gr	143 2 0321	gradient
+rg	158 2 0322	registerserif
+co	158 2 0323	copyrightserif
+tm	178 2 0324	trademarkserif
+sr	110 2 0326	radical
+m.	50 0 0327	dotmath
+no	143 0 0330	logicalnot
+an	121 0 0331	logicaland
+la	"
+lo	121 0 0332	logicalor
+io	208 0 0333	arrowdblboth
+<:	197 0 0334	arrowdblleft
+lh	"
+u=	121 2 0335	arrowdblup
+:>	197 0 0336	arrowdblright
+im	"
+rh	"
+d=	121 2 0337	arrowdbldown
+dm	99 2 0340	lozenge
+l<	66 3 0341	angleleft
+L<	"
+AL	158 2 0360	apple
+r>	66 3 0361	angleright
+R>	"
+is	55 3 0362	integral
+13	167 0 0210	fudgedproc!
+23	167 0 0211	fudgedproc!
+18	167 0 0204	fudgedproc!
+38	167 0 0205	fudgedproc!
+58	167 0 0206	fudgedproc!
+78	167 0 0207	fudgedproc!

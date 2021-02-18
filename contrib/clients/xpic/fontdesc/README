@@ -1,0 +1,14 @@
+These describe the font mappings between xpic fonts and:
+	X fonts (xpic), 
+	PostScript fonts (x2ps), 
+	Troff + PostScript fonts (x2pic)
+	TeX + PostScript fonts (x2tpic)
+
+Site dependent - if you don't have a PostScript printer, many of these
+definitions will be useless, and you may need to provide substitutes.
+
+For each of the font names in the first column in the xpic file, there
+should be a corresponding name in each of the other files so that the filter
+can map an xpic name onto some font that actually exists in the printer.
+
+Users can override these, of course.

@@ -1,0 +1,4 @@
+*hello*label:	Hello
+*goodbye*label:	Goodbye
+*hello*accelerators: #augment\n\
+	<KeyPress>q:	set() notify()

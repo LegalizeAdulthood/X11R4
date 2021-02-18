@@ -1,0 +1,17 @@
+--
+--
+--  This package contains Ada type definitions which correspond to
+--  C language type representations.
+--
+--
+
+with system;
+
+package c_types is
+
+  subtype c_handle is system.address;
+--  type c_string is access string(1..256);
+
+  type int_ptr is access integer;
+
+end c_types;

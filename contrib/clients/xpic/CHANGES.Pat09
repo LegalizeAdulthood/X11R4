@@ -1,0 +1,5 @@
+Fixes 
+	- a bug in Minibuf 
+
+	- so the button boxes work as intended in the new fixed Form
+	widget (Xhp.patch.works.ptch3)

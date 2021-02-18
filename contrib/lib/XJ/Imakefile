@@ -1,0 +1,14 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#include "./XJImake.defs"
+
+SUBDIRS= include lib frontend clients
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+MakeDirectories(install,$(INCDIR))
+MakeDirectories(install,$(BINDIR))
+MakeDirectories(install,$(USRLIBDIR))
+MakeDirectories(install,$(WNNBINDIR))

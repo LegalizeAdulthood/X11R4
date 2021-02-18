@@ -1,0 +1,22 @@
+*** charproc.c.orig	Thu May 18 19:58:00 1989
+--- charproc.c	Fri Oct 27 13:45:47 1989
+***************
+*** 164,169 ****
+--- 164,170 ----
+  extern void HandleLeaveWindow();
+  extern void HandleFocusChange();
+         void HandleKeymapChange();
++ extern void HandleMacroString();
+  extern void HandleModeMenu();
+  extern void HandleInsertSelection();
+  extern void HandleSelectStart();
+***************
+*** 210,215 ****
+--- 211,217 ----
+      { "insert",		  HandleKeyPressed },
+      { "insert-selection", HandleInsertSelection },
+      { "keymap", 	  HandleKeymapChange },
++     { "macro-string",	  HandleMacroString },
+      { "mode-menu",	  HandleModeMenu },
+      { "secure",		  HandleSecure },
+      { "select-start",	  HandleSelectStart },

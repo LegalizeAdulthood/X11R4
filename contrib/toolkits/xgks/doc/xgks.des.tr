@@ -1,0 +1,262 @@
+.sz 11
+.\" redefine superscript strings so that refer tags look like [this]
+.ds [. " [
+.ds .] ]
+.\" redefine the tbl TS and TE macros to fix spacing problem caused by changing
+.\" the $r and $R values above.  Also make table font smaller.
+.he 'XGKS Design Note''\*(td'
+.fo ''- % -''
+.hy 0
+.ce 10
+XGKS - An Implementation of GKS on X 11
+Design Note #1
+\*(td
+Gregory S. Rogers
+.ce 0
+.ls 1
+.sp
+.pp
+The XGKS library will have to maintain all GKS state information; this includes
+the GKS state list, segment store, and all workstation state lists.
+So we should have a C structure for each of these lists.
+The flavor of the implementation should be to create structures in a device
+independent (and X independent) manner and then process these structures,
+when necessary, to generate output.  This is somewhat like the PHIGS idea
+of building a hierarchy and then posting it.  However, the GKS structure
+is the segment list and posting is implicit rather than explicit.
+.pp
+Several interesting issues must be dealt with; most have to do with running
+GKS on a workstation where the capabilities are not static.
+.in +0.5i
+.sp
+\(bu What does GKS do about window size changes?  Scale or Clip?
+.sp
+\(bu How is the color table handled in X and what is the impact on GKS?
+.sp
+\(bu Should the workstation description table and associated inquiries describe
+the full capabilities of the X workstation or just those resources allocated
+to the X window that represents a GKS workstation?
+.sp
+\(bu How should choice menus present themselves?  Staticly visible menus or pop-ups
+or both?
+.sp
+\(bu Should XGKS use the X raster text fonts or the vector fonts that we have?
+Using the raster fonts complicates things because the fonts cannot be scaled
+or rotated.
+However, using the X fonts would make the XGKS applications more X compatible.
+.sp
+\(bu How might XGKS be implemented so that it can be extended?
+For example, how might a new form of valuator be implemented by the application
+programmer?
+.sp
+\(bu How closely should the XGKS C binding adhere to the proposed C binding for GKS?
+.sp
+\(bu How are patterns and cell arrays specified? 
+Should we try to use the GKS specification in its
+full generality or should we use an X view of non-transformable patterns?
+.sp
+.pp
+The GKS structure for the GKS state list must maintain the following information:
+.sp
+.in +0.5i
+\(bu GKS state (open, >= 1 workstation open, >=1 workstation active, Segment open...).
+.sp
+\(bu Segment list	- linked list of segment structures ordered by priority;
+order of segments of equal priority is unspecified.
+.sp
+\(bu Current open segment - segment id of current open segment.  This segment is in
+its proper place in the segment list.  This should probably be a
+pointer to the segment structure rather than the id to avoid the need
+to search for the current segment.
+.sp
+\(bu Current open segment append point - pointer to the place where new commands
+are to be appended on the current segment.
+.sp
+\(bu Non-segment primitives - this is a list of primitives that are on the screen
+but where generated outside of a segment.  This list should be emptied
+each time that GKS performs a clear display or implicit
+regeneration.  The open issue is whether an implicit regeneration
+should occur whenever X causes the window to be redrawn or only when
+the redraw is within the GKS framework (e.g. workstation transformation change).
+Implementation question: should this really be just another undetectable
+segment that the user cannot do anything with?
+.sp
+\(bu Non-segment primitive append point - where the next primitive is to be appended
+to the list.
+.sp
+\(bu Workstation list - linked list of open workstations (order is unspecified).
+.sp
+\(bu Current attributes - output primitive attributes, ASFs, bundle indexes, etc..
+.sp
+\(bu Transformations - array or list of normalization transformations
+(Window, viewport, and matrix).
+.sp
+\(bu Event Input Queue - linked list of events from the workstations. The first
+item in the list is the head of the queue.  Items are appended to the end
+of the list.
+.sp
+\(bu Event Queue append point - pointer to place where next event queue record
+is to be appended.
+.sp
+\(bu Other things I can't think of now.
+.in -0.5i
+.sp
+.pp
+The Segment list is a linked list of segment structures each of which contains
+the information listed below.
+The list is ordered by priority and unordered within priority buckets.
+The first segment is the list is the lowest priority.
+Thus, the redisplay can simply traverse this list.
+Segments are device independent and stored with coordinates in NDC space.
+The Segment list is essentially the WISS workstation however, the WISS
+workstation id must be present in the segment to keep it from being deleted
+when no other workstation has reference to it.
+.in +0.5i
+.sp
+\(bu Next segment - pointer to next segment structure or NULL if this is the last
+segment in the list.
+.sp
+\(bu Workstation list - this list contains the workstation identifier for each
+workstation that this segment is on.  This list could be implemented as a
+simple array of some reasonable size, say 20.
+.sp
+\(bu Segment attributes - visible, detectable, transformation, etc..
+.sp
+\(bu Bounding box - untransformed smallest bounding box that encloses all
+untransformed primitives. This is for PICK hit detection.
+.sp
+\(bu Primitive list - linked list of primitive structures stored in the order drawn;
+thus new primitives are appended to the end of this list.
+.sp
+\(bu Primitive list append point - pointer to last primitive in the list.  This
+avoids the need to find the end of the list each time something is appended.
+.in -0.5i
+.sp
+.pp
+The primitive list is a linked list of primitive structures.  There is a
+primitive structure for each of the output primitives 
+and anything else that goes into a segment.
+Each primitive structure has the following form:
+.in +0.5i
+.sp
+\(bu Next item - pointer to the next item in the list or NULL.
+.sp
+\(bu Item type - an enum that distinguishes between the possible types
+(e.g. PLINE, PMARK, etc.)etc.).
+.sp
+\(bu Num points - number of coordinate points in this item.
+.sp
+\(bu Points - the list of coordinate points (array of NDC points).
+.sp
+\(bu Current attributes - e.g. current color, line width, style at the time this
+item was created.
+.sp
+\(bu Bundle table index - bundle table entry to use if ASFs are BUNDLED.
+.sp
+\(bu ASFs - aspect source flags that are relevant to the is type of object.
+.sp
+NOTE: this information is highly dependent on the type of the primitive thus,
+there should be routines to build, destroy, display, META write, and PICK
+detect each type of primitive structure.
+.in -0.5i
+.sp
+.pp
+The workstation state list is a linked list of workstation structures with
+no ordering specified.
+Each item in this list completely specifies the state of a single workstation
+(except for segments).
+The information stored in each workstation structure is:
+.in +0.5i
+.sp
+\(bu Next workstation - pointer to next workstation in list.
+.sp
+\(bu Workstation id - workstation identifier specified by the appliation.
+.sp
+\(bu Connection id - I'm not sure what this should be in windowed environment.
+Should this be a window id, if so is the user responsible for creating the
+window?
+Just how much windowing should the gks programmer be aware of?
+Probably this should be the X DISPLAY environment variable (i.e. hostname and
+server instance) where a new window is to be created.
+.sp
+\(bu Workstation type - probably just X, META, or WISS.
+Should we adopt a philosophy that all workstations are X workstations
+(other than META and WISS) and hardcopy via pic or plotters or whatever is done
+by an external program that interprets the META file?
+.sp
+\(bu Active flag - is the workstation active or not.
+.sp
+\(bu Workstation transformation - current and pending window, viewport, and matrix.
+.sp
+\(bu Bundle tables - bundle tables for each output primitive.
+Implementation question: should these be fixed size tables or lists of bundle
+entries?
+.sp
+\(bu Logical input device list - list of logical input device structures.  Some of
+these devices may be on the screen.
+.sp
+\(bu X information - X window id and other information.
+.in -0.5i
+.sp
+.pp
+The list of logical input devices contains one structure for each instance
+of a logical input device.
+I don't believe there is any reason to limit the number of input devices of
+a class.
+This list is somewhat like the segment list; that is, the item structures
+are very dependent on the type of input device.
+There is no ordering implied on this list.
+Each structure has the following form:
+.in +0.5i
+.sp
+\(bu Next item - next input device structure or null.
+.sp
+\(bu Item class - the type of logical device (e.g. LOCATOR, STROKE, etc.).
+.sp
+\(bu Echo area - the echo area for this device in DC coordinates.
+.sp
+\(bu Input mode - the input mode (REQUEST, SAMPLE, EVENT).
+.sp
+\(bu Prompt type - the type of prompt (e.g. locator cross hair or rubberband).
+.sp
+\(bu Echo mode - echo of prompt is ON (visible) or OFF (invisible).  It's not quite
+clear what an invisible prompt on some input devices means.
+.sp
+\(bu Initial value - initial values for the device; very dependent on the class.
+.sp
+\(bu Current value - current reading of the input device.
+.sp
+\(bu X information - any X information that is necessary.
+.in -0.5i
+.sp
+.uh "Binding"
+.pp
+Since we are essentially rewriting GKS we should consider what language
+binding to use.
+The two options are: 1) use the existing UIGKS binding,
+and 2) convert to the proposed standard binding.
+The advantages of option one are more reuse of UIGKS implementation code and
+applications do not need to be modified to work with the new binding.
+However, we will have to change any UIGKS code that is reused since each UIGKS
+function currently has code to execute remote procedure calls.
+Option two is very desirable since the binding is standard (or at least proposed).
+By using a standard binding more applications will be usable without modification
+and we can use the standards documents as documentation.
+.sp
+.uh "Development Plans"
+.pp
+At this point, development should continue in two directions.
+First, the structures outlined above must be fleshed out with all required GKS
+information and implemented as C struct definitions.
+Once these structures are defined, routines can be written to manipulate these
+lists and the application program interface can be designed.
+The second direction is to gain experience programming X 11.
+This should begin with a study of the X 11 specification and culminate
+with the writing of routines that implement the GKS output primitives and
+input devices.
+.pp
+Definition of the structures should take approximately one week with two
+weeks to implement a simple (i.e. without inquiries) prototype of XGKS.
+The study of X should take approximately one week.
+Two or three weeks may be needed to implement the GKS primitive structure
+to X mapping along with some form (maybe just request) of input.

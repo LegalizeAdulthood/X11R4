@@ -1,0 +1,1719 @@
+%!
+%%Creator: root@bay.csri (Operator)
+%%Title: van.xpic (xpic)
+%%CreationDate: Wed May  4 23:53:47 1988
+%%Pages: 1
+%%DocumentFonts: (atend)
+%%BoundingBox: 96.3 43.2 612 830.7
+%	(in inches) at 1.3375 0.6, width 7.1625, height 10.9375
+%%EndComments
+% Prolog for xpic to PostScript converter
+% Author: Mark Moraes
+% $Header: x2ps.pro,v 1.2 88/03/19 16:50:09 moraes Exp 
+%	%d D - change style SOLID, DOTTED, SHORT-DASH, LONG-DASH, DOT-DASH
+%	%d F - change font ROMAN, BOLD, ITALIC, SPECIAL
+%	%d S - change size (font size in points)
+%	(%s) rj %d t - text right just. (%d is TOPLINE, MIDLINE, BOTLINE)
+%	(%s) lj %d t - text left just. (%d is TOPLINE, MIDLINE, BOTLINE)
+%	(%s) ce %d t - text centered (%d is TOPLINE, MIDLINE, BOTLINE)
+%	%d %d l - lineto
+%	%d %d m - moveto
+%	%d %d s - spline segment
+%	x - flush line, spline
+%	<wid> <ht> <x> <y> b - box
+%	<wid> <ht> <x> <y> e - ellipse
+%	%d ss - setscale
+%	%d W - change linewidth
+save 50 dict begin /xpic exch def
+/StartXpic {newpath 0 0 moveto [] 0 setdash 0 setgray 1 setlinecap} def
+% Set defaults
+/fontname /Times-Roman def
+/ptsize 12 def
+% xpic has 4 fonts R, B, I, S
+/nfonts 4 def
+/fonts /Times-Roman /Times-Bold /Times-Italic /Symbol nfonts array astore def
+% halign has the values for MIDLINE, TOPLINE, BOTLINE
+/halign 3 array def
+/s {rcurveto} def
+/x {stroke} def
+/l {lineto} def
+/m {moveto} def
+/b {
+	/ury exch def /urx exch def /lly exch def /llx exch def 
+	llx lly moveto urx lly lineto urx ury lineto 
+	llx ury lineto llx lly lineto stroke
+} def
+/mtrx matrix def
+/e {
+	/yc exch def /xc exch def /yrad exch def /xrad exch def
+	xc xrad add yc moveto
+	/savematrix mtrx currentmatrix def
+	xc yc translate
+	xrad yrad scale
+	0 0 1 0 360 arc
+	savematrix setmatrix stroke
+} def
+% The next three take the text string, and moveto the right horiz. position
+% leaving the string on the stack.
+/lj {} def
+/rj {dup stringwidth pop neg 0 rmoveto} def
+/ce {dup stringwidth pop 2 div neg 0 rmoveto} def
+% And this is invoked after one of the three above, and 
+% computes the vert. pos, and then displays the string.
+/t {halign exch get 0 exch rmoveto show newpath} def
+% Store an array of patterns in /styles - a pattern is an array consisting 
+% of an array and an offset. Corresp to xpic patterns
+% solid, dotted, short-dashed, long-dashed, dot-dashed
+/styles [ [] 0 ] [ [1 3] 0 ] [ [4 4] 0 ] [ [8 4] 0 ] [ [1 4 4 4] 0 ]
+	5 array astore def
+% change style to arg.
+/D {stroke styles exch get aload pop setdash newpath} def
+/W {stroke setlinewidth newpath} def
+% fontbox takes a fontname of the stack, and returns an array
+% containing the values of the bottom line of the bounding box, the
+% mid line of the bounding box, and the top line of the bounding box
+% of that font, taken from the baseline, scaled to a font of size 1
+/fontbox {
+	findfont dup /FontMatrix get /fm exch def /FontBBox get aload pop
+	/ytop exch def pop /ybot exch def pop
+	/ymid ytop ybot sub 2 div def
+	0 ybot fm dtransform exch pop % botline
+	dup neg exch % midline - this works better than (ytop-ybot)/2!
+	0 ytop fm dtransform exch pop exch %topline
+	% now in the order midline, topline, botline.
+	3 array astore
+} def
+% fontboxes stores the fontbox of each of the fontnames in the 'fonts'
+% array
+/fontboxes nfonts array def
+0 1 nfonts 1 sub {
+	fontboxes exch dup fonts exch get fontbox put
+} for
+% select font
+/F {
+	dup fonts exch get /fontname exch def fontboxes exch get
+	/thisfontbox exch def SF 
+} def
+% set point size
+/S {/ptsize exch def SF} def
+% actually set font
+/SF {
+	fontname findfont ptsize curscale div scalefont setfont
+	thisfontbox aload pop
+	1 1 3 {
+		pop ptsize mul curscale div neg 3 1 roll
+	} for
+	halign astore pop
+} def
+% sets the scale to 72 / n, where n is on the stack, and stores the value
+% in curscale for font scaling
+/curscale 1 def
+/ss {/curscale exch 72 exch div dup dup scale def} def
+/land {8.5 72 mul curscale div 0 translate 90 rotate} def
+StartXpic
+%%EndProlog
+land
+1 1 scale
+80 ss
+0 F
+14 S
+495 77 m
+(ODU - Operand Decode Unit) ce 1 t
+10 S
+163 85 m
+(ind2) ce 1 t
+331 89 m
+(ind1) ce 1 t
+79 125 m
+(ind2.set) ce 1 t
+0 D
+163 177 m
+163 161 l
+x
+155 161 m
+171 161 l
+x
+331 177 m
+331 161 l
+323 161 l
+339 161 l
+x
+323 161 m
+331 145 l
+339 161 l
+x
+155 161 m
+163 145 l
+171 161 l
+x
+3 3 162 141 e
+3 3 331 145 e
+331 141 m
+331 129 l
+0 D
+335 138 m
+331 129 l
+328 138 l
+0 D
+331 129 m
+x
+163 137 m
+163 125 l
+0 D
+167 134 m
+163 125 l
+160 134 l
+0 D
+163 125 m
+x
+311 129 m
+355 129 l
+347 113 l
+315 113 l
+307 129 l
+x
+143 121 m
+187 121 l
+179 105 l
+151 105 l
+155 105 l
+147 105 l
+139 121 l
+x
+331 113 m
+331 93 l
+0 D
+335 102 m
+331 93 l
+328 102 l
+0 D
+331 93 m
+x
+163 105 m
+163 85 l
+0 D
+167 94 m
+163 85 l
+160 94 l
+0 D
+163 85 m
+x
+111 137 m
+151 137 l
+151 121 l
+0 D
+155 130 m
+151 121 l
+148 130 l
+0 D
+151 121 m
+x
+291 145 m
+315 145 l
+315 129 l
+0 D
+319 138 m
+315 129 l
+312 138 l
+0 D
+315 129 m
+x
+291 121 m
+311 121 l
+0 D
+303 125 m
+311 121 l
+303 118 l
+0 D
+311 121 m
+x
+107 113 m
+143 113 l
+0 D
+135 117 m
+143 113 l
+135 110 l
+0 D
+143 113 m
+x
+75 145 m
+(ind2.val) ce 1 t
+267 129 m
+(ind1.set) ce 1 t
+263 153 m
+(ind1.val) ce 1 t
+355 185 m
+(QA\(7\)) ce 1 t
+139 185 m
+(QA\(6\)) ce 1 t
+319 261 m
+0 0 0 1 0 4 s
+0 2 1 5 4 8 s
+2 2 5 2 8 0 s
+2 -2 4 -6 4 -12 s
+x
+319 261 m
+0 0 5 0 16 0 s
+x
+2 2 299 346 e
+287 381 m
+291 381 l
+0 D
+283 385 m
+291 381 l
+283 378 l
+0 D
+291 381 m
+x
+283 337 m
+291 337 l
+0 D
+283 341 m
+291 337 l
+283 334 l
+0 D
+291 337 m
+x
+315 401 m
+339 401 l
+x
+419 445 m
+315 445 l
+315 377 l
+335 377 l
+x
+283 381 m
+303 381 l
+303 393 l
+335 393 l
+x
+287 381 m
+287 345 l
+299 345 l
+x
+287 337 m
+303 337 l
+x
+319 341 m
+327 341 l
+327 369 l
+335 369 l
+x
+351 373 m
+375 373 l
+375 349 l
+415 349 l
+0 D
+407 353 m
+415 349 l
+407 346 l
+0 D
+415 349 m
+x
+351 397 m
+383 397 l
+383 365 l
+415 365 l
+0 D
+407 369 m
+415 365 l
+407 362 l
+0 D
+415 365 m
+x
+415 429 m
+391 429 l
+391 381 l
+415 381 l
+0 D
+407 385 m
+415 381 l
+407 378 l
+0 D
+415 381 m
+x
+415 413 m
+399 413 l
+399 333 l
+415 333 l
+0 D
+407 337 m
+415 333 l
+407 330 l
+0 D
+415 333 m
+x
+415 389 495 325 b
+12 S
+447 341 m
+(IBASE) ce 1 t
+471 357 m
+(ROM) ce 0 t
+471 373 m
+(4X5bit) ce 0 t
+431 349 m
+(SP) ce 0 t
+431 365 m
+(FP) ce 0 t
+431 381 m
+(PC) ce 0 t
+127 389 m
+0 0 0 1 0 4 s
+0 2 1 5 4 8 s
+2 2 5 2 8 0 s
+2 -2 4 -6 4 -12 s
+x
+127 389 m
+0 0 5 0 16 0 s
+x
+335 405 m
+0 0 1 0 4 0 s
+2 0 5 -1 8 -4 s
+2 -2 2 -5 0 -8 s
+-2 -2 -6 -4 -12 -4 s
+x
+423 413 m
+415 413 l
+0 D
+424 410 m
+415 413 l
+424 417 l
+0 D
+415 413 m
+x
+423 429 m
+415 429 l
+0 D
+424 426 m
+415 429 l
+424 433 l
+0 D
+415 429 m
+x
+423 445 m
+415 445 l
+0 D
+424 442 m
+415 445 l
+424 449 l
+0 D
+415 445 m
+x
+803 405 m
+795 401 l
+x
+643 497 m
+639 489 l
+x
+643 345 m
+635 337 l
+x
+643 433 m
+635 425 l
+x
+787 457 m
+799 465 l
+x
+791 461 m
+795 461 l
+x
+803 453 m
+811 461 l
+x
+10 S
+747 521 m
+(\(FP/SP\)) ce 1 t
+12 S
+451 437 m
+(PC.ena) ce 1 t
+455 453 m
+(op2.ena) ce 1 t
+691 333 m
+695 333 l
+0 D
+687 337 m
+695 333 l
+687 330 l
+0 D
+695 333 m
+x
+10 S
+683 345 m
+(bcc) ce 1 t
+815 453 m
+(5) ce 1 t
+783 453 m
+(5) ce 1 t
+687 465 m
+695 465 l
+x
+679 517 m
+679 509 l
+0 D
+683 518 m
+679 509 l
+676 518 l
+0 D
+679 509 m
+x
+707 421 m
+707 453 l
+707 453 l
+x
+855 365 m
+847 365 l
+0 D
+856 362 m
+847 365 l
+856 369 l
+0 D
+847 365 m
+x
+607 525 m
+631 525 l
+x
+607 525 m
+0 0 0 -1 0 -4 s
+0 -2 1 -5 4 -8 s
+2 -2 5 -4 8 -4 s
+2 0 5 1 8 4 s
+2 2 4 6 4 12 s
+x
+615 533 m
+615 525 l
+0 D
+619 534 m
+615 525 l
+612 534 l
+0 D
+615 525 m
+x
+851 525 m
+843 525 l
+0 D
+852 522 m
+843 525 l
+852 529 l
+0 D
+843 525 m
+x
+831 333 m
+823 317 l
+x
+807 477 m
+807 429 l
+0 D
+811 438 m
+807 429 l
+804 438 l
+0 D
+807 429 m
+x
+12 S
+807 493 m
+(ROM) ce 1 t
+735 365 m
+743 365 l
+0 D
+735 369 m
+743 365 l
+735 362 l
+0 D
+743 365 m
+x
+755 365 m
+743 365 l
+x
+10 S
+719 365 m
+(\(Bf1\)) ce 1 t
+871 381 m
+(Bf1.ena) ce 1 t
+719 381 m
+(QA\(7\)) ce 1 t
+755 381 m
+755 365 l
+x
+763 365 m
+763 381 l
+x
+847 365 m
+763 365 l
+x
+751 381 m
+0 0 0 1 0 4 s
+0 2 1 6 4 10 s
+2 4 5 4 8 0 s
+2 -4 4 -8 4 -14 s
+x
+751 381 m
+767 381 l
+x
+759 421 m
+759 397 l
+759 397 l
+x
+771 420 m
+782 421 l
+x
+711 557 m
+711 461 l
+727 461 l
+727 405 l
+695 405 l
+695 349 l
+671 349 l
+671 333 l
+695 333 l
+x
+747 437 m
+(B1.sel) ce 1 t
+687 469 m
+687 453 l
+x
+775 421 m
+775 421 l
+x
+12 S
+775 509 m
+(FP) ce 1 t
+759 501 m
+751 501 l
+727 501 l
+727 565 l
+x
+615 541 m
+615 525 l
+x
+10 S
+583 557 m
+(Call.ena) ce 1 t
+615 541 m
+591 541 l
+x
+619 493 m
+623 493 l
+x
+619 509 m
+619 493 l
+x
+0 0 707 421 e
+0 0 708 421 e
+0 0 708 422 e
+0 0 708 422 e
+3 3 688 456 e
+839 541 m
+623 541 l
+x
+12 S
+807 509 m
+(2X5bit) ce 1 t
+10 S
+727 485 m
+(5) ce 1 t
+707 457 m
+691 457 l
+x
+707 457 m
+707 453 l
+707 453 l
+x
+775 421 m
+687 421 l
+687 397 l
+655 397 l
+655 405 l
+x
+847 541 m
+839 541 l
+0 D
+848 538 m
+839 541 l
+848 545 l
+0 D
+839 541 m
+x
+847 525 m
+695 525 l
+695 461 l
+x
+711 565 m
+711 557 l
+0 D
+715 566 m
+711 557 l
+708 566 l
+0 D
+711 557 m
+x
+671 461 m
+655 461 l
+655 469 l
+0 D
+652 461 m
+655 469 l
+659 461 l
+0 D
+655 469 m
+x
+687 469 m
+0 0 -1 0 -4 0 s
+-2 0 -5 -1 -8 -4 s
+-2 -2 -2 -5 0 -8 s
+2 -2 6 -4 12 -4 s
+x
+751 485 m
+747 485 l
+x
+2 2 744 484 e
+735 477 m
+743 485 l
+x
+735 489 m
+743 485 l
+x
+735 489 m
+735 477 l
+x
+12 S
+596 157 m
+(rti.ena) ce 1 t
+195 589 m
+203 593 l
+x
+315 589 m
+323 597 l
+x
+655 397 m
+655 405 l
+0 D
+652 397 m
+655 405 l
+659 397 l
+0 D
+655 405 m
+x
+783 413 m
+775 429 l
+x
+623 541 m
+623 525 l
+x
+871 533 m
+(opl.ena) ce 1 t
+871 549 m
+(CC.ena) ce 1 t
+10 S
+783 61 m
+(SEB=SignExtender+Bufferr output) ce 1 t
+12 S
+599 181 m
+(sop.ena) ce 1 t
+863 157 m
+(pull.ena) ce 1 t
+695 133 m
+647 181 l
+x
+775 133 m
+823 181 l
+x
+695 133 m
+775 133 l
+x
+791 197 m
+791 181 l
+0 D
+795 190 m
+791 181 l
+788 190 l
+0 D
+791 181 m
+x
+759 197 m
+759 181 l
+0 D
+763 190 m
+759 181 l
+756 190 l
+0 D
+759 181 m
+x
+727 197 m
+727 181 l
+0 D
+731 190 m
+727 181 l
+724 190 l
+0 D
+727 181 m
+x
+679 197 m
+679 181 l
+0 D
+683 190 m
+679 181 l
+676 190 l
+0 D
+679 181 m
+x
+647 181 m
+823 181 l
+x
+679 181 m
+(sop) ce 1 t
+727 181 m
+(rti) ce 1 t
+759 181 m
+(pull) ce 1 t
+791 181 m
+(push) ce 1 t
+679 213 m
+(QA\(7:6\)) ce 1 t
+727 213 m
+('+1') ce 1 t
+759 213 m
+('0') ce 1 t
+791 213 m
+('-2') ce 1 t
+623 173 m
+655 173 l
+0 D
+647 177 m
+655 173 l
+647 170 l
+0 D
+655 173 m
+x
+623 149 m
+679 149 l
+0 D
+671 153 m
+679 149 l
+671 146 l
+0 D
+679 149 m
+x
+839 173 m
+815 173 l
+0 D
+824 170 m
+815 173 l
+824 177 l
+0 D
+815 173 m
+x
+839 149 m
+791 149 l
+0 D
+800 146 m
+791 149 l
+800 153 l
+0 D
+791 149 m
+x
+719 581 m
+719 573 l
+0 D
+723 582 m
+719 573 l
+716 582 l
+0 D
+719 573 m
+x
+719 581 m
+719 565 l
+x
+719 573 m
+719 469 l
+791 469 l
+791 429 l
+0 D
+795 438 m
+791 429 l
+788 438 l
+0 D
+791 429 m
+x
+727 573 m
+727 565 l
+0 D
+731 574 m
+727 565 l
+724 574 l
+0 D
+727 565 m
+x
+735 485 m
+727 485 l
+727 501 l
+x
+10 S
+671 517 m
+(4) ce 1 t
+663 533 m
+(QA\(11:8\)) ce 1 t
+759 485 m
+751 485 l
+x
+751 581 m
+(QA\(12\)) ce 1 t
+12 S
+775 493 m
+(SP) ce 1 t
+759 509 831 477 b
+815 333 m
+(F) ce 1 t
+791 317 m
+823 317 l
+x
+839 541 m
+839 325 l
+831 325 l
+0 D
+840 322 m
+831 325 l
+840 329 l
+0 D
+831 325 m
+x
+10 S
+679 445 m
+('0') ce 1 t
+679 429 m
+663 429 l
+0 D
+672 426 m
+663 429 l
+672 433 l
+0 D
+663 429 m
+x
+663 501 m
+679 501 l
+679 517 l
+x
+639 285 m
+(0ffset1\(5\)) ce 1 t
+631 373 m
+(5) ce 1 t
+639 357 m
+(5) ce 1 t
+639 445 m
+(5) ce 1 t
+639 509 m
+(4) ce 1 t
+655 381 m
+655 365 l
+0 D
+659 374 m
+655 365 l
+652 374 l
+0 D
+655 365 m
+x
+623 493 m
+623 293 l
+0 D
+627 302 m
+623 293 l
+620 302 l
+0 D
+623 293 m
+x
+647 341 m
+623 341 l
+0 D
+632 338 m
+623 341 l
+632 345 l
+0 D
+623 341 m
+x
+647 429 m
+623 429 l
+0 D
+632 426 m
+623 429 l
+632 433 l
+0 D
+623 429 m
+x
+647 493 m
+623 493 l
+0 D
+632 490 m
+623 493 l
+632 497 l
+0 D
+623 493 m
+x
+743 133 m
+(2) ce 1 t
+191 621 m
+(QA <17:0>) ce 1 t
+295 621 m
+(QB <17:0>) ce 1 t
+12 S
+463 421 m
+(JBASE.ena) ce 1 t
+263 229 m
+(\(Bf2\)) ce 1 t
+263 253 m
+(QA\(6\)) ce 1 t
+271 285 m
+(B2.sel) ce 1 t
+263 357 m
+(QA\(4\)) ce 1 t
+263 373 m
+(\(FP\)) ce 1 t
+263 389 m
+(QA\(5\)) ce 1 t
+39 381 m
+(QA\(3\)) ce 1 t
+39 365 m
+(QA\(4\)) ce 1 t
+39 349 m
+(QA\(5\)) ce 1 t
+175 573 m
+(10) ce 1 t
+199 605 m
+199 573 l
+x
+231 573 m
+(13) ce 1 t
+279 573 m
+(7) ce 1 t
+327 573 m
+55 573 l
+55 437 l
+x
+167 549 m
+(SEB) ce 0 t
+151 557 183 541 b
+175 533 m
+(30) ce 1 t
+167 541 m
+167 509 l
+0 D
+171 518 m
+167 509 l
+164 518 l
+0 D
+167 509 m
+x
+151 429 m
+(30) ce 1 t
+143 437 m
+167 437 l
+0 D
+159 441 m
+167 437 l
+159 434 l
+0 D
+167 437 m
+x
+135 549 m
+151 549 l
+0 D
+143 553 m
+151 549 l
+143 546 l
+0 D
+151 549 m
+x
+135 421 m
+(B) ce 0 t
+135 437 m
+(E) ce 0 t
+127 461 143 413 b
+135 453 m
+(S) ce 0 t
+47 333 m
+(\(FP\)) ce 1 t
+319 573 m
+319 557 l
+0 D
+323 566 m
+319 557 l
+316 566 l
+0 D
+319 557 m
+x
+327 573 m
+(12) ce 1 t
+415 517 m
+(offset<17:0>) ce 1 t
+335 597 m
+(18) ce 1 t
+319 605 m
+319 581 l
+367 581 l
+367 557 l
+x
+359 573 m
+(18) ce 1 t
+215 597 m
+(18) ce 1 t
+151 325 m
+(30) ce 1 t
+183 285 m
+(offset2\(30\)) ce 1 t
+183 301 m
+(30) ce 1 t
+295 549 m
+303 549 l
+0 D
+295 553 m
+303 549 l
+295 546 l
+0 D
+303 549 m
+x
+247 549 m
+255 549 l
+0 D
+247 553 m
+255 549 l
+247 546 l
+0 D
+255 549 m
+x
+191 549 m
+199 549 l
+0 D
+191 553 m
+199 549 l
+191 546 l
+0 D
+199 549 m
+x
+375 533 m
+(18) ce 1 t
+327 533 m
+(12) ce 1 t
+223 533 m
+(30) ce 1 t
+279 533 m
+(12) ce 1 t
+423 557 m
+(36bit.ena) ce 1 t
+399 549 m
+383 549 l
+0 D
+392 546 m
+383 549 l
+392 553 l
+0 D
+383 549 m
+x
+143 333 m
+167 333 l
+0 D
+159 337 m
+167 333 l
+159 330 l
+0 D
+167 333 m
+x
+367 509 m
+167 509 l
+167 285 l
+0 D
+171 294 m
+167 285 l
+164 294 l
+0 D
+167 285 m
+x
+367 541 m
+367 509 l
+0 D
+371 518 m
+367 509 l
+364 518 l
+0 D
+367 509 m
+x
+319 541 m
+319 509 l
+0 D
+323 518 m
+319 509 l
+316 518 l
+0 D
+319 509 m
+x
+271 541 m
+271 509 l
+0 D
+275 518 m
+271 509 l
+268 518 l
+0 D
+271 509 m
+x
+215 541 m
+215 509 l
+0 D
+219 518 m
+215 509 l
+212 518 l
+0 D
+215 509 m
+x
+271 573 m
+271 557 l
+0 D
+275 566 m
+271 557 l
+268 566 l
+0 D
+271 557 m
+x
+215 573 m
+215 557 l
+0 D
+219 566 m
+215 557 l
+212 566 l
+0 D
+215 557 m
+x
+167 573 m
+167 557 l
+0 D
+171 566 m
+167 557 l
+164 566 l
+0 D
+167 557 m
+x
+247 621 m
+247 605 l
+x
+663 389 m
+(CC.ena) ce 1 t
+647 453 663 405 b
+647 517 663 469 b
+823 293 m
+(Breq1\(5\)) ce 1 t
+655 349 m
+(U) ce 1 t
+655 365 m
+(B) ce 1 t
+655 421 m
+(F) ce 1 t
+655 437 m
+(U) ce 1 t
+655 453 m
+(B) ce 1 t
+655 485 m
+(B) ce 1 t
+655 501 m
+(E) ce 1 t
+655 517 m
+(S) ce 1 t
+127 357 143 309 b
+135 317 m
+(F) ce 0 t
+135 333 m
+(U) ce 0 t
+135 349 m
+(B) ce 0 t
+295 517 m
+(off.30) ce 0 t
+247 517 m
+(off.25) ce 0 t
+191 517 m
+(off.13) ce 0 t
+303 549 m
+295 549 l
+295 525 l
+x
+255 549 m
+247 549 l
+247 525 l
+x
+199 549 m
+191 549 l
+191 549 l
+191 525 l
+x
+351 557 383 541 b
+303 557 335 541 b
+255 557 287 541 b
+199 557 231 541 b
+199 557 199 549 b
+143 621 343 605 b
+319 549 m
+(SEB) ce 0 t
+367 549 m
+(BUF) ce 0 t
+271 549 m
+(SEB) ce 0 t
+215 549 m
+(SEB) ce 0 t
+823 93 m
+(before SP is updated\12) ce 1 t
+823 109 m
+(+1 will be added\12) ce 1 t
+743 109 m
+(sop\(2\)) ce 1 t
+647 365 663 317 b
+695 341 767 309 b
+727 325 m
+(8X8bits) ce 1 t
+727 341 m
+(BCC ROM) ce 1 t
+95 453 m
+(QA<3:0>) ce 1 t
+863 197 m
+(push.ena) ce 1 t
+823 429 m
+815 413 l
+x
+815 413 m
+783 413 l
+x
+775 429 m
+823 429 l
+x
+791 429 m
+(1) ce 1 t
+807 429 m
+(0) ce 1 t
+799 413 m
+799 389 l
+815 389 l
+815 333 l
+0 D
+819 342 m
+815 333 l
+812 342 l
+0 D
+815 333 m
+x
+783 333 m
+831 333 l
+x
+799 333 m
+(T) ce 1 t
+783 333 m
+791 317 l
+x
+751 309 m
+751 293 l
+775 293 l
+775 349 l
+799 349 l
+791 349 l
+799 349 l
+799 333 l
+0 D
+803 342 m
+799 333 l
+796 342 l
+0 D
+799 333 m
+x
+807 317 m
+807 293 l
+0 D
+811 302 m
+807 293 l
+804 302 l
+0 D
+807 293 m
+x
+10 S
+767 309 m
+(4) ce 1 t
+807 405 m
+(5) ce 1 t
+12 S
+655 333 m
+(F) ce 1 t
+10 S
+703 309 m
+(4) ce 1 t
+711 309 m
+711 293 l
+679 293 l
+679 325 l
+663 325 l
+0 D
+672 322 m
+663 325 l
+672 329 l
+0 D
+663 325 m
+x
+687 581 m
+(QA\(12:10\)) ce 1 t
+735 597 m
+(QA\(12:8\)) ce 1 t
+735 133 m
+735 109 l
+0 D
+739 118 m
+735 109 l
+732 118 l
+0 D
+735 109 m
+x
+303 349 m
+303 333 l
+x
+303 349 m
+0 0 1 0 4 0 s
+2 0 5 -1 8 -4 s
+2 -2 2 -5 0 -8 s
+-2 -2 -6 -4 -12 -4 s
+x
+335 381 m
+0 0 1 0 4 0 s
+2 0 5 -1 8 -4 s
+2 -2 2 -5 0 -8 s
+-2 -2 -6 -4 -12 -4 s
+x
+75 273 m
+0 0 0 -1 0 -4 s
+0 -2 1 -5 4 -8 s
+2 -2 5 -4 8 -4 s
+2 0 5 1 8 4 s
+2 2 4 6 4 12 s
+x
+75 273 m
+99 273 l
+x
+335 381 m
+335 365 l
+x
+335 405 m
+335 389 l
+x
+495 293 m
+487 269 l
+x
+415 293 m
+423 269 l
+x
+423 269 m
+487 269 l
+x
+415 293 m
+495 293 l
+x
+303 309 m
+439 309 l
+439 293 l
+0 D
+443 302 m
+439 293 l
+436 302 l
+0 D
+439 293 m
+x
+463 325 m
+463 293 l
+0 D
+467 302 m
+463 293 l
+460 302 l
+0 D
+463 293 m
+x
+303 285 m
+415 285 l
+0 D
+407 289 m
+415 285 l
+407 282 l
+0 D
+415 285 m
+x
+455 269 m
+455 237 l
+0 D
+459 246 m
+455 237 l
+452 246 l
+0 D
+455 237 m
+x
+327 277 m
+327 285 l
+x
+287 245 m
+323 245 l
+323 261 l
+x
+331 261 m
+331 245 l
+351 245 l
+x
+135 405 m
+135 413 l
+x
+131 365 m
+163 365 l
+x
+139 389 m
+139 377 l
+163 377 l
+x
+131 357 m
+131 381 l
+x
+55 437 m
+127 437 l
+x
+3 3 132 385 e
+3 3 80 277 e
+3 3 96 276 e
+359 245 m
+351 245 l
+0 D
+360 242 m
+351 245 l
+360 249 l
+0 D
+351 245 m
+x
+287 245 m
+295 245 l
+0 D
+287 249 m
+295 245 l
+287 242 l
+0 D
+295 245 m
+x
+303 285 m
+311 285 l
+0 D
+303 289 m
+311 285 l
+303 282 l
+0 D
+311 285 m
+x
+303 309 m
+311 309 l
+0 D
+303 313 m
+311 309 l
+303 306 l
+0 D
+311 309 m
+x
+87 253 m
+87 237 l
+0 D
+91 246 m
+87 237 l
+84 246 l
+0 D
+87 237 m
+x
+63 373 m
+71 373 l
+0 D
+63 377 m
+71 373 l
+63 370 l
+0 D
+71 373 m
+x
+63 357 m
+71 357 l
+0 D
+63 361 m
+71 357 l
+63 354 l
+0 D
+71 357 m
+x
+55 437 m
+55 389 l
+71 389 l
+71 317 l
+95 317 l
+95 349 l
+0 D
+92 341 m
+95 349 l
+99 341 l
+0 D
+95 349 m
+x
+12 S
+119 349 m
+('0') ce 1 t
+95 397 m
+95 349 l
+x
+111 357 m
+111 389 l
+x
+95 397 m
+111 389 l
+x
+71 373 m
+95 373 l
+0 D
+87 377 m
+95 373 l
+87 370 l
+0 D
+95 373 m
+x
+95 349 m
+111 357 l
+x
+59 341 m
+71 341 l
+0 D
+63 345 m
+71 341 l
+63 338 l
+0 D
+71 341 m
+x
+119 333 m
+127 333 l
+0 D
+119 337 m
+127 333 l
+119 330 l
+0 D
+127 333 m
+x
+79 429 m
+(4) ce 1 t
+71 357 m
+95 357 l
+0 D
+87 361 m
+95 357 l
+87 354 l
+0 D
+95 357 m
+x
+79 357 m
+79 277 l
+x
+87 317 m
+87 285 l
+95 285 l
+95 277 l
+x
+10 S
+103 389 m
+(0) ce 1 t
+103 365 m
+(1) ce 1 t
+87 237 m
+(immediate\(1\)) ce 1 t
+12 S
+207 389 m
+(op2.ena) ce 1 t
+199 365 m
+(B2.sel) ce 1 t
+183 377 m
+175 377 l
+0 D
+184 374 m
+175 377 l
+184 381 l
+0 D
+175 377 m
+x
+183 365 m
+171 365 l
+0 D
+180 362 m
+171 365 l
+180 369 l
+0 D
+171 365 m
+x
+455 233 m
+(Breq2\(5\)) ce 1 t
+111 557 m
+(off.10) ce 1 t
+10 S
+435 285 m
+(1) ce 1 t
+467 285 m
+(0) ce 1 t
+463 261 m
+(5) ce 1 t
+471 313 m
+(5) ce 1 t
+12 S
+263 341 m
+(\(SP/i\)) ce 1 t
+10 S
+423 305 m
+(5) ce 1 t
+111 373 m
+119 373 l
+119 437 l
+x
+12 S
+271 313 m
+(QA\(4:0\)) ce 1 t
+10 S
+115 421 m
+(5) ce 1 t
+107 321 m
+(FP) ce 1 t
+31 221 m
+39 213 l
+263 213 l
+263 205 l
+271 213 l
+519 213 l
+527 221 l
+x
+575 277 m
+583 269 l
+727 269 l
+735 261 l
+743 269 l
+887 269 l
+895 277 l
+x
+735 261 m
+(FIELD1) ce 1 t
+263 205 m
+(FIELD 2) ce 1 t
+591 317 m
+591 285 l
+0 D
+595 294 m
+591 285 l
+588 294 l
+0 D
+591 285 m
+x
+511 253 m
+511 229 l
+0 D
+515 238 m
+511 229 l
+508 238 l
+0 D
+511 229 m
+x
+591 333 m
+(ind1) ce 1 t
+511 269 m
+(ind2) ce 1 t
+%%Trailer
+showpage
+% Trailer for xpic to PostScript converter
+% $Header: x2ps.tra,v 1.1 87/11/21 20:33:03 moraes Exp $
+xpic end restore
+%%DocumentFonts: Times-Roman Times-Italic Times-Bold Special

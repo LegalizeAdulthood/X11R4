@@ -1,0 +1,18 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+
+DependTarget()
+
+NormalObjectRule()
+
+#ifdef WHITEPAGES_ENV
+
+ProgramTarget(newbt, newbt.o, $(UTILLIB),)
+InstallProgram(newbt, $(DESTDIR)/etc)
+
+#endif /* WHITEPAGES_ENV */
+
+ProgramTarget(pref, pref.o, $(UTILLIB),)
+InstallProgram(pref, $(DESTDIR)/bin)

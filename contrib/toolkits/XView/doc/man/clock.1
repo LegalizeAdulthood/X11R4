@@ -1,0 +1,77 @@
+.\" @(#)clock.1 1.22 89/07/31 SMI; 
+.TH CLOCK 1 "1 September 1989
+.SH NAME
+.B clock
+- display the time in an icon or window
+.SH SYNOPSIS
+.B clock
+.SH AVAILABILITY
+Although this command is available with both the
+SunView software installation option
+and the
+OpenWindows environment,
+its appearance is not the
+same for both environments.
+The man page you are currently
+viewing refers to the
+.B clock
+that is available with OpenWindows. The primary
+difference between this and the 
+SunView 
+.B clock
+is the user interface.  All OpenWindows standard tools
+use the OPEN LOOK Graphical User Interface. For more
+information about the OPEN LOOK UI, refer to the
+.I OpenWindows User's Guide.
+For information about installing OpenWindows, refer to the
+.I OpenWindows Installation and Start-Up Guide.
+.SH DESCRIPTION
+.LP
+.B clock
+is an OpenWindows XView utility that displays the current time in
+a window or icon. When the window is open, 
+.B clock 
+can display
+the time in  either analog or digital format. The
+.B clock
+window is scalable in either format.
+.SH PROPERTIES
+When the
+.B clock
+window is open, it has a floating menu from which you can bring up a property
+window.
+From this property sheet, you can modify the display of the
+tool by selecting either the 
+.B Analog
+or
+.B Digital
+choice box.
+.RS
+.B Seconds:
+.RS
+On the analog version, this selection starts a second hand on the
+face of the clock. On the digital version, it adds two digits to
+the digital readout.
+.RE
+.B Date:
+.RS
+Turns on a date display for both analog and digital versions of
+.B clock.
+.RE
+.RE
+.SH BUGS
+If you reset the system time,
+.B clock
+will not reflect the new time until you change its window state from
+open to icon, or vice versa.
+To reset the system time, see
+.B date
+(1V).
+
+The date display does not go well with the round clock face.
+
+Occasionally, when 
+.B clock
+is uncovered, the face will be visually corrupted. Use the
+.B Refresh
+button from the frame menu to repair.

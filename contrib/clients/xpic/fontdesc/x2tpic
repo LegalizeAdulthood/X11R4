@@ -1,0 +1,289 @@
+# Font description file for mapping xpic font names to TeX fonts.
+# Almost all these fonts are magstep values and should therefore be available
+# on most machines. The Special font is mapped to the PostScript(tm)
+# Symbol font - we store the tfm file as PS-Symbol. Other sites may
+# call it other names.
+# The algorithm to find the closest font will try to find the closest size in
+# the same font style or Roman.
+# Add or remove fonts from this list depending on availability - the LaTeX
+# lfonts.tex file is a good place to check.
+Roman 	5		\Xfiverm	cmr5
+Roman 	6		\Xsixrm		cmr6
+Roman 	7		\Xsevenrm	cmr7
+Roman 	8		\Xeightrm	cmr8
+Roman 	9		\Xninerm	cmr9
+Roman 	10		\Xtenrm		cmr10
+Roman 	11		\Xelevenrm	cmr10  \magstephalf
+Roman 	12		\Xtwelverm	cmr10  \magstep1
+Roman 	14		\Xfourteenrm	cmr10  \magstep2
+Roman 	17		\Xseventeenrm	cmr10  \magstep3
+Roman 	20		\Xtwentyrm	cmr10  \magstep4
+Roman 	25		\Xtwentyfiverm	cmr10  \magstep5
+Times-Roman 	5		\Xfivetrm	cmr5
+Times-Roman 	6		\Xsixtrm		cmr6
+Times-Roman 	7		\Xseventrm	cmr7
+Times-Roman 	8		\Xeighttrm	cmr8
+Times-Roman 	9		\Xninetrm	cmr9
+Times-Roman 	10		\Xtentrm		cmr10
+Times-Roman 	11		\Xeleventrm	cmr10  \magstephalf
+Times-Roman 	12		\Xtwelvetrm	cmr10  \magstep1
+Times-Roman 	14		\Xfourteentrm	cmr10  \magstep2
+Times-Roman 	17		\Xseventeentrm	cmr10  \magstep3
+Times-Roman 	20		\Xtwentytrm	cmr10  \magstep4
+Times-Roman 	25		\Xtwentyfivetrm	cmr10  \magstep5
+Image-Roman 	5		\Xfiveirm	cmr5
+Image-Roman 	6		\Xsixirm		cmr6
+Image-Roman 	7		\Xsevenirm	cmr7
+Image-Roman 	8		\Xeightirm	cmr8
+Image-Roman 	9		\Xnineirm	cmr9
+Image-Roman 	10		\Xtenirm		cmr10
+Image-Roman 	11		\Xelevenirm	cmr10  \magstephalf
+Image-Roman 	12		\Xtwelveirm	cmr10  \magstep1
+Image-Roman 	14		\Xfourteenirm	cmr10  \magstep2
+Image-Roman 	17		\Xseventeenirm	cmr10  \magstep3
+Image-Roman 	20		\Xtwentyirm	cmr10  \magstep4
+Image-Roman 	25		\Xtwentyfiveirm	cmr10  \magstep5
+#Italic 	5		\Xfiveit	cmti7  714
+#Italic 	6		\Xsixit		cmti7  857
+Italic 	7		\Xsevenit	cmti7
+Italic 	8	\Xeightit	cmti8
+Italic 	9	\Xnineit	cmti9
+Italic 	10	\Xtenit		cmti10
+Italic 	11	\Xelevenit	cmti10 \magstephalf
+Italic 	12	\Xtwelveit	cmti10 \magstep1
+Italic 	14	\Xfourteenit	cmti10 \magstep2
+Italic 	17	\Xseventeenit	cmti10 \magstep3
+Italic 	20	\Xtwentyit	cmti10 \magstep4
+Italic 	25	\Xtwentyfiveit	cmti10 \magstep5
+Times-Italic 	7		\Xseventi	cmti7
+Times-Italic 	8	\Xeightti	cmti8
+Times-Italic 	9	\Xnineti	cmti9
+Times-Italic 	10	\Xtenti		cmti10
+Times-Italic 	11	\Xeleventi	cmti10 \magstephalf
+Times-Italic 	12	\Xtwelveti	cmti10 \magstep1
+Times-Italic 	14	\Xfourteenti	cmti10 \magstep2
+Times-Italic 	17	\Xseventeenti	cmti10 \magstep3
+Times-Italic 	20	\Xtwentyti	cmti10 \magstep4
+Times-Italic 	25	\Xtwentyfiveti	cmti10 \magstep5
+Image-Italic 	7		\Xseventi	cmti7
+Image-Italic 	8	\Xeightimi	cmti8
+Image-Italic 	9	\Xnineimi	cmti9
+Image-Italic 	10	\Xtenimi		cmti10
+Image-Italic 	11	\Xelevenimi	cmti10 \magstephalf
+Image-Italic 	12	\Xtwelveimi	cmti10 \magstep1
+Image-Italic 	14	\Xfourteenimi	cmti10 \magstep2
+Image-Italic 	17	\Xseventeenimi	cmti10 \magstep3
+Image-Italic 	20	\Xtwentyimi	cmti10 \magstep4
+Image-Italic 	25	\Xtwentyfiveimi	cmti10 \magstep5
+#Bold 	5	\Xfivebf	cmbx7  714
+#Bold 	6	\Xsixbf		cmbx7  857
+Bold 	7	\Xsevenbf	cmbx7
+Bold 	8	\Xeightbf	cmbx8
+Bold 	9	\Xninebf	cmbx9
+Bold 	10	\Xtenbf		cmbx10
+Bold 	11	\Xelevenbf	cmbx10 \magstephalf
+Bold 	12	\Xtwelvebf	cmbx10 \magstep1
+Bold 	14	\Xfourteenbf	cmbx10 \magstep2
+Bold 	17	\Xseventeenbf	cmbx10 \magstep3
+Bold 	20	\Xtwentybf	cmbx10 \magstep4
+Bold 	25	\Xtwentyfivebf	cmbx10 \magstep5
+Times-Bold 	7	\Xseventb	cmbx7
+Times-Bold 	8	\Xeighttb	cmbx8
+Times-Bold 	9	\Xninetb	cmbx9
+Times-Bold 	10	\Xtentb		cmbx10
+Times-Bold 	11	\Xeleventb	cmbx10 \magstephalf
+Times-Bold 	12	\Xtwelvetb	cmbx10 \magstep1
+Times-Bold 	14	\Xfourteentb	cmbx10 \magstep2
+Times-Bold 	17	\Xseventeentb	cmbx10 \magstep3
+Times-Bold 	20	\Xtwentytb	cmbx10 \magstep4
+Times-Bold 	25	\Xtwentyfivetb	cmbx10 \magstep5
+Image-Bold 	7	\Xsevenimb	cmbx7
+Image-Bold 	8	\Xeightimb	cmbx8
+Image-Bold 	9	\Xnineimb	cmbx9
+Image-Bold 	10	\Xtenimb		cmbx10
+Image-Bold 	11	\Xelevenimb	cmbx10 \magstephalf
+Image-Bold 	12	\Xtwelveimb	cmbx10 \magstep1
+Image-Bold 	14	\Xfourteenimb	cmbx10 \magstep2
+Image-Bold 	17	\Xseventeenimb	cmbx10 \magstep3
+Image-Bold 	20	\Xtwentyimb	cmbx10 \magstep4
+Image-Bold 	25	\Xtwentyfiveimb	cmbx10 \magstep5
+Special 5	\Xfivesp	PS-Symbol pointsize5	# No \ in pointsize!
+Special 6	\Xsixsp		PS-Symbol pointsize6
+Special 7	\Xsevensp	PS-Symbol pointsize7
+Special 8	\Xeightsp	PS-Symbol pointsize8
+Special 9	\Xninesp	PS-Symbol pointsize9
+Special 10	\Xtensp		PS-Symbol pointsize10
+Special 11	\Xelevensp	PS-Symbol pointsize11
+Special 12	\Xtwelvesp	PS-Symbol pointsize12
+Special 14	\Xfourteensp	PS-Symbol pointsize14
+Special 17	\Xseventeensp	PS-Symbol pointsize17
+Special 20	\Xtwentysp	PS-Symbol pointsize20
+Special 25	\Xtwentyfivesp	PS-Symbol pointsize25
+Symbol 5	\Xfivesy	PS-Symbol pointsize5	# No \ in pointsize!
+Symbol 6	\Xsixsy		PS-Symbol pointsize6
+Symbol 7	\Xsevensy	PS-Symbol pointsize7
+Symbol 8	\Xeightsy	PS-Symbol pointsize8
+Symbol 9	\Xninesy	PS-Symbol pointsize9
+Symbol 10	\Xtensy		PS-Symbol pointsize10
+Symbol 11	\Xelevensy	PS-Symbol pointsize11
+Symbol 12	\Xtwelvesy	PS-Symbol pointsize12
+Symbol 14	\Xfourteensy	PS-Symbol pointsize14
+Symbol 17	\Xseventeensy	PS-Symbol pointsize17
+Symbol 20	\Xtwentysy	PS-Symbol pointsize20
+Symbol 25	\Xtwentyfivesy	PS-Symbol pointsize25
+Times-BoldItalic 5	\Xfivetbi	PS-Times-BoldItalic pointsize5	# No \ in pointsize!
+Times-BoldItalic 6	\Xsixtbi		PS-Times-BoldItalic pointsize6
+Times-BoldItalic 7	\Xseventbi	PS-Times-BoldItalic pointsize7
+Times-BoldItalic 8	\Xeighttbi	PS-Times-BoldItalic pointsize8
+Times-BoldItalic 9	\Xninetbi	PS-Times-BoldItalic pointsize9
+Times-BoldItalic 10	\Xtentbi		PS-Times-BoldItalic pointsize10
+Times-BoldItalic 11	\Xeleventbi	PS-Times-BoldItalic pointsize11
+Times-BoldItalic 12	\Xtwelvetbi	PS-Times-BoldItalic pointsize12
+Times-BoldItalic 14	\Xfourteentbi	PS-Times-BoldItalic pointsize14
+Times-BoldItalic 17	\Xseventeentbi	PS-Times-BoldItalic pointsize17
+Times-BoldItalic 20	\Xtwentytbi	PS-Times-BoldItalic pointsize20
+Times-BoldItalic 25	\Xtwentyfivetbi	PS-Times-BoldItalic pointsize25
+Courier 5	\Xfivec	PS-Courier pointsize5	# No \ in pointsize!
+Courier 6	\Xsixc		PS-Courier pointsize6
+Courier 7	\Xsevenc	PS-Courier pointsize7
+Courier 8	\Xeightc	PS-Courier pointsize8
+Courier 9	\Xninec	PS-Courier pointsize9
+Courier 10	\Xtenc		PS-Courier pointsize10
+Courier 11	\Xelevenc	PS-Courier pointsize11
+Courier 12	\Xtwelvec	PS-Courier pointsize12
+Courier 14	\Xfourteenc	PS-Courier pointsize14
+Courier 17	\Xseventeenc	PS-Courier pointsize17
+Courier 20	\Xtwentyc	PS-Courier pointsize20
+Courier 25	\Xtwentyfivec	PS-Courier pointsize25
+Courier-Bold 5	\Xfivecb	PS-Courier-Bold pointsize5	# No \ in pointsize!
+Courier-Bold 6	\Xsixcb		PS-Courier-Bold pointsize6
+Courier-Bold 7	\Xsevencb	PS-Courier-Bold pointsize7
+Courier-Bold 8	\Xeightcb	PS-Courier-Bold pointsize8
+Courier-Bold 9	\Xninecb	PS-Courier-Bold pointsize9
+Courier-Bold 10	\Xtencb		PS-Courier-Bold pointsize10
+Courier-Bold 11	\Xelevencb	PS-Courier-Bold pointsize11
+Courier-Bold 12	\Xtwelvecb	PS-Courier-Bold pointsize12
+Courier-Bold 14	\Xfourteencb	PS-Courier-Bold pointsize14
+Courier-Bold 17	\Xseventeencb	PS-Courier-Bold pointsize17
+Courier-Bold 20	\Xtwentycb	PS-Courier-Bold pointsize20
+Courier-Bold 25	\Xtwentyfivecb	PS-Courier-Bold pointsize25
+Courier-BoldOblique 5	\Xfivecbo	PS-Courier-BoldOblique pointsize5	# No \ in pointsize!
+Courier-BoldOblique 6	\Xsixcbo	PS-Courier-BoldOblique pointsize6
+Courier-BoldOblique 7	\Xsevencbo	PS-Courier-BoldOblique pointsize7
+Courier-BoldOblique 8	\Xeightcbo	PS-Courier-BoldOblique pointsize8
+Courier-BoldOblique 9	\Xninecbo	PS-Courier-BoldOblique pointsize9
+Courier-BoldOblique 10	\Xtencbo	PS-Courier-BoldOblique pointsize10
+Courier-BoldOblique 11	\Xelevencbo	PS-Courier-BoldOblique pointsize11
+Courier-BoldOblique 12	\Xtwelvecbo	PS-Courier-BoldOblique pointsize12
+Courier-BoldOblique 14	\Xfourteencbo	PS-Courier-BoldOblique pointsize14
+Courier-BoldOblique 17	\Xseventeencbo	PS-Courier-BoldOblique pointsize17
+Courier-BoldOblique 20	\Xtwentycbo	PS-Courier-BoldOblique pointsize20
+Courier-BoldOblique 25	\Xtwentyfivecbo	PS-Courier-BoldOblique pointsize25
+Courier-Oblique 5	\Xfiveco	PS-Courier-Oblique pointsize5	# No \ in pointsize!
+Courier-Oblique 6	\Xsixco		PS-Courier-Oblique pointsize6
+Courier-Oblique 7	\Xsevenco	PS-Courier-Oblique pointsize7
+Courier-Oblique 8	\Xeightco	PS-Courier-Oblique pointsize8
+Courier-Oblique 9	\Xnineco	PS-Courier-Oblique pointsize9
+Courier-Oblique 10	\Xtenco		PS-Courier-Oblique pointsize10
+Courier-Oblique 11	\Xelevenco	PS-Courier-Oblique pointsize11
+Courier-Oblique 12	\Xtwelveco	PS-Courier-Oblique pointsize12
+Courier-Oblique 14	\Xfourteenco	PS-Courier-Oblique pointsize14
+Courier-Oblique 17	\Xseventeenco	PS-Courier-Oblique pointsize17
+Courier-Oblique 20	\Xtwentyco	PS-Courier-Oblique pointsize20
+Courier-Oblique 25	\Xtwentyfiveco	PS-Courier-Oblique pointsize25
+Helvetica 5	\Xfiveh	PS-Helvetica pointsize5	# No \ in pointsize!
+Helvetica 6	\Xsixh		PS-Helvetica pointsize6
+Helvetica 7	\Xsevenh	PS-Helvetica pointsize7
+Helvetica 8	\Xeighth	PS-Helvetica pointsize8
+Helvetica 9	\Xnineh	PS-Helvetica pointsize9
+Helvetica 10	\Xtenh		PS-Helvetica pointsize10
+Helvetica 11	\Xelevenh	PS-Helvetica pointsize11
+Helvetica 12	\Xtwelveh	PS-Helvetica pointsize12
+Helvetica 14	\Xfourteenh	PS-Helvetica pointsize14
+Helvetica 17	\Xseventeenh	PS-Helvetica pointsize17
+Helvetica 20	\Xtwentyh	PS-Helvetica pointsize20
+Helvetica 25	\Xtwentyfiveh	PS-Helvetica pointsize25
+Helvetica-Bold 5	\Xfivehb	PS-Helvetica-Bold pointsize5	# No \ in pointsize!
+Helvetica-Bold 6	\Xsixhb		PS-Helvetica-Bold pointsize6
+Helvetica-Bold 7	\Xsevenhb	PS-Helvetica-Bold pointsize7
+Helvetica-Bold 8	\Xeighthb	PS-Helvetica-Bold pointsize8
+Helvetica-Bold 9	\Xninehb	PS-Helvetica-Bold pointsize9
+Helvetica-Bold 10	\Xtenhb		PS-Helvetica-Bold pointsize10
+Helvetica-Bold 11	\Xelevenhb	PS-Helvetica-Bold pointsize11
+Helvetica-Bold 12	\Xtwelvehb	PS-Helvetica-Bold pointsize12
+Helvetica-Bold 14	\Xfourteenhb	PS-Helvetica-Bold pointsize14
+Helvetica-Bold 17	\Xseventeenhb	PS-Helvetica-Bold pointsize17
+Helvetica-Bold 20	\Xtwentyhb	PS-Helvetica-Bold pointsize20
+Helvetica-Bold 25	\Xtwentyfivehb	PS-Helvetica-Bold pointsize25
+Helvetica-BoldOblique 5	\Xfivehbo	PS-Helvetica-BoldOblique pointsize5	# No \ in pointsize!
+Helvetica-BoldOblique 6	\Xsixhbo		PS-Helvetica-BoldOblique pointsize6
+Helvetica-BoldOblique 7	\Xsevenhbo	PS-Helvetica-BoldOblique pointsize7
+Helvetica-BoldOblique 8	\Xeighthbo	PS-Helvetica-BoldOblique pointsize8
+Helvetica-BoldOblique 9	\Xninehbo	PS-Helvetica-BoldOblique pointsize9
+Helvetica-BoldOblique 10	\Xtenhbo		PS-Helvetica-BoldOblique pointsize10
+Helvetica-BoldOblique 11	\Xelevenhbo	PS-Helvetica-BoldOblique pointsize11
+Helvetica-BoldOblique 12	\Xtwelvehbo	PS-Helvetica-BoldOblique pointsize12
+Helvetica-BoldOblique 14	\Xfourteenhbo	PS-Helvetica-BoldOblique pointsize14
+Helvetica-BoldOblique 17	\Xseventeenhbo	PS-Helvetica-BoldOblique pointsize17
+Helvetica-BoldOblique 20	\Xtwentyhbo	PS-Helvetica-BoldOblique pointsize20
+Helvetica-BoldOblique 25	\Xtwentyfivehbo	PS-Helvetica-BoldOblique pointsize25
+Helvetica-Oblique 5	\Xfiveho	PS-Helvetica-Oblique pointsize5	# No \ in pointsize!
+Helvetica-Oblique 6	\Xsixho		PS-Helvetica-Oblique pointsize6
+Helvetica-Oblique 7	\Xsevenho	PS-Helvetica-Oblique pointsize7
+Helvetica-Oblique 8	\Xeightho	PS-Helvetica-Oblique pointsize8
+Helvetica-Oblique 9	\Xnineho	PS-Helvetica-Oblique pointsize9
+Helvetica-Oblique 10	\Xtenho		PS-Helvetica-Oblique pointsize10
+Helvetica-Oblique 11	\Xelevenho	PS-Helvetica-Oblique pointsize11
+Helvetica-Oblique 12	\Xtwelveho	PS-Helvetica-Oblique pointsize12
+Helvetica-Oblique 14	\Xfourteenho	PS-Helvetica-Oblique pointsize14
+Helvetica-Oblique 17	\Xseventeenho	PS-Helvetica-Oblique pointsize17
+Helvetica-Oblique 20	\Xtwentyho	PS-Helvetica-Oblique pointsize20
+Helvetica-Oblique 25	\Xtwentyfiveho	PS-Helvetica-Oblique pointsize25
+NewCenturySchlbk-Roman 5	\Xfivencsr	PS-NewCenturySchlbk-Roman pointsize5	# No \ in pointsize!
+NewCenturySchlbk-Roman 6	\Xsixncsr		PS-NewCenturySchlbk-Roman pointsize6
+NewCenturySchlbk-Roman 7	\Xsevenncsr	PS-NewCenturySchlbk-Roman pointsize7
+NewCenturySchlbk-Roman 8	\Xeightncsr	PS-NewCenturySchlbk-Roman pointsize8
+NewCenturySchlbk-Roman 9	\Xninencsr	PS-NewCenturySchlbk-Roman pointsize9
+NewCenturySchlbk-Roman 10	\Xtenncsr		PS-NewCenturySchlbk-Roman pointsize10
+NewCenturySchlbk-Roman 11	\Xelevenncsr	PS-NewCenturySchlbk-Roman pointsize11
+NewCenturySchlbk-Roman 12	\Xtwelvencsr	PS-NewCenturySchlbk-Roman pointsize12
+NewCenturySchlbk-Roman 14	\Xfourteenncsr	PS-NewCenturySchlbk-Roman pointsize14
+NewCenturySchlbk-Roman 17	\Xseventeenncsr	PS-NewCenturySchlbk-Roman pointsize17
+NewCenturySchlbk-Roman 20	\Xtwentyncsr	PS-NewCenturySchlbk-Roman pointsize20
+NewCenturySchlbk-Roman 25	\Xtwentyfivencsr	PS-NewCenturySchlbk-Roman pointsize25
+NewCenturySchlbk-Bold 5	\Xfivencsb	PS-NewCenturySchlbk-Bold pointsize5	# No \ in pointsize!
+NewCenturySchlbk-Bold 6	\Xsixncsb		PS-NewCenturySchlbk-Bold pointsize6
+NewCenturySchlbk-Bold 7	\Xsevenncsb	PS-NewCenturySchlbk-Bold pointsize7
+NewCenturySchlbk-Bold 8	\Xeightncsb	PS-NewCenturySchlbk-Bold pointsize8
+NewCenturySchlbk-Bold 9	\Xninencsb	PS-NewCenturySchlbk-Bold pointsize9
+NewCenturySchlbk-Bold 10	\Xtenncsb		PS-NewCenturySchlbk-Bold pointsize10
+NewCenturySchlbk-Bold 11	\Xelevenncsb	PS-NewCenturySchlbk-Bold pointsize11
+NewCenturySchlbk-Bold 12	\Xtwelvencsb	PS-NewCenturySchlbk-Bold pointsize12
+NewCenturySchlbk-Bold 14	\Xfourteenncsb	PS-NewCenturySchlbk-Bold pointsize14
+NewCenturySchlbk-Bold 17	\Xseventeenncsb	PS-NewCenturySchlbk-Bold pointsize17
+NewCenturySchlbk-Bold 20	\Xtwentyncsb	PS-NewCenturySchlbk-Bold pointsize20
+NewCenturySchlbk-Bold 25	\Xtwentyfivencsb	PS-NewCenturySchlbk-Bold pointsize25
+NewCenturySchlbk-BoldItalic 5	\Xfivencsbi	PS-NewCenturySchlbk-BoldItalic pointsize5	# No \ in pointsize!
+NewCenturySchlbk-BoldItalic 6	\Xsixncsbi		PS-NewCenturySchlbk-BoldItalic pointsize6
+NewCenturySchlbk-BoldItalic 7	\Xsevenncsbi	PS-NewCenturySchlbk-BoldItalic pointsize7
+NewCenturySchlbk-BoldItalic 8	\Xeightncsbi	PS-NewCenturySchlbk-BoldItalic pointsize8
+NewCenturySchlbk-BoldItalic 9	\Xninencsbi	PS-NewCenturySchlbk-BoldItalic pointsize9
+NewCenturySchlbk-BoldItalic 10	\Xtenncsbi		PS-NewCenturySchlbk-BoldItalic pointsize10
+NewCenturySchlbk-BoldItalic 11	\Xelevenncsbi	PS-NewCenturySchlbk-BoldItalic pointsize11
+NewCenturySchlbk-BoldItalic 12	\Xtwelvencsbi	PS-NewCenturySchlbk-BoldItalic pointsize12
+NewCenturySchlbk-BoldItalic 14	\Xfourteenncsbi	PS-NewCenturySchlbk-BoldItalic pointsize14
+NewCenturySchlbk-BoldItalic 17	\Xseventeenncsbi	PS-NewCenturySchlbk-BoldItalic pointsize17
+NewCenturySchlbk-BoldItalic 20	\Xtwentyncsbi	PS-NewCenturySchlbk-BoldItalic pointsize20
+NewCenturySchlbk-BoldItalic 25	\Xtwentyfivencsbi	PS-NewCenturySchlbk-BoldItalic pointsize25
+NewCenturySchlbk-Italic 5	\Xfivencsi	PS-NewCenturySchlbk-Italic pointsize5	# No \ in pointsize!
+NewCenturySchlbk-Italic 6	\Xsixncsi		PS-NewCenturySchlbk-Italic pointsize6
+NewCenturySchlbk-Italic 7	\Xsevenncsi	PS-NewCenturySchlbk-Italic pointsize7
+NewCenturySchlbk-Italic 8	\Xeightncsi	PS-NewCenturySchlbk-Italic pointsize8
+NewCenturySchlbk-Italic 9	\Xninencsi	PS-NewCenturySchlbk-Italic pointsize9
+NewCenturySchlbk-Italic 10	\Xtenncsi		PS-NewCenturySchlbk-Italic pointsize10
+NewCenturySchlbk-Italic 11	\Xelevenncsi	PS-NewCenturySchlbk-Italic pointsize11
+NewCenturySchlbk-Italic 12	\Xtwelvencsi	PS-NewCenturySchlbk-Italic pointsize12
+NewCenturySchlbk-Italic 14	\Xfourteenncsi	PS-NewCenturySchlbk-Italic pointsize14
+NewCenturySchlbk-Italic 17	\Xseventeenncsi	PS-NewCenturySchlbk-Italic pointsize17
+NewCenturySchlbk-Italic 20	\Xtwentyncsi	PS-NewCenturySchlbk-Italic pointsize20
+NewCenturySchlbk-Italic 25	\Xtwentyfivencsi	PS-NewCenturySchlbk-Italic pointsize25

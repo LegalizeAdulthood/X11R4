@@ -1,0 +1,1079 @@
+#FIG 1.4
+80 2
+#StPicture 0.1
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 43 -53 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 91 -53 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 91 -100 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 43 -100 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 138 -53 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 186 -53 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 186 -100 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 138 -100 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 234 -52 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 282 -52 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 282 -99 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 234 -99 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 329 -52 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 377 -52 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 377 -99 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 329 -99 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 43 -148 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 91 -148 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 91 -195 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 43 -195 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 138 -148 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 186 -148 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 186 -195 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 138 -195 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 234 -147 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 282 -147 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 282 -194 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 234 -194 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 329 -147 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 377 -147 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 377 -194 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 329 -194 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 44 -241 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 92 -241 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 92 -288 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 44 -288 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 139 -241 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 187 -241 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 187 -288 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 139 -288 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 235 -240 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 283 -240 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 283 -287 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 235 -287 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 330 -240 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 378 -240 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 378 -287 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 330 -287 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 44 -336 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 92 -336 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 92 -383 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 44 -383 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 139 -336 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 187 -336 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 187 -383 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 139 -383 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 235 -335 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 283 -335 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 283 -382 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 235 -382 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 330 -335 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 378 -335 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 378 -382 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 330 -382 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 92 -430 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 44 -430 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 187 -430 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 139 -430 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 283 -429 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 235 -429 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 378 -429 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 330 -429 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 424 -54 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 424 -101 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 424 -149 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 424 -196 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 425 -242 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 425 -289 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 425 -337 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 425 -384 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 425 -431 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 -5 -51 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 -5 -98 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 -5 -146 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 -5 -193 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   11 12 14
+#!!  bitmap
+#!   8 -4 -239 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 -4 -286 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 -4 -334 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 -4 -381 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 -4 -428 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 43 -6 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 91 -6 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 138 -6 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 -5 -4 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 185 -9 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 233 -6 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 281 -6 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 328 -6 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 376 -6 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 423 -8 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   8 -51 -52 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   6 -51 -99 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   8 -51 -147 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   6 -51 -194 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   8 -50 -240 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   6 -50 -287 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   8 -50 -335 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   8 -51 -5 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   6 -49 -382 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   13 0 1
+#!!  bitmap
+#!   6 -49 -429 flagup
+#StFIG_0.1  Line Primitive
+#!!  figure_type
+#!   10
+#!!  line_atr
+#!   0 20 0 0 0 2 1 3
+#!!  paint_atr
+#!   12 0 1
+2 1 0 20 2 0 3 12 0.000 0 0
+	 22 -257 16 -262 14 -263 13 -264 10 -265
+	 8 -265 5 -265 3 -264 2 -262 1 -262
+	 0 -260 0 -257 -1 -254 -1 -250 0 -248
+	 1 -246 3 -243 5 -240 7 -238 9 -236
+	 11 -234 14 -234 18 -232 24 -231 34 -230
+	 42 -228 46 -228 49 -229 50 -230 52 -232
+	 53 -234 54 -238 54 -241 54 -245 54 -248
+	 53 -250 53 -253 52 -255 51 -258 49 -260
+	 48 -263 46 -266 43 -270 41 -274 39 -278
+	 37 -280 36 -283 34 -286 32 -289 29 -292
+	 28 -294 26 -297 25 -298 24 -300 24 -301
+	 23 -302 22 -304 21 -305 20 -307 19 -309
+	 18 -310 17 -313 15 -315 14 -318 13 -319
+	 13 -320 13 -320 9999 9999
+#StFIG_0.1  Line Primitive
+#!!  figure_type
+#!   10
+#!!  line_atr
+#!   0 20 0 0 0 2 1 3
+#!!  paint_atr
+#!   12 0 1
+2 1 0 20 2 0 3 12 0.000 0 0
+	 54 -263 56 -261 57 -259 59 -257 60 -256
+	 61 -255 62 -253 64 -253 66 -252 67 -250
+	 68 -249 69 -248 70 -247 70 -245 71 -245
+	 71 -244 72 -243 73 -242 74 -241 75 -240
+	 77 -238 79 -237 81 -237 83 -236 87 -234
+	 89 -234 91 -235 92 -236 93 -237 94 -237
+	 95 -238 95 -239 95 -240 96 -240 96 -241
+	 97 -241 98 -243 98 -245 98 -246 98 -247
+	 98 -248 97 -249 96 -251 95 -253 95 -254
+	 94 -256 93 -257 92 -259 91 -261 90 -262
+	 89 -264 88 -265 87 -268 86 -270 85 -273
+	 85 -275 84 -277 84 -278 83 -280 83 -281
+	 82 -283 81 -285 79 -288 78 -290 77 -293
+	 75 -296 74 -298 73 -301 72 -303 71 -305
+	 70 -308 69 -309 68 -311 68 -311 9999 9999
+#StFIG_0.1  Line Primitive
+#!!  figure_type
+#!   10
+#!!  line_atr
+#!   0 20 0 0 0 2 1 3
+#!!  paint_atr
+#!   12 0 1
+2 1 0 20 2 0 3 12 0.000 0 0
+	 98 -263 105 -259 108 -256 111 -254 113 -251
+	 114 -249 116 -247 117 -247 118 -245 119 -244
+	 119 -243 120 -243 121 -243 122 -242 124 -241
+	 125 -241 127 -241 129 -241 131 -241 132 -242
+	 133 -243 135 -244 136 -246 136 -247 136 -250
+	 136 -252 136 -254 135 -256 134 -258 133 -259
+	 131 -262 129 -265 127 -267 126 -271 124 -273
+	 122 -276 121 -278 120 -280 118 -282 117 -284
+	 116 -287 115 -289 113 -291 112 -294 111 -296
+	 111 -298 110 -299 110 -300 109 -301 109 -303
+	 108 -305 108 -307 108 -309 108 -311 108 -312
+	 107 -314 107 -316 107 -319 107 -320 107 -320
+	 9999 9999
+#StFIG_0.1  Line Primitive
+#!!  figure_type
+#!   10
+#!!  line_atr
+#!   0 20 0 0 0 2 1 3
+#!!  paint_atr
+#!   12 0 1
+2 1 0 20 2 0 3 12 0.000 0 0
+	 342 -162 340 -168 338 -170 338 -172 336 -174
+	 335 -176 334 -178 334 -181 334 -182 333 -185
+	 332 -188 330 -192 327 -198 323 -206 317 -216
+	 314 -224 312 -228 311 -231 309 -234 307 -238
+	 305 -242 303 -250 301 -258 300 -262 299 -268
+	 298 -274 297 -277 296 -280 296 -284 296 -287
+	 296 -290 296 -292 297 -293 299 -296 300 -297
+	 301 -300 304 -304 306 -308 308 -310 308 -311
+	 309 -311 311 -312 314 -312 316 -313 319 -313
+	 321 -313 323 -312 325 -312 327 -311 328 -310
+	 328 -310 9999 9999
+#StFIG_0.1  Line Primitive
+#!!  figure_type
+#!   10
+#!!  line_atr
+#!   0 20 0 0 0 2 1 3
+#!!  paint_atr
+#!   12 0 1
+2 1 0 20 2 0 3 12 0.000 0 0
+	 199 -273 200 -265 200 -261 200 -258 199 -257
+	 197 -253 195 -253 192 -250 191 -249 188 -249
+	 185 -249 182 -251 179 -253 176 -254 173 -256
+	 171 -257 168 -258 167 -260 165 -261 164 -261
+	 163 -263 161 -265 160 -266 159 -267 159 -268
+	 158 -269 157 -269 156 -272 154 -275 151 -283
+	 148 -289 148 -293 147 -296 147 -300 146 -302
+	 146 -303 146 -304 146 -305 147 -306 148 -308
+	 149 -309 150 -311 152 -312 154 -314 156 -316
+	 159 -316 161 -317 164 -317 166 -317 168 -317
+	 171 -316 173 -314 175 -313 177 -312 179 -310
+	 180 -309 182 -308 183 -306 183 -305 184 -305
+	 184 -304 185 -303 186 -301 187 -300 188 -298
+	 189 -296 191 -294 191 -292 192 -291 194 -288
+	 196 -285 197 -282 198 -281 198 -280 198 -280
+	 9999 9999
+#StFIG_0.1  Line Primitive
+#!!  figure_type
+#!   10
+#!!  line_atr
+#!   0 20 0 0 0 2 1 3
+#!!  paint_atr
+#!   12 0 1
+2 1 0 20 2 0 3 12 0.000 0 0
+	 200 -269 198 -282 198 -284 197 -286 197 -288
+	 197 -290 197 -291 197 -294 197 -296 197 -298
+	 197 -301 198 -303 199 -305 200 -306 202 -308
+	 204 -308 207 -310 209 -310 210 -310 211 -310
+	 212 -311 213 -311 214 -311 214 -311 9999 9999
+#StFIG_0.1  Line Primitive
+#!!  figure_type
+#!   10
+#!!  line_atr
+#!   0 20 0 0 0 2 1 3
+#!!  paint_atr
+#!   12 0 1
+2 1 0 20 2 0 3 12 0.000 0 0
+	 251 -250 248 -255 247 -258 246 -261 245 -264
+	 244 -267 244 -269 243 -271 241 -273 240 -275
+	 238 -278 237 -281 236 -283 235 -285 235 -287
+	 234 -289 234 -291 234 -292 234 -293 234 -294
+	 234 -295 234 -296 234 -297 234 -299 235 -300
+	 237 -303 239 -305 241 -307 244 -309 247 -311
+	 249 -312 251 -312 254 -312 257 -311 259 -311
+	 260 -309 260 -309 9999 9999
+#StFIG_0.1  Line Primitive
+#!!  figure_type
+#!   10
+#!!  line_atr
+#!   0 20 0 0 0 2 1 3
+#!!  paint_atr
+#!   12 0 1
+2 1 0 20 2 0 3 12 0.000 0 0
+	 261 -227 261 -225 261 -224 260 -224 258 -223
+	 257 -223 256 -223 256 -224 255 -225 254 -226
+	 254 -227 254 -228 254 -229 254 -230 254 -231
+	 255 -231 256 -232 258 -233 259 -233 260 -232
+	 261 -232 261 -231 262 -231 262 -230 262 -230
+	 9999 9999
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 90 -474 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 42 -474 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 185 -474 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 137 -474 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 281 -473 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 233 -473 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 376 -473 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 328 -473 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 423 -475 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 -4 -474 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 473 -99 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 473 -146 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 473 -194 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 473 -241 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 474 -287 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 474 -334 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 474 -382 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 474 -429 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 474 -476 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 472 -53 flagdown
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   6 465 -8 flagup
+#StFIG_0.1  Bitmap Primitive
+#!!  figure_type
+#!   13
+#!!  paint_atr
+#!   12 0 1
+#!!  bitmap
+#!   8 -50 -475 flagdown

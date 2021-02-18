@@ -1,0 +1,10 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+InstallMultipleByExtension(con, $(INSTINCFLAGS), $(DESTDIR)/lib/consoles)
+InstallMultipleByExtension(vop, $(INSTINCFLAGS), $(DESTDIR)/lib/consoles)
+InstallMultipleByExtension(rou, $(INSTINCFLAGS), $(DESTDIR)/lib/consoles)
+#ifndef CMU_ENV
+InstallFileToFile(default.xcn, $(INSTINCFLAGS), $(DESTDIR)/lib/consoles/default.con)
+#endif /* CMU_ENV */

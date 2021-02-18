@@ -1,0 +1,3351 @@
+<!OPS, Version = 6.4>
+
+<!Document,
+	Final Output Device =	"ps",
+	Default Printer =	"nearest-ps">
+
+<!Font Definitions,
+	F20 = Times 10,
+	F28 = Times 12,
+	F148 = Courier 12,
+	F29 = Times 12 Bold,
+	F81 = Helvetica 10 Bold,
+	F45 = Times 24 Bold,
+	F49 = Times 36 Bold,
+	F24 = Times 11,
+	F26 = Times 11 Italic,
+	F85 = Helvetica 11 Bold,
+	F46 = Times 24 Italic,
+	F72 = Helvetica 8,
+	F47 = Times 24 Bold Italic,
+	F77 = Helvetica 9 Bold,
+	F76 = Helvetica 9,
+	F80 = Helvetica 10,
+	F84 = Helvetica 11,
+	F68 = Helvetica 6,
+	F101 = Helvetica 18 Bold,
+	F93 = Helvetica 14 Bold,
+	F89 = Helvetica 12 Bold,
+	F31 = Times 12 Bold Italic,
+	F25 = Times 11 Bold,
+	F88 = Helvetica 12,
+	F22 = Times 10 Italic,
+	F41 = Times 18 Bold,
+	F33 = Times 14 Bold,
+	F21 = Times 10 Bold,
+	F8 = Times 6>
+
+<!Color Definitions,
+	C0 = 0, 0, 0,
+	C1 = 3.13, 3.13, 3.13,
+	C2 = 6.25, 6.25, 6.25,
+	C3 = 12.50, 12.50, 12.50,
+	C4 = 25, 25, 25,
+	C5 = 50, 50, 50,
+	C6 = 75, 75, 75,
+	C7 = 100, 100, 100>
+
+<!Page,
+	Bottom Margin =		0.83 inches,
+	Left Margin =		0.87 inches,
+	Right Margin =		0.88 inches,
+	Inner Margin =		0.50 inches,
+	Outer Margin =		0.94 inches,
+	First Page =		Right,
+	Margins =			Left/Right,
+	Starting Page # = 	Inherit,
+	Hyphenation =		on,
+	Consecutive Hyphens =	2,
+	Revision Bar Placement = Right,
+	Margin Stretch =	150,
+	Margin Shrink =		75,
+	Feathering =		off,
+	Begin With = Odd>
+
+<!Autonumber Stream, footnote, 1,
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, List, 1>
+
+<!Autonumber Stream, Outline, 3,
+	Level 1 Symbol Type =	Upper Roman,
+	Level 2 Symbol Type =	Upper Alpha>
+
+<!Autonumber Stream, chap, 1,
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, label, 1,
+	Level 1 Prefix =	"Figure ",
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, reference, 1,
+	Level 1 Suffix =	,
+	Level 1 Show =		no>
+
+<!Autonumber Stream, step, 1,
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, Chapters, 1,
+	Level 1 Suffix =	>
+
+<!Class, "|:bullet",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F28@i*,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+S<Tab>
+
+<!Class, "|:Cstuff",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F148@i*,
+	Left Tab =		0/1*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<F29><Autonum, Outline, 2><Tab>
+
+<!Class, "|:Csubtopic",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F148@i*,
+	Left Tab =		0/1*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<F29><Autonum, Outline, 3><Tab>
+
+<!Class, "|:item",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F28@i*,
+	Left Tab =		0/1*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+S<Tab>
+
+<!Class, 12x2:cell,
+	Top Margin =		0.03 inches,
+	Bottom Margin =		0.03 inches,
+	Line Spacing =		1.114 lines,
+	Alignment =		Left,
+	Font =			F28,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum>
+
+<!Class, Cfields,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+Fields
+
+<!Class, Chapter,
+	Bottom Margin =		1 inches,
+	Left Margin =		1.50 inches,
+	First Indent =		-1 inches,
+	Line Spacing =		1.166 lines,
+	Alignment =		Left,
+	Font =			F45,
+	Begin New Page =		yes,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	TOC Doc Name =		TOC,
+	Contents =	Prefix>
+
+<"|:Chapter",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F49><Autonum, Chapters, 1><F0><Tab><End Sub>
+<F0>
+
+<!Class, Ctopic,
+	Top Margin =		0.06 inches,
+	Bottom Margin =		0.04 inches,
+	Left Margin =		1 inches,
+	First Indent =		-1 inches,
+	Line Spacing =		1.162 lines,
+	Alignment =		Left,
+	Font =			F148,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		-0.50/0.50*3/2/3 Inches,
+	TOC Doc Name =		TOC,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:Ctopic",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F29><Autonum, Outline, 2><Tab><End Sub><F0>
+
+<!Class, heading,
+	Top Margin =		0.07 inches,
+	Bottom Margin =		0.07 inches,
+	Line Spacing =		1.206 lines,
+	Font =			F29,
+	Allow Page Break After = no,
+	Left Tab =		0/0.50*7 Inches,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:heading",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F0><Autonum, Outline, 1> <End Sub><F0>
+
+<!Class, micro:ftnote,
+	Top Margin =		0.03 inches,
+	Bottom Margin =		0.03 inches,
+	Line Spacing =		1.114 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Left Tab =		0/0.25 Inches,
+	Composition =		Optimum>
+
+<!Class, Outline1,
+	Top Margin =		0.20 inches,
+	Bottom Margin =		0.10 inches,
+	Left Margin =		0.70 inches,
+	First Indent =		-0.70 inches,
+	Line Spacing =		1.166 lines,
+	Alignment =		Left,
+	Font =			F29,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		-0.10 Inches,
+	TOC Doc Name =		TOC,
+	Contents =	Prefix>
+
+<"|:Outline1",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F0><Autonum, Outline, 1><Tab><Tab><End Sub>
+<F0>
+
+<!Class, Outline2,
+	Top Margin =		0.07 inches,
+	Bottom Margin =		0.07 inches,
+	Left Margin =		0.60 inches,
+	First Indent =		-0.60 inches,
+	Line Spacing =		1.166 lines,
+	Alignment =		Left,
+	Font =			F28,
+	Left Tab =		0/1.50/2.25/3 Inches,
+	Right Tab =		-0.10 Inches,
+	TOC Doc Name =		TOC>
+
+<Tab><Autonum, Outline, 2><Tab>
+
+<!Class, Outline3,
+	Top Margin =		0.05 inches,
+	Bottom Margin =		0.05 inches,
+	Left Margin =		0.80 inches,
+	First Indent =		-0.80 inches,
+	Line Spacing =		1.211 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Left Tab =		0/1.50/2.25/3 Inches,
+	Right Tab =		-0.10 Inches>
+
+<Tab><Autonum, Outline, 3><Tab>
+
+<!Class, Outline4,
+	Top Margin =		0.03 inches,
+	Bottom Margin =		0.03 inches,
+	Left Margin =		1 inches,
+	First Indent =		-1 inches,
+	Line Spacing =		1.211 lines,
+	Alignment =		Left,
+	Font =			F28,
+	Left Tab =		0/1.50/2.25/3 Inches,
+	Right Tab =		-0.10 Inches,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:Outline4",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F0><Tab>D<Tab><End Sub><F0>
+
+<!Class, "|:Chapter",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F45@i*,
+	Left Tab =		0/1*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<F49><Autonum, Chapters, 1><F0><Tab>
+
+<!Class, "|:Ctopic",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F148@i*,
+	Left Tab =		0/1*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<F29><Autonum, Outline, 2><Tab>
+
+<!Class, "|:Outline1",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F29@i*,
+	Left Tab =		0/1*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Autonum, Outline, 1><Tab><Tab>
+
+<!Class, "|:Outline4",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F20@i*,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab>D<Tab>
+
+<!Class, "|:heading",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F29@i*,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Autonum, Outline, 1> 
+
+<!Class, "|:list",
+	Font =			F24,
+	Contents =	Shared>
+
+<Tab><F25>><F0><Tab>
+
+<!Class, "|:listLA",
+	Font =			F24>
+
+<Tab><F25>><F0><Tab>
+
+<!Class, "|:listempty1",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24@i*,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab><Tab>
+
+<!Class, "|:note:caution",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Frame,
+	Name =			note:caution,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.047423,0.706667,0.047423,7,0,4,0)
+       (v6,3,0,0.706667,0.047423,0.706667,0.005911,7,0,4,0)
+       (v6,4,0,0.706667,0.005911,0,0.005911,7,0,4,0)
+       (v6,5,0,0,0.005911,0,0.047423,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+<Tab><F26>Caution:<F0><Tab>
+
+<!Class, "|:note:note",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Frame,
+	Name =			note:standard,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.037045,0.706667,0.037045,7,0,4,0)
+       (v6,3,0,0.706667,0.037045,0.706667,0.016289,7,0,4,0)
+       (v6,4,0,0.706667,0.016289,0,0.016289,7,0,4,0)
+       (v6,5,0,0,0.016289,0,0.037045,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+<Tab><F26>Note:<F0><Tab>
+
+<!Class, "|:note:warning",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Frame,
+	Name =			note:warning,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.062266,0.706667,0.062266,7,0,4,0)
+       (v6,3,0,0.706667,0.062266,0.706667,0,7,0,4,0)
+       (v6,4,0,0.706667,0,0,0,7,0,4,0)
+       (v6,5,0,0,0,0,0.062266,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+<Tab><F26>Warning:<F0><Tab>
+
+<!Class, "|:numlist",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab><Autonum, List, 1><Tab>
+
+<!Class, "|:step:OR1",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<F20>. . . or . . .<F26><Tab><F0>
+
+<!Class, "|:step:numb1",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<F85><Autonum, step, 1>.<F0><Tab>
+
+<!Class, "|:titlexcer",
+	Font =			F85,
+	Contents =	Shared>
+
+<Tab><F20>"<F0><Tab>
+
+<!Class, 6x4:cell,
+	Top Margin =		0.03 inches,
+	Bottom Margin =		0.03 inches,
+	Left Margin =		0.15 inches,
+	Line Spacing =		1.114 lines,
+	Font =			F28,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum>
+
+<!Class, tblhead,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Center,
+	Font =			F29,
+	Composition =		Optimum>
+
+<!Class, chapname,
+	Top Margin =		0.50 inches,
+	Bottom Margin =		1 inches,
+	Line Spacing =		1.100 lines,
+	Alignment =		Left,
+	Font =			F46@K1,
+	Begin New Page =		yes,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		7/8.25/0.75*18 Inches,
+	TOC Doc Name =		TOC,
+	Composition =		Optimum>
+
+<!Class, chaprefs,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F72,
+	Left Tab =		0/0.75*13 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Autonum, label, 1>                            <Autonum, chap, 1>
+
+<!Class, keyside,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.200 lines,
+	Font =			F77,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches>
+
+Action<F76><HR>
+Apollo<Tab.>Key<HR>
+DEC<Tab.>Key<HR>
+Sun<Tab.>Key
+
+<!Class, list,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		2 inches,
+	First Indent =		-1.13 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Allow Page Break Within = no,
+	Left Tab =		-0.25/0/0.25/0.75/0.75*18/15.75/0.75*7 Inches,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:list",
+	Hidden =		yes,
+	Font =			F24,
+	Subcomponent =	yes,
+	Contents =	Shared><F0><Tab><F25>><F0><Tab><End Sub><F0>
+
+<!Class, listLA,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0.17 inches,
+	Left Margin =		2 inches,
+	First Indent =		-1.13 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Allow Page Break Within = no,
+	Left Tab =		-0.25/0/0.25/0.75/0.75*18/15.75/0.75*7 Inches,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:listLA",
+	Hidden =		yes,
+	Font =			F24,
+	Subcomponent =	yes><F0><Tab><F25>><F0><Tab><End Sub><F0>
+
+<!Class, mpara,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1.200 lines,
+	Alignment =		Left,
+	Font =			F80,
+	Left Tab =		0/0.75*13 Inches,
+	Composition =		Optimum>
+
+<!Class, note:caution,
+	Top Margin =		0.17 inches,
+	Bottom Margin =		0.08 inches,
+	Left Margin =		1.75 inches,
+	First Indent =		-1.75 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Allow Page Break Within = no,
+	Left Tab =		-0.88/0/0.75*3/3.75/0.75*24 Inches,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:note:caution",
+	Hidden =		yes,
+	Font =			F24,
+	Subcomponent =	yes,
+	Contents =	Shared><F0>
+<Frame,
+	Name =			note:caution,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.047423,0.706667,0.047423,7,0,4,0)
+       (v6,3,0,0.706667,0.047423,0.706667,0.005911,7,0,4,0)
+       (v6,4,0,0.706667,0.005911,0,0.005911,7,0,4,0)
+       (v6,5,0,0,0.005911,0,0.047423,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+<Tab><F26>Caution:<F0><Tab><End Sub><F0>
+
+<!Class, option,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.200 lines,
+	Alignment =		Left,
+	Font =			F77,
+	Hyphenation =		2,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Wordspace Min =		0.483,
+	Wordspace Nom =		0.800,
+	Wordspace Max =		1.420,
+	Letterspace Max =		0.483,
+	Composition =		Optimum>
+
+Optional Feature<HR>
+<F76>The <<name> feature is <HR>
+available in the <<package><HR>
+etc.
+
+<!Class, para,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Composition =		Optimum>
+
+<!Class, paraAT,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Allow Page Break After = no,
+	Composition =		Optimum>
+
+<!Class, rule:Adot,
+	Bottom Margin =		0.08 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F84,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		10.50/0.75*15 Inches,
+	Right Tab =		6.75/10 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab.>
+
+<!Class, rule:sm,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F68,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break Within = no,
+	Left Tab =		0 Inches,
+	Composition =		Optimum>
+
+<!Class, titleA,
+	Top Margin =		0.50 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F101@K1,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0/7/8.25/0.75*18 Inches,
+	TOC Doc Name =		TOC>
+
+<!Class, titleB,
+	Top Margin =		0.50 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F93,
+	Straddle =		yes,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		7/8.25/0.75*18 Inches,
+	TOC Doc Name =		TOC>
+
+<!Class, titleBA,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F93,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		7/8.25/0.75*18 Inches,
+	TOC Doc Name =		TOC,
+	Composition =		Optimum>
+
+<!Class, titleCB,
+	Top Margin =		0.17 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.100 lines,
+	Alignment =		Left,
+	Font =			F89,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		7/7.50/0.75*19 Inches,
+	Composition =		Optimum>
+
+<!Class, titleD,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+titleD component in a sideD frame
+
+<!Class, foot_prelim,
+	Top Margin =		0.07 inches,
+	Bottom Margin =		0.07 inches,
+	Line Spacing =		1.308 lines,
+	Font =			F31,
+	Contents =	Shared>
+
+PRELIMINARY  ( June 19, 1989 )
+
+<!Class, unique,
+	Top Margin =		0.07 inches,
+	Bottom Margin =		0.07 inches,
+	Line Spacing =		1.308 lines,
+	Font =			F20>
+
+<!Class, Cpara,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Composition =		Optimum>
+
+<!Class, CparaD,
+	Top Margin =		0.17 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Composition =		Optimum>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+CtitleD component in a CsideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Class, Cstuff,
+	Top Margin =		0.17 inches,
+	Bottom Margin =		0.07 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.308 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Left Tab =		0/0.25*12 Inches>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+CtitleD component in a CsideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Class, CtitleB,
+	Top Margin =		0.50 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F93,
+	Begin New Page =		yes,
+	Straddle =		yes,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		7/8.25/0.75*18 Inches,
+	TOC Doc Name =		TOC>
+
+<!Class, CtitleC,
+	Top Margin =		0.25 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.100 lines,
+	Alignment =		Left,
+	Font =			F89,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		7/7.50/0.75*19 Inches>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+CtitleD component in a CsideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Class, CtitleCdesc,
+	Top Margin =		0.17 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Composition =		Optimum>
+
+<Frame,
+	Name =			CsideDdesc,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.137 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+Usage
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Class, CtitleCfields,
+	Top Margin =		0.25 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.100 lines,
+	Alignment =		Left,
+	Font =			F89,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		7/7.50/0.75*19 Inches>
+
+<Frame,
+	Name =			CsideDfield,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.137 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+Fields
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Class, CtitleCns,
+	Top Margin =		0.25 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.100 lines,
+	Alignment =		Left,
+	Font =			F89,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		7/7.50/0.75*19 Inches>
+
+<!Class, CtitleD,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+titleD component in a<HR>
+sideD frame
+
+<!Master Frame,
+	Name =			Auto,
+	Placement =		At Anchor,
+	Width =			0.50 inches,
+	Height =		0.167 inches,
+	Diagram =
+V6,
+(g9,0,0)>
+
+<!Master Frame,
+	Name =			Chapter,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 1.40 inches,
+	Width =			1.75 inches,
+	Height =		1.75 inches,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,268,0.08,1.546667,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.547 inches, Height = 0.11 inches,
+	Revision Bar Placement = Left>
+<chaprefs,
+	Hidden =		yes>
+
+<Autonum, label, 1>                            <Autonum, chap, 1>
+
+<End Text>)
+ (t14,2,128,0,0.92,0,7,0,0,t1,wst:timsps24bi,)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			note:caution,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Diagram =
+V6,
+(g9,0,0)>
+
+<!Master Frame,
+	Name =			note:standard,
+	Placement =		At Anchor,
+	Vertical Alignment =	Baseline - 0.111 inches,
+	Width =			0.73 inches,
+	Height =		0.111 inches,
+	Shared Contents =	yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.020756,0.706667,0.020756,7,0,4,0)
+       (v6,3,0,0.706667,0.020756,0.706667,0,7,0,4,0)
+       (v6,4,0,0.706667,0,0,0,7,0,4,0)
+       (v6,5,0,0,0,0,0.020756,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			note:warning,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Diagram =
+V6,
+(g9,0,0)>
+
+<!Master Frame,
+	Name =			rule:intro,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 0.04 inches,
+	Width =			5 inches,
+	Height =		0.10 inches,
+	Shared Contents =	yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,65536,0,0,4.986667,0,7,0,4,0)
+       (v6,3,65536,4.986667,0,4.986667,0.041511,7,0,4,0)
+       (v6,4,65536,4.986667,0.041511,0,0.041511,7,0,4,0)
+       (v6,5,65536,0,0.041511,0,0,7,0,4,0))))
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			sideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<titleD,
+	Hidden =		yes>
+
+titleD component in a<HR>
+sideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes>
+
+CtitleD component in a CsideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			CsideDdesc,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.137 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes>
+
+Usage
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			CsideDfield,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.137 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes>
+
+Field Descriptions
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Table, 6x4,
+	Columns =		4,
+	Column 1 Width =	1.591 inches,
+	Column 2 Width =	1.591 inches,
+	Column 3 Width =	1.591 inches,
+	Column 4 Width =	1.591 inches,
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row">
+
+<Master Row, "row">
+
+<Cell><6x4:cell,
+	Hidden =		yes>
+
+<Cell><6x4:cell,
+	Hidden =		yes>
+
+<Cell><6x4:cell,
+	Hidden =		yes>
+
+<Cell><6x4:cell,
+	Hidden =		yes>
+
+<End Table>
+
+<!Master Table, 8x3,
+	Columns =		3,
+	Column 1 Width =	2.131 inches,
+	Column 2 Width =	2.131 inches,
+	Column 3 Width =	2.131 inches,
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row">
+
+<Master Row, "row">
+
+<Cell><mpara,
+	Hidden =		yes>
+
+<Cell><mpara,
+	Hidden =		yes>
+
+<Cell><mpara,
+	Hidden =		yes>
+
+<End Table>
+
+<Right Page Header, Frame =
+V6,
+(g9,1,0
+ (t14,1,4,6.493333,0.438782,2,7,0,0,,wst:timsps10,)
+ (t14,2,4,3.246667,0.438782,1,7,0,0,,wst:timsps10,)
+ (t14,3,4,0,0.438782,0,7,0,0,,wst:timsps10,)
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<Right Page Footer, Frame =
+V6,
+(g9,1,0
+ (t14,1,4,6.493333,0.478772,2,7,0,0,,wst:timsps10,)
+ (t14,2,4,3.366667,0.446667,1,7,0,0,,wst:timsps10,\X80a0)
+ (t14,3,4,0,0.478772,0,7,0,0,,wst:timsps10,)
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<Left Page Footer, Frame =
+V6,
+(g9,1,0
+ (T12,1,12,0.04,0.32,7,127,5,7,127,8,0,2,
+<!Page, Width = 2.533 inches, Height = 0.167 inches>
+<unique>
+
+<foot_prelim, Subcomponent = yes><F31>PRELIMINARY  ( June 19, 1989 
+)<End Sub><F0>
+
+<End Text>))>
+
+<chapname>
+
+<|,165>
+<Frame,
+	Name =			Chapter,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 1.40 inches,
+	Width =			1.75 inches,
+	Height =		1.75 inches,
+	Diagram =
+V6,
+(g9,4,0
+ (g9,4,0
+   (O5,4,8,1,wst:bsdutch0bi,54
+     (s@"8"637
+       (s@"8"0
+         (J0"8"7"6"2"7
+           (s@"8"0
+             (J0"8"5738"6"2"532
+               (s@"8"5713
+                 (s@"8"5713
+                   (y0"8"7"5"5/177376"!5/1@5361"7/645363"5/75423@"7/614846"5/7@5
+                    162"7/670510"5/546504"!7/863684"1/672078"7/670510"5/546504"6
+                    "2"532"2"532"0"7)
+                   (y0"6"7"5"5/135563"!7/425325"7/670510"5/546504"7/8@8060"5/5@1
+                    325"7/82@072"5/335160"!7/637102"3/@2@@33"7/82@072"5/335160"6
+                    "2"532"2"532"0"7)
+                   (y0"4"7"5"3/7058@0"!5/637443"7/82@072"5/335160"7/880031"5/36@
+                    728"7/872354"5/304164"!5/558062"5/@@6303"7/872354"5/304164"6
+                    "2"532"2"532"0"7)
+                   (y0"2"7"5"1/708058"7/187353"7/872354"5/304164"7/106704"5/3@5@
+                    21"7/14101@"5/3@1622"!3/657068"5/3252@"7/14101@"5/3@1622"6"2
+                    "532"2"532"0"7)
+                   (y0"0"7"5"3/20@14"5/3214@6"7/14101@"5/3@1622"7/132684"5/30024
+                    6"7/3@82@3"5/328135"!5/4@0406"7/733764"7/3@82@3"5/328135"6"2
+                    "532"2"532"0"7)
+                   (y0"@"7"5"3/515218"3/232170"7/3@82@3"5/328135"7/327002"5/3804
+                    1@"7/364238"5/35058@"!7/183423"!7/@31001"7/364238"5/35058@"6
+                    "2"532"2"532"0"7)
+                   (y0"57"7"5"5/5283@8"1/02401"7/364238"5/35058@"7/36585"5/5@230
+                    8"7/38@48"5/526454"7/347864"!5/47@@0"7/38@48"5/526454"6"2"53
+                    2"2"532"0"7)
+                   (y0"55"7"5"7/3@3268"1/873433"7/38@48"5/526454"7/361508"5/5744
+                    76"7/34484"5/7101@8"7/082030"!5/5364@@"7/34484"5/7101@8"6"2"
+                    532"2"532"0"7)
+                   (y0"53"7"5"!7/54@8@5"3/@6351"7/34484"5/7101@8"7/3@0113"7/@378
+                    13"7/11@@1@"7/078725"5/72@481"!5/715146"7/11@@1@"7/078725"6"
+                    2"532"2"532"0"7)
+                   (y0"51"7"5"!7/4@1478"1/615464"7/11@@1@"7/078725"7/162483"7/24
+                    3184"7/12000@"7/235852"5/010540"!5/087063"7/12000@"7/235852"
+                    6"2"532"2"532"0"7)
+                   (y0"58"7"5"!7/283@04"3/0@606@"7/12000@"7/235852"7/100436"7/27
+                    614@"7/87575@"7/4@7533"3/555221"!5/58554"7/87575@"7/4@7533"6
+                    "2"532"2"532"0"7)
+                   (y0"56"7"5"!5/042140"1/163454"7/87575@"7/4@7533"7/835101"7/42
+                    1325"7/882761"7/44148"3/36@760"7/177761"7/882761"7/44148"6"2
+                    "532"2"532"0"7)
+                   (y0"54"7"5"!5/18385@"5/761486"7/882761"7/44148"7/847118"7/445
+                    313"7/826106"7/46@432"3/153132"7/616@0"7/826106"7/46@432"6"2
+                    "532"2"532"0"7)
+                   (y0"52"7"5"!3/846574"7/05042@"7/826106"7/46@432"7/650243"7/44
+                    148"7/66@803"7/4078@3"1/775330"3/528024"7/66@803"7/4078@3"6"
+                    2"532"2"532"0"7)
+                   (y0"50"7"5"!5/737322"!7/166632"7/66@803"7/4078@3"7/60721"7/4@
+                    0@80"7/6@620"7/233335"5/11@7@"3/164046"7/6@620"7/233335"6"2"
+                    532"2"532"0"7)
+                   (y0"5@"7"5"!7/7@6061"!5/520201"7/6@620"7/233335"7/471282"7/26
+                    5@53"7/474878"7/20135"7/6@8404"3/206632"7/474878"7/20135"6"2
+                    "532"2"532"0"7)
+                   (y0"37"7"5"7/074673"!3/545810"7/474878"7/20135"7/475@22"7/030
+                    @8@"7/6@80@1"7/0284@5"7/7603@5"1/20826"7/6@80@1"7/0284@5"6"2
+                    "532"2"532"0"7)
+                   (y0"35"7"5"5/721762"!5/87@486"7/6@80@1"7/0284@5"7/620@4"7/@84
+                    55"7/645363"5/75423@"!7/7127@5"1/322483"7/645363"5/75423@"6"
+                    2"532"2"532"0"7))))
+             (J0"31"5738"6"2"532
+               (s@"31"5713
+                 (s@"31"5713
+                   (y0"31"7"5"1/871234"!7/6@0883"7/@27381"7/508648"7/0@8@@@"7/35
+                    506"7/0313@"7/381@8@"!5/8864@0"5/145346"7/0313@"7/381@8@"6"2
+                    "532"2"532"0"7)
+                   (y0"38"7"5"3/14@821"!7/8@4285"7/0313@"7/381@8@"7/4800@8"7/166
+                    8@1"7/655420"7/671586"!5/10526"1/540@72"7/655420"7/671586"6"
+                    2"532"2"532"0"7)
+                   (y0"36"7"5"5/42075@"!5/510886"7/655420"7/671586"7/824342"7/66
+                    617@"7/881658"7/470340"!7/625873"3/11745"7/881658"7/470340"6
+                    "2"532"2"532"0"7)
+                   (y0"34"7"5"!3/871610"5/300134"7/881658"7/470340"7/802220"7/6@
+                    @881"7/611051"7/6@1036"1/8460@"7/18@634"7/611051"7/6@1036"6"
+                    2"532"2"532"0"7)
+                   (D4"32"7"7/611051"7/6@1036"7/662253"7/6@1736"2"532"0"7)
+                   (y0"30"7"5"!3/381586"7/415160"7/662253"7/6@1736"7/274816"7/43
+                    @513"7/053442"7/215065"3/7@5726"3/@@5871"7/053442"7/215065"6
+                    "2"532"2"532"0"7)
+                   (y0"3@"7"5"!7/186341"!5/1@3454"7/053442"7/215065"7/01@338"7/0
+                    77743"7/0825@6"7/023303"7/2@8546"1/3856@"7/0825@6"7/023303"6
+                    "2"532"2"532"0"7)
+                   (y0"17"7"5"7/025474"!5/6171@5"7/0825@6"7/023303"7/038522"5/75
+                    423@"7/26@661"5/567210"!7/450176"1/371123"7/26@661"5/567210"
+                    6"2"532"2"532"0"7)
+                   (y0"15"7"5"3/336652"!7/@77@81"7/26@661"5/567210"7/467448"5/36
+                    @028"7/67@@70"5/1137@0"!3/750883"3/50352"7/67@@70"5/1137@0"6
+                    "2"532"2"532"0"7)
+                   (y0"13"7"5"3/610@00"7/467420"7/67@@70"5/1137@0"7/886308"5/180
+                    586"7/12000@"5/161242"!5/208483"5/14626"7/12000@"5/161242"6"
+                    2"532"2"532"0"7)
+                   (y0"11"7"5"1/782131"5/16116@"7/12000@"5/161242"7/3@2888"5/188
+                    @12"7/335151"5/15@36@"!3/563405"7/358470"7/335151"5/15@36@"6
+                    "2"532"2"532"0"7)
+                   (y0"18"7"5"3/343255"3/36078@"7/335151"5/15@36@"7/541221"5/301
+                    582"7/55@670"5/316775"!5/7@4060"!7/633828"7/55@670"5/316775"
+                    6"2"532"2"532"0"7)
+                   (y0"16"7"5"5/278338"1/101543"7/55@670"5/316775"7/720200"5/548
+                    103"7/766225"5/70058@"!7/1@@57@"!5/843@68"7/766225"5/70058@"
+                    6"2"532"2"532"0"7)
+                   (y0"14"7"5"7/163248"3/23726"7/766225"5/70058@"7/780402"5/7142
+                    @"7/78473@"7/@06815"7/715172"!7/440@4"7/78473@"7/@06815"6"2"
+                    532"2"532"0"7)
+                   (y0"12"7"5"7/533@88"1/16454@"7/78473@"7/@06815"7/760831"7/087
+                    501"7/578862"7/277661"5/554352"!5/80426@"7/578862"7/277661"6
+                    "2"532"2"532"0"7)
+                   (y0"10"7"5"!7/@46746"1/780776"7/578862"7/277661"7/506756"7/64
+                    5234"7/3@3516"7/810@80"3/336884"!5/1@@32@"7/3@3516"7/810@80"
+                    6"2"532"2"532"0"7)
+                   (y0"1@"7"5"!5/85536@"3/520383"7/3@3516"7/810@80"7/872354"7/18
+                    5784"7/6870@3"7/34135"3/052454"!7/07@176"7/6870@3"7/34135"6"
+                    2"532"2"532"0"7)
+                   (y0"87"7"5"!3/733106"5/820@53"7/6870@3"7/34135"7/278446"7/5@0
+                    372"7/02052@"7/568728"1/255808"!7/1241@4"7/02052@"7/568728"6
+                    "2"532"2"532"0"7)
+                   (D4"85"7"7/02052@"7/568728"7/@6@45@"7/58531"2"532"0"7)
+                   (D4"83"7"7/@6@45@"7/58531"7/@27381"7/508648"2"532"0"7)))))))
+       (s@"81"0
+         (D4"81"54222678"7"7"7"7"2"532"0"7)
+         (D4"88"54222678"7/@6472@"7"7/@6472@"7"2"532"0"7)
+         (D4"86"54222678"7"5/211111"7"5/211111"2"532"0"7)
+         (D4"84"54222678"7/@6472@"5/211111"7/@6472@"5/211111"2"532"0"7)))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+Filter Services
+
+<rule:sm>
+
+<Frame,
+	Name =			rule:intro,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 0.04 inches,
+	Width =			5 inches,
+	Height =		0.10 inches,
+	Shared Contents =	yes>
+
+<para>
+
+In addition to the basic <F25>ASCII Reader <F0>data structures and 
+function calls, the <F25>ASCII Reader<F0> also provides a set of commonly 
+used routines that make writing filters easier. At this point, the 
+only services provided are string manipulation and I/O.
+
+<para>
+
+The <F25>ASCII Reader <F0>uses strings of <F25>short<F0>s instead 
+of <F25>char<F0>s to represent character strings. In this capacity, 
+the <F26>characters<F0> are <F25>shar<F0>s, and the <F26>strings<F0> 
+are <F25>shring<F0>s. <F25>shar<F0>s are used because the need to 
+represent other structures (frames, inline components), fonts, and 
+an expanded character set requires more space per <F26>character<F0>.
+
+<para>
+
+The <F25>shring<F0> routines are similar to the C string functions.
+
+<rule:sm>
+
+<Frame,
+	Name =			rule:intro,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 0.04 inches,
+	Width =			5 inches,
+	Height =		0.10 inches,
+	Shared Contents =	yes>
+
+<titleA,
+	Begin New Page =		yes>
+
+<|,166>String Manipulation
+
+<rule:Adot>
+
+<Tab.>
+
+<titleBA>
+
+<Autonum, reference, 1, First = Yes, Tagname = ssave>Ssave: Dynamically-growing 
+character string services
+
+<para>
+
+In many parts of the ASCII Reader, there is a need to store a string 
+of text when the length of the text is not known in advance. Generally 
+a maximum length is known, but often the actual length is much less 
+than the maximum and it would be a waste of space to allocate storage 
+based on the maximum. And in some circumstances, there is no maximum 
+length: the text in a component can be as large as the computer will 
+allow.
+
+<para>
+
+AR provides a separate set of services to handle dynamically-growing 
+strings. Such a string is managed by a control block that contains 
+information about the location and size of the string. The services 
+allocate more space when it is needed, and hide the details of storage 
+management from the client routine.
+
+<note:caution>
+
+<"|:note:caution", Subcomponent = yes><F0>
+<Frame,
+	Name =			note:caution,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.047423,0.706667,0.047423,7,0,4,0)
+       (v6,3,0,0.706667,0.047423,0.706667,0.005911,7,0,4,0)
+       (v6,4,0,0.706667,0.005911,0,0.005911,7,0,4,0)
+       (v6,5,0,0,0.005911,0,0.047423,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+<Tab><F26>Caution:<F0><Tab><End Sub><F0>These services do <F26>not<F0> 
+automatically NULL-terminate the string. It is up to the client to 
+add a zero value to terminate a string.
+
+<para>
+
+The string services are used in three ways within AR. We describe 
+them here to show how they might be useful to a client program.
+
+<para>
+
+A simple use is the gathering of characters that make up a name, such 
+as a component name or printer name. A temporary control block is 
+allocated and used to collect the characters in the name (including 
+an explicit NULL terminator). When the name is complete, a pointer 
+to it is saved in some data structure and the temporary control block 
+is discarded. The name will generally be kept for the duration of 
+the program, and will not grow.
+
+<para>
+
+Another use is to manage the content of a component, its text and 
+its tokens. Here the control block is part of a <F25>Cmpn_t<F0> variable, 
+and lasts for as long as the component does. The dynamically growing 
+storage is referred to as the component's <F26>buffer<F0>. The buffer 
+grows in a complex way as the text and markup of the Interleaf ASCII 
+markup file are read. The control block is used by several different 
+routines, each using it to add its piece to the component buffer. 
+These routines all use the services described here, with the result 
+that the buffer grows in a uniform and consistent way. Note that in 
+this case, the buffer is not NULL-terminated.
+
+<para>
+
+A third use of these services within AR is in managing the input stream 
+of characters from the Interleaf ASCII markup file. To interpret the 
+markup commands, it is sometimes necessary to look ahead in the file, 
+reading past the <#7f>current" character. Characters read ahead must 
+be saved and processed in their turn. They are kept in a block of 
+storage managed by the Csave services. Also, it is sometimes necessary 
+to insert characters into the input stream that are not in the input 
+file. The string services allow characters to be placed on the front 
+of the read-ahead string.
+
+<titleB>
+
+Using the Ssave Facilities
+
+<titleCB>
+
+#include "ar5csave.h"
+
+<para>
+
+<F25>ar5csave.h<F0> is the <F24@U>include file<F0> that defines the 
+interface to these routines. The client program must include it to 
+access the Ssave_t structures and associated routines.
+
+<titleA,
+	Begin New Page =		yes>
+
+<|,167>The Ssave_t Data Structures
+
+<rule:Adot>
+
+<Tab.>
+
+<CtitleB,
+	Top Margin =		0.08 inches,
+	Begin New Page =		no>
+
+Ssave_t
+
+<Cstuff>
+
+typedef struct ssave_t<HR>
+{<HR>
+<Tab>shar *baseP,<HR>
+<Tab>shar *outP,<HR>
+<Tab>shar *inP,<HR>
+ <Tab>shar *limitP;<HR>
+} Ssave_t;
+
+<CtitleCfields>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		167,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Field Definitions
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+baseP
+
+<Cpara>
+
+The first location in the storage array.
+
+<CtitleCns>
+
+outP
+
+<Cpara>
+
+The next <F25>shar <F0>to be returned from an output function.
+
+<CtitleCns>
+
+inP
+
+<Cpara>
+
+The location for the next input <F25>shar<F0>.
+
+<CtitleCns>
+
+limitP
+
+<Cpara>
+
+One position beyond the last available storage location. 
+
+<CtitleCdesc>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		167,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Usage
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+For the most part, these fields are manipulated by service routines 
+and should not be used by the client. The allocation of storage is 
+handled by the <F25>ASCII Reader<F0>. The client's only responsibility 
+is to allocate the Ssave_t structure itself.
+
+<Cpara>
+
+In addition to the <F25>shar<F0>-based services described here, there 
+are equivalent <F25>char<F0>-based services. Refer to the header file 
+for the name of the corresponding <F25>char<F0>-based service.
+
+<titleA,
+	Begin New Page =		yes>
+
+<|,168>The String Manipulation Routines
+
+<rule:Adot>
+
+<Tab.>
+
+<paraAT>
+
+The routines presented here ease access to the strings of text and 
+embedded components in an ASCII markup document. See the <F26>Data 
+Structures <F0>chapter of this document for examples of usage of some 
+of these routines.
+
+<paraAT>
+
+The example CASE database interface in the <F26>Design Guide <F0>chapter 
+also presented an example using the data structures.
+
+<CtitleB>
+
+<|,169>SsSaveS()
+
+<Cpara>
+
+Save a <F25>shar <F0>in a <F25>shring<F0>. (Add a character to a string.)
+
+<Cstuff>
+
+short SsSaveS( s, ssP )<HR>
+shar s;<HR>
+Ssave_t *ssP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		169,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+short
+
+<Cpara>
+
+YES on success, NO on failure. 
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		169,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+s
+
+<Cpara>
+
+The <F25>shar <F0>to save.
+
+<CtitleCns>
+
+ssP
+
+<Cpara>
+
+The string storage structure.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		169,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This function appends the <F25>shar<F0> value in <F25>s<F0> to the 
+storage manage by the <F25>Ssave_t<F0> structure pointed to by <F25>ssP<F0>.
+
+<Cpara>
+
+If needed, an initial buffer is allocated. If the buffer is full, 
+it is reallocated via <F25>ArSafeRealloc()<F0>. The pointers are updated 
+appropriately. The boolean value <F25>YES<F0> is returned on success.
+
+<Cpara>
+
+If an error happens, a message will be sent to standard error and 
+the program will exit.
+
+<CtitleB>
+
+<|,170>SsSaveSFront()
+
+<Cpara>
+
+Save a <F25>shar<F0> at the front of a <F25>shring<F0>.
+
+<Cstuff>
+
+short SsSaveSFront( s, ssP )<HR>
+shar s;<HR>
+Ssave_t *ssP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		170,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+short
+
+<Cpara>
+
+YES on success, NO on failure.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		170,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+s
+
+<Cpara>
+
+The <F25>shar <F0>to save.
+
+<CtitleCns>
+
+ssP
+
+<Cpara>
+
+The string storage structure.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		170,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This function is like <F25>SsSaveS()<F0> except that <F25>s<F0> is 
+saved at the <#7f>first" position in storage. If necessary, the rest 
+of storage is shifted to make room there. This routine is the basis 
+of any <F25>ungetc()<F0>-like functions built on top of the <F25>Csave<F0> 
+services. Note that any number of characters can be put onto the front 
+of storage; space is allocated as needed, just as it is for <F25>SsSaveS().
+
+<CtitleB>
+
+<|,171>SsSaveShr()
+
+<Cpara>
+
+Copy a <F25>shring <F0>into string storage.
+
+<Cstuff>
+
+short SsSaveShr( sP, ssP )<HR>
+shar *sP;<HR>
+Ssave_t *ssP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		171,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Return
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+short
+
+<Cpara>
+
+YES on success, NO on failure.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		171,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+sP
+
+<Cpara>
+
+The <F25>shring <F0>to be moved into string storage.
+
+<CtitleCns>
+
+ssP
+
+<Cpara>
+
+The string storage structure.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		171,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This function saves the shars pointed to by <F25>sP<F0>, up to a zero 
+value, at the back of the storage managed by <F25>ssP<F0>. It is equivalent 
+to looping over the shars in <F25>*sP<F0>, saving each one with <F25>SsSaveS()
+<F0>, but it is faster.
+
+<CtitleB>
+
+<|,172>SsAmount()
+
+<Cpara>
+
+Return string length in bytes.
+
+<Cstuff>
+
+long SsAmount( ssP )<HR>
+Ssave_t *ssP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		172,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+long
+
+<Cpara>
+
+The number of bytes required to store the <F25>shring<F0>, not including 
+the NULL terminator.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		172,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ssP
+
+<Cpara>
+
+The string storage structure.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		172,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This function returns the number of objects (in the <F25>sizeof() <F0>sense) 
+currently stored in the buffer.
+
+<CtitleB>
+
+<|,173>SsGetS()
+
+<Cpara>
+
+Get the next <F25>shar <F0>from string storage.
+
+<Cstuff>
+
+shar SsGetS( ssP )<HR>
+Ssave_t *ssP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		173,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+shar
+
+<Cpara>
+
+The next <F25>shar<F0> from string storage.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		173,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ssP
+
+<Cpara>
+
+The string storage structure.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		173,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This function returns the <F25>shar<F0> on the <#7f>front" of the 
+storage, or <F25>EOF<F0> if the storage is empty or unallocated.
+
+<CtitleB>
+
+<|,174>SsNew()
+
+<Cpara>
+
+Allocate a string storage structure.
+
+<Cstuff>
+
+Ssave_t *SsNew( );
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		174,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+Ssave_t*
+
+<Cpara>
+
+A new string storage structure.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		174,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+none
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		174,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This function creates a new <F25>Ssave_t<F0> object and returns a 
+pointer to it. It is initialized as if by <F25>SsInitEmpty()<F0>, 
+below, and is ready for use.
+
+<CtitleB>
+
+<|,175>SsBufStart()
+
+<Cpara>
+
+Return a pointer to the next object to be returned from string storage.
+
+<Cstuff>
+
+#define SsBufStart( ssP ) ....<HR>
+Ssave_t<Tab><Tab>*ssP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		175,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+shar*
+
+<Cpara>
+
+The next <F25>shar<F0> in string storage. Be careful when changing 
+this value because different values require different amounts of space. 
+For example, an inline component token requires six bytes of storage.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		175,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ssP
+
+<Cpara>
+
+The string storage structure.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		175,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This macro evaluates to a pointer to the next object in the <F25>shar<F0> 
+storage. A client should use it, rather than directly accessing the 
+fields of the <F25>Ssave_t<F0>, to be secure against future changes 
+to those fields.
+
+<CtitleB>
+
+<|,176>SsBufEnd()
+
+<Cpara>
+
+Return a pointer to the location for the next input <F25>shar<F0>.
+
+<Cstuff>
+
+#define SsBufEnd( ssP ) ....<HR>
+Ssave_t<Tab><Tab>*ssP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		176,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+shar*
+
+<Cpara>
+
+Pointer to the location for the next <F25>shar <F0>from an input routine.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		176,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ssP
+
+<Cpara>
+
+The string storage structure.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		176,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This macro evaluates to a pointer to the location that is one beyond 
+the last <F25>shar<F0> in the <F25>ssP<F0>. A client should use it, 
+rather than directly accessing the fields of the <F25>Ssave_t<F0>, 
+to be secure against future changes to those fields.
+
+<CtitleB>
+
+<|,177>SsInitEmpty()
+
+<Cpara>
+
+Return an initialized, unallocated, <F25>Ssave_t <F0>structure.
+
+<Cstuff>
+
+#define SsInitEmpty( ) ....
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		177,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+Ssave_t
+
+<Cpara>
+
+An initialized <F25>Ssave_t <F0>structure. Note that this routine 
+doesn't allocate storage.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		177,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+none
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		177,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This macro evaluates to a correctly initialized, unallocated, <F25>Ssave_t
+<F0> structure. It can be assigned to a local <F25>Ssave_t<F0> structure.
+
+<CtitleB>
+
+<|,178>SsReset()
+
+<Cpara>
+
+Reset string storage.
+
+<Cstuff>
+
+void SsReset( ssP );<HR>
+Ssave_t *ssP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		178,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+none
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		178,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ssP
+
+<Cpara>
+
+The string storage structure.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		178,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+If <F25>ssP<F0> is not <F25>NULL<F0>, its <F25>outP<F0> and <F25>inP<F0> 
+pointers are reset to <F25>baseP<F0>, abandoning any characters it 
+may have held and making the existing storage look empty. <F25>limitP<F0> 
+is unchanged (that is, no allocated memory is released).
+
+<CtitleB>
+
+<|,179>SsFree()
+
+<Cpara>
+
+Free string storage.
+
+<Cstuff>
+
+void SsFree( ssP );<HR>
+Ssave_t *ssP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		179,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+none
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		179,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ssP
+
+<Cpara>
+
+The string storage structure.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		179,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+If <F25>ssP<F0> is not <F25>NULL<F0>, and there is storage allocated, 
+the storage is freed and the pointers are all reset to <F25>NULL<F0>. 
+The result is that <F25>*ssP<F0> looks unallocated. The next <F25>SsSaveS()
+<F0> or <F25>SsSaveShr()<F0> call will allocated new storage.
+
+<CtitleB>
+
+<|,180>ArFprintf()
+
+<Cpara>
+
+Provide fprintf() functionality with <F25>shar<F0>s.
+
+<list>
+
+<"|:list", Subcomponent = yes><F0><Tab><F25>><F0><Tab><End Sub><F0>There 
+are several new format descriptors for <F25>short<F0>-based characters 
+and strings
+
+<list>
+
+<"|:list", Subcomponent = yes><F0><Tab><F25>><F0><Tab><End Sub><F0>There 
+are some new descriptors specifically related to Interleaf ASCII markup
+
+<listLA>
+
+<"|:listLA", Subcomponent = yes><F0><Tab><F25>><F0><Tab><End Sub><F0>There 
+are <F24@U>no<F0> floating-point formats
+
+<Cstuff>
+
+long ArFprintf( ofile, fmtP, arg )<HR>
+FILE *ofile;<HR>
+char *fmtP;<HR>
+unsigned long arg;<HR>
+
+<Cstuff>
+
+long ArSprintf( strP, fmtP, arg )<HR>
+char *strP,<HR>
+char *fmtP;<HR>
+unsigned long arg;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		180,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+long
+
+<Cpara>
+
+Number of characters written to the output file or string.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		180,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ofile <F88>or <F0>strP
+
+<Cpara>
+
+Opened file stream or character array. This routine does no allocation.
+
+<CtitleCns>
+
+fmtP
+
+<Cpara>
+
+A format string similar to the ones used in fprintf(). The following 
+table describes the new format arguments.
+
+<Table, 8x3,
+	Columns =		3,
+	Left Margin =		1.75 inches,
+	Column 1 Width =	0.77 inches,
+	Column 2 Width =	1.154 inches,
+	Column 3 Width =	3.076 inches>
+
+<Master Row, header, Top Margin = 0.03 inches, Bottom Margin = 0.03 inches, Header = yes>
+
+<Cell, Vertical Alignment = Center><para,
+	Hidden =		yes,
+	Left Margin =		0 inches>
+
+<Cell, Vertical Alignment = Center><para,
+	Hidden =		yes,
+	Left Margin =		0 inches>
+
+<Cell><para,
+	Hidden =		yes,
+	Left Margin =		0 inches>
+
+<Master Row, "row">
+
+<Cell, Vertical Alignment = Center><para,
+	Hidden =		yes,
+	Left Margin =		0 inches>
+
+<Cell, Vertical Alignment = Center><para,
+	Hidden =		yes,
+	Left Margin =		0 inches>
+
+<Cell, Vertical Alignment = Center><para,
+	Hidden =		yes,
+	Left Margin =		0 inches>
+
+<Row, header, Top Margin = 0.027 inches, Bottom Margin = 0.027 inches>
+<Cell, Vertical Alignment = Center><tblhead>
+
+Format
+
+<Cell, Vertical Alignment = Center><tblhead>
+
+Argument type
+
+<Cell, Vertical Alignment = Center><tblhead>
+
+Effect
+
+<Row, "row">
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+%C
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+shar
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+A 16-bit value is read from the argument. It is truncated to 8 bits, 
+and the result is printed as per %c.
+
+<Row, "row">
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+%#C
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+shar
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+A 16-bit value is read from the argument. If it is in the range of 
+printable ASCII, it is printed as per %c. Otherwise it is printed 
+in the Interleaf ASCII markup standard form of out-of-range characters, 
+<<#xxxx>. Note that this puts seven bytes into the output. Note also 
+that the value is not truncated.
+
+<Row, "row">
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+%#c
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+char
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+Like %#C, except that an 8-bit value is read from the argument.
+
+<Row, "row">
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+%S
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+pointer to shar (shring)
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+The shring is read until the terminating zero or until the format 
+precision is exhausted. Each shar is printed as per %C. 
+
+<Row, "row">
+<|,181>
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+%#S
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+pointer to shar (shring)
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+The shring is read until the terminating zero or until the format 
+precision is exhausted. Each shar is printed as per %#C.
+
+<Row, "row">
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+%Q
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+pointer to shar (shring)
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+The shring is printed according to the rules of Interleaf ASCII markup. 
+The caller does not need to check for any special conditions in the 
+shring.
+
+<para,
+	Left Margin =		0 inches>
+
+The double-quote character " is printed before the beginning and after 
+the end of the characters in the shring. If the double-quote character 
+occurs inside the shring, it is printed twice. If the character '<<' 
+occurs inside the shring, it is printed twice. Characters outside 
+the range of printable ASCII are printed in <<#xxxx> form.
+
+<Row, "row">
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+%#Q
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+pointer to shar (shring)
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+Like %Q, except that the single-quote character ' is used in place 
+of the double-quote character, and it is printed twice if it occurs 
+within the string.
+
+<Row, "row">
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+%q
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+pointer to shar (string)
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+Like %Q, except that 8-bit values are read from the argument.
+
+<Row, "row">
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+%#q
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+pointer to shar (string)
+
+<Cell, Vertical Alignment = Center><para,
+	Left Margin =		0 inches>
+
+Like %#Q, except that 8-bit values are read from the argument.
+
+<End Table>
+
+<CtitleCns>
+
+arg
+
+<Cpara>
+
+An unlimited number of arguments, one for each format command in <F25>fmtP
+<F0>.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		181,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+In TPS 3.0, a <#7f>character" or <#7f>fundamental text unit" required 
+7 bits, and fit into a C <F25>char<F0> variable. That character set 
+is too limited for the needs of TPS 4.0, which now uses 14 bits in 
+a 16-bit C <F25>short<F0> variable to hold a <#7f>character". These <F25>short
+<F0>-based characters and character strings are referred to as <F25>shar<F0>s 
+and <F25>shring<F0>s. The standard C output function <F25>fprintf()<F0> 
+is not capable of printing <F25>shars<F0> and <F25>shrings<F0> as 
+text, since it does not anticipate <F25>short<F0>-based characters. 
+For this reason, we have created <F25>ArFprintf()<F0> and <F25>ArSprintf()
+<F0>, functionally like <F25>fprintf()<F0> and <F25>sprintf()<F0> 
+except that they do <F25>shar<F0>s and do not do <F25>float<F0>s.
+
+<Cpara>
+
+These functions can be especially useful when debugging. Because <F25>ArDocWrit
+e() <F0>will write a complete document, they are not generally required 
+for generating the output document.
+
+<Cpara>
+
+In interfaces that collect data from a document for storage in other 
+forms (like databases, other word processors, graphics libraries, 
+etc), the routines could be used for converting <F25>shar<F0>-based 
+strings to <F25>char<F0>-based ones.
+

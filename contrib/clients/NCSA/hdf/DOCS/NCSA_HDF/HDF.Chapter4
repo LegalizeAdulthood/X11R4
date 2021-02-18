@@ -1,0 +1,852 @@
+
+
+Chapter 4	FORTRAN Language Interface
+
+
+
+Chapter Overview
+FORTRAN Routines vs. FORTRAN Stubs 
+Written in C
+Data Type Anomalies
+Case Sensitivity
+General Purpose HDF I/O Routines
+Header Files
+Return Values
+Opening and Closing Files
+DFopen
+DFclose
+Finding Tags, Refs, and Element Lengths
+DFsfind
+DFfind
+Storing and Retrieving Entire Data Elements
+DFget
+DFput
+Reading or Writing Part of a Data Element
+DFaccess
+DFread
+DFwrite
+DFseek
+Manipulating Data Descriptors (DDs)
+DFupdate
+DFdup
+DFdel
+HDF 8-Bit Raster Image Set Routines
+Return Values
+Reading Raster Images from a File
+DFR8getdims
+DFR8getimage
+Writing Raster Images to a File
+DFR8setpalette
+DFR8putimage
+DFR8addimage
+HDF Scientific Data Set Routines
+Reading Scientific Data from a File
+DFSDgetdims
+DFSDgetdata
+DFSDgetdimstrs
+DFSDgetdimscale
+DFSDgetdatastrs
+DFSDgetmaxmin
+DFSDrestart
+Writing Scientific Data Sets to a File
+DFSDsetlengths
+DFSDsetdims
+DFSDsetdimstrs
+DFSDsetdimscale
+DFSDsetdatastrs
+DFSDsetmaxmin
+DFSDputdata
+DFSDadddata
+DFSDclear
+
+.c2.Chapter Overview
+
+The following is a reference to the current FORTRAN language 
+routines for working with HDF files. The collection of routines is 
+divided into three groups. The first group is a set of general purpose 
+low-level routines for reading and writing portions of HDF files. 
+The second is the set of RIS8 routines, which are for reading and 
+writing 8-bit raster images. And the third is the set of SDS routines, 
+which are for reading and writing scientific data sets.
+
+Please note that if you are using an HDF package such as RIS8, you 
+probably do not need the first group of low level routines.
+
+
+FORTRAN Routines vs. FORTRAN Stubs Written in C
+
+All of the HDF routines described here are callable from 
+FORTRAN programs, but they are not actually written in 
+FORTRAN. They are written in C, and stored in a library that is 
+accessible to FORTRAN programs. So the routines might better be 
+referred to as FORTRAN stubs, rather than FORTRAN functions.
+
+
+Data Type Anomalies
+This distinction leads to a few difficulties in describing, using 
+FORTRAN conventions, some of the data types in the argument 
+lists. For instance, some of the SDS routines place no restrictions 
+on the rank (number of dimensions) that a data array can have. 
+This is perfectly legal in C, but unnatural in FORTRAN. 
+Fortunately, since both C and FORTRAN pass arrays by 
+reference, no problem arises in the actual interface between the 
+FORTRAN calls and the corresponding stubs. The only real 
+problem is in the notation used here to describe the routines as if 
+they were actual FORTRAN routines.
+
+So, in the declarations contained in the headers, use the following 
+conventions:
+
+¥	"CHARACTER*1    x(*)" means that x refers to an array that 
+contains an indefinite number of characters. It is the 
+responsibility of the calling program to allocate enough space to 
+hold whatever data is stored in the array.
+
+¥	"REAL    x(*)" means that x refers to an array of reals of 
+indefinite size and of indefinite rank. It is the responsibility of the 
+calling program to allocate an actual array with the correct 
+number of dimensions and dimension sizes.
+
+
+Case Sensitivity
+Another difference between FORTRAN and C is that FORTRAN 
+identifiers, in general, are not case sensitive, whereas C 
+identifiers are. Hence, although the names of functions and 
+variables listed below use both lower-case and upper-case letters, 
+FORTRAN programs that call them can use either upper or lower 
+case without loss of meaning.
+
+
+General Purpose HDF I/O Routines
+
+Sometimes you may need a lower level of access to HDF files than 
+that provided by more application-oriented interfaces such as RIS8 
+and SDS. The routines described here enable you to build and 
+manipulate HDF files of any type, including those of your own 
+invention. All HDF applications developed at NCSA use these 
+routines as their basic building blocks.
+
+NOTE:  If you are using an HDF package such as RIS8, you 
+probably do not need to use any of these routines.
+
+In order to understand how these routines work, it is important to 
+understand the underlying structure of all HDF files. Detailed 
+information about the basic HDF structure and how it works can be 
+found in NCSA HDF Specifications, currently a draft document 
+which may be obtained by contacting NCSA's Software 
+Development Group at the address listed on the Bugs and 
+Suggestions page at the end of this manual.
+
+
+Header Files
+You need to include a header file if your program uses special HDF 
+declarations or definitions. The header file dfF.h contains the 
+declarations and definitions that are used by the general purpose 
+I/O routines listed here. For example, if your program uses 
+mnemonics for tags, the corresponding numerical values for the 
+tags can be found in dfF.h. The contents of dfF.h are listed in 
+Appendix B.
+
+Although the use of header files is generally not permitted in 
+FORTRAN, it is sometimes available as an option. On UNIX 
+systems, for example, the macro processors m4 and cpp let your 
+compiler include and preprocess header files. If this or a similar 
+capability is not available, you may have to copy whatever 
+declarations, definitions, or values you need from dfF.h into your 
+program code.
+
+
+Return Values
+Unless otherwise indicated, all HDF routines return 0 (zero) on 
+success and -1 on failure.
+
+
+
+Opening and Closing Files
+The functions used to open and close your HDF files are presented 
+below.
+
+
+DFopen
+INTEGER FUNCTION DFopen(filename, access, defDDs)
+
+CHARACTER*64	filename	-	name of file to be opened
+INTEGER	access	-	type of access
+INTEGER	defDDs	-	number of data descriptors to
+			allocate per block
+DFopen provides an access path to the file named in filename with 
+the access given in access. It also reads into primary memory all 
+of the DD blocks in the file.
+
+Values allowed for access are 1 for read only and 2 for read/write. 
+If the file must be created or extended, defDDs specifies the number 
+of data descriptors (DDs) to be allocated per DD block. If defDDs ² 
+0, it is set to the machine default.
+
+NOTE:  In the current implementation, only one file can be open at 
+a time.
+
+Return value:  DFopen returns an integer that identifies the file 
+access path. If the call succeeds, the return value is positive. If the 
+call fails, the return value is 0.
+
+
+DFclose
+INTEGER FUNCTION DFclose(dfile)
+
+INTEGER	dfile	-	identifier of file access path
+DFclose updates the DD blocks, then closes the access path to the 
+file referred to by dfile.
+
+NOTE:  If the contents of a file have been changed, it is important 
+to call DFclose to ensure that the DD blocks are written to the file. 
+Alternatively, to cause all DD blocks to be written to the file without 
+also closing the file, see DFupdate.
+
+
+Finding Tags, Refs, and 
+Element Lengths
+These routines make it possible to locate elements without previous 
+knowledge of their tags and reference numbers. For example, if 
+you know that several instances of a given tag are in a file, but do 
+not know the reference numbers, you can use these routines to find 
+the reference numbers, as well as the lengths, of the corresponding 
+data elements.
+
+
+DFsfind
+INTEGER FUNCTION DFsfind(dfile, itag, iref)
+
+INTEGER	dfile	-	identifier of file access path
+INTEGER	itag, iref	-	tag and ref to be located
+DFsfind is used to initialize searches for elements using tags and 
+reference numbers. A call to DFsfind locates the item in dfile 
+with the tag/ref combination itag/iref.
+
+DFsfind is closely tied to the operation of DFfind, which is 
+described next. After calling DFsfind, you must call DFfind to 
+actually get the information to which the tag and reference 
+numbers correspond.
+
+Either itag or iref may be a wild card. If itag is 0, then when 
+DFfind is called, it returns ascending tag numbers that match the 
+reference number iref. If iref is 0, then DFfind returns 
+ascending reference numbers that match the tag itag. If both itag 
+and iref are wild cards, then DFfind gives the tags and reference 
+numbers in ascending order, with reference numbers as the 
+primary field.
+
+
+DFfind
+INTEGER FUNCTION DFfind(dfile, itag, iref, len)
+
+INTEGER	dfile	-	identifier of file access path
+INTEGER	itag, iref	-	tag and ref of data to be retrieved
+INTEGER	len	-	number of bytes of data to be stored
+DFfind is used to get the results from searches of tag and reference 
+numbers. Tag, reference number, and length of data elements are 
+returned according to the search pattern set in DFsfind. DFfind 
+returns a negative number and sets itag and iref to zero if there 
+are no more elements which match the pattern.
+
+
+Storing and Retrieving 
+Entire Data Elements
+There are two sets of routines for reading and writing data 
+elements. DFput and DFget, described here, store and retrieve 
+entire elements. A second set of routines may be used if it is 
+desired to access only part of a data element at a time. These 
+routines are covered in the next section.
+
+
+DFget
+INTEGER FUNCTION DFget(dfile, itag, iref, storage)
+
+INTEGER	dfile	-	identifier of file access path
+INTEGER	itag, iref	-	tag and ref of data to be retrieved
+CHARACTER*1	storage(*)	-	array for storing incoming data
+DFget obtains the data referred to by the itag/iref combination 
+that is passed to it from the dfile, and places the incoming data in 
+the array storage.
+
+Return value:  If DFget succeeds, the return value is the number of 
+bytes read. If it fails, -1 is returned.
+
+
+DFput
+INTEGER FUNCTION DFput(dfile, itag, iref, storage, len)
+
+INTEGER	dfile	-	identifier of file access path
+INTEGER	itag, iref	-	tag and ref of data to store
+INTEGER	len	-	number of bytes of data to store
+CHARACTER*1	storage(len)	-	array with data to be stored
+DFput adds or replaces elements in dfile. The first len bytes in 
+the array storage are written to the file with itag/iref referring 
+to them.
+
+Since there can be no two elements with the same tag and reference 
+numbers, any call with a tag/ref combination that duplicates an 
+existing tag/ref replaces the previous element.
+
+
+Reading or Writing Part of 
+a Data Element
+The second set of routines for reading and writing data elements 
+makes it possible to read or write all or part of a data element, in 
+contrast to DFput and DFget, described above, which can only read 
+or write entire elements.
+
+
+DFaccess
+INTEGER FUNCTION DFaccess(dfile, itag, iref, access)
+
+INTEGER	dfile	-	identifier of file access path
+INTEGER	itag, iref	-	tag and ref of data to be accessed
+CHARACTER*1	access	-	access mode
+DFaccess initiates a read or write on the data element with the 
+specified itag/iref combination. For read, write, or append 
+access, respectively, access is 'r', 'w', or 'a'.
+
+DFaccess must be invoked before the first DFread or DFwrite 
+operation can be performed. It checks that the access mode is valid 
+and moves to the position in the file where the desired data element 
+is stored. If append access is specified, subsequent writes are 
+appended to the end of the existing data.
+
+
+DFread
+INTEGER FUNCTION DFread(dfile, data, len)
+
+INTEGER	dfile	-	identifier of file access path
+INTEGER 	len	-	number of bytes to read
+CHARACTER*1	data(len)	-	array that will hold data
+DFread reads a portion of a data element. It starts at the last 
+position left by a DFaccess, DFread or DFseek command and 
+reads into the array data any data that remains in the element up 
+to len bytes. It fails if the DFaccess mode was not 'r'.
+
+Return value:  If DFread is able to read any bytes, it returns the 
+number of bytes read. If it is at the end of the element before the 
+read occurs, it returns zero. On failure, it returns -1.
+
+
+DFwrite
+INTEGER FUNCTION DFwrite(dfile, data, len)
+
+INTEGER 	dfile	-	identifier of file access path
+INTEGER	len	-	number of bytes to write
+CHARACTER*1	data(len)	-	array with data to be written
+DFwrite appends data to a data element. It starts at the last position 
+left by a DFaccess or DFwrite command and writes up to len 
+bytes, then leaves the write pointer at the end of the 
+element.Returns the number of bytes written or negative on 
+failure.
+
+DFwrite fails if the DFaccess mode was not 'w' or 'a'.
+
+NOTE:  The corresponding tag entry in the DD block is not updated 
+until DFclose or DFupdate is called. 
+
+Return value:  Number of bytes written, or negative on failure.
+
+
+DFseek
+INTEGER FUNCTION DFseek(dfile, offset)
+
+INTEGER	dfile	-	identifier of file access path
+INTEGER	offset	-	offset within data element to seek to
+DFseek sets the read pointer to an offset within a data element. It 
+tries to count offset number of bytes from the beginning of the 
+element and set the read pointer there. The next time DFread is 
+called, the read occurs from the new position.
+
+NOTE:  DFseek is only valid when used in conjunction with a 
+DFread. It should not be used to position a write operation.
+
+Return value:  Number of bytes from the beginning of the element 
+to the new pointer position.
+
+
+Manipulating Data 
+Descriptors (DDs) 
+These routines perform operations on DDs without doing anything 
+with the data to which the DDs refer.
+
+
+DFupdate
+INTEGER FUNCTION DFupdate(dfile)
+
+INTEGER	dfile	-	identifier of file access path
+DFupdate writes out the DD blocks necessary to update the file. All 
+data elements that have been written or partially written to the file 
+are given valid DDs.
+
+DFupdate is useful because HDF does not automatically write DDs 
+to a file when the corresponding data is written out. Instead, it 
+keeps all of the DDs in a special structure in primary memory, 
+then writes them all out when DFclose is called. If a crash occurs 
+after data has been written out to a file but before the file is closed, 
+changes that have been made to the file can be lost. If a DFupdate is 
+performed immediately after a write, then the changes made by the 
+write are not lost because both the DDs and the corresponding data 
+have been stored in the file.
+
+
+DFdup
+INTEGER FUNCTION DFdup(dfile, itag, iref, otag, oref)
+
+INTEGER	dfile	-	identifier of file access path
+INTEGER	itag, iref	-	new tag and ref to point to old data
+INTEGER	otag, oref	-	tag and ref that already point to data
+Sometimes it is desirable to have more than one DD point to a 
+single data element. In these cases, the offset and length fields are 
+identical for two or more DDs. DFdup is used to generate new 
+references to data that is already referenced from somewhere else.
+
+DFdup creates a new tag/ref (itag/iref) that points to the same 
+data as an old tag/ref (otag/oref). If the new tag/ref combination 
+already exists in the file, then the offset and length are changed to 
+their new values.
+
+Return value:  0 on success and a negative error indicator if the old 
+tag/ref is not present in the file.
+
+WARNING:  When a data element that is referenced from several 
+places is modified, there is a danger that duplicate references to 
+that data no longer point to the correct data. For instance, when a 
+data element is moved HDF does not automatically change all 
+prior references to that data to point to the data in its new location.
+
+
+DFdel
+INTEGER FUNCTION DFdel(dfile, itag, iref)
+
+INTEGER	dfile	-	identifier of file access path
+INTEGER	itag, iref	-	tag and ref of data to be deleted
+DFdel deletes a tag/ref from the list of DDs.
+
+The data to which this DD points is not affected by DFdel, but is 
+reclaimed when the file is compacted. If there are multiple 
+references to this data, then the other references remain intact and 
+compaction does not affect the data itself.
+
+
+HDF 8-Bit Raster Image Set Routines
+
+These routines apply to the storage of 8-bit raster images. See 
+Chapter 2, "Using NCSA HDF for 8-Bit Raster Images," for 
+examples and discussions of these routines.
+
+
+Return Values
+Unless otherwise indicated, all HDF routines return 0 (zero) on 
+success and -1 on failure.
+
+
+Reading Raster Images 
+from a File
+The two routines DFR8getdim and DFR8getimage are sufficient to 
+read raster images from a file. If enough is known about the 
+images and palettes, only the latter routine is needed.
+
+
+DFR8getdims
+INTEGER FUNCTION DFR8getdims(filename,xdim,ydim,ispalette)
+
+CHARACTER*64	filename	-	name of file with RIS8 image
+INTEGER	xdim, ydim	-	dimensions of the next image
+INTEGER	ispalette	-	1 if there is a palette, else 0
+DFR8getdims opens the file with name filename, finds the next 
+image, retrieves the dimensions of the image in xdim and ydim, 
+and tells via ispalette whether there is a palette associated with 
+the image.
+
+If the file is being opened for the first time, DFR8getdims returns 
+information about the first image in the file. If an image has 
+already been read, DFR8getdims finds the next image. Thus, 
+images are read in the same order in which they were written to the 
+file.
+
+Normally, DFR8getdims is called before DFR8getimage so that, if 
+necessary, space allocations for the image and palette can be 
+checked, and the dimensions can be verified. If this information 
+is already known, DFR8getdims need not be called.
+
+
+DFR8getimage
+INTEGER FUNCTION DFR8getimage(filename, image, xdim, ydim, 
+palette)
+
+CHARACTER*64	filename	-	name of file with RIS8 image
+INTEGER	xdim,ydim	-	dimensions of the next image
+CHARACTER	image(xdim,ydim) -	array that will hold the image
+CHARACTER	palette(768)	-	palette to go with image
+DFR8getimage retrieves the image and palette (if it is present), 
+and stores them in the specified arrays. If the image in the file is 
+compressed, DFR8getimage automatically decompresses it.
+
+If DFR8getdims has not been called, DFR8getimage finds the next 
+image in the same way that DFR8getdims does.
+
+Writing Raster Images to 
+a File
+Presented below are the functions used to write 8-bit raster images 
+to a file.
+
+
+DFR8setpalette
+INTEGER FUNCTION DFR8setpalette(palette)
+
+CHARACTER	palette(768)	-	palette to go with image
+DFR8setpalette tells the system what palette will be used for 
+subsequent images. The palette that is set here continues as the 
+default palette until it is changed by a new call to the routine.
+
+
+DFR8putimage
+INTEGER FUNCTION DFR8putimage(filename, image, xdim, ydim, 
+compress)
+
+CHARACTER*64	filename	-	name of file to store RIS8 in
+INTEGER	xdim, ydim	-	dimensions of next image
+CHARACTER	image(xdim,ydim) -	array holding image to be put
+			in file
+INTEGER	compress	-	type of compression to use, if
+			any
+DFR8putimage writes out the RIS8 for the image as the first image 
+in the file. The argument compress identifies the scheme to be 
+used for compressing the data if any. Valid values of compress 
+are
+
+	0:	no compression
+	11:	run length encoding
+	12:	IMCOMP
+
+If before the call to DFR8putimage there was other information in 
+the file, the function overwrites that information.
+
+
+DFR8addimage
+INTEGER FUNCTION DFR8addimage(filename,image,xdim,ydim, 
+compress)
+
+CHARACTER*64	filename	-	name of file to add RIS8 to
+INTEGER	xdim, ydim	-	dimensions of the image
+CHARACTER	image(xdim,ydim) -	array holding image to be added
+			to file
+INTEGER	compress	-	type of compression to use, if
+			any
+DFR8addimage appends to the file the RIS8 for the image. In all 
+other respects, it is exactly like DFR8putimage.
+
+
+HDF Scientific Data Set Routines
+
+These routines are for storing scientific data sets. See Chapter 3, 
+"Using NCSA HDF for Storing Scientific Data," for examples and 
+discussions of these routines.
+
+
+Reading Scientific Data 
+from a File
+An SDS can be read by executing a series of get calls. Each call 
+retrieves from the file one or more pieces of information associated 
+with the SDS.
+
+You must invoke at least one of the two routines, DFSDgetdims or 
+DFSDgetdata before calling any of the others. These two routines 
+open the desired file, allocate space for special HDF structures that 
+must be loaded into primary memory, and perform other 
+initializing operations. Once this initialization is done, the other 
+routines can be called in any order and as many times as desired.
+
+
+DFSDgetdims
+INTEGER FUNCTION DFSDgetdims(filename, rank, sizes, maxrank)
+
+CHARACTER*64	filename	-	name of file with SDS
+INTEGER	rank	-	number of dimensions
+INTEGER	maxrank	-	size of array for holding dim
+ 			sizes
+INTEGER	sizes(maxrank)	-	array for holding dim sizes
+DFSDgetdims gets the rank (number of dimensions) of the data set 
+and the sizes of each dimension in the next SDS in the file. The 
+input argument maxrank tells it the size of the array that is 
+allocated for storing the array of dimension sizes. The value of 
+rank cannot exceed the value of maxrank.
+
+
+DFSDgetdata
+INTEGER FUNCTION DFSDgetdata(filename, rank, sizes, data)
+
+CHARACTER*64	filename	-	name of file with SDS
+INTEGER	rank	-	number of dimensions
+INTEGER	maxrank	-	size of array for holding dim
+ 			sizes
+INTEGER	sizes(maxrank)	-	array that holds sizes of 
+			dimensions
+REAL	data(*)	-	array for holding the data
+DFSDgetdata gets the data set from the next SDS in the file and 
+stores it in the floating-point array data. The input argument 
+filename is the same as it is in DFSDgetdims, rank tells the rank 
+of the data to be read, and sizes gives the actual dimensions of the 
+array data.
+
+If you know the rank and dimensions of the data set beforehand, 
+then there is no need to call DFSDgetdims. Simply allocate arrays
+
+with the proper dimensions for the data set and let DFSDgetdata 
+read it in.
+
+If you do not know the values of rank or maxsizes, however, you 
+have to call DFSDgetdims to get them and then use them to provide 
+the right amount of space for the array data.
+
+Each new call to DFSDgetdims or DFSDgetdata (or just to 
+DFSDgetdata) reads from the SDS following the one that was last 
+read. For example, if DFSDgetdata is called three times in 
+succession, the third call reads data from the third SDS in the file. 
+DFSDreset (see below) enables you to override this convention.
+
+
+DFSDgetdimstrs
+INTEGER FUNCTION DFSDgetdimstrs(dim, label, unit, format)
+
+INTEGER	dim	-	dimension this label, unit and 
+			format refer to
+CHARACTER	label	-	label that describes this dimension
+CHARACTER	unit	-	unit to be used with this dimension
+CHARACTER	format	-	format to be used in displaying 
+			scale for this dimension
+DFSDgetdimstrs gets the items corresponding to dimension dim 
+that are stored as strings in the SDS, namely label, unit, and 
+format.
+
+
+DFSDgetdimscale
+INTEGER FUNCTION DFSDgetdimscale(dim, size, scale)
+
+INTEGER	dim	-	dimension that this scale 	
+			corresponds to
+INTEGER	size	-	size of scale
+REAL	scale(size)	-	the scale
+DFSDgetdimscale gets the scale corresponding to dimension dim 
+and stores it in the floating point array scale. The input 
+parameter size gives the size of the scale array.
+
+
+DFSDgetdatastrs
+INTEGER FUNCTION DFSDgetdatastrs(label, unit, format, coordsys)
+
+CHARACTER*256	label	-	label that describes the data
+CHARACTER*256	unit	-	unit to be used with the data
+CHARACTER*256	format	-	format to be used in displaying the 
+			data
+CHARACTER*256	coordsys	-	coordinate system
+DFSDgetdatastrs gets information about the data itself, all 
+strings. The parameter coordsys gives the coordinate system 
+that is to be used for interpreting the dimension information.
+
+
+DFSDgetmaxmin
+INTEGER FUNCTION DFSDgetmaxmin(max, min)
+
+REAL	max	-	highest value in data array
+REAL	min	-	lowest value in data array
+DFSDgetmaxmin gets the maximum and minimum of the values in 
+the data array.
+
+NOTE:  These values need to have been set by a user via a call to 
+DFSDsetmaxmin. They are not automatically stored.
+
+
+DFSDrestart
+INTEGER FUNCTION DFSDrestart()
+
+DFSDrestart causes the next get to read from the first SDS in the 
+file, rather than the SDS following the one that was most recently 
+read from.
+
+
+Writing Scientific Data 
+Sets to a File
+SDS information is written to a file in two phases. The first phase 
+involves execution of a series of set calls, which put information 
+about the actual data into a special structure in primary memory. 
+If you do not wish to specify a certain item, you need not invoke its 
+corresponding set call.
+
+The second phase involves actually writing to the file the data, plus 
+the information that has been set. Do this by executing either 
+DFSDputdata or DFSDadddata.
+
+Once an item has been set it does not normally go away, even after 
+a DFSDputdata or DFSDadddata. If it does not get overwritten by 
+another set call or otherwise cleared, the same item is associated 
+with all subsequent scientific data sets that are written to the same 
+file. (The two functions, DFSDclear and DFSDsetdims, cause all 
+previous sets to be cleared. No other function affects previous sets 
+in this manner.)
+
+
+DFSDsetlengths
+INTEGER FUNCTION DFSDsetlengths(maxlen_label, 
+maxlen_unit,maxlen_format, maxlen_coordsys)
+
+INTEGER	maxlen_label	-	max length of any label
+INTEGER	maxlen_unit	-	max length of any unit
+INTEGER	Maxlen_format	-	max length of any format
+INTEGER	maxlen_coordsys	-	max length of any coordsys
+DFSDsetlengths optionally sets the maximum lengths for the 
+strings that will hold labels, units, formats, and the name of the 
+coordinate system. These lengths are used by the get routines to 
+determine the maximum lengths of strings that they get from the 
+file.
+
+Normally, DFSDsetlengths is not needed. If it is not called, 
+default lengths for the strings are used.
+
+
+DFSDsetdims
+INTEGER FUNCTION DFSDsetdims(rank, dimsizes)
+
+INTEGER	rank	-	number of dimensions
+INTEGER	dimsizes(rank)	-	sizes of the dimensions
+DFSDsetdims sets the rank and dimension sizes for subsequent 
+scientific data sets that are written to the file.
+
+This routine must be called before calling DFSDsetdimstrs and 
+DFSDsetdimscales. It need not be called if these routines are not 
+called, and the correct dimensions are supplied in DFSDputdata or 
+DFSDadddata.
+
+If rank or dimension sizes change, all previous sets are 
+invalidated.
+
+
+DFSDsetdimstrs
+INTEGER FUNCTION DFSDsetdimstrs(dim, label, unit, format)
+
+INTEGER	dim	-	dimension this label, unit and format 
+			refer to
+CHARACTER*256	label	-	label that describes this dimension
+CHARACTER*256	unit	-	unit to be used with this dimension
+CHARACTER*256	format	-	format to be used in displaying scale 
+			for this dimension
+DFSDsetdimstrs sets the items corresponding to dimension dim 
+that are to be stored as strings in the SDS, namely label, unit, and 
+format.
+
+
+DFSDsetdimscale
+INTEGER FUNCTION DFSDsetdimscale(dim, size, scale)
+
+INTEGER	dim	-	dimension this scale corresponds to
+INTEGER	dimsize	-	size of scale
+REAL	scale(dimsize)	-	the scale
+DFSDsetdimscale sets the scale corresponding to dimension dim, 
+taking it from the floating point array scale. The input parameter 
+dimsize gives the size of the array scale.
+
+
+DFSDsetdatastrs
+INTEGER FUNCTION DFSDsetdatastrs(label,unit,format,coordsys)
+
+CHARACTER	label	-	label that describes the data
+CHARACTER	unit	-	unit to be used with the data
+CHARACTER	format	-	format to be used in displaying the data
+CHARACTER	coordsys	-	coordinate system
+DFSDsetdatastrs sets information about the data itself, all 
+strings.
+
+
+DFSDsetmaxmin
+INTEGER FUNCTION DFSDsetmaxmin(max, min)
+
+REAL	max	-	highest value in data array
+REAL	min	-	lowest value in data array
+
+DFSDsetmaxmin sets maximum and minimum data values. This 
+routine does not compute the maximum and minimum values. It 
+merely stores the values it is given as maximum and minimum.
+
+The values max and min are automatically cleared after a call to 
+DFSDputdata or DFSDadddata.
+
+
+DFSDputdata
+INTEGER FUNCTION DFSDputdata(filename, rank, dimsizes, data)
+
+CHARACTER*64	filename	-	name of file to store SDS in
+INTEGER	rank	-	number of dimensions of data 
+			array to be stored
+INTEGER	dimsizes(rank)	-	array that holds sizes of 
+			dimensions
+REAL	data(*)	-	array holding data to be stored
+
+DFSDputdata writes to the file the scientific data in the floating-
+point array data, as well as all other information that has 
+previously been set. If the file is not empty, DFSDputdata 
+overwrites whatever was previously in the file.
+
+
+DFSDadddata
+INTEGER FUNCTION DFSDadddata(filename, rank, dimsizes, data)
+
+CHARACTER*64	filename	-	name of file to store SDS in
+INTEGER	rank	-	number of dimensions of data 
+			array to be stored
+INTEGER	dimsizes(rank)	-	array that holds sizes of 
+			dimensions
+REAL	data(*)	-	array holding data to be stored
+DFSDadddata does the same thing that DFSDputdata does, except 
+that it appends the scientific data set to the file. If there was other 
+data in the file, it remains undisturbed.
+
+
+DFSDclear
+INTEGER FUNCTION DFSDclear()
+
+DFSDclear causes all possible set values to be cleared. After a call 
+to DFSDclear, these values will not be written unless they have 
+been set again.
+
+
+
+FORTRAN 
+Language 
+Interface	4.1
+
+
+
+February 
+1989
+
+                                                                
+
+
+
+
+4.1	NCSA 
+HDF
+
+FORTRAN 
+Language 
+Interface	4.1
+
+National 
+Center for 
+Supercompu
+ting 
+Applicat
+ions
+
+February 
+1989
+
+                                                                
+
+
+
+
+

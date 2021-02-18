@@ -1,0 +1,232 @@
+<!OPS, Version = 6.4>
+
+<!Document,
+	Final Output Device =	"ps",
+	Default Printer =	"nearest-ps">
+
+<!Font Definitions,
+	F33 = Times 14 Bold,
+	F20 = Times 10,
+	F46 = Times 24 Italic,
+	F72 = Helvetica 8,
+	F28 = Times 12,
+	F47 = Times 24 Bold Italic>
+
+<!Page,
+	Bottom Margin =		0.83 inches,
+	Left Margin =		1.50 inches,
+	Right Margin =		1.50 inches,
+	Inner Margin =		0.87 inches,
+	Outer Margin =		0.88 inches,
+	First Page =		Right,
+	Starting Page # = 	Inherit,
+	Page # Style =		Lower Case Roman,
+	Hyphenation =		on,
+	Consecutive Hyphens =	2,
+	Revision Bar Placement = Right,
+	Vert. Just. =		off,
+	Feathering =		off>
+
+<!Autonumber Stream, List, 1>
+
+<!Autonumber Stream, step, 1,
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, chap, 1,
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, label, 1,
+	Level 1 Prefix =	"Figure ",
+	Level 1 Suffix =	,
+	Level 1 Starting Value = 0>
+
+<!Autonumber Stream, list, 1>
+
+<!Class, "|:chapnameTOC",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F33@i*,
+	Left Tab =		0/1*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Autonum, list, 1><Tab>
+
+<!Class, "|:prefaceTOC",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F33@i*,
+	Left Tab =		0/1*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab>
+
+<!Class, CtitleBTOC,
+	Top Margin =		0.02 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		0.25 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Allow Page Break Within = no,
+	Left Tab =		6 Inches,
+	Right Tab =		6.50 Inches>
+
+<!Class, TOCtitle,
+	Top Margin =		0.50 inches,
+	Bottom Margin =		1 inches,
+	Line Spacing =		1.100 lines,
+	Alignment =		Left,
+	Font =			F46@K1,
+	Begin New Page =		yes,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		7/8.25/0.75*18 Inches,
+	TOC Doc Name =		TOC,
+	Composition =		Optimum>
+
+Contents
+
+<!Class, chapnameTOC,
+	Top Margin =		0.25 inches,
+	Bottom Margin =		0 inches,
+	First Indent =		-0.25 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F33,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		0/6.25 Inches,
+	Right Tab =		6.75 Inches,
+	Contents =	Prefix>
+
+<"|:chapnameTOC",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F0><Autonum, list, 1><Tab><End Sub><F0>
+
+<!Class, chaprefs,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F72,
+	Left Tab =		0/0.75*13 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Autonum, label, 1>                            <Autonum, chap, 1>
+
+<!Class, prefaceTOC,
+	Top Margin =		0.25 inches,
+	Bottom Margin =		0 inches,
+	First Indent =		-0.25 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F33,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		0/6.25 Inches,
+	Right Tab =		6.75 Inches,
+	Contents =	Prefix>
+
+<"|:prefaceTOC",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F0><Tab><End Sub><F0>
+
+<!Class, titleATOC,
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F28,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		6.25 Inches,
+	Right Tab =		6.75 Inches>
+
+<!Class, titleBATOC,
+	Top Margin =		0.02 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		0.25 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Allow Page Break Within = no,
+	Left Tab =		6 Inches,
+	Right Tab =		6.50 Inches>
+
+<!Class, titleBTOC,
+	Top Margin =		0.02 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		0.25 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Allow Page Break Within = no,
+	Left Tab =		6 Inches,
+	Right Tab =		6.50 Inches>
+
+<!Master Frame,
+	Name =			Chapter,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 1.40 inches,
+	Width =			1.75 inches,
+	Height =		1.75 inches,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,268,0.08,1.546667,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.547 inches, Height = 0.11 inches,
+	Revision Bar Placement = Left>
+<chaprefs,
+	Hidden =		yes>
+
+<Autonum, label, 1>                            <Autonum, chap, 1>
+
+<End Text>)
+ (t14,2,128,0,0.92,0,7,0,0,t1,wst:timsps24bi,)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			floating,
+	Placement =		Following Anchor,
+	Horizontal Alignment =	Center,
+	Width =			Page Without Margins,
+	Height =		Page Without Margins * 0.33,
+	Diagram =
+V6,
+(g9,0,0)>
+
+<Right Page Header, Frame =
+V6,
+(g9,0,0)>
+
+<TOCtitle>
+
+<|,i>Contents
+
+<chapnameTOC>
+
+<"|:chapnameTOC", Subcomponent = yes><F0><Autonum, list, 1, First = Yes, Value = 1.><Tab><End Sub>
+<F0>
+
+<prefaceTOC>
+
+<"|:prefaceTOC", Subcomponent = yes><F0><Tab><End Sub><F0>
+
+<CtitleBTOC>
+
+<titleATOC>
+
+<titleBATOC>
+
+<titleBTOC>
+

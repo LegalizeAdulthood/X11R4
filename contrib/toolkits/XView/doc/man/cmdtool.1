@@ -1,0 +1,520 @@
+.\" @(#)cmdtool.1 1.24 89/07/31 SMI; 
+.TH CMDTOOL 1  "1 September 1989"
+.SH NAME
+.B cmdtool 
+\- run a shell (or program) using the SunView text facility
+.SH SYNOPSIS
+.B cmdtool
+[
+.B \-C
+]
+[
+.B \-M
+.I bytes
+]
+[
+.B \-P
+.I count
+]
+[
+.B \-B
+.I boldstyle
+]
+[
+.B \-I
+.I command
+]
+[
+.I generic-tool-arguments
+]
+[
+.I program
+[ 
+.I program-arguments
+]
+]
+.SH AVAILABILITY
+Although this command is available with both the
+SunView software installation option
+and the
+OpenWindows user environment,
+its appearance is not the
+same for both environments.
+The man page you are currently
+viewing refers to the
+.B cmdtool 
+that is available with OpenWindows. The primary
+difference between this and the 
+SunView 
+.B cmdtool
+is the user interface.  All OpenWindows standard tools
+use the OPEN LOOK Graphical User Interface. For more
+information about the OPEN LOOK UI, refer to the
+.I OpenWindows User's Guide.
+For information about installing OpenWindows, refer to the
+.I OpenWindows Installation and Start-Up Guide.
+.SH DESCRIPTION
+.IX cmdtool "" "\fLcmdtool\fR \(em shell or program with SunView text facility"
+.IX "shell window" "\fLcmdtool\fR"
+.LP
+.B cmdtool
+is the standard
+.I OpenWindows
+support facility for shells and other programs.
+When invoked,
+.B cmdtool
+runs a program (usually a shell) in a text-based command window.
+Characters typed on the keyboard are inserted at the caret.  If the
+program is a shell, that shell accepts and runs commands in the
+usual manner.  
+.B cmdtool
+also supports programs that perform cursor motions directly, such
+as
+.BR vi (1).
+.LP
+The text of the current command line can be edited using normal
+.BR textedit (1)
+functions.
+The command window displays a log of the
+session, which can be scrolled through using the scrollbar
+(unless the command does cursor motion).
+This log can be edited, and saved by choosing the
+.RB ` "Store as New File" '
+item in the text facility's pop-up menu.
+.SH OPTIONS
+.TP 15
+.B \-C
+Console 
+.BR cmdtool .
+Redirect system console output to this shelltool.
+Display console messages in this
+.BR cmdtool ,
+which might otherwise appear in unexpected places on the 
+workstation screen.  Since a
+.B cmdtool
+window can be scrolled, console error messages can be recorded for
+later examination.
+.TP
+.BI \-M " bytes"
+Set the log to wrap-around after the indicated
+number of
+.IR bytes .
+.TP
+.BI \-P " count"
+Checkpoint the log after every set of
+.I count
+editing operations.
+.TP
+.BI \-B " boldstyle"
+Set the style for displaying bold text to
+.IR boldstyle .
+.I boldstyle
+can be a string specifying one of the choices for the
+.B /Tty/Bold_style
+default, see
+.BR "Defaults Options" ,
+below, or it may be a numerical value for one of those choices,
+from 0 to 8, corresponding to the placement of the choice in the list.
+.TP
+.BI \-I " command"
+Pass
+.I command
+to the shell. 
+.SM SPACE
+characters within the command must be escaped.
+
+.I generic-tool-arguments
+.B cmdtool
+accepts the generic tool arguments
+listed in
+.BR sunview (1).
+.HP
+.I program
+[
+.I program-arguments
+]
+.br
+If a
+.I program
+argument is present,
+.B cmdtool
+runs it and passes any remaining arguments to that
+.IR program .
+If no
+.I program
+is given,
+.B cmdtool
+runs the program indicated by the
+.SB SHELL
+environment variable, or
+.B /usr/bin/sh
+by default.
+.SH USAGE
+.SS Defaults Options
+.LP
+The following options can be configured as default settings
+using
+.BR defaultsedit (1).
+.TP
+.B Term.EnableEdit:
+When set to
+.SB TRUE
+(the standard default) only command lines can be edited.
+.SB FALSE
+allows the entire log to be edited.
+(See also the description of 
+.B Enable Edit
+below.)
+.TP
+.B Text.InsertMakesCaretVisible:
+This entry allows you to specify the method for displaying the
+editing caret.
+.RS
+.PD 0
+.TP 18
+.B Same_as_for_text
+Use the setting specified in the defaults for the 
+.B Text
+category (the standard default).
+.TP
+.B If_auto_scroll
+If the caret is showing, and an inserted
+.SM NEWLINE
+would position it below the bottom of the screen 
+(as determined by 
+.BR /Text/Lower_context ),
+the text is scrolled to keep the caret showing.
+The number of lines scrolled is determined by the
+.BR /Text/Auto_scroll_by
+default.
+(See
+.BR textedit (1)
+for more information.)
+.br
+.ne 3
+.TP
+.B Always
+Scroll the caret back into view whenever input would position it
+off the screen.
+.PD
+.RE
+.TP
+.B Text.CheckpointFrequency:
+If set to
+.B 0
+(the standard default) no checkpointing is done.
+For any value greater than zero,
+a checkpoint is made each time the indicated number
+editing operations has been performed since the last checkpoint.
+Each character typed, each
+.BR Paste ,
+and each
+.B Cut
+counts as an editing operation.
+At each checkpoint, an updated copy of the log is saved in a
+file with a name that is constructed by appending two percent signs
+.RB ( %%  )
+to the name of the log file. 
+By default, the log file has a name of the form
+.BI /tmp/tty.txt. pid
+.RI ( pid
+is the process
+.SM ID
+number of
+.BR cmdtool );
+the corresponding checkpoint file has a name of the form
+.BI /tmp/tty.txt. nnnnnn %% .
+.TP
+.B Text.MaxLogFileSize:
+If set to
+.B 0
+(the standard default) no wrap-around takes place; the log file
+grows without a specified limit. 
+For values greater than zero,
+wrap-around occurs whenever the indicated number of characters have
+been written to the log since the last wrap-around.
+Characters that are pushed over the top are replaced by the
+message:
+.RS
+.IP
+.B 
+*** Text is lost because the maximum edit log size has been exceeded. ***
+.RE
+.TP
+.B Keyboard.DeleteChar:
+Set the character for erasing to the left of the caret.
+Note:
+in
+.BR cmdtool ,
+the
+.RB ` "stty erase" '
+command has no effect.
+Text-based tools refer only to the defaults database key settings.
+The default is 
+.SM DELETE\s0.
+.TP
+.B Keyboard.DeleteWord:
+Set the character for erasing the word to the left of the caret.
+The standard default is 
+.SM CTRL-W\s0.
+.TP
+.B Keyboard.DeletetoLine:
+Set the character for erasing all characters to the left of
+the caret.  Note:
+.RB ` "stty kill" '
+has no effect in
+.BR cmdtool .
+The standard default is 
+.SM CTRL-U\s0.
+.LP
+.B cmdtool Windows
+.LP
+The window created by 
+.B cmdtool
+is based on the text facility that is described in the 
+.B textedit
+man page.
+The user is given a prompt at which to type commands and pop-up
+menus from which to select command options.
+.LP
+.B cmdtool
+windows support cursor motions, using an
+.B /etc/termcap
+entry called
+.BR sun-cmd .
+Command windows automatically set the
+.SB TERM
+environment variable to
+.BR sun-cmd .
+So, if you
+.BR rlogin (1C)
+to a machine that does not have an entry for
+.B sun-cmd
+in its
+.B /etc/termcap
+file, the error message
+.RB ` "Type sun-cmd unknown" '
+results.
+To rectify this, type the command
+.RB ` "set \s-1TERM\s0=sun" '.
+Programs written using the
+.BR curses (3X)
+or 
+.BR curses (3V)
+library packages will work in a command window, but programs
+hard-coded for
+.BR sun -type
+terminals may not. 
+When supporting a program that performs
+cursor motions, the command window automatically takes on the
+characteristics of a tty window (as with
+.BR shelltool (1)).
+When that program terminates or sleeps, the full command window
+functionality is restored.
+.LP
+.B cmdtool
+supports programs that use
+.SM CBREAK
+and
+.SM NO ECHO
+terminal modes. 
+This support is normally invisible to the user.
+However, programs that use
+.SM RAW
+mode, such as
+.BR rlogin (1C)
+and
+.BR script (1),
+inhibit command-line editing with the mouse.
+In this case, however, tty-style
+.SM ERASE,
+word-kill and line-kill characters can still be used to edit the
+current command line.
+.SS The cmdtool Menu
+.LP
+The
+.B cmdtool
+window menu is called the
+.B Term Pane
+menu and contains the following options and their submenus:
+.RS
+.B History 
+.RS
+Creates a a list of commands used during the
+.B cmdtool session
+.RE
+.B Edit >
+.RS
+Provides a set of editing functions as described below:
+
+.B Again
+.RS
+Repeats the last action.
+.RE
+.B Undo >
+.RS
+.B Undo Last Edit
+.RS
+Undoes the last edit made in
+.B cmdtool.
+.RE
+.B Undo All Edits
+.RS
+Undoes all edits made during this session of
+.B cmdtool.
+.RE
+.RE
+.B Copy
+.RS
+Makes a copy of the selected text and places it in the clipboard.
+.RE
+.B Paste
+.RS
+Pastes a copy of the text stored in the clipboard at the cursor location.
+.RE
+.B Cut
+.RS
+Deletes the selected text and places it in the clipboard.
+.RE
+.RE
+.B Find >
+.RS
+Provides a set of find and replace functions as described below:
+
+.B Find and Replace
+.RS
+Brings up a pop-up menu containing text fields and command
+buttons that allow you to search forward and backward through
+the file being edited for specific text strings. Allows you
+to specify options for the replacement of text.
+.RE
+.B Find Selection >
+.RS
+.B Forward
+.RS
+Searches forward to find a selected text string.
+.RE
+.B Backward
+.RS
+Searches backward to find a selected text string.
+.RE
+.RE
+.B Find Marked Text
+.RS
+Brings up a pop-up menu that allows you to find text that is
+included between specified bracket pairs. Also allows you to
+insert or remove bracket pairs around selected text.
+.RE
+.B Replace |>field<| >
+.RS
+Allows you to replace selected text forward and backward throughout
+the file.
+.RE
+.RE
+.B Extras >
+.RS
+A user-definable pull-right menu conrolled by the
+.B /usr/lib/text_extras_menu
+file.
+.RE
+.B File Editor >
+.RS
+.B Enable
+.RS
+Allows you to edit files from within
+.B cmdtool.
+.RE
+.B Disable
+.RS
+Turns off the ability to edit files from
+within 
+.B cmdtool.
+.RE
+.RE
+.B Scrolling >
+.RS
+Enables scrolling within
+.B cmdtool.
+.RE
+.B Disable Scrolling >
+.RS
+Turns off the ability to scroll within
+.B cmdtool.
+Once scrolling in 
+.B cmdtool is disabled, it's functionality is
+identical to
+.B shelltool
+and a more restricted menu appears. Selecting the
+.B Enable Scrolling
+option from the restricted menu restores the full menu
+and functionality of
+.B cmdtool.
+.RE
+.RE
+
+.SS Accelerators
+.LP
+Text facility accelerators that are especially useful in
+command windows are described here.  See 
+.br
+.BR textedit (1)
+for more information.
+.TP 18
+.SM CTRL-RETURN
+Position the caret at the bottom, and scroll it into view
+as determined by 
+.BR Text.LowerContext .
+.TP 
+.PD 0
+\s-1CAPS\s0-lock
+.TP
+Toggle between all-upper-case keyboard input, and mixed-case.
+.PD
+.SH FILES
+.PD 0
+.TP 20
+.BI /tmp/tty.txt. pid
+log file
+.TP
+.B ~/.textswrc
+.TP
+.B ~/.ttyswrc
+.TP
+.B usr/lib/.text_extras_menu
+.TP
+.B $HOME/.TextExtraMenu
+.TP
+.B /etc/termcap
+.TP
+.B /usr/bin/sh
+.PD
+.SH "SEE ALSO"
+.BR defaultsedit (1),
+.BR rlogin (1C),
+.BR script (1),
+.BR shelltool (1),
+.BR sunview (1),
+.BR textedit (1),
+.BR vi (1),
+.BR curses (3V),
+.BR curses (3X)
+.LP
+.TX INSTALL
+.br
+.TX SVBG
+.SH BUGS
+.LP
+Typing ahead while
+.B cmdtool 
+changes between its scrollable and cursor motion modes
+will sometimes freeze
+.B cmdtool .
+.LP
+Full terminal emulation is not complete.
+Some manifestations of this deficiency are:
+.TP 3
+\(bu
+File completion in the C shell does not work.
+.TP
+\(bu
+Enhanced display of text is not supported.

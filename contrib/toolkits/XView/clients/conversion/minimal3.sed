@@ -1,0 +1,26 @@
+  cat ${1} | \
+    sed -e 's%\<SCROLL_%/* XView CONVERSION - Possibly Defunct, see Sect 2\.3 & 3\.2 */SCROLL_%g' \
+        -e 's%\<SCROLLBAR_%/* XView CONVERSION - Possibly Defunct, see Sect 2\.3 & 3\.2 */SCROLLBAR_%g' \
+        -e 's%\<scrollbar_create\>%/* XView CONVERSION - This compatibility interface is VERY inefficient and VERY slow\. Also, it will not be supported in later releases\. Change this call to xv_create of SCROLLBAR with owner being the window the scrollbar should manage */scrollbar_create%g' \
+        -e 's%\<selection_attributes\.h%sel_attrs\.h%g' \
+        -e 's%\<selection_compat\.h%sel_compat\.h%g' \
+        -e 's%\<selection_svc\.h%sel_svc\.h%g' \
+	-e 's%\<struct cursor\>%/* XView CONVERSION - Defunct, change to Xv_Cursor  Sect 4\.3 */struct cursor%g' \
+	-e 's%\<struct icon\>%/* XView CONVERSION - Defunct, change to Icon  Sect 4\.3 */struct icon%g' \
+        -e 's%\<struct pixwin\>%/* XView CONVERSION - Defunct, change to Pixwin  Sect 4\.3 */struct pixwin%g' \
+        -e 's%\<struct prompt\>%/* XView CONVERSION - Defunct, use new NOTICE package, see Sect 4\.2 */struct prompt%g' \
+        -e 's%\<struct screen\>%/* XView CONVERSION - Defunct, change to Screen  Sect 4\.3 */struct screen%g' \
+        -e 's%\<struct tool\>%/* XView CONVERSION - Defunct, see Sect 2\.3, 2\.4 & 4\.3 */struct tool%g' \
+	-e 's%\<sun\.h%base\.h%g' \
+        -e 's%\<suntool/%xview/%g' \
+        -e 's%\<sunview\.h%xview\.h%g' \
+        -e 's%\<sunwindow/\>%xview/%g' \
+        -e 's%\<TERM\>%/* XView CONVERSION - If TERM is being used as a window type, it should be changed to TERMSW for XView and you must now include termsw\.h, otherwise review API Guide */TERM%g' \
+	-e 's%textsw_get%/* XView CONVERSION - Possibly defunct, see Sect 2\.3 */textsw_get%g' \
+        -e 's%\<TEXTSW_LEFT_MARGIN\>%XV_LEFT_MARGIN%g' \
+        -e 's%\<TEXTSW_MENU\>%WIN_MENU%g' \
+        -e 's%\<TEXTSW_RIGHT_MARGIN\>%XV_RIGHT_MARGIN%g' \
+        -e 's%\<tool_find_attribute\>%attr_find%g' \
+        -e 's%\<tool_hs\.h%/* XView CONVERSION - Defunct, simply remove  Sect 2\.3 */tool_hs\.h%g' \
+        -e 's%\<tool_parse_one\>%xv_parse_one%g' \
+        -e 's%\<tool_usage\>%xv_usage%g' 

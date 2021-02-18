@@ -1,0 +1,175 @@
+\" Header for ME macros - Sets up stuff for nice thesis look
+\" but SINGLE SPACED. Use '.ls 2' to get DOUBLE SPACE
+\" It also defines the macros
+\" needed for entering the section headings and chapter
+\" headings in an index called 't' which you can print out
+\" if you want to at the end of the document by giving 
+\" .TC
+\" Giving .TC at any other place might have weird effects on 
+\" the chapter numbering, and will result in an incomplete
+\" table of contents.
+\" The .sh, .uh commands both generate index entries, with
+\" .uh using the current depth for formatting.
+\" The macros .TL and .DE have been swiped from the -me
+\" macros ref. manual for preparing terminology sections.
+\" The .BU macro starts an indented paragraph, with a bullet.
+\" (Allegedly, 4.3BSD -me macros have a .bu macro which does 
+\" the same thing.)
+\" The .RF macro is essentially .+c "References" except that
+\" it makes an index entry as well. 
+\" The .PS and .PE simply invoke .(c and .)c to automatically
+\" center the picture. (Removed since drb fixed the me macros)
+\" The .(r and .)r macros enclose a block of right justified
+\" text - handy for letters
+\" The .*s macro sets paragraph size to the given size.
+\"
+\" Mark Moraes, May 22, 1987
+\"
+.rm @m
+.nr ss 2v	\" Space before section title
+.nr pp 12	\" Point size for .pp , .ip , etc.
+.nr cp 14	\" Point size for .~+~c
+.nr sp 13	\" Point size for .sh
+.nr tp 12	\" Point size for headers & footers
+.nr fg 0 1	\" Register with figure numbers
+.nr TC 2	\" Register with Table of content indent in ems
+.nr CH 16	\" Point size for chapter titles
+.nr DI 1.5i. 	\" Pinched from memacros/ref.nr for the .DE/.TL macros
+.sz 12		\" Reset point size
+.sc		\" Read in special characters
+.nr _0 \n(c.	\" Lifted from the .th macro
+.nr tf 1
+.he '''%'
+.fo ''''
+.po 1.25i
+.ll 6.25i
+.m1 1i
+.nr ?t 1
+.nr c. \n(_0
+.rm $c
+.de $c			\" $$$ print chapter title. Modified from tmac.e
+.sz \\n(CH
+.ft B
+.ce 1000
+.if \\n(_M<3 \
+.	nr ch +1
+.ie \\n(_M=1 CHAPTER\ \ \\n(ch
+.el .if \\n(_M=2 APPENDIX\ \ \\n(ch
+.if \w"\\$1" .sp 3-\\n(.L
+.if \w"\\$1" \\$1
+.if (\\n(_M<3):(\w"\\$1") \
+.	sp 4-\\n(.L
+.ce 0
+.ft
+.sz
+.ie \\n(_M=1 \
+.	$C Chapter \\n(ch "\\$1"
+.el .if \\n(_M=2 \
+.	$C Appendix \\n(ch "\\$1"
+..
+.de $0			\" Called by .sh to put entry in index t
+.if !"\\$1"" \{\
+.nr XT 0.3i*\\n($0-0.3i+\\n(TCm
+\".tm Called \\$1 \\$2 \\$3 \\n(XT 
+.(x t
+.in 0
+.in +\\n(XTu
+\\$2 \\$1
+.)x
+.in -\\n(XTu \}
+..
+.de $C			\" Called by $c to put an entry in index t.
+.nr $0 2		\" Also sets up default section depth to 2
+.nr $1 \\$2		\" and resets all other section registers.
+.nr $2 0		\" My own.
+.nr $3 0
+.nr $4 0
+.nr $5 0
+.nr $6 0
+\".tm \\$1 \\$2 \\$3
+.(x t
+.sp 1
+.in 0
+.in +\\n(TC
+.ie "\\$1"Chapter" \\$2 \\$3
+.el \\$1 \\$2 \\$3
+.)x
+.in -\\n(TC
+..
+.de RF			\" Sets up a section for references since +c
+.ep			\" has no provision for that. Enters in index t
+.if \\n(?o:\\n(?a \
+\{\
+.	bp
+.	rs
+.	ep
+.\}
+.nr ?C 1
+.nr $f 1 1
+.ds * \\*[1\\*]\k*
+.if \\n(?R \
+.	pn 1
+.bp
+.in \\n($iu
+.rs
+.sz \\n(CH
+.ft B
+.ce 1000
+References
+.sp 3
+.ce 0
+.ft
+.sz
+.(x t
+.in 0
+.in +\\n(TC
+References
+.)x
+.in -\\n(TC
+..
+.de TL			\" *** title line. Pinched from memacros/ref.nr
+.lp
+.di XX
+..
+.de DE			\" *** description. Pinched from memacros/ref.nr
+\\\\h'|\\n(DIu'\\\\c
+.br
+.di
+.in +\\n(DIu
+.ti 0
+.cu 1000
+.XX
+.rm XX
+.cu 0
+..
+.de TC			\" *** description. Prints table of contents at end
+.++ P
+.+c "Table of Contents"
+.xp t
+..
+.de BU			\" *** description. Bulletted paragraph.
+.ip \(bu
+..
+.de (r			\" An attempt at right justified text.
+.br
+.nf
+.if "\\n(.z"|r" .tm Line \\n(c. -- Nested .(r requests
+.di |r
+..
+.de )r
+.if !"\\n(.z"|r" .tm Line \\n(c. -- Unmatched .)r
+.br
+.di
+.nr RJ \\n(.iu
+.in (\\n(.lu-\\n(.iu-\\n(dlu)
+.nf
+.|r
+.ec
+.in \\n(RJu
+.rm |r
+.fi
+..
+.de *s			\" Point size setting
+.nr pp \\$1	\" Point size for .pp , .ip , etc.
+.sz \\$1
+..

@@ -1,0 +1,6 @@
+        DEPLIBS = $(DEPXTOOLLIB) $(DEPXLIB)
+LOCAL_LIBRARIES = $(XTOOLLIB) $(XLIB)
+           SRCS = clover.c 
+           OBJS = clover.o
+
+ComplexProgramTarget(clover)

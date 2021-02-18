@@ -1,0 +1,528 @@
+
+
+
+     XWFORM(3X)                                             XWFORM(3X)
+
+
+
+
+     NAME
+          XwformWidgetClass - the X Widget's general widget layout
+          manager
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/Form.h>
+
+
+     CLASSES
+          A Form widget is built from Core, Composite, Constraint and
+          XwManager classes
+
+          The widget class to use when creating a form is
+          XwformWidgetClass.
+
+          The class name of Form is Form.
+
+     DESCRIPTION
+          The Form widget is a constraint based manager that provides
+          a layout language used to establish spatial relationships
+          between its children and then manipulates these
+          relationships when the Form is resized, new children are
+          added to the Form, or its children are resized, unmanaged,
+          remanaged or destroyed.
+
+          The following list highlights the types of layout control
+          provided by the form widget.
+
+          Spanning Constraints
+               A widget can be created with a set of constraints such
+               that it spans the width or height of a form.  This is
+               often used for the layout of scrollbars and titlebars.
+               Constraints that cause a widget to span both the width
+               and height of a form can also be specified.
+
+          Row Constraints
+               Sets of widgets can be set up as a row so that resizing
+               a form may increase or decrease the spacing between the
+               widgets.  The form may also make the widgets smaller if
+               desired, but it will not allow the widgets to overlap.
+
+          Column Constraints
+               Sets of widgets can be displayed in a single column or
+               in multiple columns.  The form may increase or decrease
+               the spacing between widgets or resize the widgets, but
+               it will not allow the widgets to overlap.
+
+          Automatic Form Resizing
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWFORM(3X)                                             XWFORM(3X)
+
+
+
+
+               The form calculates new sizes or positions for its
+               children whenever they change size or position.  The
+               new orm size thus generated is passed as a geometry
+               request to the parent of the form.  The parent can
+               accept the request or modify it and return it as a
+               geometry almost.  When a geometry almost is returned by
+               the parent, the form respecifies the constraints to
+               match the parent's reply size.
+
+          Optimal Child Sizes and Positions
+               The Form widget also calculates the sizes and positions
+               of its children to both match the constraints defined
+               and to match either the initial size of the widget or
+               the size given when the widget was modified through
+               XtSetValues.  These values are further constrained to
+               match a given form size only when the form's size is
+               being explicitly changed through its resize procedure,
+               or its parent returns a geometry almost when the form
+               makes a geometry request.
+
+          Managing, Unmanaging and Destroying Children
+               When a widget within a form is unmanaged or destroyed,
+               it is removed from the constraint processing and the
+               constraints are reprocessed to reposition and/or resize
+               the form and its contents.  Any widgets that referenced
+               it are rereferenced to the widget that it had been
+               referencing.  For the unmanaged case, if the widget is
+               remanaged, the widgets that were previously referencing
+               it are rereferenced to it, thus preserving the original
+               layout.
+
+     NEW RESOURCES
+          The Form does not add any new resources.  All of the
+          functionality for the form is tied to its constraint
+          resources.
+
+     CONSTRAINT RESOURCES
+          The following resources are attached to every widget
+          inserted into Form.  To specify an of these resources within
+          a .Xdefaults file, drop the XtN from the resource name.
+          Refer to CONSTRAINT(3X) for a general discussion of
+          constraint resources.
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWFORM(3X)                                             XWFORM(3X)
+
+
+
+
+              Constraint Resource Set -- Children of FORM(3X)
+      Name               Class              Type      Default
+      _______________________________________________________________
+      XtNxRefName        XtCXRefName        String    NULL
+      XtNxRefWidget      XtCXRefWidget      Widget    the parent form
+      XtNxOffset         XtCXOffset         int       0
+      XtNxAddWidth       XtCXAddWidth       Boolean   FALSE
+      XtNxVaryOffset     XtCXVaryOffset     Boolean   FALSE
+      XtNxResizable      XtCXResizable      Boolean   FALSE
+      XtNxAttachRight    XtCXAttachRight    Boolean   FALSE
+      XtNxAttachOffset   XtCXAttachOffset   int       0
+      XtNyRefName        XtCYRefName        String    NULL
+      XtNyRefWidget      XtCYRefWidget      Widget    the parent form
+      XtNyOffset         XtCYOffset         int       0
+      XtNyAddHeight      XtCYAddHeight      Boolean   FALSE
+      XtNyVaryOffset     XtCYVaryOffset     Boolean   FALSE
+      XtNyResizable      XtCYResizable      Boolean   FALSE
+      XtNyAttachBottom   XtCYAttachBottom   Boolean   False
+      XtNyAttachOffset   XtCYAttachOffset   int       0
+
+
+
+          XtNxRefName XtNyRefName
+               When a widget is added as a child of the form its
+               position is determined by the widget it references.
+               The reference widget must be created before the widget
+               which references it is created.  These resources allow
+               the name of the reference widget to be given.  The form
+               converts this name to a widget to use for the
+               referencing.  Any widget that is a direct child of the
+               form or the form widget itself can be used as a
+               reference widget.
+
+          XtNxRefWidget XtNyRefWidget
+               The application can specify the reference widget as
+               either a string representing the name of the widget (as
+               described above) or as the Widget ID value returned
+               from XtCreateWidget.  This resource is the means by
+               which a widget ID is specified.
+
+          XtNxOffset XtNyOffset
+               The location of a widget is determined by the widget it
+               references.  As the default, a widget's position on the
+               form exactly matches its reference widget's location.
+               There are two additional pieces of data used to
+               determine the location.  This resource defines an
+               integer value representing the number of pixels to add
+               to the reference widget's location when calculating the
+               widget's location.
+
+          XtNxAddWidth XtNyAddHeight
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWFORM(3X)                                             XWFORM(3X)
+
+
+
+
+               This resource indicates whether or not to add the width
+               or height of the reference widget to a widget's
+               location when determining the widget's position.
+
+          XtNxVaryOffset XtNyVaryOffset
+               When a form is resized, it processes the constraints
+               contained within its children.  This resource allows
+               the spacing between a widget and the widget it
+               references to vary (either increase or decrease) when a
+               form's size changes.  For widgets that directly
+               reference the form widget this resource is ignored.
+               The spacing between a widget and its reference widget
+               can decrease to 0 pixels if the XtNAddWidth resource is
+               FALSE or to 1 pixel if XtNAddWidth is TRUE.
+
+          XtNxResizable XtNyResizable
+               This resource specifies whether the form can resize
+               (shrink) a widget.  When a form's size becomes smaller
+               the form will resize its children only after all of the
+               inter-widget spacing of widget's with their VaryOffset
+               resource set to TRUE.  The form keeps track of a
+               widgets initial size or size generated through
+               XtSetValues so that when the form then becomes larger
+               the widget will grow to it original size and no larger.
+
+          XtNxAttachRight XtNyAttachBottom
+               Widgets are normally referenced from "form left" to
+               "form right" or from "form top" to "form bottom."  The
+               attach resources allow this reference to occur on the
+               opposite edge of the form.  These resources, when used
+               in conjunction with the varyOffset resources, allow a
+               widget to float along the right or bottom edge of the
+               form.  This is done by setting both the Attach and
+               VaryOffset resources to TRUE.  A widget can also span
+               the width and height of the form by setting the Attach
+               resource to TRUE and the VaryOffset resource to FALSE.
+
+          XtNxAttachOffset XtNyAttachOffset
+               When a widget is attached to the right or bottom edge
+               of the form (through the above resources), the
+               separation between the widget and the form is defaulted
+               to 0 pixels.  This resource allows that separation to
+               be set to some other value.  Also, for widgets that are
+               not attached to the right or bottom edge of the form,
+               this constraint specifies the minimum spacing between
+               the widget and the form.
+
+     INHERITED RESOURCES
+          The following resources are inherited from the indicated
+          superclasses:
+
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWFORM(3X)                                             XWFORM(3X)
+
+
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+
+                           Manager Resource Set
+       Name                Class               Type      Default
+       ____________________________________________________________
+       XtNforeground       XtCForeground       Pixel     Black
+       XtNbackgroundTile   XtCBackgroundTile   int       background
+       XtNtraversalOn      XtCTraversalOn      Boolean   FALSE
+       XtNlayout           XtCLayout           int       minimize
+       XtNnextTop          XtCCallback         Pointer   NULL
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalOn resource is set to TRUE at either
+          create time or during a call to XtSetValues, the XwManager
+          superclass will automatically augment the manager widget's
+          translations to support keyboard traversal.  Refer to the
+          XwManager man page for a complete description of these
+          translations.
+
+     EXAMPLES
+          The following examples list the desired layout of widgets
+          within a form and the constraints needed to achieve the
+          layout.
+
+          TitleBar
+               Use the following constraints to get a titlebar widget
+               to span the top of a form the following constraints can
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWFORM(3X)                                             XWFORM(3X)
+
+
+
+
+               be used.  For a widget named title the .Xdefaults file
+               will contain.
+
+
+              *title.xRefName:        "form widget name"   attach to the left
+                                                           edge of the form
+              *title.xOffset:         5                    offset 5 pixels from
+                                                           the left edge
+              *title.xResizable:      TRUE                 title is
+                                                           horizontally
+                                                           resizable
+              *title.xAttachRight:    TRUE                 attach to the right
+                                                           edge of the form
+              *title.xAttachOffset:   5                    offset 5 pixels from
+                                                           right edge
+              *title.yRefName:        "form widget name"   attach to the top
+                                                           edge of the form
+
+
+
+          Dynamic Scrolled Window
+               The above constraints work generally for any widget
+               type that is to span the form and that need to be
+               resized as the form increases or decreases in size.
+               For example, if the child widget is a scrolled window
+               named sWin that dynamically resizes as the form resizes
+               in both the horizontal and vertical directions the
+               constraints are as follows.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 6 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWFORM(3X)                                             XWFORM(3X)
+
+
+
+
+              *sWin.xRefName:        "form widget name"   attach to the left
+                                                          edge of the form
+              *sWin.xOffset:         5                    offset 5 pixels from
+                                                          the left edge
+              *sWin.xResizable:      TRUE                 scrollWin is
+                                                          horizontally
+                                                          resizable
+              *sWin.xAttachRight:    TRUE                 attach to the right
+                                                          edge of the form
+              *sWin.xAttachOffset:   5                    offset 5 pixels from
+                                                          right edge
+
+              *sWin.yRefName:        "form widget name"   attach to the top
+                                                          edge of the form
+              *sWin.yOffset:         5                    offset 5 pixels from
+                                                          the left edge
+              *sWin.yResizable:      TRUE                 scrollWin is
+                                                          vertically resizable
+              *sWin.yAttachRight:    TRUE                 attach to the bottom
+                                                          edge of the form
+              *sWin.yAttachOffset:   5                    offset 5 pixels from
+                                                          right edge
+
+
+
+
+          Right or Bottom Attached Widgets
+               For a widget named widget to float along the right or
+               bottom edge of the form as it is resized the constraint
+               set is the same as for the titlebar example with the
+               following changes.
+
+
+              *widget.xRefName:     "any widget name"   the widget to the
+                                                        left of this one
+              *widget.varyOffset:   TRUE                adjust the spacing
+                                                        with the reference
+                                                        widget
+
+
+
+          Columns of Widgets
+               A set of widgets within a form can be arranged in
+               columns by using of the constraint language.  The
+               following set of constraints sets up two columns of
+               widgets.  The naming of the widgets for this example is
+               wI,J where I is the column and J is the row.
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 7 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWFORM(3X)                                             XWFORM(3X)
+
+
+
+
+                  *w0,0.xRefName:     "form widget name"
+                  *w0,0.xOffset:      5
+                  *w0,0.xResizable:   TRUE
+                  *w0,0.yRefName:     "form widget name"
+                  *w0,0.yOffset:      5
+                  *w0,0.yResizable:   TRUE
+
+                  *w0,1.xRefName:     widget0,0
+                  *w0,1.xResizable:   TRUE
+                  *w0,1.yRefName:     widget0,0
+                  *w0,1.yOffset:      5
+                  *w0,1.yAddHeight:   TRUE
+                  *w0,1.yResizable:   TRUE
+
+                  *w1,0.xRefName:     widget0,0
+                  *w1,0.xOffset:      20
+                  *w1,0.yAddWidth:    TRUE
+                  *w1,0.xResizable:   TRUE
+                  *w1,0.yRefName:     widget0,0
+                  *w1,0.yOffset:      5
+                  *w1,0.yAddHeight:   TRUE
+                  *w1,0.yResizable:   TRUE
+
+                  *w1,1.xRefName:     widget1,0
+                  *w1,1.xResizable:   TRUE
+                  *w1,1.yRefName:     widget1,0
+                  *w1,1.yOffset:      5
+                  *w1,1.yAddHeight:   TRUE
+                  *w1,1.yResizable:   TRUE
+
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), COMPOSITE(3X), CONSTRAINT(3X), XWMANAGERCLASS(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 8 -                   Aug 9, 1988
+
+
+

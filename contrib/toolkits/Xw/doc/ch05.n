@@ -1,0 +1,189 @@
+
+
+       5  Form Widgets
+
+
+       The form widget is a special kind of manager (or layout)
+       widget.  It allows an application to specify a desired set
+       of relationships between the children being laid out. The
+       form widget remembers the relationships specified and uses
+       these relationships, or constraints, to manage its children
+       whenever any of the following conditions occur:
+
+          o When the form widget is resized.
+
+          o When new children are added.
+
+          o When existing children are resized, unmanaged,
+            remanaged or destroyed,
+
+       For example, the form widget allows the application to state
+       that widget B should have the same y coordinate as widget A,
+       and that widget B should be attached to the left hand side
+       of the form widget.  Further, widget C should be attached to
+       the left, bottom and right hand side of the form widget.  It
+       should be resizable, so that when the form widget changes
+       size it will also be resized to maintain the specified
+       relationships.
+
+
+       5.1  Using the Form Widget
+
+
+       Use the form widget when you have a collection of widgets
+       that will be dynamically changing but you want to retain a
+       certain spatial relationship (that might otherwise be lost)
+       among the children.  If you are creating a box with some
+       buttons that is basically static after it is created, it
+       would be simpler to use another layout widget (such as the
+       row column manager widget) rather than the form widget.
+
+       The form widget accomplishes its functionality by exporting
+       a constraint language.  In the language of the Xt
+       Intrinsics, the form widget is a constraint widget.  Each
+       widget created as a child of the form widget has appended to
+       it a block of information called a constraint record.  It is
+       in this constraint record that the form widget stores the
+       relationships or constraints that determine how a child will
+       be laid out.  When a child is created, these constraints are
+       specified by arguments to XtCreateWidget.  Table 5-1 is a
+       table of constraints supported by the form widget, and  will
+       assist in the discussion of how these constraints might be
+       used.  For a complete explanation of the fields in the
+       table, refer to the form widget man page at the end of this
+       document.
+
+
+        TABLE 5-1.  Constraint Resource Set - Children of FORM(3X)
+       
+
+       |Name               Class              Type      Default         |
+       |                                                                |
+
+       |XtNxRefName        XtCXRefName        String    NULL            |
+       |XtNxRefWidget      XtCXRefWidget      Widget    the parent form |
+       |XtNxOffset         XtCXOffset         int       0               |
+       |XtNxAddWidth       XtCXAddWidth       Boolean   False           |
+       |XtNxVaryOffset     XtCXVaryOffset     Boolean   False           |
+       |XtNxResizable      XtCXResizable      Boolean   False           |
+       |XtNxAttachRight    XtCXAttachRight    Boolean   False           |
+       |XtNxAttachOffset   XtCXAttachOffset   int       0               |
+       |XtNyRefName        XtCYRefName        String    NULL            |
+       |XtNyRefWidget      XtCYRefWidget      Widget    the parent form |
+       |XtNyOffset         XtCYOffset         int       0               |
+       |XtNyAddHeight      XtCYAddHeight      Boolean   False           |
+       |XtNyVaryOffset     XtCYVaryOffset     Boolean   False           |
+       |XtNyResizable      XtCYResizable      Boolean   False           |
+       |XtNyAttachBottom   XtCYAttachBottom   Boolean   False           |
+       |XtNyAttachOffset   XtCYAttachOffset   int       0               |
+       |                                                                |
+
+
+       It is often useful to be able to specify that a child will
+       span the entire width or height (or both) of its parent,
+       regardless of the sizes the parent is forced to take.  For
+       example, you normally would want a titlebar positioned at
+       the top of the window and have it span the width of its
+       parent.  The following code segment shows how this could be
+       accomplished.
+
+           Widget toplevel, form1, tbar1;
+           /* Create the form */
+           form1 = XtCreateManagedWidget ("form1", XwformWidgetClass,
+                                  toplevel, (ArgList) args, 0);
+
+
+           /* Create the titlebar;  say that both its x and its y coordinates
+            * are to match that of its parent, the form; give the titlebar the
+            * string "Radio Buttons" to display; anchor the titlebar to the
+            * right hand side of the form; and say it is resizeable in both
+            * the x and y directions--this allows it to conform to the
+            * constraints that it be attached to both the left and the right
+            * hand sides of the form.
+            */
+           XtSetArg (args[0], XtNxRefWidget, (caddr t) form1);
+           XtSetArg (args[1], XtNyRefWidget, (caddr t) form1);
+           XtSetArg (args[2], XtNstring, "Radio Buttons");
+           XtSetArg (args[3], XtNxAttachRight, TRUE);
+           XtSetArg (args[4], XtNxResizable, TRUE);
+           XtSetArg (args[5], XtNyResizable, TRUE);
+           tbar1= XtCreateManagedWidget ("title1", XwtitlebarWidgetClass,
+                                         form1, (ArgList) args, 6);
+
+
+       The next example creates a set of relationships between
+       three widgets.  The widgets are aligned into a single row
+       with the leftmost widget attached to the left edge of the
+       form, the rightmost widget attached to the right edge of the
+       form and the middle widget centered in the form between the
+       other two.  See figure 5-1.
+
+
+                         Figure 5-1.  Form Widget
+
+          /* Create the form*/
+           form1 = XtCreateManagedWidget ("form1", XwformWidgetClass,
+                                  toplevel, (ArgList) args, 0);
+
+          /* Create the leftmost push button; both its x and y coordinates
+           * reference its parent, the form; add 10 pixels of offset from
+           * both the top and the edge of the form.
+           */
+           XtSetArg (args[0], XtNxRefWidget, (caddr t) form1);
+           XtSetArg (args[1], XtNyRefWidget, (caddr t) form1);
+           XtSetArg (args[2], XtNxOffset, 10);
+           XtSetArg (args[3], XtNyOffset, 10);
+           pb1= XtCreateManagedWidget ("pb1", XwpushButtonWidgetClass,
+                                         form1, (ArgList) args, 4);
+
+
+          /* Create the middle push button; both its x and y coordinates
+           * reference the first pushbutton, pb1.  If no other adjustment
+           * were made to its x,y values, this widget would occupy the same
+           * space as the first push button.  The XtNxAddWidth says to
+           * add the width of the reference widget (here its pb1) to the
+           * x coordinate;  say that this widget can be resized in the
+           * x direction if necessary (for this example, it is resized when
+           * the form is made smaller);  allow the x offset between this
+           * widget, pb2, and its x coordinate reference widget, pb1, to
+           * vary.  When the form is made larger, the space between pb1
+           * and pb2 will grow; when the form is made smaller the space
+           * will shrink. NOTE that in this example whether the pushbuttons
+           * can actually be made to touch each other depends on their
+           * highlight thickness settings.
+           */
+           XtSetArg (args[0], XtNxRefWidget, (caddr t) pb1);
+           XtSetArg (args[1], XtNyRefWidget, (caddr t) pb1);
+           XtSetArg (args[2], XtNxAddWidth, TRUE);
+           XtSetArg (args[3], XtNxResizable, TRUE);
+           XtSetArg (args[4], XtNxVaryOffset, TRUE);
+           pb2= XtCreateManagedWidget ("pb2", XwpushButtonWidgetClass,
+                                         form1, (ArgList) args, 5);
+          /* Create the rightmost pushbutton; both its x and  y coordinates
+           * reference the middle pushbutton, pb2.  We again add the width
+           * of the referenced widget to its x coordinate to prevent overlapping;
+           * attach the widget to the right edge of the form; allow the offset
+           * between this widget and its x coordinate reference widget to
+           * vary.
+           */
+           XtSetArg (args[0], XtNxRefWidget, (caddr t) pb2);
+           XtSetArg (args[1], XtNyRefWidget, (caddr t) pb2);
+           XtSetArg (args[2], XtNxAddWidth, TRUE);
+           XtSetArg (args[3], XtNxAttachRight, TRUE);
+           XtSetArg (args[4], XtNxVaryOffset, TRUE);
+           pb3= XtCreateManagedWidget ("pb3", XwpushButtonWidgetClass,
+                                         form1, (ArgList) args, 5);
+
+
+       5.2  Summary
+
+
+       Most of the form widget's constraints are illustrated in the
+       previous examples.  It is a powerful but complicated widget,
+       and may sometimes require experimentation to learn how the
+       various constraints interact.  The man page for the form
+       widget at the end of this manual provides additional general
+       information, as well as an explanation for each of the
+       constraints.
+
+

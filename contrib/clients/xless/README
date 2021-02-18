@@ -1,0 +1,36 @@
+This is Xless
+
+	"A file Browsing tool for the X Window System Version 11 Release 3"
+
+   Version 1.0 
+   Based Upon: Xmore for X11R2 by Chris Peterson - MIT Project Athena.
+   Written By: Carlo Lisa - MIT Project Athena.
+       
+   Copyright 1989 Massachusetts Institute of Technology
+
+FEATURES:
+ - Takes input from standard input also.
+ - Search facility dialog-box guided.
+ - Is possible to open windows on other files.
+ - Is possible to open a window running your favorite editor on
+   the current file (specify which editor in the EDITOR env. var.).
+ - Is possible to reload the current file.
+ - Is possible to change file in the current window.
+
+
+Has been tested on vax-station, vax-station equiped with Parallex video board
+and color monitor, IBM-RT with B/W and color monitor.
+
+Works fine with MWM, UWM and TWM window managers.
+
+Specify resource to resources data base as suggested in sample.Xresources
+in this directory.
+
+Send bugs, impressions, suggestions to:
+
+			carlo@athena.mit.edu
+
+Enjoy!
+
+
+

@@ -1,0 +1,3 @@
+Most of the PostScript files in this tree have been compressed to save space.
+If your system does not have the "uncompress" program, compile the sources
+in the directory util/compress/.  Names of compressed files end in ".Z".

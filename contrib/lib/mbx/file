@@ -1,0 +1,141 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          The MultibyteX proposal defines a set of interfaces that  provide
+          encoding mapping from the system's locale character set to X font
+          indexes. Its goals  are  to  :  Support  mapping  from  single  &
+          multibyte character strings to a fonts code set.  Provide mapping
+          from a single character set to multiple  fonts.  MultibyteX  will
+          incorporate  the  concept  of character set (CS) identifiers with
+          each  identifier  being  associated  with  a  font.  No   further
+          knowledge  of CS is defined by MultibyteX.  Support XLFD standard
+          CHARSET_ENCODING that are registered.   (not  in  first  release)
+          Conform to existing multibyte functions found in ANSI-C.
+          MultibyteX  will  use  the  LC_CTYPE  catagory   (used   by   the
+          setlocale())  to affect the behavior of the MultibyteX functions.
+          For any given codepoint within a LC_CTYPE locale  the  MultibyteX
+          functions  will  identify  the  character set identifier and font
+          index.   The  character  set  identifier  will  be  mapped  to  a
+          paritcular  font  file under X.  The number of CS identifiers and
+          association to font code set is locale specific.  There shall  be
+          no  limit  placed  on  the  number  of  character set identifiers
+          supported by a particular locale ( As in the case of  the  Taiwan
+          SEED  project  they  are  defining 16 planes of double octet code
+          points.) &Chset. identifiers will be simply numbered seqencially,
+          CS0/CS1/CS2/..., with CS0 always being assumed to be ASCII.
+          The following is the Release plan for the code: Version 1.1
+          The current version, 1.1, is  a  protype  version  that  has  its
+          encoding tables linked in with the program and has some setlocale
+          stub code included for systems that don't have it.  Version 2.1
+          Externalize the encoding tables  under  some  NLS  directory.   I
+          suggest /usr/lib/X11/nls/$LC_CTYPE.mbX.  Version 2.2
+          Perform XLFD validation of encoding  information  in  the  fonts.
+          Plus more convience functions, eg. mbXDrawLineUndeline.  p.
+          The following define the interfaces  provided.   In  general  all
+          MultibyteX  functions perform similiar to the Xlib function it is
+          dependent on.  Refer to Xlib Reference manual for list of Errors.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          NNNNaaaammmmeeee(Reg.)
+
+
+
+
+
+                      ===> Encountered obsolete macro .DS. <===
+
+

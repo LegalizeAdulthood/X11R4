@@ -1,0 +1,11 @@
+This demo is similar to that of "xcursors".
+
+By executing "xlayout normal", one can see all the English legible fonts
+in a single layout. ("English legible" means that by using the font name as
+the label, the label spells out the font name in English.)
+
+CAUTION: It takes a LONG time for the server to load all the fonts, so there
+will be a noticeable delay...  allow several minutes!
+
+By executing "xlayout weird", one can see all the fonts that are not English
+legible. No offense intended for other languages :-)

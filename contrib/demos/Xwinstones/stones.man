@@ -1,0 +1,297 @@
+.TH STONES 1 "July 1989" "X Version 11"
+.SH NAME
+stones -- performance programs for X11
+.SH SYNOPSIS
+.B "stones"
+[-option ...]
+.SH DESCRIPTION
+.PP
+\fBStones\fP is a collection of programs designed
+to measure performance of various aspects of xwindows.
+These programs can be run individually as part of a complex
+scenario.  The options discussed on this man page are common to
+programs.  Specific options are discussed with each of the specific
+programs.
+.PP
+\fBDIRECTORY STRUCTURE\fP
+.PP
+The top level directory in the \fBstones\fP directory tree contains
+this man file and a file named Make.sh.  The Make.sh file is a shell
+script that performs the following operations:
+  o  deletes the .out file
+  o  deletes all executables and object files.
+  o  rebuilds all testcases
+  o  executes shell scripts in bin
+Make.sh should be editted to set:
+  o  MACHINE=name_of_your_machine_for_Results
+  o  MONITOR=name_of_your_monitor_for_Results
+  o  MONITORNAME=name_to_use_with_the display-c_command
+Other variables you may want to set:
+  o  RELEASE=for_the_record
+  o  BUILD=for_the_record
+.PP
+A new line should be added to the Imake.rules file for the
+ComplexProgramTarget rule.
+This line should be the last in the the program: stanza and should read:
+.nf
+
+$(LN) program ../bin/program
+.fi
+
+.PP
+The Tools directory contains shell scripts to do pre and post testing.
+.PP
+The bin directory contains the test executables and a number of sample
+shell scripts illustrating the use of the stones set of programs to
+build complex testcases.  THe results of each individual test are
+appended to the hidden log file, bin/.out.  Eventually, this file is
+moved to the data file for the machine and monitor in the Result directory
+.PP
+Out from the commands is stored in several files in the Results directory.
+These files are config, data, date, db.report, motd, ps.
+.PP
+\fBSAMPLE OUTPUT\fP
+.PP
+Sample output from \fBconfig\fP.
+
+.nf
+		Machine         :       name
+		Node            :       name
+		Processor       :       type
+		FloatingPt      :       type
+		Memory          :       amount
+		Slot 1          :
+		Slot 2          :
+		Slot 3          :
+		Slot .          :
+		Slot .          :
+		Slot .          :
+		Slot N          :
+.fi
+
+Sample output from \fBdata\fP.
+.nf
+stonestype: ./arcstones -machine jeannesrt unix:0.0 -monitor 8c
+	    -build GOLD -mintime 1 -timeout 360
+	    -casename GemArcsN1.D360.R190 -narcs 1
+date:       Thu Jul  6 09:40:09 1989
+machine:    jeannesrt
+build:      GOLD
+vender:     International Business Machines
+release:    3
+server:     unix:0.0
+monitor:    mpel
+font:       6x10
+background: black
+foreground: white
+mintime:    1
+timeout:    360
+count:      400      /* NUMBER REPETITIONS. MULTIPLIES BY A   */
+		     /* MULIPLIER SO MINIMUM TIME REQUIREMENT */
+		     /* FULFILLED                             */
+stonecount: 400      /* BATCHSIZE * COUNT                     */
+batchsize:  1
+time:       <time elapsed>
+casename:   GemArcsN1.D360.R190
+record:     <value> arcs per second during ./arcstones.
+.fi
+
+Sample output from \fBdate\fP.  This is a record of the date the tests
+were run.
+
+.nf
+Thu Jul  6 09:39:52 CDT 1989
+.fi
+Sample output from \fBdb.report\fP.  The information from this file
+can be used to load a database for further evaluation.  The information
+consists of 2 columns of information--the testcase name and the
+value it returned.
+.nf
+
+jeannesrt
+GOLD
+06-Jul-89
+GemArcsN1.D360.R190             <value>
+GemArcsN100.D360.R190           <value>
+GemArcsN190.D360.Rvar           <value>
+GemArcsN1.D001.R190             <value>
+GemArcsN100.D001.R190           <value>
+GemArcsN1.D002.R190             <value>
+GemArcsN100.D002.R190           <value>
+GemArcsN1.D034.R2000            <value>
+GemArcsN100.D034.R2000          <value>
+GemSFArcsN1.D010.R190.p         <value>
+GemSFArcsN1.D020.R190.p         <value>
+GemSFArcsN1.D090.R190.p         <value>
+GemSFArcsN1.D270.R190.p         <value>
+GemSFArcsN1.D180.R190.c         <value>
+GemSFArcsN1.D180.R190.p         <value>
+GemSFArcsN1.D360.R190.p         <value>
+GemSFArcsN1.D360.R190.c         <value>
+GemPFArcsN1.D180.R190.p.t       <value>
+GemPFArcsN1.D180.R190.p.s       <value>
+GemPFArcsN1.D180.R190.p.o       <value>
+GemPFArcsN1.D180.R190.c.t       <value>
+GemPFArcsN1.D180.R190.c.s       <value>
+GemPFArcsN1.D180.R190.c.o       <value>
+GemPFArcsN1.D360.R190.p.t       <value>
+GemPFArcsN1.D360.R190.p.s       <value>
+.fi
+
+Sample output from \fBmotd\fP.  This file contains the system message
+of the day.
+
+.nf
+***************************************************
+*                                                 *
+*                                                 *
+*    CONTAINS THE SYSTEM MESSAGE OF THE DAY       *
+*                                                 *
+*                                                 *
+***************************************************
+.fi
+
+Sample output from \fBps\fP.  This file contains \fBps -el\fP
+output before any of the tests are run.
+
+.nf
+  F S   UID   PID  PPID  C    SZ    WCHAN     TTY  TIME COMD
+  3 S     0     0     0  0    12     3040       -  0:01 swapper
+101 S     0     1     0  0   116    df434       -  0:01 init
+101 S   200   946     1  0   344    e034c console  0:06 csh
+101 S     0   123     1  0   176   119ecc       -  0:00 getty
+101 S     0    54     1  0   100    a71e0       -  0:00 errdemon
+101 S     0    85     1  0   440   18aaf0       -  0:01 sendmail
+101 S     0    62     1  0   308 3fffe800       -  3:36 qdaemon
+101 S     0    59     1  0   216    d3a5c       -  0:27 cron
+101 S     0    64     1  0   188   10583e       -  0:00 writesrv
+101 S     0    79     1  0   200   11bc60       -  0:02 portmap
+101 S   200  1981     1  0   764   11bc60       -  0:06 aixterm
+101 S   200   952     1  0   344    e0934   hft/3  0:03 csh
+101 S     0    81     1  0   788   11bc60       -  0:04 inetd
+101 S   200   939     1  0   756   11bc60       -  0:24 aixterm
+101 S   200   941   939  0   352   1195b8    pts0  0:07 csh
+101 S   200  1983  1981  0   340    e0bd4    pts2  0:01 csh
+101 S   200  1991   946 12   228    e0c7c console  0:00 sh
+101 S   200  2321  1991 40   228    e0d24 console  0:00 sh
+101 R   200  2326  2321 74   208          console  0:00 ps
+101 S     0   113    81  0   236   11bc60       -  0:02 rpc.moun
+101 S   200  1893     1  0   760   11bc60       -  0:03 aixterm
+101 S   200  1908  1893  0   340    e106c    pts1  0:02 csh
+101 S   200  1727     1  0   524   11bc60       -  0:07 aixwm
+101 S   200  2135  1908  0  9360   119704    pts1  0:03 vi
+101 S   200  2311   952  1   684   111a84   hft/3  0:01 e
+101 S   200  2131  1983  0  9360   119850    pts2  0:04 vi
+101 S   200  2097     1  0   352   11bc60       -  0:00 xclock
+.in -5
+.fi
+.PP
+.SH COMMON OPTIONS
+.TP 8
+.B \-machine \fImachine\fP
+This option specifies the name of the machine running the X Server.
+The default value is "unknown".
+.TP 8
+.B server:0
+This option specifies the server name of the X Server.  Typically,
+the 'server' in server:0 is replaced by 'unix' or 'netname'.
+The default value is unix:0.
+.TP 8
+.B \-build \fIbuildname\fP
+This option specifies the build name of the X11 product.  The default
+value is "unknown".
+.TP 8
+.B \-monitor \fImonitorname\fP
+This option specifies the name of the video display terminal.
+The default value is "unknown".
+.TP 8 
+.B \-casename \fIname\fP
+This option specifies a nickname for a specific testcase of stones.
+The default value is "unknown".
+.TP 8
+.B \-winX \fInum\fP
+This option specifies the "x" coordinate of the upper-left pixel of
+the window border.
+The default value is 20.
+.TP 8
+.B \-winY \fInum\fP
+This option specifies the "x" coordinate of the upper-left pixel of
+the window border.
+The default value is 20.
+.TP 8
+.B \-winH  \fInum\fP
+This option specifies the window width.  The default value is 600.
+.TP 8
+.B \-winW \fInum\fP
+This option specifies the window height.  The default value is 400.
+.TP 8
+.B \-winBW \fInum\fP
+This option specifies the width of the window border.  The default value is
+0.
+.TP 8
+.B \-cursX  \fInum\fP
+This option specifies the "x" offset of the cursor in the root
+window.
+The default value is 10.
+.TP 8
+.B \-cursY  \fInum\fP
+This option specifies the "y" offset of the cursor in the root
+window.
+The default value is 10.
+.TP 8
+.B \-fg  \fIcolor\fP
+This option specifies the color to use as the foreground color.
+The default value is "white".
+.TP 8
+.B \-bg  \fIcolor\fP
+This option specifies the color to use as the background color.
+The default value is "black".
+.TP 8
+.B \-n  \fInum\fP
+This option specifies the number of initial repetitions of the test.
+The default value is 1.
+For a sample run, the repetitions are self adjusted to meet the time
+region.
+.TP 8
+.B \-mintime  \fInum_seconds\fP
+This option specifies the minimum amount of time to run the test.
+The default value is 6.
+.TP 8
+.B \-timeout  \fInum_seconds\fP
+This option specifies the number of seconds before timeout occurs.
+The default is 180.
+.TP 8
+.B \-alu  \fIGXstring\fP
+This option specifies the logical operation to be set in the
+GC.  Valid values are:
+ GXclear          0x0   /* 0 */
+ GXand            0x1   /* src AND dst */
+ GXandReverse     0x2   /* src AND NOT dst */
+ GXcopy           0x3   /* src */
+ GXandInverted    0x4   /* NOT src AND dst */
+ GXnoop           0x5   /* dst */
+ GXxor            0x6   /* src XOR dst */
+ GXor             0x7   /* src OR dst */
+ GXnor            0x8   /* NOT src AND NOT dst*/
+ GXequiv          0x9   /* NOT src XOR dst */
+ GXinvert         0xa   /* NOT dst */
+ GXorReverse      0xb   /* src OR NOT dst*/
+ GXcopyInverted   0xc   /* NOT src */
+ GXorInverted     0xd   /* NOT src OR dst */
+ GXnand           0xe   /* NOT src OR NOT dst */
+ GXset            0xf   /* 1 */
+.TP 8
+.B \-fn \fIfontname\fP
+This option specifies the name of the font to use.  The default value is
+6x10.
+.TP 8
+.B \-help
+This option displays the help menu.
+.TP 8
+.B \-h
+This option displays the help menu.
+.SH "SEE ALSO"
+X(1)
+.PP
+.SH "COPYRIGHT"
+International Business Machines--1989

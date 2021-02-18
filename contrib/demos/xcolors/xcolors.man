@@ -1,0 +1,20 @@
+.TH XCOLORS 1
+.SH NAME
+xcolors - display all X11 color names and colors
+.SH SYNOPSIS
+.B xcolors
+.RI [ " X Toolkit option " "] ..."
+.SH DESCRIPTION
+.I xcolors
+reads in the rgb.txt file that defines symbolic names for RGB colors and
+displays all colors found.  Accepts all standard toolkit options.
+.SH FILES
+.TP RGBFILE
+X11 color names and values.
+.SH BUGS
+It requires every color to be defined twice or more.  (It uses the
+last definition since that is usually the capitalized name). 
+.br
+Dumps core if the server was started with different dbm databases.
+.SH AUTHOR
+Paul Vixie (vix@ubvax.ub.com)

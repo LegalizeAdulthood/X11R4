@@ -1,0 +1,28 @@
+#include <Server.tmpl>
+
+SRCS = ap_init.c ap_util.c \
+       apmon_init.c apclr_init.c apclr_cmap.c \
+       gpr_tmgr.c ap_input.c apk2_input.c apna_input.c apmn_input.c
+
+OBJS = ap_init.o ap_util.o \
+       apmon_init.o apclr_init.o apclr_cmap.o \
+       gpr_tmgr.o ap_input.o apk2_input.o apna_input.o apmn_input.o
+
+OFILES = ap_init.o
+
+INCLUDES = -I. -I../../include -I../mfb -I../mi -I../../os/4.2bsd -I$(INCLUDESRC) -I$(TOP)
+LINTLIBS = ../../dix/llib-ldix.ln ../../os/4.2bsd/llib-los.ln ../mi/llib-lmi.ln \
+           ../mfb/llib-lmfb.ln
+
+NormalLibraryObjectRule()
+
+all:: $(OFILES)
+
+NormalLibraryTarget(apollo,$(OBJS))
+
+DependTarget()
+InstallManPage(Xapollo,$(MANDIR))
+
+lintlib:
+
+NormalLintTarget($(SRCS))

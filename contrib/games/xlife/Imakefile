@@ -1,0 +1,38 @@
+#Imakefile for xlife 1.0
+
+PREFIX		= /usr/games
+XLIFEBINDIR	= $(PREFIX)/bin
+DEPLIBS		= $(DEPXLIB)
+LOCAL_LIBRARIES	= $(XLIB)
+
+#========= Do Not Change Anything Below
+
+SRCS =  button.c\
+	data.c\
+	expose.c\
+	file.c\
+	generate.c\
+	help.c\
+	key.c\
+	keyin.c\
+	lifeutil.c\
+	main.c\
+	motion.c\
+	resize.c\
+	utils.c
+
+OBJS =  button.o\
+	data.o\
+	expose.o\
+	file.o\
+	generate.o\
+	help.o\
+	key.o\
+	keyin.o\
+	lifeutil.o\
+	main.o\
+	motion.o\
+	resize.o\
+	utils.o
+
+ComplexProgramTarget(xlife)

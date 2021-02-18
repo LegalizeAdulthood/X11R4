@@ -1,0 +1,330 @@
+
+
+
+     XWVALUATOR(3X)                                     XWVALUATOR(3X)
+
+
+
+
+     NAME
+          XwvaluatorWidgetClass - the X Widget's valuator widget
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/Valuator.h>
+
+
+     CLASSES
+          The Valuator widget is built from the Core and XwPrimitive
+          classes.
+
+          The widget class to use when creating a valuator is
+          XwvaluatorWidgetClass.  The class name for Valuator is
+          Valuator.
+
+     DESCRIPTION
+          The Valuator widget implements a horizontal or vertical
+          scrolling widget as a rectangular bar containing a sliding
+          box (slider).  The Valuator widget supports input through
+          interactive slider movement and selections on the slide area
+          not occupied by the slider.  Both types of input have a
+          separate callback list for communicating with the
+          application.  The Valuator widget can be used by the
+          application to attach to objects scrolled under application
+          control, or used by composite widgets to implement
+          predefined scrolled objects.
+
+     NEW RESOURCES
+          The Valuator widget defines a set of resource types used by
+          the programmer to specify the data for the valuator.  The
+          programmer can also set the values for the Core and
+          Primitive widget classes to set attributes for this widget.
+          To reference a resource in a .Xdefaults file, strip off the
+          XtN from the resource string.  The following table contains
+          the set of resources defined by Valuator.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWVALUATOR(3X)                                     XWVALUATOR(3X)
+
+
+
+
+                          Valuator Resource Set
+     Name                  Class                 Type      Default
+     ________________________________________________________________
+     XtNsliderMin          XtCSliderMin          int       0
+     XtNsliderMax          XtCSliderMax          int       100
+     XtNsliderExtent       XtCSliderExtent       int       10
+     XtNsliderOrigin       XtCSliderOrigin       int       0
+     XtNsliderTile         XtCSliderTile         int       foreground
+     XtNslideOrientation   XtCSlideOrientation   int       vertical
+     XtNsliderMoved        XtCCallback           Pointer   NULL
+     XtNsliderReleased     XtCCallback           Pointer   NULL
+     XtNareaSelected       XtCCallback           Pointer   NULL
+
+
+
+          XtNsliderMin, XtNsliderMax
+               The Valuator widget lets the application define its own
+               coordinate system for the valuator.  Any integer values
+               with sliderMin less than sliderMax can be specified.
+
+          XtNsliderExtent
+               The size of the slider can be set by the application.
+               The acceptable values are 0 < sliderExtent < (sliderMax
+               - sliderMin).
+
+          XtNsliderOrigin
+               The location of the slider can be set by the
+               application.  The acceptable values are between
+               sliderMin and (sliderMax - sliderExtent).
+
+          XtNsliderTile
+               This resource is used to set the tile used to create
+               the pixmap to use when drawing the slider.  The
+               #defines for setting the values through an arg list and
+               the strings to be used in the .Xdefaults files are
+               described in XwCreateTile(3X).
+
+          XtNslideOrientation
+               The Valuator widget supports both horizontal and
+               vertical scrolling.  This resource type is the means by
+               which this is set.  It can be defined through the
+               .Xdefaults file by the strings "horizontal", and
+               "vertical" or within an arg list for use in
+               XtSetValues() by the defines XwHORIZONTAL and
+               XwVERTICAL.
+
+          XtNsliderMoved, XtNsliderReleased, XtNareaSelected
+               The Valuator widget defines three types of callback
+               lists which get invoked upon different event conditions
+               when interacting with a valuator. All types use the
+               data parameter to send the location of the slider to
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWVALUATOR(3X)                                     XWVALUATOR(3X)
+
+
+
+
+               the callback functions.
+
+               The first callback type, sliderMoved, defines the
+               callback list containing the callback functions called
+               when the slider is interactively moved.
+
+               The second callback type, sliderReleased, defines a
+               callback list containing callback functions called when
+               the mouse button is released after moving the slider.
+
+               The third callback type, areaSelected, defines a
+               callback list containing the callback functions called
+               when an area in a valuator not containing the slider is
+               selected.  The slider is not moved to this position but
+               if the application wants the slider moved, it can use
+               the position value contained in the parameter call_data
+               and perform a XtSetValues() to its valuator.
+
+               For the callback types, the call_data parameter of the
+               callback function will be an integer containing the
+               slider or selection position.
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWVALUATOR(3X)                                     XWVALUATOR(3X)
+
+
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightColor       XtCForeground           Pixel     Black
+     XtNhighlightTile        XtCHighlightTile        int       50_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNrecomputeSize        XtCRecomputeSize        Boolean   TRUE
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalType resource is set to
+          highlight_traversal (XwHIGHLIGHT_TRAVERSAL in an argument
+          list) at either create time or during a call to XtSetValues,
+          the XwPrimitive superclass will automatically augment the
+          primitive widget's translations to support keyboard
+          traversal.  See the XwPrimitive man page for a complete
+          description of these translations.  See the TRANSLATIONS
+          section in this man page for a description of the
+          translations local this widget.
+
+     TRANSLATIONS
+          The input to the Valuator widget is driven by the mouse
+          buttons.  The default translation is defined as follows:
+
+
+      <Btn1Down>:          select(),
+      <Btn1Up>:            release(),
+      Button1<PtrMoved>:   moved(),
+      <EnterWindow>:       enter(),
+      <LeaveWindow>:       leave(),
+      Ctrl<Key>Left:       left(),      HP "Control Left Cursor" key
+      Ctrl<Key>Up:         up(),        HP "Control Up Cursor" key
+      Ctrl<Key>Right:      right(),     HP "Control Right Cursor" key
+      Ctrl<Key>Down:       down(),      HP "Control Down Cursor" key
+
+
+     ACTIONS
+          select:
+               Select processes the activation conditions within the
+               valuator, both for selections within the slider area
+               and on the slider.
+
+          release:
+               Release handles the processing terminating conditions
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWVALUATOR(3X)                                     XWVALUATOR(3X)
+
+
+
+
+               for selections on the valuator.
+
+          moved:
+               Moved processes interactive movement of the slider
+               following a selection upon the slider.
+
+          enter:
+               If the XtNtraversalType resource has been set to
+               XwHIGHLIGHT_ENTER then the arrow's border will be
+               highlighted.  Otherwise no action is taken.
+
+          leave:
+               If the XtNtraversalType resource has been set to
+               XwHIGHLIGHT_ENTER then the arrow's border will be
+               unhighlighted.  Otherwise no action is taken.
+
+          left:
+               If the valuator's orientation is horizontal, this
+               action will cause its slider origin to be decremented
+               by 1 unit and redisplayed.
+
+          up:  If the valuator's orientation is vertical, this action
+               will cause its slider origin to be decremented by 1
+               unit and redisplayed.
+
+          right:
+               If the valuator's orientation is horizontal, this
+               action will cause its slider origin to be incremented
+               by 1 unit and redisplayed.
+
+          down:
+               If the valuator's orientation is vertical, this action
+               will cause its slider origin to be incremented by 1
+               unit and redisplayed.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWPRIMITIVE(3X), XWCREATETILE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+

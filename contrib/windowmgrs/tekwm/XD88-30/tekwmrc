@@ -1,0 +1,157 @@
+#
+#   Window Manager Configuration File
+#   System Default for Tektronix 4310 Series
+#
+# $Header: tekwmrc,v 1.7 89/11/22 13:36:47 glennw Exp $
+#
+# Copyright 1989 by Tektronix, Inc. Beaverton, Oregon.
+#
+# Permission to use, copy, modify, distribute, and sell this software and its
+# documentation for any purpose is hereby granted without fee, provided that
+# the above copyright notice appear in all copies and that both that copyright
+# notice and this permission notice appear in supporting documentation, and
+# that the name of Tektronix not be used in advertising or publicity
+# pertaining to distribution of the software without specific, written prior
+# permission.  Tektronix makes no representations about the suitability of
+# this software for any purpose.  It is provided "as is" without express or
+# implied warranty.
+#
+# TEKTRONIX DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+# ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+# TEKTRONIX BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+# ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
+# IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+# OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+# Author:  Glenn Widener, Tektronix, Inc.
+#          P.O. Box 1000
+#          Wilsonville, OR, 97070
+#          glennw@orca.wv.tek.com
+#
+#   Parameter Settings
+#   See /usr/lib/X11/config/zzTek/Xresources for default settings of 
+#   tekwm variables.
+#
+resetbindings;resetmenus;resetgadgets
+
+gadget[0] = (rresize.bm)
+gadget[1] = (resize.bm)
+gadget[2] = (rmove.bm)
+gadget[3] = (move.bm)
+gadget[4] = (close.bm)^ | | red
+gadget[5] = (raisenlower.bm)
+
+#
+#  Mouse button/key maps
+#
+#  FUNCTION	KEYS	CONTEXT		BUTTON		MENU (if any)
+#
+# Global functions:
+#
+f.circledown =		: root	:	left down
+f.circledown =	  meta	: root	:	left down
+f.raiseandlower = meta	: w|i|t	:	left down
+f.raiseandlower = meta	:gadget[0]:	left down
+f.raiseandlower = meta	:gadget[1]:	left down
+f.raiseandlower = meta	:gadget[2]:	left down
+f.raiseandlower = meta	:gadget[3]:	left down
+f.raiseandlower = meta	:gadget[4]:	left down
+f.raiseandlower = meta	:gadget[5]:	left down
+f.menu =		: root	:	middle down	:"System Operations"
+f.menu =	meta	: r|w|i|t:	middle down	:"System Operations"
+f.menu =	meta	:gadget[0]:	middle down	:"System Operations"
+f.menu =	meta	:gadget[1]:	middle down	:"System Operations"
+f.menu =	meta	:gadget[2]:	middle down	:"System Operations"
+f.menu =	meta	:gadget[3]:	middle down	:"System Operations"
+f.menu =	meta	:gadget[4]:	middle down	:"System Operations"
+f.menu =	meta	:gadget[5]:	middle down	:"System Operations"
+f.menu =		: root	:	right down	:"Window Operations"
+f.menu =	meta	: r|w|i|t:	right down	:"Window Operations"
+f.menu =	meta	:gadget[0]:	right down	:"Window Operations"
+f.menu =	meta	:gadget[1]:	right down	:"Window Operations"
+f.menu =	meta	:gadget[2]:	right down	:"Window Operations"
+f.menu =	meta	:gadget[3]:	right down	:"Window Operations"
+f.menu =	meta	:gadget[4]:	right down	:"Window Operations"
+f.menu =	meta	:gadget[5]:	right down	:"Window Operations"
+#
+# Window/Icon functions:
+#
+f.raise =		: title:	left down
+f.moveopaque =		: title:	left motion
+# Leave icons in background:
+f.moveopaque =		: icon:		left down
+f.iconify =		: i|t:		middle down
+f.menu =		: title:	right down	:"Title Bar Operations"
+f.move =		: icon:		right down
+#
+#  Gadget Functions:
+#
+f.resize =		: gadget[0]:	left down
+f.resize =		: gadget[0]:	middle down
+f.resize =		: gadget[0]:	right down
+f.resize =		: gadget[1]:	left down
+f.resize =		: gadget[1]:	middle down
+f.resize =		: gadget[1]:	right down
+f.moveopaque =		: gadget[2]:	left down
+f.move =		: gadget[2]:	middle down
+f.move =		: gadget[2]:	right down
+f.moveopaque =		: gadget[3]:	left down
+f.move =		: gadget[3]:	middle down
+f.move =		: gadget[3]:	right down
+f.menu =		: gadget[4]:	left down	:"close"
+f.menu =		: gadget[4]:	middle down	:"close"
+f.menu =		: gadget[4]:	right down	:"close"
+f.raiseandlower =	: gadget[5]:	left down
+f.raiseandlower =	: gadget[5]:	middle down
+f.raiseandlower =	: gadget[5]:	right down
+
+#
+#   Menu Definitions
+#
+menu =  "System Operations"	{
+" open VT102 window":	!"xterm -ls -b 4 -name VT102 &"
+" open Tek window":	!"tekwindow &"
+" open Tek peer":	!"tekpeer &"
+" open Tek screen":	!"tekscreen &"
+" hardcopy screen":	!"screencopy -hcproperty -root -gamma 2.8 &"
+" configure hardcopy":	!"hcsetup &"
+" repaint display":	f.refresh
+" reset X resources":	!"xusersetup +s +u -c"
+" restart tekwm":	f.restart
+#  restart session does not work with xdm
+#" restart session":	f.menu:	"restart session"
+" end session":		f.menu:	"end session"
+}
+
+menu =  "Window Operations"	{
+" close":		f.delete
+" collapse / expand":	f.newiconify
+" cover":		f.lower
+" uncover":		f.raise
+" reframe":		f.resize
+" move":		f.move
+" focus input":		f.focus
+" hardcopy window":	!"screencopy -hcproperty -gamma 2.8&"
+" repaint window":	f.redraw
+}
+
+menu = "close" {
+" confirm":		f.delete
+}
+
+menu = "restart session" {
+" confirm":		f.restartsession
+}
+
+menu = "end session" {
+" confirm":		f.endsession
+}
+
+
+
+menu = "Title Bar Operations" {
+" collapse":	f.newiconify
+" focus input":		f.focus
+" hardcopy window":	>"screencopy -hcproperty -id %d -gamma 2.8&"
+" repaint window":	f.redraw
+}

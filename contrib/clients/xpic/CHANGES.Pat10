@@ -1,0 +1,10 @@
+to be released 
+
+- Minibuf now understands cut, emacs style - by clicking to set the mark
+  with the right button. (Also sets selection owner to none, so you can paste
+  the cut text into xterm)
+
+- changed the font mapping to use X font names and extract dpi and
+  point size from them. The old devsun/devpsc is junked -- this matches
+  version 4.8 xtroff. Saves disk space on fonts and delinks xpic from
+  xtroff. fonts.alias no longer needed. New file -- xfname.c

@@ -1,0 +1,45 @@
+.TH XIMAGE 1 "1 November 1989"
+.SH NAME
+NCSA ximage \- interactive data analysis tool
+.SH SYNOPSIS
+.B ximage
+.RB [ " \-options \|.\|.\|." ]
+.LP
+.SH DESCRIPTION
+.IX  ximage  ""  "\fLximage\fR \(em interactive data analysis tool"
+.IP  
+ximage is 2D interactive data analysis tool that features displaying
+color images of data sets in cartesian and polar form.  It can 
+display the actual data values in a spread sheet manner and create
+contour plots, shaded images, and histograms.  
+.LP
+.IP
+ximage provides functions for dynamically manipulating palettes.  
+Palette manipulation may be done by changing the component values in RGB, 
+CMY or HSV color models.  In addition, the palette may be changed by 
+expansion, compression, rotation or transposition. 
+.LP
+.IP
+The user may animate multiple raster images from disk or the X server's memory.
+.LP
+.IP
+As input data, ximage takes either 8-bit raster files or HDF files containing 
+either 8-bit raster data or 32 bit floating point data.  HDF 
+(Hierarchical Data Format) is a standard data format originally developed
+at NCSA.  As Input palettes, it takes in HDF palettes, and 8 bit palettes
+where the first 256 bytes specify the 256 entries of red, followed by
+256 entries of green and then blue.  
+.LP
+.SH SEE ALSO
+.IP
+xds(1)	- NCSA XDataSlice
+.LP
+.IP
+Full documentation of NCSA XImage is provided along with the distribution.
+.LP
+.SH BUGS
+Please send bug reports to bugs@ncsa.uiuc.edu.
+.IP
+.SH ORIGIN
+National Center for Supercomputing Applications at the University of Illinois
+in Urbana Champaign.

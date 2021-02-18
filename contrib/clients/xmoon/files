@@ -1,0 +1,12 @@
+     365    1214   11843 Image.c
+     111     428    3550 Image.h
+     107     380    3050 ImageP.h
+       8      24     232 Imakefile
+      29     177    1109 README
+      64     370    2677 README.original
+     415    2052   11602 calc.c
+      48     526    3306 moon.bm
+     419    1676   12808 xmoon.c
+     153     957    6474 xmoon.h
+      41     201    1241 xmoon.man
+    1760    8005   57892 total

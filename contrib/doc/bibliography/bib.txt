@@ -1,0 +1,396 @@
+
+
+
+
+
+
+                         _X _T_E_C_H_N_I_C_A_L _B_I_B_L_I_O_G_R_A_P_H_Y
+                            compiled by Ken Lee
+          please send updates to klee@wsl.dec.com or decwrl!klee
+                             December 14, 1989
+
+
+
+Asente, Paul, "Simplicity and Productivity," _U_N_I_X _R_e_v_i_e_w, vol. 6, no. 9,
+     pp. 57-63.  A discussion on the classing mechanism in the X Toolkit.
+
+ASP, Inc., _X _M_a_n_u_a_l _S_e_t (_3 _v_o_l_u_m_e_s), ASP, Inc., 1989.  A copy of the MIT
+     X11R3 manual set.  Volume 1 covers popular client programs.  Volume 2
+     covers Xlib.  Volume 3 covers Xt and the Athena widgets.  An upcoming
+     Volume 4 covers Motif.
+
+ASP, Inc., _X _R_e_f_e_r_e_n_c_e _S_e_t (_3 _v_o_l_u_m_e_s), ASP, Inc., 1989.  A 3 volume set of
+     quick reference guides covering Xlib, Xt, Athena widgets, and popular
+     clients.
+
+Baldwin, Howard, "Why All The Shouting Over X Terminals?," _U_N_I_X _W_o_r_l_d, _N_e_t_-
+     _w_o_r_k_i_n_g _S_u_p_p_l_e_m_e_n_t, pp. 75-81, 1989.  A broad look at X terminals,
+     with details on 6 vendor's products.
+
+Brunet, James, "Using PC's at X Servers," _U_N_I_X _W_o_r_l_d, _N_e_t_w_o_r_k_i_n_g _S_u_p_p_l_e_-
+     _m_e_n_t, pp. 83-85, 1989.  An introduction to X server software for IBM
+     PC's.
+
+Brunhoff, Todd, "Pleasing The Eye," _U_N_I_X _R_e_v_i_e_w, vol. 7, no. 10, pp. 64-72,
+     November, 1989.  An introduction to VEX, one of the proposed video ex-
+     tensions to X.
+
+Cashin, Jerry, "Many Struggle to Set Laws of Windows Game," _S_o_f_t_w_a_r_e _M_a_g_a_-
+     _z_i_n_e, vol. 9, no. 2, pp. 74-79, February, 1989.  A description of the
+     players in the window system standards war. Includes a photo of Bob
+     Scheifler.
+
+Champine, George, Bob Scheifler, Jim Gettys, Georges Grinstein, and Bertram
+     Herzog, "Panel discussion on the X Window System," in _S_I_G_G_R_A_P_H'_8_8
+     _P_a_n_e_l _P_r_o_c_e_e_d_i_n_g_s, August, 1988.  This is the transcript of an in-
+     teresting panel discussion on X. George Champine was moderator. Panel-
+     ists were Bob Scheifler, Jim Gettys, Georges Grinstein, and Bertram
+     Herzog. The panelists discussed the history of X and current work
+     at/on the X Consortium, PEX, and national and international standards
+     for X. This was followed by a lively question and answer session on
+     the present and future of X.
+
+Farrow, Rik, "Before their time?," _U_N_I_X _W_o_r_l_d, pp. 75-81, July, 1989.  This
+     article describes X terminals in general and compares two models. The
+     comparison is, unfortunately, not especially meaningful.
+
+Gancarz, M., "UWM:  A User Interface for X Windows," in _P_r_o_c_e_e_d_i_n_g_s _o_f _t_h_e
+     _S_u_m_m_e_r, _1_9_8_6 _U_S_E_N_I_X _C_o_n_f_e_r_e_n_c_e, pp. 429-440.  Describes UWM, the first
+     good window manager for X.
+
+
+
+
+
+
+
+
+
+                              - 2 -
+
+
+
+Gettys, Jim, "Problems Implementing Window Systems in UNIX," in _P_r_o_c_e_e_d_i_n_g_s
+     _o_f _t_h_e _W_i_n_t_e_r, _1_9_8_6 _U_S_E_N_I_X _C_o_n_f_e_r_e_n_c_e, pp. 89-97.  Describes some of
+     the early work on X.
+
+Hancock, Bill, "DECwindows:  X'ing With A Vengeance," _D_E_C _P_r_o_f_e_s_s_i_o_n_a_l,
+     vol. 8, no. 2, pp. 70-84, February, 1989.  A description of DECwin-
+     dows, DEC's product version of X.  It includes enhanced X libraries, a
+     tuned X server, a high-level user interface description language, and
+     several X applications.
+
+Hopgood, F. R. A., _M_e_t_h_o_d_o_l_o_g_y _o_f _W_i_n_d_o_w _M_a_n_a_g_e_m_e_n_t, Springer-Verlag, New
+     York, 1986.  ISBN 0-387-16116-3.  The proceedings of the important
+     1985 Alvey Workshop on Window Management. Many of the big names ap-
+     parently were here.  It includes interesting material on problems with
+     UNIX window systems and proposed solutions.  It also includes
+     descriptions of early versions of current UNIX window systems, such as
+     X and NeWS.
+
+Johnson, Eric and Kevin Reichard, _X _W_i_n_d_o_w _A_p_p_l_i_c_a_t_i_o_n_s _P_r_o_g_r_a_m_m_i_n_g, MIS:
+     Press.  ISBN 1-55828-016-2. Another tutorial on Xlib programming. This
+     book has lots and lots of examples, but coverage of complex subjects
+     is not as deep as Jones' book or as broad as the O'Reilly Xlib tutori-
+     al. Unfortunately, many of the example programs are not well behaved,
+     so be careful.
+
+Jones, Oliver, _I_n_t_r_o_d_u_c_t_i_o_n _t_o _t_h_e _X _W_i_n_d_o_w _S_y_s_t_e_m, Prentice-Hall, 1988.
+     ISBN 0-13-499997-5. An excellent introduction to programming with
+     Xlib.  Written with the programmer in mind, this book includes many
+     practical tips that are not written anywhere else. This book is not as
+     broad as the O'Reilly Xlib tutorial and doesn't offer as many examples
+     as the Johnson & Reichard book, but Jones is probably the most experi-
+     enced X programmer of this group and this shows in the quality of the
+     material in the book.
+
+Lee, Ed, "Window of Opportunity," _U_N_I_X _R_e_v_i_e_w, vol. 6, no. 6, pp. 47-61.
+     This article proposes a user interface reference model and shows how X
+     attempts to meet it.  In the process, it presents a good, broad over-
+     view of X, its advantages, and its shortcomings.
+
+Leffler, Samuel J., "A Window On The Future?," _U_N_I_X _R_e_v_i_e_w, vol. 6, no. 6,
+     pp. 62-69.  This article compares NeWS with other window systems, such
+     as X, and concludes that, despite its problems, NeWS is the window
+     system of the future. See Robin Schaufler's paper for a more technical
+     comparison of the X and NeWS.
+
+Lemke, David and David S. H. Rosenthal, "Visualizing X11 Clients," in
+     _P_r_o_c_e_e_d_i_n_g_s _o_f _t_h_e _W_i_n_t_e_r, _1_9_8_9 _U_S_E_N_I_X _C_o_n_f_e_r_e_n_c_e, pp. 125-138.  A de-
+     tailed look at ``visuals'', the X abstraction of display hardware
+     capabilities. Proper use of visuals is necessary for an X client to
+     take advantage of the capabilities of a server's hardware.
+
+Linton, Mark A., John M. Vlissides, and Paul R. Calder, "Composing User In-
+     terfaces with InterViews," _I_E_E_E _C_o_m_p_u_t_e_r, vol. 22, no. 2, pp. 65-84,
+     February, 1989.  Describes the InterViews user interface toolkit,
+
+
+
+
+
+
+
+
+                              - 3 -
+
+
+
+     written in C++ and based on the X Window System.  Even if you don't
+     plan to use InterViews as a toolkit, it provides a good C++ binding to
+     the X protocol.
+
+Macklem, Rick, Jim Linders, and Hugh Smith, "G Shell Environment," in
+     _P_r_o_c_e_e_d_i_n_g_s _o_f _t_h_e _S_u_m_m_e_r, _1_9_8_8 _U_S_E_N_I_X _C_o_n_f_e_r_e_n_c_e, pp. 15-22.
+     Describes a rudimentary graphical UNIX shell written as a X client.
+
+McCormack, Joel and Paul Asente, "Using the X Toolkit or How to Write a
+     Widget," in _P_r_o_c_e_e_d_i_n_g_s _o_f _t_h_e _S_u_m_m_e_r, _1_9_8_8 _U_S_E_N_I_X _C_o_n_f_e_r_e_n_c_e, pp. 1-
+     13.  An excellent tutorial on writing basic X Toolkit widgets.  Poten-
+     tial widget writers (and maybe users, too) should probably start by
+     reading this paper. Unfortunately, it's based on X11R2, so some of it
+     is out of date.
+
+McCormack, Joel and Paul Asente, "An Overview of the X Toolkit," in
+     _P_r_o_c_e_e_d_i_n_g_s _o_f _t_h_e _A_C_M _S_I_G_G_R_A_P_H _S_y_m_p_o_s_i_u_m _o_n _U_s_e_r _I_n_t_e_r_f_a_c_e _S_o_f_t_w_a_r_e,
+     pp. 46-55, October, 1988.  An excelent architectural overview of the X
+     Toolkit, including its goals, how it accomplished them, and possible
+     future directions.
+
+McCormack, Joel, Paul Asente, and Ralph Swick, _X _T_o_o_l_k_i_t _I_n_t_r_i_n_s_i_c_s - _C
+     _L_a_n_g_u_a_g_e _I_n_t_e_r_f_a_c_e, DEC Press, 1989.  Not yet published, but should be
+     a much improved version of the MIT X Toolkit intrinsics manual, by the
+     same authors.
+
+McCormack, Joel, "Smart Code, Stupid Memory: A Fast X Server for a Dumb
+     ColorFrame Buffer," DEC Western Research Laboratory Technical Note 9,
+     September, 1989.  Describes the implementation of one of the best X
+     servers currently available, that of the color DECstation 3100. Algo-
+     rithms as well as performance measurements are discussed. For informa-
+     tion on obtaining free copies of this report, send eletronic mail to
+     ``wrl-techreports@decwrl.dec.com''. Your message should contain the
+     single word ``help''.
+
+McLoughlin, Lee, "A Simple Guide to Porting the X Window System," in
+     _P_r_o_c_e_e_d_i_n_g_s _o_f _E_U_U_G _S_p_r_i_n_g _1_9_8_9, pp. 283-291, Brussels, April 3-7,
+     1989.  A brief, but good, discussion of the interface between the X
+     server and the underlying operating system.
+
+MIPS Staff, "Graphical User Interfaces Now," _M_I_P_S _M_a_g_a_z_i_n_e, vol. 1, no. 11,
+     pp. 42-50, November, 1989.  A comparison of popular user interfaces
+     including Microsoft Presentation Manager, NextStep, Macintosh, Motif,
+     and Open Look.  Motif and Open Look are both available for the X Win-
+     dow System.  The IXI X.desktop and Visix Looking Glass UNIX file
+     managers, both based on X, are also mentioned. See also the review by
+     Alan Southerton.
+
+Myers, Brad A., "Window Interfaces:  A Taxonomy of Window Manager User In-
+     terfaces," _I_E_E_E _C_o_m_p_u_t_e_r _G_r_a_p_h_i_c_s & _A_p_p_l_i_c_a_t_i_o_n_s, vol. 8, no. 5, pp.
+     65-84, September, 1988.  A taxonomy of current window system user in-
+     terfaces, including the UWM window manager for X. Discusses and com-
+     pares the features of each user interface. Contrast this with Rob
+     Pike's window system user interface guidelines. Myers is a well known
+
+
+
+
+
+
+
+
+                              - 4 -
+
+
+
+     user interface researcher.
+
+Nadeau, David R., "High-Performance 3-D Graphics In A Window Environment,"
+     _C_o_m_p_u_t_e_r _T_e_c_h_n_o_l_o_g_y _R_e_v_i_e_w, pp. 89-93, Fall, 1988.  A discussion on
+     integrating Megatek's high-performance 3D graphics hardware/software
+     with X.
+
+Nye, Adrian, "The X Window System Protocol," _U_N_I_X _W_o_r_l_d, pp. 105-113, Sep-
+     tember, 1989.  A high-level description of the X protocol.
+
+O'Reilly, Tim, "The Toolkits (and Politics) of X Windows," _U_N_I_X _W_o_r_l_d, vol.
+     6, no. 2, pp. 66-73, February, 1989.  An introduction to some of the
+     popular widget sets available for the X Toolkit.
+
+O'Reilly and Associates, _T_h_e _X _W_i_n_d_o_w _S_y_s_t_e_m _S_e_r_i_e_s (_4 _v_o_l_u_m_e_s), O'Reilly
+     and Associates, 1988, 1989.  ISBN 0-937175-26-9, 0-937175-27-7, etc.
+     This is a 4 (and growing) volume set of books. Volume 1 is a tutorial
+     on Xlib. It's broader than the others (Jones, Johnson & Reichard), but
+     offers fewer examples or practical tips. Volumes 0, 2, and 3 are ap-
+     proximately the same as the MIT manuals (protocol manual, Xlib manual
+     pages, and popular client manual pages). Most of these were originally
+     written for X11R2, but newer printing include changes for X11R3. Fu-
+     ture volumes will reportedly cover the X Toolkit intrinsics, XView,
+     and Motif. Written by technical writers, these are probably the most
+     professional looking of the X books.
+
+Pike, Rob, "Window Systems Should Be Transparent," _U_S_E_N_I_X _C_o_m_p_u_t_i_n_g _S_y_s_-
+     _t_e_m_s, vol. 1, no. 3, pp. 279-296, Summer, 1988.  Some window system
+     user interface guidelines, based on MUX window system for the BLIT
+     terminal, with some comparisons to X.  Contrast this to Myers' paper.
+     Pike is the developer of the BLIT.
+
+Pike, Rob, "A Concurrent Window System," _U_S_E_N_I_X _C_o_m_p_u_t_i_n_g _S_y_s_t_e_m_s, vol. 2,
+     no. 2, pp. 133-153, Spring, 1989.  A description of a multi-threaded
+     window system written using a concurrent programming language.  The
+     design is shown to be simpler than the single threaded design of X.
+
+Probst, Richard, "OPEN LOOK Toolkits," _S_u_n_T_e_c_h_n_o_l_o_g_y, vol. 1, no. 4, pp.
+     76-86, Autumn, 1988.  OPEN LOOK is a user interface specification
+     designed by AT&T and Sun. This paper discusses OPEN LOOK programming
+     toolkits, including two for the X Window System.
+
+Rao, R. and S. Wallace, "The X Toolkit," in _P_r_o_c_e_e_d_i_n_g_s _o_f _t_h_e _S_u_m_m_e_r, _1_9_8_7
+     _U_S_E_N_I_X _C_o_n_f_e_r_e_n_c_e.  Describes an early version of the X Toolkit.
+
+Rochkind, Marc J., "XVT:  A Virtual Toolkit for Portability Between Window
+     Systems," in _P_r_o_c_e_e_d_i_n_g_s _o_f _t_h_e _W_i_n_t_e_r, _1_9_8_9 _U_S_E_N_I_X _C_o_n_f_e_r_e_n_c_e, pp.
+     151-163.  Describes the Extensible Virtual Toolkit (XVT), a user in-
+     terface toolkit that provides a uniform application programming inter-
+     face to several different window systems, while providing the ``look
+     and feel'' appropriate for the  window system.  Supported window sys-
+     tems include X11, Microsoft Windows, OS/2 Presentation Manager, and
+     the Macintosh.
+
+
+
+
+
+
+
+
+
+                              - 5 -
+
+
+
+Rosenthal, David S. H., "A Simple X11 Client Program," in _P_r_o_c_e_e_d_i_n_g_s _o_f
+     _t_h_e _W_i_n_t_e_r, _1_9_8_8 _U_S_E_N_I_X _C_o_n_f_e_r_e_n_c_e, pp. 229-235.  A version of the
+     ``hello, world'' paper, presenting and comparing the basics of the X
+     library and the X Toolkit.  All potential X programmers (Xlib or X
+     toolkit) should understand everything in this paper before they at-
+     tempt to write any X programs.  Included in the MIT X distribution and
+     reprinted as ``Going for Baroque'' in the June, 1988 issue of _U_N_I_X _R_e_-
+     _v_i_e_w magazine.
+
+Rost, Randi, Jeffrey Friedberg, and Peter Nishimoto, "PEX:  A Network-
+     Transparent 3D Graphics System," _I_E_E_E _C_o_m_p_u_t_e_r _G_r_a_p_h_i_c_s & _A_p_p_l_i_c_a_-
+     _t_i_o_n_s, pp. 14-26, July, 1989.  A good overview of PEX, the
+     PHIGS/PHIGS+ 3D extension to X. A complete PEX is currently being
+     developed by Sun under contract to the MIT X Consortium and is
+     scheduled to be publically available in 1990. See also the Thomas &
+     Friedmann paper on PEX.
+
+Schaufler, Robin, "X11/NeWS Design Overview," in _P_r_o_c_e_e_d_i_n_g_s _o_f _t_h_e _S_u_m_m_e_r,
+     _1_9_8_8 _U_S_E_N_I_X _C_o_n_f_e_r_e_n_c_e, pp. 23-35.  Discusses Sun's X/NeWS server.
+     Compares the functionality of X and NeWS and describes a server that
+     merges the two.
+
+Scheifler, Robert and Jim Gettys, "The X Window System," _A_C_M _T_r_a_n_s_a_c_t_i_o_n_s
+     _o_n _G_r_a_p_h_i_c_s, vol. 5, no. 2, pp. 79-109, April, 1986.  The first pub-
+     lished description of X.  Although it discusses X10, it is still one
+     of the most comprehensive overviews of X. An updated X11 version is
+     reportedly being written by Jim Gettys.
+
+Scheifler, Robert, James Gettys, and Ron Newman, _X _W_i_n_d_o_w _S_y_s_t_e_m:  _C _L_i_-
+     _b_r_a_r_y _a_n_d _P_r_o_t_o_c_o_l _R_e_f_e_r_e_n_c_e, DEC Press, 1988.  ISBN 1-55558-012-2.
+     The Xlib bible by the authors of X11. It is shipped with the X11R3
+     tapes. Includes detailed descriptions of the X protocol and all Xlib
+     functions and data structures. Required for all serious Xlib program-
+     mers, but may be rough going for those with little experience in in-
+     teractive computer graphics. An X11R4 version of this book is in
+     preparation.
+
+Southerton, Alan, "Friendly Desktops," _U_N_I_X _W_o_r_l_d, vol. 6, no. 11, pp. 68-
+     73, November, 1989.  Another comparison of X-based UNIX file managers,
+     including Non Standard Logic InDepth, IXI X.Desktop, Visix Looking
+     Glass, AT&T Open Look, Torch Technologies Y-OpenTop, and Softscience
+     Convenience Plus. See also the review by MIPS.
+
+Swick, Ralph R. and Mark S. Ackerman, "The X Toolkit:  More Bricks for
+     Building User Interfaces," in _P_r_o_c_e_e_d_i_n_g_s _o_f _t_h_e _W_i_n_t_e_r, _1_9_8_8 _U_S_E_N_I_X
+     _C_o_n_f_e_r_e_n_c_e, pp. 221-233.  An introduction to the X Toolkit.  Describes
+     the toolkit architecture and the basic Athena widgets.
+
+Thomas, Spencer W. and Martin Friedmann, "PEX - A 3-D Extension to X Win-
+     dows," in _P_r_o_c_e_e_d_i_n_g_s _o_f _t_h_e _W_i_n_t_e_r, _1_9_8_9 _U_S_E_N_I_X _C_o_n_f_e_r_e_n_c_e, pp. 139-
+     149.  Describes the demonstration implementation of PEX, the
+     PHIGS/PHIGS+ 3D extension to X. A complete PEX is currently being
+     developed by Sun under contract to the MIT X Consortium and is
+     scheduled to be publically available in 1990. See also the Rost, _e_t
+
+
+
+
+
+
+
+
+                              - 6 -
+
+
+
+     _a_l, paper on PEX.
+
+X/Open Company, Ltd., _X/_O_p_e_n _P_o_r_t_a_b_i_l_i_t_y _G_u_i_d_e:  _W_i_n_d_o_w _M_a_n_a_g_e_m_e_n_t,
+     Prentice-Hall, 1988.  X/Open is an international user group of UNIX
+     hardware and software developers. It publishes portability guidelines
+     with the goal that developers that follow these guidelines will be
+     portable across other hardware and software supporting the guidelines.
+     The X/Open window management guidelines are based on the X11R3 specif-
+     ications.
+
+Young, Doug, _X _W_i_n_d_o_w _S_y_s_t_e_m_s _P_r_o_g_r_a_m_m_i_n_g _a_n_d _A_p_p_l_i_c_a_t_i_o_n_s _W_i_t_h _X_t,
+     Prentice-Hall.  ISBN 0-13-972167-3. An excellent (and currently the
+     only) tutorial on programming with the Xt intrinsics. Examples in this
+     book use the HP widgets, but a Motif edition is scheduled to be
+     released soon.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

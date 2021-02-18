@@ -1,0 +1,264 @@
+
+
+
+     XWIMAGEEDIT(3X)                                   XWIMAGEEDIT(3X)
+
+
+
+
+     NAME
+          XwimageEditWidgetClass - the X Widget's image editor widget
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/ImageEdit.h>
+
+
+     CLASSES
+          ImageEdit is built from the Core and Primitive classes.
+
+          The widget class to use when creating an image editor is
+          XwimageEditWidgetClass.
+
+           The class name is ImageEdit.
+
+     DESCRIPTION
+          The ImageEdit widget allows an image to be displayed in an
+          enlarged format so that it may be edited on a pixel-by-pixel
+          basis. The specified image is displayed in a grid structure
+          so that a user may see and modify the composition.
+
+          To change the image, the user moves the mouse to the desired
+          point and presses the mouse button. The pixel under the
+          cursor will change to the foreground color. If the cursor is
+          moved while the button is pressed, all pixels that are
+          touched will change to the foreground color.
+
+     NEW RESOURCES
+          The ImageEdit defines a set of resource types that can be
+          used by the programmer to control the appearance and
+          behavior of the widget.  The programmer can also set the
+          values for the Core and Primitive widget classes to set
+          attributes for this widget. To reference a resource in a
+          .Xdefaults file, strip off the XtN from the resource string
+          name.  The following table contains the set of resources
+          defined by ImageEdit.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWIMAGEEDIT(3X)                                   XWIMAGEEDIT(3X)
+
+
+
+
+                          ImageEdit Resource Set
+         Name               Class              Type       Default
+         ________________________________________________________
+         XtNimage           XtCImage           XImage *   NULL
+         XtNpixelScale      XtCPixelScale      int        6
+         XtNgridThickness   XtCGridThickness   int        1
+         XtNdrawColor       XtCBackground      Pixel      Black
+         XtNeraseColor      XtCBackground      Pixel      White
+         XtNeraseOn         XtCEraseOn         Boolean    True
+         XtNbackground      XtCBackground      Pixel      Black
+
+
+
+          XtNimage
+               This is a pointer to the image that is displayed in the
+               grid.  It points to an XImage structure.
+
+          XtNpixelScale
+               This resource defines the magnification factor to use
+               when displaying the expanded image.
+
+          XtNgridThickness
+               This resource defines the separation between the
+               magnified pixels.
+
+          XtNdrawColor
+               This resource define the color to be used for drawing
+               in the widget.
+
+          XtNeraseColor
+               This resource defines the color used for erasing in the
+               widget.  Erase is enabled by the eraseOn resource.
+               When selections occur on the widget, the widget
+               determines the color of the pixel selected.  If the
+               selected pixel is not the same as the draw color, the
+               draw color will be used to draw until the button
+               release occurs.  If the selected pixel is the draw
+               color, the erase color will be used for drawing until
+               the button release occurs.
+
+          XtNeraseOn
+               This resource is a boolean variable that indicates
+               whether erasing is enabled or not.  If set to TRUE,
+               drawing will occur as described above.  If set to
+               FALSE, only the draw color will be used for drawing.
+
+          XtNbackground
+               ImageEdit redefines the core class background resource
+               to default it to the color black.  This is then used as
+               the background color for the widget's window which will
+               be reflected in the grid color.
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWIMAGEEDIT(3X)                                   XWIMAGEEDIT(3X)
+
+
+
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightColor       XtCForeground           Pixel     Black
+     XtNhighlightTile        XtCHighlightTile        int       50_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNrecomputeSize        XtCRecomputeSize        Boolean   TRUE
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalType resource is set to
+          highlight_traversal (XwHIGHLIGHT_TRAVERSAL in an argument
+          list) at either create time or during a call to XtSetValues,
+          the XwPrimitive superclass will automatically augment the
+          primitive widget's translations to support keyboard
+          traversal.  Refer to the XwPrimitive man page for a complete
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWIMAGEEDIT(3X)                                   XWIMAGEEDIT(3X)
+
+
+
+
+          description of these translations.  Refer to the
+          TRANSLATIONS section in this man page for a description of
+          the translations local to this widget.
+
+     TRANSLATIONS
+          The following translations are defined for the ImageEdit
+          widget.
+
+               <BtnDown>:            select()
+               <BtnUp>:              release()
+               Button1<PtrMoved>:    moved()
+               <EnterWindow>:        enter()
+               <LeaveWindow>:        leave()
+
+     ACTIONS
+          select:  Selections occurring on an image edit cause drawing
+          or erasing on the selected pixel, activate the moved action
+          for continuous drawing and invoke the primitive class
+          XtNselect callback functions.
+
+          release:  Release concludes a drawing sequence and invokes
+          primitive class XtNrelease callbacks.
+
+          moved:  Moved causes drawing or erasing to occur from the
+          last cursor position to the current cursor position.
+
+          enter:  If the XtNtraversalType resource has been set to
+          XwHIGHLIGHT_ENTER then the image edit's border will be
+          highlighted.  Otherwise no action is taken.
+
+          leave:  If the XtNtraversalType resource has been set to
+          XwHIGHLIGHT_ENTER then the image edit's border will be
+          unhighlighted.  Otherwise no action is taken.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWPRIMITIVE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+

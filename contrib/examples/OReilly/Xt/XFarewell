@@ -1,0 +1,5 @@
+*farewell.label:  Click on me.
+*farewell.translations: #override\n\
+	<Btn1Down>,<Btn1Up>:	confirm()\n\
+	<Btn2Down>:   set()\n\
+	<Btn2Down>,<Btn2Up>:	quit()

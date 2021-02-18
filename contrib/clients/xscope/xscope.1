@@ -1,0 +1,89 @@
+.TH XSCOPE 1 "8 Sept 1988" "X Version 11"
+.SH NAME
+xscope - X Window Protocol Viewer
+.SH SYNOPSIS
+.B xscope
+[ option ] ...
+.SH DESCRIPTION
+.I Xscope
+sits in-between an X11 client and an X11 server and prints the contents
+of each request, reply, error, or event that is communicated between them.
+This information can be useful in debugging and performance
+tuning of X11 servers and clients.
+.PP
+To operate, \fIxscope\fP must know the host, port, and display to use
+to connect to the X11 server.  In addition, it must know the port on
+which it should listen for X11 clients.  Two cases are common:
+.PP
+.TP 5
+(1) The X11 server is on the same host as \fIxscope\fP.
+In this case, the input port for \fIxscope\fP should be selected as an
+X11 server on a different display, and the client DISPLAY argument
+adjusted to select \fIxscope\fP .  For example, if the X11 server is
+on port 6000, display 1, then \fIxscope\fP can use port 6002 as its
+input port.  The client can use display 1 for direct access to X11 or
+display 2 for access to \fIxscope\fP.
+.PP
+.TP 5
+(2) The X11 server is on a different host than \fIxscope\fP.
+In this case the same input and output ports can be used, and the host
+component of the DISPLAY is used to select \fIxscope\fP or X11.
+.SH ARGUMENTS
+.PP
+.TP 10
+.B \-i<input-port>
+Specify the port that \fIxscope\fP will use to take requests from clients
+(defaults to 1).
+For X11, this port is automatically biased by 6000.
+.PP
+.TP 10
+.B \-o<output-port>
+Determines the port that 
+\fIxscope\fP will use to connect to X11 (defaults to 0). 
+For X11, this port is automatically biased by 6000.
+.PP
+.TP 10
+.B \-h<host>
+Determines the host that  \fIxscope\fP will use to find its X11 server.
+.PP
+.TP 10
+.B \-d<display>
+Defines the display number.  The display number is added to the input
+and output port to give the actual ports which are used by  \fIxscope\fP.
+.PP
+.TP 10
+.B \-q
+Quiet output mode.  Gives only the names of requests, replies, errors, and 
+events, but does not indicate contents.
+.PP
+.TP 10
+.B \-v<print-level>
+Determines the level of printing which \fIxscope\fP will provide.  The
+print-level can be 0 (same as quiet mode), 1, 2, 3, 4.  The larger
+numbers give more and more output.  For example, a successful setup
+returns a string which is the name of the vendor of the X11 server.
+At level 1, the explicit field giving the length of the string is
+suppressed since it can be inferred from the string.  At level 2 and
+above the length is explicitly printed.
+.SH EXAMPLES
+.LP
+xscope -v4 -hcleo -d0 -o0 -i1
+.PP
+This command would have xscope communicate with an X11 server on host
+``cleo'', display 0;  xscope itself would be available on the current
+host as display 1 (display of 0 plus the 1 of -i1). Verbose level 4.
+.LP
+xscope -q -d1 -o1 -o3
+.PP
+The X11 server for the current host, display 2 (1 for -d1 plus 1 for -o1)
+would be used by xscope which would run as display 4 (1 for -d1 plus 3 for
+-o3). Quite mode (verbose level 0).
+.SH SEE ALSO
+X(1), X11 Protocol document (doc/Protocol/X11.protocol)
+.SH AUTHOR
+.PP
+James L. Peterson (MCC)
+.PP
+Copyright 1988, MCC
+.SH BUGS
+Code has only been tested on Sun3's.

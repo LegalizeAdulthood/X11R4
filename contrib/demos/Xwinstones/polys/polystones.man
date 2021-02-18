@@ -1,0 +1,79 @@
+.TH POLYSTONES 1 "June 1989" "X Version 11"
+.SH NAME
+polystones -- tests the performance of polygon fills
+.SH SYNOPSIS
+.B "polystones"
+[-option ...]
+.SH DESCRIPTION
+.PP
+\fIPolystones\fP uses XFillPolygon.  \fIPolystones\fP uses either an
+input file of vertices or defaults to vertices on the circumference
+of a circle.
+.sk 5
+.SH OPTIONS
+.TP 8
+.B \-nverts \fInum\fP
+This option specifies the number of verticies for the default
+polygon.  The default value is 4.
+.TP 8
+.B \-tilt \fInum\fP
+This option specifies the number of degrees to rotate the default polygon.
+The default value is 0.
+.TP 8
+.B \-grow \fInum\fP
+This option specifies growing polygons.  The default value is 0.
+\fI What does this mean ????? \fB
+.TP 8 
+.B \-convex
+This option specifies the use of Convex mode for XFillPolygon().  The
+default value is Complex.
+.TP 8
+.B \-nonconvex
+This option specifies the use of Nonconvex mode for XFillPolygon().  The
+default value is Complex.
+.TP 8
+.B \-complex
+This option specifies the use of Complex mode for XFillPolygon().  The
+default value is Complex.
+.TP 8
+.B \-evenodd
+This option specifies the use of the EvenOdd fill rule.  The default is
+EvenOdd.
+.TP 8
+.B \-winding
+This option specifies the use of the Winding fill rule.  The default is
+EvenOdd.
+.TP 8
+.B \-file \fIfilename\fP
+The name of the file that contains the list of points to be used
+as vertices.
+.TP 8
+.B \-tile
+This option specifies the use of tile fill for chords and pieslices.
+The bitmap used for the tile is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-stip
+This option specifies the use of stipple fill for chords and pie slices.
+The bitmap used for the tile is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-opaqstip
+This option specifies the use of opaque stipple file for chords and pie slices.
+The bitmap used for the tile is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-opaqstipbg \fIcolor\fP
+This option specifies the background color to use for the
+opaque stipple fill.
+.TP 8
+.B \-help
+This option displays the help menu.
+.TP 8
+.B \-h
+This option displays the help menu.
+.PP
+.SH "SEE ALSO"
+X(1)
+.SH "COPYRIGHT"
+International Business Machines--1989

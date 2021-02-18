@@ -1,0 +1,6 @@
+LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+           SRCS = xtalk.c
+           OBJS = xtalk.o
+       INCLUDES = -I$(TOP)
+
+ComplexProgramTarget(xtalk)

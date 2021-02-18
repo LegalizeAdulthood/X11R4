@@ -1,0 +1,84 @@
+.TH XIM 5  "Oct 25, 1989"
+.UC 5
+.SH NAME
+xim \- file format for digital images.
+.SH SYNOPSIS
+.B #include "XimHeader.h"
+.br
+.SH DESCRIPTION
+Xim is an external file format for storing images and loading them into
+xim compatible programs.
+There are actually two formats: one binary form for use within programs and an ascii form for storage and data transfer.
+Both formats are similar in content and are addressed as one except
+where noted.
+.PP
+Xim files can accommodate a variety of image types; bitmap (1 bit/pixel), pixmap (8 bits/pixel) and RGB (24 bits/pixel) images.
+An alpha mask may additionally be specified.
+The depth of an image (bits/pixel) can be calculated by multiplying the number of channels by the bytes per channel.
+.PP
+This format is intended for use on workstations with square pixels and assume an aspect ration of 1:1.
+The external format for Xim files stores all of its data in ascii form.
+This is for ease in portability and a minimal human readability.
+No byte swapping is needed in among little and big endian machines.
+Bitmaps are stored with the least significant bit first (LSBFirst).
+Additional information about the nature and origin of the image may also be stored in the header's fields as described below.
+
+.SH XIM HEADER
+The first field of the header is the version of the file format, which also serves as a magic number.
+The current version is \fB3\fP.
+Xim libraries will use this to maintain backwards compatibility in future releases.
+.PP
+The next field, \fIheader_size\fP, is the size of the Xim header.
+In this current version, this includes the entire header which is 1024
+bytes long.
+In future versions, this will not include the color table and comments which will be of variable length.
+.PP
+The next two fields \fIimage_width\fP and \fIimage_height\fP are the dimensions of the image in pixels.
+The origin (0,0) is at the top left corner of image.
+.PP
+The next field, \fInum_colors\fP, is the number of colors in the image and the is actual number of entries used in the color table.
+Bitmaps and RGB images should have zero entries here.
+.PP
+The \fInum_channels\fP field specifies into how many channels compose an image.
+This is usually 1 for bitmaps and pixmaps or 3 for RGB images.
+Alpha channels are not counted here.
+.PP
+The \fIbytes_per_line\fP field is the number of bytes per scanline of one channel.
+This is useful for bitmaps where this is not equal to the width of an image.
+Scanlines are not padded except for bitmaps which are rounded up to the nearest byte (width + 7)/ 8.
+.PP
+The \fInum_pictures\fP field tells how many images or frames are stored in the file.
+Currently, for most programs, multiple images are only supported for pixmap and bitmap form.
+All of the subsequent images use the same header and color table.
+.PP
+The \fIbits_per_channel\fP field describes the depth of one channel of data.
+This is usually 1 for bitmaps or 8 for pixmaps and RGB data.
+Other depths are not currently supported.
+.PP
+The \fIalpha_channel\fP field is a flag indicating whether an alpha channel is present or not.
+It is used to indicate percentage of transparency.
+Each alpha channel is found after the num_channels of data above.
+(ie. R G B A R G B A ... for 24 bit images)
+An alpha channel has eight bits per pixel.
+The values of 0 is opaque while 255 is 100 percent transparent.
+.PP
+The \fIrunlength\fP field is a flag indicating whether data is runlength encoded or not.
+This is no longer supported as most files are now compressed via the \fIcompress(1)\fP command.
+.PP
+The \fIauthor\fP field is 48 characters long and describes the creator or source of the image.
+This is usually pulled from the GECOS information field of the password database,  but it can also be almost identifier.
+.PP
+The \fIdate\fP field is the time the image was made.
+It is 32 characters long and is made the accommodate the \fIdate(1)\fP format.
+.PP
+The \fIcomment\fP is 96 characters long and accommodates another line of text information.
+The last field is the \fIc_map\fP, which is the space for the color table stored as unsigned chars.
+Values for red, green and blue are 0 - 255 and are interleaved (ie. R G B R G B ...).
+.PP
+The data then immediately follows this header.
+The channels are stored sequentially for each image in the file.
+.IR fs (5).
+.RE
+.PP
+.SH "SEE ALSO"
+compress(1), xtoxim(1)

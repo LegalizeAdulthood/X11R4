@@ -1,0 +1,18 @@
+This is my 3rd version of sm for version 11 of the X Window System.  I
+wrote it to experiment with some of the features of the ICCCM.
+There are a some things that I still want to do with it.  See the TODO
+file for more info on these.
+Basically this program will save and restore the state of a X session.
+It does this using information provided by ICCCM conforming clients.
+It assumes the window manager put the WM_STATE property on top-level
+window managers, that clients put their startup command in WM_COMMAND.
+(most Xt based application do this automatically), and works best with clients
+that support the WM_SAVE_YOURSELF protocol.
+There are many things that are not done cleanly in this program. For
+some of them there is no clean way of doing them(See smpro.tbl.ms).
+Some ICCCM compliant clients will not be restarted properly. 
+Hopefully this program will be useful anyway.
+If you have any suggestions or fixes, please send them to me at mikew@fx.com.
+If you are interested in doing the window manager side of the protocol
+in smpro.tbl.ms, please send me email and I will do the session manager side
+of the protocol.

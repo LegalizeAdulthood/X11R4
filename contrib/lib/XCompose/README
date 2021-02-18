@@ -1,0 +1,131 @@
+		       X11 R3 Compose Sequence Support
+				Glenn Widener
+			       Tektronix, Inc.
+			      November 11, 1989
+
+This directory contains code that supports general user-configurable
+Compose sequences.  Users of the code must integrate it with their R3 or
+R4 Xlib, xmodmap, and, optionally, the server.  The server-side
+implementation is needed only to support a keyboard compose LED.  The code
+is taken from product code now in final testing, and is very solid (when
+integrated with Tek X11!)  It was built with Saber-C, and runs on 68000
+and 88000, so there should not be any porting problems.
+
+If you have problems, suggestions, enhancements, or questions, contact
+
+Glenn Widener
+Tektronix, Inc.
+(503) 685-2494
+glennw@orca.wv.tek.com
+
+You will probably get assistance as time permits.
+
+
+			    Distribution Contents:
+
+
+The code is in two patch files for an R3 X11 tree, plus a set of new
+files.  Run patch on both patch files if you want to server-based compose,
+or just on client_patch if you want only client-side compose.  You will
+have to tell patch what files to patch as it goes.  I am sending patches,
+even with files with large changes, so that it will be easier to integrate
+it with R4.
+
+server_patch: (Server patches)
+	server/dix/Imakefile
+	server/dix/atom.c
+	server/dix/property.c
+	server/dix/events.c
+
+client_patch: (Client and Xlib patches)
+	X11/Imakefile
+	lib/X/Imakefile
+	lib/X/XKeyBind.c
+	lib/X/Xlib.h
+	lib/X/XOpenDis.c
+	clients/xmodmap/xmodmap.h
+	clients/xmodmap/xmodmap.c
+	clients/xmodmap/handle.c
+	clients/xmodmap/wq.h
+	clients/xmodmap/pf.c
+	clients/xev/xev.c
+	clients/xmodmap/xmodmap.man
+	clients/xmodmap/Imakefile
+
+(new file for server side):
+server/dix/kbd_ext.c
+
+(new files for client side):
+lib/X/XKeysym.c
+lib/X/XSetKbd.c
+X11/Xkbd.h
+clients/xmodmap/binding.c
+
+(sample keymap files for Latin-1, on Tek VT2xx keyboard):
+fonts/bdf/100dpi/Xkm.compose
+fonts/bdf/100dpi/Xkm.Compose
+fonts/bdf/100dpi/Xkm.usascii.8
+
+(documentation):
+README		(this file)
+protocol	(compose property definition)
+tek_notes	(notes on implementation details for Compose in Tek X11)
+--------
+The compose sequences are loaded onto a set of properties on the server by
+xmodmap.  These properties are read by either the server or Xlib.  See the
+file protocol for details.
+
+The server changes involve additions to DIX that are called from DDX.
+The define SERVER_COMPOSE enables server compose processing.
+
+The following is an example of the hooks into ddx, from the Tek
+4310-series driver server/ddx/tek/pegEvent.c, which is on the R4 tape.
+Basically, all that is needed is a call into dix (CheckForCompose,
+events.c) with each key event, and handling of keyboard LED's.  On the Tek
+keyboard, one LED is used for both Katakana shift and Compose, hence the
+code to or the two states together.
+
+***************
+*** 475,481
+  SetComposeLED(on)
+      Bool on;
+  {
+!     if (on)
+  	ioctl(pegInfo.eventFd, KEYBD_COMPOSE_LED_ON, 0);
+      else
+  	ioctl(pegInfo.eventFd, KEYBD_COMPOSE_LED_OFF, 0);
+
+--- 475,482 -----
+  SetComposeLED(on)
+      Bool on;
+  {
+!     if (on || (KanaShiftState == True))
+! 	/* if we are in kana mode, keep ComposeLED on when Compose goes off */
+  	ioctl(pegInfo.eventFd, KEYBD_COMPOSE_LED_ON, 0);
+      else
+  	ioctl(pegInfo.eventFd, KEYBD_COMPOSE_LED_OFF, 0);
+***************
+*** 783,788
+  			    break; /* don't deliver the event */
+  			}
+  		}
+  
+  		/* process Katakana shift state */
+  		count = GetCurKeySymList(x.u.u.detail, &keysyms);
+
+--- 783,795 -----
+  			    break; /* don't deliver the event */
+  			}
+  		}
++ 
++ #ifdef SERVER_COMPOSE
++ 		/* process Compose sequences; toss keycode if a match */
++ 		/* Note that this bypasses the test code */
++ 		if (CheckForCompose(x, (DeviceIntPtr) pegInfo.pKeyboard))
++ 		    break;
++ #endif /* SERVER_COMPOSE */
+  
+  		/* process Katakana shift state */
+  		count = GetCurKeySymList(x.u.u.detail, &keysyms);
+
+

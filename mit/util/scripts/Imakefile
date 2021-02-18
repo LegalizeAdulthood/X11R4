@@ -1,0 +1,23 @@
+         PROGRAMS = xmkmf makedepend x11mf mergelib mkdirhier
+
+all:: $(PROGRAMS)
+
+CppScriptTarget(xmkmf, xmkmf.cpp, -DCONFIGDIRSPEC=-I$(CONFIGDIR), $(ICONFIGFILES))
+CppScriptTarget(makedepend, mdepend.cpp, -DPREPROC='"'"$(PREPROCESSCMD)"'"', $(ICONFIGFILES))
+CppScriptTarget(x11mf, x11mf.cpp, /**/, /**/)
+CppScriptTarget(mergelib, mergelib.cpp, "-DARCMD=$(AR)" "-DRANLIB=$(RANLIB)", $(ICONFIGFILES))
+CppScriptTarget(mkdirhier, mkdirh.cpp, /**/, /**/)
+
+InstallProgram(xmkmf,$(BINDIR))
+InstallProgram(mkdirhier,$(BINDIR))
+#if UseCCMakeDepend
+InstallProgram(makedepend,$(BINDIR))
+#endif
+
+clean::
+	$(RM) $(PROGRAMS)
+
+depend::
+
+install.man::
+

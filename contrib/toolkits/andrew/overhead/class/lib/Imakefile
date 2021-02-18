@@ -1,0 +1,15 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES = -I../machdep/machine
+
+DependTarget()
+
+NormalObjectRule()
+NormalAsmPPRule()
+
+LibraryTarget(libclass.a, class.o ../machdep/machine/entry.o ../machdep/machine/doload.o mapping.o classind.o ../machdep/machine/globals.o)
+InstallLibrary(libclass.a, $(DESTDIR)/lib)
+InstallFile(class.h, $(INSTINCFLAGS), $(DESTDIR)/include)
+InstallFile(mapping.h, $(INSTINCFLAGS), $(DESTDIR)/include)

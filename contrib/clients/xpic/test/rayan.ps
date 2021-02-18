@@ -1,0 +1,224 @@
+%!
+%%Creator: root@bay.csri (Operator)
+%%Title: rayan.xpic (xpic)
+%%CreationDate: Wed May  4 23:51:39 1988
+%%Pages: 1
+%%DocumentFonts: (atend)
+%%BoundingBox: 28.8 28.8 561.6 669.6
+%	(in inches) at 0.4 0.4, width 7.4, height 8.9
+%%EndComments
+% Prolog for xpic to PostScript converter
+% Author: Mark Moraes
+% $Header: x2ps.pro,v 1.2 88/03/19 16:50:09 moraes Exp 
+%	%d D - change style SOLID, DOTTED, SHORT-DASH, LONG-DASH, DOT-DASH
+%	%d F - change font ROMAN, BOLD, ITALIC, SPECIAL
+%	%d S - change size (font size in points)
+%	(%s) rj %d t - text right just. (%d is TOPLINE, MIDLINE, BOTLINE)
+%	(%s) lj %d t - text left just. (%d is TOPLINE, MIDLINE, BOTLINE)
+%	(%s) ce %d t - text centered (%d is TOPLINE, MIDLINE, BOTLINE)
+%	%d %d l - lineto
+%	%d %d m - moveto
+%	%d %d s - spline segment
+%	x - flush line, spline
+%	<wid> <ht> <x> <y> b - box
+%	<wid> <ht> <x> <y> e - ellipse
+%	%d ss - setscale
+%	%d W - change linewidth
+save 50 dict begin /xpic exch def
+/StartXpic {newpath 0 0 moveto [] 0 setdash 0 setgray 1 setlinecap} def
+% Set defaults
+/fontname /Times-Roman def
+/ptsize 12 def
+% xpic has 4 fonts R, B, I, S
+/nfonts 4 def
+/fonts /Times-Roman /Times-Bold /Times-Italic /Symbol nfonts array astore def
+% halign has the values for MIDLINE, TOPLINE, BOTLINE
+/halign 3 array def
+/s {rcurveto} def
+/x {stroke} def
+/l {lineto} def
+/m {moveto} def
+/b {
+	/ury exch def /urx exch def /lly exch def /llx exch def 
+	llx lly moveto urx lly lineto urx ury lineto 
+	llx ury lineto llx lly lineto stroke
+} def
+/mtrx matrix def
+/e {
+	/yc exch def /xc exch def /yrad exch def /xrad exch def
+	xc xrad add yc moveto
+	/savematrix mtrx currentmatrix def
+	xc yc translate
+	xrad yrad scale
+	0 0 1 0 360 arc
+	savematrix setmatrix stroke
+} def
+% The next three take the text string, and moveto the right horiz. position
+% leaving the string on the stack.
+/lj {} def
+/rj {dup stringwidth pop neg 0 rmoveto} def
+/ce {dup stringwidth pop 2 div neg 0 rmoveto} def
+% And this is invoked after one of the three above, and 
+% computes the vert. pos, and then displays the string.
+/t {halign exch get 0 exch rmoveto show newpath} def
+% Store an array of patterns in /styles - a pattern is an array consisting 
+% of an array and an offset. Corresp to xpic patterns
+% solid, dotted, short-dashed, long-dashed, dot-dashed
+/styles [ [] 0 ] [ [1 3] 0 ] [ [4 4] 0 ] [ [8 4] 0 ] [ [1 4 4 4] 0 ]
+	5 array astore def
+% change style to arg.
+/D {stroke styles exch get aload pop setdash newpath} def
+/W {stroke setlinewidth newpath} def
+% fontbox takes a fontname of the stack, and returns an array
+% containing the values of the bottom line of the bounding box, the
+% mid line of the bounding box, and the top line of the bounding box
+% of that font, taken from the baseline, scaled to a font of size 1
+/fontbox {
+	findfont dup /FontMatrix get /fm exch def /FontBBox get aload pop
+	/ytop exch def pop /ybot exch def pop
+	/ymid ytop ybot sub 2 div def
+	0 ybot fm dtransform exch pop % botline
+	dup neg exch % midline - this works better than (ytop-ybot)/2!
+	0 ytop fm dtransform exch pop exch %topline
+	% now in the order midline, topline, botline.
+	3 array astore
+} def
+% fontboxes stores the fontbox of each of the fontnames in the 'fonts'
+% array
+/fontboxes nfonts array def
+0 1 nfonts 1 sub {
+	fontboxes exch dup fonts exch get fontbox put
+} for
+% select font
+/F {
+	dup fonts exch get /fontname exch def fontboxes exch get
+	/thisfontbox exch def SF 
+} def
+% set point size
+/S {/ptsize exch def SF} def
+% actually set font
+/SF {
+	fontname findfont ptsize curscale div scalefont setfont
+	thisfontbox aload pop
+	1 1 3 {
+		pop ptsize mul curscale div neg 3 1 roll
+	} for
+	halign astore pop
+} def
+% sets the scale to 72 / n, where n is on the stack, and stores the value
+% in curscale for font scaling
+/curscale 1 def
+/ss {/curscale exch 72 exch div dup dup scale def} def
+/land {8.5 72 mul curscale div 0 translate 90 rotate} def
+StartXpic
+%%EndProlog
+1 1 scale
+80 ss
+0 D
+215 352 m
+0 D
+224 349 m
+215 352 l
+224 356 l
+0 D
+215 352 m
+447 352 l
+0 D
+439 356 m
+447 352 l
+439 349 l
+0 D
+447 352 m
+x
+2 D
+47 224 m
+279 80 l
+0 D
+275 88 m
+279 80 l
+270 81 l
+2 D
+279 80 m
+x
+1 D
+79 120 m
+0 D
+82 130 m
+79 120 l
+74 128 l
+1 D
+79 120 m
+47 320 l
+x
+575 640 m
+511 520 l
+599 592 l
+x
+3 D
+599 696 m
+607 424 l
+535 528 l
+631 568 l
+583 512 l
+583 568 l
+639 512 l
+x
+0 D
+88 88 439 656 e
+287 624 m
+383 488 l
+447 504 l
+x
+279 584 m
+375 448 l
+439 464 l
+x
+311 680 m
+407 544 l
+471 560 l
+x
+239 528 m
+335 392 l
+399 408 l
+x
+135 576 m
+351 576 l
+479 392 l
+x
+223 664 m
+0 0 17 -2 52 -8 s
+34 -5 61 -24 80 -56 s
+18 -32 -8 -70 -80 -116 s
+-72 -45 -114 -33 -128 36 s
+-13 69 -2 116 32 140 s
+34 24 52 21 52 -8 s
+0 -29 17 -30 52 -4 s
+34 26 78 21 132 -16 s
+53 -37 58 -76 16 -116 s
+-42 -40 -30 -58 36 -56 s
+66 2 84 -25 52 -84 s
+-32 -58 -102 -94 -212 -108 s
+-109 -13 -164 8 -164 64 s
+0 56 -9 86 -28 92 s
+-18 5 -32 -20 -40 -76 s
+-8 -56 68 -116 228 -180 s
+x
+2 F
+20 S
+423 496 m
+(This is more text) ce 0 t
+295 296 527 144 b
+12 S
+327 312 m
+(This is a box) ce 0 t
+0 F
+319 72 m
+(This is an ellipsis) ce 0 t
+164 44 331 76 e
+215 392 447 240 b
+%%Trailer
+showpage
+% Trailer for xpic to PostScript converter
+% $Header: x2ps.tra,v 1.1 87/11/21 20:33:03 moraes Exp $
+xpic end restore
+%%DocumentFonts: Times-Roman Times-Italic Times-Bold Special

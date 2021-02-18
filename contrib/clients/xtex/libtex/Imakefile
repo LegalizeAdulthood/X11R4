@@ -1,0 +1,37 @@
+     DEFINES	=-DFONTDESC=\"$(FontDesc)\"
+
+SRCS	=\
+	conv.c dviclass.c error.c findpost.c fio.c font.c font_subr.c \
+	gfclass.c gripes.c magfactor.c rotate.c scaletfm.c scanpost.c \
+	search.c seek.c split.c strsave.c tfm.c \
+	gffont.c pkfont.c pxlfont.c tfmfont.c \
+	dvi_draw.c dvistuff.c
+
+OBJS	=\
+	conv.o dviclass.o error.o findpost.o fio.o font.o font_subr.o \
+	gfclass.o gripes.o magfactor.o rotate.o scaletfm.o scanpost.o \
+	search.o seek.o split.o strsave.o tfm.o \
+	gffont.o pkfont.o pxlfont.o tfmfont.o \
+	dvi_draw.o dvistuff.o
+
+HDRS	=\
+	conv.h convstruct.h dvi.h dviclass.h dvicodes.h dvistruct.h dvistuff.h\
+	fio.h font.h gfclass.h gfcodes.h imPcodes.h imagen.h num.h postamble.h\
+	search.h tfm.h types.h
+
+FILES	=$(SRCS) $(HDRS) Imakefile Makefile
+
+NormalLibraryObjectRule()
+NormalLibraryTarget(tex,$(OBJS))
+LintLibraryTarget(tex,$(SRCS))
+DependTarget()
+NormalLintTarget($(SRCS))
+
+tar:
+	cd ../..;\
+	for file in $(FILES); \
+	do \
+	  tar rf $(TARFILE) $(PRODUCT)/libtex/$$file; \
+	done
+
+font.o: Imakefile Makefile

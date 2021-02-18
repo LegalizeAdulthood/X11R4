@@ -1,0 +1,27 @@
+.TH XIPR 1 "X WINDOWS"
+.SH NAME
+xipr \- dump an X window directly to the printer
+.SH SYNOPSIS
+.in +.5i
+.ti -.5i
+.B xipr
+\%[options for \fIxwdimp\fR]
+\%[\-nobdrs]
+\%[host:display]
+.in -.5i
+.SH DESCRIPTION
+\fIXipr\fP runs \fIxwd\fR and \fIxwdimp\fR
+to dump an X window,
+process it for the Imagen laser printer,
+and print it out.
+.SH OPTIONS
+The `\-nobdrs' option (along with the display specification)
+is given to \fIxwd\fR,
+all other options are given to \fIxwdimp\fR
+.SH ENVIRONMENT
+DISPLAY \- the default host and display number
+.SH "SEE ALSO"
+xwd(1), xdpr(1), xwud(1)
+.SH AUTHOR
+Marshall T. Rose, Northrop Research and Technology Center
+

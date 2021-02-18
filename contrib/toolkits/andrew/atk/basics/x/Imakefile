@@ -1,0 +1,29 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES = -I../common
+
+COMOBJS = ../common/region.o ../common/rect.o ../common/point.o ../common/physical.o
+
+OBJS = xws.o xim.o xcursor.o xfontd.o xgraphic.o
+
+IHFILES = xws.ih xim.ih xcursor.ih xfontd.ih xgraphic.ih
+
+LIBS = $(BASEDIR)/lib/libcmenu.a \
+	$(XLIBDIR)/libX11.a \
+	$(BASEDIR)/lib/liberrors.a \
+	$(UTILLIB)
+
+NormalObjectRule()
+NormalATKRule()
+
+all:: xinit.o
+
+DynamicMultiObject(xws.do, $(OBJS) ${COMOBJS}, ${LIBS},)
+InstallClassFiles(xws.do, $(IHFILES))
+
+DependTarget()
+
+InstallDocs(atkx.doc,${DESTDIR}/doc/atk/basics)
+

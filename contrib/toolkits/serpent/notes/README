@@ -1,0 +1,88 @@
+
+                          SERPENT ALPHA RELEASE 0.7
+
+                                RELEASE NOTES
+
+This  is  Serpent Alpha Release 0.7, which is the third release of the Serpent
+user interface system.  Alpha Release 0.7 represents a major change over Alpha
+Release 0.6, in terms of directory structure, file names, and procedures, with
+some added functionality.  Highlights of the changes include:
+
+   - One of the major changes is that Serpent now uses the imake utility,
+     developed at MIT, for configuration management.  This caused a major
+     restructuring of the files.  See below for tar file  breakdown,  and
+     see the file REL.7.proc for specifics of the structure.
+
+   - Many file names were changed to accommodate the System V restriction
+     that file names be limited to 14 characters.  Details can  be  found
+     in REL.7.files.
+
+   - The  Slang  file extension has been changed, from ".slang" to ".sl",
+     again to accommodate the 14 character restriction.  Serpent will  no
+     longer  work  with  the  top level Slang file of a dialogue having a
+     ".slang" extension.  See REL.7.files for more details.
+
+   - Among the functionality  changes  are  the  addition  of  an  "exit"
+     function,  which  allows  a  user  interface  specifier  to build in
+     conditions  under  which  Serpent  will  terminate   without   using
+     control-C.    We  also have a playback facility which can be invoked
+     from the Serpent command.   This  allows  someone  to  play  back  a
+     session  and  simulate  the  application  or  a technology so that a
+     dialogue can be debugged without any  end  user  interaction.    See
+     REL.7.func for more details.
+
+   - The  Ada interface to Serpent has been worked on extensively, but it
+     is not yet ready for release.  When it is ready,  we  will  make  an
+     update  tar  file  available.  There are further notes about this in
+     REL.7.func.
+
+   - Some of the procedures  for  building  and  executing  Serpent  have
+     changed.  See REL.7.proc for details.
+
+This release is composed of several files:
+
+          README (this file)
+          REL.7.inst (installation procedures)
+          REL.7.func (functional changes)
+          REL.7.files (structural and file name changes)
+          REL.7.proc (procedural changes)
+
+          s.7.src.tar.Z
+          s.7.vax.tar.Z
+          s.7.sun.tar.Z
+
+The first five files contain information about this release and should be read
+in order.  REL.7.files is mostly for information purposes only, for those  who
+have  Serpent  Alpha  Release  0.6.   However, the end of REL.7.files contains
+information about Serpent documents.
+
+As a result of the use of imake and the resultant directory structure, all  of
+the  source  files  can  be found in the compressed tar file s.7.src.tar.Z.  A
+complete working Serpent for the Vax, without source or object files,  can  be
+found  in  s.7.vax.tar.Z, while s.7.sun.tar.Z holds a complete working Serpent
+for the Sun, again without source or object files.
+
+There are three additional files:
+          s.7.src.toc
+          s.7.sun.toc
+          s.7.vax.toc
+These hold the table of contents for the source, Sun,  and  Vax  distribution,
+respectively.
+
+This version of Serpent has been tested on the following systems:
+
+   - Sun  3/60  or equivalent workstation, running Sun Unix 4.2, Releases
+     3.5 and 4.0.3, and the X Window System, Version 11, Release  3  with
+     the X Toolkit and the Athena Widget set.  Note: Serpent, if compiled
+     under Release 3.5, will run under Release 4.0.3, but not vice versa.
+     The  Sun-specific  files  contained  in  s.7.sun.tar.Z were compiled
+     under Release 3.5.
+
+   - DEC MicroVAX II or III running Ultrix 2.2 and the X  Window  System,
+     Version 11, Release 3 with the X Toolkit and the Athena Widget set.
+
+If  you  get  Serpent  via any electronic means, please send your organization
+name and contact name via Internet email to  serpent-list-request@sei.cmu.edu,
+so  we  can keep track of who has a copy of the system.  Also, indicate if you
+wish to be included on the Serpent electronic mailing  list  (which  is  named
+serpent-list@sei.cmu.edu).

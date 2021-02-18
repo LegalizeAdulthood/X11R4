@@ -1,0 +1,77 @@
+#
+# XXXX-XXX (C) COPYRIGHT IBM CORPORATION 1988
+# LICENSED MATERIALS - PROPERTY OF IBM
+# REFER TO COPYRIGHT INSTRUCTIONS FORM NUMBER G120-2083
+#
+#
+# Make XGKS
+#
+# The following line added for the AIX PORT 
+SHELL=/bin/sh
+SUBDIRS = src fortran
+
+# When XGKS installs itself it will do so in these directories:
+#	INSTALLHOME/bin
+#	INSTALLHOME/lib
+#	INSTALLHOME/include
+#
+# NOTE: XGKS fonts are stored in INSTALLHOME/lib/fontdb and this path is
+#	compiled into the library.
+#
+INSTALLHOME=/usr/lib/xgks
+
+all:
+	@for i in $(SUBDIRS); do \
+		(echo '** making: '`pwd`'/'$$i; \
+		cd $$i; make $(MFLAGS) $(ALLIVARS) all; \
+		echo '** done making: '`pwd`/); done
+
+demos:
+	cd demo; make $(MFLAGS) $(ALLIVARS) all;
+
+src:
+	cd src; make $(MFLAGS) $(ALLIVARS) all;
+
+install:
+	@for i in $(SUBDIRS); do \
+		(echo '** installing : '`pwd`'/'$$i; \
+		cd $$i; make $(MFLAGS)  $(ALLIVARS) install; \
+		echo '** done installing : '`pwd`/); done
+
+clean :
+	@for i in $(SUBDIRS); do \
+		(echo '** cleaning : '`pwd`'/'$$i; \
+		cd $$i; make $(MFLAGS) $(ALLIVARS) clean; \
+		echo '** done cleaning : '`pwd`/); done 
+
+depend:
+	cd utils/makedepend;make;cd ../..;
+	@for i in $(SUBDIRS); do \
+		(echo '** makedepend: '`pwd`'/'$$i; \
+		cd $$i; make $(MFLAGS) $(ALLIVARS) depend; \
+		); done
+
+
+
+#
+# If the machine on which XGKS is compiled does not have write access to the
+# ultimate installation directories (i.e. you are using a read-only remote file
+# system) build and install the system as follows:
+#
+# make depend
+# make INSTALLHOME=<ultimate installation direcory (/usr) >
+# make install INSTALLHOME=<writable directory that mimics ultimate (./usr) >
+# make rdist INSTALLHOME=<writable path> REMOTEHOME=<ultimate on remote machine>
+#
+
+
+
+#
+# rdist all XGKS files from phony installation directory to server machines.
+#
+REMOTEHOME=/rvdusr
+RDISTFLAGS=
+rdist:
+	rdist $(RDISTFLAGS) -c $(INSTALLHOME) bullwinkle.cs.uiuc.edu:$(REMOTEHOME)
+	rdist $(RDISTFLAGS) -c $(INSTALLHOME) dudley.cs.uiuc.edu:$(REMOTEHOME)
+

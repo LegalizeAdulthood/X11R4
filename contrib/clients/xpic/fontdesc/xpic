@@ -1,0 +1,25 @@
+default Times-Roman 10
+Times-Roman *-times-medium-r-normal-*
+Times-Italic *-times-medium-i-normal-*
+Times-Bold *-times-bold-r-normal-*
+Times-BoldItalic *-times-bold-i-normal-*
+Courier *-courier-medium-r-normal-*
+Courier-Bold *-courier-bold-r-normal-*
+Courier-BoldOblique *-courier-bold-o-normal-*
+Courier-Oblique *-courier-medium-o-normal-*
+Helvetica *-helvetica-medium-r-normal-*
+Helvetica-Bold *-helvetica-bold-r-normal-*
+Helvetica-BoldOblique *-helvetica-bold-r-normal-*
+Helvetica-Oblique *-helvetica-medium-r-normal-*
+NewCenturySchlbk-Roman *-new century schoolbook-medium-r-normal-*
+NewCenturySchlbk-Bold -new century schoolbook-bold-r-normal-
+NewCenturySchlbk-BoldItalic -new century schoolbook-bold-i-normal-
+NewCenturySchlbk-Italic -new century schoolbook-medium-i-normal-
+Symbol *-symbol-medium-r-normal-*
+Special *-symbol-medium-r-normal-*
+Roman *-times-medium-r-normal-*
+Bold *-times-bold-r-normal-*
+BigBold *-times-bold-r-normal-*
+Image-Roman *-times-medium-r-normal-*
+Image-Italic *-times-medium-i-normal-*
+Image-Special  *-symbol-medium-r-normal-*

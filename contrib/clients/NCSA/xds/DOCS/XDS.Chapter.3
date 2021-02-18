@@ -1,0 +1,561 @@
+
+
+
+
+Chapter 3	Planes Along Axes
+
+
+
+
+
+
+
+Chapter Overview
+
+Viewing Planes Along the Coordinate Axes
+
+Viewing 2D Planes
+
+Single Image Window
+
+Multiple Frame Window
+
+Unfold Window
+
+Animation Window
+
+Viewing 3D Planes
+
+Visable Volume Rendering
+
+Setting Parameters
+
+Defining Substances
+
+Using the Animation Window
+
+Chapter Overview
+
+This chapter describes options available in the Planes Along Axes window.
+It outlines the various options available to manipulate and view both 2D
+and 3D planes.
+
+
+
+
+
+Viewing Planes Along the Coordinate Axes
+
+
+
+NCSA X DataSlice allows you to view 2D slices of data along the three
+major cartesian coordinate axes singly, as raster images displayed
+together with actual data values in a single image window, or multiply, as
+multiple raster images tiled in a single image window. Multiple images
+may also be animated.
+
+
+
+
+
+Viewing 2D Planes
+
+
+
+To view 2D slices of data along the three major cartesian coordinate axes:
+
+
+
+1.	Enable the option,
+Planes Along Axes, in the Attributes window (Figure 3.1). A Cartesian
+Display Mode window appears (see Figure 3.2).
+
+
+
+Figure 3.1	Attributes Window
+
+ 
+
+
+
+
+
+Figure 3.2	Cartesian  Display
+Mode Window
+
+ 
+
+
+
+2.	Select and orient a
+plane for viewing data. Click the button labeled XY Plane, XZ Plane, or YZ
+Plane, respectively, to indicate the coordinate axis of interest.
+
+
+
+NOTE:  Each of the three faces is parallel to one cartesian axis and
+orthogonal to the others. Your 3D SDS, if written in C, should have the
+implicit ordering of data [x][y][z], or row-major order, in which each entry
+in the array may also be lexically accessed by:
+
+data[x+(y*dimz)+(z*dimy*dimz)]where dimy is the Y dimension of the
+SDS and dimz is the Z dimension. This order is implicitly assumed when
+you invoke NCSA HDF to create an SDS file.
+
+
+
+	Click the buttons
+Cntr-Clockwise, Clockwise, Flip Vert, and Flip Horiz to change the
+orientation of the axes view with respect to the origin of the data ([0,0,0]
+in C programs or [1,1,1] in Fortran).Note that the default position of the
+origin is on the bottom left hand corner of the plane with the first literal
+of the axis plane's label going right and the second literal going up. For
+example, XY plane toggle has the default of the origin at the left hand
+corner of the dataset, X as its column axis and Y as its row axis. Click
+Cntr-Clockwise to rotate the axes plane view 90 degrees counter
+clockwise, Clockwise to rotate it 90 degrees clockwise, Flip Vert to flip
+it vertically, and Flip Horiz to flip it horizontally. 
+
+3.	Set parameters for
+viewing the 2D plane(s).
+
+
+
+NOTE:  The View 3D button in the cartesian display mode window, which
+accesses 3D visible volume rendering features of NCSA X DataSlice,
+requires different parameters and is discussed in the following
+subsection.
+
+
+
+
+
+	Enter an integer
+into the text box labeled, Plane ID, where 0 is the foremost plane in the
+data matrix, to indicate which plane along the specified coordinate axis
+you wish X DataSlice to consider the current plane. The current plane is
+displayed if you click the Single button, and appears first if you tile
+several planes in a single window.
+
+NOTE:  If you enter an invalid number, that is, one which does not fall
+withing the range of the dimensions of the SDS, the nearest available
+plane (the first or last) is displayed.
+
+
+
+	Enter an integer in
+the text box labeled Scale to indicate the magnification value which
+determines the actual pixel size of every numeric entry in the generated
+image(s). The default value is 4, because 3D datasets are generally
+expected to produce very small images.
+
+
+
+	Enter an integer in
+the text box labeled Frame Incr, to indicate the intervals by which you
+wish NCSA X DataSlice to increment the frames when tiling multiple
+images. The default value is 1.
+
+
+
+	Enter an integer in
+the text box labeled, No. of Frames, to specify the number of frames to
+display when tiling multiple images. The user may open up to a maximum
+of 15 frames on the Frame Window.The default value is 5.
+
+
+
+4.	Check the box
+labeled Interpolated to specify that the raster image(s) generated be
+interpolated by the factor indicated in the Scale text box. By default,
+generated raster images are non-interpreted.
+
+
+
+NOTE:  This is quite a time-consuming operation and is most efficiently
+done in a batch mode. You can economize on time by calculating several
+slices as a batch using the Animate or Frame automated buttons.
+
+
+
+5.	Invoke the
+image(s) by clicking one of the following buttons:
+
+
+
+	Single:  Opens a
+Cartesian Single Plane window that contains both the numeric values and
+raster display of the current frame.
+
+
+
+	Frame:  Opens a
+Cartesian Frame window with the number of frames specified. The frames
+are tiled beginning with the current plane and incremented by the
+Increment value specified.
+
+
+
+	Unfolded:  Opens a
+specialized Cartesian Frame window which tiles the specified number of
+frames along each coordinate axis. This option creates images for each 3D
+box of data for comparison along the dataset.
+
+
+
+	Animate:  Opens a
+Cartesian Plane Animation window which creates an animation sequence
+using the number of frames specified, starting with the current plane and
+incremented with the specified incremental value.
+
+
+
+Each of these windows contains a Palette and a Save button. The Palette
+button allows you to change the color map, and the Save button allows you
+to store the raster image in a single HDF file. For more information about
+these options, see Chapter One, "Getting Started."
+
+
+
+The following sections describe each Cartesian Image window and its
+features in detail. For information on using the animation window, refer to
+the section of this chapter entitled "Animation Window."
+
+
+
+
+
+Single Image Window
+
+The Single Image window, opening a slice of data for analysis along a
+coordinate axis, includes a numeric data display and its corresponding
+raster image (see Figure 3.3). A palette displays the current range of
+color, which may be changed by clicking the Palette command button.
+
+
+
+The numeric data labels identify the vertical and horizontal cartesian
+coordinate axis. The horizontal and vertical scales display the units in
+planar coordinates along each axis, respectively. The two-dimensional
+data list includes all values in the selected plane. When you select an
+individual entry with the mouse, the corresponding "pixel" is highlighted in
+the raster image. Similarly, clicking a specific point in the image
+highlights a corresponding value in the data list. The list can be scrolled
+vertically and horizontally using the scroll bars.
+
+
+
+You may open single image windows of several other planes along the same
+axis and synchronize all selections between them by setting their
+synchronize toggles on or off.
+
+
+
+Figure 3.3	Single Frame
+Window
+
+ 
+
+
+
+Multiple Frame Window
+
+The Multiple Frame Window, shown in Figure 3.4, displays a number of
+raster images, or frames, in increasing frame order and by the increment
+specified. Each of the frames are labeled by number and axis; the frames
+are synchronized so that a point selected is highlighted in all the frames.
+The Palette button allows you to change the color map, and the Save button
+allows you to store the raster image in a single HDF file.
+
+
+
+
+
+Unfold Window
+
+The Unfold Window tiles the specified number of frames along each
+coordinate axis. This option creates images for each 3D box of data for
+comparison along the dataset.
+
+
+
+NOTE:  No illustration is provided for this window, because of the large
+size of the window.
+
+
+
+Animation Window
+
+The animation window contains an animation mechanism that may be used
+to quickly display several related raster frames together to give an
+illusion of motion (see Figure 3.5).Animation adds a 3rd dimension (time)
+to the 2D slices of 3D data.
+
+
+
+To use the animation window:
+
+
+
+1.	Enter an integer in
+the Frame text box to indicate the beginning frame of the animation
+sequence, and click the Set button immediately below. For instance, if the
+animation sequence contains frames 1 through 10, but you wish to start
+the animation with frame 2, enter 2.
+
+
+
+2.	Enter an integer
+indicating what intervals of frames are to be animated by typing your
+preference in the text box labeled Skip, and click the Set button
+immediately below. For example, if you wish to skip every third frame as
+your animation is run, you would enter 3.
+
+
+
+3.	Check the Repeat
+diamond toggle to specify that the animation be repeated in the same
+direction as when first started.
+
+
+
+4.	Check the Reverse
+diamond toggle to specify that the animation be run continuously from the
+last image in the sequence to the first, and then first to last.
+
+
+
+5.	Click the Off
+diamond toggle to turn the Repeat or Reverse option off.
+
+
+
+NOTE:  If only one frame exists in your file, the text box below the
+animation options will contain a solid black bar indicating that the options
+have no function. No animation can occur for a single frame.
+
+
+
+Figure 3.4	Multiple Frame
+Window
+
+ 
+
+
+
+Figure 3.5	Animation Window
+
+ 
+
+
+
+
+
+6.	Set the animation
+speed by clicking within the speed bar, located at the bottom of the
+animation window. You may either click anywhere in the the solid white
+region of the bar or click on the fast (located on the left end of the bar) or
+slow button (located on the right end of the bar) before or during
+animation to set the speed. A slight delay in speed change may occur as X
+DataSlice adjusts to your preferences.
+
+
+
+7.	Click the < to
+single-step backwards or the > button to single-step forward through the
+animation.
+
+
+
+8.	Click the << button
+to move continously backwards or the >> button to move continously
+forward through the animation.
+
+
+
+9.	Click the <> button
+to halt a continous animation. If your animation is running at a fast speed,
+a slight delay may occur before X DataSlice recognized the interrupt
+signal.
+
+
+
+10.	Click the Palette
+button to change the palette of your image. For more information on
+changing palettes, see Chapter One, "Getting Started." Notice that the
+palette bar located directly below the raster image represents the current
+palette spectrum of the displayed image.
+
+
+
+
+
+11.	Click Save to save
+your image animation and its current palette. For more information on
+saving images, see Chapter One, "Getting Started."
+
+
+
+Note that the speed of any display is dependent on the size of the images
+contained within the file.
+
+
+
+
+
+Viewing 3D Planes
+
+
+
+Visable Volume Rendering 
+
+The V-Buffer Algorithm generates 3D images, from a surface
+representation to an armorphous wisp of form, simply by changing the
+opacity and other parameters that control the rendering.
+
+
+
+To access the V-Buffer, you must first load a 3D scientific dataset if you
+have not done so already. For more information on loading datasets, see
+Chapter One, "Getting Started." For this discussion, use the sample
+spine64x64x64.hdf.
+
+
+
+In the display mode window, click the appropriate plane, XY, XZ or YZ, and
+click View 3D. Note that you can only have views parallel to the cartesian
+axes. The parameters for visible volume rendering appear in the bottom
+left part of the screen, replacing the View 2D options (see Figure 3.6).
+
+
+
+
+
+Figure 3.6	Display
+Mode--View 3D
+
+ 
+
+
+
+
+
+Setting Parameters
+
+The X pts, Y pts, and Z pts are scales that control the number of pixels per
+side of the computational cube along each axis. The X and Y values control
+the horizontal and vertical dimensions of the output, while the Z value has
+no effect on the dimensions of the final image. 
+
+
+
+Also, indicate the number of substances you want to view in your dataset.
+Note that the application provides default values. Clicking on Interpolate
+smooths out the resulting image.
+
+
+
+Click V-Buff to set the remaining parameters and to generate the image.
+See Figure 3.7.
+
+
+
+
+
+Defining Substances
+
+A substance is defined as a range of values in the 3D dataset. For each
+substance included in the dataset, you must set lower and upper
+percentage values and an opacity value. These selections will largely
+determine the quality of your output. After entering values for the first
+substance, click Set. Then, pull down the scroll bar to move to the
+remaining substances. For each substance in the dataset, you must enter
+its values and click Set.
+
+
+
+NOTE:  Make sure all values are nomalized between 0 and 1.
+
+
+
+For example, imagine you want to view two substances in the spine
+dataset:  the bone and the tissue. Suppose the tissue lies between 23% and
+36% of the range of values in the dataset. For the tissue, substance 1, you
+would set the lower value to 0.23 and the upper value to 0.36 Because the
+tissue surrounds the bone, you would not want the tissue to be so opaque
+that it would occlude 
+
+
+
+Figure 3.7	V-Buffer
+
+ 
+
+
+
+
+
+the bone material. Hence you would assign an opacity of 0.1 to the tissue.
+Thus, to define substance 2 as the bone, set the lower value to 0.48 and
+the upper value to 0.63 with a higher opacity of 0.3. You may obtain these
+values by using the other tools supplied by X DataSlice to locate the data
+values. 
+
+
+
+Once you have set all substance values, you can fine-tune the image
+presentation using the following viewing parameters which have been
+preset with some common default values:
+
+
+
+Attenuate [Atten]:  Controls the amount of depth cueing of the view. It lies
+between 0 and 1, and best results occur between 0.5 to 0.7. An attenuaion
+of 0.7 implies that the intensity attributed to the last plane of data is 70%
+of what it should be without attenuation (i.e., Atten = 1.0).
+
+
+
+Note:  Do not input either 0 or 1 as the ATTENUATE factor.
+
+
+
+Gamma:  Controls the spread of density (intensity) values. The higher the
+gamma entry, the greater the bias is towards larger values in the range of
+data values.
+
+
+
+Ambience [Amb]:  Controls the amount of ambient light falling on the
+dataset. If a view is too dark in general, this parameter may be increased
+to brighten the image. Usually it ranges from 0 to 1, because the actual
+intensity of the image also falls within this range.
+
+
+
+Enter range values for the Near and Far planes of the image (for example, 0
+to 63). If you wish to see the image backwards, enter the high value in
+Near and the low value in Far (for example, 64 to 1). Finally, enter the
+increments (Incr) at which you want to process planes of the image.
+
+
+
+With all parameters entered, click Start to generate the 3D image. The
+Control window will indicate each plane being generated together with the
+maximum intensity accumulated thus far. As soon as out Max becomes
+non-zero, it implies that a substance has been found in the dataset. The
+Pause button (which toggles with Start) allows you to stop image
+generation in order to see the image at any particular point. Click Cont to
+continue generation, or if necessary, click the Reset button and change
+parameters.
+
+
+
+Clicking Palette and Save, respectively, allows you to load a new palette
+and to save the V-Buffer image.
+
+
+
+
+
+

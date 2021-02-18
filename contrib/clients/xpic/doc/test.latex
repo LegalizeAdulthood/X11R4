@@ -1,0 +1,94 @@
+\documentstyle[11pt,titlepage]{article}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\title{Test}
+
+\author{Victor Greenberg}
+
+\begin{document}
+
+\maketitle
+
+\maketitle
+
+\section {Operations}
+
+\subsection{{\em Show\/} operation}
+
+\begin{figure}
+\vspace{3.8in}
+\special{psfile=show.ps} 
+\caption{Show $A$}
+\label{show_a}
+\end{figure}
+
+\begin{tabbing}
+
+PROCEDURE \= INDENT \= INDENT \= INDENT \= \kill
+Show ($A$)
+\\
+\>	$A.R \Rightarrow\ A.S$ \\
+\>	For each $X$ above $A$, from top to bottom \\
+\>\>		if $X.R \cap\ A.R$ \\
+\>\>\>			$X.R \Rightarrow\ A.S$ \\
+\>	{\em the save buffers of the objects above $A$ contain portions} \\
+\>	{\em of the image that should be under $A$ after it is shown} \\
+\\
+\>	Draw($A$) \\
+\>	UpdateAbove ($A$,$A.R$) \\
+\>	{\em the images in objects above $A$ may be affected by this change,}\\
+\>      {\em so may have to be re-generated}
+\end{tabbing}
+
+\subsection{{\em UpdateAbove\/} operation}
+
+The UpdateAbove operation is used to propagate the changes made to an portion
+of an image up to any of its ``dependants'', i.e. objects that are above it.
+This operation may be optimized by taking into consideration the extent of the
+source of each mapping. 
+
+\begin{tabbing}
+PROCEDURE \= INDENT \= INDENT \= INDENT \= \kill
+UpdateAbove ($A$, $R$)
+\\
+\>	For each $X$ above $A$, from bottom to top \\
+\>\>		if $A.R \cap\ X.R$ \\
+\>\>\>		$A.R \cap\ X.R \Rightarrow\ X.S$ \\
+\>\>\>		$X.$changed $ = $ {\em true} \\
+\>	{\em Any object covering a portion of $A$ should have that}\\
+\>	{\em portion in its save buffer, and also has to be redrawn.}\\
+\\
+\>	$B$ = Above($A$) \\
+\>	if $B.$changed \\
+\>\>		Draw($B$) \\
+\>\>		$B.$changed $ = $ {\em false} \\
+\>\>		UpdateAbove ($B$, $B.R$)
+\>\>		{\em Recursively apply the operation to $B$}
+\end{tabbing}
+
+Note that the tail recursion in UpdateAbove can be easlily eliminated.
+
+\subsection{{\em Hide\/} operation}
+
+The {\em Hide\/} operation is considerably simpler now that we have
+UpdateAbove defined:
+
+\begin{tabbing}
+PROCEDURE \= INDENT \= INDENT \= INDENT \= \kill
+Hide ($A$)
+\\
+\>	$A.S \Rightarrow\ A.R$
+\>	UpdateAbove ($A$, $A.R$)
+\end{tabbing}
+
+\section{{\em Move\/} operation}
+
+\begin{figure}
+\vspace{3.3in}
+\special{psfile=move.ps} 
+\caption{Move $A$}
+\label{move_a}
+\end{figure}
+
+\end{document}
+

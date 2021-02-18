@@ -1,0 +1,339 @@
+\begindata{text, 268818976}
+\textdsversion{12}
+\template{default}
+\define{deleteme
+menu:[Region,DeleteMe]
+attr:[FontFamily Andy Int 0]
+attr:[FontSize PreviousFontSize Point -4]}
+\define{sans
+menu:[Font,Sans]
+attr:[FontFamily AndySans Int 0]}
+-- this script converts from Scribe to ATK formatting
+
+--
+
+-- uasge:   nessrun -blue thisfile filetoconvert
+
+--
+
+--	The converted file is written in the same place as its argument, 
+
+--	but with the extension ".d".  If the original file has no extension
+
+--	or has the extension ".d", a new ".d" is appended to the name.
+
+--	The old version of the output file is saved as filename.d.BAK
+
+
+--	RESTRICTION: 
+
+--		The syntax of @begin-@end uses parentheses as brackets.
+
+--		Brackets cannot be a pair of apostrophes;  
+
+--		they can be backquote and apostrophe: ` ... '
+
+--		Spaces are not allowed after @ or before the following bracket
+
+
+
+-- The StyleTable is a space-separated list of stylenames.  In a fine bit of 
+wit, 
+
+--		each name is given the style which it references.  
+
+--	If the stylename is directly followed by "X", the region will be deleted.
+
+--	Order matters: a short word must precede
+
+--		a longer word of which it is a prefix
+
+
+marker StyleTable;
+
+
+marker LeftBrackets;	  	-- the list of characters to terminate the string 
+after @
+
+marker RightBrackets;	-- table associating right brackets with left brackets 
+
+
+function init()
+
+	StyleTable := 
+
+//
+
+			 \bold{b} \italic{i} \leftindent{LeftIndent} \leftindent{leftindent} 
+\indent{Indent} \indent{indent  }
+
+			\example{Example} \example{example} 
+
+			\example{programexample} \example{ProgramExample} \example{Programexample} 
+			IndexX IndexEntryX  IndexSecondaryX 
+
+			\smaller{Smaller} \subscript{-}  blankspaceX commentX newpageX
+
+			30longdescriptionX \description{description}  includeX 
+
+			partX \chapter{\bigger{Unnumbered}} 
+
+			\section{\bigger{Section}} \section{\bigger{section}}
+
+			\subsection{\bigger{Subsection}} \subsection{\bigger{subsection}} 
+
+			\bold{Paragraph} \bold{paragraph} 
+
+\\\\;
+
+	LeftBrackets := "[(\{\\"`<@";
+
+	RightBrackets := "() \{\} [] <>  \\"\\" `' ";
+
+end function;
+
+
+
+-- matchingBracket(m, brackets)
+
+--	searches for second(brackets).  Ignores nested left-right pairs.
+
+--	Returns the right bracket or start(m) for failure.
+
+function matchingBracket(m, brackets)
+
+	marker q;
+
+	marker right;
+
+	-- printline(brackets ~ "  " ~ extent(m, nextn(m,5)));
+
+	right := second(brackets);
+
+	q := m;
+
+	while True do
+
+		q := anyof(q, brackets);
+
+		if q = ""  or  q = right then return q; end if;
+
+		-- q must be left bracket: recur and repeat
+
+		q := matchingBracket(next(q), brackets);
+
+		if q = "" then return start(m); end if;
+
+		q := next(q);	-- skip the nested right bracket
+
+	end while;
+
+end function;
+
+
+
+-- ConvertRegion(m, left, right, s)
+
+--	Converts the region from next(left) to start(right)
+
+--	to have style given by name s
+
+function ConvertRegion(m, left, right, s)
+
+	if right = "" then return next(left); end if;
+
+	s := search(StyleTable, s);
+
+	if s = "" then return next(left); end if;
+
+	if next(s) = "X"  then
+
+		return replace(extent(m, right), "");
+
+	else
+
+		AddStyles(extent(next(left), start(right)), s);
+
+		return extent(replace(extent(m, left), ""), replace(right, ""));
+
+	end if;
+
+end function;
+
+
+
+-- ConvertBeginEnd(m)
+
+--	Convert a style region delimited with either @begin(word) ... @end(word)
+
+--	or @begin(word,...)...@end(word)
+
+--	where ... is anything other then the expected delimiter.
+
+--	If any part of this syntax is not met exactly, do nothing.
+
+--	m is a marker for the @-sign;  it must be followed with "begin("
+
+function ConvertBeginEnd(m)
+
+	marker m1;
+
+	marker s;
+
+	marker mend;
+
+	m := extent (m, nextn(m, 6));
+
+	m1 := anyof(next(m), ",)@");
+
+	if m1 = "@" then return m1; end if;
+
+	s := extent(next(m), start(m1));	-- the style name
+
+	mend := search(m1, "@end(" ~ s ~ ")");
+
+
+	-- found it:  do the replace
+
+	return ConvertRegion(m, m1, mend, s);
+
+end function;
+
+
+
+-- ConvertStyles looks for @-signs, finds subsequent name, finds the bracketed 
+region, 
+
+--	and then gives the region the style had by the name.
+
+--	Everything between @ and the next left bracket is taken as the style name.
+
+--	Exceptions:  @@ is reduced to @ and not processed further.
+
+--		Style names with the DeleteMe style delete the whole region.
+
+--		If @ is not followed by a name from the StyleTable, 
+
+--					the region is unchanged.
+
+--		@begin is checked for and processed up to matching @end
+
+function ConvertStyles(m)
+
+	marker m1;	-- another pointer into m
+
+	marker s;	-- the style
+
+	marker b;
+
+	marker right;
+
+	while True do
+
+		m := search(m, "@");
+
+		if m = ""  then return; end if;
+
+		--printline(extent(m, nextn(m,5)));
+
+		if next(m) = "@" then m := next(next(replace(m, ""))); 
+
+		elif match(next(m), "begin(") /= ""  then
+
+			m := ConvertBeginEnd(m);
+
+		elif match(next(m), "newpage") /= ""  then
+
+			m := replace(extent(m, nextn(m,7)), "");
+
+		else
+
+			m1 := anyof (next(m), LeftBrackets);
+
+			if m1 = "" then return; end if;
+
+			if m1 = "@" then 
+
+				-- the @ at m is not followed by bracket: ignore it
+
+				m := m1;
+
+			else 
+
+				s := extent(next(m), start(m1));
+
+				b := search(RightBrackets, m1);
+
+				right := matchingBracket(next(m1),
+
+						extent(b, next(b)));
+
+				m := ConvertRegion(m, m1, right, s);
+
+			end if;
+
+		end if;
+
+	end while;
+
+end function
+
+
+
+function main(args)
+
+	marker filename;
+
+	marker outname;
+
+	marker text;
+
+
+	filename := token(args, "qwertyuiopasdfghjklzxcvbnm"
+
+			~ "QWERTYUIOPASDFGHJKLZXCVBNM"
+
+			~ "./0123456789");
+
+	outname := search(filename, ".");
+
+	text := search(next(outname), ".");
+
+	while text /= "" do
+
+		outname := text;
+
+		text := search(next(outname), ".");		
+
+	end while;
+
+	if outname = "" or search(outname, "/") /= ""
+
+			or extent(next(outname), filename) = "d" then
+
+		outname := filename ~ ".d";
+
+	else 
+
+		outname := extent(filename, outname) ~ "d";
+
+	end if;
+
+
+	printline("deScribe: " ~ filename ~ " -> " ~ outname);
+
+	text := readfile(filename) ~ "";	-- XXX remove ~"" after readfile() is fixed
+
+	system("mv " ~ outname ~ " " ~ outname ~ ".BAK");
+
+
+	ConvertStyles(text);
+
+	addStyles(text, "\sans{sans}");
+
+
+	writefile(outname, text);
+
+end function
+
+\enddata{text,268818976}

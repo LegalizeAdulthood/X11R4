@@ -1,0 +1,279 @@
+% Document type: LaTeX
+%
+% $Header: xpic.tex,v 1.2 88/11/04 23:01:46 moraes Exp $
+%
+%  Copyright 1988, Mark Moraes
+%  May be freely used for non-commercial purposes provided acknowledgement
+%  to the source is given.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Specifies the document style.
+\documentstyle[twoside,fullpage,notes]{article}
+
+\def\Ps{Post\-Script}
+\newcommand{\postscript}{Post\-Script\ }
+\newcommand{\psfigtex}{Psfig/\TeX\ }
+\newcommand{\tex}{\TeX\ }
+\newcommand{\nodeeqn}{$ {\displaystyle y = f \left( \sum_{i=1}^{n-1}
+w_{i} x_{i} - \theta \right)} $}
+
+% From the TeXbook, Appendix E, pg 419
+\def\dbend{{\manual\char127}} % "dangerous bend" sign
+\def\d@nger{\medbreak\begingroup\clubpenalty=10000
+  \def\par{\endgraf\endgroup\mdebreak} \noindent\hang\hangafter=-1
+  \hbox to0pt{\hskip-\hangindent\dbend\hfill}\ninepoint}
+\outer\def\danger{\d@nger}
+
+\input{psfig}
+\title{Including {\tt xpic} figures in \LaTeX}
+\author{Mark Moraes\\
+moraes@csri.toronto.edu}
+\date{November 5, 1988}    % Deleting this command produces today's date.
+
+\begin{document}           % End of preamble and beginning of text.
+\maketitle                 % Produces the title.
+
+\section{Introduction}
+
+{\tt Xpic} is a program for drawing figures under {\em the X Window
+system}. It produces a file in a special format. Various programs
+exist to translate from this format to formats which may be included
+in \tex documents to eliminate the pains of manual paste-up.
+This document describes two ways to do just that.
+\begin{figure}[h]
+\centerline{\psfig{figure=texwarning.ps,height=1.5in}}
+\caption{A simple example. Don't take the warning seriously!}
+\label{fig:texwarning}
+\end{figure}
+\section{\psfigtex} The first method is to convert the {\tt xpic}
+figure to \postscript and include the \postscript in the document.
+The conversion is done with the {\tt x2ps} program, which can be run
+as follows
+\begin{quote}
+\tt
+x2ps file.x > file.ps
+\end{quote}
+where {\tt file.x} is the {\tt xpic} figure and {\tt file.ps} is the
+resulting \postscript figure.
+
+\psfigtex is a macro package for \tex that facilitates the inclusion of
+arbitrary \postscript figures into \tex documents. Figures are
+automatically scaled and positioned on the page, and the proper amount
+of space is reserved. The only restriction is that the \postscript
+figures must be {\em well behaved} and
+must adhere to the bounding box comment convention.\footnote[1]{
+See `Appendix J: \Ps\ File Structuring Conventions' in
+{\it The \Ps\ Language Reference Manual}}
+{\tt xpic} follows
+this convention, so inclusion of such figures in \psfigtex is easy.
+
+To include a \Ps\ figure with {\tt psfig}, first load the {\tt psfig}
+macros at the beginning of your document with
+\begin{quote}
+{\tt\verb+\input{psfig}+}
+\end{quote}
+\postscript files may then be included in the document using the commands
+\begin{quote}
+\tt
+{\tt\verb+\+psfig\{figure={\it file.ps}\}}
+\end{quote}
+Psfig will automatically position the figure at the current point on the page, 
+and reserve the proper amount of space in \TeX\ so that it doesn't conflict
+with any other objects on the page.
+
+For example, we included the {\tt xpic} figure in the file {\tt
+texwarning.x} as figure \ref{fig:texwarning} by first converting it to the
+\postscript file {\tt texwarning.ps} using the {\tt x2ps} command as
+follows ---
+\begin{quote}
+\begin{verbatim}
+x2ps texwarning.x > texwarning.ps
+\end{verbatim}
+\end{quote}
+We could then use the commands
+\begin{quote}
+\tt
+\begin{verbatim}
+\begin{figure}[h]
+\centerline{\psfig{figure=texwarning.ps}}
+\caption{A simple example. Don't take the warning seriously!}
+\label{fig:texwarning}
+\end{figure}
+\end{verbatim}
+\end{quote} 
+to include it as a centered paragraph.  Since no mention
+of size was made in the above example, \psfigtex draws the figure at
+its natural size (as if it was printed directly on a \Ps\ printer.) The
+figure's natural size is several inches high, which is a little large;
+Figure \ref{fig:texwarning} in the introduction was produced with the actual
+{\tt psfig} invocation changed to:
+\begin{quote}
+\tt\verb+\+centerline\{\verb+\+psfig\{figure=texwarning.ps,height=1.5in\}\}
+\end{quote} 
+The {\tt height} option specifies how tall the figure
+should be on the page. Since no {\tt width} was specified, the figure
+was scaled equally in both dimensions. By listing both a {\tt height}
+and a {\tt width}, figures can be scaled disproportionately, with
+interesting results.  For example:
+
+\begin{figure}[h]
+\centerline{\hbox{
+\psfig{figure=funstuff.ps,height=.8in,width=.15in}
+\psfig{figure=funstuff.ps,height=.8in,width=.35in}
+\psfig{figure=funstuff.ps,height=.8in}
+\psfig{figure=funstuff.ps,height=.8in,width=1.2in}
+\psfig{figure=funstuff.ps,height=.8in,width=1.5in}
+}}
+\caption{Abstract art. Untitled}
+\label{fig:funstuff}
+\end{figure}
+
+was produced with:
+
+\begin{quote}
+\tt
+\begin{verbatim}
+\begin{figure}[h]
+\centerline{\hbox{
+\psfig{figure=funstuff.ps,height=.8in,width=.15in}
+\psfig{figure=funstuff.ps,height=.8in,width=.35in}
+\psfig{figure=funstuff.ps,height=.8in}
+\psfig{figure=funstuff.ps,height=.8in,width=1.2in}
+\psfig{figure=funstuff.ps,height=.8in,width=1.5in}
+}}
+\caption{Abstract art. Untitled}
+\label{fig:funstuff}
+\end{figure}
+\end{verbatim}
+\end{quote}
+
+\section{\tt Tpic}
+
+Even though \psfigtex is a powerful and easy-to-use method of
+including \postscript figures in a document, it has two drawbacks. The
+first is that all output devices used for \tex do not have
+\Ps. The other problem is that strings put in a
+\postscript figure are not processed by \TeX, so if you want to put
+equations in, you have to overlay them on top of the picture.
+(You can measure distances with a ruler and use the {\tt\verb+\picture+} 
+environment to do this, using {\tt \verb+\put+} commands to place the 
+equations.)
+
+A way of getting around this is to use a picture drawing preprocessor that
+passes the text through \TeX. One such preprocessor is {\tt tpic}.\footnote{
+{\tt Tpic} is a port of {\tt troff} 's {\tt pic} preprocessor.}
+
+To convert {\tt xpic} output to {\tt tpic} format, use the {\tt x2tpic}
+command, then run {\tt tpic} to convert this to \TeX. You can then include
+this \tex file produced in a document. For instance we include the
+figure
+{\tt node.x}, with the following commands:\footnote{
+The command {\tt x2tex} does the same thing as running the following two
+commands. It is sometimes more flexible to use the two commands separately.}
+\begin{quote}
+\tt
+x2tpic node.x > node.pic \\
+tpic node.pic 
+\end{quote}
+We now have a file called {\tt node.tex} with a picture called
+{\tt\verb+\graph+} in it --- the following \LaTeX\
+commands are used to include it:
+\begin{quote}
+\tt
+\begin{verbatim}
+\begin{figure} [h]
+\input{node}		% This reads in the picture definition
+\centerline{\box\graph}		% This positions the picture and draws it
+\caption{Computational element or node which forms a weighting 
+sum of $ n $ inputs}
+\label{fig:node}
+\end{figure}
+\end{verbatim}
+\end{quote}
+This produces the picture in figure \ref{fig:node}.
+\begin{figure} [h]
+\input{node}
+\centerline{\box\graph}
+\caption{Computational element or node which forms a weighting 
+sum of $ n $ inputs}
+\label{fig:node}
+\end{figure}
+The figure is little large, so we generate a smaller version asking
+{\tt x2tpic} to scale it down for us with:
+\begin{quote}
+\tt
+x2tpic -s 0.6 node.x > shrunknode.pic \\
+tpic shrunknode.pic 
+\end{quote}
+and include it as figure \ref{fig:shrunknode}.
+\begin{figure}[h]
+\input{shrunknode}
+\centerline{\box\graph}
+\caption{Computational element or node which forms a weighting 
+sum of $ n $ inputs}
+\label{fig:shrunknode}
+\end{figure}
+\par
+{\small {\em Hint} --- The text for the equation
+in the box above is 
+\begin{verbatim}
+$ {\displaystyle y = f \left( \sum_{i=1}^{n-1} w_{i} x_{i} - \theta \right)} $
+\end{verbatim}
+which is quite long, and appears literally in the {\tt xpic} figure
+since {\tt xpic} does not process equations on the screen.  This looks
+slightly messy onscreen and overflows the edges of the picture --- a
+better way to do it is to define a command to generate the equation,
+and use that in the figure. Then in the document, you could say
+something like
+\begin{verbatim}
+\newcommand{\nodeeqn}{ $ {\displaystyle y = f \left( \sum_{i=1}^{n-1} 
+w_{i} x_{i} - \theta \right)} $ }
+\end{verbatim}
+and put \verb+\+nodeeqn in the picture instead of the long equation.}
+\par
+{\small {\em Hint} --- {\tt xpic}'s text alignment options are
+important if you want to get good results. For instance, in the figure
+above, most text, including the equation in the box uses the default {\tt
+Centered, Middle} attributes, which mean that the single {\em control
+point} whose location is guaranteed is the centre of the text. For the
+labels $ x_{0}, x_{1}, x_{n-1} $ along the left edge, we use the {\tt
+Right Justified, Middle} attributes so that we ensure that they are all
+aligned along the same right edge. Remember that {\tt xpic} screen
+fonts are only approximations of the actual fonts used by \TeX, and
+aren't too accurate.}
+\section{Further Reading}
+For more information on \psfigtex --- see the {\em
+\psfigtex 1.2 Users Guide} by Trevor Darrell ({\em
+trevor@grasp.cis.upenn.edu}). Some of
+the examples used in this note are based on that document.
+
+{\tt Pic} is a powerful language for describing pictures --- {\tt xpic}
+uses only a small subset. For more information on the {\tt pic}language, see {\em PIC --- A Graphics Language for Typesetting} by
+Brian W. Kernighan. {\tt Pic} is really a preprocessor for the {\tt
+troff} typesetting program, but the language is quite independent of
+the underlying typesetter. A few differences are listed in the {\tt
+tpic} manual page.
+
+{\tt Xpic, x2ps} and {\tt x2tpic} are described in {\em Using xpic} by
+Mark Moraes. {\em moraes@csri.toronto.edu}. These programs also have
+manual pages.
+
+\section{Availability}
+\psfigtex is available by anonymous ftp from {\em linc.cis.upenn.edu}
+(Internet host number 128.91.2.8), in the tar file
+{\tt ~ftp/dist/psfig/tex.tar.Z}. There exists a corresponding {\tt troff}
+version.
+
+{\tt Pic} is part of the {\em Documenter's Workbench} sold by AT\&T
+(and many vendors of Unix.\footnote{Unix is a trademark of AT\&T}). It
+is also supplied with research editions of Unix. (eg) Eighth Edition.
+
+{\tt Tpic} is a port of {\tt pic}. Therefore, you need a Unix source
+license to get it. Contact Tim Morgan {\em morgan@rome.ics.uci.edu}
+for more details.
+
+{\tt Xpic, x2ps} and {\tt x2pic} are part of the user-contributed
+software for the X Windows System Version 11 Release 3.  This document
+is part of the source.
+
+\end{document}             % End of document.

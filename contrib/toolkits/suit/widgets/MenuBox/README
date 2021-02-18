@@ -1,0 +1,138 @@
+ABOUT MENU
+
+This directory contains a first-pass implementation of a Menu widget for the
+Athena widget set.  It is derived from work by Robert Blumen of Xerox
+Corporation and Robert Shen and Malcolm Forbes of Digital Equipment
+Corporation.  There is much work to be done; comments and suggestions for
+improvements are welcome.
+
+MENU WIDGET FUNCTIONS
+
+The interface to the menu widget is actually a separate set of functions;
+a program does not normally call XtCreateWidget() to create menus.  Ty
+  The
+functions currently available are:
+
+PopupMenu *
+MenuCreate(parent, enable, name)
+Widget parent, enable;
+char *name;
+
+parent: parent widget (for example, the top level widget).
+enable: command button widget associated with the menu (see below for
+	explanation)
+name: name of the menu.
+
+Creates a new menu widget.
+
+
+void
+MenuAddSelection(menu, name, action, arg)
+PopupMenu *menu;
+char *name;
+XtCallbackProc action;
+caddr_t arg;
+
+menu:	Menu receiving the new selection.
+name:	Name of the selection.
+action:	procedure to call when the selection is chosen.
+arg:	Data to be passed to the action procedure
+
+Adds selections to a menu widget.
+
+
+MenuReady(menu)
+PopupMenu *menu;
+
+menu: The menu that is now ready to be used.
+
+Indicates that a menu has been constructed and is ready for use.
+
+
+USING THE MENU WIDGET
+
+A sample program using the menu widget is contained in menutest.c.  The basic
+steps are:
+
+1. Create a command widget that will activate the menu.
+2. Modify the command widget translations to activate the menu.
+	This is the addition of the translation
+	"<BtnDown>:MenuPopup(Menu)" where "Menu" is the name of your menu.
+3. Call MenuCreate() to create an empty new menu.
+4. Call MenuAddSelection() as many times as you like to add selections to
+	the menu.
+5. Call MenuReady() to indicate that you have completed initializing the
+	menu.
+
+IMPLEMENTATION OF THE MENU WIDGET
+
+The menu widget is actually made up of two new widget classes: menuShell
+and menuBox.
+
+MenuShell is a subclass of overrideShell with the following changes:
+
+1. MenuShellClassPart has one field that does nothing.  It has a
+MenuShellPart as follows :
+
+typedef struct _MenuShell_Part { 
+	Boolean putback_cursor; 
+	Boolean menu_under_cursor;
+
+/* private */
+	Position cursor_x, cursor_y;
+} MenuShellPart;
+
+2. It has the DEFAULT translations
+
+static char  defaultTranslations[] = 
+       	"<BtnUp>: MenuPopdown() select()\n\
+	<Map>: setup()";
+
+Where Select is a function that does a depth-first search of the menuShell's
+widget tree until it finds one that is a menuButton Widget that has its
+command.set field == TRUE.  It then calls XtCallCallbacks for this widget.
+
+Setup is a function that calls XQueryPointer to find the pointer
+location, and sets the cursor_x and cursor_y to the cursor position.
+
+3. The Initialize routine sets the shell.create_popup_child_proc to the
+function "GetLocation".   The create_popup_child_proc is called everytime
+that the popup is mapped.  GetLocation uses XQueryPointer to find the pointer
+location, then calls XtMakeGeometryRequest with request_mode = CWX | CWY and
+the x and y fields set to positions near the cursor.  This positions the menu
+properly, near the cursor.
+
+--------
+MenuBox is a subclass of box with the following changes:
+
+1. The MenuBoxClasRec has one field that does nothing.  The menuBoxPart 
+does also.
+
+2. MenuBox has its own change_managed procedure which makes sure that all of
+the buttons in the menu have the same width.  The way it does this is that it
+calls XtQueryGeometry on all of its  managed children to find out their
+preferred width, and keeps track of the maximum width of any child.
+
+Then, for any children that are smaller than the max, it calls XtResizeWidget
+on that child.  Then, it calls the superclasses change_managed to do the
+layout of the box.
+
+------
+The individual buttons on the menu are command widgets, with their
+translations modified to set() on EnterWindow events and unset() on
+LeaveWindow() events.
+
+------
+The file Menu.c contains the interface routines MenuCreate(), MenuReady(),
+and MenuAddSelection(), as well as internal functions.
+
+FUTURE OF THE MENU WIDGET
+
+Eventually, we hope that this (or a similar widget) will be part of the
+Athena widget set (Xaw).  Comments and suggestions for improvement should
+be sent to me at the address below.
+
+	Win Treese
+	Digital Equipment Corp.
+	Cambridge Research Lab & MIT Project Athena
+	treese@athena.mit.edu

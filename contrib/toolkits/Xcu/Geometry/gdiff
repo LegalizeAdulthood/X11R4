@@ -1,0 +1,42 @@
+45d44
+<     XWindowChanges changes;
+108,114d106
+<     /* keep record of what the widget looks like before calling geometry mgr */
+<     changes.x = widget->core.x ;
+<     changes.y = widget->core.y ;
+<     changes.width = widget->core.width ;
+<     changes.height = widget->core.height ;
+<     changes.border_width = widget->core.border_width ;
+< 
+151d142
+< 	/* determine reconfigurable items by comparing with "old" widget */
+153,172c144
+< 	if (changes.x != widget->core.x) {
+< 	    changeMask |= CWX;
+< 	    changes.x = widget->core.x;
+< 	}
+< 	if (changes.y != widget->core.y) {
+< 	    changeMask |= CWY;
+< 	    changes.y = widget->core.y;
+< 	}
+< 	if (changes.width != widget->core.width) {
+< 	    changeMask |= CWWidth;
+< 	    changes.width = widget->core.width;
+< 	}
+< 	if (changes.height != widget->core.height) {
+< 	    changeMask |= CWHeight;
+< 	    changes.height = widget->core.height;
+< 	}
+< 	if (changes.border_width != widget->core.border_width) {
+< 	    changeMask |= CWBorderWidth;
+< 	    changes.border_width = widget->core.border_width;
+< 	}
+---
+> 	XWindowChanges changes;
+173a146,151
+> 	if (changeMask & CWX) changes.x = widget->core.x;
+> 	if (changeMask & CWY) changes.y = widget->core.y;
+> 	if (changeMask & CWWidth) changes.width = widget->core.width;
+> 	if (changeMask & CWHeight) changes.height = widget->core.height;
+> 	if (changeMask & CWBorderWidth)
+> 	    changes.border_width = widget->core.border_width;

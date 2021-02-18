@@ -1,0 +1,219 @@
+################################################################################
+#
+# File:         Makefile
+# RCS:          $Header: Makefile.hpux,v 1.1 89/11/25 04:04:52 mayer Exp $
+# Description:  Mkmf-generated makefile for WINTERP's xlisp-library
+# Author:       Niels Mayer, HPLabs
+# Created:      Mon Oct 23 21:00:37 1989
+# Modified:     Sat Nov 25 02:46:36 1989 (Niels Mayer) mayer@hplnpm
+# Language:     N/A
+# Package:      N/A
+# Status:       X11r4 contrib tape release
+#
+# (c) Copyright 1989, Hewlett-Packard Company.
+#
+################################################################################
+
+# USER_DEFINES =
+DEFINES = -DSYSV -Dhpux -DWINTERP $(USER_DEFINES)
+##############################################################################
+LINT = /usr/bin/lint
+.SUFFIXES: .ln .c
+.c.ln:
+	$(LINT) -c $*.c -Nd4000 -Ns3000 -Na50000 $(DEFINES)
+##############################################################################
+CFLAGS = -Wc,-Nd7000,-Ns6000,-Np300,-Nw4000,-Nt100000 $(DEFINES)
+# OPTIMIZER = -g
+.c.o:
+	$(CC) -c $(OPTIMIZER) $*.c $(CFLAGS)
+##############################################################################
+HDRS	      = osdefs.h \
+		osptrs.h \
+		xldmem.h \
+		xlisp.h
+
+SRCS	      = unixstuff.c \
+		xlbfun.c \
+		xlcont.c \
+		xldbug.c \
+		xldmem.c \
+		xleval.c \
+		xlfio.c \
+		xlglob.c \
+		xlimage.c \
+		xlinit.c \
+		xlio.c \
+		xljump.c \
+		xllist.c \
+		xlmath.c \
+		xlobj.c \
+		xlpp.c \
+		xlprin.c \
+		xlread.c \
+		xlstr.c \
+		xlstruct.c \
+		xlsubr.c \
+		xlsym.c \
+		xlsys.c
+
+OBJS	      = $(SRCS:.c=.o)
+
+LINTS	      = $(SRCS:.c=.ln)
+
+##############################################################################
+DEST	      = .
+
+EXTHDRS	      = /usr/include/X11/CompObj.h \
+		/usr/include/X11/Composite.h \
+		/usr/include/X11/Constraint.h \
+		/usr/include/X11/Core.h \
+		/usr/include/X11/Intrinsic.h \
+		/usr/include/X11/Object.h \
+		/usr/include/X11/RectObj.h \
+		/usr/include/X11/WindowObj.h \
+		/usr/include/X11/X.h \
+		/usr/include/X11/Xlib.h \
+		/usr/include/X11/Xos.h \
+		/usr/include/X11/Xresource.h \
+		/usr/include/X11/Xutil.h \
+		/usr/include/ctype.h \
+		/usr/include/fcntl.h \
+		/usr/include/math.h \
+		/usr/include/setjmp.h \
+		/usr/include/stdio.h \
+		/usr/include/string.h \
+		/usr/include/sys/fcntl.h \
+		/usr/include/sys/file.h \
+		/usr/include/sys/stdsyms.h \
+		/usr/include/sys/time.h \
+		/usr/include/sys/types.h \
+		/usr/include/time.h
+
+INSTALL	      = install
+
+LIBRARY	      = libXlisp.a
+
+LINT_LIB      = llib-Xlisp.ln
+
+MAKEFILE      = Makefile.hpux
+
+PRINT	      = pr
+
+SHELL	      = /bin/sh
+
+all::		$(LIBRARY)
+
+$(LIBRARY):	$(OBJS)
+		@echo "Loading $(LIBRARY) ..."
+		ar cruv $(LIBRARY) $(OBJS)
+		@echo "$(LIBRARY) done"
+
+$(LINT_LIB):	$(LINTS)
+		@echo "Loading $(LINT_LIB) ..."
+		$(LINT) -o Xlisp -x -Zn8192 -Zt16384 -Zf500 $(LINTS)
+		@echo "$(LINT_LIB) done"
+
+lisp::
+		@echo "Making XLISP ..."
+		@echo "	Deleteing WINTERP *.o files for recompiling xlisp sources without -DWINTERP."
+		rm -f $(OBJS)
+		make -f Makefile.hpux "CFLAGS=-DUNIX" "OPTIMIZER=-O" xlisp
+		@echo "	Deleteing XLISP *.o files to ensure future WINTERP compilations uses XLISP sources compiled with -DWINTERP."
+		rm -f $(OBJS)
+		@echo "Done Making XLISP."
+
+#
+# Note that if you've compiled winterp previously, you should delete the *.o
+# files in this directory, since those were compiled with -DWINTERP which will
+# require that extra X11/Motif/Winterp code be linked in with the exectable.
+#		
+xlisp:		xlisp.o xlftab.o $(OBJS)
+		@echo "	Loading XLISP ..."
+		cc -O -s -o xlisp xlisp.o xlftab.o $(OBJS) -lm -lmalloc
+		@echo "	done"
+
+clean:;		rm -f $(OBJS) $(LINTS) core xlisp.o
+
+clobber:;	rm -f $(OBJS) $(LIBRARY) $(LINTS) $(LINT_LIB) core tags xlisp xlisp.o
+
+depend:;	mkmf -f $(MAKEFILE) ROOT=$(ROOT)
+
+echo:;		@echo $(HDRS) $(SRCS)
+
+extract:;	ar x $(DEST)/$(LIBRARY)
+
+index:;		ctags -wx $(HDRS) $(SRCS)
+
+install:	$(LIBRARY)
+		@echo Installing $(LIBRARY) in $(DEST)
+		if [ $(DEST) != . ]; then \
+		(rm -f $(DEST)/$(LIBRARY); $(INSTALL) -f $(DEST) $(LIBRARY)); fi
+
+print:;		$(PRINT) $(HDRS) $(SRCS)
+
+tags:           $(HDRS) $(SRCS); @ctags $(HDRS) $(SRCS)
+
+update:         $(DEST)/$(LIBRARY)
+
+$(DEST)/$(LIBRARY): $(SRCS) $(HDRS) $(EXTHDRS)
+		$(MAKE) -f $(MAKEFILE) ROOT=$(ROOT) DEST=$(DEST) install
+###
+unixstuff.o: /usr/include/stdio.h /usr/include/sys/stdsyms.h
+xlbfun.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlcont.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xldbug.o: /usr/include/X11/Intrinsic.h /usr/include/X11/Xlib.h \
+	/usr/include/sys/types.h /usr/include/sys/stdsyms.h \
+	/usr/include/X11/X.h /usr/include/X11/Xutil.h \
+	/usr/include/X11/Xresource.h /usr/include/X11/Xos.h \
+	/usr/include/string.h /usr/include/fcntl.h /usr/include/sys/fcntl.h \
+	/usr/include/sys/file.h /usr/include/time.h /usr/include/sys/time.h \
+	/usr/include/X11/Core.h /usr/include/X11/Composite.h \
+	/usr/include/X11/Constraint.h /usr/include/X11/Object.h \
+	/usr/include/X11/RectObj.h /usr/include/X11/WindowObj.h \
+	/usr/include/X11/CompObj.h xlisp.h /usr/include/stdio.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xldmem.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xleval.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlfio.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlftab.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h osdefs.h osptrs.h
+xlglob.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlimage.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlinit.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlio.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlisp.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xljump.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xllist.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlmath.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h \
+	/usr/include/math.h
+xlobj.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlpp.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlprin.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlread.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlstr.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlstruct.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlsubr.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlsym.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h
+xlsys.o: xlisp.h /usr/include/stdio.h /usr/include/sys/stdsyms.h \
+	/usr/include/ctype.h /usr/include/setjmp.h xldmem.h

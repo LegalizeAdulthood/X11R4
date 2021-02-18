@@ -1,0 +1,855 @@
+<!OPS, Version = 6.4>
+
+<!Document,
+	Final Output Device =	"ps",
+	Default Printer =	"nearest-ps">
+
+<!Font Definitions,
+	F20 = Times 10,
+	F29 = Times 12 Bold,
+	F33 = Times 14 Bold,
+	F46 = Times 24 Italic,
+	F12 = Times 8,
+	F28 = Times 12,
+	F47 = Times 24 Bold Italic,
+	F24 = Times 11,
+	F21 = Times 10 Bold,
+	F41 = Times 18 Bold,
+	F22 = Times 10 Italic,
+	F31 = Times 12 Bold Italic>
+
+<!Color Definitions,
+	C0 = 0, 0, 0,
+	C1 = 3.13, 3.13, 3.13,
+	C2 = 6.25, 6.25, 6.25,
+	C3 = 12.50, 12.50, 12.50,
+	C4 = 25, 25, 25,
+	C5 = 50, 50, 50,
+	C6 = 75, 75, 75,
+	C7 = 100, 100, 100,
+	c8 = 50, 50, 50>
+
+<!Page,
+	Bottom Margin =		1 inches,
+	Left Margin =		1 inches,
+	Right Margin =		1 inches,
+	Starting Page # = 	Inherit,
+	Page # Style =		Lower Case Roman,
+	Hyphenation =		on>
+
+<!Autonumber Stream, chap, 1,
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, label, 1,
+	Level 1 Prefix =	"Figure ",
+	Level 1 Suffix =	,
+	Level 1 Starting Value = 0>
+
+<!Autonumber Stream, list, 1>
+
+<!Class, "|:chapnameTOC",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F33@i*,
+	Left Tab =		0/1*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Autonum, list, 1><Tab>
+
+<!Class, "|:prefaceTOC",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F33@i*,
+	Left Tab =		0/1*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab>
+
+<!Class, CtitleD,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F21,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+titleD component in a<HR>
+sideD frame
+
+<!Class, CtitleBTOC,
+	Top Margin =		0.02 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		0.25 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Allow Page Break Within = no,
+	Left Tab =		6 Inches,
+	Right Tab =		6.50 Inches>
+
+<!Class, chapnameTOC,
+	Top Margin =		0.25 inches,
+	Bottom Margin =		0 inches,
+	First Indent =		-0.25 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F33,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		0/6.25 Inches,
+	Right Tab =		6.75 Inches,
+	Contents =	Prefix>
+
+<"|:chapnameTOC",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F0><Autonum, list, 1><Tab><End Sub><F0>
+
+<!Class, chaprefs,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F12,
+	Left Tab =		0/0.75*13 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Autonum, label, 1>                            <Autonum, chap, 1>
+
+<!Class, prefaceTOC,
+	Top Margin =		0.25 inches,
+	Bottom Margin =		0 inches,
+	First Indent =		-0.25 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F33,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		0/6.25 Inches,
+	Right Tab =		6.75 Inches,
+	Contents =	Prefix>
+
+<"|:prefaceTOC",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F0><Tab><End Sub><F0>
+
+<!Class, titleATOC,
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F28,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		6.25 Inches,
+	Right Tab =		6.75 Inches>
+
+<!Class, titleBATOC,
+	Top Margin =		0.02 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		0.25 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Allow Page Break Within = no,
+	Left Tab =		6 Inches,
+	Right Tab =		6.50 Inches>
+
+<!Class, titleBTOC,
+	Top Margin =		0.02 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		0.25 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Allow Page Break Within = no,
+	Left Tab =		6 Inches,
+	Right Tab =		6.50 Inches>
+
+<!Master Frame,
+	Name =			floating,
+	Placement =		Following Anchor,
+	Horizontal Alignment =	Center,
+	Width =			Page Without Margins,
+	Height =		Page Without Margins * 0.33,
+	Diagram =
+V6,
+(g9,0,0)>
+
+<!Master Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,8,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes>
+
+CtitleD component in a CsideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			CsideDdesc,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,8,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.137 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes>
+
+Usage
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			CsideDfield,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,8,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.137 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes>
+
+Field Descriptions
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<prefaceTOC>
+
+<|,i><"|:prefaceTOC", Subcomponent = yes><F0><Tab><End Sub><F0>Preface<Tab.><Tab>
+1
+
+<titleATOC>
+
+Introduction<Tab.><Tab>1
+
+<titleBTOC>
+
+The Use of the Software and disclaimer<Tab.><Tab>1
+
+<titleBTOC>
+
+Additional Reading<Tab.><Tab>1
+
+<titleATOC>
+
+Interleaf ASCII Format<Tab.><Tab>2
+
+<titleATOC>
+
+Document Structure<Tab.><Tab>2
+
+<titleATOC>
+
+General Concepts<Tab.><Tab>3
+
+<titleBTOC>
+
+Creating ASCII Format Documents<Tab.><Tab>3
+
+<titleBTOC>
+
+Files without Markup<Tab.><Tab>4
+
+<titleBTOC>
+
+Icons and Extensions<Tab.><Tab>4
+
+<titleBTOC>
+
+Newlines<Tab.><Tab>5
+
+<titleBTOC>
+
+Character Mapping<Tab.><Tab>5
+
+<titleBTOC>
+
+Units of Measurement<Tab.><Tab>5
+
+<titleBTOC>
+
+Quoting Conventions<Tab.><Tab>6
+
+<titleBTOC>
+
+Conventions within Markup Brackets<Tab.><Tab>7
+
+<chapnameTOC>
+
+<"|:chapnameTOC", Subcomponent = yes><F0><Autonum, list, 1, First = Yes, Value = 1.><Tab><End Sub>
+<F0>DESIGN<#0104>GUIDELINES<Tab.><Tab>15
+
+<titleATOC>
+
+Writing an Interface<Tab.><Tab>16
+
+<titleBTOC>
+
+Different Types of Filters<Tab.><Tab>16
+
+<titleBTOC>
+
+Transforming the Input Data<Tab.><Tab>18
+
+<titleBTOC>
+
+General Filter Strategy<Tab.><Tab>19
+
+<titleATOC>
+
+Using the ASCII Reader<Tab.><Tab>20
+
+<titleBTOC>
+
+Default Behavior<Tab.><Tab>20
+
+<titleATOC>
+
+Selected Interface Issues<Tab.><Tab>21
+
+<titleBATOC>
+
+Font Matching<Tab.><Tab>22
+
+<titleBTOC>
+
+Character-Set Matching<Tab.><Tab>23
+
+<titleBTOC>
+
+Component Matching<Tab.><Tab>24
+
+<titleATOC>
+
+Example Filters<Tab.><Tab>26
+
+<titleBTOC>
+
+Toy Word Processor Interface<Tab.><Tab>26
+
+<titleBTOC>
+
+CASE Database Interface<Tab.><Tab>35
+
+<chapnameTOC>
+
+<"|:chapnameTOC", Subcomponent = yes><F0><Autonum, list, 1, Value = 2.><Tab><End Sub>
+<F0>PROGRAMMING<#0104>GUIDELINES<Tab.><Tab>41
+
+<titleATOC>
+
+C Naming Conventions<Tab.><Tab>42
+
+<titleATOC>
+
+Include files<Tab.><Tab>42
+
+<titleATOC>
+
+makefiles<Tab.><Tab>42
+
+<titleATOC>
+
+Unsupported ASCII Markup<Tab.><Tab>42
+
+<titleATOC>
+
+Operating Limitations<Tab.><Tab>43
+
+<chapnameTOC>
+
+<"|:chapnameTOC", Subcomponent = yes><F0><Autonum, list, 1, Value = 3.><Tab><End Sub>
+<F0>DATA STRUCTURES<Tab.><Tab>45
+
+<titleATOC>
+
+Basic Definitions<Tab.><Tab>46
+
+<titleBTOC>
+
+Constants<Tab.><Tab>46
+
+<titleBTOC>
+
+Commonly used types<Tab.><Tab>46
+
+<titleBTOC>
+
+Identifiers and self-identifying data structures<Tab.><Tab>46
+
+<titleBTOC>
+
+Unknown Objects<Tab.><Tab>48
+
+<titleBTOC>
+
+Comment Objects<Tab.><Tab>48
+
+<titleATOC>
+
+Data Structures Overview<Tab.><Tab>49
+
+<titleATOC>
+
+Fonts Overview<Tab.><Tab>50
+
+<titleATOC>
+
+Diagramming Overview<Tab.><Tab>50
+
+<titleBTOC>
+
+Diagram Object Classes<Tab.><Tab>50
+
+<titleBTOC>
+
+<|,ii>Diagramming Limitations<Tab.><Tab>51
+
+<titleBTOC>
+
+Diagramming Structure<Tab.><Tab>51
+
+<titleBTOC>
+
+Z-coordinate<Tab.><Tab>52
+
+<titleATOC>
+
+Tables Overview<Tab.><Tab>52
+
+<titleBTOC>
+
+Cells<Tab.><Tab>52
+
+<titleBTOC>
+
+Table Inheritance<Tab.><Tab>52
+
+<titleBTOC>
+
+Cell Masters<Tab.><Tab>53
+
+<titleBTOC>
+
+Table Masters<Tab.><Tab>53
+
+<titleATOC>
+
+Component-body Tokens<Tab.><Tab>53
+
+<titleBTOC>
+
+Token Values<Tab.><Tab>55
+
+<titleATOC>
+
+Structure Definitions<Tab.><Tab>59
+
+<titleATOC>
+
+Miscellaneous Structures<Tab.><Tab>60
+
+<CtitleBTOC>
+
+Ar_init_t<Tab.><Tab>61
+
+<CtitleBTOC>
+
+File_info_t<Tab.><Tab>62
+
+<CtitleBTOC>
+
+NullObj_t<Tab.><Tab>63
+
+<CtitleBTOC>
+
+Unknown_t<Tab.><Tab>64
+
+<titleATOC>
+
+Structure for the Document<Tab.><Tab>65
+
+<CtitleBTOC>
+
+Il_state_t<Tab.><Tab>66
+
+<CtitleBTOC>
+
+Ops_info_t<Tab.><Tab>68
+
+<CtitleBTOC>
+
+Document_info_t<Tab.><Tab>69
+
+<CtitleBTOC>
+
+Font_info_t<Tab.><Tab>71
+
+<CtitleBTOC>
+
+Color_info_t<Tab.><Tab>72
+
+<CtitleBTOC>
+
+Pattern_info_t<Tab.><Tab>73
+
+<CtitleBTOC>
+
+The Page_info_t object<Tab.><Tab>74
+
+<CtitleBTOC>
+
+An_stream_info_t<Tab.><Tab>79
+
+<titleATOC>
+
+Structure for Text<Tab.><Tab>81
+
+<CtitleBTOC>
+
+Autonum_t<Tab.><Tab>82
+
+<CtitleBTOC>
+
+Font_value_t<Tab.><Tab>83
+
+<CtitleBTOC>
+
+Index_t<Tab.><Tab>86
+
+<CtitleBTOC>
+
+Ref_t<Tab.><Tab>88
+
+<CtitleBTOC>
+
+Attr_t<Tab.><Tab>90
+
+<CtitleBTOC>
+
+Cmpn_profile_t<Tab.><Tab>91
+
+<CtitleBTOC>
+
+Tabline_t<Tab.><Tab>92
+
+<CtitleBTOC>
+
+Cmpn_t<Tab.><Tab>93
+
+<titleATOC>
+
+Structure for Tables<Tab.><Tab>98
+
+<CtitleBTOC>
+
+Table_rule_t<Tab.><Tab>99
+
+<CtitleBTOC>
+
+Table_border_t<Tab.><Tab>100
+
+<CtitleBTOC>
+
+TL_ruling_t<Tab.><Tab>101
+
+<CtitleBTOC>
+
+Cell_t<Tab.><Tab>102
+
+<CtitleBTOC>
+
+The Row_t object<Tab.><Tab>104
+
+<CtitleBTOC>
+
+Row_name_t<Tab.><Tab>106
+
+<CtitleBTOC>
+
+The Table_t object<Tab.><Tab>107
+
+<titleATOC>
+
+Structure for Diagrams<Tab.><Tab>110
+
+<CtitleBTOC>
+
+ArDgObject_t<Tab.><Tab>111
+
+<CtitleBTOC>
+
+ArDgHead_t<Tab.><Tab>113
+
+<CtitleBTOC>
+
+Frame_t<Tab.><Tab>114
+
+<CtitleBTOC>
+
+HeaderFooter_t<Tab.><Tab>120
+
+<CtitleBTOC>
+
+MicroTSD_t<Tab.><Tab>121
+
+<CtitleBTOC>
+
+LineTSD_t<Tab.><Tab>123
+
+<CtitleBTOC>
+
+ArcTSD_t<Tab.><Tab>124
+
+<CtitleBTOC>
+
+EllipseTSD_t<Tab.><Tab>126
+
+<CtitleBTOC>
+
+SplineTSD_t<Tab.><Tab>128
+
+<CtitleBTOC>
+
+PolyTSD_t<Tab.><Tab>130
+
+<CtitleBTOC>
+
+TextstrTSD_t<Tab.><Tab>131
+
+<CtitleBTOC>
+
+EqnTSD_t<Tab.><Tab>133
+
+<CtitleBTOC>
+
+<|,iii>EditStateTSD_t<Tab.><Tab>134
+
+<CtitleBTOC>
+
+SplineSegTSD_t (obsolete)<Tab.><Tab>135
+
+<CtitleBTOC>
+
+VectorListTSD_t<Tab.><Tab>136
+
+<CtitleBTOC>
+
+EpsTSD_t<Tab.><Tab>137
+
+<titleATOC>
+
+Structure for Charts<Tab.><Tab>139
+
+<CtitleBTOC>
+
+ChartTSD_t<Tab.><Tab>140
+
+<titleATOC>
+
+Structure for Images<Tab.><Tab>142
+
+<CtitleBTOC>
+
+RASTER_t<Tab.><Tab>143
+
+<CtitleBTOC>
+
+ImageTSD_t<Tab.><Tab>145
+
+<chapnameTOC>
+
+<"|:chapnameTOC", Subcomponent = yes><F0><Autonum, list, 1, Value = 4.><Tab><End Sub>
+<F0>Program Interface<Tab.><Tab>147
+
+<titleATOC>
+
+Initializations functions<Tab.><Tab>148
+
+<CtitleBTOC>
+
+ArInit()<Tab.><Tab>149
+
+<CtitleBTOC>
+
+ArStateInit()<Tab.><Tab>150
+
+<CtitleBTOC>
+
+ArFileInit()<Tab.><Tab>151
+
+<CtitleBTOC>
+
+ArCmpnInit()<Tab.><Tab>152
+
+<CtitleBTOC>
+
+ArFontValueInit()<Tab.><Tab>153
+
+<titleATOC>
+
+Memory functions<Tab.><Tab>154
+
+<CtitleBTOC>
+
+ArSafeMalloc()<Tab.><Tab>155
+
+<CtitleBTOC>
+
+ArSafeRealloc()<Tab.><Tab>156
+
+<titleATOC>
+
+High-level Read functions<Tab.><Tab>157
+
+<CtitleBTOC>
+
+ArNextObject()<Tab.><Tab>158
+
+<CtitleBTOC>
+
+ArDocRead()<Tab.><Tab>159
+
+<titleATOC>
+
+High-level Write Functions<Tab.><Tab>160
+
+<CtitleBTOC>
+
+ArDocWrite()<Tab.><Tab>161
+
+<CtitleBTOC>
+
+ArDocDeclWrite()<Tab.><Tab>162
+
+<CtitleBTOC>
+
+ArDocBodyWrite()<Tab.><Tab>163
+
+<chapnameTOC>
+
+<"|:chapnameTOC", Subcomponent = yes><F0><Autonum, list, 1, Value = 5.><Tab><End Sub>
+<F0>Filter Services<Tab.><Tab>165
+
+<titleATOC>
+
+String Manipulation<Tab.><Tab>166
+
+<titleBATOC>
+
+Ssave: Dynamically-growing character string services<Tab.><Tab>166
+
+<titleBTOC>
+
+Using the Ssave Facilities<Tab.><Tab>166
+
+<titleATOC>
+
+The Ssave_t Data Structures<Tab.><Tab>167
+
+<CtitleBTOC>
+
+Ssave_t<Tab.><Tab>167
+
+<titleATOC>
+
+The String Manipulation Routines<Tab.><Tab>168
+
+<CtitleBTOC>
+
+SsSaveS()<Tab.><Tab>169
+
+<CtitleBTOC>
+
+SsSaveSFront()<Tab.><Tab>170
+
+<CtitleBTOC>
+
+SsSaveShr()<Tab.><Tab>171
+
+<CtitleBTOC>
+
+SsAmount()<Tab.><Tab>172
+
+<CtitleBTOC>
+
+SsGetS()<Tab.><Tab>173
+
+<CtitleBTOC>
+
+SsNew()<Tab.><Tab>174
+
+<CtitleBTOC>
+
+SsBufStart()<Tab.><Tab>175
+
+<CtitleBTOC>
+
+SsBufEnd()<Tab.><Tab>176
+
+<CtitleBTOC>
+
+SsInitEmpty()<Tab.><Tab>177
+
+<CtitleBTOC>
+
+SsReset()<Tab.><Tab>178
+
+<CtitleBTOC>
+
+SsFree()<Tab.><Tab>179
+
+<CtitleBTOC>
+
+ArFprintf()<Tab.><Tab>180
+

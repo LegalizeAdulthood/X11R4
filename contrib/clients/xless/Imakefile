@@ -1,0 +1,16 @@
+#ifdef BandAidCompiler
+#include BandAidCompiler
+#endif
+
+        DEFINES = -DXAW_BC -DHELPFILE=\"${LIBDIR}/xless.help\" 
+        DEPLIBS = $(DEPXAWLIB) $(DEPXMULIB) $(DEPXTOOLLIB) $(DEPXLIB)
+LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+           SRCS = help.c init.c popup.c util.c callbacks.c new.c main.c 
+           OBJS = help.o init.o popup.o util.o callbacks.o new.o main.o 
+
+       INCLUDES = -I$(TOOLKITSRC) -I$(TOP)
+
+ComplexProgramTarget(xless)
+
+InstallNonExec(xless.help, $(LIBDIR))
+#InstallAppDefaults(Xman)

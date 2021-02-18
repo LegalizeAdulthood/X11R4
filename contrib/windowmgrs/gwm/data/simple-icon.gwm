@@ -1,0 +1,67 @@
+; SIMPLE ICON  DECORATION
+; =======================
+
+;;File: simple-icon.gwm -- simple icon decoration
+;;Author: colas@mirsa.inria.fr (Colas NAHABOO) -- Bull Research FRANCE
+;;Revision: 1.4 -- June 12 1989
+;;State: Exp
+;;GWM Version: 1.4
+
+; A simple icon "a la Mac", following fully the ICCCs
+
+(defaults-to simple-icon.font small-font)
+(defaults-to simple-icon.legend t)
+
+(: simple-icon.title-fsm (fsm-make (state-make
+	icon-behavior
+	(on (user-event 'get-title) 
+	    (progn (with (font simple-icon.font)
+			 (place-window-in-screen)
+			 (wob-tile (label-make s)))
+		   (update-placements)
+		       )))))))
+
+(de simple-icon.center-plug? ()
+    (or (window-icon-window) simple-icon-decoration.wip
+	(: tmp (resource-get 
+		   (+ -screen-name ".GwmIconPixmap." 
+		      (window-client-class) "." screen-type)
+		   "S.GwmIconPixmap.any.any"))))
+
+(: simple-icon.context 
+    '(fsm icon-fsm background white foreground black menu 'icon-pop
+	  simple-icon-decoration.wip (window-icon-pixmap)
+	  borderwidth 1 font simple-icon.font
+	  grabs icon-grabs)))
+
+(: simple-icon.data
+    '(with simple-icon.context
+	   (window-make  () () () 
+	       (if (and (simple-icon.center-plug?) simple-icon.legend)
+		   (bar-make () 
+		     (with (borderwidth 0 fsm simple-icon.title-fsm)
+		       (plug-make
+			   (label-make window-icon-name simple-icon.font)))
+		       ())
+		   ())
+	       (if (window-icon-window) 
+		   (window-icon-window)
+		   simple-icon-decoration.wip 
+		   (with (fsm icon-center-plug-with-pixmap-hint-fsm)
+			 (plug-make simple-icon-decoration.wip))
+		   tmp
+		   (plug-make tmp)
+		   (with (borderwidth 0 fsm simple-icon.title-fsm)
+			 (plug-make 
+			  (label-make window-icon-name simple-icon.font)))
+))))))))))))
+
+(: icon-center-plug-with-pixmap-hint-fsm (fsm-make
+    (state-make
+	(on (buttonrelease 2 any) (progn (iconify-window)(raise-window)))
+	(on (user-event 'icon-pixmap-change) 
+		    (wob-tile (window-icon-pixmap)))
+	icon-behavior
+    )))
+
+(de simple-icon () simple-icon.data)

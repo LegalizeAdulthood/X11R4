@@ -1,0 +1,198 @@
+
+
+
+     XWMANAGER(3X)                                       XWMANAGER(3X)
+
+
+
+
+     NAME
+          XwmanagerWidgetClass - X Widget Manager MetaClass
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+
+
+     CLASSES
+          The XwManagerClass is built from the Core, Composite and
+          Constraint classes.
+
+     DESCRIPTION
+          The manager class is an X Widget meta class.  It is never
+          instantiated as a widget.  Its sole purpose is as a
+          supporting superclass for other widget classes.  It provides
+          methods (procedures) which handle keyboard traversal and
+          border highlighting for other manager widgets.
+
+     NEW RESOURCES
+          The manager class defines a set of resources used by the
+          programmer to specify data for widgets which are subclasses
+          of Manager.  The string to be used when setting any of these
+          resources in an application defaults file (like .Xdefaults)
+          can be obtained by stripping the preface "XtN" off the
+          resource name.  For instance, XtNtraversalOn becomes
+          traversalOn.
+
+
+                             Manager Resource Set
+     Name                    Class                   Type      Default
+     ____________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNtraversalOn          XtCTraversalOn          Boolean   FALSE
+     XtNlayout               XtCLayout               int       minimize
+     XtNnextTop              XtCCallback             Pointer   NULL
+
+
+
+          XtNforeground
+               This resource defines the foreground color for the
+               widget.  Widgets built upon this class can use the
+               foreground for their drawing.
+
+          XtNbackgroundTile
+               This resource defines the tile to be used for the
+               background of the widget.  It defines a particular tile
+               to be combined with the foreground and background pixel
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMANAGER(3X)                                       XWMANAGER(3X)
+
+
+
+
+               colors.  The #defines for setting the tile value
+               through an arg list and the strings to be used in the
+               .Xdefaults files are described in XwCreateTile(3X).
+
+          XtNhighlightThickness
+               This resource specifies an amount of border spacing
+               around the border of the widget.  It is typically used
+               by managers to have padding space around their children
+               and to draw special borders.  This highlight thickness
+               is and an integer value representing the width, in
+               pixels, of the border area.  This value must be greater
+               than or equal to 0.
+
+          XtNtraversalOn
+               The application can define whether keyboard traversal
+               is active or not.  The default for this resource is
+               typically FALSE.
+
+          XtNlayout
+               This flag controls how the manager widget's geometry
+               deals with too little or too much space.  The valid
+               settings for this field are XwMINIMIZE, XwMAXIMIZE and
+               XwIGNORE.  (The counterpart for these settings to be
+               used in resource files, like .Xdefaults, are: minimize,
+               maximize and ignore.)  Typically, the XwMINIMIZE means
+               to request the minimum amount of space necessary to
+               display all children.  The XwMAXIMIZE means that if
+               additional space is given to the widget (i.e., at
+               create time or set values time) then use the additional
+               space as padding between children widgets. The XwIGNORE
+               settings means, maintain the size set at create time or
+               at set value time and never change size in response to
+               a child widget's request (i.e., added/deleted/modified
+               a child widget).  Look at the description of the
+               individual manager widgets to see if this feature is
+               supported.
+
+          XtNnextTop
+               This callback procedure is used by the applications
+               programmer to move the focus from one toplevel widget
+               to another toplevel widget.
+
+          NOTE:  The XwManagerClass provides a specialized insert
+          child procedure.  Manager widgets for which ordering makes
+          sense (such as the RowCol manager widget) make use of the
+          procedure.  It allows an application to provide a special
+          argument list type XtNinsertPosition with an integer value.
+          This value specifies where in the child list the new widget
+          is inserted.
+
+     KEYBOARD TRAVERSAL
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMANAGER(3X)                                       XWMANAGER(3X)
+
+
+
+
+          If the traversalOn resource is TRUE (either when the widget
+          is created or during a call to XtSetValues) the manager
+          widget's translation table is augmented with the following
+          translations:
+
+               <EnterWindow>:       enter()
+               <LeaveWindow>:       leave()
+               <Visible>:           visible()
+               <FocusIn>:           focusIn()
+
+     ACTIONS
+          enter:
+               If the widget is a top level manager and traversal is
+               on, then begin or resume traversal.
+
+          leave:
+               If the widget is a top level manager and traversal is
+               on, then suspend traversal.
+
+          visible:
+               If traversal is on for a widget of this class and the
+               widget that is focused becomes hidden (e.g. another
+               window obscures its visibility), then the focus moves
+               to another visible widget.
+
+          focusIn:
+               If the widget is a top level manager and traversal is
+               on, then begin traversal.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+

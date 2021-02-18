@@ -1,0 +1,47 @@
+#
+# Imakefile for xnetload
+#
+# Written by: Mike Berkley, jmberkley@watnext.waterloo.edu, 1989
+# Copyright 1989 University of Waterloo
+#
+# Permission to use, copy, modify, distribute, and sell this software and its
+# documentation for any purpose is hereby granted without fee, provided that
+# the above copyright notice appear in all copies and that both that
+# copyright notice and this permission notice appear in supporting
+# documentation, and that the name of UW not be used in advertising or
+# publicity pertaining to distribution of the software without specific,
+# written prior permission.  UW makes no representations about the
+# suitability of this software for any purpose.  It is provided "as is"
+# without express or implied warranty.
+#
+# UW DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL UW
+# BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
+# OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN 
+# CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+
+#
+# Since xnetload finds the local machine's load using the standard Load
+# widget stuff, it needs to be able to read kmem, i.e.  setgid kmem.  If
+# you do not want this, then define NOLOCAL
+#        DEFINES = -O -DNOLOCAL
+
+       INCLUDES = -I$(TOP) -I$(TOP)/X11
+
+# Dynix doesn't have -L option on load, but I have left changing the
+# XLIB specification up to individual sites.  Dynix and our Sun 3.5
+# don't come with a memcpy, so you'll have to add in whichever library
+# has memcpy.
+/* LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB) */
+LOCAL_LIBRARIES = -L/usr/software/X11/lib -lXaw -lXmu -lXt -lX11
+
+           SRCS = xnetload.c getload.o
+           OBJS = xnetload.o getload.o
+
+   INSTALLFLAGS = $(INSTKMEMFLAGS)
+
+all: xnetload
+
+SingleProgramTarget(xnetload,$(OBJS),,$(LOCAL_LIBRARIES))

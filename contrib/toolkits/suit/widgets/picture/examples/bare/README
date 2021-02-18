@@ -1,0 +1,63 @@
+	PicDemo is an example application making use of the picture widget.
+	It just creates an instance of the picture widget, but already serves
+as a graphic editor ....., I hope.
+
+	Files with suffix '.picw' in this directory are figure data files
+provided for demo purpose.
+
+	To start playing with PicDemo, you can follow these steps.
+
+1.	Read in some sample resources:
+
+		xrdb -m S.Xresources
+
+	This is not necessary, and has little sense for monochrome displays.
+
+2.	Run PicDemo:
+
+		PicDemo -sb
+
+	Omit '-sb' if you don't want scrollbars to be displayed.
+
+3.	Click the middle mouse button to pop up the main menu.
+
+4.	Move the mouse cursor to the 'Read  ->' menu entry.
+
+5.	Enter a picture file name ( ex. 'figure1.picw' ) into the dialog box.
+
+6.	Click the 'Merge' or 'Override' button.
+
+3.- 6.	These steps can be skipped if you
+
+	also specify '-f figure1.picw' at step 2.
+
+			or
+
+	read in an additional resource at step 1. with
+
+		xrdb -m SF.Xresource
+
+	to have the XtNfile resource set to the above file name.
+
+7.	Now, give full scope to your imagination and guess how to continue ...
+
+			.
+			.
+			.
+
+
+	If your imaginative power should lack a bit,
+
+	consult the file 'picture.n' in the 'doc' directory.
+
+			.
+			.
+			.
+
+
+X.	To quit, enter Ctrl-C.
+
+
+				Have fun!
+
+							Yoshihisa Konishi

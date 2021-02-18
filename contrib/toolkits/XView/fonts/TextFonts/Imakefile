@@ -1,0 +1,122 @@
+#
+# Imakefile for fonts.
+#
+# This will look in the standard place for mkfontdir
+# and bdftosnf (in the X11 source tree). If you wish to get the
+# binaries from elsewhere, define MKFONTDIR to be the location of mkfontdir
+# and FC to be the location of bdftosnf.
+#
+
+#include "../../XView.config"
+
+SRCS = \
+	luBIS08.bdf luBIS10.bdf luBIS12.bdf luBIS14.bdf luBIS18.bdf \
+	luBIS24.bdf luBS08.bdf luBS10.bdf luBS12.bdf luBS14.bdf \
+	luBS18.bdf luBS24.bdf luIS08.bdf luIS10.bdf luIS12.bdf \
+	luIS14.bdf luIS18.bdf luIS24.bdf luRS08.bdf luRS10.bdf \
+	luRS12.bdf luRS14.bdf luRS18.bdf luRS24.bdf lubB08.bdf \
+	lubB10.bdf lubB12.bdf lubB14.bdf lubB18.bdf lubB24.bdf \
+	lubBI08.bdf lubBI10.bdf lubBI12.bdf lubBI14.bdf lubBI18.bdf \
+	lubBI24.bdf lubI08.bdf lubI10.bdf lubI12.bdf lubI14.bdf \
+	lubI18.bdf lubI24.bdf lubR08.bdf lubR10.bdf lubR12.bdf \
+	lubR14.bdf lubR18.bdf lubR24.bdf lutBS08.bdf lutBS10.bdf \
+	lutBS12.bdf lutBS14.bdf lutBS18.bdf lutBS24.bdf lutRS08.bdf \
+	lutRS10.bdf lutRS12.bdf lutRS14.bdf lutRS18.bdf lutRS24.bdf \
+	luBIS19.bdf luBS19.bdf luIS19.bdf luRS19.bdf lubB19.bdf \
+	lubBI19.bdf lubI19.bdf lubR19.bdf lutBS19.bdf lutRS19.bdf 
+
+OBJS = \
+	luBIS08.snf luBIS10.snf luBIS12.snf luBIS14.snf luBIS18.snf \
+	luBIS24.snf luBS08.snf luBS10.snf luBS12.snf luBS14.snf \
+	luBS18.snf luBS24.snf luIS08.snf luIS10.snf luIS12.snf \
+	luIS14.snf luIS18.snf luIS24.snf luRS08.snf luRS10.snf \
+	luRS12.snf luRS14.snf luRS18.snf luRS24.snf lubB08.snf \
+	lubB10.snf lubB12.snf lubB14.snf lubB18.snf lubB24.snf \
+	lubBI08.snf lubBI10.snf lubBI12.snf lubBI14.snf lubBI18.snf \
+	lubBI24.snf lubI08.snf lubI10.snf lubI12.snf lubI14.snf \
+	lubI18.snf lubI24.snf lubR08.snf lubR10.snf lubR12.snf \
+	lubR14.snf lubR18.snf lubR24.snf lutBS08.snf lutBS10.snf \
+	lutBS12.snf lutBS14.snf lutBS18.snf lutBS24.snf lutRS08.snf \
+	lutRS10.snf lutRS12.snf lutRS14.snf lutRS18.snf lutRS24.snf \
+	luBIS19.snf luBS19.snf luIS19.snf luRS19.snf lubB19.snf \
+	lubBI19.snf lubI19.snf lubR19.snf lutBS19.snf lutRS19.snf 
+
+MakeFonts()
+
+FontTarget(luBIS08)
+FontTarget(luBIS10)
+FontTarget(luBIS12)
+FontTarget(luBIS14)
+FontTarget(luBIS18)
+FontTarget(luBIS24)
+FontTarget(luBS08)
+FontTarget(luBS10)
+FontTarget(luBS12)
+FontTarget(luBS14)
+FontTarget(luBS18)
+FontTarget(luBS24)
+FontTarget(luIS08)
+FontTarget(luIS10)
+FontTarget(luIS12)
+FontTarget(luIS14)
+FontTarget(luIS18)
+FontTarget(luIS24)
+FontTarget(luRS08)
+FontTarget(luRS10)
+FontTarget(luRS12)
+FontTarget(luRS14)
+FontTarget(luRS18)
+FontTarget(luRS24)
+FontTarget(lubB08)
+FontTarget(lubB10)
+FontTarget(lubB12)
+FontTarget(lubB14)
+FontTarget(lubB18)
+FontTarget(lubB24)
+FontTarget(lubBI08)
+FontTarget(lubBI10)
+FontTarget(lubBI12)
+FontTarget(lubBI14)
+FontTarget(lubBI18)
+FontTarget(lubBI24)
+FontTarget(lubI08)
+FontTarget(lubI10)
+FontTarget(lubI12)
+FontTarget(lubI14)
+FontTarget(lubI18)
+FontTarget(lubI24)
+FontTarget(lubR08)
+FontTarget(lubR10)
+FontTarget(lubR12)
+FontTarget(lubR14)
+FontTarget(lubR18)
+FontTarget(lubR24)
+FontTarget(lutBS08)
+FontTarget(lutBS10)
+FontTarget(lutBS12)
+FontTarget(lutBS14)
+FontTarget(lutBS18)
+FontTarget(lutBS24)
+FontTarget(lutRS08)
+FontTarget(lutRS10)
+FontTarget(lutRS12)
+FontTarget(lutRS14)
+FontTarget(lutRS18)
+FontTarget(lutRS24)
+FontTarget(luBIS19)
+FontTarget(luBS19)
+FontTarget(luIS19)
+FontTarget(luRS19)
+FontTarget(lubB19)
+FontTarget(lubBI19)
+FontTarget(lubI19)
+FontTarget(lubR19)
+FontTarget(lutBS19)
+FontTarget(lutRS19)
+
+InstallFonts($(TEXTFONT_FONTINSTDIR))
+
+install::
+	cd $(TEXTFONT_FONTINSTDIR); chmod +w fonts.dir; $(MKFONTDIR) .
+
+depend::

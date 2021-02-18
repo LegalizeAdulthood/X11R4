@@ -1,0 +1,27 @@
+#ifdef RtArchitecture
+             CC = pcc
+#endif
+         XCUSRC = ../src
+       INCLUDES = -I$(TOP) -I$(XCUSRC)
+           SRCS = wlc.c CuStack.c CuGrow.c CuCopy_ds.c wlc.y wlc.l
+         XCULIB = $(XCUSRC)/libXcu.a
+LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB) $(XCULIB)
+
+all: wlc 
+
+wlc.o : wlc.h wlc.y.c wlc.lex.c
+
+SingleProgramTarget(wlc,wlc.o CuStack.o CuGrow.o CuCopy_ds.o,$(LOCAL_LIBRARIES),)
+
+DependTarget()
+
+wlc.c : ;
+
+wlc.lex.c :	wlc.l
+	lex wlc.l
+	mv lex.yy.c wlc.lex.c
+
+wlc.y.c :	wlc.y
+	yacc wlc.y
+	mv y.tab.c wlc.y.c
+

@@ -1,0 +1,13 @@
+.TH VF2BDF X "1st March 1988"
+.AT 3
+.SH NAME
+vf2bdf \- convert vfont format to BDF format
+.SH SYNOPSIS
+.B vf2bdf
+vffile pointsize
+.SH DESCRIPTION
+.I Vf2bdf
+converts the vfont file to BDF on stdout.
+.SH AUTHOR
+Ken Yap
+

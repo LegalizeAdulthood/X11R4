@@ -1,0 +1,70 @@
+.TH XCPUSTATE 1 "13 July 1988" "X Version 11"
+.SH NAME
+xcpustate - display CPU states (idle, nice, system, kernel) statistics
+.SH SYNTAX
+\fBxcpustate\fP [\fI-toolkitoption\fP ...] [\fI-count\fP iterations] 
+[\fI-interval\fP seconds]
+.SH DESCRIPTION
+.I Xcpustate
+displays bars showing the percentage of time the CPU spends in
+different states. 
+.PP
+On a machine running Berkeley Unix, or a derivative (Suns with SunOS,
+microVaxen with Ultrix), the bar indicates the proportions of idle,
+user, nice, and system time with increasing levels of gray scale (from
+left to right) 
+.PP
+On an Iris4D, there may be more than one bar, one for each CPU, and
+each bar indicates the proportions of idle + wait, user, kernel, sxbrk
+and interrupt time for each cpu.
+.SH OPTIONS
+.I Xcpustate
+accepts all of the standard X Toolkit command line options, plus:
+.TP 8
+.IR -count " iterations"
+The number of times it should update the display. Default is forever.
+.TP 8
+.IR -interval " seconds"
+the interval in between updates. Default is 1 second.
+.SH X DEFAULTS
+For
+.I xcpustate
+the available class identifiers are:
+.sp
+.nf
+CPUStateMonitor - the application
+Form - enclosing the entire application, and sub-Forms enclosing 
+Label/Bar pairs.
+.fi
+.PP
+For
+.I xcpustate,
+the available name identifiers are:
+.sp
+.nf
+xcpustate - application name
+The outer Form is "form".
+The Forms enclosing the Label/Bar pairs are "formN", where N is the
+index number, starting with the top pair as zero.
+Each Label name is the same as the label string.
+Each Bar name is "barN".
+.fi
+.sp
+.LP
+For
+.I xcpustate,
+the available resources are:
+.IP "name interval, class Interval"
+corresponds to the -interval option. Takes an integer value.
+.IP "name count, class Count"
+corresponds to the -count argument, also takes and integer value.
+.SH NOTES
+.I Xcpustate 
+was designed for a multiprocessor (a Silicon Graphics Iris4D/240) - it
+happens to work for conventional BSD uniprocessors. It is meant to be
+easy to port, and extend to monitor a wide variety of statistics.
+.SH SEE ALSO
+xperfmon, xload
+.SH AUTHOR
+Mark Moraes, University of Toronto
+(Thanks to Chris Siebenmann for the code for BSD systems)

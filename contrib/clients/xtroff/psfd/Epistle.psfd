@@ -1,0 +1,32 @@
+Return-Path: earth.cray.com!dac
+Received: from uc.msc.umn.edu (-:uc.msc.umn.edu:-) by yonge.csri.toronto.edu via TCP with SMTP id AA02083; Sat, 18 Feb 89 15:48:50 EST
+Received: from hall.cray.com by uc.msc.umn.edu (5.59/1.14)
+	id AA09668; Sat, 18 Feb 89 14:44:54 CST
+Received: from quixote.cray.com by hall.cray.com
+	id AA10270; 3.2/CRI-3.6; Sat, 18 Feb 89 14:47:41 CST
+Received: by quixote.cray.com
+	id AA07959; 3.2/CRI-3.7; Sat, 18 Feb 89 14:47:39 CST
+Date: Sat, 18 Feb 89 14:47:39 CST
+From: dac@earth.cray.com (Dave Cahlander)
+Message-Id: <8902182047.AA07959@quixote.cray.com>
+To: moraes@csri.toronto.edu
+Subject: font display
+
+While I am checking out the troff output that you are sending to me,
+Please run the following script on the discription file that you
+have for transcript/PostScript.  Ours is located at /usr/lib/fonts/devpsc,
+but it sounds like yours is at /usr/lib/troff/devpsc or something
+like that.  Anyway, unpack this shar.ar and run:
+
+	psfd path/devpsc/R | pic |troff -Tpsc | lpr -n
+
+Let me know what you get.  This should match the character set on
+page 252 of "The Adobe Red Book".
+
+	PostScript Language Reference Manual,
+	Addison-Wesley, ISBN 0-201-10174-2
+
+	psfd path/devpsc/S | pic | troff -Tpsc | lpr -n
+
+should match the character set on page 253.
+------------------- shar.ar ---------------------

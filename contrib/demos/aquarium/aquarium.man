@@ -1,0 +1,29 @@
+.TH AQUARIUM 1 "26 October 1988" "X Version 11"
+.SH NAME
+aquarium \- watch the fish
+.SH SYNOPSIS
+.B aquarium
+[-option ...]
+.SH DESCRIPTION
+.I Aquarium
+displays an odd assortment of object on your screen and
+moves them randomly about
+.SH OPTIONS
+.TP 8
+.B \-fg \fIforeground color\fB
+.TP 8
+.B \-bg \fIbackground color\fB
+.TP 8
+.B \-display \fIdisplay\fB
+specify the display to use; see \fIX(1)\fP.
+.TP 8
+.B \-count \fIcount\fB
+changes the number of objects from the default of 5.
+.SH "SEE ALSO"
+X(1)
+.SH COPYRIGHT
+Copyright 1989, Massachusetts Institute of Technology.
+.br
+See \fIX(1)\fP for a full statement of rights and permissions.
+.SH AUTHOR
+Keith Packard, MIT X Consortium

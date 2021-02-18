@@ -1,0 +1,67 @@
+#
+# $XConsortium: Imakefile,v 1.1 89/09/18 16:14:49 jim Exp $
+#
+
+XGKS_TOP = ../..
+#include  "../../xgks.tmpl"
+
+CCOPTIONS = LibraryCCOptions
+STD_DEFINES = LibraryDefines
+CDEBUGFLAGS = LibraryCDebugFlags
+
+GKS_DEFINES = -DFONTDBDIR=\"$(FONTDBDIR)\"
+
+SUBDIRS = fontdb 
+
+XOBJS = xSet.o xopws.o xpline.o xevent.o xpmarker.o xfillarea.o xupdate.o \
+        xtext.o xcolours.o xinqpixel.o xcellarray.o
+
+OBJS = gdp.o open_ws.o open_gks.o aspect_flags.o colours.o act_ws.o\
+          transforms.o gks_error.o polylines.o prmgr.o segments.o\
+          polymarkers.o fillarea.o cellarray.o input.o locator.o event.o update.o\
+          text.o deferral_ws.o choice.o pick.o valuator.o string.o stroke.o\
+          inqpolylines.o inqpmarker.o inqfillareas.o message.o escape.o\
+          inqtext.o inqWDT.o inquiries.o inqtransform.o inqpixel.o metafile.o\
+          gerrorhand.o $(XOBJS)
+
+XSRCS = xSet.c xopws.c xpline.c xevent.c xpmarker.c xfillarea.c xupdate.c \
+        xtext.c xcolours.c xinqpixel.c xcellarray.c
+
+SRCS = gdp.c open_ws.c open_gks.c aspect_flags.c colours.c act_ws.c\
+          transforms.c gks_error.c polylines.c prmgr.c segments.c\
+          polymarkers.c fillarea.c cellarray.c input.c locator.c event.c update.c\
+          text.c deferral_ws.c pick.c choice.c valuator.c string.c stroke.c\
+          inqpolylines.c inqpmarker.c inqfillareas.c message.c escape.c\
+          inqtext.c inqWDT.c inquiries.c inqtransform.c inqpixel.c metafile.c\
+          gerrorhand.c $(XSRCS)
+
+all::  
+
+NormalLibraryObjectRule()
+SpecialObjectRule(text.o,,$(GKS_DEFINES))
+#if !HasVoidSignalReturn
+SpecialObjectRule(xevent.o,,-DSIGNALRETURNSINT)
+#endif
+
+NormalLibraryTarget(xgks,$(OBJS))
+InstallLibrary(xgks,$(USRLIBDIR))
+
+LintLibraryTarget(xgks,$(SRCS))
+
+NormalLintTarget($(SRCS))
+
+/*
+ * snag extra files from subdir
+ */
+LinkSourceFile(xSet.c,x)
+LinkSourceFile(xcellarray.c,x)
+LinkSourceFile(xcolours.c,x)
+LinkSourceFile(xevent.c,x)
+LinkSourceFile(xfillarea.c,x)
+LinkSourceFile(xinqpixel.c,x)
+LinkSourceFile(xopws.c,x)
+LinkSourceFile(xpline.c,x)
+LinkSourceFile(xpmarker.c,x)
+LinkSourceFile(xtext.c,x)
+LinkSourceFile(xupdate.c,x)
+

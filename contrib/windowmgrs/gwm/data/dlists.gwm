@@ -1,0 +1,33 @@
+; Dynamic lists
+; ==============
+
+;;File: dlists.gwm -- manage dynamic lists
+;;Author: colas@mirsa.inria.fr (Colas NAHABOO) -- Bull Research FRANCE
+;;Revision: 1.4 -- June 12 1989
+;;State: Exp
+;;GWM Version: 1.4
+
+(setq Dlists t)
+
+; making a new list of name n
+
+(defunq Dlists.make (n)
+    (set n ())
+	n)
+
+; appending one element
+
+(defun Dlists.append (l obj)
+   (## (length (eval l)) l obj))
+
+; removing an element (returns pos)
+
+(defun Dlists.remove (l obj)
+    (if (setq Dlists.remove.pos (member obj (eval l)))
+	(progn
+	  (delete-nth Dlists.remove.pos (eval l))
+	  Dlists.remove.pos
+	  )
+      0
+      )
+    )

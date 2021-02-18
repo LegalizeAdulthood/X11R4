@@ -1,0 +1,15 @@
+      INCLUDES = -I. -I$(TOP) -I$(TOP)/X11
+          SRCS = cconv.c
+          OBJS = cconv.o
+
+      CCDEFDIR = $(LIBDIR)/ccdef
+       CCFILES = ccdef/ccdef.kinput ccdef/ccdef.wterm
+     RULEFILES = ccdef/rule.func ccdef/rule.greek ccdef/rule.kana \
+		 ccdef/rule.roma ccdef/rule.wnnroma ccdef/rule.zascii
+    CCDEFFILES = $(CCFILES) $(RULEFILES)
+
+NormalLibraryObjectRule()
+NormalLibraryTarget(cc,$(OBJS))
+MakeDirectories(install,$(CCDEFDIR))
+InstallMultiple($(CCDEFFILES),$(CCDEFDIR))
+DependTarget()

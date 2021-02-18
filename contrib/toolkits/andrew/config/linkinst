@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -x
+DIR=`pwd`
+for i in ${3}; do
+${1} ${4}/$i
+${2} ${DIR}/$i ${4}
+done
+
+

@@ -1,0 +1,26 @@
+#include "../../Serpent.tmpl"
+DIR = concent
+
+DIALOGUE = concent
+
+SRC = app.c
+
+OBJ = app.o
+
+BIN = app
+
+LIBS = $(SERPENTLIBS)
+
+DEPENDINCS = -I$(SERPENTBASEDIR)/data -I$(SERPENTBASEDIR)/externs/include
+
+ILLFILES = $(DIALOGUE).ill
+
+SerpentSddRule()
+
+SerpentObjectRule()
+
+all:	$(ILLFILES) $(DIALOGUE) $(BIN)
+
+SerpentAppSerpent()
+
+SerpentDependDialogueApp()

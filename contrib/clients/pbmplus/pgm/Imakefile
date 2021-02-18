@@ -1,0 +1,52 @@
+# Imakefile for pgm tools.
+#
+# Copyright (C) 1989 by Jef Poskanzer.
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted, provided
+# that the above copyright notice appear in all copies and that both that
+# copyright notice and this permission notice appear in supporting
+# documentation.  This software is provided "as is" without express or
+# implied warranty.
+
+PBMDIR =	../pbm
+INCLUDEPBM =	-I$(PBMDIR)
+LIBPBM =	$(PBMDIR)/libpbm.a
+DEFPBM =	$(PBMDIR)/pbm.h ../pbmplus.h
+DEFLIBPBM =	$(PBMDIR)/libpbm.h
+
+INCLUDE =	$(INCLUDEPBM)
+ALLCFLAGS =	$(CFLAGS) $(INCLUDE)
+LIBPGM =	libpgm.a
+
+BINARIES =	fitstopgm fstopgm hipstopgm pgmenhance pgmhist pgmnorm \
+		pgmtofits pgmtopbm pgmtops psidtopgm rawtopgm tifftopgm
+
+MANUALS1 =	fitstopgm.1 fstopgm.1 hipstopgm.1 pgmenhance.1 pgmhist.1 \
+		pgmnorm.1 pgmtofits.1 pgmtopbm.1 pgmtops.1 psidtopgm.1 \
+		rawtopgm.1 tifftopgm.1
+MANUALS3 =	libpgm.3
+MANUALS5 =	pgm.5
+
+all:		$(BINARIES)
+
+install::	all
+	cp $(BINARIES) $(BINDIR)
+
+install.man::
+	cp $(MANUALS1) $(MANUALS3) $(MANUALS5) $(MANDIR)
+
+# Rule for plain programs.
+$(BINARIES):	pgm.h $(DEFPBM) $(LIBPGM) $(LIBPBM)
+	$(CC) $(ALLCFLAGS) $(LDFLAGS) -o $@ $@.c $(LIBPGM) $(LIBPBM)
+
+# And library.
+$(LIBPGM):	libpgm1.o libpgm2.o
+	-rm $(LIBPGM)
+	ar rc $(LIBPGM) libpgm1.o libpgm2.o
+	-ranlib $(LIBPGM)
+
+libpgm1.o:	pgm.h $(DEFPBM) libpgm.h libpgm1.c
+	$(CC) $(ALLCFLAGS) -c libpgm1.c
+libpgm2.o:	pgm.h $(DEFPBM) libpgm.h libpgm2.c $(DEFLIBPBM)
+	$(CC) $(ALLCFLAGS) -c libpgm2.c

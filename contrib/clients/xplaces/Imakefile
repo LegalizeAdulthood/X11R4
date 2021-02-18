@@ -1,0 +1,17 @@
+LOCAL_LIBRARIES = $(XLIB)
+
+/* For R4, define ICCCM_XLIB */
+
+#ifdef CSRIToronto
+DEFINES = -DCSRI
+#endif
+
+SimpleProgramTarget(xplaces)
+
+install::
+	$(INSTALL) rcmd $(BINDIR)
+
+InstallManPage(rcmd, $(MANDIR))
+
+lint:
+	$(LINT) $(LINTFLAGS) $(SRCS) -lX11

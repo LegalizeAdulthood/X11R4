@@ -1,0 +1,1005 @@
+<!OPS, Version = 6.4>
+
+<!Document,
+	Final Output Device =	"ps",
+	Default Printer =	"nearest-ps">
+
+<!Font Definitions,
+	F20 = Times 10,
+	F24 = Times 11,
+	F26 = Times 11 Italic,
+	F85 = Helvetica 11 Bold,
+	F46 = Times 24 Italic,
+	F72 = Helvetica 8,
+	F47 = Times 24 Bold Italic,
+	F77 = Helvetica 9 Bold,
+	F76 = Helvetica 9,
+	F84 = Helvetica 11,
+	F68 = Helvetica 6,
+	F101 = Helvetica 18 Bold,
+	F81 = Helvetica 10 Bold,
+	F31 = Times 12 Bold Italic,
+	F25 = Times 11 Bold,
+	F21 = Times 10 Bold,
+	F22 = Times 10 Italic,
+	F93 = Helvetica 14 Bold,
+	F89 = Helvetica 12 Bold,
+	F41 = Times 18 Bold,
+	F33 = Times 14 Bold,
+	F80 = Helvetica 10,
+	F8 = Times 6>
+
+<!Color Definitions,
+	C0 = 0, 0, 0,
+	C1 = 3.13, 3.13, 3.13,
+	C2 = 6.25, 6.25, 6.25,
+	C3 = 12.50, 12.50, 12.50,
+	C4 = 25, 25, 25,
+	C5 = 50, 50, 50,
+	C6 = 75, 75, 75,
+	C7 = 100, 100, 100>
+
+<!Page,
+	Bottom Margin =		0.83 inches,
+	Left Margin =		0.87 inches,
+	Right Margin =		0.88 inches,
+	Inner Margin =		0.50 inches,
+	Outer Margin =		0.94 inches,
+	First Page =		Right,
+	Margins =			Left/Right,
+	Starting Page # = 	Inherit,
+	Hyphenation =		on,
+	Consecutive Hyphens =	2,
+	Revision Bar Placement = Right,
+	Margin Stretch =	150,
+	Margin Shrink =		75,
+	Feathering =		off,
+	Begin With = Odd>
+
+<!Autonumber Stream, List, 1>
+
+<!Autonumber Stream, chap, 1,
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, label, 1,
+	Level 1 Prefix =	"Figure ",
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, step, 1,
+	Level 1 Suffix =	>
+
+<!Class, listingIN,
+	Top Margin =		0.07 inches,
+	Bottom Margin =		0.07 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.308 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Allow Page Break Within = no,
+	Left Tab =		0/0.55/2/2.60/3.75/0.75*8 Inches>
+
+<!Class, "|:list",
+	Font =			F24,
+	Contents =	Shared>
+
+<Tab><F25>><F0><Tab>
+
+<!Class, "|:listLA",
+	Font =			F24>
+
+<Tab><F25>><F0><Tab>
+
+<!Class, "|:listempty1",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24@i*,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab><Tab>
+
+<!Class, "|:note:caution",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Frame,
+	Name =			note:caution,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.047423,0.706667,0.047423,7,0,4,0)
+       (v6,3,0,0.706667,0.047423,0.706667,0.005911,7,0,4,0)
+       (v6,4,0,0.706667,0.005911,0,0.005911,7,0,4,0)
+       (v6,5,0,0,0.005911,0,0.047423,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+<Tab><F26>Caution:<F0><Tab>
+
+<!Class, "|:note:note",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Frame,
+	Name =			note:standard,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.037045,0.706667,0.037045,7,0,4,0)
+       (v6,3,0,0.706667,0.037045,0.706667,0.016289,7,0,4,0)
+       (v6,4,0,0.706667,0.016289,0,0.016289,7,0,4,0)
+       (v6,5,0,0,0.016289,0,0.037045,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+<Tab><F26>Note:<F0><Tab>
+
+<!Class, "|:note:warning",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Frame,
+	Name =			note:warning,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.062266,0.706667,0.062266,7,0,4,0)
+       (v6,3,0,0.706667,0.062266,0.706667,0,7,0,4,0)
+       (v6,4,0,0.706667,0,0,0,7,0,4,0)
+       (v6,5,0,0,0,0,0.062266,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+<Tab><F26>Warning:<F0><Tab>
+
+<!Class, "|:numlist",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab><Autonum, List, 1><Tab>
+
+<!Class, "|:step:OR1",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<F20>. . . or . . .<F26><Tab><F0>
+
+<!Class, "|:step:numb1",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<F85><Autonum, step, 1>.<F0><Tab>
+
+<!Class, "|:titlexcer",
+	Font =			F85,
+	Contents =	Shared>
+
+<Tab><F20>"<F0><Tab>
+
+<!Class, chapname,
+	Top Margin =		0.50 inches,
+	Bottom Margin =		1 inches,
+	Line Spacing =		1.100 lines,
+	Alignment =		Left,
+	Font =			F46@K1,
+	Begin New Page =		yes,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		7/8.25/0.75*18 Inches,
+	TOC Doc Name =		TOC,
+	Composition =		Optimum>
+
+<!Class, chaprefs,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F72,
+	Left Tab =		0/0.75*13 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Autonum, label, 1>                            <Autonum, chap, 1>
+
+<!Class, keyside,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.200 lines,
+	Font =			F77,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches>
+
+Action<F76><HR>
+Apollo<Tab.>Key<HR>
+DEC<Tab.>Key<HR>
+Sun<Tab.>Key
+
+<!Class, list,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		2 inches,
+	First Indent =		-1.13 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Allow Page Break Within = no,
+	Left Tab =		-0.25/0/0.25/0.75/0.75*18/15.75/0.75*7 Inches,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:list",
+	Hidden =		yes,
+	Font =			F24,
+	Subcomponent =	yes,
+	Contents =	Shared><F0><Tab><F25>><F0><Tab><End Sub><F0>
+
+<!Class, listempty1,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		2 inches,
+	First Indent =		-1.13 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Allow Page Break Within = no,
+	Left Tab =		-0.25/0/0.25/0.75/0.75*18/15.75/0.75*7 Inches,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:listempty1",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F0><Tab><Tab><End Sub><F0>
+
+<!Class, option,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.200 lines,
+	Alignment =		Left,
+	Font =			F77,
+	Hyphenation =		2,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Wordspace Min =		0.484,
+	Wordspace Nom =		0.800,
+	Wordspace Max =		1.420,
+	Letterspace Max =		0.484,
+	Composition =		Optimum>
+
+Optional Feature<HR>
+<F76>The <<name> feature is <HR>
+available in the <<package><HR>
+etc.
+
+<!Class, para,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Composition =		Optimum>
+
+<!Class, paraAT,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Allow Page Break After = no,
+	Composition =		Optimum>
+
+<!Class, rule:Adot,
+	Bottom Margin =		0.08 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F84,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		10.50/0.75*15 Inches,
+	Right Tab =		6.75/10 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab.>
+
+<!Class, rule:sm,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F68,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break Within = no,
+	Left Tab =		0 Inches,
+	Composition =		Optimum>
+
+<!Class, titleA,
+	Top Margin =		0.50 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F101@K1,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0/7/8.25/0.75*18 Inches,
+	TOC Doc Name =		TOC>
+
+<!Class, titleD,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+titleD component in a sideD frame
+
+<!Class, foot_prelim,
+	Top Margin =		0.07 inches,
+	Bottom Margin =		0.07 inches,
+	Line Spacing =		1.308 lines,
+	Font =			F31,
+	Contents =	Shared>
+
+PRELIMINARY  ( June 19, 1989 )
+
+<!Class, unique,
+	Top Margin =		0.07 inches,
+	Bottom Margin =		0.07 inches,
+	Line Spacing =		1.308 lines,
+	Font =			F20>
+
+<!Class, Cstuff,
+	Top Margin =		0.17 inches,
+	Bottom Margin =		0.07 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.308 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Left Tab =		0/0.25*12 Inches>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+CtitleD component in a CsideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Class, CtitleD,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+titleD component in a<HR>
+sideD frame
+
+<!Master Frame,
+	Name =			Chapter,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 1.40 inches,
+	Width =			1.75 inches,
+	Height =		1.75 inches,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,268,0.08,1.546667,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.547 inches, Height = 0.11 inches,
+	Revision Bar Placement = Left>
+<chaprefs,
+	Hidden =		yes>
+
+<Autonum, label, 1>                            <Autonum, chap, 1>
+
+<End Text>)
+ (t14,2,128,0,0.92,0,7,0,0,t1,wst:timsps24bi,)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			note:caution,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Diagram =
+V6,
+(g9,0,0)>
+
+<!Master Frame,
+	Name =			note:standard,
+	Placement =		At Anchor,
+	Vertical Alignment =	Baseline - 0.111 inches,
+	Width =			0.73 inches,
+	Height =		0.111 inches,
+	Shared Contents =	yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.020756,0.706667,0.020756,7,0,4,0)
+       (v6,3,0,0.706667,0.020756,0.706667,0,7,0,4,0)
+       (v6,4,0,0.706667,0,0,0,7,0,4,0)
+       (v6,5,0,0,0,0,0.020756,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			note:warning,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Diagram =
+V6,
+(g9,0,0)>
+
+<!Master Frame,
+	Name =			rule:intro,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 0.04 inches,
+	Width =			5 inches,
+	Height =		0.10 inches,
+	Shared Contents =	yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,65536,0,0,4.986667,0,7,0,4,0)
+       (v6,3,65536,4.986667,0,4.986667,0.041511,7,0,4,0)
+       (v6,4,65536,4.986667,0.041511,0,0.041511,7,0,4,0)
+       (v6,5,65536,0,0.041511,0,0,7,0,4,0))))
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			sideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<titleD,
+	Hidden =		yes>
+
+titleD component in a<HR>
+sideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes>
+
+CtitleD component in a CsideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			CsideDdesc,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.137 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes>
+
+Usage
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			CsideDfield,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.137 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes>
+
+Field Descriptions
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<Right Page Header, Frame =
+V6,
+(g9,1,0
+ (t14,1,4,6.493333,0.438782,2,7,0,0,,wst:timsps10,)
+ (t14,2,4,3.246667,0.438782,1,7,0,0,,wst:timsps10,)
+ (t14,3,4,0,0.438782,0,7,0,0,,wst:timsps10,)
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<Right Page Footer, Frame =
+V6,
+(g9,1,0
+ (t14,1,4,6.493333,0.478772,2,7,0,0,,wst:timsps10,)
+ (t14,2,4,3.366667,0.446667,1,7,0,0,,wst:timsps10,\X80a0)
+ (t14,3,4,0,0.478772,0,7,0,0,,wst:timsps10,)
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<Left Page Footer, Frame =
+V6,
+(g9,1,0
+ (T12,1,12,0.04,0.32,7,127,5,7,127,8,0,2,
+<!Page, Width = 3.067 inches, Height = 0.167 inches>
+<unique>
+
+<foot_prelim, Subcomponent = yes><F31>PRELIMINARY  ( June 19, 1989 
+)<End Sub><F0>
+
+<End Text>))>
+
+<chapname>
+
+<|,41>
+<Frame,
+	Name =			Chapter,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 1.40 inches,
+	Width =			1.75 inches,
+	Height =		1.75 inches,
+	Diagram =
+V6,
+(g9,4,0
+ (g9,4,0
+   (O5,4,8,1,wst:bsdutch0i,51
+     (s@"8"637
+       (s@"8"0
+         (J0"8"7"6"2"7
+           (s@"8"0
+             (J0"8"5738"6"2"532
+               (s@"8"5713
+                 (s@"8"5713
+                   (D4"8"7"7/322@6@"7/44@360"7/3087@1"7/411586"2"532"0"7)
+                   (y0"6"7"5"!5/60217@"7/415655"7/3087@1"7/411586"7/1@0006"7/431
+                    654"7/657546"7/6@841"3/366@50"!7/731346"7/657546"7/6@841"6"2
+                    "532"2"532"0"7)
+                   (y0"4"7"5"!5/63@411"5/133435"7/657546"7/6@841"7/62310"7/64@26
+                    3"7/413081"7/687743"3/650285"!7/82055@"7/413081"7/687743"6"2
+                    "532"2"532"0"7)
+                   (y0"2"7"5"!3/53@75@"3/377256"7/413081"7/687743"7/273@88"7/820
+                    340"7/288530"7/1@4850"5/681141"!3/61@656"7/288530"7/1@4850"6
+                    "2"532"2"532"0"7)
+                   (y0"0"7"5"7/50643@"3/@87542"7/288530"7/1@4850"7/282415"7/1241
+                    60"7/28@103"7/1643@1"7/04160"!3/316@18"7/28@103"7/1643@1"6"2
+                    "532"2"532"0"7)
+                   (y0"@"7"5"7/4@0422"3/531623"7/28@103"7/1643@1"7/2858@2"7/1711
+                    1"7/254708"7/366@00"!5/654831"!3/43@754"7/254708"7/366@00"6"
+                    2"532"2"532"0"7)
+                   (y0"57"7"5"3/771500"5/005@52"7/254708"7/366@00"7/4@1173"7/311
+                    656"7/446341"7/354441"!5/177500"!7/4285@8"7/446341"7/354441"
+                    6"2"532"2"532"0"7)
+                   (y0"55"7"5"3/140648"7/@60514"7/446341"7/354441"7/45774"7/5@@7
+                    55"7/661576"7/5@36@"!5/113486"7/54123"7/661576"7/5@36@"6"2"5
+                    32"2"532"0"7)
+                   (y0"53"7"5"1/153602"7/523270"7/661576"7/5@36@"7/827212"7/3768
+                    3@"7/1@0772"7/387285"!5/076461"5/24542@"7/1@0772"7/387285"6"
+                    2"532"2"532"0"7)
+                   (y0"51"7"5"3/07743"!5/886@38"7/1@0772"7/387285"7/145376"7/340
+                    733"7/134566"7/3@4@53"!5/04@221"3/37634@"7/134566"7/3@4@53"6
+                    "2"532"2"532"0"7)
+                   (D4"58"7"7/134566"7/3@4@53"7/170413"7/155164"2"532"0"7)
+                   (D4"56"7"7/170413"7/155164"7/30760@"7/302301"2"532"0"7)
+                   (y0"54"7"5"!5/043@@0"1/75@336"7/30760@"7/302301"7/15648"7/386
+                    661"7/16115@"7/374311"3/04880"!3/38@771"7/16115@"7/374311"6"
+                    2"532"2"532"0"7)
+                   (y0"52"7"5"!3/181554"3/020615"7/16115@"7/374311"7/882722"7/51
+                    @434"7/647553"7/57815@"3/637605"!7/5@754"7/647553"7/57815@"6
+                    "2"532"2"532"0"7)
+                   (y0"50"7"5"!5/5@6708"7/146673"7/647553"7/57815@"7/602322"7/57
+                    555"7/456154"7/7@@674"3/1@1551"7/763445"7/456154"7/7@@674"6"
+                    2"532"2"532"0"7)
+                   (y0"5@"7"5"!3/3@7@3@"7/318501"7/456154"7/7@@674"7/271052"7/57
+                    6531"7/200056"7/53@@@4"1/818688"5/387142"7/200056"7/53@@@4"6
+                    "2"532"2"532"0"7)
+                   (y0"37"7"5"!7/253551"!7/674@41"7/200056"7/53@@@4"7/048525"7/5
+                    03@4"7/@72@08"7/345476"5/25@645"1/5@@523"7/@72@08"7/345476"6
+                    "2"532"2"532"0"7)
+                   (y0"35"7"5"7/86676@"!5/8062@1"7/@72@08"7/345476"7/@5138"7/300
+                    002"7/@58@@2"7/154@21"7/@57011"3/551535"7/@58@@2"7/154@21"6"
+                    2"532"2"532"0"7)
+                   (y0"33"7"5"7/@85610"!5/68@065"7/@58@@2"7/154@21"7/002013"7/83
+                    3@"7/056575"7/672@43"!7/26440"5/4@4@28"7/056575"7/672@43"6"2
+                    "532"2"532"0"7)
+                   (y0"31"7"5"1/4@@208"!5/477270"7/056575"7/672@43"7/25@6@3"7/64
+                    621@"7/456154"7/474448"!5/510@58"5/51566"7/456154"7/474448"6
+                    "2"532"2"532"0"7)
+                   (y0"38"7"5"!3/564@68"!7/381451"7/456154"7/474448"7/414182"7/4
+                    51006"7/462120"7/433254"1/34@764"5/032782"7/462120"7/433254"
+                    6"2"532"2"532"0"7)
+                   (y0"36"7"5"!3/347750"!7/@7243"7/462120"7/433254"7/4@@816"7/48
+                    @@@0"7/216148"7/408676"3/07@748"1/5704@3"7/216148"7/408676"6
+                    "2"532"2"532"0"7)
+                   (y0"34"7"5"!5/604@66"!3/702112"7/216148"7/408676"7/200056"7/2
+                    2420@"7/074110"7/007170"7/207243"3/432330"7/074110"7/007170"
+                    6"2"532"2"532"0"7)
+                   (y0"32"7"5"7/016803"!7/088262"7/074110"7/007170"7/2@7644"7/@0
+                    8415"7/282415"5/703613"!7/543613"3/6@1761"7/282415"5/703613"
+                    6"2"532"2"532"0"7)
+                   (y0"30"7"5"5/008226"!7/28181@"7/282415"5/703613"7/448106"5/50
+                    4065"7/660145"5/325570"!5/113052"3/843142"7/660145"5/325570"
+                    6"2"532"2"532"0"7)
+                   (y0"3@"7"5"3/47464"7/71474@"7/660145"5/325570"7/83183"5/13000
+                    @"7/322704"5/180@8@"!3/526550"5/16@142"7/322704"5/180@8@"6"2
+                    "532"2"532"0"7)
+                   (y0"17"7"5"3/13@@40"5/160721"7/322704"5/180@8@"7/351550"5/188
+                    @12"7/567@78"5/111273"!5/018734"7/068@5"7/567@78"5/111273"6"
+                    2"532"2"532"0"7)
+                   (y0"15"7"5"3/753342"5/268803"7/567@78"5/111273"7/535@02"5/136
+                    424"7/7@8032"5/156382"!5/413253"7/668086"7/7@8032"5/156382"6
+                    "2"532"2"532"0"7)
+                   (y0"13"7"5"5/4274@2"5/@67@55"7/7@8032"5/156382"7/765002"5/300
+                    246"7/7337@2"5/365780"!5/807@53"!5/6043@6"7/7337@2"5/365780"
+                    6"2"532"2"532"0"7)
+                   (y0"11"7"5"5/712104"1/368@@@"7/7337@2"5/365780"7/756@48"5/316
+                    775"7/751111"5/35058@"!7/7@1513"!7/@00@26"7/751111"5/35058@"
+                    6"2"532"2"532"0"7)
+                   (y0"18"7"5"7/715522"1/778246"7/751111"5/35058@"7/73@@03"5/526
+                    454"7/723@50"5/561582"5/@@2822"7/06@40@"7/723@50"5/561582"6"
+                    2"532"2"532"0"7)
+                   (D4"16"7"7/723@50"5/561582"7/70040@"5/565681"2"532"0"7)
+                   (y0"14"7"5"!3/341@41"5/526203"7/70040@"5/565681"7/53121@"5/56
+                    6664"7/562710"5/5401@8"3/5204@6"3/32551@"7/562710"5/5401@8"6
+                    "2"532"2"532"0"7)
+                   (y0"12"7"5"!3/14386"!7/118818"7/562710"5/5401@8"7/52681@"5/50
+                    7811"7/5@108"5/5@8024"3/10677@"1/705252"7/5@108"5/5@8024"6"2
+                    "532"2"532"0"7)
+                   (y0"10"7"5"!5/878@3@"!7/1@07@@"7/5@108"5/5@8024"7/35@363"5/35
+                    0@8@"7/384850"5/383333"3/753454"3/42@851"7/384850"5/383333"6
+                    "2"532"2"532"0"7)
+                   (y0"1@"7"5"!3/368116"!7/033216"7/384850"5/383333"7/300826"5/3
+                    42@"7/112688"5/305681"3/771336"5/672135"7/112688"5/305681"6"
+                    2"532"2"532"0"7)
+                   (y0"87"7"5"!5/461506"7/08@765"7/112688"5/305681"7/163885"5/30
+                    1@63"7/14@7@5"5/308263"3/854131"5/343@41"7/14@7@5"5/308263"6
+                    "2"532"2"532"0"7)
+                   (y0"85"7"5"!3/7@8@18"5/365445"7/14@7@5"5/308263"7/885035"5/32
+                    8135"7/674445"5/383333"3/888@"!7/565075"7/674445"5/383333"6"
+                    2"532"2"532"0"7)
+                   (y0"83"7"5"!5/548425"3/61@41"7/674445"5/383333"7/60@@72"5/567
+                    210"7/4186@6"5/7126@"5/7575@0"!7/@1@532"7/4186@6"5/7126@"6"2
+                    "532"2"532"0"7)
+                   (y0"81"7"5"7/327004"1/505075"7/4186@6"5/7126@"7/410@22"5/7710
+                    02"7/487230"7/@27501"7/44@626"!5/5@@41"7/487230"7/@27501"6"2
+                    "532"2"532"0"7)
+                   (y0"88"7"5"7/480758"1/081371"7/487230"7/@27501"7/430845"7/003
+                    254"7/6@1855"7/075442"!7/@51848"!5/252081"7/6@1855"7/075442"
+                    6"2"532"2"532"0"7)
+                   (y0"86"7"5"3/500@70"1/310386"7/6@1855"7/075442"7/613@80"7/214
+                    448"7/86135"7/4@1115"!3/812250"!7/114011"7/86135"7/4@1115"6"
+                    2"532"2"532"0"7)
+                   (y0"84"7"5"3/623855"5/87772@"7/86135"7/4@1115"7/10628"7/42482
+                    @"7/154650"7/427743"!5/@10883"7/413376"7/154650"7/427743"6"2
+                    "532"2"532"0"7)
+                   (D4"82"7"7/154650"7/427743"7/322@6@"7/44@360"2"532"0"7)))))))
+      
+       (s@"80"0
+         (D4"80"54222678"7/785124"7"7/785124"7"2"532"0"7)
+         (D4"8@"54222678"7/@02233"7"7/@02233"7"2"532"0"7)
+         (D4"67"54222678"7/785124"5/211111"7/785124"5/211111"2"532"0"7)
+         (D4"65"54222678"7/@02233"5/211111"7/@02233"5/211111"2"532"0"7)))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+PROGRAMMING<#0104>GUIDELINES
+
+<rule:sm>
+
+<Frame,
+	Name =			rule:intro,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 0.04 inches,
+	Width =			5 inches,
+	Height =		0.10 inches,
+	Shared Contents =	yes>
+
+<para>
+
+This chapter describes the programming conventions used with the <F25>ASCII 
+Reader<F0>,<F25> <F0>as well as some limitations.
+
+<rule:sm>
+
+<Frame,
+	Name =			rule:intro,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 0.04 inches,
+	Width =			5 inches,
+	Height =		0.10 inches,
+	Shared Contents =	yes>
+
+<titleA,
+	Begin New Page =		yes>
+
+<|,42>C Naming Conventions
+
+<rule:Adot>
+
+<Tab.>
+
+<paraAT>
+
+There are several naming conventions used throughout AR:
+
+<Cstuff>
+
+something<F21>_t<F0><Tab><Tab><Tab>A <F22>typedef<F0> definition of 
+a data structure or type<HR>
+something<F21>P<F0><Tab><Tab><Tab>A<F22> pointer variable<F0> has 
+a trailing <F21>P<F0> on its name<HR>
+<F21>Ar<F0>SomeThing()<Tab><Tab>A function name begins with <F21>Ar<F0><HR>
+<F21>AR<F0>_MAX_SIZE<Tab><Tab>A constant or other global value begins 
+with <F21>AR<F0><HR>
+
+<para>
+
+All names that start with <#7f>Ar" or <#7f> AR" should be considered 
+reserved by the ASCII Reader.
+
+<titleA>
+
+Include files
+
+<rule:Adot>
+
+<Tab.>
+
+<paraAT>
+
+There are two required include-files <F25>ar5defs.h <F0>and<F25> ar5csave.h.
+<F0> Note that they guard themselves against re-inclusion and can 
+therefore be <F26>#included<F0> multiple times. These files should 
+be included in any module that uses AR data types or services.
+
+<titleA>
+
+makefiles
+
+<rule:Adot>
+
+<Tab.>
+
+<paraAT>
+
+On UNIX systems,<F25> makefile<F0>s can be used to control the compilation 
+and linking of AR-based programs. MMS files are the VMS equivalent. 
+
+<para>
+
+The only points to note in the <F25>makefile<F0> is that when they 
+are compiled the C source modules must have access to the include 
+files, and that when linked, the program must have access to the AR 
+object library.
+
+<Cstuff>
+
+# use your own path to AR<HR>
+# the AR directory contains the AR object library and include files<HR>
+AR<Tab><Tab><Tab>= ../ar<HR>
+INCLUDES<Tab>= -I. -I${AR}<HR>
+# location for runnable images<HR>
+BIN<Tab><Tab>= ../bin<HR>
+#image that we want to build is dependent on the image file<HR>
+filter:<Tab><Tab>${BIN}/filter<HR>
+#the filter is dependent on object modules and AR libraries<HR>
+${BIN}/filter:<Tab>filter.o<Tab>${AR}/AR5_lib.a<HR>
+<Tab>cc -o ${BIN}/filter filter.o<HR>
+#objects are dependent on C source and headers<HR>
+filter.o:<Tab><<include files> ar5defs.h ar5csave.h<HR>
+<Tab>cc ${INCLUDES} filter.c<HR>
+
+<titleA>
+
+Unsupported ASCII Markup
+
+<rule:Adot>
+
+<Tab.>
+
+<paraAT>
+
+There are a few features of ASCII Markup that are not currently supported 
+by the ASCII Reader.
+
+<list>
+
+<"|:list", Subcomponent = yes><F0><Tab><F25>><F0><Tab><End Sub><F0>The 
+Include command
+
+<list>
+
+<|,43><"|:list", Subcomponent = yes><F0><Tab><F25>><F0><Tab><End Sub><F0>Tracin
+g objects
+
+<list>
+
+<"|:list", Subcomponent = yes><F0><Tab><F25>><F0><Tab><End Sub><F0>Outline 
+objects
+
+<listempty1>
+
+<"|:listempty1", Subcomponent = yes><F0><Tab><Tab><End Sub><F0>The 
+data in outline-fonts are encrypted (for commercial license reasons, 
+required by the vendor of the outlines) and we do not provide the 
+method of encryption. But the client has full access to the structure 
+of the diagram, just as there is full access to the text content of 
+the document.
+
+<para>
+
+TPS does not generate <F26>Include<F0> commands, so this shouldn't 
+be a problem when reading an ASCII markup document. <F26>Include<F0> 
+files can be avoided when generating ASCII markup by including the 
+data directly into the main document.
+
+<para>
+
+There is no current work-around for capturing tracing and outline 
+objects.
+
+<titleA>
+
+Operating Limitations
+
+<rule:Adot>
+
+<Tab.>
+
+<paraAT>
+
+The <F25>ASCII Reader <F0>is not able to read multiple documents at 
+the same time. If this is required, completely read one document before 
+reading the next. AR is able to write to multiple output files without 
+difficulty.
+

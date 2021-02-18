@@ -1,0 +1,15 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+LIBS	=	${BASEDIR}/lib/libmail.a \
+		${UTILLIB} \
+		${BASEDIR}/lib/liberrors.a \
+		${MALLOCLIB}
+
+NormalObjectRule()
+ProgramTarget(reauth, reauth.o, ${LIBS},)
+InstallProgram(reauth, ${DESTDIR}/etc/)
+DependTarget()
+
+InstallDocs(reauth.help, ${DESTDIR}/help)

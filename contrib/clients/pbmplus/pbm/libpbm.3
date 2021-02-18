@@ -1,0 +1,124 @@
+.de Ss
+.    sp
+.    ft CW
+.    nf
+..
+.de Se
+.    fi
+.    ft P
+.    sp
+..
+.TH pbm 3
+.SH NAME
+pbm - functions to support portable bitmap programs
+.SH SYNOPSIS
+.Ss
+#include <pbm.h>
+cc ... libpbm.a
+.Se
+.SH DESCRIPTION
+.SS TYPES AND CONSTANTS
+.Ss
+typedef unsigned char bit;
+#define PBM_WHITE 0
+#define PBM_BLACK 1
+.Se
+Each
+.IR bit
+should contain only the values of
+.IR white
+or
+.IR black .
+.SS PBM MEMORY MANAGEMENT
+.Ss
+bit **pbm_allocarray(int cols, int rows)
+.Se
+Allocate an array of bits.
+.Ss
+bit *pbm_allocrow( int cols )
+.Se
+Allocate a row of the given number of bits.
+.Ss
+void pbm_freearray( bitrow, rows )
+.Se
+Free the array allocated with
+.IR pbm_allocarray()
+containing the given number
+of rows.
+.Ss
+pbm_freerow( bitrow )
+.Se
+Free a row of bits.
+.SS READING PBM FILES
+.Ss
+void
+pbm_readpbminit( file, colsP, rowsP, formatP )
+FILE *file;
+int *colsP, *rowsP, *formatP;
+.Se
+Read the header from a pbm file, filling in the rows, cols and format
+variables.
+.Ss
+void
+pbm_readpbmrow( file, bitrow, cols, format )
+FILE *file;
+bit *bitrow;
+int cols, format;
+.Se
+Read a row of bits into the bitrow array.
+Format and cols were filled in by
+.IR pbm_readpbminit() .
+.Ss
+bit **
+pbm_readpbm( file, colsP, rowsP )
+FILE *file;
+int *colsP, *rowsP;
+.Se
+Read an entire bitmap file into memory, returning the allocated array and
+filling in the rows and cols variables.
+This function combines
+.IR pbm_readpbminit() ,
+.IR pbm_allocarray()
+and
+.IR pbm_readpbmrow() .
+.SS WRITING PBM FILES
+.Ss
+void
+pbm_writepbminit( file, cols, rows )
+FILE *file;
+int cols, rows;
+.Se
+Write the header for a portable bitmap file.
+.Ss
+void
+pbm_writepbmrow( file, bitrow, cols )
+FILE *file;
+bit *bitrow;
+int cols;
+.Se
+Write a row from a portable bitmap.
+.Ss
+void
+pbm_writepbm( file, bits, cols, rows )
+FILE *file;
+bit **bits;
+int cols, rows;
+.Se
+Write the header and all data for a portable bitmap.
+This function combines
+.IR pbm_writepbminit()
+and
+.IR pbm_writepbmrow() .
+.SH "SEE ALSO"
+pgm(3), ppm(3)
+.SH AUTHOR
+Manual by Tony Hansen.
+
+Copyright (C) 1989 by Jef Poskanzer.
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided
+that the above copyright notice appear in all copies and that both that
+copyright notice and this permission notice appear in supporting
+documentation.  This software is provided "as is" without express or
+implied warranty.

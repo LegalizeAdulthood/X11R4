@@ -1,0 +1,8 @@
+DOBJS = compress.do compresv.do
+IHFILES = compress.ih compresv.ih
+
+NormalObjectRule()
+NormalATKRule()
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+DependTarget()

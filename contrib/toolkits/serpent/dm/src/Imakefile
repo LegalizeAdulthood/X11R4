@@ -1,0 +1,20 @@
+#include "../../Serpent.tmpl"
+DIR = dm
+
+INC = d22.h dpt.h dob.h dgo.h dob_make.h dro.h dra.h dtt.h dpg.h dgr.h drc.h din.h
+
+SRC = dpt.c din_st.c din_int.c dpg.c din_main.c din_shell.c dob_make.c dra.c dro1.c dro2.c drc.c dtt.c dob.c dgr.c
+
+OBJ = dpt.o din_st.o din_int.o dpg.o din_main.o din_shell.o dob_make.o dra.o dro1.o dro2.o drc.o dtt.o dob.o dgr.o
+
+LIB = libdm.a
+
+SerpentObjectRule()
+
+all:	$(LIB) install_lib
+
+SerpentLibrary()
+
+SerpentInstallIncLib()
+
+SerpentDepend()

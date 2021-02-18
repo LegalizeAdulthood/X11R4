@@ -1,0 +1,37 @@
+
+Within this directory are the documents describing the Serpent system:
+
+Overview of the Serpent system;
+Slang (dialogue Specification LANGuage) Reference Manual; 
+Application Developer's Guide;
+Saddle User's Guide;
+Technology Integrator's Guide.
+
+CONTENTS (compressed documentation files):
+
+1.   overview.ps.Z	-- Overview
+
+2.   slang.ps.Z		-- Slang Reference Manual
+
+3.   saddle.ps.Z	-- Saddle User's Guide
+
+4.   appdev.ps.Z 	-- Application Developer's Guide
+
+5.   tech.ps.Z 		-- Technology Integrator's Guide
+
+6.   toolbox.ps.Z	-- C Programmer's Toolbox Reference Manual
+
+NOTE: The Overview and Slang Reference Manual will print backwards, i.e., page
+1 will come out first, due to an error in the way they were composed.
+
+To print documents:
+
+	zcat <document>.ps.Z | lpr
+
+or
+
+	uncompress <document>.ps.Z
+	lpr <document>.ps
+
+Be sure to use whatever options are necessary to send the document to a laser
+printer.

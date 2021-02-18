@@ -1,0 +1,127 @@
+# $Header: Imakefile,v 1.1 89/12/19 21:01:38 rws Exp $ 
+# $Source: /xsrc/mit/server/ddx/ibm/mpel/RCS/Imakefile,v $ 
+
+#include <Server.tmpl>
+
+#ifdef RtAIX
+MPELWINC = mpelWin.c
+MPELWINO = mpelWin.o
+#else
+MPELWINC = 
+MPELWINO = 
+#endif
+
+SRCS =	 \
+		mpelALU.c	\
+		mpelArc.c	\
+		mpelBlit.c	\
+		mpelCmap.c	\
+		mpelCursor.c	\
+		mpelDash.c	\
+		mpelFont.c	\
+		mpelGC.c	\
+		mpelImg.c	\
+		mpelInfo.c	\
+		mpelIO.c	\
+		mpelLine.c	\
+		mpelMono.c	\
+		mpelOSD.c	\
+		mpelPlane.c	\
+		mpelPoly.c	\
+		mpelPolyPt.c	\
+		mpelSave.c	\
+		mpelSolid.c	\
+		mpelText.c	\
+		mpelTile.c	\
+		mpeluCode.c	\
+		mpelUtil.c	\
+		$(MPELWINC)	\
+		mpelXmorg.c	\
+		mpelData.c
+
+ASRCS = \
+		mpelFifoOut.s
+
+OBJS =	 \
+		mpelALU.o	\
+		mpelArc.o	\
+		mpelBlit.o	\
+		mpelCmap.o	\
+		mpelCursor.o	\
+		mpelDash.o	\
+		mpelFifoOut.o	\
+		mpelFont.o	\
+		mpelGC.o	\
+		mpelImg.o	\
+		mpelInfo.o	\
+		mpelIO.o	\
+		mpelLine.o	\
+		mpelMono.o	\
+		mpelOSD.o	\
+		mpelPlane.o	\
+		mpelPoly.o	\
+		mpelPolyPt.o	\
+		mpelSave.o	\
+		mpelSolid.o	\
+		mpelText.o	\
+		mpelTile.o	\
+		mpeluCode.o	\
+		mpelUtil.o	\
+		$(MPELWINO)	\
+		mpelXmorg.o	\
+		mpelData.o
+
+INCLUDES = -I../OPERATING_SYSTEM -I../../mfb -I../ppc -I../../../include -I$(INCLUDESRC) -I../common -I../../mi
+STD_DEFINES = ServerDefines -DRTIO
+
+NormalRelocatableTarget(mpel,$(OBJS))
+
+#if ProfileServer
+ProfiledRelocatableTarget(mpel,$(OBJS))
+#endif
+#if DebugServer
+DebuggedRelocatableTarget(mpel,$(OBJS))
+#endif
+
+#if DebugServer && ProfileServer
+DebuggedAndProfiledLibraryObjectRule()
+.s.o:
+	$(RM) -f m.s $@ debugger/$@ profiled/$@
+	$(CPP) $(CFLAGS) $*.s > m.s
+	$(AS) -o $@ m.s
+	$(CP) $@ debugger/$@
+	$(CP) $@ profiled/$@
+	$(RM) -f m.s
+#else
+# if DebugServer
+DebuggedLibraryObjectRule()
+.s.o:
+	$(RM) -f m.s $@ debugger/$@
+	$(CPP) $(CFLAGS) $*.s > m.s
+	$(AS) -o $@ m.s
+	$(CP) $@ debugger/$@
+	$(RM) -f m.s
+# else
+#  if ProfileServer
+ProfiledLibraryObjectRule()
+.s.o:
+	$(RM) -f m.s $@ profiled/$@
+	$(CPP) $(CFLAGS) $*.s > m.s
+	$(AS) -o $@ m.s
+	$(CP) $@ profiled/$@
+	$(RM) -f m.s
+#  else
+NormalLibraryObjectRule()
+.s.o:
+	$(RM) -f m.s $@
+	$(CPP) -E $(CFLAGS) $*.s > m.s
+	$(AS) -o $@ m.s
+	$(RM) -f m.s
+#  endif
+# endif
+#endif
+
+DependTarget()
+
+LintLibraryTarget(mpel,$(SRCS))
+NormalLintTarget($(SRCS))

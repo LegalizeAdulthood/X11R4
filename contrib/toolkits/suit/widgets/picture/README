@@ -1,0 +1,25 @@
+	The picture widget is a widget for drawing, editing andd managing
+graphic elements.
+	Instantiating one will virtually generate a graphic editor.
+
+	The contents of each subdirectory is as follows:
+
+	St
+		header files
+
+	doc
+		documents
+
+	lib
+		source code
+		object code and library will be generated here
+
+	examples
+		Sample programs making use of the picture widget
+
+NOTE
+	The picture widget uses not only the Xaw(Athena widgets) but also the
+MenuBox widget, provided in the 'contrib/widgets' directory of X.V11R3.
+	The Imakefile assumes the configuration system to be compatible with R3
+( that is, the MenuBox widget directory exists as a sibling [./../MenuBox] ).
+If this is not the case, the Imakefile has to be modified a bit.

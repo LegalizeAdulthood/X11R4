@@ -1,0 +1,163 @@
+/* $Header: /u/04c/mnt/new_integ/externs/include/RCS/arith.ext,v 1.1 89/10/08 23:05:31 serpent Exp $ */
+
+/*--------------------------------------------------------------------------*\
+|   
+|  Name:  arith.ext
+|
+|  Description:  
+|     This file defines Slang arithmetic functions not already provided by
+|     the language.
+|
+|  Component of:
+|     External function libraries.
+|
+|  Related files:
+|     arith.c - the C implementation of the functions
+|
+|  Project:
+|     Serpent
+|     User Interface Project
+|     Software Engineering Institute
+|     Carnegie Mellon University
+|     Pittsburgh, PA  15213
+|
+|  Version: 1.0
+|
+|  Project Leader:  
+|     Len Bass
+|     ljb@sei.cmu.edu
+|
+|  Author:  
+|     Brian M. Clapper
+|     bmc@sei.cmu.edu  
+|
+$Log:	arith.ext,v $
+Revision 1.1  89/10/08  23:05:31  serpent
+Initial revision
+
+Revision 1.1  89/09/12  18:38:38  bmc
+Initial revision
+
+|
+\*--------------------------------------------------------------------------*\
+|
+|   Distribution: Approved for public release; distribution is unlimited.
+|
+|   Copyright (c) 1989  by  Carnegie  Mellon  University, Pittsburgh, PA.  The
+|  Software Engineering  Institute  (SEI) is a federally  funded  research and
+|  development center established  and  operated by Carnegie Mellon University
+|  (CMU).  Sponsored  by  the  U.S.  Department  of   Defense  under  contract
+|  F19628-85-C-0003,  the  SEI  is  supported  by  the  services  and  defense
+|  agencies, with the U.S. Air Force as the executive contracting agent.
+|
+|    Permission to use,  copy,  modify, or  distribute  this  software and its
+|  documentation for  any purpose and without fee  is hereby granted, provided
+|  that  the above copyright notice appear  in  all copies and that both  that
+|  copyright  notice  and   this  permission  notice  appear   in   supporting
+|  documentation.   Further,  the  names  Software  Engineering  Institute  or
+|  Carnegie  Mellon  University  may  not be used in  advertising or publicity
+|  pertaining to distribution of the software without specific, written  prior
+|  permission.  CMU makes no claims  or representations  about the suitability
+|  of this software for any purpose.  This software is provided "as is" and no
+|  warranty,  express  or  implied,  is  made  by  the  SEI  or CMU, as to the
+|  accuracy  and  functioning of the program and related program material, nor
+|  shall   the  fact of  distribution   constitute  any   such  warranty.   No
+|  responsibility is assumed by the SEI or CMU in connection herewith.
+|
+\*--------------------------------------------------------------------------*/
+
+#ifndef _ARITHMETIC_EXT_
+#define _ARITHMETIC_EXT_
+
+EXTERNALS:
+
+/*--------------------------------------------------------------------------*\
+|  Routine: make_integer
+|
+|  Description:
+|     Converts a Slang expression to an integer, forcing truncation if
+|     necessary.
+|
+|  Syntax:
+\*                                                                          */
+
+	integer make_integer
+	    (
+	    /* operand : in */ integer
+	    );
+/*
+|  Parameters:
+|     operand - The expression or variable to be converted to integer.
+|               While the above syntax implies that only integers are
+|               accepted, in reality, any type of expression may be passed.
+|               Conversion is handled by the Slang run-time system.
+|
+|  Synonyms:
+
+#define	truncate(exp) 		make_integer(exp)
+
+|
+|  Result:
+|     An integer version of the operand is passed back.  Real data is
+|     truncated, not rounded.
+\*--------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------*\
+|  Macro: mod (or MOD)
+|
+|  Description:
+|     Provides a function-oriented modulo operator, using the make_integer
+|     function above.
+|
+|  Syntax:
+\*                                                                          */
+
+#define	MOD(operand,divisor) \
+	( operand - (make_integer (operand / divisor) * divisor) )
+
+#define mod(operator,divisor) \
+	MOD(operator,divisor)
+
+/*
+|  Parameters:
+|     operand - The expression or variable on which the modulo operation is
+|               to be performed.
+|     divisor - The divisor to be used in the modulo operation.
+|
+|  Result:
+|     The remainder from dividing operand by divisor is returned.
+|
+|  Example:
+|     The assignment "i := x MOD y" is expressed as "i := MOD (x, y)".
+|
+\*--------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------*\
+|  Macro: div (or DIV)
+|
+|  Description:
+|     Provides a function-oriented integer division operator, using the
+|     make_integer function above.
+|
+|  Syntax:
+\*                                                                          */
+
+#define	DIV(operand,divisor) \
+	make_integer (operand / divisor)
+
+#define div(operator,divisor) \
+	DIV(operator,divisor)
+
+/*
+|  Parameters:
+|     operand - The expression or variable on which the division operation is
+|               to be performed.
+|     divisor - The divisor to be used.
+|
+|  Result:
+|     The integer portion of the quotient is returned.  Any fractional portion
+|     is discarded.
+|
+\*--------------------------------------------------------------------------*/
+
+#endif  _ARITHMETIC_EXT_

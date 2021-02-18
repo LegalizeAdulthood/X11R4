@@ -1,0 +1,120 @@
+
+
+                  Common Lisp User Interface Environment (CLUE)
+                                        
+                                  Release Notes
+
+            Copyright (C) 1988, 1989, Texas Instruments Incorporated
+
+
+VERSION 
+        
+        7.0
+
+
+RELEASE DATE
+
+        September, 1989
+
+GENERAL
+
+        CLUE (Common  Lisp  User  Interface  Environment)  is a portable
+        system for  user  interface  programming  in Common Lisp.  CLUE,
+        which is based on the X Window System and the Common Lisp Object
+        System  (CLOS),  extends  the   CLX  interface  to   provide  an
+        architectural model  for  the  construction  of interactive Lisp
+        applications.  Modelled on the Xt toolkit library, CLUE could be
+        described as  a  translation  of  the  Xt  "intrinsics" into the
+        domain of Common Lisp and CLOS.
+
+        This portable implementation of CLUE is available to the  public
+        at no charge.   Anyone interested  may receive  source code  and
+        documentation  via  anonymous  ftp  from  CSC.TI.COM,  (internet
+        address 10.7.0.46)  in  pub/clue.tar.Z.   CLUE  sources are also
+        included as  part  of  the  public  distribution of the X Window
+        System, Version 11; see directory contrib/toolkits/clue.
+
+        General comments and CLUE  issue discussion should  be addressed
+        to   clue-review@dsg.csc.ti.com   (im4u!ti-csl!dsg!clue-review).
+        This  mailing  list  is  a  forum  for  ideas  and   experiences
+        concerning  CLUE  in   particular,  and   Lisp  user   interface
+        programming in  general.   The  clue-review  list  is public; to
+        subscribe, send  a  message  containing  your  email  address to
+        clue-review-request@dsg.csc.ti.com.
+
+        Problem reports and  fixes are  welcome and  should be addressed
+        either    to    clue-review    or    to clue-bugs@dsg.csc.ti.com
+        (im4u!ti-csl!dsg!clue-bugs).  The clue-bugs  list is  not public
+        and  contains  only  members  of  TI's  CLUE  develoment   team.
+        Therefore, messages of  the form  "I'm running  with Foo  Common
+        Lisp and I  don't understand  why (clue:erehwon)  isn't working"
+        are best sent  to clue-review.   Problem reports  should specify
+        the versions of Common Lisp, CLOS, CLX, and CLUE being used.
+
+
+RELATED SYSTEMS
+
+        CLUE  may  be  installed  without  change  in  TI   Explorer and
+        Symbolics environments.  Other configurations (including  Lucid,
+        Allegro, and KCL) are  in progress but  have not yet  been fully
+        tested.
+
+        Please note that  CLUE depends  on X11  R3 CLX  features and bug
+        fixes (see X11 R3 distribution, directory lib/CLX).  The version
+        of CLX found on CSC.TI.COM  in pub/clx.tar.Z is also  sufficient
+        to support CLUE.  Be sure  to review other information  found in
+        clue/doc/release-notes.text.
+
+
+PREVIOUS RELEASE
+
+        6.0 (July, 1989)
+
+
+SPECIFICATION CHANGES
+        
+        None
+
+
+FIXES
+        
+1.      Nil clause typo corrected in final case form of click-lookahead,
+        used to exit double-click lookahead.
+        
+2.      The   select    component    of    event    specifications   for
+        :key-press/release  and   :button-press/release   now  correctly
+        defaults to :same.
+        
+3.      Event specifications containing lists of state-mask keywords are
+        now matched correctly.
+
+4.      Using a  window  manager  to  unmap  a shell no longer causes an
+        error.
+
+5.      (setf contact-state) now  works  for  shells without causing the
+        contact state to be reset incorrectly.
+        
+6.      (setf wm-initial-state) no longer calls an undefined function.
+
+7.      using-gcontext bug fixed:   find-gcontext now  modifies existing
+        cache elements correctly. This corrects problems where  gcontext
+        attributes are incorrectly set to nil.
+
+8.      Shell properties are now updated only after the shell window has
+        been realized.
+
+9.      References to internal xlib symbols corrected.
+
+10.     Missing shell property accessor functions defined.
+
+11.     Numerous problems reported when installing on  non-Lisp machines
+        were fixed.
+
+
+KNOWN BUGS
+
+
+1.      Modal input needs to be defined.
+
+2.      The implementation of interactive-stream is not portable.
+

@@ -1,0 +1,203 @@
+
+		The XView Toolkit, Version 1.0.1
+
+	This document contains a brief summary of the contents of
+this source distribution and installation instructions for the
+XView Toolkit.
+ 
+	Should you encounter problems with XView, please see the
+bug_report file in this directory.  Bugs can be reported to
+comp.windows.x or the xpert mailing alias, but we would prefer to
+have them go to xviewbugs@sun.com in the format provided by the
+bug_report file.  Please direct questions about usage or topics
+of general interest to the xpert mailing alias or the
+comp.windows.x news group.
+ 
+If you do not have an email connection, bug reports may be faxed to
+(415) 969-9131 or telexed to 3729639 SUN UR.  Please put
+        Atten:  XView Bugs M/S 14-40
+on the cover sheet of the fax or telex.  Bug reports may also be
+mailed to:
+        Sun Microsystems
+        Atten:  XView Bugs M/S 14-40
+        2550 Garcia Ave.
+        Mountain View, CA 94043
+        USA
+
+			  Requirements
+
+	XView requires the use of an ICCCM-compliant window
+manager. One such window manager is olwm, which supports the OPEN
+LOOK (TM) user interface.  Further, XView requires full ICCCM
+support in Xlib. This is the standard in the X Window System
+Version 11, Release 4. In order to run under Release 3, you must
+define the PRE_R4_ICCCM compile-time flag. Though XView is
+currently being ported to many different platforms, this version
+of XView has only been tested on Sun hardware.
+
+	To build XView, you must also have the X Window System
+source.  XView requires standard utilities from the X Window
+System source tree, such as imake, bdftosnf, and mkfontdir. This
+document assumes a working knowledge of imake.
+
+				 Contents
+
+	At the top level of this hierarchy there are six directories:
+
+	lib -     Contains the source for the XView library
+
+	clients - Contains the source for several applications, 
+		  and example programs.
+
+	fonts -   Contains the OPENLOOK (TM) and Lucida fonts used 
+	          by the XView library.
+
+	images -  Contains various icons and images used by XView.
+
+	doc -     Contains some general documentation on XView,
+	          and some conversion documents to aid in the 
+		  porting of SunView applications to XView.
+
+
+			 Building XView
+
+	XView should build properly regardless of where its
+source hierarchy is installed. Throughout the following steps, we
+will denote the top-level source directory by <XVIEW>.
+
+A. Building the Libraries
+-------------------------
+
+1) Determine where you wish to install the XView header files. XView
+creates three subdirectories of header files: xview, xview_private,
+and pixrect. The header files MUST be installed in order to build XView.
+If you don't wish to install the header files elsewhere, you must at least
+install them somewhere within the XView source tree.
+
+2) Determine where you wish to install the XView libraries.
+
+3) Edit the XView configuration file to reflect the desired
+header file and library locations. The configuration file is
+<XVIEW>/XView.config.  Set HEADER_DEST, LIBRARY_DEST, and BINDIR
+to the destination for the header, library and binary files,
+respectively. Set FONTINSTDIR to the destination of the fonts.
+Set HELP_DEST, and MAN_DEST to the destination of the on-line
+help files, and man pages. If your version of Xlib does not
+contain all of the Release 4 ICCCM functions, define CDEBUGFLAGS
+to be -DPRE_R4_ICCCM.  You may also want to add -O to CDEBUGFLAGS
+to compile an optimized library.
+
+	The XView Imakefiles determine the location of the X11 include
+files and binaries by using the default locations from the imake templates 
+(Imake.tmpl and site.def). If your X11 include files or utilities are not 
+in the default locations within the X11 source tree, then the build may break. 
+To avoid this, either override the defaults using your local site.def file 
+or place the necessary definitions in XView.config. For example, if your
+"mkfontdir" binary is /usr/bin/mkfontdir, rather than in the X11 source 
+tree, you will need to place a line "MKFONTDIR=/usr/bin/mkfontdir" in
+XView.config.
+
+4) While in <XVIEW>/lib, imake on the top-level Imakefile to
+create a normal Makefile. The standard imake template and rules
+should be used. You should also define TOPDIR in your imake
+command line to be the top level of your X source tree relative
+to the current working directory. Such an imake command might
+look like:
+
+	imake -TImake.tmpl -I../../../../mit/config \
+		-DTOPDIR=../../../../mit -s Makefile
+
+It is important that TOPDIR be relative to the current working 
+directory, otherwise, step 5 will fail.
+
+5) Make the Makefiles for all of the library and font subdirectories. In 
+<XVIEW>/lib, type
+
+	make Makefiles
+
+This should cause make to descend into all the appropriate subdirectories
+and use imake to create the necessary Makefiles.
+
+6) Install the header files. In <XVIEW>/lib, type
+
+	make install_headers
+
+This should create the header file subdirectories "xview," "xview_private,"
+and "pixrect," then proceed to install the proper header files in each.
+
+	NOTE: If you are compiling on a Sun 386i, replace the header
+	file pixrect/memvar.h with the one already present on your
+	system (/usr/include/pixrect/memvar.h).
+
+7) Install the icon and cursor images. Change directories to 
+<XVIEW>/images, run "imake" as in step 4 to create a Makefile
+from the Imakefile, and then 
+
+	make install
+
+8) Return to <XVIEW>/lib to build the XView library by running 
+
+	make
+
+This should create <XVIEW>/libxview.a. 
+
+9) To install the library, run 
+
+	make install
+
+from <XVIEW>/lib
+
+10) Next you need to build and install the fonts.  This can be
+accomplished by changing directories to <XVIEW>/fonts, and
+running:
+
+	make all install
+
+11) To install the on line help files, go to <XVIEW>/help and run:
+
+	make install
+
+B. Building the Application Binaries
+------------------------------------
+
+1) Decide where you want to install the demo binaries.
+
+2) Set your current working directory to <XVIEW>/clients and edit
+the Imakefile in that directory.  Set DEMO_DEST to the location
+where you want the sample programs (those in the "demos"
+subdirectory) installed. The other applications will be installed
+in the standard X11 bin directory unless you specify otherwise.
+
+3) Run imake to create a Makefile from the Imakefile. This is done
+exactly as in step 4 above, except that the relative pathnames
+will differ.
+
+4) Make the Makefiles in the subdirectories by typing
+
+	make Makefiles
+
+This will proceed into all the subdirectories and use imake to
+generate Makefiles from all the Imakefiles.
+
+5) Make the binaries. To make all the binaries at once, simply
+type
+
+	make
+
+If you wish to make a subset of the binaries, type
+
+	make SUBDIRS='<subset>' all
+
+where <subset> is a list of subdirectories under <XVIEW>/clients,
+separated by spaces. For example, to build just the clock and
+cmdtool binaries, type
+
+	make SUBDIRS='clock cmdtool' all
+
+6) Install the binaries, if desired. To do so, use
+
+	make install
+
+7) There is also a directory 'examples' that contains example
+programs from the "XView Programming Manual" by O'Reilly &
+Associates, Inc.

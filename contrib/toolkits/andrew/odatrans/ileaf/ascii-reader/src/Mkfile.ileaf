@@ -1,0 +1,106 @@
+#	 Copyright 1989, Interleaf, Inc.	 
+#	 1100 Mass. Ave., Cambridge MA  02138
+# See andrew/odatrans/ileaf/ascii-reader/COPYRIGHT
+#
+#                     A bit of explanation:
+#  This makefile does a few things depending on what target it's
+# called with. The target "default" will make all the .o's in this
+# directory and then a library file. This library is suitable for
+# use in a TPS development environment (ie: with INTERLEAF_INCLUDE_FILES
+# defined).  The target "devkit" will ceate a library that's suitable
+# for use by external developers, and put it, along with all other necessary
+# files, in the ${DEVKITDIR} subdirectory. The object being that the entire
+# contents of that directory can then be tar'ed off and sent to an
+# external developer. Running "make devkit" in no way effects the contents
+# of this directory as all the .[oa]'s remain untouched. The target "all"
+# makes both these targets. It is intended that the TPS top level makefile
+# do a make "all" whenever AR stuff is being remade so that both versions
+# of the library are kept in sync. This makefile also knows how to make
+# and run some diagnostic routines, of these, only ar5test is tied into the
+# "all" target (via the "default" target). This is to validate the link-
+# ability of the library file.
+#   Running the simple test program on an I'leaf document is also a fine,
+# quick way to test that AR actually works. To run the test just use any
+# 4.0 I'leaf ascii document for input as follows:
+#           ar5test < I'leaf-input.doc > Resulting-output.doc
+# When opened, the two documents should appear identical (diff's of the two,
+# however, will reveal many differences because the resulting markup
+# is designed to equivilent to TPS not identical to the eye). Note that
+# a similar test facility is available in the ${DEVKITDIR} and that diffs
+# between the two output documents should be identical.
+#  If there are any questions, please call me at 2826.
+# -Chris
+#
+
+XOPS  	  = ../..
+INCL	  = ${XOPS}/include
+DEVKITDIR = ./dev_kit
+
+INCLUDES  = -I${INCL}
+DEFINES   = -DINTERLEAF_INCLUDE_FILES
+CPPFLAGS  = ${INCLUDES} ${DEFINES} ${OCFLAGS} ${PCFLAGS}
+OCFLAGS   = -O
+CFLAGS	  = ${CPPFLAGS} 
+LINTFLAGS = ${CFLAGS} -ehubz
+
+OBJECTS	= ar5printf.o ar5memory.o ar5shrutils.o ar5csave.o \
+	  ar5init.o ar5dump.o ar5error.o ar5lex.o ar5strings.o \
+	  ar5stubs.o ar5io.o ar5font.o ar5cvt.o ar5read.o \
+	  ar5frameread.o ar5cmpn.o ar5docread.o ar5buf.o ar5token.o \
+	  ar5autonum.o ar5index.o ar5ref.o ar5table.o ar5loadDg.o ar5dumpDg.o \
+	  ar5unknowns.o ar5incharmap.o ar5free.o ar5freeDg.o
+
+HEADERS	= ar5defs.h ar5private.h ar5csave.h ar5errs.h
+
+TESTFILES = ar5test ar5test.o ar5test.out ar5test.err
+
+all: default devkit
+
+default: libAR5_0${PORTLIB}.a ar5test
+
+devkit: ${DEVKITDIR}/libAR5_0${PORTLIB}.a
+
+${DEVKITDIR}/libAR5_0${PORTLIB}.a: ${OBJECTS}
+	cd ${DEVKITDIR}; make all
+
+libAR5_0.a : ${OBJECTS}
+	rm -f $@
+	ar rcv $@ ${OBJECTS}
+	ranlib $@
+
+libAR5_0RT.a: ${OBJECTS}
+	rm -f libAR5_0RT.a libAR5_0.a
+	@echo "Creating tsort.tmp..." 
+	@(lorder $? | tsort >tsort.tmp) >& /dev/null
+	ar cr libAR5_0.a `cat tsort.tmp`
+	ln libAR5_0.a libAR5_0RT.a
+	ln libAR5_0.a ${XOPS}/lib/libAR5_0RT.a
+
+libAR5_0DOS.a: ${OBJECTS}
+	rm -f libAR5_0DOS.a libAR5_0.a
+	xlib386 libAR5_0DOS.a -twocase -create ${OBJECTS}
+	ln libAR5_0DOS.a libAR5_0.a
+	ln libAR5_0.a ${XOPS}/lib/libAR5_0.a
+
+${OBJECTS}: ${HEADERS}
+
+o:	${OBJECTS}
+
+### The rest is all test file and diag. stuff
+
+ar5test: ar5test.o libAR5_0.a
+	${CC} -o $@ ar5test.o libAR5_0.a
+
+test:	ar5test 
+	ar5test <ar5test.doc >ar5test.out 2>ar5test.err
+
+results:
+	@echo "# ar5test.std <-- differences --> ar5test.out"
+	diff ar5test.std ar5test.out
+
+saveresults:
+	cp ar5test.out ar5test.std
+
+remove:
+	rm -f ${TESTFILES} *.[oa]
+

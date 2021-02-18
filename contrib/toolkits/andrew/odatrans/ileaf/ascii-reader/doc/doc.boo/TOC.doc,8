@@ -1,0 +1,13 @@
+
+(Version Page\ Numbering 1)
+(Version Auto\ Numbering 1)
+(Page\ Numbering
+  (Style 1)
+  (Pages 3))
+(Auto\ Numbering
+  (Stream list
+    (Level 0
+      (Suffix \.))
+    (Deltas 5)
+    (Restart 1)
+    (FirstLevel 0)))

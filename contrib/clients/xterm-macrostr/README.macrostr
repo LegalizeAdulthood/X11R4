@@ -1,0 +1,10 @@
+The macro string package is intended to allow xterm to generate the character
+sequences for button presses on just about any terminal you can think of.
+It is a general enough mechanism that you may find other uses for it as well.
+Installation requires the addition of one major new file (macrostr.c) and some
+one-line changes to a few other files.  See the updated man pages for details
+on how the macro string capability is used.  Copyright has been donated to
+MIT using their standard copyright notice.
+
+Jim McBeath	13.Nov.89
+sci!jimmc@decwrl.dec.com

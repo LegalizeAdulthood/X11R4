@@ -1,0 +1,1289 @@
+
+
+       3  Using Widgets in Programs
+
+
+       This chapter explains how to write applications that use the
+       HP X Widgets.  If you are interested in writing your own
+       widgets, read chapter 7 ``Writing Widgets'' in this manual.
+
+       Application programs use the HP X Widgets by calling
+       functions of the Xt Intrinsics.  Relevant functions are
+       explained.  For more details on the Xt routines, refer to
+       Programming With the Xt Intrinsics in this binder.
+
+       Writing widget programs involves eight steps:
+
+
+                   TABLE 3-1.  Steps in Writing Widgets
+       
+
+       Step             Description                     Related Functions
+       
+
+        1  Include required header files        #include <X11/StringDefs.h>
+       |   |                                    #include <X11/Intrinsic.h>        |
+                                                #include <Xw/Xw.h>
+       |   |                                    #include <Xw/widget.h>            |
+       |   |                                    |                                 |
+        2  Initialize toolkit                   XtInitialize(...)
+       |   |                                    |                                 |
+       |   |                                    |                                 |
+       |   |                                    |                                 |
+
+       |   Do steps 3 through 6 for each widget.|                                 |
+       |3  Set up argument lists for widget     XtSetArg(...)                     |
+       |4  Add callback routines                |                                 |
+       |5  Create widget                        XtCreateManagedWidget(...)        |
+       |   |                                    |                                 |
+       |   |                                    |                                 |
+       |   |                                    |                                 |
+        6  Realize widgets and loop             XtRealizeWidget(parent)
+       |   |                                    XtMainLoop()                      |
+       |   |                                    |                                 |
+        7  Link relevant libraries              cc +Nd2000 +Ns2000 -oapplication \
+       |   |                                    |  application.c -lXw -lXt -lX11  |
+       |   |                                    |                                 |
+        8  Create default files                 /usr/lib/X11/app-defaults/class
+       |   |                                    ~/.Xdefaults                      |
+       |   |                                    |                                 |
+       |   |                                    |                                 |
+
+
+       Sections 3.1 through 3.8 of this chapter describe each of
+       the steps.  The sample code segments of each section build a
+       simple widget program (called demo1) that implements a push
+       button widget.  An illustration showing the screen generated
+       by the program and a full listing of the program appear on
+       the next two pages.  Section 3.9 introduces some advanced
+       programming techniques and section 3.10 presents a more
+       substantial sample program.
+
+       /*****************************************************/
+       /* demo1.c   Sample program used in sections 3.1-3.8 */
+       /* of "Programming With the HP X Widgets."           */
+       /* It displays a push button widget.                 */
+       /*****************************************************/
+       /* Step 1: Include files */
+       #include <stdio.h>
+       #include <X11/StringDefs.h>
+       #include <X11/Intrinsic.h>
+       #include <Xw/Xw.h>
+       #include <Xw/PButton.h>
+       /* Step 4: Callback function */
+       void selected(w, client data, call data)
+         Widget w;
+         caddr t client data;
+         caddr t call data;
+       {
+         printf("Push button selected.\n");
+         exit(0);
+       }
+       /* Start of main program */
+       void main(argc,argv)
+         unsigned int argc;
+         char **argv;
+       {
+         Widget toplevel, pbuttonwidget;
+         Cardinal i;
+         Arg arglist[10];
+       /* Step 4: Callback record */
+         static XtCallbackRec selectcallbacks[] = {
+                                                { selected, NULL },
+                                                { NULL, NULL },
+         };
+       /* Step 2: Initialize toolkit */
+         toplevel=XtInitialize("main","DEmo",NULL,NULL,&argc,argv);
+       /* Step 3: Set up argument lists for widget */
+         i = 0;
+         XtSetArg(arglist[i], XtNwidth, 250); i++;
+         XtSetArg(arglist[i], XtNheight, 150); i++;
+         XtSetArg(arglist[i], XtNlabel, "Push Here"); i++;
+       /* Step 4: Add call back */
+         XtSetArg(arglist[i], XtNselect, selectcallbacks); i++;
+       /* Step 5: Create widget */
+         pbuttonwidget=XtCreateManagedWidget("pbutton",XwpushButtonWidgetClass,
+                                                toplevel,arglist,i);
+       /* Step 6: Realize widget and loop */
+         XtRealizeWidget(toplevel);
+         XtMainLoop();
+       }
+
+
+                Figure 3-1.  Sample Program Screen Display
+
+
+                 -----------------------------------------
+                                   NOTE
+
+                 This chapter assumes you have a working
+                 knowledge of the C programming language.
+                 You should be particularly familiar with
+                 pointers and structures.  If you are
+                 not, be sure to study a book on
+                 programming with C.  Books on the topic
+                 are widely available in computer
+                 bookstores.
+                 -----------------------------------------
+
+
+       The following sections describe the eight-step process for
+       writing widget programs summarized in table 3-1.  Following
+       the eight steps will help you start writing programs that
+       use the HP X Widgets.
+
+
+       3.1  Including Header Files
+
+       Special variables and types of variables used by X widget
+       programs are defined in header files.  Include the
+       appropriate files at the beginning of your program.  The man
+       page for each widget specifies what headers are needed.
+       Usually this section in your program will look like this:
+
+       #include <X11/StringDefs.h>
+       #include <X11/Intrinsic.h>
+       #include <Xw/Xw.h>
+       #include <Xw/widget.h>
+
+       Replace widget with the name of the widget you are using.
+       The man page for each widget shows the exact spelling of all
+       header files you need.  For the push button widget in the
+       sample program demo1, the header file name is PButton.h.
+       Put a #include statement in your program for each type of
+       widget you use.  You need to include a header file only
+       once, even if you use a given widget twice in your program.
+       Don't forget to include any other header files (such as
+       <stdio.h>) that your program needs.
+
+       The file StringDefs.h contains definitions for resources
+       used by the Xt Intrinsics.  Intrinsic.h defines the rest of
+       the Xt structures and variables.  Variables common to all HP
+       X Widgets are defined in Xw.h.
+
+
+       3.2  Initializing the Toolkit
+
+       You must initialize the toolkit before making any other
+       calls to toolkit functions.  The function XtInitialize
+       establishes the connection to the display server, parses the
+       command line that invoked the application, and creates a
+       ``shell widget'' to serve as the parent of your application
+       widgets.
+       By passing the command line that invoked your application to
+       XtInitialize, the function can parse the line to allow users
+       to specify certain resources (such as fonts and colors) for
+       your application at run time. The options and their formats
+       are described in chapter 3 ``Running Your X Clients'' of
+       Using the X Window System.  XtInitialize scans the command
+       line and removes those options.  The rest of your
+       application sees only the remaining options.
+       The call to XtInitialize used by the sample program demo1
+       is:
+
+       toplevel = XtInitialize("main","DEmo",NULL,NULL,&argc,argv);
+
+       This line names the application shell ``main,'' the
+       application class ``DEmo,'' passes no additional options,
+       and passes the command line which invoked the application.
+       The first two parameters are used later in setting up
+       defaults files.  They are explained in section 3.8
+       ``Creating Default Files'' later in this chapter.
+
+       The syntax of the XtInitialize function appears below.  Note
+       that it returns a value of type Widget, therefore the
+       variable toplevel in demo1 must be defined as type Widget.
+
+       Widget XtInitialize(shell name, application class, options, num options, argc, argv)
+             String shell name;
+             String application class;
+             XrmOptionDescRec options[];
+             Cardinal num options;
+             Cardinal *argc;
+             String argv[];
+
+       shell name Specifies the name of the application shell
+                 widget instance, which usually is something
+                 generic like ``main''.
+
+       application class Specifies the class name of this
+                 application, which usually is the generic name for
+                 all instances of this application.  By convention,
+                 the class name is formed by reversing the case of
+                 the application's first two letters.  For example,
+                 an application named ``xterm'' would have a class
+                 name of ``XTerm''.
+
+       options   Specifies how to parse the command line for any
+                 application-specific resources.  The options
+                 argument is passed as a parameter to
+                 XrmParseCommand.  For further information, see
+                 Programming With Xlib.
+
+       num options Specifies the number of entries in options list.
+
+       argc      Specifies a pointer to the number of command line
+                 parameters.
+
+       argv      Specifies the command line parameters.
+
+
+       3.3  Setting up Arguments for Widgets
+
+       The steps in sections 3.3 through 3.6 must be performed for
+       each widget you wish to create.
+       Widgets accept arguments that control their appearance and
+       functionality.  The arguments for a given widget are shown
+       in the man page for the widget.  The list of arguments
+       acceptable for a widget comprises not only arguments unique
+       to the widget, but also those arguments inherited from
+       widgets higher in the widget class hierarchy (refer to
+       chapter 7 ``Writing Widgets'' for a discussion of widget
+       class hierarchies).
+
+       The simplest way to set arguments is by using the XtSetArg
+       macro.  Other methods are described later in section 3.9
+       ``Advanced Programming Techniques.''
+
+       The program segment below declares an array arglist of up to
+       10 arguments (the size of the array is not important just so
+       long as the number of elements allocated is greater than the
+       number of elements used).  The first two arguments specify
+       that the widget will have a width of 250 pixels and a height
+       of 150 pixels.  The third argument specifies the string to
+       display in the push button.
+
+       Arg arglist[10];
+       XtSetArg(arglist[0],XtNwidth, 250);
+       XtSetArg(arglist[1],XtNheight, 150);
+       XtSetArg(arglist[2],XtNlabel, "Push Here");
+
+       An alternate method for XtSetArg uses a counter rather than
+       a hard-coded index.  This method, shown below, makes it
+       easier to add and delete argument assignments. It is the
+       method used in the sample program demo1.
+       Arg arglist[10];
+       Cardinal i=0;
+       XtSetArg(arglist[i],XtNwidth,250); i++;
+       XtSetArg(arglist[i],XtNheight,150); i++;
+       XtSetArg(arglist[i],XtNlabel, "Push Here"; i++;
+
+       The variable i contains the number of arguments set.  It can
+       be passed to the widget create function (explained in
+       section 3.5) as the argument list count.
+
+
+                 -----------------------------------------
+                                 CAUTION
+
+                 Do not increment the counter inside
+                 XtSetArg.  As currently implemented,
+                 XtSetArg is a macro that dereferences
+                 the first argument twice.
+                 -----------------------------------------
+
+
+       The syntax for using XtSetArg is as follows.
+
+       XtSetArg(arg, name, value)
+             Arg arg;
+             String name;
+             XtArgVal value;
+
+       arg       Specifies the name-value pair to set.
+
+       name      Specifies the name of the resource.
+
+       value     Specifies the value of the resource if it will fit
+                 in an  XtArgVal, otherwise the address.
+
+
+       3.4  Adding Callback Routines
+
+       Callback routines are one of the key features of the Xt
+       intrinsics.  They allow you, the application programmer, to
+       write subroutines that will be executed when certain events
+       occur within a widget.  These events include mouse button
+       presses, keyboard selections, and cursor movements.
+       Callback routines are the main mechanism your application
+       uses to actually get things done.
+
+       You need to complete three steps to add callbacks:
+         1.  Write the callback procedures.
+         2.  Create an appropriate callback list.
+         3.  Set the widget's callback argument.
+
+       Each of these steps is described in the following sections.
+
+       3.4.1  Writing a Callback Procedure
+
+       Callback procedures return no values, but have three
+       arguments:
+          o The widget for which the callback is registered.
+          o Data passed to the callback procedure by the
+            application.
+          o Data passed to the callback procedure by the widget.
+
+       In the sample program demo1, the callback procedure prints a
+       message to the standard output device (usually the terminal
+       window from which the application was invoked) and ends the
+       program using the unix exit call.
+
+       void selected(w, client data, call data)
+         Widget w;
+         caddr t client data;
+         caddr t call data;
+       {
+         fprint("Push button selected.\n")
+         exit(0);
+       }
+
+
+       The variable type caddr t is defined by the Xt Intrinsics as
+       a pointer to an area of memory.  The call data argument is
+       used only by a few widgets.  The man page for each widget
+       specifies whether it passes any data to its callbacks.
+
+       The general syntax of a callback procedure is described
+       below:
+
+       typedef void (*XtCallbackProc)();
+       void CallbackProc(w, client data, call data)
+             Widget w;
+             caddr t client data;
+             caddr t call data;
+
+       w         Specifies widget for which the callback is
+                 registered.
+
+       client data Specifies the data that the widget should pass
+                 back to the client when the widget executes the
+                 client's callback procedure.  This is a way for
+                 the client registering the callback to also
+                 register client-specific data: a pointer to
+                 additional information about the widget, a reason
+                 for invoking the callback, and so on.  It is
+                 perfectly normal to have client data be NULL if
+                 all necessary information is in the widget.
+
+       call data Specifies any callback-specific data the widget
+                 wants to pass to the client.  The call data
+                 argument merely is a convenience to avoid having
+                 simple cases where the client could otherwise need
+                 to call XtGetValues or a widget-specific function
+                 to retrieve data from the widget.  Complex state
+                 information in call data generally should be
+                 avoided.  The client can use the more general data
+                 retrieval methods, if necessary.
+
+
+       3.4.2  Creating the Callback List
+
+       A callback list contains information about the callback
+       routines associated with a particular user action.
+
+       The sample program demo1 creates a callback list named
+       selectcallbacks and specifies the name of the single
+
+
+       callback function selected.
+
+       static XtCallbackRec selectcallbacks[] = {
+         { selected, NULL },
+         { NULL, NULL },
+       };
+
+       To invoke more callbacks, just add more elements to the
+       array selectcallbacks.  In this way you can cause a user
+       event to trigger many callback routines.  Be sure to end the
+       list with a NULL record, as this denotes the end of the
+       callback list to the system.  The second element in the
+       callback record is a pointer to data your application wants
+       to pass to the callback routine when the routine is invoked.
+
+
+       3.4.3  Setting Widgets' Callback Arguments
+
+       All widgets contain one or more arguments for callbacks.
+       Set the value of the argument to the name of your callback
+       list.
+
+       The callback arguments for any particular widget are listed
+       in the man page for that widget.  The push button widget
+       (man page XWPUSHBUTTON) used in the sample program demo1
+       supports three different kinds of callbacks.  Each callback
+       is set up by specifying the callback list as the value of
+       the appropriate argument.
+
+          o Callbacks invoked when the widget is destroyed
+            (argument XtNdestroyCallback).
+
+          o Callbacks invoked when the widget is selected (argument
+            XtNselect).  This is the callback we will used in
+            demo1.
+
+          o Callbacks invoked when the widget is released (argument
+            XtNrelease).
+
+       Setting the value of XtNselect to point at the callback list
+       selectcallbacks is easy.  Use any method described in this
+       chapter for setting arguments.
+
+         XtSetArg(arglist[i], XtNselect, selectcallbacks); i++;
+
+
+       The translation table for this widget has been set such that
+       a select event occurs whenever the pointer cursor is over
+       the widget and the user presses mouse button 1 (usually the
+       left button).  A select event then causes the widget to
+       invoke each of the callback routines on the callback list
+       pointed to by its XtNselect argument in the order they
+       appear in the callback list. In the case of the sample
+       program demo1, only the routine selected is executed.
+
+
+       3.5  Creating the Widget
+
+       Now that you have established an argument list for the
+       widget, you can create the widget instance.  The sample call
+       to XtCreateManagedWidget below comes from the sample program
+       demo1.
+       pbuttonwidget=XtCreateManagedWidget("pbutton",XwpushButtonWidgetClass,toplevel,
+         arglist, i);
+
+       This call names the newly-created widget ``pbutton'' and
+       defines it to be a push button widget (from the class
+       XwpushButtonWidgetClass).  The name ``pbutton'' can be used
+       in default files (discussed in section 3.8) to refer to this
+       widget.  Its parent is ``toplevel'' (the top level widget
+       returned from XtInitialize).  The argument list and number
+       of arguments complete the call.  This call will create the
+       widget and notify its parent so that the parent can control
+       its specific layout.
+
+       Widgets form a hierarchical structure called a widget tree.
+       The widget returned by XtInitialize is the invisible parent
+       for the top level application widget, in this case
+       pbuttonwidget.  Usually there are several levels of widgets.
+       Widgets at the higher levels are layout widgets (also called
+       manager widgets) that control and coordinate the primitive
+       widgets located at the leaves of the widget tree.  The more
+       advanced sample program later in this chapter illustrates
+       multiple levels of widgets.
+
+       The syntax for XtCreateManagedWidget is described below.
+       Widget XtCreateManagedWidget(name, widget class, parent, args, num args)
+             String name;
+             WidgetClass widget class;
+             Widget parent;
+             ArgList args;
+             Cardinal num args;
+
+
+       name      Specifies the resource name for the created
+                 widget.  This name is used for retrieving
+                 resources and, for that reason, should not be the
+                 same as any other widget that is a child of same
+                 parent.
+
+       widget class Specifies the widget class pointer for the
+                 created widget.
+
+       parent    Specifies the parent widget.
+
+       args      Specifies the argument list to override the
+                 resource defaults.
+
+       num args  Specifies the number of arguments in args.  The
+                 number of arguments in an argument list can be
+                 automatically computed by using the XtNumber
+                 macro.
+
+
+       3.6  Making the Widget Visible
+
+       All widgets are now created and linked together into a
+       widget tree.
+       XtRealizeWidget displays on the screen the widget that is
+       passed to it and the children of that widget.
+       The final step in the program is to call the toolkit routine
+       that causes the application to enter a loop, awaiting action
+       by the user.
+       Sample code for this section is:
+       XtRealizeWidget(toplevel);
+       XtMainLoop();
+
+       The above two statements from the sample program demo1
+       display the push button widget and cause the program to
+       enter a loop, waiting for user input.  The main role of your
+       application is the setting of widget arguments and the
+       writing of callback procedures.  Your application passes
+       control to the Xt Intrinsics and the HP X Widgets once the
+       XtMainLoop function is called.
+
+       The syntax for XtRealizeWidget is shown below.
+
+
+       void XtRealizeWidget(w)
+             Widget w;
+
+       w         Specifies the widget.
+
+
+       3.7  Linking in Libraries
+
+       When linking the program, be sure to include three
+       libraries:
+          o libXw.a which contains the HP X Widgets.
+          o libXt.a which contains the Xt Intrinsics.
+          o libX11.a which contains the underlying Xlib library.
+       The compile and link command for Series 800 users is:
+       cc -o application  application.c -lXw -lXt -lX11
+
+       For Series 300 users, the compile and link command is:
+       cc +Nd2000 +Ns2000 -o application  application.c -lXw -lXt -lX11
+
+       Replace the word application with the name of your program
+       and list the three X libraries in the order listed above.
+       Don't forget to include any additional libraries your
+       application may need.  The N parameters for Series 300 users
+       expand the compiler's internal tables to accommodate the
+       large number of declarations made by the various components
+       of the X Window System.  If you are writing particularly
+       large programs, you may need to expand the table sizes
+       further.
+
+       Congratulations!  You have just written your first program
+       using the HP X Widgets.
+
+
+       3.8  Creating Default Files
+
+       Up to now, all widget resources have been set by the
+       application using widget arguments.  An additional method
+       for specifying resources is through a set of ASCII files
+       that you, the application programmer, can set up for your
+       user.  You may also want your user to set up these files to
+       customize the application to individual requirements or
+       preferences.
+       When writing a program, consider the following factors in
+       deciding whether to specify an argument in a default file or
+       in the program itself.
+
+          o Using a default file provides additional flexibility.
+            Any user can override settings to reflect personal
+            preferences and a systems administrator can modify the
+            application default file for system-wide customization.
+
+          o Settings specified in the program give the programmer
+            greater control.  They cannot be overridden.
+
+          o Using default files can speed application development.
+            To change an argument in a default file, simply edit
+            the file (using any ASCII editor) and rerun the
+            program.  No recompilation or relinking is necessary.
+
+          o Using default files can simplify your program.
+            Arguments in default files are specified as strings.
+            When arguments are set in your program, they may have
+            to be in some internal format that takes several calls
+            to compute.  Section 3.10 ``An Advanced Sample
+            Program'' shows how colors are specified inside a
+            program.
+
+          o Specifying options in your program may be more
+            efficient for the computer.  The process of reading
+            default files and interpreting their contents adds
+            processing overhead.
+
+       Two files exist for customization:
+
+          o A file located centrally in the directory
+            /usr/lib/X11/app-defaults supplies defaults for an
+            entire class of applications executing anywhere on the
+            computer system.
+
+          o A file (called .Xdefaults) in each user's home
+            directory can supply default values to all applications
+            started by the user.
+
+       All files are of the same format.  Chapter 4 ``User-level
+       Customization'' and chapter 5 ``System-Level Customization''
+       in the manual Using the X Window System contains a detailed
+       discussion of default files.  There you will learn about the
+       format of the files, specifying a different location for
+       them, and additional user default files.
+
+       3.8.1  Application Default Files
+
+       These files are designed to be created by the applications
+       developer or systems administrator.  They are located in the
+       directory /usr/lib/X11/app-defaults on the machine where the
+       application resides.  Application programs specify the file
+       that contains the application defaults when they call
+       XtInitialize.  The application class argument to that
+       function specifies the name of the application default file.
+       Several applications can point to the same file.
+       The call below (taken from the sample program demo1) will
+       cause the toolkit to look for the file /usr/lib/X11/app-
+       defaults/DEmo for default information.
+       toplevel = XtInitialize("main","DEmo",NULL,NULL,&argc,argv);
+
+       The sample default file below sets the foreground color to
+       white and background color to black.
+
+       *background:                             black
+       *foreground:                             white
+
+
+       3.8.2  User Default Files
+
+       Each user can create a .Xdefaults file in his or her home
+       directory to specify resource defaults for applications run
+       by that user.  User defaults override application and system
+       defaults and allow different users running the same program
+       to specify personal display preferences, such as color and
+       font selection.
+
+       The sample file below changes the background color to blue.
+
+       *background:                             blue
+
+
+       3.8.3  Default Example
+
+       The example below illustrates the interaction of the default
+       files with each other and with arguments specified in
+       programs.
+
+       Suppose a computer contains the program demo1 as well as the
+       application and user default files described above.
+
+       In order to determine the color of the background, the
+       toolkit will do the following:
+
+         1.  It will first look for the system defaults and
+             initialize the background color to white. (These
+             defaults are compiled into the widgets.)
+
+         2.  Then it will look for the application default file
+             /usr/lib/X11/app-defaults/DEmo and set the color to
+             black.
+
+         3.  Next the toolkit will look for the user default file
+             .Xdefaults and set the background color to blue.
+
+         4.  If the program explicitly sets the background argument
+             (XtNbackground), it will override the defaults.
+
+
+       3.9  Advanced Programming Techniques
+
+       The sample program demo1 described in earlier sections of
+       this chapter illustrated the writing of simple widget
+       programs.  The Xt Intrinsics provide additional mechanisms
+       for programmers.  For more details on any of the toolkit
+       functions mentioned in this section, refer to Programming
+       With the Xt Intrinsics.
+
+
+       3.9.1  Setting Argument Values
+
+       Section 3.3 described the use of XtSetArg for setting the
+       values of widget arguments.  This section describes three
+       additional methods.  The code segments show how the earlier
+       sample program could have been rewritten to use the new
+       methods.
+
+
+       Assigning Argument Values
+       Each element of the type Arg structure can be assigned
+       individually.
+
+       Arg arglist[10];
+       arglist[0].name = XtNwidth;
+       arglist[0].value = (XtArgVal) 250;
+       arglist[1].name = XtNheight;
+       arglist[1].value = (XtArgVal) 150;
+       arglist[2].name = XtNlabel;
+       arglist[2].value = (XtArgVal) "Push Here";
+
+       Be sure to keep name-value pairs synchronized.  Note that
+       all argument values have been cast to type XtArgVal.
+
+
+       Static Initialization
+       Initializing argument lists at compile time makes it easy to
+       add and delete argument settings in your program.  It avoids
+       the need to hard-code the maximum number of arguments when
+       declaring your argument list.  These settings are frozen at
+       compile time, however.  While the example below shows only a
+       single argument list being created, you can create any
+       number of lists (be sure to declare each list as type Arg).
+       You can use each list with a different widget, or you can
+       combine them using the XtMergeArgLists(...) function
+       described in Programming With the Xt Intrinsics.
+
+
+       static Arg arglist[] = {
+         {XtNwidth, (XtArgVal) 250},
+         {XtNheight, (XtArgVal) 150},
+         {XtNlabel, (XtArgVal) "Push Here"},
+       };
+
+       Note that the values of each argument have been cast to
+       variable type XtArgVal.  When the create widget function is
+       invoked, passing it XtNumber(arglist) will compute the
+       number of elements in the argument list.
+
+       pbuttonwidget = XtCreateManagedWidget("pbutton", XwpushButtonWidgetClass,
+         toplevel, arglist, XtNumber(arglist));
+
+
+                 -----------------------------------------
+                                   NOTE
+
+                 Use the macro XtNumber only if you are
+                 declaring the argument list of
+                 indefinite size as shown above
+                 (arglist[]).  XtNumber will return the
+                 number of elements that have actually
+                 been allocated in program memory.
+                 -----------------------------------------
+
+
+       Combining Static Initialization With Run-Time Assignments
+       The final method for creating argument lists initializes a
+       list at compile time (described in ``Static Initialization''
+       above) and then modifies the values of the settings using
+       regular assignment statements.  The XtNumber macro can be
+       used to count the number of arguments, since the argument
+       list is declared with no definite number of arguments.  The
+       values can be changed through assignments at run time, but
+       the size of the argument list (the number of arguments that
+       can be specified) is frozen at compile time and cannot be
+       extended.
+
+       The example below initializes an argument list of three
+       elements.  The last is initialized to NULL so it can be
+       given a value later.  The value for argument XtNheight is
+       changed in the program from its initialized value of 150 to
+       a run-time value of 250.
+
+
+       static Arg arglist[] = {
+         {XtNwidth, (XtArgVal) 500},            /* item 0 */
+         {XtNheight, (XtArgVal) 150},           /* item 1 */
+         {XtNlabel, (XtArgVal) NULL},           /* item 2 */
+       };
+       arglist[1].value = (XtArgVal) 250;
+       arglist[2].value = (XtArgVal) "Push Here";
+
+
+       3.9.2  Manipulating Created Widgets
+
+       Widget programs to this point have set up arguments and
+       callbacks for widgets prior to the widgets' creation.  You
+       can also modify widgets after they have been created.  Such
+       modification usually occurs in callback routines and is
+       illustrated in the sample program demo2 discussed later in
+       this chapter.
+
+
+       Retrieving and Modifying Arguments
+       XtGetValues will return the current value of specified
+       arguments for a created widget.  XtSetValues will change the
+       value of specified arguments.
+
+
+       Adding Callbacks and Translations
+       The sample program added callbacks before widget creation by
+       setting appropriate arguments.  XtAddCallbacks will add a
+       callback routine to a widget's callback list after the
+       widget has been created.
+
+       Each widget has a translation table that ties user actions
+       (button presses, keyboard presses, etc.) to widget events.
+       Your application can modify the translation table for any
+       widget.  This process is described in chapter 12
+       ``Translation Management'' of Programming With the Xt
+       Intrinsics.
+
+
+       Separating Widget Creation and Management
+       By using XtCreateManagedWidget, the sample program added the
+       newly created widget to its parent's set of managed children
+       automatically.  To optimize programs that add a number of
+       widgets to a single parent, you may want to create the
+       widgets using XtCreateWidget calls and then add the entire
+       list of children to its parent with a single
+       XtManageChildren call.  In this way, the parent widget
+       performs its geometry processing of its children only once.
+
+
+       Usually, the function XtRealizeWidget will display a widget
+       and all of its children.  Using the function
+       XtSetMappedWhenManaged allows you to turn off automatic
+       mapping (displaying) of particular widgets.  Your
+       application can then use XtMapWidget to display the widget.
+
+       The function XtDestroyWidget will destroy a created widget
+       and its children.  The destroyed widget is automatically
+       removed from its parent's list of children.
+
+
+       3.10  An Advanced Sample Program
+
+       This section illustrates use of several important concepts
+       in using widgets:
+
+          o Using layout widgets (manager widgets) in conjunction
+            with selection and display widgets (primitive widgets)
+            to create a widget hierarchy (widget tree).
+
+          o Modifying widgets after they have been created.
+
+          o Calling Xlib routines in a toolkit program.
+
+
+       The source code and the application default file for the
+       sample program are listed in section 3.10.5 ``Source Code''
+       later in this section.  They are also located on your system
+       in /usr/contrib/Xw/examples as demo2.c and DEmo.  To run the
+       program, move the file DEmo to the directory
+       /usr/lib/X11/app-defaults and compile the program demo2.c
+       using the command below.
+       cc -O -Wc,-Nd3000 -Wc,-Ns3000 -o -demo2 demo2.c -lXw -lXt -lX11
+
+       If you are on a monochrome system, you may want to change
+       the colors to shades of gray in both demo2.c and DEmo.
+
+
+       3.10.1  Description
+
+       The application demo2 is a simple game, the ``Color Game.''
+       The program displays an application window as shown in
+       figure 3-2.  The two sets of toggles control the color of
+       the static text displayed at the top of the window.  The
+       user can set the foreground color by moving the mouse
+       pointer to one of the toggles in the left column and
+       clicking the left mouse button.  The right column of toggles
+       controls the background color.  The program terminates when
+       the user moves the mouse over the ``Quit'' push button and
+       presses the left mouse button.
+
+
+                         Figure 3-2.  Color Game
+
+
+       3.10.2  Widget Hierarchy
+
+       The first step in widget application design is designing the
+       screen layout (as is shown in figure 3-2).  The second step
+       is drawing up an appropriate widget tree.  The tree for the
+       sample program is shown in figure 3-3.
+
+
+                       PIC Illustration goes here.
+
+
+                 Figure 3-3.  Sample Program Widget Tree
+
+       Widgets in toolkit applications form a hierarchy, with the
+       shell widget (returned from a call to XtInitialize) at the
+       top.  A panel widget is the highest level widget defined by
+       the application demo2.  As specified in panel widget's man
+       page, it allows three children: a title bar, a menu bar, and
+       a work space (which can be any other widget).  The Color
+       Game program specifies title bar, no menu bar (menus are
+       discussed in the next chapter), and a form manager (layout)
+       widget for the work space.
+
+       The title bar has one child widget, a push button with the
+       label ``Quit'' which is right justified in the title bar.
+       The string for the title bar widget (``Color Game'') is
+       contained in a static text widget that is internal to the
+       title bar, so the application does not have to create that
+       static text widget.
+
+       A form serves as the parent widget for the work space, so
+       that exact x-y coordinates do not have to be specified.  The
+       form widget is an extremely powerful layout widget that
+       allows you to control the position of its children by
+       setting special constraint arguments.  The form widget makes
+       sure that these relationships hold true even if the user
+       resizes the window using standard window manager commands.
+       Form widget options are explained in chapter 5.  The
+       children of the form specify these arguments as each child
+       is created.
+
+       The static text widget child of the form widget contains the
+       string whose foregound and background colors are controlled
+       by the toggles.
+
+       All color selection information is contained in a row column
+       manager which divides the space into two equal columns, one
+       for the foreground settings and one for the background
+
+
+       settings.  Another row column manager controls the layout
+       for each of the color columns.  This new row column manager
+       has just one column with four rows: one row for the static
+       text widget containing the title ``Foreground'' or
+       ``Background'' and the remaining three rows for each of the
+       color options.  Separate row column managers are necessary
+       for the foreground and background to ensure the user can
+       select both a single foreground color and a single
+       background color.
+
+
+       3.10.3  Setting Arguments
+
+       You want to refer to the source code for the program listed
+       at the end of this chapter as you read the following two
+       sections.
+
+       The Color Game uses both the application default file DEmo
+       and argument lists to specify widget options.  Note that
+       although colors are specified as strings (``red,'' for
+       example) in default files, you must provide a pixel value
+       when setting a color inside your program.  The subroutine
+       String to Pixel performs this task.  The routine
+       String to Pixel uses an Xlib functions to obtain an index
+       into the color map.  This index will correspond to the color
+       name specified as a string.  The color name must be in the
+       color data base /usr/lib/X11/rgb.txt for the display server.
+       The main procedure uses the XtDisplay call to set a global
+       variable containing the name of the current display.
+
+       Arguments for each widget consist not only of arguments for
+       the widget itself, but also of arguments specifying its
+       spatial relationship to its siblings.  The arguments
+       controlling the layout are documented on the man page for
+       the parent manager widget, but specified as part of the
+       argument list for the child widget.
+
+
+       3.10.4  Writing the Callback Routines
+
+       The Color Game contains three callback routines: quit to
+       exit the program, fselected to change the foreground color,
+       and bselected to change the background color.
+
+
+       The routine quit terminates the program using the standard
+       unix system call exit(0).
+
+       Of the other two callback routines, one handles changes to
+       the foreground color, the other controls the background
+       color.  Each is passed a pixel value as an argument when it
+       is invoked and uses XtSetArg and XtSetValues to set either
+       the background or foreground color argument of the static
+       text widget.
+
+       A callback record has to be created for each of the six
+       toggles.  That record specifies which callback routine to
+       call (Fselected or Bselected) and which color to set (red,
+       green, or blue).  The callback routine name is initialized
+       at compile time.  Calculation of the color pixels must wait
+       until run time.
+
+
+       3.10.5  Source Code
+
+
+       The Program
+       /********************************************************/
+       /* This program displays a text string and two sets     */
+       /* of button boxes.  One set controls the foreground    */
+       /* color of the image.  The other controls the back-    */
+       /* ground color.  The user presses a button to select   */
+       /* a color.                                             */
+       /********************************************************/
+       /* Include files */
+       #include <stdio.h>
+       #include <X11/X.h>
+       #include <X11/Xlib.h>
+       #include <X11/StringDefs.h>
+       #include <X11/Intrinsic.h>
+       #include <Xw/Xw.h>
+       #include <Xw/Panel.h>
+       #include <Xw/TitleBar.h>
+       #include <Xw/PButton.h>
+       #include <Xw/Form.h>
+       #include <Xw/SText.h>
+       #include <Xw/RCManager.h>
+       #include <Xw/Toggle.h>
+       Widget TargetW; /* Global widget to be changed by callbacks */
+       Display *Current display; /* Global display ID */
+       /* Callback routine for QuitW "Quit" Push Button */
+       void quit(w, client data, call data)
+         Widget w;
+         caddr t client data;
+         caddr t call data;
+       {
+         exit(0);
+       }
+
+
+       /* Callback routine for Foreground Toggles */
+       void Fselected(w, client data, call data)
+         Widget w;
+         caddr t client data;
+         caddr t call data;
+       {
+               Cardinal i;
+               Arg arglist[5];
+         printf("Foreground color selected.\n");
+         i = 0;
+         XtSetArg(arglist[i], XtNforeground, client data); i++;
+         XtSetValues(TargetW, arglist, i);
+       }
+       /* Callback routine for Background Toggles */
+       void Bselected(w, client data, call data)
+         Widget w;
+         caddr t client data;
+         caddr t call data;
+       {
+               Cardinal i;
+               Arg arglist[5];
+         printf("Background color selected.\n");
+         i = 0;
+         XtSetArg(arglist[i], XtNbackground, client data); i++;
+         XtSetValues(TargetW, arglist, i);
+       }
+       /* Function to return a pixel value when passed a named color */
+       Pixel String to Pixel(color name)
+               char* color name;
+       {
+               int i;
+         Colormap cmap;
+         XColor screen def return, exact def return;
+         cmap = XDefaultColormap(Current display,
+                                 DefaultScreen(Current display));
+         i = XAllocNamedColor(Current display, cmap, color name,
+                              &screen def return, &exact def return);
+         return(screen def return.pixel);/* Return the closest pixel for the server */
+             }
+       void main(argc,argv)
+         unsigned int argc;
+         char **argv;
+       {
+         Widget toplevel, PanelW, TBarW, QuitW, FormW,  ColorsW,
+         ForegroundW, BackgroundW, FTitleW, FRedW, FGreenW,
+         FBlueW, BTitleW, BRedW, BGreenW, BBlueW;
+       /* Callback list for QuitW push button */
+         static XtCallbackRec QuitWcallbacks[] = {
+                                                { quit, NULL },
+                                                { NULL, NULL },
+         };
+       /* Callback lists for each foreground toggle */
+         static XtCallbackRec FRedcallbacks[] = {
+                                                { Fselected, NULL },
+                                                { NULL, NULL },
+         };
+         static XtCallbackRec FGreencallbacks[] = {
+                                                { Fselected, NULL },
+                                                { NULL, NULL },
+         };
+         static XtCallbackRec FBluecallbacks[] = {
+                                                { Fselected, NULL },
+                                                { NULL, NULL },
+         };
+       /* Callback lists for each background toggle */
+         static XtCallbackRec BRedcallbacks[] = {
+                                                { Bselected, NULL },
+                                                { NULL, NULL },
+         };
+         static XtCallbackRec BGreencallbacks[] = {
+                                                { Bselected, NULL },
+                                                { NULL, NULL },
+         };
+
+
+         static XtCallbackRec BBluecallbacks[] = {
+                                                { Bselected, NULL },
+                                                { NULL, NULL },
+         };
+         Arg arglist[20];
+         Cardinal i;                            /* Counter used for arglists */
+         Pixel Red, Green, Blue; /* Pixel values for colors */
+       /* Initialize toolkit */
+         toplevel=XtInitialize("main","DEmo",NULL,NULL,&argc,argv);
+       /* Get pixel values for colors */
+         Current display = XtDisplay(toplevel); /*Get display-ID */
+         Red = String to Pixel ("Red");
+         Green = String to Pixel ("Green");
+         Blue = String to Pixel ("Blue");
+       /* Set color values in callback records */
+         FRedcallbacks[0].closure = (caddr t) Red;
+         FGreencallbacks[0].closure = (caddr t) Green;
+         FBluecallbacks[0].closure = (caddr t) Blue;
+         BRedcallbacks[0].closure = (caddr t) Red;
+         BGreencallbacks[0].closure = (caddr t) Green;
+         BBluecallbacks[0].closure = (caddr t) Blue;
+       /* Set up Panel widget */
+         PanelW=XtCreateManagedWidget("Panel",XwpanelWidgetClass,
+                                                toplevel,NULL,NULL);
+       /* Set up Title Bar widget */
+         i = 0;
+         /* Argument for parent panel widget */
+         XtSetArg(arglist[i], XtNwidgetType, XwTITLE); i++;
+         /* Arguments for implicit static text widget */
+         XtSetArg(arglist[i], XtNstring, "The Color Game"); i++;
+         XtSetArg(arglist[i], XtNwrap, False); i++;
+         TBarW=XtCreateManagedWidget("TBar",XwtitlebarWidgetClass,
+                                                PanelW,arglist,i);
+       /* Set up Push button widget inside title bar*/
+         i = 0;
+         /* Argument for push button widget */
+         XtSetArg(arglist[i], XtNlabel, "Quit"); i++;
+         XtSetArg(arglist[i], XtNselect, QuitWcallbacks); i++;
+         /* Argument for title bar parent */
+         XtSetArg(arglist[i], XtNregion, XwALIGN RIGHT); i++;
+         QuitW=XtCreateManagedWidget("Quit",XwpushButtonWidgetClass,
+                                                TBarW,arglist,i);
+       /* Set up Forms widget */
+         i = 0;
+         /*Argument for panel parent */
+         XtSetArg(arglist[i], XtNwidgetType, XwWORK SPACE); i++;
+         FormW=XtCreateManagedWidget("Form",XwformWidgetClass,
+                                                PanelW,arglist,i);
+       /* Set up Static Text widget */
+         i = 0;
+         /* Arguments for form parent */
+         XtSetArg(arglist[i], XtNxRefWidget, FormW); i++;
+         XtSetArg(arglist[i], XtNxResizable, True); i++;
+         XtSetArg(arglist[i], XtNxAttachRight, True); i++;
+         XtSetArg(arglist[i], XtNyRefWidget, FormW); i++;
+         XtSetArg(arglist[i], XtNyResizable, True); i++;
+         TargetW=XtCreateManagedWidget("Text",XwstatictextWidgetClass,
+                                                FormW,arglist,i);
+       /* Set up Colors Row Column widget */
+         i = 0;
+         /* Arguments for row column widget */
+         XtSetArg(arglist[i], XtNcolumns, 2); i++;
+         XtSetArg(arglist[i], XtNforceSize, True); i++;
+         XtSetArg(arglist[i], XtNlayout, XwMAXIMIZE); i++;
+         /* Arguments for form parent */
+         XtSetArg(arglist[i], XtNxRefWidget, FormW); i++;
+         XtSetArg(arglist[i], XtNxResizable, True); i++;
+         XtSetArg(arglist[i], XtNxAttachRight, True); i++;
+         XtSetArg(arglist[i], XtNyRefWidget, TargetW); i++;
+         XtSetArg(arglist[i], XtNyAddHeight, True); i++;
+         XtSetArg(arglist[i], XtNyResizable, True); i++;
+         ColorsW=XtCreateManagedWidget("Colors",XwrowColWidgetClass,
+                                                FormW,arglist,i);
+       /* Set up Foreground Row Column widget */
+         i = 0;
+         /* Arguments for row column widget */
+         XtSetArg(arglist[i], XtNmode, XwONE OF MANY); i++;
+         XtSetArg(arglist[i], XtNforceSize, True); i++;
+         ForegroundW=XtCreateManagedWidget("Foreground",XwrowColWidgetClass,
+                                                ColorsW,arglist,i);
+
+
+       /* Set up Background Row Column widget */
+         i = 0;
+         /* Arguments for row column widget */
+         XtSetArg(arglist[i], XtNmode, XwONE OF MANY); i++;
+         XtSetArg(arglist[i], XtNforceSize, True); i++;
+         BackgroundW=XtCreateManagedWidget("Background",XwrowColWidgetClass,
+                                                ColorsW,arglist,i);
+       /* Set up Foreground Toggles */
+       /* Title */
+         i = 0;
+         XtSetArg(arglist[i], XtNstring, "Foreground Colors"); i++;
+         XtSetArg(arglist[i], XtNalignment, XwALIGN CENTER); i++;
+         FTitleW=XtCreateManagedWidget("Title",XwstatictextWidgetClass,
+                                                ForegroundW,arglist,i);
+       /* Red */
+         i = 0;
+         XtSetArg(arglist[i], XtNlabel, "Red"); i++;
+         XtSetArg(arglist[i], XtNforeground, Red); i++;
+         XtSetArg(arglist[i], XtNsquare, False); i++;
+         XtSetArg(arglist[i], XtNselect, FRedcallbacks); i++;
+         FRedW=XtCreateManagedWidget("Red",XwtoggleWidgetClass,
+                                                ForegroundW,arglist,i);
+       /* Green */
+         i = 0;
+         XtSetArg(arglist[i], XtNlabel, "Green"); i++;
+         XtSetArg(arglist[i], XtNforeground, Green); i++;
+         XtSetArg(arglist[i], XtNsquare, False); i++;
+         XtSetArg(arglist[i], XtNselect, FGreencallbacks); i++;
+         FGreenW=XtCreateManagedWidget("Green",XwtoggleWidgetClass,
+                                                ForegroundW,arglist,i);
+       /* Blue */
+         i = 0;
+         XtSetArg(arglist[i], XtNlabel, "Blue"); i++;
+         XtSetArg(arglist[i], XtNforeground, Blue); i++;
+         XtSetArg(arglist[i], XtNsquare, False); i++;
+         XtSetArg(arglist[i], XtNselect, FBluecallbacks); i++;
+         FBlueW=XtCreateManagedWidget("Blue",XwtoggleWidgetClass,
+                                                ForegroundW,arglist,i);
+       /* Set up Background Toggles */
+       /* Title */
+         i = 0;
+         XtSetArg(arglist[i], XtNstring, "Background Colors"); i++;
+         XtSetArg(arglist[i], XtNalignment, XwALIGN CENTER); i++;
+         BTitleW=XtCreateManagedWidget("Title",XwstatictextWidgetClass,
+                                                BackgroundW,arglist,i);
+       /* Red */
+         i = 0;
+         XtSetArg(arglist[i], XtNlabel, "Red"); i++;
+         XtSetArg(arglist[i], XtNforeground, Red); i++;
+         XtSetArg(arglist[i], XtNsquare, False); i++;
+         XtSetArg(arglist[i], XtNselect, BRedcallbacks); i++;
+         BRedW=XtCreateManagedWidget("Red",XwtoggleWidgetClass,
+                                                BackgroundW,arglist,i);
+       /* Green */
+         i = 0;
+         XtSetArg(arglist[i], XtNlabel, "Green"); i++;
+         XtSetArg(arglist[i], XtNforeground, Green); i++;
+         XtSetArg(arglist[i], XtNsquare, False); i++;
+         XtSetArg(arglist[i], XtNselect, BGreencallbacks); i++;
+         BGreenW=XtCreateManagedWidget("Green",XwtoggleWidgetClass,
+                                                BackgroundW,arglist,i);
+       /* Blue */
+         i = 0;
+         XtSetArg(arglist[i], XtNlabel, "Blue"); i++;
+         XtSetArg(arglist[i], XtNforeground, Blue); i++;
+         XtSetArg(arglist[i], XtNsquare, False); i++;
+         XtSetArg(arglist[i], XtNselect, BBluecallbacks); i++;
+         BBlueW=XtCreateManagedWidget("Blue",XwtoggleWidgetClass,
+                                                BackgroundW,arglist,i);
+       /* Realize widget and loop */
+         XtRealizeWidget(toplevel);
+         XtMainLoop();
+       }
+
+
+       The Default File
+       # Application class defaults
+       *RowCol.hSpace:                          6
+       *RowCol.vSpace:                          6
+       *borderWidth:                            0
+       # Defaults for program demo2
+       demo2*foreground:                        dim gray
+       demo2*background:                        light gray
+       # Title bar defaults
+       demo2*TBar*font:                         vgB-25
+       demo2*TBar*background:                   dark slate grey
+       demo2*TBar*titleBackground:              dark slate grey
+       demo2*TBar*titleForeground:              light grey
+       demo2*TBar*alignment:                    left
+       demo2*TBar*region:                       left
+       demo2*TBar.Quit.font:                    variable
+       demo2*TBar.Quit.background:              light grey
+       # Text widget defaults
+       demo2*Text.yOffset:                      5
+       demo2*Text.font:                         ger-s35
+       demo2*Text.string:  A long time ago in a\ngalaxy far far away
+       demo2*Text.xAttachLeft:                  True
+       demo2*Text.background:                   White
+       demo2*Text.foreground:                   Black
+       demo2*Text.borderWidth:                  1
+       demo2*Foreground*font:                   variable
+       demo2*Background*font:                   variable
+
+

@@ -1,0 +1,14 @@
+/**/###########################################################################
+/**/# definitions common to all Picture Widget Makefiles  - do not  edit
+
+          PWTOP = $(CONTRIBSRC)/widgets/picture
+   PWINCLUDESRC = $(PWTOP)
+       PWLIBSRC = $(PWTOP)/lib
+
+          PWLIB = $(PWLIBSRC)/libPicture.a
+        MENULIB = $(CONTRIBSRC)/widgets/MenuBox/libMenu.a
+
+/**/###########################################################################
+/**/# start of PW's Imakefile
+
+     PWDEFINES  = $(SYSTEM) -DOMITARC -DINCDIR="\"$(INCDIR)\""

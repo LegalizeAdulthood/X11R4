@@ -1,0 +1,54 @@
+#include <Server.tmpl>
+
+SRCS =		bsdCursor.c \
+		bsdKeybd.c \
+		bsdMouse.c \
+		bsdInitEmul.c \
+		bsdScrSave.c \
+		bsdLimits.c
+
+LIBOBJS =	bsdCursor.o \
+		bsdKeybd.o \
+		bsdMouse.o \
+		bsdInitEmul.o \
+		bsdScrSave.o \
+		bsdLimits.o
+
+OBJS =		$(OTHROBJS) $(LIBOBJS)
+
+#if ibmSpecialMalloc
+DEFINES = -DIBM_SPECIAL_MALLOC
+#else
+DEFINES =
+#endif
+
+INCLUDES = -I. -I../../../include -I$(INCLUDESRC) -I../common
+
+#if DebugServer && ProfileServer
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugServer
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileServer
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+all::	$(OTHROBJS)
+
+NormalRelocatableTarget(BSDrt,$(LIBOBJS))
+#if ProfileServer
+ProfiledRelocatableTarget(BSDrt,$(LIBOBJS))
+#endif
+#if DebugServer
+DebuggedRelocatableTarget(BSDrt,$(LIBOBJS))
+#endif
+
+DependTarget()
+
+LintLibraryTarget(BSDrt,$(SRCS))
+NormalLintTarget($(SRCS))

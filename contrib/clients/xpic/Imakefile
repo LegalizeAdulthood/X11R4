@@ -1,0 +1,148 @@
+# Where are the HP widgets - this is used with a -I option. If you have them
+# installed.
+#XWSRC=$(CONTRIBSRC)/widgets/Xhp
+#XWINC=-I$(XWSRC)
+
+# Note - You need the HP widgets (Xw) for the X11 Toolkit
+# These should be defined in an Imake.tmpl - except that the 
+# normal Imake.tmpl insists on these being compiled in the 
+# X directory tree.
+#XWLIB=$(XWSRC)/Xw/libXw.a
+XWLIB=$(USRLIBDIR)/libXw.a
+
+# The documents go in $(DOCDIR)/xpic - see the install target. 
+# At CSRI, we use a logical link to the source, so we don't 
+# install this. You must still keep this accurate, because 
+# it's put into the man page. Change the install target appropriately.
+DOCDIR=/local/doc/X11
+# the directory in which xpic saves the current buffer 
+# in case it dies on a signal
+DUMPDIR=/tmp
+
+# -DXWINDOWS is used by the filename completion code is ask.c and util.c
+# to include the Xos.h header file if compiled in an X program for
+# greater portability.
+# -DMAGIC will include code that puts a '#! $(BINDIR)/xpic'
+# header on the saved xpic files, and make them executable, so
+# you can just execute the saved xpic file and it starts up
+# xpic.
+# -DFASTARCS means your X server can draw arcs fast. Do *NOT* define this
+# for the MIT R3 sample server running on anything less than a 
+# MIPS-based workstation.
+# -DDEBUG turns on debugging output - do you really want that?!
+# -DDRAWBBOX is also for debugging - it draws the bounding box
+# of all gels.
+# -DGRAB should be defined if XtAddGrab and XtRemoveGrab can be 
+# made to work in Minibuf.c and input.c - I can't seem to get them
+# to work.
+# -DTYPEOUT includes the typeout code
+DEFINES = -DXWINDOWS -DMAGIC -DTYPEOUT # -DDEBUG
+
+# Define USLEEP if your system lacks a usleep (eg) Ultrix.
+USLEEP=usleep.o
+
+########################################################################
+# You should not have to modify the rest of this file
+
+CDEBUGFLAGS = -O
+INCLUDES =  $(XWINC) -Ibitmaps $(INLINELIBM) -I$(INCDIR) -I$(INCROOT)
+XPICLIBDIR=$(LIBDIR)/xpic
+
+# Sigh - we use sin(), cos(), atan2() for arrow, and for ellipses
+# If inlining is chosen (see INLINELIBM), then the mathlib on won't be
+# used, saving a whopping 55K on Suns.
+MATHLIB=-lm
+
+# /usr/lib/debug/malloc.o is Sun's debugging malloc() - it
+# provides the malloc_debug() and malloc_verify() calls.
+# malloc.o is a first-fit malloc with debugging ASSERTs. Finds
+# heap corruption fast. Not defining this will use libc.
+#MALLOC = /usr/lib/debug/malloc.o
+#MALLOC = malloc.o
+MALLOC = 
+
+OBJS1 = main.o windows.o xpic.o handlers.o input.o  \
+	event.o grid.o error.o spline.o arrow.o newfonts.o \
+	util.o gels.o null.o obj_line.o obj_spline.o obj_text.o \
+	obj_box.o obj_circ.o obj_ell.o obj_block.o obj_elem.o \
+	updown.o text.o isqrt.o ask.o xtypeout.o Minibuf.o Window.o \
+	arc.o box.o focus.o line.o xfname.o $(USLEEP)
+
+SRCS1 = main.c windows.c xpic.c handlers.c input.c  \
+	event.c grid.c error.c spline.c arrow.c newfonts.c \
+	util.c gels.c null.c obj_line.c obj_spline.c obj_text.c \
+	obj_box.c obj_circ.c obj_ell.c obj_block.c obj_elem.c \
+	updown.c text.c isqrt.c ask.c xtypeout.c Minibuf.c Window.c \
+	arc.c box.c focus.c line.c xfname.c
+
+OBJS2 = x2pic.o hash.o
+SRCS2 = x2pic.c hash.c
+
+OBJS3 = x2ps.o hash.o
+SRCS3 = x2ps.c hash.c
+
+OBJS4 = x2tpic.o xtp.o hash.o
+SRCS4 = x2tpic.c xtp.c hash.c
+
+PROGRAMS = xpic x2ps x2pic x2tpic
+
+.SUFFIXES: .manX .man
+
+.manX.man:
+	sed -e 's?DOCDIR?$(DOCDIR)/xpic?g'\
+	    -e 's?XPICLIBDIR?$(XPICLIBDIR)?g' $*.manX > $*.man
+
+ComplexProgramTarget_1(xpic,$(MYXTSTUFF) $(MALLOC) $(XWLIB) $(XTOOLLIB) $(XLIB),$(MATHLIB))
+/* Imake rules allow for only 3 SRCS */
+SRCS = $(SRCS1) $(SRCS2) $(SRCS3) $(SRCS4)
+
+SingleProgramTarget(x2pic,$(OBJS2),,)
+InstallProgram(x2pic, $(BINDIR))
+InstallManPage(x2pic, $(MANDIR))
+
+SingleProgramTarget(x2ps,$(OBJS3),,$(MATHLIB))
+InstallProgram(x2ps, $(BINDIR))
+InstallManPage(x2ps, $(MANDIR))
+
+SingleProgramTarget(x2tpic,$(OBJS4),,)
+InstallProgram(x2tpic, $(BINDIR))
+InstallManPage(x2tpic, $(MANDIR))
+
+InstallScript(x2tex, $(BINDIR))
+InstallManPage(x2tex, $(MANDIR))
+
+lint:
+	(lint -abz $(SRCS1) -lXw -lXt -lX11 -lm $(LINTFLAGS); \
+	lint -abz $(SRCS2) $(LINTFLAGS); \
+	lint -abz $(SRCS3) -lm $(LINTFLAGS); \
+	lint -abz $(SRCS4) $(LINTFLAGS)) | \
+	./xlint
+
+clean::
+	$(RM) tune.h.new xpic.man x2ps.man x2pic.man x2tpic.man x2tex.man
+
+id: tags
+	mkid *.[ch]
+
+install::
+	-mkdir $(XPICLIBDIR)
+	$(INSTALL) -c $(INSTAPPFLAGS) x2ps.pro $(XPICLIBDIR)
+	$(INSTALL) -c $(INSTAPPFLAGS) x2ps.tra $(XPICLIBDIR)
+	-mkdir $(XPICLIBDIR)/fontdesc
+	$(INSTALL) -c $(INSTAPPFLAGS) fontdesc/xpic $(XPICLIBDIR)/fontdesc
+	$(INSTALL) -c $(INSTAPPFLAGS) fontdesc/x2pic $(XPICLIBDIR)/fontdesc
+	$(INSTALL) -c $(INSTAPPFLAGS) fontdesc/x2tpic $(XPICLIBDIR)/fontdesc
+	$(INSTALL) -c $(INSTAPPFLAGS) fontdesc/x2ps $(XPICLIBDIR)/fontdesc
+
+install::
+	-rm -r $(DOCDIR)/xpic
+	-cp -r doc $(DOCDIR)/xpic
+	
+tar:
+	cd ..; tar cvfX - xpic/ExcludeFiles xpic | compress > xpic.tar.Z
+
+tune.h: Makefile
+	echo \#define LIBDIR \"$(XPICLIBDIR)\" > tune.h.new
+	echo \#define PROGRAMNAME \"$(BINDIR)/xpic\" >> tune.h.new
+	echo \#define DUMPDIR \"$(DUMPDIR)\" >> tune.h.new
+	-cmp -s tune.h.new tune.h || cp tune.h.new tune.h

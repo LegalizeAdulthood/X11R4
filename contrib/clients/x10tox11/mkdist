@@ -1,0 +1,54 @@
+#!/bin/sh
+SOURCES=' Imakefile
+	README
+	X10int.h
+	X10struct.h
+	access.c
+	data.c
+	debug.c
+	debug.h
+	dispatch.c
+	eventdebug.c
+	events.c
+	image.c
+	io.c
+	lk201keys.h
+	main.c
+	mkdist
+	proto1.c
+	proto2.c
+	proto3.c
+	proto4.c
+	rcsid.c
+	resource.h
+	sequence.c
+	startup.c
+	subr.c
+	window.c
+	x10tox11.man'
+DOC="X10.protocol"
+doshar=false
+
+for arg
+do
+	case "$arg" in
+	-d)     DOC=;;      # don't include X.doc
+	-s)	doshar=true;;
+		
+	esac
+done
+
+FILES="$SOURCES $DOC"
+
+case "$doshar" in
+true)
+	shar $FILES
+	;;
+false)
+	tar cf - $FILES \
+	| compress > dist/x10tox11.tar.Z
+	uuencode x10tox11.tar.Z < dist/x10tox11.tar.Z \
+	| split -1000 - dist/x
+	;;
+esac
+

@@ -1,0 +1,134 @@
+INTRODUCTION:
+=============
+
+WINTERP is a rapid prototyping, development and delivery enviropnment for
+building complex, customizable applications. It uses the OSF Motif Toolkit,
+which is based on the X11 Xtoolkit intrinsics. Winterp contains a small
+lisp interpreter which is based on the popular XLISP interpreter. Infact
+the  name "WINTERP" is just an abbreviation for "Widget INTERPreter".
+
+As an application prototyping environment, WINTERP is akin to a graphical
+gnuemacs in that it uses a mini-lisp interpreter to glue together various
+C-Implemented primitive operations.  In gnuemacs, these operations consist
+mostly of manipulating text within editor buffers -- infact text-buffers
+are a "first-class" type in gnuemacs.  WINTERP makes the widget a first
+class type, and represents them as real objects using the XLISP object
+system (a smalltalk-like object system).
+
+The syntax resulting from marrying XLISP objects and motif widgets is far
+cleaner than UIL, using straight C, etc. Furthermore, since WINTERP is
+interactive, you can try out small changes incrementally, and modify the
+look and functionality of an application on-the-fly. A very useful
+interactive primitive, 'get_moused_widget' allows you to send arbitrary
+messages to widgets just by pointing at them with the mouse.
+
+Winterp contains an interface to gnuemacs' lisp-mode which allows you to
+type lisp forms into a gnuemacs editor buffer, and issue a simple command
+to send a form off to winterp's lisp-listener for evaluation.
+
+Winterp's lisp-listener is infact a TCP socket, which means that you can
+easily allow other applications to talk to a winterp-based application.  In
+directory ./winterp/src-client, you'll find the winterp client program 'wl'
+which sends the lisp form specified on it's command line off to the WINTERP
+server (./winterp/src-server/winterp). In the same directory, you'll find
+the emacs-lisp customization file 'winterp.el' which talks to the winterp
+server via 'wl'.
+
+------------------------------------------------------------------------------
+
+RUNNING WINTERP:
+================
+
+	1) start up the winterp program (./winterp/src-server/winterp) in a
+	terminal emulator window. winterp will then popup a small
+	"quit-button" and will proceed to send the results of lisp
+	evaluation to stdout and stderr. If you	give it the right lisp
+	input, it will begin popping up windows too...
+
+	2) make sure you've installed the winterp client program
+	'./winterp/src-client/wl' somewhere on your search path; start up
+	gnuemacs.
+
+	3) In gnuemacs, load the emacs-lisp file
+	./winterp/src-client/winterp.el. (Use M-x load-file, or do
+	(load "<pathname>/winterp") in your ~/.emacs file)
+
+	4) in gnuemacs, visit one of the example programs in
+	./winterp/examples: a good start might be the simple search browser
+	application built upon the unix 'grep' command --
+	./winterp/examples/grep-br.lsp'.
+
+	After visiting the file, the buffer you're in  should be in
+	'lisp'-mode. Place the point somewhere within a lisp s-expression
+	(aka, inbetween the opening and closing parens of a lisp statement),
+	and hit C-M-X to send the expression you're pointing at to WINTERP.
+	If you don't like hitting C-M-X, you can rebind the
+	gnuemacs function winterp-send-defun to	a more accessible key.
+
+	5) browse around  the various files in winterp/examples and evaluate
+	various forms....
+
+If you don't use gnuemacs, you can still send lisp input to winterp, although
+it's much less elegant. While winterp is running inside a terminal emulator,
+just use the 'wl' command to send forms to the  lisp interpreter. For example
+assuming you started winterp while cd'd to ./winterp/examples, just
+issue the following command to the shell
+		wl '(load "popup-menu")'
+
+The best way to see the power of combining Motif widgets with XLISP objects
+is to take a look at the ./winterp/examples directory, which contains a few
+interesting examples. (e.g mail-br.lsp, bitmap-br.lsp, grep-br.lsp) and a
+few files that should show you how to do things...
+
+------------------------------------------------------------------------------
+
+MAILING LIST:
+============
+
+Send mail to mayer@hplabs.hp.com (hplabs!mayer) and I will add you to a mailing
+for discussing WINTERP ideas, anouncements, futures, bugs, and porting.
+
+------------------------------------------------------------------------------
+
+ROADMAP:
+=======
+
+	./winterp/src-client/wl			-- WINTERP lisp client
+	./winterp/src/client/winterp.el		-- GNUEMACS interface
+	./winterp/src-server/winterp		-- WINTERP lisp server
+	./winterp/src-server/xlisp/		-- XLISP 2.1 sources
+	./winterp/doc/xlisp.doc			-- XLISP documentation
+	./winterp/doc/winterp.doc		-- WINTERP documentation
+	./winterp/examples/dialogshel.lsp	-- Motif dialog shells
+	./winterp/examples/grep-br.lsp		-- search browser
+	./winterp/examples/initialize.lsp	-- WINTERP init file
+	./winterp/examples/interact.lsp		-- get_moused_widget examples
+	./winterp/examples/list-test.lsp	-- Motif list widget
+	./winterp/examples/mail-br.lsp		-- mail browser
+	./winterp/examples/menu-ex.lsp		-- pulldown menus
+	./winterp/examples/mng-test.lsp		-- manage/unmanage randomness
+	./winterp/examples/pixmaps.lsp		-- ximages,pixmaps, etc
+	./winterp/examples/popen.lsp		-- get data from ux process
+	./winterp/examples/popup-menu.lsp	-- popup menu example
+	./winterp/examples/radiobox1.lsp	-- radio box example
+	./winterp/examples/radiobox2.lsp	-- radio box using subclassing
+	./winterp/examples/rc-shell.lsp		-- a widget "workarea"
+	./winterp/examples/setvalues.lsp	-- setvalues examples
+	./winterp/examples/text.lsp		-- motif text widget
+	./winterp/examples/trans.lsp		-- Xt translations/accelerators
+	./winterp/examples/xlisp-1.6/*.lsp	-- examples from XLISP v 1.6
+	./winterp/examples/xlisp-2.1/*.lsp	-- examples from XLISP v 2.1
+
+------------------------------------------------------------------------------
+
+DOCUMENTATION:
+==============
+	XLISP -- see ./winterp/doc/xlisp.doc, ./winterp/doc/README.XLISP
+	WINTERP -- see ./winterp/doc/winterp.doc
+
+-------------------------------------------------------------------------------
+	    Niels Mayer -- hplabs!mayer -- mayer@hplabs.hp.com
+		  Human-Computer Interaction Department
+		       Hewlett-Packard Laboratories
+			      Palo Alto, CA.
+				   *

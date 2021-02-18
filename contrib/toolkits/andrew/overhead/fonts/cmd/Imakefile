@@ -1,0 +1,22 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+
+
+DependTarget()
+
+NormalObjectRule()
+
+#ifdef X11_ENV
+ProgramTarget(fdbbdf, fdbbdf.o, ,)
+InstallProgram(fdbbdf, $(DESTDIR)/bin)
+#endif /* X11_ENV */
+
+#ifdef WM_ENV
+ProgramTarget(fdbwm, fdbwm.o, $(BASEDIR)/lib/libfont.a $(UTILLIB),)
+InstallProgram(fdbwm, $(DESTDIR)/bin)
+ProgramTarget(wmfdb, wmfdb.o, $(BASEDIR)/lib/libfont.a $(UTILLIB),)
+InstallProgram(wmfdb, $(DESTDIR)/bin)
+#endif /* WM_ENV */
+

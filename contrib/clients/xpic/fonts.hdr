@@ -1,0 +1,80 @@
+(Message xtroff:307)
+Date:    Thu, 09 Nov 89 06:05:13 -0500
+From:    Mark Moraes <moraes>
+To:      Dave Cahlander <dac@arson.cray.com>
+Subject: Re: helper file for xtroff 
+
+ | that has the form:
+ | R	-*-times-medium-r-normal--*-*-75-75-*-*-iso8859-1
+
+Hmm. I was thinking of a reverse philosophy, where the program did an
+XListFonts("*-*-*"), and extracted the appropriate fields. Then use
+the FAMILY_NAME-WEIGHT_NAME-SLANT to match the font based on a table
+such as you suggest, but a bit simpler i.e.
+
+R	times-medium-r
+I	times-medium-i
+B	times-bold-r
+BI	times-bold-i
+TR	times-medium-r
+TI	times-medium-i
+TB	times-bold-r
+TD	times-bold-i
+C	courier-medium-r
+CO	courier-medium-o
+CB	courier-bold-r
+CD	courier-bold-o
+H	helvetica-medium-r
+HO	helvetica-medium-o
+HB	helvetica-bold-r
+HD	helvetica-bold-o
+nc	new century schoolbook-medium-r
+nC	new century schoolbook-medium-i
+Nc	new century schoolbook-bold-r
+NC	new century schoolbook-bold-i
+A	charter-medium-r
+AI	charter-medium-i
+AB	charter-bold-r
+AD	charter-bold-i
+S	symbol-medium-r
+S2	symbol-medium-r
+
+Could use the POINT_SIZE and RESOLUTION_Y fields to compute pointsize
+relative to the display resolution. This means one isn't stuck with
+the 75 dpi fonts only. (BTW, DECWindows comes with itc souvenir-demi,
+itc lubalin graph-book,itc avant garde gothic-demi and some others)
+
+What do you think? (I enclose a font field parser below if you're
+interested in following this idea up -- includes a main() -- just strip
+out main() if you find it useful to call getfontname() and select the
+appropriate elements from the array -- have to free each non-null
+pointer in the array once you're done with it)
+
+ | This finds the X font from the troff font name.  Next I need to
+ | generate a description file for these fonts (a width file).  It
+ | needs to know about the different coalating sequence that X uses
+ | and needs to know that the litigures are missing.
+
+Can't you get the widths from the font by querying them?  You could
+then do XLoadQueryFont when the font is loaded, and store those
+widths. Thus avoid loading the fonts widths until really necessary,
+and avoiding a width file.
+
+As for the collating sequence, how about something like the
+devpsc/[A-Z]?  files you already have, except without the width
+information in files with the names "iso8859", or anything else in the
+charsetencoding field? fontspecific could be mapped with the
+foundry-family-weight-slant perhaps. Or just foundry-family?
+
+Note that you extract most of the width information via your awk
+scripts at present from bdf. All that information can be handled at
+runtime instead, if you were to do it in C. (I have some splay tree
+code, or hash table code that i could send you if you want, for the
+associative arrays -- I may have to chase up a COPYRIGHT notice for
+each of them from the authors, but I don't think either would mind)
+
+ | I think that the font mapping file should be handled by the .Xdefaults
+ | method, but I'm not sure how to do it.  This I know how to make work.
+
+Interesting idea. I'll look at it later. Here's the font name parser.
+

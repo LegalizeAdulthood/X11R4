@@ -1,0 +1,36 @@
+IPRBIN	=$(IprBin)
+
+OBJS	=imagen1.o imagen1-special.o
+SRCS	=imagen1.c imagen1-special.c
+
+      LIBTEXROOT= ../
+      LIBTEXSRC	= ../libtex
+         LIBTEX	= $(LIBTEXSRC)/libtex.a
+      DEPLIBTEX	= $(LIBTEX)
+        SYSLIBS = -lm
+        DEPLIBS = $(DEPLIBTEX) 
+LOCAL_LIBRARIES = $(LIBTEX)
+
+        DEFINES = -I$(LIBTEXROOT)
+
+FILES	= Imakefile iptex.man iptex.proto iptex.man $(SRCS)
+
+all: imagen1 iptex.script
+
+iptex.script: iptex.proto Imakefile Makefile
+	sed -e 's|=BIN|=$(BINDIR)|' -e 's|=IPRBIN|=$(IPRBIN)|' < iptex.proto > iptex.script
+
+SingleProgramTarget(imagen1,$(OBJS),$(LOCAL_LIBRARIES),$(SYSLIBS))
+InstallProgram(imagen1, $(BINDIR))
+InstallScript(iptex,$(BINDIR))
+InstallManPage(iptex,$(MANDIR))
+DependTarget()
+CleanTarget()
+TagsTarget()
+
+tar:
+	cd ../..;\
+	for file in $(FILES); \
+	do \
+	  tar rf $(TARFILE) $(PRODUCT)/Iptex/$$file; \
+	done

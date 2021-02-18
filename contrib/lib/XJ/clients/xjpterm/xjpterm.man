@@ -1,0 +1,51 @@
+.TH XJPTERM 1 "14 Sep 1989" "X Version 11"
+.SH NAME
+xjpterm \- terminal emulator for X
+.SH SYNOPSIS
+.B xjpterm
+[-\fItoolkitoption\fP ...] [-option ...]
+.SH DESCRIPTION
+The \fIxjpterm\fP program is a Kanji terminal emulator for the X Window System.
+It provides DEC VT102 and Tektronix 4014 
+compatible terminals for programs that can't
+use the window system directly.
+It comes from \fIkterm\fP in the user contributed programs of the distribution
+of the X Window System.
+The most of the functions are the same as original \fIkterm\fP's, however,
+it has capabilities of Kanji strings input ,using Wnn/Jserver, xwnmo 
+and XJp-library.
+.SH OPTIONS
+The \fIxjpterm\fP terminal emulator 
+accepts all of the standard \fIkterm\fP command line options along with the 
+additional options listed below (if the option begins with a
+.RB ` + '
+instead of a
+.RB ` \- ',
+the option is restored to its default value):
+.TP 8
+.BI \-jo
+This option indicates that \fIxjpterm\fP should connect to xwnmo.
+The default is ``true.''
+.TP 8
+.BI \-jm "input-mode"
+This option specifies conversion-window position.
+If input-mode is ``default'', then xjpterm use default conversion-window.
+If input-mode is ``under'', then conversion-window position is under of
+xjpterm window.
+If input-mode is ``inline'', then conversion-window position is cusor position
+of xjpterm.
+The default is ``default''
+.SH "SEE ALSO"
+kterm(1), xterm(1), resize(1), X(1), pty(4), tty(4)
+.br
+.PP
+.SH COPYRIGHT
+Copyright 1989, OMORN TATEISI ELECTRONICS CO,
+.br
+See \fIX(1)\fP for a full statement of rights and permissions.
+.SH AUTHORS
+Far too many people, including:
+Seiji Kuwari	OMRON TATEISI ELECTRONICS CO.
+		kuwa@frf.omron.junet
+		uunet!nff.ncl.omron.co.jp!kuwa
+.sp

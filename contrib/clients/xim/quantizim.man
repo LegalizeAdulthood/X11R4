@@ -1,0 +1,72 @@
+.TH QUANTIZIM 1 "February 3,  1989"
+.UC 5
+.SH NAME
+quantizim \- quantize a 24 bit/pixel image to 256 colors or less.
+.SH SYNOPSIS
+.B quantizim
+[-in 
+.I file
+] [-out
+.I file
+] [-colors
+.I n] [-nodes
+.I n
+]
+.SH DESCRIPTION
+.I Quantizim
+is a program for quantizing 24 bit/pixel images down to 8 bits or less.
+It does a fairly good job creating a pixmap and colormap from a three channel RG&B data.
+At the heart of this program is the
+.I alcols
+code written at the USC Information Sciences Institute.
+It uses a tree sorting algorithm for selecting the best 256 (or less) unique colors from over 16 million.
+.SH OPTIONS
+.TP "\w'\f3\-m\f1name 'u"
+.B -in \fIfile\fP
+This option allows the user to explicitly specify the 24 bit/pixel file on the command line.  The default is to read input from standard in.
+.TP "\w'\f3\-m\f1name 'u"
+.B -out \fIfile\fP
+This option allows the user to explicitly specify the 8 bit/pixel file on the command line.
+The default is to write output to standard out.
+.TP "\w'\f3\-m\f1name 'u"
+.B -colors \fInum\fP
+This allows one to specify the maximum number of colors to quantize down to.
+The program may return less than the maximum.
+The default is 256 colors.x.
+.TP "\w'\f3\-m\f1name 'u"
+.B -nodes \fInum\fP
+The ratio of pixels per node to begin the tree sort with.
+The default is 50.
+A smaller ratio (more nodes) gives more even shading and uses more memory.
+Less nodes causes more banding but generally less quantization error.
+.PP
+.I Note:
+All of the command line options can be abbreviated to their shortest unique spelling.
+.br
+ex: %  quantizim -in colord24.xim -out color.xim -co 192 -no 10
+
+.SH "SEE ALSO"
+xim(n)
+smoothim(n)
+.SH BUGS
+- This program takes a lot of memory.
+Large images around 640x480 may not work on all machines.
+.br
+- The optimum ratio of nodes to image size is not clear.
+.br
+- I wish I knew better how this works.
+.SH COPYRIGHTS
+Copyright (c) 1988, University of Southern California
+.br
+Copyright (c) 1989, Massachusetts Institute of Technology.
+.SH AUTHORS
+Paul Raveling (vaxa.isi.edu) - alcols.c
+.PP
+Philip R. Thompson (phils@athena.mit.edu) - quantizim.c
+.br
+Computer Resource Laboratory,  
+Dept. of Architecture and Planning,  
+.br
+Massachusetts Institute of Technology,  
+Cambridge, MA  02139
+

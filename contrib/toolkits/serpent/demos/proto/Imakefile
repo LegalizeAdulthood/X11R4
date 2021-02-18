@@ -1,0 +1,16 @@
+#include "../../Serpent.tmpl"
+DIR = proto
+
+DIALOGUE = proto
+
+DEPENDINCS = -I$(SERPENTBASEDIR)/data
+
+ILLFILES = dm.ill
+
+SerpentSddRule()
+
+all:	$(ILLFILES) $(DIALOGUE)
+
+SerpentSerpent()
+
+SerpentDependDialogue()

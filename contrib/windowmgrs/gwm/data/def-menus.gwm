@@ -1,0 +1,117 @@
+; DEFAULT MENUS
+; =============
+
+;;File: def-menus.gwm -- default root/window/icon menus
+;;Author: colas@mirsa.inria.fr (Colas NAHABOO) -- Bull Research FRANCE
+;;Revision: 1.4 -- July 20 1989
+;;State: Exp
+;;GWM Version: 1.4
+
+; create menus with lists of xterms and xloads
+; ============================================
+
+(defname-in-screen-to ()  xterm-pop xload-pop)
+
+(for screen (list-of-screens)
+    (with (fsm pop-fsm menu ())
+	  (if (not (boundp 'root-pop)) 
+	      (: root-pop
+		 (if (boundp 'add-to-dvroom)
+		     (menu-make
+		      (pop-label-make "Gwm")
+		      (item-make "Xloads..." (pop-menu xload-pop))
+		      (item-make "Xterms..." (pop-menu xterm-pop))
+		      (item-make "refresh" (refresh))
+		      (item-make "Exec cut" 
+				 (execute-string (+ "(? " cut-buffer ")")))
+		      (item-make "New dvroom" (new-dvroom-manager))
+		      (item-make 
+		       "Wool infos" (progn
+				      (hashinfo)(gcinfo)
+				      (wlcfinfo)(meminfo)))
+		      (item-make "pack icons" (rows.pack))
+		      (item-make "restart" (restart))
+		      (item-make "reload" (load ".gwmrc"))
+		      (item-make "End" (end)))
+		   (menu-make
+		      (pop-label-make "Gwm")
+		      (item-make "Xloads..." (pop-menu xload-pop))
+		      (item-make "Xterms..." (pop-menu xterm-pop))
+		      (item-make "refresh" (refresh))
+		      (item-make "Exec cut" 
+				 (execute-string (+ "(? " cut-buffer ")")))
+		      (item-make "pack icons" (rows.pack))
+		      (item-make 
+		       "Wool infos" (progn
+				      (hashinfo)(gcinfo)
+				      (wlcfinfo)(meminfo)))
+		      (item-make "restart" (restart))
+		      (item-make "reload" (load ".gwmrc"))
+		      (item-make "End" (end)))
+		   )
+		 ))
+	  
+	  (if (not (boundp 'window-pop))
+	      (: window-pop 
+		 (if (boundp 'add-to-dvroom)
+		     (menu-make
+		      (item-make "iconify" (iconify-window))
+		      (item-make "Exec cut" 
+				 (execute-string (+ "(? " cut-buffer ")")))
+		      (item-make "Add to room" (add-to-dvroom))
+		      (item-make "Rem from room" (remove-from-dvroom))
+		      (item-make "Inst Colormap" (set-colormap-focus))
+		      (item-make "client info" (print-window-info))
+		      (item-make "redecorate" (re-decorate-window))
+		      (item-make "re-load&dec" 
+				 (progn (with (window window) (load ".gwmrc"))
+					(re-decorate-window)))
+		      (item-make "kill" (if (not (delete-window))
+					    (kill-window)))
+		      )
+		   (menu-make
+		    (item-make "iconify" (iconify-window))
+		    (item-make "Exec cut" 
+			       (execute-string (+ "(? " cut-buffer ")")))
+		    (item-make "Inst Colormap" (set-colormap-focus))
+		    (item-make "client info" (print-window-info))
+		    (item-make "redecorate" (re-decorate-window))
+		    (item-make "re-load&dec" 
+			       (progn (with (window window) (load ".gwmrc"))
+				      (re-decorate-window)))
+		    (item-make "kill" (if (not (delete-window))
+					    (kill-window)))
+		 ))))
+	  (if (not (boundp 'icon-pop)) (: icon-pop window-pop))
+	  
+	  (setq xterm-items 
+		'(menu-make (pop-label-make "Xterms")
+		     (item-make "." (! "xterm" "-display" x-screen-name))))
+	  (for xterm-item xterm-list
+	       (: xterm-items 
+		  (+ xterm-items 
+		     (list (list 'item-make xterm-item 
+				 (list '! "/bin/sh" "-c" 
+				       (+ "DISPLAY=" x-screen-name
+					  ";export DISPLAY; rxterm "
+					  xterm-item "</dev/null")))))))
+	  (: xterm-pop (eval xterm-items))
+	  
+	  (setq xload-items 
+		'(menu-make (pop-label-make "Xloads")
+		     (item-make "." (! "xload" "-display" x-screen-name))))
+	  (for xload-item xload-list
+	       (: xload-items 
+		  (+ xload-items 
+		     (list (list 'item-make xload-item
+				 (list '! "/bin/sh" "-c"
+				       (+ "DISPLAY=" x-screen-name
+					  ";export DISPLAY; rxload "
+					   xload-item "</dev/null")))))))
+	  (: xload-pop (eval xload-items)))
+)
+ 
+(de pop-root-menu ()
+    (set-colormap-focus ())	; bugged on dpx???
+    (pop-menu root-pop 3))
+

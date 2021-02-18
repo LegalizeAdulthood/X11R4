@@ -1,0 +1,174 @@
+
+#
+#		(c) Copyright Carnegie Mellon University
+#
+# See "The CMU ODA Tool Kit" (available as CMU/ITC tech report
+# CMU-ITC-071) for full text & permitted uses.
+#
+
+#
+# Makefile for site type 'macintosh', directory 'raster'
+# Generated on Thu Nov  2 10:21:21 1989
+#
+
+# Std definitions
+COptions = -m -b3 -i : -i ::valid -i ::prog -i ::isode -i ::src -i ::site:mac
+LDFLAGS = 
+AR1 = Lib -b
+
+# Default compilation rule
+.o	Ä	.c
+	{C} {COptions} -s {Default} {DepDir}{Default}.c -o {TargDir}{Default}.o
+
+
+# Rules for LIB "libraster.a"
+
+rgmem.o Ä  rgmem.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rginit.h  ¶
+	     raster.h rgmem.h
+
+rglist.o Ä  rglist.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rgmem.h  ¶
+	     rglist.h
+
+rginit.o Ä  rginit.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rginit.h  ¶
+	     raster.h
+
+rgdbg.o Ä  rgdbg.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h
+
+raster.o Ä  raster.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rgmem.h  ¶
+	     pel.h rglist.h raster.h
+
+rasio.o Ä  rasio.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rginit.h  ¶
+	     raster.h rasio.h iog3.h iog4.h  ¶
+	     ioobm.h iopbm.h iomacp.h iops.h  ¶
+	     ioandy.h iox.h iofbm.h ioetc.h
+
+pel.o Ä    pel.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h raster.h  ¶
+	     pel.h
+
+iox.o Ä    iox.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rgmem.h  ¶
+	     raster.h rasio.h iog3.h iog4.h  ¶
+	     ioobm.h iopbm.h iomacp.h iops.h  ¶
+	     ioandy.h iox.h iofbm.h ioetc.h  ¶
+	     rglist.h
+
+iops.o Ä   iops.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h raster.h  ¶
+	     rasio.h iog3.h iog4.h ioobm.h  ¶
+	     iopbm.h iomacp.h iops.h ioandy.h  ¶
+	     iox.h iofbm.h ioetc.h
+
+iopbm.o Ä  iopbm.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rgmem.h  ¶
+	     raster.h rasio.h iog3.h iog4.h  ¶
+	     ioobm.h iopbm.h iomacp.h iops.h  ¶
+	     ioandy.h iox.h iofbm.h ioetc.h  ¶
+	     pel.h
+
+ioobm.o Ä  ioobm.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h raster.h  ¶
+	     rasio.h iog3.h iog4.h ioobm.h  ¶
+	     iopbm.h iomacp.h iops.h ioandy.h  ¶
+	     iox.h iofbm.h ioetc.h rglist.h
+
+iomacp.o Ä  iomacp.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rgmem.h  ¶
+	     raster.h rasio.h iog3.h iog4.h  ¶
+	     ioobm.h iopbm.h iomacp.h iops.h  ¶
+	     ioandy.h iox.h iofbm.h ioetc.h  ¶
+	     pel.h rglist.h
+
+iog4.o Ä   iog4.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rgmem.h  ¶
+	     raster.h rasio.h iog3.h iog4.h  ¶
+	     ioobm.h iopbm.h iomacp.h iops.h  ¶
+	     ioandy.h iox.h iofbm.h ioetc.h  ¶
+	     iog32.h iog33.h rglist.h
+
+iog33.o Ä  iog33.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rgmem.h  ¶
+	     raster.h rasio.h iog3.h iog4.h  ¶
+	     ioobm.h iopbm.h iomacp.h iops.h  ¶
+	     ioandy.h iox.h iofbm.h ioetc.h  ¶
+	     iog32.h iog33.h rglist.h
+
+iog32.o Ä  iog32.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h raster.h  ¶
+	     rasio.h iog3.h iog4.h ioobm.h  ¶
+	     iopbm.h iomacp.h iops.h ioandy.h  ¶
+	     iox.h iofbm.h ioetc.h iog32.h  ¶
+	     rglist.h
+
+iog3.o Ä   iog3.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rgmem.h  ¶
+	     raster.h rasio.h iog3.h iog4.h  ¶
+	     ioobm.h iopbm.h iomacp.h iops.h  ¶
+	     ioandy.h iox.h iofbm.h ioetc.h  ¶
+	     iog32.h iog33.h rglist.h
+
+iofbm.o Ä  iofbm.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rgmem.h  ¶
+	     pel.h raster.h rasio.h iog3.h  ¶
+	     iog4.h ioobm.h iopbm.h iomacp.h  ¶
+	     iops.h ioandy.h iox.h iofbm.h  ¶
+	     ioetc.h fbm.h
+
+ioetc.o Ä  ioetc.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h raster.h  ¶
+	     rasio.h iog3.h iog4.h ioobm.h  ¶
+	     iopbm.h iomacp.h iops.h ioandy.h  ¶
+	     iox.h iofbm.h ioetc.h
+
+ioandy.o Ä  ioandy.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h rgmem.h  ¶
+	     pel.h raster.h rasio.h iog3.h  ¶
+	     iog4.h ioobm.h iopbm.h iomacp.h  ¶
+	     iops.h ioandy.h iox.h iofbm.h  ¶
+	     ioetc.h
+
+g3code.o Ä  g3code.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h raster.h  ¶
+	     iog3.h
+
+flsun.o Ä  flsun.c fbm.h rgsite.h rgreal.h  ¶
+	     ::site:mac:lcsite.h ::site:mac:local.h rgdbg.h rgerr.h
+
+fliff.o Ä  fliff.c fbm.h rgsite.h rgreal.h  ¶
+	     ::site:mac:lcsite.h ::site:mac:local.h rgdbg.h rgerr.h
+
+flgifw.o Ä  flgifw.c fbm.h rgsite.h rgreal.h  ¶
+	     ::site:mac:lcsite.h ::site:mac:local.h rgdbg.h rgerr.h
+
+flgifr.o Ä  flgifr.c fbm.h rgsite.h rgreal.h  ¶
+	     ::site:mac:lcsite.h ::site:mac:local.h rgdbg.h rgerr.h
+
+flgife.o Ä  flgife.c fbm.h rgsite.h rgreal.h  ¶
+	     ::site:mac:lcsite.h ::site:mac:local.h rgdbg.h rgerr.h
+
+flgifc.o Ä  flgifc.c rgsite.h rgreal.h ::site:mac:lcsite.h  ¶
+	     ::site:mac:local.h rgdbg.h rgerr.h fbm.h
+
+flbyte.o Ä  flbyte.c fbm.h rgsite.h rgreal.h  ¶
+	     ::site:mac:lcsite.h ::site:mac:local.h rgdbg.h rgerr.h
+
+flalfb.o Ä  flalfb.c fbm.h rgsite.h rgreal.h  ¶
+	     ::site:mac:lcsite.h ::site:mac:local.h rgdbg.h rgerr.h
+
+libraster.a Ä    rgmem.o rglist.o rginit.o rgdbg.o raster.o rasio.o  ¶
+	    pel.o iox.o iops.o iopbm.o ioobm.o iomacp.o  ¶
+	    iog4.o iog33.o iog32.o iog3.o iofbm.o ioetc.o  ¶
+	    ioandy.o g3code.o flsun.o fliff.o flgifw.o flgifr.o  ¶
+	    flgife.o flgifc.o flbyte.o flalfb.o
+	   {AR1} rgmem.o rglist.o rginit.o rgdbg.o raster.o  ¶
+	    rasio.o pel.o iox.o iops.o iopbm.o  ¶
+	    ioobm.o iomacp.o iog4.o iog33.o iog32.o  ¶
+	    iog3.o iofbm.o ioetc.o ioandy.o g3code.o  ¶
+	    flsun.o fliff.o flgifw.o flgifr.o flgife.o  ¶
+	    flgifc.o flbyte.o flalfb.o -p -o libraster.a

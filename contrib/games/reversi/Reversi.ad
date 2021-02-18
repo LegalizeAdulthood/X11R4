@@ -1,0 +1,86 @@
+*mainWindow.orientation:		horizontal
+*mainWindow.internalBorderWidth:	0
+*mainWindow.allowResize:		true
+
+*leftPane.internalBorderWidth:	0
+*leftPane.allowResize:		true
+*leftPane.showGrip:		false
+
+*boardForm.showGrip:		false
+*boardForm.allowResize:		true
+
+*reversiBoard.white:		white
+*reversiBoard.black:		black
+*reversiBoard.background:	#30d030
+*reversiBoard.width:		300
+*reversiBoard.height:	300
+*reversiBoard.allowResize:	true
+*reversiBoard.top:		ChainTop
+*reversiBoard.left:		ChainLeft
+*reversiBoard.right:		ChainRight
+*reversiBoard.bottom:		ChainBottom
+
+*rightPane.internalBorderWidth:	0
+*rightPane.skipAdjust:		true
+
+*widgetForm.showGrip:	false
+*widgetForm.skipAdjust:	true
+
+*hint.Label:		Hint
+*hint.skipAdjust:	true
+
+*undo.Label:		Undo
+*undo.fromHoriz:	hint
+*undo.skipAdjust:	true
+
+*restart.Label:		Restart
+*restart.fromHoriz:	undo
+*restart.skipAdjust:	true
+
+*player.borderWidth:	1
+*player.fromVert:	hint
+
+*playerLabel.Label:	Computer Plays:
+*playerLabel.borderWidth:	0
+
+*playWhite.fromVert:	playerLabel
+*playWhite.Label:	White
+
+*playBlack.fromHoriz:	playWhite
+*playBlack.fromVert:	playerLabel
+*playBlack.Label:	Black
+
+*playBoth.fromVert:	playWhite
+*playBoth.Label:	Both
+
+*playNeither.fromHoriz:	playBoth
+*playNeither.fromVert:	playBlack
+*playNeither.Label:	Neither
+
+*levelLabel.Label:	level:\ 
+*levelLabel.borderWidth:	0
+*levelLabel.fromVert:	player
+
+*levelValue.borderWidth:	1
+*levelValue.fromVert:	player
+*levelValue.fromHoriz:	levelLabel
+
+*turn.borderWidth:	0
+*turn.fromVert:		levelLabel
+*turn.resizable:	true
+
+*error.Label:		
+*error.borderWidth:	0
+*error.justify:		left
+*error.resizable:	true
+*error.fromVert:	turn
+*error.skipAdjust:	true
+
+*quit.Label:		Quit
+*quit.fromVert:		error
+*quit.resizable:	true
+
+*label.label:		Reversi
+*label.font:		-*-new century schoolbook-bold-r-*-*-*-240-*-*-*-*-iso8859-1
+*label.showGrip:	false
+

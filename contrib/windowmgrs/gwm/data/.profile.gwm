@@ -1,0 +1,104 @@
+; GWM: an exemple of a user customisation file for the standard profile
+; =====================================================================
+
+;;File: .profile.gwm -- user-settable part of standard profile
+;;Author: colas@mirsa.inria.fr (Colas NAHABOO) -- Bull Research FRANCE
+;;Revision: 1.1 -- Nov 12 1989
+;;State: Exp
+;;GWM Version: 1.5
+
+; MISC
+;=====
+
+(? screen)			; echo # of screen
+(stack-print-level 3)		; dump only 3 stack levels on error
+
+				; list of my preferred machines
+(setq xterm-list '(mirsa falbala miracle cma cerisi))
+(setq xload-list '(mirsa falbala miracle cma cerisi))
+
+				; how to set the root pattern
+(if (= screen-type 'mono)
+	  (: screen-tile (pixmap-make "grainy"))
+	  (: screen-tile (pixmap-make white "grainy" grey)))
+
+				; put the BULL logo in the upper left corner
+				; of simple-ed-win decorations
+(setq icon-pixmap 		
+  (if (= screen-depth 1)
+	(pixmap-make white "bull_1" black "bull_2" white)
+      (= screen-depth 2)
+	(pixmap-make white "bull_1" darkgrey "bull_2" grey)
+      (pixmap-make white "bull_1" (color-make "DarkSlateBlue")
+			 "bull_2" (color-make "Green")))))
+
+; BEHAVIOR
+;=========
+
+; how to add a function (iconify on control-alt clik-right) to windows:
+
+(setq window-behavior		; for decos which build their fsm
+    (state-make
+	window-behavior
+        (on (buttonrelease 3 (together with-alt with-control))
+		{(iconify-window) (raise-window)}))))
+(setq window-fsm		; for decos using the standard fsm
+      (fsm-make (state-make window-behavior)))
+(setq window-grabs		; to trap the event for the window
+    (+ window-grabs 
+       (list (buttonpress 3 (together with-alt with-control)))))
+
+; if you do not see the grid lines when moving/resizing, do a:
+; (setq grid-color (bitwise-xor (color-make "fore") (color-make "back")))
+; with fore and back being the predominant colors on your screen
+; do the same thing with invert-color if you have problems with menus
+
+; UTILITIES
+;==========
+
+(load "dvrooms")		; duane voth's rooms
+
+; DECORATIONS
+;============
+
+; How to affect decorations to window classes
+
+(set-window any simple-win)	; Any X Client
+
+(set-window XTerm simple-ed-win)	; XTERM
+
+;  this is an example of how to define new decorations by a function:
+(: no-frame.win (with (fsm window-fsm) (window-make ()()()()())))))
+(df no-frame () no-frame.win)
+
+; and how to set them
+(set-window XLoad no-frame) ; XLOAD
+
+(set-window XClock frame-win)	; XCLOCK
+(set-window Clock frame-win)	; OCLOCK
+
+(set-icon-window any simple-icon) ; Any icon
+
+(set-icon-window XTerm term-icon)	; XTERM icon
+
+; How to affect decorations on other criterions than just class:
+				; first, define a function doing what you want
+				; in a QUOTED expression that you return
+(defun switch-xterm-decos ()
+	'(if (= "bahia" window-name)
+		(no-frame)
+	     (simple-ed-win))))
+				; and give it  to set-window:
+(set-window XTerm switch-xterm-decos)
+
+; (if it is not quoted, it will be called a the set-window time, where no
+; current window exists yet! -- resulting in a bus error sometimes)
+
+;PLACEMENTS
+;==========
+
+(set-placement XTerm user-positioning)  ; place manually xterms
+(set-icon-placement any rows.right-top.placement) ;  all icons on the right
+(set-placement XLoad rows.top-right.placement)     ; place all xloads on top
+(rows.limits rows.top-right 'start 100)   ; xload begin at 100 from right
+

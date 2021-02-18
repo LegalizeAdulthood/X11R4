@@ -1,0 +1,43 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+DOBJS = pscripta.do \
+	tscript.do \
+	tscripta.do \
+	typetext.do \
+	fcomp.do
+
+OBJS =  pscripta.o \
+	tscript.o \
+	tscripta.o \
+	typetext.o \
+	fcomp.o
+
+IHFILES = pscripta.ih \
+	tscript.ih \
+	tscripta.ih \
+	typetext.ih \
+	fcomp.ih
+
+
+NormalObjectRule()
+NormalATKRule()
+
+DynamicObject(tscript, ${UTILLIB},)
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+LibraryTarget(libtypescript.a,$(OBJS))
+InstallLibrary(libtypescript.a,${DESTDIR}/lib/atk)
+
+InstallFile(shmenu,${INSTINCFLAGS},${DESTDIR}/lib)
+
+DependTarget()
+
+NormalHelpRule()
+InstallDocs(tscript.help tsckeys.help pscript.help typproc.help, ${DESTDIR}/help)
+InstallHelpAlias(tscript, typescript tx shmenu)
+InstallHelpAlias(tsckeys, typescript-keys typescriptkeys)
+InstallHelpAlias(pscript, pipescript)
+InstallHelpAlias(typproc, typescriptproc typescriptprocs tscriptproc tscriptprocs)

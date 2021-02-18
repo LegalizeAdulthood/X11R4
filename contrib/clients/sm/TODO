@@ -1,0 +1,37 @@
+1. Create a better way of starting remote clients.
+[If anyone has any idea or code on how to start clients on a remote machine
+that is portable, please let me know. -mcw]
+
+2. Have sm Automatically save the session at regular intervals.
+
+3. Support clients that don't handle -geometry by setting up a window
+    manager convention.
+[See proposed protocol in smpro.tbl.ms. -mcw]
+
+4. Save and restore font path, key click volumn, bell volume, etc...
+
+5. Make sure the geometry is right(not off by border width or something).
+
+6. Handle icon positioning.
+
+7. Handle multiple top-level window clients
+[This requires either a SM/WM communcation convention or for the client
+to restore its own geometry on all windows other then a main one. -mcw]
+
+8. Take window gravity into account.
+
+9. Use the new alloc functions for allocating WM properties.
+
+10. Make sure things which don't have top-level windows die properly.
+[This may not be feasible. An SM, like a WM, may only be able to find out
+about things with top-level windows. -mcw]
+
+11. Support other widgets sets (Motif and Xt+)
+
+12. Implement a clone function to allow creating another instance of
+    a currently running client.
+
+13. Implement a restart function that allows you to restart a client that
+    was started by sm.
+
+14. Implement a display state function that displays the current state.

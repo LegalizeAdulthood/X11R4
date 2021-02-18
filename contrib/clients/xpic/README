@@ -1,0 +1,79 @@
+To install, 
+
+1. Edit the Imakefile to change XWSRC, DOCDIR, CC, DUMPDIR, DEFINES,
+CDEBUGFLAGS, INCLUDES, XWLIB, MALLOC, USLEEP to your taste. There are brief
+comments about each in the Imakefile.
+
+3. Edit windows.h if need be, changing DEFAULTSPACING, DEFAULTPAGEHEIGHT,
+and DEFAULTPAGEWIDTH. These are set to fill the entire screen on a Sun 3/50
+ordinary resolution or uvax3200.
+
+4. make.
+
+5. To test it, copy the file fontdesc/xpic to ~/.xpic, run it with the
+command 
+	xpic test/test.xpic 
+xpic uses the X.V11R3 font naming convention and the X.V11R3 fonts.
+
+6. make install.
+
+Notes:  You need to have the HP Widgets. The ones on the R3 tape in
+contrib/widgets are really for R2 and won't work with xpic. You need to get
+Martin Friedmann's fixed widgets. (These are available as
+Xhp.patch.works.tar.Z from various archive sites - try expo.lcs.mit.edu in
+contrib/ and ai.toronto.edu in pub/X by anonymous ftp)
+
+xpic has been tested very extensively under X11R2 and R3 on monochrome
+and color Suns and reasonably thoroughly under X11R2 on uVaxen as well.
+It has been known to compile and work on SGI's Personal Iris.
+
+Bugs
+====
+Known problems:
+	Splines leave a residue caused by a lousy rubber banding
+	method. If you think you can do better, please do.
+
+	Strange things happen on undo of block operations if you
+	happen to have selected elements that were created by the
+	operation you want to undo. This is a result of the undo
+	philosophy, and seems hard to fix - if you want to undo
+	something, undo it immediately after doing it!
+
+	Rubberbanding thick objects is SLOOOOW, especially on machines
+	without hardware floating point support. Yell at your server vendor.
+
+If you do run into a bug, please tell me exactly what happened so I can try
+to track it down - ideally, if you could narrow it down to a reproducible
+set of actions, "when I edit this file, draw a spline, undo that, draw a
+line, and then click the adjust buttons, the line vanishes" would make it
+possible to fix the bug without divination!
+
+Please do send in bug reports - chances are that I'll be able to find the
+bug a bit faster, unless it depends on specific peculiarities of your system
+- and then I might be able to offer pointers and narrow down the
+possibilities.  With a bug report, please send me the output of an 'xrdb
+-query'.
+
+Finally the disclaimer:
+This program was developed as an independent project to satisfy a need
+of the author.  This program may contain bugs and the user is cautioned
+to independently verify that the program is suitable for the user's 
+intended purpose. The program is made available on an ``as is'' basis 
+with all faults and without any implied or expressed warranties or support
+from either the author, Mark Moraes, or the University of Toronto.
+
+You are free to use xpic as you wish. You may redistribute the program
+freely, with the source. In return I ask two things.  First, that you
+do not remove the name of the author from this work.  Secondly, if
+you make changes or improvements to this program that you pass these
+changes back to the author so that everybody can benefit from the
+improvements.
+
+
+		Mark Moraes.
+		Computer Systems Research Institute, 
+		Univerity of Toronto.
+		moraes@csri.toronto.{edu,cdn}
+		moraes@csri.utoronto.ca
+		moraes@utcsri.uucp
+		{your favourite backbone}!uunet!utcsri!moraes

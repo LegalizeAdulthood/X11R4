@@ -1,0 +1,5 @@
+;jidou henkan you.
+(search /usr/local/lib/wnn/rk)
+(defmode katakana)
+1B_TOUPPER
+2B_ROMKANA

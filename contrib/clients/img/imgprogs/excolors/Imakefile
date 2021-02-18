@@ -1,0 +1,11 @@
+
+         IMGINC = ../..
+         IMGLIB = ../../imglib/libimg.a
+
+LOCAL_LIBRARIES = $(IMGLIB) $(XLIB)
+           SRCS = excolors.c
+           OBJS = excolors.o
+
+       INCLUDES = -I$(IMGINC)
+
+ComplexProgramTarget(excolors)

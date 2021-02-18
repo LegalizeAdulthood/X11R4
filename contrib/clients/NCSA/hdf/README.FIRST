@@ -1,0 +1,162 @@
+***********************************************************************
+
+                    NCSA HDF version 2.80 beta
+                           June 21, 1989
+***********************************************************************
+
+This is NCSA HDF version 2.80 beta.  It is a beta test version.  Suggestions
+and bug reports are welcome.  For the current release of HDF, see the directory
+"HDF" under anonymous ftp.
+
+Included in this version are:
+	the basic low-level routines to perform I/O to HDF files, 
+	routines to process 8-bit Raster Image Sets
+	routines to process Scientific Data Sets.
+	routines to process 24-bit Raster Image Sets
+	routines to extract slabs from Scientific Data Sets
+	routines to process Palettes (independently of images)
+	routines to process Annotations for data items
+
+NCSA HDF is the Hierarchical Data Format, a standard file format 
+developed by NCSA.  For more information about HDF, see the 
+January/February 1989 NCSA Data Link article, the document "NCSA HDF", and 
+the document "HDF  Specification".
+
+This version of HDF runs on CRAYs running UNICOS, ALLIANTs, SUNs and 
+IRIS 4D machines running Unix, MACs running MacOS, VAXen running VMS and 
+PCs running MS/DOS.
+
+Compilation of these programs produces a library of HDF routines that 
+can be called from either FORTRAN or C programs.
+
+There is an older version of HDF implemented for CRAYs running CTSS, available
+from NCSA.  This version only implements the 8-bit Raster Image Set.  If you
+are interested in this, please contact Mike Folk (see below).
+
+
+This document describes how to obtain a version of HDF for your system.   
+Other information, including hints on using HDF, descriptions of  the 
+files that comprise the distribution, and instructions on how to to 
+create a library, can be found in other README files in this directory. 
+
+There are two ways of obtaining HDF, depending on whether you are 
+accessing this system by remote login or anonymous ftp.
+Accordingly, this document contains the following sections:
+
+	Obtaining HDF using anonymous ftp
+	Obtaining HDF using remote login
+
+If you have any questions, problems or suggestions, you can contact us 
+via Email at mfolk@ncsa.uiuc.edu or likkai@ncsa.uiuc.edu,  or by writing 
+to Mike Folk, Software Development, NCSA, 605 East Springfield Ave., 
+Champaign, IL 61820, or call 217 244 0647.
+
+
+************************************************************************
+	Obtaining HDF using anonymous ftp
+************************************************************************
+
+Login to zaphod.ncsa.uiuc.edu (128.174.20.50), with a login name of 
+"anonymous". Give your real name as password.  Move to the directory 
+"HDF" by issuing the command "cd HDF" to ftp.  Now you are ready to 
+transfer files.  There are two ways to do this:
+
+1. You may use the command "get hdf.tar" to download a "tar" format 
+file.  (Be sure to set file transfer mode to binary with the command 
+"binary".)   Unpacking hdf.tar with the Unix "tar" utility on your 
+system will produce a tree of subdirectories similar to the ones in this 
+directory.    These files are described in README.SRC.  They must be
+compiled according to the instructions in that section.  (NOTE: this tar
+file is very large, as it contains source files for several systems, plus
+all of the documentation.  If space is dear, consider using the method
+described in the next paragraph.) 
+
+2. As an alternative to "tar", you may download the files you require 
+directly.  Use "cd src" to move to the directory containing source 
+files. Then, move to the directory for your system.  For instance, if 
+you are on an Alliant system, use "cd alliant".  Then use the command 
+"mget *".  This will prompt you for each of the source files, asking if 
+you want to download them. Answer "y" to each.  This will produce the 
+source files for that system in your directory.  Compile these files 
+according to the instructions in the file README.SRC.
+
+To obtain the documentation enter "cd ../../doc" to move to the 
+directory containing the documentation.  There are two subdirectories, 
+with "ascii" providing the documentation in readable form, and "word" 
+providing it in Macintosh Microsoft Word format. Each subdirectory has 
+two subdirectories, containing the user documentation (NCSA_HDF) and the 
+technical specification (HDF_Specs), respectively.  The Word files must 
+be downloaded in binary mode with Macbinary mode enabled.  The ascii 
+files may be downloaded in ascii mode.  
+
+Mac users may download the file hdf.sit, which is HDF for the Mac in 
+StuffIt format.  This is an archive containing all the files necessary 
+to install HDF on a Mac.  This must be downloaded in binary mode, using 
+the MacBinary option on NCSA Telnet.  Alternatively, the file 
+hdf.sit.hqx may be downloaded in ascii (normal) mode.  This is a StuffIt 
+file further encoded with BinHex.
+
+
+
+**********************************************************************
+		Obtaining HDF using remote login 
+**********************************************************************
+
+If you have an account on the NCSA Suns, you may download HDF in this way.
+To obtain a copy of HDF for a particular system, login to zaphod.ncsa.uiuc.edu,
+cd to the directory /sdg/ftp/HDF and use the "transfer" script.
+
+Usage: transfer systemtype hostname [directory]
+
+where systemtype is "unicos", "sun", "alliant", "iris4", "mac", 
+"vms" or "pc", hostname is the ftp name of the host you want to transfer 
+the files to, and directory is the directory on the target system in 
+which you want the files to be placed.
+
+Transfer will create the source files appropriate for the system type, 
+then open an ftp connection to the target machine and ask you to login.  
+When you do, it will automatically copy the required files to the target 
+system in the directory you specified.  It will also deposit all the 
+documentation, in Macintosh Microsoft Word format if transferring to a 
+Macintosh, in ascii format otherwise.  It will deposit all the files in 
+the same directory, as contrasted to using the "tar" approach outlined 
+in the section on anonymous ftp, which will create a tree of 
+subdirectories.
+
+
+*----------------------------------------------------------------------
+*  * NCSA HDF Version 2.80 beta source code and documentation are in the 
+* public domain.  Specifically, we give to the public domain all rights 
+* for future licensing of the source code, all resale rights, and all 
+* publishing rights. 
+*  
+* We ask, but do not require, that the following message be included in
+* all derived works: 
+*  
+* Portions developed at the National Center for Supercomputing 
+* Applications at the University of Illinois at Urbana-Champaign. 
+*  
+*  
+* THE UNIVERSITY OF ILLINOIS GIVES NO WARRANTY, EXPRESSED OR IMPLIED, 
+* FOR THE SOFTWARE AND/OR DOCUMENTATION PROVIDED, INCLUDING, WITHOUT 
+* LIMITATION, WARRANTY OF MERCHANTABILITY AND WARRANTY OF FITNESS FOR 
+* A PARTICULAR PURPOSE. 
+*  
+* If you want to see more software like NCSA HDF, you need to send us a 
+* letter, email or US mail, telling us what you are doing with NCSA HDF. 
+* We need to know: 
+* 1) What science you are working on (an abstract of your work would be 
+* fine); 
+* 2) How NCSA HDF has helped you, e.g., whether it has increased your 
+* productivity or allowed you to perform operations you were unable to 
+* do before. 
+*  
+* We encourage you to cite the use of NCSA HDF , and any other NCSA 
+* software you have used, in your publications.  A bibliography of your 
+* work would be extremely helpful. 
+*  
+* This is a new kind of shareware.  You share your science and successes
+* with us, and we attain the resources necessary to share more software 
+* like NCSA HDF with you. 
+* 
+***********************************************************************

@@ -1,0 +1,11 @@
+xpic.doc is an unformatted document on xpic. Use lpr.
+
+test.psfig is troff document using the -me macros, including
+PostScript from x2ps using psfig.
+
+test.latex is a a sample document in LaTeX using \special to include 
+PostScript from x2ps. Note that unlike psfig, you need to explicitly
+specify, vspace.
+
+tex contains a LaTeX document on using xpic figures in LaTeX using 
+psfig and tpic.

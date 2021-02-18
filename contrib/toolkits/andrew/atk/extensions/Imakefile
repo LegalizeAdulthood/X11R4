@@ -1,0 +1,54 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+
+DOBJS = compile.do \
+	dsearch.do \
+	ezdiff.do \
+	filter.do \
+	isearch.do \
+	spell.do \
+	tags.do \
+	deskey.do
+
+IHFILES = compile.ih \
+	dsearch.ih \
+	ezdiff.ih \
+	filter.ih \
+	isearch.ih \
+	spell.ih \
+	tags.ih \
+	deskey.ih
+
+
+NormalObjectRule()
+NormalATKRule()
+
+DynamicObject(deskey, ${UTILLIB},)
+DynamicObject(compile, ${BASEDIR}/lib/atk/libbasics.a,)
+DynamicObject(filter, ${UTILLIB},)
+
+InstallClassFiles($(DOBJS), ${IHFILES})
+
+InstallFile(compile.tpl, ${INSTINCFLAGS}, ${DESTDIR}/lib/tpls)
+
+DependTarget()
+
+NormalHelpRule()
+InstallDocs(tags.help ezdiff.help compile.help search.help ezdproc.help comproc.help desproc.help dsrproc.help isrproc.help ftrproc.help splproc.help tgsproc.help, ${DESTDIR}/help)
+InstallHelpAlias(ftrproc, filterproc filterprocs)
+InstallHelpAlias(splproc, spellproc spellprocs)
+InstallHelpAlias(tgsproc, tagsproc tagsprocs)
+InstallHelpAlias(ezdproc, ezdiffproc ezdiffprocs ez-diffproc)
+InstallHelpAlias(comproc, compileproc compileprocs)
+InstallHelpAlias(desproc, deskey deskeyproc deskeyprocs)
+InstallHelpAlias(dsrproc, dsearch dsearchproc dsearchprocs)
+InstallHelpAlias(isrproc, isearch isearchproc isearchprocs)
+InstallHelpAlias(ezdiff, ez-diff)
+InstallHelpAlias(search, searching)
+InstallHelpAlias(tags, tag)
+
+MkdirTarget(${DESTDIR}/doc/atk/extensions)
+
+InstallDocs(ezdiff.doc compile.doc deskey.doc dsearch.doc isearch.doc filter.doc spell.doc tags.doc,${DESTDIR}/doc/atk/extensions)

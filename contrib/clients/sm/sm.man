@@ -1,0 +1,117 @@
+.TH SM 1 
+.SH NAME
+sm \- a session manager for x
+.SH SYNOPSIS
+sm [-ignore] [-print] [-debug] [-display hostname:dpy] [normal Xaw options]
+.SH DESCRIPTION
+.I sm
+is a convenient way to save the state of your "desktop" and
+restore it. 
+.PP
+The state is saved in a file called
+.I sm/State
+which is located in your home directory.
+.I Sm
+executes each of the commands in this file at startup time.
+If you don't have 
+.I sm/State
+in your home directory,
+.I sm
+first tries to use the file
+.I /usr/lib/X11/sm/DefaultState.
+If that file doesn't exist then,
+.I sm
+executes "xterm -C".
+.SH OPTIONS
+.TP
+.B \-ignore
+Ignore any existing sm/State file.
+.TP
+.B \-print
+Just print out that current state.
+.TP
+.B \-debug
+Turn on debugging.
+.SH STARTING AND QUITING
+.I sm
+is normally started by
+.I xinit
+or
+.I xdm after running
+.I xrdb
+and starting an ICCCM compliant window manager(such as X11R4's twm).
+.PP
+If
+.I sm
+was started by
+.I xinit
+or 
+.I xdm,
+quitting
+.I sm
+shutdowns the X Window System server.
+.I sm
+has a small window with a button that looks like a stop sign.
+When you click
+on the shutdown button a confirmation box pops up; if you click on the
+``Save State'' button then
+.I sm
+will save the state of the system.
+.SH OPTIONS
+.I sm
+takes all of the standard toolkit options.  In addition, you may
+ignore the startup file with -ignore or you can write the current
+configure to stdout using -print.
+.SH "X DEFAULTS"
+The available names and classes for the widgets used are:
+.RS
+.nf
+.ta 4i
+NAME			CLASS
+print			Boolean
+ignore			Boolean
+stateFile		String
+defaultState		String
+shell			String
+defaultcommand		String
+geometryString		String
+iconicString		String
+geometryString		String
+iconPixmap		Pixmap
+geometry		Geometry
+homeForm		Form
+homeForm.quitButton	Form.CommandButton
+confirmForm.confirmLabel	Form.Label
+confirmForm.yesButton		Form.Label
+confirmForm.noButton.label:	Form.label
+confirmForm.checkBoxLabel.label: Form.label
+.fi
+.RE
+.PP
+These can be used to set fonts, colors, etc. tailored to the user's
+needs.  As a color example:
+.PP
+.RS
+.ta 4i
+.nf
+sm*quitButton.background:			mauve
+sm*yesButton.background:			peach
+sm*noButton.background:				plum
+sm.geometry:					-1-100
+sm*homeForm.font:				vbee-36
+sm*confirmForm.font:				vbee-36
+.fi
+.RE
+.SH FILES
+/usr/lib/X11/sm/DefaultState
+~/sm/State
+.SH BUGS
+.B Sm
+doesn't  iconic windows or window gravity.
+.SH AUTHOR
+.ta 1.2i
+Mike Wexler
+.br
+	mikew@fx.com
+
+

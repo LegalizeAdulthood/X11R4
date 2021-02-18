@@ -1,0 +1,428 @@
+1c1
+< .TH XTERM 1 "25 October 1988" "X Version 11"
+---
+> .TH XTERM 1 " 7 November 1989" "X Version 11"
+222c222
+< cause the window to be repositioned automatically in the normal postion at the
+---
+> cause the window to be repositioned automatically in the normal position at the
+264c264
+< This option indicates that a visual bell is prefered over an audible one.
+---
+> This option indicates that a visual bell is preferred over an audible one.
+286c286
+< This option specifies the prefered size and position of the Tektronix window.
+---
+> This option specifies the preferred size and position of the Tektronix window.
+290c290
+< This option specifies the prefered position of the icon window.
+---
+> This option specifies the preferred position of the icon window.
+316c316
+< instead of the user's shell.  \fBThis option has been superceeded by the new
+---
+> instead of the user's shell.  \fBThis option has been superceded by the new
+358c358
+< This option specifies the prefered size and position of the VT102 window;
+---
+> This option specifies the preferred size and position of the VT102 window;
+376c376
+< Specifies the prefered size and position of the application when iconified.
+---
+> Specifies the preferred size and position of the application when iconified.
+457c457
+< Specifies the prefered size and position of the VT102 window.
+---
+> Specifies the preferred size and position of the VT102 window.
+460c460
+< Specifies the prefered size and position of the Tektronix window.
+---
+> Specifies the preferred size and position of the Tektronix window.
+713c713
+< To distinquish a pointer button from a key, the high bit of the character is
+---
+> To distinguish a pointer button from a key, the high bit of the character is
+785c785
+< X environments differ in their security conciousness.  The servers provided
+---
+> X environments differ in their security consciousness.  The servers provided
+911a912,919
+> .B macro-string(\fImacro-string\fB)
+> Rebinds the key or key sequence to the macro-string value.
+> When this action is executed, the macro string is processed, which normally
+> inserts a string into the input stream.
+> This capability is useful for emulating the wide variety of character sequences
+> that are produced by a button press on various terminals.
+> For more details, see the section "MACRO STRINGS" below.
+> .TP 15
+994a1003,1368
+> .SH "MACRO STRINGS"
+> .PP
+> Xterm includes a fairly general macro-string processing capability intended
+> to allow emulation of the button-press sequences of just about any terminal
+> type.
+> The macro-string processor is a simple stack machine which interprets a
+> macro string.
+> The macro string can contain commands which access state information
+> (such as the X and Y location of the mouse), manipulate the stack (such
+> as doing arithmetic operations), and insert text into the terminal
+> input buffer (which is the desired end result of the macro string).
+> There are rudimentary programming commands (conditional execution,
+> subroutine calls), built-in primitives and macro strings, and user-definable
+> macro strings.
+> .PP
+> A macro string is interpreted one token at a time.
+> Operations are expressed in RPN, i.e. operands first (which are placed onto
+> the stack) followed by operation (which operates on the stack).
+> White space in a macro string is ignored.
+> If there is an error in processing a macro string, the Bell() function
+> is called.
+> .PP
+> There are two data types: integer and string.
+> Boolean operations result in an integer where FALSE is represented by
+> 0 and TRUE is represented by 1.
+> When interpreting an integer as a Boolean, 0 is considered
+> FALSE and anything else is considered TRUE.
+> When interpreting a string as a Boolean, NULL or the empty string is
+> considered FALSE and anything else is considered TRUE.
+> .PP
+> In the descriptions below, the term TOS represents the value of the
+> top item on the stack, TOS-1 is the next-to-top, etc.
+> .PP
+> The macro-string commands are as follows:
+> .TP 15
+> .B "\'string\'"
+> Single-quoted string.
+> Pushes the quoted string onto the stack.
+> The string can contain any character except NULL and single quote.
+> There is no backslash notation and no provision for including a single
+> quote within a single-quoted string.
+> You can use a double-quoted string if you need to include a single
+> quote in your string.
+> Note also that the various parsers used to load this string (i.e. the
+> C compiler if it is a built-in macro string, or the resource manager if
+> it is from a resource or default file) can handle backslash notation, so
+> you can include control characters in a quoted string.
+> .TP 15
+> .ft 3
+> "string"
+> .}N
+> Double-quoted string.
+> Pushes the quoted string onto the stack.
+> This behaves in exactly the same way as a single-quoted string, except that
+> when using a double-quoted string you can include single quotes in the
+> string but not double quotes.
+> .TP 15
+> .B "printf formatting"
+> You can convert TOS to a string using standard printf formatting commands.
+> For example, if TOS is the integer 123, then the command "%04d" would
+> replace TOS with the string "0123", and the command "%X" would replace
+> TOS with the string "7B".
+> The formatting string is only a single "%" sequence, and only converts
+> the top item on the stack to a string.
+> .TP 15
+> .B "+"
+> Add or catenate.
+> If TOS and TOS-1 are both integers,
+> replaces TOS and TOS-1 with (TOS-1 + TOS).
+> If TOS and TOS-1 are both strings, replaces TOS and TOS-1 with
+> the catenation of TOS-1 and TOS.
+> .TP 15
+> .B "-"
+> Subtract.
+> Replaces TOS and TOS-1 with (TOS-1 - TOS).
+> TOS and TOS-1 must both be integers.
+> .TP 15
+> .B "*"
+> Multiply.
+> Replaces TOS and TOS-1 with (TOS-1 * TOS).
+> TOS and TOS-1 must both be integers.
+> .TP 15
+> .B "/"
+> Integer divide.
+> Replaces TOS and TOS-1 with (TOS-1 / TOS).
+> TOS and TOS-1 must both be integers.
+> .TP 15
+> .B "<<"
+> Left shift.
+> Replaces TOS and TOS-1 with (TOS-1 << TOS).
+> TOS and TOS-1 must both be integers.
+> .TP 15
+> .B ">>"
+> Right shift.
+> Replaces TOS and TOS-1 with (TOS-1 >> TOS).
+> TOS and TOS-1 must both be integers.
+> .TP 15
+> .B "|"
+> Bitwise OR.
+> Replaces TOS and TOS-1 with (TOS-1 | TOS).
+> TOS and TOS-1 must both be integers.
+> .TP 15
+> .B "||"
+> Logical OR.
+> Replaces TOS and TOS-1 with (TOS-1 || TOS).
+> TOS and TOS-1 are independently considered as Booleans.
+> .TP 15
+> .B "&"
+> Bitwise AND.
+> Replaces TOS and TOS-1 with (TOS-1 & TOS).
+> TOS and TOS-1 must both be integers.
+> .TP 15
+> .B "&&"
+> Logical AND.
+> Replaces TOS and TOS-1 with (TOS-1 && TOS).
+> TOS and TOS-1 are independently considered as Booleans.
+> .TP 15
+> .B "^"
+> Bitwise XOR.
+> Replaces TOS and TOS-1 with (TOS-1 ^ TOS).
+> TOS and TOS-1 must both be integers.
+> .TP 15
+> .B "^^"
+> Logical XOR.
+> Replaces TOS and TOS-1 with (TOS-1 ^^ TOS).
+> TOS and TOS-1 are independently considered as Booleans.
+> .TP 15
+> .B "!"
+> Logical NOT.
+> Replaces TOS by the logical inverse of TOS when considered as a Boolean.
+> .TP 15
+> .B "~"
+> Bitwise invert.
+> Replaces TOS by the bitwise inversion of TOS.
+> TOS must be an integer.
+> .TP 15
+> .B number
+> Numbers can be entered in decimal, octal or hexadecimal radix.
+> A simple string of digits, not starting with a 0, pushes a decimal
+> value onto the stack.
+> If the first digit in the string is 0 and the remainder of digits are
+> between 0 and 7, the number is input as an octal number and pushed onto
+> the stack.
+> If the first digit in the string is 0 and it is immediately followed
+> by x or X, the number is input as a hexadecimal number and pushed onto
+> the stack.
+> .TP 15
+> .B b
+> Pushes the button field from a button event onto the stack.
+> .TP 15
+> .B c
+> Pushes the cursor column from a key or button event onto the stack.
+> The leftmost column is column 0.
+> .TP 15
+> .B C
+> Pushes the column width of the screen onto the stack.
+> .TP 15
+> .B h
+> Pushes the pixel height of a character onto the stack.
+> .TP 15
+> .B H
+> Pushes the pixel height of the screen onto the stack.
+> .TP 15
+> .B i
+> Places TOS (must be a string) into the terminal input buffer
+> and pops it off the stack.
+> .TP 15
+> .B k
+> Pushes the keycode field from a key event onto the stack.
+> .TP 15
+> .B l
+> Puts the results of XLookupString on a key event onto the stack.
+> If XLookupString returns an error or no string, an empty string is
+> pushed onto the stack.
+> .TP 15
+> .B M
+> Pop TOS (which must be a string) and interpret the macro of that name.
+> The macro may be either a primitive or built-in (both compiled into xterm)
+> or a user-defined macro.
+> User defined macros override built-in macros, but not primitives.
+> The list of primitives and built-in macros is given below.
+> .TP 15
+> .B r
+> Pushes the cursor row from a key or button event onto the stack.
+> The topmost row is 0.
+> .TP 15
+> .B R
+> Pushes the row height of the screen onto the stack.
+> .TP 15
+> .B s
+> Pushes the state field from a key or button event onto the stack.
+> .TP 15
+> .B w
+> Pushes the pixel width of a character onto the stack.
+> .TP 15
+> .B W
+> Pushes the pixel width of the screen onto the stack.
+> .TP 15
+> .B x
+> Pushes the x pixel value from a key or button event onto the stack.
+> .TP 15
+> .B X
+> Pushes to x_root pixel value from a key or button event onto the stack.
+> .TP 15
+> .B y
+> Pushes the y pixel value from a key or button event onto the stack.
+> .TP 15
+> .B Y
+> Pushes the y_root pixel value from a key or button event onto the stack.
+> .TP 15
+> .B Z
+> Conditionally returns from (terminates) a macro.
+> Pops TOS and interprets it as a Bool; if TRUE, returns from the macro,
+> else does nothing.
+> .PP
+> Primitive functions are compiled into Xterm and can not be overridden.
+> The primitives are:
+> .TP 15
+> .B error
+> Generates an error; calls Bell() and aborts all macro string processing.
+> This is typically used with an "if" statement to abort a macro if
+> an error condition occurs.
+> .TP 15
+> .B exch
+> Exchanges TOS with TOS-1.
+> .TP 15
+> .B if
+> Examines TOS-1 as a Boolean; if TRUE, executes the macro named at TOS,
+> else does nothing.
+> In either case, the two values are popped off the stack before the
+> test is performed.
+> .TP 15
+> .B ifElse
+> Examines TOS-2 as a Boolean; if TRUE, executes the macro named at TOS-1,
+> else executes the macro named at TOS.
+> In either case, the three values are popped off the stack before the
+> test is performed.
+> .TP 15
+> .B limit
+> Limits TOS-2 to be between TOS-1 and TOS.
+> If TOS-2 is less than TOS-1, replaces it with TOS-1.
+> If TOS-2 is greater than TOS, replaces it with TOS.
+> All three items must be integers.
+> Pops two items off the stack, leaving only the limited number.
+> .TP 15
+> .B ord
+> Converts a one-character string at TOS to an integer with the
+> equivalent integer value (essentially a "scanf %c").
+> .TP 15
+> .B pop
+> Pops one item off the stack and discards it.
+> .TP 15
+> .B push
+> Pushes the top item onto the stack again, duplicating it.
+> .TP 15
+> .B tekScale
+> Pushes the tekScale field of the screen onto the stack.
+> Useful for emulating the Tektronix mode buttons.
+> .TP 15
+> .B toBool
+> Converts TOS to a Boolean (integer 0 or 1).
+> 
+> .PP
+> There are a number of built-in macros, which are simply macro strings
+> which are compiled into xterm.
+> These built-ins can be overridden by a user defined macro.
+> The built-ins are listed below, with the definitions of some given
+> as examples.
+> .TP 15
+> .B SeikoButton
+> Generates the character sequence for button presses on a Seiko terminal.
+> There are a number of associated built-ins that are a part of this package:
+> SeikoGetX, SeikoGetY, SeikoSub1, SeikoEnd.
+> To set up your xterm so that it generates Seiko character sequences for
+> the buttons when the shift key is held down, you could add the following
+> lines to your resource file:
+> .sp
+> .Ds
+>  *VT100.translations: #override \\n\\
+> 	Shift <BtnDown> : macro-string("'SeikoButton'M") \\n\\
+> 	Shift <BtnUp> : ignore()
+> .De
+> .TP 15
+> .B X10Button
+> Generates the character sequence that the X10 xterm generated for button
+> pushes.
+> This macro is implemented with this string:
+> .sp
+> .Ds
+>  '\\033[M'i31b+%ci33c+%ci33r+%ci
+> .De
+> .TP 15
+> .B VT200ButtonPress
+> Generates the character sequence for a VT200 button press.
+> This macro is implemented with this string:
+> .sp
+> .Ds
+>  '\\033['iM31'VT200KeyState'M+b+%ci33c+%ci33r+%ci
+> .De
+> .TP 15
+> .B VT200KeyState
+> Called by the VT200ButtonPress macro.
+> This macro is implemented with this string:
+> .sp
+> .Ds
+>  s5&s8&2>>+
+> .De
+> .TP 15
+> .B TekButton
+> Generates the character sequence for a Tektronix button press.
+> Associated macros are TekGetBchar, TekGetlbchar, TekUcase, and TekSub1.
+> .TP 15
+> .B TestConst
+> Generates a character string with a number of screen-dependent values,
+> implemented with this string:
+> .sp
+> .Ds
+>  'h='ih%di' w='iw%di' H='iH%di' W='iW%di' R='iR%di' C='iC%di'\\n'i
+> .De
+> .TP 15
+> .B TestButton
+> Generates a character string with a number of position-dependent values,
+> suitable for binding to a button,
+> implemented with this string:
+> .sp
+> .Ds
+>  'x='ix%di' y='iy%di' X='iX%di' Y='iY%di\\
+>  ' r='ir%di' c='ic%di' b='ib%di' s='is%xi'\\n'i
+> .De
+> .TP 15
+> .B TestKey
+> Generates a character string with a number of position-dependent values,
+> suitable for binding to a key,
+> implemented with this string:
+> .sp
+> .Ds
+>  'x='ix%di' y='iy%di' X='iX%di' Y='iY%di\\
+>  ' r='ir%di' c='ic%di' k='ik%di' s='is%xi' l=\\"'ili'\\"\\n'i
+> .De
+> .PP
+> You could add the following bindings to execute the test macros to
+> see how the values look:
+> .sp
+> .Ds
+>  *VT100.translations: #override \\n\\
+> 	<Key>F5 : macro-string("'TestConst'M") \\n\\
+> 	<Key>F6 : macro-string("'TestKey'M")
+> .De
+> .PP
+> User defined macros can be specified in your resource or Xdefaults file.
+> Macros are searched for as subresources of the xterm widget, where the
+> subobject name is "macroString" and the subresource name is the macro name.
+> For example, to define a macro named foo that prints out the string
+> "button" and the button number, you could put this line in your resource file:
+> .sp
+> .Ds
+>  *VT100.macroString.foo: 'button 'i b%di
+> .De
+> .PP
+> You could then bind this macro to a key with a line like:
+> .sp
+> .Ds
+>  *VT100.translations: #override \\n\\
+> 	<Key>F7 : macro-string("'foo'M")
+> .De
+> 
+1125c1499
+< Consortium), Dave Serisky (HP)
+---
+> Consortium), Dave Serisky (HP), Jim McBeath (Silicon Compilers)

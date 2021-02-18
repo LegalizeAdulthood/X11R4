@@ -1,0 +1,36 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+DOBJS = hash.do rofftext.do rofftxta.do
+IHFILES = hash.ih rofftext.ih rofftxta.ih
+
+NormalObjectRule()
+NormalATKRule()
+NormalYaccRule()
+
+DynamicMultiObject(rofftext.do, rofftext.o roffcmds.o roffutil.o roffstyl.o num.o roffchrs.o,,)
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+InstallLink(runapp, ${DESTDIR}/bin/rofftext)
+
+InstallFile(roff.tpl, ${INSTINCFLAGS}, ${DESTDIR}/lib/tpls)
+
+DependTarget()
+MkdirTarget(${DESTDIR}/doc/atk/rofftext)
+NormalHelpRule()
+InstallDocs(rofftxt.help,${DESTDIR}/help)
+InstallHelpAlias(rofftxt,rofftext)
+InstallDocs(rofftext.doc,${DESTDIR}/doc/atk/rofftext)
+
+/*
+These dependencies are included since we don't know how to
+generate dependencies on yacc files.
+*/
+
+num.o: num.y rofftext.ih
+num.o: ${BASEDIR}/include/atk/text.ih
+num.o: ${BASEDIR}/include/atk/dataobj.ih
+num.o: ${BASEDIR}/include/atk/observe.ih
+

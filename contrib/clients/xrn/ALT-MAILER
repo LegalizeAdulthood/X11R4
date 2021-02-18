@@ -1,0 +1,39 @@
+Return-Path: tengi@Princeton.EDU
+Received: from Princeton.EDU by shambhala.Berkeley.EDU (5.61/1.28)
+	id AA18073; Fri, 10 Nov 89 08:45:47 -0800
+Received: from idunno.Princeton.EDU by Princeton.EDU (5.58+++/2.25/mailrelay)
+	id AA17524; Fri, 10 Nov 89 11:42:07 EST
+Received: from localhost by idunno.Princeton.EDU (5.61/1.92)
+	id AA01989; Fri, 10 Nov 89 11:43:41 -0500
+Message-Id: <8911101643.AA01989@idunno.Princeton.EDU>
+To: Rick L. Spickelmier <ricks@shambhala.Berkeley.EDU>
+Cc: tengi@Princeton.EDU
+Subject: Re: XRN and mail aliases 
+In-Reply-To: Your message of Wed, 27 Sep 89 09:44:37 -0700.
+             <8909271644.AA06010@shambhala.Berkeley.EDU> 
+Date: Fri, 10 Nov 89 11:43:39 -0500
+From: tengi@Princeton.EDU
+
+Rick,
+    I tried your solution to my aliases problem (as I use mh here) and
+it worked just fine.  Since I have my mh profile set up to use my
+aliases file automatically, I didn't need to pass the shell script an
+argument.  Bottom line is this in my X resources:
+
+xrn.mailer:     /u/tengi/bin/xrn-mh-mailer
+
+and this in /u/tengi/bin/xrn-mh-mailer:
+
+#! /bin/csh
+cat > /tmp/mail.${USER}.$$
+send /tmp/mail.${USER}.$$
+exit 0
+
+
+Naturally, you need to be sure that /tmp/#* files geventually get
+removed (we do it nightly with cron) since send renames file to #file
+on completion.  Thanks for the idea.  It works great here!
+
+						/Chris
+
+

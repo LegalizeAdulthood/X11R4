@@ -1,0 +1,6 @@
+LOCAL_LIBRARIES = 
+SRCS = prtype.c print11.c table11.c decode11.c server.c fd.c common.c scope.c
+OBJS = scope.o common.o fd.o server.o decode11.o table11.o print11.o prtype.o
+TOP=/x11
+
+ComplexProgramTarget(xscope)

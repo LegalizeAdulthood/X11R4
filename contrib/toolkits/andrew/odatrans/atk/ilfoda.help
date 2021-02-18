@@ -1,0 +1,59 @@
+\begindata{text,268962644}
+\textdsversion{12}
+\template{help}
+\chapter{ileafoda
+
+}
+\section{What ileafoda is
+
+}\leftindent{
+ileafoda is a translator from from Interleaf format to ODA format. It only 
+exchanges style structure. See the documentation for \italic{atkoda}
+for more information.
+
+}
+\section{Starting ileafoda
+
+}\leftindent{
+ileafoda reads from standard input and produces standard output.
+
+
+}\section{Warnings
+
+}\leftindent{
+This is a prototype translator.
+
+}\leftindent{
+}
+\section{Related tools}  
+
+
+Select (highlight) one of the italicized names and choose "Show Help on 
+Selected Word" from the pop-up menu to see the help file for:
+
+
+\leftindent{\italic{ODA}
+
+\italic{ODA-Toolkit
+
+}\italic{Raster}\italic{-Toolkit
+
+Local-Toolkit}
+
+\italic{atkoda}
+
+\italic{odaatk}
+
+\italic{odatroff}}
+
+\leftindent{\italic{ileafoda}}
+
+\leftindent{\italic{proda}}
+
+\leftindent{\italic{prodif}}
+
+\leftindent{\italic{prtext}}
+
+\leftindent{\italic{convert}
+
+}\enddata{text,268962644}

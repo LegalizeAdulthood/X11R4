@@ -1,0 +1,35 @@
+.TH IMAGESTONES 1 "June 1989" "X Version 11"
+.SH NAME
+imagestones -- tests the performance of XPutImage
+.SH SYNOPSIS
+.B "imagestones"
+[-option ...]
+.SH DESCRIPTION
+.PP
+MORE WORDS FOR DESCRIPTION???
+.PP
+.SH OPTIONS
+.TP 8
+.B \-wd \fInum\fP
+This option specifies the width of the image.  The default value is 32.
+.TP 8
+.B \-ht \fInum\fP
+This option specifies the height of the image.  The default value is 32.
+.TP 8
+.B \-XYformat
+This option specifies the use of the XYPixmap format.  The default value
+is ZFormat.
+.TP 8 
+.B \-ZFormat
+This option specifies the use of the ZPixmap format.  The default value
+is ZFormat.
+.TP 8
+.B \-help
+This option displays the help menu.
+.TP 8
+.B \-h
+This option displays the help menu.
+.SH "SEE ALSO"
+X(1)
+.SH "COPYRIGHT"
+International Business Machines--1989

@@ -1,0 +1,28 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+
+LOCALINCLUDES = -I$(BASEDIR)/include/ams
+
+OBJS = gl.o gle.o mc.o mcb.o mcbe.o nns.o st.o stb.o stbe.o
+
+LIBS = $(BASEDIR)/lib/libmssrv.a \
+	$(BASEDIR)/lib/libmsshr.a \
+	$(BASEDIR)/lib/libeli.a \
+	$(BASEDIR)/lib/librxp.a \
+	${MALLOCLIB} \
+	$(BASEDIR)/lib/libmail.a \
+	$(BASEDIR)/lib/liberrors.a \
+	$(UTILLIB) \
+	${PRSLIB} \
+	$(RESOLVLIB)
+
+NormalObjectRule()
+
+ProgramTarget(nns, $(OBJS), $(LIBS),)
+
+InstallProgram(nns, $(DESTDIR)/etc)
+
+DependTarget()
+

@@ -1,0 +1,5683 @@
+-*-Outline-*-
+
+
+
+
+
+
+				  WINTERP:
+  An object-oriented rapid prototyping, development and delivery environment
+  for building user-customizable applications with the OSF Motif UI Toolkit.
+
+		    Version 1.0 (X11r4 contrib release)
+
+			     December 15 1989.
+
+
+				    by
+			      Niels P. Mayer
+		       Hewlett-Packard Laboratories,
+		   Human-Computer Interaction Department
+
+			     Mailing Address:
+			      Hewlett Packard
+			     Niels Mayer 1U/17
+			      P.O. Box 10490
+			 Palo Alto, CA  94303-0969
+				     
+			      E-Mail Address:
+		       internet: mayer@hplabs.hp.com
+			    uucp: hplabs!mayer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	Copyright (c) 1989 Hewlett-Packard Company (by Niels Mayer)
+	   XLISP version 2.1, Copyright (c) 1989, by David Betz.
+  Document Version: $Header: winterp.doc,v 1.2 89/12/19 05:39:45 mayer Exp $
+
+* Introduction
+
+** Why a Widget INTERPreter?
+
+WINTERP is an interpretive, interactive environment for rapid prototyping
+applications using the OSF Motif UI Toolkit. The name "WINTERP" stands for
+Widget INTERPreter, and that's exactly what WINTERP is -- an interpretive
+language that allows programmers to interactively create interfaces using
+the capabilities of the Motif widgets and the X11 toolkit intrinsics.
+Widgets in the Xtoolkit are dynamic and "interpretive" by nature of their
+object-oriented, message passing style of design; they become maximally
+useful when driven by an interactive environment like WINTERP.
+
+Neither traditional C Xtoolkit applications, nor UIL applications really
+take advantage of the interpretive nature of the Xtoolkit. When programming
+in C, one is forced to go through tedious compile+edit+test cycles even for
+making a trivial change. X and the Xtoolkit provide a fancy widget resource
+manager that allow you to shorten the compile+edit+test cycle -- the
+Xtoolkit "reinterprets" it's resource settings as a whole each time the
+application is brought up; compile+edit+test is shortened to edit+test.
+UIL extends the level of data-interpretation a little bit further by
+allowing the system to read a structured description of the widget
+hierarchy and resources. UIL claims this will allow applications to be
+written in such a way that the interface can be drastically altered by
+changing the description file. In reality, only the most trivial sorts of
+layout changes are possible with UIL because it is not a programming
+language, and thus cannot allow you alter the program semantics that are
+invariably intertwined with the semantics of the user interface.
+Furthermore, UIL still uses compilation, rather than interpretation, which
+means application prototyping is still as tedious as ever.  WINTERP
+provides both an interpretive interface to the Xtoolkit widgets, and a real
+programming language -- this makes it ideal for prototyping and/or
+customizing the layout, look, AND functionality of an application.
+
+WINTERP's interpreter is based on David Betz's popular XLISP, a small,
+fast, C-implemented interpreter with Common Lisp syntax and extensions for
+object oriented programming. Full-blown Lisp systems such as Common Lisp
+have proven to be very effective prototyping environments and are commonly
+used as platforms for building User-Interface Management Systems (UIMS).
+WINTERP attempts to deliver the advantages of Lisp to those that cannot
+afford the expenses, both monetary and computational, of large systems like
+Common Lisp.
+
+Lisp is traditionally associated with unwieldy, large, slow and expensive
+systems -- Lisp's flexibility has it's costs. One solution to these
+problems has been to create special operating systems and hardware to
+better support Lisp: The Lisp Machine -- a very expensive, and very
+specialized system.  Lisp Machines are losing ground to the general purpose
+workstation running UN*X: such machines can be built at relatively low cost
+with enough compatibility between vendors that a growing number of UN*X
+applications can be run on a variety of hardware vendor platforms.
+Unfortunately, attempts at building Lisp-based applications that are good
+citizens on UN*X workstations have generally failed because systems such as
+Common Lisp (CL) create huge, resource-hungry processes that swap/thrash
+out all other applications -- not acceptable if you are trying to create an
+application that works alongside other applications running in a
+multiprocessing system like UN*X.  While CL platforms will continue to make
+excellent prototyping platforms, delivery of applications embedded in a CL
+environment is unacceptable. Attempts at recoding CL prototypes under a
+delivery platform (e.g. just using UN*X & C) is time consuming, and changes
+the feel and the flexibility of an application: applications prototyped
+with Common Lisp assume and make use of the underlying features of the Lisp
+system; these assumptions must be removed from the design or be recoded in
+the delivery language.
+
+Fortunately, another class of Lisp application has been successful in a
+general purpose computational environment -- a hybrid architecture of Lisp
+and C giving the flexibility of a Lisp system while allowing delivery of a
+relatively small and efficient process. Under UN*X, Richard Stallman has
+created a highly-customizable editor-based programming environment called
+GNUEMACS -- this is a system that delivers to the UN*X user a text editor
+oriented UI that is the foundation of the Lisp Machine programming
+environment. Similarly, under MSD*S successful programs like AUTOCAD
+contain a Lisp customization language embedded in a CAD program.  The
+approach taken by such hybrid applications is that a small mini-Lisp
+interpreter serves to "glue" together efficient C-implemented primitives
+that make up an application.  User-customization and prototyping under such
+a hybrid system amounts to using the Lisp interpreter to reconfigure
+C-implemented building blocks in order to change, modify, or improve the
+functionality of the system. Such an application architecture follows the
+"80/20 heuristics" for program execution -- low level routines that take up
+most of the computational resources are coded in C, and are therefore fast,
+and efficient in memory use (no garbage collections caused by low-level
+code). The Lisp interpreter is relatively slow in comparison to a compiled
+C program, but it only serves to flexibly glue together components of the
+"outer loop" of a program.
+
+WINTERP was written as a platform for building such hybrid Lisp/C systems;
+XLISP makes this possible because, unlike large Common Lisp systems,
+integrating arbitrary C-implemented functionality with the Lisp interpreter
+is easy.  WINTERP itself is an example of the feasability of hybrid
+programming techniques -- WINTERP's X/Motif functionality is achieved
+through XLISP interfaces to the C-implemented Motif toolkit. WINTERP is
+thus aimed at the class of application that cannot afford to carry along
+all the excesses of Common Lisp, but does require an embedded programming
+language for user-customization.
+
+WINTERP supports an evolutionary program lifecycle: WINTERP application
+writers will rapidly prototype new functionality by using the mini-Lisp
+interpreter to interactively refine the layout, looks, and functionality of
+the user interface.  Once functionality has stabilized, a programmer will
+be able to improve the application's efficiency by reimplementing the
+functionality in C while maintaining the same Lisp programmatic interface
+to the rest of the system. These new primitives will then serve as the
+building blocks for the next layer of prototyping and customization... The
+end result, if designed carefully, is a relatively small and fast
+application that provides the right set of building blocks and hooks to
+permit end-users to customize the look and feel of the application.
+
+WINTERP is also useful for rapid prototyping applications that do not need
+to be delivered with an embedded customization language. Systems with such
+delivery goals may still use the aforementioned application lifecycle. As
+the application matures and Lisp prototype code stabilizes, the program can
+gradually be recoded entirely into C, eventually allowing a "normal" C
+program to be delivered.
+
+
+** Why I built WINTERP:
+
+I built WINTERP as a platform for our project in designing, building, and
+evaluating Computer Supported Cooperative Work (CSCW) and Collaborative
+Multimedia Systems. The usefulness of such systems can rarely be
+demonstrated by demoing "laboratory curiosity" applications; evaluating
+such technologies requires applications be delivered to early adopters of
+the technology with a minimum of extraneous overhead (e.g. runtime
+licenses, huge systems) and that the delivered application be customizable
+so that it can be integrated into the environment of a particular
+workgroup.
+
+The project's immediate goal is to develop STRUDEL, a highly configurable
+mail/calendar/information management system to enable computer supported
+cooperative work.  We intend for STRUDEL to become the "GNUEMACS of
+groupware systems".  The Lisp interpreter will permit the system to be
+customized to support special modes of communication for particular
+workgroup environments much in the same way that emacs-Lisp is used to
+customize the editor to support special editing modes for particular
+programming environments.
+
+In STRUDEL, WINTERP's Lisp interpreter and Motif U.I. primitives will be
+used as a description language for creating and processing active/graphical
+e-mail forms. Such forms can be sent (as textual programs) through standard
+e-mail channels, and the receiving STRUDEL system will interpret the
+WINTERP-Lisp forms description language and display a form letter
+containing a user interface built from arbitrary combinations of widgets,
+bitmaps, as well as voice and video "widgets".  Users will be able to
+choose from a library of email forms that are designed to track specific
+types of conversations -- scheduling meetings and resources, software
+defect tracking, fleshing out design issues, etc.  Workgroups can extend
+the library of forms to help capture and manage recurrent conversations
+that are not covered by STRUDEL's standard forms library.
+
+
+** Why XLISP?
+
+I implemented WINTERP on top of XLISP because it is reliable, small, and
+free, thus allowing delivery of applications such as STRUDEL (see above)
+with a minimum of overhead (licenses, slow systems requiring specialized
+hardware) to potential early adopters of groupware technologies. XLISP has
+been around since 1985, and has evolved considerably since it first
+appeared publically; because it has been in use for some time it has also
+had most bugs shaken out of the system through widespread use. Furthermore,
+the newsgroup comp.lang.Lisp.x has been an effective channel for exchanging
+information and patches to XLISP. XLISP was designed to be run on PC's;
+because it was designed with a limited environment in mind, it has turned
+out to be quite fast and memory- efficient while remaining portable across
+a variety of architectures ranging from 16 bit PC's to workstations.  And
+of course, XLISP's simple object system has enabled an elegant interface to
+the object oriented structure of the Xtoolkit and the Motif widgets.
+Finally, XLISP is free, thanks to the generosity of David Betz.
+
+Many people have asked "Why not scheme?", or "why not emacs-Lisp?"... the
+above paragraph should answer that. David Betz's XSCHEME is still under
+development, and would not be a good choice as a stable platform. In
+particular, XSCHEME does not (yet) have the debugging capabilities of
+XLISP.  Other Scheme implementations were too large, and too complicated to
+work with given the sorts of changes I needed to make. GNUEMACS' emacs-Lisp
+fit the bill in many ways, but unfortunately the code is very intertwined
+with GNUEMACS' editor functionality, and the Free Software Foundation's
+Copyleft is far too restrictive to be used in potential products built from
+WINTERP's technology.
+
+"Professional" Common-Lisp systems have many nice features, but
+unfortunately, they are big, slow, expensive, and make bad delivery
+platforms.  Most CL systems do not come with source code, which makes it
+difficult to alter the way these systems work in significant ways (as I
+have done with XLISP in WINTERP). Even with source code, CL impedes the use
+of hybrid programming techniques mentioned above -- CL systems are often
+only implemented in C at the lowest levels, thus making it difficult to
+patch in high-level C-implemented functionality that can be used
+transparently from Lisp. Finally, Common Lisp programs cannot be
+distributed for free -- this means that potential early adopters of our
+STRUDEL technology would have to pay CL license fees, attach codeword
+modules to their computers (to ensure that license fees have been paid),
+and other such "hassles". People eager to try out our STRUDEL technology
+may have second thoughts about becoming "early adopters" if they have to
+spend money and time (convincing their management to give them the money
+and time ...) in order to try out experimental software.
+
+
+** Interacting with WINTERP's Lisp Listener.
+
+WINTERP is a Lisp server, that is, the XLISP interpreter in the program
+named 'WINTERP' accepts Lisp commands through a TCP socket. WINTERP's
+clients are an editor such as GNUEMACS, and any other program running on
+other UN*X machines on a network. Such capabilities are extremely useful in
+allowing "remote procedure calls" (RPC) to a WINTERP-based application.
+WINTERP's "RPC" capabilities can enable better tool integration: different
+tools in one's environment can easily communicate with an application built
+upon WINTERP. For example, in the aforementioned STRUDEL project, we expect
+to integrate the groupware toolkit with traditional, stand alone software
+revision control and source control tools so that designers can keep better
+track of conversations on-, commitments about-, and issues surrounding-
+version ownership, defect and enhancement resolution, etc.
+
+The WINTERP distribution contains a simple client program 'wl' (in
+./winterp/src-client/wl) which sends the Lisp s-expression given on its
+command line to the Lisp server for evaluation. The best way to interact
+with WINTERP's serverized Lisp listener is through it's GNUEMACS interface:
+
+The GNUEMACS editor provides a very elegant and useful environment for
+editing Lisp programs. Emacs' Lisp-mode will automatically indent your code
+(C-M-Q == indent-sexp) and help you catch unmatched parentheses. The file
+./winterp/src-client/winterp.el extends Emacs' Lisp-mode by providing a
+command that allows you to send the current Lisp form you are editing off
+to WINTERP for evaluation. This allows truly interactive programming
+because you need not exit the editor to see the results of your "program";
+with WINTERP, you can see the graphical results of interactive changes to
+a program immediately. Note that WINTERP is architecturally separate from
+the GNUEMACS editor -- interfaces to other editors are possible, but are
+not provided in the standard WINTERP distribution.
+
+WARNING!!> Running WINTERP 1.0 is a security hole! Because the current
+WARNING!!> version of WINTERP acts as a server, anybody that knows WINTERP's
+WARNING!!> port number and the host it's running on can send WINTERP Lisp
+WARNING!!> commands.  That by itself is not a horrible security hole, but
+WARNING!!> since WINTERP provides the interfaces to the UN*X subroutines
+WARNING!!> SYSTEM and POPEN, it is possible for intruders to access your
+WARNING!!> account. 
+WARNING!!> 
+WARNING!!> This security problem could be fixed in a number of ways, and I
+WARNING!!> will be looking into solutions for the problem as soon as I have
+WARNING!!> the time. First, 'wl' and 'winterp' could be altered to use UDP
+WARNING!!> sockets -- this should serve adequately for people running
+WARNING!!> WINTERP on a single-user workstation and not requiring remote
+WARNING!!> RPC capabilities; another alternative is to have 'wl' send
+WARNING!!> requests to 'winterp' through the X server itself, or simply
+WARNING!!> store a hidden randomly assigned port number on a property in
+WARNING!!> the X server....  The best solution, when it becomes more widely
+WARNING!!> available, would be to use Kerberos. If you have any suggestions
+WARNING!!> on making the WINTERP Lisp-server more secure, I'd like to hear
+WARNING!!> about them!
+
+
+* Prerequisites and Assumptions.
+
+This documentation assumes that you understand object oriented programming
+concepts, understand the rudiments of Lisp programming, and know how to
+make application user-interfaces using the Xtoolkit.  If not, you should be
+able to learn things quite easily by studying and interactively evaluating
+the various bits of Lisp code in the ./winterp/examples directory.
+
+For documentation on XLISP features see the file ./winterp/doc/xlisp.doc.
+
+This guide assumes that you already have documentation on Motif and the
+Xtoolkit. A good overview of programming with widgets is Doug Young's "X
+Window Systems: Programming and Applications with Xt" -- by the time you
+read this, the Motif version of his book may be available. I also expect
+that you have the Motif programming guide, the Motif manual pages, etc.
+This document will hopefully allow you to understand how to translate the
+examples and topics discussed in those programming guides into
+WINTERP-Lisp.
+
+Names in Xtoolkit and Motif contain mixed case. Since XLISP symbols are
+case-insensitive, all the Motif/Xtoolkit names in WINTERP contain an
+underscore in place of a lowercase-to-uppercase transition in the name, eg,
+xmPushButtonWidgetClass becomes XM_PUSH_BUTTON_WIDGET_CLASS, and the
+resource XmNinput becomes XMN_INPUT.
+
+
+* Introduction to XLISP objects and Widgets.
+
+WINTERP uses XLISP's object system as its interface to the class hierarchy
+of widgets provided by Motif. Specifically, each Motif widget class is
+represented by one or more object classes in WINTERP.  In order to best
+understand the capabilities of WINTERP's Motif interface, a brief review of
+the XLISP object system is in order. You may also want to consult the XLISP
+documentation ./winterp/doc/xLisp.doc for a more precise definition of the
+object system.
+
+XLISP Classes describe the type of a particular object by declaring a set
+of variables held in each object. These "instance variables" may only be
+accessed by "methods" that respond to "messages" sent to the object.
+Methods are defined for particular classes, and functionality of other
+classes may be incorporated into new classes via "inheritance". From
+XLISP, Motif widget classes look just like normal XLISP objects -- that
+means that you can easily extend the functionality of Motif widgets by
+adding your own methods to a particular widget class. You may also use
+inheritance to attach your own data structures to widgets. The result is
+that WINTERP provides a very clean way to interactively rapid-prototype an
+application, while also providing mechanisms for code structuring and reuse.
+The latter is necessary in evolving from prototype to a structured,
+maintainable, and customizable deliverable.
+
+
+** Creating new objects.
+
+Create a new instance of a class by sending the message :NEW to
+<a_class_instance>:
+
+	(SEND <a_class_instance> :NEW <parameters>)
+
+<a_class_instance> is in fact an instance of class CLASS. Class CLASS allows
+you to define new class instances by specifying the instance variables and
+parent class of a particular class.
+
+
+** Declaring a class.
+
+To declare a "base class" object, that is, an object with no parent object,
+just send message :NEW to the object <CLASS>
+
+	(SEND CLASS :NEW '(<ivar0> ... <ivarN>)
+			 ['(<cvar0> ... <cvarM>)])
+
+'(<ivar0> ... (ivarN>) are a list of symbols. Each <ivar-i> names an
+instance variable of the class. '(<cvar0> ... <cvarM>)]) are an optional
+list of variables that are shared among all instances of that particular
+class.
+
+
+** Defining methods.
+
+When a "message" is sent to an object, XLISP searches for a "method" to
+answer the message. A method is a piece of Lisp code that is executed when
+a particular message is sent to an object. Within the code of a method, all
+object instance and class variables are accessible. Furthermore, the symbol
+'self' is bound to the object the message was sent to.
+
+Methods are defined by sending the message :ANSWER to <a_class_instance>:
+
+	(SEND a_class_instance :ANSWER <:msg> <parameters> <code>)
+
+where <:msg> is a keyword symbol (a symbol with a ':' prefix) representing
+the message; <parameters> are the arguments given along with the message.
+See the documentation on "lambda lists" in /winterp/doc/xLisp.doc p.12 for
+details.  <code> is a list of s-expressions which get evaluated in response
+to a message. The lexical environment that existed for the call to :ANSWER
+will be used for value and functional bindings during method evaluation.
+
+If you need to remember what the syntax is, consider the memory-helper
+    "this class :ANSWERs to :MESSAGE..." == (send <cls> :ANSWER :MESSAGE ...)
+
+
+** Inheritance
+
+So far, the object system we just described supports *encapsulation*.
+Encapsulation is good programming practice because it helps localize and
+detangle complexity. Unfortunately, encapsulation runs counter to
+flexibility because making flexible use of an object may require that
+certain groups of instance variables be accessed by different layers of new
+functionality. Most often, one wants to *reuse* aspects of a particular
+class in creating code that specializes and alters the functionality of
+that class. A compromise between encapsulation and flexibility is found by
+using *inheritance* in an object system. Inheritance is used to allow a
+ *subclass* to specialize the functionality of it's *parent class* (aka,
+the *superclass*):
+
+	(send Class :NEW '(<ivar0> ... <ivarN>)
+                         '(<cvar0> ... <cvarM>)
+			 <superclass>)
+
+(<ivar0> ... <ivarN>) is a list of new instance variables in the subclass;
+(<cvar0> ... <cvarN>) is a list of new class variables in the subclass;
+<superclass> is a class instance representing the parent from which
+the new subclass inherits variables and methods.
+
+"Inheritance" is occurring because all the instance variables of all the
+parent classes of the new subclass become the variables of each subclass
+instance. Furthermore, all methods defined on a parent class may also be
+used on a subclass instance. Note that while a subclass' methods can access
+the variables defined on the parent classes, the reverse isn't true.
+
+
+** Object initialization.
+
+As mentioned earlier, new object instances are created by sending the
+message :NEW to a class object. Sending the message :NEW to a class
+automatically sends message :ISNEW to the newly created instance. By
+default :ISNEW on an instance is a no-op method defined on class 'Object',
+which is the implicit [(grand)*]parent of all instances. If you want to
+initialize the instance/class variables of a particular class, you must
+define an :ISNEW method on the class.  Any parameters originally sent to
+the :NEW method will be passed on to the :ISNEW method and may be used to
+initialize an object to outside-world parameters.
+
+
+** Example of using OOP features of XLISP with Motif widgets:
+
+As currently implemented, the Motif class xmListWidgetClass makes it a bit
+baroque to create browsers (hopefully this will change in Motif 1.1).  The
+problem is that a "browser" is a kind of application that lends itself to
+object oriented techniques that are not always straightforward to support
+in C. One often has a collection of 'things' that one wants to display in a
+'list' and perform actions on the 'thing' corresponding to the visual
+selection of an element in the displayed list. xmListWidgetClass will
+display an arrray of XmStrings in a list. When one or more elements in the
+list are selected, XmStrings corresponding to the selected elements are
+returned. Since the XmStrings you put into the list widget are not the
+XmStrings you get out, you must call XmStringCompare on each element of the
+collection of 'things' to find out which ones are selected.  Presumably,
+you'll want to do more than just get back an XmString...  normally one will
+want to access data structures associated with the XmString so as to perform
+an action dependent on those structures. This could be done with a lookup
+table, but there's also a better way...
+
+WINTERP allows us to subclass the Motif list widget so as to make it have
+the kind of functionality we want. This subclass will contain an additional
+instance variable 'items' which is an array of arbitrary XLISP objects to
+be displayed in a textual browser made from the list widget. These objects
+can have completely different internal representations -- the only
+requirement is that they follow the protocol of being able to respond to
+the messages :DISPLAY_STRING and :DEFAULT_ACTION. :DISPLAY_STRING returns a
+string representation of the object to be displayed in the browser.
+:DEFAULT_ACTION is the action to be performed when a list item is browsed
+(by double clicking on the item).
+
+The following creates the subclass <List_Browser> from superclass
+<XM_LIST_WIDGET_CLASS>:
+
+	(setq List_Browser 
+		(send Class :NEW		;create a class inst
+			'(items)		;new instance vars
+			'()			;no class vars
+			XM_LIST_WIDGET_CLASS))	;superclass
+
+So now all instances of <List_Browser> will contain an instance variable
+<items> and will respond to all the messages understood by the
+XM_LIST_WIDGET_CLASS. We want our list browser to behave as described
+above, so we define an :ISNEW method to initialize instance variable
+<items> to the list of arbitrary objects to be displayed.  <items> gets
+initialized to an array of objects, the list widget is created, and a
+XmNdefaultActionCallback is setup so that a double click will send the
+message :DEFAULT_ACTION to the browsed item:
+
+	;; (send List_Browser :new <items_list> <args-for-the-list-widget>)
+	;; <items_list> is a list of BROWSER_OBJECTs as described above.
+	;; <args-for-the-list-widget> -- these are the arguments that
+	;;       will be passed on to the list widget
+	;;
+	(send List_Browser :answer :isnew '(items_list &rest args)
+	      '(
+		(let* (
+		       (items_end_idx (length items_list))
+		       (display_items (make-array items_end_idx)))
+
+		  ;; initialize the 'items' instance variable so that it
+		  ;; holds all the BROWSER_OBJECTs passed in <items_list>
+		  (setq items (make-array items_end_idx)) ;create the array
+		  (do (                         ;copy elts from list to array
+		       (i    0          (1+ i))
+		       (elts items_list (cdr elts)))
+		      ;; loop till no more elts
+		      ((null elts))
+		      ;; loop body
+		      (setf (aref items i) (car elts))
+		      (setf (aref display_items i) 
+			    (send (car elts) :display_string))
+		      )
+
+		  ;; initialize the widget, passing in the browser items.
+		  (apply 'send-super `(:isnew
+				       ,@args
+				       :xmn_selection_policy :browse_select
+				       :xmn_items ,display_items
+				       :xmn_item_count ,items_end_idx
+				       ))
+		  )
+
+		;; set up a callback on the list widget initialized above such
+		;; that a double click on the browser-item will send the
+		;; message :default_action to the BROWSER_OBJECT.
+		(send-super :add_callback :xmn_default_action_callback
+			    '(callback_item_position)
+			    '((send (aref items (1- callback_item_position))
+				    :default_action))
+			    )
+		)
+	      )
+
+
+In the above code, SEND-SUPER works just like send, except that it doesn't
+require you to give it the object to send the message to.  Instead, it
+implicitly assumes that it will be called from within a method, and will
+automatically send the message to a superclass of the object's class.  The
+(apply 'send-super ...) form is actually calling the :ISNEW (instance
+initializer) method on XM_LIST_WIDGET_CLASS, which actually creates the
+widget via XmCreateList() or XmCreateScrolledList(). The APPLY '`'
+(BACKQUOTE) and '&rest args' (LAMBDA LIST) features of Lisp allow us to
+splice in the argument list passed to the instance of List_Browser into the
+function that actually creates the widget. Finally, method :add_callback is
+the WINTERP equivalent of XtAddCallback(). See the documentation on methods
+on WIDGET_CLASS for more details.
+
+The Motif List widget also defines a number of "methods" implemented as C
+routines such as XmListAddItem(), XmListAddItemUnselected(),
+XmListDeleteItem(), and XmListDeletePos(). In WINTERP, we define these as
+methods :ADD_ITEM, :ADD_ITEM_UNSELECTED, :DELETE_ITEM, and :DELETE_POS
+respectively. Since these methods modify the collection of objects
+represented by the list widget, we must update the internal array of
+objects <items> to correspond with the items displayed. We do this by
+intercepting those messages to the superclass of class <List_Browser> and
+handle them in <List_Browser> so as to update the appropriate data:
+
+	(send List_Browser :answer :ADD_ITEM '(item position)
+	      '(
+		(setq items (array-insert-pos items (1- position) item))
+		(send-super :add_item 
+			    (send item :display_string) 
+			    position)
+		)
+	      )
+
+	(send List_Browser :answer :ADD_ITEM_UNSELECTED '(item position)
+	      '(
+		(setq items (array-insert-pos items (1- position) item))
+		(send-super :add_item_unselected 
+			    (send item :display_string)
+			    position)
+		)
+	      )
+
+	(send List_Browser :answer :DELETE_ITEM '(item)
+	      '(
+		;; this is too lame to implement... requires that we compare
+		;; item with the result of :display_string done on every elt
+		;; of ivar 'items'
+		(error "Message :DELETE_ITEM not supported in List_Browser")
+		)
+	      )
+
+	(send List_Browser :answer :DELETE_POS '(position)
+	      '(
+		(setq items (array-delete-pos items (1- position)))
+		(send-super :delete_pos position)
+	       )
+	     )
+
+To see how this subclassed list browser is used, and also to see how one
+might write a sample application in WINTERP using the object oriented
+features of XLISP, see ./winterp/examples/grep-br.lsp.  That file
+implements a simple search browser based on the UN*X command 'grep'. See
+also ./winterp/examples/mail-br.lsp to see how you can build a simple
+mh-based mail browser. Finally, as another example of subclassing Motif
+widgets, see ./winterp/examples/radiobox2.lsp.
+==============================================================================
+
+* Running WINTERP:
+
+** WINTERP Resources (~/.Xdefaults):
+
+	WINTERP is an Xtoolkit program. Any widgets you create will be
+	affected by resource-manager settings just like they would in a
+	normal program. 
+
+	In addition to resources settings for individual widgets, WINTERP
+	provides the following application-defined resources and defaults:
+
+	Winterp.servicePort: 23751
+
+		23751 is the default port number of the WINTERP-server.
+		If you change this, you'll also have to change the port number
+		that 'wl' uses to connect with WINTERP -- see the '-p'
+		option of 'wl'.
+
+	Winterp.serviceName: widget_interp
+
+		'widget_interp' is the default service name used by
+		WINTERP's TCP port. This shouldn't really matter...
+
+	Winterp.LispInitFile: init.lsp
+
+		`pwd`/"init.lsp" is the XLISP initialization file that WINTERP
+		attempts to load when it starts up. I strongly suggest that
+		you set this resource to
+		"<path>/winterp/examples/initialize.lsp" (where <path> is
+		the full path to wherever you've put the WINTERP
+		distribution). "initialize.lsp" contains some important
+		macros and default settings for making WINTERP and XLISP
+		run correctly.
+
+		Feel free to customize the initialization file so that
+		XLISP works like you want it to. There are a number of
+		global variables described in xlisp.doc which you may set
+		to alter the way XLISP works...
+
+	Winterp.LispTranscriptFile: <none>
+
+		If you set this, XLISP will use the DRIBBLE primitive to
+		write out a transcript of your interactions with the Lisp
+		interpreter. By default, this is not done.
+	
+	Winterp.geometry: <none>
+
+		When WINTERP comes up, it brings up a window containing a
+		single "quit" button which allows you to quit WINTERP. By
+		default, without this resource set your window manager will
+		prompt you for placement of this window. You may set this
+		just like any geometry specification for the Xtoolkit.
+
+		Note that the "quit button" window is not really necessary
+		for WINTERP users. Unfortunately, the current
+		implementation of WINTERP requires at least one toplevel
+		shell to be created in order to work around certain
+		Xtoolkit deficiencies. If you do not want to see this 
+		"quit button" window, and you also don't want to place it
+		every time you bring up WINTERP, place the WINTERP toplevel
+		shell off-screen. For example, if you have a screen smaller
+		than 2048x2048 pixels, you can use
+		"Winterp.geometry: =+2048+2048" to achieve this.
+
+	Winterp.quit_button.labelString: <none>
+
+		If you are using the "quit button" you may want to set this
+		to "Winterp.quit_button.labelString: Quit".
+
+** Usage:
+
+*** WINTERP -- the WINTERP Lisp server (./winterp/src-server/winterp):
+
+	usage: winterp [Xtoolkit-command-line-parameters]
+
+	'winterp' is a standard Xtoolkit/Motif applciation. See the
+	Xtoolkit and Motif documentation for a description of the command
+	line parameters understood by an Xtoolkit-based program.
+	
+	You should run 'winterp' a terminal emulator window because it
+	prints the results of Lisp evaluation on stdout and prints Lisp
+	error output on stderr. In addition, all the XLISP print commands
+	will by default print to stdout, and stderr.
+
+	NOTE -- even though WINTERP's XLISP interpreter prints a "prompt"
+	that says "XLISP> " do not be mislead into thinking that you may
+	type Lisp input directly into WINTERP's stdin. WINTERP's XLISP
+	listener is only accessible through a TCP socket. You must use
+	the client program 'wl' to send input to the Lisp listener.
+	
+
+*** WL -- the WINTERP Lisp client (./winterp/src-client/wl):
+
+	usage: wl [-h hostname] [-p port] [s-expr]
+	
+		The <hostname> argument allows you to specify the host upon
+		which the WINTERP's Lisp server is running. By default, 'wl'
+		attempts to connect to a WINTERP server running at IP address
+		127.0.0.1. See the note below for further details.
+
+		The <port> argument specifies a different port number
+		for WINTERP's Lisp listener service. The default is
+		23751; you may want to change the default (along with
+		WINTERP's "Winterp.servicePort" resource) if 23751 is
+		already defined in /etc/services. You will also need to
+		change <port> if you are running multiple instances of
+		WINTERP on the same machine.
+
+		The <s-expr> argument is a single Lisp s-expression to be
+		sent to WINTERP's Lisp listener. If no <s-expr> argument is
+		given, 'wl' sends an EOF (==^D) to XLISP, indicating that
+		XLISP should exit the current level -- if XLISP is in a
+		"breakloop" due to a Lisp error, this will exist the
+		current "breaklevel". If XLISP isn't in a "breakloop", then
+		omitting the <s-expr> will quit XLISP and cause WINTERP to exit.
+
+	Example usage -- type the following to the shell.
+		wl '(load "<pathname>/menu-ex")'
+	Where <pathname>=./winterp/examples, the full path to the examples
+	directory. As a result of that command, the menu-example file will
+	be loaded. A subsequent "wl '(musicians)'" will run the example program.
+	
+	Note that the <s-expr> must be quoted with ['] so that the shell
+	does not attempt to interpret the parentheses as shell commands.	
+	
+	NOTE: By default, 'wl' uses the IP address 127.0.0.1 as the hostname.
+	This is the standard "loopback" or localhost address on all UN*X
+	machines I've worked with. If your setup defines hostname
+	"localhost" as a different I.P. address, you may need to specify
+	'localhost' or `hostname` as <hostname>. You may see significant
+	speed increases in 'wl' by replacing "127.0.0.1" with the
+	appropriate IP address and recompiling 'wl.c' -- hostname lookup on
+	some machines can be slow.
+
+
+*** GNUEMACS interface (./winterp/src-client/winterp.el):
+
+	The gnuemacs interface to WINTERP makes the following assumptions:
+	(1) You're using GNUEMACS version 18.54 or later (I've used
+	winterp.el with versions of gnuemacs as old as 18.44, but you may
+	need to load a >18.54 version of Lisp/shell.el).
+	(2) You've installed the WINTERP-Lisp client program 'wl' somewhere
+	on your	UX*X search path (see $PATH).
+	(3) The WINTERP-server is running and sending stderr and
+	stdout to a reasonable place such as a terminal emulator.
+
+	To use WINTERP's GNUEMACS interface, you must first load the file
+	./winterp/src-client/winterp.el into gnuemacs. You may do this
+	manually by using the command 'M-X load-file<return>' specifying the
+	file 'winterp.el' with the appropriate path information prepended.
+	Alternately, you may include the form '(load "<path>winterp")' in
+	your $HOME/.emacs file, where <path> is the appropriate path to the
+	file ./winterp/src-client/winterp.el.
+
+	Once winterp.el is loaded, you should visit a WINTERP-Lisp file
+	using GNUEMACS command 'M-X find-file<return>' (C-x C-f). A file with
+	suffix '.lsp' denotes an XLISP or WINTERP-Lisp file, and these will
+	automatically put the associated editor buffer "Lisp mode" -- the
+	GNUEMACS mode line will indicate the mode as '(Lisp)'. Within a
+	Lisp-mode buffer, the following additional commands and keybindings
+	are defined:
+
+		winterp-send-defun (C-M-X):
+			The Lisp s-expression at the "point" (cursor) is
+			sent to the WINTERP-server for evaluation.
+
+		winterp-send-buffer:
+			The current buffer is sent to the WINTERP-server
+			for evaluation.
+
+		winterp-send-exit: (C-c C-d):
+			Sends a ^D == EOF to XLISP, which exists the
+			current breaklevel. If XLISP is not at a
+			breaklevel, then this command will exit XLISP and
+			cause the WINTERP-server to terminate.
+
+	Additional commands that are useful in GNUEMACS' Lisp-mode:
+
+		indent-sexp (C-M-Q):
+			Formats and indents the s-expression under the
+			"point" (cursor).
+
+		indent-for-comment (M-;):
+			Will place a Lisp comment character at the
+			appropriate column in your Lisp-source. If a
+			comment already exists on the current line, this
+			will reindent the comment.
+
+		forward-list: (C-M-N):
+			Moves the "point" forward across a balanced group
+			of parentheses. This is useful for moving the
+			cursor to the next form.
+		
+		backward-list: (C-M-P):
+			Moves the "point" backward across a balanced group
+			of parentheses. This is useful for moving the
+			cursor to the previous form.
+
+		forward-sexp: (C-M-F):
+			Moves the "point" forward across one balanced 
+			expression.
+			
+		backward-sexp (C-M-B):
+			Moves the "point" backward across one balanced
+			expression.
+		
+	I have found it useful to bind commands backward-list,
+	forward-list, and winterp-send-buffer to "function" keys F6, F7,
+	and F8 because these commands are used often when using GNUEMACS to
+	interface with WINTERP.
+	
+	DEBUGGING-TIP: If you are using WINTERP's GNUEMACS interface and
+	functions such as winterp-send-defun are not working correctly, 
+	you should check the GNUEMACS buffer *winterp-client-shell* for
+	error output from the program 'wl'. WINTERP's GNUEMACS interface
+	requires that the winterp client program 'wl' works correctly --
+	see the documentation on 'wl' above for information.
+
+==============================================================================
+
+* WINTERP <--> Motif Widget Classes
+
+** WIDGET_CLASS -- the WINTERP widget metaclass.
+
+*** equivalent Xt 'WidgetClass':
+
+	There is no direct equivalent. This class is essentially a       
+	combination of classes 'Primitive',  'Core', 'Manager' etc.
+
+*** equivalent creation convenience function:
+
+	None, since this class is uninstantiable.
+
+*** XtCreateWidget():
+
+	(send <Widget_Class_Subclass> :new [:managed/:unmanaged]
+					   [<name>]
+					   <parent> 
+					   [<resource_0> <value_0>]
+					   . . .
+					   [<resource_n> <value_n>])
+
+		--> returns a newly created WIDGETOBJ of class
+			<Widget_Class_Subclass>.
+
+	The optional keyword-argument :managed will cause a subsequent call
+	to XtManageChild() (:MANAGE). If the submessage :unmanaged is
+	present, or no submessage, then XtManageChild() won't be called, and
+	the resulting widget will be returned unmanaged.
+
+	The optional argument <name> is a string which becomes the
+	name of the widget as used by the resource manager. If you
+	are not setting any widget resources via the resource
+	manager, you may leave this parameter out.
+
+	The argument <parent> is a WIDGETOBJ that will be managing
+	the widget to be created.
+
+	The optional arguments [<resource_i> <value_i>]... represent a series
+	of Motif resource name/value pairs -- upon creation of the
+	widget, each <resource_i> will be set to <value_i>. Resource names are
+	keyword symbols which are described in the "WINTERP <--> Motif resources"
+	section of this document. Each <resource_i> expects a specific Lisp
+	type for <value_i> and will signal an error if the wrong type
+	<value_i> is given. For example, the Motif resource XmNx indicates
+	the X-axis location of a widget with respect to it's parent -- the
+	corresponding WINTERP-Lisp symbol :XMN_X will expect it's
+	associated value to be a FIXNUM.
+
+	Note that different resource names are valid for each particular
+	widget class. See the Motif manual pages on a particular widget
+	class to find out which resources may be set. If you attempt to set
+	a resource that doesn't exist for a particular widget's class, no
+	error will be signaled, and the invalid resource will be ignored.
+
+
+*** XtSetValues():
+
+	(send <widget> :SET_VALUES <resource_0> <value_0>
+				   . . .
+				   [<resource_n> <value_n>])
+		--> returns <widget>.
+
+
+	This method allows you to set the value of widget resource <resource_i>
+	to value <value_i> for the widget object <widget>. Resource names are
+	keyword symbols which are described in the "WINTERP <--> Motif resources"
+	section of this document. Each <resource_i> expects a specific Lisp
+	type for <value_i> and will signal an error if the wrong type
+	<value_i> is given. For example, the Motif resource XmNx indicates
+	the X-axis location of a widget with respect to it's parent -- the
+	corresponding WINTERP-Lisp symbol :XMN_X will expect it's
+	associated value to be a FIXNUM.
+
+	Note that different resource names are valid for each particular
+	widget class. See the Motif manual pages on a particular widget
+	class to find out which resources may be set. If you attempt to set
+	a resource that doesn't exist for a particular widget's class, no
+	error will be signaled, and the invalid resource will be ignored.
+
+
+*** XtGetValues():
+
+	(send <widget> :GET_VALUES 
+		<resource_0> <place_0>
+		. . .
+		<resource_n> <place_n>)
+		--> returns a list of values corresponding to <place_i>==NIL
+		    (see below).		
+
+	This method accesses values inside the OBJECT <widget> and stores
+	them in Lisp data structures. <place_i> is a the place to put the
+	value associated with widget resource name <resource_i>. Resource
+	names are keyword symbols which are described in the
+	"WINTERP <--> Motif resources" section of this document.
+
+	If <place_i> is NIL, then <resource_i>'s value is returned by the
+	method as an element in a list of results. If <place_i> is aquoted
+	symbol, then that symbol gets bound to <resource_i>'s value. If
+	<place_i> is a place-form (see documentation on xLisp's 'setf'
+	construct) then <resource_i>'s value will be put in <place_i>,
+	which is one of the following field specifiers:
+                       <sym>                   set value of a symbol
+                       (car <expr>)            set car of a cons node
+                       (cdr <expr>)            set cdr of a cons node
+                       (nth <n> <expr>)        set nth car of a list
+                       (aref <expr> <n>)       set nth element of an array
+                       (get <sym> <prop>)      set value of a property
+                       (symbol-value <sym>)    set value-cell of a symbol
+                       (symbol-function <sym>) set function-cell of a symbol
+                       (symbol-plist <sym>)    set property list of a symbol
+
+	Note that different resource names are valid for each particular
+	widget class. See the Motif manual pages on a particular widget
+	class to find out which resources may be set. If you attempt to get
+	the value of a resource value that doesn't exist for a particular
+	widget's class, no error will be signaled, and the <place_i> will
+	be set to NIL.
+
+
+*** XtAddCallback():
+
+	(send <widget_instance> :add_callback	<name>
+						<call_data_binding_names_list>
+						<code>)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	(send <widget_instance> :set_callback	<name>
+						<call_data_binding_names_list>
+						<code>)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	Both these methods add the callback <name> to <widget_instance>.
+	:SET_CALLBACK contains additional code to ensure that only one
+	callback exists per <name>. :SET_CALLBACK is useful when one is
+	prototyping an application and changing callbacks frequently -- you
+	don't have to worry about removing the previous callback with
+	XT_REMOVE_CALLBACK. Note that :ADD_CALLBACK should be used in
+	time-sensitive code, since :SET_CALLBACK is slower.
+
+	<name> is a resource keyword of type XmRCallback, eg,
+	:XMN_ACTIVATE_CALLBACK, :XMN_ARM_CALLBACK, :XMN_DISARM_CALLBACK.
+	For a list of valid resource names for callbacks, see the
+	"XmRCallback" subheading of the "WINTERP <--> Motif resources" section
+	of this document. Different widget classes support different
+	callback names -- see the Motif manual page for the appropriate
+	widget class to see which callbacks are valid for a particular
+	widget class.  Note that an error will be signaled if an invalid
+	callback <name> is given.
+
+	<call_data_binding_name_list> is a list of symbols that get bound to
+	data specific to the action on the callback widget. Most
+	widgets return call_data of type XmAnyCallbackStruct:
+		typedef struct
+			{
+			  int     reason;
+			  Event  *event;
+			} XmAnyCallbackStruct;
+	For such widgets, specifying one or more of the following symbols
+	in the callback	bindings list will bind that symbol's value in the
+	lexical	environment of the callback:
+		CALLBACK_WIDGET -- the WIDGETOBJ of the callback
+		CALLBACK_REASON -- the reason symbol for the callback
+		CALLBACK_XEVENT -- the Xevent* that caused the callback
+
+		The symbol CALLBACK_REASON is bound to one of the following
+		symbols during the callback:
+			CR_NONE, CR_HELP, CR_VALUE_CHANGED, CR_INCREMENT,
+			CR_DECREMENT, CR_PAGE_INCREMENT, CR_PAGE_DECREMENT,
+			CR_TO_TOP, CR_TO_BOTTOM, CR_DRAG, CR_ACTIVATE,
+			CR_ARM, CR_DISARM, CR_MAP, CR_UNMAP, CR_FOCUS,
+			CR_LOSING_FOCUS, CR_MODIFYING_TEXT_VALUE,
+			CR_MOVING_INSERT_CURSOR, CR_EXECUTE,
+			CR_SINGLE_SELECT, CR_MULTIPLE_SELECT,
+			CR_EXTENDED_SELECT, CR_BROWSE_SELECT,
+			CR_DEFAULT_ACTION, CR_CLIPBOARD_DATA_REQUEST,
+			CR_CLIPBOARD_DATA_DELETE, CR_CASCADING, CR_OK,
+			CR_CANCEL, CR_APPLY, CR_NO_MATCH, CR_COMMAND_ENTERED,
+			CR_COMMAND_CHANGED, CR_EXPOSE, CR_RESIZE, CR_INPUT;
+
+		Note that widget classes whose callback call_data isn't of type
+		XmAnyCallbackStruct will override WIDGET_CLASS's
+		:ADD_CALLBACK and :SET_CALLBACK methods and provide a
+		class-specific method that allows retrieval of values from
+		other kinds of Xm*CallbackStructs. These methods will allow
+		additional symbols in <call_data_binding_names_list>.
+		However, all :ADD_CALLBACK and :SET_CALLBACK methods allow
+		for the symbols CALLBACK_WIDGET CALLBACK_REASON and
+		CALLBACK_XEVENT.	
+
+	<code> is a list of Lisp expressions that are evaluated when the
+	callback occurs. When the callback fires and <code> gets evaluated,
+	the lexical environment that existed for the call to
+	:ADD_CALLBACK/:SET_CALLBACK will be used for value and functional
+	bindings.
+
+	NOTE: The the callback associated with the returned
+	<callback_id_object> may be removed via XtRemoveCallback() with the
+	WINTERP primitive (XT_REMOVE_CALLBACK <callback_id_object>).
+
+*** XtRemoveAllCallbacks():
+
+	(SEND <widget> :REMOVE_ALL_CALLBACKS <name>)
+		--> returns T.
+
+	<name> is a resource keyword of type XmRCallback, eg,
+	:XMN_ACTIVATE_CALLBACK, :XMN_ARM_CALLBACK, :XMN_DISARM_CALLBACK.
+
+	This method removes all callbacks matching <name> from <widget>.
+
+*** XtAddEventHandler(), XtAddRawEventHandler():
+
+	(send <widget> :ADD_EVENT_HANDLER [:RAW] [:NONMASKABLE] <event_mask>
+        	                          <event_data_bindings_list> <code>)
+	(send <widget> :SET_EVENT_HANDLER [:RAW] [:NONMASKABLE] <event_mask>
+					  <event_data_bindings_list> <code>)
+		--> returns an <EVHANDLEROBJ> which identifies the handler.
+
+	Optional keyword :RAW indicates that XtAddRawEventHandler() will be
+	invoked so as to not affect the widget's input mask nor for it to
+	select for events. Otherwise XtAddEventHandler() will get called.
+
+	Optional keyword :NONMASKABLE indicates that the handler should be
+	called for nonmaskable events.
+ 
+	<event_mask> is a FIXNUM which is the value of the an event mask.
+	event masks may be combined by doing a bitwise OR via the XLISP
+	'LOGIOR' function. The following event mask constants have been
+	defined: NO_EVENT_MASK, KEY_PRESS_MASK, KEY_RELEASE_MASK,
+	BUTTON_PRESS_MASK, BUTTON_RELEASE_MASK, ENTER_WINDOW_MASK,
+	LEAVE_WINDOW_MASK, POINTER_MOTION_MASK, POINTER_MOTIONHINT_MASK,
+	BUTTON1_MOTION_MASK, BUTTON2_MOTION_MASK, BUTTON3_MOTION_MASK,
+	BUTTON4_MOTION_MASK, BUTTON5_MOTION_MASK, BUTTON_MOTION_MASK,
+	KEYMAP_STATE_MASK, EXPOSURE_MASK,  VISIBILITY_CHANGE_MASK
+	STRUCTURE_NOTIFY_MASK, RESIZE_REDIRECT_MASK, SUBSTRUCTURE_NOTIFY_MASK
+	SUBSTRUCTURE_REDIRECT_MASK, FOCUS_CHANGE_MASK, PROPERTY_CHANGE_MASK
+	COLORMAP_CHANGE_MASK, OWNER_GRAB_BUTTON_MASK.
+
+	<event_data_bindings_list> is a list of symbols that get
+	bound to data specific to the action that caused the event
+	handler to fire. These symbols get bound to specific values during
+	the execution of the event-handler <code>.
+	Valid symbols are:
+		EVHANDLER_WIDGET -- bound to the WIDGETOBJ of the event
+		EVHANDLER_XEVENT -- bound to the XEvent that fired handler.
+		EVHANDLER_BUTTON -- fixnum -- the button or keycode
+		EVHANDLER_TIME   -- fixnum -- the timestamp.
+
+	<code> is a list of Lisp-forms to be evaluated when the eventhandler
+	fires. When the eventhandler fires, the lexical environment that
+	existed for the call to :ADD_EVENT_HANDLER will be used for value and
+	functional bindings.
+
+	The eventhandler may be removed by giving the <EVHANDLEROBJ> to
+	procedure REMOVE_EVENT_HANDLER.
+
+	Note that the :SET_EVENT_HANDLER variant does exactly the same
+	thing as :ADD_EVENT_HANDLER except that it ensure that only one
+	event handler with the given <event_mask>, :RAW and :NONMASKABLE
+	specifications exist on <widget>. It will remove all other matching
+	event handlers in order to set the current event handler. This
+	function is useful for making interactive changes to an event
+	handler without having to remember to remove the previous
+	handler. Note that :SET_EVENT_HANDLER is slower, so it should 
+	not be used in cases where speed is important.
+
+	NOTE: the EVHANDLER_TIME and EVHANDLER_BUTTON binding values may
+	return gibberish if the eventhandler returned a event->type that
+	doesn't define those fields. This is currently just a kludge for
+	Motif functions that require the event->button info (popup menus)
+	or event->time info (XmClipboard*). Hopefully I'll come up with
+	something better in the future...
+
+*** XtRemoveEventHandler() // XtRemoveRawEventHandler()
+
+	(REMOVE_EVENT_HANDLER <EVHANDEROBJ>)
+		--> returns true.
+
+	This procedure removes the eventhandler corresponding to the 
+	<EVHANDLEROBJ> returned by method :ADD_EVENT_HANDLER
+
+*** XtBuildEventMask():
+
+	(send <widget> :BUILD_EVENT_MASK)
+		--> returns as a FIXNUM the event mask representing the
+	logical OR of all event masks for event handlers registered on
+	<widget>. This includes masks set by XtAddEventHandler(), all event
+	translations & accelerators.
+
+*** XtOverrideTranslations():
+
+	(send <widget> :OVERRIDE_TRANSLATIONS <translations>)
+		--> returns <widget>
+
+	This method destructively merges the new <translations> into
+	<widget>'s existing translations -- event sequences in <translations>
+	that already exist from a previous translation will override.
+
+	<translations> can be a string, in which case it is compiled into a
+	translation table. Otherwise, we expect a value of type
+	XT_TRANSLATIONS as returned by XT_PARSE_TRANSLATION_TABLE.
+
+*** XtAugmentTranslations():
+
+	(send <widget> :AUGMENT_TRANSLATIONS <translations>) 
+		--> returns <widget>.
+
+	This method nondestructively merges the new <translations> into
+	<widget>'s existing translations -- event sequences in <translations>
+	that already exist a previous translation will be ignored.
+
+	<translations> can be a string, in which case it is compiled into a
+	translation table. Otherwise, we expect a value of type
+	XT_TRANSLATIONS as returned by XT_PARSE_TRANSLATION_TABLE.
+
+*** XtUninstallTranslations():
+
+	(send <widget> :UNINSTALL_TRANSLATIONS)
+		-->  returns <widget>
+
+	This method removes all translations from <widget>.
+
+*** XtInstallAccelerators():
+
+	(send <destination> :INSTALL_ACCELERATORS <source>)
+		-->  returns <destination>
+
+	This method installs the accelerators from widget <source> onto
+	widget <destination> by augmenting the destination translations with
+	the source accelerators.
+	Both <source> and <destination> are WIDGETOBJs.
+
+*** XtInstallAllAccelerators():
+
+	(send <destination> :INSTALL_ALL_ACCELERATORS <source>)
+		-->  returns <destination>
+
+	This method installs the accelerators from widget <source> and all
+	it's children onto widget <destination> by augmenting the destination
+	translations with the source accelerators.
+	Both <source> and <destination> are WIDGETOBJs.
+
+*** XtDestroyWidget():
+
+	(send <widget> :destroy)
+		--> returns NIL.
+
+	After calling this routine, the WIDGETOBJ <widget> may be garbage
+	collected, along with all other resources the widget references, such
+	as PIXMAPs CALLBACKOBJs, and EVHANDLEROBJs. Furthermore, this will
+	destroy all children of the destroyed widget and allow their storage
+	to be garbage collected as well.
+
+*** XtManageChild():
+
+	(send <widget> :MANAGE)
+		--> returns <widget>
+
+	This method will add <widget> to it's parent-widget's managed list,
+	which means it will become visible (if mapped) and will take up space
+	within the managing widget.
+
+*** XtUnmanageChild():
+
+	(send <widget> :UNMANAGE)
+		--> returns <widget>
+
+	This method will remove <widget> from its parent's managed list,
+	which means it will no longer be visible or take up space.
+
+*** XtAddGrab():
+
+	(send <widget> :ADD_GRAB <exclusive_p> <spring_loaded_p>)
+		-->  returns <widget>
+
+	This method appends <widget> to the modal cascade -- redirects user
+	input to this widget. <exclusive_p> and <spring_loaded_p> are
+	booleans.
+
+*** XtRemoveGrab():
+
+	(send <widget> :REMOVE_GRAB)
+		-->  returns <widget>
+
+	Removes the redirection of user input to <widget> done via :ADD_GRAB
+
+*** XtIsCompositeObject():
+
+	(send <widget> :IS_COMPOSITE)
+		--> returns T if <widget> is a composite widget, else NIL.
+
+*** XtIsConstraint():
+
+	(send <widget> :IS_CONSTRAINT)
+		--> returns T if <widget> is a constraint widget, else NIL.
+
+*** XtIsShell():
+
+	(send <widget> :IS_SHELL)
+		--> returns T if <widget> is a shell widget, else NIL.
+
+*** XtSetSensitive():
+
+	(send <widget> :SET_SENSITIVE <sensitive_p>)
+		--> returns <widget>.
+
+	If <sensitive_p> is NIL, then the widget will not respond to user
+	input.
+
+*** XtSetMappedWhenManaged():
+
+	(send <widget> :SET_MAPPED_WHEN_MANAGED <mapped_p>)
+		--> returns <widget>.
+
+	If <mapped_p> is non-NIL, then the widget will be mapped (displayed)
+	when it is managed by it's parent widget.
+
+*** XtIsManaged():
+
+	(send <widget> :IS_MANAGED)
+		--> returns T if the widget is managed, else NIL. 
+
+	See also method :MANAGE and :UNMANAGE
+
+*** XtIsRealized():
+
+	(send <widget> :IS_REALIZED) 
+		--> returns T if the widget is realized, else NIL.
+
+	See also methods :REALIZE and :UNREALIZE
+
+*** XtIsSensitive():
+
+	(send <widget> :IS_SENSITIVE)
+		--> returns T if the widget will accept user input, else NIL. 
+
+	See also method :SET_SENSITIVE.
+
+*** XtParent():
+
+	(send <widget> :PARENT)
+		--> returns the given <widget>'s parent widget or NIL 
+		    if no parent.
+
+*** XtWindow():
+
+	(send <widget> :WINDOW)
+		--> returns the given <widget>'s window.
+
+*** XtMapWidget():
+
+	(send <widget> :MAP)
+		--> returns <widget>.
+
+	If the widget is realized and managed, this method will make the
+	window appear on the display. Make it disappear with :UNMAP.
+
+*** XtUnmapWidget():
+
+	(send <widget> :UNMAP)
+		--> returns <widget>.
+
+	If the widget is realized and managed, this method will make the
+	window disappear from the display. Make it reappear with :MAP.
+
+*** XmUpdateDisplay():
+
+	(send <widget> :UPDATE_DISPLAY)
+		--> returns <widget>.
+
+	This method is useful for refreshing WINTERP's Xwindows displays
+	while inside a callback. Since the X display won't get refreshed
+	until you hit the XtNextEvent/XtDispatcEvent loop you cannot normally
+	change the display inside a callback. Thus, this function is
+	especially useful for forcing a status message to be seen before a
+	long computation occurs within a callback.
+
+*** XmAddTabGroup():
+
+	(send <widget> :ADD_TAB_GROUP)
+		--> returns <widget>
+
+	This method adds <widget> to the list of tab groups associated with a
+	particular widget hierarchy.
+
+*** XmRemoveTabGroup():
+
+	(send <widget> :REMOVE_TAB_GROUP)
+		--> returns <widget>
+
+	This method removes <widget> from the list of tab groups associated
+	with a particular widget hierarchy.
+
+*** XmIsPrimitive():
+
+	(send <widget> :IS_PRIMITIVE)
+		--> returns T if <widget> is a motif primitive widget, 
+		    else NIL.
+
+*** XmIsGadget():
+
+	(send <widget> :IS_GADGET)
+		--> returns T if <widget> is a motif gadget, else NIL.
+
+*** XmIsManager():
+
+	(send <widget> :IS_MANAGER)
+		--> returns T if <widget> is a motif manager widget, else NIL.
+______________________________________________________________________________
+
+** <SHELL_WIDGET_CLASS> -- the WINTERP shell widget metaclass
+
+	<SHELL_WIDGET_CLASS> is a widget (pseudo) metaclass for all shell
+	widgets. A shell widget is an object representing a "top level"
+	window that are managed by a window manager (e.g. mwm, the
+	Motif window manager).
+
+	<SHELL_WIDGET_CLASS> is a subclass of WIDGET_CLASS, so all methods
+	on that	metaclass also work on this class as well. 
+
+
+*** XtCreateApplicationShell():
+
+	The following create instances of metaclass <SHELL_WIDGET_CLASS>.
+	[<args>...] represents a sequence of resource pairs. For
+	more details on resource pairs, see method :SET_VALUES or :NEW
+	on WIDGET_CLASS.
+
+	(send TOP_LEVEL_SHELL_WIDGET_CLASS :new [<name>] [<args>...])
+		--> XtCreateApplicationShell(topLevelShellWidgetClass...)
+
+	(send APPLICATION_SHELL_WIDGET_CLASS :new [<name>] [<args>...])
+		--> XtCreateApplicationShell(applicationShellWidgetClass...)
+
+	(send OVERRIDE_SHELL_WIDGET_CLASS :new [<name>] [<args>...])
+		--> XtCreateApplicationShell(overrideShellWidgetClass...)
+
+	(send TRANSIENT_SHELL_WIDGET_CLASS :new [<name>] [<args>...])
+		--> XtCreateApplicationShell(transientShellWidgetClass...)
+
+
+*** XtRealizeWidget():
+
+	(send <Shell_Widget_Instance> :realize)
+		==> returns <Shell_Widget_Instance>
+
+	This method causes the shell window and it's subwindows to be
+	created and will make the window appear on the screen.
+
+
+*** XtUnrealizeWidget():
+
+	(send <Shell_Widget_Instance> :unrealize)
+		==> returns <Shell_Widget_Instance>
+
+	This method destroys the window associated with the shell and
+	all it's subwindows.
+
+*** XmIsMotifWMRunning():
+
+	(send <Shell_Widget_Instance> :IS_MOTIF_WM_RUNNING)
+		==> returns T if the motif window manager (mwm) is running,
+		    else NIL.
+______________________________________________________________________________
+
+** <POPUP_SHELL_WIDGET_CLASS> -- the WINTERP popup shell widget metaclass
+
+	<POPUP_SHELL_WIDGET_CLASS> is a (pseudo) metaclass for all popup shells.
+	Popup shells are used for creating dialog boxes, menus, and other
+	interactors that "pop up" from an application window. Like instances of
+	<SHELL_WIDGET_CLASS>, popup shells are "top level" windows that are
+	managed by the window manager.
+
+	This class is a subclass of <SHELL_WIDGET_CLASS> and
+	WIDGET_CLASS, all methods on those classes also work on this class.
+	
+
+*** XtCreatePopupShell():
+
+	The following create instances of metaclass <POPUP_SHELL_WIDGET_CLASS>.
+	Optional argument <name> is a string, the name of the widget.
+	<parent> is a WIDGETOBJ that has the new widget instance as popup
+	child. [<args>...] represents a sequence of resource pairs. For
+	more details on resource pairs, see method :SET_VALUES or :NEW
+	on WIDGET_CLASS.
+
+	(send TOP_LEVEL_POPUP_SHELL_WIDGET_CLASS :new [<name>] <parent>
+							[<args>...])
+		--> XtCreatePopupShell(topLevelShellWidgetClass)
+
+	(send APPLICATION_POPUP_SHELL_WIDGET_CLASS :new [<name>] <parent>
+							[<args>...])
+		--> XtCreatePopupShell(applicationShellWidgetClass)
+
+	(send OVERRIDE_POPUP_SHELL_WIDGET_CLASS :new [<name>] <parent>
+							[<args>...])
+		--> XtCreatePopupShell(overrideShellWidgetClass)
+
+	(send TRANSIENT_POPUP_SHELL_WIDGET_CLASS :new [<name>] <parent>
+							[<args>...])
+		--> XtCreatePopupShell(transientShellWidgetClass)
+
+	(send XM_DIALOG_POPUP_SHELL_WIDGET_CLASS :new [<name>] <parent>
+							[<args>...])
+		--> XmCreateDialogShell()
+		--> XtCreatePopupShell(xmDialogShellWidgetClass)
+
+	(send XM_MENU_POPUP_SHELL_WIDGET_CLASS :new [<name>] <parent>
+							[<args>...])
+		--> XmCreateMenuShell()
+		--> XtCreatePopupShell(xmMenuShellWidgetClass)
+
+
+*** XtPopup():
+
+	(send <Popup_Shell_Widget_Instance> :popup <grabkind>)
+		==> returns <Popup_Shell_Widget_Instance>
+
+	This method pops up the shell, keyword symbol <grabkind> determines
+	the kind of grab used: :grab_none, :grab_nonexclusive, :grab_exclusive.
+
+
+*** XtPopDown():
+
+	(send <Popup_Shell_Widget_Instance> :popdown)
+		==> returns  <Popup_Shell_Widget_Instance>
+
+	This method pops down the shell, making it invisible and removing
+	the grab setup by :popup.
+______________________________________________________________________________
+
+** XM_ARROW_BUTTON_WIDGET_CLASS / XM_ARROW_BUTTON_GADGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmArrowButtonWidgetClass
+	xmArrowButtonGadgetClass
+
+
+*** equivalent creation convenience function:
+
+	(send XM_ARROW_BUTTON_WIDGET_CLASS :new [:managed/:unmanaged] ...) 
+		--> XmCreateArrowButton()
+
+	(send XM_ARROW_BUTTON_GADGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateArrowButtonGadget()
+______________________________________________________________________________
+
+** XM_BULLETIN_BOARD_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmBulletinBoardWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_BULLETIN_BOARD_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateBulletinBoard()
+
+	(send XM_BULLETIN_BOARD_WIDGET_CLASS :new [:managed/:unmanaged] :dialog ...)
+		--> XmCreateBulletinBoardDialog()
+______________________________________________________________________________
+
+** XM_CASCADE_BUTTON_WIDGET_CLASS / XM_CASCADE_BUTTON_GADGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmCascadeButtonWidgetClass
+	xmCascadeButtonGadgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_CASCADE_BUTTON_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateCascadeButton()
+
+	(send XM_CASCADE_BUTTON_GADGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateCascadeButtonGadget()
+
+*** XmCascadeButtonHighlight():
+
+	(send <cascadebuttonwidget> :highlight <highlight_p>)
+		--> returns <cascadebuttonwidget>
+
+	This method draws the shadow highlight around the cascadebutton if
+	<highlight_p> is true, and unhighlights if <highlight_p> is NIL.
+______________________________________________________________________________
+
+** XM_COMMAND_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmCommandWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_COMMAND_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateCommand()
+
+*** XtAddCallback():
+
+	(send <commandwidget> :add_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+	(send <commandwidget> :set_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	These methods work just like the :add_callback/:set_callback
+	methods on WIDGET_CLASS except that these methods understand
+	how to get call_data values from the XmCommandCallbackStruct:
+		typedef struct
+		{
+		    int reason;
+		    XEvent	*event;
+		    XmString	value;
+		    int	length;
+		} XmCommandCallbackStruct;
+
+	Specifying one or more of the following symbols in the callback
+	bindings list will bind that symbol's value in the lexical
+	environment of the callback:
+		CALLBACK_WIDGET -- the WIDGETOBJ of the callback
+		CALLBACK_REASON -- the reason symbol for the callback
+		CALLBACK_XEVENT -- the Xevent* that caused the callback
+		CALLBACK_VALUE -- the XmString of the command.
+		CALLBACK_LENGTH -- the length of that string.
+
+*** XmCommandGetChild():
+
+	(send <commandwidget> :get_child <symbol>)
+		--> returns a WIDGETOBJ corresponding to <symbol>
+
+	<symbol> can be :DIALOG_COMMAND_TEXT,
+	                :DIALOG_HISTORY_LIST, or
+	                :DIALOG_PROMPT_LABEL
+
+*** XmCommandAppendValue():
+
+	(send <commandwidget> :append_value <value>)
+		--> returns <value>.
+
+	This method appends the string or XmString <value> to the string in
+	the command area widget. If a normal string is given, it will be
+	converted to an XmString and returned as the method's result.
+
+*** XmCommandSetValue():
+
+	(send <commandwidget> :set_value <value>)
+		--> returns <value>
+
+	This method sets the text in the widget's command area to the
+	string or XmString <value>. If a normal string is given, it will be
+	converted to an XmString and returned as the method's result.
+
+*** XmCommandError():
+	(send <commandwidget> :error <error>)
+		--> returns <error>.
+
+	This method temporarily displays the string or XmString <error> in
+	the history area of the command widget, the display is cleared upon
+	entry of the next command. If a normal string is given, it will be
+	converted to an XmString and returned as the method's result.
+______________________________________________________________________________
+
+** XM_DRAWING_AREA_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmDrawingAreaWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_DRAWING_AREA_WIDGET_CLASS :new [:managed/:unmanaged] ..)
+		--> XmCreateDrawingArea()
+
+*** XtAddCallback():
+
+	(send <drawingareawidget> :add_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+	(send <drawingareawidget> :set_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	These methods work just like the :add_callback/:set_callback
+	methods on WIDGET_CLASS except that this method knows
+	how to get call_data values from the XmDrawingAreaCallbackStruct:
+		typedef struct
+		{
+			int     reason;
+			XEvent  *event;
+			Window  window;
+		} XmDrawingAreaCallbackStruct;
+
+	Specifying one or more of the following symbols in the callback
+	bindings list will bind that symbol's value in the lexical
+	environment of the callback:
+		CALLBACK_WIDGET -- the WIDGETOBJ of the callback
+		CALLBACK_REASON -- the reason symbol for the callback
+		CALLBACK_XEVENT -- the Xevent* that caused the callback
+		CALLBACK_WINDOW -- the Window of the callback
+
+______________________________________________________________________________
+
+** XM_DRAWN_BUTTON_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmDrawnButtonWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_DRAWN_BUTTON_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateDrawnButton()
+
+*** XtAddCallback():
+
+	(send <drawnbuttonwidget> :add_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+	(send <drawnbuttonwidget> :set_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	These methods work just like the :add_callback/:set_callback
+	methods on WIDGET_CLASS except that these methods understand
+	how to get call_data values from the XmDrawnButtonCallbackStruct: 
+		typedef struct
+		{
+		    int     reason;
+		    XEvent  *event;
+		    Window  window;
+		} XmDrawnButtonCallbackStruct;
+
+	Specifying one or more of the following symbols in the callback
+	bindings list will bind that symbol's value in the lexical
+	environment of the callback:
+		CALLBACK_WIDGET -- the WIDGETOBJ of the callback
+		CALLBACK_REASON -- the reason symbol for the callback
+		CALLBACK_XEVENT -- the Xevent* that caused the callback
+		CALLBACK_WINDOW -- the Window of the callback
+______________________________________________________________________________
+
+** XM_FILE_SELECTION_BOX_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmFileSelectionBoxWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_FILE_SELECTION_BOX_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateFileSelectionBox()
+
+	(send XM_FILE_SELECTION_BOX_WIDGET_CLASS :new [:managed/:unmanaged] :dialog ...)
+		--> XmCreateFileSelectionDialog()
+
+*** XtAddCallback():
+
+	(send <fileselboxwidget> :add_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+	(send <fileselboxwidget> :set_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	These methods work just like the :add_callback/:set_callback
+	methods on WIDGET_CLASS except that these methods understand
+	how to get call_data values from the XmFileSelectionBoxCallbackStruct: 
+		typedef struct
+		{
+		    int reason;
+		    XEvent	*event;
+		    XmString	value;
+		    int		length;
+		    XmString	mask;
+		    int		mask_length;
+		} XmFileSelectionBoxCallbackStruct;
+
+	Specifying one or more of the following symbols in the callback
+	bindings list will bind that symbol's value in the lexical
+	environment of the callback:
+		CALLBACK_WIDGET -- the WIDGETOBJ of the callback
+		CALLBACK_REASON -- the reason symbol for the callback
+		CALLBACK_XEVENT -- the Xevent* that caused the callback
+		CALLBACK_VALUE  -- the XmString corresponding to the current
+				   value of resource :XMN_DIR_SPEC
+		CALLBACK_LENGTH -- the number of bytes in the XmString struct
+				   CALLBACK_VALUE	
+		CALLBACK_MASK   -- the XmString corresponding to the current
+				   value of resource :XMN_DIR_MASK
+		CALLBACK_MASK_LENGTH -- the number of bytes in the XmString
+					struct CALLBACK_MASK
+
+*** XmFileSelectionBoxGetChild():
+
+	(send <fileselboxwidget> :GET_CHILD <child_sym>)
+		--> returns a WIDGETOBJ, the child of <fileselboxwidget>
+		corresponding to one of the following keyword symbols:
+		     :DIALOG_APPLY_BUTTON
+		     :DIALOG_CANCEL_BUTTON
+		     :DIALOG_DEFAULT_BUTTON
+		     :DIALOG_FILTER_LABEL
+		     :DIALOG_FILTER_TEXT
+		     :DIALOG_HELP_BUTTON
+		     :DIALOG_LIST
+		     :DIALOG_LIST_LABEL
+		     :DIALOG_OK_BUTTON
+		     :DIALOG_SELECTION_LABEL
+		     :DIALOG_TEXT
+
+*** XmFileSelectionDoSearch():
+
+	(send <fileselboxwidget> :DO_SEARCH <dirmask>)
+		--> returns <dirmask>
+
+	This method initiates a directory search. The search will be
+	according to the string or XmString <dirmask>. If <dirmask> is NIL,
+	then the search will use the current directory mask. This method
+	returns <dirmask> as an XmString.
+______________________________________________________________________________
+
+** XM_FORM_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmFormWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_FORM_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateForm()
+
+	(send XM_FORM_WIDGET_CLASS :new [:managed/:unmanaged] :dialog ...)
+		--> XmCreateFormDialog()
+
+______________________________________________________________________________
+
+** XM_FRAME_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmFrameWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_FRAME_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateFrame()
+______________________________________________________________________________
+
+** XM_LABEL_WIDGET_CLASS / XM_LABEL_GADGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmLabelWidgetClass
+	xmLabelGadgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_LABEL_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateLabel()
+
+	(send XM_LABEL_GADGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateLabelGadget()
+______________________________________________________________________________
+
+** XM_LIST_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmListWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_LIST_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateList()
+
+	(send XM_LIST_WIDGET_CLASS :new [:managed/:unmanaged] :scrolled ...)
+		--> XmCreateScrolledList()
+
+	Note -- the :scrolled list widget created by XmCreateScrolledList()
+	is anomalous, since it returns a list widget whose parent is of
+	class xmScrolledWindowWidgetClass. Unless special kludgery was
+	added since the last time I looked at the source, this may result
+	in problems in using this widget with managers and constraint
+	manager as <parent>. If that happens, do (send <list_w> :parent)
+	to retrieve the appropriate widget to be managed.
+
+*** XtAddCallback():
+
+	(send <listwidget> :add_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+	(send <listwidget> :set_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	These methods work just like the :add_callback/:set_callback
+	methods on WIDGET_CLASS except that these methods understand
+	how to get call_data values from the XmListCallbackStruct:
+		typedef struct
+		{
+		   int 	reason;
+		   XEvent    *event;
+		   XmString  item;
+		   int       item_length;
+		   int       item_position;
+		   XmString  *selected_items;
+		   int       selected_item_count;
+		   int       selection_type;
+		} XmListCallbackStruct;
+
+	Specifying one or more of the following symbols in the callback
+	bindings list will bind that symbol's value in the lexical
+	environment of the callback:
+		CALLBACK_WIDGET -- the WIDGETOBJ of the callback
+		CALLBACK_REASON -- the reason symbol for the callback
+		CALLBACK_XEVENT -- the Xevent* that caused the callback
+		CALLBACK_ITEM	-- the selected list item, an XmString.
+		CALLBACK_ITEM_LENGTH -- the byte length of CALLBACK_ITEM, a
+					FIXNUM.
+		CALLBACK_ITEM_POSITION -- the position of the selected item
+				          in the list, a nonnegative FIXNUM.
+		CALLBACK_SELECTED_ITEMS -- an ARRAY of XmStrings
+					   corresponding to the selected
+					   items in the list.
+		CALLBACK_SELECTED_ITEM_COUNT -- a FIXNUM, the number of items
+						in CALLBACK_SELECTED_ITEMS.
+		CALLBACK_SELECTION_TYPE -- a SYMBOL, either INITIAL, ADDITION,
+					   or MODIFICATION corresponding to
+					   the Motif constants XmINITIAL,
+					   XmADDITION, or XmMODIFICATION.
+
+*** XmListAddItem()
+
+	(send <listwidget> :ADD_ITEM <item> <position>)
+	     --> returns <item> as an XmString.
+
+	This method adds <item> to <listwidget> at the given position.
+
+	<item> is a string or XmString. If <item> is given as a string, it
+	     is converted to an XmString and that XmString is returned.
+
+	<position> is an positive fixnum. Specifying 0 will add the item to
+	the end	of the list, 1 makes it the first item, 2 the second, etc.
+
+*** XmListAddItemUnselected():
+
+	(send <listwidget> :ADD_ITEM_UNSELECTED <item> <position>)
+	     ==> returns <item> as an XmString.
+
+	This method adds <item> to <listwidget> at the given position and
+	ensures that <item> is not selected.
+
+	<item> is a string or XmString. If <item> is given as a string, it
+	is converted to an XmString and that XmString is returned by the
+	method.
+
+	<position> is an positive fixnum. Specifying 0 will add the item to
+	the end	of the list, 1 makes it the first item, 2 the second, etc.
+
+*** XmListDeleteItem():
+
+	(send <listwidget> :DELETE_ITEM <item>)
+	     ==> returns <item> as an XmString
+
+	This method deletes the specified <item> from <listwidget>, giving
+	an XtWarning if <item> doesn't exist.
+
+	<item> is a string or XmString. If <item> is given as a string, it
+	is converted to an XmString and that XmString is returned by the
+	method.
+
+*** XmListDeletePos():
+
+	(send <listwidget> :DELETE_POS <position>)
+	     ==> returns <listwidget>.
+
+	This method deletes the item at <position> from <listwidget>. A
+	position of zero deletes the last item on the list. Gives an
+	XtWarning if the item doesn't exist. <position> is an positive fixnum. 
+
+*** XmListSelectItem():
+
+	(send <listwidget> :SELECT_ITEM <item> [<notify_p>])
+	     ==> returns <item> as an XmString
+
+	This method adds <item> to the selected items list and highlights it.
+
+	<item> is a string or XmString. If <item> is given as a string, it
+	is converted to an XmString and that XmString is returned by the
+	method.
+
+	<notify_p> is an optional boolean parameter. If non-NIL, it will
+	issue a	callback indicating an item has been selected.
+
+*** XmListSelectPos():
+
+	(send <listwidget> :SELECT_POS <position> [<notify_p>])
+	     ==> returns <listwidget>.
+
+	This method adds the item corresponding to <position> to the selected
+	items list and highlights it.
+
+	<position> is an positive fixnum. 
+
+	<notify_p> is an optional boolean parameter. If non-NIL, it will
+	issue a	callback indicating an item has been selected.
+
+*** XmListDeselectItem():
+
+	(send <listwidget> :DESELECT_ITEM <item>)
+	     ==> returns <item> as an XmString
+
+	This method removes the specified <item> from the selected list and
+	unhighlights it.
+
+	<item> is a string or XmString. If <item> is given as a string, it
+	is converted to an XmString and that XmString is returned by the
+	method.
+
+*** XmListDeselectPos():
+
+	(send <listwidget> :DESELECT_POS <position>)
+	     ==> returns <listwidget>.
+
+	This method removes the item associated with <position> from the
+	selected list and unhighlights it.
+
+	<position> is an positive fixnum. 
+
+*** XmListDeselectAllItems():
+
+	(send <listwidget> :DESELECT_ALL_ITEMS)
+	     ==> returns <listwidget>.
+
+	This method unhighlights all selected items and removes all items
+	from the selected items list.
+
+*** XmListSetPos():
+
+	(send <listwidget> :SET_POS <position>)
+	     ==> returns <listwidget>.
+
+	This method makes the item associated with <position> be the first
+	visible element of the list.
+
+	<position> is an positive fixnum. 
+
+*** XmListSetBottomPos():
+
+	(send <listwidget> :SET_BOTTOM_POS <position>)
+	     ==> returns <listwidget>.
+
+	This method makes the item associated with <position> be the last
+	visible	position in the list.
+
+	<position> is an positive fixnum. 
+
+*** XmListSetItem():
+
+	(send <listwidget> :SET_ITEM <item>)
+	     ==> returns <item> as an XmString
+
+	This method makes <item> be the first visible item in the
+	list. <item> is a string or XmString. If <item> is given as a
+	string, it is converted to an XmString and that XmString is
+	returned by the method.
+
+*** XmListSetBottomItem():
+
+	(send <listwidget> :SET_BOTTOM_ITEM <item>)
+	     ==> returns <item> as an XmString
+
+	This method makes <item> be the last visible position in the list.
+	<item> is a string or XmString. If <item> is given as a string, it
+	is converted to an XmString and that XmString is returned by the
+	method.
+
+*** XmListItemExists():
+
+	(send <listwidget> :ITEM_EXISTS <item>)
+	     ==> returns T if the item is in the specified list widget,
+		 else NIL.
+
+	<item> is a string or XmString. If <item> is given as a string, it
+	is converted to an XmString.
+
+*** XmListSetHorizPos():
+
+	(send <listwidget> :SET_HORIZ_POS <position>)
+	     ==> returns <listwidget>.
+
+	This method scrolls the list horizontally such that the scrollbar
+	reflects <position> in the list.
+
+	<position> is an positive fixnum. 
+______________________________________________________________________________
+
+** XM_MAIN_WINDOW_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmMainWindowWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_MAIN_WINDOW_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateMainWindow()
+
+***  XmMainWindowSetAreas():
+
+	(send <mainwinwidget> :SET_AREAS <menu> <command> <hscroll> <vscroll>
+	                                 <workregion>)
+	     ==> returns <mainwinwidget>.
+
+	This method is used to attach children to be managed by an instance of
+	XM_MAIN_WINDOW_WIDGET_CLASS. <menu> <command> <hscroll> <vscroll>
+	and <workregion> are all WIDGETOBJs. If you don't want to set
+	the particular region, pass NIL as the argument for the particular
+	widget.
+
+*** XmMainWindowSep1():
+
+	(send <mainwinwidget> :SEP1)
+	      ==> returns the WIDGETOBJ corresponding to the first
+		  separator widget.
+
+*** XmMainWindowSep2():
+
+	(send <mainwinwidget> :SEP2)
+	      ==> returns the WIDGETOBJ corresponding to the second
+		  separator widget.
+______________________________________________________________________________
+
+** XM_MESSAGE_BOX_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmMessageBoxWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_MESSAGE_BOX_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateMessageBox()
+
+	(send XM_MESSAGE_BOX_WIDGET_CLASS :new [:managed/:unmanaged] :message_dialog ...)
+		--> XmCreateMessageDialog()
+
+	(send XM_MESSAGE_BOX_WIDGET_CLASS :new [:managed/:unmanaged] :error_dialog ...)
+		--> XmCreateErrorDialog()
+
+	(send XM_MESSAGE_BOX_WIDGET_CLASS :new [:managed/:unmanaged] :information_dialog ...)
+		--> XmCreateInformationDialog()
+
+	(send XM_MESSAGE_BOX_WIDGET_CLASS :new [:managed/:unmanaged] :question_dialog ...)
+		--> XmCreateQuestionDialog()
+
+	(send XM_MESSAGE_BOX_WIDGET_CLASS :new [:managed/:unmanaged] :warning_dialog ...)
+		--> XmCreateWarningDialog()
+
+	(send XM_MESSAGE_BOX_WIDGET_CLASS :new [:managed/:unmanaged] :working_dialog ...)
+		--> XmCreateWorkingDialog()
+
+*** XmMessageBoxGetChild():
+
+	(send <messageboxwidget> :GET_CHILD <symbol>)
+		==> returns a WIDGETOBJ, the child of <messageboxwidget> 
+		corresponding to one of the following keyword <symbol>s:
+			:DIALOG_DEFAULT_BUTTON
+			:DIALOG_SYMBOL_LABEL
+			:DIALOG_MESSAGE_LABEL
+			:DIALOG_OK_BUTTON
+			:DIALOG_CANCEL_BUTTON
+			:DIALOG_HELP_BUTTON
+			:DIALOG_SEPARATOR
+______________________________________________________________________________
+
+** XM_PANED_WINDOW_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmPanedWindowWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_PANED_WINDOW_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreatePanedWindow()
+______________________________________________________________________________
+
+** XM_PUSH_BUTTON_WIDGET_CLASS / XM_PUSH_BUTTON_GADGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmPushButtonWidgetClass
+	xmPushButtonGadgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_PUSH_BUTTON_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreatePushButton()
+
+	(send XM_PUSH_BUTTON_GADGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreatePushButtonGadget()
+______________________________________________________________________________
+
+** XM_ROW_COLUMN_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmRowColumnWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_ROW_COLUMN_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateRowColumn()
+
+	(send XM_ROW_COLUMN_WIDGET_CLASS :new [:managed/:unmanaged] :radio_box ...)
+		--> XmCreateRadioBox()
+
+	(send XM_ROW_COLUMN_WIDGET_CLASS :new [:managed/:unmanaged] :option_menu ...)
+		--> XmCreateOptionMenu()
+
+	(send XM_ROW_COLUMN_WIDGET_CLASS :new [:managed/:unmanaged] :menu_bar ...)
+		--> XmCreateMenuBar()
+
+	(send XM_ROW_COLUMN_WIDGET_CLASS :new [:managed/:unmanaged] :popup_menu ...)
+		--> XmCreatePopupMenu()
+
+	(send XM_ROW_COLUMN_WIDGET_CLASS :new [:managed/:unmanaged] :pulldown_menu ...)
+		--> XmCreatePulldownMenu()
+
+*** XtAddCallback():
+
+	(send <rowcolwidget> :add_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+	(send <rowcolwidget> :set_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	These methods work just like the :add_callback/:set_callback
+	methods on WIDGET_CLASS except that these methods understand
+	how to get call_data values from the XmRowColumnCallbackStruct:
+		typedef struct
+		{
+		    int     reason;
+		    XEvent  *event;
+		    Widget  widget;
+		    char    *data;
+		    char    *callbackstruct;
+		} XmRowColumnCallbackStruct;
+
+	Specifying one or more of the following symbols in the callback
+	bindings list will bind that symbol's value in the lexical
+	environment of the callback:
+		CALLBACK_WIDGET -- the WIDGETOBJ of the callback
+		CALLBACK_REASON -- the reason symbol for the callback
+		CALLBACK_XEVENT -- the Xevent* that caused the callback
+	
+	If the you're doing 
+	(send <rowcolwidget> :add_callback :XMN_ENTRY_CALLBACK ...) or
+	(send <rowcolwidget> :set_callback :XMN_ENTRY_CALLBACK ...)
+	then the following symbols are bound to call_data values from the
+	entry widget in <rowcolwidget> that fired:
+
+		CALLBACK_ENTRY_WIDGET -- a WIDGETOBJ representing the child
+					 of <rowcolwidget> that fired.
+		CALLBACK_ENTRY_REASON -- the reason SYMBOL for an
+					 entrywidget of class
+					 XM_TOGGLE_BUTTON_GADGET_CLASS or
+					 XM_TOGGLE_BUTTON_WIDGET_CLASS
+		CALLBACK_ENTRY_SET    -- T if the entrywidget is a
+					 set toggle button, NIL if
+					 an unset togglebutton. IF not a
+					 togglebutton, then results
+					 unpredictable.
+		CALLBACK_ENTRY_DATA   -- if a callback was set for the
+					 entry widget, this will be it's
+					 CALLBACKOBJ. Uses for this
+					 parameter are unknown and
+					 unpredictable. 
+
+*** XmMenuPosition():
+
+	(send <popup_menu> :MENU_POSITION <event>)
+	     ==> returns <popup_menu>
+
+	This method will position a popup menupane at the position
+	specified by event->x_root, event->y_root, where <event> is an XEvent.
+	This method should only be used on a row_column widget created via
+	(send XM_ROW_COLUMN_WIDGET_CLASS :new :popup_menu ...).
+
+*** XmOptionLabelGadget():
+
+	(send <option_menu> :OPTION_LABEL_GADGET)
+	     ==> returns the WIDGETOBJ corresponding to the label
+	         gadget created in an <option_menu> instance. 
+
+	This method should only be used on a rowcolumn instance created
+	via (send XM_ROW_COLUMN_WIDGET_CLASS :new :option_menu ...)
+
+*** XmOptionButtonGadget():
+
+	(send <option_menu> :OPTION_BUTTON_GADGET)
+	     ==> returns the WIDGETOBJ corresponding to the cascade
+	         button gadget created in an <option_menu> instance.
+
+	This method should only be used on a rowcolumn instance created
+	via (send XM_ROW_COLUMN_WIDGET_CLASS :new :option_menu ...)
+
+*** NOTE on msgs :MENU_POSITION :OPTION_BUTTON_GADGET and :OPTION_LABEL_GADGET
+
+	Future versions of WINTERP may create a special POPUP_MENU_CLASS
+	and OPTION_MENU_CLASS subclasses of XM_ROW_COLUMN_WIDGET_CLASS that
+	have :MENU_POSITION and {:OPTION_BUTTON_GADGET,:OPTION_LABEL_GADGET}
+	as methods in order to avoid problems with using these methods on the
+	wrong row column widget variant.
+______________________________________________________________________________
+
+** XM_SCALE_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmScaleWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_SCALE_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateScale()
+
+*** XtAddCallback():
+
+	(send <scalewidget> :add_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+	(send <scalewidget> :set_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	These methods work just like the :add_callback/:set_callback
+	methods on WIDGET_CLASS except that these methods understand
+	how to get call_data values from the XmScaleCallbackStruct:
+		typedef struct 
+		{
+		   int reason;
+		   XEvent * event;
+		   int value;
+		} XmScaleCallbackStruct;
+
+	Specifying one or more of the following symbols in the callback
+	bindings list will bind that symbol's value in the lexical
+	environment of the callback:
+		CALLBACK_WIDGET -- the WIDGETOBJ of the callback
+		CALLBACK_REASON -- the reason symbol for the callback
+		CALLBACK_XEVENT -- the Xevent* that caused the callback
+		CALLBACK_VALUE  -- a FIXNUM representing the slider location.
+
+*** XmScaleSetValue():
+
+	(send <scale_widget> :SET_VALUE <value>)
+		==> returns <scale_widget>
+
+	This method sets the <scale_widget>'s slider position to <value>, a
+	FIXNUM.
+
+*** XmScaleGetValue():
+
+	(send <scale_widget> :GET_VALUE)
+		--> returns slider value as a FIXNUM
+______________________________________________________________________________
+
+** XM_SCROLLED_WINDOW_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmScrolledWindowWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_SCROLLED_WINDOW_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateScrolledWindow()
+
+*** XmScrolledWindowSetAreas():
+
+	(send <ScrolledWin_Widget> :SET_AREAS <hscroll> <vscroll> <wregion>)
+		--> returns <ScrolledWin_Widget>
+
+	This method allows you to add or change the work region controlled by
+	a scrolled window, and set the scrollbars for scrolled windows in which
+	resource :XMN_SCROLLING_POLICY is set to :APPLICATION_DEFINED.
+	<wregion> <hscroll> and  <vscroll> are all WIDGETOBJS. Use NIL
+	if you don't want to set a particular parameter.
+______________________________________________________________________________
+
+** XM_SCROLL_BAR_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmScrollBarWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_SCROLL_BAR_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateScrollBar()
+
+*** XtAddCallback():
+	(send <scrollbar_widget> :add_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+	(send <scrollbar_widget> :set_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	These methods work just like the :add_callback/:set_callback
+	methods on WIDGET_CLASS except that these methods understand
+	how to get call_data values from the XmScrollBarCallbackStruct:
+		typedef struct
+		{
+		   int reason;
+		   XEvent * event;
+		   int value;
+		   int pixel;
+		} XmScrollBarCallbackStruct;
+
+	Specifying one or more of the following symbols in the callback
+	bindings list will bind that symbol's value in the lexical
+	environment of the callback:
+		CALLBACK_WIDGET -- the WIDGETOBJ of the callback
+		CALLBACK_REASON -- the reason symbol for the callback
+		CALLBACK_XEVENT -- the Xevent* that caused the callback
+		CALLBACK_VALUE  -- a FIXNUM representing the slider location.
+		CALLBACK_PIXEL  -- a FIXNUM representing the coordinate of
+				   the mouse button selection. For a
+				   vertical scrollbar, it's the 'y'
+				   coordinate; For a horizontal scrollbar,
+				   it's the 'x' coordinate.
+				   NOTE: The value is valid only for callbacks
+				   :XMN_TO_TOP_CALLBACK/:XMN_TO_BOTTOM_CALLBACK
+
+*** XmScrollBarGetValues():
+
+	(send <scrollbar_widget> :GET_VALUE) 
+		==> returns a list
+		(<value> <slider_size> <increment> <page_increment>)
+		all of which are FIXNUMs representing  the values of resources
+		:XMN_VALUE, :XMN_SLIDER_SIZE, :XMN_INCREMENT, and
+		:XMN_PAGE_INCREMENT respectively.
+	
+	Note that I couldn't call this method :GET_VALUES (for consistency
+	with the name XmScrollBarGetValues()) because it would override
+	method :GET_VALUES on WIDGET_CLASS.
+
+*** XmScrollBarSetValues():
+
+	(send <scrollbar_widget> :SET_VALUE <value> <slider_size> 
+	                                    [[[<increment>]
+					     <page_increment>]
+					    <notify>])
+	==> returns <scrollbar_widget>.
+
+	<value> is a fixnum specifying the slider position
+	(same as setting the resource :XMN_VALUE)
+
+	<slider_size> is a fixnum specifying the size of the slider.
+	(same as setting resource :XMN_SLIDER_SIZE).
+
+	<increment> is an optional fixnum specifying the amount of button
+	increment and decrement. (same as setting resource :XMN_INCREMENT).
+
+	<page_increment> is an optional fixnum specifying the page
+	increment size. (same as setting resource :XMN_INCREMENT).
+
+	<notify> is an optional Boolean, if NIL, the value changed callback
+	will not be activated, else it will.
+	
+	Note that I couldn't call this method :SET_VALUES (for consistency
+	with name XmScrollBarSetValues()) because it would override method
+	:SET_VALUES on WIDGET_CLASS.
+______________________________________________________________________________
+
+** XM_SELECTION_BOX_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmSelectionBoxWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_SELECTION_BOX_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateSelectionBox()
+
+	(send XM_SELECTION_BOX_WIDGET_CLASS :new [:managed/:unmanaged] :dialog ...)
+		--> XmCreateSelectionDialog()
+
+	(send XM_SELECTION_BOX_WIDGET_CLASS :new [:managed/:unmanaged] :prompt_dialog ...)
+		--> XmCreatePromptDialog()
+
+*** XtAddCallback():
+
+	(send <selectionbox_widget> :add_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+	(send <selectionbox_widget> :set_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	These methods work just like the :add_callback/:set_callback
+	methods on WIDGET_CLASS except that these methods understand
+	how to get call_data values from the XmSelectionBoxCallbackStruct:
+		typedef struct
+		{
+		    int reason;
+		    XEvent	*event;
+		    XmString	value;
+		    int	length;
+		} XmSelectionBoxCallbackStruct;
+
+	Specifying one or more of the following symbols in the callback
+	bindings list will bind that symbol's value in the lexical
+	environment of the callback:
+		CALLBACK_WIDGET -- the WIDGETOBJ of the callback
+		CALLBACK_REASON -- the reason symbol for the callback
+		CALLBACK_XEVENT -- the Xevent* that caused the callback
+		CALLBACK_VALUE  -- an XmString, the value selected from
+				   the selectionbox list, or entered into
+				   the selectionbox text field.
+		CALLBACK_LENGTH -- a FIXNUM, the number of bytes in 
+				   CALLBACK_VALUE's XmString structure.
+
+*** XmSelectionBoxGetChild():
+
+	(send <selectionbox_widget> :get_child <childname>)
+	==> returns the WIDGETOBJ corresponding to <childname> which is on
+	    of the following keyword symbols:
+		:DIALOG_LIST, :DIALOG_LIST_LABEL, :DIALOG_SELECTION_LABEL,
+		:DIALOG_WORK_AREA, :DIALOG_TEXT, :DIALOG_SEPARATOR,
+		:DIALOG_OK_BUTTON, :DIALOG_APPLY_BUTTON,
+		:DIALOG_CANCEL_BUTTON, :DIALOG_HELP_BUTTON,
+		:DIALOG_DEFAULT_BUTTON
+______________________________________________________________________________
+
+** XM_SEPARATOR_WIDGET_CLASS / XM_SEPARATOR_GADGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmSeparatorWidgetClass
+	xmSeparatorGadgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_SEPARATOR_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateSeparator()
+
+	(send XM_SEPARATOR_GADGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateSeparatorGadget()
+______________________________________________________________________________
+
+** XM_TEXT_WIDGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmTextWidgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_TEXT_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateText()
+
+	(send XM_TEXT_WIDGET_CLASS :new [:managed/:unmanaged] :scrolled ...)
+		--> XmCreateScrolledText()
+
+	Note -- the :scrolled text widget created by XmCreateScrolledText()
+	is anomalous, since it returns a text widget whose parent is of
+	class xmScrolledWindowWidgetClass. Unless special kludgery was
+	added since the last time I looked at the source, this may result
+	in problems in using this widget with managers and constraint
+	manager as <parent>. If that happens, do (send <list_w> :parent)
+	to retrieve the appropriate widget to be managed.
+
+*** XtAddCallback():
+
+	(send <selectionbox_widget> :add_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+	(send <selectionbox_widget> :set_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	These methods work just like the :add_callback/:set_callback
+	methods on WIDGET_CLASS except that these methods understand
+	how to get call_data values from the XmTextVerifyCallbackStruct:
+		typedef struct
+		{
+		    int reason;
+		    XEvent  *event;
+		    Boolean doit;
+		    XmTextPosition currInsert, newInsert;
+		    XmTextPosition startPos, endPos;
+		    XmTextBlock text;
+		} XmTextVerifyCallbackStruct, *XmTextVerifyPtr;
+
+	Specifying one or more of the following symbols in the callback
+	bindings list will bind that symbol's value in the lexical
+	environment of the callback:
+		CALLBACK_WIDGET -- the WIDGETOBJ of the callback
+		CALLBACK_REASON -- the reason symbol for the callback
+		CALLBACK_XEVENT -- the Xevent* that caused the callback
+		CALLBACK_CUR_INSERT -- a FIXNUM, the current position of the
+				       insert cursor.
+		CALLBACK_NEW_INSERT -- a FIXNUM, the position at which the 
+				       user attempted to position the
+				       insert cursor.
+		CALLBACK_START_POS  -- a FIXNUM, the starting position of
+				       the text to modify.
+		CALLBACK_END_POS    -- a FIXNUM, the ending position of the 
+				       text to modify.
+
+	NOTE: setting the calldata->text->(XmTextBlockRec) and calldata->doit
+	slots of the XmTextVerifyCallbackStruct is not supported
+	in this version of WINTERP. Most of this functionality can be achieved
+	through methods on the XM_TEXT_WIDGET_CLASS. (For details, see comments
+	in ./winterp/src-server/w_callbacks.c, procedure,
+	Wcb_Lexical_Bindings_For_XmTextVerifyCallbackStruct(). -- It should
+	be relatively straightforward to add such capabilities to WINTERP.)
+
+*** XmTextGetTopPosition():
+
+	(send <text_widget> :GET_TOP_POSITION)
+	      ==> returns a FIXNUM representing top position of Text widget.
+
+*** XmTextSetTopPosition():
+
+	(send <text_widget> :SET_TOP_POSITION <top_position>)
+		==> returns <text_widget>.
+	
+	This method sets the top position of <text_widget> by specifying
+	a FIXNUM <top_position> as index into the text widget's string value.
+ 
+*** XmTextScroll():
+
+	(send <text_widget> :SCROLL <n>)
+		--> returns <text_widget>.
+
+	This method will scroll the text displayed by the text widget
+	up or down by <n> lines. If <n> is a positive FIXNUM, the text
+	moves upward. If <n> is a negative FIXNUM, the text moves down. 
+
+*** XmTextGetInsertionPosition():
+
+	(send <text_widget> :GET_INSERTION_POSITION)
+		--> returns a FIXNUM, the position of the insert cursor
+		as an index into the text widget's string value.
+
+*** XmTextSetInsertionPosition():
+
+	(send <text_widget> :SET_INSERTION_POSITION <position>)
+		--> returns <text_widget>
+
+	This method sets the insert cursor to index <position> in the
+	text widget's string value. <position> is a FIXNUM.
+ 
+*** XmTextShowPosition():
+
+	(send <text_widget> :SHOW_POSITION <position>)
+		--> returns <text_widget>
+
+	This method makes <position> visible. <position> is a FIXNUM index
+	into the text widget's string value.
+
+*** XmTextDisableRedisplay():
+
+	(send <text_widget> :DISABLE_REDISPLAY <loses-backingstore-p>)
+		--> returns <text_widget>
+
+	This method is useful to call before making a series of updates
+	to the text widget's string value. It prevents the changes from
+	being displayed until message :ENABLE_REDISPLAY is received. 
+	<loses-backingstore-p> is a boolean. If true, then the text widget
+	loses backingstore, I guess (couldn't find documentation on this).
+
+*** XmTextEnableRedisplay():
+
+	(send <text_widget> :ENABLE_REDISPLAY)
+		--> returns <text_widget>
+
+	This method allows changes made to the text widget to be displayed
+	after the text widget has received a message :DISABLE_REDISPLAY.
+
+*** XmTextClearSelection():
+
+	(send <text_widget> :CLEAR_SELECTION [<time>])
+		--> returns <text_widget>
+
+	This method clears the primary selection in the Text widget.	
+	Note that this version of WINTERP doesn't accept a <time>
+	parameter. It uses 'CurrentTime' instead.
+
+*** XmTextGetSelection():
+
+	(send <text_widget> :GET_SELECTION)
+		--> returns a string, the value of the primary selection.
+
+*** XmTextSetSelection():
+
+	(send <text_widget> :SET_SELECTION <firstpos> <lastpos> [<time>])
+		--> returns <text_widget>.
+
+	This method sets the primary selection in <text_widget>. The
+	selection is set between indexes <firstpos> and <lastpos> both
+	FIXNUMs. The current version of WINTERP doesn't take the <time>
+	parameter, 'CurrentTime' is used instead.
+
+*** XmTextGetSelectionPosition():
+
+	(send <text_widget> :GET_SELECTION_POSITION)
+		--> returns a "dotted pair" (<left_pos> . <right_pos>):
+		    Taking 'car' of this result returns <left_pos> which
+		    is a FIXNUM representing the position of the left side
+		    of the selection. Taking 'cdr' of the result returns
+		    <right_pos> which is a FIXNUM representing the position
+ 		    of the right side of the selection.
+
+*** XmTextGetString():
+
+	(send <text_widget> :GET_STRING)
+		--> returns the string edited by the text edit widget.
+
+*** XmTextSetString():
+
+	(send <text_widget> :SET_STRING <string>)
+		--> returns <text_widget>
+
+	This method sets the string edited by <text_widget>.
+
+*** XmTextReplace():
+
+	(send <text_widget> :replace <from-pos> <to-pos> <string>)
+		--> returns <text_widget>.
+
+	This method replaces part of the text string displayed by
+	<text_widget> with <string> a STRING value.
+
+	<from-pos> and <to-pos> are FIXNUMs which represent the indexes
+	of the character segment to be replaced. If <from-pos>==<to-pos>
+	the <string> is inserted after <from-pos>.
+
+*** XmTextGetEditable():
+
+	(send <text_widget> :get_editable)
+		--> returns T if editable, NIL otherwise. This is the
+		same as the value of resource :XMN_EDITABLE.
+
+*** XmTextSetEditable():
+
+	(send <text_widget> :set_editable <editableP>)
+		--> returns <text_widget>
+
+	This method sets the edit permission of the <text_widget>. If
+	<editableP> is NIL, then keyboard input will not edit text,
+	otherwise users may edit the text. This method sets the resource
+	:XMN_EDITABLE.
+
+*** XmTextGetMaxLength():
+
+	(send <text_widget> :GET_MAX_LENGTH)
+		--> returns a FIXNUM, the maximum length of a text string
+		entered into <text_widget> from the keyboard.
+
+*** XmTextSetMaxLength():
+
+	(send <text_widget> :SET_MAX_LENGTH <max_length>)
+		--> returns <text_widget>
+
+	This method sets the value of the current maximum allowable length
+	of a text string entered from the keyboard to <max_length>, a FIXNUM.
+	
+*** XmTextPosToXY():
+
+	(send <text_widget> :POS_TO_XY <position>)
+		--> returns a "dotted pair" (<x> . <y>).
+		    Taking 'car' of the result returns <x>, a FIXNUM
+		    representing the pixel x position corresponding to 
+		    <position>. 'cdr' of the result returns <y>, a FIXNUM
+		    representing the pixel y position corresponding to 
+		    <position>.
+
+*** XmTextXYToPos():
+
+	(send <text_widget> :XY_TO_POS <x> <y>)
+		--> returns a FIXNUM representing the index into the 
+		    text edit widget's string value corresponding to
+		    the FIXNUMs <x> and <y> which are pixel coordinates.
+
+*** XmTextGetLastPosition():
+
+	(send <text_widget> :GET_LAST_POSITION)
+		--> returns a FIXNUM representing last position.
+
+*** XmTextSetSource():
+
+	No interface to this method exists in the current version of WINTERP.
+
+*** XmTextGetSource():
+
+	No interface to this method exists in the current version of WINTERP.
+______________________________________________________________________________
+
+** XM_TOGGLE_BUTTON_WIDGET_CLASS / XM_TOGGLE_BUTTON_GADGET_CLASS
+
+*** equivalent Xt 'WidgetClass':
+
+	xmToggleButtonWidgetClass
+	xmToggleButtonGadgetClass
+
+*** equivalent creation convenience function:
+
+	(send XM_TOGGLE_BUTTON_WIDGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateToggleButton()
+
+	(send XM_TOGGLE_BUTTON_GADGET_CLASS :new [:managed/:unmanaged] ...)
+		--> XmCreateToggleButtonGadget()
+
+*** XtAddCallback():
+
+	(send <selectionbox_widget> :add_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+	(send <selectionbox_widget> :set_callback ...)
+		--> returns: <callback_id_object> of type CALLBACKOBJ
+
+	These methods work just like the :add_callback/:set_callback
+	methods on WIDGET_CLASS except that these methods understand
+	how to get call_data values from the XmToggleButtonCallbackStruct:
+		typedef struct
+		{
+		   int reason;
+		   XEvent * event;
+		   int set;
+		} XmToggleButtonCallbackStruct;
+
+	Specifying one or more of the following symbols in the callback
+	bindings list will bind that symbol's value in the lexical
+	environment of the callback:
+		CALLBACK_WIDGET -- the WIDGETOBJ of the callback
+		CALLBACK_REASON -- the reason symbol for the callback
+		CALLBACK_XEVENT -- the Xevent* that caused the callback
+		CALLBACK_SET    -- T if the togglebutton causing the
+				   callback is set, else NIL.
+
+*** XmToggleButtonGetState() / XmToggleButtonGadgetGetState():
+
+	(send <togglebutton> :GET_STATE)
+		--> returns T if the toggle button is set, else NIL
+
+*** XmToggleButtonSetState() / XmToggleButtonGadgetSetState():
+
+	(send <togglebutton> :SET_STATE <state_p> <notify_p>)
+		--> returns <togglebutton>.
+
+	This method sets the state of the togglebutton to OFF if
+	boolean <state_p> is NIL, else it set the state to ON
+
+	<notify_p> -- if not NIL, :xmn_value_changed_callback gets called.
+
+=============================================================================
+
+* WINTERP <--> Motif resources
+
+______________________________________________________________________________
+
+** XmRAcceleratorTable:
+
+*** Type Information:
+
+	Resource representation type XmRAcceleratorTable corresponds to the
+	atomic type XT_ACCELERATORS as returned by primitive
+	XT_PARSE_ACCELERATOR_TABLE.
+
+	One may set XmRAcceleratorTable resources by specifying a STRING
+	accelerator table, just as you would in file $HOME/.Xdefaults.
+	Alternatively, one can use the result of :get_values on another
+	widget's XmRAcceleratorTable resource or use primitive
+	XT_PARSE_ACCELERATOR_TABLE as a XmRAcceleratorTable value.
+
+	For more information on the syntax of the string representation of
+	accelerator tables, see the X11r3 documentation "X Toolkit
+	Intrinsics -- C Language Interface": "Appendix B: Translation Table
+	Syntax" and "Chapter 10: Translation Management".
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_TEXT_ACCELERATORS		XmNtextAccelerators
+
+		XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_ACCELERATORS		XmNaccelerators
+
+		<CORE_WIDGET_CLASS>
+______________________________________________________________________________
+
+** XmRAlignment:
+
+*** Type Information:
+
+	Resource representation type XmRAlignment corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:ALIGNMENT_BEGINNING	XmALIGNMENT_BEGINNING
+		:ALIGNMENT_CENTER	XmALIGNMENT_CENTER
+		:ALIGNMENT_END		XmALIGNMENT_END
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRAlignment by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_ALIGNMENT		XmNalignment
+
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+
+	:XMN_MESSAGE_ALIGNMENT	XmNmessageAlignment
+
+		XM_MESSAGE_BOX_WIDGET_CLASS
+
+	:XMN_ENTRY_ALIGNMENT	XmNentryAlignment
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+______________________________________________________________________________
+
+** XmRBoolean:
+
+*** Type Information:
+
+	Resource representation type XmRBoolean corresponds to any WINTERP-Lisp 
+	value. If the value is NIL, then the value is the boolean FALSE,
+	any other value is interpreted as boolean TRUE.
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRBoolean by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_ANCESTOR_SENSITIVE		XmNancestorSensitive
+
+		<CORE_WIDGET_CLASS> <SHELL_WIDGET_CLASS>
+
+	:XMN_INPUT			XmNinput
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_SENSITIVE			XmNsensitive
+
+		<CORE_WIDGET_CLASS>
+
+	:XMN_ALLOW_SHELL_RESIZE		XmNallowShellResize
+
+		<SHELL_WIDGET_CLASS> XM_MENU_POPUP_SHELL_WIDGET_CLASS
+
+	:XMN_SAVE_UNDER			XmNsaveUnder
+
+		<SHELL_WIDGET_CLASS> XM_MENU_POPUP_SHELL_WIDGET_CLASS
+
+	:XMN_OVERRIDE_REDIRECT		XmNoverrideRedirect
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_WAIT_FOR_WM		XmNwaitForWm
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_TRANSIENT			XmNtransient
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_ICONIC			XmNiconic
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_MAPPED_WHEN_MANAGED	XmNmappedWhenManaged
+
+		<Core_Widget_Class>
+
+	:XMN_ALLOW_OVERLAP		XmNallowOverlap
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS
+
+	:XMN_AUTO_UNMANAGE		XmNautoUnmanage
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS XM_COMMAND_WIDGET_CLASS
+		XM_FILE_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_DEFAULT_POSITION		XmNdefaultPosition
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS XM_COMMAND_WIDGET_CLASS
+
+	:XMN_NO_RESIZE			XmNnoResize
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS
+
+	:XMN_PUSH_BUTTON_ENABLED	XmNpushButtonEnabled
+
+		XM_DRAWN_BUTTON_WIDGET_CLASS
+
+	:XMN_LIST_UPDATED		XmNlistUpdated
+
+		XM_FILE_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_RUBBER_POSITIONING		XmNrubberPositioning
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_RESIZABLE			XmNresizable
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_TRAVERSAL_ON		XmNtraversalOn
+
+		<XM_GADGET_CLASS> <XM_PRIMITIVE_WIDGET_CLASS>
+		XM_SCALE_WIDGET_CLASS
+
+	:XMN_HIGHLIGHT_ON_ENTER		XmNhighlightOnEnter
+
+		<XM_GADGET_CLASS> <XM_PRIMITIVE_WIDGET_CLASS>
+		XM_SCALE_WIDGET_CLASS
+
+	:XMN_RECOMPUTE_SIZE		XmNrecomputeSize
+
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+
+	:XMN_AUTOMATIC_SELECTION XmNautomaticSelection
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_SHOW_SEPARATOR		XmNshowSeparator
+
+		XM_MAIN_WINDOW_WIDGET_CLASS
+
+	:XMN_MINIMIZE_BUTTONS		XmNminimizeButtons
+
+		XM_MESSAGE_BOX_WIDGET_CLASS XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_REFIGURE_MODE		XmNrefigureMode
+
+		XM_PANED_WINDOW_WIDGET_CLASS
+
+	:XMN_SEPARATOR_ON		XmNseparatorOn
+
+		XM_PANED_WINDOW_WIDGET_CLASS
+
+	:XMN_ALLOW_RESIZE		XmNallowResize
+
+		XM_PANED_WINDOW_WIDGET_CLASS
+
+	:XMN_SKIP_ADJUST		XmNskipAdjust
+
+		XM_PANED_WINDOW_WIDGET_CLASS
+
+	:XMN_FILL_ON_ARM		XmNfillOnArm
+
+		XM_PUSH_BUTTON_WIDGET_CLASS XM_PUSH_BUTTON_GADGET_CLASS
+
+	:XMN_RESIZE_WIDTH		XmNresizeWidth
+
+		XM_ROW_COLUMN_WIDGET_CLASS XM_TEXT_WIDGET_CLASS
+
+	:XMN_RESIZE_HEIGHT		XmNresizeHeight
+
+		XM_ROW_COLUMN_WIDGET_CLASS XM_TEXT_WIDGET_CLASS
+
+	:XMN_ADJUST_LAST		XmNadjustLast
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_IS_ALIGNED			XmNisAligned
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_ADJUST_MARGIN		XmNadjustMargin
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_RADIO_BEHAVIOR		XmNradioBehavior
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_RADIO_ALWAYS_ONE		XmNradioAlwaysOne
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_IS_HOMOGENEOUS		XmNisHomogeneous
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_POPUP_ENABLED		XmNpopupEnabled
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_SHOW_VALUE			XmNshowValue
+
+		XM_SCALE_WIDGET_CLASS
+
+	:XMN_SHOW_ARROWS		XmNshowArrows
+
+		XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_MUST_MATCH			XmNmustMatch
+
+		XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_AUTO_SHOW_CURSOR_POSITION	XmNautoShowCursorPosition
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_EDITABLE			XmNeditable
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_PENDING_DELETE		XmNpendingDelete
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_WORD_WRAP			XmNwordWrap
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_SCROLL_VERTICAL		XmNscrollVertical
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_SCROLL_HORIZONTAL		XmNscrollHorizontal
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_SCROLL_LEFT_SIDE		XmNscrollLeftSide
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_SCROLL_TOP_SIDE		XmNscrollTopSide
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_CURSOR_POSITION_VISIBLE	XmNcursorPositionVisible
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_VISIBLE_WHEN_OFF		XmNvisibleWhenOff
+
+		XM_TOGGLE_BUTTON_WIDGET_CLASS XM_TOGGLE_BUTTON_GADGET_CLASS
+
+	:XMN_SET			XmNset	
+
+		XM_TOGGLE_BUTTON_WIDGET_CLASS XM_TOGGLE_BUTTON_GADGET_CLASS
+
+	:XMN_INDICATOR_ON		XmNindicatorOn
+
+		XM_TOGGLE_BUTTON_WIDGET_CLASS XM_TOGGLE_BUTTON_GADGET_CLASS
+
+	:XMN_FILL_ON_SELECT		XmNfillOnSelect
+
+		XM_TOGGLE_BUTTON_WIDGET_CLASS XM_TOGGLE_BUTTON_GADGET_CLASS
+______________________________________________________________________________
+
+** XmRCallback:
+
+*** Type Information:
+
+	The current version of WINTERP does not allow you to set or
+	retrieve a widget's callback list directly. Modifications
+	to a callback list must be done through WIDGET_CLASS methods
+	:ADD_CALLBACK, :SET_CALLBACK, :REMOVE_ALL_CALLBACKS,
+	or via primitive XT_REMOVE_CALLBACK.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_DESTROY_CALLBACK		XmNdestroyCallback
+
+		<CORE_WIDGET_CLASS>
+
+	:XMN_POPUP_CALLBACK		XmNpopupCallback
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_POPDOWN_CALLBACK		XmNpopdownCallback
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_FOCUS_POLICY_CHANGED	XmNfocusPolicyChanged
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_ACTIVATE_CALLBACK		XmNactivateCallback
+
+		XM_ARROW_BUTTON_WIDGET_CLASS XM_ARROW_BUTTON_GADGET_CLASS
+		XM_CASCADE_BUTTON_WIDGET_CLASS XM_CASCADE_BUTTON_GADGET_CLASS
+		XM_DRAWN_BUTTON_WIDGET_CLASS
+		XM_PUSH_BUTTON_WIDGET_CLASS XM_PUSH_BUTTON_GADGET_CLASS
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_ARM_CALLBACK		XmNarmCallback
+
+		XM_ARROW_BUTTON_WIDGET_CLASS XM_ARROW_BUTTON_GADGET_CLASS
+		XM_DRAWN_BUTTON_WIDGET_CLASS
+		XM_PUSH_BUTTON_WIDGET_CLASS XM_PUSH_BUTTON_GADGET_CLASS
+		XM_TOGGLE_BUTTON_WIDGET_CLASS XM_TOGGLE_BUTTON_GADGET_CLASS
+
+	:XMN_DISARM_CALLBACK		XmNdisarmCallback
+
+		XM_ARROW_BUTTON_WIDGET_CLASS XM_ARROW_BUTTON_GADGET_CLASS
+		XM_DRAWN_BUTTON_WIDGET_CLASS
+		XM_PUSH_BUTTON_WIDGET_CLASS XM_PUSH_BUTTON_GADGET_CLASS
+		XM_TOGGLE_BUTTON_WIDGET_CLASS XM_TOGGLE_BUTTON_GADGET_CLASS
+
+	:XMN_FOCUS_CALLBACK		XmNfocusCallback
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS XM_TEXT_WIDGET_CLASS
+
+	:XMN_MAP_CALLBACK		XmNmapCallback
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_UNMAP_CALLBACK		XmNunmapCallback
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_CASCADING_CALLBACK		XmNcascadingCallback
+
+		XM_CASCADE_BUTTON_WIDGET_CLASS XM_CASCADE_BUTTON_GADGET_CLASS
+
+	:XMN_COMMAND_ENTERED_CALLBACK	XmNcommandEnteredCallback
+
+		XM_COMMAND_WIDGET_CLASS
+
+	:XMN_COMMAND_CHANGED_CALLBACK	XmNcommandChangedCallback
+
+		XM_COMMAND_WIDGET_CLASS
+
+	:XMN_RESIZE_CALLBACK		XmNresizeCallback
+
+		XM_DRAWING_AREA_WIDGET_CLASS XM_DRAWN_BUTTON_WIDGET_CLASS
+
+	:XMN_EXPOSE_CALLBACK		XmNexposeCallback
+
+		XM_DRAWING_AREA_WIDGET_CLASS XM_DRAWN_BUTTON_WIDGET_CLASS
+
+	:XMN_INPUT_CALLBACK		XmNinputCallback
+
+		XM_DRAWING_AREA_WIDGET_CLASS
+
+	:XMN_HELP_CALLBACK		XmNhelpCallback
+
+		<XM_GADGET_CLASS> <XM_MANAGER_WIDGET_CLASS>
+		<XM_PRIMITIVE_WIDGET_CLASS>
+
+	:XMN_SINGLE_SELECTION_CALLBACK	XmNsingleSelectionCallback
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_MULTIPLE_SELECTION_CALLBACK XmNmultipleSelectionCallback
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_EXTENDED_SELECTION_CALLBACK XmNextendedSelectionCallback
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_BROWSE_SELECTION_CALLBACK	XmNbrowseSelectionCallback
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_DEFAULT_ACTION_CALLBACK	XmNdefaultActionCallback
+
+		XM_LIST_WIDGET_CLASS 
+
+	:XMN_OK_CALLBACK		XmNokCallback
+
+		XM_MESSAGE_BOX_WIDGET_CLASS XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_CANCEL_CALLBACK		XmNcancelCallback
+
+		XM_MESSAGE_BOX_WIDGET_CLASS XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_ENTRY_CALLBACK		XmNentryCallback
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_VALUE_CHANGED_CALLBACK	XmNvalueChangedCallback
+
+		XM_SCALE_WIDGET_CLASS XM_SCROLL_BAR_WIDGET_CLASS
+		XM_TEXT_WIDGET_CLASS
+		XM_TOGGLE_BUTTON_WIDGET_CLASS XM_TOGGLE_BUTTON_GADGET_CLASS
+
+	:XMN_DRAG_CALLBACK		XmNdragCallback
+
+		XM_SCALE_WIDGET_CLASS XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_INCREMENT_CALLBACK		XmNincrementCallback
+
+		XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_DECREMENT_CALLBACK		XmNdecrementCallback
+
+		XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_PAGE_INCREMENT_CALLBACK	XmNpageIncrementCallback
+
+		XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_PAGE_DECREMENT_CALLBACK	XmNpageDecrementCallback
+
+		XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_TO_TOP_CALLBACK		XmNtoTopCallback
+
+		XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_TO_BOTTOM_CALLBACK		XmNtoBottomCallback
+
+		XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_NO_MATCH_CALLBACK		XmNnoMatchCallback
+
+		XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_APPLY_CALLBACK		XmNapplyCallback
+
+		XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_LOSING_FOCUS_CALLBACK	XmNlosingFocusCallback
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_MODIFY_VERIFY_CALLBACK	XmNmodifyVerifyCallback
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_MOTION_VERIFY_CALLBACK	XmNmotionVerifyCallback
+
+		XM_TEXT_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRChar:
+
+*** Type Information:
+
+	Resource representation type XmRChar corresponds to the
+	WINTERP-Lisp type CHARACTER.
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRChar by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_MNEMONIC			XmNmnemonic
+
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+		XM_ROW_COLUMN_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRDimension:
+
+*** Type Information:
+
+	Resource representation type XmRDimension corresponds to
+	WINTERP-Lisp type FIXNUM, and further restricts that type to the
+	subrange of non-negative integers.
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRDimension by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_WIDTH			XmNwidth
+
+		<CORE_WIDGET_CLASS>
+
+	:XMN_HEIGHT			XmNheight
+
+		<CORE_WIDGET_CLASS>
+
+	:XMN_BORDER_WIDTH		XmNborderWidth
+
+		<CORE_WIDGET_CLASS> <XM_GADGET_CLASS> <XM_MANAGER_WIDGET_CLASS>
+		<XM_PRIMITIVE_WIDGET_CLASS>
+
+	:XMN_SASH_WIDTH			XmNsashWidth
+
+		XM_PANED_WINDOW_WIDGET_CLASS
+
+	:XMN_SASH_HEIGHT		XmNsashHeight
+
+		XM_PANED_WINDOW_WIDGET_CLASS
+
+	:XMN_RCMARGIN_WIDTH		XmNmarginWidth
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+		Note -- :XMN_RCMARGIN_WIDTH is an alias for XmNmarginWidth
+		for the Motif Row Column Widget. Motif 1.0 has a bug in
+		that it inconsistently declares XmNmarginWidth as 'short' in
+		a number of widget classes, but uses 'unsigned int' for the
+		rowcolumn widget. On some architectures, this may cause
+		method :get_values to retrieve garbage.
+
+	:XMN_RCMARGIN_HEIGHT		XmNmarginHeight
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+		Note -- :XMN_RCMARGIN_HEIGHT is an alias for XmNmarginHeight
+		for the Motif Row Column Widget. Motif 1.0 has a bug in
+		that it inconsistently declares XmNmarginHeight as 'short' in
+		a number of widget classes, but uses 'unsigned int' for the
+		rowcolumn widget. On some architectures, this may cause
+		method :get_values to retrieve garbage.
+
+	:XMN_SPACING			XmNspacing
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+		XM_TOGGLE_BUTTON_WIDGET_CLASS XM_TOGGLE_BUTTON_GADGET_CLASS
+		XM_PANED_WINDOW_WIDGET_CLASS
+
+		Note -- Motif 1.0 has a bug in that :XMN_SPACING is inconsistently
+		declared across	widget classes. In XM_ROW_COLUMN_WIDGET_CLASS, it is
+		declared as XmRDimension; in XM_TOGGLE_BUTTON_WIDGET_CLASS and
+		XM_TOGGLE_BUTTON_GADGET_CLASS it is declared as XmRShort;
+		and it's declared as XmRInt in XM_PANED_WINDOW_WIDGET_CLASS.
+		Note that in some architectures, this may result in the bug of bogus
+		retrieval and/or setting of values....
+
+	:XMN_ENTRY_BORDER		XmNentryBorder
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_SCALE_WIDTH		XmNscaleWidth
+
+		XM_SCALE_WIDGET_CLASS
+
+	:XMN_SCALE_HEIGHT		XmNscaleHeight
+
+		XM_SCALE_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmREditMode:
+
+*** Type Information:
+
+	Resource representation type XmREditMode corresponds to an enumerated
+	type. The following keyword symbols represent the valid	WINTERP-Lisp
+	values for this type and their associated Motif constants:
+
+		:MULTI_LINE_EDIT	XmMULTI_LINE_EDIT
+		:SINGLE_LINE_EDIT	XmSINGLE_LINE_EDIT
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_EDIT_MODE			XmNeditMode
+
+		XM_TEXT_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRFontList:
+
+*** Type Information:
+
+	The current version of WINTERP does not allow you to get
+	a widget's XmRFontList value since WINTERP-Lisp doesn't currently
+	support XmRFontList as a type. Adding this type was not a high
+	priority in this first release of WINTERP; I expect to add it in a 
+	subsequent release along with various XmString utilities that use
+	the XmFontList type.
+
+	One may set a XmRFontList resource by specifying a STRING value
+	corresponding to the font's name. These string values will then get
+	looked up using Motif's font-searching and font-cacheing utilities.
+	You may specify any value that you would specify to a XmRFontList
+	resource in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_BUTTON_FONT_LIST		XmNbuttonFontList
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS
+
+	:XMN_LABEL_FONT_LIST		XmNlabelFontList
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS
+
+	:XMN_TEXT_FONT_LIST		XmNtextFontList
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS
+
+	:XMN_FONT_LIST			XmNfontList
+
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS XM_LIST_WIDGET_CLASS
+		XM_SCALE_WIDGET_CLASS XM_TEXT_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRIndicatorType:
+
+*** Type Information:
+
+	Resource representation type XmRIndicatorType corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:N_OF_MANY	XmN_OF_MANY
+		:ONE_OF_MANY	XmONE_OF_MANY
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRIndicatorType by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_INDICATOR_TYPE		XmNindicatorType
+
+		XM_TOGGLE_BUTTON_WIDGET_CLASS XM_TOGGLE_BUTTON_GADGET_CLASS
+______________________________________________________________________________
+
+** XmRInt:
+
+*** Type Information:
+
+	Resource representation type XmRInt corresponds to WINTERP-Lisp type
+	FIXNUM. On architectures where the range of type 'long' is
+	different from the range of type 'int', FIXNUM values exceeding the
+	minimum and maximum 'int' limits will cause XLISP to signal an error.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_DEPTH			XmNdepth
+
+		<SHELL_WIDGET_CLASS> <Core_Widget_Class>
+
+	:XMN_WM_TIMEOUT			XmNwmTimeout
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_MIN_WIDTH			XmNminWidth
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_MIN_HEIGHT			XmNminHeight
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_MAX_WIDTH			XmNmaxWidth
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_WIDTH_INC			XmNwidthInc
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_HEIGHT_INC			XmNheightInc
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_MIN_ASPECT_X		XmNminAspectX
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_MIN_ASPECT_Y		XmNminAspectY
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_MAX_ASPECT_X		XmNmaxAspectX
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_MAX_ASPECT_Y		XmNmaxAspectY
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_INITIAL_STATE		XmNinitialState
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_ICON_X			XmNiconX
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_ICON_Y			XmNiconY
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_ARGC			XmNargc
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_MWM_DECORATIONS		XmNmwmDecorations
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_MWM_FUNCTIONS		XmNmwmFunctions
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_MWM_INPUT_MODE		XmNmwmInputMode
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_MAPPING_DELAY		XmNmappingDelay
+
+		XM_CASCADE_BUTTON_WIDGET_CLASS XM_CASCADE_BUTTON_GADGET_CLASS
+
+	:XMN_HISTORY_ITEM_COUNT		XmNhistoryItemCount
+
+		XM_COMMAND_WIDGET_CLASS
+
+	:XMN_HISTORY_MAX_ITEMS		XmNhistoryMaxItems
+
+		XM_COMMAND_WIDGET_CLASS
+
+	:XMN_HISTORY_VISIBLE_ITEM_COUNT	XmNhistoryVisibleItemCount
+
+		XM_COMMAND_WIDGET_CLASS
+
+	:XMN_HORIZONTAL_SPACING		XmNhorizontalSpacing
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_VERTICAL_SPACING		XmNverticalSpacing
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_FRACTION_BASE		XmNfractionBase
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_TOP_POSITION		XmNtopPosition
+
+		XM_FORM_WIDGET_CLASS XM_TEXT_WIDGET_CLASS
+
+	:XMN_BOTTOM_POSITION		XmNbottomPosition
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_LEFT_POSITION		XmNleftPosition
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_RIGHT_POSITION		XmNrightPosition
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_TOP_OFFSET			XmNtopOffset
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_BOTTOM_OFFSET		XmNbottomOffset
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_LEFT_OFFSET		XmNleftOffset
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_RIGHT_OFFSET		XmNrightOffset
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_ITEM_COUNT			XmNitemCount
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_SELECTED_ITEM_COUNT	XmNselectedItemCount
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_VISIBLE_ITEM_COUNT		XmNvisibleItemCount
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_DOUBLE_CLICK_INTERVAL	XmNdoubleClickInterval
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_SASH_SHADOW_THICKNESS	XmNsashShadowThickness
+
+		XM_PANED_WINDOW_WIDGET_CLASS
+
+	:XMN_MINIMUM			XmNminimum
+
+		XM_PANED_WINDOW_WIDGET_CLASS XM_SCALE_WIDGET_CLASS XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_MAXIMUM			XmNmaximum
+
+		XM_PANED_WINDOW_WIDGET_CLASS XM_SCALE_WIDGET_CLASS XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_VALUE			XmNvalue
+
+		XM_SCALE_WIDGET_CLASS XM_SCROLL_BAR_WIDGET_CLASS
+
+		Note -- resource name :XMN_VALUE will not set or
+		retrieve a string value in XM_TEXT_WIDGET_CLASS instances.
+		Motif 1.0 has a bug that inconsistently declares the value
+		associated with the "message" XmNvalue as 'int' for 
+		XM_SCALE_WIDGET_CLASS XM_SCROLL_BAR_WIDGET_CLASS, and
+		as a 'string' for the text widget. Thus, to retrieve or
+		set the string in a text widget, use resource name :XMN_STRING
+		or use text widget methods :GET_STRING and :SET_STRING.
+
+	:XMN_SLIDER_SIZE		XmNsliderSize
+
+		XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_INCREMENT			XmNincrement
+
+		XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_PAGE_INCREMENT		XmNpageIncrement
+
+		XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_INITIAL_DELAY		XmNinitialDelay
+
+		XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_REPEAT_DELAY		XmNrepeatDelay
+
+		XM_SCROLL_BAR_WIDGET_CLASS
+
+	:XMN_TEXT_COLUMNS		XmNtextColumns
+
+		XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_LIST_ITEM_COUNT		XmNlistItemCount
+
+		XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_LIST_VISIBLE_ITEM_COUNT	XmNlistVisibleItemCount
+
+		XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_MAX_LENGTH			XmNmaxLength
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_CURSOR_POSITION		XmNcursorPosition
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_SELECTION_ARRAY_COUNT	XmNselectionArrayCount
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_SELECT_THRESHOLD		XmNselectThreshold
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_BLINK_RATE			XmNblinkRate
+
+		XM_TEXT_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRLabelType:
+
+*** Type Information:
+
+	Resource representation type XmRLabelType corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:PIXMAP		XmPIXMAP
+		:STRING		XmSTRING
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRLabelType by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_LABEL_TYPE			XmNlabelType
+
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+______________________________________________________________________________
+
+** XmROrientation:
+
+*** Type Information:
+
+	Resource representation type XmROrientation corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:NO_ORIENTATION		XmNO_ORIENTATION
+		:VERTICAL		XmVERTICAL
+		:HORIZONTAL		XmHORIZONTAL
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRLabelType by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_ORIENTATION		XmNorientation
+
+		XM_ROW_COLUMN_WIDGET_CLASS XM_SCALE_WIDGET_CLASS
+		XM_SCROLL_BAR_WIDGET_CLASS
+		XM_SEPARATOR_GADGET_CLASS XM_SEPARATOR_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRPacking:
+
+*** Type Information:
+
+	Resource representation type XmRPacking corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:NO_PACKING		XmNO_PACKING
+		:PACK_TIGHT		XmPACK_TIGHT
+		:PACK_COLUMN		XmPACK_COLUMN
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRPacking by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_PACKING			XmNpacking
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRPixel:
+
+*** Type Information:
+
+	Resource representation type XmRPixel corresponds to the
+	WINTERP-Lisp atomic type PIXEL, which is X's way of representing
+	a color.
+
+	One may set XmRPixel resources by specifying a STRING color name,
+	just as you would in $HOME/.Xdefaults. Alternatively, one can use
+	the result of primitive	X_ALLOC_COLOR, or the result of :get_values
+	on the XmRPixel resource of another widget.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_BORDER_COLOR		XmNborderColor
+
+		<Core_Widget_Class>
+
+	:XMN_FOREGROUND			XmNforeground
+
+		<XM_MANAGER_WIDGET_CLASS> <XM_PRIMITIVE_WIDGET_CLASS>
+
+	:XMN_BACKGROUND			XmNbackground
+
+		<Core_Widget_Class> <XM_MANAGER_WIDGET_CLASS> <XM_PRIMITIVE_WIDGET_CLASS>
+
+	:XMN_HIGHLIGHT_COLOR		XmNhighlightColor
+
+		<XM_MANAGER_WIDGET_CLASS> <XM_PRIMITIVE_WIDGET_CLASS>
+
+	:XMN_TOP_SHADOW_COLOR		XmNtopShadowColor
+
+		<XM_MANAGER_WIDGET_CLASS> <XM_PRIMITIVE_WIDGET_CLASS>
+
+	:XMN_BOTTOM_SHADOW_COLOR	XmNbottomShadowColor
+
+		<XM_MANAGER_WIDGET_CLASS> <XM_PRIMITIVE_WIDGET_CLASS>
+
+	:XMN_ARM_COLOR			XmNarmColor
+
+		XM_PUSH_BUTTON_WIDGET_CLASS XM_PUSH_BUTTON_GADGET_CLASS
+
+	:XMN_SELECT_COLOR		XmNselectColor
+
+		XM_TOGGLE_BUTTON_WIDGET_CLASS XM_TOGGLE_BUTTON_GADGET_CLASS
+______________________________________________________________________________
+
+** XmRPixmap, XmRPrimForegroundPixmap, XmRManForegroundPixmap, XmRPrimHighlightPixmap, XmRManHighlightPixmap:
+
+*** Type Information:
+
+	Resource representation type XmR*Pixmap corresponds to the
+	WINTERP-Lisp atomic type PIXMAP as returned by primitive
+	XM_GET_PIXMAP. Pixmaps are used by widgets to display
+	graphical images.
+	
+	One may set Pixmap resources by specifying the STRING name of
+	the pixmap. Pixmaps get named by "installing" an XImage with an
+	associated name by using primitive XM_INSTALL_IMAGE. If a named
+	pixmap cannot be found, then the pixmap name is taken as a filename
+	for an X10 or X11 bitmap file. The bitmap must either be on the
+	file path specified by environment variable XBMLANGPATH, or must be
+	in Motif's default pixmap search path. For more information, see
+	the documentation for XmGetPixmap(X).
+
+	Additionally, Motif defines the following preinstalled pixmap
+	names: "background", "25_foreground", "50_foreground",
+	"75_foreground", "vertical", "horizontal", "slant_right",
+	"slant_left", "menu_cascade", and "menu_checkmark".
+	
+	Note that due to bugs in Motif 1.0 pixmap handling, it may be best
+	to only use primitive XM_GET_PIXMAP to set pixmap resource values.
+	If you specify a string value for a pixmap, Motif's string --> pixmap
+	converters will probably retrieve the wrong default colors for the
+	pixmap:	At widget creation time, you'll get back a pixmap using the
+	WINTERP	main application window's (the quit button) default
+	foreground and background colors; If you set a pixmap resource via
+	:SET_VALUES, the pixmap will use the widget manager's foreground and
+	background colors. (For details on this problem, see comments in .
+	/winterp/src-server/w_resources.c and ./winterp/src-server/w_pixmap.c)
+
+
+*** Garbage Collection of Pixmaps:
+
+	Unused pixmaps are garbage collected by WINTERP -- if no
+	references to them exist in any WIDGETOBJ or other WINTERP-XLISP
+	variable, their server and client-side storage will get reclaimed.
+	In other words, PIXMAPs do what you'd expect them to do in a Lispy garbage
+	collected system. This is certainly useful and good to do because
+	we can expect pixmaps to take up a reasonable amount of client and
+	server space -- we should be efficient about their use, especially
+	because Motif has made it easy to do so.
+
+	Motif provides an explicit function XmDestroyPixmap() to deallocate
+	unused pixmaps. Unfortunately, it is often difficult for a user to know
+	when a pixmap is no longer being used. If a user calls
+	XmDestroyPixmap() on a pixmap that is still being used by a widget, 
+	a guaranteed coredump will result due to an "X Protocol Error".
+	Therefore, WINTERP provides no interface to XmDestroyPixmap();
+	instead it extends XLISP's mark/sweep garbage collector to use
+	the reference counting and pixmap cacheing scheme of
+	XmGetPixmap() and XmDestroyPixmap().
+
+	Unfortunately, the XImage* behind the pixmap still persists
+	even if all pixmaps based on a particular Ximage no longer exist.
+	Since XImages can be created inside XmGetPixmap(), or through a
+	XmString-->Xm*Pixmap* conversion it will be very hard to get a
+	hold of the actual XImage pointer when all we have access to are
+	the name-strings of the previously installed images or the
+	filenames of new images installed.  Either we'll have to prevent
+	creating cached XImages inside XmGetPixmap() and the
+	XmString-->Xm*Pixmap* converters, and do all this ourselves, or we
+	can just punt. I'm going to punt on the harder problem, and let
+	people that care about this use the following extra Motif primitives:
+
+	Use XM_INSTALL_IMAGE(XM_GET_IMAGE_FROM_FILE(<image_file_name>)) at
+	application startup time, and then destroy the <XImage_obj> via
+	primitive XM_UNINSTALL_IMAGE when the XImage is no longer needed.
+	Destroying an XImage after creating the	necessary pixmaps from it
+	shouldn't cause any protocol errors, so	this is the thing to do.
+
+	NOTE -- PIXMAPs created implicitly (by specifying the pixmap's
+	string cache-name or filename as the value of a Motif pixmap
+	resource) will not get garbage collected. I had to remove that
+	possibility because it was getting interference from Motif 1.0's
+	pixmap cacheing code.  For cases where collecting this memory is
+	important, use XM_GET_PIXMAP to convert a pixmap rather than using
+	WINTERP's automatic string-->Pixmap conversion.
+
+
+*** Resource names and the widget classes they apply to:
+
+
+	:XMN_ICON_PIXMAP		XmNiconPixmap
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_ICON_MASK			XmNiconMask
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_BACKGROUND_PIXMAP		XmNbackgroundPixmap
+
+		<Core_Widget_Class> <XM_MANAGER_WIDGET_CLASS>
+		<XM_PRIMITIVE_WIDGET_CLASS>
+
+	:XMN_BORDER_PIXMAP		XmNborderPixmap
+
+		<Core_Widget_Class>
+
+	:XMN_LABEL_INSENSITIVE_PIXMAP	XmNlabelInsensitivePixmap
+
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS -- XmRPixmap
+
+	:XMN_SELECT_INSENSITIVE_PIXMAP	XmNselectInsensitivePixmap
+
+		XM_TOGGLE_BUTTON_GADGET_CLASS XM_TOGGLE_BUTTON_WIDGET_CLASS -- XmRPixmap
+
+	:XMN_SELECT_PIXMAP		XmNselectPixmap
+
+		XM_TOGGLE_BUTTON_WIDGET_CLASS -- XmRPrimForegroundPixmap;
+		XM_TOGGLE_BUTTON_GADGET_CLASS -- XmRPixmap
+
+	:XMN_CASCADE_PIXMAP		XmNcascadePixmap
+
+		XM_CASCADE_BUTTON_WIDGET_CLASS -- XmRPrimForegroundPixmap
+		XM_CASCADE_BUTTON_GADGET_CLASS -- XmRManForegroundPixmap
+
+	:XMN_LABEL_PIXMAP		XmNlabelPixmap
+
+		XM_LABEL_WIDGET_CLASS -- XmRPrimForegroundPixmap
+		XM_LABEL_GADGET_CLASS -- XmRManForegroundPixmap
+
+	:XMN_HIGHLIGHT_PIXMAP		XmNhighlightPixmap
+
+		<XM_PRIMITIVE_WIDGET_CLASS> -- XmRPrimHighlightPixmap
+		<XM_MANAGER_WIDGET_CLASS> -- XmRManHighlightPixmap
+
+	:XMN_ARM_PIXMAP			XmNarmPixmap
+
+		XM_PUSH_BUTTON_WIDGET_CLASS
+		XM_PUSH_BUTTON_GADGET_CLASS -- XmRPrimForegroundPixmap
+
+	:XMN_SYMBOL_PIXMAP		XmNsymbolPixmap
+
+		XM_MESSAGE_BOX_WIDGET_CLASS -- XmRManForegroundPixmap
+
+	:XMN_TOP_SHADOW_PIXMAP		XmNtopShadowPixmap
+
+		<XM_PRIMITIVE_WIDGET_CLASS> -- XmRPrimTopShadowPixmap;
+		<XM_MANAGER_WIDGET_CLASS> -- XmRManTopShadowPixmap
+
+	:XMN_BOTTOM_SHADOW_PIXMAP	XmNbottomShadowPixmap
+
+		<XM_PRIMITIVE_WIDGET_CLASS> -- XmRPrimBottomShadowPixmap;
+		<XM_MANAGER_WIDGET_CLASS> -- XmRManBottomShadowPixmap
+______________________________________________________________________________
+
+** XmRPointer:
+
+*** Type Information:
+
+	Resources of representation type XmRPointer cannot be set or
+	retrieved in the current version of WINTERP.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_COLORMAP			XmNcolormap
+
+		<SHELL_WIDGET_CLASS> <Core_Widget_Class>
+
+	:XMN_ARGV			XmNargv
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_SCREEN			XmNscreen
+
+		<Core_Widget_Class>
+
+	:XMN_SOURCE			XmNsource
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_SELECTION_ARRAY		XmNselectionArray
+
+		XM_TEXT_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRPosition:
+
+*** Type Information:
+
+	Resource representation type XmRPosition corresponds to
+	WINTERP-Lisp type FIXNUM. Note that on some architectures, 
+	WINTERP will signal an XLISP error if the FIXNUM is too
+	large or too small of an integer.
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRPosition by Motif's resource converters.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_X				XmNx
+
+		<CORE_WIDGET_CLASS>
+
+	:XMN_Y				XmNy
+
+		<CORE_WIDGET_CLASS>
+
+	:XMN_SASH_INDENT		XmNsashIndent
+
+		XM_PANED_WINDOW_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRRowColumnType:
+
+*** Type Information:
+
+	Resource representation type XmRRowColumnType corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:WORK_AREA	XmWORK_AREA
+		:MENU_BAR	XmMENU_BAR
+		:MENU_POPUP	XmMENU_POPUP
+		:MENU_PULLDOWN	XmMENU_PULLDOWN
+		:MENU_OPTION	XmMENU_OPTION
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRRowColumnType by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_ROW_COLUMN_TYPE		XmNrowColumnType
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRShort:
+
+*** Type Information:
+
+	Resource representation type XmRShort corresponds to
+	WINTERP-Lisp type FIXNUM. Note that on some architectures, 
+	WINTERP will signal an XLISP error if the FIXNUM is too
+	large or too small of an integer.
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRShort by Motif's resource converters.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_SHADOW_THICKNESS		XmNshadowThickness
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS
+		XM_CASCADE_BUTTON_WIDGET_CLASS XM_CASCADE_BUTTON_GADGET_CLASS
+		XM_DRAWN_BUTTON_WIDGET_CLASS <XM_GADGET_CLASS>
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+		<XM_MANAGER_WIDGET_CLASS> <XM_PRIMITIVE_WIDGET_CLASS>
+		XM_PUSH_BUTTON_WIDGET_CLASS XM_PUSH_BUTTON_GADGET_CLASS
+		XM_SCROLLED_WINDOW_WIDGET_CLASS
+
+	:XMN_MARGIN_WIDTH		XmNmarginWidth
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS XM_DRAWING_AREA_WIDGET_CLASS
+		XM_FRAME_WIDGET_CLASS
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+		XM_PANED_WINDOW_WIDGET_CLASS XM_TEXT_WIDGET_CLASS
+
+		Note: if :get_values of :XMN_MARGIN_WIDTH on
+		XM_ROW_COLUMN_WIDGET_CLASS retrieves bogus values use resource
+		:XMN_RCMARGIN_WIDTH instead.
+		This is may be a Motif 1.0 bug on some architectures.
+
+	:XMN_MARGIN_HEIGHT		XmNmarginHeight
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS XM_DRAWING_AREA_WIDGET_CLASS
+		XM_FRAME_WIDGET_CLASS
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+		XM_PANED_WINDOW_WIDGET_CLASS XM_TEXT_WIDGET_CLASS
+
+		Note: if :get_values of :XMN_MARGIN_HEIGHT on
+		XM_ROW_COLUMN_WIDGET_CLASS retrieves bogus values use resource
+		:XMN_RCMARGIN_HEIGHT instead.
+		This may be a Motif 1.0 bug on some architectures.
+
+	:XMN_HIGHLIGHT_THICKNESS	XmNhighlightThickness
+
+		<XM_GADGET_CLASS> <XM_PRIMITIVE_WIDGET_CLASS>
+		XM_SCALE_WIDGET_CLASS
+
+	:XMN_MARGIN_LEFT		XmNmarginLeft
+
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+
+	:XMN_MARGIN_RIGHT		XmNmarginRight
+
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+
+	:XMN_MARGIN_TOP			XmNmarginTop
+
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+
+	:XMN_MARGIN_BOTTOM		XmNmarginBottom
+
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+
+	:XMN_LIST_SPACING		XmNlistSpacing
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_LIST_MARGIN_WIDTH		XmNlistMarginWidth
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_LIST_MARGIN_HEIGHT		XmNlistMarginHeight
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_MAIN_WINDOW_MARGIN_WIDTH	XmNmainWindowMarginWidth
+
+		XM_MAIN_WINDOW_WIDGET_CLASS
+
+	:XMN_MAIN_WINDOW_MARGIN_HEIGHT	XmNmainWindowMarginHeight
+
+		XM_MAIN_WINDOW_WIDGET_CLASS
+
+	:XMN_SHOW_AS_DEFAULT		XmNshowAsDefault
+
+		XM_PUSH_BUTTON_WIDGET_CLASS XM_PUSH_BUTTON_GADGET_CLASS
+
+	:XMN_NUM_COLUMNS		XmNnumColumns
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_DECIMAL_POINTS		XmNdecimalPoints
+
+		XM_SCALE_WIDGET_CLASS
+
+	:XMN_SCROLLED_WINDOW_MARGIN_WIDTH XmNscrolledWindowMarginWidth
+
+		XM_SCROLLED_WINDOW_WIDGET_CLASS
+
+	:XMN_SCROLLED_WINDOW_MARGIN_HEIGHT XmNscrolledWindowMarginHeight
+
+		XM_SCROLLED_WINDOW_WIDGET_CLASS
+
+	:XMN_MARGIN			XmNmargin
+
+		XM_SEPARATOR_WIDGET_CLASS XM_SEPARATOR_GADGET_CLASS
+
+	:XMN_COLUMNS			XmNcolumns
+
+		XM_TEXT_WIDGET_CLASS
+
+	:XMN_ROWS			XmNrows
+
+		XM_TEXT_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRString:
+
+*** Type Information:
+
+	Resource representation type XmRString corresponds to winter-Lisp
+	type STRING.
+
+*** Garbage Collection of strings:
+
+	XLISP will reclaim storage on any STRING values that are no
+	longer referenced inside WINTERP.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_ACCELERATOR		XmNaccelerator
+
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+
+	:XMN_MENU_ACCELERATOR		XmNmenuAccelerator
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_STRING			XmNvalue
+
+		XM_TEXT_WIDGET_CLASS
+
+		Note -- :XMN_STRING is an alias for resource XmNvalue on 
+		the Motif Text Widget. Motif 1.0 has a bug in that it
+		inconsistently declares the value associated with the
+		"message" XmNvalue as 'int' for other widget classes, and
+		as a 'string' for the text widget. Thus, to retrieve or
+		set the string in a text widget, use this resource name,
+		or use text widget methods :GET_STRING and :SET_STRING.
+
+	:XMN_GEOMETRY			XmNgeometry
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_TITLE			XmNtitle
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_ICON_NAME			XmNiconName
+
+		TOP_LEVEL_SHELL_WIDGET_CLASS TOP_LEVEL_POPUP_SHELL_WIDGET_CLASS
+
+	:XMN_MWM_MENU			XmNmwmMenu
+
+		<SHELL_WIDGET_CLASS>
+______________________________________________________________________________
+
+** XmRStringDirection:
+
+*** Type Information:
+
+	Resource representation type XmRStringDirection corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:STRING_DIRECTION_L_TO_R	XmSTRING_DIRECTION_L_TO_R
+		:STRING_DIRECTION_R_TO_L	XmSTRING_DIRECTION_R_TO_L
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRStringDirection by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_STRING_DIRECTION		XmNstringDirection
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS XM_LIST_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRTranslationTable:
+
+*** Type Information:
+
+	Resource representation type XmRTranslationTable corresponds to the
+	atomic type XT_TRANSLATIONS as returned by primitive
+	XT_PARSE_TRANSLATION_TABLE.
+
+	One may set XmRTranslationTable resources by specifying a STRING
+	translation table, just as you would in file $HOME/.Xdefaults.
+	Alternatively, one can use the result of :get_values on another
+	widget's XmRTranslationTable resource or use primitive
+	XT_PARSE_TRANSLATION_TABLE as a XmRTranslationTable value.
+
+	For more information on the syntax of the string representation of
+	translation tables, see the X11r3 documentation "X Toolkit
+	Intrinsics -- C Language Interface": "Appendix B: Translation Table
+	Syntax" and "Chapter 10: Translation Management".
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_TEXT_TRANSLATIONS		XmNtextTranslations
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS
+
+	:XMN_TRANSLATIONS		XmNtranslations
+
+		<Core_Widget_Class>
+______________________________________________________________________________
+
+** XmRWhichButton:
+
+*** Type Information:
+
+	Resource representation type XmRWhichButton corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated X constants:
+
+		:BUTTON1		Button1
+		:BUTTON2		Button2
+		:BUTTON3		Button3
+		:BUTTON4		Button4
+		:BUTTON5		Button5
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRStringDirection by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_WHICH_BUTTON		XmNwhichButton
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRWindow:
+
+*** Type Information:
+
+	Resource representation type XmRWindow corresponds to WINTERP-Lisp
+	atomic type WINDOW. This type is returned by some callbacks, as
+	well as by WIDGET_CLASS method :WINDOW.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_ICON_WINDOW		XmNiconWindow
+
+		<SHELL_WIDGET_CLASS>
+
+	:XMN_WINDOW_GROUP		XmNwindowGroup
+
+		<SHELL_WIDGET_CLASS>
+______________________________________________________________________________
+
+** "XmRWidget", XmRMenuWidget:
+
+*** Type Information:
+
+	Resource representation type "XmRWidget" corresponds to WINTERP-Lisp
+	OBJECT type WIDGETOBJ.
+
+	Note that Motif 1.0 nor the Xtoolkit define a representation type
+	"XmRWidget" -- this is a fake type used for all resources that
+	expect a value of type 'Widget'. In many cases,	Motif 1.0
+	misdeclares such values as being of representation type	XmRWindow.
+	Additionally, the fake representation type "XmRWidget" subsumes the
+	type XmRMenuWidget, which is used for a few Motif resources. This
+	won't matter for automatic string-->XmRWidget conversions because Motif
+	doesn't provide a converters to XmRWidget, XmRMenuWidget, nor XmRWindow.
+
+
+*** Garbage collection of WIDGETOBJs
+
+	Every WIDGETOBJ that gets created will not be garbage collected
+	until the widget is destroyed. This is needed for proper operation
+	of the get-moused-widget function, and for getting back the correct
+	WIDGETOBJ when a WIDGETOBJ is retrieved from the Motif Toolkit
+	internals.  This could be made optional in the future because some
+	memory could be saved, and garbage collection times potentially
+	reduced if only the widgets that are actually being referenced in
+	Lisp code are protected against g.c.
+
+	When a WIDGETOBJ gets :DESTROY'd, all it's WINTERP-XLISP memory and
+	resources may be garbage collected. This includes any PIXMAPs,
+	CALLBACKOBJs, EVHANDLEROBJs, etc that correspond to the widget.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_SUB_MENU_ID		XmNsubMenuId
+
+		XM_CASCADE_BUTTON_WIDGET_CLASS XM_CASCADE_BUTTON_GADGET_CLASS
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as 
+		representation type XmRMenuWidget. I'm throwing it in
+		with "XmRWidget" because these resources are WIDGETOBJs.
+
+	:XMN_MENU_HELP_WIDGET		XmNmenuHelpWidget
+
+		XM_ROW_COLUMN_WIDGET_CLASS 
+		
+		Note -- Motif 1.0 (mis)declares this resource as 
+		representation type XmRMenuWidget. I'm throwing it in
+		with "XmRWidget" because these resources are WIDGETOBJs.
+
+		Note -- resource name :XMN_MENU_HELP_WIDGET is defined
+		only for a row column widget created with the :menu_bar
+		option. Using this resource with other variants of the
+		row column widget is underfined and unguaranteed.
+
+	:XMN_MENU_HISTORY		XmNmenuHistory
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as 
+		representation type XmRMenuWidget. I'm throwing it in
+		with "XmRWidget" because these resources are WIDGETOBJs.
+
+		Note -- resource name :XMN_MENU_HISTORY is defined
+		only for row column widgets created with the 
+		:popup_menu or :pulldown_menu options. Using this
+		resource with other variants of the row column widget
+		is undefined and unguaranteed.
+
+	:XMN_DEFAULT_BUTTON		XmNdefaultButton
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as representation
+		XmRWindow. I'm throwing it in with "XmRWidget" because these
+		resources are WIDGETOBJs.
+
+	:XMN_CANCEL_BUTTON		XmNcancelButton
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as representation
+		XmRWindow. I'm throwing it in with "XmRWidget" because these
+		resources are WIDGETOBJs.
+
+	:XMN_TOP_WIDGET			XmNtopWidget
+
+		XM_FORM_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as representation
+		XmRWindow. I'm throwing it in with "XmRWidget" because these
+		resources are WIDGETOBJs.
+
+	:XMN_BOTTOM_WIDGET		XmNbottomWidget
+
+		XM_FORM_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as representation
+		XmRWindow. I'm throwing it in with "XmRWidget" because these
+		resources are WIDGETOBJs.
+
+	:XMN_LEFT_WIDGET		XmNleftWidget
+
+		XM_FORM_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as representation
+		XmRWindow. I'm throwing it in with "XmRWidget" because these
+		resources are WIDGETOBJs.
+
+	:XMN_RIGHT_WIDGET		XmNrightWidget
+
+		XM_FORM_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as representation
+		XmRWindow. I'm throwing it in with "XmRWidget" because these
+		resources are WIDGETOBJs.
+
+	:XMN_HORIZONTAL_SCROLL_BAR	XmNhorizontalScrollBar
+
+		XM_LIST_WIDGET_CLASS XM_SCROLLED_WINDOW_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as representation
+		XmRWindow. I'm throwing it in with "XmRWidget" because these
+		resources are WIDGETOBJs.
+
+	:XMN_VERTICAL_SCROLL_BAR	XmNverticalScrollBar
+
+		XM_LIST_WIDGET_CLASS XM_SCROLLED_WINDOW_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as representation
+		XmRWindow. I'm throwing it in with "XmRWidget" because these
+		resources are WIDGETOBJs.
+
+	:XMN_COMMAND_WINDOW		XmNcommandWindow
+
+		XM_MAIN_WINDOW_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as representation
+		XmRWindow. I'm throwing it in with "XmRWidget" because these
+		resources are WIDGETOBJs.
+
+	:XMN_MENU_BAR			XmNmenuBar
+
+		XM_MAIN_WINDOW_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as representation
+		XmRWindow. I'm throwing it in with "XmRWidget" because these
+		resources are WIDGETOBJs.
+
+	:XMN_WORK_WINDOW		XmNworkWindow
+
+		XM_SCROLLED_WINDOW_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as representation
+		XmRWindow. I'm throwing it in with "XmRWidget" because these
+		resources are WIDGETOBJs.
+
+	:XMN_CLIP_WINDOW		XmNclipWindow
+
+		XM_SCROLLED_WINDOW_WIDGET_CLASS
+
+		Note -- Motif 1.0 (mis)declares this resource as representation
+		XmRWindow. I'm throwing it in with "XmRWidget" because these
+		resources are WIDGETOBJs.
+______________________________________________________________________________
+
+** XmRXmString:
+
+*** Type Information:
+
+	Resource representation type XmRXmString corresponds to the atomic
+	type XM_STRING as returned by primitives XM_STRING_CREATE_L_TO_R and
+	XM_STRING_CREATE.
+
+	Any XM_STRING value needed by a Motif function, method or resource
+	may be substituted for a STRING. WINTERP will automatically
+	call XmStringCreateLtoR() to convert STRING values to XM_STRING values.
+	
+	Note that Motif XmStrings are problematic in that the XmString
+	values you set are guaranteed not to be EQL or EQUAL to the ones
+	you get. By "get" I mean any Motif or Xt function that retrieves a
+	'XmString' type, and by "set" I mean any Motif or Xt function that
+	sets a resource to an 'XmString' type.
+
+	In order to check for equality, you have to call XmStringCompare(),
+	via primitive XM_STRING_COMPARE. XmStringCompare() is almost one of
+	the most disgustingly inefficient things I've seen, so be careful
+	how you're using it, especially for large browsers constructed from
+	XM_LIST_WIDGET_CLASS.
+
+	In order to get a STRING value from an XM_STRING value, use primitive
+	XM_STRING_GET_L_TO_R.
+
+*** Garbage collection of XM_STRINGs:
+
+	Storage associated with XM_STRINGs is freed via XmStringFree() when
+	a XM_STRING node gets garbage collected. Garbage collection of
+	XM_STRINGs occurs when they are no longer accessible by a Lisp variable.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_DIALOG_TITLE		XmNdialogTitle
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS
+
+	:XMN_PROMPT_STRING		XmNpromptString
+
+		XM_COMMAND_WIDGET_CLASS
+
+	:XMN_COMMAND			XmNcommand
+
+		XM_COMMAND_WIDGET_CLASS
+
+	:XMN_TEXT_STRING		XmNtextString
+
+		XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_LABEL_STRING		XmNlabelString
+
+		XM_DRAWN_BUTTON_WIDGET_CLASS XM_ROW_COLUMN_WIDGET_CLASS
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+	:XMN_LIST_LABEL_STRING		XmNlistLabelString
+
+		XM_FILE_SELECTION_BOX_WIDGET_CLASS XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_APPLY_LABEL_STRING		XmNapplyLabelString
+
+		XM_FILE_SELECTION_BOX_WIDGET_CLASS XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_DIR_SPEC			XmNdirSpec
+
+		XM_FILE_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_FILTER_LABEL_STRING	XmNfilterLabelString
+
+		XM_FILE_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_DIR_MASK			XmNdirMask
+
+		XM_FILE_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_ACCELERATOR_TEXT		XmNacceleratorText
+
+		XM_LABEL_WIDGET_CLASS XM_LABEL_GADGET_CLASS
+
+	:XMN_MESSAGE_STRING		XmNmessageString
+
+		XM_MESSAGE_BOX_WIDGET_CLASS
+
+	:XMN_OK_LABEL_STRING		XmNokLabelString
+
+		XM_MESSAGE_BOX_WIDGET_CLASS XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_CANCEL_LABEL_STRING	XmNcancelLabelString
+
+		XM_MESSAGE_BOX_WIDGET_CLASS XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_HELP_LABEL_STRING		XmNhelpLabelString
+
+		XM_MESSAGE_BOX_WIDGET_CLASS XM_SELECTION_BOX_WIDGET_CLASS
+
+	:XMN_TITLE_STRING		XmNtitleString
+
+		XM_SCALE_WIDGET_CLASS
+
+	:XMN_SELECTION_LABEL_STRING	XmNselectionLabelString
+
+		XM_SELECTION_BOX_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRXmStringTable:
+
+*** Type Information:
+
+	One may set an XmRXmStringTable resource by passing a
+	ARRAY or LIST value containing either STRING or XM_STRING nodes.
+	Any STRING values are automatically converted to XmStrings via
+	XmStringCreateLtoR().
+
+	Limitations in the design of Motif 1.0 prevent WINTERP from being 
+	able to retrieve XmRXmStringTable resources using WIDGET_CLASS
+	method :GET_VALUES. Hopefully Motif 1.1 will fix this problem. I've
+	yet to find a case where it is absolutely necessary to retrieve a
+	XmRXmStringTalbe resource from a widget. Note that all callbacks on
+	the List widget and composites built from the list widget will
+	return an ARRAY of XM_STRINGs and that should suffice for most
+	needs.  Otherwise, you may write your own XmRStringTable accessor
+	method in C for whichever widget classes need it, or send me mail
+	and ask me to add this.
+
+
+*** Garbage Collection of XmRXmStringTable:
+
+	A Motif XmStringTable is represented as an array or list of
+	XmStrings.  The XmStrings in these sequences will get garbage
+	collected if the vector or array holding them gets collected.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_HISTORY_ITEMS		XmNhistoryItems
+
+		XM_COMMAND_WIDGET_CLASS
+
+	:XMN_ITEMS			XmNitems
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_SELECTED_ITEMS		XmNselectedItems
+
+		XM_LIST_WIDGET_CLASS
+
+	:XMN_LIST_ITEMS			XmNlistItems
+
+		XM_SELECTION_BOX_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRUnitType:
+
+*** Type Information:
+
+	Resource representation type XmRUnitType corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:PIXELS			XmPIXELS
+		:100TH_MILLIMETERS	Xm100TH_MILLIMETERS
+		:1000TH_INCHES		Xm1000TH_INCHES
+		:100TH_POINTS		Xm100TH_POINTS
+		:100TH_FONT_UNITS	Xm100TH_FONT_UNITS
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRUnitType by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_UNIT_TYPE			XmNunitType
+
+		<XM_GADGET_CLASS> <XM_MANAGER_WIDGET_CLASS> <XM_PRIMITIVE_WIDGET_CLASS>
+
+	:XMN_SHELL_UNIT_TYPE		XmNshellUnitType
+
+		<SHELL_WIDGET_CLASS>
+______________________________________________________________________________
+
+** XmRResizePolicy:
+
+*** Type Information:
+
+	Resource representation type XmRResizePolicy corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:RESIZE_NONE		XmRESIZE_NONE
+		:RESIZE_GROW		XmRESIZE_GROW
+		:RESIZE_ANY		XmRESIZE_ANY
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRResizePolicy by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_RESIZE_POLICY		XmNresizePolicy
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS XM_COMMAND_WIDGET_CLASS
+		XM_DRAWING_AREA_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRAttachment:
+
+*** Type Information:
+
+	Resource representation type XmRAttachment corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:ATTACH_NONE		XmATTACH_NONE
+		:ATTACH_FORM		XmATTACH_FORM
+		:ATTACH_OPPOSITE_FORM	XmATTACH_OPPOSITE_FORM
+		:ATTACH_WIDGET		XmATTACH_WIDGET
+		:ATTACH_OPPOSITE_WIDGET	XmATTACH_OPPOSITE_WIDGET
+		:ATTACH_POSITION	XmATTACH_POSITION
+		:ATTACH_SELF		XmATTACH_SELF
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRAttachment by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_TOP_ATTACHMENT		XmNtopAttachment
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_BOTTOM_ATTACHMENT		XmNbottomAttachment
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_LEFT_ATTACHMENT		XmNleftAttachment
+
+		XM_FORM_WIDGET_CLASS
+
+	:XMN_RIGHT_ATTACHMENT		XmNrightAttachment
+
+		XM_FORM_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRShadowType:
+
+*** Type Information:
+
+	Resource representation type XmRShadowType corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:SHADOW_ETCHED_IN	XmSHADOW_ETCHED_IN
+		:SHADOW_ETCHED_OUT	XmSHADOW_ETCHED_OUT
+		:SHADOW_IN		XmSHADOW_IN
+		:SHADOW_OUT		XmSHADOW_OUT
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRShadowType by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_SHADOW_TYPE		XmNshadowType
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS XM_DRAWN_BUTTON_WIDGET_CLASS
+		XM_FRAME_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRArrowDirection:
+
+*** Type Information:
+
+	Resource representation type XmRArrowDirection corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:ARROW_UP		XmARROW_UP
+		:ARROW_DOWN		XmARROW_DOWN
+		:ARROW_LEFT		XmARROW_LEFT
+		:ARROW_RIGHT		XmARROW_RIGHT
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRArrowDirection by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_ARROW_DIRECTION		XmNarrowDirection
+
+		XM_ARROW_BUTTON_WIDGET_CLASS XM_ARROW_BUTTON_GADGET_CLASS
+______________________________________________________________________________
+
+** XmRSeparatorType:
+
+*** Type Information:
+
+	Resource representation type XmRSeparatorType corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:NO_LINE		XmNO_LINE
+		:SINGLE_LINE		XmSINGLE_LINE
+		:DOUBLE_LINE		XmDOUBLE_LINE
+		:SINGLE_DASHED_LINE	XmSINGLE_DASHED_LINE
+		:DOUBLE_DASHED_LINE	XmDOUBLE_DASHED_LINE
+		:SHADOW_ETCHED_IN	XmSHADOW_ETCHED_IN
+		:SHADOW_ETCHED_OUT	XmSHADOW_ETCHED_OUT
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRSeparatorType by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_SEPARATOR_TYPE		XmNseparatorType
+
+		XM_SEPARATOR_GADGET_CLASS XM_SEPARATOR_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRProcessingDirection:
+
+*** Type Information:
+
+	Resource representation type XmRProcessingDirection corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:MAX_ON_TOP		XmMAX_ON_TOP
+		:MAX_ON_BOTTOM		XmMAX_ON_BOTTOM
+		:MAX_ON_LEFT		XmMAX_ON_LEFT
+		:MAX_ON_RIGHT		XmMAX_ON_RIGHT
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRProcessingDirection by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+	Note -- :GET_VALUES on a horizontally oriented scale or
+	scrollbar widget will return :MAX_ON_TOP or :MAX_ON_BOTTOM instead of 
+	:MAX_ON_LEFT and :MAX_ON_RIGHT. This is due to a bug in Motif 1.0.
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_PROCESSING_DIRECTION	XmNprocessingDirection
+
+		XM_SCALE_WIDGET_CLASS XM_SCROLL_BAR_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRSelectionPolicy:
+
+*** Type Information:
+
+	Resource representation type XmRSelectionPolicy corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:SINGLE_SELECT		XmSINGLE_SELECT
+		:MULTIPLE_SELECT	XmMULTIPLE_SELECT
+		:EXTENDED_SELECT	XmEXTENDED_SELECT
+		:BROWSE_SELECT		XmBROWSE_SELECT
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRSelectionPolicy by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_SELECTION_POLICY		XmNselectionPolicy
+
+		XM_LIST_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRListSizePolicy:
+
+*** Type Information:
+
+	Resource representation type XmRListSizePolicy corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:VARIABLE		XmVARIABLE
+		:CONSTANT		XmCONSTANT
+		:RESIZE_IF_POSSIBLE	XmRESIZE_IF_POSSIBLE
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRListSizePolicy by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_LIST_SIZE_POLICY		XmNlistSizePolicy
+
+		XM_LIST_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRScrollingPolicy:
+
+*** Type Information:
+
+	Resource representation type XmRScrollingPolicy corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:AUTOMATIC		XmAUTOMATIC
+		:APPLICATION_DEFINED	XmAPPLICATION_DEFINED
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRScrollingPolicy by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_SCROLLING_POLICY		XmNscrollingPolicy
+
+		XM_SCROLLED_WINDOW_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRVisualPolicy:
+
+*** Type Information:
+
+	Resource representation type XmRVisualPolicy corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:VARIABLE		XmVARIABLE
+		:CONSTANT		XmCONSTANT
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRVisualPolicy by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_VISUAL_POLICY		XmNvisualPolicy
+
+		XM_SCROLLED_WINDOW_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRScrollBarDisplayPolicy:
+
+*** Type Information:
+
+	Resource representation type XmRScrollBarDisplayPolicy corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:STATIC			XmSTATIC
+		:AS_NEEDED		XmAS_NEEDED
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRScrollBarDisplayPolicy by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_SCROLL_BAR_DISPLAY_POLICY	XmNscrollBarDisplayPolicy
+
+		XM_LIST_WIDGET_CLASS XM_SCROLLED_WINDOW_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRScrollBarPlacement:
+
+*** Type Information:
+
+	Resource representation type XmRScrollBarPlacement corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:TOP_LEFT		XmTOP_LEFT
+		:BOTTOM_LEFT		XmBOTTOM_LEFT
+		:TOP_RIGHT		XmTOP_RIGHT
+		:BOTTOM_RIGHT		XmBOTTOM_RIGHT
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRScrollBarPlacement by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_SCROLL_BAR_PLACEMENT	XmNscrollBarPlacement
+
+		XM_SCROLLED_WINDOW_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRDialogStyle:
+
+*** Type Information:
+
+	Resource representation type XmRDialogStyle corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:DIALOG_WORK_AREA		XmDIALOG_WORK_AREA
+		:DIALOG_MODELESS		XmDIALOG_MODELESS
+		:DIALOG_APPLICATION_MODAL	XmDIALOG_APPLICATION_MODAL
+		:DIALOG_SYSTEM_MODAL		XmDIALOG_SYSTEM_MODAL
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRDialogStyle by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_DIALOG_STYLE		XmNdialogStyle
+
+		XM_BULLETIN_BOARD_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRDefaultButtonType:
+
+*** Type Information:
+
+	Resource representation type XmRDefaultButtonType corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:DIALOG_OK_BUTTON		XmDIALOG_OK_BUTTON
+		:DIALOG_CANCEL_BUTTON		XmDIALOG_CANCEL_BUTTON
+		:DIALOG_HELP_BUTTON		XmDIALOG_HELP_BUTTON
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRDefaultButtonType by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_DEFAULT_BUTTON_TYPE	XmNdefaultButtonType
+
+		XM_MESSAGE_BOX_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRDialogType:
+
+*** Type Information:
+
+	Resource representation type XmRDialogType corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:DIALOG_ERROR		XmDIALOG_ERROR
+		:DIALOG_INFORMATION	XmDIALOG_INFORMATION
+		:DIALOG_MESSAGE		XmDIALOG_MESSAGE
+		:DIALOG_QUESTION	XmDIALOG_QUESTION
+		:DIALOG_WARNING		XmDIALOG_WARNING
+		:DIALOG_WORKING		XmDIALOG_WORKING
+		:DIALOG_PROMPT		XmDIALOG_PROMPT
+		:DIALOG_SELECTION	XmDIALOG_SELECTION
+		:DIALOG_COMMAND		XmDIALOG_COMMAND
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRDialogType by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_DIALOG_TYPE		XmNdialogType
+
+		XM_COMMAND_WIDGET_CLASS XM_FILE_SELECTION_BOX_WIDGET_CLASS
+		XM_MESSAGE_BOX_WIDGET_CLASS XM_SELECTION_BOX_WIDGET_CLASS
+______________________________________________________________________________
+
+** "XmRWidgetClass":
+
+*** Type Information:
+
+	Resource representation type XmRWidgetClass corresponds to
+	WINTERP-Lisp OBJECT. In particular, this OBJECT must be a class
+	object that is a subclass of WIDGET_CLASS.
+
+	Note that Motif 1.0 nor the Xtoolkit define a representation type
+	"XmRWidgetClass" -- this is a fake type used for all resources that
+	expect a value of type 'WidgetClass'.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_ENTRY_CLASS		XmNentryClass
+
+		XM_ROW_COLUMN_WIDGET_CLASS
+
+		Note -- Motif 1.0 misdeclares resource XmNentryClass as
+		representation type XmRInt. The value for this resource is
+		actually a 'WidgetClass' pointer.
+______________________________________________________________________________
+
+** XmRDeleteResponse:
+
+*** Type Information:
+
+	Resource representation type XmRDeleteResponse corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:DESTROY		XmDESTROY
+		:UNMAP			XmUNMAP
+		:DO_NOTHING		XmDO_NOTHING
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRDeleteResponse by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_DELETE_RESPONSE		XmNdeleteResponse
+
+		<SHELL_WIDGET_CLASS> XM_DIALOG_POPUP_SHELL_WIDGET_CLASS
+______________________________________________________________________________
+
+** XmRKeyboardFocusPolicy:
+
+*** Type Information:
+
+	Resource representation type XmRKeyboardFocusPolicy corresponds to an
+	enumerated type. The following keyword symbols represent the valid
+	WINTERP-Lisp values for this type and their associated Motif constants:
+
+		:EXPLICIT		XmEXPLICIT
+		:POINTER		XmPOINTER
+
+	You may also specify a STRING value which will be automatically
+	converted to XmRKeyboardFocusPolicy by Motif's resource converters.
+	These values would be the same as one would specify in $HOME/.Xdefaults.
+
+
+*** Resource names and the widget classes they apply to:
+
+	:XMN_KEYBOARD_FOCUS_POLICY	XmNkeyboardFocusPolicy
+
+		<SHELL_WIDGET_CLASS>
+=============================================================================
+
+* Additional X and Xtoolkit Functionality
+
+** GET_MOUSED_WIDGET -- primitive for visually interacting with widgets.
+
+	(GET_MOUSED_WIDGET)
+		--> returns the WIDGETOBJ designated by the user.
+ 
+	Evaluating GET_MOUSED_WIDGET will change the cursor to a crossbar,
+	indicating that the user is to 'click' the mouse on a widget
+	managed by WINTERP. GET_MOUSED_WIDGET will then return the
+	WIDGETOBJ corresponding to the selected widget.
+
+	You can use this primitive to visually alter widgets displayed by
+	WINTERP, for example, evaluating the following form will invert the
+	colors on any widget you click (note -- you can't change the
+	colors on a gadget):
+		  (let
+		      ((widget (get_moused_widget))
+		       foreground
+		       background
+		       )
+		    (send widget :get_values
+			  :XMN_FOREGROUND 'foreground
+			  :XMN_BACKGROUND 'background
+			  )
+		    (send widget :set_values
+			  :XMN_FOREGROUND background
+			  :XMN_BACKGROUND foreground
+			  ))
+
+	You may use this primitive for sending arbitrary messages to
+	arbitrary widgets "visually". This primitive can be used to
+	implement "builder-like" and "hypercard-like" features with WINTERP.
+	For additional examples using this primitive, see 
+	./winterp/examples/interact.lsp
+
+	Note: GET_MOUSED_WIDGET will work on any kind of widget, not only
+	widgets created at the Lisp level in WINTERP. This means that you
+	can use it to modify widgets inside a composite widget (e.g., the 
+	scrollbar in a scrolled text or list widget). Furthermore, if you
+	take an existing C-implemented Motif application and link it in
+	with WINTERP such that your application uses WINTERP's event
+	handling loop in main(), then you can use GET_MOUSED_WIDGET to
+	modify the widgets created in your own C-implemented application code!
+
+	KNOWN BUG -- doing '(send (get_moused_widget) :destroy)' on a 
+	shell widget doesn't work. I still don't understand why.
+
+	KNOWN BUG -- you cannot use get_moused_widget primitive on widgets
+	within a menu system. Even if you manage to post a menu that stays
+	posted and then	call this function, the "grab" from the menu
+	prevents this primitive from working...
+
+
+** X_ALLOC_COLOR == XParseColor() + XAllocColor():
+
+	(X_ALLOC_COLOR <color>)
+		--> returns a PIXEL atom.
+	
+	<color> is a string, either a colorname from /usr/lib/X11/rgb.txt
+	or a hexadecimal color specification of format "#RRGGBB".
+
+
+** XT_ADD_TIMEOUT / XT_REMOVE_TIMEOUT == XtAddTimeout() / XtRemoveTimeout()
+
+	(XT_ADD_TIMEOUT <interval> <code>)
+			--> returns a <timeout_obj> 
+
+	<interval> is a FIXNUM, the number of milliseconds before the
+	timeout fires.
+
+	<code> is a list of Lisp expressions that are evaluated when the
+	timeout	occurs. During the timeout, the lexical environment that
+	existed for the call to XT_ADD_TIMEOUT will be used for value and
+	functional bindings. Additionally, the symbol TIMEOUT_OBJ is bound
+	to the timeout object that caused the timeout.
+
+	A variant of the above form allows efficient scheduling of
+	recurrent timeouts when called from within <code>
+		(XT_ADD_TIMEOUT <interval> TIMEOUT_OBJ)
+	Instead of creating a new closure around the same <code> each time
+	a recurrent timeout is rescheduled, this second form for XT_ADD_TIMEOUT
+	allows you to take the TIMEOUT_OBJ from a previously expired
+	timeout and reschedule a new timeout using the closure setup by the
+	initial call to (XT_ADD_TIMEOUT <interval> <code>).  During the
+	execution of <code>, the symbol TIMEOUT_OBJ is bound to
+	<timeout-obj> so that you don't need to keep around a global
+	variable for each recurrent timeout.
+
+	The timeout scheduled by XT_ADD_TIMEOUT may be removed by passing
+	<timeout_obj> into the primitive XT_REMOVE_TIMEOUT:
+		(xt_remove_timeout <timeout_obj>)
+        <timeout_obj> is the value returned by XT_ADD_TIMEOUT.
+
+
+** Translations, Accelerators, and Actions.
+
+*** Action Lisp() -- call the XLISP evaluator from a translation table.
+
+	WINTERP has a built-in ActionProc named "Lisp" that allows you to
+	call arbitrary Lisp functions from a translation or accelerator table.
+	The arguments passed on to ActionProc "Lisp" become the elements in
+	the Lisp form passed on to the evaluator when the action is fired.
+
+	For example, a translation/accelerator table containing an entry 
+	"<EnterWindow>: Lisp(Lisp-function arg1 arg2 arg3)" will end up 
+	evaluating the Lisp form '(Lisp-function arg1 arg2 arg3)' whenever 
+	an EnterWindow event is processed.
+
+	In the lexical scope of the action invocation, ACTION_WIDGET gets
+	bound to the widget causing the action, and ACTION_XEVENT gets
+	bound to the event. See ./winterp/examples/trans.lsp for examples.
+
+	KNOWN-BUG: I haven't found a way of escaping characters passed on
+	to the translation/action table parsers to allow Lisp strings or
+	lips lists to be passed on to the Lisp evaluator that is called by
+	this function.  Using the evaluator through an action proc is still
+	useful, just don't try to pass in very complex Lisp forms.
+
+
+** XT_PARSE_TRANSLATION_TABLE == XtParseTranslationTable():
+
+	(XT_PARSE_TRANSLATION_TABLE <string>)
+		--> returns a XT_TRANSLATIONS node
+
+	This primitive compiles <string> into a translation table and
+	returns the compiled table. 
+
+	For more information on the syntax of the string representation of
+	translation tables, see the X11r3 documentation "X Toolkit
+	Intrinsics -- C	Language Interface": "Appendix B: Translation Table
+	Syntax" and "Chapter 10: Translation Management".
+ 
+	NOTE: the memory allocated by XtParseTranslationTable() isn't freed
+	anywhere yet -- I can't find any documentation that says you're
+	supposed to free this. For now this may be a memory leak.
+
+
+** XT_PARSE_ACCELERATOR_TABLE == XtParseAcceleratorTable():
+
+	(XT_PARSE_ACCELERATOR_TABLE <string>)
+		--> returns a XT_ACCELERATORS node
+
+	This primitive compiles <string> into an accelerator table and
+	returns the compiled table.
+
+	For more information on the syntax of the string representation of
+	accelerator tables, see the X11r3 documentation "X Toolkit
+	Intrinsics -- C	Language Interface": "Appendix B: Translation Table
+	Syntax" and "Chapter 10: Translation Management".
+
+	NOTE: the memory allocated by XtParseAcceleratorTable() isn't freed
+	anywhere yet -- I can't find any documentation that says you're
+	supposed to free this. For now this may be a memory leak.
+
+
+** XM_GET_PIXMAP == XmGetPixmap():
+
+	(XM_GET_PIXMAP <image-name> <foreground> <background>)
+		--> returns a PIXMAP node.
+
+	<image-name> is a string representing a XImage that has been
+	cached via XM_INSTALL_IMAGE. If such an XImage isn't found, then
+	<image-name> is treated as the filename for a X10 or X11 bitmap file.
+	You need to give a full pathname to the bitmap file, or alternately,
+	you may set the environment variable XBMLANGPATH to the directories to
+	be searched for bitmap files. XBMLANGPATH defaults to
+	/usr/lib/X11/%L/bitmaps/%N/%B:/usr/lib/X11/%L/bitmaps/%B:/usr/lib/X11/bitmaps/%B:/usr/include/X11/bitmaps/%B
+	
+	In additions to images you have installed, Motif features 10
+	preinstalled images: "background", "25_foreground",
+	"50_foreground", "75_foreground", "vertical", "horizontal",
+	"slant_right", "slant_left", "menu_cascade", "menu_checkmark".
+	
+	<foreground> and <background> may be strings representing color names, or
+	values of type PIXEL. (generated by X_ALLOC_COLOR, or
+	via widget-method :get_values on :XMN_FOREGROUND or :XMN_BACKGROUND
+	resources).
+	
+	This function returns a value of type PIXMAP, which is suitable for
+	passing on to any Pixmap-valued widget resource so as to display an
+	image inside a widget.
+	
+	Note that there is no interface to XmDestroyPixmap()-- unreferenced
+	pixmaps	are automatically destroyed by WINTERP during garbage
+	collection.
+
+
+** XM_INSTALL_IMAGE == XmInstallImage():
+
+	(XM_INSTALL_IMAGE <ximage> <image_name>)
+		--> returns T if success,  NIL if a NULL <ximage>, or
+			duplicate <image_name> is given.
+
+	This primitive installs an XIMAGE node for use by Motif's Image and
+	Pixmap cacheing routines. 
+
+	<ximage> is an XIMAGE node as returned by XM_GET_XIMAGE_FROM_FILE; 
+
+	<image_name> is a STRING, the name under which the <ximage> is cached.
+	
+
+** XM_UNINSTALL_IMAGE == XmUninstallImage():
+
+	(XM_UNINSTALL_IMAGE <ximage>)
+		--> returns T if success,  NIL if a NULL <ximage>, or
+			<ximage> cannot be found in the image cache.
+
+	This primitive removes an XIMAGE from Motif's Image cache, freeing
+	up the storage associated with the XImage.
+
+	<ximage> is an XIMAGE node as returned by XM_GET_XIMAGE_FROM_FILE
+	
+** XM_GET_XIMAGE_FROM_FILE == _XmGetImageFromFile():
+
+	(XM_GET_XIMAGE_FROM_FILE <filepath>)
+		--> returns an XIMAGE node if an XImage was successfully
+			retrieved from the given bitmap file; NIL if
+
+	This primitive reads an X10 or X11 bitmap file and returns an
+	XImage structure associated with that file.
+
+	<filepath> is a STRING, the full path name to the file containing
+	the XImage data.
+
+
+** XT_MANAGE_CHILDREN == XtManageChildren():
+
+	(XT_MANAGE_CHILDREN <widgets...>)
+		--> returns T.
+	
+	Given <widgets...>, an ARRAY or list of WIDGETOBJs, all of which
+	must be children of the same parent, this primitive will add those
+	widgets to their parent-widget's managed list, which means they
+	will become visible (if mapped) and will take up space within the
+	managing widget.
+
+	Calling XT_MANAGE_CHILDREN on a sequence of child widgets is more
+	efficient than specifying the :MANAGED option to each child-widget
+	creation form, or sending the :MANAGE message to each child-widget
+	created.
+
+	An error will be signaled if the widgets passed to this routine do
+	not all have the same parent.
+	
+
+** XT_UNMANAGE_CHILDREN == XtUnmanageChildren():
+
+	(XT_UNMANAGE_CHILDREN <widgets...>)
+		--> returns T.
+
+	Given <widgets...>, an ARRAY or list of WIDGETOBJs, all of which
+	must be children of the same parent, this primitive will remove those
+	widgets from their parent-widget's managed list, which means they
+	will no longer be visible or take up space.
+
+	Calling XT_UNMANAGE_CHILDREN on a sequence of child widgets is more
+	efficient than sending the :UNMANAGE message to each child-widget.
+
+	An error will be signaled if the widgets passed to this routine do
+	not all have the same parent.
+
+
+** Primitives for manipulating XM_STRINGs:
+
+	I HATE XmStrings. <Nasty comments about DEC deleted...>
+	I've only provided minimal support for them in WINTERP 1.0. In
+	general, I've tried to make it so you can pretend XmStrings don't
+	exist at all by providing automatic string-->XmString conversions
+	for setting resources and for various widget methods.
+
+	Alas, there are cases where you need to retrieve STRING values from
+	an XM_STRING, or need to compare two XM_STRINGS, so I've provided
+	the functions below.
+	
+	Note that in Motif 1.0, you cannot specify character sets. If I
+	ever figure out a clean way of interfacing the user to XmString
+	braindamage, I'll add the feature to WINTERP....
+	
+	
+*** XM_STRING_CREATE == XmStringCreate():
+
+	(XM_STRING_CREATE <string> [<charset>])
+		--> returns an XM_STRING version of string <string>.
+
+	Create a compound string from STRING <text>. Optional argument
+	<charset> specifies an XmStringCharSet. If left out,
+	XmSTRING_DEFAULT_CHARSET is used.
+
+	Note -- WINTERP 1.0 does not take the <charset> argument. It
+	defaults to using XmSTRING_DEFAULT_CHARSET.
+
+
+*** XM_STRING_DIRECTION_CREATE == XmStringDirectionCreate():
+
+	(XM_STRING_DIRECTION_CREATE :STRING_DIRECTION_L_TO_R)
+		 --> returns an XM_STRING with a single L->R direction component.
+	(XM_STRING_DIRECTION_CREATE :STRING_DIRECTION_R_TO_L)
+		--> returns an XM_STRING with a single R->L direction component
+
+
+*** XM_STRING_SEPARATOR_CREATE == XmStringSeparatorCreate():
+
+	(XM_STRING_SEPARATOR_CREATE)
+		--> returns an XM_STRING with a single component, a separator.
+
+
+*** XM_STRING_SEGMENT_CREATE == XmStringSegmentCreate():
+
+	(XM_STRING_SEGMENT_CREATE <text> [<charset>] <direction> <separator_p>)
+		--> returns a XM_STRING with the specified components:
+		<text>, a STRING;
+		<charset>, an optional character set;
+		<direction>, a symbol, either :STRING_DIRECTION_L_TO_R, or
+	                                      :STRING_DIRECTION_R_TO_L;
+		<separator_p>, a boolean; if non-NIL, a separator will be added.
+	
+	Note -- WINTERP 1.0 does not take the <charset> argument. It
+	defaults to using XmSTRING_DEFAULT_CHARSET.
+
+
+*** XM_STRING_CREATE_L_TO_R == XmStringCreateLtoR():
+
+	(XM_STRING_CREATE_L_TO_R <text> [<charset>])
+		--> returns an XM_STRING version of string <text>.
+	
+	Create a left-to-right compound string from STRING <text>. If <text>
+	includes '\n', they will be replaced by a separator.
+	
+	Optional argument <charset> specifies an XmStringCharSet.
+	If left out, XmSTRING_DEFAULT_CHARSET is used.
+	
+	Note -- WINTERP 1.0 does not take the <charset> argument. It
+	defaults to using XmSTRING_DEFAULT_CHARSET.
+
+
+*** XM_STRING_GET_L_TO_R == XmStringGetLtoR():
+
+	(XM_STRING_GET_L_TO_R <xmstring> [<charset>])
+		--> returns a STRING, or NIL if no matching character set found.
+	
+	This function will fetch the first text segment of the XM_STRING
+	<xmstring> which matches the character set <charset>, and returns
+	that as a STRING.
+	
+	Note -- WINTERP 1.0 does not take the <charset> argument. It
+	defaults to using XmSTRING_DEFAULT_CHARSET.
+
+
+*** XM_STRING_CONCAT == XmStringConcat():
+
+	(XM_STRING_CONCAT <xmstring_a> <xmstring_b>)
+		--> returns a new XM_STRING which is the concatenation of
+		    XM_STRINGs  <xmstring_a> and <xmstring_b>.
+
+
+*** XM_STRING_COPY == XmStringCopy():
+
+	(XM_STRING_COPY <xmstring>)
+		--> returns a new XM_STRING, a copy of <xmstring>
+
+
+*** XM_STRING_BYTE_COMPARE == XmStringByteCompare():
+
+	(XM_STRING_BYTE_COMPARE <xmstring_a> <xmxtring_b>)
+		--> returns T if the XM_STRING args are byte-for-byte equal,
+		    else NIL.
+
+	Note that this function will return NIL for an XM_STRING that is
+	retrieved from a widget via :get_values, a callback, or a method.
+	It's pretty useless, just like all the other XmString bogosities.
+
+
+*** XM_STRING_COMPARE == XmStringCompare():
+
+	(XM_STRING_COMPARE <xmstring_a> <xmxtring_b>)
+		--> returns T if the two XM_STRING args are "semantically equal",
+		    else NIL.
+
+
+*** XM_STRING_LENGTH == XmStringLength():
+
+	(XM_STRING_LENGTH <xmstring>)
+		--> returns a FIXNUM representing the number of bytes in
+		    <xmstring>
+
+
+*** XM_STRING_EMPTY == XmStringEmpty():
+
+	(XM_STRING_EMPTY <xmstring>)
+		--> returns T if all segments in XM_STRING <xmstring> are
+		    zero length or if there are no text segments.
+		    Otherwise returns NIL.
+
+
+*** XM_STRING_LINE_COUNT == XmStringLineCount():
+
+	(XM_STRING_LINE_COUNT <xmstring>)
+		--> returns a FIXNUM representing the number of lines
+		    in XM_STRING <xmstring>.
+==============================================================================
+
+* Future work, missing features.
+
+	If you add any of the features described below, please send your
+	modifications to me at mayer@hplabs.hp.com or hplabs!mayer.
+
+** Support for Multiple Displays.
+
+	The X11r3 toolkit upon which Motif is based does not support 
+	multiple displays properly, and therefore Motif 1.0 does not
+	support multiple displays either. The X11r4 Xtoolkit supposedly
+	supports multiple displays, so we might expect bug-free multiple
+	display support in Motif 1.1 (??). When that happens, I'll modify
+	WINTERP to support multiple displays.	
+
+
+** <Xm/CutPaste.h> -- XmClipboard functionality.
+
+	The following Motif functionality is missing from WINTERP 1.0.
+	I didn't get around to adding these due to lack of time and 
+	interest. I'm sure I'll be needing this functionality eventually,
+	so you can expect that they'll be included in a future WINTERP
+	release. Feel free to interface these functions and send me your code!
+
+		XmClipboardBeginCopy(), XmClipboardStartCopy(),
+		XmClipboardCopy(), XmClipboardEndCopy(), XmClipboardCancelCopy(),
+		XmClipboardCopyByName(), XmClipboardUndoCopy(),
+		XmClipboardLock(), XmClipboardUnlock(),
+		XmClipboardStartRetrieve(), XmClipboardRetrieve(),
+		XmClipboardEndRetrieve(), XmClipboardInquireCount(),
+		XmClipboardInquireFormat(), XmClipboardInquireLength(),
+		XmClipboardInquirePendingItems(), XmClipboardWithdrawFormat(),
+		XmClipboardRegisterFormat().
+
+
+** <X11/Selection.h> -- X11r3 selection capabilities.
+
+	The following Motif functionality is missing from WINTERP 1.0.
+	I didn't get around to adding these due to lack of time and 
+	interest. Are these really necessary if we interface XmClipboard??
+
+		XtOwnSelection(), XtDisownSelection(), XtGetSelectionValue(),
+		XtGetSelectionValues(), XtSetSelectionTimeout(),
+		XtGetSelectionTimeout().
+
+
+** <X11/Protocols.h> -- Window Manager Protocol interfaces.
+
+	The following Motif functionality is missing from WINTERP 1.0.
+	I didn't get around to adding these due to lack of time and 
+	interest.
+
+		XmAddWMProtocols(), XmRemoveWMProtocols(), 
+		XmAddWMProtocolCallback(), XmRemoveWMProtocolCallback(),
+		XmActivateWMProtocol(), XmDeactivateWMProtocol(),
+		XmSetWMProtocolHooks(), XmAddProtocols(),
+		XmRemoveProtocols(), XmAddProtocolCallback(), 
+		XmRemoveProtocolCallback(), XmActivateProtocol(),
+		XmDeactivateProtocol(), XmSetProtocolHooks()
+
+
+** <X11/PassivGrab.h>
+
+	The following Motif functionality is missing from WINTERP 1.0.
+	I didn't get around to adding these due to lack of time and 
+	interest.
+
+		XtGrabKey(), XtUngrabKey(), XtGrabKeyboard(), XtUngrabKeyboard()
+
+
+** XtAddInput()/XtRemoveInput():
+
+	It might be nice provide some high-level Lisp interfaces that use
+	XtAddInput():
+
+	One interface would allow for functionality similar to gnuemacs'
+	"process-sentinel" capabilities but using XtAddInput() for proper
+	integration into the Xtoolkit's event-driven style. This would give
+	WINTERP the ability to concurrently run a subprocess while still
+	responding to Lisp and X events. (In contrast to POPEN and SYSTEM,
+	which cause WINTERP to block until the subprocess terminates)
+
+	Another high-level interface would allow you to create other TCP,
+	and UDP sockets	and attach Lisp code that responds to input on
+	these sockets.
+
+
+** XtAppAddWorkProc()/XtAppRemoveWorkProc():
+
+	This might be useful for scheduling periodic garbage collects that
+	can occur when WINTERP is otherwise idle.
+
+
+** Missing XmString and XmFontList functionality:
+
+	XmStringFreeContext(), XmStringGetNextComponent(), 
+	XmStringPeekNextComponent(), XmStringGetNextSegment(), 
+	XmFontListCreate(), XmStringCreateFontList(), XmFontListFree(),
+	XmFontListAdd(), XmFontListCopy(), XmStringNConcat(),
+	XmStringNCopy(), XmStringBaseline(), XmStringWidth(), XmStringHeight(),
+	XmStringExtent(), XmStringDraw(), XmStringDrawImage(), 
+	XmStringDrawUnderline().
+
+	If you need any of the above, feel free to add them to
+	./winterp/src-server/w_XmString.c and send me the changes....
+
+
+** More interactive builder-like functions:
+
+*** Widget and Resource "palette"
+	
+	It gets tedious having to remember widget class names and resource
+	names. Create a browser that will allow you to visually construct
+	the arguments for widget creation and widget :set_values.
+
+	Such functionality would serve as the basis for a builder. Much of this
+	could be done in Lisp, without having to modify C code.
+
+*** Interactively place a newly created widget inside a manager.
+
+*** Interactively move existing widgets around.
+
+*** Colorpicker:
+
+	Be able to mouse on a color-source widget followed by a
+	color-destination widget. The color-destination widget will take on
+	the background/foreground colors of another widget.
+
+	Allow optional creation of a palette of widgets for picking
+	specific preset color combinations.
+
+	Both of these could easily be done as Lisp-only extensions to
+	WINTERP.
+	
+*** Resource browser:
+
+	Be able to bring up a browser that allows you to inspect and alter
+	the resources on a widget. Alterations on a widget are returned
+	as name/value pairs that can be passed on to future invocations of
+	:set_values or :new.

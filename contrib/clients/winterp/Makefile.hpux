@@ -1,0 +1,30 @@
+################################################################################
+#
+# File:         Makefile
+# RCS:          $Header: $
+# Description:  Makefile for beta winterp client programs.
+# Author:       Niels Mayer, HPLabs
+# Created:      Tue Aug 29 01:19:06 1989
+# Modified:     Sat Nov 25 02:45:16 1989 (Niels Mayer) mayer@hplnpm
+# Language:     N/A
+# Package:      N/A
+# Status:       X11r4 contrib tape release
+#
+# (c) Copyright 1989, Hewlett-Packard Company.
+#
+################################################################################
+
+# USER_DEFINES =
+DEFINES = -DSYSV -Dhpux -DWINTERP $(USER_DEFINES)
+CFLAGS = -Wc,-Nd7000,-Ns6000,-Np300,-Nw4000,-Nt100000 $(DEFINES)
+OPTIMIZER = -O
+.c.o:
+	$(CC) -c $(OPTIMIZER) $*.c $(CFLAGS)
+
+all:: src-client src-server
+
+src-client::
+	(cd src-client ; $(MAKE) -f Makefile.hpux "USER_DEFINES=$(USER_DEFINES)" "OPTIMIZER=$(OPTIMIZER)" all ; cd ..)
+
+src-server::
+	(cd src-server ; $(MAKE) -f Makefile.hpux "USER_DEFINES=$(USER_DEFINES)" "OPTIMIZER=$(OPTIMIZER)" all ; cd ..)

@@ -1,0 +1,10 @@
+!
+KTerm*font:		a14
+KTerm*boldFont:
+KTerm*kanjiFont:	k14
+KTerm*kanaFont:		kana14
+!
+!    You may add this to your resource file,
+!    if your system does not have Kanji key.
+!KTerm*Translations:	#override\
+!	Shift<Key>Space: begin-conversion(JAPANESE_CONVERSION)

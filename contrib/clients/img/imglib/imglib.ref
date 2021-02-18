@@ -1,0 +1,1493 @@
+
+	This file is a reference to imglib routines, produced
+	from comments extracted from the source.  One section
+	is present for each C function, and all sections are
+	collated in alphabetic order by function names.
+
+	At present this is only plain text.  This at least allows
+	using an editor to search and view it; someday perhaps
+	we'll translate this automatically into various other
+	"standard" forms of documentation (UNIX man pages,
+	Postscript, LaTeX input, ...)
+
+	To look at the same information in functional groupings
+	for each module, see the collection of .doc files, one
+	per module.
+
+	The only module not documented in this way at present
+	is xrand, which we adopted without change from a comp.sources
+	newsgroup.  Eventually we'll add module and routine headers
+	to its source to allow including its routines in the
+	same set of documentation.  For now we've appended an
+	excerpt from its comments at the end of this file.
+
+
+	Routines documented in this file:
+
+	change_img	Change  Image	
+	ck_colorcap	Check Read/Write Color Capacity
+	close_yafile	Close a File
+	color_to_gray	Convert Color Image to Grayscale
+	color_to_mono	Convert Color Image to Dithered Monochrome
+	copy_img	Copy  Image
+	create_img	Create  Image
+	create_sysres	Create System-Dependent Resources
+	delete_img	Delete Image
+	delete_sysres	Delete System-Dependent Resources
+	describe_img	Describe image
+	display_img	Display Image in New Window
+	dither_rgb	Dither an RGB image
+	expand_path	Expand file pathname
+	get_img		Get Image from Drawable
+	img_rep_node	Replenish Free Node Supply
+	init_colman	Initialize Image for Color Management
+	maint_img	Maintain Displayed Image
+	open_filter	Open a Filter
+	open_yafile	Open a File
+	print_img	Print Image
+	put_img		Put Image to Drawable
+	quant_cmi	Quantize Color Mapped Image
+	quant_rgb	Quantize RGB Image
+	read_img	Read Image from File
+	start_X11	Start up X Interface
+	stop_X11	Stop (Terminate) X Interface
+	update_colors	Update X11 Color Map
+	write_img	Write Image to File
+	xrand		Random number generation routines
+
+
+===============================================================================
+=======                                                                 =======
+=======			  change_img  --  Change  Image			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = change_img ( imgtype, image )
+
+
+  Functions:
+
+	Change an existing image from one type to another.
+	This normally is used to change image data between
+	color mapped and RGB formats.
+
+	CAUTION:  change_img does not touch system-dependent
+	data associated with the image.  Do this to an image
+	that's currently displayed and you may be shocked.
+
+	If the image types are abbreviated to:
+
+		cm	Color mapped image
+		cmi	Color mapped image info (no pixel data)
+		rgb	RGB unmapped image
+		rgbi	RGB unmapped image info (no pixel data)
+
+	Possible special actions are:
+
+		Old	New	Special actions
+		---	---	---------------
+
+		cm	rgb	Color map is retained.  Pixel tags
+				are set to the original pixel values
+				(i.e., indices to color map).
+
+		rgb	cm	Color map must be present in RGB image.
+				Pixel tags must be indices to color map
+				(i.e., new pixel values).
+
+		cm	cmi \
+		cm	rgbi \_/ Pixel data
+		rgb	cmi  / \ is discarded
+		rgb	rgbi/
+
+
+		cm	rgbi	Color map is retained.
+
+		rgb	cmi	Color map must be present in RGB image.
+
+		cmi	cm \
+		cmi	rgb \_/ New image has no pixel data,
+		rgbi	cm  / \ even though its type indicates it does
+		rgbi	rgb/
+
+
+  Input:
+
+	imgtype		int
+			Type of new image, as defined in imglib.h:
+
+			  mapped_img	Color mapped
+			  mapped_info	Color mapped, Info only:  No pixel data
+			  rgb_img	32-bit RGB, unmapped
+			  rgb_info	RGB, Info only:  No pixel data
+
+	image		Img *
+			Pointer to Img structure for image
+
+
+  Output:
+
+	status		int
+	[return value]	Status code:
+			0 => insufficient memory for image,
+			or attempted to change RGB image without
+			a color map to a color-mapped image.
+
+
+===============================================================================
+=======                                                                 =======
+=======		ck_colorcap  --  Check Read/Write Color Capacity	=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	num_colors = ck_colorcap ( X11_env )
+
+
+  Functions:
+
+	Check the number of read/write colors available in the given
+	X11 display environment.  If the X11 environment includes
+	a smaller "maxcolors" override, use the override.
+
+	Since there's no X11 function to do this directly,  ck_colorcap
+	uses iterative attempts to allocate read/write cells.  It
+	uses a binary search to minimize the overhead involved.
+
+
+  Input:
+
+	X11_env		X11env *
+			Pointer to X11 interface environment
+			(e.g., as created by start_X11)
+
+
+  Output:
+
+	num_colors	int
+	<return value>	Number of read/write color cells available.
+
+===============================================================================
+=======                                                                 =======
+=======			close_yafile --  Close a File			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	close_yafile ( yafile )
+
+
+  Functions:
+
+	Close a file that was opened with open_yafile.
+
+	This closes either a file or a pipe, each of which of course
+	involves a different interface to UNIX, and releases memory
+	associated with the Yafile structure.
+
+
+  Input:
+
+	yafile		Yafile *
+			Pointer to Yafile info.  As with other stuff,
+			caller can treat this as a FILE *.
+
+
+  Output:	None
+
+===============================================================================
+=======                                                                 =======
+=======	      color_to_gray --  Convert Color Image to Grayscale	=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	color_to_gray (image)
+
+
+  Functions:
+
+	Convert colors in an image to gray scale.  Conversion
+	is based on:
+
+	    gray = .299*red + .587*green + .114*blue
+
+	but uses the following approximation for the sake of speed:
+
+	    gray = (77*red + 150*green + 29*blue) >> 8
+
+	This is accurate enough to suit human perception, and
+	it's adequately fast as long as the C compiler decomposes
+	multiplication by constants into shifts, adds, and subtracts.
+
+	If the image is an RGB image without a colormap, color_to_gray
+	supplies a 256-entry grayscale map and sets the map index
+	in all pixels.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to convert
+
+
+  Output:
+
+	No direct output;  Image is modified to change colors to gray scale
+
+===============================================================================
+=======                                                                 =======
+=======	 color_to_mono  --  Convert Color Image to Dithered Monochrome	=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = color_to_mono (image)
+
+
+  Functions:
+
+
+	Convert  a color image to gray scale and dither the grayscale
+	values to black and white.
+
+	If the image is color-mapped, this replaces the color map
+	with a 2-entry map.  Pixel values become 0 for black,
+	1 for white.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to convert
+
+
+  Output:
+
+	status		int
+	<return value>	Success/failure status:
+			    0 => Failure:  Image isn't color mapped,
+					   or is info-only (no pixels!)
+			    1 => Success
+
+===============================================================================
+=======                                                                 =======
+=======			  copy_img  --  Copy  Image			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	newimage = copy_img ( imgtype, oldimage )
+
+
+  Functions:
+
+	Create an image and copy an existing image to it.
+	All data related to the old image is replicated in
+	newly allocated memory for the new image, EXCEPT
+	system-dependent resources.
+
+	This can produce a new image of a different type than
+	the old image.  If the image types are abbreviated to:
+
+		cm	Color mapped image
+		cmi	Color mapped image info (no pixel data)
+		rgb	RGB unmapped image
+		rgbi	RGB unmapped image info (no pixel data)
+
+	Possible special actions are:
+
+		Old	New	Special actions
+		---	---	---------------
+
+		cm	rgb	Color map is retained.  Pixel tags
+				are set to the original pixel values
+				(i.e., indices to color map).
+
+		rgb	cm	Color map must be present in RGB image.
+				Pixel tags must be indices to color map
+				(i.e., new pixel values).
+
+		cm	cmi \__/Pixel data is not copied --
+		rgb	rgbi/  \New image's pixdata pointer is NULL.
+
+		cm	rgbi	Color map is retained.
+
+		rgb	cmi	Color map must be present in RGB image.
+
+		cmi	cm \
+		cmi	rgb \_/ New image has no pixel data,
+		rgbi	cm  / \ even though its type indicates it does
+		rgbi	rgb/
+
+
+  Input:
+
+	imgtype		int
+			Type of new image, as defined in imglib.h:
+
+			  mapped_img	Color mapped
+			  mapped_info	Color mapped, Info only:  No pixel data
+			  rgb_img	32-bit RGB, unmapped
+			  rgb_info	RGB, Info only:  No pixel data
+
+	oldimage	Img *
+			Pointer to Img structure for old (source) image
+
+
+  Output:
+
+	newimage	Img *
+	[return value]	Pointer to Img structure for new (destination) image;
+			NULL => insufficient memory for image,
+			or attempted to copy RGB image without
+			a color map to a color-mapped image.
+
+===============================================================================
+=======                                                                 =======
+=======			  create_img  --  Create  Image			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	image = create_img ( imgtype, width, height, asdlen, asdata,
+			     num_colors, colormap, pixdata )
+
+
+  Functions:
+
+	Create an image by allocating an Img structure and filling
+	in fields with the given parameters.  The created image
+	can be refer to either color-mapped 8-bit pixels or
+	32-bit RGB (unmapped) pixels.  It can also omit pixel data  
+	to supply only information concerning an image.
+
+	32-bit pixels actually contain 24 bits of color, 8 bits each
+	for red, green and blue components, and an 8-bit tag for use
+	during various processing operations.
+
+	RGB images are allowed to have color maps.  If present,
+	such a map is for convenience in color-related processing
+	functions; it is not used in displaying the image unless
+	the system-dependent display function is such a processing
+	function.
+
+	If a pointer to any related block of data (associated data,
+	color map, or pixel data) is NULL but the corresponding size
+	or count parameter is nonzero, create_img allocates a
+	block of memory of the required size.  Such blocks are
+	"owned" by the image, and will be freed when delete_img
+	deletes it.
+
+	Blocks (associated data, color map, or pixel data) with
+	non-NULL addresses and nonzero sizes are property of the
+	caller; delete_img will NOT free them when it deletes
+	the image.  If the caller wishes to transfer ownership of
+	these blocks to the image, the calling routine must set
+	the appropriate "alloc" bits in the returned Img -- See
+	Img definition in imglib.h.
+
+	Size of the pixel data is inferred to be width*height pixels.
+
+	If color management functions will be used on the new image,
+	it is necessary for the caller to invoke init_colman after
+	ceate_img returns.
+
+
+  Input:
+
+	imgtype		int
+			Type of image, as defined in imglib.h:
+
+			  mapped_img	Color mapped
+			  mapped_info	Color mapped, Info only:  No pixel data
+			  rgb_img	32-bit RGB, unmapped
+			  rgb_info	RGB, Info only:  No pixel data
+
+	width		int
+			Width of image in pixels
+
+	height		int
+			Height of image in pixels
+
+	asdlen		int
+			Length of associated data in bytes
+
+	asdata		Byte *
+			Pointer to associated data
+
+	num_colors	int
+			Number of colors in color map
+
+	colormap	Col *
+			Pointer to color map  (array of num_colors Col's)
+
+	pixdata		Byte *
+			Pointer to pixel data (array of width*height
+			indices to color map)
+
+
+  Output:
+
+	image		Img *
+	[return value]	Pointer to Img structure for new image;
+			NULL => insufficient memory for image
+
+
+===============================================================================
+=======                                                                 =======
+=======	     create_sysres  --  Create System-Dependent Resources	=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = create_sysres ( image, X11_env )
+
+
+  Functions:
+
+	Create system-dependent resources required to display or
+	otherwise manipulate an image.  This also binds the image
+	to a particular X11 environment.
+
+	Normally this would be called by a system-dependent function
+	which needs such resources but finds they don't exist yet
+	for this image.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image being initialized.
+
+	X11_env		X11env *
+			Pointer to X11 environment for image
+
+
+  Output:
+
+	status		int
+	<return value>	Success/fail status:
+			    0 => Couldn't create some resource
+			    1 => Resources were created
+
+===============================================================================
+=======                                                                 =======
+=======			  delete_img  --  Delete Image			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	delete_img ( image )
+
+
+  Functions:
+
+	Delete an image.  Release the Img structure's memory and
+	that of all subordinate structures "owned" by the image.
+
+
+
+  Input:
+
+	image		Img	*
+			Pointer to Img structure for image to delete
+
+
+  Output:	None
+
+===============================================================================
+=======                                                                 =======
+=======	      delete_sysres  --  Delete System-Dependent Resources	=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	delete_sysres ( image )
+
+
+  Functions:
+
+	Free whatever system-dependent resources are associated with
+	the given image.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image being cleaned up
+
+
+  Output:
+
+	None.  Any system resources (colors, pixmaps, windows,...)
+	associated with this image are freed, and associated
+	blocks of memory are released.
+
+===============================================================================
+=======                                                                 =======
+=======			describe_img  --  Describe image		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = describe_img ( image, outfile, format, heading )
+
+
+  Functions:
+
+	Describe image characteristics.
+
+	This writes text describing the image's geometry, color map
+	(if any), and associated data (if any).  Various pieces of
+	info can be omitted or formatted differently under control
+	of the "format" parameter.
+
+	Defaulting file to NULL and format to 0 produces what we
+	think a user would most likely want to see most of the time.
+
+	Details of this are likely to change.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to describe
+
+	outfile		FILE *
+			Pointer to stream to report image info on;
+			NULL => use stdout
+
+	format		int
+			Mask for info to display:
+
+			  0x01 => Heading text
+			  0x02 => Image type
+			  0x04 => Geometry & size
+			  0x08 => Color map size
+			  0x10 => Associated data length
+			  0x20 => Associated data contents
+			  0x40 => Color map contents
+
+			  0x00 defaults to 0x3f
+
+	heading		char *
+			Heading text; NULL => "\n\tImage description:\n\n"
+
+
+  Output:	None to caller
+
+===============================================================================
+=======                                                                 =======
+=======		   display_img --  Display Image in New Window		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = display_img ( image, display_name, event_mask )
+
+
+  Functions:
+
+	Create a new pixmap and window, and display an image in it.
+
+
+  Input:
+
+	image		Img *
+			Image to display
+
+
+	X11_env		X11env *
+			Pointer to X11 environment for image
+
+	event_mask	Word
+			X11 event mask for event for events of interest
+			on image's window.  This function forces
+			ExposureMask on in the event mask.
+
+
+  Output:
+
+	status		int
+	<return value>	Status:  0 => failed, 1 => succeeded
+
+===============================================================================
+=======                                                                 =======
+=======	    	     dither_rgb  --  Dither an RGB image		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = dither_rgb ( image, tree )
+
+
+  Functions:
+
+	Dither an RGB image, coercing assigned pixel values to match
+	colors in the image's color map.  Original RGB values remain
+	unchanged, but color index tags (if any) in each pixel are
+	set to an appropriate color index.
+
+	Specifying NULL as the color tree pointer requires generating
+	the tree, which may be time-consuming.  Quantization routines
+	call dither_rgb as their final pixel assignment phase when
+	dithering is desired.
+
+
+  Input:
+
+	image		Img	*
+			Pointer to Img structure for image to delete
+
+	tree		Ctnode	*
+			Pointer to root node of color tree
+
+
+  Output:
+
+	status		int
+	<return value>	Completion status:
+				0 => Failed
+				1 => Succeeded
+
+===============================================================================
+=======                                                                 =======
+=======		     expand_path  --  Expand file pathname		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	full_path = expand_path ( csh_path )
+
+
+  Functions:
+
+	Expand a file's pathname from csh-acceptable form to
+	the fully qualified pathname.  Although this involves
+	the most common csh conventions, it does NOT include
+	globbing (substition for *, ?, [...], etc.).
+
+	Transformations applied to the pathname are:
+
+	    --	Environment variables ($name) are expanded before
+		all other substitutions.
+
+	    --	"~/" at the beginning of the pathname translates
+		to the current user's home directory.  This is
+		expanded from the $home environment variable.
+
+	    --	"~user/" at the beginning of the pathname translates
+		to the named user's home directory.
+
+	    --	"./" at the beginning of the pathname translates
+		to the current working directory.
+
+	    --  If the pathname does not begin with "/", "~", "~user",
+		or "./", the current working directory name is
+		prepended to it.
+
+	    --	".." translates to the parent directory of the
+		current point in the path.  If embedded within
+		the path, it deletes the preceding directory name.
+
+
+  Input:
+
+	csh_path	unsigned char	*
+			Pointer to pathname using csh conventions
+			noted above.
+			Format is a 0-terminated char string.
+
+
+  Output:
+
+	full_path	Byte  *
+	<return value>	Pointer to full pathname expanded from csh_path.
+			Format is a 0-terminated char string.
+			"\0" => An environment variable was undefined
+			or a user name in "~user" was invalid.
+
+			****  This path string is statically allocated
+			      within expand_path.  Therefore, any
+			      full_path value becomes invalid at the
+			      next call to this routine.
+
+===============================================================================
+=======                                                                 =======
+=======		     get_img --  Get Image from Drawable		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	image = get_img ( drawable, geometry, X11_env )
+
+
+  Functions:
+
+	Copy a region of a drawable to a new image.
+
+	Restrictions:
+
+	    1.  If the drawable is a pixmap rather than a window,
+		the color map could be wrong.  We assume that a
+		pixmap uses the default color map for the given
+		X11 environment.  If the caller knows for sure what
+		color map is appropriate, it can supply an X11_env
+		structure with the appropriate cmap setting.
+
+	    2.  This currently doesn't work if the default color map
+		uses more than 256 colors (i.e., is more than 8 bits
+		deep), or if XGetImage reports:
+
+		    --  Image depth > than 8
+		    --  Pixel size other than 8 bits
+		    --  RGB mask values other than 0
+
+
+  Input:
+
+	drawable	Drawable
+			Window or pixmap to get image from:
+			X11 Drawable (XID)
+
+	geometry	Geom *
+			Pointer to imglib Geom structure representing
+			geometry of region to get from drawable;
+			NULL => get entire contents of drawable
+
+	X11_env		X11env *
+			Pointer to X11 interface environment
+			(e.g., as created by start_X11)
+
+
+  Output:
+
+	image		Img *
+	<return value>	Pointer to new image;
+			NULL => couldn't get X11 image, or couldn't
+			create a new imglib Img (probably insufficent
+			memory)
+
+******************************************************************************
+******									******
+******		   img_rep_node  --  Replenish Free Node Supply		******
+******									******
+******************************************************************************
+
+  Invocation:
+
+	new_node = img_rep_mode ()
+
+	[Invoked only from get_node macro]
+
+
+  Function:
+
+	Allocate memory for a new supply of node structures
+	and preset all fields to 0.
+
+
+
+  Input:
+
+	None from caller; img_rep_node uses shared data structures
+	img_block_queue, img_new_block, img_next_node, and img_num_free
+
+  Output:
+
+	new_node	Ctnode	*
+	<return value>	Pointer to a new color tree node
+
+	Data structures named as input are updated.
+
+
+   Notes:
+
+	Blocks are normally allocated by the get_node macro --
+	get_node(np) set node pointer np to addr of new node.
+	Before use, caller must initialize memory block data as follows:
+
+img_block_queue = BNULL;	\*  Init memory block queue as empty	*\
+img_num_free    = 0;		\*  Indicate no free blocks		*\
+
+	After the color tree is no longer needed, space should be freed
+	with this code fragment:
+
+while ( img_block_queue != BNULL )
+      {
+      img_new_block = img_block_queue -> next_block;
+      free ( img_block_queue );
+      img-block_queue = img_new_block;
+      }
+
+===============================================================================
+=======                                                                 =======
+=======	    init_colman  --  Initialize Image for Color Management	=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = init_colman ( image )
+
+
+  Functions:
+
+	Initialize color management data for a color-mapped image.
+	The image type can be either mapped_image or rgb_image,
+	but an RGB image must have a color map, which would otherwise
+	be optional.  RGB pixel values must have color map indices
+	in their tag fields.
+
+	This routine must be called after the image is created
+	and before most other color management routines are invoked
+	on it.
+
+	Specific data initialized are:
+
+	--  A color info queue entry for the current color map.
+	    If queue entries exist, init_colman updates the one
+	    at the head of the queue.  If none exist, it creates
+	    a new queue entry.
+
+	--  Pixel frequency statistics in the current color map
+	    are initialized by scanning the pixel data.  While
+	    doing this, pixels are checked for invalid color map
+	    indices.  If any exist, a summary message is sent to
+	    stderr and the faulty pixel values are replaced by 0.
+
+
+  Input:
+
+	image		Img	*
+			Pointer to Img structure for image to delete
+
+
+  Output:
+
+	status		int
+	<return value>	0 if initialization succeeded;
+			1 if init completed but invalid pixels were found
+			2 if init failed due to insufficient memory
+			  or incorrect image format
+
+===============================================================================
+=======                                                                 =======
+=======		     maint_img  --  Maintain Displayed Image		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	X11_event = maint_img ( image, X11_env )
+
+
+  Functions:
+
+	Maintain a displayed image.
+
+	This means waiting for an X event and handling refreshing.
+	The caller is responsible for having selected event input
+	appropriately, and for including ExposreMask in the event
+	mask given to X.
+
+	Return to the caller to let him handle any X event other
+	than an XExposeEvent.  Handle exposures within this routine.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image being displayed.
+
+	X11_env		X11env *
+			Pointer to X11 interface environment
+			(e.g., as created by start_X11)
+
+  Output:
+
+	X11_event	XEvent *
+	<return value>	Pointer to last event reported by X11
+			that's of interest to the caller.
+
+===============================================================================
+=======                                                                 =======
+=======			open_filter --  Open a Filter			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	pid = open_filter (progargs, inpath, oupath, [&]instream, [&]oustream)
+
+
+  Functions:
+
+	Open an i/o filter.  The filter runs as a separate
+	process whose stdin and stdout streams can be redirected
+	at will.
+
+	This is something like popen, but its calling sequence
+	is slightly more versatile and it avoids the overhead
+	of invoking a shell to run the program.  Its main liability
+	is that the program's filename should be fully qualified:
+	open_filter does NOT search the directories name in
+	$path (for csh) or $PATH (for sh).
+
+	**  It's advisable to use a fully qualified pathname
+	**  in progargs[0] to identify the filter program.
+
+	****  Warning:  This hasn't been tested completely.
+
+
+  Input:
+
+	progargs	char  *[]
+			Pointer to array of command arguments.
+			1st argument is pathname of program to execute;
+			last argument is NULL.
+
+	inpath		char  *
+			String defining pathname of file to use as
+			input to the filter program;
+			NULL => open pipe to filter
+
+	oupath		char  *
+			String defining pathname of file to use as
+			output from the filter program;
+			NULL => open pipe from filter
+
+  Output:
+
+	pid		int
+	<return value>	Process id of filter process;
+			0 => Failed, couldn't load program or open pipe(s).
+
+	*instream	FILE  *
+			If inpath is given as NULL, open_filter
+			returns a FILE pointer to a pipe (open for output)
+			that connects to the filter's input.
+
+	*iostream	FILE  *
+			If oupath is given as NULL, open_filter
+			returns a FILE pointer to a pipe (open for input)
+			that connects to the filter's output.
+
+
+===============================================================================
+=======                                                                 =======
+=======			open_yafile --  Open a File			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	yafile = open_yafile ( filename, options, suffix )
+
+
+  Functions:
+
+	Open a file.  If the given filename can't be opened,
+	try it with default suffixes appended.  If any suffix
+	ending with ".Z" works, open the file by piping it
+	through either compress or uncompress.
+
+	Suffix defaulting attempts to open the following names
+	in this order until an open succeeds:
+
+		1.  filename
+		2.  filename.Z
+		3.  filename.default_suffix
+		4.  filename.default_suffix.Z
+
+	If the original filename already ends with ".Z",
+	only the caller's original filename is used.  Also, if
+	the options specify "w" to write a file, the given filename
+	will be the one used unless a file of that name exists and
+	its protection does not allow write access to the caller.
+
+	Information returned includes the actual filename opened
+	and a flag indicating whether the file is compressed.
+	In the case of compressed files, the file the caller sees
+	is actually a pipe to compress or from uncompress.
+
+	A file opened in this manner can be read or written as
+	if the "yafile" is a FILE, but it must be closed with
+	close_yafile.
+
+
+  Input:
+
+	filename	char *
+			Pointer to filename, or at least the root
+			of the filename.  Name can include csh'ish
+			things, such as ~[user] and $environment_var.
+
+	options		char *
+			Options for openf.  We expect "r" or "w";
+			anything else may or may not work.
+
+	suffix		char *
+			Default suffix to try if filename can't be opened.
+			NULL => no default suffix
+
+
+  Output:
+
+	yafile		Yafile *
+	<return value>	Pointer to Yafile info.  Caller can treat this
+			as a FILE * if he doesn't want to check the file's
+			actual name or its compressed/uncompressed status.
+
+===============================================================================
+=======                                                                 =======
+=======			print_img  --  Print Image			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	print_img ( image, prfile, orientation, docname )
+
+
+  Functions:
+
+	Print the given image on an Imagen printer.  Convert
+	color to grayscale and dither to monochrome.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to print
+
+	prfile		FILE *
+			Pointer to output file; file must already
+			be open and will be left open when print_img
+			returns.  Callers should prefer to supply
+			a pipe to lpr or an equivalent program, but
+			writing to disk also works.  It just eats
+			a lot of space.
+
+	orientation	int
+			Orientation code, defined in <imglib.h>:
+
+			  PIO_DEFAULT:	    Default:  Choose best of:
+			  PIO_PORTRAIT:		Portrait (unrotated)
+			  PIO_LANDSCAPE:	Landscape (rotated 90-deg)
+
+	docname		char *
+			Pointer to document name (name of file containing
+			image or some other string, such as "Screen Dump")
+
+
+  Output:	No direct output:
+
+		Memory is buffered into a local "patches" array, then
+		written to the designated output file.
+
+===============================================================================
+=======                                                                 =======
+=======		       put_img --  Put Image to Drawable		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	put_img ( image, drawable, geometry, X11_env )
+
+
+  Functions:
+
+	Copy an image to a region of a drawable.
+
+
+	WARNING:  This may modify the original image:
+
+	If "force monochrome" or "force grayscale" is in effect,
+	or if the target display environment has a restrictive
+	visual (e.g., monochrome or grayscale display), or if
+	the image contains more colors than are available,...
+
+	The ORIGINAL image may be quantized, converted to grayscale,
+	dithered, or otherwise disturbed.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to put (i.e., image to draw)
+
+	drawable	Drawable
+			Window or pixmap to put image into:
+			X11 Drawable (XID)
+
+	geometry	Geom *
+			geometry of region to write in drawable;
+			NULL => image_width x image_height + 0 + 0
+
+	X11_env		X11env *
+			Pointer to X11 interface environment
+			(e.g., as created by start_X11)
+
+
+  Output:
+
+	status		int
+	<return value>	Status:  0 => Couldn't put image, 1 => did.
+
+******************************************************************************
+******									******
+******		    quant_cmi  --  Quantize Color Mapped Image		******
+******									******
+******************************************************************************
+
+  Invocation:
+
+	status = quant_cmi ( image, num_colors )
+
+
+  Function:
+
+
+	Quantize colors for an image.  This replaces the image's
+	color map with a smaller map and midifies its pixel data
+	to index the new map.
+
+	The old color map is discarded and a new one is allocated.
+	Pixel data is updated in place.
+
+	The actual number of colors in the quantized map can be
+	slightly less than the number requested.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to quantize
+
+	num_colors	int
+			Maximum number of colors to be retained
+			in the image
+
+
+  Output:
+
+	status		int
+	<return value>	Completion status:
+				0 => Failed
+				1 => Succeeded
+
+******************************************************************************
+******									******
+******			quant_rgb  --  Quantize RGB Image		******
+******									******
+******************************************************************************
+
+  Invocation:
+
+	status = quant_rgb ( image, num_colors )
+
+
+  Function:
+
+
+	Quantize colors for an image.  This selects a set of colors
+	to represent the RGB image, defines them in a color map
+	added to the image, and stores an index to entries in this color
+	map in the "tag" field of each pixel.
+
+	After calling quant_rgb, a color-mapped version of the image
+	can be created by using copy_img and specifying mapped_image
+	as the new image type.
+
+	The actual number of colors in the quantized map can be
+	slightly less than the number requested.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to quantize
+
+	num_colors	int
+			Maximum number of colors to be retained
+			in the image
+
+
+  Output:
+
+	status		int
+	<return value>	Completion status:
+				0 => Failed
+				1 => Succeeded
+
+===============================================================================
+=======                                                                 =======
+=======		       read_img --  Read Image from File		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	image = read_img ( filename, imgtype )
+
+
+  Functions:
+
+	Read an image file.
+
+	Under control of imgtype it's possible to read only
+	image attributes, or image attributes + color map.
+
+	For a color mapped image, read_img reads a single
+	optionally compressed file.  If the given filename
+	can't be opened, read_img checks for "filename.p[.Z]"
+	Choice of ".p" is a bit arbitrary, but suggests some
+	relation to X11 pixmaps.
+
+	For an RGB image, read_img reads four files with
+	names of the form:
+
+	    filename.a[.Z]	Attributes of image
+	    filename.r[.Z]	Red pixel components
+	    filename.g[.Z]	Green pixel components
+	    filename.b[.Z]	Blue pixel components
+
+	Although RGB images can have color maps while they're
+	in use, their files never have color maps.
+
+	If called to read an image of type "any_image" or "any_info",
+	read_image reads a color mapped image if one is available.
+	If there is no mapped image, it reads an RGB image.
+
+	"Attributes" are the Img fields indicating the image's
+	width, height, number of colors, number of pixels, and
+	associated data.
+
+
+  Input:
+
+	filename	char *
+			Name of file to read.  Name can include
+			references to home directories (~, ~username),
+			environment variables ($whatnot) in addition
+			to ordinary path info verbiage.
+
+	imgtype		int
+			Type of image, as defined in imglib.h:
+
+			  mapped_image	Color mapped
+			  mapped_info	Color mapped, Info only:  No pixel data
+			  rgb_image	32-bit RGB, unmapped
+			  rgb_info	RGB, Info only:  No pixel data
+
+			  any_image	Either mapped or RGB image
+			  any_info	Either mapped or RGB, no pixel data
+
+
+  Output:
+
+	image		Img *
+	<return value>	Pointer to Img structure for the new image
+			NULL => the image couldn't be read:  Either
+			free memory is insufficient, an input error
+			occurred, or a format error exists in the
+			image file.
+
+===============================================================================
+=======                                                                 =======
+=======		     start_X11  --  Start up X Interface		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	X11_env = start_X11 ( argc, argv )
+
+
+  Function:
+
+	Start_X11 opens a connection to an X11 display server and
+	saves information for a default X11 interface environment.
+
+	The caller should terminate use of this environment by
+	calling stop_X11.
+
+
+  Input:
+
+	argc		int
+			Number of arguments on command line used
+			to invoke program.  Minimum argc = 1.
+
+	argv		char *[]
+			Array of pointers to command line arguments.
+			argv[0] must contain the program name.
+
+
+  Output:
+
+	X11_env		X11env *
+	<return value>	Pointer to X11 interface environment
+			(e.g., as created by start_X11)
+			NULL => Couldn't open named display
+
+
+===============================================================================
+=======                                                                 =======
+=======		    stop_X11  --  Stop (Terminate) X Interface		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	stop_X11 ( X11_env )
+
+
+  Function:
+
+	Start_X11 closes a connection to an X11 display server and
+	frees the default X11 interface environment information
+	that was saved by start_X11.
+
+
+  Input:
+
+
+	X11_env		X11env *
+	<return value>	Pointer to X11 interface environment
+			(e.g., as created by start_X11)
+
+
+  Output:	None
+
+
+===============================================================================
+=======                                                                 =======
+=======		  update_colors  --  Update X11 Color Map		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	update_colors ( image )
+
+
+  Functions:
+
+	Update X11 color map to match new contents of image color map.
+	At present this is implemented only for X11 environments
+	using private colors.
+
+	This does not allow changing the size of an existing color map.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to put (i.e., image to draw)
+
+
+  Output:
+
+	None to caller; X11 color map is updated,
+
+===============================================================================
+=======                                                                 =======
+=======		      write_img  --  Write Image to File		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = write_img ( filename, image )
+
+
+  Functions:
+
+	Write an image file or files:
+
+	    --	If the image is color-mapped, write a single file.
+		If the given filename does not contain a '.', name
+		the output file "filename.p.Z".
+
+	    --  If the image is 32-bit RGB, write four files:
+
+		filename.a	Attributes
+		filename.r.Z	Red   component of pixel values
+		filename.g.Z	Green component of pixel values
+		filename.b.Z	Blue  component of pixel values
+
+	Any file whose name ends with ".Z" is written in compressed
+	format by piping its data through compress.
+
+
+  Input:
+
+	filename	char *
+			Name of file to write.  Name can include
+			references to home directories (~, ~username),
+			environment variables ($whatnot) in addition
+			to ordinary path info verbiage.
+
+	image		Img *
+			Pointer to image to write
+
+
+  Output:
+
+	status		int
+			Status:  1 => completed successfully,
+				 0 => couldn't write file
+
+			Inability to write the file may be due to
+			exhaustion of disk space.  It's been known
+			to happen to folks with big bunches of images...
+
+
+	From module xrand:
+
+
+/* Random number generators:
+ *
+ *  rnd_init (unsigned seed) 
+ *			: initializes the generator
+ *
+ *  rnd_i ()		: returns positive integers [0,0x7fffffff]
+ *  rnd_u ()		: returns unsigned's        [0,0xffffffff]
+ *  rnd_ri (long n)	: returns positive integers [0,n-1]
+ *  rnd_01d ()		: returns doubles	    [0.0,1.0)
+ *			  Note: ")" is no typo - rnd_01d will not return a 1.0,
+ *                              but can return the next smaller FP number.
+ *  rnd_ned (double lam): returns neg. exponential distributed doubles [0.0,+inf)
+ *
+ *  Algorithm M as describes in Knuth's "Art of Computer Programming", Vol 2. 1969
+ *  is used with a linear congruential generator (to get a good uniform
+ *  distribution) that is permuted with a Fibonacci additive congruential
+ *  generator to get good independence.
+ *
+ *  Bit, byte, and word distributions were extensively tested and pass
+ *  Chi-squared test near perfect scores (>7E8 numbers tested, Uniformity
+ *  assumption holds with probability > 0.999)
+ *
+ *  Run-up tests for on 7E8 numbers confirm independence with
+ *  probability > 0.97.
+ ...

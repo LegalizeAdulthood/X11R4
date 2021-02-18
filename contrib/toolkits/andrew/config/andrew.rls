@@ -1,0 +1,857 @@
+/* ***************************************************************** *\
+ * andrew.rls - macro (rules) for Imakefiles
+ *
+ * Last modified: 1 August 1989 - Adam Stoller
+\* ***************************************************************** */
+
+/* ***************************************************************** *\
+ * Standard Compilation Rules
+\* ***************************************************************** */
+
+#define NormalObjectRule()					    @@\
+.c.o:								    @@\
+	$(RM) $@						    @@\
+	$(CC) -c -I. $(LOCALINCLUDES) $(CFLAGS) $*.c
+
+
+#define NormalATKRule()						    @@\
+all:: $(IHFILES) ${DOBJS}					    @@\
+								    @@\
+.ch.ih:								    @@\
+	$(CLASS) -s -I. $(LOCALINCLUDES) $(CLASSFLAGS) $*.ch	    @@\
+								    @@\
+.ch.eh: 							    @@\
+	$(CLASS) -s -I. $(LOCALINCLUDES) $(CLASSFLAGS) $*.ch	    @@\
+								    @@\
+.o.do:								    @@\
+	$(MAKEDO) $(MAKEDOFLAGS) -o $*.do $*.o			    @@\
+								    @@\
+.c.do:								    @@\
+	$(RM) $*.do						    @@\
+	$(CC) -c -I. $(LOCALINCLUDES) $(CFLAGS) $*.c		    @@\
+	$(MAKEDO) $(MAKEDOFLAGS) -o $*.do $*.o			    @@\
+								    @@\
+test:: all								    @@\
+	$(BASEDIR)/bin/doindex *.do
+
+
+#define NormalHelpRule()					    @@\
+install.alias:: doc do.alias					    @@\
+	@sh -c 'if [ -f ,help.alias ]; then  \			    @@\
+		$(ADDALIASES) ,help.alias \			    @@\
+		$(COMMON)/$(DESTDIR)/help/help.aliases;\	    @@\
+		fi; \						    @@\
+	exit 0'							    @@\
+								    @@\
+do.alias::							    @@\
+	@$(RM) ,help.alias
+
+
+
+#define	NormalYaccRule()					    @@\
+.y.o:								    @@\
+	$(YACC) $*.y						    @@\
+	-$(RM) $*.c						    @@\
+	$(MV) y.tab.c $*.c					    @@\
+	$(CC) -c -I. $(LOCALINCLUDES) $(CFLAGS) $*.c		    @@\
+	$(RM) $*.c
+
+#define	NormalAsmPPRule()					    @@\
+.spp.o:								    @@\
+	-$(RM) $@ ,$*.s ,$*.c					    @@\
+	$(CP) $*.spp ,$*.c					    @@\
+	$(CC) -E -I. $(LOCALINCLUDES) $(CFLAGS) ,$*.c > ,$*.s	    @@\
+	$(AS) -o $*.o ,$*.s					    @@\
+	$(RM) ,$*.c ,$*.s
+
+#define	NormalLexRule()						    @@\
+.l.o:								    @@\
+	$(LEX) $*.l						    @@\
+	-$(RM) $*.c						    @@\
+	$(MV) lex.yy.c $*.c					    @@\
+	$(CC) -c -I. $(LOCALINCLUDES) $(CFLAGS) $*.c		    @@\
+	$(RM) $*.c
+
+#define	NormalScribeRule()					    @@\
+.mss.PS:							    @@\
+	$(SCRIBE) $*.mss
+
+
+/* ***************************************************************** *\
+ * Either not quite standard but related rules or
+ * standard rules which did not seem to be used
+\* ***************************************************************** */
+
+#define	NormalAsmRule()						    @@\
+.s.o:								    @@\
+	-$(RM) $@						    @@\
+	$(AS) -o $*.o $*.s
+
+#define YaccWithHeader(file)					    @@\
+file.c file.h: file.y						    @@\
+	$(YACC) -d file.y					    @@\
+	-$(RM) file.c file.h					    @@\
+	$(MV) y.tab.c file.c					    @@\
+	$(MV) y.tab.h file.h					    @@\
+								    @@\
+file.o: file.c							    @@\
+	-$(RM) file.o					    @@\
+	$(CC) -c -I. $(LOCALINCLUDES) $(CFLAGS) file.c		    @@\
+								    @@\
+depend::	file.h file.c						    @@\
+								    @@\
+tidy::								    @@\
+	$(RM) file.c						    @@\
+clean::								    @@\
+	$(RM) file.h
+
+#define	YaccWithReplacement(file, string)			    @@\
+file.c file.h: file.y						    @@\
+	$(YACC) -d file.y					    @@\
+	-$(RM) file.c file.h y.tab._c				    @@\
+	$(SED) -e '/yy/s//string/g' y.tab.c > y.tab._c		    @@\
+	-$(RM) y.tab.c						    @@\
+	$(MV) y.tab._c file.c					    @@\
+	$(MV) y.tab.h file.h					    @@\
+								    @@\
+file.o: file.c							    @@\
+	-$(RM) file.o					    @@\
+	$(CC) -c -I. $(LOCALINCLUDES) $(CFLAGS) file.c		    @@\
+								    @@\
+depend::	file.h file.c						    @@\
+								    @@\
+tidy::								    @@\
+	$(RM) file.c						    @@\
+clean::								    @@\
+	$(RM) file.h
+
+#define	LexWithReplacement(file, string)			    @@\
+file.o: file.l							    @@\
+	$(LEX) $*.l						    @@\
+	-$(RM) $*.c						    @@\
+	$(SED) -e '/yy/s//string/g' lex.yy.c > lex.yy._c	    @@\
+	-$(RM) lex.yy.c						    @@\
+	$(MV) lex.yy._c file.c					    @@\
+	$(CC) -c -I. $(LOCALINCLUDES) $(CFLAGS) file.c		    @@\
+								    @@\
+tidy::								    @@\
+	$(RM) file.c
+
+#define NCYaccWithHeader(yfile)					    @@\
+y.tab.c y.tab.h: yfile						    @@\
+	$(RM) y.tab.c y.tab.h					    @@\
+	$(YACC) -d yfile					    @@\
+								    @@\
+depend::	y.tab.h
+
+#define NCLex(lfile)						    @@\
+lex.yy.c: lfile							    @@\
+	$(RM) lex.yy.c						    @@\
+	$(LEX) lfile
+
+#define CppAndFilter(file, lyfile, incfiles, filter)		    @@\
+file: lyfile incfiles						    @@\
+	$(RM) file						    @@\
+	$(CPP) lyfile | filter > file
+
+#define AppendFiles(target, sources)				    @@\
+target: sources							    @@\
+	$(RM) target						    @@\
+	cat sources > target
+
+#define TestingOnlyTestingRule(libs)					    @@\
+.SUFFIXES: .test						    @@\
+.c.test:							    @@\
+	$(RM) $@						    @@\
+	$(CC) -DTESTINGONLYTESTING $(CFLAGS) -o $*.test $*.c libs	    @@\
+	$(RM) $*.o					    @@\
+tidy::							    @@\
+	${RM} *.test
+
+/* ***************************************************************** *\
+ * Basic rules for compilation (and cleanup)
+\* ***************************************************************** */
+
+#if (defined(AIX) || defined(hpux))
+
+#define	LibraryTarget(library, objs)				    @@\
+all:: library							    @@\
+								    @@\
+library: objs							    @@\
+	$(RM) $@						    @@\
+	$(AR) $@ objs
+
+#else /* (defined(AIX) || defined(hpux)) */
+
+#define	LibraryTarget(library, objs)				    @@\
+all:: library							    @@\
+								    @@\
+library: objs							    @@\
+	$(RM) $@						    @@\
+	$(AR) $@ objs						    @@\
+	$(RANLIB) $@
+
+#endif /* (defined(AIX) || defined(hpux)) */
+
+#define	TestProgramTarget(program, objs, libs, syslibs)		    @@\
+test:: program							    @@\
+								    @@\
+program: objs libs						    @@\
+	$(RM) $@						    @@\
+	$(CC) $(CFLAGS) -o $@ objs libs syslibs			    @@\
+								    @@\
+clean::								    @@\
+	$(RM) program
+
+#define	ProgramTarget(program, objs, libs, syslibs)		    @@\
+all:: program							    @@\
+								    @@\
+program: objs libs						    @@\
+	$(RM) $@						    @@\
+	$(CC) $(CFLAGS) -o $@ objs libs syslibs			    @@\
+								    @@\
+clean::								    @@\
+	$(RM) program
+
+#define	CleanTarget(files)					    @@\
+clean::								    @@\
+	$(RM) files
+
+#define MkdirTarget(dirs)					    @@\
+install.time:: makedirs						    @@\
+	@echo -n ''						    @@\
+install.doc:: makedirs						    @@\
+	@echo -n ''						    @@\
+makedirs::							    @@\
+	@echo "Checking Destination Directories...."		    @@\
+	@sh -c 'for i in dirs;  do  \				    @@\
+		if [ -f $$i ]; then  \				    @@\
+			echo MkdirTarget: $$i is a FILE; \	    @@\
+			exit 1; \				    @@\
+		elif [ ! -d $$i ]; then  \			    @@\
+			echo Making directory $$i; \		    @@\
+			mkdir $$i; \				    @@\
+		fi; \						    @@\
+	done; \							    @@\
+	exit 0'
+
+#define	TagsTarget()						    @@\
+tags::								    @@\
+	$(TAGS) -w *.[ch]					    @@\
+	$(TAGS) -xw *.[ch] > TAGS
+
+#ifdef AFS_ENV
+#define	DependTarget(dependencies)				    @@\
+depend:: dependencies						    @@\
+	$(DEPENDSCRIPT) $(XMAKEDEPEND) $(BASEDIR) $(XINCDIR) \	    @@\
+	"$(CC)" $(CLASS) "-I. $(LOCALINCLUDES) $(INCLUDES)" \	    @@\
+	$(AFSBASEDIR)
+#else /* AFS_ENV */
+#define	DependTarget(dependencies)				    @@\
+depend:: dependencies						    @@\
+	$(DEPENDSCRIPT) $(XMAKEDEPEND) $(BASEDIR) $(XINCDIR) \	    @@\
+	"$(CC)" $(CLASS) "-I. $(LOCALINCLUDES) $(INCLUDES)"
+#endif /* AFS_ENV */
+
+/* ***************************************************************** *\
+ * ATK compilation rules
+\* ***************************************************************** */
+
+#define DynamicObject(dobj, libs, syslibs)			    @@\
+all:: dobj.do							    @@\
+								    @@\
+dobj.do: dobj.o libs 						    @@\
+	$(MAKEDO) $(MAKEDOFLAGS) -o dobj.do \			    @@\
+	dobj.o libs syslibs
+
+#define	DynamicMultiObject(dobj, objs, libs, syslibs)		    @@\
+all:: dobj							    @@\
+								    @@\
+dobj: objs libs							    @@\
+	$(MAKEDO) $(MAKEDOFLAGS) -o dobj objs libs syslibs
+
+#ifndef LINKINSTALL_ENV
+/* ***************************************************************** *\
+ * Font rules
+ *
+ * This is a bit confusing but there is only one DeclareFont() rule so 
+ * we pick all the different types of suffixes needed for the different
+ * environments.  I know it isn't as neat as it might be able to be but
+ * hey, it's documented;-)   pgc
+\* ***************************************************************** */
+
+
+#ifdef X11_ENV
+#ifdef AIX
+#ifdef i386
+/* for X11 PS/2 AIX sites. */
+
+#define DeclareFont(fontname)					    @@\
+all:: fontname.snf						    @@\
+install.time:: fontname.snf					    @@\
+	$(INSTALL) $(INSTINCFLAGS) fontname.snf $(DESTDIR)/X11fonts
+
+#define NSDeclareFont(fontname)					    @@\
+DeclareFont(fontname)
+
+#else /* i386 */
+/* for X11 RT/PC AIX sites. */
+
+#define DeclareFont(fontname)					    @@\
+all:: fontname.rtx						    @@\
+install.time:: fontname.rtx					    @@\
+	$(INSTALL) $(INSTINCFLAGS) fontname.rtx $(DESTDIR)/X11fonts
+
+#define NSDeclareFont(fontname)					    @@\
+DeclareFont(fontname)
+
+#endif /* i386 */
+#else /* AIX */
+#ifdef WM_ENV
+/* for X11 sites that also support WM */
+
+#define DeclareFont(fontname)					    @@\
+all:: fontname.snf fontname.fwm					    @@\
+install.time:: fontname.snf					    @@\
+	$(INSTALL) $(INSTINCFLAGS) fontname.snf $(DESTDIR)/X11fonts @@\
+install.time:: fontname.fwm					    @@\
+	$(INSTALL) $(INSTINCFLAGS) fontname.fwm $(DESTDIR)/fonts
+
+#define NSDeclareFont(fontname)					    @@\
+all:: fontname.snf fontname.fwm				    	    @@\
+fontname.fwm: fontname.fdb					    @@\
+	$(FDBWM) -g -F fontname.fdb				    @@\
+install.time:: fontname.snf					    @@\
+	$(INSTALL) $(INSTINCFLAGS) fontname.snf $(DESTDIR)/X11fonts @@\
+install.time:: fontname.fwm					    @@\
+	$(INSTALL) $(INSTINCFLAGS) fontname.fwm $(DESTDIR)/fonts
+
+#else /* WM_ENV */
+/* for X11 only sites */
+
+#define DeclareFont(fontname)					    @@\
+all:: fontname.snf						    @@\
+install.time:: fontname.snf					    @@\
+	$(INSTALL) $(INSTINCFLAGS) fontname.snf $(DESTDIR)/X11fonts
+
+#define NSDeclareFont(fontname)					    @@\
+DeclareFont(fontname)
+
+#endif /* WM_ENV */
+#endif /* AIX */
+#else /* X11_ENV */
+#ifdef WM_ENV
+/* for WM only sites */
+
+#define DeclareFont(fontname)					    @@\
+all:: fontname.fwm						    @@\
+install.time:: fontname.fwm					    @@\
+	$(INSTALL) $(INSTINCFLAGS) fontname.fwm $(DESTDIR)/fonts
+
+#define NSDeclareFont(fontname)					    @@\
+all:: fontname.fwm						    @@\
+fontname.fwm: fontname.fdb					    @@\
+	$(FDBWM) -g -F fontname.fdb				    @@\
+install.time:: fontname.fwm					    @@\
+	$(INSTALL) $(INSTINCFLAGS) fontname.fwm $(DESTDIR)/fonts
+
+#endif /* WM_ENV */
+#endif /*X11_ENV */
+
+#else LINKINSTALL_ENV
+/* ***************************************************************** *\
+ * Font rules
+ *
+ * This is a bit confusing but there is only one DeclareFont() rule so 
+ * we pick all the different types of suffixes needed for the different
+ * environments.  I know it isn't as neat as it might be able to be but
+ * hey, it's documented;-)   pgc
+\* ***************************************************************** */
+
+
+#ifdef X11_ENV
+#ifdef AIX
+#ifdef i386
+/* for X11 PS/2 AIX sites. */
+
+#define DeclareFont(fontname)					    @@\
+all:: fontname.snf						    @@\
+install.time:: fontname.snf					    @@\
+	$(RM) $(DESTDIR)/X11fonts/fontname.snf			    @@\
+	$(LN) `pwd`/fontname.snf $(DESTDIR)/X11fonts/fontname.snf
+
+
+#define NSDeclareFont(fontname)					    @@\
+DeclareFont(fontname)
+
+#else /* i386 */
+/* for X11 RT/PC AIX sites. */
+
+#define DeclareFont(fontname)					    @@\
+all:: fontname.rtx						    @@\
+install.time:: fontname.rtx					    @@\
+	$(RM) $(DESTDIR)/X11fonts/fontname.rtx			    @@\
+	$(LN) `pwd`/fontname.rtx $(DESTDIR)/X11fonts/fontname.rtx
+
+#define NSDeclareFont(fontname)					    @@\
+DeclareFont(fontname)
+
+#endif /* i386 */
+#else /* AIX */
+#ifdef WM_ENV
+/* for X11 sites that also support WM */
+
+#define DeclareFont(fontname)					    @@\
+all:: fontname.snf fontname.fwm					    @@\
+install.time:: fontname.snf					    @@\
+	$(RM) $(DESTDIR)/X11fonts/fontname.snf			    @@\
+	$(LN) `pwd`/fontname.snf $(DESTDIR)/X11fonts/fontname.snf   @@\
+install.time:: fontname.fwm					    @@\
+	$(RM) $(DESTDIR)/fonts/fontname.fwm			    @@\
+	$(LN) `pwd`/fontname.fwm $(DESTDIR)/fonts/fontname.fwm
+
+#define NSDeclareFont(fontname)					    @@\
+all:: fontname.snf fontname.fwm				    	    @@\
+fontname.fwm: fontname.fdb					    @@\
+	$(FDBWM) -g -F fontname.fdb				    @@\
+install.time:: fontname.snf					    @@\
+	$(RM) $(DESTDIR)/X11fonts/fontname.snf			    @@\
+	$(LN) `pwd`/fontname.snf $(DESTDIR)/X11fonts/fontname.snf   @@\
+install.time:: fontname.fwm					    @@\
+	$(RM) $(DESTDIR)/fonts/fontname.fwm			    @@\
+	$(LN) `pwd`/fontname.fwm $(DESTDIR)/fonts/fontname.fwm
+
+#else /* WM_ENV */
+/* for X11 only sites */
+
+#define DeclareFont(fontname)					    @@\
+all:: fontname.snf						    @@\
+install.time:: fontname.snf					    @@\
+	$(RM) $(DESTDIR)/X11fonts/fontname.snf			    @@\
+	$(LN) `pwd`/fontname.snf $(DESTDIR)/X11fonts/fontname.snf
+
+#define NSDeclareFont(fontname)					    @@\
+DeclareFont(fontname)
+
+#endif /* WM_ENV */
+#endif /* AIX */
+#else /* X11_ENV */
+#ifdef WM_ENV
+/* for WM only sites */
+
+#define DeclareFont(fontname)					    @@\
+all:: fontname.fwm						    @@\
+install.time:: fontname.fwm					    @@\
+	$(RM) $(DESTDIR)/fonts/fontname.fwm			    @@\
+	$(LN) `pwd`/fontname.fwm $(DESTDIR)/fonts/fontname.fwm
+
+#define NSDeclareFont(fontname)					    @@\
+all:: fontname.fwm						    @@\
+fontname.fwm: fontname.fdb					    @@\
+	$(FDBWM) -g -F fontname.fdb				    @@\
+install.time:: fontname.fwm					    @@\
+	$(RM) $(DESTDIR)/fonts/fontname.fwm			    @@\
+	$(LN) `pwd`/fontname.fwm $(DESTDIR)/fonts/fontname.fwm
+
+#endif /* WM_ENV */
+#endif /*X11_ENV */
+
+
+#endif LINKINSTALL_ENV
+
+
+#ifdef X11_ENV
+#ifdef AIX
+#ifdef i386
+/* for X11 PS/2 AIX sites. */
+
+#define FontRule()						    @@\
+.fdb.snf:							    @@\
+	$(SED) -e 's/^$$spacing \(.*\),.*$$/$$spacing \1,0/' $*.fdb > /tmp/$*.tfdb      @@\
+	$(FDBBDF) /tmp/$*.tfdb >/tmp/$*.bdf			    @@\
+	$(XFC) /tmp/$*.bdf >$*.snf				    @@\
+	$(RM) /tmp/$*.bdf /tmp/$*.tfdb
+
+#else /* i386 */
+/* for X11 RT/PC AIX sites. */
+
+#define FontRule()						    @@\
+.fdb.rtx:							    @@\
+	$(SED) -e 's/^$$spacing \(.*\),.*$$/$$spacing \1,0/' $*.fdb > /tmp/$*.tfdb      @@\
+	$(FDBBDF) /tmp/$*.tfdb >/tmp/$*.bdf			    @@\
+	$(XFC) /tmp/$*.bdf /tmp/$*.rtx				    @@\
+	$(MV) /tmp/$*.rtx $*.rtx				    @@\
+	$(RM) /tmp/$*.bdf /tmp/$*.tfdb
+
+#endif /* i386 */
+#else /* AIX */
+#ifdef WM_ENV
+/* for X11 sites that also support WM */
+
+#define FontRule()						    @@\
+.fdb.snf:							    @@\
+	$(SED) -e 's/^$$spacing \(.*\),.*$$/$$spacing \1,0/' $*.fdb > /tmp/$*.tfdb      @@\
+	$(FDBBDF) /tmp/$*.tfdb >/tmp/$*.bdf			    @@\
+	$(XFC) /tmp/$*.bdf >$*.snf				    @@\
+	$(RM) /tmp/$*.bdf /tmp/$*.tfdb				    @@\
+								    @@\
+.fdb.fwm: ; $(FDBWM) -O -F $*.fdb
+
+#else /* WM_ENV */
+/* for X11 only sites */
+
+#define FontRule()						    @@\
+.fdb.snf:							    @@\
+	$(SED) -e 's/^$$spacing \(.*\),.*$$/$$spacing \1,0/' $*.fdb > /tmp/$*.tfdb      @@\
+	$(FDBBDF) /tmp/$*.tfdb >/tmp/$*.bdf			    @@\
+	$(XFC) /tmp/$*.bdf >$*.snf				    @@\
+	$(RM) /tmp/$*.bdf /tmp/$*.tfdb
+
+#endif /* WM_ENV */
+#endif /* AIX */
+#else /* X11_ENV */
+#ifdef WM_ENV
+/* for WM only sites */
+
+#define FontRule()						    @@\
+.fdb.fwm: ; $(FDBWM) -O -F $*.fdb
+
+#endif /* WM_ENV */
+#endif /*X11_ENV */
+
+
+
+/* ***************************************************************** *\
+ * Installation rules
+\* ***************************************************************** */
+
+#ifndef LINKINSTALL_ENV
+/* ****************************** *\
+ * NOT LinkInstall
+\* ****************************** */
+
+#define	InstallFile(file, flags, dest)				    @@\
+install.time:: file						    @@\
+	$(INSTALL) flags file dest
+
+#define	InstallFileToFile(file, flags, destfile)		    @@\
+install.time:: file						    @@\
+	$(INSTALL) flags file destfile
+
+#define InstallClassFiles(dolist, ihlist)			    @@\
+install.time:: dolist						    @@\
+	@(case '$(MFLAGS)' in *[i]*) set +e;; esac; \		    @@\
+	for i in $?; do \					    @@\
+	    (set -x; $(INSTALL) $(INSTDOFLAGS) $$i \		    @@\
+	    $(DESTDIR)/dlib/atk) done)			    @@\
+	$(BASEDIR)/bin/doindex -d$(DESTDIR)/dlib/atk dolist	    @@\
+								    @@\
+install.time:: ihlist						    @@\
+	@(case '$(MFLAGS)' in *[i]*) set +e;; esac; \		    @@\
+	for i in $?; do \					    @@\
+	    (set -x; \						    @@\
+	    $(INSTALL) $(INSTINCFLAGS) `basename $$i .ih`.ch  $(DESTDIR)/include/atk; \    @@\
+	    $(INSTALL) $(INSTINCFLAGS) $$i  $(DESTDIR)/include/atk) done)
+
+#define InstallExampleClassFiles(dolist, ihlist, dest)		    @@\
+install.time:: dolist						    @@\
+	@(case '$(MFLAGS)' in *[i]*) set +e;; esac; \		    @@\
+	for i in $?; do \					    @@\
+	    (set -x; $(INSTALL) $(INSTDOFLAGS) $$i dest) done)	    @@\
+	$(BASEDIR)/bin/doindex -d dest dolist			    @@\
+								    @@\
+install.time:: ihlist						    @@\
+	@(case '$(MFLAGS)' in *[i]*) set +e;; esac; \		    @@\
+	for i in $?; do \					    @@\
+	    (set -x; \						    @@\
+	    $(INSTALL) $(INSTINCFLAGS) `basename $$i .ih`.c  dest;\	    @@\
+	    $(INSTALL) $(INSTINCFLAGS) `basename $$i .ih`.ch dest;\    @@\
+	    $(INSTALL) $(INSTINCFLAGS) $$i  dest;\  		    @@\
+	    $(INSTALL) $(INSTINCFLAGS) `basename $$i .ih`.eh  dest;\	    @@\
+	    $(INSTALL) $(INSTINCFLAGS) Imakefile  dest)  done)
+
+#define InstallDocs(files, dest)				    @@\
+install.doc:: files						    @@\
+	@(case '$(MFLAGS)' in *[i]*) set +e;; esac; \		    @@\
+	for i in $?; do \					    @@\
+	    (set -x; $(INSTALL) $(INSTINCFLAGS) $$i dest) done)
+
+#define	InstallMultiple(list, flags, dest)			    @@\
+install.time:: list						    @@\
+	@(case '$(MFLAGS)' in *[i]*) set +e;; esac; \		    @@\
+	for i in $?; do \					    @@\
+		(set -x; $(INSTALL) flags $$i dest) done)
+
+#define	InstallByPattern(pattern, flags, dest)			    @@\
+install.time::							    @@\
+	@case '$(MFLAGS)' in *[i]*) set +e;; esac; \		    @@\
+	for i in pattern; do \					    @@\
+		(set -x; $(INSTALL) flags $$i dest) \		    @@\
+	done
+
+#define	InstallProgram(file, dest)				    @@\
+install.time:: file						    @@\
+	$(INSTALL) $(INSTPROGFLAGS) file dest
+
+#define	InstallProgramRW(file, dest)				    @@\
+install.time:: file						    @@\
+	$(INSTALL) $(INSTPROGRWFLAGS) file dest
+
+#if (defined(AIX) || defined(hpux))
+
+#define	InstallLibrary(file, dest)				    @@\
+install.time:: file						    @@\
+	$(INSTALL) $(INSTLIBFLAGS) file dest
+
+#else /* (defined(AIX) || defined(hpux)) */
+
+#define	InstallLibrary(file, dest)				    @@\
+install.time:: file						    @@\
+	$(INSTALL) $(INSTLIBFLAGS) file dest			    @@\
+	$(RANLIB) dest/file
+
+#endif /* (defined(AIX) || defined(hpux)) */
+
+#define	InstallHardLink(file, link)				    @@\
+install.time::							    @@\
+	$(RM) link						    @@\
+	ln file link
+
+#else /* LINKINSTALL_ENV
+/* ****************************** *\
+ * WITH LinkInstall
+\* ****************************** */
+
+#define LinkInstallMultiFiles(pattern, dest)  \
+	$(BASEDIR)/bin/linkinst "$(RM)" "$(LN)" "pattern" "dest"
+
+#define LinkInstallFile(file, destfile)				    @@\
+install.time:: file						    @@\
+	$(RM) destfile						    @@\
+	$(LN) `pwd`/file destfile
+
+#define	InstallLibrary(file, dest)				    @@\
+LinkInstallFile(file, dest/file)
+
+#define	InstallFile(file, flags, dest)				    @@\
+LinkInstallFile(file, dest/file)
+
+#define	InstallFileToFile(file, flags, destfile)		    @@\
+LinkInstallFile(file, destfile)
+
+#define	InstallProgram(file, dest)				    @@\
+LinkInstallFile(file, dest/file)
+
+#define	InstallProgramRW(file, dest)				    @@\
+LinkInstallFile(file, dest/file)
+
+#define	InstallMultiple(list, flags, dest)			    @@\
+install.time:: list						    @@\
+	LinkInstallMultiFiles(list, dest)
+
+#define	InstallByPattern(pattern, flags, dest)			    @@\
+install.time::							    @@\
+	LinkInstallMultiFiles(pattern, dest)
+
+
+#define InstallClassFiles(dolist, ihlist)			    @@\
+install.time:: dolist						    @@\
+	@(case '$(MFLAGS)' in *[i]*) set +e;; esac; \		    @@\
+	PWD=`pwd`; for i in $?; do \				    @@\
+	    (set -x; $(RM) $(DESTDIR)/dlib/atk/$$i;\		    @@\
+	    $(LN) $$PWD/$$i $(DESTDIR)/dlib/atk) done)	    @@\
+	$(BASEDIR)/bin/doindex -d$(DESTDIR)/dlib/atk dolist	    @@\
+							    @@\
+install.time:: ihlist						    @@\
+	@case '$(MFLAGS)' in *[i]*) set +e;; esac; \		    @@\
+	PWD=`pwd`; echo +; for i in $?; do \	    @@\
+	    (set -x; $(RM) $(DESTDIR)/include/atk/$$i;\	    @@\
+	    $(LN) $$PWD/$$i $(DESTDIR)/include/atk;\	    @@\
+	    $(RM) $(DESTDIR)/include/atk/`basename $$i .ih`.ch;\   @@\
+	    $(LN) $$PWD/`basename $$i .ih`.ch $(DESTDIR)/include/atk) done
+
+#define InstallExampleClassFiles(dolist, ihlist, dest)		    @@\
+install.time:: dolist						    @@\
+	@(case '$(MFLAGS)' in *[i]*) set +e;; esac; \		    @@\
+	PWD=`pwd`; for i in $?; do \				    @@\
+		(set -x; $(RM) dest/$$i;\			    @@\
+		$(LN) $$PWD/$$i dest) done)		    @@\
+	$(BASEDIR)/bin/doindex -d dest dolist		    @@\
+							    @@\
+install.time:: ihlist						    @@\
+	@case '$(MFLAGS)' in *[i]*) set +e;; esac; \		    @@\
+	PWD=`pwd`; echo +; for i in $?; do \	    @@\
+		(set -x; $(RM) dest$$i;\			    @@\
+		$(LN) $$PWD/$$i dest;\			    @@\
+		$(RM) dest/`basename $$i .ih`.ch;\		    @@\
+		$(LN) $$PWD/`basename $$i .ih`.ch dest;\	    @@\
+		$(RM) dest/`basename $$i .ih`.eh;\		    @@\
+		$(LN) $$PWD/`basename $$i .ih`.eh dest;\	    @@\
+		$(RM) dest/`basename $$i .ih`.c;\		    @@\
+		$(LN) $$PWD/`basename $$i .ih`.c dest;\	    @@\
+		$(RM) dest/Imakefile;\			    @@\
+		$(LN) $$PWD/Imakefile dest) done
+
+#define InstallDocs(files, dest)				    @@\
+install.doc:: files						    @@\
+	LinkInstallMultiFiles(files, dest)
+
+#define	InstallHardLink(file, link)				    @@\
+install.time::							    @@\
+	$(RM) link						    @@\
+	${LN} file link
+
+#endif /* LINKINSTALL_ENV
+
+/* ****************************** *\
+ * not dependant upon LinkInstall
+\* ****************************** */
+
+#define InstallHelpAlias(file, aliases)				    @@\
+do.alias::							    @@\
+	@(case '$(MFLAGS)' in *[i]*) set +e;; esac; \		    @@\
+	PWD=`pwd`; for i in aliases; do \			    @@\
+	(set -x; echo "$$i	file	!$$PWD" >> ,help.alias) done)
+
+#define	InstallLink(file, link)					    @@\
+install.time::							    @@\
+	$(RM) link						    @@\
+	$(LN) file link
+
+#define	InstallMultipleByExtension(extension, flags, dest) \
+	InstallByPattern(*.extension, flags, dest)
+
+/* ***************************************************************** *\
+ * Internal (to template) rules
+\* ***************************************************************** */
+
+#define	GenericCleanTarget()					    @@\
+tidy::								    @@\
+	$(RM) \#* ,* *~ *.CKP *.BAK *.bas errs core		    @@\
+	$(RM) *.ln *.o *.dog tags TAGS make.log			    @@\
+clean::								    @@\
+	$(RM) *.do *.eh *.ih *.a *.fwm *.snf *.rtx		    @@\
+	$(RM) install.time install.doc
+
+#define	MakefileTarget()					    @@\
+Makefile:: Imakefile \						    @@\
+	$(IRULESRC)/andyenv.h \					    @@\
+	$(IRULESRC)/imake.tmpl \				    @@\
+	$(IRULESRC)/andrew.rls \				    @@\
+	$(IRULESRC)/allsys.h \					    @@\
+	$(IRULESRC)/allsys.mcr \				    @@\
+	$(IRULESRC)/site.h \					    @@\
+	$(IRULESRC)/site.mcr \					    @@\
+	$(IRULESRC)/$(MACROFILE) \				    @@\
+	$(IRULESRC)/$(SYSTEM_H_FILE)				    @@\
+		$(IMAKE_CMD) -DTOPDIR=$(TOP); \		    @@\
+		touch .depends; \				    @@\
+		cat .depends >>Makefile
+
+#define MakeSubdirs(dirs)					    @@\
+All::								    @@\
+	@(case '$(MFLAGS)' in *[ik]*) set +e;; esac; \		    @@\
+	for i in dirs; do \							    @@\
+		(cd $$i; echo "making (`pwd`)";  $(MAKE) $(MFLAGS)) done)
+
+#define DependMakeSubdirs(dirs)					    @@\
+dependAll::							    @@\
+	@)case '$(MFLAGS)' in *[ik]*) set +e;; esac; \		    @@\
+	for i in dirs; do \						    @@\
+		(cd $$i; echo "depend/making (`pwd`)"; \		    @@\
+			$(MAKE) $(MFLAGS) dependAll) done)
+
+#define InstallSubdirs(dirs)					    @@\
+Install::							    @@\
+	@(case '$(MFLAGS)' in *[ik]*) set +e;; esac; \		    @@\
+	for i in dirs; do \					    @@\
+		(cd $$i; echo "installing (`pwd`)"; \		    @@\
+			$(MAKE) $(MFLAGS) \			    @@\
+				DESTDIR='$(DESTDIR)' Install) done)
+
+#define InstallDocSubdirs(dirs)					    @@\
+Doc::								    @@\
+	@case '$(MFLAGS)' in *[ik]*) set +e;; esac; \		    @@\
+	for i in dirs;\					    @@\
+	do \							    @@\
+		(cd $$i; echo "installing docs (`pwd`)"; \	    @@\
+			$(MAKE) $(MFLAGS) \			    @@\
+				DESTDIR='$(DESTDIR)' Doc) \	    @@\
+	done
+
+#define InstallAliasSubdirs(dirs)				    @@\
+Aliases::							    @@\
+	@case '$(MFLAGS)' in *[ik]*) set +e;; esac; \		    @@\
+	for i in dirs;\					    @@\
+	do \							    @@\
+		(cd $$i; echo "installing aliases (`pwd`)"; \	    @@\
+			$(MAKE) $(MFLAGS) \			    @@\
+				DESTDIR='$(DESTDIR)' Aliases) \   @@\
+	done
+
+#define DependInstallSubdirs(dirs)				    @@\
+dependInstall::							    @@\
+	@case '$(MFLAGS)' in *[ik]*) set +e;; esac; \		    @@\
+	for i in dirs;\					    @@\
+	do \							    @@\
+		(cd $$i;echo "building (dependInstall) (`pwd`)"; \  @@\
+			$(MAKE) $(MFLAGS) \			    @@\
+			    DESTDIR='$(DESTDIR)' dependInstall) \  @@\
+	done
+
+#define WorldInstallSubdirs(dirs)				    @@\
+World::								    @@\
+	@case '$(MFLAGS)' in *[ik]*) set +e;; esac; \		    @@\
+	for i in dirs;\					    @@\
+	do \							    @@\
+		(cd $$i;echo "building (World)) (`pwd`)"; \	    @@\
+			$(MAKE) $(MFLAGS) \			    @@\
+			    DESTDIR='$(DESTDIR)' World) \	    @@\
+	done
+
+#define CleanSubdirs(dirs)					    @@\
+Clean::								    @@\
+	@case '$(MFLAGS)' in *[ik]*) set +e;; esac; \		    @@\
+	for i in dirs;\					    @@\
+	do \							    @@\
+		(cd $$i; echo "cleaning (`pwd`)"; \		    @@\
+			$(MAKE) $(MFLAGS)  Clean) \		    @@\
+	done
+
+#define TidySubdirs(dirs)					    @@\
+Tidy::								    @@\
+	@case '$(MFLAGS)' in *[ik]*) set +e;; esac; \		    @@\
+	for i in dirs;\					    @@\
+	do \							    @@\
+		(cd $$i; echo "tidying (`pwd`)"; \		    @@\
+			$(MAKE) $(MFLAGS)  Tidy) \		    @@\
+	done
+
+#define TagSubdirs(dirs)					    @@\
+tags::								    @@\
+	@case '$(MFLAGS)' in *[ik]*) set +e;; esac; \		    @@\
+	for i in dirs;\					    @@\
+	do \							    @@\
+		(cd $$i; echo "tagging (`pwd`)"; \		    @@\
+			$(MAKE) $(MFLAGS) TAGS='$(TAGS)' tags) \  @@\
+	done
+
+#define MakeMakeSubdirs(dirs)					    @@\
+Makefiles::							    @@\
+	@case '$(MFLAGS)' in *[ik]*) set +e;; esac; \		    @@\
+	for i in dirs;\					    @@\
+	do \							    @@\
+		echo "Making Makefiles (`pwd`/$$i)..."; \	    @@\
+		$(MAKE) subdirMakefiles NEWTOP=../ \		    @@\
+			MAKE_SUBDIR=$$i;\			    @@\
+	done
+
+#define MakefileSubdirs(dirs)					    @@\
+MakeMakeSubdirs(dirs)						    @@\
+								    @@\
+subdirMakefiles:						    @@\
+	cd $(MAKE_SUBDIR); \					    @@\
+	$(DOTDOTIMAKE_CMD) -DTOPDIR=../$(TOP); \		    @@\
+	touch .depends;  \					    @@\
+	cat .depends >>Makefile; \				    @@\
+	$(MAKE) $(MFLAGS) Makefiles 

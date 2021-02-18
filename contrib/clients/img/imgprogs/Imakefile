@@ -1,0 +1,8 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+SUBDIRS = \
+	descimg dispimg exhibit excolors giftoimg mapimg primg savewin setback
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

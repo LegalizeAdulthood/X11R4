@@ -1,0 +1,26 @@
+#include "../../Serpent.tmpl"
+DIR = compiler
+
+INC = c22.h cs2.h
+
+SRC = cay.c cal.c cs2.c cam.c csc.c csc_exp.c c22_comp.c c22_error.c c22_main.c ca2_init.c ca2_ill.c csd.c cas.c
+
+OBJ = cay.o cal.o cs2.o cam.o csc.o csc_exp.o c22_comp.o c22_error.o c22_main.o ca2_init.o ca2_ill.o csd.o cas.o
+
+PERM = slang
+
+BIN = slang_comp
+
+LIBS = $(SERPENTLIBS)
+
+SerpentYaccRule()
+SerpentLexRule()
+SerpentObjectRule()
+
+all:	cay.c cal.c $(BIN) install_bin
+
+SerpentSimpleProgramObjs(slang_comp,$(OBJ))
+
+SerpentInstallIncPermBin()
+
+SerpentDepend()

@@ -1,0 +1,30 @@
+       PROGRAMS = sm
+         SM_DIR = $(LIBDIR)/sm
+    CDEBUGFLAGS = -I/net/troll/a/src/share/X11/X.V11R4 -I/net/russ/a/grady/sun4 -g 
+        DEFINES = -DSM_DIR=\"${SM_DIR}\" -DICCCM
+  SYS_LIBRARIES = -L/usr/share/X11/lib -lXaw -lXt -lXmu /net/troll/a/src/share/X11/X.V11R4/lib/X/libX11.a
+          SRCS = Atoms.c Globals.c Home.c \
+                   ICCUtils.c PropUtils.c SM.c \
+		   State.c StateGet.c StateRestore.c StateSave.c \
+	           Top.c Utils.c WinInfo.c 
+
+          OBJS = Atoms.o Globals.o Home.o \
+                   ICCUtils.o PropUtils.o SM.o \
+		   State.o StateGet.o StateRestore.o StateSave.o \
+	           Top.o Utils.o WinInfo.o 
+
+
+ComplexProgramTarget(sm)
+NormalLintTarget($(SRCS))
+InstallAppDefaults(SM)
+InstallNonExec(DefaultState, $(SM_DIR))
+InstallNonExec(SM.xbm, $(SM_DIR))
+
+SABERFLAGS = $(CFLAGS)
+saber:		
+		%load $(SABERFLAGS) $(SRCS) $(SYS_LIBRARIES)
+
+
+
+
+

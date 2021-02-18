@@ -1,0 +1,17 @@
+#!/bin/sh
+MFTOBDF=mftobdf
+FONTDIR=/usr/local/lib/X11/fonts/cmr
+#
+cd ${FONTDIR}
+${MFTOBDF} $*
+for file in *.bdf ;
+do
+   base=`echo $file | sed -e 's/.bdf//g'`
+   echo Process $base
+   bdftosnf $base.bdf > ${FONTDIR}/$base.snf
+   rm -f $base.bdf
+done
+#
+mkfontdir
+xset +fp `pwd`
+xset fp rehash

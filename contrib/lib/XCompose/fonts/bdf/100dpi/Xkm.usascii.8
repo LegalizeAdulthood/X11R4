@@ -1,0 +1,32 @@
+! $Header: Xkm.usascii.8,v 1.1 89/09/20 11:51:22 glennw Exp $
+!
+! xmodmap 8-bit key re-binding file for USASCII.  Uses default keysym map.
+! At least one xmodmap file must exist for consoleterm to operate.
+! If any key bindings are placed here, this file must be different
+! for the different machines, as it is read with both the VT200
+! and the 4315/16/19 keyboards.
+
+! force processing of keycode map before use in compose sequences.
+execute
+
+! 3-key acute, degree, asciitilde, diaeresis, macron : apply to those kbds 
+! that have them.  Because Danish and German have
+! both apostrophe and acute (ISO Latin-1 diacritical), make both function 
+! with 3-key compose.  Only acute works with 2-key compose.
+
+!compose AnyModifier keysyms Multi_key asciitilde space = keysym asciitilde
+compose AnyModifier keysyms Multi_key asciitilde space = 216
+!compose AnyModifier keysyms Multi_key space asciitilde = keysym asciitilde
+compose AnyModifier keysyms Multi_key space asciitilde = 216
+compose AnyModifier keysyms Multi_key asciitilde a = keysym atilde
+compose AnyModifier keysyms Multi_key a asciitilde = keysym atilde
+compose AnyModifier keysyms Multi_key asciitilde A = keysym Atilde
+compose AnyModifier keysyms Multi_key A asciitilde = keysym Atilde
+compose AnyModifier keysyms Multi_key asciitilde n = keysym ntilde
+compose AnyModifier keysyms Multi_key n asciitilde = keysym ntilde
+compose AnyModifier keysyms Multi_key asciitilde N = keysym Ntilde
+compose AnyModifier keysyms Multi_key N asciitilde = keysym Ntilde
+compose AnyModifier keysyms Multi_key asciitilde o = keysym otilde
+compose AnyModifier keysyms Multi_key o asciitilde = keysym otilde
+compose AnyModifier keysyms Multi_key asciitilde O = keysym Otilde
+compose AnyModifier keysyms Multi_key O asciitilde = keysym Otilde

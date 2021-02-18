@@ -1,0 +1,191 @@
+#	Purdue University Computing Center
+#	George Kraft IV, Unix Systems Staff
+#
+#	.twmrc file to be read by twm(1L) started in file .xsession
+#
+
+BorderWidth		1
+Zoom			2
+ForceIcons
+ShowIconManager
+IconifyByUnmapping
+IconDirectory		"/share/icons"
+IconManagerGeometry	"175x80-1+80"
+DefaultFunction		f.beep
+IconFont		"9x15"
+TitleFont		"9x15"
+MenuFont		"9x15"
+
+Button1 =      : root    : f.menu "Hosts"
+Button1 =      : title	 : f.raise
+Button1 =      : frame   : f.raise
+Button1 =      : icon	 : f.iconify
+
+Button2 =      : root    : f.menu "TWM"
+Button2 =      : title   : f.move
+Button2 =      : frame   : f.move
+Button2 =      : icon	 : f.move
+
+Button3 =      : root	 : f.menu "Tools"
+Button3 =      : title	 : f.fullzoom
+Button3 =      : frame	 : f.lower
+
+IconManagerDontShow {
+	"xlogin"
+	"xbiff"
+	"xload"
+	"dclock"
+	"xclock"
+	"xpostit"
+	"dayEditor"
+	"PostItNote"
+	"TWM Icon Manager"
+}
+
+AutoRaise {
+	"TWM Icon Manager"
+	"xpostit"
+	"xcalc"
+	"xfig"
+	"dclock"
+	"xclock"
+	"xload"
+	"xterm"
+	"xcalendar"
+	"dayEditor"
+}
+
+DontIconifyByUnmapping {
+	"xbiff"
+	"dclock"
+	"xclock"
+	"xpostit"
+	"PostItNote"
+	"TWM Icon Manager"
+}
+
+NoTitle {
+	"POSTSCRIPT"
+	"xfd"
+	"xpostit"
+	"xlogo"
+	"xbiff"
+	"dclock"
+	"xclock"
+	"PostItNote"
+	"postitnote"
+	"xpostitnote"
+	"TWM Icon Manager"
+}
+
+#
+#	Use the TWM Window Manager instead.
+#
+#	UnknownIcon		"huh.xbm"
+#
+#	IconGeometry {
+#		"xterm"		"20x20+100+100"
+#		"console"	"20x20+100+300"
+#		"xbiff"		"20x20+100+400"
+#	}
+#
+#	Icons {
+#		"xterm"			"xterm.xbm"
+#		"xbiff"			"huh.xbm"
+#		"xps" 			"coke.xbm"
+#		"bitmap" 		"coke.xbm"
+#		"console" 		"console.xbm"
+#		"xfd" 			"xfd_icon"
+#	}
+
+Menu "Hosts" {
+	"Remote Logins by Dept"	f.title
+	"LocalHost" 		!"xterm -T `hostname` &"
+	"PUCC"			f.menu "PUCC"
+	"STAT"			f.menu "STAT"
+	"ECN"			f.menu "ECN"
+	"CS"			f.menu "CS"
+}
+
+
+Menu "PUCC" {
+	"Computing Center"	f.title
+	"boiler   # ETA 10P*"    !"xterm -T Boiler.cc -tn xterms -e rlogin boiler.cc &"
+	"element  # Sun 3/280"	 !"xterm -T Element.cc -e rlogin element.cc &"
+	"expert   # Sequent S81" !"xterm -T Expert.cc -e rlogin expert.cc &"
+	"h        # Vax 11/780"  !"xterm -T H.cc -e rlogin h.cc    &"
+	"j        # Vax 11/780"  !"xterm -T J.cc -e rlogin j.cc    &"
+	"m        # Vax 11/780"	 !"xterm -T M.cc -e rlogin m.cc    &"
+	"mace     # Vax 8800" 	 !"xterm -T Mace.cc -e rlogin mace.cc &"
+	"mentor   # Sequent S81" !"xterm -T Mentor.cc -e rlogin mentor.cc &"
+	"n        # Vax 11/780"	 !"xterm -T N.cc -e rlogin n.cc    &"
+	"sage     # Sequent S81" !"xterm -T Sage.cc -e rlogin sage.cc &"
+	"staff    # Sun 3/280"	 !"xterm -T Staff.cc -e rlogin staff.cc &"
+	"tyro     # Sequent S81" !"xterm -T Tyro.cc -e rlogin tyro.cc &"
+	"vm       # IBM 3090-180E" !"xterm -T PURCCVM -name vmxterm -e tn3270 vm.cc &"
+}
+
+Menu "STAT" {
+	"Statistics"	f.title
+	"l        # Vax 11/780"	 !"xterm -T L.cc -e rlogin l.cc &"
+	"pop.stat # Sun 3/280"	 !"xterm -T Pop.stat -e rlogin pop.stat &"
+}
+
+Menu "ECN" {
+	"Engineering Computing Network"	f.title
+	"ea         # Vax 11/780" !"xterm -T Ea.ecn -e rlogin ea.ecn &"
+	"orchestra  # Sun 3/280" !"xterm -T Orchestra.ecn -e rlogin orchestra.ecn &"
+}
+
+
+Menu "CS" {
+	"Computer Science"	f.title
+	"arthur  # Sequent B21" !"xterm -T Arthur.cs -e rlogin arthur.cs &"
+}
+
+menu "Tools" {
+	"Tools"			f.title
+	"dclock"		!"dclock &"
+	"index"			!"xterm -e index &"
+	"xbiff"			!"xbiff &"
+	"xcalendar"		!"xcalendar &"
+	"xfig"			!"xfig -L &"
+	"xcalc"			!"xcalc &"
+	"xclip"			!"xclipboard &"
+	"xpostit"		!"xpostit &"
+	"Print X Window"	!"xwd | xpr -device ps | lpr &"
+	"Dump  X Window"	!"(xwd | xwdtopbm | pbmtoxbm > dump$$.xbm &)"
+}
+
+
+menu "TWM" {
+	"Tom's Window Manager"	f.title
+	"Refresh"		f.refresh
+	"Source .twmrc"		f.twmrc
+	"Destroy Window"	f.destroy
+	"(De)Iconify"		f.iconify
+	"Show Icon Mgr"		f.showiconmgr
+	"Full Zoom/UnZoom"	f.fullzoom
+	"Focus on Window"	f.focus
+	"Root Window Focus"	f.unfocus
+	"Move Window"		f.move
+	"Resize Window"		f.resize
+	"Raise Window"		f.raise
+	"Lower Window"		f.lower
+	"Cut File"		f.cutfile
+	"Kill twm"		f.quit
+	"Root Window"		f.menu "RtWindow"
+}
+
+
+menu "RtWindow" {
+	"Root Window"	f.title
+	"black"		!"xsetroot -solid black &"
+	"grey"		!"xsetroot -grey &"
+	"PUCC white"	!"xsetroot -bitmap /share/icons/pucc.xbm &"
+	"PUCC black"	!"xsetroot -bitmap /share/icons/pucc.xbm -rv &"
+	"balls3"	!"xsetroot -bitmap /share/icons/balls3.xbm &"
+	"astronaut"	!"xsetroot -bitmap /share/icons/astronaut.xbm &"
+	"fullmoon"	!"xsetroot -bitmap /share/icons/fullmoon.xbm &"
+	"zippy"		!"xsetroot -bitmap /share/icons/zippy.xbm &"
+}

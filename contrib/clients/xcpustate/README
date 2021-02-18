@@ -1,0 +1,5 @@
+A snapshot performance monitor. Originally written to watch the load
+distribution on the CPU's on an Silicon Graphics Iris4d/240, it can be
+adapted to display a large variety of changing system statistics.
+
+	- moraes@cs.toronto.edu (Mark Moraes)

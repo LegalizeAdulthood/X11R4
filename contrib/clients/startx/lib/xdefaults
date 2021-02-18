@@ -1,0 +1,26 @@
+!	Purdue University Computing Center
+!	George Kraft IV, Unix Systems Staff
+!
+!	.xdefaults file to by read by xrdb(1L) invoked in .xsession
+!
+DClock*Geometry:	175x75-1+0
+DClock*bell:		false
+DClock*scroll:		false
+DClock*date:		%w %M %d, %Y
+XBiff*Geometry:		75x75-176+0
+XBiff*Volume:		100
+XBiff*Interval:		60
+XPostit.Geometry:	75x75-252+0
+XPostit*saveNotes:	true
+XLogin*Iconic:		on
+XTerm*ScrollBar:	on
+XTerm*Geometry:		80x24+250+300
+XTerm*SaveLines:	500
+XTerm*Iconic:		on
+XTerm*Font:		8x13bold
+XTerm*loginShell:	true
+XTerm*UtmpInhibit:	true
+XTerm*VisualBell:	true
+XTerm*pointerShape:	pencil
+vmxterm*font:		8x13
+vmxterm*boldFont:	8x13bold

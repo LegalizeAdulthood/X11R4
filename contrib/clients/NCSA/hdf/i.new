@@ -1,0 +1,58 @@
+
+# Imakefile for creating libdf.a, the Hierarchical Data Format (HDF) 
+# library and miscellaneous HDF utilities.
+#
+# Check with anonymous ftp "ftp.ncsa.uiuc.edu" or "128.174.20.50" for the 
+# latest versions with new features.  Questions?   Call (217) 244-0647 or 
+# write to NCSA, 605 East Springfield Ave., Champaign, IL 61820.
+# NCSA HDF Group:
+#  Mike Folk, Swami Natarajan, Chin_Chau Low, Likkai Ng, Peter Webb,
+#  Brian Calvert and Drew Hess.
+###########################################################################
+
+CC = cc
+AR = ar
+RM = /bin/rm -f
+RANLIB = ranlib
+HDFLIB = libdf.a
+GLIB  = -lpixrect
+OBJS= df.o dfr8.o dfsd.o dfgroup.o dfcomp.o dfimcomp.o  \
+	dfkit.o dfp.o dfan.o  dfgr.o df24.o
+UTILS  = hdfrseq hdfls r8tohdf hdfcomp hdftotek tektohdf hdftor8
+DEFS   = -g
+CFLAGS = ${DEFS}
+ARFLAGS = r
+
+
+NormalLibraryObjectRule()
+
+#ifdef CrayArchitecture
+MACHINE =UNICOS
+DEFS    = -D$(MACHINE)
+CFLAGS  = ${DEFS}
+GLIB    =
+$(HDFLIB): $(OBJS)
+	-${RM} $@
+		bld cr $(HDFLIB) `lorder ${OBJS} | tsort`
+#else
+$(HDFLIB): $(OBJS)
+	$(RM) $@
+	$(AR) $(ARFLAGS) $@ $(OBJS)
+	$(RANLIB) $@
+#endif
+
+#ifdef SunArchitecture 
+SingleProgramTarget( hdfrseq, hdfrseq.o, libdf.a,$(GLIB))
+#else
+SingleProgramTarget( hdfrseq, hdfrseq.o, libdf.a,)
+#endif
+
+SingleProgramTarget( hdfls, 		hdfls.o, 	$(HDFLIB), )
+SingleProgramTarget( r8tohdf, 	r8tohdf.o,	$(HDFLIB), )
+SingleProgramTarget( hdfcomp, 	hdfcomp.o, 	$(HDFLIB), )
+SingleProgramTarget( hdftotek, 	hdftotek.o, $(HDFLIB), )
+SingleProgramTarget( tektohdf,	tektohdf.o, $(HDFLIB), )
+SingleProgramTarget( hdftor8, 	hdftor8.o, 	$(HDFLIB), )
+
+all:: $(HDFLIB) $(UTILS)
+

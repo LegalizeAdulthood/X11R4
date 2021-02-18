@@ -1,0 +1,26 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989		        *
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+
+#define	IHaveSubdirs
+
+/* ============================================================ */
+
+/* Interleaf software doesn't compile on Vax */
+#ifdef VAX_ENV
+ILEAF =
+#else
+ILEAF = ileaf
+#endif
+
+SUBDIRS = atk \
+	mdc \
+	troff \
+	$(ILEAF)
+
+install.time::
+	-mkdir $(DESTDIR)/bin
+	-mkdir $(DESTDIR)/dlib
+	-mkdir $(DESTDIR)/dlib/atk
+	-mkdir $(DESTDIR)/help

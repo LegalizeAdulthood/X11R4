@@ -1,0 +1,18 @@
+#include "../../Serpent.tmpl"
+DIR = externs
+
+SRC = arith.c sstring.c
+
+OBJ = arith.o sstring.o
+
+LIB = libsext.a
+
+SerpentObjectRule()
+
+all:	$(LIB) install_lib
+
+SerpentLibrary()
+
+SerpentInstallLib()
+
+SerpentDepend()

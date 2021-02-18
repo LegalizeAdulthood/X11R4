@@ -1,0 +1,16 @@
+	SUIT(SIGMA User Inteface Tools) widgets are some controls following the
+SUIT guideline.
+	They consist of various buttons, switches, labels, popup sheets, etc.
+
+	The contents of each subdirectory is as follows:
+
+	lib
+		source code for the widgets
+		part of the header files ( with the name xxxxxxxI.h )
+		object code and library will be generated here
+
+	St
+		header files for the widgets ( xxxxxxx.h, xxxxxxxP.h )
+
+	Examples
+		Sample programs making use of the widgets

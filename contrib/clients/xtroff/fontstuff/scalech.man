@@ -1,0 +1,12 @@
+.TH SCALECH 1 "84/04/12"
+.AT 3
+.SH NAME
+scalech \- Font scaling for character format fonts.
+.SH SYNOPSIS
+.B scalech
+[ -s# ]  charfile1  > charfile2
+.SH DESCRIPTION
+Takes input from charfile1 (which must be in the format
+written by rst2ch), scales by # (default = 50%) and writes to stdout.
+If charfile1 is missing, stdin is read.  The -s flag sets the scaling
+factor to # (which is a percentage REDUCTION - can't make fonts bigger)

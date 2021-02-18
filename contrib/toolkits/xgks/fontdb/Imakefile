@@ -1,0 +1,149 @@
+#
+# $XConsortium: Imakefile,v 1.1 89/09/18 16:41:42 jim Exp $
+#
+
+XGKS_TOP = ..
+#include  "../xgks.tmpl"
+
+FONTS= r.gksfont R.gksfont b.gksfont B.gksfont i.gksfont I.gksfont \
+	sc.gksfont SC.gksfont G.gksfont
+
+OBJS = mkfont.o
+SRCS = mkfont.c 
+MKGKSFONT = ./mkfont		/* really ought to be mkgksfont */
+
+
+all:: mkfont $(FONTS)
+
+SingleProgramTarget(mkfont,$(OBJS),,-lm)
+
+
+BuildGksFont(r,1)
+BuildGksFont(R,2)
+BuildGksFont(b,3)
+BuildGksFont(B,4)
+BuildGksFont(i,5)
+BuildGksFont(I,6)
+BuildGksFont(sc,7)
+BuildGksFont(SC,8)
+BuildGksFont(G,9)
+
+clean::
+	$(RM) $(MKGKSFONT) *.gksfont
+
+
+
+
+#ifdef notdef
+
+/*
+ * old Imakefile cruft from IBM
+ */
+
+# use up to 8 cpus on the Encore Multimax	AUG
+#PARALLEL=8
+
+# add -fswitch to CFLAGS on a Sun
+#
+# CFLAGS has to be set in the following manner for an AIX make.
+# CFLAGS = -O $(INCLUDES) -DFONTDBDIR=\"$(FONTDBDIR)\"
+#          -DBSD_INCLUDES -DBSD_REMAP_SIGNAL_TO_SIGVEC -Nd4000 -Nn2500
+
+CFLAGS= -O -I$(H) -DFONTDBDIR=\"$(FONTDBDIR)\"
+SRCS= mkfont.c
+
+all : mkfont $(FONTS)
+
+install:: all idir fonts
+
+idir:
+	@-mkdir $(FONTDBDIR) 
+	@chmod 775 $(FONTDBDIR)
+
+clean::
+	-rm -f *.o core a.out *.gksfont mkfont
+	
+mkfont: mkfont.o
+	$(CC) $(CFLAGS) $@.o -o $@ -lm
+
+fonts: 1 2 3 4 5 6 7 8 9
+
+1 : r.gksfont
+	-install -c -m 644 $? $(FONTDBDIR)
+	-rm -f $(FONTDBDIR)/$@
+	-ln -s $? $(FONTDBDIR)/$@
+
+r.gksfont : r.src mkfont
+	mkfont r.src $@
+
+2 : R.gksfont
+	-install -c -m 644 $? $(FONTDBDIR)
+	-rm -f $(FONTDBDIR)/$@
+	-ln -s $? $(FONTDBDIR)/$@
+
+R.gksfont : R.src mkfont
+	mkfont R.src $@
+
+3 : b.gksfont
+	-install -c -m 644 $? $(FONTDBDIR)
+	-rm -f $(FONTDBDIR)/$@
+	-ln -s $? $(FONTDBDIR)/$@
+
+b.gksfont : b.src mkfont
+	mkfont b.src $@
+
+4 : B.gksfont
+	-install -c -m 644 $? $(FONTDBDIR)
+	-rm -f $(FONTDBDIR)/$@
+	-ln -s $? $(FONTDBDIR)/$@
+
+B.gksfont : B.src mkfont
+	mkfont B.src $@
+
+5 : i.gksfont
+	-install -c -m 644 $? $(FONTDBDIR)
+	-rm -f $(FONTDBDIR)/$@
+	-ln -s $? $(FONTDBDIR)/$@
+
+i.gksfont : i.src mkfont
+	mkfont i.src $@
+
+6 : I.gksfont
+	-install -c -m 644 $? $(FONTDBDIR)
+	-rm -f $(FONTDBDIR)/$@
+	-ln -s $? $(FONTDBDIR)/$@
+
+I.gksfont : I.src mkfont
+	mkfont I.src $@
+
+7 : sc.gksfont
+	-install -c -m 644 $? $(FONTDBDIR)
+	-rm -f $(FONTDBDIR)/$@
+	-ln -s $? $(FONTDBDIR)/$@
+
+sc.gksfont : sc.src mkfont
+	mkfont sc.src $@
+
+8 : SC.gksfont
+	-install -c -m 644 $? $(FONTDBDIR)
+	-rm -f $(FONTDBDIR)/$@
+	-ln -s $? $(FONTDBDIR)/$@
+
+SC.gksfont : SC.src mkfont
+	mkfont SC.src $@
+
+9 : G.gksfont
+	-install -c -m 644 $? $(FONTDBDIR)
+	-rm -f $(FONTDBDIR)/$@
+	-ln -s $? $(FONTDBDIR)/$@
+
+G.gksfont : G.src mkfont
+	mkfont G.src $@
+
+
+depend:
+	-$(CO) -q -l Imakefile
+	makedepend -f Imakefile -s"# DO NOT DELETE" -I../../include $(SRCS)
+	-$(CI) -u -f -q -m"make dependencies" Imakefile
+
+#endif /* notdef */

@@ -1,0 +1,396 @@
+
+
+
+     XWSTATICTEXT(3X)                                 XWSTATICTEXT(3X)
+
+
+
+
+     NAME
+          XwstatictextWidgetClass - An X Widget for displaying static
+          text.
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/SText.h>
+
+
+     CLASSES
+          A subclass of CoreClass and XwPrimitiveClass.
+
+          The widget class to use when creating a static text widget
+          is XwstatictextWidgetClass.
+
+          The class name for StaticText is StaticText.
+
+     DESCRIPTION
+          StaticText provides an uneditable block of text. Optionally
+          StaticText will provide simple heuristics to fit the text
+          into arbitrarily sized windows.  Imbedded new-line
+          characters in the string are always honored.  Stripping of
+          leading and trailing spaces is optional.
+
+          If the static text widget is directed to become larger than
+          is needed for the text, the text will be centered in the
+          window.  The text will retain the specified alignment.
+
+          If the static text widget is directed to become narrower
+          than is neccessary for the text, the text may be wrapped
+          (depending on XtNWrap) or clipped to the right and/or left
+          (depending on the XtNalignment).
+
+          If the static text widget is directed to become shorter than
+          is neccessary for the text, the text will be clipped on the
+          bottom.
+
+          When the text is wrapped, StaticText will try to break lines
+          on spaces.  The space on which the line is broken is
+          temporarily converted to a newline.
+
+     NEW RESOURCES
+          To specify any of these resources within a resource defaults
+          file, simply drop the XtN prefis from the resource name.
+          StaticText defines the following new resources:
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSTATICTEXT(3X)                                 XWSTATICTEXT(3X)
+
+
+
+
+                          StaticText Resource Set
+        Name           Class          Type            Default
+        ___________________________________________________________
+        XtNhSpace      XtCHSpace      int             2
+        XtNvSpace      XtCVSpace      int             2
+        XtNalignment   XtCAlignment   XwAlignment     XwALIGN_LEFT
+        XtNgravity     XtCGravity     int             CenterGravity
+        XtNwrap        XtCWrap        Boolean         TRUE
+        XtNstrip       XtCStrip       Boolean         TRUE
+        XtNlineSpace   XtCLineSpace   int             0
+        XtNfont        XtCFont        XFontStruct *   Fixed
+        XtNstring      XtCString      char *          NULL
+
+
+
+          XtNhSpace
+               This specifies the number of pixels to maintain between
+               the text and the highlight area to the right and left
+               of the text.
+
+          XtNvSpace
+               This specifies the number of pixels to maintain between
+               the text and the highlight area to the top and bottom
+               of the text.
+
+          XtNalignment
+               This specifies the alignment to be applied when drawing
+               the text.  The alignment resource is interpreted
+               without regard to case.
+
+               Alignment never causes leading or trailing spaces to be
+               stripped.
+
+               Alignment may have the following values and effects:
+
+                    XwALIGN_LEFT will cause the left sides of the
+                    lines will be vertically aligned.  Specified in
+                    resource default file as "Left".
+
+                    XwALIGN_CENTER will cause the centers of the lines
+                    will be vertically aligned.  Specified in resource
+                    default file as "Center".
+
+                    XwALIGN_RIGHT will cause the right sides of the
+                    lines will be vertically aligned.  Specified in
+                    resource default file as "Right".
+
+          XtNgravity
+               This resource controls the use of extra space within
+               the widget.
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSTATICTEXT(3X)                                 XWSTATICTEXT(3X)
+
+
+
+
+                    CenterGravity will cause the string to be centered
+                    in the extra space.  Specified in the resource
+                    defaults file as "CenterGravity".
+
+                    NorthGravity will cause the string to always to be
+                    at the top of the window centered in any extra
+                    width.  Specified in the resource defaults file as
+                    "NorthGravity".
+
+                    SouthGravity will cause the string to always to be
+                    at the bottom of the window centered in any extra
+                    width.  Specified in the resource defaults file as
+                    "SouthGravity".
+
+                    EastGravity will cause the string to always be at
+                    the right of the window centered in any extra
+                    height.  Specified in the resource defaults file
+                    as "EastGravity".
+
+                    WestGravity will cause the string to always be at
+                    the left of the window centered in any extra
+                    height.  Specified in the resource defaults file
+                    as "WestGravity".
+
+                    NorthWestGravity will cause the string to always
+                    be in the upper left corner of the window.
+                    Specified in the resource defaults file as
+                    "NorthWestGravity".
+
+                    NorthEastGravity will cause the string to always
+                    be in the upper right corner of the window.
+                    Specified in the resource defaults file as
+                    "NorthEastGravity".
+
+                    SouthWestGravity will cause the string to always
+                    be in the lower left corner of the window.
+                    Specified in the resource defaults file as
+                    "SouthWestGravity".
+
+                    SouthEastGravity will cause the string to always
+                    be in the lower right corner of the window.
+                    Specified in the resource defaults file as
+                    "SouthEastGravity".
+
+          XtNwrap
+               This resource controls the wrapping of lines within the
+               widget. If XtNwrap is TRUE, lines which are too long
+               are broken on spaces.  The spaces are converted to
+               new-lines to break the line. Imbedded new-lines are
+               honored.  If there is too much text for the specified
+               window size, it will be clipped at the bottom.
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSTATICTEXT(3X)                                 XWSTATICTEXT(3X)
+
+
+
+
+               If XtNwrap is FALSE, lines which are too long will be
+               clipped according to the alignment.  An XtNalignment
+               value of XwALIGN_LEFT will cause lines which are too
+               long to be clipped to the right.  An XtNalignment value
+               of XwALIGN_RIGHT will cause lines which are too long to
+               be clipped to the left.  An XtNalignment value of
+               XwALIGN_CENTER will cause lines to be clipped equally
+               on both the right and the left.
+
+          XtNstrip
+               This resource controls the stripping of leading an
+               trailing spaces during the layout of the text string.
+               If XtNstrip is FALSE, spaces are not stripped.  If
+               XtNstrip is TRUE and XtNalignment is XwALIGN_LEFT,
+               leading spaces are stripped from each line.  If
+               XtNstrip is TRUE and XtNalignment is XwALIGN_CENTER,
+               both leading and trailing spaces are stripped from each
+               line.  If XtNstrip is TRUE and XtNalignment is
+               XwALIGN_RIGHT, trailing spaces are stripped from each
+               line.
+
+          XtNlineSpace
+               This resource controls the amount of space between
+               lines.  It is specified as a percentage of the font
+               height.  This space is added between each line of text.
+               XtNlineSpace may be negative to a maximum of -100
+               (which causes all lines to overwrite each other).
+
+          XtNfont
+               This resource controls which font the text will drawn
+               in.
+
+          XtNstring
+               This resource is the string which will be drawn.  The
+               string must be null terminated.  If the string is given
+               in a resource defaults file, newlines may be specified
+               by "\n" within the string.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSTATICTEXT(3X)                                 XWSTATICTEXT(3X)
+
+
+
+
+     INHERITED RESOURCES
+          The following resources are inherited from the indicated
+          superclasses:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightColor       XtCForeground           Pixel     Black
+     XtNhighlightTile        XtCHighlightTile        int       50_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNrecomputeSize        XtCRecomputeSize        Boolean   TRUE
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+
+     TRANSLATIONS
+          The input to the toggle is driven by the mouse buttons.  The
+          default translation set defining this button is listed
+          below.  Note that for the specific key symbols used in
+          traversal, the HP Key Cap which corresponds to this key
+          symbol appears to the right of the definition.
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSTATICTEXT(3X)                                 XWSTATICTEXT(3X)
+
+
+
+
+              <EnterWindow>:     enter()
+              <LeaveWindow>:     leave()
+              <KeyDown>Select:   select()    HP "Select" key
+              <KeyUp>Select:     release()   HP "Select" key
+
+
+     ACTIONS
+          enter
+               If the XtNtraversalType resource has been set to
+               XwHIGHLIGHT_OFF then the StaticText will be
+               highlighted.  Otherwise no action is taken.
+
+          leave
+               If the XtNtraversalType resouces has been set to
+               XwHIGHLIGHT_OFF then the StaticText will be
+               unhighlighted.  Otherwise no action is taken.
+
+          select
+               Invokes the select callbacks.
+
+          release
+               Invokes the release callbacks.
+
+     NOTES
+          The forced new line is the '\n' character constant as
+          defined by the C compiler.  Fonts which do not use that
+          character constant for the newline will not be handled
+          correctly by StaticText.
+
+          StaticText will assume that the space is the ' ' character
+          constant as defined by the C compiler.  Fonts which do not
+          use that character constant for spaces will not be handled
+          correctly by StaticText.
+
+          Non-8-bit character representations have undefined effects
+          on the operation of StaticText.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          XWPRIMITIVE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 6 -                   Aug 9, 1988
+
+
+

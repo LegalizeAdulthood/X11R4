@@ -1,0 +1,249 @@
+
+
+		X10 to X11 Protocol Converter
+		       Todd Brunhoff
+		      Tektronix, inc.
+		      $Revision: 1.2 $
+		      $Date: 88/10/21 11:50:13 $
+
+
+This README file describes a Protocol Converter, or PC, for X10 clients
+such that they may continue to run unaltered under X11.  This file
+discusses the PC's limitations and usage of the debugging
+facilities.
+
+Limitations
+----
+This implementation uses the gc clip mask to implement the clipping
+caused by Transparent windows in X10.  There are four requests that
+use a bitmap mask in X10: PixFill, TileFill, BitmapBitsPut and
+PixmapBitsPut.  PixFill and BitmapBitsPut can be implemented with
+stipple tiling, but TileFill and PixmapBitsPut cannot be done in this
+way, and instead must incorporate offscreen pixmaps, making it a bit
+slow.
+
+The X10 UnmapTransparent request is impossible to implement perfectly
+under X11 because
+X11 will not allow you to suppress exposure events for other clients.  The
+best that can be done is to suppress the events for the client issuing
+the request.  In addition, UnmapTransparent left the bits on the screen
+unchanged.  There are three ways that "SaveUnders" were used in X10:
+     1) - PixmapSave area on Root window
+	- Map window over saved area (usually a menu)
+	- UnmapTransparent on the window
+	- PixmapPut the saved area on the Root window
+
+     2) - PixmapSave area on Root window
+	- Map window over saved area (usually a menu)
+	- PixmapPut the saved area on top of the menu window
+	- UnmapTransparent the menu window
+
+     3) - Map a window, say window W
+	- UnmapTransparent the new window W
+	- map/configure all of its subwindows
+	- map W again
+
+#1 is easy to implement because no state must be remembered.  #2 was
+implemented by the following approach:
+     Whenever a PixmapSave happens, make note of the region saved and
+     watch for a window that gets mapped over the same region.
+     If there is one, try to see if it gets PixmapPut'ed onto
+     the window.  If so, then hang onto the Pixmap, and if it is followed
+     by an UnmapTransparent, then PixmapPut it again.
+#3 is implemented by placing a sibling window (B) with background=NONE
+over the window being UnmapTransparent'ed (A).  Window A is then
+unmapped.  Then all requests are watched, and if any would draw on the
+screen, window B is unmapped.  Usually, though, the effect is the same
+as for X10.
+
+The PC handles all X11 events.  Most map directly to X10 events, some
+varieties map to a single X10 event, and others have no meaning at all
+in X10.  Among these last are some interesting ones: ReparentNotify,
+which causes the PC to discover the new window hierarchy;
+SelectionClear, SelectionNotify and SelectionRequest, which provide the
+server's idea of time.
+
+When an X10 request would yield an event mask, no effort is made to use
+the event mask provided in other X10 requests, such as SelectInput.
+Instead, the X10 mask is interpolated from the X11 mask; but this
+is not a one to one mapping.  In particular, ExposeWindow and ExposeRegion
+are lost.  This could be fixed by looking up the window internally and
+using the mask found there.
+
+In the X10 CreateWindow request, the X10 spec does not say what the
+border_pixmap should be if it is specified as 0 and the border width
+is > 0.  The PC assumes the X11 CopyFromParent.
+
+X10 brush width and height are colapsed into X11 line width.
+This could be solved by looking at the slope of the line
+and deciding:
+     vertical:       X11 line width is X10 brush width
+     horizontal:     X11 line width is X10 brush height
+     0<slope<infite: X11 line width is some function of
+                        X10 brush width and height
+This will work for the X10 Line request, but this is an incomplete
+solution for a series of points specifying several segments:
+Draw and DrawFilled.
+
+The PC tries very hard to find a visual whose class is closest to that
+of X10.  It prefers, in order: PseudoColor, GrayScale, DirectColor,
+StaticColor, StaticGray, TrueColor.  If the visual class it prefers is
+not same as that of the default, or if black and white pixel are not
+sufficiently close to 0 and 1, the PC creates a new colormap to use
+with all X10 windows and installs it (which means you should probably
+have a window manager that handles colormaps).
+
+WhitePixel and BlackPixel in X10 were defined to be 1 and 0
+respectively.  X11 makes no such guarentee.  If the X11 white and black
+pixel are complementary, i.e., one is all 1's and the other is all 0's,
+the PC does the appropriate thing, translating the graphics function
+code if necessary.  This is always true with monochrome and should be
+true for DirectColor and StaticGray.  StaticColor and TrueColor may or
+may not have this property, but if not, there is nothing that can be
+done.  GrayScale and PseudoColor are programmable, and hence a new
+colormap could be issued with a white and black pixel assigned
+appropriately, but the PC makes no effort at this.
+
+For the X10 requests ChangeBackground and TileMode, there were four
+possible combinations for tiling:
+	1) TileModeRelative	no pixmap
+	2) TileModeRelative	uniq pixmap
+	3) TileModeAbsolute	no pixmap
+	4) TileModeAbsolute	uniq pixmap
+In X11, only 1 and 4 are possible because only a pixmap or ParentRelative
+can be specified; and None is not applicable here.
+
+The X10 Text request can be implemented using the ImageText8 request,
+but it is only correct if function == GCcopy, and only if inter-character
+spacing and space pad are both zero.  For the latter cases, the PC uses
+offscreen pixmaps to emulate X10, hence, they are slower.
+
+Many events in X10 propogated up the window hierarchy to whoever was
+interested, but X11 only propogates device events.
+Every effort has been made to propogate events just the way that
+X10 does.
+
+The X10 GrabMouse works always, whereas the X11 GrabPointer will fail
+if the event window is not viewable.  This is fixed by changing the
+window in the selection request to the root window, if the window
+in the request is unmapped.
+
+Debugging Usage
+-----
+The PC requires nothing to be present from the X10 environment to
+either build or run; however, clients may require things like the rgb
+database or a global keymap file.  The X10 client could exist on one
+architecture, the X11 server on another and the PC could sit on a third
+architecture.  See the man page for basic usage, but when debugging
+facilities are available, the command line usage is extended as follows:
+
+    x10tox11 [Keyword ...] [flag ...]
+
+    where keyword is any of
+	Sync			call XSyncronize(dpy, True) for each
+				connection.
+	NoSync			call XSyncronize(dpy, False) for each
+				connection (default).
+	AllowGrabServer		Any X10 GrabServer requests will become
+				X11 GrabServer requests (default).
+	NoGrabServer		All X10 GrabServer requests are
+				ignored (as are UngrabServer).
+	AllowGrabMouse		Any X10 GrabMouse requests will become
+				X11 GrabPointer requests (default).
+	NoGrabMouse		All X10 GrabMouse requests are
+				ignored (as are UngrabMouse).
+	AllowFocusKeyboard  	Any X10 FocusKeyboard requests will become
+				X11 FocusKeyboard requests (default).
+	NoFocusKeyboard		All X10 FocusKeyboard requests are ignored.
+	AllowGrab		AllowGrabServer, AllowGrabMouse, and
+				AllowFocusKeyboard.
+	NoGrab			NoGrabServer, NoGrabMouse, and
+				NoFocusKeyboard.
+	OverrideRedirect 	All windows are created with
+				OverrideRedirect=true (default)
+	NoOverrideRedirect	only Windows that look like menus
+				are created with OverrideRedirect=true.
+				If a pixmapSave has been done on the root
+				for the area in use, this is a good
+				indicator.  See the man page for a
+				discussion of this option.
+
+    where flag is a '+' (or '-') followed by any of the the following
+    words.  The '+' means to turn on debugging for the corresponding
+    item and '-' is the inverse.  The default state is off for all
+    flags.
+	All		Show (don't show) every all debug information.
+	Events		Show all incomming X11 events and what
+			X10 event they were mapped to.
+	Requests	Show all incomming X10 requests and
+			their reply.
+	EventMasks	Show the conversion of X10 to X11 event
+			masks and vice-versa.
+	ButtonMasks	Show the conversion of X10 to X11 button
+			masks and vice-versa.
+	Bitmaps		print out received bitmaps.
+	Unimplemented	Show unimplemented features when they are
+			needed.  (everything is implemented these days)
+	WinTree		On the creation of every window, show the
+			corresponding X10 client's idea of what the
+			tree of windows looks like.
+	PromptForEachRequest
+			Each request that is being debugged is followed
+			by a prompt and will wait for a <return> from
+			the user before further processing.
+	PromptForEachEvent
+			For each X11 event being debugged, prompt
+			the user before delivering the event.  When
+			prompted, if the first character typed is
+			an 's', then the event is "suppressed" and
+			not sent on to the X10 client.
+	LineCoordinates	For the requests Line, Draw and DrawFilled,
+			the coordinates of each point in the request
+			and associated flags are printed.
+	Sequence	Show sequence information and associated
+			actions in the PC.
+	IO		Show IO activity such as opening and closing
+			connections and flushing.
+	NameOnly	Show only names of requests and events that
+			are being debugged (reduces output).
+	Initialize	reveals initialization steps at the time the PC
+			starts up.  Colormap decisions are shown here.
+	<X11 event>	Show a particular X11 event and its mapping
+			to an X10 event, such as +MotionNotify or
+			-MappingNotify.
+	<X10 request>	Show a particular X10 request and its
+			associated reply, such as +MapWindow or
+			-FontWidths.
+
+In addition, by sending a keyboard interrupt to the PC (usually ^C),
+you can enter any of the above commands, one per line, with the
+following additional commands:
+	WinTree		(that is, no preceeding +/-) This prints
+			out immediately the entire window tree
+			for each X10 client.
+	Quit		exit the PC.
+	Continue	
+
+	
+Implementation
+--------------
+The source consists of two files taken largely from the X10 server
+source:  main.c and dispatch.c.  These implement X10-style socket
+connection, and request dispatch.  The file X10/dispatch.c has only the
+structure of the large switch statement intact, but now calls external
+routines to carry out the requests.  The X11 directory contains The
+rest of the files are the X11 implementation of the X10 protocol, one
+routine per request (proto[1-4].c); a file to translate X11 events into
+X10 events (events.c); some files to aid in debugging and other files
+to accomplish miscelaneous tasks.
+
+The PC is IO driven.  Sockets are examined regularly for connections on
+internet and unix domain sockets, input from the X10 clients, and input
+from the X11 server.  X10 requests from clients are responded to as
+they arrive, replying as necessary.  X11 events are translated
+at appropriate times; in particular, just before replies to X10
+requests are sent.  This maintains the assumption (for the most part)
+that if an X10 client has made a request requiring a reply, all events
+resulting from earlier requests, such as MapWindow, will be delivered
+before the reply.
+

@@ -1,0 +1,96 @@
+.TH DISPIMG 1 "27 November 1989" "X Version 11"
+.SH NAME
+dispimg \- Display image file
+.SH SYNOPSIS
+.PP
+.B dispimg
+.I file
+[
+.I options
+]
+.br
+.SH DESCRIPTION
+.PP
+.B dispimg
+displays an image in an X11 window.  If the image requires more
+colors than are available for private use by an X11 client, it
+displays a quantized copy of the image which uses a smaller
+number of colors.
+.PP
+When appropriate,
+.B dispimg
+may convert the image automatically to a different representation
+to suit the screen's default visual.  This may involve converting
+in either direction between RGB and color-mapped format, and
+it may involve quantizing the image to force it to use only the
+maximum number of colors available.  Similarly, it may convert
+color to grayscale or monochrome (dithered black and white).
+.PP
+The
+.I file
+argument can be a specific filename or a "base" filename for an
+image.  If
+.I file
+cannot be opened,
+.B dispimg
+tries
+.I file.Z,
+.I file.p,
+and
+.I file.p.Z.
+.PP
+Any file whose names ends with
+.I .Z
+is presumed to be in compressed format.
+.PP
+At present
+.B dispimg
+has substantially no interaction.  Typing control-C or pressing
+any mouse button within the image's window causes it to terminate.
+.SH OPTIONS
+This program accepts the standard options listed below.  They are
+listed as command line options, but can also be supplied as X
+resources; for example, "-force monochrome" on the command line
+has the same effect as
+"dispimg.force:  monochrome".
+.TP
+.B \-colorinstances scope
+.B \-colorinstances private
+selects use of privately allocated (read/write) colors,
+.B \-colorinstances \fIshared\f
+selects use of shared (read only) colors.
+Private colors cannot be shared with other clients using the
+same color map, but they allow better image quality than
+shared colors.
+.TP
+.B \-colormap scope
+.B \-colormap private
+selects use of a private color map.
+.B \-colormap \fIshared\f
+selects shared use of a default color map.
+A private color map allows the best possible color rendition
+for the image, but may cause annoying color changes on the screen
+as the cursor moves into or out of the image's window.
+.TP
+.B \-display \fIdisplayname\f
+Name of X server to use, including screen number.
+.TP
+.B \-force \fIrestriction\f
+.B \-force grayscale
+forces conversion of a color image to grayscale.
+.B \-force monochrome
+forces conversion of a color or grayscale image to monochrome
+(dithered black and white).
+.B \-force nothing
+retains as much of the image's original
+data as possible.
+.TP
+.B \-geometry \fIgeometry\f
+Size and/or location to use for window.
+.TP
+.B \-maxcolors \fIn\f
+This specifies the maximum number of colors (2 - 256) to be retained
+in a color-mapped image.  The maximum depends on how many colors
+the display hardware supports.
+.SH AUTHOR
+Paul Raveling, USC Information Sciences Institute (Raveling@isi.edu)

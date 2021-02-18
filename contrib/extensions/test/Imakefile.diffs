@@ -1,0 +1,30 @@
+*** /tmp/,RCSt1a29019	Wed Oct  4 09:48:21 1989
+--- Imakefile	Thu Jul 13 14:52:26 1989
+***************
+*** 3,13 ****
+     ZOIDOBJS = zoidtest.o
+   BEZIERSRCS = beziertest.c
+   BEZIEROBJS = beziertest.o
+     INCLUDES = -I$(TOP) -I$(INCLUDESRC) -I../include
+  
+! all: zoidtest beziertest
+  
+  SingleProgramTarget(zoidtest,$(ZOIDOBJS),$(EXTENSIONLIB) $(XLIB),)
+  SingleProgramTarget(beziertest,$(BEZIEROBJS),$(EXTENSIONLIB) $(XLIB),)
+  
+  DependTarget()
+--- 3,16 ----
+     ZOIDOBJS = zoidtest.o
+   BEZIERSRCS = beziertest.c
+   BEZIEROBJS = beziertest.o
++   XIDLESRCS = xidletest.c
++   XIDLEOBJS = xidletest.o
+     INCLUDES = -I$(TOP) -I$(INCLUDESRC) -I../include
+  
+! all: zoidtest beziertest xidletest
+  
+  SingleProgramTarget(zoidtest,$(ZOIDOBJS),$(EXTENSIONLIB) $(XLIB),)
+  SingleProgramTarget(beziertest,$(BEZIEROBJS),$(EXTENSIONLIB) $(XLIB),)
++ SingleProgramTarget(xidletest,$(XIDLEOBJS),$(EXTENSIONLIB) $(XLIB),)
+  
+  DependTarget()

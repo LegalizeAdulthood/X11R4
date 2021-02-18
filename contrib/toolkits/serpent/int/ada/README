@@ -1,0 +1,86 @@
+ 
+	This README file contains information on how to  build this 
+directory ( ~serpent/integ/int/ada ) and make the Serpent interface
+routines  available to an Ada application;  and also  how to get an 
+Ada application for a Serpent dialogue up and walking.
+ 
+	
+I.   Building this directory ( ~serpent/integ/int/ada ) 
+     
+  NOTE: These init  commands are available as a target in the makefile
+	and will execute automatically when a make is run the 1st time.
+
+  1. a.mklib -i 
+		interactively create VADS dirrectories
+
+  2. a.path -t 
+		display library search list and target info
+
+  3. a.info +link WITH2 $SERPENT_BASE_PATH/lib/vax/libdm.a 
+     a.info +link WITH3 $SERPENT_BASE_PATH/lib/vax/libint.a 
+     a.info +link WITH4 $SERPENT_BASE_PATH/lib/vax/libutl.a 
+     a.info +link WITH5 $SERPENT_BASE_PATH/lib/vax/liblist.a 
+
+     		add the LINK directives (to ada.lib) that will
+		tell "a.ld" (when used by an aplication) where
+		to find the SERPENT 'C' versions of the libraries. 
+		
+ 
+	NOTE: The "WITHx" must be consecutively numbered.
+	      The math (-lm) lib is probably WITH1. Therefore,
+	       start at WITH2.
+
+  4. a.info -a 
+		display all directives and verify they're correct.
+
+  5. make
+		run "make" to create and install the SERPENT interface
+		routines.
+
+
+
+
+ 
+II.  How to get an Ada Application for a Serpent Dialogue up and walking.
+     ( VERDIX V5R5 )
+
+
+  1. mkdir your_ada_directory 
+     cd your_ada_directory 
+		create a directory where your Ada source will
+		reside. Put source into this directory.
+
+  2. a.mklib -i 
+		interactively create a local VADS dir
+
+  3. a.path -t 
+		display library search list and target info
+		and verify info, if needed.
+
+
+  4. a.path -a $SERPENT_BASE_PATH/int/ada 
+		append to the search-list and target info where
+		the SERPENT Ada libs exist
+
+
+  5. a.info -a 
+		display all directives and verify they're
+		correct.
+
+
+  6. sdd -a <your_sdd_file> 
+		create the your Ada package that contains the 
+		shared data definitions (if any) for your application.
+
+
+  7. a.make -All -v -C "ada -E" <your_application_main> -f *.a -o <your_application_exec>
+		create your application and put the executable
+		into "your_application_exec".
+
+
+  8. serpent -clg <your_slang_dialogue> 
+		compile, link, then execute the Dialogue and 
+		application.
+
+ 
+

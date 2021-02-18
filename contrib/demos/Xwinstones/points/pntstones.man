@@ -1,0 +1,55 @@
+.TH POINTSTONES 1 "June 1989" "X Version 11"
+.SH NAME
+pointstones -- tests the performance of point drawing
+.SH SYNOPSIS
+.B "pointstones"
+[-option ...]
+.SH DESCRIPTION
+.PP
+\fIPointstones\fP uses XDrawPoints.
+Points are drawn by rows or columns in the direction specified--up, down,
+left or right.
+.sk 5
+.SH OPTIONS
+.TP 8
+.B \-npts \fInum\fP
+This option specifies the number of points per call to XDrawPoints.
+The default value is 16380.
+.TP 8
+.B \-maxpts
+This option specifies the use of the maximum number of points
+per call.  This value is 16380.
+.TP 8
+.B \-horiz
+This option specifies horizontal lines across the window.
+The default is horizontal.
+.TP 8 
+.B \-vert
+This option specifies vertical lines across the window.
+The default is horizontal.
+.TP 8
+.B \-left
+This option specifies the lines are drawn left to right across the
+window.  The default is left.
+.TP 8
+.B \-right
+This option specifies the lines are drawn right to left across the
+window.  The default is left.
+.TP 8
+.B \-top
+This option specifies the lines are drawn top to bottom across the
+window.  The default is top.
+.TP 8
+.B \-bottom
+This option specifies the lines are drawn bottom to top across the
+window.  The default is top.
+.TP 8
+.B \-help
+This option displays the help menu.
+.TP 8
+.B \-h
+This option displays the help menu.
+.SH "SEE ALSO"
+X(1)
+.SH "COPYRIGHT"
+International Business Machines--1989

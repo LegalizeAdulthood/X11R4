@@ -1,0 +1,118 @@
+.TH X2PS L
+.SH NAME
+x2ps - convert figures stored in \fIxpic\fP format to PostScript(tm).
+.SH SYNOPSIS
+.B x2ps
+[-w] [-r] [-x] [-s \fIscale\fP] [-p \fIprologuefile\fP] [-t \fItrailerfile\fP] 
+[-f \fImaximum fonts\fP] [-h \fIhoffset\fP] [-v \fIvoffset\fP] 
+[\fIfilename\fP] ....
+.SH DESCRIPTION
+.I X2ps
+takes the given 
+.I xpic 
+file (default is the standard input) and
+produces corresponding PostScript on the standard output. This can
+then be printed on PostScript-supporting graphic output devices, like
+laser printers.
+.PP
+It usually moves the picture so that the lower left corner of the picture is
+at the lower left corner of the PostScript page, which makes it easy to
+include in documents.
+.SH OPTIONS
+.TP 8
+.I -w
+WYSIWYG mode, prints the figure as it was in the screen without moving the
+picture so the picture's lower left corner is at the page lower left corner.
+Useful for sending the picture straight to the printer.
+.TP 8
+.I -r
+prints the figure in landscape mode, rotated by 90 degrees. It
+goes together with the -r option on xpic.
+.TP 8
+.I -x 
+suppresses the 
+.I showpage 
+emitted by 
+.I x2ps - 
+.I LaTeX 
+used to need this.
+(Locally, we've fixed 
+.I LaTeX 
+by defining 
+.I /showpage 
+to be null in the 
+.I \\special 
+header).
+.TP  8
+.IR -s "  scale"
+scales the picture by 
+.I scale, 
+which is a floating point number. (eg) 
+.I -s 0.5
+will scale the picture to half its size.
+.TP 8
+.IR -p "  prologuefile"
+.TP 8
+.IR -t "  trailerfile"
+specify the prologue and trailer to be used.
+The defaults are
+.I XPICLIBDIR/x2ps.pro 
+and
+.I x2ps.tra. 
+Use these only if you know
+what you're doing. Typically, you'd take the default 
+.I x2ps.{pro,tra} 
+and modify
+them to change something you don't like - or you think is buggy. On
+your own head be it.
+.TP 8
+.IR -h "  hoffset"
+.TP 8
+.IR -v "  voffset"
+specify the horizontal and vertical offset to add to the figure, in
+inches. hoffset and voffset may be floats.
+.TP 8
+.IR -f " numfonts"
+sets the maximum number of fonts that can be stored. The default is enough
+unless the users 
+.I ~/.x2ps 
+has a lot of font mappings.
+.SH "SEE ALSO"
+.IR xpic (L)
+is what generates the files for 
+.I x2ps
+to convert.
+.br
+.IR x2pic (L)
+is another filter for converting 
+.I xpic 
+output to
+.I pic
+format.
+.br
+.IR psfig (L)
+is a preprocessor for 
+.I ditroff
+to permit inclusion of PostScript in 
+.I ditroff 
+documents. There is also
+a version for 
+.I TeX 
+.br
+The other method I know of for including PostScript in TeX
+documents is
+.I \\special
+directive supported by some versions of 
+.I LaTeX/dvi2ps.
+See the local guide for 
+.I LaTeX
+and the examples in DOCDIR and DOCDIR/tex.
+.SH TRADEMARKS
+PostScript is a registered trademark of Adobe Systems, Inc.
+.SH FILES
+.I x2ps
+looks at 
+.I XPICLIBDIR/fontdesc/x2ps
+and at 
+.I ~/.x2ps 
+to find font mappings.

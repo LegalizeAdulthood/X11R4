@@ -1,0 +1,114 @@
+# $Header: /andrew/X11/r3src/r3plus/server/ddx/ibm/ppc/RCS/Imakefile,v 9.4 89/07/05 18:20:33 jeff Exp $ 
+# $Source: /andrew/X11/r3src/r3plus/server/ddx/ibm/ppc/RCS/Imakefile,v $ 
+
+#include <Server.tmpl>
+
+SRCS =	 	ppcArea.c	\
+		ppcArc.c	\
+		ppcBitmap.c	\
+		ppcBStore.c	\
+		ppcCache.c	\
+		ppcCacheTx.c	\
+		ppcClip.c	\
+		ppcCmap.c	\
+		ppcCpArea.c	\
+		ppcCReduce.c	\
+		ppcCurs.c	\
+		ppcDepth.c	\
+		ppcFillRct.c	\
+		ppcFont.c	\
+		ppcWindowFS.c	\
+		ppcPixmapFS.c	\
+		ppcGenFS.c	\
+		ppcGBlt.c	\
+		ppcGC.c		\
+		ppcGetSp.c	\
+		ppcIO.c		\
+		ppcImg.c	\
+		ppcLine.c	\
+		ppcPixmap.c	\
+		ppcPntWin.c	\
+		ppcPolyPnt.c	\
+		ppcPolyRec.c	\
+		ppcPushPxl.c	\
+		ppcQuery.c	\
+		ppcRot.c	\
+		ppcRslvC.c	\
+		ppcSetSp.c	\
+		ppcSinTab.c	\
+		ppcWindow.c	\
+	\
+		emulOpStip.c	\
+		emulStip.c	\
+		emulRepAre.c	\
+		emulTile.c
+
+OBJS =	 	ppcArea.o	\
+		ppcArc.o	\
+		ppcBitmap.o	\
+		ppcBStore.o	\
+		ppcCache.o	\
+		ppcCacheTx.o	\
+		ppcClip.o	\
+		ppcCmap.o	\
+		ppcCpArea.o	\
+		ppcCReduce.o	\
+		ppcCurs.o	\
+		ppcDepth.o	\
+		ppcFillRct.o	\
+		ppcFont.o	\
+		ppcWindowFS.o	\
+		ppcPixmapFS.o	\
+		ppcGenFS.o	\
+		ppcGBlt.o	\
+		ppcGC.o		\
+		ppcGetSp.o	\
+		ppcIO.o		\
+		ppcImg.o	\
+		ppcLine.o	\
+		ppcPixmap.o	\
+		ppcPntWin.o	\
+		ppcPolyPnt.o	\
+		ppcPolyRec.o	\
+		ppcPushPxl.o	\
+		ppcQuery.o	\
+		ppcRot.o	\
+		ppcRslvC.o	\
+		ppcSetSp.o	\
+		ppcSinTab.o	\
+		ppcWindow.o	\
+	\
+		emulOpStip.o	\
+		emulStip.o	\
+		emulRepAre.o	\
+		emulTile.o
+
+INCLUDES = -I. -I../../mi -I../../mfb -I../../../include -I$(INCLUDESRC) -I../common -I../OPERATING_SYSTEM
+
+#if DebugServer && ProfileServer
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugServer
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileServer
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+NormalRelocatableTarget(ppc,$(OBJS))
+
+#if ProfileServer
+ProfiledRelocatableTarget(ppc,$(OBJS))
+#endif
+#if DebugServer
+DebuggedRelocatableTarget(ppc,$(OBJS))
+#endif
+
+DependTarget()
+
+LintLibraryTarget(ppc,$(SRCS))
+NormalLintTarget($(SRCS))

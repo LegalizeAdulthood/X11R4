@@ -1,0 +1,528 @@
+
+
+
+     XWMENUBUTTON(3X)                                 XWMENUBUTTON(3X)
+
+
+
+
+     NAME
+          XwmenubuttonWidgetClass - the X Widgets menubutton widget.
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/MenuBtn.h>
+
+
+     CLASSES
+          The menubutton widget is built out of the Core, XwPrimitive,
+          and XwButton classes.
+
+          The widget class to use when creating a menupane is
+          XwmenubuttonWidgetClass.  The class name is MenuButton.
+
+     DESCRIPTION
+          The menubutton widget is commonly used with menupane and
+          menu manager widgets to build a menu system.  The menubutton
+          consists of a single label, a mark and a cascade indicator.
+          The menubutton is broken into three areas.  Starting from
+          the left border of the menubutton the areas are:  the mark
+          area, the label area and the cascade area.  By default, the
+          mark area contains a checkmark image, the label area
+          contains the name of the menubutton widget and the cascade
+          area contains an arrow image.  The label can be set to any
+          string or image and the label area attempts to grow or
+          shrink to accommodate it.  The mark and cascade can be set
+          to an image, although the width of the these areas remains
+          fixed.
+
+          The default semantic for this button is that button 1 down
+          causes the select call backs to be invoked.  When a
+          menubutton is used in a menu manager, this may be overridden
+          by the menu manager.  The select callbacks may also be
+          invoked by a keyboard accelerator or mnemonic, although, it
+          is up to the menu manager to determine whether the
+          accelerator or mnemonic is active.
+
+          The menubutton is often used with a menupane and menu
+          manager widget although it is not necessary.  The menubutton
+          could simply be used as another button widget.
+
+     NEW RESOURCES
+          The MenuButton widget defines a set of resource types used
+          by the programmer to specify the data for the menubutton.
+          The programmer can also set the values for the Core,
+          Primitive and Button widget classes to set attributes for
+          this widget.  The following table contains the set of
+          resources defined by MenuButton.  To specify any of these
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUBUTTON(3X)                                 XWMENUBUTTON(3X)
+
+
+
+
+          resources within the .Xdefaults file, simply drop the XtN
+          prefix from the resource name.
+
+
+                            MenuButton Resource Set
+     Name                     Class                    Type       Default
+     _____________________________________________________________________
+     XtNlabelType             XtCLabelType             int        XwSTRING
+     XtNlabelImage            XtCLabelImage            XImage *   NULL
+     XtNcascadeImage          XtCCascadeImage          XImage *   NULL
+     XtNcascadeOn             XtCCascadeOn             Widget     NULL
+     XtNmarkImage             XtCMarkImage             XImage *   NULL
+     XtNsetMark               XtCSetMark               Boolean    FALSE
+     XtNkbdAccelerator        XtCKbdAccelerator        String     NULL
+     XtNmnemonic              XtCMnemonic              String     NULL
+     XtNmgrOverrideMnemonic   XtCMgrOverrideMnemonic   Boolean    TRUE
+     XtNmenuMgrId             XtCMenuMgrId             Widget     NULL
+     XtNcascadeSelect         XtCCallback              Pointer    NULL
+     XtNcascadeUnselect       XtCCallback              Pointer    NULL
+
+
+
+          XtNlabelType
+               Two styles of labels are supported by the MenuButton
+               widget: text string labels and image labels.  The text
+               string label is defined by the Button resource XtNlabel
+               and the image label is defined by the XtNlabelImage
+               resource.  To programmatically set this resource, use
+               either the XwSTRING define or the XwIMAGE define.  To
+               set this resource using the .Xdefaults files, use one
+               of the strings string or image.
+
+          XtNlabelImage
+               If XtNlabelType indicates that a label image should be
+               displayed, then this resource contains the image used.
+               This is a pointer to an XImage structure which
+               describes the label image data.  If the image is
+               defined with XYBitmap data, then the image is nicely
+               inverted when the menubutton is highlighted.
+
+          XtNcascadeImage
+               This resource points to an XImage structure which
+               describes the cascade image data.  The cascade area is
+               a fixed size (16x16).  If this resource is set to NULL,
+               then the default cascade image, an arrow, is used. The
+               cascade indicator is not displayed if the XtNcascadeOn
+               resource is set to NULL.  If the image is defined with
+               XYBitmap data, then the image is nicely inverted when
+               the menubutton is highlighted.
+
+          XtNcascadeOn
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUBUTTON(3X)                                 XWMENUBUTTON(3X)
+
+
+
+
+               This resource determines if the cascade indicator is
+               displayed.  It is typically set only by the menu
+               manager and contains the widget ID of the menupane
+               which cascades as a submenu from this menubutton.  This
+               resource is set to NULL to disable the display of the
+               cascade indicator.
+
+          XtNmarkImage
+               This resource points to an XImage structure which
+               describes the mark image data.  The mark area is a
+               fixed size (16x16).  If this resource is set to NULL,
+               then the default mark image is used.  The mark is not
+               displayed if the XtNsetMark resource is set to FALSE.
+               If the image is defined with XYBitmap data, then the
+               image is nicely inverted when the menubutton is
+               highlighted.
+
+          XtNsetMark
+               This boolean resource determines whether the mark is
+               displayed.
+
+          XtNkbdAccelerator
+               This resource is a string which describe a set of
+               modifiers and the key which may be used to select this
+               menubutton widget.  The format for this string is
+               identical to that used by the translations manager,
+               with the exception that only a single event may be
+               specified, and only KeyPress events are allowed.  If
+               the menubutton does not have a menu manager associated
+               with it, then this resource is ignored.  The menu
+               manager determines when, and if, this accelerator is
+               available.
+
+          XtNmnemonic
+               Certain menu managers allow the menubuttons to have a
+               mnemonic.  Mnemonics provide the user with another
+               means for selecting a menu button.  This resource is a
+               NULL terminated string, containing a single character.
+               The menu manager determines if this mnemonic is
+               available.  If the XtNmgrOverrideMnemonic resource is
+               false and the mnemonic is found in the label string,
+               then that character is underlined when the menubutton
+               is displayed.  Refer to XwPullDown(3X) man page for
+               further discussion of traversal.
+
+          XtNmgrOverrideMnemonic
+               This boolean resource determines if the mnemonic
+               character is underlined in the label string.  If it is
+               set to TRUE, then the mnemonic character is not
+               underlined.  This resource is typically set only by
+               menu managers.
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUBUTTON(3X)                                 XWMENUBUTTON(3X)
+
+
+
+
+          XtNmenuMgrId
+               This resource is used only by menu managers to indicate
+               to the menubutton widget its menu manager.  If this is
+               set to NULL, then the menubutton checks if it has a
+               menu manager at the appropriate level in its parentage.
+               This resource should not be set by users.
+
+          XtNcascadeSelect
+               This resource provides the means for registering
+               callback routines which are invoked if a cascade
+               indicator is displayed and the pointer moves into the
+               cascade area.  In some cases, the menu manager
+               suppresses the calling of these callback routines.  The
+               menubutton does not pass any data in the call_data
+               field of the callback.
+
+          XtNcascadeUnselect
+               This resource provides the means for registering
+               callback routines which are invoked if a cascade
+               indicator is displayed and the pointer moves out of the
+               cascade area.  These callbacks are only invoked if the
+               XtNcascadeSelect callbacks have been previously
+               invoked.  The menubutton passes data in the call_data
+               field of the callback.  It is a pointer to the
+               XwunselectParams data structure shown below:
+
+                 typedef struct
+                 {
+                   Dimension         rootX;
+                   Dimension         rootY;
+                   Boolean           remainHighlighted;
+                 } XwunselectParams;
+
+
+          The rootX and rootY parameters have the position of the
+          pointer relative to the root window when the event occurred
+          which caused the XtNcascadeUnselect call backs to be called.
+          The remainHighlighted parameter is used by cascading
+          submenus.  It is set by the menu manager's call back routine
+          to indicate that the pointer traversed from a cascade into
+          the submenu.  If the boolean is set TRUE, then the
+          menubutton does not unhighlight on exit.  It also sets up an
+          event handler on its parent menupane so that it is notified
+          if the pointer enters another menubutton, in which case the
+          menubutton should then unhighlight.
+
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUBUTTON(3X)                                 XWMENUBUTTON(3X)
+
+
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightColor       XtCForeground           Pixel     Black
+     XtNhighlightTile        XtCHighlightTile        int       50_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNrecomputeSize        XtCRecomputeSize        Boolean   TRUE
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+
+
+                     Button Resource Set -- XWBUTTON(3X)
+     Name               Class              Type            Default
+     ___________________________________________________________________
+     XtNfont            XtCFont            XFontStruct *   Fixed
+     XtNlabel           XtCLabel           caddr_t         widget name
+     XtNlabelLocation   XtCLabelLocation   int             XwRIGHT
+     XtNvSpace          XtCVSpace          int             2
+     XtNhSpace          XtCHSpace          int             2
+     XtNsensitiveTile   XtCSensitiveTile   int             75_foreground
+
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUBUTTON(3X)                                 XWMENUBUTTON(3X)
+
+
+
+
+     TRANSLATIONS
+          The default translations set by the menubutton widget are as
+          follows:
+
+               <Btn1Down>:                        select()
+               <EnterWindow>                      enter()
+               <LeaveWindow>:                     leave()
+               <Motion>:                          moved()
+               <Key>Select:                       select()
+               <Key>Up:                           traverseUp()
+               <Key>Down:                         traverseDown()
+               <Key>Left:                         traverseLeft()
+               <Key>Right:                        traverseRight()
+               <Key>Next:                         traverseNext()
+               <Key>Prior:                        traversePrev()
+               <Key>Home:                         traverseHome()
+               <Visible>:                         visibility()
+               <Unmap>:                           unmap()
+               <Key>KP_Enter:                     traverseNexttop()
+
+     ACTIONS
+          select:
+               If a menu manager is present, then it is informed of
+               the select event.  The menu manager indicates whether
+               this select event should be processed or ignored.  If
+               there is no menu manager, or if the menu manager
+               indicates the event is to be processed, then the select
+               callbacks are called.
+
+          enter:
+               If a menu manager is present, then it is informed of
+               the enter event.  The menu manager indicates whether
+               this enter event should be processed or ignored.  If
+               there is no menu manager present, or if the menu
+               manager indicates the event is to be processed, then
+               the menubutton is highlightedi A processed enter action
+               also calls the moved action to determine if the pointer
+               is in the cascade indicator area.
+
+          leave:
+               If a menu manager is present, then it is informed of
+               the leave event.  The menu manager indicates whether
+               this leave event should be processed or ignored.  If
+               there is no menu manager present, or if the menu
+               manager indicates that the leave event is to be
+               processed, then the menubutton is unhighlighted.  If
+               the XtNcascadeSelect callbacks have been called, the
+               XtNcascadeUnselect callbacks are called.
+
+          moved:
+               If this menubutton has cascading on, then this action
+
+
+
+     Hewlett-Packard Company       - 6 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUBUTTON(3X)                                 XWMENUBUTTON(3X)
+
+
+
+
+               determines if the pointer is in the cascade area and
+               calls the XtNcascadeSelect or XtNcascadeUnselect
+               callbacks if necessary.
+
+          traverseUp:
+               Inform the menu manager controlling this widget that it
+               should transfer the keyboard focus to the menu button
+               positioned above the current traversal item; wrap to
+               the bottom, if necessary.
+
+          traverseDown:
+               Inform the menu manager controlling this widget that it
+               should transfer the keyboard focus to the menu button
+               positioned below the current traversal item; wrap to
+               the top, if necessary.
+
+          traverseLeft:
+               Inform the menu manager controlling this widget that it
+               should transfer the keyboard focus to the menupane
+               cascading from this menubutton, if one is present.
+
+          traverseRight:
+               Inform the menu manager controlling this widget that it
+               should transfer the keyboard focus to the menupane from
+               which the current one has cascaded.
+
+          traverseNext:
+               Inform the menu manager controlling this widget that it
+               should transfer the keyboard focus to the next menu
+               tree, if one is present.
+
+          traversePrev:
+               Inform the menu manager controlling this widget that it
+               should transfer the keyboard focus to the previous menu
+               tree, if one is present.
+
+          traverseHome:
+               Inform the menu manager controlling this widget that it
+               should transfer the keyboard focus to the first
+               menupane in the menu hierarchy.
+
+          visibility:
+               This action routine overrides the visibility action
+               routine provided by the XwPrimitive meta class.
+
+          unmap:
+               This action overrides the unmap action routine provided
+               by the XwPrimitive meta class.
+
+          traverseNexttop:
+               Inform the menu manager controlling this widget that it
+
+
+
+     Hewlett-Packard Company       - 7 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUBUTTON(3X)                                 XWMENUBUTTON(3X)
+
+
+
+
+               should transfer the keyboard focus to the next top
+               level menupane.
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalType resource is set to
+          highlight_traversal (XwHIGHLIGHT_TRAVERSAL in an argument
+          list) at either create time or during a call to XtSetValues,
+          the XwPrimitive superclass will automatically augment the
+          primitive widget's translations to support keyboard
+          traversal.  See the XwPrimitive man page for a complete
+          description of these translations.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3), XWPRIMITIVE(3X), XWBUTTON(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 8 -                   Aug 9, 1988
+
+
+

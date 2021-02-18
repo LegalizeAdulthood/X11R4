@@ -1,0 +1,13 @@
+DOBJS = mtext.do mtextv.do
+IHFILES = mtext.ih mtextv.ih
+
+NormalObjectRule()
+NormalATKRule()
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+InstallFile(mtext.tpl, ${INSTINCFLAGS}, ${DESTDIR}/lib/tpls)
+
+DependTarget()
+
+InstallDocs(mtext.help, ${DESTDIR}/help)

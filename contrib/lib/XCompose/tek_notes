@@ -1,0 +1,176 @@
+		Specification for Server Modifications for
+		    Compose and JUS Katakana Mechanism
+			for Tektronix X11 products
+			      Glenn Widener
+				 9/14/89
+
+(Note - this is extracted from implementation notes for the new Tek X11
+releases.  The Tek 431x ddx layer on the R4 tape conforms to this spec.)
+
+				 Summary
+
+The Tektronix X11 server will be modified to support Compose sequences,
+and to support the Katakana keyboard per the Japan Unix Society
+specification.  The server is responsible for processing Compose key
+sequences, emitting a single KeyPress/KeyRelease event pair for the entire
+Compose sequence, and for recognizing a Kana_Lock or Kana_Shift keysym and
+emitting the special Katakana keycodes.
+
+Note that the mnemonic compose design is intended to interoperate with
+MIT-Xlib-based X11 clients; Compose processing is entirely server-based,
+so the keyboards work uniformly with any X11 networked clients.
+DECWindows applications running on a Tek X11 terminal can use their own
+Compose processing if a key is configured with the "Alt" keysym.  Hex
+compose requires Xlib changes, and will be supported only on Tek
+workstations.
+
+The Katakana keyboard will interoperate with any X11 client that conforms
+to the JUS proposal.  Additionally, this implementation allows the user to
+configure any key on the keyboard to generate a different keycode when the
+keyboard is in Kana Shift mode, by attaching any desired keysym to the
+shifted keycode.  (For this purpose, the Kana shift/lock key press
+generates a different keycode only when going into Kana Shift mode, not
+when going out of Kana Shift mode.)  Also, both shifting and locking Kana
+keys are supported, by attaching the desired Kana_shift or Kana_Lock
+keysym to the desired key.
+
+			    Compose Processing
+
+The server recognizes the creation or change of the property
+KB_COMPOSE_TABLE and KB_COMPOSE_TABLE_SHORTS on the root window, and
+builds or updates a compose sequence table from the contents of the
+property.  See the protocol spec for the definition of KB_COMPOSE_TABLE
+and KB_COMPOSE_TABLE.
+
+In addition to the mnemonic compose sequences, the client will be
+processing "numeric compose sequences" (Compose followed by two numeric
+characters).  The server must detect a numeric compose sequence, and when
+the sequence is completed, send the KeyPress/KeyRelease events for the
+entire sequence.  See the protocol spec for the definition of a numeric
+compose sequence.
+
+A keycode that initiates a Compose sequence should not be assigned to a
+Modifier.  Hence, the compose key will be removed from the default
+modifier map.  Of course, the user can always disable Compose processing
+by removing the Compose property and mapping the Compose key back to
+"Meta_L" (Mod1).  Compose processing will be enabled by default on all
+4319/20/30 keyboards; the compose key will no longer serve as a mod1 key
+by default.
+
+The default KB_COMPOSE_TABLE will contain the standard DEC Compose
+sequences plus Tek specials, as implemented in the 4220/4230.  In the
+default KB_COMPOSE_TABLE, the modifier emitted is zero, and the keycodes
+emitted are the 96 keycodes after the actual keycodes (118-213), which
+are mapped to the ISO Latin-1 high half keysyms.  (A total of 110 extra
+keycodes, same as for Katakana, is allocated.)  Keycodes 214-218 are used
+for the extra diacritical output keys that avoids them being interpreted
+as 2-key compose input keys.
+
+Three-key compose sequences appear twice in the table, with the order of
+the last two keys reversed, in order to allow them to be entered in any
+order.
+
+The default configuration causes the bell to be rung on an invalid compose
+sequence, per the Tek 432x terminal definition of invalid Compose
+sequences.
+
+Note that Compose processing can function on the 4315/16/17 keyboard,
+though there is no Compose LED.  It is disabled by default by mapping the
+special key ("two arrows") to the "Meta_L" keysym (and keeping it bound to
+mod1).
+
+Note that the max-keycode value returned at connection startup always
+includes the 110 Compose/Katakana keycodes.  This overhead can be
+eliminated, and the Katakana and Compose keysyms moved to other modifiers,
+only after the existing Xlib XLookupString() is fully obsoleted, and
+replaced by a true multilingual XLookupText().
+
+			 Katakana Keycode Support
+
+This implementation of support for the Tek Katakana keyboard follows the
+Japan Unix Society/Fujitsu Japanese keyboard proposal, which is the
+original definition for JUSkeysym.h supplied by MIT.
+
+The server recognizes a key with the keysym "Kana_Lock", "Mode_switch", or
+Kana_Shift)" bound to any keysym in the list for its keycode.  (This
+ability to redefine the Kana shift key is not required by the JUS
+proposal, and is a technical violation of the protocol spec, but allows
+easy reconfiguration of the Kana capability, which is non-standard
+anyway.)  Note that the keysym "Mode_switch" is ambiguous as to whether it
+is a lock or a shift key, but it is is recognized in this implementation
+as a lock key.  (Mode_switch may be used in future modifier-based language
+selection methods, but such use will be backward-compatable with the JUS
+method.)
+
+Server compose sequence matching takes precedence over Katakana shift
+state; the compose sequences are compared against the unshifted keycodes,
+regardless of Katakana shift state.  Any Kana shift or lock keys that
+occur in a compose sequence have no effect on Kana shift state.
+
+In order to allow user customization of the Kana keymapping, all the
+actual keycodes (8-117) are remapped to the next unused keycodes (118-227)
+when kana shift is in effect.  If the keycode does not have a keysym, the
+corresponding actual keycode (8-117) is sent.
+
+While any key bound to one of these keysyms is in the down state, the
+server lights the "Kana" LED (same physical LED as "Compose"), and emits a
+different set of keycodes for the keys defined to emit Kana characters.
+The keycode-keysym mapping established at system startup by xconfig for
+the Katakana keyboard in the file /usr/lib/X/config/xxTekIntl/Xkm.katakana
+attaches "Kana_Lock" to the Katakana key (which is the "Compose" key on
+other keyboards, and "Multi_key" in the default keycode-keysym mapping
+table), and attaches the required Kana keysyms to the first keysym in the
+list for the shifted Kana keycodes.  The Kana keysyms will be consistent
+with the Tek Katakana keyboard, the file JUSkeysym.h, and the file
+keysymdef.h.
+
+For the Katakana keyboard, Hex Compose is initiated by a control-Kana
+keypress in Kana shift mode, 7-bit Mnemonic compose in unshifted (Roman)
+mode.  (Note that Mnemonic compose requires server-side Compose
+processing.)  Compose processing is supported as in the Tek terminal
+Katakana keyboard, but note that all modified Kana keypresses except
+control-Kana will cause a Kana mode switch.
+
+Note that in this implementation, control characters are not accessable
+when in Kana mode, because XLookupString depends on the ASCII keysyms to
+obtain control characters, and the Kana keycodes are a separate set from
+the ASCII keycodes.  This will be fixed when the R4 "bi-lingual keyboard"
+protocol change is implemented, or when the new keyboard architecture is
+implemented.
+
+Also, once either the bi-lingual change or the new keyboard architecture
+is in place, Latin-1 mnemonic compose sequences can be supported, either
+using the extra set of keycodes (once the Kana keysyms are moved to keysym
+3 and 4 of the normal keycodes), or using the fifth keysym in the list for
+the normal keycodes.  In the latter case, the output modifier in the
+composed key event is set to Mod5.  The KB_MODIFIER_INDEX property (see
+the keyboard rearchitecture protocol spec) is configured with the index
+with Mod5 set pointing to the fifth keysym in the list, to tell
+XLookupString which column to use for the Mnemonic Compose characters.
+
+Eisu_Lock is not recognized by the server; the only additional
+effect it could add to a Kana_Lock key is to initialize the keyboard to
+Ascii mode.
+
+The Fujitsu spec does not specify the effect of pressing Kana_Shift while
+Kana_Lock is in the "down" (i.e.  locked to Kana) state.  The JUS chair
+agrees that there is no effect defined.  In this implementation, it has
+the effect of temporarily shifting back to Ascii mode.
+
+The Fujitsu spec says that Kana lock takes precedence over caps lock.  The
+JUS chair agrees that this means that whatever XLookupString() does with
+the Kana keysyms due to Caps Lock being pressed is by definition correct.
+
+In this design, XLookupString() returns the Kana keysyms and untranslated
+ASCII (Latin-1) strings, leaving it up to the Kana application to
+translate the Kana keysyms to characters.
+
+When the full keyboard rearchitecture is complete, this Katakana support
+must be retained for compatibility with existing Japanese clients that
+still use the standard XLookupString().  The cost will be the increased
+table sizes mentioned above.  In the new system, the Katakana language
+modifier pattern must be pointed at a different column of the
+keycode-keysym and keycode-string tables, duplicating the Katakana
+keysyms, so that the correct encoding name can be associated with the
+Katakana modifier.
+

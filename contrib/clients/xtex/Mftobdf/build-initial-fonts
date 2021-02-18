@@ -1,0 +1,65 @@
+#!/bin/sh
+#	Posted-From: The MITRE Corp., Bedford, MA
+#	X-Alternate-Route: user%node@mbunix.mitre.org
+#	Return-Path: <ramsdell@huxley>
+#	Posted-Date: Mon, 20 Mar 89 07:08:32 EST
+#	Date: Mon, 20 Mar 89 07:08:32 EST
+#	From: ramsdell@huxley.mitre.org (John D. Ramsdell)
+#	To: grunwald@m.cs.uiuc.edu (Dirk Grunwald)
+#	Subject: texx2 font generator
+#	
+#	Here is a simple way to generate fonts for TeXx2.
+#	John
+#	
+#!/bin/sh
+FONTDPI=300
+TFMFONTDIR=/usr/local/lib/tex/fonts/tfm
+DPI=$1
+XFONTDIR=/usr/local/lib/tex/fonts/snf$DPI
+
+# MAG=1000*DPI/FONTDPI
+case "$DPI" in
+150)	MAG=500;;
+100)	MAG=333;;
+ 75)	MAG=250;;
+  *)	echo "Unknown size $1" 1>&2; exit 1;;
+esac
+
+if test ! -d $XFONTDIR
+then 
+   echo Cannot find $XFONTDIR
+   exit 1
+fi
+
+TMPDIR=/tmp/tfm2snf$$
+trap 'rm -rf /tmp/$TMPDIR; exit' 0 1 2 3 15
+mkdir $TMPDIR
+cd $TMPDIR
+
+for tfm in $TFMFONTDIR/*.tfm
+do
+    base=`basename $tfm .tfm`
+    for scale in "1000" "1098" "1200" "1440" "1728" "2074" "2488" \
+		"2988" "3583" "4300" "5160"
+    do
+	mftobdf -mag $MAG -scaled $scale $base
+    done
+done
+
+#  Process bdf files.
+for file in *.bdf ;
+do
+    if test ! -s $file
+    then
+	echo $file is empty
+    else
+	base=`basename $file .bdf`
+	echo Processing $base
+	bdftosnf $base.bdf > $XFONTDIR/$base.snf
+    fi
+done
+#
+cd $XFONTDIR
+rm -rf $TMPDIR
+mkfontdir
+

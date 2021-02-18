@@ -1,0 +1,24 @@
+.TH GIFTOIMG 1 "27 November 1989" "X Version 11"
+.SH NAME
+giftoimg \- Convert GIF file to Img file
+.SH SYNOPSIS
+.PP
+.B giftoimg
+.I infile
+.I outfile
+.br
+.SH DESCRIPTION
+.PP
+.B giftoimg
+converts a GIF image file to color-mapped Img format.  This is
+i simple hack of an existing GIF reader, and may not be bullet-proof.
+It is included here as a convience for importing GIF files,
+which appear to be available in greater numbers than most other
+file formats at this time.
+.PP
+.I infile
+names the GIF input file, and
+.I outfile
+names the Img output file.
+.SH AUTHOR
+Paul Raveling, USC Information Sciences Institute (Raveling@isi.edu)

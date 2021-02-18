@@ -1,0 +1,8 @@
+*trial*accelerators: #augment\n\
+	<KeyPress>A: 	set() actionA()\n\
+	<KeyPress>B: 	set() actionB()\n\
+	<KeyPress>C: 	set() actionC()
+*trial*translations: #replace\n\
+	<Btn1Down>,<Btn1Up>:	set() actionA()\n\
+	<Btn3Down>:	set() actionC()\n\
+	<Btn3Up>:	unset()

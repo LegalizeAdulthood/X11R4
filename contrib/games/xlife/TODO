@@ -1,0 +1,22 @@
+Box a region.
+	Rotate box
+	Flip box
+	Move box
+	Save box
+
+Read different file formats (bitmap....)
+
+See loaded image before placement, allows construction of objects.
+
+Current save files are larger then they need to be, to avoid a algorithim
+dependant save file format. Having the ability to load and save to an
+
+x y top_of_box bottom_of_box format insted of
+
+x y
+x y
+x.....(repeat as needed)
+
+would be good.
+
+Many error messages are highly non-optimal ...

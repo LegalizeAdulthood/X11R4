@@ -1,0 +1,9 @@
+#define IHaveSubdirs
+
+#if SY_AIX221
+        SUBDIRS = $(SYS_IDENT)
+#else
+        SUBDIRS = $(SYS_IDENT) common
+#endif
+
+

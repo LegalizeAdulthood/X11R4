@@ -1,0 +1,660 @@
+
+
+
+     XWTITLEBAR(3X)                                     XWTITLEBAR(3X)
+
+
+
+
+     NAME
+          XwtitlebarWidgetClass - An X Widget for creating titlebars.
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/TitleBar.h>
+
+
+     CLASSES
+          A subclass of Core, Composite, Constraint and
+          XwManagerClass.
+
+          The widget class to use when creating a TitleBar widget is
+          XwtitlebarWidgetClass.
+
+          The class name of TitleBar is TitleBar.
+
+     DESCRIPTION
+          TitleBar provides a flexible mechanism for creating
+          titlebars containing text and arbitrary widgets.  Inputs are
+          an optional text string and any number of widgets to manage.
+          The title string will be displayed in a StaticText widget
+          (refer to XWSTATICTEXT(3X)).  Managed widgets may have
+          optionally specified layout information (see CONSTRAINT
+          RESOURCES below).
+
+          When TitleBar is directed to become narrower than is
+          neccessary to display all of its interior widgets, some
+          widgets may be hidden.  The XtNprecedence resource in each
+          managed widget controls this feature.
+
+          As TitleBar is directed to become narrower and narrower,
+          widgets whose sum of XtNrPadding and XtNlPadding is greater
+          than zero will have their padding collapsed to one pixel.
+          Widgets will have their padding stripped in order of
+          decreasing values of XtNprecedence.
+
+          If, after collapsing all of the widgets' padding, TitleBar
+          is still too narrow to display all of its children widgets,
+          widgets will be hidden.  Widgets will be hidden in order of
+          decreasing values of XtNprecedence.  TitleBar will try to
+          always display a widget of the highest priority (lowest
+          value of XtNprecedence, even if it must be clipped.
+
+          Users of TitleBar should note that when children widgets are
+          hidden they are completely hidden.  Additionally, users who
+          wish to make extensive use of the obscurability rules should
+          read carefully the section on XtNprececence in the
+          CONSTRAINT RESOURCES section below.
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTITLEBAR(3X)                                     XWTITLEBAR(3X)
+
+
+
+
+     NEW RESOURCES
+          To specify any of these resources within a resource defaults
+          file, simply drop the XtN prefix from the resource name.
+          TitleBar defines the following new resources:
+
+
+                              TitleBar Resource Set
+     Name                  Class                Type          Default
+     _______________________________________________________________________
+     XtNtitlePrecedence    XtCTitlePrecedence   int           0
+     XtNtitleRegion        XtCTitleRegion       XwAlignment   XwALIGN_CENTER
+     XtNtitlePosition      XtCTitlePosition     int           0
+     XtNtitleRPadding      XtCTitleRPadding     int           1
+     XtNtitleLPadding      XtCTitleLPadding     int           1
+     XtNtitleForeground    XtCForeground        Pixel         black
+     XtNtitleBackground    XtCBackground        Pixel         white
+     XtNtitleHSpace        XtNTitleHSpace       int           2
+     XtNtitleVSpace        XtVTitleHSpace       int           2
+     XtNtitleBorderWidth   XtCBorderWidth       int           0
+     XtNtitleSelect        XtCCallback          Pointer       NULL
+     XtNtitleRelease       XtCCallback          Pointer       NULL
+     XtNhSpace             XtCHSpace            int           2
+     XtNvSpace             XtCVSpace            int           2
+     XtNenter              XtCCallback          Pointer       NULL
+     XtNleave              XtCCallback          Pointer       NULL
+     XtNselect             XtCCallback          Pointer       NULL
+     XtNrelease            XtCCallback          Pointer       NULL
+
+
+
+          XtNtitlePrecedence
+               The value to be loaded into the constraint record of
+               the optional StaticText widget.
+
+          XtNtitleRegion
+               The value to be loaded into the XtNtitleRegion
+               constraint resource of the optional StaticText widget.
+
+          XtNtitlePosition
+               The value to be loaded into the XtNtitlePosition
+               constraint resource of the optional StaticText widget.
+
+          XtNtitleRPadding
+               The value to be loaded into the XtNtitleRPadding
+               constraint resource of the optional StaticText widget.
+
+          XtNtitleLPadding
+               The value to be loaded into the XtNtitleLPadding
+               constraint resource of the optional StaticText widget.
+
+          XtNtitleForeground
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTITLEBAR(3X)                                     XWTITLEBAR(3X)
+
+
+
+
+               The value to be loaded into the XtNforeground resource
+               of the optional StaticText widget's core part.
+
+          XtNtitleBackground
+               The value to be loaded into the XtNbackground resource
+               of the optional StaticText widget's core part.
+
+          XtNtitleHSpace
+               The value to be loaded into the XtNhSpace resource of
+               the optional StaticText widget.
+
+          XtNtitleVSpace
+               The value to be loaded into the XtNvSpace resource of
+               the optional StaticText widget.
+
+          XtNtitleBorderWidth
+               The value to loaded into the XtNborderWidth resource of
+               the optional StaticText widget.
+
+          XtNtitleSelect
+               The value loaded into the XtNselect resource of the
+               optional StaticText widget.
+
+          XtNtitleRelease
+               The value loaded into the XtNrelease resource of the
+               optional StaticText widget.
+
+          XtNhSpace
+               The amount of space to maintain between the right and
+               left of the titlebar and the interior widgets.
+
+          XtNvSpace
+               The amount of space to maintain between the top and
+               bottom of the titlebar and the interior widgets.
+
+          XtNenter, XtNleave, XtNselect, and XtNrelease
+               Callbacks provided for control of TitleBar.  The data
+               parameter is unused.
+
+     INCORPORATED RESOURCES
+          The TitleBar creates an internal StaticText widget to handle
+          the title string.  In order to provide the user some control
+          over the appearance of this internal widget, the following
+          resources defined by StaticText are incorporated into
+          TitleBar's resource list.
+
+          It must be noted that only the resources within the
+          following tables will have any effect on the internal
+          StaticText widget.  The other resources defined for
+          StaticText will be overridden by TitleBar.
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTITLEBAR(3X)                                     XWTITLEBAR(3X)
+
+
+
+
+          For a complete description of the following resources, refer
+          to the manual page given in the table heading.
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type    Default
+     ________________________________________________________________________
+     XtNhighlightColor       XtCForeground           Pixel   Black
+     XtNhighlightStyle       XtCHighlightStyle       int     XwPATTERN_BORDER
+     XtNhighlightTile        XtCHighlightTile        int     XwBACKGROUND
+     XtNhighlightThickness   XtCHighlightThickness   int     0
+     XtNtraversalType        XtCTraversalType        int     HIGHLIGHT_OFF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTITLEBAR(3X)                                     XWTITLEBAR(3X)
+
+
+
+
+                Static Text Resource Set -- STATICTEXT(3X)
+       Name           Class          Type            Default
+       ____________________________________________________________
+       XtNstring      XtCString      char *          NULL
+       XtNalignment   XtCAlignment   XwAlignment     XwALIGN_CENTER
+       XtNwrap        XwCWrap        Boolean         TRUE
+       XtNlineSpace   XtCLineSpace   int             0
+       XtNfont        XtCFont        XFontStruct *   Fixed
+
+
+
+
+     CONSTRAINT RESOURCES
+          The following resources will be attached to every widget
+          inserted into TitleBar.  See CONSTRAINT(3X) for a general
+          discussion of constraint resources.
+
+          TitleBar uses the constraint resources as hints during the
+          layout of its managed children.  Under certain conditions,
+          any of these resources except XtNprecedence can (and will)
+          be ignored by TitleBar.
+
+
+           Constraint Resource Set -- Children of TITLEBAR(3X)
+         Name            Class           Type          Default
+         ________________________________________________________
+         XtNregion       XtCRegion       XwAlignment   See below.
+         XtNposition     XtCPosition     int           0
+         XtNlPadding     XtCLPadding     int           2
+         XtNrPadding     XtCRPadding     int           2
+         XtNprecedence   XtCPrecedence   int           1
+
+
+
+          XtNregion
+               Associates a child with a region of the titlebar.  The
+               regions may be specified in the resource default file
+               as "left" for XwALIGN_LEFT, "center" for
+               XwALIGN_CENTER, and "right" for XwALIGN_RIGHT.
+
+               During layout widgets with XtNregion values of
+               XwALIGN_LEFT grouped to the left end of TitleBar.
+               Widgets with XtNregion values of XwALIGN_LEFT are
+               grouped to the right of TitleBar.  Widgets with
+               XtNregion values of XwALIGN_CENTER will be grouped
+               between the left and right groups.  Additionally,
+               TitleBar tries to center the center group within the
+               TitleBar.
+
+               Widgets for which XtNregion is unspecified or
+               XwALIGN_NONE when XtNstring is non-null, will be
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTITLEBAR(3X)                                     XWTITLEBAR(3X)
+
+
+
+
+               assigned one of the two regions not equal to
+               XtNtitleRegion in an alternating fashion.
+
+               Widgets for which XtNregion is unspecified or
+               XwALIGN_NONE when XtNstring is null, will be assigned a
+               region.  The first such widget will be assigned to the
+               left region, the next to the center region, the next to
+               the right region, the next to the left region, and so
+               forth.
+
+          XtNposition
+               This resource gives the order of widgets within region.
+               The left and the center region are layed out with
+               XtNposition values increasing from left to right.  The
+               right region is laid out with XtNposition values
+               increasing from right to left.
+
+               Position values are unique within a region.  If two
+               widgets are assigned the same position, the widget
+               which was assigned first gets the position.  The second
+               widget gets the next available position.  For example,
+               widget1 and widget2 are the only widgets inserted in
+               TitleBar.  Widget1 is inserted befor widget2.  Widget1
+               and widget2 are both assigned a position of 4.  Widget1
+               will be given the position of 4, and widget2 will be
+               assigned a position of 5.
+
+          XtNlPadding
+               The number of pixels that TitleBar should try to
+               maintain between the left of the widget and the right
+               padding of the sibling widget to the left.  For
+               example, widget1 is to the left of widget2 within
+               TitleBar.  Widget1 has a XtNrPadding value of 5.
+               Widget2 has a XtNlPadding value of 5.  The borders of
+               widget1 and widget2 will be 10 pixels apart.
+
+               If TitleBar is too narrow to honor all of its
+               children's padding requests without hiding some
+               children, some, possibly all, padding requests will be
+               collapsed.
+
+          XtNrPadding
+               The number of pixels that TitleBar should try to
+               maintain between the right of the widget and the left
+               padding of the sibling widget to the right.  For
+               example, widget1 is to the right of widget2 within
+               TitleBar.  Widget1 has a XtNlPadding value of 5.
+               Widget2 has a XtNrPadding value of 5.  The borders of
+               widget1 and widget2 will be 10 pixels apart.
+
+               If TitleBar is too narrow to honor all of its
+
+
+
+     Hewlett-Packard Company       - 6 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTITLEBAR(3X)                                     XWTITLEBAR(3X)
+
+
+
+
+               children's padding requests without hiding some
+               children, some, possibly all, padding requests will be
+               collapsed.
+
+          XtNprecedence
+               When TitleBar is too narrow to display all of its
+               children, this resource is used to determine which
+               children should be hidden.  Widgets with high values of
+               XtNprecedence are hidden first.  Precedence values are
+               relative to all other widgets within an instantiation
+               of TitleBar.  This means that all widgets, regardless
+               of their region, with high values of XtNprecedence will
+               be hidden before any widgets with the next lower values
+               are hidden.
+
+               Values of XtNprecedence need not be unique.  If values
+               are unique, there is no question about which widget is
+               first to lose its padding, nor about which widget is
+               first to be hidden.
+
+               If values are not unique for all children of TitleBar,
+               there need be no question about which widget is acted
+               on first, but it is dependent on both insertion order
+               and precedence.  The last widget inserted in TitleBar
+               of a given precedence is the first to lose its
+               requested padding  (of widgets with that priority).
+               Widgets lose padding from last inserted to first
+               inserted, within a given level of precedence.  When
+               hiding widgets, widgets within a given precedence level
+               are hidden from last inserted to first inserted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 7 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTITLEBAR(3X)                                     XWTITLEBAR(3X)
+
+
+
+
+     INHERITED RESOURCES
+          The following resources are inherited from the indicated
+          superclasses:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+          The input to the toggle is driven by the mouse buttons.  The
+          default translation set defining this button is listed
+          below.
+                           <EnterWindow>:      enter()"
+                           <LeaveWindow>:      leave()"
+                           <Btn1Down>:         select()"
+                           <Btn1Up>:           release()"
+
+     ACTIONS
+          enter
+               If keyboard traversal is active (argument type
+               XtNtraversalOn with argument value TRUE) and the parent
+               of this widget is not a subclass of XwManager, initiate
+               keyboard traversal.  After this, the callback list is
+               invoked.
+
+          leave
+               If keyboard traversal is active (argument type
+               XtNtraversalOn with argument value TRUE) and the parent
+               of this widget is not a subclass of XwManager,
+               terminate keyboard traversal.  After this, the callback
+               list is invoked.
+
+          select
+
+
+
+     Hewlett-Packard Company       - 8 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTITLEBAR(3X)                                     XWTITLEBAR(3X)
+
+
+
+
+               Invokes the select callback list.
+
+          release
+               Invokes the release callback list.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 9 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTITLEBAR(3X)                                     XWTITLEBAR(3X)
+
+
+
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), CONSTRAINT(3X), XWMANAGER(3X), XWSTATICTEXT(3X),
+          XWCREATETILE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company      - 10 -                   Aug 9, 1988
+
+
+

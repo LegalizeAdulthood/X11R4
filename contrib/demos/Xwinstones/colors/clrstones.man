@@ -1,0 +1,21 @@
+.TH COLORSTONES 1 "June 1989" "X Version 11"
+.SH NAME
+colorstones -
+.SH SYNOPSIS
+.B "colorstones"
+[-option ...]
+.SH DESCRIPTION
+.PP
+Tests the use the XStoreColors.
+.sk 10
+.SH OPTIONS
+.TP 8
+.B \-help
+This option displays the help menu.
+.TP 8
+.B \-h
+This option displays the help menu.
+.SH "SEE ALSO"
+X(1),
+.SH "COPYRIGHT"
+International Business Machines--1989

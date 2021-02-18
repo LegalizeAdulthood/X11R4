@@ -1,0 +1,221 @@
+
+
+Chapter 1	NCSA HDF Basics
+
+
+
+Chapter Overview
+What Is Hierarchical Data Format?
+Why Was HDF Created?
+HDF Application Software
+Getting Started with HDF
+Installing and Using HDF
+How to Get HDF
+
+
+Chapter Overview
+
+This chapter provides a description of NCSA HDF, the reasons 
+behind its creation, and a brief description of HDF application 
+software.
+
+
+.c2.What Is Hierarchical Data Format?
+
+The Hierarchical Data Format (HDF) is a file structure that is 
+designed to facilitate the sharing of data between different people, 
+different projects, and different types of computers.
+
+HDF files are self-describing; that is, it is possible to fully 
+understand the structure and contents of a file just from the 
+information stored in the file itself. HDF files employ predefined 
+tags to carry such information as the amount of data, its 
+dimensions, and its location in the file. A program that has been 
+written to interpret certain tag types can scan a file containing 
+those tag types and process the corresponding data.
+
+Related items of information about a particular type of data are 
+grouped into sets, such as the raster image sets (Chapter 2) and 
+scientific data sets (Chapter 3). Each set defines an application 
+area supported by HDF.
+
+Figure 1.1 shows a conceptual view of an HDF file containing a 
+scientific data set. The actual two-dimensional array of data is 
+only one element in the set. Other elements include the number of 
+dimensions (rank), the sizes of the dimensions identifying 
+information about the data and axes, and scales (ranges) for the 
+axes.
+
+
+Figure 1.1  HDF File with Scientific Data Set
+
+                                                            
+
+
+Why Was HDF Created?
+
+HDF was created at the National Center for Supercomputing 
+Applications (NCSA) to serve the needs of diverse groups of 
+scientists working on supercomputing projects of many kinds. 
+Users commonly generate and process data files on several 
+different machines, use various software packages to process files, 
+and share data files with others who use different machines and 
+software.
+
+In addition, the mixture of information that users need to work 
+with often varies from one file to another, even for the same 
+application. The files may be conceptually related, but tend to be 
+physically separated:  some data, for example, may be dispersed 
+among different files, some in program code, and some in the 
+minds of various users.
+
+HDF addresses these problems by providing a general purpose file 
+structure that
+
+¥	makes it possible for programs to obtain information about the 
+data in a file from the file itself, rather than from another 
+source
+
+¥	lets you store different mixtures of data and related information 
+in different files, even when the files are processed by the same 
+application program
+
+¥	standardizes the formats and descriptions of many types of 
+commonly used data sets, such as raster images and scientific 
+data
+
+¥	encourages the use of a common data format by all machines 
+and programs that produce files containing a specific data set
+
+¥	can be adapted to accommodate virtually any kind of data by 
+defining new tags or new combinations of tags
+
+
+HDF Application Software
+
+In order to minimize the amount of knowledge you need to have 
+about HDF, calling interfaces are being developed for specific 
+types of applications, such as the storage and display of raster 
+images or scientific data archiving. A calling interface is a 
+library of routines that can be called from an application program 
+for storing and retrieving information, including raw data, from 
+a particular type of HDF file.
+
+Different applications typically require different interfaces. One 
+such interface, an interface for working with 8-bit raster images 
+stored in HDF files, is the subject of Chapter 2, "Using NCSA HDF 
+for 8-Bit Raster Images." Calling interfaces for other applications, 
+such as storing scientific data, are currently under development. 
+An example of an interface for storing scientific data may also be 
+found in Chapter 3. These interfaces are mutually compatible, and 
+user programs can combine calls to routines in different 
+interfaces when they need to store different kinds of data in the 
+same file.
+
+In some rare cases, an application may require the use of a 
+combination of routines from different interfaces. Just as it is 
+possible to define new HDF tags, it is also possible to build new 
+interfaces by combining routines from two or more existing 
+interfaces.
+
+HDF files tend to be used on several different machines, and HDF 
+interfaces developed at NCSA are implemented on as many 
+machines as possible. An important goal in the development of 
+NCSA HDF user interfaces is to eliminate the necessity of 
+changing program code when moving an application from one 
+machine to another.
+
+
+Getting Started with HDF
+
+Installing and Using HDF
+Appendix D contains a list of machines at NCSA that have HDF 
+libraries that are available to all users. If you do not have access to 
+a machine that already has an HDF library, you will need to 
+install it yourself or have it installed. Although procedures for 
+installing the HDF library vary from one system to another, the 
+basic steps are the same in all cases.
+
+First, you need to get the software from NCSA or elsewhere. You 
+might get the actual precompiled library, in which case you can 
+load it into your machine into an appropriate directory. If instead 
+you get the source code for the HDF library, you first have to 
+compile the source code into a linkable library.
+
+Some of the HDF routines are command line utilities, which 
+means that you simply execute them by typing their names in as 
+commands, using the appropriate parameters. Other routines 
+include those that you call from within C or FORTRAN programs. 
+When you write programs that call these routines, you just link the 
+library to your program at compile time.
+
+Detailed information on how to install and use HDF on specific 
+systems can be found in the documentation that comes with the 
+system-specific versions of the software.
+
+
+How to Get HDF
+If you are connected to Internet (NSFNET, ARPANET, MILNET, 
+etc.), you may order HDF at no charge from an anonymous FTP 
+(file transfer protocol) server at NCSA. To transfer the files by this 
+method, first log on to a host at your site that is connected to the 
+Internet and is running software supporting the FTP command.
+
+Invoke FTP on most systems by entering either of the following 
+command lines:
+
+% ftp ftp.ncsa.uiuc.edu
+
+% ftp 128.174.20.50
+
+Log in by entering anonymous for the name. Enter your local 
+login name for the password. Move to the directory HDF by issuing 
+the command cd HDF. Enter get README.FIRST to obtain a 
+copy of the README file(s) that contain further information on 
+how to get and compile the most recently released version of HDF 
+for your machine and operating system and to determine which 
+files to transfer to your home machine.
+
+HDF disk copies and printed manuals are available for a small 
+fee that covers materials, handling, and postage. Also available is 
+an anonymous FTP tape that includes the contents of all disks. 
+Orders can only be accepted if accompanied by a check made out in 
+U.S. dollars to the University of Illinois. You may receive an 
+order form by contacting:
+
+NCSA Documentation Orders
+152 Computing Applications Building
+605 East Springfield Avenue
+Champaign, IL  61820
+
+HDF documentation, program, and source code are now in the 
+public domain. You may copy, modify, and distribute these files as 
+you see fit.
+
+1.1	NCSA HDF
+
+HDF Basics	1.1
+
+National Center for Supercomputing Applications
+
+February 1989
+
+                                                                
+
+
+
+
+1.1	NCSA HDF
+
+NCSA HDF Basics	1.1
+
+National Center for Supercomputing Applications
+
+February 1989
+
+                                                                
+
+
+
+
+

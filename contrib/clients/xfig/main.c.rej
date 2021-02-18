@@ -1,0 +1,35 @@
+***************
+*** 252,258
+  	{
+  		XrmValue    value;
+  		XrmDatabase newdb = (XrmDatabase) 0;
+! 		extern XrmDatabase XtDefaultDB;
+  
+  		value.size = sizeof("White");
+  		value.addr = "White";
+
+--- 254,260 -----
+  	{
+  		XrmValue    value;
+  		XrmDatabase newdb = (XrmDatabase) 0;
+! 		XrmDatabase XtDefaultDB;
+  
+  		XtDefaultDB = XtDatabase(tool_d);
+  		value.size = sizeof("White");
+***************
+*** 254,259
+  		XrmDatabase newdb = (XrmDatabase) 0;
+  		extern XrmDatabase XtDefaultDB;
+  
+  		value.size = sizeof("White");
+  		value.addr = "White";
+  		XrmPutResource(&newdb, "xfig*borderColor", "String",
+
+--- 256,262 -----
+  		XrmDatabase newdb = (XrmDatabase) 0;
+  		XrmDatabase XtDefaultDB;
+  
++ 		XtDefaultDB = XtDatabase(tool_d);
+  		value.size = sizeof("White");
+  		value.addr = "White";
+  		XrmPutResource(&newdb, "xfig*borderColor", "String",

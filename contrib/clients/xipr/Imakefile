@@ -1,0 +1,13 @@
+LOCAL_LIBRARIES = $(XLIB)
+OBJS = bitimp.o readump.o swap.o
+
+ComplexProgramTarget(bitimp)
+
+all:: xipr
+
+xipr: xipr.sh
+	cp xipr.sh xipr
+
+InstallProgram(xipr,$(BINDIR))
+InstallManPage(xipr,$(MANDIR))
+

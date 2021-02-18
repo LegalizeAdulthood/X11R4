@@ -1,0 +1,5 @@
+; $Header: /afs/.andrew.cmu.edu/itc/sm/releases/X.V11R4/andrew/overhead/eli/elifiles/RCS/misc.eli,v 2.1 88/09/27 19:11:18 ghoti Exp $
+; $Source: /afs/.andrew.cmu.edu/itc/sm/releases/X.V11R4/andrew/overhead/eli/elifiles/RCS/misc.eli,v $
+
+(defun set (x y)
+  (eval (list 'setq x 'y)))

@@ -1,0 +1,9 @@
+
+PROGRAMS = startx
+
+MakeScriptFromCpp(startx, -DBINDIR=$(BINDIR) -DUNSUPBINDIR=$(UNSUPBINDIR))
+
+InstallProgram(startx,$(BINDIR))
+
+clean::
+	/bin/rm -rf $(PROGRAMS)

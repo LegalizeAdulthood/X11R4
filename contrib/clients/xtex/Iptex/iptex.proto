@@ -1,0 +1,119 @@
+#!/bin/sh
+#
+# print a dvi file on the imagen
+#
+#	The 'bin' symbol will be overwritten with the real name by the
+#	install
+#
+IMAGEN=BIN/imagen1
+IPR=IPRBIN/ipr
+iprflags=
+cflag=-c
+flags="-r 300"
+sflag="no"
+legal="no"
+printer=""
+preraster="no"
+# eat arguments
+
+while [ $# -gt 0 ]
+do
+	case "$1" in
+	-force)
+		flags="$flags -force";
+		cflag=""
+		;;
+	-t|-s)		# for TROFF people
+		sflag="yes";;
+	-P*)
+		printer="$1" ;
+		;;
+	-A*)
+		iprflags="$iprflags $1";;
+	-I)
+		iprflags="$iprflags $2"
+		shift;;
+#
+#	The following options are for imagen1. We need to know about them
+#	to process their arguments
+#
+	-p|+p|-l|-force|-D|-v|+v|-cwd|-cht)
+		flags="$flags $1" ;
+		;;
+#
+#	At UIUC, legal sized paper can only be printed on imagen-1.
+#	An alternative to this code is to restrict the printer choice
+#	to one of a number of legal-ready printers.
+#
+	-legal)
+		flags="$flags $1" ;
+		legal="yes";
+		if [ printer != "-P1" ] ; then
+		    echo "Legal size selected, Imagen-1 being used" 1>&2
+		fi
+		printer="-P1"
+		;;
+	-preraster)
+		preraster="yes"
+		;;
+	-rm|-sm|-tm|-m|-r|-d|-e)
+		flags="$flags $1 $2" ;
+		shift;
+		;;
+	*)
+		break
+	esac
+	shift
+done
+
+if [ $# != 1 ]; then
+	echo "Usage: $0 [options] [-I ipr-arg] [imagen1-args] filename" 1>&2
+	echo "Option         | Default | Meaning" 1>&2
+	echo "-legal         | false   | Use legal sized paper" 1>&2
+	echo "-force         | false   | Force the output to be printed" 1>&2
+	echo "-s             | false   | Send output to stdout" 1>&2
+	echo "-preraster     | false   | Pre-rasterize the output" 1>&2
+	echo "-Pprinter      | ip1     | Select printer for output" 1>&2
+	echo "-Aacct         |         | Use printing account acct" 1>&2
+	echo " " 1>&2
+	echo "Imagen1 has the following options" 1>&2
+	$IMAGEN -help < /dev/null
+	exit 1
+fi
+
+dvifile=$1
+
+if [ ! -r $dvifile ]; then
+	dvifile=$1.dvi
+	if [ ! -r $dvifile ]; then
+		echo "$0: cannot find $1 or $1.dvi" 1>&2
+		exit 1
+	fi
+fi
+
+if [ "$cflag" = -c ]; then
+	trap 'rm -f /tmp/iptex$$' 0 1 2 3 15
+	if $IMAGEN  $flags $dvifile > /tmp/iptex$$; then
+	    if [ "$sflag" = yes ] ; then
+	        cat /tmp/iptex$$
+	    else
+		if [ $preraster = "yes" ] ; then
+		    $IPR -D'jobheader on' -D'prerasterization on' $iprflags $printer /tmp/iptex$$
+		else
+		    $IPR -D'jobheader on' $iprflags $printer /tmp/iptex$$
+		fi
+	    fi
+	else
+		echo $0': output not spooled (use -c to force)' 1>&2
+	fi
+else
+	if [ "$sflag" = yes ] ; then
+	    $IMAGEN $flags $dvifile
+	else
+	    if [ $preraster = "yes" ] ; then
+		$IMAGEN $flags $dvifile | $IPR -D'jobheader on' -D'prerasterization on' $iprflags $printer /tmp/iptex$$
+		else
+		$IMAGEN $flags $dvifile | $IPR -D'jobheader on' $iprflags $printer /tmp/iptex$$
+		fi
+	fi
+fi

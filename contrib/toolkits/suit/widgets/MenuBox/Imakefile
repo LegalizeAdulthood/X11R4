@@ -1,0 +1,45 @@
+    STD_DEFINES = LibraryDefines
+    CDEBUGFLAGS = -g /* LibraryCDebugFlags */
+       INCLUDES = -I. -I$(TOOLKITSRC) -I$(TOP) -I$(TOP)/X11
+   INSTALLFLAGS = $(INSTINCFLAGS)
+       LINTLIBS = $(LINTXLIB) $(LINTXTOOL)
+LOCAL_LIBRARIES = libMenu.a $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+
+#ifdef RtArchitecture
+             CC = pcc
+#endif
+
+HEADERS = \
+	Menu.h \
+	MenuBox.h \
+	MenuBoxP.h \
+	MenuShell.h \
+	MenuShellP.h
+
+LIBSRCS = \
+	Menu.c \
+	MenuBox.c \
+	MenuShell.c
+
+LIBOBJS = \
+	Menu.o \
+	MenuBox.o \
+	MenuShell.o
+
+SRCS = menutest.c
+OBJS = menutest.o
+
+ComplexProgramTarget(menutest)
+
+NormalLibraryObjectRule()
+
+NormalLibraryTarget(Menu,$(LIBOBJS))
+LintLibraryTarget(Menu,$(LIBSRCS))
+InstallLibrary(Menu,$(USRLIBDIR))
+InstallLintLibrary(Menu,$(LINTLIBDIR))
+
+InstallMultiple($(HEADERS),$(INCDIR))
+
+DependTarget()
+
+NormalLintTarget($(SRCS))

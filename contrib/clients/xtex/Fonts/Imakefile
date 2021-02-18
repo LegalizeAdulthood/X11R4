@@ -1,0 +1,153 @@
+/*
+ *	Makefiles for building fonts from the 85dpi PK distribution.
+ *
+ *	You need to compile & install mftobdf and install your fontdesc
+ *	file to look in the current directory (i.e. here)
+ *
+ *	You also need some way to change BDF files to whatever your
+ *	server groks. Usually, that's something like bdftosnf.
+ *
+ *	This is a fairly complete set of fonts. I took the local
+ *	lfonts.tex, ran it through the extract-fonts.el emacs lisp
+ *	program to extract file names and scaled and then used
+ *	those names & scales at 1000 & 1440 maginification.
+ *
+ *	These mags correspond to the default ``small'' and ``large''
+ *	view in texx2.
+ *
+ *	Your site may not need all of these fonts. It may need more.
+ *	If you need  more, look at build-font-makefile.c for a (hopefully)
+ *	simple method of generating these. There are minor problems
+ *	with determining the appropriate extension (e.g. 93pk) in this
+ *	program, but it works fairly well.
+ *
+ */
+
+MFTOBDF		=mftobdf
+BDFTOSNF	=bdftosnf
+MKFONTDIR	=mkfontdir
+COMPRESS	=compress
+
+DPI	=85
+
+PK	=\
+	cmb10.111pk cmb10.134pk cmb10.159pk cmb10.93pk cmbsy10.102pk\
+	cmbsy10.110pk cmbsy10.122pk cmbsy10.134pk cmbsy10.147pk cmbsy10.176pk\
+	cmbsy10.211pk cmbsy10.254pk cmbsy10.304pk cmbsy10.43pk cmbsy10.51pk\
+	cmbsy10.60pk cmbsy10.61pk cmbsy10.68pk cmbsy10.73pk cmbsy10.76pk\
+	cmbsy10.85pk cmbsy10.86pk cmbsy10.93pk cmbsy10.98pk cmbx10.102pk\
+	cmbx10.122pk cmbx10.134pk cmbx10.147pk cmbx10.176pk cmbx10.211pk\
+	cmbx10.254pk cmbx10.304pk cmbx10.85pk cmbx10.93pk cmbx12.122pk\
+	cmbx12.85pk cmbx5.122pk cmbx5.85pk cmbx6.122pk cmbx6.85pk cmbx7.105pk\
+	cmbx7.122pk cmbx7.61pk cmbx7.73pk cmbx7.85pk cmbx7.87pk cmbx8.122pk\
+	cmbx8.85pk cmbx9.122pk cmbx9.85pk cmbxsl10.102pk cmbxsl10.110pk\
+	cmbxsl10.122pk cmbxsl10.134pk cmbxsl10.147pk cmbxsl10.176pk\
+	cmbxsl10.211pk cmbxsl10.254pk cmbxsl10.304pk cmbxsl10.43pk\
+	cmbxsl10.51pk cmbxsl10.60pk cmbxsl10.61pk cmbxsl10.68pk cmbxsl10.73pk\
+	cmbxsl10.76pk cmbxsl10.85pk cmbxsl10.86pk cmbxsl10.93pk cmbxsl10.98pk\
+	cmcsc10.102pk cmcsc10.110pk cmcsc10.122pk cmcsc10.134pk cmcsc10.147pk\
+	cmcsc10.176pk cmcsc10.211pk cmcsc10.254pk cmcsc10.304pk cmcsc10.43pk\
+	cmcsc10.51pk cmcsc10.60pk cmcsc10.61pk cmcsc10.68pk cmcsc10.73pk\
+	cmcsc10.76pk cmcsc10.85pk cmcsc10.86pk cmcsc10.93pk cmcsc10.98pk\
+	cmdunh10.122pk cmdunh10.85pk cmex10.122pk cmex10.85pk cminch.122pk\
+	cminch.85pk cmitt10.102pk cmitt10.110pk cmitt10.122pk cmitt10.134pk\
+	cmitt10.147pk cmitt10.176pk cmitt10.211pk cmitt10.254pk cmitt10.304pk\
+	cmitt10.43pk cmitt10.51pk cmitt10.60pk cmitt10.61pk cmitt10.68pk\
+	cmitt10.73pk cmitt10.76pk cmitt10.85pk cmitt10.86pk cmitt10.93pk\
+	cmitt10.98pk cmmi10.122pk cmmi10.134pk cmmi10.147pk cmmi10.176pk\
+	cmmi10.211pk cmmi10.254pk cmmi10.304pk cmmi10.85pk cmmi10.93pk\
+	cmmi12.122pk cmmi12.85pk cmmi5.122pk cmmi5.85pk cmmi6.122pk cmmi6.85pk\
+	cmmi7.122pk cmmi7.85pk cmmi8.122pk cmmi8.85pk cmmi9.122pk cmmi9.85pk\
+	cmmib10.102pk cmmib10.110pk cmmib10.122pk cmmib10.134pk cmmib10.147pk\
+	cmmib10.176pk cmmib10.211pk cmmib10.254pk cmmib10.304pk cmmib10.43pk\
+	cmmib10.51pk cmmib10.60pk cmmib10.61pk cmmib10.68pk cmmib10.73pk\
+	cmmib10.76pk cmmib10.85pk cmmib10.86pk cmmib10.93pk cmmib10.98pk\
+	cmr10.122pk cmr10.134pk cmr10.176pk cmr10.211pk cmr10.254pk\
+	cmr10.304pk cmr10.85pk cmr10.93pk cmr12.122pk cmr12.85pk cmr17.122pk\
+	cmr17.85pk cmr5.122pk cmr5.85pk cmr6.122pk cmr6.85pk cmr7.122pk\
+	cmr7.176pk cmr7.254pk cmr7.85pk cmr8.122pk cmr8.85pk cmr9.122pk\
+	cmr9.85pk cmsl10.102pk cmsl10.122pk cmsl10.134pk cmsl10.147pk\
+	cmsl10.176pk cmsl10.211pk cmsl10.254pk cmsl10.304pk cmsl10.43pk\
+	cmsl10.51pk cmsl10.60pk cmsl10.61pk cmsl10.73pk cmsl10.85pk\
+	cmsl10.86pk cmsl10.93pk cmsl12.122pk cmsl12.85pk cmsl8.122pk\
+	cmsl8.85pk cmsl9.122pk cmsl9.85pk cmsltt10.102pk cmsltt10.110pk\
+	cmsltt10.122pk cmsltt10.134pk cmsltt10.147pk cmsltt10.176pk\
+	cmsltt10.211pk cmsltt10.254pk cmsltt10.304pk cmsltt10.43pk\
+	cmsltt10.51pk cmsltt10.60pk cmsltt10.61pk cmsltt10.68pk cmsltt10.73pk\
+	cmsltt10.76pk cmsltt10.85pk cmsltt10.86pk cmsltt10.93pk cmsltt10.98pk\
+	cmss10.102pk cmss10.110pk cmss10.122pk cmss10.134pk cmss10.147pk\
+	cmss10.176pk cmss10.211pk cmss10.254pk cmss10.304pk cmss10.43pk\
+	cmss10.51pk cmss10.60pk cmss10.61pk cmss10.68pk cmss10.73pk\
+	cmss10.76pk cmss10.85pk cmss10.86pk cmss10.93pk cmss10.98pk\
+	cmss12.122pk cmss12.85pk cmss17.122pk cmss17.85pk cmssbx10.102pk\
+	cmssbx10.110pk cmssbx10.122pk cmssbx10.134pk cmssbx10.147pk\
+	cmssbx10.176pk cmssbx10.211pk cmssbx10.254pk cmssbx10.304pk\
+	cmssbx10.43pk cmssbx10.51pk cmssbx10.60pk cmssbx10.61pk cmssbx10.68pk\
+	cmssbx10.73pk cmssbx10.76pk cmssbx10.85pk cmssbx10.86pk cmssbx10.93pk\
+	cmssbx10.98pk cmssi10.102pk cmssi10.110pk cmssi10.122pk cmssi10.134pk\
+	cmssi10.147pk cmssi10.176pk cmssi10.211pk cmssi10.254pk cmssi10.304pk\
+	cmssi10.43pk cmssi10.51pk cmssi10.60pk cmssi10.61pk cmssi10.68pk\
+	cmssi10.73pk cmssi10.76pk cmssi10.85pk cmssi10.86pk cmssi10.93pk\
+	cmssi10.98pk cmssi17.122pk cmssi17.85pk cmssq8.122pk cmssq8.85pk\
+	cmssqi8.122pk cmssqi8.85pk cmsy10.102pk cmsy10.122pk cmsy10.134pk\
+	cmsy10.147pk cmsy10.176pk cmsy10.211pk cmsy10.254pk cmsy10.304pk\
+	cmsy10.85pk cmsy10.93pk cmsy5.122pk cmsy5.85pk cmsy6.122pk cmsy6.85pk\
+	cmsy7.122pk cmsy7.85pk cmsy8.122pk cmsy8.85pk cmsy9.122pk cmsy9.85pk\
+	cmtex10.85pk cmtex8.85pk cmtex9.85pk cmti10.102pk cmti10.122pk\
+	cmti10.134pk cmti10.147pk cmti10.176pk cmti10.211pk cmti10.254pk\
+	cmti10.304pk cmti10.85pk cmti10.93pk cmti12.122pk cmti12.85pk\
+	cmti7.105pk cmti7.122pk cmti7.61pk cmti7.73pk cmti7.85pk cmti7.87pk\
+	cmti8.122pk cmti8.85pk cmti9.122pk cmti9.85pk cmtt10.102pk\
+	cmtt10.111pk cmtt10.122pk cmtt10.134pk cmtt10.147pk cmtt10.159pk\
+	cmtt10.176pk cmtt10.211pk cmtt10.254pk cmtt10.304pk cmtt10.43pk\
+	cmtt10.51pk cmtt10.60pk cmtt10.61pk cmtt10.73pk cmtt10.85pk\
+	cmtt10.86pk cmtt10.93pk cmtt12.122pk cmtt12.85pk cmtt8.122pk\
+	cmtt8.85pk cmtt9.122pk cmtt9.85pk cmu10.102pk cmu10.110pk cmu10.122pk\
+	cmu10.134pk cmu10.147pk cmu10.176pk cmu10.211pk cmu10.254pk\
+	cmu10.304pk cmu10.43pk cmu10.51pk cmu10.60pk cmu10.61pk cmu10.68pk\
+	cmu10.73pk cmu10.76pk cmu10.85pk cmu10.86pk cmu10.93pk cmu10.98pk\
+	culogo.122pk culogo.85pk lasy10.102pk lasy10.122pk lasy10.134pk\
+	lasy10.147pk lasy10.176pk lasy10.211pk lasy10.254pk lasy10.304pk\
+	lasy10.85pk lasy10.93pk lasy5.122pk lasy5.85pk lasy6.122pk lasy6.85pk\
+	lasy7.122pk lasy7.85pk lasy8.122pk lasy8.85pk lasy9.122pk lasy9.85pk\
+	lasyb10.102pk lasyb10.110pk lasyb10.122pk lasyb10.134pk lasyb10.147pk\
+	lasyb10.176pk lasyb10.211pk lasyb10.254pk lasyb10.304pk lasyb10.43pk\
+	lasyb10.51pk lasyb10.60pk lasyb10.61pk lasyb10.68pk lasyb10.73pk\
+	lasyb10.76pk lasyb10.85pk lasyb10.86pk lasyb10.93pk lasyb10.98pk\
+	lcircle10.122pk lcircle10.85pk lcirclew10.122pk lcirclew10.85pk\
+	line10.122pk line10.85pk linew10.122pk linew10.85pk manfnt.122pk\
+	manfnt.85pk
+
+FILES	= Imakefile FontMakefile build-fm.c \
+	extract-fl.el font-list fonts.el README
+
+all:
+	@echo Run manually in Fonts subdirectory
+	@echo either via  make bdf or make fonts
+
+bdf:
+	for font in $(PK);\
+	do\
+	  mftobdf -dpi $(DPI) $$font ;\
+	  compress *.bdf ;\
+	done
+	$(MKFONTDIR)
+
+fonts:
+	for font in $(PK);\
+	do\
+	  mftobdf -dpi $(DPI) $$font ;\
+	  base=`echo $$font | sed -e 's/pk//'`; \
+	  echo $$base; \
+	  $(BDFTOSNF) $$base.bdf > $$base.snf ; \
+	  rm -f $$base.bdf; \
+	  $(COMPRESS) $$base.snf;\
+	done
+	$(MKFONTDIR)
+
+tar:
+	cd ../..;\
+	for file in $(FILES); \
+	do \
+	  tar rf $(TARFILE) $(PRODUCT)/Fonts/$$file; \
+	done

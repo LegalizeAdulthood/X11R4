@@ -1,0 +1,27 @@
+#include <Xcu/WlmP.h>
+#include <Xcu/Label.h>
+#include <Xcu/Wlm.h>
+#include <Xcu/Command.h>
+#include <X11/Command.h>
+#include <Xcu/Bmgr.h>
+#include <Xcu/Button.h>
+#include <Xcu/Deck.h>
+#include <Xcu/Tbl.h>
+#include <Xcu/Rc.h>
+
+void
+make_tag_class_list (ww)
+    XcuWlmWidget ww ;
+{
+TAG_CLASS_ENTRY(ww, "Command", commandWidgetClass) ;
+TAG_CLASS_ENTRY(ww, "XcuLabel", xcuLabelWidgetClass) ;
+TAG_CLASS_ENTRY(ww, "XcuWlm", xcuWlmWidgetClass) ;
+TAG_CLASS_ENTRY(ww, "XcuCommand", xcuCommandWidgetClass) ;
+TAG_CLASS_ENTRY(ww, "XcuBmgr", xcuBmgrWidgetClass) ;
+TAG_CLASS_ENTRY(ww, "XcuButton", xcuButtonWidgetClass) ;
+TAG_CLASS_ENTRY(ww, "XcuDeck", xcuDeckWidgetClass) ;
+TAG_CLASS_ENTRY(ww, "XcuTbl", xcuTblWidgetClass) ;
+TAG_CLASS_ENTRY(ww, "XcuRc", xcuRcWidgetClass) ;
+return ;
+}
+

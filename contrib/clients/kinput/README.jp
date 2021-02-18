@@ -1,0 +1,48 @@
+kinput は X11 のアプリケーションが簡単に日本語を入力するためのフロントエ
+ンドです。
+
+kinput は X11 に用意されているクライアント間通信機能を用いて日本語入力を
+必要とするクライアントから入力のリクエストを受けると変換ウィンドウをポッ
+プアップし、変換を行ない、結果をクライアントに送ります。
+
+*Installation
+kinput はかな漢字変換のエンジンとして Wnn Version 4 を使用しています。従っ
+て kinput をインストールするには Wnn をインストールしておく必要がありま
+す。
+
+Imakefile/Makefile の WNNSRC に Wnn のソースディレクトリを指定して下さい。
+
+kinput の confirm.c は Athena widget のヘッダファイルをインクルードして
+いますがX11R4 の仕様に合わせて
+	#include <X11/Xaw/Label.h>
+という形式でインクルードしています。従って R3 の環境で kinput をコンパイ
+ルする時には confirm.c を修正して下さい。
+
+*Directories
+kinput のソースには３つのサブディレクトリがあります。それらの構成は次の
+ようになっています。
+
+	jclib/		かな漢字変換のライブラリのソース
+	cconv/		入力文字変換 (ローマ字かな変換など) の
+			ライブラリのソース、および変換ルール定義ファイル
+	xlocal/		wchar_t 型文字列、および COMPOUND_TEXT の
+			ハンドリングライブラリのソース
+
+*Protocol
+kinput とクライアントとの通信のプロトコルは PROTOCOL というファイルに記
+述されています。このプロトコルは JUS XXI ワーキンググループでの X11 の国
+際化に関するディスカッションをもとに作られたもので、シンプルでかつ特定の
+言語に依存しないようになっています。ですからこのプロトコルを用いて中国語
+や韓国語などを入力することも簡単にできます。
+
+*Client library for this protocol
+このプロトコルを用いて入力を行なうためのクライアントライブラリが
+convlib.c です。これは kterm のソースにあるものと同じものです。
+
+*Thanks
+入力のプロトコルに関する議論および kinput のベータテストに参加していただ
+いたJUS XXI ワーキンググループのメンバーに感謝します。
+
+					Makoto Ishisone
+					Software Research Associates, Inc.
+					ishisone@sra.co.jp

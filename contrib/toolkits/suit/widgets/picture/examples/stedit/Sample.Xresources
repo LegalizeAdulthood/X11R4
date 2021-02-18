@@ -1,0 +1,39 @@
+stedit*reverseVideo:	true
+stedit*coordinateXMin:	-1500
+stedit*coordinateYMin:	-1500
+stedit*coordinateXMax:	1500
+stedit*coordinateYMax:	1500
+stedit*lab_line_width.label:	1
+stedit*lab_line_color.background:	black
+stedit*lab_fill_color.background:	black
+stedit*lab_char_color.background:	black
+stedit*allowHoriz:		false
+stedit*allowVert:		true
+stedit*useBottom:		true
+stedit*useRight:		true
+stedit*ForceBars:		false
+stedit*StPicture.background:	wheat
+stedit*TransientShell.borderColor:	dark orchid
+stedit*MenuBox.hSpace:	0
+stedit*MenuBox.vSpace:	0
+stedit*Label.background:	dark orchid
+stedit*Label.foreground:	thistle
+stedit*Label.borderColor:	dark orchid
+stedit*Label.borderWidth:	0
+stedit*Command.background:	thistle
+stedit*Command.foreground:	dark orchid
+stedit*Command.borderColor:	dark orchid
+stedit*Command.borderWidth:	0
+stedit*Form.background:	thistle
+stedit*Form.borderWidth:	0
+stedit*Dialog.background:	thistle
+stedit*List.background:	thistle
+stedit*List.foreground:	dark orchid
+stedit*List.borderWidth:	0
+stedit*Text.borderColor:	dark orchid
+stedit*Text.background:	thistle
+stedit*Core.background:	aquamarine
+stedit*Logo.background:	gray
+stedit*Logo.foreground:	black
+stedit*Scrollbar.background:	aquamarine
+stedit*Scrollbar.foreground:	forest green

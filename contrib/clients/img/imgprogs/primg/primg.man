@@ -1,0 +1,133 @@
+.TH PRIMG 1 "27 October 1989" "X Version 11"
+.SH NAME
+primg, prscr, prport, prland \- Print image (window, screen, or file)
+.SH SYNOPSIS
+.PP
+.B primg
+[ 
+.B \-p
+]
+[ 
+.B \-l
+]
+[ 
+.B \-o
+.I output_file
+]
+[
+.I file1
+[
+.I file2 ...
+]
+.br
+.B prscr
+[ 
+.B \-o
+.I output_file
+]
+.br
+.B prport
+[ 
+.B \-o
+.I output_file
+]
+[
+.I file1
+[
+.I file2 ...
+]
+.br
+.B prland
+[ 
+.B \-o
+.I output_file
+]
+[
+.I file1
+[
+.I file2 ...
+]
+.br
+.SH DESCRIPTION
+.PP
+Print an image on an imagen printer.  This may be a currently displayed window,
+the entire screen, or one or more image files.
+.PP
+.B primg
+is the most general way to invoke this utility.  If
+at least one filename is present it prints whatever
+image files are named.  Image files are in the
+.B IMG
+(Simple Image) format.
+.PP
+To print the contents of a window, invoke
+.B primg
+without a filename and click the mouse over the desired window.
+Clicking over the screen background causes it to print the entire
+screen image.
+.PP
+.B prscr
+always prints the screen image.  In addition to being slightly more
+convenient than
+.B primg,
+this allows printing the screen without disturbing the cursor position.
+.PP
+.B prland
+and
+.B prport
+print in either landscape or portrait orientation.  They are equivalent
+to
+.B primg \-l
+and
+.B primg \-p,
+respectively.
+For these utilities, "portrait" means an unrotated view
+of the image, and "landscape" means a view rotated 90 degrees.
+.PP
+Output from any of these commands is directed by one of three
+means:
+.IP ""
+.B -o 
+.I output_file
+switch
+.IP ""
+.B priout 
+environment variable
+.IP ""
+default:  
+.I stdout
+.PP
+A
+.B \-o 
+.I output_file
+switch on the command line forces output to go to the named file.
+.PP
+If an environment variable named
+.I priout
+is defined, it specifies a destination in a subset of shell syntax.
+.TP
+.I | program [options...]
+pipes the output to the named program.  Setting
+.I priout
+to 
+.I "| lpr" 
+directs the output to the printer.  This printer should be
+a 300 dot-per-inch Imagen.
+.TP
+.I filename
+directs output to the named file.
+.TP
+.I > filename
+also directs output to the named file.
+.PP
+If neither the command line nor the
+.I priout
+environment variable specifies an output destination, Imagen output
+goes to the standard output stream.  This allows more flexibility
+in redirecting it on the command line than is possible when using
+the
+.I priout
+environment variable, but requires always giving the redirection
+explicitly.
+.SH AUTHOR
+Paul Raveling, USC Information Sciences Institute (Raveling@isi.edu)

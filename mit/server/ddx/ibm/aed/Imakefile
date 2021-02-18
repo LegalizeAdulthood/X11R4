@@ -1,0 +1,87 @@
+#include <Server.tmpl>
+
+SRCS =		aedBStore.c	\
+		aedCpArea.c	\
+		aedCursor.c	\
+		aedDebug.c	\
+		aedDLine.c	\
+		aedFillRct.c	\
+		aedFillSp.c	\
+		aedFont.c	\
+		aedGetSp.c	\
+		aedImgGBlt.c	\
+		aedIO.c		\
+		aedGC.c		\
+		aedLine.c	\
+		aedOSD.c	\
+		aedPolySeg.c	\
+		aedPntArea.c	\
+		aedPntWin.c	\
+		aedPushPxl.c	\
+		aedScrInfo.c	\
+		aedScrInit.c	\
+		aedSetSp.c	\
+		aedText.c	\
+		aedUtils.c	\
+		aedWindow.c	\
+		mfbutils.c	\
+		rtatUtils.c 
+
+OBJS =		aedBStore.o	\
+		aedCpArea.o	\
+		aedCursor.o	\
+		aedDebug.o	\
+		aedDLine.o	\
+		aedFillRct.o	\
+		aedFillSp.o	\
+		aedFont.o	\
+		aedGetSp.o	\
+		aedImgGBlt.o	\
+		aedIO.o		\
+		aedGC.o		\
+		aedLine.o	\
+		aedOSD.o	\
+		aedPolySeg.o	\
+		aedPntArea.o	\
+		aedPntWin.o	\
+		aedPushPxl.o	\
+		aedScrInfo.o	\
+		aedScrInit.o	\
+		aedSetSp.o	\
+		aedText.o	\
+		aedUtils.o	\
+		aedWindow.o	\
+		mfbutils.o	\
+		rtatUtils.o 
+
+
+INCLUDES = -I. -I../OPERATING_SYSTEM -I../../mfb -I../../mi -I../../../include -I$(INCLUDESRC) -I../common
+
+#if DebugServer && ProfileServer
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugServer
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileServer
+ProfiledLibraryObjectRule()
+# else
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+NormalRelocatableTarget(aed,$(OBJS))
+
+#if ProfileServer
+ProfiledRelocatableTarget(aed,$(OBJS))
+#endif
+#if DebugServer
+DebuggedRelocatableTarget(aed,$(OBJS))
+#endif
+
+DependTarget()
+
+LintLibraryTarget(aed,$(SRCS))
+NormalLintTarget($(SRCS))

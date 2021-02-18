@@ -1,0 +1,73 @@
+ Xtroff patch 4
+ --------------
+
+Patch 4 is a major overhaul of xtroff, to make it work much faster and to
+use better fonts under X11R3. (Please note that there appear to be some
+other patches floating around, so you may find your xtroff at a higher
+patchlevel than 4. Those patches have been incorporated in this version. The
+version released on the R3 contrib tape was at patchlevel 2, patch 3 is
+available by anonymous ftp as xtroff.r3.shar.Z on expo.lcs.mit.edu in the
+contrib/ directory and on ai.toronto.edu in the pub/X directory. Both
+patches have been released through comp.sources.x, so they should also be
+available from your nearest archive site)
+
+	- The major enhancements come from Dave Cahlander <dac@cray.com>,
+and include an awk script to generate X fonts with the PostScript collating
+sequence from the nice fonts that come with X11R3, and changed xtroff so
+that it trusts the fonts provided by Adobe and draws a word at a time,
+rather than following ditroff's character kerning. This improved speed
+tremendously. He's added a -full option to see the whole page on the screen,
+and provided special drawing routines for special characters that are not in
+the R3 fonts. The R3 fonts look much better than the scaled vfonts. If you
+have the Imagen fonts, you may want to convert those, however. (I have not
+tested Imagen font generation) Thanks are also due to DEC, Adobe and
+Bitstream for providing such nice fonts for the X1R3 distribution.
+
+	- Dave's also provided a script to convert NeWS fonts to X11 fonts
+with names that xtroff can use. This is in the NeWS directory with a
+Makefile - I haven't been able to test it since I don't have the NeWS fonts.
+However, if you do install the NeWS fonts, you may want to get rid of
+Tms{R,I,B,BI}{10,12,14,18,24}.snf.Z since the corresponding ones that come
+with X11R3 are much better - they have ligatures and so on.
+
+	- Dana Chee <dana@bellcore.com> fixed some problems with ditroff
+device control sequences, and with the scrollbars.
+
+	- menus pop down when they're supposed to, and menu text looks right.
+menus even unhighlight when the menu pops down.
+
+	- Fixed a nasty bug in page positioning - if you ever went a
+page back, going forward again became very non-deterministic.
+
+	- Sped up a few comparisons for font and character selection
+that were slowing things down.
+
+	- Enabled printing of a page, and of the entire document. You can
+set the printer from the menu, using the interaction Minubuf.
+
+	- Now compiles with gcc, varargs code fixed, doesn't write to static
+strings.
+
+	- A substitute XDrawArc and XFillArc based on ellipse code Dave
+provided - these run considerably faster than the R3 server arc drawing
+code, which is unbearably slow on the Sun3/50s which some of us use. If you
+run your server on anything less than a MIPS based workstation, you probably
+need these routines.
+
+I do not know if this version of xtroff will compile and run under X11R2 or
+earlier. I don't know if the suntools version of the previewer still works
+after all the modifications made in this Patch. Sorry.
+
+Have fun.
+
+                                        Mark Moraes
+                                        Computer Systems Research Institute,
+                                        University of Toronto,
+                                        Toronto, Canada M5S 1A4
+                                        
+                                        {your favourite backbone}!utcsri!moraes
+                                        moraes@utcsri.UUCP (new style)
+                                        moraes@csri.toronto.edu
+                                        moraes@csri.utoronto.ca
+                                        moraes@csri.utoronto (bitnet)
+                                        

@@ -1,0 +1,264 @@
+
+
+
+     XWSASH(3X)                                             XWSASH(3X)
+
+
+
+
+     NAME
+          XwsashWidgetClass - an X Widgets utility widget
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/Sash.h>
+
+
+     CLASSES
+          The sash widget is built from the Core and XwPrimitive
+          classes.
+
+          The widget class to use when creating a sash is
+          XwsashWidgetClass.  The class name is Sash.
+
+     DESCRIPTION
+          The sash widget is a utility widget used by the vertical
+          paned manager XwVPaned to control the sizes of the
+          individual panes.  In its realized form it appears as a
+          square box of its background color.  When the pointer is
+          moved into the sash the cursor is changed to the crosshair
+          cursor.
+
+          Callbacks can be attached to the widget to report selection
+          (XtNselect) and unselection (XtNrelease).  This widget can
+          be set to respond to Enter and Leave window events by
+          highlighting and unhighlighting the sash.  This widget is
+          also capable of handling  keyboard traversal.  (While you
+          can traverse to the Sash in the current widget library, Sash
+          does not handle keyboard input.) See the translations below
+          for the default traversal keycodes.
+
+     NEW RESOURCES
+          The sash widget class defines one additional resource which
+          is detailed in the table below. The programmer should refer
+          to the man pages for the sash's superclasses to determine
+          available resources and their defaults.
+
+
+                             Sash Resource Set
+               Name          Class         Type      Default
+               _____________________________________________
+               XtNcallback   XtCCallback   caddr_t   NULL
+
+
+
+          XtNcallback
+               This is used by the paned window widget to be informed
+               of button presses and mouse movement associated with
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSASH(3X)                                             XWSASH(3X)
+
+
+
+
+               the sash.
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses: The defaults used for the sash when being
+          created are as follows:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalType resource is set to
+          highlight_traversal (XwHIGHTLIGHT_TRAVERSAL in an argument
+          list) at either create time or during a call to XtSetValues,
+          the XwPrimitive superclass will automatically augment the
+          primitive widget's translations to support keyboard
+          traversal.  See the XwPrimitive man page for a complete
+          description of these translations.  Refer to the
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSASH(3X)                                             XWSASH(3X)
+
+
+
+
+          TRANSLATIONS section in this man page for a description of
+          the translations local to the sash widget.
+
+     TRANSLATIONS
+          The input to the sash is driven by the mouse buttons.  The
+          default translation set defining this button is listed
+          below.  Note that for the specific key symbols used in
+          traversal, the HP Key Cap which corresponds to this key
+          symbol appears to the right of the definition.
+
+
+            <Btn1Down>:      SashAction(Start, UpperPane)
+            <Btn2Down>:      SashAction(Start, ThisBorderOnly)
+            <Btn3Down>:      SashAction(Start, LowerPane)
+            <Btn1Motion>:    SashAction(Move, Upper)
+            <Btn2Motion>:    SashAction(Move, ThisBorder)
+            <Btn3Motion>:    SashAction(Move, Lower)
+            Any<BtnUp>:      SashAction(Commit)
+            <EnterWindow>:   enter()
+            <LeaveWindow>:   leave()
+
+
+     ACTIONS
+          SashAction(Start, UpperPane):
+               Change the cursor from the crosshair to an upward
+               pointing arrow.  Determine the upper pane which will be
+               adjusted (usually the pane to which the sash is
+               attached).
+
+          SashAction(Start, ThisBorderOnly):
+               Change the cursor from the crosshair to a double headed
+               arrow.  The panes that will be adjusted are the pane to
+               which the sash is attached and the first pane below it
+               that can be adjusted. Unlike the UpperPane and
+               LowerPane mode, only 2 panes will be affected.  If one
+               of the panes reaches its minimum or maximum, adjustment
+               will stop, instead of finding the next adjustable pane.
+
+          SashAction(Start, LowerPane):
+               Change the cursor from the crosshair to a downward
+               pointing arrow.  Determine the lower pane which will be
+               adjusted (usually the pane below the pane to which the
+               sash is attached).
+
+          SashAction(Move, Upper):
+               Draw a series of track lines to illustrate what the
+               heights of the panes would be if the Commit action were
+               invoked.  Determine which widget below the upper pane
+               can be adjusted and make the appropriate adjustments.
+
+          SashAction(Move, ThisBorder):
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSASH(3X)                                             XWSASH(3X)
+
+
+
+
+               Draw a series of track lines to illustrate what the
+               heights of the panes would be if the Commit action were
+               invoked.  Adjust as needed (and as possible) the upper
+               and lower panes selected when the SashAction(Start,
+               ThisBorderOnly) action was invoked.
+
+          SashAction(Move, Lower):
+               Draw a series of track lines to illustrate what the
+               heights of the panes would be if the Commit action were
+               invoked.  Determine which widget above the lower pane
+               can be adjusted and make the appropriate adjustments.
+
+          enter:
+               If the XtNtraversalType resource has been set to
+               XwHIGHLIGHT_ENTER then the button will be highlighted.
+               Otherwise no action is taken.
+
+          leave:
+               If the XtNtraversalType resouces has been set to
+               XwHIGHLIGHT_ENTER then the button will be
+               unhighlighted.  Otherwise no action is taken.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWPRIMITIVE(3X), XWVPANED(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+

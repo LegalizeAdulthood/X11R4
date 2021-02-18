@@ -1,0 +1,216 @@
+
+
+                  Common Lisp User Interface Environment (CLUE)
+                                        
+                                  Release Notes
+
+            Copyright (C) 1988, 1989, Texas Instruments Incorporated
+
+
+VERSION 
+        
+        6.0
+
+
+RELEASE DATE
+
+        July, 1989
+
+GENERAL
+
+        CLUE (Common Lisp User Interface  Environment) is a portable  system for
+        user interface programming in Common Lisp.  CLUE, which is based on  the
+        X Window System and  the Common Lisp  Object System (CLOS),  extends the
+        CLX interface to provide an architectural model for the construction  of
+        interactive Lisp applications.  Modelled on the Xt toolkit library, CLUE
+        could be described  as a  translation of  the Xt  "intrinsics" into  the
+        domain of Common Lisp and CLOS.
+
+        This portable implementation of  CLUE is available  to the public  at no
+        charge.  Anyone interested may receive source code and documentation via
+        anonymous  ftp  from   CSC.TI.COM,  (internet   address  10.7.0.46)   in
+        pub/clue.tar.Z.  CLUE sources are  also included as  part of the  public
+        distribution  of  the  X   Window  System,  Version   11;  see directory
+        contrib/toolkits/clue.
+
+        General comments  and  CLUE  issue  discussion  should  be  addressed to
+        clue-review@dsg.csc.ti.com (im4u!ti-csl!dsg!clue-review).  This  mailing
+        list is a forum for ideas and experiences concerning CLUE in particular,
+        and Lisp user interface programming in general.  The clue-review list is
+        public; to subscribe,  send a  message containing  your email address to
+        clue-review-request@dsg.csc.ti.com.
+
+        Problem reports and fixes are welcome and should be addressed either  to
+        clue-review or to clue-bugs@dsg.csc.ti.com  (im4u!ti-csl!dsg!clue-bugs).
+        The clue-bugs list is not public and contains only members of TI's  CLUE
+        develoment team.  Therefore, messages of the form "I'm running with  Foo
+        Common Lisp and I don't understand why (clue:erehwon) isn't working" are
+        best sent to clue-review.  Problem  reports should specify the  versions
+        of Common Lisp, CLOS, CLX, and CLUE being used.
+
+
+RELATED SYSTEMS
+
+        CLUE may  be  installed  without  change  in  TI  Explorer and Symbolics
+        environments.  Other configurations (including Lucid, Allegro, and  KCL)
+        are in progress but have not yet been fully tested.
+
+        Please note that CLUE depends on X11 R3 CLX features and bug fixes  (see
+        X11 R3 distribution, directory  lib/CLX).  The version  of CLX found  on
+        CSC.TI.COM in pub/clx.tar.Z is also sufficient to support CLUE.  Be sure
+        to review other information found in clue/doc/release-notes.text.
+
+
+PREVIOUS RELEASE
+
+	1.15 (September, 1988)
+
+
+SPECIFICATION CHANGES
+        
+2.1     contact-callbacks defined as a :reader for the callbacks slot.
+
+        contact-parent   slot   redefined   with   :accessor   option.     (setf
+        contact-parent) can be used to reparent a contact.  See sec.  4.1.
+
+        contact-name slot initform removed.  The  default value of this  slot is
+        now defined to be (class-name (class-of contact)).
+
+        contact-background slot redefined with :accessor option.
+        
+
+2.1.2   contact-state  is  now  (member   :withdrawn  :managed  :mapped).    The
+        :withdrawn state is equivalent to the previous nil state.
+
+2.1.3   change-geometry, change-priority:  These  now  treat  top-level contacts
+        specially, in order  to interact  properly with  window manager geometry
+        management.
+
+        destroy: The primary contact method for destroy now invokes the :destroy
+        callback  of  the  destroyed  contact  and  each  of  its   descendants.
+        Application  programmers  can  define  :destroy  callback  functions  to
+        implement "existence" constraints or similar application semantics.
+
+2.1.4   New characteristic function added: preferred-size.
+
+2.1.5   Support added for multiple callback  functions.  More than one  function
+        can be associated with a contact  callback name.  Because the format  of
+        the callbacks slot  has changed,  any use  of the  :callbacks initarg to
+        make-contact  must   be   updated.    In   addition,  the  interface  to
+        delete-callback  has  changed.   For  purposes  of  compatibility,   the
+        previous delete-callback interface  remains valid  temporarily but  will
+        cause an error in future releases.  If delete-callback is called without
+        a callback-function  argument,  then  all  functions associated with the
+        given callback name are deleted.
+
+2.2     A  :constraints  option  to  defcontact  allows  the  specification   of
+        constraint resources.  See  sec.  6.5  for a  description of  the use of
+        constraint resources.
+
+3.1     open-contact-display: The default value for the display argument is  now
+        the special variable  *default-display*.  The  default-root argument  is
+        now called default-screen, with  default value 0.   A new class  keyword
+        argument is added.  The class argument defines the resource class of the
+        application as  a  whole;  class  defaults  to  the  value  of  the name
+        argument.
+
+3.3     The defaction and call-action macros have been removed.  Actions are now
+        ordinary functions (possibly  generic) and  no longer  inhabit a special
+        function name space.  For purposes of compatibility, both defaction  and
+        call-action remain  implemented  temporarily  but  will  disappear  in a
+        future release.
+
+        The set of built-in contact actions has changed:
+
+                callback        renamed: perform-callback
+                describe        renamed: describe-action
+                eval            renamed: eval-action
+                funcall-method  removed
+                funcall         renamed: apply-action
+                restrict        renamed: ignore-action
+                throw           renamed: throw-action
+                trace           renamed: trace-action
+
+        Each of these is now  a generic function with  a method defined for  the
+        contact class.
+
+3.8.1   An event specification syntax for :client-message events is defined.
+        
+3.8.2   An accessor  is  defined  for  setting  the  check  function  for  event
+        specification keywords.  This  allows implementation  alternatives other
+        than the keyword symbol property formly required.
+
+3.8.4   Timeout controls for  recognizing multipress  events are  now defined as
+        contact-display attributes, rather than as global variables.  New global
+        variables are defined to initialize default values for timeout controls.
+
+3.8.6   Motion compression no longer discards :enter-/leave-notify events.  This
+        feature was removed  because it  cannot be  implemented reliably without
+        intervention by the application.
+
+4.1     composite: new shells slot (:reader only).  This slot contains a list of
+        the shells owned by the composite.  See sec.  4.5.
+
+4.2     New function added: initialize-geometry.
+
+4.3     move-focus: the direction argument is now optional (defaults to  :next).
+        Since this  function  may  now  be  used  as  an  action  directly,  the
+        definition of a move-focus action was removed.
+
+4.4     Typos corrected: the resource name of  a root is a keyword  symbol (e.g.
+        :SCREEN-<index>).  Footnote 3 now reads "screen-index = (position screen
+        (xlib:display-roots contact-display))".
+
+4.5     This new section describes  shell contacts, a  base class for  top-level
+        contacts that control interclient communication with a window manager or
+        session manager.
+
+6.2     Typo corrected: Footnote 2 now reads "The class symbol for a contact  is
+        the value of (class-name (class-of contact))."
+
+6.5     This new section explains contact class resources and contact constraint
+        resources.
+
+
+FIXES
+        
+1.      A contact  can  now  be  initialized  to  be unmapped-and-unmanaged (use
+        :state :withdrawn).  See Specification Changes, 2.1.2.
+
+2.      Complete names/classes  now  contain  the  correct  application and root
+        name/class symbols, as described in the specification.
+
+3.      The :defaults option to make-contact now works correctly.
+
+4.      The contact-background accessor is now exported to the CLUE package.
+
+5.      default-resources now works correctly.
+
+6.      handle-event:  top-level  window  support  for   :configure-notify, etc.
+        moved from contact to wm-shell method.  Note: all top-level windows must
+        now be  shell  instances.   wm-shell  geometry  management  now provides
+        correct window manager interaction for client-requested changes.
+
+7.      The background of a root contact is now :none.
+        
+8.      Root contact  objects  are  correctly  associated  with  the root window
+        resource id, so that events to the root window are properly dispatched.
+
+9.      The  composite   method   for   manage-geometry   now   will  not accept
+        non-positive width or height.
+
+10.     inside-contact-p now recognizes (0,*) and (*,0) as inside points.
+
+
+        
+KNOWN BUGS
+
+
+1.      Modal input needs to be defined.
+
+2.      The implementation of interactive-stream is not portable.
+
+3.      Resource bindings with names of the form (* something) may not be  found
+        during contact  initialization.   This  is  caused  by  an R3 CLX bug in
+        get-search-table.   Work  around   by  respecifying   as  (application *
+        something).

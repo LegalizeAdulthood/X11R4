@@ -1,0 +1,46 @@
+README for xnetload
+Mike Berkley, September 1989
+
+xnetload gives the system load for a list of remote machines by using
+rwhod statistics.  The load for the local machine is also displayed,
+but is calculated using the standard Load widget routines, (this means
+that xnetload needs to be setgid kmem.)
+
+There's an option to turn off the local load, -nolocal, which would
+allow you to run with xnetload non-setgid.  Alternatively, you can
+compile xnetload with -DNOLOCAL (see the Imakefile and Makefile).
+
+xnetload was developed on a uVax running Ultrix.  It also compiles and
+runs on Sun (both SunOS 3.5 and 4), MIPS and Sequent.  Of course,
+there are some little glitches: the Makefile needs to be altered and
+you may need to find memcpy() somewhere.
+
+xnetload was written mostly as a tool to learning how to use the
+toolkit.  I was amazed at what the toolkit can do in not very many
+lines of code.
+
+Since this was an experiment/learning tool, I'm sure that I did not
+follow all of the correct X guidelines, but I tried.
+
+The getload() routine is just my own kludge to read rwhod stats.  It
+works, but it is replaceable.  Ideally, I would like to use some kind
+of system call like Sun 4's RPC versions of rwho and rup command, then
+there would not be any dependency on rwhod.  If you are living on a
+system that does not use rwhod, or you would like a more efficient way
+of determining system load, then you can replace getload() without
+breaking the rest of the program.
+
+** Note - if you define "*Load*update", but not  **
+** "xnetload*remote*update", then xnetload will  **
+** set both the remote and local update times to **
+** the "*Load*update" value.  If this time is    **
+** much less than the rwhod update period, then  **
+** the remote load displays will look more like  **
+** bar graphs.                                   **
+
+Send comments, bug reports, etc. to jmberkley@watnext.waterloo.edu.
+
+ Mike Berkley, University of Waterloo
+ PAMI Lab
+ jmberkley@watnext.waterloo.edu
+ {utai,uunet}!watmath!watnext!jmberkley

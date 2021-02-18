@@ -1,0 +1,50 @@
+  XLESS is a file Browsing tool for the X Window System Version 11 Release 3.
+
+CREDITS:
+
+	Version 1.0
+	Based Upon: Xmore for X11R2 by Chris Peterson - MIT Project Athena.
+	Written By: Carlo Lisa - MIT Project Athena.
+	
+	Copyright 1989 Massachusetts Institute of Technology 
+
+SCROLLING TEXT:
+
+  The scroll bars act in exactly the same way they do in xmh and
+xman, that is to say that clicking left or right with the pointer at
+the very bottom of scrollbar will scroll the text up or down one page.
+The farther up the scrollbar the pointer is when clicked the less of a
+page will be scrolled with each click.  The middle button will move
+the top of the page to the position of the mouse, in the scrollbar.
+
+FEATURES:
+
+- Takes input from standard input.
+- Search facility dialog-box guided.
+- It's possible to open a new window containing another file.
+- It's possible to open a session of your favorite editor (specified
+  in the environment variable EDITOR) on the current file.
+- It's possible to reload the current file.
+- It's possible to change the current file.
+
+SUMMARY OF ACTIONS:
+
+In Text:
+
+CLICK LEFT:		  Position cursor.
+CLICK RIGHT:		  Copy text, from cursor position to actual
+			  mouse position, into Cut & Paste buffer.
+Meta<Key>S		  Same as click on Search button.
+Meta<Key>N		  Same as click on Search Next button.
+Meta<Key>R		  Same as click on Reload button.
+Meta<Key>E		  Same as click on Editor button.
+Meta<Key>C		  Same as click on Change File button.
+Meta<Key>W		  Same as click on New Window button.
+
+In scrollbars:
+
+CLICK LEFT:               Move Down - more of pointer is near bottom
+				      of window.
+CLICK MIDDLE:             Move top of page to current mouse position.
+CLICK RIGHT:              Move Up - more of pointer is near bottom
+				    of window.

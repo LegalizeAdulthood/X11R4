@@ -1,0 +1,418 @@
+
+	Here is some explanation about the picture file format.
+
+
+	The file format employed by the picture widget is based on xfig's file
+format ( FORMAT 1.4 ), adding some attributes for lines, fills, circles, etc.
+in the form of comments for xfig. ( In xfig's file format, comment lines can be
+identified by the '#' character at the first column ).
+
+
+	The first 2 lines are xfig's identifiers and look as follows:
+
+	#FIG 1.4
+	80 2
+
+
+	The next line is picture widget's identifier and the information type:
+
+ex.	#StFIG_0.1 Rect Primitive
+
+	figure type	   Contents
+	------------------------------------------------------------------------
+	Rect Primitive	   rectangle
+	Arc Primitive	   circle, ellipse, arc, elliptic arc, pie, elliptic pie
+	Line Primitive	   line, polygon, polyline, freehand
+	Bitmap Primitive   bitmaps
+	Text Primitive	   text
+	Group Start	   start of group primitive ( primitives following )
+	Group End	   end of group primitive
+
+	The above example indicates information about a rectangle.
+
+
+	Lines beginning with '#!!' is coupled with the next line beginning with
+'#!', and contains figure type, figure attribute or circle information.
+
+
+1. figure type
+
+ex.	#!! figure_type
+	#!  0
+
+	These lines give the figure type.
+	The value corresponds to the following figure type:
+
+		value		figure type
+		---------------------------
+		 0		rectangle
+		 1		circle
+		 2		ellipse
+		 3		line
+		 4		arc
+		 5		elliptic arc
+		 6		pie
+		 7		elliptic pie
+		 8		polygon
+		 9		polyline
+		10		freehand
+		11		text
+		13		bitmap
+
+	The above example indicates a rectangle.
+
+
+2. line attributes
+
+ex.	#!! line_atr
+	#!  0 1 0 0 0 0 1 3
+
+	These lines give the line attributes.
+	The parameters correspond to the following attributes:
+
+		parameter_1	line type
+		parameter_2	line width (pixels)
+		parameter_3	start point style
+		parameter_4	end point style
+		parameter_5	joint style
+		parameter_6	foreground color
+		parameter_7	background color
+		parameter_8	graphics function
+
+	The line type value corresponds to the following attribute:
+
+		value		line type
+		---------------------------
+		 0		Solid
+		 1		On Off Dash
+		 2		Double Dash
+
+	The start/end point style value corresponds to the following attribute:
+
+		value		point style
+		---------------------------
+		 0		Butt
+		 1		Round
+		 2		Arrow
+
+	The joint style value corresponds to the following attribute:
+
+		value		joint style
+		---------------------------
+		 0		Miter
+		 1		Round
+		 2		Bevel
+
+	The color value corresponds to the following attribute:
+
+		value		color
+		-------------------------------
+		 0		Black
+		 1		White
+		 2		Red
+		 3		Green
+		 4		Blue
+		 5		Cyan
+		 6		Yellow
+		 7		Magenta
+		 8		LightGray
+		 9		Gray
+	        10		Orange
+	        11		LimeGreen
+	        12		SteelBlue
+	        13		MediumTurquoise
+	        14		MediumGoldenrod
+	        15		Orchid
+
+	The graphics function value corresponds to the following attribute:
+
+		value		graphics function
+		---------------------------------
+		 0		clear
+		 1		and
+		 2		andreverse
+		 3		copy
+		 4		andinverted
+		 5		noop
+		 6		xor
+		 7		or
+		 8		nor
+		 9		equiv
+	        10		invert
+	        11		orreverse
+	        12		copyinverted
+	        13		orinverted
+	        14		nand
+	        15		set
+
+	The above example shows the line attributes for
+line type : Solid, width : 1 pixel, start point : Butt, end point : Butt,
+joint style : Miter, foreground color : black, background color : white,
+graphics function : copy.
+
+
+3. fill attributes
+
+ex.	#!! paint_atr
+	#!  13 0 1
+
+	These lines give the fill attributes.
+	The parameters correspond to the following attributes:
+
+		parameter_1	fill style
+		parameter_2	foreground color
+		parameter_3	background color
+
+	The fill style value corresponds to the following attribute:
+
+		value		fill style
+		----------------------------
+		 0		boxes
+		 1		cross_weave
+		 2		dimple1
+		 3		dimple3
+		 4		flipped_gray
+		 5		gray1
+		 6		gray3
+		 7		light_gray
+		 8		root_weave
+		 9		scales
+	        10		stipple
+	        11		wide_weave
+	        12		solid
+	        13		hollow
+
+	As for the foreground/background color, refer to the line attribute.
+
+	The above example gives the fill attributes for
+no filling, forground color : black, background color : white.
+
+
+4. circle information
+
+ex.	#!! Arc Data
+	#!  272 272 192 192 0 0
+
+	These lines give information about circular figures.
+	The parameters correspond to the following attributes:
+
+		parameter_1    x-coordinate of circumscribing rectangle (pixels)
+		parameter_2    y-coordinate of circumscribing rectangle (pixels)
+		parameter_3    width of the circumscribing rectangle
+		parameter_4    height of the circumscribing rectangle
+		parameter_5    drawing start angle
+		parameter_6    drawing end angle
+
+	Both the start and end angles are specified counterclockwise in 1/64
+degrees.
+	The start angle is relative to the 3 o'clock position.
+	The end angle is relative to the start angle.   An end angle of 0
+indicates a whole circle, ellipse or pie.
+
+	The above example gives a circle inscribing a square of width [ and
+height ] 192 pixels with its upperleft corner at position ( 272, 272 ). 
+
+
+5. bitmap information
+
+ex.	#!! bitmap
+	#!  8 250 -250 flagdown
+
+	These lines give information about bitmaps.
+	The parameters correspond to the following attributes:
+
+		parameter_1    bitmap file name length (bytes)
+		parameter_2    x-coordinate of circumscribing rectangle (pixels)
+		parameter_3    y-coordinate of circumscribing rectangle (pixels)
+		parameter_4    bitmap file name
+
+	The above example gives a bitmap with its upperleft corner at position
+( 250, -250 ) and the bitmap pattern in the file 'flagdown' or
+'/usr/include/X11/bitmaps/flagdown' ( by default ).
+
+
+	After the comment lines with attribute information described above, the
+ordinary xfig-style figure information follow in the format described below.
+
+
+6.	rect and line ( line, rectangle, polygon, polyline, freehand )
+
+ex.	2 3 0 1 0 0 3 13 0.000 0 0
+
+	These values give the following information:
+
+	type	name			(brief description)
+	----	----			-------------------
+	int	object_code		(always 2)
+	int	sub_type		(1 : polyline, 2 : box, 3 : polygon)
+	int	line_style		(0 : Solid, 1 : Dash, 2 : Dotted)
+	int	thickness		pixels
+	int	color			refer to line color
+	int	depth			(not used)
+	int	pen			refer to line graphics function
+	int	area_fill		refer to fill style
+	float	style_val		(pixels)
+	int	forward_arrow		(0: off, 1: on)
+	int	backward_arrow		(0: off, 1: on)
+
+	The above example gives a polyline with attributes
+line type : Solid, width 1 pixel, color : black, graphics function : copy,
+no filling, no arrows.
+
+	This line is followed by the points line(s) shown below:
+
+ex.	249 -56 185 -159 313 -107 180 -74 293 -188 9999 9999
+
+	These values give the following information:
+
+	type	name			(brief description)
+	----	----			-------------------
+	int	x1, y1			(pixels)
+	int	x2, y2			(pixels)
+	  .
+	  .
+	int	xn, yn			(this will be the same as the 1st
+					point for polygon and box)
+	int	x, y			(always 9999, 9999; marks the end of
+					point for polygon and box)
+
+	The above example gives a figure consisting of the points:
+( 249, -56 ), ( 185, -159 ), ( 313, -107 ), ( 180, -74 ), ( 293, -188 )
+
+
+7.	arc ( circle, ellipse, arc, elliptic arc, pie, elliptic pie )
+
+ex.	5 1 0 1 0 0 3 13 0.000 0 0 0 461.000 -25.500 376 -71 376 -71 376 -71
+
+	These values give the following information:
+
+	type	name			(brief description)
+	----	----			-------------------
+	int	object_code		(always 5)
+	int	sub_type		(always	1)
+	int	line_style		(0 : Solid, 1 : Dash, 2 : Dotted)
+	int	line_thickness		pixels
+	int	color			refer to line color
+	int	depth			(not used)
+	int	pen			refer to line graphic function
+	int	area_fill		refer to fill style
+	float	style_val		(pixels, not used)
+	int	direction		(0 : clockwise, 1 : counterclockwise)
+	int	forward_arrow		(0: off, 1: on)
+	int	backward_arrow		(0: off, 1: on)
+	float	center_x, center_y	(center of the arc)
+	int	x1, y1			(pixels, not used)
+	int	x2, y2			(pixels, not used)
+	int	x3, y3			(pixels, not used)
+
+	The above example gives a figure with attributes
+line type : Solid, width 1 pixel, color : black, graphics function : copy,
+no filling, clockwise direction, no arrows, center ( 461, -25.5 ).
+
+
+8.	text
+
+ex.	4 0 0 0 3 0 0 0.000 0 0 4 261 -299 text
+
+	These values give the following information:
+
+	type	name			(brief description)
+	----	----			-------------------
+	int	object 			(always 4)
+	int	sub_type		(0 : Left justified
+					 1 : Center justified
+					 2 : Right justified)
+	int	font 			(0 : roman-8
+					 1 : roman-16
+					 2 : roman-24
+					 3 : italic-8
+					 4 : italic-16
+					 5 : italic-24
+					 6 : bold-8
+					 7 : bold-16
+					 8 : bold-24
+					 9 : bolditalic-8
+					10 : bolditalic-16
+					11 : bolditalic-24)
+	int	font_size 		(same as above)
+	int	pen			refer to line graphics function
+	int	color			refer to line color
+	int	depth			(not used)
+	int	angle			(radian, not used, the angle of the
+					the base line of the string)
+	int	font_style		(same as font)
+	int	height			(not used)
+	int	length			(bytes, string length)
+	int	x, y			(pixels, coordinate of the origin
+					 of the string.  If sub_type = 0, it is
+					 the lower left corner of the string.
+					 If sub_type = 1, it is the lower
+					 center.  Otherwise it is the lower
+					 right corner of the string.)
+	char	string[]		(ascii characters; starts after a blank
+					character following the last number and
+					ends before the character '\1'.  This
+					character is not part of the string.
+					Note that the string may contain '\n'.)
+
+	The above example gives a text with attributes
+left justification, graphics function : copy, color : black, upper left corner
+position ( 261, -299 ), string 'text'.
+
+
+9. group
+
+ex.	 6
+	 .
+	 .
+	 .
+	 .
+	 .
+	-6
+
+	A line with with code 6 signifies the start of a group primitive.
+	A line with with code -6 signifies the end of a group primitive.
+	Group primitives may be nested.
+
+
+Example of a whole picture file:
+
+	  #FIG 1.4
+	  80 2
+	  #StFIG_0.1  Rect Primitive
+	  #!!  figure_type
+	  #!   0
+	  #!!  line_atr
+	  #!   0 3 1 1 1 5 2 6
+	  #!!  paint_atr
+	  #!   13 0 1
+	  2 2 0 3 5 0 6 13 0.000 0 0
+			   92 -26 461 -26 461 -409 92 -409 92 -26 9999 9999
+	  #StFIG_0.1 Arc Primitive
+	  #!!  figure_type
+	  #!   6
+	  #!!  line_atr
+	  #!   1 3 0 0 0 4 2 3
+	  #!!  paint_atr
+	  #!   13 0 1
+	  #!!  Arc Data
+	  #!   199 -199 400 400 5760 5760
+	  5 1 2 3 4 0 3 13 0.000 0 0 0 399.000 81.000 199 -199 199 -199 199 -199
+	  #StFIG_0.1 Bitmap Primitive
+	  #!!  figure_type
+	  #!   13
+	  #!!  paint_atr
+	  #!   13 0 1
+	  #!!  bitmap
+	  #!   11 200 -284 mensetmanus
+	  #StFIG_0.1 Line Primitive
+	  #!!  figure_type
+	  #!   9
+	  #!!  line_atr
+	  #!   2 3 2 1 1 4 2 7
+	  #!!  paint_atr
+	  #!   0 0 0
+	  2 1 1 3 4 0 7 0 0.000 1 0
+		  0 0 0.000 0.000 0.000
+		   183 -70 122 -222 378 -216 252 -159 272 -51
+		   9999 9999

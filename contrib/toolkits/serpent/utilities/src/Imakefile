@@ -1,0 +1,39 @@
+#include "../../Serpent.tmpl"
+DIR = utilities
+
+INC = u22.h cud.h cus.h cus_priv.h ubo.h uer.h ufa.h u22_rt.h
+
+SRC = u22.c cud.c ubo.c cus.c ipb2.c uer.c ufa.c u22_rt.c
+
+OBJ = u22.o cud.o ubo.o cus.o ipb2.o uer.o ufa.o
+
+LIB = libutl.a
+
+RUNTIME_H = ../include/u22_rt.h
+
+RUNTIME_DEFINES_H = ../include/u22_rtd.h
+
+SerpentObjectRule()
+
+all:	$(LIB) install_lib ${RUNTIME_H}
+
+SerpentLibrary()
+
+${RUNTIME_H}:	u22_rt.o ${RUNTIME_DEFINES_H}
+	@echo "making a new u22_rt.h
+	@ rm -f ${RUNTIME_H}
+	@ /lib/cpp -I$(SERPENTINCS) u22_rt.c | \
+	  sed -e '/^#/d' \
+	    -e '/^$$/d' \
+	    -e '/rcsid/d' \
+	    -e '/u22_rt.c,v/d' \
+	    -e 's/\	/ /g' \
+	    -e 's/  */ /g' \
+	    -e 's/^ //' \
+	    -e '/^$$/d' > ${RUNTIME_H}
+	@ cat ${RUNTIME_DEFINES_H} >> ${RUNTIME_H}
+	@ chmod a+r ${RUNTIME_H}
+
+SerpentInstallIncLib()
+
+SerpentDepend()

@@ -1,0 +1,126 @@
+ＪＦＥＷＲＣ（４＿ＪＴ）
+
+
+名称
+    jfewrc - Ｘウィンドウ対応かな漢字変換フロントエンドプロセッサ(xwnmo(1_JT))
+		初期化ファイル
+
+形式
+    /usr/local/lib/wnn/jfewrc (デフォルト)
+
+機能説明
+
+    jfewrcは、xwnmo を使用する時の環境を設定するもので、各ユーザごとの設定が可能
+    である。
+    エントリが重複した場合は上書きされる。
+    ';' で始まる行はコメントになる。
+
+    このファイルで設定できるものは、以下の通り。
+
+	include <jfwercファイル名>
+		他のjfwercファイルを読み込む。
+		デフォルトの jfwerc ファイルに個人の設定を付け加える場合などに使
+		用する。
+
+	setfontascii <フォント名>
+		かな漢字変換が使用するアスキーフォントの指定。
+		デフォルトは "gmw-24"。
+
+	setfontkanji <フォント名>
+		かな漢字変換が使用する漢字フォントの指定。
+		デフォルトは "gmwk-24"。
+
+	setfontkana <フォント名>
+		かな漢字変換が使用する漢字フォントの指定。
+		デフォルトは "gmwr-24"。
+
+	setfontgaiji <フォント名>
+		かな漢字変換が使用する外字フォントの指定。(現在は使用しない。)
+
+	setfontutilascii <フォント名>
+		辞書操作時に使用するアスキーフォントの指定。
+		デフォルトは "gmw-16"。
+
+	setfontutilkanji <フォント名>
+		辞書操作時に使用する漢字フォントの指定。
+		デフォルトは "gmwk-16"。
+
+	setfontutilkana <フォント名>
+		辞書操作時に使用する漢字フォントの指定。
+		デフォルトは "gmwr-16"。
+
+	setfontutilgaiji <フォント名>
+		辞書操作時に使用する外字フォントの指定。(現在は使用しない。)
+
+	setdefwidth <ピクセル値>
+		日本語変換ウィンドウの幅のピクセル値の指定。
+		デフォルトは "1280"。
+
+	setdefbwidth <ピクセル値>
+		日本語変換ウィンドウのボーダーのピクセル値の指定。
+		デフォルトは "4"。
+
+	setcolorfore <color>
+		日本語変換ウィンドウのフォアグランドの指定。
+		デフォルトは "黒"。
+
+	setcolorback <color>
+		日本語変換ウィンドウのバックグランドの指定。
+		デフォルトは "白"。
+
+	setcolorborder <color>
+		日本語変換ウィンドウのボーダーカラーの指定。
+		デフォルトは "黒"。
+
+	setcvtfunkey <cvt_fun_tblファイル名>
+		ファンクションキー変換用ファイルの指定。
+		デフォルトは "/usr/local/lib/wnn/cvt_fun_tbl"。
+
+	setcvtmetakey <cvt_fun_tblファイル名>
+		メタ(前面)キー変換用ファイルの指定。
+		デフォルトは "/usr/local/lib/wnn/cvt_meta_tbl"。
+
+	setjumpkey
+		xwnmo が必要でないキーをクライアントへ送り返すことを指定。
+		デフォルトは、返さない。
+
+	set_xwnmo_title <文字列>
+		変換ＯＦＦ時のタイトルの設定。(ＥＵＣコードに限る)
+		デフォルトは "かな漢字変換"。
+
+	setdisplayname <ホスト名:0>
+		xwnmo が接続するホスト名の指定。
+		設定されていない場合は、環境変数DISPLAYを使用する。環境変数も
+		設定されていない場合、デフォルトは "unix:0.0"(UNIXドメイン)。
+
+	setuumrc <ユーザ名> <uumrcファイル名>
+		xwnmo がuumrc使用するuumrcファイルを指定する。
+		<ユーザ名>が指定されているものは、その<ユーザ名>が環境変数 LOGNAME と一致
+		する場合、この<uumrcファイル名>が使用される。
+		<ユーザ名>を変えたものを複数指定することで、<ユーザ名>を変えることにより
+		異った環境での変換ができる。 
+		<ユーザ名>が指定されない場合は、デフォルトの uumrc として登録され、登録
+		されていない<ユーザ名>で使用される場合に使用される。
+		
+	
+設定例
+	setfontascii		gmw-16
+	setfontkanji		gmwk-16
+	setfontkana		gmwr-16
+	setfontutilascii	gmw-16
+	setfontutilkanji	gmwk-16
+	setfontutilkana		gmwr-16
+	setdefwidth		600
+	setdefbwidth		1
+	setcolorfore		red
+	setcolorback		green
+	setcolorborder		black
+	setjumpkey
+	set_xwnmo_title	Ｘｗｉｎｄｏｗ対応かな漢字変換
+	setdisplayname	alpha:0
+	setuumrc demo		/usr/demo/uumrc
+	setuumrc 		/usr/wnn/uumrc
+
+関連項目
+
+    xwnmo(1_JT)

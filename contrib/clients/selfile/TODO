@@ -1,0 +1,31 @@
+* Variable number of lists (instead of 3), variable no. of entries, etc.
+  Perhaps turn it into a widget?
+
+* Use X selections instead of cut buffer.
+  This would enable clients to obtain pathnames through selections, and the
+  client would not have to link in the XsraSelFile code.
+
+* Some clients may want to have more control over what happens in the
+  XtAppNextEvent-XtDispatchEvent loop.
+
+* Another idea is a text widget with file name completion that can be embedded
+  in an application. The completions would only be popped up when the user
+  wants to see them.
+
+* Make another package for completion of not only filenames, but anything.
+
+* launching by eg double click
+
+* scrolling and selection through keyboard
+
+* if file to be read, it must exist
+
+* allow the user to specify the filename pattern e.g. *.c
+
+* customized buttons eg vi
+
+* directory stack option
+
+* search (RE)
+
+* file stat info

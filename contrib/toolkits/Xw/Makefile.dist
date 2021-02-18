@@ -1,0 +1,24 @@
+#  toplevel Makefile for HP X Widgets
+
+
+all: Xtlib Xwlib testMake MButtonMake
+
+Xtlib:
+	cd Xt; make
+	mv Xt/libXt.a lib
+
+Xwlib:
+	cd Xw; make
+
+testMake:
+	cd test; make
+
+MButtonMake:
+	cd MButton; make
+
+clean:
+	cd Xt; make clean
+	cd Xw; make clobber
+	cd test; make clean
+	cd MButton;rm -f *.o multiTest
+

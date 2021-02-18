@@ -1,0 +1,105 @@
+.TH MFTOBDF 1
+.SH NAME
+mftobdf -- translate a metafont-derived font into X-11 BDF format
+.SH SYNOPSIS
+.B mftobdf [options]
+.SH DESCRIPTION
+.I mftobdf
+translates a metafont derived font into X11 BDF format;
+the original font can be in any of PXL, GF or PK format.
+In addition to converting the font into BDF format,
+fonts can be optionally shrunk, allowing you to generate
+screen-resolution fonts from existing printer resolution fonts.
+.SH OPTIONS
+.TP
+.B \-scaled <int>
+Specify the scale of the font to load, specified as
+.I scale * 1000
+e.g., 1500 means scale the font 1.5 times
+Default is 1000.
+.TP
+.B \-mag <int>
+Specify how much the font should be magnified, specified as
+.I mag * 1000
+e.g., -mag 333 specifies 1/3 reduction.
+.TP
+.B \-b <int>
+Specify the ``blackness'' for font reduction. When reducing an
+n by n area, a blackess of
+.I b
+means that the reduced pixel is ``on'' is (n * n)/b pixels were
+on in the original sample.
+The default is 3.
+.TP
+.B \-show
+Show the output of your fonts on your tty.
+.TP
+.B \-dpi
+Specify the 
+.I dots per inch
+of the fonts you wish to load.
+Default is 300.
+.TP
+.B \-size
+Specify the dvi design size of the fonts.
+If you ever need to specify this, please tell me why.
+Defaults to 1000.
+.TP
+.B \-dev
+Specify the device for the original fonts;
+defaults to ``cannon''.
+.PP
+Assume you're viewing a file using texx2,
+and you've set the magnification level to 500,
+meaning that you're viewing your document at 1/2 the
+size that would be actually sent to your 300dpi printer
+(that is, you're viewing it at 150dpi).
+If your file calls for font ``cmr10'' scaled 1000 at 300dpi,
+.I texx2
+will look for the font ``cmr10.150''.
+The suffix is compute by
+.I
+(dpi * scaled * mag ) / ( 1000 * 1000 ).
+You can generate this fonts using ``mftobdf''.
+For this example,
+you would execute ``mftobdf -scaled 1000 -mag 500 cmr10''.
+This looks for the font ``cmr10.300'' (the default resolution is 300);
+this would then be shrunk by 50% to produce ``cmr10.150.bdf'',
+the output file.
+.I mftobdf
+can only magnify things by 500, 333, 250, 200, ..., 1000/integer,
+because it does the shrinking in a very silly way.
+You could also generate this font by using
+.I Metafont
+to build a font ``cmr10.150'' and then saying ``mftobdf -scaled 500 cmr10,''
+the result to
+.I texx2
+are the same; it doesn't care how you produce the font.
+.PP
+texx2 was designed to work with
+.I mftobdf
+and 
+.I buildfonts
+(a shell script to automate the installation of the X11 fonts).
+When texx2 can't find a font, you will get a message in the
+dialog box, e.g, ``Can't find font: -scaled 1095 -mag 500 cmr11.''
+Simply cut the text ``-scaled 1095 -mag 500 cmr11'' from the dialog
+box and paste it in as the arguments to a
+.I buildfonts
+command.
+.SH HINTS
+.PP
+The texx2 distribution also includes a file called
+.I build-initial-fonts
+that purports to build many of your favorite cmr fonts automatically.
+You should probably look at this an
+.I buildfonts
+if you want to automate the procedure.
+If you come up with a good solution, please inform the author.
+.SH BUGS
+You can only shrink by intergral areas.
+Anti-aliasing should be done.
+You can only shrink, not magnify fonts.
+.SH AUTHOR
+Dirk Grunwald (University of Illinois) wrote mftobdf
+using a DVI-library written by Chris Torek at UMD.

@@ -1,0 +1,21 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+OBJS = convrast.o
+
+NormalObjectRule()
+
+ProgramTarget(convertraster, convrast.o,  $(BASEDIR)/lib/atk/libbasics.a $(BASEDIR)/lib/libclass.a $(MALLOCLIB) $(BASEDIR)/lib/liberrors.a $(UTILLIB), )
+
+InstallProgram(convertraster, $(DESTDIR)/bin)
+
+DependTarget()
+
+NormalHelpRule()
+InstallDocs(convras.help, ${DESTDIR}/help)
+InstallHelpAlias(convras, convertraster)
+
+MkdirTarget(${DESTDIR}/doc/atk/raster  ${DESTDIR}/doc/atk/raster/convert)
+InstallDocs(convert.doc,${DESTDIR}/doc/atk/raster/convert)
+

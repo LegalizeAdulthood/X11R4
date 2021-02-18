@@ -1,0 +1,364 @@
+This directory contains a Device Independent Troff previewer for a
+Sun workstation.  It is based on a previewer originally written by
+David Slattengren (Berkeley) and Rich Hyde (Purdue) and was nearly
+all rewritten by Malcolm Slaney (Schlumberger Palo Alto Research).
+(An X Windows interface for X Version 11 also exists - see README.X11)
+
+First the appropiate legal mumblings......
+
+This command was developed as an independent project to satisfy a need
+of the author.  This program may contain bugs and the user is cautioned
+to independently verify that the program is suitable for the user's 
+intended purpose. The program is made available on an ``as is'' basis 
+with all faults and without any implied or expressed warranties or support
+from either the author, Malcolm Slaney, or the Schlumberger Palo Alto
+Research Laboratory.
+
+I am putting this program in the Unix domain.  You are free to use
+it as you wish.  In return I ask two things.  First, that you do not
+remove the names of the authors from this work.  Secondly, if you 
+make changes or improvements to this program that you pass these
+changes back to the author so that everybody can benefit from the
+improvements.
+
+
+					Malcolm Slaney  (December 1986)
+					Schlumberger Palo Alto Research
+					3340 Hillview Avenue
+					Palo Alto, CA 94304
+					(415) 496-4669
+					spar!malcolm@decwrl.dec.com
+					malcolm@ecn.purdue.edu
+					malcolm@spar.slb.com (Someday)
+
+
+
+HOW IT WORKS
+
+Ditroff (Device Independent Troff) outputs a file containing commands
+for a pseudo typesetter.  SunTroff reads this file and displays an
+approximation to the typeset output as a window on a Sun workstation.
+The current code makes extensive use of Sun View and will runs under
+either Sun Unix 3.0 or 3.2.  It has not been tested with other versions
+of Sun software. 
+
+Note that ditroff is NOT the same as /usr/bin/troff in SunOS or
+numerous other variants of Unix. Ditroff is supplied with the
+Documenters WorkBench by AT&T, or with Research Unix from Bell Labs
+from Eighth Edition onwards. To tell if your typesetter if ditroff, try
+running the suntroff.man file through it - if you get something
+resembling suntroff.tr (i.e ASCII commands) then it's ditroff - if you
+get a binary file, or the dreaded 'Typesetter busy', then you've got
+the venerable old troff that produces stuff for a CAT typesetter. If
+you have the old troff, and do not want to, or cannot purchase DWB from
+AT&T or your computer vendor, you may be interested in looking at a
+package called psroff that was posted to the comp.sources.unix USENET
+newsgroup in Volume 20, Issue 33, sometime in 1989. You can get this
+by anonymous ftp, uucp, or tape from any site that archives that
+newsgroup -- uunet, osu-cis, for example. See the comp.sources.unix
+information posting for more details. It is supposed to convert 
+old troff output to ditroff output, among other things.
+
+Ditroff reads files containing typesetter information from a directory
+(at SPAR it is in /usr/spar/font/ditroff).  This information is also
+used by SunTroff (and most of the filters that convert ditroff output
+into bits for a typesetter.)  Within the ditroff directory there
+are sub directories for each of the typesetters supported by ditroff.
+These directories are named /usr/spar/font/ditroff/devXXX where XXX is
+replaced with the typesetter name.
+(At CSRI, University of Toronto, the troff directory is called
+ /local/share/troff, and ditroff is called /local/bin/troff)
+
+In addition their is another directory (called /usr/spar/font/suntroff
+at SPAR) with the actual fonts used by Suntroff.  This directory 
+parallel's the ditroff directory with seperate directories for
+each typesetter.  These directories contain the reduced fonts used
+to approximate each typesetter.  Suntroff (as it is used at SPAR)
+uses fonts that have 120 dots per inch.
+(At CSRI, this directory is /local/lib/suntroff)
+
+There is software provided (originally written at Berkeley) that will
+convert Berkeley versatec format or Imagen RST format fonts to a
+readable format, reduce them by any desired fraction and then convert
+them back to Versatec format for use by Suntroff.  SunTroff can only
+read font information in Berkeley Versatec format (this is also the
+default for the rest of the Sun software.)
+
+The hardest problem with SunTroff (possibly unsolved) is the fonts.
+The only fonts that are available to Sun users are the versatec fonts
+found in /usr/lib/vfont.  Other typesetters (like Imagen) sometimes
+provide fonts but not in a common format.  Finally there are typesetters
+(like Adobe and Apple) where there it is not possible to get the font
+bits.
+
+SunTroff will try to use the fonts available for each typesetter.  Here
+at SPAR this means that our 300 dpi Imagen printer has some of the
+fonts it needs.  All other devices default to the Versatec fonts. SunTroff
+is pretty smart about picking the right size if exactly the right size
+isn't available.  If the correct font name isn't present (like a
+Roman Helvetica, HR) then it defaults to the Roman font.
+
+In addition to the normal typesetters it is also necessary to define
+a new typesetter called sun that represents the default typesetter.
+In the ditroff font directory this can be a link to the Versatec information
+(link devvp to devsun) but in the SunTroff directory it contains the 
+actual bits for the default fonts.  Here is what these two directories
+contain at SPAR.
+
+/usr/spar/font/ditroff:
+total 25
+   1 drwxrwxr-x  9 malcolm       512 Oct 29 12:17 .
+   1 drwxrwxr-x  6 root          512 Sep 14 13:21 ..
+   1 lrwxrwxrwx  1 malcolm        12 Oct 22 15:58 devi24 -> devimagen300
+   1 lrwxrwxrwx  1 malcolm        12 Oct 22 15:58 devimagen -> devimagen300
+   1 lrwxrwxrwx  1 malcolm        12 Oct 22 15:58 devimagen24 -> devimagen300
+   1 drwxrwxr-x  3 malcolm      1024 Sep 29 11:51 devimagen300
+   1 lrwxrwxrwx  1 malcolm        12 Oct 22 15:58 devip -> devimagen300
+   1 lrwxrwxrwx  1 malcolm         6 Oct 22 15:58 devlw1 -> devpsc
+   1 lrwxrwxrwx  1 malcolm         6 Oct 22 15:58 devlw2 -> devpsc
+   1 lrwxrwxrwx  1 malcolm         6 Oct 22 15:58 devlw3 -> devpsc
+   1 lrwxrwxrwx  1 malcolm         6 Oct 22 15:58 devlw4 -> devpsc
+   2 drwxrwxr-x  2 malcolm      1536 Jul  7 20:12 devpsc
+   1 lrwxrwxrwx  1 malcolm         5 Oct 29 12:17 devsun -> devva
+   1 drwxrwxr-x  2 malcolm       512 Jun 30 10:44 devter
+   1 lrwxrwxrwx  1 malcolm         6 Oct 22 15:58 devterm -> devter
+   1 lrwxrwxrwx  1 malcolm         6 Oct 22 15:58 devterminal -> devter
+   2 drwxrwxr-x  2 malcolm      2048 Jun 30 10:45 devva
+   1 lrwxrwxrwx  1 malcolm         5 Oct 22 15:58 devvarian -> devva
+   1 lrwxrwxrwx  1 malcolm         5 Oct 22 15:58 devversatec -> devva
+   1 lrwxrwxrwx  1 malcolm         5 Oct 22 15:58 devvp -> devva
+
+/usr/spar/font/suntroff:
+total 6
+   1 drwxr-xr-x  4 malcolm       512 Sep 14 13:53 .
+   1 drwxrwxr-x  6 root          512 Sep 14 13:21 ..
+   3 drwxr-xr-x  2 malcolm      3072 Sep 26 17:06 devimagen
+   1 drwxr-xr-x  2 malcolm      1024 Sep 15 09:38 devsun
+
+Note that in the /usr/spar/font/ditroff directory there are really
+only five different devices supported (300 dpi Imagen, 300 dpi
+Postscript, dumb terminals and the 200 dpi Versatec type 
+devices).  Each directory contains the DESC and font files needed
+for ditroff.
+
+The /usr/spar/font/suntroff directory only contains two directories,
+one for the imagen fonts and the other for the default sun fonts.  The
+programs in the fontstuff subdirectory are used to make these fonts.
+If anybody figures out a way to get the Apple fonts I would dearly
+love to hear from them.
+
+INSTALLATION
+Installation of SunTroff is relatively easy.  The following represents
+a short do list (I hope I haven't forgotten anything).  Except for
+creating the BITDIR (see 2 below) directory and installing the binary
+image of suntroff there is no need for special permissions.
+
+1)	Edit the Makefile.  Change the definitions of VFONTS and RSTFONTS
+	to point to the location of your Versatec Font Files (as provided
+	by Sun) and the RST (Imagen) fonts.  If you don't have an Imagen
+	printer (or you don't want to mess with the Imagen fonts) then
+	don't worry about the RSTFONTS.  These two definitions are needed
+	by the programs that attempt to automatically make the font files
+	needed for the screen. Change SUNTROFF_FONTS to the directory 
+	where you want the scaled sunfonts to go (they'll be put in devXXX
+	subdirectories, and set DEVICE to whatever XXX is to be. (eg) sun
+	for devsun, or imp for devimp.) Change MAKEDEV to point to 
+	either makedev (for AT&T ditroff people) or devconfig (for Berkeley
+	ditroff people). Change WIDTHDIR to point to wherever ditroff
+	looks for its font width tables. To find that out, type
+	something like
+		ditroff -t -Tfoo suntroff.man > /dev/null
+	You should get an error message like
+
+	ditroff: can't open tables for /usr/local/lib/troff//devfoo/DESC.out
+
+	Whatever is before the devfoo is WIDTHDIR.
+	(At CSRI, we call ditroff troff, and just bury the Sun
+	supplied /usr/bin/troff)
+
+	People using Berkeley ditroff should add -DBEZERKELYISM to the
+	DEFINES line in the Makefile.
+
+2)	Make sure that the dev.h file is correct.  There are two versions.
+	The one supplied is identical to AT&T's version and should work
+	for most people.  If your version of DESC.out files are compiled
+	with another version of dev.h then you should replace this copy
+	of the dev.h file with your own.  It doesn't really matter which
+	version you use as long as you are consistent.
+	
+3)	Type make.  This will make the suntroff binary.
+
+4)	Type 'make fonts' which will make the font conversion programs, and
+	then scale and make the fonts, and install them in 
+	$(SUNTROFF_FONTS)/dev$(DEVICE)
+
+5)	Type 'make width'. This will install the devsun directory in
+	WIDTHDIR.  It runs either makedev (for you AT&T ditroff people) or
+	devconfig (for you Berkeley ditroff people).  
+
+	The devsun directory (and more specifically the DESC.out file that
+	devconfig/makedev create) is necessary so that SunTroff knows how
+	to find the special characters (like ligatures) in the font files.
+
+	In the directory devsun I have supplied the DESC and font
+	description files we use for the Versatec (default) fonts.  If
+	your site doesn't already support the Versatec fonts then these
+	description files might be a good place to start.  Be sure to
+	put them in with the rest of your fonts and run either makedev
+	(AT&T) or devconfig (Berkeley).  You need to have a devsun
+	directory......it can either be a link to the devversatec
+	(or whatever you call it) or a copy of the devsun directory
+	supplied here.
+
+6)	To test.  Type the command "suntroff suntroff.tr" while
+	running in suntools.  Things should be pretty obvious from the
+	right mouse button menu, the middle mouse button and the
+	status panel.  (The files suntroff.tr and xtroff.tr are both
+	ditroff output files for test purposes. They are the suntroff
+	and xtroff manuals respectively). Then you can create a ditroff
+	output file with the -t flag to ditroff. 
+
+One final note (or things not to get bitten by)
+Note there are two different versions of the dev.h file that describes
+the DESC.out files.  The AT&T version is probably the most widespread
+and is what is distributed in this directory.  Berkeley made a couple
+of small changes in the size of some of the string arrays and changed
+a couple of the spare slots into graphics specifications.  It doesn't
+matter which one you use as long as it is the same as the one used
+to make your DESC.out files.  (If you're not sure then the one supplied
+is probably correct for you.)
+
+If you don't have the proper $(WIDTHDIR)/devsun/DESC.out file installed then
+SunTroff will not be able to find the special characters like ligatures
+(fi, ffi, etc).
+
+The files found in this directory are listed below.  Note the source files
+are organized the way they are because there is somebody at SPAR who is 
+interested in using the SunTroff user interface (in sunwindows.c) as part
+of a TeX previewer.  The file sunwindows.c contains all the SunView code,
+and suntroff.c and *.c contain all the ditroff dependent stuff.
+
+	README			This file.
+
+	dev.h			Contains structure describing the
+				binary file with typesetter information.
+
+	devsun/ 		A directory containing the DESC and
+				font description files needed for DiTroff.
+				Be sure to install this information in
+				your ditroff font directory.  SunTroff needs
+				this information so it can figure out the
+				mapping of the special characters. 
+				If you already have Ditroff working on
+				the versatec then just use that directory.
+
+	suntroff		The binary executable.  Install in
+				your favorite source directory.
+
+	suntroff.h		Various system defines.  You will
+				definitely have to change the location
+				of your font directories (FONTDIR and
+				BITDIR).  The rest of the stuff is
+				probably OK.  Also note the LPR command
+				that is used.  It could be different
+				at different sites.
+
+	suntroff.man		The manual page
+	suntroff.tr		The ditroff output of the manual page
+
+	suntroff.c		Miscellaneous functions that don't
+				really fit anywhere else.  The functions
+				in sunwindows.c mostly call the functions
+				in this file.
+
+	curves.c		The fancy drawing commands.  There were
+				not written at SPAR.
+
+	draw.c		The simple drawing commands.  Most of
+				the word is done by SunView.
+
+	fixpoint.c	Fixed point arithmetic used by the 
+				routines in curves.c
+
+	font.c		All the routines needed to deal with
+				the fonts.  This includes font loading
+				and caching.
+
+	parse.c		Parse the troff input file.  No real
+				work is done by this file.  It depends
+				on the other files to draw the
+				characters.
+
+	sunwindows.c		This file contains all the SunView interface.
+				This includes the page movement, the
+				panel and the menu.  It provides a large
+				bit map for the troff drawing functions
+				to scribble on then displays the desired
+				part of the page for the user.
+
+
+In the fontstuff directory:
+
+	MakeSunFonts		Program to make the reduced fonts
+				needed by SunTroff.  By default it
+				reads the fonts in /usr/lib/vfont
+				reduces them and puts them in
+				the proper directory.
+
+	MakeImagenFonts		Program to make the reduced fonts
+				needed by SunTroff to emulate the
+				300 DPI Imagen printers.
+
+	ch2rst
+	ch2rst.c		Convert a font in character format
+				back into RST (Imagen) format
+	ch2cft
+	ch2vft.c		Convert a font in character format
+				back into Versatec format
+
+	rst.h			Describes the RST (Imagen) format.
+
+	rst2ch
+	rst2ch.c		Convert an RST format font into 
+				a readable (character) format.
+
+	scalech
+	scalech.c		Scale a readable font (as created
+				by rst2ch and vft2ch) by a fraction
+				less than 1.
+
+	vf2bdf
+	vf2bdf.c		Convert a Vfont (Versatec format)
+				font into the BDF format used by
+				X11. (Originally from Ken Yap, at Rochester,
+				a couple of fixes by Dana Chee at bellcore
+				- moraes)
+
+	vft2ch
+	vft2ch.c		Convert a Vfont (Versatec format)
+				font into character format.
+
+In the bitmaps directory:
+
+	ditroff.icon		An icon for the SunTroff program.
+
+	ditroff.bitmap		An icon for the X11 program.
+
+	hand.x11.mask
+	hand.x11.bitmap		The hand cursor for the X11 program. 
+				(All conversions from Sun format to X11
+				format were made using Jef Poskanzer's
+				pbm programs - moraes)
+
+Please contact me if you have any questions, comments, bugs and (most
+importantly) any improvements.
+
+					Malcolm Slaney
+					Schlumberger Palo Alto Research
+					3340 Hillview Avenue
+					Palo Alto, CA 94304
+					(415) 496-4669
+					{decwrl,pur-ee}!malcolm
+					spar!malcolm@decwrl.dec.com
+					malcolm@malcolm.purdue.edu
+

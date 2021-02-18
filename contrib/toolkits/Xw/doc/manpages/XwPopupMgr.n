@@ -1,0 +1,330 @@
+
+
+
+     XWPOPUPMGR(3X)                                     XWPOPUPMGR(3X)
+
+
+
+
+     NAME
+          XwpopupmgrWidgetClass - the X Widgets popup menu manager
+          widget.
+
+     SYNOPSIS
+          #include <X11/Intrinsic.h>
+          #include <X11/StringDefs.h>
+          #include <Xw/Xw.h>
+          #include <Xw/PopupMgr.h>
+
+
+     CLASSES
+          The popup menu manager widget is built from the Core,
+          Composite, Constraint, XwManager and XwMenuMgr classes. Note
+          that the Constraint fields are not used in this widget and
+          so are not listed in the resource tables below.  Also, since
+          the Composite class contains no user settable resources,
+          there is no table for Composite class resources.
+
+          The widget class to use when creating an instance of the
+          popup menu manager is XwpopupmgrWidgetClass.  The class name
+          is PopupMgr.
+
+     DESCRIPTION
+          The popup menu manager widget is a composite widget which is
+          used by an application to manage a collection of menupanes.
+          Even though the popup menu manager is a composite widget, it
+          should never have any normal widget children.  Instead, all
+          of its children are popup shell children; the child of each
+          of the popup shell widgets is a menupane.  In addition, the
+          parent of the popup menu manager must be a popup shell
+          widget, whose parent is the widget to which the menu tree is
+          being associated.
+
+          The popup menu manager manages a collection of menupane
+          widgets, which have been organized into a hierarchical tree
+          structure; the root of the tree is the top level menupane.
+          When the user requests that the menu be posted, by
+          generating a post event within the widget (or possibly one
+          of the widget's children), the top level menupane is posted.
+
+          Once the menu manager has posted the top level menupane, it
+          will remain posted until the user generates a select action;
+          at that point, the menupanes will be removed from the
+          display, and the selected menu button will perform any
+          required actions.  If the select occurs outside of a menu
+          button, or if the user issues the menu unpost event, then
+          the menupanes are simply unposted.
+
+          The menu manager supports a mode by which the menu hierarchy
+          may be associated only with the specified widget, or it may
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPOPUPMGR(3X)                                     XWPOPUPMGR(3X)
+
+
+
+
+          be associated with the widget and all of its children (both
+          present and future children).  If the menu is associated
+          with the widget and its children, then a menu post event
+          which occurs in either the widget or one of its children,
+          will cause the menu to be posted.
+
+          The menu manager also supports a commonly used menuing
+          feature, referred to as sticky menus.  When operating in
+          sticky menu mode, the menu manager will remember the last
+          menu button selected by the user.  The next time the user
+          requests that the menu system be posted, all of the
+          menupanes, up to the one containing the previously selected
+          menu button, will be posted.
+
+          The popup menu manager provides a keyboard interface to the
+          menus, through the use of keyboard accelerators, for posting
+          the menu and for selecting a menubutton from within one of
+          the menupanes.  This manager does not support keyboard
+          mnemonics.  When traversal is enabled, the standard keyboard
+          traversal keys are also operational.  Using the mouse, while
+          traversal is enabled, may produce confusing results for the
+          user; thus, operating in this fashion is discouraged.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPOPUPMGR(3X)                                     XWPOPUPMGR(3X)
+
+
+
+
+          The popup menu manager provides the application writer with
+          a global function which may be used to programmatically post
+          a top level menupane at a particular position relative to a
+          specified widget.  The calling sequence and parameters are
+          shown below:
+
+               XwPostPopup (menuMgr, relativeTo, x, y)
+               XwPopupMgrWidget menuMgr;
+               Widget relativeTo;
+               Position x,y;
+
+          XwPostPopup() posts the top level menupane associated with
+          the specified menu manager at the requested (x,y) position,
+          relative to the specified widget.  If the relativeTo
+          parameter is set to NULL, then the position is assumed to be
+          relative to the root window.
+
+     NEW RESOURCES
+          The popup menu manager defines a set of resource types used
+          by the programmer to specify the data for the menu manager.
+          The programmer can also set the values for the Core,
+          Composite and Manager widget classes to set attributes for
+          this widget.  To specify any of these resources within the
+          .Xdefaults file, simply drop the XtN prefix from the
+          resource name.  The following table contains the set of
+          resources defined by PopupMgr.
+
+
+                           PopupMgr Resource Set
+        Name                 Class                Type      Default
+        ___________________________________________________________
+        XtNstickyMenus       XtCStickyMenus       Boolean   FALSE
+        XtNpostAccelerator   XtCPostAccelerator   String    NULL
+
+
+
+          XtNstickyMenus
+               This resource controls whether the menu manager
+               operates in sticky menu mode.
+
+          XtNpostAccelerator
+               This resource indicates the keyboard event that can be
+               used to post the top level menupane.  The string is
+               specified using the syntax supported by the translation
+               manager, with three exceptions.  First, only a single
+               event may be specified.  Second, the event must be a
+               KeyPress or KeyRelease event.  Third, all modifiers
+               specified are interpreted as being exclusive; this
+               means that only the specified modifiers can be present
+               when the key event occurs.
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPOPUPMGR(3X)                                     XWPOPUPMGR(3X)
+
+
+
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+                     Manager Resource Set -- XWMANAGER(3X)
+     Name                    Class                   Type       Default
+     _____________________________________________________________________
+     XtNforeground           XtCForeground           Pixel      Black
+     XtNbackgroundTile       XtCBackgroundTile       int        background
+     XtNhighlightThickness   XtCHighlightThickness   int        0
+     XtNtraversalOn          XtCTraversalOn           Boolean   FALSE
+
+
+
+
+                  Menu Manager Resource Set -- XWMENUMGR(3X)
+     Name                   Class                  Type      Default
+     _____________________________________________________________________
+     XtNassociateChildren   XtCAssociateChildren   Boolean   TRUE
+     XtNmenuPost            XtCMenuPost            String    "<Btn1Down>"
+     XtNmenuSelect          XtCMenuSelect          String    "<Btn1Up>"
+     XtNmenuUnpost          XtCMenuUnpost          String    NULL
+     XtNkbdSelect           XtCKbdSelect           String    "<Key>Select"
+
+
+
+     BUGS
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPOPUPMGR(3X)                                     XWPOPUPMGR(3X)
+
+
+
+
+          Due to limitations within the Xt Intrinsics, keyboard
+          accelerators for posting a menu pane or for selecting a menu
+          item do not work if the widget to which the menu manager is
+          attached has traversal enabled.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWMANAGER(3X), XwMENUMGR(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+

@@ -1,0 +1,280 @@
+%!PS-Adobe-1.0
+%%Creator: oaxaca:colas (Colas Nahaboo,Koala,657771,)
+%%Title: stdin (xwdump)
+%%CreationDate: Tue Sep  5 15:58:25 1989
+%%EndComments
+/min {2 copy le {pop} {exch pop} ifelse} def
+/max {2 copy ge {pop} {exch pop} ifelse} def
+/NOT {1 exch sub} def
+/odd {2 mod abs} def		% int 		- odd (0 or 1)
+
+/grayfunction1			% x y		- val
+{
+    % x, y, and val are in [-1 +1]
+    /y exch 1 add pixelsize mul 2 div 0.5 add cvi def 
+    /x exch 1 add pixelsize mul 2 div 0.5 add cvi def
+
+    x y sub odd NOT
+    0.4 mul
+
+    x 2 idiv   y 2 idiv   sub   odd
+    0.2 mul add
+
+    x 3 idiv   y 3 idiv   sub   odd
+    x odd
+    xor
+    0.1 mul add
+
+
+    x 50 mul abs  y 51 mul abs  add 102400 div
+    0.04 mul sub
+
+    0.9 sub
+} def
+
+/transfergray1				%  gray	- gray2
+{
+    grayoffset add   1   min
+} def
+    
+/initgray1				% frequence     -
+{
+    /frequence exch def
+
+% init screen function
+    frequence				% frequence
+    0					% angle
+    {grayfunction1}			% order function to make points black
+    setscreen
+
+% init gray transfer
+    /grayoffset
+        1     pixelsize 0.5 add cvi 1 max  dup mul  2   mul     div
+    def
+    (grayoffset: ) print grayoffset =
+    {transfergray1} settransfer
+} def
+
+/initgray2				% frequence	-
+{
+    /frequence exch def
+
+% init screen function
+    currentscreen
+    3 2 roll pop frequence 3 1 roll
+    setscreen
+
+% init gray transfer
+    {} settransfer
+} def
+
+/initgray		               % screenresolution iscale -
+{
+% init screen function
+    /localiscale exch def
+    /screenresolution exch def
+
+    /pixelsize localiscale screenresolution mul 300 div def
+    /frequence screenresolution pixelsize div def
+
+    pixelsize 3 lt
+    {
+        % less than 3x3 printer points for each pixel:
+	% modify gray and transfer (for less than 1x1, black/white only)
+        frequence 			initgray1
+	(initgray1, pixelsize: ) print pixelsize =
+    }
+    {
+	% more than 3x3 printer points for each pixel:
+	
+	% don't use resolution of printer to be photocopiable
+	% i.e. at least 4/300 inch
+	/frequencemax 300 4 div def
+	/pixelsize 4 def
+	/frequence screenresolution pixelsize div def
+	frequencemax frequence min	initgray2
+	(initgray2, pixelsize: ) print pixelsize =
+
+    }
+    ifelse
+} def
+
+%%Pages: 1
+%%EndProlog
+%%Page: 1 1
+
+/bitperpixel 1 def
+/bitdump % stk: width, height, iscale
+% dump a bit image with lower left corner at current origin,
+% scaling by iscale (iscale=1 means 1/300 inch per pixel)
+{
+	% read arguments
+	/iscale exch def
+	/height exch def
+	/width exch def
+
+	% scale appropriately
+	width iscale mul height iscale mul scale
+
+	% allocate space for one scanline of input
+	/picstr % picstr holds one scan line
+		width bitperpixel mul 7 add 8 idiv
+			% width of image in bytes = ceiling(width/8)
+		string
+		def
+
+	% read and dump the image
+ width height bitperpixel [width 0 0 height neg 0 height]
+	{ currentfile picstr readhexstring pop }
+	image
+} def
+/extendedbitdump  % width height iscale screenresolution angle header trailer
+{
+    /trailer exch def
+    /header exch def
+    /angle exch def			% works only for angle in [-90, +90]
+    /screenresolution exch def
+    /iscale exch def
+    /height exch def
+    /width exch def
+
+    % image is centered but if bigger it is placed on lower left corner
+    % this depend from rotation
+    0 angle eq
+    {
+	paperwidth  iscale width  mul sub 2 div
+	0						max
+	paperheight iscale height mul sub 2 div
+	0						max
+	translate
+    } if
+
+    90 angle eq
+    {
+	paperwidth   paperwidth  iscale height  mul sub 2 div  sub
+	iscale height mul
+	max 
+
+	paperheight iscale width mul sub 2 div
+	0
+	max
+
+	translate
+    } if
+
+    -90 angle eq
+    {
+	paperwidth iscale height mul sub 2 div
+	0						max
+
+	paperheight  paperheight iscale width  mul sub 2 div sub  
+	width iscale mul				max
+
+	translate
+
+    } if
+
+    0 angle ne
+    {angle rotate}
+    if
+
+    gsave
+    /sizefont 64 def
+    /textoffset 40 def
+    /Times-Roman findfont sizefont scalefont setfont
+    
+    width iscale mul 2 div header stringwidth pop 2 div sub
+    height iscale mul textoffset add 
+    moveto
+    header show
+    
+    width iscale mul 2 div trailer stringwidth pop 2 div sub
+    textoffset neg sizefont sub
+    moveto
+    trailer show
+    grestore
+
+    % modify gray appropriately
+    screenresolution iscale initgray
+
+    width height iscale bitdump
+} def
+
+72 300 div dup scale
+/bitperpixel 8 def
+%page geometry:
+/marge 30 300 mul 72 div def
+%marge marge translate
+/paperwidth   68 def
+/paperheight 68 def
+68 68 5 300 0 () () extendedbitdump
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00
+00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000
+00ffffa7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7000000
+00ffffa7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7000000
+00ffffa7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7000000
+00ffffa7a7a7ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa7a7a7000000
+00ffffa7a7a7ffa7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a700a7a7a7000000
+00ffffa7a7a7ffa7000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffff0000ffffffffffffffffffff0000ffffffffffffffffffffffffff0000ffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffff00ffffffffffffffffff0000ffffffffffffffffffffffff00ffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffff0000ffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffff0000ffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffff0000ffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffff0000ffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffff0000ffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffff0000ffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffff000000ffffffffffffffffffffffffff000000ffffffffffffffffffffffffff000000ffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffff0000000000ffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffff000000ffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000ffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffff0000ffffffffffffffffffffffffffffffffffffffffffffffffff0000ffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa700ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa700a7a7a7000000
+00ffffa7a7a7ffa7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a700a7a7a7000000
+00ffffa7a7a70000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a7a7a7000000
+00ffffa7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7000000
+00ffffa7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7000000
+00ffffa7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7000000
+00ff000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+%%Trailer

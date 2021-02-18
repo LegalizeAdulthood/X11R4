@@ -1,0 +1,1158 @@
+.TH "StPicture" "WIDGET" " " " " " "
+
+.SH NAME
+stPictureWidgetClass \- Sigma User Interface Tools Picture widget
+
+.SH SYNTAX
+.nf
+.ta 1i 2i
+#include <X11/Intrinsic.h>
+#include <St/StPicture.h>
+.fi
+
+.SH SYNOPSIS
+     The picture is a window supplying applications the function to
+manipulate various types of figures.   The figures are managed
+internally within the widget, and applications can manipulate them by making use
+of the public functions.   You can also have the scrollbars attached to change
+the view location within the virtual plane.
+.sp
+     The picture widget has a default user interface for drawing, selecting
+and manipulating the figures with the mouse and/or the popup menu.   If you
+should be contented with this interface and the functions supported there, you
+only have to instantiate a picture widget to get a graphics editor.
+.sp
+     Of course, it is also possible to establish your favorite user interface
+and functions using the resourses and public functions supplied by the picture
+widget.
+.sp
+     You can do the following with the picture widget:
+.sp
+.in +2
+.ti -2
+(1) Display various types of figures in the window.
+.sp
+.ti -2
+(2) Compound multiple figures into a group, and manipulate it as a single
+figure.
+.sp
+.ti -2
+(3) Draw figures interactively using the mouse.
+.sp
+.ti -2
+(4) Set the figure type to draw, change attributes, manipulate figures using the
+standard popup menu.
+.sp
+.ti -2
+(5) Access the figure data managed by the widget using public functions
+supported by the widget.
+.sp
+.ti -2
+(6) Change the view location within the virtual plane using scrollbars or
+the 'Shift<Btn1>' click operation.
+.sp
+.ti -2
+(7) Save and restore figure data from files, and read in bitmap format files.
+.sp
+.ti -2
+(8) Automatically have figure data loaded from a file at widget instantiation.
+.in -2
+
+.bp
+.SH CLASS
+     The StPicture widget inherits the Core and Simple widget classes.
+.sp
+.PS
+	move right 2.25i
+C:	box width 1.5i height 0.3i "Core"
+S:	box same "Simple" at last box - ( 0, 0.5 )
+P:	box same "StPicture" at last box - ( 0, 0.5 )
+	line from C.s to S.n
+	line from S.s to P.n
+.PE
+.sp
+.ce
+StPicture widget class hierarchy
+.sp 2
+     To create a StPicture widget instance, use StPicture and specify the
+class varible stPictureWidgetClass.
+
+.SH DESCRIPTION
+The functions of the picture widget are described below.
+.sp
+Operations on the figures are performed following these steps:
+.sp
+.in +2
+.ti -1
+1. Select the figure you want to manipulate.
+.ti -1
+2. Select a function from the menu.
+.ti -1
+3. Manipulate the figure.
+.in -2
+.sp
+By specifying some resources, you can alter the main popup menu and Draw submenu in these ways:
+.sp
+.in +2
+.ti -1
+a. Change title and entry names.
+.br
+.ti -1
+b. Change the sequence of the entries.
+.br
+.ti -1
+c. Suppress the functions corresponding to the entry, in which case the widget only calls the user-supplied callbacks for the entry.
+.br
+.ti -1
+d. Delete menu entries.
+.in -2
+.bp
+The default main popup menu will look like this:
+.PS
+	move right 0.9i
+MT:	box width 1.3i height 0.2i "( menu title )"
+ZZ:	box same "Attributes->" at last box - ( 0, 0.25 )
+	"=> Attributes submenu => dialog boxes" at last box + ( 2.1, 0 )
+ZB:	box same "Draw ->" at last box - ( 0, 0.25 )
+	"=> Draw submenu" at last box + ( 1.38, 0 )
+BK:	box same "End Draw" at last box - ( 0, 0.25 )
+GR:	box same "Group ->" at last box - ( 0, 0.25 )
+	"=> submenu" at last box + ( 1.18, 0 )
+HY:	box same "Priority ->" at last box - ( 0, 0.25 )
+	"=> submenu" at last box + ( 1.18, 0 )
+JH:	box same "Top<->Bottom" at last box - ( 0, 0.25 )
+SH:	box same "Left<->Right" at last box - ( 0, 0.25 )
+KT:	box same "Rotate ->" at last box - ( 0, 0.25 )
+	"=> submenu" at last box + ( 1.18, 0 )
+SJ:	box same "Delete" at last box - ( 0, 0.25 )
+FS:	box same "Copy" at last box - ( 0, 0.25 )
+ID:	box same "Move" at last box - ( 0, 0.25 )
+RS:	box same "Resize" at last box - ( 0, 0.25 )
+KD:	box same "Write ->" at last box - ( 0, 0.25 )
+	"=> dialog box" at last box + ( 1.24, 0 )
+YK:	box same "Read ->" at last box - ( 0, 0.25 )
+	"=> dialog box" at last box + ( 1.24, 0 )
+IM:	box same "Read Image->" at last box - ( 0, 0.25 )
+	"=> dialog box" at last box + ( 1.24, 0 )
+UN:	box same "Undo" at last box - ( 0, 0.25 )
+SB:	box same "Redraw" at last box - ( 0, 0.25 )
+	box width 1.4i height 4.6 at 1/2 <MT, SB>
+.PE
+.sp
+.in -1
+DRAWING
+.in +1
+.sp
+     Within the picture widget, you can draw the figure types listed below:
+.PP
+.nf
+.in +10
+      Rectangle
+      Circle
+      Ellipse
+      Line
+      Arc
+      Elliptic Arc
+      Pie
+      Elliptic Pie
+      Polyline
+      Polygon
+      Freehand
+      Text
+.in -10
+.fi
+.sp
+     The figure data is managed by the widget.
+.sp
+     There is a resource named StNallowProtrusion to specify whether you are
+allowed to draw figures beyond the widget window.   If you specify True, the
+view can move within the virtual plane, which extends from -32k to +32k-1 by
+default.   This size can be also changed by specifying the resources
+StNcoordinateXMax, etc.
+.sp
+     To draw a figure interactively, first you set the figure type using the
+popup menu, and then operates the mouse.   You can also draw one from your
+application by making use of the public functions supplied by the widget.   Each
+figure is assigned an ID number, which you may specify in other public functions
+to manipulate it.
+.sp
+.in -1
+SELECTION
+.in +1
+.sp
+     To select a figure, you have to click the left mouse button within the
+circumscribing rectangle.   When multiple figures are at the same location, the
+one with the highest priority ( usually the one drawn latest ) will be selected.
+When a figure is selected, the circumscribing rectangle reverses and 8 grips
+( small squares ) appear at the corners and between them.   This means that
+1-pixel-wide solid-lined rectangles on a monochrome display will disappear
+when they get selected, in which case you have to identify them by the grips
+surrounding them.
+.br
+     You can also select it by dragging the left mouse button and then
+releasing it at the location of the figure you want to get selected.
+.sp
+     To select multiple figures, you can add figures to the selected set by
+clicking the right mouse button within the circumscribing rectangle.
+.br
+     You can also select multiple figures by dragging the right mouse button
+so that the rectangle that appears completely encloses the figures you want get
+selected, and then releasing it.
+.sp
+     To get a NULL selection, a state where no figure is selected, click the
+left button anywhere within the widget window where no figure resides.
+.sp
+.in -1
+MOTION
+.in +1
+.sp
+.br
+     To move the selected figure(s), click the left mouse button pressing the
+Shift key, move the figure(s) to the location you want, and click the left mouse
+button.
+.br
+     You can also move the selected figure(s) by clicking the middle mouse
+button to pop up the menu, clicking the left mouse button on the 'Move' entry,
+clicking it at the base position, moving the figure(s) to the location
+you want, and clicking it again.
+.sp
+     This function can also be performed from your application with the
+public functions supplied by the widget.
+.sp
+.in -1
+SCROLLING
+.in +1
+.sp
+     If you click the left mouse button pressing the Shift key when no figure
+is selected, the mouse cursor changes to a 4-directional arrow and the view area
+moves against the mouse cursor.   To your eyes, all the figures move with the
+mouse cursor.   To exit this scrolling mode, click the left mouse button again
+pressing the Shift key.
+.br
+     Scrolling is disabled if you specify False for the
+StNallowProtrusion resource.
+.sp
+     Of coures, if you like scrollbars, you can get them by setting the value of
+the resource XtNforceBars to TRUE.   They are needed when you want to scroll a
+large amount at a time.   For the people who want the scrollbars only when they
+use them, an idea would be to dynamically set/reset this resource value from
+their applications using the XtSetValues function.
+.sp
+     Scrollbars behave as follows:
+.sp
+     The thumb represents the proportional size of the view against the virtual
+plane.
+.sp
+     If you click the left mouse button on a horizontal/vertical bar, the amount
+from the bar's left/top edge to the pointer location is scrolled to
+left/upwards.
+.sp
+     If you click the right mouse button on a horizontal/vertical bar, the
+amount from the bar's left/top edge to the pointer location is scrolled to
+right/downwards.
+.sp
+     If you drag the middle mouse button on a bar, the thumb ( and the view 
+proportionally to the virtual plane ) follow the
+pointer location.
+.sp
+     It may be a bit confusing, because when the view moves to left/upwards
+within the virtual plane, the figures in the window move to right/downwards, and
+vice versa.
+.sp
+.in -1
+RESIZING
+.in +1
+.sp
+     To resize one of the selected figure(s), click the middle mouse
+button to pop up the menu, click the left mouse button on the 'Resize' entry,
+click it at one of the figure's grips, resize the figure to the size
+you want, and click it again.
+.br
+     The grip you click determines the direction for the resize operation.
+.sp
+     This function can also be performed from your application with the
+public functions supplied by the widget.
+.sp
+.in -1
+FIGURE TYPE SETTING
+.in +1
+.sp
+     To draw figures, you have to enter into the drawing mode by setting the
+type of figure you want to draw.
+.br
+     To set the type of figures to draw, click the middle mouse
+button to pop up the menu, move the mouse cursor to the 'Draw ->' entry to pop
+up the Draw submenu, and click the left mouse button on one of the figure type
+entries.
+.sp
+     To leave the drawing mode, click the middle mouse
+button to pop up the menu, and click the left mouse button on the 'End Draw'
+entry,
+.sp
+The default Draw submenu will look like this:
+.PS
+ZB:	box width 1.3i height 0.2i "Draw ->"
+	line from ZB.nw + ( -0.05, 0.05 ) to ZB.sw - ( 0.05, 0.05 )
+	line from ZB.ne + ( 0.05, 0.05 ) to ZB.ne + ( 0.05, 0 )
+TI:	box same "( submenu title )" at last box + ( 1.37, -0.07 )
+	box same "Rectangle" at last box - ( 0, 0.25 )
+	box same "Circle" at last box - ( 0, 0.25 )
+	box same "Ellipse" at last box - ( 0, 0.25 )
+	box same "Line" at last box - ( 0, 0.25 )
+	box same "Arc" at last box - ( 0, 0.25 )
+	box same "Elliptic Arc" at last box - ( 0, 0.25 )
+	box same "Pie" at last box - ( 0, 0.25 )
+	box same "Elliptical Pie" at last box - ( 0, 0.25 )
+	box same "Polyline" at last box - ( 0, 0.25 )
+	box same "Polygon" at last box - ( 0, 0.25 )
+	box same "Freehand" at last box - ( 0, 0.25 )
+MJ:	box same "Text" at last box - ( 0, 0.25 )
+	box width 1.4i height 3.35 at 1/2 <TI, MJ>
+.PE
+.sp
+.in -1
+ATTRIBUTES
+.in +1
+.sp
+     To change the attributes of the selected figure(s), follow these steps:
+.sp
+.in +2
+1. Pop up the menu, and move the mouse cursor to the 'Attributes->' entry.
+.sp
+.br
+2. Move the mouse cursor to one of the Attributes submenu entries shown below:
+.sp
+.in +2
+.nf
+(a) line	line type, line width, line color, cap style, join style, etc.
+(b) fill	fill pattern, fill color, etc.
+(c) text	font, graphics function, etc.
+.fi
+.in -2
+.sp
+3. Set the attributes, and click the left mouse button on the 'OK' button.
+.in -2
+.sp
+The Attributes submenu will look like this:
+.PS
+ZZ:	box width 1.3i height 0.2i "Attributes->"
+	line from ZZ.nw + ( -0.05, 0.05 ) to ZB.sw - ( 0.05, 0.05 )
+	line from ZZ.ne + ( 0.05, 0.05 ) to ZZ.ne + ( 0.05, 0 )
+SE:	box "Line->" width 1i height 0.2i at last box + ( 1.22, -0.07 )
+	"=> dialog box" at last box + ( 1.1, 0 )
+NK:	box same "Fill->" at last box - ( 0, 0.25 )
+	"=> dialog box" at last box + ( 1.1, 0 )
+MJ:	box same "Text->" at last box - ( 0, 0.25 )
+	"=> dialog box" at last box + ( 1.1, 0 )
+	box width 1.1i height 0.85 at 1/2 <SE, MJ>
+.PE
+.sp
+     If you set the attributes when no figure is selected, the global figure
+attributes is set, which will be applied to all newly drawn figures and bitmap
+data read in.
+.sp
+     This function can also be performed from your application with the
+public functions supplied by the widget.
+.sp
+.in -1
+.nf
+GROUP
+PRIORITY
+REVERSAL
+ROTATION
+DELETION
+COPY
+FILE ACCESSING
+BITMAP READING
+UNDOING
+REDRAWING
+.fi
+.in +1
+.sp
+     It would be redundant to repeat the operations for these functions here,
+as they are more or less of the same paradigm as those described above.   In
+general, you have to follow these steps:
+.sp
+.in +2
+1. Select some figure(s), if needed, with the mouse.
+.br
+2. Use the menu / submenu / dialog box to indicate what you want to do.
+.br
+3. Perform some additional operation, if needed, with the mouse.
+.sp
+     Here are some topics on these functions.
+.sp
+     Groups may be nested.   If you ungroup a nested-group figure, only the top
+level group nest will be reset.
+.sp
+     Priority can only be raised to the top or lowered to the bottom.
+.sp
+     Reversal is performed on a horizontal / vertical axis that passes through
+the center of the figure's circumscribing rectangle.   If you have selected
+multiple figures, they will be reversed individually, not as one figure set.
+   Text figures can not be reversed.
+.sp
+     Rotation is performed on the center of the figure's circumscribing
+rectangle.   You can specify only one of 90, 180 or 270 degrees in anticlockwise
+direction.   If you have selected
+multiple figures, they will be rotated individually, not as one figure set.
+   Text figures can not be rotated.
+.sp
+     The dialog box where you specify the figure data file name to save the
+contents into has as its initial value the name set to the XtNfile resource.
+.sp
+     The bitmap file name specified is searched for not only in the current
+directory but also in the X window's standard bitmap directory
+( by default '/usr/include/X11/bitmaps' ).   In figure data files, the
+bitmaps are saved as file names specified in the dialog box.
+.sp
+     Most of the functions described above can also be performed from your
+application with the public functions supplied by the widget.
+.sp
+.SH PUBLIC FUNCTIONS
+     Currently, there is no document [ in English ] available for the public
+functions supplied by the StPicture widget.
+.br
+     If you make use of them, include the header file 'St/StPicutreA.h', where
+the data structures and constants are defined.
+.sp
+     Here is a list of their names and brief descriptions.   Please consult the
+individual source code for their interface and detailed specification.
+.sp
+.TS
+center, tab(:);
+c c
+lw(2.7i) lw(2.7i).
+_
+Function Name:Description
+_
+StPicGetMouseLocation:get current mouse cursor location
+_
+StPicSetFigureType:set figure type to draw
+StPicBreakDraw:leave drawing mode
+_
+StPicSetLineAtr:set line attributes
+StPicSetPaintAtr:set fill attributes
+StPicSetTextAtr:set text attributes
+_
+StPicGetLineAtr:get line attributes
+StPicGetPaintAtr:get fill attributes
+StPicGetTextAtr:get text attributes
+_
+StPicCreateArc:register an arc
+StPicCreateEllipse:register an ellipse
+StPicCreateFreehand:register a freehand line
+StPicCreateLine:register a line
+StPicCreatePie:register a pie
+StPicCreatePolygon:register a polygon
+StPicCreatePolyline:register a polyline
+StPicCreateRectangle:register a rectangle
+StPicCreateText:register a string
+StPicCreateBitmap:register a bitmap
+_
+StPicGetFigure:get ID's for figures within a region
+StPicGetSelectedFigure:get ID's for figures currently selected
+StPicGetAllFigure:get ID's for all the figures
+_
+StPicGetFigureType:get figure type from ID
+StPicGetLineInfo:get information of a line
+StPicGetRectangleInfo:get information of a rectangle
+StPicGetPieInfo:get information of a pie
+StPicGetPolygonInfo:get information of a polygon
+StPicGetFreehandInfo:get information of a freehand line
+StPicGetEllipseInfo:get information of an ellipse
+StPicGetArcInfo:get information of an arc
+StPicGetPolylineInfo:get information of a polyline
+StPicGetTextInfo:get information of a string
+StPicGetBitmapInfo:get information of a bitmap
+_
+StPicGetFigureRegion:get circumscribing rectangular area
+_
+StPicDrawFigure:draw a figure by ID
+StPicRedrawPart:redraw figures within a rectangular area
+StPicRedrawAll:redraw all the figures
+_
+StPicSelectFigure:set selected figures
+StPicGroupFigure:group figures into one
+StPicUngroupFigure:ungroup a grouped figure
+StPicChangePriority:change figure's display priority
+StPicMirrorFigure:reverse figure on an axis
+StPicRotateFigure:rotate a figure
+StPicDeleteFigure:unregister a figure
+StPicCopyFigure:copy a figure
+StPicMoveFigure:move a figure
+StPicResizeFigure:resize a figure
+_
+StPicReinitialize:unregister all the figures
+_
+StPicSetViewArea:set view location
+StPicClearView:clear view contens
+_
+StPicReadFile:load a picture data file
+StPicWriteFile:save into a picture data file
+_
+StPicGetStatus:get error status information
+_
+.TE
+
+.SH RESOURCE
+     The newly defined resourses for the StPicture widget is as follows:
+.sp
+.ps -2
+.TS
+allbox;
+c c c c
+l l l l.
+Name	Class	Type	Default
+StNafterCallbacks	StCAfterCallbacks	XtCallbackList *	NULL	
+StNafterCallbacksDraw	StCAfterCallbacksDraw	XtCallbackList *	NULL	
+StNallowProtrusion	StCAllowProtrusion	Boolean	True	
+StNbeforeCallbacks	StCBeforeCallbacks	XtCallbackList *	NULL	
+StNbeforeCallbacksDraw	StCBeforeCallbacksDraw	XtCallbackList *	NULL	
+StNcoordinateXMax	StCCoordinateXMax	Position	32767	
+StNcoordinateXMin	StCCoordinateXMin	Position	-32768	
+StNcoordinateYMax	StCCoordinateYMax	Position	32767	
+StNcoordinateYMin	StCCoordinateYMin	Position	-32768	
+StNmenuEntries	StCMenuEntries	StringTable	( See below )
+StNmenuEntriesDraw	StCMenuEntriesDraw	StringTable	( See below )
+StNmenuFunctions	StCMenuFunctions	StPictureFunction *	( See below )
+StNmenuFunctionsDraw	StCMenuFunctionsDraw	StDrawFunction *	( See below )
+StNmenuTitle	StCMenuTitle	String	NULL	
+StNmenuTitleDraw	StCMenuTitleDraw	String	NULL	
+StNviewX	StCViewX	Position	0	
+StNviewY	StCViewY	Position	0	
+XtNfile	XtCFile	String	NULL	
+XtNforceBars	XtCBoolean	Boolean	False	
+XtNforeground	XtCForeground	Pixel	black
+XtNfont	XtCFont	XFontStruct *	Fixed	
+XtNuseBottom	XtCBoolean	Boolean	False	
+XtNuseRight	XtCBoolean	Boolean	False	
+.TE
+.ps +2
+.sp
+StNafterCallbacks
+.in +3
+.sp
+     An array of XtCallbackList type elements.
+.br
+     Specifies the callbacks called after the functions corresponding to the
+main popup menu entries are executed.
+.sp
+     The default value NULL is identical to the array below:
+.sp
+.nf
+{  NULL, NULL, NULL, ... NULL, NULL, StcallbacksEnd  }
+   ( NULL for each main menu entry )
+.fi
+.sp
+     StcallbacksEnd marks the end of the array.
+.in -3
+.sp
+StNafterCallbacksDraw
+.in +3
+.sp
+     An array of XtCallbackList type elements.
+.br
+     Specifies the callbacks called after the functions corresponding to the
+Draw submenu entries are executed.
+.sp
+     The default value NULL is identical to the array below:
+.sp
+.nf
+{  NULL, NULL, NULL, ... NULL, NULL, StcallbacksEnd  }
+ ( NULL for each Draw submenu entry )
+.fi
+.sp
+     StcallbacksEnd marks the end of the array.
+.sp
+.in -3
+StNallowProtrusion
+.in +3
+.sp
+     Specifies whether the view may change its location within the virtual
+plane.
+.in -3
+.sp
+StNbeforeCallbacks
+.in +3
+.sp
+     An array of XtCallbackList type elements.
+.br
+     Specifies the callbacks called before the functions corresponding to the
+main popup menu entries are executed.
+.sp
+     The default value NULL is identical to the array below:
+.sp
+.nf
+{  NULL, NULL, NULL, ... NULL, NULL, StcallbacksEnd  }
+   ( NULL for each main menu entry )
+.fi
+.sp
+     StcallbacksEnd marks the end of the array.
+.in -3
+.sp
+StNbeforeCallbacksDraw
+.sp
+.in +3
+     An array of XtCallbackList type elements.
+.br
+     Specifies the callbacks called before the functions corresponding to the
+Draw submenu entries are executed.
+.sp
+     The default value NULL is identical to the array below:
+.sp
+.nf
+{  NULL, NULL, NULL, ... NULL, NULL, StcallbacksEnd  }
+ ( NULL for each Draw submenu entry )
+.fi
+.sp
+     StcallbacksEnd marks the end of the array.
+.in -3
+.sp
+StNcoordinateXMax
+.br
+StNcoordinateXMin
+.br
+StNcoordinateYMax
+.br
+StNcoordinateYMin
+.in +3
+.sp
+     Specify the limit coordinates of the virtual plane.
+.sp
+.in -3
+StNmenuEntries
+.in +3
+.sp
+     An array of String type elements.
+.br
+     Specifies the strings displayed on the main popup menu entries.
+.sp
+     The default value is as follows:
+.sp
+.TS
+l l l l l.
+{	"Attributes->",	"Draw ->",	"End Draw",	" Group ->",
+	" Priority ->",	"Top<->Bottom",	"Left<->Right",	" Rotate ->",
+	"Delete",	"Copy",	"Move",	"Resize",
+	"Write ->",	"Read ->",	"Read Image->",	"Undo",
+	"Redraw",	NULL	}
+.TE
+.sp
+     NULL marks the end of the array.
+.sp
+.in -3
+StNmenuEntriesDraw
+.sp
+.in +3
+     An array of String type elements.
+.br
+     Specifies the strings displayed on the Draw submenu entries.
+.sp
+     The default value is as follows:
+.sp
+.TS
+l l l l l.
+{	"Rectangle",	"Circle",	"Ellipse",	"Line",
+	"Arc",	"Elliptic Arc",	"Pie",	"Elliptic Pie",
+	"Polyline",	"Polygon",	"Freehand",	"Text",
+	NULL	}
+.TE
+.sp
+     NULL marks the end of the array.
+.sp
+.in -3
+StNmenuFunctions
+.sp
+.in +3
+     An array of StPictureFunction type elements.
+     Specifies the standard functions corresponding to the
+main popup menu entries.
+.sp
+     The predefined standard functions are as follows:
+.sp
+.TS
+l l.
+_
+function	description
+_
+StpictureAttributes	setting / changing figure attributes
+StpictureCopy	copying
+StpictureDelete	deleting
+StpictureDraw	entering the drawing mode
+StpictureDrawEnd	exiting the drawing mode
+StpictureEnd	( marks the end of the array )
+StpictureGroup	grouping / ungrouping
+StpictureImage	reading in a bitmap file
+StpictureLeftRight	reversing on a vertical axis
+StpictureMove	moving
+StpictureNull	( no operation )
+StpicturePriority	raising / lowering
+StpictureRead	loading in a picture data file
+StpictureRedraw	redrawing
+StpictureResize	resizing
+StpictureRotate	rotating
+StpictureTopBottom	reversing on a horizontal axis
+StpictureUndo	undoing
+StpictureWrite	saving to a picture data file
+_
+.TE
+.sp
+     The default value is as follows:
+.sp
+.TS
+l l l l l.
+{	StpictureAttributes,	StpictureDraw,	StpictureDrawEnd,	
+	StpictureGroup,	StpicturePriority,	StpictureTopBottom,
+	StpictureLeftRight,	StpictureRotate,	StpictureDelete,
+	StpictureCopy,	StpictureMove,	StpictureResize,
+	StpictureWrite,	StpictureRead,	StpictureImage,
+	StpictureUndo,	StpictureRedraw,	StpictureEnd	}
+.TE
+.sp
+.in -3
+StNmenuFunctionsDraw
+.in +3
+.sp
+     An array of StDrawFunction type elements.
+.br
+     Specifies the standard functions corresponding to the
+Draw submenu entries.
+.sp
+     The predefined standard functions are as follows:
+.sp
+.TS
+l l.
+_
+Function	Description
+_
+StdrawArc	arc
+StdrawCircle	cicle
+StdrawEllipse	ellipse
+StdrawEllipticArc	elliptic arc
+StdrawEllipticPie	elliptic pie
+StdrawEnd	( marks the end of the array )
+StdrawFreehand	freehand
+StdrawLine	line
+StdrawNull	( no operation )
+StdrawPie	pie
+StdrawPolygon	polygon
+StdrawPolyline	polyline
+StdrawRectangle	rectangle
+StdrawText	text
+_
+.TE
+.sp
+     The default value is as follows:
+.sp
+.TS
+l l l l.
+{	StdrawRectangle,	StdrawCircle,	StdrawEllipse,
+	StdrawLine,	StdrawArc,	StdrawEllipticArc,
+	StdrawPie,	StdrawEllipticPie,	StdrawPolyline,
+	StdrawPolygon,	StdrawFreehand,	StdrawText,
+	StdrawEnd	}
+.TE
+.sp
+.in -3
+StNmenuTitle
+.in +3
+.sp
+     Specifies the main popup menu title.
+.br
+     If NULL is specified, no title is displayed.
+.in -3
+.sp
+StNmenuTitleDraw
+.in +3
+.sp
+     Specifies the Draw submenu title.
+.br
+     If NULL is specified, no title is displayed.
+.sp
+.in -3
+StNviewX
+.br
+StNviewY
+.in +3
+.sp
+     Specify the view location within the vitual plane.
+.br
+     The contents of the rectangular area with its upperleft corner at this
+location will be displayed in the window.
+.sp
+.in -3
+XtNfile
+.in +3
+.sp
+     Specifies the name of the file initially read in when the widget is
+realized.   It is also employed as the default file name for the Read operation,
+and will be displayed in the Read dialog box.
+.sp
+     This resource may be useful when you want static pictures arranged
+within your application window by setting this resource of each particular
+widget to the name of the file that contains the picture data, and disabling
+input events by nullifying the translation tables.
+.in -3
+.sp
+XtNforceBars
+.in +3
+.sp
+     Specifies whether or not to display scrollbars.
+.in -3
+.sp
+XtNforeground
+.in +3
+.sp
+     Specifies the forground pixel of the window.
+.in -3
+.sp
+XtNfont
+.in +3
+.sp
+     Specifies the font name used in the menus and dialog boxes.
+.in -3
+.sp
+XtNuseBottom
+.in +3
+.sp
+     Specifies the horizontal scrollbar location
+.in +3
+.sp
+False	top
+.br
+True	bottom
+.in -3
+.sp
+.in -3
+XtNuseRight
+.in +3
+.sp
+     Specifies the vertical scrollbar location
+.in +3
+.sp
+False	left
+.br
+True	right
+.in -3
+.in -3
+.sp 2
+.bp
+     The resources inherited from the Core widget class are as follows:
+.sp
+.ps -2
+.TS
+allbox;
+c c c c
+l l l l.
+Name	Class	Type	Default
+XtNbackground	XtCBackground	Pixel	XtDefaultBackground	
+XtNborderColor	XtCBorderColor	Pixel	XtDefaultForeground	
+XtNborderWidth	XtCBorderWidth	Dimension	4	
+XtNdestroyCallback	XtCCallback	XtCallbackList	NULL	
+XtNheight	XtCHeight	Dimension	500	
+XtNmappedWhenManaged	XtCMappedWhenManaged	Boolean	True	
+XtNsensitive	XtCSensitive	Boolean	True	
+XtNtranslations	XtCTranslations	TranslationTable	( See TRANSLATION )
+XtNwidth	XtCWidth	Dimension	500	
+XtNx	XtCPosition	Position	0	
+XtNy	XtCPosition	Position	0	
+.TE
+.ps +2
+
+.SH TRANSLATION
+
+.br
+     This is the default translation for the StPicture widget.
+.sp
+.ps -2
+.TS
+l l.
+Ctrl<Key>D:	delete-character()
+Ctrl<Key>H:	delete-previous-character()
+Ctrl<Key>K:	erase-to-end-of-line()
+Ctrl<Key>M:	newline()
+Ctrl<Key>U:	erase-line()
+<Key>Delete:	delete-previous-character()
+<Key>BackSpace:	delete-previous-character()
+<Key>Return:	newline()
+<Key>:	insert-char()
+Shift<Btn1Down>, Shift<Btn1Up>:	move-hand()  notify-before(move-hand)  notify-after(move-hand)
+<Btn1Down>:	select-start()
+<Btn1Motion>:	select-adjust()
+<Btn1Up>:	select-end()  notify-after(select-end)
+Shift<Btn2Down>, Shift<Btn2Up>:	pline-end()  notify-after(pline-end)
+<Btn2Down>, <Btn2Up>:	main-popup()
+<Btn3Down>:	extend-start()
+<Btn3Motion>:	extend-adjust()
+<Btn3Up>:	extend-end()
+<Motion>:	motion()
+.TE
+.ps +2
+
+.SH ACTION
+Selection
+.sp
+.in +3
+select-start
+.in +3
+Discards previous selection, and starts a new select operation.
+.sp
+.in -3
+select-adjust
+.in +3
+Switches the figure to highlight when another figure is to get selected.
+.sp
+.in -3
+select-end
+.in +3
+Ends a select operation.
+.sp
+.in -3
+extend-start
+.in +3
+Appending to the previous selection, starts a new adding-to select operation.
+.sp
+.in -3
+extend-adjust
+.in +3
+Adds a figure to the highlighted figure set when it is also to get selected.
+.sp
+.in -3
+extend-end
+.in +3
+Ends an adding-to selection.
+.sp
+.in -3
+.in -3
+Menu
+.sp
+.in +3
+main-popup
+.in +3
+Controls the main popup menu, submenus, dialog boxes.   The user's request will
+be set on an internal table.
+.sp
+.in -3
+menu-function
+.in +3
+Refering to the information set on the internal table, at most one of the
+following menu functions, which require no further user interaction, is
+executed.
+.sp
+.in +10
+.nf
+End Draw
+Attributes
+Group
+Priority
+Top<->Bottom
+Left<->Right
+Delete
+Write
+Read
+Read Image
+Undo
+Redraw
+.fi
+.in -10
+.in -3
+.in -3
+.sp
+Motion
+.sp
+.in +3
+move-hand
+.in +3
+Starts or ends a figure motion or scrolling operation depending on whether
+some figure is selected or not.
+.sp
+.in -3
+motion
+     The function for one of the operations below is executed.
+.sp
+.in +10
+.nf
+scrolling
+Move
+Resize
+Copy
+Draw
+.in -10
+.fi
+.in -3
+.in -3
+.sp
+Callbacks
+.sp
+.in +3
+notify-before( menu-function | move-hand )
+.sp
+.in +3
+menu-function specified:
+.in +3
+Calls the before callback(s) corresponding to the current function.
+.sp
+.in -3
+move-hand specified:
+.in +3
+Calls the before callback(s) corresponding to the Move function.
+.sp
+.in -3
+.in -3
+notify-after( menu-function | move-hand | select-end | pline-end )
+.sp
+.in +3
+menu-function specified:
+.in +3
+Calls the after callback(s) corresponding to the current function if it requires
+no further user interaction.
+.sp
+.in -3
+move-hand specified:
+.in +3
+Calls the after callback(s) corresponding to the Move function.
+.sp
+.in -3
+select-end specified:
+.in +3
+Calls the after callback(s) corresponding to the current function.
+.sp
+.in -3
+pline-end specified:
+.in +3
+Calls the after callback(s) corresponding to polyline / polygon drawing.
+.sp
+.in -3
+.in -3
+.in -3
+String Operation
+.sp
+.in +3
+delete-character
+.in +3
+Deletes the character at the character cursor position.
+.br
+The characters on the right move to the left.
+.sp
+.in -3
+delete-previous-character
+.in +3
+Deletes the character at the left of the character cursor position.
+.br
+The characters at the cursor position and on the right move to the left.
+.sp
+.in -3
+erase-line
+.in +3
+Deletes the line at the character cursor position.
+.br
+The lines below move upward.
+.sp
+.in -3
+erase-to-end-of-line
+.in +3
+Deletes the character at the character cursor position and on the right.
+.sp
+.in -3
+insert-char
+.in +3
+Inserts the character entered at the character cursor position.
+.br
+The characters at the character cursor and on the right move to the right.
+.sp
+.in -3
+newline
+.in +3
+Starts a new line.
+.br
+The character cursor with the characters at its position and on the right move
+to the beginning of the next line, left-adjusting to the text primitive.
+.br
+The lines below move downward.
+.sp
+.in -3
+.in -3
+Miscellaneous
+.sp
+.in +3
+do-nothing
+.in +3
+No operation.
+.in -3
+.in -3
+.sp
+.SH EXAMPLE
+.nf
+.sp 2
+#include <X11/Xatom.h>
+#include <X11/Xlib.h>
+#include <X11/Intrinsic.h>
+#include <X11/StringDefs.h>
+#include <X11/Shell.h>
+#include <X11/Cardinals.h>
+#include <St/StPicture.h>
+#include "picture.bit"
+
+extern void exit();
+
+static XrmOptionDescRec options[ ] = {
+.TS
+l l l l l l.
+  {	"-ap",	"*picture.allowProtrusion",	XrmoptionNoArg,	"TRUE"	},
+  {	"-np",	"*picture.allowProtrusion",	XrmoptionNoArg,	"FALSE"	},
+  {	"-scrollbar",	"*picture.forceBars",	XrmoptionNoArg,	"TRUE"	},
+  {	"-sb",	"*picture.forceBars",	XrmoptionNoArg,	"TRUE"	},
+  {	"-bottombar",	"*picture.useBottom",	XrmoptionNoArg,	"TRUE"	},
+  {	"-bb",	"*picture.useBottom",	XrmoptionNoArg,	"TRUE"	},
+  {	"-topbar",	"*picture.useBottom",	XrmoptionNoArg,	"FALSE"	},
+  {	"-tb",	"*picture.useBottom",	XrmoptionNoArg,	"FALSE"	},
+  {	"-rightbar",	"*picture.useRight",	XrmoptionNoArg,	"TRUE"	},
+  {	"-rb",	"*picture.useRight",	XrmoptionNoArg,	"TRUE"	},
+  {	"-leftbar",	"*picture.useRight",	XrmoptionNoArg,	"FALSE"	},
+  {	"-lb",	"*picture.useRight",	XrmoptionNoArg,	"FALSE"	},
+  {	"-file",	"*picture.file",	XrmoptionSepArg,	""	},
+  {	"-f",	"*picture.file",	XrmoptionSepArg,	""	},
+.TE
+};
+
+/*
+ * Report the syntax for calling xpicture.
+ */
+Syntax(call)
+	char *call;
+{
+	(void)printf("Usage: %s [-sb] [-bb] [-tb] [-rb] [-lb]\\n", call);
+	(void)printf("  [-f <file_name>]\\n");
+	(void)printf("  [-fn <font_name>]\\n");
+	(void)printf("  [-fg <color>] [-bg <color>]\\n");
+	(void)printf("  [-bw <pixels>] [-bd <color>] [-rv]\\n");
+	(void)printf("  [-d [<host>]:[<vs>]]\\n");
+	(void)printf("  [-g [<width>][x<height>][<+-><xoff>[<+-><yoff>]]]\\n\\n");
+	exit(1);
+}
+
+void main(argc, argv)
+    int argc;
+    char **argv;
+{
+    Widget toplevel;
+    Arg arg;
+    Pixmap icon_pixmap = None;
+
+    toplevel = XtInitialize("main", "XPicture", options, XtNumber(options), &argc, argv);
+    if (argc != 1) Syntax(argv[0]);
+
+    XtSetArg(arg, XtNiconPixmap, &icon_pixmap);
+    XtGetValues(toplevel, &arg, ONE);
+    if (icon_pixmap == None) {
+        arg.value = (XtArgVal)XCreateBitmapFromData(XtDisplay(toplevel),
+                        XtScreen(toplevel)->root, picture_bits, picture_width, picture_height);
+        XtSetValues(toplevel, &arg, ONE);
+    }
+
+    XtCreateManagedWidget("picture", stPictureWidgetClass, toplevel, NULL, ZERO);
+    XtRealizeWidget(toplevel);
+    XtMainLoop();
+}
+.fi

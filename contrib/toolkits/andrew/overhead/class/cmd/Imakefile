@@ -1,0 +1,23 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES = -I../machdep/machine -I../lib
+
+DependTarget()
+NormalObjectRule()
+
+ProgramTarget(doindex,doindex.o,../lib/libclass.a,)
+InstallProgram(doindex,$(DESTDIR)/bin)
+ProgramTarget(dofix,../machdep/machine/dofix.o,../lib/libclass.a,)
+InstallProgram(dofix,$(DESTDIR)/bin)
+
+ProgramTarget(dotest,dotest.o,../lib/libclass.a,)
+InstallProgram(dotest,$(DESTDIR)/bin)
+
+ProgramTarget(whichdo,whichdo.o,$(UTILLIB),)
+InstallProgram(whichdo,$(DESTDIR)/bin)
+
+InstallDocs(doindex.help, ${DESTDIR}/help)
+
+

@@ -1,0 +1,36 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+
+DOBJS = lex.do sym.do toksym.do lexdef.do
+IHFILES = lex.ih sym.ih toksym.ih lexdef.ih
+OBJS = lex.o sym.o toksym.o lexdef.o
+DOCS = lex.doc sym.doc
+
+NormalObjectRule()
+NormalATKRule()
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+LibraryTarget(libtokens.a, $(OBJS))
+InstallLibrary(libtokens.a, ${DESTDIR}/lib/atk/)
+
+InstallFile(xgetchar.h, $(INSTINCFLAGS), $(DESTDIR)/include/atk/)
+
+LIBS = 	${BASEDIR}/lib/atk/libbasics.a \
+	${BASEDIR}/lib/libclass.a  \
+	${MALLOCLIB}
+
+ProgramTarget(buildy, buildy.o, ${MALLOCLIB}, -lm)
+ProgramTarget(lextest, lextest.o, ${LIBS}, -lm)
+
+test::	lextest
+	lextest test.in | diff - test.owt
+
+InstallProgram(buildy, ${DESTDIR}/bin/)
+
+InstallDocs($(DOCS), $(DESTDIR)/doc/atk/)
+
+DependTarget()
+

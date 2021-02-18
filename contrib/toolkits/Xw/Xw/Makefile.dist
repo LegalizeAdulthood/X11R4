@@ -1,0 +1,330 @@
+#-----------------------------------------------------------------------
+#   Makefile for HP X Widgets
+#   
+#   This Makefile compiles and generates the library ../lib/libXw.a
+#   on Hewlett-Packard 9000 workstations.  Necessary modifications for
+#   DEC and Sun workstations are shown in comments.  Other Makefiles
+#   in this release will need to modified similarly.
+#   
+#   Note:  The HP X Widgets library depends on the HP version of 
+#          X11R2 Xt Intrinsics (see ../Xt).
+#-----------------------------------------------------------------------
+CCROOT=/
+CC=$(CCROOT)/bin/cc
+AS=$(CCROOT)/bin/as
+AR=$(CCROOT)/bin/ar
+LD=$(CCROOT)/bin/ld
+
+INCRT = ../
+LIBNAME = ../lib/libXw.a
+#CFLAGS = -O -DSYSV -Wc,-Nd4000 -Wc,-Ns4000 -I../
+# DEC and Sun
+CFLAGS = -O -I$(INCRT)
+
+FILES =\
+	Arrow.o\
+	BBoard.o\
+	Button.o\
+	Cascade.o\
+	CreateTile.o\
+	Display.o\
+	Form.o\
+	ImageEdit.o\
+	List.o\
+	ListRC.o\
+	Manager.o\
+	MapEvents.o\
+	MenuBtn.o\
+	MenuMgr.o\
+	MenuPane.o\
+	MenuSep.o\
+	PButton.o\
+	Panel.o\
+	PopupMgr.o\
+	Primitive.o\
+	RCManager.o\
+	ResConvert.o\
+	SRaster.o\
+	SText.o\
+	SWindow.o\
+	Sash.o\
+	ScrollBar.o\
+	SourceDsk.o\
+	SourceStr.o\
+	TextEdit.o\
+	TitleBar.o\
+	Toggle.o\
+	Traversal.o\
+	VPW.o\
+	Valuator.o\
+	WClassing.o\
+	WorkSpace.o
+
+
+all:	$(LIBNAME) 
+
+.PRECIOUS:	$(LIBNAME)
+
+$(LIBNAME):	$(FILES)
+	rm -f $(LIBNAME)
+	$(AR) clq $(LIBNAME) $(FILES)
+	ranlib $(LIBNAME)
+
+.s.a:
+	$(AS) -o $*.o $<
+
+.c.o:
+	$(CC) -c $(CFLAGS) $<
+
+clean:
+	-rm -f *.o
+
+clobber:	clean
+	-rm -f $(LIBNAME)
+
+Display.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/TextEditP.h\
+	$(FRC)
+
+
+TextEdit.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/TextEditP.h\
+	$(INCRT)/Xw/TextEdit.h\
+	$(FRC)
+
+SourceDsk.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/TextEdit.h\
+	$(INCRT)/Xw/TextEditP.h\
+	$(FRC)
+
+SourceStr.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/TextEdit.h\
+	$(INCRT)/Xw/TextEditP.h\
+	$(FRC)
+
+Arrow.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/Arrow.h\
+	$(INCRT)/Xw/ArrowP.h\
+	$(FRC)
+
+Button.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(FRC)
+
+BBoard.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(FRC)
+
+Panel.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/Panel.h\
+	$(INCRT)/Xw/PanelP.h\
+	$(FRC)
+
+Cascade.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/MenuBtn.h\
+	$(INCRT)/Xw/MenuBtnP.h\
+	$(INCRT)/Xw/Cascade.h\
+	$(INCRT)/Xw/CascadeP.h\
+	$(FRC)
+
+Toggle.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/Toggle.h\
+	$(INCRT)/Xw/ToggleP.h\
+	$(FRC)
+
+Sash.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/Sash.h\
+	$(INCRT)/Xw/SashP.h\
+	$(FRC)
+
+CreateTile.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(FRC)
+
+Form.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/Form.h\
+	$(INCRT)/Xw/FormP.h\
+	$(FRC)
+
+ImageEdit.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/ImageEdit.h\
+	$(INCRT)/Xw/ImageEditP.h\
+	$(FRC)
+
+List.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/List.h\
+	$(INCRT)/Xw/ListP.h\
+	ListRC.o\
+	$(FRC)
+
+ListRC.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/ListRC.h\
+	$(INCRT)/Xw/ListRCP.h\
+	$(FRC)
+
+Manager.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(FRC)
+
+Primitive.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(FRC)
+
+MenuPane.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(FRC)
+
+MenuBtn.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/MenuBtn.h\
+	$(INCRT)/Xw/MenuBtnP.h\
+	$(FRC)
+
+MenuMgr.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(FRC)
+
+MenuSep.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/MenuSep.h\
+	$(INCRT)/Xw/MenuSepP.h\
+	$(FRC)
+
+PopupMgr.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/MenuBtn.h\
+	$(INCRT)/Xw/MenuBtnP.h\
+	$(INCRT)/Xw/PopupMgr.h\
+	$(INCRT)/Xw/PopupMgrP.h\
+	$(FRC)
+
+PButton.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/PButton.h\
+	$(INCRT)/Xw/PButtonP.h\
+	$(FRC)
+
+RCManager.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/RCManagerP.h\
+	$(INCRT)/Xw/RCManager.h\
+	$(FRC)
+
+VPW.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/VPWP.h\
+	$(INCRT)/Xw/VPW.h\
+	$(FRC)
+
+ResConvert.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(FRC)
+
+ScrollBar.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/Arrow.h\
+	$(INCRT)/Xw/ArrowP.h\
+	$(INCRT)/Xw/Valuator.h\
+	$(INCRT)/Xw/ValuatorP.h\
+	$(INCRT)/Xw/ScrollBar.h\
+	$(INCRT)/Xw/ScrollBar.h\
+	$(FRC)
+
+SText.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/SText.h\
+	$(INCRT)/Xw/STextP.h\
+	$(FRC)
+
+SRaster.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/SRaster.h\
+	$(INCRT)/Xw/SRasterP.h\
+	$(FRC)
+
+SWindow.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/SWindow.h\
+	$(INCRT)/Xw/SWindowP.h\
+	$(FRC)
+
+TitleBar.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/SText.h\
+	$(INCRT)/Xw/STextP.h\
+	$(INCRT)/Xw/TitleBar.h\
+	$(INCRT)/Xw/TitleBar.h\
+	$(FRC)
+
+Traversal.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(FRC)
+
+Valuator.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/Valuator.h\
+	$(INCRT)/Xw/ValuatorP.h\
+	$(FRC)
+
+WClassing.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/WClassing.h\
+	$(INCRT)/Xw/WClassingP.h\
+	$(FRC)
+
+WorkSpace.o:\
+	$(INCRT)/Xw/Xw.h\
+	$(INCRT)/Xw/XwP.h\
+	$(INCRT)/Xw/WorkSpace.h\
+	$(INCRT)/Xw/WorkSpaceP.h\
+	$(FRC)
+
+FRC:

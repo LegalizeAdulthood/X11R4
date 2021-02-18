@@ -1,0 +1,92 @@
+
+
+		monochrome image sample		11-27-89
+		Paul Raveling		Raveling@isi.edu
+
+
+	This directory (img/monochrome) contains one sample
+	monochrome image in color-mapped format.  It's a copy
+	of a color image available on venera.isi.edu, converted
+	to monochrome.
+
+	After building and installing the Img Software Set,
+	you can display this image with the following command:
+
+		[cd <this directory>]
+		dispimg monochrome_sample
+
+
+	This image is a digitized photo from the 1982 International
+	Soling Association calendar, which was not copyrighted.
+	Solings are 27-foot racing sloops, the largest one-design
+	class raced in the Olympic Games.  For several years I
+	owned and raced one; the sort of close racing shown in this
+	this calendar photo is typical because the class rules force
+	all boats to be very evenly matched.
+
+	In 1984 the U.S. had a golden (literally!) opportunity to
+	watch this sort of racing in the Olympics.  However, ABC
+	televised absolutely no sailing.  As San Diego's Robbie Haines
+	was taking the Soling class gold medal Americans were
+	dominating all other classes in Olympic sailing.  Instead
+	of covering this, ABC heaped boxing on us.  As for me,
+	nuts to ABC.
+
+
+	Conversion of this image from color to monochrome is an
+	example of using several Img Software Set facilities.
+	Steps were:
+
+	1.  Display monochrome rescaled rendition of original RGB image
+	    on a 24-plane TrueColor display.  The command to do this was:
+
+	dispimg $img/color_rgb/solings -force monochrome
+
+
+	2.  Save the displayed image with:
+
+	[cd .]
+	savewin sample_monochrome
+
+
+	3.  Convert from RGB image format to color-mapped:
+
+	mapimg sample_monochrome 2  [any number works]
+
+
+
+	Other monochrome images are available by anonymous FTP from:
+
+		Host:		venera.isi.edu
+		Directory:	[~ftp/] images/monochrome
+
+	A copy of the corresponding README file from this directory,
+	current on this date, follows.  Most of the monochrome images
+	are from an old copy of Jef Poskanzer's PBM collection;
+	I expect to update the img/monochrome port of these soon.
+
+
+
+Original sources of images:
+
+
+	Abbrev		Source			Medium
+	------		------			------
+
+	MIT	? (Host m9-520-1.mit.edu)	Anonymous FTP
+	PBM	Jef Poskanzer via expo.lcs.mit	Anonymous FTP
+	UXE	? (Host uxe.cso.uiuc.edu)	anonymous FTP
+
+
+Pixmap image files in this directory:
+
+	Filename      Size, bytes	Dimensions	Source
+	--------      -----------	----------	------
+
+	bulldog		  9,152		 640 x 400	UXE
+	pagoda		 12,836		 512 x 384	MIT
+
+
+	***  And a cast of hundreds:			PBM
+	     See README.pbm and README.old.pbm
+

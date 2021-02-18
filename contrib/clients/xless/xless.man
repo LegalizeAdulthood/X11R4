@@ -1,0 +1,88 @@
+.TH Xless 1 "1 June 1989" "X Version 11"
+.SH NAME
+xless - File browsing program for the X Window System.
+.SH SYNOPSIS
+.B xless
+[-options ...] filename
+.SH DESCRIPTION
+Xless pops up a window on the display specified, containing the file
+specified on the command line.  This file may easily be viewed using
+the scrollbar to the left of the window.
+Xless takes also input from the standard input.
+Extra function are available on the toolbox to the right of the window:
+.br
+.br
+- Search a specified pattern;
+.br
+- Search the next occurance of the above specified pattern;
+.br
+- Open a session of the editor specified in the environment variable EDITOR,
+on the current file;
+.br
+- Reload the current file;
+.br
+- Change file in the current window;
+.br
+- Open a new xless window on the specified file.
+.br
+.PP
+For further information on using xless please read the online
+help information.  The rest of this manual page will dicsuss
+customization of xless to suit the needs of a particular user.
+.PP
+.SH "OPTIONS"
+.PP
+Xless is build upon the \fIXToolkit (Xtk)\fP and as such understands all
+default command line options of the Xtk.
+.PP
+.SH "WIDGET AND RESOURCE NAMES"
+In addition to the standard widget resources Xless has the following
+application resources:
+.br
+.PP
+.B standardFont
+.br
+	The default font to be used if any of the specified fonts are available.
+.PP
+.B textFont
+.br
+        The fonts to use for the text.
+.br
+.PP
+.B labelFont
+.br
+	The fonts to use for labels in dialog boxes.
+.br
+.PP
+.B buttonFont
+.br
+	The fonts to use for labels on buttons.
+.br
+.PP
+.B standardCur
+.br
+        The cursors to use in the main button window 
+        with the Quit and Help commands.
+.br
+.PP
+.B dialogCur
+.br
+        The cursors to use in the toolbox and dialog box windows. 
+.br
+.PP
+.TP 8 
+.B helpFile
+Use this rather than the system default helpfile.
+.PP
+.SH "SEE ALSO"
+X(1), X(8C), more(1), less(1)
+.PP
+.SH BUGS
+The probably are some.
+.br
+.PP
+.SH AUTHOR
+Copyright 1989 by Massachusetts Institute of Technology.
+.br
+Carlo Lisa, MIT Project Athena, from xmore written by
+Chris Peterson, MIT Project Athena.

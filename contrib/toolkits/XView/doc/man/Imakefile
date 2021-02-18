@@ -1,0 +1,20 @@
+#
+# Need to change the installation directory of the man pages to correspond
+# to your site.  Can either just change the location of man pages with the
+# $(MAN_DEST) variable in the XView.config file, or can change $(LIBMANDIR)
+# below.
+# Install the man pages with "make install.man"
+#
+
+#include "../../XView.config"
+
+LIBMANDIR= $(MAN_DEST)/man1
+MANPAGES = clock.1 cmdtool.1 dbxtool.1 shelltool.1 textedit.1
+
+all::
+
+install.man::
+	-mkdir $(MAN_DEST)
+	-mkdir $(LIBMANDIR)
+
+InstallMultipleMan($(MANPAGES),$(LIBMANDIR))

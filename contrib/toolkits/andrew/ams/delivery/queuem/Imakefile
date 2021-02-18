@@ -1,0 +1,19 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+LIBS	=	${BASEDIR}/lib/libmail.a \
+		${UTILLIB} \
+		${BASEDIR}/lib/liberrors.a \
+		${MALLOCLIB}
+
+NormalObjectRule()
+TestProgramTarget(deliver, deliver.o, ${LIBS},)
+ProgramTarget(queuemail, queuem.o, ${LIBS},)
+/* InstallProgram(queuemail, ${DESTDIR}/etc/) */
+/* needs to be installed setuid daemon */
+DependTarget()
+
+NormalHelpRule()
+InstallDocs(qmail.help, ${DESTDIR}/help)
+InstallHelpAlias(qmail, queuemail)

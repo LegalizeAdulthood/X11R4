@@ -1,0 +1,102 @@
+#
+# @(#) ttysw.info 1.1 88/02/22 SMI
+#
+#
+:menbpage
+	Enable Page Mode menu item
+
+Sends output to the window a "page" (panefull)
+at a time. A stop-sign symbol appears when there
+is more output to display. To see this output,
+press the Space bar or select Continue on the
+menu.
+#
+:mdsbpage
+	Disable Page Mode menu item
+
+Sends output to the window without stopping at
+"page" (window) boundaries.
+#
+:medit
+        Edit menu item
+
+Re-executes the most recent sequence of editing
+operations. Previous Undo operations are
+ignored.
+
+Pressing MENU provides a menu of Edit options. 
+#
+:mcommands
+	Extras menu item
+
+The extas menu allows for users to easily
+customize their system by defining a set of menu
+items including other menus of items in a file
+set in their user preferences file (Xdefaults).
+
+The format for this file is:
+
+"item 1"	program1 -options
+"menu name	MENU
+  "item 2"	  program2
+  "item 3"	  program3 -options
+"menu name"	END
+"item 4		program4 -options
+
+The Xdefaults entry where this file should
+be specified is "Text.ExtrasMenuFilename:"
+#
+:mfind
+        Find menu item
+
+Opens a Find and Replace command window.
+
+Pressing MENU provides a menu of find options.
+#
+:mcont
+	Continue menu item
+
+In page mode, displays the next page of output.
+#
+:mscroll
+	Scrolling menu item
+
+Provides the capablitiy of enabling or disabling
+scrolling.
+
+Enabling scrolling provides the window with a
+scrollbar and full text editing capabilities.
+
+Disabling the scrollbar also eliminates many text
+editing capabilities. (This is needed by some
+applications but normally you do not use this
+option.)
+#
+:menscroll
+	Enable Scrolling menu item
+
+Provides the window with a scrollbar and full
+text editing capabilities.
+#
+:mdisscroll
+	Disable Scrolling menu item
+
+Eliminates the scroll bar and many text editing
+capabilities. (This is needed by some
+applications but normally you do not use this
+option.)
+#
+:mflush
+	Flush menu item
+
+Clears out the input buffer when overfilled.
+#
+:termsw
+	Command window
+
+This is a Commands or System Messages window, in
+which you can enter UNIX commands.
+
+Click MENU in the window for the menu.
+#
+:bogus_keyword_to_mark_end

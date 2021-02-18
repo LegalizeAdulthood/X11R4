@@ -1,0 +1,459 @@
+
+
+
+Chapter 6	NCSA HDF Command Line Utilities
+
+
+
+Chapter Overview
+Introduction
+Listing the Contents of an HDF File:  hdfls
+Utilities for Working with Raster Image Sets
+Converting Images to HDF RIS8:  r8tohdf
+Extracting Images and Palettes from an HDF 
+File:  hdftor8
+Displaying Images:  hdfrseq and hdfseq
+Vector Graphics Emulation on Raster 
+Technologies and Sun Displays:  tdspl
+
+.c2.Chapter Overview
+
+A small but growing number of command line utilities are 
+available for working with HDF files. Currently available 
+programs are described here.
+
+
+Introduction
+
+The command line utilities are applications programs that can be 
+executed by entering them at the command level, just like other 
+UNIX commands. These utilities serve two purposes:
+
+¥	They make it possible for you to perform, at the command level, 
+common operations on HDF files for which you would normally 
+have to write your own program. For example, the utility r8tohdf 
+is a program that takes a raw raster image from a file and 
+stores it in an HDF files in a raster image set.
+
+¥	They provide capabilities for doing things with HDF files that 
+would be very difficult to do under your own program control. 
+For example, the utility hdfseq takes a a raster image from an 
+HDF file and displays it immediately on a Sun-3 console.
+
+
+Listing the Contents of an HDF File:  hdfls
+
+This program displays information about the data elements in an 
+HDF file. For each data element in a file, hdfls displays the 
+corresponding tag descriptor, tag number, and reference number. 
+Optionally, hdfls can display the length of the data element. The 
+syntax for hdfls is:
+
+hdfls [-o] [-l] filename
+
+-o	Order: Indicates that the reference numbers are to be 
+displayed in ascending order.
+
+-l	Long format: Displays more information about the file.
+
+Example 1
+A  file called aa.hdf contains three items associated with a raster 
+image:  (1) the image dimensions, (2) a palette, and (3) the raster 
+image. To display information about the contents of the file, enter:
+
+hdfls aa.hdf
+
+
+The following is displayed:
+
+aa.hdf:
+Image Dimensions-8  (Raster-8)  : (tag 200)
+	Ref nos: 1
+Image Palette-8     (Raster-8)  : (tag 201)
+	Ref nos: 3
+Raster Image-8      (Raster-8)  : (tag 202)
+	Ref nos: 1
+
+To display the same information together with the length of each 
+data element, enter:
+
+hdfls -l aa.hdf
+
+The resulting display is:
+
+aa.hdf:
+Image Dimensions-8  (Raster-8)  : (tag 200)
+		Ref no      1          4 bytes
+
+Image Palette-8     (Raster-8)  : (tag 201)
+		Ref no      3        768 bytes
+
+Raster Image-8      (Raster-8)  : (tag 202)
+		Ref no      1     120000 bytes
+
+
+Utilities for Working with Raster Image Sets
+
+There are three utility programs for working with HDF files that 
+contain raster image sets. These routines can be executed 
+interactively, at the command level, without being embedded in 
+programs.
+
+
+Converting Images to HDF 
+RIS8:  r8tohdf
+The utility r8tohdf converts one or more raw images to HDF RIS8 
+format and writes them to a file. The syntax for storing one RIS8 
+in a file using r8tohdf is as follows:
+
+
+r8tohdf rows cols outfile [-p palfile] {[-c],[-r],[-i]} imf1 imf2 ...
+
+
+where
+
+¥	rows and cols are the number of rows and columns, 
+respectively, of the raster image
+
+¥	outfile is the file that will contain the raster image set, and
+
+¥	imf1, imf2, and so forth, are files containing 8-bit raw raster 
+images.
+
+
+Options
+-p palfile 
+Optionally stores a file containing a palette in the RIS8. If -p is not 
+specified, no palette is stored in the RIS8.
+
+{[-c],[-r],[-i]} 
+Optionally chooses compression by run length encoding (-c), 
+compression by the IMCOMP method (-i), or no compression (-r). 
+The default is -r.
+
+Example 2
+A 256-by-512 byte raw raster image is contained in a file called 
+rawras, and the palette with which it is to be used is stored in a file 
+called mypal. To convert this information to an RIS8 without 
+compression and store the result in a file called ras.hdf, enter:
+
+r8tohdf 256 512 ras.hdf -p mypal rawras
+
+Example 3
+A 800-by-1000 byte raw raster image is stored in a file called 
+bigpic. You want to convert this information to an RIS8 with run 
+length encoding for compression and no palette, and store the 
+result in a file called bigpic.hdf. Enter:
+
+r8tohdf 800 1000 bigpic.hdf -c bigpic
+
+
+Example 4
+Three 300-by-400 raw images are contained in files pic1, pic2, 
+and pic3. To convert all three files to RIS8s with imcomp 
+compression, and store them in pic.hdf, enter:
+
+r8tohdf 300 400 pic.hdf -i pic1 pic2 pic3
+
+
+Example 5
+A combination of different types or raster image sets is to be stored 
+in a file called ras.hdf. The image from file rawras1 is to be 
+stored without a palette. The images from rawras2 are to be stored 
+with a palette that is copied from a file called mypal. The images 
+from rawras1 and rawras2 are to be compressed using run length 
+encoding, and rawras3 is not to be compressed. All images are 
+256-by-512.
+
+
+r8tohdf 256 512 ras.hdf -c rawras1 -p mypal rawras2 -r rawras3
+
+
+
+
+Extracting Images and 
+Palettes from an HDF File:  
+hdftor8
+The utility hdftor8 extracts the images and or palettes from an 
+HDF file and stores them in two sets of files that contain only 
+images and palettes, respectively. The syntax for hdftor8 is as 
+follows:
+
+
+hdftor8 hdf_file [-i] [-v] [-r image_file] [-p palette_file]
+
+
+Where hdf_file is the file to extract images and palettes from, 
+and image_file and palette_file are basic names of  the files 
+that will contain the images and palettes. These names are 
+extended as follows. For each image file, the filename is given the 
+extension ".#.@.%", where # stands for the image number from 
+the original file, @ is the x dimension of the image, and % is the y 
+dimension of the image. For each palette file, the filename is 
+given the extension ".#", where # stands for the palette number 
+from the original file.
+
+If no names are given for the image file, the default name 
+"img.#.@.%" is used, where #, @ and % are defined as in the 
+preceding paragraph. Similarly the default name for a palette file 
+is "pal.#".
+
+Options
+-i	Puts the program in interactive mode, so you can specify 
+	filenames interactively.
+
+-v	Specifies verbose mode, providing descriptive 
+	messages.
+
+-r	Indicates that the file whose name follows is to hold 
+	images.
+
+-p	Indicates that the file whose name follows is to hold 
+	palettes.
+
+Example 6
+A file called denm.hdf contains three 512-by-256 images and three 
+palettes. To extract these images and palettes and put them in 
+separate files, enter:
+
+hdftor8 denm.hdf
+
+Six files are produced with the names img1.512.256, img2.512.256, 
+img3.512.256, pal.1, pal.2, and pal.3.
+
+
+Displaying Images:  
+hdfrseq and hdfseq
+The utilities hdfseq and hdfrseq display sequences of images, one 
+after the other, from files containing raster image sets.
+
+Although hdfseq and hdfrseq perform essentially the same 
+function, the situations in which they are used are quite different. 
+hdfseq is specifically for displaying images on a Sun-3 console. 
+When hdfseq executes on a file, it causes a raster image to be 
+displayed immediately on the Sun-3 console.
+
+hdfrseq is the more general utility of the two. When hdfrseq 
+executes on a file, it converts the image from RIS8 format to 
+NCSA's ICR (interactive color raster) format. ICR is a protocol that 
+is easy to transmit to a remote display station. (The "r" in hdfrseq 
+stands for remote.)  In a typical application, the display station 
+would be running a program, such as NCSA Telnet, that 
+understands ICR and immediately converts the incoming stream 
+to a screen display.
+
+The syntax for hdfseq is:
+
+
+hdfseq [-s] [-l] [-p xloc yloc] [-e expansion] file1 file2 ...
+
+
+file1, file2, and so forth are HDF files that contain raster 
+image sets. Only one image is displayed per file. If more than one 
+file is listed, the corresponding images are displayed in sequence, 
+that is, in the order in which the files are listed. Each new image 
+overwrites the preceding image on the screen.
+
+Options
+-s	Single step through the images. Once an image 
+is displayed, it remains on the screen until you 
+press RETURN to display the next image or 
+enter Q to quit.
+
+-l	Make the image as large as possible on the 
+screen.
+
+-p xloc yloc	Place the upper left corner of the display at 
+position (xloc, yloc) on the screen.
+
+-e expansion	Expand the image by the expansion factor 
+specified by expansion.
+
+The syntax for hdfrseq is exactly the same. 
+
+
+Example 7
+Five images are stored in RIS8 form in the files star1, star2, 
+star3, star4, and star5. You want to use hdfrseq to display all 
+five images, in sequence, but with a pause between them. You want 
+them to appear on screen three times their normal size. Enter:
+
+hdfrseq -s -e 3 star1 star2 star3 star4 star5
+
+
+Vector Graphics Emulation on Raster Technologies
+and Sun Displays:   tdspl
+
+The command line utility tdspl is used to display Tektronix vector 
+graphics files written in HDF format that may have been created 
+on Cray systems, Raster Technologies machines, and Suns or any 
+raster computers that uses fblib.
+
+tdspl is particularly useful for the  recording of vector images on 
+video or film, as it allows the user to set the line width of the vectors 
+to any arbitrary size. It also allows the user to scale the images 
+horizontally or vertically, maximize the use of the frame buffer 
+while retaining the original aspect ratio of the vector image, or 
+simply fit the image in its entirety without worrying about its 
+aspect ratio. 
+
+To record an image displayed on a Raster Technologies display, 
+use the -x or -xn options when invoking tdspl.
+
+NOTE: Images displayed on the Suns cannot be captured.
+
+The syntax for tdspl is 
+
+tdspl  [-options]  hdffile {hdffile...}
+
+Options
+	-cf r g b
+	-cb r g b
+	-fb framebuffer_name
+	-fs frame_start
+	-fe frame_start
+	-fi frame_increment
+	-md color_mode
+	-d x_offset y_offset
+	-p palette_file_name
+	-f 
+	-r 
+	-l 
+	-v 
+	-h 
+	-lw n
+	-x 
+	-xn records_per_frame
+	-nc
+
+Description of Options
+-cf	Set foreground color to r g b values. Use only in RGB 
+	color mode.
+
+-cb	Set background color to r g b values. Use only in RGB 
+	color mode.
+
+-fb	Set frame_buffer to send images for display.
+
+Framebuffer_names allowed for Raster Technologies machines 
+are listed below:
+		rtech 	:	1280x1024 	Model One/80 (rtd0)
+		rtech_a	:	640x486	top left quad
+		rtech_b	:	640x486	top right quad
+		rtech_c	:	640x486	bottom right quad
+		rtech_d	:	640x486	bottom left quad
+		rtech1 	:	1280x1024	Model One/380 (rtd1)
+		rtech1_a	:	640x486	top left quad
+		rtech1_b	:	640x486	top right quad
+		rtech1_c	:	640x486	bottom right quad
+		rtech1_d	:	640x486	bottom left quad
+		rtech2 	:	1280x1024 	Model One/380 (rtd2)
+		rtech2_a	:	640x486	top left quad
+		rtech2_b	:	640x486	top right quad
+		rtech2_c	:	640x486	bottom right quad
+		rtech2_d	:	640x486	bottom left quad
+
+Framebuffer_names allowed for the Sun include:
+		Sunv8c	:	640x486 color
+		Sunv8g 	:	640x486 b/w
+		Sunv8c_big	:	1280x1024 color
+		Sunv8g_big	:	1280x1024 b/w
+
+On the Raster Technologies machines, if framebuffer_name is not 
+set, the one given by the WF_BUFFER env variable is opened by 
+default. Likewise, on a Sun operating under SunView, Sunv8c is 
+opened.
+
+Options
+-fs	Set start frame of frame list to display. Defaults to starting 
+frame in the HDF file.
+
+-fe	Set end frame of frame list to display. Defaults to last 
+frame in the file.
+
+-fi	Set frame increment of frame list to display between 
+frames. Defaults to 1.
+
+-md	Set color display mode to color_mode. Modes allowed 
+include:
+
+	0 - RGB
+	1 - CLUT (Color LookUp Table)
+
+	Only the CLUT mode can be specified for the Suns. If CLUT 
+is used, a color palette file must be included (default is 
+"white.pal"). Defaults: For the Raster Technologies 
+display, 0. For the Sun, 1.
+
+-d	Set  virtual screen size. The virtual screen is what the 
+emulator imagines itself to be displaying its output on. 
+Defaults:  The framebuffer size of the current framebuffer.
+
+-p	Set the color palette to palette_file_name. Use only in CLUT 
+color mode. Defaults: none. If a palette file is not supplied 
+in the CLUT mode, the lookup table will automatically be 
+initialized to a white palette type.
+
+-f	Use the full virtual screen. The whole image is resized and 
+shaped to cover the entire virtual screen. The original 
+image aspect ratio is not kept.
+
+-r	Retain ratio while maximizing the image on virtual 
+screen. Same as -f, except that the original image aspect 
+ratio is kept.
+
+-l	List data elements in an hdf file. This gives a 
+comprehensive list of all data elements, although only 
+frames tagged with DFTAG_T105 will be displayed.
+
+-v	Run in verbose mode. This will give a status report of the 
+display.
+
+-h	Pause between the display of frames.
+
+-lw	Set line (pixel/pen) width to n pixels without blurring. Used 
+to darken lines for proper video capture. Note that the area 
+occupied by each incidental pixel will now occupy n2 pixels. 
+
+TIPS:  That the resulting lines are truly fattened may create some 
+difficulty in the reading of small characters. When this happens, 
+you may want to try to resize the virtual screen to include the 
+important details and occlude the unnecessary. Defaults:  1.
+
+-x	Record images displayed on the Raster Technologies 
+machines (1 per frame). Available only on the Raster 
+Technologies frame buffers.
+
+-xn	Record images displayed on the Raster Technologies 
+machines (n per frame). Available only on the Raster 
+Technologies frame buffers.
+
+-nc	No clearing of screen after displaying each frame. This is 
+used when an explicit clear screen call is included in the 
+hdf file.
+
+6.1	NCSA HDF
+
+HDF fCommand Line Utilities	6.1
+
+National Center for Supercomputing Applications
+
+February 1989
+
+                                                                
+
+
+
+6.1	NCSA HDF
+
+NCSA HDF Command Line Utilities	6.1
+
+National Center for Supercomputing Applications
+
+February 1989
+
+                                                                
+
+
+
+

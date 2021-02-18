@@ -1,0 +1,264 @@
+
+
+
+     XWSTATICRASTER(3X)                             XWSTATICRASTER(3X)
+
+
+
+
+     NAME
+          XwstaticrasterWidgetClass - The HP X Widget's static image
+          widget
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/SRaster.h>
+
+
+     CLASSES
+          The static raster widget is built from the Core, XwPrimitive
+          and XwSRaster classes.
+
+          The widget class to use when creating a static raster is
+          XwstaticrasterWidgetClass. The class name is StaticRaster.
+
+     DESCRIPTION
+          The static raster widget provides an uneditable raster
+          image. As a default, the image is placed in a window that is
+          exactly the size of the raster (plus the border width). The
+          image can be dynamically resized. If the window is enlarged
+          from its original size, the image will be redrawn in the
+          center of the new window. If the window shrinks below the
+          size of the raster, the image is clipped on the right and
+          bottom sides as needed to fit within the new boundries.
+
+          The raster image is provided to the widget in the form of an
+          XImage data structure. New data can be displayed by
+          specifing a new XImage structure, or by changing the pointer
+          to the bitmap data within that structure.
+
+          Callbacks can be attached to the widget to report selection
+          (XtNselect) and unselection (XtNrelease).  This widget can
+          be set to respond to Enter and Leave window events by
+          highlighting and unhighlighting the border.
+
+     NEW RESOURCES
+          StaticRaster defines several new resources.  (To reference a
+          resource in a .Xdefaults file, strip off the XtN from the
+          resource string.)
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSTATICRASTER(3X)                             XWSTATICRASTER(3X)
+
+
+
+
+                        StaticRaster Resource Set
+        Resource            Class               Type       Default
+        __________________________________________________________
+        XtNsRimage          XtCSRimage          XImage *   NULL
+        XtNinvertOnSelect   XtCInvertOnSelect   Boolean    TRUE
+        XtNshowSelected     XtCIShowSelected    Boolean    TRUE
+        XtNset              XtCSet              Boolean    FALSE
+
+
+
+          XtNsRimage
+               This is a pointer to an XImage data structure.
+
+          XtNinvertOnSelect
+               If this resource is TRUE, the raster image will invert
+               its foreground and background colors when selected, and
+               return to normal when unselected.
+
+          XtNshowSelected
+               If TRUE, this will cause the image to appear to be
+               indented when selected, and raised when unselected.
+
+          XtNset
+               This is a Boolean resource which indicates whether the
+               raster is currently selected (TRUE) or not (FALSE).
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSTATICRASTER(3X)                             XWSTATICRASTER(3X)
+
+
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightColor       XtCForeground           Pixel     Black
+     XtNhighlightTile        XtCHighlightTile        int       50_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNrecomputeSize        XtCRecomputeSize        Boolean   TRUE
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalType resource is set to
+          highlight_traversal (XwHIGHLIGHT_TRAVERSAL in an argument
+          list) at either create time or during a call to XtSetValues,
+          the XwPrimitive superclass will automatically augment the
+          primitive widget's translations to support keyboard
+          traversal.  Refer to the XwPrimitive man page for a complete
+          description of these translations.  See the TRANSLATIONS
+          section in this man page for a description of the
+          translations local to the static raster widget.
+
+     TRANSLATIONS
+          The static raster is affected by the mouse buttons and
+          cursor motion.  The default translation set is as follows:
+
+
+                        <Btn1Down>:      select(),
+                        <Btn1Up>:        release(),
+                        <EnterWindow>:   enter(),
+                        <LeaveWindow>:   leave(),
+
+
+     ACTIONS
+          select:
+               Allows an application to be notified of the event via
+               the callback structure.
+
+          release:
+               Allows an application to be notified of the event via
+               the callback structure.
+
+          enter:
+               Causes the border to be highlighted if enabled.
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSTATICRASTER(3X)                             XWSTATICRASTER(3X)
+
+
+
+
+          leave:
+               Causes the border to be highlighted if enabled.
+
+     NOTES
+          Error checking on the XImage structure is minimal, so weird
+          rasters can result from incorrect or incomplete data.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X),  XWPRIMITIVE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+

@@ -1,0 +1,19 @@
+#include <Server.tmpl>
+
+#ifdef AIXArchitecture
+OBJS = ibm8514.o
+#else
+OBJS = ibm8514bsd.o
+#endif
+
+AllTarget($(OBJS))
+
+ibm8514.o: ibm8514.o.Z
+    $(RM) $@
+    UNCOMPRESSPATH -c $@.Z > $@
+
+ibm8514bsd.o: ibm8514bsd.o.Z
+    $(RM) $@
+    UNCOMPRESSPATH -c $@.Z > $@
+
+depend::

@@ -1,0 +1,136 @@
+.TH XXIM n "February 3,  1989"
+.UC 5
+.SH NAME
+xxim \- display 8 and 24 bit images on color and monochrome terminals
+.SH SYNOPSIS
+.B xxim
+[-in 
+.I file
+] [-display
+.I host
+] [-mono] [-reverse] [-fs] [-mfs]
+[-dither[=n]] [-enhance[=1-9]] [-cmap] [-debug]
+.SH DESCRIPTION
+.I Xxim
+is an X program that displays 8 and 24 bit deep color images on 8 bit color and monochrome terminals.
+Xxim was previously called /fIxim/fP, but has been replaced by a more powerful toolkit version.
+This is meant to be simpler and faster.
+The program will do the necessary image processing to make the image fit the particular display's depth.
+It is intended to make the viewing of images across on a variety of displays fast, easy and somewhat network "transparent".
+.PP
+Color dithering is used to display images using the
+.I n
+colors that the host will support.
+Additionally, various options are available for displaying processing images into bitmaps.
+This bitmap conversion is useful for making images suitable for printing on conventional printers via "xdpr".
+An edge enhancement option is also available for improving spatial resolution.
+
+.SH OPTIONS
+.TP "\w'\f3\-m\f1name 'u"
+.B -in \fIfile\fP
+Specify what file to read.  Otherwise, default is stdin.
+.TP
+.B  -display \fIhost\fP
+This option specifies the X server to connect and the screen on which to display the image.   See
+.I X(1).
+.TP
+.B -mono
+Convert an image to a monochrome (bitmap) image.  This is only valid
+on color displays since this is automatic on displays with a depth less than 4 bits.
+.TP
+.B -dither, -dither=4 or =8 \fR(mono)\fP
+Use a matrix dithering algorithm for digital halftoning to a bitmap image.
+In mono mode a 4x4 or 8x8 (default) dithering matrix pattern maybe specified.
+.TP
+.B -dither or -dither=2-6 \fR(color)\fP
+In color mode, a value maybe specified from 2 to 6 where
+.I n**3
+will be the number of colors needed in the colormap (ie. 6 = 216 colors).
+Also force a fit to the displays depth.
+.TP
+.B -fs
+Use the Floyd Steinberg algorithm for digital halftoning into monochrome images.  This is the default.
+.TP
+.B -mfs
+Use a modified Floyd Steinberg algorithm for a threshold b/w conversion with greater contrast.
+.TP
+.B -enhance or -enhance=1-9
+Edge enhance monochrome and 24 bit color images.
+Degrees of enhancement from 1 to 9 maybe specified.
+9 is the default, and is faster than 1 to 8.
+.TP
+.B -reverse
+Draw the bitmap images with black and white inverted.
+.TP
+.B -cmap
+Force the installation of the colormap.
+This is faster since data maps directly to the colormap entries and no attempt is made to allocate the colormap in the current map. (color only)
+.TP
+.B -debug
+List various debugging messages, colortable mappings, matrix values,
+etc...
+.PP
+.I Note:
+All of the command line options can be abbreviated to their shortest unique spelling.
+.br
+ex: %  xxim -in color.xim.Z -dit=4 -en -dis unix:0 -deb
+
+.SH FEATURES
+.LP
+The program's interaction is loosely based on "xwud".
+A right button press exits the program.
+The middle button displays the coordinates of the mouse.
+The left button advances to the next pixmap, if any.
+A new colormap is created and installed only if there isn't enough room
+in the default map.
+"Leave" and "Enter" events seem to be sufficient to process for installing and uninstalling the colormap, although in some cases button presses events may trick the program.
+The
+.I uwm
+window manager seems pretty good about not doing this.
+.LP
+When dithering color, Xxim will make a common colormap to fit the particular display's depth.
+For 8 bit images this is an option that will disable installation of the image's own colormap and is useful for viewing several images at once.
+.PP
+Edge enhancement will only work on 24 bit images or on color to monochrome conversions.
+It may not give desired results on some types of images, such as those with noise or those that have been previously dithered.
+The default enhancement value of 9 allows for simplifications in the enhancement algorithm and shorter processing times.
+.SH IMAGE FORMAT
+Xxim reads image files are in my particular (yet another) format.
+Images come either as pixmaps or color channel separations.
+They may be compressed (for those Unix systems with the the "compress" and "zcat" commands) or runlength encoded to save space on other systems.
+The header on each file is 1024 bytes in size and contains the necessary information about formats, sizes, authors, encoding flags, and the colormap of the pixmap(s).
+Multiple pixmaps may follow the header.
+Images are in characters (no shorts, ints or longs) so as to be easily portable across machines, and be somewhat humanly readable.
+.PP
+In the multi-channel format, the rgb (& alpha) buffers follow the header respectively, and the colormap in the header is not used.
+Xxim will only use the first three (RG & B) channels of information,
+If the number of channels is 0 or 1, 8 bit pixmaps are assumed and the colormap is used.
+
+.SH "SEE ALSO"
+X(1), rletoxim(1), ximtorle(1), xim(1), ximsetroot(1);
+ximtops(1), ximtofbm(1), smoothim(1), quantizim(1)
+.SH BUGS
+.LP
+Xxim conforms to the ICCCM protocol, but there are presently few window managers that do.
+Uwm on the ibm/rt does not conform and has trouble installing colormaps properly.
+.LP
+Leaving and iconifing the window installs the default colormap, but not necessarily the map that was in use when the program was called.
+.LP
+24-bit displays aren't supported yet.
+I don't have one, but if someone else should ...
+.LP
+Doesn't do any gamma or color display corrections.
+.LP
+Displays with less than less than 256 addressable colors don't automatically invoke dithering on images with a greater number of colors (ie. 256 color image on a 192 color display).
+
+.SH COPYRIGHT
+Copyright 1989, Massachusetts Institute of Technology.
+.SH AUTHOR
+.br
+Philip R. Thompson  (phils@athena.mit.edu)
+.br
+Computer Resource Laboratory,  
+Dept. of Architecture and Planning,  
+Massachusetts Institute of Technology,  
+Cambridge, MA  02139
+

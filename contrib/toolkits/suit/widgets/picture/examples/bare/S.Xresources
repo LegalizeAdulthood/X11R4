@@ -1,0 +1,39 @@
+PicDemo*reverseVideo:	true
+PicDemo*coordinateXMin:	-1500
+PicDemo*coordinateYMin:	-1500
+PicDemo*coordinateXMax:	1500
+PicDemo*coordinateYMax:	1500
+PicDemo*lab_line_width.label:	1
+PicDemo*lab_line_color.background:	black
+PicDemo*lab_fill_color.background:	black
+PicDemo*lab_char_color.background:	black
+PicDemo*allowHoriz:		false
+PicDemo*allowVert:		true
+PicDemo*useBottom:		true
+PicDemo*useRight:		true
+PicDemo*ForceBars:		false
+PicDemo*StPicture.background:	wheat
+PicDemo*TransientShell.borderColor:	dark orchid
+PicDemo*MenuBox.hSpace:	0
+PicDemo*MenuBox.vSpace:	0
+PicDemo*Label.background:	dark orchid
+PicDemo*Label.foreground:	thistle
+PicDemo*Label.borderColor:	dark orchid
+PicDemo*Label.borderWidth:	0
+PicDemo*Command.background:	thistle
+PicDemo*Command.foreground:	dark orchid
+PicDemo*Command.borderColor:	dark orchid
+PicDemo*Command.borderWidth:	0
+PicDemo*Form.background:	thistle
+PicDemo*Form.borderWidth:	0
+PicDemo*Dialog.background:	thistle
+PicDemo*List.background:	thistle
+PicDemo*List.foreground:	dark orchid
+PicDemo*List.borderWidth:	0
+PicDemo*Text.borderColor:	dark orchid
+PicDemo*Text.background:	thistle
+PicDemo*Core.background:	aquamarine
+PicDemo*Logo.background:	gray
+PicDemo*Logo.foreground:	black
+PicDemo*Scrollbar.background:	aquamarine
+PicDemo*Scrollbar.foreground:	forest green

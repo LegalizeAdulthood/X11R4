@@ -1,0 +1,988 @@
+.ev 0
+.po 0.75i
+.ll 6.5i
+.fi
+.in 36p
+.cs CR 22
+.de NP
+'sp |\\n(.pu-0.5i-1
+.ft \\*(FF
+.ps \\n(FS
+.lt 432p
+.po 90p
+.ie \\n(DP=1 \{.ie e .tl `\\*(El`\\*(Ec`\\*(Er`
+.el .tl `\\*(Ol`\\*(Oc`\\*(Or\}`
+.el .tl `\\*(LB`\\*(CB`\\*(RB`
+.ps
+.ft P
+.PZ
+.rm PZ
+'bp
+'sp |.5i-1
+.ft \\*(HF
+.ps \\n(HS
+.ie \\n(DP=1 \{.ie e .tl `\\*(EL`\\*(EC`\\*(ER`
+.el .tl `\\*(OL`\\*(OC`\\*(OR`\}
+.el .tl `\\*(LT`\\*(CT`\\*(RT`
+.ps
+.ft P
+'sp |1.0i
+.po 54p
+..
+.nr zT 0
+.if  "\*(.T"postscript"  'nr zT 1
+.if  "\*(.T"psc"  'nr zT 1
+.de PB
+'ne \\$2p
+'nr zw \\n(.l-\\n(.k-1m-\\$1p
+'nr zH \\n(.k
+'nr zV \\n(.d
+'if  \\n(zT  \\{\\
+'ie  !\\n(zw  \\{\\
+'nr zx \\n(.l-\\$1p-10m
+'nr zV \\n(zV+1v
+.sp 0
+\\v'-.75v'\\ \\v'+.75v'\\c\\}
+'el \\{\\
+'nr zx \\n(zw-10m
+\\v'-.75v'\\ \\v'+.75v'\\c\\}
+.sp |\\n(zVu
+'if ((\\n(zx<=0)&(\\$2p>0.75v)) \\x'\\$2p-0.75v'\\c
+\\!%
+\\!%!
+\\!  PB
+'if \\n(.j=3 \\{\\
+\\!    /troffadjust { neg 2 idiv } def
+'ss\\}
+'if \\n(.j=5 \\{\\
+\\!    /troffadjust { neg } def
+'ss\\}
+'if \\n(.j<3 \\{\\
+\\!    /troffadjust { pop 0 } def
+'ss\\}\\}
+..
+.de PE
+'if \\n(zT \\{\\
+\\!  PE
+\\!.
+'ie \\n(zx \\{\\
+'if (\\$2p>0.75v) \\x'\\$2p-0.75v'\\c
+\\h'-\\n(.ku+\\n(zHu+\\$1p'\\c\\}
+'el  .br\\}
+'if !\\n(zT \\{\\
+'if  !\\n(zw  \\{\\
+ \\h'-\\n(.k'\\ \\h'-\\n(.w'\\c
+.sp -1\\}
+\\x'\\$2p-0.75v'\\v'-.75v'\\D'l \\$1p 0.0i'\\D'l 0.0i \\$2p'\\D'l -\\$1p 0.0i'\\D'l 0.0i -\\$2p'\\v'+.75v'\\h'\\$1p'\\c\\}
+..
+.wh -1i NP
+.br
+.ad b
+'ft R
+.ps 12
+.vs 14p
+.nr EN 8*\w'n'
+.ta \n(ENu +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu)
+.sp 0.5i
+.nr DP 0
+.ds EL - % -
+.ds OR - % -
+.ds RT - % -
+.ds HF R
+.nr HS \n(.s
+.ds FF R
+.nr FS \n(.s
+.nh
+.ps 10
+.vs 12p
+.br
+.ad c
+'ft R
+.ps 16
+.br
+XGKS Implementation Notes\fR\s14\&
+.sp 1
+February 1, 1988
+.br
+.ad b
+'ft R
+.ps 12
+.sp 3
+XGKS is an implementation of the ANSI standard Graphical Kernel System for use with 
+the X version 11 window system.  This work was done by the Graphics Workstation Research 
+Group at the University of Illinois in Urbana, Illinois.  This group consists of Professors 
+Bill Kubitz and Roy Campbell and graduate students Jenny Barrett, Sung Hsien Ching, 
+Yu Pan, and Greg Rogers.  This work was funded by IBM ACIS.
+.sp 1
+This report describes the implementation details of the XGKS system that are of interest 
+to any programmer using the XGKS library.  As such, we discuss the capabilities of 
+XGKS, the deficiencies of XGKS, how the library differs from the proposed ANSI C Binding 
+for GKS, the relationship between XGKS and the X11 window system, how the library is 
+used by the application programmer, and how the user interacts with XGKS application.
+'in 22p
+.br
+.ad l
+'ft B
+.sp 1
+Relation to GKS Standards
+'in 36p
+.br
+.ad b
+'ft R
+.sp 1
+XGKS is an implementation of the ANSI Graphical Kernel System as defined by the functional 
+description and the proposed C language binding.  Thus, the ultimate reference for any programmer is the C binding manual which details the data types and functions available.  XGKS is a level 2C implementation of the GKS specification.   It supports REQUEST, SAMPLE, and EVENT input modes for all six logical input devices, workstation independent segment storage, and metafiles.
+
+'in 22p
+.br
+.ad l
+'ft B
+Capabilities
+'in 36p
+.br
+.ad b
+'ft R
+
+
+The XGKS library supports all functions specified by the ANSI standard with the exception of :
+
+.nf
+'in 72p
+'ft R
+.ps 10
+ESCAPE (in its most general form)
+GENERALIZED DRAWING PRIMITIVE (in its most general form)
+INQUIRE GENERALIZED DRAWING PRIMITIVE
+INQUIRE LIST OF AVAILABLE GENERALIZED DRAWING PRIMITIVES
+SET PATTERN REFERENCE POINT
+SET PATTERN SIZE\fR\s12\&
+'in 36p
+.fi
+
+The escape and gdp functions are implemented as a set of functions which follow the naming convention outlined in the C binding.  That is, escape functions are named \fBgesc\f(BI<function>\fR and gdp functions are named \fBggdp\f(BI<function>\fR, where \f(BI<function>\fR is a descriptive name for the function performed.
+
+.br
+.ad l
+'ft B
+Output Primitives
+.br
+.ad b
+'ft R
+
+
+Polylines of any width and color can be displayed while seven line styles are supported they are:
+.ft R
+.br
+.ad c
+
+.de 30
+.if \n(.u .fi
+.if \n(.j .ad
+.if \n(.j=0 .na
+.ft \n(.f
+.ps \n(.s
+.vs \n(.vu
+.ll \n(.lu
+.in \n(.iu
+..
+.nf
+.br
+.nr 31 \w'0123456789.jJ'
+.nr 32 \n(st
+.de 40
+.ll \n(.lu
+.in \n(.iu
+..
+.di 50
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.ta 4p +151p
+.di 50
+.mk
+	GLN_DASH	long dash
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	GLN_DDOTDASH	double dot dash
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	GLN_SDASH	short dash
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	GLN_SOLID	solid
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	GLN_DASH	medium dash
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	GLN_DOT	dotted
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	GLN_DOTDASH	dot dash
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.sp 1v
+.30
+
+.br
+.ad b
+Polymarkers of any size and color can be displayed, five marker styles are provided:
+.ft R
+.br
+.ad c
+
+.de 30
+.if \n(.u .fi
+.if \n(.j .ad
+.if \n(.j=0 .na
+.ft \n(.f
+.ps \n(.s
+.vs \n(.vu
+.ll \n(.lu
+.in \n(.iu
+..
+.nf
+.br
+.nr 31 \w'0123456789.jJ'
+.nr 32 \n(st
+.de 40
+.ll \n(.lu
+.in \n(.iu
+..
+.di 50
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.ta 4p +158p
+.di 50
+.mk
+	GMK_POINT	filled circle
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	GMK_PLUS	+
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	GMK_STAR	*
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	GMK_O	unfilled circle
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	GMK_X	X
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.sp 1v
+.30
+
+.br
+.ad b
+All text within XGKS is implemented through stroke fonts, thus text primitives are fully transformable.  Nine font styles are supported:
+.ft R
+.br
+.ad c
+
+.de 30
+.if \n(.u .fi
+.if \n(.j .ad
+.if \n(.j=0 .na
+.ft \n(.f
+.ps \n(.s
+.vs \n(.vu
+.ll \n(.lu
+.in \n(.iu
+..
+.nf
+.br
+.nr 31 \w'0123456789.jJ'
+.nr 32 \n(st
+.de 40
+.ll \n(.lu
+.in \n(.iu
+..
+.di 50
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.ta 28pR +46pR +5p
+.di 50
+.mk
+	1   		SanSerif Roman
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	2   		Serif Roman
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	3   		SansSerif Bold Roman
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	4   		Serif Bold Roman
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	5   		Sanserif Italic Roman
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	6   		Serif Italic Roman
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	7   		SanSerif Script
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	8   		Serif Script
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	9   		Gothic
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.sp 1v
+.30
+
+.br
+.ad b
+Fill Area output primitives can be displayed as hollow, solid, hatched and patterned.  Sixteen (numbered zero to fifteen)  hatch and pattern styles are predefined.
+
+GKS Cell Arrays are supported in their most general transformable form.
+
+
+.br
+.ad l
+'ft B
+Logical Input Devices
+.br
+.ad b
+'ft R
+.sp 1
+XGKS supports the full GKS input model.  Thus, all logical input devices operate in 
+request, sample, and event modes.  Any number of logical input devices can be created 
+for each of the six input classes.  All logical devices are triggered through the use 
+of the mouse and its buttons with the exception of the choice device where one prompting 
+technique uses the keyboard's function buttons.  A logical input device is only active 
+when the mouse is within the echo area of the device and one or more of the mouse buttons 
+is pressed.  When the mouse button is released, the physical device triggers all logical 
+input devices in request or event mode whose echo area surrounds the cursor.  Devices 
+in sample mode are triggered whenever the mouse moves within the echo area while the 
+mouse is pressed.  Any input operation can be aborted by pressing the \fBBreak\fR key on 
+the keyboard.
+.sp 1
+Five prompting types are defined for the locator:
+.br
+.ft R
+.br
+.ad c
+
+.de 30
+.if \n(.u .fi
+.if \n(.j .ad
+.if \n(.j=0 .na
+.ft \n(.f
+.ps \n(.s
+.vs \n(.vu
+.ll \n(.lu
+.in \n(.iu
+..
+.nf
+.br
+.nr 31 \w'0123456789.jJ'
+.nr 32 \n(st
+.de 40
+.ll \n(.lu
+.in \n(.iu
+..
+.di 50
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.ta 32pR +45pR +5p
+.di 50
+.mk
+	1   		tracking cross
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	2   		crosshair spanning X window
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	3   		tracking cross
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	4   		rubberband line
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	5   		rubberband rectangle
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.sp 1v
+.30
+.br
+.ad b
+.br
+The only restriction placed on these prompts is that prompt and echo type 5 does not 
+allow the rectangle to be a fill area style other than hollow.  The fixed end of the 
+rubberband line and rubber rectangle is at the initial locator position while the floating 
+end is the current value.
+.sp 1
+The stroke input device differs from the locator by allowing more than one coordinate 
+point to be entered.  There are three stroke prompts supported:
+.br
+.ft R
+.br
+.ad c
+
+.de 30
+.if \n(.u .fi
+.if \n(.j .ad
+.if \n(.j=0 .na
+.ft \n(.f
+.ps \n(.s
+.vs \n(.vu
+.ll \n(.lu
+.in \n(.iu
+..
+.nf
+.br
+.nr 31 \w'0123456789.jJ'
+.nr 32 \n(st
+.de 40
+.ll \n(.lu
+.in \n(.iu
+..
+.di 50
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.ta 33pR +48pR +5p
+.di 50
+.mk
+	1   		tracking cross
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	3   		polymarker at each point
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.di 50
+.mk
+	4   		polyline joining points
+.sp -\n(32u+3p
+
+.di
+.if \n(dn>=\n(.t .bp
+.in 0
+.50
+.40
+.sp 1v
+.30
+.br
+.ad b
+.br
+The closeness of selected points can be controlled by specifying a minimum X and minimum 
+Y displacement in the stroke data record during stroke initialization.  Although specified 
+as a distance in World Coordinate space, the restriction is enforced in Normalized 
+Device space.
+.sp 1
+The valuator input device allows the user to select a real numbered value within the 
+application specified range.  Only one visual representation is currently supported: 
+the valuator appears as a bar with a sliding knob whose relative position determines 
+the current value.  A horizontal bar is displayed if the echo area is wider than it 
+is tall, otherwise a vertical bar is used.  This prompt technique is selected by valuator 
+prompt and echo types one and two.
+.sp 1
+Two types of choice devices are provided.   Choice prompts one and two use the keyboard 
+function keys as a choice device, thus function key F1 returns choice number one.  
+Prompt and echo type one enables all function keys while prompt type two enables only 
+those keys specified in the data record when the device is initialized.  Choice prompt 
+type three presents the user with a menu from which the current choice is selected.  
+These menus appear and act similar to most X11 window manager menus.  That is, the 
+current selection is highlighted and selection is made by releasing the mouse button 
+when the desired choice is lit.  A word of warning, these menus are displayed in the 
+choice echo area and DO NOT attempt to restore any output primitives that they cover.
+.sp 1
+Currently only two pick prompt types are supported: one and three.  Both prompt types 
+highlight the currently selected segment by flashing a bounding box around the segment's 
+extent.  Also, picking is only implemented at the segment extent level.   Thus, if 
+two segments overlap and the user points at the area of intersection, then the segment 
+of highest priority will be picked even if the cursor is directly over a primitive 
+contained in the other segment.
+.sp 1
+The string device has only one prompt and echo type: number 1.  This prompt type gives 
+the user one line on which to type.  This line is positioned in the upper-left corner 
+of the string echo area and is displayed as a hollow fill area within which an insertion 
+point cursor and typed text appear.  As the user types, the only special keys are \fBBackspace\fR, \fB
+Delete\fR, and \fBEnter \fRwhich perform the obvious functions.  The length of the line is limited 
+by the width of the echo area and the size of the string buffer as specified by the 
+application program during string initialization.
+.br
+.ad l
+'ft B
+.sp 1
+XGKS Limits
+.br
+.ad b
+'ft R
+.sp 1
+Four workstation types are defined by XGKS: MI, MO, WISS, and X11.  When calling the 
+open workstation function the application must specify three parameters: 1) workstation 
+identifier, an integer used to identify this workstation throughout the application; 
+2) workstation connection, a file name for the metafile workstations (MI and MO),  
+ignored for the workstation independent segment store (WISS), and the X11 DISPLAY specification 
+string (see the X man page) which tells XGKS to open a new window on the display; and 
+3) the workstation type which is MI, MO, WISS, or the X11 DISPLAY string.  Ten workstations 
+can be open simultaneously, however, only one WISS workstation can be open.
+.sp 1
+There are thirty-one normalization transformations, numbered 0 to 30.  Transformation 
+number zero is the identity transformation and cannot be changed.
+.sp 1
+Every X11 window workstation has a fixed device coordinate space that is 0 to 1279 
+on the X axis and 0 to 1023 on the Y axis.  This is not to say that the X window is 
+that big, the GKS workstation will be scaled to fit the X window; this scaling preserves 
+the aspects ratio.
+.sp 1
+There are twenty bundle table entries for each type of bundle table.
+.sp 1
+The size of the color table is determined by the X11 window server and the hardware 
+being used.  The IBM apa16 monochrome display provides two colors and the Megapel display 
+supports 255 out of 4096 possible colors.  Since X11 allows multiple color maps, each 
+XGKS workstation initially shares the color map with its parent window and only creates 
+a new color map when the application program changes a color table entry via the SET 
+COLOR REPRESENTATION function.  Since many displays only support one physical color 
+map, the color map associated with the X11 window which has the input focus is loaded 
+into the hardware.
+'in 22p
+.br
+.ad l
+'ft B
+.sp 1
+Programming With XGKS
+'in 36p
+.br
+.ad b
+'ft R
+.sp 1
+Here is a simple XGKS program that displays "Hello World" in the center of the default 
+workstation window.  After displaying the greeting, the program uses a choice input 
+device to wait for the user to press the break key.  This is done because the X window 
+that represents this workstation is removed from the screen as soon as the workstation 
+is closed.  The \fBfor\fR loop in the main program is a convenient way for the application 
+to allow the user to specify the workstation connection id on the command line via 
+a \fIhostname:serverNumber\fR pair.  If the connection id is not specified XGKS will use 
+the value of the environment variable DISPLAY in the users environment.
+'in 72p
+.br
+.ad l
+'ft CR
+.ps 10
+.sp 1
+.nr EN 8*\w'n'
+.ta \n(ENu +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu) +(\n(ENu)
+.br
+#include <stdio.h>
+.br
+#include <local/xgks.h>
+.sp 1
+/*
+.br
+ * This function is called when the program is finished and we just
+.br
+ * want to wait until the user is done looking at the output.
+.br
+ * Here we set up a choice device to use the function keys. However,
+.br
+ * we ignore all choices and wait for the user to press the Break
+.br
+ * key.
+.br
+ */
+.br
+WaitForBreak( wsid )
+.br
+	Gint wsid;
+.br
+{
+.br
+	Gchoice init;
+.br
+	Gchoicerec record;
+.br
+	Glimit earea = { 0.0, 1279.0, 0.0, 1023.0 };
+.sp 1
+	gmessage(wsid, "Done, press Break to quit ...");
+.sp 1
+	init.status = GC_NOCHOICE;
+.br
+	init.choice = 0;
+.br
+	record.pet1.data = NULL;
+.br
+	ginitchoice( wsid, 1, &init, 1, &earea, &record );
+.br
+	gsetchoicemode( wsid, 1, GREQUEST, GECHO );
+.br
+	for( ; init.status != GC_NONE ; )
+.br
+		greqchoice( wsid, 1, &init );
+.br
+}\f(CR\s12\&\f(CR\s10\&
+.sp 1
+/*
+.br
+ * set up various text parameters and print "Hello World"
+.br
+ */
+.br
+PrintHello()
+.br
+{
+.br
+	Gpoint tpt;
+.br
+	Gpoint up;
+.br
+	Gtxfp txfp;
+.br
+	Gtxalign align;
+.sp 1
+	txfp.font = 4;		/* use Serif Bold Roman font */
+.br
+	txfp.prec = GSTROKE;
+.br
+	gsettextfontprec(&txfp);
+.sp 1
+	gsetcharexpan(0.5);
+.br
+	gsetcharspace(0.2);
+.br
+	gsettextcolorind( 1 );	/* should be white */
+.sp 1
+	gsetcharheight(0.05);
+.sp 1
+	up.x = 0.0; up.y = 1.0;	/* characters are straight up */
+.br
+	gsetcharup(&up);
+.sp 1
+	align.hor = GTH_CENTER;
+.br
+	align.ver = GTV_HALF;
+.br
+	gsettextalign(&align);
+.sp 1
+	gsettextpath(GTP_RIGHT);	/* print from left to right */
+.sp 1
+	tpt.x = 0.5; tpt.y = 0.5;	/* center of the window */
+.br
+	gtext(&tpt,"Hello World!");
+.sp 1
+}
+'in 36p
+.br
+.ad b
+'ft R
+.ps 12
+'in 72p
+.br
+.ad l
+'ft CR
+.ps 10
+.br
+main(argc,argv)
+.br
+int argc;
+.br
+char *argv[];
+.br
+{
+.br
+	int i, wsid=1;
+.br
+	char *conn = (char *)NULL;
+.sp 1
+	for( i=1; i<argc; i++){
+.br
+		if (index( argv[i], ':'))
+.br
+			conn = argv[i];
+.br
+	/* Application dependent options here */
+.br
+	}
+.sp 1
+	gopengks(stdout,0);
+.sp 1
+	if (gopenws( wsid , conn, conn) != 0)
+.br
+		exit(0);
+.br
+	gactivatews( wsid );
+.sp 1
+	PrintHello();
+.br
+	WaitForBreak ( wsid );
+.sp 1
+	gdeactivatews( wsid );
+.br
+	gclosews( wsid );
+.sp 1
+	gclosegks();
+.br
+	exit(0);
+.br
+}
+'in 36p
+.br
+.ad b
+'ft R
+.ps 12
+.sp 1
+To compile the program we use the following command line:
+'in 72p
+.br
+.ad l
+'ft CR
+.sp 1
+cc hello.c -o hello -lxgks -lX -lm
+'in 36p
+.br
+.ad b
+'ft R
+.sp 1
+To execute just type:
+'in 72p
+.br
+.ad l
+'ft CR
+.sp 1
+hello
+'in 36p
+.br
+.ad b
+'ft R
+.sp 1
+(note: you must be running X windows when you run any XGKS application.)
+.sp 1
+When the program opens the GKS workstation the X11 window system will prompt the user 
+to open a new window.  The program will display "Hello World!" and then wait for the 
+user to press the Break key.  While the GKS workstation window is on the screen the 
+user can resize, move, cover, and uncover the window and XGKS will take care of redisplaying 
+the greeting.
+'in 22p
+.br
+.ad l
+'ft B
+.sp 2
+References
+'in 36p
+.br
+.ad b
+'ft R
+'ft I
+.sp 1
+Computer Graphics - Graphical Kernel System (GKS) Functional Description\fR.  ANSI, X3.124-1985,  
+June 24, 1985.\fI
+.sp 1
+C Language Binding of GKS\fR.  ANSI X3H34/83-12R5, March 21, 1986.
+.sp 1
+Donald Hearn and M. Pauline Baker, \fIComputer Graphics\fR, Prentice-Hall, Englewood Cliffs, 
+New Jersey, 1986.
+.sp 1
+Robert W. Scheifler and Jim Gettys, \fIThe X Window System\fR, acm Transactions on Graphics, 
+volume 5, number 2, April 1986, pp. 79-109.
+.sp 1
+Unix manual pages X(1), xterm(1), and uwm(1).
+.ev

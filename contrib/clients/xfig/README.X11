@@ -1,0 +1,78 @@
+This the famous fig program, ported to X11. I have ported version 1.4
+with patches for LaTeX line drawing by Frank Schmuck of Cornell.
+
+I only added code to it, which means this is a derivative work, so you
+have to stick to the terms of redistribution of the SunView version.
+The copyright belongs to Supoj Sutanthavibul, but the source code for
+fig (the SunView only version) has been freely available to everyone
+for a long time. In particular, it has been available for ftp from
+sally.utexas.edu and is also stored in the Sun-Spots archive.
+Therefore, I presume that you may also freely redistribute xfig source
+code and you should *at least* not remove the copyright notice and not
+try to make money selling it. Naturally, everything is provided as is
+and the user bears all risks of using this software.  Disclaimer:  I am
+not a lawyer so none of what I say may have any legal weight.
+
+I have chosen to retain compatibility with the SunView version, mainly
+for sanity; so that I know I haven't changed the modus operandi of the
+program.  You can compile for SunView simply by editing two lines in
+the Makefile. You may have to change the paths a little.
+
+Updating the ruler arrows slows down xfig noticeably. You might want to
+optimize the code or make this feature an command line option.
+
+I know there are things that aren't quite right with the program, I
+don't have time to fix them properly now.  There are some quirks with
+the behaviour of xfig.  Lots of error returns that should be checked
+are not.
+
+I will gratefully receive bug reports and tune ups but I'm not
+interested in taking up maintenance in the long run. (I have to finish
+a thesis.) In particular reports of little-endian machine versions and
+weird machines (not Sun or Vax) are interesting to me.
+
+If you send me bug reports they will probably sit in my mailbox until I
+have the time to install them locally. Then it may be some time before
+I post a new version. So it will be best if you also posted your fixes
+to some public place. As for coordinating and merging fixes, well that
+will have to happen by anarchy unless somebody volunteers to be the
+grundge.
+
+Please keep the history and version numbers up to date.
+
+The fig2latex translator and friends are part of the transfig package
+from Cornell and at the time of writing, were available by ftp from
+svax.cs.cornell.edu.
+
+	Ken Yap (ken@cs.rochester.edu)
+	July 1988
+
+History:
+
+xfig 1.4.1:
+
+14 Jul 88	Ken Yap (University of Rochester)
+		Ported to X11. Alpha release.
+
+31 Jul 88	Ken Yap (University of Rochester)
+		Works practically like SunView version now. Beta release.
+
+8 Aug 88	Ken Yap (University of Rochester)
+		Dana Chee of Bellcore contributed lots of cleanups
+		and put right some features I didn't know how
+		to do properly. (Thanks, Dana.) Released to world.
+
+xfig 1.4.2:
+
+23 Aug 88 	Dana Chee (Bellcore)
+	  	Fixed color, added mouse tracking option.
+
+xfig 1.4.3:
+
+26 Aug 88 	Dana Chee (Bellcore)
+	  	Added John Kohl's changes to fix color and make
+	  	inverse video work on a monochrome display.
+	  	Allow scaling of compound objects on a side as well as
+	  	a corner.
+	  	Allow compound objects within a compound.
+

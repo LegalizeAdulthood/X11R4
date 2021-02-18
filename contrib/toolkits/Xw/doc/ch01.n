@@ -1,0 +1,218 @@
+
+
+       1  Introduction
+
+
+       The X Widgets provide the base upon which you, the
+       programmer, can build a wide variety of application
+       environments.  It consists of the following:
+
+          o A set of intrinsic mechanisms for building widgets.
+
+          o A consistent interface set (widget set) for
+            programming.
+
+       You can see from figure 1-1 that the X Widgets system is
+       layered on top of the X Toolkit Intrinsics, which in turn is
+       layered on top of the X Window System, thus extending the
+       basic abstractions provided by X.  The X Widgets support
+       independent development of new or extended components.
+
+
+                       PIC Illustration goes here.
+
+
+              Figure 1-1.  User Interface Development Model
+
+       The fundamental data type in the X Widget system is the
+       widget.  A widget is dynamically allocated and contains
+       state information.  Every widget belongs to exactly one
+       class, and each class has a class structure that is
+       statically allocated and initialized and contains operations
+       for that class.  Figure 1-2 shows the basic widget classes
+       and how they are related.
+
+
+                       PIC Illustration goes here.
+
+
+                   Figure 1-2.  Widget Class Hierarchy
+
+       This manual will explain the individual widgets, widget
+       classes, and how you can create and use these widgets in
+       your applications.
+
+
+       1.1  Terminology
+
+
+       This section defines selected words and terms used in this
+       manual.
+
+          o Accelerator.  A keyboard key or keys used to cause some
+            action to occur.  For example, the keys might be used
+            to post a menu instead of a mouse button action.
+
+          o Callback.  A procedure that is called if and when
+            certain specified conditions are met.  This is
+            accomplished by specifying the procedure in a callback
+            list.  Individual widgets can define callback lists as
+            required.
+
+          o Child Widget.  A child widget is a subwidget of a
+            composite widget.  The composite widget is referred to
+            as the parent of the child widget.  The parent controls
+            where the child is placed and when it is mapped.  If
+            the parent is destroyed, the child is automatically
+            destroyed.
+
+          o Composite Widget Class.  This class provides the
+            resources and functionality that allows subclass
+            widgets to manage the layout and children.
+
+          o Composite Manager Widget.  A composite manager widget
+            is a manager widget with special knowledge about the
+            handling of one or more particular widgets.  For
+            example, a titlebar and scrollbar can be registered
+            with a panel widget, and the panel widget will position
+            the titlebar and scrollbar widgets correctly.
+            Normally, a manager widget has no knowledge about its
+            children.
+
+          o Double Click.  A method of menu selection in which a
+            mouse button is pressed and released, the mouse is
+            moved so that the pointer moves to the desired point,
+            and the button is pressed and released again to select
+            the desired action.
+
+          o Drag.  A method of menu selection in which a button is
+            pressed and held, the mouse is moved so that the
+            pointer is ``dragged'' to the desired point, and the
+            button is then released to select the action to be
+            taken.
+
+          o Grab.  A procedure by which a window will act upon a
+            key or button event that occurs for it or any of its
+            descendants.  This precludes the necessity of setting
+            up translations for all windows.
+
+          o Instantiate.  To represent an abstraction by a concrete
+            instance.  To instantiate a widget means that a widget
+            class creates an instance of that class.
+
+          o Manager Widget Class.  A class that provides the
+            resources and functionality to implement certain
+            features, such as keyboard interface and traversal
+            mechanism.  It is built from core, composite, and
+            constraint classes.
+
+          o Meta Class.  A meta class is a set of structures and
+            functionality that a widget uses to export that
+            functionality to subclass widgets.  Each instance of a
+            widget subclass will have the features common to that
+            widget class, and will export these features to child
+            widgets of that class.  Included in this class are
+            core, composite, constraint, primitive, button,
+            manager, menumgr and menupane.  A meta class widget is
+            never instantiated.
+
+          o Post.  The action required to make a popup or pulldown
+            menu appear.  This action is normally a double click on
+            one of the mouse buttons.
+
+          o Primitive Widget Class.  The primitive class provides
+            the resources and functionality for the low level
+            widgets that are managed by the manager class.
+            Primitive class widgets cannot have normal child
+            widgets,  but they can have pop-up child widgets.
+
+          o Widget.  A widget is a graphic device capable of
+            receiving input from the keyboard and the mouse, and
+            communicating with an application or another widget by
+            means of a callback.  Every widget is a member of only
+            one class and always has a window associated with it.
+
+          o Widget Instance.  The creation of a widget so that it
+            is seen on the display.  Note that some widgets (meta
+            class, for example) cannot be instantiated.
+
+          o Widget Tree.  A widget tree is a hierarchy of widgets
+            within a specific program.   For example, if a program
+            included Panel, Form, RowColumn, and three instances of
+            PushButton widgets, its widget tree would be as shown
+            in figure 1-3.
+
+
+                       PIC Illustration goes here.
+
+
+                        Figure 1-3.  A Widget Tree
+
+
+            The shell widget returned by XtInitialize or
+            XtCreateApplicationShell is the root of the widget tree
+            (TopLevel in figure 1-3).  Widgets with no children of
+            any kind are leaves of the tree.
+
+
+       1.2  Available Documentation
+
+
+       Use the following table to determine the document or
+       documents you need to accomplish  specific tasks.
+
+                      TABLE 1-1.  Documentation Map
+
+       
+
+       |           Task            |       Document Title        Document Part No.|
+       |                           |                             |                |
+
+       Install the X Window System Installing X on the Series 300|  B1152-90601   |
+       |                           |                             |                |
+
+       Learn how to start up the X Using the X Window System     |   5959-6151    |
+       Window System               |                             |                |
+       |                           |                             |                |
+
+       Customizing the X Window    Using the X Window System     |   5959-6151    |
+       Environment                 |                             |                |
+       |                           |                             |                |
+
+       Incorporate widgets into    Programming With the HP X     |   5959-6155    |
+       applications                Widgets and the Xt Intrinsics |                |
+       |                           |                             |                |
+
+       Write new widgets           Programming With the HP X     |   5959-6155    |
+       |                           Widgets and the Xt Intrinsics |                |
+       |                           |                             |                |
+
+       Learn about Fortran bindingsProgramming With the Xrlib    |   5959-6160    |
+       |                           User Interface Toolbox        |                |
+       |                           |                             |                |
+
+       Learn about National        Programming With the Xrlib    |   5959-6160    |
+       Language I/O System         User Interface Toolbox        |                |
+       |                           |                             |                |
+
+       Write graphics programs     Programming With Xlib         |   5959-6158    |
+       |                           |                             |                |
+
+
+       Other sources of information are listed below:
+
+          o A ``readme'' file named x11windows found in the
+            directory /etc/newconfig/Update info.  This file
+            contains last-minute information about the X Window
+            system.
+
+
+          o Xlib Programming Manual For Version 11 Release of the X
+            Window System, by Adrian Nye, published by O'Reilly and
+            Associates, Newton, MA (1-800-338-NUTS).
+
+          o Xlib Reference Manual For Version 11 Release of the X
+            Window System, by Adrian Nye, published by O'Reilly and
+            Associates, Newton, MA (1-800-338-NUTS).
+
+

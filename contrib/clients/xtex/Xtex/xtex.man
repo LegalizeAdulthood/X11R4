@@ -1,0 +1,337 @@
+.TH XTEX 1
+.SH NAME
+xtex \- view DVI files on your X-11 display
+.SH SYNOPSIS
+.B xtex
+.SH DESCRIPTION
+.I Xtex
+allows you to preview a DVI file produced by
+.I TeX82, LaTeX,
+etc., under the X-11 windowing system.
+.I Xtex
+relies heavily on the application defaults file,
+which is loaded into the X resource database on invocation.
+Normally, this file lives in /usr/lib/X11/app-defaults/Xtex.ad
+.I Xtex 
+will not work properly if this file is not installed.
+Must function bindings in
+.I xtex
+can be altered by editing the application defaults file or
+by overriding those options in your private resource file.
+.SH OPTIONS
+.TP
+.B \-mag
+Set the default mag for windows. Default is 1000.
+Can be set by ``mag'' in resource database.
+.TP
+.B \-smallMag
+Set the default mag for the ``small'' magnification. Default is 1000.
+Can be set by ``smallMag'' in resource database.
+.TP
+.B \-largeMag
+Set the default mag for the ``large'' button. Default is 1440.
+Can be set by ``largeMag'' in resource database.
+.TP
+.B \-topOffset
+alias for \-voffset
+.TP
+.B \-voffset
+Set the vertical margin to display, in inches.
+This should correspond to the value of
+.B voffset
+in your document. The default is one inch.
+Specifying smaller values, e.g. 0.5, avoids displaying
+whitespace that takes up display real estate.
+.TP
+.B \-leftOffset
+alias for \-hoffset.
+.TP
+.B \-hoffset
+Specifies the horizontial (left) margin, corresponding to
+.B hoffset
+in your document.
+Again, this can be used to save display real estate.
+.TP
+.B \-paperWidth
+Specifies the width of ``paper'' to render, in inches.
+Default is 8.5 inches.
+Can be specified using ``paperWidth'' in your resource database.
+.TP
+.B \-paperHeight
+Specifies the height of ``paper'' to render, in inches.
+Default is 11 inches.
+Can be specified using ``paperWidth'' in your resource database.
+.TP
+.B \-print
+Set the default printing program for files.
+Default is ``lpr -d''
+Can be set by ``print'' in resource database.
+.TP
+.B \-useButtons
+Display function buttons in the page display, giving your
+document more room. You must use the keypress accelerators within
+that page (see Accelerators).
+Default is `True.'
+Can be set by ``useButtons'' in resource database.
+.TP
+.B \-autoSize
+Automatically resize the window.
+Default is ``True''
+Can be set by ``autoSize'' in resource database.
+.TP
+.B \-pageMaxWd
+The maximum allowed page width (in pixels) when auto-sizing
+your window. The default is about 95% of your display width.
+Can be set by ``maxPageWd'' in resource database.
+.TP
+.B \-pageMaxHt
+The maximum allowed page height (in pixels) when auto-sizing.
+Default is about 95% of your display height.
+Can be set by ``maxPageHt'' in resource database.
+.TP
+.B \-dpiHoriz
+Set the default horizontial resolution of the fonts, in dots per inch.
+This value is used to actually determine what fonts are loaded.
+Default is 85 dpi.
+Can be set by ``dpiHoriz'' in resource database.
+.TP
+.B \-dpiVert
+Set the vertical font resolution; 
+some displays have a non-unity aspect ratio.
+E.g. on a Sun-3 monitor, the horizontial resolution is
+about 85 dpi, but the vertical resolution (on mine)
+is about 83.5dpi.
+This is only important if you're really running at
+screen resolution and are trying to layout documents to a
+specific format.
+Can be set by ``dpiVert'' in resource database.
+.TP
+.B \-tfmPath
+Specifies the default path used to locate the TFM files that describe
+the TeX fonts.
+.I Xtex
+uses X11 fonts to actually
+render the bitmaps, but must also know the size of
+fonts when laying out a page.
+The TEXFONTS environment variable will override this option.
+.SH FONTS
+.I Xtex
+can display your document at a variety of sizes, but you must
+have X-11 fonts corresponding to the fonts in your .dvi file.
+For example, if your file calls for font ``cmr10'' scaled 1000,
+and you're rendering it on your display
+at 300dpi with the magnification level set to 500,
+.I xtex
+will look for the font ``cmr10.150''.
+The suffix is compute by
+.I
+(dpi * scaled * mag ) / ( 1000 * 1000 ).
+You can generate these fonts using 
+.I mftobdf.
+For example, executing ``mftobdf -scaled 1000 -mag 500 cmr10''
+would produce ``cmr10.300'' (the default resolution is 300).
+The font ``cmr10.300pk''
+would be shrunk by 50% to produce ``cmr10.150.bdf'',
+the output file. You could also specify this at using
+``mftobdf cmr10.300pk.''
+.I mftobdf
+can only magnify things by 500, 333, 250, 200, ..., 1000/integer.
+You could also generate this font by using
+.I Metafont
+to build a font ``cmr10.150'' and then saying ``mftobdf -scaled 500 cmr10.''
+In practice, most installations use screen (or near screen) resolution
+fonts. For example, to produce the ``cmr10.85'' (cmr10 font, normal
+scaling, 85dpi resolution), you execute:
+``mftobdf -dpi 85 cmr10.85pk.''
+.PP
+Ideally, this will have already been set up at your site, and you'll
+never have to worry about it.
+.SH DOCUMENT LEVEL FUNCTIONS
+.PP
+There are many buttons at the top level display.
+.TP
+.B Quit
+quits Xtex entirely.
+.TP
+.B Open
+opens the file in the file name box.
+.TP
+.B Copy
+copies the file and then opens this copy;
+this lets you process a new version of the file while looking at the old one.
+.TP
+.B Cd
+changes the current directory.
+.TP
+.B Close
+closes the current file if there is one.
+.PP
+These functions (and the button names) are all controlled by the
+application defaults file, and may differ at your site.
+Normally, an accellerator is installed to invoke ``copy''
+and ``Page'' (see below) when you press
+.B RETURN
+in the file name box.
+.PP
+Once you open a file, you can select other functions.
+.TP
+.B Page
+puts up a new page display.
+.TP
+.B Print all
+uses the print program specified by
+.B -print
+to print your document.
+.TP
+.B Print Marked
+prints only marked pages.
+.TP
+.B Print Unmarked
+prints unmarked pages.
+.PP
+The marked pages are displayed under the dialog box in the mark menu.
+You can mark pages in the mark menu using the mouse.
+Button1 marks a page,
+Button2 clears all marks and Button3 inverts all marks.
+These button bindings are set by the application defaults file,
+and may differ at your installation.
+Currently, the only thing you can do with marked pages is print them.
+.I xtex
+invokes 
+.I dviselect
+to copy the pages into another file, which is then printed.
+.PP
+When you display a page of output,
+by selecting the ``Page'' button,
+the first page of your document is displayed.
+You can press ``Page'' again to display multiple
+copies if you desire.
+.PP
+Actions within a page are specified either
+by using buttons or key presses.
+Because the buttons take valuable real estate on your display,
+you may wish to use the
+.B \-useButtons
+options, or specify
+``Xtex.useButtons: False''
+in your resource database.
+.SH PAGE BUTTONS
+You can move around (forewards and backwards),
+mark the current page for printing
+or duplicate the page (e.g., to view it at a larger size).
+You can also create tied pages;
+in these, pressing foreward or backward in the master window
+(the one in which you poked `tied') causes the tied page
+to go foreward or backward. Movement in the tied page
+doesn't affect the master.
+Tied pages can also have tied pages.
+.PP
+The ``large'' and ``small'' buttons allow you to select two
+common sizes for magnification. You can also use the mag
+button for other general sizes.
+.PP
+Options to the right of the text widget require extra input;
+that's what the text widget is for.
+You specify a page number in the text widget
+and then either hit ``Goto'' to go to that page number.
+You specify a general mag by entering a mag number (e.g., 333, 500 or 1000)
+and hit ``Mag'' to set the magnification.
+.PP
+If you change the mag,
+the page will resize itself if you specified
+.B \-autoSize
+or set the ``Xtex.autoSize'' resource to true.
+.SH PAGE ACCELERATORS
+.PP
+There are accelerators for these functions.
+.TP
+.B Q, X, Control-d
+exit xtex entirely.
+.TP
+.B q,x
+exit this particular page.
+.TP
+.B 0,1,2,3,4,5,6,7,8,9
+set the current <prefix>.
+These numbers are cummulative, i.e. entering ``23'' gives the
+number ``23,'' not simply ``3''.
+.TP
+.B ESCAPE
+clear the current <prefix>.
+.TP
+.B f, n, Control-n, RETURN
+go forward <prefix> pages, with a default of one.
+.TP
+.B b, p, Control-h, BackSpace, Delete
+go backward <prefix> pages, with a default of one.
+.ip
+.B g
+goto the logical page specified by <prefix>.
+.TP
+.B Control-t
+prints the current page.
+.TP
+.B l
+shifts to ``large magnification.''
+.TP
+.B s
+shifts to ``small magnification.''
+.TP
+.B m
+shifts to arbitrary magnification specified by the <prefix>.
+E.g. typing ``1095m'' will set the magnification to 1095.
+.TP
+.B m
+marks the current page.
+.TP
+.B u
+unmarks the current page.
+.TP
+.B t
+toggles the mark for the current page.
+.TP
+.B F12, r
+reopens the document. If you opened the document using ``Open,''
+the document is opened again, while if you used ``Copy,'' a new copy
+is made.
+This is used when making iterative changes to your document.
+If the current logical page number exists in the newly
+opened document, you'll continue to see that page. If it doesn't
+exist, you'll see the first page.
+Reopening a document clears all page marks.
+.TP
+.B d
+duplicates the current page (putting up another page window).
+.TP
+.B t
+duplicates the current page using a tied window.
+All forward and backward actions in the original page are mimiced
+in the tied page, allowing you to walk through a document
+with two (or more) pages displayed in lockstep.
+.TP
+.B Space, Arrow Keys
+If your document is too large to fit on the display, and must use
+the scroll bar, Space-Down will display the bottom of the document
+and Space-Up will return to displaying the upper half.
+You can also the arrow keys to move up, down, left and right.
+.PP
+.SH HINTS
+Set your backing store in your resources file, e.g. 
+.B Xtex*backingStore: whenMapped
+and scolling will be MUCH faster.
+.SH BUGS
+Although
+.I xtex
+understands most
+.I tpic
+graphical commands, it is unable to display shading,
+because Dirk was too lazy to finish it.
+All other graphics commands are supported, however.
+.SH AUTHOR
+Dirk Grunwald, at the University of Colorado wrote
+.I TeXx2
+based using a DVI-library written by Chris Torek at UMD.
+Tim Morgan, at the University of Calif, Irvine,
+wrote the enhanced
+.I tpic
+support, and Dirk beat on it heavily.

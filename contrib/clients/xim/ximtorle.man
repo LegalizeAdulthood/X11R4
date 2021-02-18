@@ -1,0 +1,58 @@
+.TH XIMTORLE 1 "February 3,  1989"
+.UC 5
+.SH NAME
+ximtorle, rletoxim \- converting between "xim" and the Utah "rle" formats.
+.SH SYNOPSIS
+.B ximtorle
+[-in 
+.I ximfile
+] [-out
+.I rlefile
+]
+.br
+.B rletoxim
+[-in 
+.I rlefile
+] [-out
+.I ximfile
+]
+
+.SH DESCRIPTION
+.I Ximtorle
+and
+.I rletoxim
+are programs that convert color "xim" files to and from the "rle" format of the Utah Raster Toolkit.
+The Utah raster toolkit provides a large library of image processing tools for scaling, rotating, compositing, cropping, etc...
+Both of these programs will convert 8 and 24/32 bit images automatically between these formats.
+
+.SH OPTIONS
+.TP "\w'\f3\-m\f1name 'u"
+.B -in \fIfile\fP
+This option allows the user to explicitly specify the input file on the command line.  The default is to read input from standard in.
+.TP "\w'\f3\-m\f1name 'u"
+.B -out \fIfile\fP
+This option allows the user to explicitly specify the output file on the command line.
+The default is to write output to standard out.
+
+.SH "SEE ALSO"
+xim(1), xtoxim(1), (rle(5) available from cs.utah.edu)
+
+.SH BUGS
+The rle format contains a larger amount of information such background color and image clipping information than the xim format can hold.
+Some of this information maybe lost when converting to xim.
+.br
+Some comment information may also be lost when converting between formats.
+.br
+One note, rle images have their origins in the bottom-left while xim have theirs in the top-left.
+.SH COPYRIGHT
+Copyright 1989, Massachusetts Institute of Technology.
+.SH AUTHOR
+.br
+Philip R. Thompson  (phils@athena.mit.edu)
+.br
+Computer Resource Laboratory,  
+Dept. of Architecture and Planning,  
+.br
+Massachusetts Institute of Technology,  
+Cambridge, MA  02139
+

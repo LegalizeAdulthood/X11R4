@@ -1,0 +1,14 @@
+*blimp.foreground: black
+*blimp.background: gray80
+*eye.foreground: blue
+*eye.background: white
+*face.foreground: black
+*face.background: magenta
+*fork.foreground: white
+*fork.background: black
+*pirhanna.foreground: green
+*pirhanna.background: yellow
+*fish.foreground: blue
+*fish.background: red
+*bob.foreground: black
+*bob.background: white

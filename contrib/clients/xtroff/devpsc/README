@@ -1,0 +1,25 @@
+The files in this directory make the ditroff description files
+for the xtroff "device" and its fonts.  The Makefile uses two
+awk programs (adobe.awk and bdfdit.awk) to generate the discription
+files.
+
+The first awk program (adobe.awk) is used to map characters into
+the character set used by ditroff.  Some characters are left
+unmapped, while other characters, that had been unmapped, are enabled.
+
+The second awk program (bdfdit.awk) serves two tasks:
+(1)	It maps from the .bdf format of character description to the
+	discription used by makedev.
+
+(2)	It is called by the makefile to help create the device description
+	file "DESC".
+
+This program contains the mapping from .bdf character names
+to ditroff input character escape sequences: e.g., \(em.
+This mapping is called "ditmap".  The mapping called "ascii" serves to
+identify the normal printing ascii characters (which may have synonymns
+in ditmap).
+
+"Make install" will install all of the .out files into the destination
+directory from which xtroff reads them.  This is usually
+/usr/lib/X11/troff/devpsc/  (devpsc stands for the PostScript device).

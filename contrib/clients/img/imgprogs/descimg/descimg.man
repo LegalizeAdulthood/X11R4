@@ -1,0 +1,45 @@
+.TH DESCIMG 1 "27 November 1989" "X Version 11"
+.SH NAME
+descimg \- Describe image file
+.SH SYNOPSIS
+.PP
+.B descimg
+.I file
+[
+.B colors
+]
+.br
+.SH DESCRIPTION
+.PP
+Describe an image file.
+.PP
+.B descimg
+summarizes characteristics of an image file.  This includes the
+file type, image geometry (width x height), number of pixels,
+number of colors in its color map (if it has a color map), and
+associated data (if any).
+.PP
+The
+.I file
+argument can be a specific filename or a "base" filename.  If
+the given name is not an existing file, it is presumed to be the
+base for one of the following forms of names:
+.IP ""
+.I file.p [.Z]:
+Color-mapped image file
+.IP ""
+.I file.a [.Z]:
+Attribute file for an RGB (unmapped) image
+.PP
+Any file whose names ends with
+.I .Z
+is presumed to be in compressed format.
+.PP
+If anything at all is present as a second argument on the command line,
+.B descimg
+lists the contents of the image's color map.  It reports each color
+in a hexadecimal format consistent with an X11 standard reprenentation,
+and it shows individual red, green, and blue component values in
+decimal.
+.SH AUTHOR
+Paul Raveling, USC Information Sciences Institute (Raveling@isi.edu)

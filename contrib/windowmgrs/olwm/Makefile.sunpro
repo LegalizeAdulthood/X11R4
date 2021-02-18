@@ -1,0 +1,92 @@
+# 
+#	(c) Copyright 1989 Sun Microsystems, Inc. Sun design patents
+#	pending in the U.S. and foreign countries. See LEGAL_NOTICE
+#	file for terms of the license.
+#
+#   	Written for Sun Microsystems by Crucible, Santa Cruz, CA.
+#
+#	@(#)Makefile 5.1 89/12/14
+#
+
+SRCDOT=../../..
+
+include ${SRCDOT}/Makefile.cfg
+
+SRC	= olwm.c AdFrame.c defaults.c CheckMap.c \
+	  RubberWin.c InitGraphics.c  WinInfo.c st.c \
+	  AdPushPin.c AdResize.c AdShineMark.c AdTitleBar.c \
+	  RootWin.c Icon.c Debug.c menu.c \
+	  AdFooter.c Select.c MenuWin.c Error.c usleep.c usermenu.c \
+	  Dialogue.c
+
+OBJ	= olwm.o AdFrame.o defaults.o CheckMap.o \
+	  RubberWin.o InitGraphics.o WinInfo.o st.o \
+	  AdPushPin.o AdResize.o AdShineMark.o AdTitleBar.o \
+	  RootWin.o Icon.o Debug.o menu.o \
+	  AdFooter.o Select.o MenuWin.o Error.o usleep.o usermenu.o \
+	  Dialogue.o
+
+HEADERS	= menu.h olwm.h st.h
+
+BITMAPS = bitmaps/icon.h bitmaps/llresize.h bitmaps/lrresize.h \
+	  bitmaps/pushpin.h bitmaps/pushpinin.h bitmaps/shinemark.h \
+	  bitmaps/ulresize.h bitmaps/urresize.h bitmaps/windowmark.h
+
+MISC 	= .olwmmenu Readme Makefile
+
+MTARGET = all
+PROGRAM = olwm
+OLGXDIR = ./libolgx
+LIBOLGX = ${OLGXDIR}/libolgx.a
+LIBS = -lolgx -lX11
+
+# Prevent the environment's LD_LIBRARY_PATH from altering the shared
+# libraries required by the resulting binary
+LD_LIBRARY_PATH =
+
+# To disable menu shadows (for servers that do not support SaveUnder)
+# remove the -DSHADOW option from DEFINES.
+CPPFLAGS= $(DEFINES) $(INCLUDES)
+CFLAGS	= $(CMETHOD)
+DEFINES = # -DSHADOW
+INCLUDES= -I$(INCLUDEDIR) -I$(OLGXDIR) -I${BUILDENV}/include
+LDFLAGS = -L$(LIBDIR) -L$(OLGXDIR) -L${BUILDENV}/lib
+
+# Altered parameters for compiling a debugging version.
+# Note: Makefile.cfg changes CMETHOD to -g.
+debug := DEFINES += -DDEBUG
+debug := MTARGET = debug
+
+# this is pretty much every lint flag possible
+LINTFLAGS = -abchx $(CPPFLAGS)
+
+# .c.l:
+# 	lint $(LINTFLAGS) $*.c > $*.l
+
+all: $(PROGRAM)
+
+debug: $(PROGRAM)
+
+# REMIND: Is the ${RM} line necessary?
+install: $(PROGRAM)
+	$(BINSTALL) $(PROGRAM) $(DEMODIR)
+	${RM} $(BINDIR)/$(PROGRAM)
+
+clean:
+	rm -f $(OBJ) *.l tags
+
+$(PROGRAM): $(LIBOLGX) $(BITMAPS) $(HEADERS) $(OBJ) 
+	cc $(CFLAGS) $(LDFLAGS) -o $(PROGRAM) $(OBJ) $(LIBS)
+
+$(LIBOLGX): FRC
+	(cd $(OLGXDIR); $(MAKE) $(MFLAGS) $(MTARGET))
+
+lint:
+	lint $(LINTFLAGS) $(SRC)
+
+tags:
+	ctags -tw *.[ch]
+
+FRC:
+
+.KEEP_STATE:

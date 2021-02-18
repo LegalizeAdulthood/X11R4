@@ -1,0 +1,249 @@
+#
+#	This makefile is used to build either pk fonts or SNF fonts,
+#	using the method of overkill. Basically, we provide rules
+#	for every font in mag's 0.5, 1, magstep 0.5, magstep 1,
+#	magstep 2, magstep 3, magstep4 and magstep 5.
+#
+#	The makefile assumes you have metafont, gftopk and mftobdf (if you
+#	are building the snf fonts).
+#
+#	Right now, this is configured to produce 85dpi fonts for the
+#	Sun-3 low-res display, assuming you set the ``small'' (normal)
+#	mag to 1000 and the large to 1440. 
+#
+#	This whole makefile is pretty hacky at the moment -- it's a first
+#	draft of what's needed.
+#
+#
+#	THIS USES GNU MAKE!
+#
+#
+.SUFFIXES:
+vpath
+
+vpath	%.mf	/usr/local/lib/mf84/macros
+vpath	%.pk	/usr/local/lib/tex82/fonts-85dpi
+
+CM	=\
+	cmr17.mf cmr12.mf cmr10.mf cmr9.mf cmr8.mf cmr7.mf cmr6.mf 	\
+	cmr5.mf cmsl12.mf cmsl10.mf cmsl9.mf cmsl8.mf cmdunh10.mf 	\
+	cmbx12.mf cmbx10.mf cmbx9.mf cmbx8.mf cmbx7.mf cmbx6.mf 	\
+	cmbx5.mf cmb10.mf cmbxsl10.mf cmtt12.mf cmtt10.mf cmtt9.mf 	\
+	cmtt8.mf cmvtt10.mf cmsltt10.mf cmss17.mf cmss12.mf 	\
+	cmss10.mf cmss9.mf cmss8.mf cmssi17.mf cmssi12.mf 	\
+	cmssi10.mf cmssi9.mf cmssi8.mf cmssbx10.mf cmssdc10.mf 	\
+	cmssq8.mf cmssqi8.mf cminch.mf cmfib8.mf cmff10.mf 	\
+	cmti12.mf cmti10.mf cmti9.mf cmti8.mf cmti7.mf cmmi12.mf 	\
+	cmmi10.mf cmmi9.mf cmmi8.mf cmmi7.mf cmmi6.mf cmmi5.mf 	\
+	cmbxti10.mf cmmib10.mf cmitt10.mf cmu10.mf cmfi10.mf 	\
+	cmsy10.mf cmsy9.mf cmsy8.mf cmsy7.mf cmsy6.mf cmsy5.mf 	\
+	cmbsy10.mf cmex10.mf cmtex10.mf cmtex9.mf cmtex8.mf 	\
+	cmcsc10.mf cmtcsc10.mf
+
+LATEX	=\
+	circle10.mf circlew10.mf \
+	lasy10.mf lasy5.mf lasy6.mf lasy7.mf lasy8.mf lasy9.mf \
+	line10.mf linew10.mf
+
+FONTS	= $(CM) $(LATEX)
+#
+#	85 DPI is suitable for suns
+#
+
+DPI	=85
+MODE	=sun_lores
+
+MFTOBDF	=mftobdf -dpi $(DPI) -mag 1000
+#
+# Use dxfc for DECwindows
+#
+BDFTOSNF=bdftosnf
+GFTOPK	=gftopk
+MF	=mf
+
+END500	=43
+END1000	=85
+ENDHALF	=93
+ENDONE	=102
+ENDTWO	=122
+#
+#	THALF is magstep 2.5, for large mode viewing of .5 magstep files
+#
+ENDTHALF=134
+ENDTHREE=147
+ENDFOUR	=176
+ENDFIVE	=212
+
+MAG500	=500
+MAG1000	=1000
+MAGHALF	=1098
+MAGONE	=1200
+MAGTWO	=1440
+MAGTHALF =1581
+MAGTHREE=1728
+MAGFOUR	=2074
+MAGFIVE	=2489
+
+PK500	=.$(END500)pk
+PK1000	=.$(END1000)pk
+PKHALF	=.$(ENDHALF)pk
+PKONE	=.$(ENDONE)pk
+PKTWO	=.$(ENDTWO)pk
+PKTHALF=.$(ENDTHALF)pk
+PKTHREE	=.$(ENDTHREE)pk
+PKFOUR	=.$(ENDFOUR)pk
+PKFIVE	=.$(ENDFIVE)pk
+
+GF500	=.$(END500)gf
+GF1000	=.$(END1000)gf
+GFHALF	=.$(ENDHALF)gf
+GFONE	=.$(ENDONE)gf
+GFTWO	=.$(ENDTWO)gf
+GFTHALF=.$(ENDTHALF)gf
+GFTHREE	=.$(ENDTHREE)gf
+GFFOUR	=.$(ENDFOUR)gf
+GFFIVE	=.$(ENDFIVE)gf
+
+SNF500		=.$(END500).snf
+SNF1000		=.$(END1000).snf
+SNFHALF		=.$(ENDHALF).snf
+SNFONE		=.$(ENDONE).snf
+SNFTWO		=.$(ENDTWO).snf
+SNFTHALF	=.$(ENDTHALF).snf
+SNFTHREE	=.$(ENDTHREE).snf
+SNFFOUR		=.$(ENDFOUR).snf
+SNFFIVE		=.$(ENDFIVE).snf
+
+.SUFFIXES: .mf
+.SUFFIXES: $(PK500) $(PK1000) $(PKHALF) $(PKTWO) $(PKTHALF) $(PKTHREE) $(PKFOUR) $(PKFIVE)
+.SUFFIXES: $(SNF500) $(SNF1000) $(SNFHALF) $(SNFTWO) $(SNFTHALF) $(SNFTHREE) $(SNFFOUR) $(SNFFIVE)
+
+X500	=$(subst .mf,$(SNF500),$(FONTS))
+X1000	=$(subst .mf,$(SNF1000),$(FONTS))
+XHALF	=$(subst .mf,$(SNFHALF),$(FONTS))
+XONE	=$(subst .mf,$(SNFONE),$(FONTS))
+XTWO	=$(subst .mf,$(SNFTWO),$(FONTS))
+XTHALF	=$(subst .mf,$(SNFTHALF),$(FONTS))
+XTHREE	=$(subst .mf,$(SNFTHREE),$(FONTS))
+XFOUR	=$(subst .mf,$(SNFFOUR),$(FONTS))
+XFIVE	=$(subst .mf,$(SNFFIVE),$(FONTS))
+XFONTS	=$(X500) $(X1000) $(XHALF) $(XONE) $(XTWO) $(XTHALF) $(XTHREE) $(XFOUR) $(XFIVE)
+
+MF500	=$(subst .mf,$(PK500),$(FONTS))
+MF1000	=$(subst .mf,$(PK1000),$(FONTS))
+MFHALF	=$(subst .mf,$(PKHALF),$(FONTS))
+MFONE	=$(subst .mf,$(PKONE),$(FONTS))
+MFTWO	=$(subst .mf,$(PKTWO),$(FONTS))
+MFTHALF	=$(subst .mf,$(PKTHALF),$(FONTS))
+MFTHREE	=$(subst .mf,$(PKTHREE),$(FONTS))
+MFFOUR	=$(subst .mf,$(PKFOUR),$(FONTS))
+MFFIVE	=$(subst .mf,$(PKFIVE),$(FONTS))
+MFFONTS	= $(MF500) $(MF1000) $(MFHALF) $(MFONE) $(MFTWO) $(MFTHALF) $(MFTHREE) $(MFFOUR) $(MFFIVE)
+
+.PRECIOUS: $(MFFONTS)
+
+pkfonts: $(MFFONTS)
+	@echo woof
+
+pkfonts-twohalf: $(MFTHALF)
+	@echo pkfonts-tohalf Done
+
+xfonts: $(XFONTS)
+	@echo woof
+
+xfonts-twohalf: $(XTHALF)
+	@echo xfonts-tohalf Done
+
+%$(PK500): %.mf
+	-$(MF) "\mode:=$(MODE); mag=0.5; batchmode; input $*" 
+	$(GFTOPK) $*$(GF500)
+	rm -f $*$(GF500)
+
+%$(PK1000): %.mf
+	-$(MF) "\mode:=$(MODE); mag=1; batchmode; input $*" 
+	$(GFTOPK) $*$(GF1000)
+	rm -f $*$(GF1000)
+
+%$(PKHALF): %.mf
+	-$(MF) "\mode:=$(MODE); mag=magstep 0.5; batchmode; input $*" 
+	$(GFTOPK) $*$(GFHALF)
+	rm -f $*$(GFHALF)
+
+%$(PKONE): %.mf
+	-$(MF) "\mode:=$(MODE); mag=magstep 1; batchmode; input $*" 
+	$(GFTOPK) $*$(GFONE)
+	rm -f $*$(GFONE)
+
+%$(PKTWO): %.mf
+	-$(MF) "\mode:=$(MODE); mag=magstep 2; batchmode; input $*" 
+	$(GFTOPK) $*$(GFTWO)
+	rm -f $*$(GFTWO)
+
+%$(PKTHALF): %.mf
+	-$(MF) "\mode:=$(MODE); mag=magstep 2.5; batchmode; input $*" 
+	$(GFTOPK) $*$(GFTHALF)
+	rm -f $*$(GFTHALF)
+
+%$(PKTHREE): %.mf
+	-$(MF) "\mode:=$(MODE); mag=magstep 3; batchmode; input $*" 
+	$(GFTOPK) $*$(GFTHREE)
+	rm -f $*$(GFTHREE)
+
+%$(PKFOUR): %.mf
+	-$(MF) "\mode:=$(MODE); mag=magstep 4; batchmode; input $*" 
+	$(GFTOPK) $*$(GFFOUR)
+	rm -f $*$(GFFOUR)
+
+%$(PKFIVE): %.mf
+	-$(MF) "\mode:=$(MODE); mag=magstep 5; batchmode; input $*" 
+	$(GFTOPK) $*$(GFFIVE)
+	rm -f $*$(GFFIVE)
+
+#
+#	Rules to build .snf fonts
+#
+%$(SNF500): %$(PK500)
+	-$(MFTOBDF) -scaled $(MAG500) $(subst $(END500),,$*) 
+	$(BDFTOSNF) $*.$(END500).bdf > $*.$(END500).snf
+	rm -f $*.$(END500).bdf
+
+%$(SNF1000): %$(PK1000)
+	-$(MFTOBDF) -scaled $(MAG1000) $(subst $(END1000),,$*) 
+	$(BDFTOSNF) $*.$(END1000).bdf > $*.$(END1000).snf
+	rm -f $*.$(END1000).bdf
+
+%$(SNFHALF): %$(PKHALF)
+	-$(MFTOBDF) -scaled $(MAGHALF) $(subst $(ENDHALF),,$*) 
+	$(BDFTOSNF) $*.$(ENDHALF).bdf > $*.$(ENDHALF).snf
+	rm -f $*.$(ENDHALF).bdf
+
+%$(SNFONE): %$(PKONE)
+	-$(MFTOBDF) -scaled $(MAGONE) $(subst $(ENDONE),,$*) 
+	$(BDFTOSNF) $*.$(ENDONE).bdf > $*.$(ENDONE).snf
+	rm -f $*.$(ENDONE).bdf
+
+%$(SNFTWO): %$(PKTWO)
+	-$(MFTOBDF) -scaled $(MAGTWO) $(subst $(ENDTWO),,$*) 
+	$(BDFTOSNF) $*.$(ENDTWO).bdf > $*.$(ENDTWO).snf
+	rm -f $*.$(ENDTWO).bdf
+
+%$(SNFTHALF): %$(PKTHALF)
+	-$(MFTOBDF) -scaled $(MAGTHALF) $(subst $(ENDTHALF),,$*) 
+	$(BDFTOSNF) $*.$(ENDTHALF).bdf > $*.$(ENDTHALF).snf
+	rm -f $*.$(ENDTHALF).bdf
+
+%$(SNFTHREE): %$(PKTHREE)
+	-$(MFTOBDF) -scaled $(MAGTHREE) $(subst $(ENDTHREE),,$*) 
+	$(BDFTOSNF) $*.$(ENDTHREE).bdf > $*.$(ENDTHREE).snf
+	rm -f $*.$(ENDTHREE).bdf
+
+%$(SNFFOUR): %$(PKFOUR)
+	-$(MFTOBDF) -scaled $(MAGFOUR) $(subst $(ENDFOUR),,$*) 
+	$(BDFTOSNF) $*.$(ENDFOUR).bdf > $*.$(ENDFOUR).snf
+	rm -f $*.$(ENDFOUR).bdf
+
+%$(SNFFIVE): %$(PKFIVE)
+	-$(MFTOBDF) -scaled $(MAGFIVE) $(subst $(ENDFIVE),,$*) 
+	$(BDFTOSNF) $*.$(ENDFIVE).bdf > $*.$(ENDFIVE).snf
+	rm -f $*.$(ENDFIVE).bdf
+

@@ -1,0 +1,3 @@
+typedef enum {
+	NOSCROLL, VERTONLY, HORIZONLY, VERTHORIZ
+} A_Scroll_t;

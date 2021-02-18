@@ -1,0 +1,15 @@
+confirm1
+setfuzokugo pubdic/full.fzk
+setdic pubdic/kihon.sysR !@WNN_DIC_DIR/pubdic/kihon.frq 5 1 0 - - 1
+setdic pubdic/setsuji.sysR !@WNN_DIC_DIR/pubdic/setsuji.frq 5 1 0 - - 1
+setdic pubdic/koyuu.sysR !@WNN_DIC_DIR/pubdic/koyuu.frq 1 1 0 - - 1
+setdic pubdic/chimei.sysR !@WNN_DIC_DIR/pubdic/chimei.frq 1 1 0 - - 1
+setdic pubdic/jinmei.sysR !@WNN_DIC_DIR/pubdic/jinmei.frq  1 1 0 - - 1
+setdic pubdic/special.sysR !@WNN_DIC_DIR/pubdic/special.frq  5 1 0 - - 1
+setdic pubdic/computer.sysR !@WNN_DIC_DIR/pubdic/computer.frq 5 1 0 - - 1
+setdic pubdic/symbol.sysR !@WNN_DIC_DIR/pubdic/symbol.frq 1 1 0 - - 1
+setdic pubdic/tankan.sysR !@WNN_DIC_DIR/pubdic/tankan.frq  1 1 0 - - 1
+setdic !@WNN_DIC_DIR/private - 5 0 0 - - 1
+
+;;       N nsho hindo len jiri flag jisho sbn dbn_len sbn_cnt suuji kana eisuu kigou toji_kakko fuzokogo kaikakko
+setparam 2 10   2     45  1    80   5     1   50      -20     400   -10  100   -100  200        0        200

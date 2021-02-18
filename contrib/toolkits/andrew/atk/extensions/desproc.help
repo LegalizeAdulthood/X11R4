@@ -1,0 +1,19 @@
+\begindata{text,269040080}
+\textdsversion{12}
+\template{help}
+
+
+\chapter{Proclist for Deskey
+
+}
+
+deskey-describe-key:  Show binding of a typed in key sequence.
+
+
+
+The proctable entry 'deskey-describe-key' can be bound to a key in an .xxxinit 
+file or can be called from Ness as deskey_describe_key().  It prompts for a 
+key sequence and responds with the name of the proctable entry that will be 
+called.  The sequence can be interrupted with control-G.
+
+\enddata{text,269040080}

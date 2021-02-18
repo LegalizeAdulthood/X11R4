@@ -1,0 +1,264 @@
+
+
+
+     XWWORKSPACE(3X)                                   XWWORKSPACE(3X)
+
+
+
+
+     NAME
+          XwworkSpaceWidgetClass - the X Widget's empty window widget.
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/WorkSpace.h>
+
+
+     CLASSES
+          The WorkSpace widget is built from the Core and XwPrimitive
+          classes.
+
+          The widget class to use when creating a workspace is
+          XwworkSpaceWidgetClass.
+
+          The class name for this widget is WorkSpace.
+
+     DESCRIPTION
+          The WorkSpace widget provides the application developer with
+          an empty primitive widget.  This widget can be used by the
+          application as a non-widget graphics area.  Callback types
+          are defined for widget exposure and resize to allow the
+          application to redraw or reposition its graphics.  Keyboard,
+          button press and button release callbacks are also defined
+          to provide the application an easy means of getting normal
+          input from the widget.  Other types of input can be gathered
+          from the widget by adding event handlers.
+
+          If the workspace widget has a highlight thickness, the
+          application should take care not to draw on this area.  This
+          can be done by creating the graphics context to be used for
+          drawing in the widget with a clipping rectangle set to the
+          size of the widget's window inset by the highlight
+          thickness.
+
+     NEW RESOURCES
+          The WorkSpace widget defines a set of resource types used by
+          the programmer to specify the data for the workspace.  The
+          programmer can also set the values for the Core and
+          Primitive widget classes to set attributes for this widget.
+
+
+                          WorkSpace Resource Set
+               Name         Class         Type      Default
+               ____________________________________________
+               XtNexpose    XtCCallback   Pointer   Null
+               XtNresize    XtCCallback   Pointer   Null
+               XtNkeyDown   XtCCallback   Pointer   Null
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWWORKSPACE(3X)                                   XWWORKSPACE(3X)
+
+
+
+
+          XtNexpose
+               This resource defines a callback list which is invoked
+               when an exposure event occurs on the widget.  The
+               call_data parameter for the callback will contain a
+               Region structure containing the exposed region.
+
+          XtNresize
+               This resource defines a callback list which is invoked
+               when the widget is resized.  The widget parameter can
+               be accessed to obtain the new size of the widget.
+
+          XtNkeyDown
+               This resource defines a callback list which is invoked
+               when keyboard input occurs in the widget.  The
+               call_data parameter for the callback will contain the
+               key pressed event.
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWWORKSPACE(3X)                                   XWWORKSPACE(3X)
+
+
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightColor       XtCForeground           Pixel     Black
+     XtNhighlightTile        XtCHighlightTile        int       50_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNrecomputeSize        XtCRecomputeSize        Boolean   TRUE
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalType resource is set to
+          highlight_traversal (XwHIGHLIGHT_TRAVERSAL in an argument
+          list) at create time or during a call to XtSetValues, the
+          XwPrimitive superclass will automatically augment the
+          primitive widget's translations to support keyboard
+          traversal.  Refer to the XwPrimitive man page for a complete
+          description of these translations.  Refer to the
+          TRANSLATIONS section in this man page for a description of
+          the translations local to this widget.
+
+     TRANSLATIONS
+          The following translations are defined for the WorkSpace
+          widget.
+
+
+                        <KeyDown>:       keydown()
+                        <BtnDown>:       select()
+                        <BtnUp>:         release()
+                        <EnterWindow>:   enter()
+                        <LeaveWindow>:   leave()
+
+
+     ACTIONS
+          keydown:
+               Keyboard input occurring on a workspace invokes the
+               workspace's XtNkeyDown callback list.
+
+          select:
+               Selections occurring on a workspace invokes the
+               workspace's primitive XtNselect callback list.
+
+          release:
+               Release invokes the workspace's primitive XtNrelease
+               callback list.
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWWORKSPACE(3X)                                   XWWORKSPACE(3X)
+
+
+
+
+          enter:
+               If the XtNtraversalType resource has been set to
+               XwHIGHLIGHT_ENTER then the workspace's border will be
+               highlighted.  Otherwise no action is taken.
+
+          leave:
+               If the XtNtraversalType resource has been set to
+               XwHIGHLIGHT_ENTER then the workspace's border will be
+               unhighlighted.  Otherwise no action is taken.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWPRIMITIVE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+

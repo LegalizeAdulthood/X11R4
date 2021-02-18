@@ -1,0 +1,77 @@
+.TH Xlife 6 
+.SH NAME
+Xlife - Conway's Game of Life, for X
+.SH SYNTAX
+.B xlife [intial pattern file]
+.SH DESCRIPTION
+.NXR "xlife"
+.PN xlife
+brings up a single window in which the user may play the game of life.
+
+The universe is effectivly unbounded (4.2 billion on a side)
+The algorithim uses hashed 8x8 boxes of cells, and computes the next 
+generation by using lookup tables for added speed.
+
+.SH COMMANDS
+.IP \fB8\fR 20 
+Move your view of the universe up.
+.IP \fB2\fR 20 
+Move your view of the universe down.
+.IP \fB6\fR 20
+Move your view of the universe right.
+.IP \fB4\fR 20
+Move your view of the universe left.
+.IP \fB5\fR 20
+Center the universe on the screen (based on average position of the cells).
+.IP \fB=,+\fR 20
+Zoom the view in.
+.IP \fB\-\fR 20
+Zoom the view out.
+.IP \fBg\fR 20
+Toggle running the game.
+.IP \fBo\fR 20
+Step forward one generation.
+.IP \fBs\fR 20
+Save the universe to a file adding extention .life.
+.IP \fBl\fR 20
+Load (actually add to) the universe from a file with extention .life.
+This lets you overlay multiple saved states to make for some interesting
+effects. Clear the universe if you want to start from scratch.
+.IP \fBh\fR 20
+(Hide) stop displaying after each generation, does not iconify.
+.IP \fB?\fR 20
+Help for xlife.
+.IP \fB!\fR 20
+Place random cells on the area of the universe on the screen.
+.IP \fBr\fR 20
+Redraw the screen.
+.IP \fBR\fR 20
+Change the rules in "stays alive on"/"born on"
+format. The standard rules are 23/3 (alive on two or three
+neighbors, birth on three neighbors for an empty cell).
+.IP \fBC\fR 20
+Clear the universe.
+.IP \fBQ\fR 20
+Quit
+.IP \fBButtons\fR 20
+.IP \fB1\fR 20
+Activate a cell at the cursor.
+.IP \fB2\fR 20 
+Center the universe view on the cursor.
+.IP \fB3\fR 20 
+Delete a cell at the cursor.
+
+.SH RESTRICTIONS
+none
+
+.SH AUTHORS
+Algorithim, and implementation
+
+Jon Bennett jcrb@cs.cmu.edu
+
+Original X code
+
+Chuck Silvers cs4n@andrew.cmu.edu
+
+.SH SEE ALSO   
+xtrek(6)

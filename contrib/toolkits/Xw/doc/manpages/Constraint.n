@@ -1,0 +1,66 @@
+
+
+
+     CONSTRAINT(3X)                                     CONSTRAINT(3X)
+
+
+
+
+     NAME
+          Constraint - A description of the interface to constraint
+          resources.
+
+     CLASSES
+          A sub-class of Core and Composite.
+
+     DESCRIPTION
+          When a constrained composite widget defines constraint
+          resources, all of that widget's children effectively
+          "inherit" all of those resources as their own.  These
+          constraint resources are set and read just the same as any
+          other resources defined for the child.  This resource
+          "inheritance" extends exactly one generation down, or in
+          other words only the first generation children of a
+          constrained composite widget inherit that (the constrained
+          composite) widget's constraint resources.
+
+          For example, Panel has three children, a child of class
+          XwstatictextWidgetClass, a child of class
+          XwrowColWidgetClass, and a child of class XwFormWidgetClass.
+          All of these children inherit all of the constraint
+          resources defined by XwpanelWidgetClass.  None of the
+          children of the rowCol child inherit any of the Panel
+          constraint resources.  None of the children of the Form
+          inherit any of the Panel constraint resources, but all of
+          the children of the Form do inherit all of the constraint
+          resources defined by the XwformWidgetClass.
+
+          Because constraint resources are defined by the "parent"
+          widgets and not the children, the child widgets never
+          directly use the constraint resource data.  Constraint
+          resource data is instead used by the parents to attach child
+          specific data to children.
+
+     SEE ALSO
+          CORE(3X), XWPANEL(3X)
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+

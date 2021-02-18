@@ -1,0 +1,15 @@
+xrn.editorCommand:	gemacs %s
+xrn.includeHeader:	off
+xrn.leaveHeaders:	from,subject,organization,keywords,date,reply-to
+xrn.geometry:		680x760
+xrn*Font:	 -adobe-courier-bold-r-normal--12-120-75-75-m-70-iso8859-1
+xrn*background:		LightSteelBlue
+xrn*Text*background:	White
+xrn*Text*foreground:	Black
+xrn*Label.background:	Cyan
+xrn*Command.background:	LightYellow
+xrn*artButtonList:	artQuit,artNextUnread,artNext,artPrev,artLast, \
+artGotoArticle,artCatchUp,artUnsub,artMarkRead,artMarkUnread, \
+artSubNext,artSubPrev,artSubSearch,artContinue,artPost, \
+artKillSession,artKillLocal,artKillGlobal,artKillAuthor, \
+artNextGroup,artExit,artGripe

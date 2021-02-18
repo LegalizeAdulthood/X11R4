@@ -1,0 +1,67 @@
+.TH RCMD X
+.SH NAME
+rcmd - run a remote command in the background, without stdout and stderr.
+.SH SYNOPSIS
+.B rcmd
+remotehost [ -l user ] command
+.SH DESCRIPTION
+.I Rcmd
+runs the given 
+.I command 
+on the specified
+.I remotehost
+via 
+.I rsh
+but by redirecting stdout and stderr to /dev/null, and running command
+in the background, it results in the rsh exiting and closing the
+connection, leaving the command as a daemon on the remote machine.
+This is useful only for commands that have no use for stdout and
+stderr like most X Windows applications.
+.PP
+It passes the TERM environment variable to the remote shell. It also
+passes the DISPLAY environment variable, unless DISPLAY is not defined
+or is unix:N, in which case it passes `hostname`:N.
+.PP
+If
+.I rcmd
+is run from the same machine as the one on which the X server is
+running, then it will run an
+.I xhost
+to add the remotehost to the access list.
+.RI ( xhost
+may not be run from remotehosts, so you'll have to do it yourself if
+you run 
+.I rcmd 
+on a remotehost, for another remotehost)
+.SH OPTIONS
+.TP
+.BR \-l " user"
+Runs the remote shell as 
+.I user
+on the remote host rather than as yourself.
+.SH EXAMPLE
+.nf
+rcmd godzilla.eecg /local/bin/X11/xterm -geometry 80x50+3-3 -ls
+rcmd church.csri -l xwindows /local/bin/X11/xpic
+.fi
+.sp
+will run xterm on the remote machine 
+.I godzilla
+with the display on the current HOST (assuming the environment variable 
+HOST is set to `hostname`).
+.SH BUGS
+The remote command has no way of notifying the user about error
+conditions, except through logs. A particularly annoying problem is if
+the user has the DISPLAY wrong, or the host is not in the server's
+access list, (via 
+.IR xhost )
+nothing will happen. If the
+.I .rhosts
+or
+.I hosts.equiv
+files aren't set up to allow you permission for
+.I rsh 
+on the remote host, you'll get a "Permission denied" error.
+.PP
+All bugs associated with
+.I rsh

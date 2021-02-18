@@ -1,0 +1,96 @@
+################################################################################
+#
+# File:         Imakefile
+# RCS:          $Header: Imakefile,v 1.1 89/11/25 04:04:13 mayer Exp $
+# Description:  IMAKEFILE FOR WINTERP-SERVER DIRECTORY
+# Author:       Niels Mayer, HPLabs
+# Created:      Fri Nov 24 19:47:38 1989
+# Modified:     Fri Nov 24 23:48:27 1989 (Niels Mayer) mayer@hplnpm
+# Language:     N/A
+# Package:      N/A
+# Status:       X11r4 contrib tape release
+#
+# (c) Copyright 1989, Hewlett-Packard Company.
+#
+################################################################################
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+ SUBDIRS = xlisp
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+MakeLintLibSubdirs($(SUBDIRS))
+
+#
+# Note on INCLUDES: WINTERP uses the Motif toolkit, which is not included with
+#		X11r4. Standard locations for Motif includes are 
+#		/usr/include/X11 and /usr/include/Xm. Note that Motif uses
+#		a variant of the X11r3 toolkit intinsics headers which
+#		are installed in /usr/include/X11. Don't confuse  these
+#		with the (probably) incompatible Xtoolkit intrinsics from
+#		X11r4.
+#			
+ INCLUDES = -I/usr/include -I.
+
+ SRCS =	w_XmString.c     w_timeouts.c     wc_Form.c        wc_Scale.c \
+	w_callbacks.c    w_txlations.c    wc_Frame.c       wc_ScrollBar.c \
+	w_classes.c      w_utils.c        wc_Label.c       wc_ScrolledW.c \
+	w_evnthndlr.c    wc_ArrowB.c      wc_List.c        wc_SelectioB.c \
+	w_funtab.c       wc_BulletinB.c   wc_MainW.c       wc_Separator.c \
+	w_libXm.c        wc_CascadeB.c    wc_MessageB.c    wc_Text.c \
+	w_libXt.c        wc_Command.c     wc_PanedW.c      wc_ToggleB.c \
+	w_pixmap.c       wc_DrawingA.c    wc_PushB.c       wc_WIDGET.c \
+	w_resources.c    wc_DrawnB.c      wc_RowColumn.c   winterp.c \
+	w_savedobjs.c    wc_FileSB.c      wc_SHELL.c
+
+ OBJS =	w_XmString.o     w_timeouts.o     wc_Form.o        wc_Scale.o \
+	w_callbacks.o    w_txlations.o    wc_Frame.o       wc_ScrollBar.o \
+	w_classes.o      w_utils.o        wc_Label.o       wc_ScrolledW.o \
+	w_evnthndlr.o    wc_ArrowB.o      wc_List.o        wc_SelectioB.o \
+	w_funtab.o       wc_BulletinB.o   wc_MainW.o       wc_Separator.o \
+	w_libXm.o        wc_CascadeB.o    wc_MessageB.o    wc_Text.o \
+	w_libXt.o        wc_Command.o     wc_PanedW.o      wc_ToggleB.o \
+	w_pixmap.o       wc_DrawingA.o    wc_PushB.o       wc_WIDGET.o \
+	w_resources.o    wc_DrawnB.o      wc_RowColumn.o   winterp.o \
+	w_savedobjs.o    wc_FileSB.o      wc_SHELL.o
+
+#
+# Note that xlisp/xlisp.h and xlisp/xldmem.h (which are included by all
+# WINTERP files) have #ifdefs for changes made to XLISP so that it can
+# be used by WINTERP...
+#
+ DEFINES = -DWINTERP
+
+#
+# Note on SYS_LIBRARIES:
+#        libm.a -- this is required by XLISP since it includes math routines
+#
+#	 libXm.a, libXt.a, libX11.a -- These libraries are part of the Motif
+#		toolkit, which is not included with X11r4. By the time you
+#		receive this tape various unix vendors should have Motif
+#		available on your architecture. For example,
+#		Hewlett-Packard's HPUX 7.0, which was released
+#		11/89, includes libXm.a, libXt.a, and libX11.a.
+#
+#	 libPW.a -- required by Motif's file-selection-box widget on HPUX;
+#		I'm assuming this doesn't exist on other OS's. See Motif
+#		documentation for your particular installation of Motif.
+#
+#        libmalloc.a -- I've been using this fast malloc library on HPUX;
+#		don't know whether something equivalent exists on other OS's.
+#		Leaving it out should just cause the standard malloc to be used.
+#
+#ifdef HPArchitecture
+ SYS_LIBRARIES = -lXm -lXt -lX11 -lPW -lm -lmalloc
+#else
+ SYS_LIBRARIES = -lXm -lXt -lX11 -lm
+#endif
+
+#
+# xlisp/libXlisp.a is a library of routines from XLISP used by WINTERP
+#
+ LOCAL_LIBRARIES = xlisp/libXlisp.a
+
+ComplexProgramTarget(winterp)

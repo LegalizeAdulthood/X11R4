@@ -1,0 +1,18 @@
+Pretty much a complete rewrite of xplaces to make it ICCCM conformant (more
+or less) and give it more smarts about icons, icongeometry, and geometry. It
+also prints a DISPLAY= at the start -- Bourne shell syntax.
+
+It gets the WM_COMMAND property and reconstructs the command line with the
+window's present geometry (rather than the geometry it started with),
+icongeometry and iconic state if any. It also uses the WM_CLIENT_MACHINE
+property to determine whether the application is running remotely or not, if
+the latter, it generates a line of the form 'rcmd remotehost command
+arguments...'. Th ercmd script in this directory works for machines with BSD
+style remote shell (rsh) It should work with reparenting window managers as
+well - tested with twm (an alpha version that is sort of ICCCM conformant as
+well as the old version).
+
+It's flexible enough that it should be adaptable to other toolkits with just
+a change of Option descriptions. See the comment before the Option typedef.
+
+	Mark Moraes <moraes@csri.toronto.edu>

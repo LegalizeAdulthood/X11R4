@@ -1,0 +1,14 @@
+\begindata{text,269023632}
+\textdsversion{12}
+\template{default}
+\chapter{Working with Text in ATK}
+
+
+This document is intended to contain information on working with text objects 
+and editors in ATK.  There are no short-term plans for completing this 
+document.  Information on creating text objects may be found in the discussion 
+of examples 14 and 15 in the tutorial modules.
+
+
+
+\enddata{text,269023632}

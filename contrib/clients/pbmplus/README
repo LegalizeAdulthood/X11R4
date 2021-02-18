@@ -1,0 +1,223 @@
+                  Extended Portable Bitmap Toolkit
+                      Distribution of 22nov89
+                   Previous distribution 13sep89
+
+
+Included are a number of programs for converting various image formats
+to and from portable formats; plus some tools for manipulating the
+portable formats.  The package is broken up into four parts (five parts
+if you count this one, the zeroth part).  First is PBM, for bitmaps (1
+bit per pixel).  Then there is PGM, for grayscale images.  Next is PPM,
+for full-color images.  Last, there is PNM, which does content-independent
+manipulations on any of the three formats.
+
+These parts are semi-independent; if you're only going to deal with
+bitmaps, you don't have to install PGM and PPM, and this makes PNM run
+faster; if you want PGM, you must install PBM but can leave PPM out;
+but if you want PPM, you must install both PGM and PBM.  PNM is
+optional but recommended.
+
+
+To install:
+
+    Unpack the files.
+    Decide whether you want to use Imakefiles or Makefiles.  If you want
+      to use Makefiles:
+
+	Edit the top-level Makefile, find each line with the string
+	  "CONFIGURE", and follow the directions for setting configuration
+	  options.
+	Likewise edit pbmplus.h.
+	Likewise edit pnm/Makefile.
+	Make.
+	When you're happy that things work ok, make install.
+    
+    If you want to use Imakefiles instead:
+
+	Edit the top-level Imakefile, find each line with the string
+	  "CONFIGURE", and follow the directions for setting configuration
+	  options.
+	Likewise edit pbmplus.h.
+	Likewise edit pnm/Imakefile.
+	Edit Makefile and */Makefile, look towards the end for the
+	  definition of TOP, and change it to point to your X11 tree.
+	Save the original Makefiles, in case you later want to switch back
+	  to using them.
+	Touch Imakefile, since you just editted Makefile.
+	Make Makefile, make Makefiles, make depend, then make.
+	When you're happy that things work ok, make install.
+
+
+I've tested this stuff under 4.2 BSD, 4.3 BSD, on Sun 3's 4's and 386's
+and Sequents and Vaxen, with cc and gcc.  Nevertheless, I'm sure bugs
+remain.  Feedback is welcome; send bug reports, enhancements, checks,
+money orders, etc. to the addresses below.  Be sure to mention what
+version you have when sending bug reports!
+
+    Jef Poskanzer
+    jef@well.sf.ca.us
+    {ucbvax, lll-crg, sun!pacbell, apple, hplabs}!well!jef
+
+
+Files in pbmplus.shar:
+
+    README		this
+    CHANGES		list of changes between the various versions of PBM
+    FORMATS		list of the formats supported
+    OTHER.SYSTEMS	list of other free image-processing software
+    TIPS		useful techniques and rules of thumb for PBM
+    Makefile		guess
+    Imakefile		for X11-type installations
+    pbmplus.h		header file for PBM, PGM, PPM, and PNM
+
+    compataliases	csh script for compatibility with old versions
+
+
+Files in pbm.shar?:
+
+    Makefile		guess
+    Imakefile		for X11-type installations
+
+    brushtopbm.c	convert Xerox doodle brushes to portable bitmap
+    cmuwmtopbm.c	convert CMU window manager format to portable bitmap
+    g3topbm.c		convert Group 3 FAX to portable bitmap
+    icontopbm.c		convert Sun icon to portable bitmap
+    gemtopbm.c		convert GEM .img format to portable bitmap
+    macptopbm.c		convert MacPaint to portable bitmap
+    mgrtopbm.c		convert MGR format to portable bitmap
+    pcxtopbm.c		convert PC paintbrush format to portable bitmap
+    picttopbm.c		convert PICT to portable bitmap
+    rasttopbm.c		convert Sun raster to portable bitmap
+    xbmtopbm.c		convert X10 or X11 bitmap to portable bitmap
+    xwdtopbm.c		convert X10 or X11 window dump to portable bitmap
+
+    pbmtoascii.c	convert portable bitmap to ASCII graphic form
+    pbmtobbnbg.c	convert portable bitmap to BBN BitGraph graphics
+    pbmtocmuwm.c	convert portable bitmap to CMU window manager format
+    pbmtog3.c		convert portable bitmap to Group 3 FAX
+    pbmtogo.c		convert portable bitmap to GraphOn graphics
+    pbmtoicon.c		convert portable bitmap to Sun icon
+    pbmtolj.c		convert portable bitmap to HP LaserJet
+    pbmtomacp.c		convert portable bitmap to MacPaint
+    pbmtomgr.c		convert portable bitmap to MGR format
+    pbmtoptx.c		convert portable bitmap to Printronix
+    pbmtorast.c		convert portable bitmap to Sun raster
+    pbmtoxbm.c		convert portable bitmap to X11 bitmap
+    pbmtox10bm.c	convert portable bitmap to X10 bitmap
+    pbmtoxwd.c		convert portable bitmap to X11 window dump
+
+    pbmlife.c		apply Conway's rules of Life to a portable bitmap
+    pbmmake.c		create a blank bitmap of a specified size
+    pbmmask.c		create a mask bitmap from a regular bitmap
+    pbmpaste.c		paste a rectangle into a portable bitmap
+    pbmreduce.c		reduce a portable bitmap N times, using Floyd-Steinberg
+    pbmupc.c		create a Universal Product Code bitmap
+
+    libpbm[1-5].c	a few utility routines
+    pbm.h		header file for libpbm
+    libpbm.h		internal header file for libpbm
+    g3.h		definitions for Group 3 FAX
+    macp.h		definitions for MacPaint files
+    pict.h		definitions for PICT files
+    rast.h		definitions for Sun raster files
+    x10wd.h		definitions for X10 window dumps
+    x11wd.h		definitions for X11 window dumps
+    bitreverse.h	useful include file
+    *.1			manual entries for all of the tools
+    pbm.5		manual entry for the pbm format
+    libpbm.3		manual entry for the pbm library
+
+
+Files in pgm.shar?:
+
+    Makefile		guess
+    Imakefile		for X11-type installations
+
+    fitstopgm.c		convert FITS format to portable graymap
+    fstopgm.c		convert Usenix FaceSaver file to portable graymap
+    hipstopgm.c		convert HIPS format to portable graymap
+    psidtopgm.c		convert PostScript "image" data to portable graymap
+    rawtopgm.c		convert raw grayscale bytes to portable graymap
+    tifftopgm.c		convert TIFF format to portable graymap
+
+    pgmtofits.c		convert portable graymap to FITS format
+    pgmtopbm.c		convert portable graymap to portable bitmap
+    pgmtops.c		convert portable graymap to Encapsulated PostScript
+
+    pgmenhance.c	edge-enhance a portable graymap
+    pgmhist.c		print a histogram of the values in a portable graymap
+    pgmnorm.c		normalize contrast in a portable graymap
+
+    libpgm[1-3].c	a few utility routines
+    pgm.h		header file for libpgm
+    libpgm.h		internal header file for libpgm
+    dithers.h		useful include file
+    tiff.h		definitions for TIFF files
+    *.1			manual entries for all of the tools
+    pgm.5		manual entry for the pgm format
+    libpgm.3		manual entry for the pgm library
+
+
+Files in ppm.shar?:
+
+    Makefile		guess
+    Imakefile		for X11-type installations
+
+    giftoppm.c		convert GIF to portable pixmap
+    ilbmtoppm.c		convert Amiga IFF ILBM to portable pixmap
+    imgtoppm.c		convert Img-whatnot to portable pixmap
+    mtvtoppm.c		convert MTV ray-tracer output to portable pixmap
+    qrttoppm.c		convert QRT ray-tracer output to portable pixmap
+    rasttoppm.c		convert Sun raster file to portable pixmap
+    tgatoppm.c		convert TrueVision Targa file to portable pixmap
+    xwdtoppm.c		convert color X10 or X11 window dump to portable pixmap
+
+    ppmtogif.c		convert portable pixmap to GIF
+    ppmtoilbm.c		convert portable pixmap to Amiga IFF ILBM
+    ppmtopgm.c		convert portable pixmap to portable graymap
+    ppmtops.c		convert portable pixmap to color Encapsulated PostScript
+    ppmtorast.c		convert portable pixmap to Sun raster file
+    ppmtoxwd.c		convert portable pixmap to color X11 window dump
+
+    ppmarith.c		perform arithmetic on two portable pixmaps
+    ppmconvol.c		general MxN convolution on a portable pixmap
+    ppmcscale.c		scale the colors in a portable pixmap
+    ppmpat.c		create a pretty pixmap
+    ppmquant.c		quantize colors down to a specified number
+    ppmrotate.c		rotate a portable pixmap
+    ppmscale.c		scale a portable pixmap
+    ppmshear.c		shear a portable pixmap
+    ppmhist.c		print a histogram of a portable pixmap
+
+    convolscripts/*	ppmconvol scripts
+
+    libppm[1-5].c	a few utility routines
+    ppm.h		header file for libppm
+    ppmcmap.h		header file for colormap routines in libppm
+    ppmdraw.h		header file for simple drawing routines in libppm
+    libppm.h		internal header file for libppm
+    tga.h		definitions for TrueVision Targa files
+    *.1			manual entries for all of the tools
+    ppm.5		manual entry for the ppm format
+    libppm.3		manual entry for the ppm library
+
+
+Files in pnm.shar?:
+
+    Makefile		guess
+    Imakefile		for X11-type installations
+
+    pnmcat.c		concatenate portable anymaps
+    pnmcrop.c		crop all like-colored borders off a portable anymap
+    pnmcut.c		select a rectangular region from a portable anymap
+    pnmenlarge.c	enlarge a portable anymap N times
+    pnmflip.c		perform one or more flip operations on a portable anymap
+    pnminvert.c		invert a portable anymap
+    pnmpaste.c		paste a rectangle into a portable anymap
+    pnmtile.c		replicate a portable anymap into a specified size
+
+    libpnm[1-4].c	a few utility routines
+    pnm.h		header file for libpnm
+    *.1			manual entries for all of the tools
+    pnm.5		manual entry for the pnm format
+    libpnm.3		manual entry for the pnm library

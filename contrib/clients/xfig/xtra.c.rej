@@ -1,0 +1,18 @@
+***************
+*** 128,134
+  
+  	if( confirm == NULL )
+  	{
+! 		Position	rootx, rooty;
+  		Window		win;
+  		Arg		confirm_args[5];
+  		
+
+--- 128,134 -----
+  
+  	if( confirm == NULL )
+  	{
+! 		int		rootx, rooty;
+  		Window		win;
+  		Arg		confirm_args[5];
+  		

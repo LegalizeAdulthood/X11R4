@@ -1,0 +1,9 @@
+   INSTALLFLAGS =  $(INSTKMEMFLAGS)
+LOCAL_LIBRARIES = $(XAWLIB) $(XTOOLLIB) $(XLIB)
+       INCLUDES = -I. -I$(TOOLKITSRC) -I$(TOP) -I$(TOP)/X11
+#       INCLUDES = -I. -I$(TOOLKITSRC) -I$(TOP) -I$(TOP)/X11 -I/usr/include/bsd
+           SRCS = Perfmon.c system.c xperfmon.c
+           OBJS = Perfmon.o system.o xperfmon.o
+
+ComplexProgramTarget(xperfmon)
+

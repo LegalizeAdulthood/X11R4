@@ -1,0 +1,350 @@
+
+
+       6  Keyboard Interface
+
+
+       The X Widgets keyboard interface mechanism provides a method
+       of keyboard input and interaction to augment the mouse.
+       This capability is necessary for a variety of application
+       classes, including mouseless systems and systems which
+       include a mouse but have a number of text edit or page edit
+       input components.
+
+       The keyboard interface involves two distinct processing
+       areas:
+
+          o Keyboard input processing to an individual widget.
+
+          o Keyboard traversal between widgets.
+
+
+       6.1  Keyboard Input Processing
+
+
+       The keyboard input processing is handled through proper
+       definitions of the widget's default translations that handle
+       keyboard input.  created.  For example, the normal
+       processing of the push button is defined by the following
+       translations:
+
+          o When mouse button 1 is pressed, a select procedure is
+            invoked.
+
+          o When mouse button 1 is released, a release procedure is
+            invoked.
+
+       These translations define the processing functions contained
+       within the widget to be called when the particular events
+       occur.  By setting these translations to understand keyboard
+       input as well as the mouse button input, the keyboard input
+       problem is solved.  For the push button widget, this can be
+       defined as follows (on HP keyboards):
+
+          o When button 1 or the key is pressed, a select procedure
+            is invoked.
+
+          o When button 1 or the key is released, a release
+            procedure is invoked.
+
+       The translation manager and a proper set of translations can
+       handle the keyboard input processing needed for a keyboard
+       interface.
+
+
+       6.2  Keyboard Traversal
+
+
+       Keyboard traversal is a more difficult problem to solve
+       since it requires interaction between widgets, not just
+       interaction within a single widget.  The traversal mechanism
+       provided solves the majority of the traversal problems
+       encountered by applications.  The following list is the set
+       of general capabilities of the traversal handling mechanism.
+
+          o Intra-widget hierarchy and inter-widget hierarchy
+            traversal.
+
+          o Traversal routing within complex widget hierarchies.
+
+          o Continuation of traversal when interrupted by mouse
+            selection.
+
+          o Active and inactive widgets within a traversal set.
+
+
+                 -----------------------------------------
+                                   NOTE
+
+                 Keyboard traversal is not implemented
+                 for pulldown menus.
+                 -----------------------------------------
+
+
+       6.2.1  Visual Attributes
+
+       When keyboard traversal is on, the widget that is activated
+       displays its border according to its highlight style and
+       highlight thickness.  As the keyboard traversal keys are
+       pressed, the highlight moves from widget to widget.  If the
+       pointer is moved out of the top level widget of the active
+       widget hierarchy, the border highlight on the active widget
+       is removed.  When the pointer moves back into the top level
+       widget, the highlight is restored back to the same widget.
+
+
+       6.2.2  Application Control
+
+       There is a set of simple control mechanisms that allow an
+       application to control and modify how traversal works.
+       These mechanisms fall into three main areas.
+
+          o Keyboard traversal activation and deactivation.
+
+          o Keyboard traversal key definitions through translation
+            definition.
+
+          o Keyboard traversal handling between multiple root
+            window-based widget hierarchies.  This is accomplished
+            through an application-supplied callback used in
+            conjunction with a keyboard traversal invocation
+            function supplied by X Widgets.  Refer to the
+
+
+            XwMoveFocus man page for more information.
+
+       Traversal Activation
+       Widgets indicate the desire for keyboard traversal through
+       an argument type.  There is an argument type for subclasses
+       of primitive widgets (such as pushbutton) and subclasses of
+       manager widgets (such as row column manager).
+
+       To activate keyboard traversal for an entire widget
+       hierarchy, the application can set the manager traversal on
+       class resource name XtCTraversalOn to true and the primitive
+       class traversal type class resource name XtCTraversalType to
+       highlight traversal.
+
+       If the application creates a manager widget with its
+       traversal on value set to false, the immediate child widgets
+       of the manager widget will not perform traversal.  However,
+       if one of these children is also a manager widget and its
+       traversal on value is true, its children will have traversal
+       active.
+
+       When the keyboard traversal mechanism makes a widget active,
+       the widget is given the keyboard focus.  When this occurs,
+       all keyboard input directed at the application will go to
+       the active widget regardless of the location of the pointer.
+       The exception to this processing state is if the pointer is
+       moved out of the top level widget in the hierarchy.  When
+       this occurs, the focus is taken from the active widget.
+
+       The keyboard traversal mechanism is implemented to keep the
+       active field visible whenever possible.  This places an
+       additional constraint on composite widgets (such as the row
+       column manager) to calculate their children's visibility
+       when keyboard traversal is to occur.  The manager widgets
+       support two ways to handle keyboard traversal visibility.
+
+          o Traverse only to currently visible children.
+
+          o If a child becomes invisible, move the traversal focus
+            to a visible widget.
+
+
+       Traversal Key Definitions
+       The keyboard input that drives the traversal between widgets
+       is defined through the translation manager.  Each widget
+       supports eight directions, up, down, left, right, next,
+       previous, next top, and home.
+
+       The translations necessary to support keyboard traversal are
+       defined in the primitive and manager meta classes.  These
+       definitions augment the translation table for a widget if it
+       has specified that it wants keyboard traversal.
+
+       On HP keyboards, the following keys generally control the
+       directions indicated (refer to the primitive and manager
+       widget man pages for detailed information):
+
+
+       
+
+        Direction     Key                       Meaning
+       
+
+           Up          []      Traverse to the widget most nearly above
+                               this widget.  If no widget is above it,
+                               find the widget that is below this widget
+                               and closest to the bottom of the widget
+                               hierarchy.  In other words, wrap the
+                               search to the bottom of the window and
+                               search up from there.
+
+          Down         []      Traverse to the widget that is most nearly
+                               below the widget. If no widget is below
+                               it, find the widget that is above this
+                               widget and closest to the top of the
+                               widget hierarchy.  In other words, wrap
+                               the search to the top of the window and
+                               search down from there.
+
+          Left         []      Traverse to the widget that is most nearly
+                               to the left of this widget.  If no widget
+                               is to the left of this widget, find the
+                               widget that is to the right of this widget
+                               and closest to the right edge of the
+                               window.  In other words, wrap the search
+                               to the right and search to the left from
+                               there.
+
+          Right        []      Traverse to the widget that is most nearly
+                               to the right of this widget.  If no widget
+                               is to the right of this widget, find the
+                               widget that is to the left of this widget
+                               and closest to the left edge of the
+                               window.  In other words, wrap the search
+                               to the left and search to the right from
+                               there.
+
+
+       |  Next    |  [Next]  | Traverse to the widget that appears next   |
+       |          |          | (regardless of the physical position) in   |
+       |          |          | the list of children maintained by the     |
+       |          |          | parent of the widget that has the focus.   |
+       |          |          | If there are no more children in the       |
+       |          |          | parent's list, traverse to the next child  |
+       |          |          | in the grandparent's list of children.     |
+       |          |          | When the end of the children is reached,   |
+       |          |          | wrap to the beginning of the list of       |
+       |          |          | children.                                  |
+       |          |          |                                            |
+
+       |  Prev    |  [Prev]  | Traverse to the widget that appears prior  |
+       |          |          | to the widget that has the focus           |
+       |          |          | (regardless of the physical position) in   |
+       |          |          | the list of children maintained by the     |
+       |          |          | parent of the widget that has the focus.   |
+       |          |          | If there are no previous children in the   |
+       |          |          | parent's list, traverse to the previous    |
+       |          |          | child in the grandparent's list of         |
+       |          |          | children.  When the beginning of the       |
+       |          |          | widget hierarchy is reached, wrap to the   |
+       |          |          | end of the list of children.               |
+       |          |          |                                            |
+
+       |  Home    |  [Home]  | Traverse to the widget that is closest to  |
+       |          |          | the parent's origin (0,0) point.  If this  |
+       |          |          | widget already has the focus, move to the  |
+       |          |          | widget that is closest to the              |
+       |          |          | grandparent's origin (0,0) point.          |
+       |          |          |                                            |
+
+       |Next Top  | [Return] | Find the topmost widget in this hierarchy  |
+       |          |          | that is a subclass of manager, and have it |
+       |          |          | issue any XtNnextTopCallbacks that have    |
+       |          |          | been registered.                           |
+       |          |          |                                            |
+
+
+       When a keyboard traversal key is pressed, it is translated
+       by the translation manager, which then calls one of the
+       widget's traversal routines.  The widget then makes a
+       request to its parent widget to perform the traversal.  The
+       parent does this by calculating the next widget to be
+       traversed to and then issuing a focus activation call to the
+       widget to get it activated.
+
+
+       The order of traversal between widgets is controlled by the
+       parent (manager) of the widgets.  The specific widget
+       managers perform the location calculations based on their
+       widget ordering algorithms and the direction of traversal
+       supplied by the child widget.  The managers also ensure the
+       visibility of the widget to be traversed.
+
+
+       Traversal Search
+       Keyboard traversal uses a search path based on the height
+       and width of the active widget (including the border
+       highlight).  Figure 6-1 shows how this works.
+
+
+                       PIC Illustration goes here.
+
+
+                     Figure 6-1.  Widget Search Path
+
+       The search path for Widget A is shown by the horizontal and
+       vertical dashed lines.  If an up or down direction is
+       specified, no traversal will occur since there is no widget
+       within the search path in either direction.  Traversal to
+       the right or left will ultimately find Widget B, since it
+       lies within the search path.  Traversal from Widget A to
+       Widget C (or the reverse) is not possible since neither
+       widget lies within the other's search path.  Traversal from
+       Widget B to Widget C (or the reverse) is possible.  Note
+       that only a portion of a widget needs to be in the search
+       path for traversal to occur.
+
+
+       Traversal Between Root Level Widget Sets
+       Traversal between distinct widget hierarchies cannot be
+       handled automatically by the traversal mechanism because it
+       relies on the ability to ascend and descend the widget
+       hierarchies.  A mechanism is provided to traverse between
+       widget hierarchies with minimal application intervention.
+       All subclasses of manager widgets implement a callback and
+       all subclasses of primitive widgets define an input
+       translation to drive the callback for a NextTop traversal
+       key.
+
+
+       To use this capability, the application defines a callback
+       function and adds it to the top level widget of each widget
+       hierarchy in the traversal set.  When the key for nextTop is
+       pressed, an internal function is invoked that ascends the
+       widget hierarchy until the top level widget is found.  It
+       then invokes any application- supplied callback functions
+       that are attached to that widget.
+
+       At this point the application's callback function needs to
+       determine which widget hierarchy to activate.  When it has
+       done this, the hierarchy can be activated by calling the
+       following function.
+       XwMoveFocus (w)
+       Widget w;
+
+       The widget specified as a parameter should be the top level
+       widget of the widget hierarchy to be activated.
+
+
+       6.3  Internal Implementation Requirements for Traversal
+
+       There are several requirements placed on both primitive and
+       composite widgets that are necessary to implement keyboard
+       traversal properly.  New widgets will need to meet these
+       requirements in order to correctly implement keyboard
+       traversal for these widgets.
+
+       6.3.1  Primitive Widget Requirements
+
+       The requirements placed on primitive widgets are to
+       incorporate the primitive class and instance structure into
+       their class hierarchy definition.  The initialize and set
+       values procedures provided by the primitive class will
+       augment the widget's translation table to support keyboard
+       traversal.
+
+       6.3.2  Manager Widget Requirements
+
+       The requirements placed on composite widgets are:
+          o Incorporate the manager class and instance structures
+            into the class hierarchy definition.
+          o Inherit the generalized keyboard traversal handling
+            procedure from the manager class record.
+       The next chapter deals with a more advanced topic, writing
+       new widgets.  If you do not plan to write your own widgets,
+       you need not read this chapter.
+
+

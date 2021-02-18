@@ -1,0 +1,7 @@
+xpixmap.c  This was an abortive attempt at hardcoding a pixmap
+	   by invoking a converter from the application.  However,
+	   this particular converter requires an XtConvertArgsRec 
+	   argument list, and I could not find a way to specify the
+	   arguments properly.
+
+(If you make it work, drop me a line at uunet!ora!adrian or adrian@ora.uu.net.)

@@ -1,0 +1,72 @@
+.TH F2PS 1 "29 March 1988"
+.SH NAME
+f2ps \- Fig to Postscript translator
+.SH SYNOPSIS
+.B f2ps
+[
+.B -f
+font ] [
+.B -s
+size ] [
+.B -e
+scale ] [
+.B -N
+][
+.B -c
+] [ input_file [ output_file ] ]
+.SH DESCRIPTION
+.I F2ps
+translates fig output format (in 
+.I input_file
+into the postscript language (in
+.I output_file
+).
+The default
+.I input_file
+and
+.I output_file
+are standard input and standard output.
+.PP
+The
+.I font
+should be font that your printer knows about.
+The unit of
+.I size
+(font size) is point.  There are 72 points in an inch.
+The upper limit for
+.I size
+is 300 points (about 4 inches).
+.I Scale
+will also be applied to
+.I size.
+The default value of
+.I font,
+.I size
+and
+.I scale
+are Times-Roman, 11 points and 1 respectively.
+The
+.B -c
+option tells f2ps to center the figure on the page.
+The centering may not be accurate if there are texts in the
+.I input_file
+that extends too far to the right of other objects.
+The option
+.B -N
+indicates that no page printing command (showpage)
+is to be appended after the figure. 
+This ensures that when the output is used as an included illustration,
+it won't untimely skip the rest of the page.
+However you can not print it by itself on the printer.
+.PP
+Objects (except text) which are created in \fIfig\fP while the
+dash-line mode was on will be produced with dashed line even
+though they may be drawn with solid line in \fIfig\fP.
+.SH "SEE ALSO"
+fig(1).
+.SH AUTHOR
+Supoj Sutanthavibul (supoj@sally.UTEXAS.EDU),
+.br
+University of Texas at Austin, 
+.br
+November 13, 1986.

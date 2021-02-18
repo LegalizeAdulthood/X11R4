@@ -1,0 +1,103 @@
+
+                          SERPENT ALPHA RELEASE 0.7
+
+                              FUNCTIONAL CHANGES
+
+                               SERPENT COMMAND
+
+There are some new options to the Serpent command.
+
+   - The playback option is invoked as follows:
+               % serpent -p arg1 arg2 <dialogue-name>
+
+        * where  arg1 is the name of the component to be simulated by the
+          playback; the component can be the dialogue manager (arg1 =  dm
+          or  <dialogue-name>),  a technology (arg1 = <technology-name>),
+          or an application (arg1 = <application-name>);
+
+        * arg2 is the name of the journaling file; this file must include
+          all  of  the  transactions  in  the  session  in  which  it was
+          generated and not have begun in the middle of a session; and
+
+        * <dialogue-name> is the name of the dialogue.
+
+   - In keeping with the notion of allowing  users  to  declare  external
+     functions  within  a  Slang  program,  you  can  now  write your own
+     functions and place them in your own library.  User libraries can be
+     invoked via:
+               % serpent -L <library> <dialogue-name>
+
+                                EXIT FUNCTION
+
+There is now an exit function in Slang, which, when invoked, sends a SIGINT to
+all applications/technologies in a particular serpent execution.  This can  be
+invoked  for  example  by clicking on a "Quit" button, whose method is defined
+as:
+        notify:
+                {
+                exit ();
+                }
+
+See the Slang Reference Manual for further information.
+
+                                   BUFFERS
+
+Serpent supports  a  buffer  type  in  both  the  application  and  technology
+interfaces.    Buffers were originally conceived to allow the communication of
+an arbitrary number of  bytes  of  untyped  data  between  an  application  or
+technology  and the dialogue.  In the .7 release buffers have been extended to
+also support the  communication  of  variant  information.    The  application
+programmer, for example, may need to share information with the dialogue where
+one component of the shared data element may be a  string,  integer  or  real.
+This can now be accomplished with buffers.
+
+To implement this, buffers have been modified to contain three fields: length,
+type, and body.  The following is the new buffer structure:
+        typedef struct {
+          int     length;
+          caddr_t body;
+          idd_data_types type;
+        } idd_buffer_type;
+
+The length defines the number of bytes of data pointed to by the  body  field.
+The type field is new, and defines the type of information pointed to by body.
+This allows the dialogue manager to determine the actual type of the data  and
+process it correctly.  Existing applications which use buffers will need to be
+modified since the type information is now essential in  determining  how  the
+information is processed.
+
+The  type  field  of  the  buffer structure can be set to any of the following
+values:
+        serpent_boolean
+        serpent_integer
+        serpent_real
+        serpent_string
+        serpent_record
+        serpent_id
+        serpent_buffer
+
+Buffers which contain  untyped  data  should  be  defined  as  being  of  type
+serpent_buffer.
+
+Within  the  dialogue,  typed  buffer  information is treated just like normal
+typed information, i.e., it can be compared, added and otherwise operated  on.
+Buffers of type serpent_buffer may only be assigned or compared for equality.
+
+                              EXTERNAL FUNCTIONS
+
+There  are  several  new  built-in  functions for string manipulation and more
+extensive arithmetic.  These reside  in  the  directory  $SERPENT/externs/src;
+Slang-invocable   header  files  are  in  $SERPENT/externs/include,  with  the
+extension .ext.  Details can be found in the Slang Reference Manual.
+
+                                ADA INTERFACE
+
+Serpent is supplied with an Ada interface, which runs on a DEC MicroVAX II  or
+III  under Verdix Ada, Version 5.5.  This interface has undergone some changes
+since Alpha Release 0.6.  However, Steve Edwards of the Institue  for  Defense
+Analyses  has  made further changes to it.  We have not had time to assess the
+impact of these changes; when we have tested it, the  new  interface  will  be
+sent out as an update tar file.
+
+The  current  Ada  interface  can  be  found  in  $SERPENT/int/ada  and is not
+significantly different from the Ada interface released in Alpha Release 0.6.

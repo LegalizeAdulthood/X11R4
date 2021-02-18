@@ -1,0 +1,21 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989		        *
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+
+/* ============================================================ */
+LOCALINCLUDES	=	-I../../src
+
+OBJS = local.o vlocal.o
+
+HFILES = lcsite.h local.h vlocal.h
+
+NormalObjectRule()
+
+LibraryTarget(liblocal.a, $(OBJS) )
+
+InstallLibrary(liblocal.a, $(DESTDIR)/lib/oda)
+
+InstallMultiple( $(HFILES), $(INSTINCFLAGS), $(DESTDIR)/include/oda)
+
+DependTarget()

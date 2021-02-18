@@ -1,0 +1,38 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+#ifdef AMS_ENV
+MAILLIB = ${BASEDIR}/lib/libmail.a
+#else /* AMS_ENV */
+MAILLIB =
+#endif /* AMS_ENV */
+
+LIBS =	libwpi.a ${MAILLIB} ${UTILLIB} ${PRSLIB} ${RESOLVLIB}
+
+NormalObjectRule()
+
+LibraryTarget(libwpi.a, wpilib.o)
+InstallFile(wpi.h,${INSTINCFLAGS},${DESTDIR}/include)
+InstallLibrary(libwpi.a, ${DESTDIR}/lib)
+
+#ifdef AMS_ENV
+ProgramTarget(wpi,wpi.o,${LIBS},)
+InstallProgram(wpi, ${DESTDIR}/bin/)
+InstallHardLink(${DESTDIR}/bin/wpi,${DESTDIR}/bin/forward)
+#endif AMS_ENV
+
+ProgramTarget(wpiupdat,wpiupdat.o,${LIBS},)
+InstallProgram(wpiupdat, ${DESTDIR}/etc/)
+
+ProgramTarget(wpq,wpq.o,${LIBS},)
+InstallProgram(wpq, ${DESTDIR}/bin/)
+
+DependTarget()
+
+NormalHelpRule()
+InstallDocs(wpq.help wpi.help forward.help wpiplcy.help, ${DESTDIR}/help)
+InstallHelpAlias(wpi, whitepagesinteractive)
+InstallHelpAlias(wpiplcy, wpipolicy whitepagesinteractivepolicy)
+InstallHelpAlias(forward, forwarding mail-forwarding ms-forwarding ms-forward)
+InstallHelpAlias(wpq, whitepagesquery)

@@ -1,0 +1,319 @@
+.\" $Id: kinput.man,v 1.7 89/10/27 21:06:00 ishisone Rel $
+.TH KINPUT 1 "27 October 1989" "X Version 11"
+.SH NAME
+kinput - kanji input front-end processor for X11
+.SH SYNOPSIS
+\fBkinput\fP [-options...]
+.SH DESCRIPTION
+.I Kinput
+is a tool for easy input of Japanese,
+acting as a front-end processor for other applications that want
+kana-kanji conversion.
+When invoked, \fIkinput\fP does some initialization, and then
+waits for a Japanese text input request from another client.
+When \fIkinput\fP receives a request,
+it pops up a window for Japanese text input (called conversion window)
+just below the requesting window (called request window).
+.I Kinput
+does conversion in this conversion window, and sends the converted text
+back to the client when the text is fixed.
+.PP
+When the conversion starts,
+.I kinput
+creates a transparent (InputOnly) window on top of the request window,
+and selects keyboard events, effectively stealing the request window's events.
+So you don't have to move the pointer to the conversion window for
+conversion.
+.PP
+The conversion window consists of 3 subwindows.
+The largest subwindow, called the text window, is for displaying and editing
+the conversion text.
+Another is the candidate window that displays homonym candidates and
+the third is the mode window that displays the current input mode.
+.PP
+The Version 4 Wnn
+.I Jserver
+is used for the actual kana-kanji conversion.
+See the Wnn documents for details of setting up the kana-kanji conversion
+environment.
+.PP
+Input character conversion rules (such as those for romaji-kana conversion)
+can be customized by writing a rule definition file (called \fIccdef\fP).
+.SH PROTOCOL
+.I kinput
+communicates with the application that requests conversion via
+the X11 inter-client communication mechanisms
+(\fIselection, property, and client-message event\fP).
+The protocol for communication is described in `X11 Input Conversion'.
+All applications implementing this protocol can input Japanese text
+with \fIkinput\fP.
+.I Kterm
+is one such application, so it can display and input Japanese text
+with \fIkinput\fP.
+.SH OPTIONS
+.I kinput
+accepts all of the standard X Toolkit command line options along with
+the additional options listed below:
+.TP 8
+\fB\-jserver\fP \fIjserver-host\fP
+This option specifies the hostname of the jserver to be used for conversion.
+.TP 8
+\fB\-ccdef\fP \fIccdef-file\fP
+This option specifies the input character conversion rule file.
+.TP 8
+\fB\-wnnenvname\fP \fIwnnenv-name\fP
+This option specifies the conversion environment name.
+.TP 8
+\fB\-wnnenvrc\fP \fIwnnenvrc-file\fP
+This option specifies the conversion environment initialization file.
+.TP 8
+\fB\-nl\fP \fInumber-of-lines\fP
+This option specifies the number of lines in the text window.
+.TP 8
+\fB\-font\fP \fIascii-font\fP
+This option specifies the font to be used for displaying ASCII text.
+.TP 8
+\fB\-kanjifont\fP \fIkanji-font\fP
+This option specifies the font to be used for displaying Kanji text.
+.SH RESOURCES
+Here is a brief description of the resources used by \fIkinput\fP.
+.TP 8
+.B font
+Specifies the name of the ASCII font.
+The default is \fBfixed\fP.
+.TP 8
+.B kanjiFont
+Specifies the name of the Kanji font.
+The default is \fBk14\fP.
+.TP 8
+.B kanaFont
+Specifies the name of the half-width kana font.
+Since there is no default for this resource,
+you can't see half-width kana characters by default.
+.TP 8
+.B nlines
+Specifies the number of lines to be displayed in the text window.
+The default is \fB2\fP.
+.TP 8
+.B jserver
+Specifies the name of the jserver host.
+By default, the value of the environment variable `\fBJSERVER\fP' is used.
+.TP 8
+.B ccdef
+Specifies the name of the input character conversion rule file.
+By default, the following files are searched in order:
+.br
+	1. A file specified by the environment variable `\fBCC_DEF\fP'.
+.br
+	2. \fB/usr/lib/X11/ccdef/ccdef.kinput\fP
+.TP 8
+.B wnnEnvname
+Specifies the name of the kana-kanji conversion environment.
+The default is the user name.
+.TP 8
+.B wnnEnvrc
+Specifies the name of the kana-kanji conversion environment
+initialization file.
+By default, the following files are searched in order:
+.br
+	1. A file specified by the environment variable `\fBWNNENVRC\fP'.
+.br
+	2. \fB/usr/local/lib/wnn/wnnenvrc\fP
+.TP 8
+.B wnnOverrideEnv
+Specifies whether or not \fIkinput\fP should initialize the conversion
+environment when the specified environment already exists.
+The default is `\fBFalse\fP' meaning no overriding initialization is done.
+.SH "CONVERSION START"
+As mentioned before,
+.I kinput
+starts conversion service when a client requests it.
+So see the client's manual for how to start the conversion.
+.PP
+For example, adding the resource listed below enables kterm
+to start conversion with \fBshift-space\fP.
+.nf
+
+.ft CW
+	kterm*vt100*translations: #override \e
+		Shift<Key>space: begin-conversion(JAPANESE_CONVERSION)
+
+.ft
+.fi
+.SH "TEXT INPUT"
+Once the conversion window pops up, you can input text and convert.
+Since the way text is input is defined by the input character
+conversion rule file specified by the \fBccdef\fP resource,
+only the default way of doing text input (which is defined
+in /usr/lib/X11/ccdef/ccdef.kinput) is described here.
+.PP
+Roma-ji mode is the initial input mode.
+Text typed in roma-ji is changed to kana and displayed.
+.PP
+Pressing the Tab key (^I doesn't work) changes the input mode as follows:
+.nf
+
+	Romaji \-> ASCII \-> double-width ASCII \-> Romaji
+
+.fi
+Pressing shift-Tab also changes the mode, but in reverse order.
+You can see the current mode in the lower right corner.
+.PP
+Characters typed in are underlined, indicating they are still in
+unconverted state.
+Converted text is not underlined.
+.PP
+A text cursor is displayed to show the current processing point.
+If the cursor is on unconverted text, it is displayed as a reversed
+character indicating the current character insertion point.
+If it is on converted text, all characters of the current
+clause are reversed.
+A half reversed area may appear, which is a part of the current
+large clause, but not a part of the current small clause.
+.SH "CONVERSION FUNCTIONS AND KEY BINDINGS"
+Here is a brief list of
+conversion functions and their key bindings used by \fIkinput\fP.
+Since the key bindings are also
+defined in the input charater conversion rule file which is user configurable,
+only default bindings are described.
+The key bindings are in parentheses.
+.TP 8
+\fBconvert\fP (Kanji, ^J), \fBconvert-s\fP (^C)
+These functions do multiple clause conversion from the current clause
+onwards.
+Convert uses the large clause as the current clause, while convert-s
+uses the small one.
+If the current clause is already converted, these functions will
+show all the candidates for the current clause in the candidate window,
+and then go into the candidate selection mode.
+.TP 8
+\fBunconvert\fP (^G)
+This function puts the current clause back into unconverted state.
+.TP 8
+\fBfix\fP (^L)
+This function fixes the converted text, then sends it to the client.
+.TP 8
+\fBcarriage-return\fP (^M)
+This function fixes the converted text, then sends it to the client
+followed by a newline.
+In candidate selection mode or symbol selection mode,
+this function selects a candidate or symbol, then goes back to normal mode.
+.TP 8
+\fBbackspace\fP (^H)
+This function deletes the character before the text cursor.
+If the current clause is converted, this puts it back into unconverted state
+before deletion.
+.TP 8
+\fBdelete\fP (Delete)
+This function deletes the character at the text cursor.
+If the current clause is converted, this puts it back into unconverted state
+before deletion.
+.TP 8
+\fBclear\fP (^U)
+This function erases all text.
+.TP 8
+\fBforward\fP (Right, ^F)
+This function moves the text cursor forward.
+If the text is already converted, the cursor moves forward a small clause,
+otherwise a character.
+In the candidate selection mode, this function moves the cursor to the
+next candidate.
+.TP 8
+\fBbackward\fP (Left, ^B)
+This function moves the text cursor backward.
+If the text is already converted, the cursor moves backward a small clause,
+otherwise a character.
+In the candidate selection mode, this function moves the cursor to the
+previous candidate.
+.TP 8
+\fBnext\fP (Down, ^N), \fBnext-s\fP (mod1-n)
+These functions substitute the current clause (large clause for
+next, small clause for next-s) for the next candidate of the clause.
+In candidate selection mode, these functions move forward a page.
+.TP 8
+\fBprevious\fP (Up, ^P), \fBprevious-s\fP (mod1-p)
+These functions substitute the current clause (large clause for
+next, small clause for next-s) for the previous candidate of the clause.
+In candidate selection mode, these functions move backward a page.
+.TP 8
+\fBmove-top\fP (^A)
+This function moves the text cursor to the beginning of the text.
+It moves the cursor to the top of the page in candidate selection mode or
+symbol input mode.
+.TP 8
+\fBmove-bottom\fP (^E)
+This function moves the text cursor to the end of the text.
+It moves the cursor to the bottom of the page in candidate selection mode or
+symbol input mode.
+.TP 8
+\fBexpand\fP (shift-Right), \fBexpand-s\fP
+This function expands the current clause (large clause for expand,
+small one for expand-s) by one character, then re-converts it.
+.TP 8
+\fBshrink\fP (shift-Left), \fBshrink-s\fP
+This function shrinks the current clause (large clause for expand,
+small one for expand-s) by one character, then re-converts it.
+.TP 8
+\fBto-katakana\fP (F1, mod1-1)
+This function converts the current large clause into Katakana.
+.TP 8
+\fBto-hiragana\fP (F2, mod1-2)
+This function converts the current large clause into Hiragana.
+.TP 8
+\fBto-hankaku\fP (F3, mod1-3)
+This function converts the current large clause
+into half width Katakana (if possible).
+.TP 8
+\fBto-zenkaku\fP (F4, mod1-4)
+This function converts the current large clause into full width Katakana.
+.TP 8
+\fBsymbol-input\fP (shift-Escape)
+This function changes the current mode to symbol input mode.
+Symbols defined in JIS X0208 (Kanji character set) are displayed
+in the candidate window.
+You can move the cursor and select a symbol with carriage-return.
+.TP 8
+\fBend-conversion\fP (control-Kanji, shift-space)
+This function ends conversion.
+If there is text that is not fixed, this sends it to the client.
+It then pops down the conversion window, and \fIkinput\fP will be
+waiting for the next conversion request.
+.SH EXAMPLE
+The following is a sample resource file for \fIkinput\fP:
+
+.nf
+.ft CW
+kinput*ccdef:	/usr/home/someone/.ccdef.kinput
+kinput*jserver:	jserverhost
+kinput*conv*width:	500
+.ft
+.fi
+
+.SH FILES
+.nf
+/usr/lib/X11/ccdef/	default directory for ccdef files
+/usr/lib/X11/ccdef/ccdef.kinput	default ccdef file
+/usr/local/lib/wnn/wnnenvrc	default conversion environment initialization file
+.fi
+.SH COPYRIGHT
+Copyright 1988, Software Research Associates, Inc.
+.PP
+.I kinput
+is based on the original version of Wnn developed by
+Kyoto University Research Institute for Mathematical Sciences (KURIMS),
+OMRON TATEISI ELECTRONICS CO. and
+ASTEC, Inc.
+.nf
+Copyright 1987,1988,1989, Kyoto University Research Institute for Mathematical Sciences
+Copyright 1987,1988,1989, OMRON TATEISI ELECTRONICS CO.
+Copyright 1987,1988,1989, ASTEC, Inc.
+.fi
+.SH BUGS
+There is no document on how to write an input character conversion
+rule file (ccdef).
+See cconv/cconv.c under \fIkinput\fP's source directory.
+(Don't worry. You don't have to read the \fIcode\fP. The comments cover
+it in detail,
+though they are written in Japanese :-)
+.SH "SEE ALSO"
+See `X11 Input Conversion' for the protocol used by \fIkinput\fP.

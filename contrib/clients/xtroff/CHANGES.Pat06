@@ -1,0 +1,38 @@
+This is a set of fixes from Adam de Boor <bsw!adam@uunet.UU.NET>. I haven't
+tested the code for the Berkeley ditroff distribution, because I don't have
+Berkeley ditroff. People with Berkeley ditroff will need this patch
+and should define -DBEZERKELYISM in the Imakefile.
+
+It also fixes a small problem Adam reported with the Minibuf.
+
+I've updated the distributions on ai.toronto.edu and expo.lcs.mit.edu to
+add this patch - the patch itself is in xtroff.fix6.
+
+---------------------------------------------------------------------------
+Date: Sun, 2 Jul 89 21:12:46 PDT
+From: bsw!adam@uunet.UU.NET (Adam de Boor)
+To: moraes@csri.toronto.edu
+Subject: fixes to xtroff level 5
+
+There are a few bugs in the handling of berkeley-style ditroff (which I use
+here). The patches are enclosed below. There was also a problem with the
+next-section and prev-section actions not calling SetScrollBar, leaving the
+thumb in the wrong place.
+
+A note on the #ifndef BEZERKELYISM for the 'w' command code -- I ran into a
+problem with a table of contents in one of my documents, where ditroff
+produced something like
+
+w54.20.20.20.20.20.20.
+
+and so on after the text for the TOC entry in order to draw the dotted line
+leading up to the page number. PutCharacterString was passing the character
+20 to PutCharacter, causing error messages and, eventually, a segmentation
+fault. None of the drivers in the Berkeley ditroff distribution handles
+the text after a w as if the w were a c, as your code does, but that
+doesn't mean the ATT stuff doesn't do so, hence the #ifndef.
+
+You might also want to add a comment to the Imakefile about -DBEZERKELYISM,
+since all the things (except Dz [bezier spline]) now work and if you
+don't define the constant, you'll get error messages when you run xtroff
+on a berkeley-ditroff output file.

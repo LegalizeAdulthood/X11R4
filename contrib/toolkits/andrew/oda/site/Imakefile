@@ -1,0 +1,24 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989		        *
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+
+#define	IHaveSubdirs
+
+/* ============================================================ */
+
+
+#if (SY_U5x || SY_AIXx)
+#define SYSTEM_DIRECTORY sysvunix
+#endif /* SY_U5x || SY_AIXx */
+
+#if SY_B4x 
+#define SYSTEM_DIRECTORY  bsdunix
+#endif /* SY_B4x */
+
+#ifndef SYSTEM_DIRECTORY
+/* Something is wrong, try your best shot */
+#define SYSTEM_DIRECTORY bsdunix
+#endif /* SYSTEM_DIRECTORY */
+
+SUBDIRS = SYSTEM_DIRECTORY

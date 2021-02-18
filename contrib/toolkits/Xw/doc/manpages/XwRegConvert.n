@@ -1,0 +1,66 @@
+
+
+
+     XWREGISTERCONVERTERS(3X)                 XWREGISTERCONVERTERS(3X)
+
+
+
+
+     NAME
+          XwRegisterConverters - register all of the resource
+          converters used by the X Widgets.
+
+     SYNOPSIS
+          #include <X11/Atoms.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+
+          void XwRegisterConverters ()
+
+
+     DESCRIPTION
+          XwRegisterConverters is used by widget writers to register
+          all of the resource type converters used by the X Widgets.
+          The call to this routine is made within a widget's
+          ClassInitialize procedure that has added a resource
+          converter to the source file containing this function.
+          XwRegisterConverters ensures that resource converters it is
+          registering are only registered once.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+

@@ -1,0 +1,118 @@
+#!	/bin/sh
+# $Header: /u/04c/mnt/integ/saddle/src/RCS/sdd,v 1.8 89/10/18 10:40:24 ejh Exp $
+# $Log:	sdd,v $
+# Revision 1.8  89/10/18  10:40:24  ejh
+# put all temp files in /tmp; added . to include list
+# 
+# Revision 1.7  89/10/11  18:37:58  serpent
+# short names: .saddle_first => saddle1; .saddle_last => saddle2
+# 
+# Revision 1.6  89/09/22  11:18:53  serpent
+# new base path: based on new environment variable for imake
+# 
+# Revision 1.5  89/02/20  12:10:19  serpent
+# change where the base path is fetched
+# 
+# Revision 1.4  89/02/09  19:30:00  ejh
+# added copyright notice
+# 
+# Revision 1.3  89/01/11  16:19:16  ejh
+# exported process id for use within ill file preamble
+# 
+# Revision 1.2  88/12/06  14:40:54  ejh
+# new version of SADDLE (1.2)
+# 
+
+#-----------------------------------------------------------------------------
+#
+#   Distribution: Approved for public release; distribution is unlimited.
+#
+#   Copyright (c) 1989  by  Carnegie  Mellon  University, Pittsburgh, PA.  The
+#  Software Engineering  Institute  (SEI) is a federally  funded  research and
+#  development center established  and  operated by Carnegie Mellon University
+#  (CMU).  Sponsored  by  the  U.S.  Department  of   Defense  under  contract
+#  F19628-85-C-0003,  the  SEI  is  supported  by  the  services  and  defense
+#  agencies, with the U.S. Air Force as the executive contracting agent.
+#
+#    Permission to use,  copy,  modify, or  distribute  this  software and its
+#  documentation for  any purpose and without fee  is hereby granted, provided
+#  that  the above copyright notice appear  in  all copies and that both  that
+#  copyright  notice  and   this  permission  notice  appear   in   supporting
+#  documentation.   Further,  the  names  Software  Engineering  Institute  or
+#  Carnegie  Mellon  University  may  not be used in  advertising or publicity
+#  pertaining to distribution of the software without specific, written  prior
+#  permission.  CMU makes no claims  or representations  about the suitability
+#  of this software for any purpose.  This software is provided "as is" and no
+#  warranty,  express  or  implied,  is  made  by  the  SEI  or CMU, as to the
+#  accuracy  and  functioning of the program and related program material, nor
+#  shall   the  fact of  distribution   constitute  any   such  warranty.   No
+#  responsibility is assumed by the SEI or CMU in connection herewith.
+#
+#-----------------------------------------------------------------------------
+
+procname=$$
+env_file=/tmp/env.${procname}
+
+new_source=/tmp/source.${procname}
+export procname new_source
+
+second=/tmp/second_${procname}
+second_c=${second}.c
+second_h=${second}.h
+second_run=${second}.run
+export second_c second_h
+
+ill=/tmp/ill_${procname}
+ill_1=${ill}.1
+ill_2=${ill}.2
+ill_3=${ill}.3
+export ill_1 ill_2
+
+base_path=${SERPENT_BASE_PATH}
+if saddle1 $* > ${env_file}
+then
+    . ${env_file}
+    export debug_level file_part ill_file dd_name
+    case ${debug_level} in
+    2)  echo 'compiling ill file generator' ;;
+    esac
+    if cc -o ${second_run} -I. -I../include -I${base_path}/include ${second_c}
+    then
+	case ${debug_level} in
+	2)  echo 'done compilation' ;;
+	esac
+	if ${second_run}
+	then
+	    case ${debug_level} in
+	    2)  echo 'sorting ill file' ;;
+	    esac
+	    if sort +1d -2d +3n +4nr +0d -1d -o ${ill_3} ${ill_2}
+	    then
+		case ${debug_level} in
+		2)  echo 'done sorting' ;;
+		esac
+		colrm 1 2 < ${ill_3} > ${ill_2}
+		cat ${ill_1} ${ill_2} >${ill_file}
+		echo ">>" >>${ill_file}
+		case ${language} in
+		a)  rm ${file_part}.h
+		    if saddle2
+		    then
+			echo 'SADDLE completed successfully'
+		    else
+			echo 'contact SADDLE administrator; quote LAST'
+		    fi
+		    exit ;;
+		esac
+		echo 'SADDLE completed successfully'
+	    else
+		echo 'contact SADDLE administrator; quote SORT'
+	    fi
+	else
+	    echo 'contact SADDLE administrator; quote SECOND'
+	    echo 'there may be a core file hanging around'
+	fi
+    else
+	echo 'contact SADDLE administrator; quote COMPILE'
+    fi
+fi

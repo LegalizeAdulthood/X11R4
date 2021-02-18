@@ -1,0 +1,198 @@
+
+
+
+     XWARROW(3X)                                           XWARROW(3X)
+
+
+
+
+     NAME
+          XwarrowWidgetClass - the X Widget's arrow drawing widget
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/Arrow.h>
+
+
+     CLASSES
+          The Arrow widget is built from the Core and XwPrimitive
+          classes.
+
+          The widget class to use when creating an arrow is
+          XwarrowWidgetClass.  The class name for this widget is
+          Arrow.
+
+     DESCRIPTION
+          The Arrow widget supports drawing of an arrow within the
+          bounds of its window. It uses the primitive widget's border
+          highlighting routines.
+
+          The arrow can be drawn in the directions of up, down, left
+          and right.  The Arrow widget also supports two types of
+          callbacks: Button selections, and Button releases.
+
+     NEW RESOURCES
+          The Arrow widget defines a set of resources used by the
+          programmer to specify the data for the arrow.  The
+          programmer can also set the values for the Core and
+          Primitive widget classes to set attributes for this widget.
+          To reference a resource in a .Xdefaults file, strip off the
+          XtN from the resource string.  The following table contains
+          the set of resources defined by the Arrow widget.
+
+
+                            Arrow Resource Set
+          Name                Class               Type   Default
+          ______________________________________________________
+          XtNarrowDirection   XtCArrowDirection   int    up
+
+
+
+          XtNarrowDirection
+               This resource is the means by which the arrow direction
+               is set.  It can be defined in either of two ways:
+               Through the .Xdefaults file by the strings "up",
+               "down", "left" and "right".  Within an arg list for use
+               in XtSetValues() by the defines XwARROW_UP,
+               XwARROW_DOWN, XwARROW_LEFT and XwARROW_RIGHT.
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWARROW(3X)                                           XWARROW(3X)
+
+
+
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightColor       XtCForeground           Pixel     Black
+     XtNhighlightTile        XtCHighlightTile        int       50_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNrecomputeSize        XtCRecomputeSize        Boolean   TRUE
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalType resource is set to
+          highlight_traversal (XwHIGHLIGHT_TRAVERSAL in an argument
+          list) at create time or during a call to XtSetValues, the
+          XwPrimitive superclass will automatically augment the
+          primitive widget's translations to support keyboard
+          traversal.  Refer to the XwPrimitive man page for a complete
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWARROW(3X)                                           XWARROW(3X)
+
+
+
+
+          description of these translations.  Refer to the
+          TRANSLATIONS section in this man page for a description of
+          the translations local to this widget.
+
+     TRANSLATIONS
+          Input to the Arrow widget is driven by the mouse buttons.
+          The Primitive class resources of XtNselect and XtNrelease
+          define the callback lists used by the Arrow widget.  Thus,
+          to receive input from an arrow, the application adds
+          callbacks to the arrow using these two resource types.  The
+          default translation set for the Arrow widget is as follows.
+
+
+              <Btn1Down>:        select()
+              <Btn1Up>:          release()
+              <EnterWindow>:     enter()
+              <LeaveWindow>:     leave()
+              <KeyDown>Select:   select()     HP "Select" key
+              <KeyUp>Select:     unselect()   HP "Select" key
+
+
+     ACTIONS
+          select:
+               Selections occurring on an arrow cause the arrow to be
+               displayed as selected and its primitive XtNselect
+               callbacks are called.
+
+          release:
+               Release redraws the arrow in its normal mode and calls
+               its primitive XtNrelease callbacks.
+
+          enter:
+               If the XtNtraversalType resource has been set to
+               XwHIGHLIGHT_ENTER then the arrow's border will be
+               highlighted.  Otherwise no action is taken.
+
+          leave:
+               If the XtNtraversalType resource has been set to
+               XwHIGHLIGHT_ENTER then the arrow's border will be
+               unhighlighted.  Otherwise no action is taken.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWPRIMITIVE(3X), XWCREATETILE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+

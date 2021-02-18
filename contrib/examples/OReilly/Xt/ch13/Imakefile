@@ -1,0 +1,22 @@
+#
+# example programs Imakefile
+#
+#
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+SRCS1=	xbanapp.c 
+OBJS1=	xbanapp.o 
+
+SRCS2=	xbantry.c
+OBJS2=	xbantry.o
+
+PROGRAMS = xbanapp xbantry
+
+all::  $(PROGRAMS)
+
+LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+
+NormalProgramTarget(xbanapp,$(OBJS1),,$(LOCAL_LIBRARIES),)
+
+NormalProgramTarget(xbantry,$(OBJS2),,$(LOCAL_LIBRARIES),)

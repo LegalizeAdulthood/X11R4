@@ -1,0 +1,129 @@
+\section{Scenario Customization}
+\subsection{Configuration File Syntax}
+
+All parameters are integers unless specified otherwise.
+
+\subsection{Ship Parameters}
+\begin{itemize}
+\item[turns]  Ship maneuverability (turn radius)
+\item[torp-damage]  Torpedo damage at zero radius
+\item[torp-blast-range]  Torpedo blast radius - range at which damage = 0
+\item[mine-damage] Mine damage at zero radius
+\item[mine-blast-range]  Mine blast radius - range at which damage = 0
+\item[phaser-damage] Phaser damage at zero radius
+\item[phaser-range] Phaser range - range at which damage = 0
+\item[ph-pulses]  Number of time slices that a phaser will lock on a target
+\item[torp-speed]  Torpedo speed
+\item[max-speed] Maximum ship speed
+\item[shield-repair]  Shield repair rate
+\item[hull-repair]  Damage repair rate
+\item[max-fuel]  Maximum fuel capacity
+\item[torp-cost] Torpedo fuel cost (unused) .  Note that weapons costs are
+calculated from the damage caused by each weapon
+\item[mine-cost] Mine fuel cost (unused)
+\item[phaser-cost] Phaser fuel cost (unused)
+\item[det-cost] Detonate other torps fuel cost
+\item[warp-cost] Warp engine fuel cost
+\item[cloak-cost] Cloak fuel cost
+\item[recharge]  Fuel recharge rate
+\item[accint]  Acceleration rate
+\item[decint]  Deceleration rate
+\item[max-armies]  Maximum army capacity
+\item[weapon-cool]  Weapon cooling rate
+\item[engine-cool]  Engine cooling rate
+\item[max-damage] Maximum structural damage sustainable before destruction
+\item[shield-max]  Maximum shield damage absorption
+\item[teleport-heat]  Teleport engine heat cost
+\item[teleport-cost]  Teleport fuel cost
+\item[teleport-range]  Teleport radius
+\item[turbo-speed]  Turbo warp speed (unused)
+\item[turbo-time]  Turbo warp duration (unused)
+\item[reload] time between torp salvos
+\item[burst] number of shots in a torp salvo
+\item[phaser-fail]  Probability of phaser failure.  Similarly for 
+{\tt torp-fail}, {\tt trans-fail}, {\tt shield-fail}, 
+ {\tt cloak-fail}, {\tt lrsensor-fail}, {\tt srsensor-fail}, {\tt lock-fail},
+and {\tt cooling-fail}.
+\end{description}
+
+\subsection{Robot Parameters}
+\begin{description}
+\item[hscruise] speed robots go when going to assist another robot.
+\item[cruise] speed robots patrol at.
+\item[battle] speed robots go in battle.
+\item[flee] speed robots run away at.
+\item[cloaked] speed robots go when cloaked.
+\item[refresh] speed robots go when they want to cool down.
+\item[engage] distance at which a robot starts firing at a target.
+\item[disengage] distance at which a robot stops firing at a target.
+\item[shotdamage] damage a robot's salvo does.
+\item[circledist] distance at which a robot would like to stand off it's
+target.
+\item[sneaky] chance that, on creation, a robot will elect to make cloaked
+attacks.
+\item[max-cloak] distance at which a robot, making a sneaky attack, will
+cloak.
+\item[min-cloak] distance at which a robot, making a sneaky attack, will uncloak.
+\end{description}
+
+\subsection{Empire Parameters}
+\begin{description}
+\item[empire] String. Empire's name.
+\item[icon] String parameter specifies bitmap file which is in the defined LIBDIR.  Bitmap is 
+automatically rotated through all 16 orientations.  The bitmap should be specified
+with front pointing upwards, and some slight aliasing will result.
+\item[robotname]  String parameter specifies robot name.
+\end{description}
+
+\subsection{Planet Parameters}
+\begin{description}
+\item[planet] String. Planet's name.
+\item[empire] String. Planet's empire.
+\item[home]  Boolean flag.  Specifies that planet is the home planet of the
+empire.
+\item[fuel] Boolean flag.  Specifies that planet is a fuel source; fuel is
+replenished at twice normal planetary rates when planet is orbited. 
+\item[repair] Boolean flag.  Specifies that planet is a repair yard; damage is
+repaired at twice normal planetary rates when planet is orbited. 
+\item[x]  Specifies X coordinate of planet.  Similarly for {\tt y}.
+\item[armies] Specifies number of armies on planet at start of game.
+Note that a large number of  armies makes the planet an effective obstacle;
+any ship passing through such a planet will be destroyed.
+\end{description}
+
+\subsection{Global Parameters}
+\begin{description}
+\item[robot-giveup-time] If after this many seconds there are no players
+in the game the robots quit. Defaults to 10.
+\item[death-time] Player is dead for this number of seconds.  Defaults to 4. 
+\item[torp-life-min]   Torpedoes live for at least this number of seconds.  
+Defaults to 7.  Similarly for {\tt mine-life-min} (default is 60).
+\item[torp-life-var]  Torpedoes may live for at least this number of seconds 
+in addition to the minimum lifetime.  Defaults to 2. Similarly for 
+{\tt mine-life-var} (default is 120).
+\item[player-explode-time] Player explodes for this number of seconds.
+\item[weapon-lock-min] Overheated weapons are unusable for at least this
+number of seconds  up   to an additional {\tt weapon-lock-var} seconds.
+Defaults are 10 and 15. Similarly for {\tt engine-lock-min} and 
+{\tt engine-lock-var}.  Defaults are  identical to those of weapons.
+\item[self-destruct-time]  Self-destruct countdown time.
+\item[robot-giveup-time] Robots will give up within this number of
+seconds if no combat is initiated.
+\item[orbit-speed]   Maximum warp allowed while entering orbit. 
+\item[det-dist]  Effective range of the counter-torpedo batteries. 
+\item[orbit-dist]  Range at which a ship can enter orbit. Defaults to 900.
+\item[planet-fire-dist]  Range at which a planet can damage a ship.
+Defaults to 1500.
+\item[phaser-hit-angle]  Number of degrees that a phaser will hit.
+\item[phaser-hit-langle]  Number of degrees that a locked phaser will hit.
+\item[auto-quit]  Auto-logout countdown time.
+\item[cool-penalty]   Floating point number.  Specifies the increase
+in weapon and engine cooling rate when both shields and cloak are inactive.
+Defaults to 1.25.
+\item[fast-destruct]  Boolean flag.  If set, self-destruct time does not
+increase with alert level.   Default is to double self-destruct time for
+yellow alert, and double again for red alert.
+\item[mine-detonate]  Boolean flag.   If set, mines detonate when
+destroyed.  This feature is potentially very nasty.  It also allows instant
+self-destruction, cheating players out of kills.
+\end{description}

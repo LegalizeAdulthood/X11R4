@@ -1,0 +1,17 @@
+       INCLUDES = -I$(TOP)
+           SRCS = xcolors.c
+           OBJS = xcolors.o
+LOCAL_LIBRARIES = $(XAWLIB) $(XTOOLLIB) $(XLIB)
+        DEFINES = -DRGB_TXT=\"$(LIBDIR)/rgb.txt\"
+
+.SUFFIXES: .manX .man
+
+.manX.man:
+	sed -e 's?RGBFILE?$(LIBDIR)/rgb.txt?g' $*.manX > $*.man
+
+ComplexProgramTarget(xcolors)
+
+DependTarget()
+
+clean::
+	rm -f xcolors.man

@@ -1,0 +1,477 @@
+
+
+		   CMU ODA TOOL KIT DISTRIBUTION
+		   === === ==== === ============
+
+INTRODUCTION
+
+This file contains information on the interim distribution of the
+CMU ODA Tool Kit.  At present, the Tool Kit is complete in the sense
+that all routines are present and may be called.  However, most
+rouitnes are not implemented and will return the appropriate ERROR
+return with TKError set to UNIMPL_err; such routines are noted as
+unimplemented in the list that follows.  For the implemented
+rouitnes, this list details any restrictions or limitations of the
+current implementation relative to the definition given in the "CMU
+ODA Tool Kit" manual (CMU-ITC-071).
+
+Within each section of this document, the Tool Kit routines are listed in alphabetic order.
+
+Comments & bug reports on the current implemementation should be sent
+to:
+	oda+@andrew.cmu.edu
+
+		   *****************************
+		   * RELEASE OF August 5, 1988 *
+		   *****************************
+
+CHANGES TO ROUTINES
+-------------------
+
+AppendSequence - implemented for a restricted set of element types:
+	BYTE_type
+	CHAR_type
+	CONSTITUENT
+	INT_type
+	RESOURCE_MAP_type
+	VALUE_type
+
+ContractSequence - works with the following restrictions:
+    If relocation of the body of the sequence fails then INTERNAL_err
+    is returned - perhaps this should be NOMEM_err, but the API
+    does not list NOMEM_err as applicable to ContractSequence.
+
+CopySequence - now works with element type SEQUENCE_RESOURCE_MAP_tag,
+    in addition to previous types.
+
+ExpandSequence - now has the following restrictions:
+    1) discovered that (in the previous releases)
+	in the case that an error did not occur the
+	return value was not the old size of the sequence.
+	This has been fixed. 
+    2) Now returns BADPARM_err if the sequence tag is not legal.
+    3) Now returns NOMEM_err when relocation of the body of the 
+	sequence fails.
+
+FindDocumentRoot - now implemented with following:
+    1) the document passed in as the first argument must not
+       be either (DOCUMENT_type) 0 or ERROR_DOCUMENT. If it is
+       then BADPARM_err is returned.
+    2) the logical passed in as the second argument must be
+       either BOOL_true or BOOL_false. If it isn't, then 
+       an error return is made with TKError = BADPARM_err.
+    3) NOROOT_err is returned if the requested root is not
+       present in the document.
+
+GetAttr - working with the following restictions:
+    1) does not perform the checking required for BADATTR_err.
+	Thus, BADATTR_err is never returned.
+    2) the inherited parameter longer need be BOOL_false. Although
+	inherited can be passed in as BOOL_true, inheritance is
+	not implemented. If inherited is passed in as BOOL_true
+	for any of document profile, object class, or style
+	an error return is made with TKError = BADPARM_err.
+	If inherited is passed as BOOL_true for either an
+	object or content portion, an error return is made
+	with TKError = UNIMPL_err.
+    3) It is now possible to GetAttr for the following types:
+	    CONSTITUENT
+	    INT_type
+	    SEQUENCE_BYTE
+	    SEQUENCE_CONSTITUENT
+	    SEQUENCE_INT
+	    SEQUENCE_STRING
+	    STRING_type
+	    VALUE_type
+	    LAYOUT_OBJECT_type
+	    at_OFFSET_type
+	    at_SEPARATION_type
+	    CONSTRUCTION_EXPR_type
+    4) the parm mask is now being set. If the attribute in
+	question has type INT_type, VALUE_type, or CONSTITUENT
+	the mask is not set at all. For all other types the
+	mask is set if the parameter passed in was not
+	(PARM_MASK_type *) 0. Note that only the
+	at_OFFSET_type and at_SEPARATION_type have parameters.
+	All other types (listed above other than INT_type,
+	VALUE_type, CONSTITUENT, at_OFFSET_type and
+	at_SEPARATION_type) will return ALL_PARMS if the
+	mask is requested.
+    5) If the constituent in question does not have the requsted
+	attribute, then an error return in made with TKError
+	set to NOATTR_err (N.B. This fixes the MOATTR_err
+	typo that used to be in the API).
+
+LabelStructure - implemented with restrictions:
+    1) Will only label specific structures, not generic.
+
+LabelStyles - implemented
+
+MakeComponent - now automatically sets the at_OBJECT_TYPE
+    attribute. No longer accepts comp_basic_page as a legal
+    type.
+
+ReadODIF - partially implemented, not usable at this time
+
+SetAttr - works with the following restrictions:
+    1) does not perform the checking required for BADATTR_err.
+    2) When the constituent already has the attribute in
+	question (i.e. a replace is being done), the storage
+	for the old attribute value is not being freed. If
+	you look at the code, you will find that the 
+	appropriate aunion.h free routine is called - but as
+	all free's are not current implemented, the storage
+	is not getting freed.
+    1) It is now possible to SetAttr for attributes with the
+	following types:
+	    CONSTITUENT
+	    INT_type
+	    SEQUENCE_BYTE
+	    SEQUENCE_CONSTITUENT
+	    SEQUENCE_INT
+	    SEQUENCE_STRING
+	    STRING_type
+	    VALUE_type
+	    LAYOUT_OBJECT_type
+	    at_OFFSET_type
+	    at_SEPARATION_type
+	    CONSTRUCTION_EXPR_type
+    2) Checking is done as follows:
+	    CONSTITUENT - none
+	    INT_type - none
+	    SEQUENCE_BYTE - value had better point to a SEQUNECE of BYTES
+		or else INTERNAL_err is returned.
+	    SEQUENCE_CONSTITUENT - value had better point to a SEQUENCE 
+		of CONSTITUENTS or else INTERNAL_err is returned.
+	    SEQUENCE_INT - value had better point to a SEQUENCE of INTs
+		or else INTERNAL_err is returned.
+	    SEQUENCE_STRING - value had better point to a SEQUENCE
+		of STRING's or else BADPARM_err is returned.
+	    STRING_type - value had better point to a STRING (SEQUENCE
+		of CHAR) or else INTERNAL_err is returned.
+	    VALUE_type - none
+	    LAYOUT_OBJECT_type - if the tag on the value passed in
+		is not legal then BADPARM_err is returned.
+	    at_OFFSET_type - none
+	    at_SEPARATION_type - none
+	    CONSTRUCTION_EXPR_type - if the value passed in is not
+		a legal construction (based on examination of the tags
+		at all levels) then BADPARM_err is returned.
+    5) BUG: Given our replace semantics for SetAttr, the
+	at_OBJECT_TYPE attribute can be replaced - this should not
+	be allowed and should return the YOURE_DOG_MEAT_err.
+
+WriteConstituentState - now works for all attributes with values of the
+    following types:
+	CONSTITUENT
+	CONSTRUCTION_EXPR_type
+	SEQUENCE_CONSTITUENT_type
+	SEQUENCE_BYTE_type
+	SEQUENCE_STRING_type
+	SEQUENCE_VALUE_type
+	STRING_type
+	VALUE_type
+
+WriteODIF - partially implemented, specification will be provided
+    with next release.
+
+OTHER RESTRICTIONS
+------------------
+
+(i) The definition of SEQUENCE_type has been fixed.
+
+		   ****************************
+		   * RELEASE OF June 17, 1988 *
+		   ****************************
+
+ROUTINES
+--------
+
+AppendSequence - not implemented
+
+AttrDocProfPriority - not implemented
+
+Chars2String - works with the following restrictions:
+    1) Does not check the str argument to ensure that it is not
+	(CHAR_type *) 0.
+    2) See MakeString below.
+    3) If the body of the string is copied using LOCAL_Bcopy and
+	there is an error during the Bcopy, TKError will be set per the
+	locally defined LOCAL_Bcopy - the return value will be
+	ERROR_STRING. (If the copy is not done by LOCAL_Bcopy then
+	no copying error can result.)
+
+ComponentAttrPriority - not implemented
+
+ConcatString - not implemented
+
+ContentAttrPriority - not implemented
+
+ContractSequence - not implemented
+
+CopyConstituent - not implemented
+
+CopySequence - works with the following restrictions:
+    1) See MakeSequence below.
+    2) Can only copy sequences with the following tags:
+	SEQUENCE_BYTE_tag
+	SEQUENCE_CHAR_tag
+	SEQUENCE_CONSTITUENT_tag
+	SEQUENCE_INT_tag
+	SEQUENCE_VALUE_tag
+    3) If the sequence type (per the tag field) can not be
+	copied then the allocated sequence is not deallocated.
+	(Yet another core leak.)
+
+DeleteConstituent - not implemented
+
+DeleteDocument - not implemented
+
+DeleteIterator - not implemented
+
+DeleteSequence - works with the following restrictions:
+    1) works 'trivially', i.e. immediatedly returns success
+	Therefore, no storage is deallocated, and the sequence
+	argument is not checked for legality. (Yet another core
+	leak.)
+
+DeleteSequenceDeeply - not implemented
+
+DeleteString - works with the following restrictions:
+    1) succeeds 'trivially'. Thus, no storage is released.
+	(Yet another core leak.)
+
+EvalNumExpr - not implemented
+
+EvalObjIdExpr - not implemented
+
+EvalRefBing - not implemented
+
+EvalStringExpr - not implemented
+
+ExpandSequence - works with the following restrictions:
+    1) Does not check the sequence argument to ensure that it
+	is neither NULL_SEQUENCE nor ERROR_SEQUENCE.
+    2) If the sequence argument's tag is illegal and error
+	return is made with TKError set to INTERNAL_err
+	(N.B. This probably should be BADPARM_err ??)
+    3) If space for the body of the sequence can not
+	successfully be relocated, an error return is made
+	but TKError is not set at all (N.B. TKError should
+	be set to NOMEM_err ???)
+
+FinalToolKit - works with the following restrictions:
+    1) No storage is released
+    2) No calls to LOCAL_ReadBytes or LOCAL_WriteBytes is made
+    3) No finalization action is taken, i.e. FinalToolKit 'trivially'
+	succeeds.
+    4) See scenario under InitToolKit
+
+FindDocumentProfile - not implemented
+
+FindDocumentRoot - not implemented
+
+GetAttr - working with the following restrictions:
+    1) does not perform the checking required for BADATTR_err.
+	Thus, BADATTR_err is never returned.
+    2) the inherited parameter must have the value BOOL_false
+	as inheritance is not implemented. Thus, the attribute
+	must be associated with the constituent passed to GetAttr.
+    3) It is possible to GetAttr for the following attributes:
+	at_SUBORDINATES
+	dp_GENERIC_LOG_STRUCT
+	at_CONCATENATION
+	cc_ALIGNMENT
+	at_OBJECT_TYPE
+	dp_SPECIFIC_LAY_STRUCT
+	cc_LINE_SPACING
+	cc_INDENTATION
+    4) the parm mask in not being set.
+
+GetAttrName - not implemented
+
+GetIntAttr - working with the following restrictions:
+    See the comments under GetAttr except disregard item 4)
+    (on parm mask) and for 3):
+    3) It is possible to GetIntAttr for the following attributes:
+	cc_LINE_SPACING
+	cc_INDENTATION
+    
+GetParmMask - not implemented
+
+GetValueAttr - working with the following restrictions:
+    See the comments under GetAttr except disregard item 4)
+    (on parm mask) for 3):
+    3) it is possible to GetValueAttr for the following attributes:
+	dp_GENERIC_LOG_STRUCT
+	at_CONCATENATION
+	cc_ALIGNMENT
+	at_OBJECT_TYPE
+	dp_SPECIFIC_LAY_STRUCT
+
+GetValueName - not implemented
+
+HasAttr - working with the following restrictions:
+    NONE
+
+HoldAttr - not implemented
+
+HoldConstituent - not implemented
+
+HoldString - not implemented
+
+InitToolKit - works with the following restrictions:
+    NONE but consider the following:
+    Scenario: FIRST, the toolkit is initialized and a document is
+    built up and then the toolkit is finalized. SECOND: the toolkit
+    is initialized again. At this point, all storage allocated 
+    earlier becomes unreachable, but it has not been deallocated
+    (we call this a core leak... )
+
+LabelDocument - not implemented
+
+LabelStructure - not implemented
+
+LabelStyles - not implemented
+
+MakeComponent - works with the following restrictions:
+    1) Does not set the at_OBJECT_TYPE attribute
+
+MakeContent - works with the following restrictions:
+    NONE
+
+MakeDocument - works with the following restrictions:
+    NONE
+
+MakeDocumentProfile - works with the following restrictions:
+    NONE
+
+MakeSequence - works with the following restrictions:
+    1) When allocating storage, TKError is not set to NOMEM_err.
+	ERROR_SEQUENCE is returned however, but TKError is bogus.
+	(N.B. storage is allocated in two places: once for the
+	sequence structure, and once for the sequence body.)
+
+MakeString - works with the following restrictions:
+    1) See comments on MakeSequence above.  
+
+
+MakeStyle - works with the following restrictions:
+    NONE
+
+MakeStylesIterator - not implemented
+
+MakeSubgraphIterator - not implemented
+
+NextConstituent - not implemented
+
+ReadODIF - not implemented
+
+ReleaseAttr - not implemented
+
+ReleaseConstituent - not implemented
+
+ReleaseString - not implemented
+
+RemAttr - not implemented
+
+SetAttr - working with the following restrictions:
+    1) does not perform the checking required for BADATTR_err.
+	Thus, BADATTR_err is never returned.
+    2) When the constituent already has the attribute in
+	question (i.e. a replace is being done, the storage
+	for the old attribute value is not being freed.
+    3) It is possible to SetAttr for the following attributes:
+	at_SUBORDINATES
+	at_CONTENT_PORTIONS
+	at_CONTENT_TYPE
+	dp_GENERIC_LOG_STRUCT
+	at_CONCATENATION
+	cc_ALIGNMENT
+	at_OBJECT_TYPE
+	dp_SPECIFIC_LAY_STRUCT
+	cc_LINE_SPACING
+	cc_INDENTATION
+	at_CONTENT_INFORMATION
+	at_PRESENTATION_STYLE
+	at_USER_VISIBLE_NAME
+	at_LAYOUT_STYLE
+	at_CONTENT_ARCH_CLASS
+    4) Comments on particular attributes follow:
+	at_SUBORDINATES: value passed must be a sequence of constituents
+	at_CONTENT_PORTIONS: value passed must be a sequence of constituents
+	at_CONTENT_TYPE: value is not checked to ensure that it is one
+	    of those given in section 11.1.1.12 of the API
+	dp_GENERIC_LOG_STRUCT: value is not checked to ensure that it 
+	    is one of those given in section 11.1.8.3 of the API
+	at_CONCATENATION: value is not checked to ensure that it is
+	    one of those given in section 11.1.5.2 of the API
+	cc_ALIGNMENT: value is not checked to ensure that it is one
+	    of those given in section 11.1.9.1 of the API
+	at_OBJECT_TYPE: value is not checked to ensure that it is one
+	    of those given in section 11.1.1.1 of the API
+	dp_SPECIFIC_LAY_STRUCT: value is not checked to ensure that it
+	    is one of those given in section 11.1.8.1 of the API
+	cc_LINE_SPACING: value is not checked to ensure that it is
+	    a positive integer
+	cc_INDENTATION: value is not checked to ensure that it is 
+	    a non-negative integer.
+	at_CONTENT_INFORMATION: value passed must be a sequence of bytes
+	at_PRESENTATION_STYLE: value is assumed to be that of a valid
+	    constituent
+	at_USER_VISIBLE_NAME: value passed must be a sequence of chars
+	at_LAYOUT_STYLE: value passed must be that of a logical constituent
+	at_CONTENT_ARCH_CLASS: value passed must be a sequence of ints
+
+SetIntAttr - works with the following restrictions:
+    See the comments under SetAttr except for 3):
+    3) It is possible to SetAttr for the following attributes:
+	cc_LINE_SPACING
+	cc_INDENTATION
+
+SetValueAttr - works with the following restrictions:
+    See the comments under SetAttr except for 3):
+    3) It is possible to SetAttr for the following attributes:
+	at_CONTENT_TYPE
+	dp_GENERIC_LOG_STRUCT
+	at_CONCATENATION
+	cc_ALIGNMENT
+	at_OBJECT_TYPE
+	dp_SPECIFIC_LAY_STRUCT
+
+StyleAttrPriority - not implemented
+
+UnspecParms - not implemented
+
+WriteConstituentState - works with the following restrictions:
+    1) All kinds of constituents are recognized
+    2) Only the following attributes are recognized:
+	at_CONTENT_INFORMATION
+	at_CONTENT_PORTIONS
+	at_CONTENT_TYPE
+	at_SUBORDINATES
+	at_USER_VISIBLE_NAME
+
+WriteDocumentState - works with the following restrictions:
+    1) All parts of the document will be displayed, but only the
+       constituents for specific structures & styles will be
+       displayed.
+    2) Only the attributes listed for WriteConstituentState will be
+       displayed.  (This means that no attributes for the document
+       profile will be displayed.)
+
+WriteODIF - not implemented
+
+WriteSubgraphState - works with the following restrictions:
+    1) Only specific structures will be walked.
+    2) Attributes as restricted by WriteConstituentState.
+
+
+OTHER RESTRICTIONS
+------------------
+
+(i) SWAPPING is unimplemented & no attempt should be made to define
+the label SWAPPING or to define site-dependent swapping routines.
+
+(ii) The type definition for SEQUENCE_type is slightly messed up &
+will have to be rewritten.

@@ -1,0 +1,22 @@
+#
+# @(#)Makefile 1.8 89/07/31 SMI
+#
+
+INFOFILE=	xview.info 	\
+		textsw.info 	\
+		ttysw.info
+
+.KEEP_STATE:
+
+include ../../Makefile.master
+
+all:  ${INFOFILE}
+
+fast_install: install 
+
+install:: ${INFOFILE} install_subdir_info
+
+install_sources:
+
+clean: 
+	rm -f *.o *.pg core errs  ${INFOFILE}

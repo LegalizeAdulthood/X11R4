@@ -1,0 +1,116 @@
+.TH XMANDEL N " 07 March 1989" "X Version 11"
+.UC 4
+.SH NAME
+xmandel \- window based interface to Mandelbrot sets and Julia sets
+.SH SYNOPSIS
+xmandel [-display display]
+.SH DESCRIPTION
+.PP
+.IR Xmandel
+is a user friendly interface for generating Mandelbrot sets and Julia sets.
+It initially comes up with with six command buttons,
+which are described below, for controlling the execution.
+A Mandelbrot set is drawn in the window of the initial form
+when the \fImandel\fP button is selected.
+A separate window is created for drawing the Julia sets.
+.SH THEORY
+Let z0 be a number in the complex plane (x + yi). 
+Choose a complex constant C.  
+Calculate z1 = z0 ** 2 + C.
+Repeat this recursively, so that z2 = z1 ** 2 + C,
+z3 = z2 ** 2 + C and so on.
+z[n] will either tend to infinity or zero, depending
+on its initial value and the constant C.
+Specifically if the absolute value of z[n], 
+expressed as |z| = sqrt(x**2 + y**2) is greater than 2,
+then the recursive formula will diverge.
+.PP
+So, to calculate a Julia set, take each point near (0,0i),
+and use the formula z = z**2 + C recursively.
+The Julia set is the set of points for which
+z = z**2 + C would iterate indefinitely for the constant C.
+Pixels, which represent numbers in the complex plane,
+are set to the number of iterations before |z| exceeds 2.
+This then becomes an index into the hardware colormap.
+Each color then represents the number of iterations before
+divergence is detected.
+.PP
+To calculate a Mandelbrot set, again take each point near (0,0i),
+use the same formula z = z**2 + C recursively.
+This time let C be the initial value of the point itself (C = z0).
+Rather than having the same C for every point in the complex plane
+as in Julia set calculations,
+C is different for each point in the plane.
+Again let the pixel value be the number of iterations
+before |z| exceeds 2.
+.PP
+On monochrome displays, the pixel value is set to 1
+if the iteration count is 64, otherwise 0.
+.PP
+Mandelbrot sets and Julia sets are obviously closely
+related as can be seen from the similarity of their
+respective formulas.
+If the constant C is chosen from the interior of the
+Mandelbrot set, then the Julia set calculated from that
+constant C will be connected, that is have no gaps or discontinuities.
+If the constant C is chosen from outside the Mandelbrot set,
+the Julia set will be disconnected, more like grains of dust (Fatou clouds).
+If the constant C is chosen from the border of the Mandelbrot set, 
+then the Julia set will be more convoluted.
+Given this relationship between points in the Mandelbrot set
+and the Julia set generated, 
+Xmandel provides user selection of the constant C
+by mouse selection in the Mandelbrot window.
+.SH BUTTONS
+To control execution of the calculations, various buttons
+are provided.
+The buttons are:
+.TP
+.B mandel \-
+Calculates a Mandelbrot set from (-2.0, -1.5) to (1.0, 1.5)
+and display it in the window provided.
+.TP
+.B julia \-
+Calculates a Julia set.
+The user is required to select a point inside the Mandelbrot window using 
+the left mouse button as the constant C for the Julia set calculation.
+It will open a new window if needed.
+The Julia set is centered around (0,0),
+going from (-1.5, -1.5) to (1.5, 1.5).
+Julia set points can be selected from zoomed in Mandelbrot windows as well.
+Beware of selecting points outside the Mandelbrot window.
+.TP
+.B zoom \-
+In order to zoom in on a given area in the Mandelbrot set,
+a zoom button is provided.
+The area to be zoomed in on is selected with the left mouse button.
+Left button down begins the selection,
+dragging with left button down draws a rubber banded box to show the zoom area,
+and left button up begins the calculation.
+You can zoom in on a zoomed in area until you reach
+the limits of the precision of your hardware.
+Selecting a zoom area that crosses a window border doesn't work.
+.TP
+.B unzoom \-
+Return to previous zoom.  
+Note that you can zoom all the way out by selecting the \fImandel\fP button.
+.TP
+.B clear \-
+Clears the Mandelbrot window.
+.TP
+.B quit \-
+This causes \fIxmandel\fP to exit.
+.SH BUGS
+Xmandel uses hard coded values for button colors,
+assuming a 256 color colormap.
+.PP
+Xmandel does not handle exposure events.
+.PP
+Selecting a zoom area that crosses a window border doesn't work.
+.PP
+Performance is slow on workstations,
+especially workstations without floating point hardware.
+.SH AUTHOR
+John L. Freeman
+.br
+jlf@cray.com

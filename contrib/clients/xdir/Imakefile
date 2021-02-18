@@ -1,0 +1,14 @@
+       INCLUDES = -I$(TOP) -I$(AWIDGETSRC) -I$(TOOLKITSRC)
+LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+CDEBUGFLAGS = -g
+
+           SRCS = xdir.c dir.c util.c display.c error.c \
+		  resources.c help.c menus.c actions.c configure.c commands.c
+           OBJS = xdir.o dir.o util.o display.o error.o \
+		  resources.o help.o menus.o actions.o configure.o commands.o
+
+ComplexProgramTarget(xdir)
+InstallNonExec(xdir.help,$(LIBDIR))
+InstallNonExec(xdir.about,$(LIBDIR))
+InstallNonExec(xdir-view.help,$(LIBDIR))
+InstallAppDefaults(Xdir)

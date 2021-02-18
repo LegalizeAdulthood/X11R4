@@ -1,0 +1,223 @@
+#
+# XXXX-XXX (C) COPYRIGHT IBM CORPORATION 1988
+# LICENSED MATERIALS - PROPERTY OF IBM
+# REFER TO COPYRIGHT INSTRUCTIONS FORM NUMBER G120-2083
+#
+#	 XGKS Xlib make script
+#
+# $Header: Makefile,v 3.27 89/03/10 14:25:14 amy Exp $
+#
+# $Log:	Makefile,v $
+# Revision 3.27  89/03/10  14:25:14  amy
+# make depend
+# 
+# Revision 3.26  89/03/10  14:24:51  amy
+# Replaced code at depend label with call to makedepend.
+# 
+# Revision 3.25  89/03/10  14:22:04  amy
+# make depend
+# 
+# Revision 3.24  89/03/10  12:12:13  amy
+# make depend
+# 
+# Revision 3.23  89/03/10  12:09:09  amy
+# make depend
+# 
+# Revision 3.22  89/03/10  11:33:23  amy
+# make depend
+# 
+# Revision 3.21  89/03/10  10:35:19  amy
+# make depend
+# 
+# Revision 3.20  89/03/09  16:04:07  amy
+# Changes to facilitate a single invocation of make from the top level directory.
+# 
+# Revision 3.19  89/03/09  16:01:07  amy
+#  
+# 
+# Revision 3.18  88/12/08  14:00:33  amy
+# Changed references to xcolors.c to xcolours.c
+# 
+# Revision 3.17  88/08/26  05:51:03  amy
+# AUG  PARALLEL:  label added, commented out.
+#      makedepend:  now used at depend label.
+#      dependencies:  all changed.
+# 
+#
+# The following line added for the AIX port 
+SHELL=/bin/sh
+
+ILIBDIR = $(INSTALLHOME)/lib
+IHDIR = $(INSTALLHOME)/include
+FONTDBDIR = $(ILIBDIR)/fontdb
+
+ALLIVARS = INSTALLHOME=$(INSTALLHOME) ILIBDIR=$(ILIBDIR) IHDIR=$(IHDIR) \
+	FONTDBDIR=$(FONTDBDIR)
+
+H = ../../include
+
+# use up to 8 cpus on the Encore Multimax	AUG
+#PARALLEL=8
+
+# some debugging information is available...
+# CFLAGS = -I$(H) -DDEBUG -DNOINIT -DDDEBUG
+# -fswitch for Sun cc
+# The following line modified for AIX PORT
+CFLAGS = -I$(H) -O -DFONTDBDIR=\"$(FONTDBDIR)\" -DBSD_REMAP_SIGNAL_TO_SIGVEC -DBSD_INCLUDES -Nd4000 -Nn2500 
+
+
+XOBJS = xSet.o xopws.o xpline.o xevent.o xpmarker.o xfillarea.o xupdate.o \
+	xtext.o xcolours.o xinqpixel.o xcellarray.o
+
+XSRCS = xSet.c xopws.c xpline.c xevent.c xpmarker.c xfillarea.c xupdate.c \
+	xtext.c xcolours.c xinqpixel.c xcellarray.c
+
+LIBGKS = ../../lib/libxgks.a
+
+all: $(LIBGKS)
+	ar ru $(LIBGKS) $(XOBJS)
+# The following line was modified for the AIX PORT 
+#	ranlib $(LIBGKS)
+
+$(LIBGKS) : $(XOBJS)
+
+#
+# Installation (nothing to do since LIBGKS is the same as used in ../Makefile
+#	then ../Makefile will take care of installation.)
+#
+clean :
+	-rm -f *.o core
+
+depend:
+	(../../utils/makedepend/makedepend -I$(H) *.c);
+install:
+	
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+xSet.o: ../../include/gks_implem.h /usr/include/X11/Xlib.h
+xSet.o: /usr/include/sys/types.h /usr/include/X11/X.h
+xSet.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+xSet.o: ../../include/xgks.h /usr/include/stdio.h ../../include/gks_defines.h
+xSet.o: ../../include/primitive.h ../../include/input.h
+xSet.o: ../../include/gkslist.h ../../include/wslist.h ../../include/wdt.h
+xSet.o: ../../include/gkserrmsg.h ../../include/gks_errors.h
+xSet.o: ../../include/event.h
+xcellarray.o: ../../include/gks_implem.h /usr/include/X11/Xlib.h
+xcellarray.o: /usr/include/sys/types.h /usr/include/X11/X.h
+xcellarray.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+xcellarray.o: ../../include/xgks.h /usr/include/stdio.h
+xcellarray.o: ../../include/gks_defines.h ../../include/primitive.h
+xcellarray.o: ../../include/input.h ../../include/gkslist.h
+xcellarray.o: ../../include/wslist.h ../../include/wdt.h
+xcellarray.o: ../../include/gkserrmsg.h ../../include/gks_errors.h
+xcellarray.o: ../../include/event.h
+xcolours.o: /usr/include/string.h /usr/include/NLchar.h
+xcolours.o: /usr/include/sys/NLchar.h ../../include/gks_implem.h
+xcolours.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h
+xcolours.o: /usr/include/X11/X.h /usr/include/X11/Xatom.h
+xcolours.o: /usr/include/X11/Xutil.h ../../include/xgks.h
+xcolours.o: /usr/include/stdio.h ../../include/gks_defines.h
+xcolours.o: ../../include/primitive.h ../../include/input.h
+xcolours.o: ../../include/gkslist.h ../../include/wslist.h
+xcolours.o: ../../include/wdt.h ../../include/gkserrmsg.h
+xcolours.o: ../../include/gks_errors.h ../../include/event.h
+xcolours.o: /usr/include/signal.h /usr/include/sys/signal.h
+xcolours.o: /usr/include/ieeetrap.h /usr/include/sys/fpfp.h
+xcolours.o: /usr/include/sys/fpfpi.h
+xevent.o: /usr/include/string.h /usr/include/NLchar.h
+xevent.o: /usr/include/sys/NLchar.h ../../include/gks_implem.h
+xevent.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h
+xevent.o: /usr/include/X11/X.h /usr/include/X11/Xatom.h
+xevent.o: /usr/include/X11/Xutil.h ../../include/xgks.h /usr/include/stdio.h
+xevent.o: ../../include/gks_defines.h ../../include/primitive.h
+xevent.o: ../../include/input.h ../../include/gkslist.h
+xevent.o: ../../include/wslist.h ../../include/wdt.h
+xevent.o: ../../include/gkserrmsg.h ../../include/gks_errors.h
+xevent.o: ../../include/event.h /usr/include/signal.h
+xevent.o: /usr/include/sys/signal.h /usr/include/ieeetrap.h
+xevent.o: /usr/include/sys/fpfp.h /usr/include/sys/fpfpi.h
+xevent.o: /usr/include/sys/ioctl.h /usr/include/sys/ttychars.h
+xevent.o: /usr/include/sys/ttydev.h
+xfillarea.o: /usr/include/string.h /usr/include/NLchar.h
+xfillarea.o: /usr/include/sys/NLchar.h ../../include/gks_implem.h
+xfillarea.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h
+xfillarea.o: /usr/include/X11/X.h /usr/include/X11/Xatom.h
+xfillarea.o: /usr/include/X11/Xutil.h ../../include/xgks.h
+xfillarea.o: /usr/include/stdio.h ../../include/gks_defines.h
+xfillarea.o: ../../include/primitive.h ../../include/input.h
+xfillarea.o: ../../include/gkslist.h ../../include/wslist.h
+xfillarea.o: ../../include/wdt.h ../../include/gkserrmsg.h
+xfillarea.o: ../../include/gks_errors.h ../../include/event.h
+xfillarea.o: /usr/include/signal.h /usr/include/sys/signal.h
+xfillarea.o: /usr/include/ieeetrap.h /usr/include/sys/fpfp.h
+xfillarea.o: /usr/include/sys/fpfpi.h
+xinqpixel.o: ../../include/gks_implem.h /usr/include/X11/Xlib.h
+xinqpixel.o: /usr/include/sys/types.h /usr/include/X11/X.h
+xinqpixel.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+xinqpixel.o: ../../include/xgks.h /usr/include/stdio.h
+xinqpixel.o: ../../include/gks_defines.h ../../include/primitive.h
+xinqpixel.o: ../../include/input.h ../../include/gkslist.h
+xinqpixel.o: ../../include/wslist.h ../../include/wdt.h
+xinqpixel.o: ../../include/gkserrmsg.h ../../include/gks_errors.h
+xinqpixel.o: ../../include/event.h
+xopws.o: /usr/include/string.h /usr/include/NLchar.h
+xopws.o: /usr/include/sys/NLchar.h ../../include/gks_implem.h
+xopws.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h
+xopws.o: /usr/include/X11/X.h /usr/include/X11/Xatom.h
+xopws.o: /usr/include/X11/Xutil.h ../../include/xgks.h /usr/include/stdio.h
+xopws.o: ../../include/gks_defines.h ../../include/primitive.h
+xopws.o: ../../include/input.h ../../include/gkslist.h ../../include/wslist.h
+xopws.o: ../../include/wdt.h ../../include/gkserrmsg.h
+xopws.o: ../../include/gks_errors.h ../../include/event.h
+xopws.o: /usr/include/signal.h /usr/include/sys/signal.h
+xopws.o: /usr/include/ieeetrap.h /usr/include/sys/fpfp.h
+xopws.o: /usr/include/sys/fpfpi.h
+xpline.o: /usr/include/string.h /usr/include/NLchar.h
+xpline.o: /usr/include/sys/NLchar.h ../../include/gks_implem.h
+xpline.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h
+xpline.o: /usr/include/X11/X.h /usr/include/X11/Xatom.h
+xpline.o: /usr/include/X11/Xutil.h ../../include/xgks.h /usr/include/stdio.h
+xpline.o: ../../include/gks_defines.h ../../include/primitive.h
+xpline.o: ../../include/input.h ../../include/gkslist.h
+xpline.o: ../../include/wslist.h ../../include/wdt.h
+xpline.o: ../../include/gkserrmsg.h ../../include/gks_errors.h
+xpline.o: ../../include/event.h /usr/include/signal.h
+xpline.o: /usr/include/sys/signal.h /usr/include/ieeetrap.h
+xpline.o: /usr/include/sys/fpfp.h /usr/include/sys/fpfpi.h
+xpmarker.o: ../../include/gks_implem.h /usr/include/X11/Xlib.h
+xpmarker.o: /usr/include/sys/types.h /usr/include/X11/X.h
+xpmarker.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+xpmarker.o: ../../include/xgks.h /usr/include/stdio.h
+xpmarker.o: ../../include/gks_defines.h ../../include/primitive.h
+xpmarker.o: ../../include/input.h ../../include/gkslist.h
+xpmarker.o: ../../include/wslist.h ../../include/wdt.h
+xpmarker.o: ../../include/gkserrmsg.h ../../include/gks_errors.h
+xpmarker.o: ../../include/event.h /usr/include/signal.h
+xpmarker.o: /usr/include/sys/signal.h /usr/include/ieeetrap.h
+xpmarker.o: /usr/include/sys/fpfp.h /usr/include/sys/fpfpi.h
+xtext.o: /usr/include/sys/file.h /usr/include/sys/types.h
+xtext.o: /usr/include/sys/param.h /usr/include/sys/sysmacros.h
+xtext.o: /usr/include/sys/seg.h /usr/include/sys/pri.h
+xtext.o: /usr/include/sys/proc.h /usr/include/sys/low.h /usr/include/math.h
+xtext.o: /usr/include/values.h /usr/include/signal.h
+xtext.o: /usr/include/sys/signal.h /usr/include/ieeetrap.h
+xtext.o: /usr/include/sys/fpfp.h /usr/include/sys/fpfpi.h
+xtext.o: ../../include/font.h ../../include/gks_implem.h
+xtext.o: /usr/include/X11/Xlib.h /usr/include/X11/X.h
+xtext.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+xtext.o: ../../include/xgks.h /usr/include/stdio.h
+xtext.o: ../../include/gks_defines.h ../../include/primitive.h
+xtext.o: ../../include/input.h ../../include/gkslist.h ../../include/wslist.h
+xtext.o: ../../include/wdt.h ../../include/gkserrmsg.h
+xtext.o: ../../include/gks_errors.h ../../include/event.h
+xupdate.o: /usr/include/string.h /usr/include/NLchar.h
+xupdate.o: /usr/include/sys/NLchar.h ../../include/gks_implem.h
+xupdate.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h
+xupdate.o: /usr/include/X11/X.h /usr/include/X11/Xatom.h
+xupdate.o: /usr/include/X11/Xutil.h ../../include/xgks.h /usr/include/stdio.h
+xupdate.o: ../../include/gks_defines.h ../../include/primitive.h
+xupdate.o: ../../include/input.h ../../include/gkslist.h
+xupdate.o: ../../include/wslist.h ../../include/wdt.h
+xupdate.o: ../../include/gkserrmsg.h ../../include/gks_errors.h
+xupdate.o: ../../include/event.h

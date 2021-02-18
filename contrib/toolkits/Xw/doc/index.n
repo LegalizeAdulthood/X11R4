@@ -1,0 +1,135 @@
+
+
+       Index
+
+       All references to appendix A, ``Reference Information,'' are
+       indicated as page A-1.
+
+
+       A                               D
+       Accelerator, 1-2                Destroy procedure, 7-15
+       Action lists, 7-8               Display widgets, 2-5
+       Advanced program, 3-18          Documentation, 1-7
+       Advanced programming            Double click, 1-3
+            techniques, 3-15           Drag, 1-3
+       Application Control, 6-3
+       Argument values, setting,
+            3-15                       E
+       Arguments, setting, 3-21        Editing widgets, 2-6
+       Arrow, 2-15
+
+                                       F
+       B                               Form, 2-9
+       Background tile, 2-16           Form widget, constraints,
+       Bulletin board, 2-9                  5-3
+                                       Form widget, example, 5-3,
+                                            5-4
+       C                               Form widget, using, 5-1
+       Callback, 1-2
+       Callbacks, 4-10
+       Cascade, 2-14                   G
+       Categories of widgets, 2-3      Grab, 1-4, 4-5
+       Child widget, 1-2
+       Class initialization, 7-11
+       Class, meta, 1-4                H
+       Class record, 7-10              Header file, private, 7-3,
+       Classes, widget, 2-1                 7-5
+       Classing, widget, 7-28          Header file, public, 7-3,
+       Common resources, 7-2                7-6, 7-10
+       Composite manager widget,       Header files, 7-7
+            1-3                        Hierarchy, 3-19
+       Composite widget class, 1-3
+       Constructing a widget, 7-3
+       Create tile, 2-16
+
+
+       I                               Meta class, 1-4
+       Image edit, 2-6                 Miscellaneous widgets, 2-15
+       Include files, 7-7
+       Initialization, class, 7-11     P
+       Instance, 1-5, 2-1
+       Instantiate, 1-4                Panel, 2-11
+       Interface, Keyboard, 6-1        Popup manager, 4-6
+                                       Popup menu manager, 2-15
+                                       Post, 1-4
+       K                               Primitive widget, 1-5
+       Keyboard                        Private header file, 7-3,
+        Input Processing, 6-1               7-5
+        Traversal, 6-2                 Program, sample menu, 4-11
+       Keyboard interface, 6-1         Programming, advanced, 3-15
+       Keyboard traversal, 4-11        Public header file, 7-3,
+                                            7-6, 7-10
+                                       Push button, 2-7
+       L
+       Layout widgets, 2-9             R
+       List, 2-10
+                                       Redisplay procedure, 7-12
+                                       Resize procedure, 7-15
+       M                               Resources, common, 7-2
+       Manager, menu, 2-14             Resources, multi-state
+       manager widget, 1-4                  button, 7-10
+       Menu                            Row Column, 2-11
+        Creation, 4-9
+        Data Specification, 4-4        S
+        Hierarchy, 4-1
+        Popup, 4-2                     Sample program, advanced,
+       Menu button, 2-14                    3-18
+       Menu components, 4-4            Scroll bar, 2-15
+       Menu manager, 2-14, 4-5         Scrolled window, 2-12
+       Menu pane, 2-14                 Separator, menu, 2-15
+       Menu Pane Widget, 4-7           Setting argument values,
+       Menu, popup, 2-15                    3-15
+       Menu, sample program, 4-11      Setting arguments, 3-21
+       Menu separator, 2-15, 4-9       SetValues procedure, 7-14
+       Menu widgets, 2-13              Source code, 7-16
+       Menubutton widget, 4-8          Source code file, 7-7
+       MenuMgr, 4-5                    Static raster, 2-5
+       Menus, 4-1                      Static text, 2-5
+       Menus, using, 4-10
+
+
+       T                               Widgets, display, 2-5
+       Text edit, 2-6                  Widgets, editing, 2-6
+       Tile, 2-16                      Widgets, form, 5-1
+       Title bar, 2-16                 Widgets, layout, 2-9
+       Toggle, 2-7                     Widgets, menu, 2-13
+       Translations, 7-8               Widgets, miscellaneous, 2-15
+       Traversal Activation, 6-4       Widgets, user selection, 2-7
+       Traversal Key Definitions,      Widgets, using, 3-1
+            6-5                        Widgets, writing, 7-1
+       Traversal Requirements, 6-9     Writing widgets, 7-1
+
+                                       X
+       U
+       User selection widgets, 2-7     XtCallbackProc, Defined, 3-8
+       Using menus, 4-10               XtCreateWidget, Defined,
+       Using Widgets, 3-1                   3-10
+       Utilities, 2-16                 XtInitialize, Defined, 3-5
+                                       XtRealizeWidget, Defined,
+                                            3-11
+       V
+       Valuator, 2-16
+       Vertical pane, 2-13
+       Visual Attributes, 6-3
+
+
+       W
+       Widget, 1-1, 1-5, 2-1
+       Widget, child, 1-2
+       Widget classes, 2-1
+       Widget, classing, 7-28
+       Widget classing,
+            implementing, 7-29
+       Widget, composite class, 1-3
+       Widget, composite manager,
+            1-3
+       Widget, constructing, 7-3
+       Widget hierarchy, 3-19
+       Widget instance, 1-5, 2-1
+       Widget, manager, 1-4
+       Widget, menu button, 4-8
+       Widget, primitive, 1-5
+       Widget tree, 1-5
+       Widgets, categories of, 2-3
+
+

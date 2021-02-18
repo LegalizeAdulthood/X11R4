@@ -1,0 +1,73 @@
+#include "./../WnnImake.def"
+
+# If you change WNNWNNDIR, you should change "include/config.h"
+
+       INCLUDES = -I$(WNNINCLUDESRC) -I$(WNNROMKANSRC)
+        DEFINES = $(WNNDEFINES) $(WNNTERM)
+   INSTALLFLAGS = $(INSTINCFLAGS)
+LOCAL_INSTFLAGS = 4775
+LOCAL_LIBRARIES = $(WNNLIB) $(CONVKEYLIB)
+       UUMOWNER = root
+
+SRC1= epilogue.c header.c kensaku.c kuten.c jis_in.c \
+      prologue.c touroku.c jikouho.c jutil.c w_string.c \
+      printf.c termio.c hinsi.c termcap.c \
+      ttyfdslot.c setutmp.c redraw.c history.c key_bind.c \
+      screen.c basic_op.c uif.c cursor.c jhlp.c \
+      select_ele.c inspect.c wnnrc_op.c
+OBJ1= epilogue.o header.o kensaku.o kuten.o jis_in.o \
+      prologue.o touroku.o jikouho.o jutil.o w_string.o \
+      printf.o termio.o hinsi.o termcap.o \
+      ttyfdslot.o setutmp.o redraw.o history.o key_bind.o \
+      screen.o basic_op.o uif.o cursor.o jhlp.o \
+      select_ele.o inspect.o wnnrc_op.o
+SRC2= $(WNNETCSRC)/strings.c
+OBJ2= strings.o
+SRC3= $(WNNETCSRC)/sstrings.c
+OBJ3= sstrings.o
+SRC4= $(WNNETCSRC)/bcopy.c
+OBJ4= bcopy.o
+SRC5= $(WNNETCSRC)/xutoj.c
+OBJ5= xutoj.o
+LOCAL_ETCSRCS= $(SRC2) $(SRC3) $(SRC4) $(SRC5)
+LOCAL_ETCOBJS= $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5)
+SRCS= $(SRC1) $(LOCAL_ETCSRCS)
+OBJS= $(OBJ1) $(LOCAL_ETCOBJS)
+
+#if SystemV
+LOCAL_CVTSRC= sysV
+#else
+LOCAL_CVTSRC= .
+#endif
+
+AllTarget(uum)
+SingleProgramTarget(uum,$(OBJS),$(LOCAL_LIBRARIES),$(WNNTERM_LIB))
+DependTarget()
+
+InstallProgramWithFlags(uum,$(WNNBINDIR),$(INSTUIDFLAGS))
+
+install::
+	strip $(WNNBINDIR)/uum
+	@echo 'Please Input Password for $(UUMOWNER)'
+	-@if test -f /etc/chown ; then \
+	    echo 'su $(UUMOWNER) -c /etc/chown $(UUMOWNER) $(WNNBINDIR)/uum' ; \
+	    su $(UUMOWNER) -c '/etc/chown $(UUMOWNER) $(WNNBINDIR)/uum' ; \
+	elif test -f /bin/chown ; then \
+	    echo 'su $(UUMOWNER) -c /bin/chown $(UUMOWNER) $(WNNBINDIR)/uum' ; \
+	    su $(UUMOWNER) -c '/bin/chown $(UUMOWNER) $(WNNBINDIR)/uum' ; \
+	else \
+	    echo 'su $(UUMOWNER) -c chown $(UUMOWNER) $(WNNBINDIR)/uum' ; \
+	    su $(UUMOWNER) -c 'chown $(UUMOWNER) $(WNNBINDIR)/uum' ; \
+	fi
+	-su $(UUMOWNER) -c 'chmod $(LOCAL_INSTFLAGS) $(WNNBINDIR)/uum'
+	-cp $(WNNJDSRC)/uumrc*		$(WNNWNNDIR)
+	-cp $(WNNJDSRC)/uumkey*		$(WNNWNNDIR)
+	-cp $(WNNJDSRC)/wnnenvrc*	$(WNNWNNDIR)
+	-cp $(WNNJDSRC)/rk/[123ma]*	$(WNNWNNDIR)/rk
+	-cp $(WNNJDSRC)/rk.vi/[123mu]*	$(WNNWNNDIR)/rk.vi
+	-cp $(WNNJDSRC)/$(LOCAL_CVTSRC)/cvt_key_*	$(WNNWNNDIR)
+
+WnnSpecialObjectRule($(OBJ2),$(SRC2),$(WNNETCSRC))
+WnnSpecialObjectRule($(OBJ3),$(SRC3),$(WNNETCSRC))
+WnnSpecialObjectRule($(OBJ4),$(SRC4),$(WNNETCSRC))
+WnnSpecialObjectRule($(OBJ5),$(SRC5),$(WNNETCSRC))

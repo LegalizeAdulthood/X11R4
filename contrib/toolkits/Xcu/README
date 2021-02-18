@@ -1,0 +1,32 @@
+
+Welcome to the Xcu widgets directory of X11R4.  (Xcu Version 1.4)
+
+If you are new to Xcu widgets, you are probably asking yourself,
+"Is there any good stuff in here?"  Well, I'll give you a quick
+rundown on how to find the answer to that question.  In the
+Readme.dir directory there are a bunch more README's.
+
+    widgets    : a quick summary of the Xcu widgets
+    tbl        : a more detailed description of the tbl widget
+    changes123 : changes from earlier versions to V1.3
+    changes4   : changes from V1.3 to V1.4
+    make       : how to make this distribution
+    examples   : a roadmap to the examples
+    bugs       : how to get prompt attention if you find bugs
+
+Briefly, there is at least one widget you should look at, XcuTbl.
+It is a geometry manager that lays out widgets using the formats of the troff
+preprocessor, "tbl".
+
+If you're looking for something more exciting, check out the XcuWlm widget,
+which is a very useful alternative to DEC's UIL.  It can do a widget layout
+for you given an ascii description, and that's just for starters...
+
+Potscript versions of the documentation are available via anonymous FTP
+from 128.84.247.85 : pub/xcu.v1.4.ps.Z.
+
+As a final piece of bait, I am working on converting a bunch of applications
+that will let you make lots of pretty pictures, but only if you take the
+time to install Xcu!  (Cellular automata, fractals, henon mappings...)
+
+ -- gene  (gdykes@tcgould.tn.cornell.edu)

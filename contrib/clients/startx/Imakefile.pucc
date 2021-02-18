@@ -1,0 +1,21 @@
+
+PROGRAMS = startx
+
+MakeScriptFromCpp(startx, -DBINDIR=$(BINDIR) -DUNSUPBINDIR=$(UNSUPBINDIR))
+
+InstallProgram(startx,$(BINDIR))
+
+install::
+	if [ ! -d $(LIBDIR)/startx ]; then \
+		mkdir $(LIBDIR)/startx ; \
+		chmod 755 $(LIBDIR)/startx ; \
+	else \
+		exit 0; \
+	fi
+
+InstallNonExec(lib/xdefaults, $(LIBDIR)/startx)
+InstallNonExec(lib/twmrc, $(LIBDIR)/startx)
+InstallNonExec(lib/xsession, $(LIBDIR)/startx)
+
+clean::
+	/bin/rm -rf $(PROGRAMS)

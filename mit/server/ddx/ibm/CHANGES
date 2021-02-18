@@ -1,0 +1,7 @@
+The following changes have been made to this directory since R3:
+
+	o  Support for PS/2 (ibm8514 and vga drivers).
+
+	o  apa16 code optimized a bit.
+
+	o  Random R4isms (out of memory, device structures etc).

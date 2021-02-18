@@ -1,0 +1,183 @@
+
+
+
+
+Chapter 6	Animate 8-bit
+Raster and Process SDS
+
+
+
+
+
+
+
+Chapter Overview
+
+Loading 8-bit Raster Images
+
+Loading the Raster Image
+
+Animating the Raster Image
+
+Processing Scientific Datasets
+
+Chapter Overview
+
+
+
+This chapter explains the procedures for loading and animating a saved
+8-bit Raster image and processing a scientific dataset.
+
+
+
+
+
+Loading an 8-bit Raster Image
+
+
+
+Loading the Raster Image
+
+To load a saved 8-bit raster image, click the Load 8-bit Raster button
+located in the control window. A file window labeled, Load a RASTER8 set,
+appears on the screen (see Figure 6.1).
+
+
+
+Figure 6.1	Load a RASTER8 
+set File Window
+
+ 
+
+
+
+ 
+
+1.	Select your image
+in the current directory, or in another by entering the path to a new
+directory in the text box labeled, Current Directory being displayed. Click
+Change to access the new directory and its file contents. If an error
+message appears in the LogBook, the current directory remains unchanged.
+
+
+
+2.	Choose the desired
+Raster8 file to be loaded by scrolling up or down the file list window and
+clicking on its filename. The name appears in the Current Filename text
+box. The LogBook reports if the file is indeed a 3D SDS HDF file or a
+Raster8 HDF file. If the file is of HDF format, the message shows the
+number of scientific datasets contained in the file.
+
+
+
+3.	Specify which
+scientific dataset you wish to load into memory from the selected file by
+entering its number in the text box labeled SDS #. Notice that the text box
+SDS # reads 1 by default, indicating that the first SDS in the file will be
+loaded unless you specify otherwise. Be aware that if you enter a value
+above the designated number of datasets present, the file window closes
+and an error appears in the LogBook:	***HDF ERROR: 
+Cannot load SDS 4.
+
+
+
+4.	Click Cancel to
+leave the box without loading your entry or Animate Raster8 to load all the
+frames into memory for animation. The file window disappears and an
+Animation window appears (see Figure 6.2).
+
+
+
+Figure 6.2	Animate 8-bit
+Raster Image Window
+
+ 
+
+
+
+Animating the Raster Image
+
+The animation window contains an animation mechanism that may be used
+to quickly display several related raster frames together to give an
+illusion of motion. For more information on animating your raster image
+using the animation window, refer to Chapter 3, "Planes Along Axes."
+
+
+
+
+
+
+
+Processing Datasets
+
+
+
+By selecting the Process a SDS from the Control window, you have the
+option of expanding a small dataset by trilinear interpolation During
+interpolation, each subvolume bounded by every eight adjacent data points
+is assumed to contain a scalar function linearly dependent on all the eight
+values, so that trilinear interpolation can be performed. The processed
+datasets, once they have been saved, may be reused by NCSA X DataSlice or
+any of the other NCSA visualization tools that support HDF such as NCSA
+Layout and NCSA Image.
+
+
+
+To process or interpolate a scientific dataset:
+
+
+
+1.	Click Process a
+SDS located in the Control window. A File window labeled, Process & save
+a SDS (see Figure 6.3), appears on the screen.
+
+
+
+2.	Select your image
+in the current directory, or in another by entering the path to a new
+directory in the text box labeled, Current Directory being displayed. Click
+Change to access the new directory and its file contents. If an error
+message appears in the LogBook, the current directory remains unchanged.
+
+
+
+3.	Select the 3D HDF
+scientific dataset file containing the dataset to be interpolated and input
+the filename of the HDF to which the enlarged dataset is to be stored.
+
+
+
+4.	Enter the number
+of the desired SDS contained within the chosen file.
+
+
+
+5.	Enter an integer in
+the Scale box to dictate the magnification value determining the actual
+pixel size of the generated image(s). The default value is 3, because 3D
+datasets are generally expected to produce very small images. Remember
+that the larger your dataset and bigger your scale value, the longer the
+dataset will take to process.
+
+
+
+6.	Click Cancel to
+abort the File window or click Save to start the interpolation process.
+Your dataset is automatically saved after the interpolation.
+
+
+
+When NCSA X DataSlice has finished interpolating and saving the dataset,
+the file window disappears from the screen and the LogBook reports on the
+completed process.
+
+
+
+Figure 6.3	Process & save a
+SDS Window
+
+ 
+
+
+
+

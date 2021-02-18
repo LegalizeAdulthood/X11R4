@@ -1,0 +1,63 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+DOBJS = arbcon.do \
+	arbiter.do \
+	arbiterv.do \
+	cel.do \
+	celv.do \
+	lset.do \
+	lsetv.do \
+	wincelv.do \
+	page.do \
+	pagev.do \
+	runadewa.do
+
+IHFILES = arbcon.ih \
+	arbiter.ih \
+	arbiterv.ih \
+	cel.ih \
+	celv.ih \
+	lset.ih \
+	lsetv.ih \
+	wincelv.ih \
+	page.ih \
+	pagev.ih \
+	runadewa.ih
+
+DOCS = Overview.doc \
+	Tutorial.doc \
+	RefMan.doc \
+	Title.doc
+
+NormalObjectRule()
+NormalATKRule()
+
+MkdirTarget(${DESTDIR}/lib/arbiters $(DESTDIR)/doc/adew ${DESTDIR}/doc/atk/adew)
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+InstallMultiple(makefile.arb Arb vallist, $(INSTINCFLAGS), $(DESTDIR)/lib/arbiters)
+InstallProgram(conpros.awk, $(DESTDIR)/lib/arbiters)
+InstallProgram(arb, $(DESTDIR)/bin)
+InstallLink(runapp, ${DESTDIR}/bin/runadew)
+
+
+NormalHelpRule()
+InstallDocs($(DOCS), $(DESTDIR)/doc/adew)
+InstallDocs(adew.help lstproc.help, $(DESTDIR)/help)
+InstallHelpAlias(adew, ado lset arb arbcon createcon value controllers)
+InstallHelpAlias(lstproc, lsetproc lsetprocs)
+
+install.doc::
+	(cd ${DESTDIR}/doc/atk/adew ; \
+	for i in $(DOCS) ; do \
+		(set -x ; $(RM) $$i ; \
+		$(LN) ../../adew/$$i $$i )  \
+	done)
+
+ProgramTarget(createcon, mkcon.o, ${UTILLIB}  ${BASEDIR}/lib/libclass.a,)
+InstallProgram(createcon, $(DESTDIR)/bin)
+
+DependTarget()

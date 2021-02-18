@@ -1,0 +1,15 @@
+As described in the Copyright notices, the Ascii Reader software is
+contributed by Interleaf, Inc. on an AS-IS basis with no warranties of
+any kind and with no support of any kind, including no representation
+that the software will be developed further or that any bugs will be
+fixed. However, Interleaf will be pleased to receive
+bug-reports for consideration should such further development happen
+in the future. Reports may be sent to
+	ar-bugs@ileaf.com 
+in the internet or via uucp to 
+	...!mit-eddie!ileaf!ar-bugs 
+Bug reports should include the version number found in the file
+ar5private.h and should only be sent if the sender is using the entire
+source set unmodified from the MIT X11R4 release. Reports should include
+a description of the problem and data files as small as possible
+illustrating the bug. No reports will be acknowledged.

@@ -1,0 +1,420 @@
+#
+# XXXX-XXX (C) COPYRIGHT IBM CORPORATION 1988
+# LICENSED MATERIALS - PROPERTY OF IBM
+# REFER TO COPYRIGHT INSTRUCTIONS FORM NUMBER G120-2083
+#
+#	 XGKS make script
+# $Header: Makefile,v 3.36 89/03/10 14:21:34 amy Exp $
+# $Log:	Makefile,v $
+#
+# The follow line added for AIX PORT 
+SHELL=/bin/sh
+H = ../include
+
+#
+# Installation
+#
+ILIBDIR = $(INSTALLHOME)/lib
+IBINDIR = $(INSTALLHOME)/bin
+IHDIR   = $(INSTALLHOME)/include
+FONTDBDIR = $(ILIBDIR)/fontdb
+
+ALLIVARS = INSTALLHOME=$(INSTALLHOME) ILIBDIR=$(ILIBDIR) IBINDIR=$(IBINDIR) \
+	IHDIR=$(IHDIR) FONTDBDIR=$(FONTDBDIR)
+
+# some debugging information is available...
+# CFLAGS = -I$(H) -DDEBUG -DNOINIT -DDDEBUG -DCHODEBUG -DIDEVDEBUG
+#	-DPICKDEBUG -DLOCDEBUG -DSTKDEBUG -DTRANDEBUG -DESCAPEDEBUG -DSEGMENTDEBUG
+# -fswitch for Sun
+# The following line modified for AIX PORT 
+CFLAGS = -I$(H) -O  -DFONTDBDIR=\"$(FONTDBDIR)\" -DBSD_INCLUDES -DBSD_REMAP_SIGNAL_TO_SIGVEC -Nd4000 -Nn3000
+
+# libraries
+#
+LIBGKS = ../lib/libxgks.a
+
+GKSOBJS = open_ws.o open_gks.o aspect_flags.o colours.o act_ws.o\
+	  transforms.o gks_error.o gerrorhand.o polylines.o prmgr.o segments.o\
+	  polymarkers.o fillarea.o cellarray.o input.o locator.o event.o update.o\
+	  text.o deferral_ws.o choice.o pick.o valuator.o string.o stroke.o\
+	  inqpolylines.o inqpmarker.o inqfillareas.o message.o escape.o\
+	  inqtext.o inqWDT.o inquiries.o inqtransform.o inqpixel.o metafile.o gdp.o
+
+GKSSRCS = open_ws.c open_gks.c aspect_flags.c colours.c act_ws.c\
+	  transforms.c gks_error.c gerrorhand.c polylines.c prmgr.c segments.c\
+	  polymarkers.c fillarea.c cellarray.c input.c locator.c event.c update.c\
+	  text.c deferral_ws.c pick.c choice.c valuator.c string.c stroke.c\
+	  inqpolylines.c inqpmarker.c inqfillareas.c message.c escape.c\
+	  inqtext.c inqWDT.c inquiries.c inqtransform.c inqpixel.c metafile.c gdp.c
+
+GKSERRMSG = ../include/gkserrmsg.h
+
+SUBDIRS = x fontdb
+
+all: $(LIBGKS)
+	@for i in $(SUBDIRS); do \
+		(echo '*** making: '`pwd`'/'$$i; \
+		cd $$i; make $(MFLAGS) $(ALLIVARS) all; \
+		echo '*** done making: '`pwd`/); done
+
+$(LIBGKS) : $(GKSOBJS)
+#	@csh .multi_make/wait_for_end
+	ar ru $(LIBGKS) $?
+# The following line was modified for the AIX PORT
+#	ranlib $(LIBGKS)
+
+$(GKSERRMSG) : mkerrmsg ../include/gks_errors.h
+	-rm -f $(GKSERRMSG)
+	mkerrmsg < ../include/gks_errors.h > $(GKSERRMSG)
+
+mkerrmsg: mkerrmsg.o
+	$(CC) $(CFLAGS) -o $@ $@.o
+
+
+#
+# Installation
+#
+
+install: all
+	@-mkdir $(INSTALLHOME)
+	@chmod 775 $(INSTALLHOME)
+	@-mkdir $(ILIBDIR)
+	@chmod 775 $(ILIBDIR)
+	@install -c  "$(ILIBDIR)" "$(LIBGKS)"
+# The following line was modified for the AIX PORT
+#	ranlib $(ILIBDIR)/libxgks.a
+	@-mkdir $(IHDIR)
+	@chmod 775 $(IHDIR)
+	@install -c  "$(IHDIR)" "$(H)/xgks.h"
+	@for i in $(SUBDIRS); do \
+		(echo '** installing : '`pwd`'/'$$i; \
+		cd $$i; make $(MFLAGS) $(ALLIVARS) install; \
+		echo '** done installing : '`pwd`/); done
+
+clean :
+	-rm -f *.o core mkerrmsg ../lib/libxgks.a
+	@for i in $(SUBDIRS); do \
+		(echo '** cleaning : '`pwd`'/'$$i; \
+		cd $$i; make $(MFLAGS) $(ALLIVARS) clean; \
+		echo '** done cleaning : '`pwd`/); done
+
+lint : 
+	lint $(CFLAGS) $(GKSSRCS) x/*.c 
+
+depend:
+	(../utils/makedepend/makedepend -I$(H) *.c); 
+# make depend in subdirectories
+	@for i in $(SUBDIRS); do \
+		(echo '*** makedepend '`pwd`'/'$$i; \
+		cd $$i;make $(MFLAGS) $(ALLIVARS) depend;); done
+
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+act_ws.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+act_ws.o: /usr/include/sys/types.h /usr/include/X11/X.h
+act_ws.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h ../include/xgks.h
+act_ws.o: /usr/include/stdio.h ../include/gks_defines.h
+act_ws.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+act_ws.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+act_ws.o: ../include/gks_errors.h ../include/event.h
+aspect_flags.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+aspect_flags.o: /usr/include/sys/types.h /usr/include/X11/X.h
+aspect_flags.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+aspect_flags.o: ../include/xgks.h /usr/include/stdio.h
+aspect_flags.o: ../include/gks_defines.h ../include/primitive.h
+aspect_flags.o: ../include/input.h ../include/gkslist.h ../include/wslist.h
+aspect_flags.o: ../include/wdt.h ../include/gkserrmsg.h
+aspect_flags.o: ../include/gks_errors.h ../include/event.h
+cellarray.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+cellarray.o: /usr/include/sys/types.h /usr/include/X11/X.h
+cellarray.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+cellarray.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+cellarray.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+cellarray.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+cellarray.o: ../include/gks_errors.h ../include/event.h
+choice.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+choice.o: /usr/include/sys/types.h /usr/include/X11/X.h
+choice.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h ../include/xgks.h
+choice.o: /usr/include/stdio.h ../include/gks_defines.h
+choice.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+choice.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+choice.o: ../include/gks_errors.h ../include/event.h /usr/include/signal.h
+choice.o: /usr/include/sys/signal.h /usr/include/ieeetrap.h
+choice.o: /usr/include/sys/fpfp.h /usr/include/sys/fpfpi.h
+choice.o: /usr/include/strings.h /usr/include/X11/keysymdef.h
+colours.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+colours.o: /usr/include/sys/types.h /usr/include/X11/X.h
+colours.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+colours.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+colours.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+colours.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+colours.o: ../include/gks_errors.h ../include/event.h
+deferral_ws.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+deferral_ws.o: /usr/include/sys/types.h /usr/include/X11/X.h
+deferral_ws.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+deferral_ws.o: ../include/xgks.h /usr/include/stdio.h
+deferral_ws.o: ../include/gks_defines.h ../include/primitive.h
+deferral_ws.o: ../include/input.h ../include/gkslist.h ../include/wslist.h
+deferral_ws.o: ../include/wdt.h ../include/gkserrmsg.h
+deferral_ws.o: ../include/gks_errors.h ../include/event.h
+escape.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+escape.o: /usr/include/sys/types.h /usr/include/X11/X.h
+escape.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h ../include/xgks.h
+escape.o: /usr/include/stdio.h ../include/gks_defines.h
+escape.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+escape.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+escape.o: ../include/gks_errors.h ../include/event.h
+event.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+event.o: /usr/include/sys/types.h /usr/include/X11/X.h
+event.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h ../include/xgks.h
+event.o: /usr/include/stdio.h ../include/gks_defines.h ../include/primitive.h
+event.o: ../include/input.h ../include/gkslist.h ../include/wslist.h
+event.o: ../include/wdt.h ../include/gkserrmsg.h ../include/gks_errors.h
+event.o: ../include/event.h /usr/include/strings.h /usr/include/signal.h
+event.o: /usr/include/sys/signal.h /usr/include/ieeetrap.h
+event.o: /usr/include/sys/fpfp.h /usr/include/sys/fpfpi.h
+event.o: /usr/include/sys/time.h /usr/include/sys/time.h
+fillarea.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+fillarea.o: /usr/include/sys/types.h /usr/include/X11/X.h
+fillarea.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+fillarea.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+fillarea.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+fillarea.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+fillarea.o: ../include/gks_errors.h ../include/event.h ../include/fillarea.h
+gdp.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+gdp.o: /usr/include/sys/types.h /usr/include/X11/X.h /usr/include/X11/Xatom.h
+gdp.o: /usr/include/X11/Xutil.h ../include/xgks.h /usr/include/stdio.h
+gdp.o: ../include/gks_defines.h ../include/primitive.h ../include/input.h
+gdp.o: ../include/gkslist.h ../include/wslist.h ../include/wdt.h
+gdp.o: ../include/gkserrmsg.h ../include/gks_errors.h ../include/event.h
+gerrorhand.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+gerrorhand.o: /usr/include/sys/types.h /usr/include/X11/X.h
+gerrorhand.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+gerrorhand.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+gerrorhand.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+gerrorhand.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+gerrorhand.o: ../include/gks_errors.h ../include/event.h
+gks_error.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+gks_error.o: /usr/include/sys/types.h /usr/include/X11/X.h
+gks_error.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+gks_error.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+gks_error.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+gks_error.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+gks_error.o: ../include/gks_errors.h ../include/event.h
+input.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+input.o: /usr/include/sys/types.h /usr/include/X11/X.h
+input.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h ../include/xgks.h
+input.o: /usr/include/stdio.h ../include/gks_defines.h ../include/primitive.h
+input.o: ../include/input.h ../include/gkslist.h ../include/wslist.h
+input.o: ../include/wdt.h ../include/gkserrmsg.h ../include/gks_errors.h
+input.o: ../include/event.h /usr/include/X11/cursorfont.h
+input.o: /usr/include/X11/keysymdef.h
+inqWDT.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+inqWDT.o: /usr/include/sys/types.h /usr/include/X11/X.h
+inqWDT.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h ../include/xgks.h
+inqWDT.o: /usr/include/stdio.h ../include/gks_defines.h
+inqWDT.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+inqWDT.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+inqWDT.o: ../include/gks_errors.h ../include/event.h /usr/include/strings.h
+inqfillareas.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+inqfillareas.o: /usr/include/sys/types.h /usr/include/X11/X.h
+inqfillareas.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+inqfillareas.o: ../include/xgks.h /usr/include/stdio.h
+inqfillareas.o: ../include/gks_defines.h ../include/primitive.h
+inqfillareas.o: ../include/input.h ../include/gkslist.h ../include/wslist.h
+inqfillareas.o: ../include/wdt.h ../include/gkserrmsg.h
+inqfillareas.o: ../include/gks_errors.h ../include/event.h
+inqfillareas.o: ../include/fillarea.h
+inqpixel.o: /usr/include/string.h /usr/include/NLchar.h
+inqpixel.o: /usr/include/sys/NLchar.h ../include/gks_implem.h
+inqpixel.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h
+inqpixel.o: /usr/include/X11/X.h /usr/include/X11/Xatom.h
+inqpixel.o: /usr/include/X11/Xutil.h ../include/xgks.h /usr/include/stdio.h
+inqpixel.o: ../include/gks_defines.h ../include/primitive.h
+inqpixel.o: ../include/input.h ../include/gkslist.h ../include/wslist.h
+inqpixel.o: ../include/wdt.h ../include/gkserrmsg.h ../include/gks_errors.h
+inqpixel.o: ../include/event.h
+inqpmarker.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+inqpmarker.o: /usr/include/sys/types.h /usr/include/X11/X.h
+inqpmarker.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+inqpmarker.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+inqpmarker.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+inqpmarker.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+inqpmarker.o: ../include/gks_errors.h ../include/event.h
+inqpmarker.o: ../include/polymarkers.h
+inqpolylines.o: /usr/include/string.h /usr/include/NLchar.h
+inqpolylines.o: /usr/include/sys/NLchar.h ../include/gks_implem.h
+inqpolylines.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h
+inqpolylines.o: /usr/include/X11/X.h /usr/include/X11/Xatom.h
+inqpolylines.o: /usr/include/X11/Xutil.h ../include/xgks.h
+inqpolylines.o: /usr/include/stdio.h ../include/gks_defines.h
+inqpolylines.o: ../include/primitive.h ../include/input.h
+inqpolylines.o: ../include/gkslist.h ../include/wslist.h ../include/wdt.h
+inqpolylines.o: ../include/gkserrmsg.h ../include/gks_errors.h
+inqpolylines.o: ../include/event.h ../include/polylines.h
+inqtext.o: /usr/include/string.h /usr/include/NLchar.h
+inqtext.o: /usr/include/sys/NLchar.h ../include/gks_implem.h
+inqtext.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h
+inqtext.o: /usr/include/X11/X.h /usr/include/X11/Xatom.h
+inqtext.o: /usr/include/X11/Xutil.h ../include/xgks.h /usr/include/stdio.h
+inqtext.o: ../include/gks_defines.h ../include/primitive.h ../include/input.h
+inqtext.o: ../include/gkslist.h ../include/wslist.h ../include/wdt.h
+inqtext.o: ../include/gkserrmsg.h ../include/gks_errors.h ../include/event.h
+inqtext.o: ../include/text.h
+inqtransform.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+inqtransform.o: /usr/include/sys/types.h /usr/include/X11/X.h
+inqtransform.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+inqtransform.o: ../include/xgks.h /usr/include/stdio.h
+inqtransform.o: ../include/gks_defines.h ../include/primitive.h
+inqtransform.o: ../include/input.h ../include/gkslist.h ../include/wslist.h
+inqtransform.o: ../include/wdt.h ../include/gkserrmsg.h
+inqtransform.o: ../include/gks_errors.h ../include/event.h
+inquiries.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+inquiries.o: /usr/include/sys/types.h /usr/include/X11/X.h
+inquiries.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+inquiries.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+inquiries.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+inquiries.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+inquiries.o: ../include/gks_errors.h ../include/event.h
+locator.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+locator.o: /usr/include/sys/types.h /usr/include/X11/X.h
+locator.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+locator.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+locator.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+locator.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+locator.o: ../include/gks_errors.h ../include/event.h /usr/include/signal.h
+locator.o: /usr/include/sys/signal.h /usr/include/ieeetrap.h
+locator.o: /usr/include/sys/fpfp.h /usr/include/sys/fpfpi.h
+message.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+message.o: /usr/include/sys/types.h /usr/include/X11/X.h
+message.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+message.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+message.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+message.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+message.o: ../include/gks_errors.h ../include/event.h /usr/include/strings.h
+metafile.o: /usr/include/sys/time.h /usr/include/sys/time.h
+metafile.o: /usr/include/strings.h /usr/include/pwd.h
+metafile.o: /usr/include/sys/types.h /usr/include/math.h
+metafile.o: /usr/include/values.h /usr/include/ctype.h
+metafile.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+metafile.o: /usr/include/X11/X.h /usr/include/X11/Xatom.h
+metafile.o: /usr/include/X11/Xutil.h ../include/xgks.h /usr/include/stdio.h
+metafile.o: ../include/gks_defines.h ../include/primitive.h
+metafile.o: ../include/input.h ../include/gkslist.h ../include/wslist.h
+metafile.o: ../include/wdt.h ../include/gkserrmsg.h ../include/gks_errors.h
+metafile.o: ../include/event.h ../include/metafile.h
+mkerrmsg.o: /usr/include/stdio.h /usr/include/strings.h
+open_gks.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+open_gks.o: /usr/include/sys/types.h /usr/include/X11/X.h
+open_gks.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+open_gks.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+open_gks.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+open_gks.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+open_gks.o: ../include/gks_errors.h ../include/event.h ../include/fillarea.h
+open_gks.o: ../include/text.h ../include/polylines.h ../include/polymarkers.h
+open_ws.o: /usr/include/string.h /usr/include/NLchar.h
+open_ws.o: /usr/include/sys/NLchar.h ../include/gks_implem.h
+open_ws.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h
+open_ws.o: /usr/include/X11/X.h /usr/include/X11/Xatom.h
+open_ws.o: /usr/include/X11/Xutil.h ../include/xgks.h /usr/include/stdio.h
+open_ws.o: ../include/gks_defines.h ../include/primitive.h ../include/input.h
+open_ws.o: ../include/gkslist.h ../include/wslist.h ../include/wdt.h
+open_ws.o: ../include/gkserrmsg.h ../include/gks_errors.h ../include/event.h
+pick.o: /usr/include/signal.h /usr/include/sys/signal.h
+pick.o: /usr/include/ieeetrap.h /usr/include/sys/fpfp.h
+pick.o: /usr/include/sys/fpfpi.h ../include/gks_implem.h
+pick.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h /usr/include/X11/X.h
+pick.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h ../include/xgks.h
+pick.o: /usr/include/stdio.h ../include/gks_defines.h ../include/primitive.h
+pick.o: ../include/input.h ../include/gkslist.h ../include/wslist.h
+pick.o: ../include/wdt.h ../include/gkserrmsg.h ../include/gks_errors.h
+pick.o: ../include/event.h
+polylines.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+polylines.o: /usr/include/sys/types.h /usr/include/X11/X.h
+polylines.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+polylines.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+polylines.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+polylines.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+polylines.o: ../include/gks_errors.h ../include/event.h
+polylines.o: ../include/polylines.h
+polymarkers.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+polymarkers.o: /usr/include/sys/types.h /usr/include/X11/X.h
+polymarkers.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+polymarkers.o: ../include/xgks.h /usr/include/stdio.h
+polymarkers.o: ../include/gks_defines.h ../include/primitive.h
+polymarkers.o: ../include/input.h ../include/gkslist.h ../include/wslist.h
+polymarkers.o: ../include/wdt.h ../include/gkserrmsg.h
+polymarkers.o: ../include/gks_errors.h ../include/event.h
+polymarkers.o: ../include/polymarkers.h
+prmgr.o: /usr/include/sys/file.h /usr/include/sys/types.h
+prmgr.o: /usr/include/sys/param.h /usr/include/sys/sysmacros.h
+prmgr.o: /usr/include/sys/seg.h /usr/include/sys/pri.h
+prmgr.o: /usr/include/sys/proc.h /usr/include/sys/low.h
+prmgr.o: /usr/include/strings.h ../include/gks_implem.h
+prmgr.o: /usr/include/X11/Xlib.h /usr/include/X11/X.h
+prmgr.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h ../include/xgks.h
+prmgr.o: /usr/include/stdio.h ../include/gks_defines.h ../include/primitive.h
+prmgr.o: ../include/input.h ../include/gkslist.h ../include/wslist.h
+prmgr.o: ../include/wdt.h ../include/gkserrmsg.h ../include/gks_errors.h
+prmgr.o: ../include/event.h
+segments.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+segments.o: /usr/include/sys/types.h /usr/include/X11/X.h
+segments.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+segments.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+segments.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+segments.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+segments.o: ../include/gks_errors.h ../include/event.h /usr/include/strings.h
+segments.o: /usr/include/math.h /usr/include/values.h
+string.o: /usr/include/strings.h /usr/include/signal.h
+string.o: /usr/include/sys/signal.h /usr/include/ieeetrap.h
+string.o: /usr/include/sys/fpfp.h /usr/include/sys/fpfpi.h
+string.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+string.o: /usr/include/sys/types.h /usr/include/X11/X.h
+string.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h ../include/xgks.h
+string.o: /usr/include/stdio.h ../include/gks_defines.h
+string.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+string.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+string.o: ../include/gks_errors.h ../include/event.h
+string.o: /usr/include/X11/keysymdef.h
+stroke.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+stroke.o: /usr/include/sys/types.h /usr/include/X11/X.h
+stroke.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h ../include/xgks.h
+stroke.o: /usr/include/stdio.h ../include/gks_defines.h
+stroke.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+stroke.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+stroke.o: ../include/gks_errors.h ../include/event.h /usr/include/signal.h
+stroke.o: /usr/include/sys/signal.h /usr/include/ieeetrap.h
+stroke.o: /usr/include/sys/fpfp.h /usr/include/sys/fpfpi.h
+text.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+text.o: /usr/include/sys/types.h /usr/include/X11/X.h
+text.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h ../include/xgks.h
+text.o: /usr/include/stdio.h ../include/gks_defines.h ../include/primitive.h
+text.o: ../include/input.h ../include/gkslist.h ../include/wslist.h
+text.o: ../include/wdt.h ../include/gkserrmsg.h ../include/gks_errors.h
+text.o: ../include/event.h /usr/include/strings.h /usr/include/math.h
+text.o: /usr/include/values.h ../include/text.h
+transforms.o: /usr/include/math.h /usr/include/values.h
+transforms.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+transforms.o: /usr/include/sys/types.h /usr/include/X11/X.h
+transforms.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+transforms.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+transforms.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+transforms.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+transforms.o: ../include/gks_errors.h ../include/event.h
+update.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+update.o: /usr/include/sys/types.h /usr/include/X11/X.h
+update.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h ../include/xgks.h
+update.o: /usr/include/stdio.h ../include/gks_defines.h
+update.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+update.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+update.o: ../include/gks_errors.h ../include/event.h
+valuator.o: ../include/gks_implem.h /usr/include/X11/Xlib.h
+valuator.o: /usr/include/sys/types.h /usr/include/X11/X.h
+valuator.o: /usr/include/X11/Xatom.h /usr/include/X11/Xutil.h
+valuator.o: ../include/xgks.h /usr/include/stdio.h ../include/gks_defines.h
+valuator.o: ../include/primitive.h ../include/input.h ../include/gkslist.h
+valuator.o: ../include/wslist.h ../include/wdt.h ../include/gkserrmsg.h
+valuator.o: ../include/gks_errors.h ../include/event.h /usr/include/signal.h
+valuator.o: /usr/include/sys/signal.h /usr/include/ieeetrap.h
+valuator.o: /usr/include/sys/fpfp.h /usr/include/sys/fpfpi.h

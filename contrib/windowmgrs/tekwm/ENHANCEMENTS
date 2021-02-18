@@ -1,0 +1,561 @@
+				  Tekwm
+		       The Tektronix Window Manager
+		       Proposed Tekwm Enhancements
+			  Public Domain Release
+			      Glenn Widener
+			     Tektronix, Inc.
+			    November 22, 1989
+
+
+The following is a list of possible Tekwm enhancements, in rough order of
+my decreasing interest.  Some were logged with Tek "XWS" bug tracking
+numbers where they have been encountered by someone other than the author.
+Hackers, here is your big chance!
+
+
+			       Optimization
+
+Optimize focus handling under frameFocus by resetting focus to PointerRoot
+when cursor enters the client window.  Then the wm does not have to wake
+up when moving into another window to get focus moved.   Seems that the fix
+to FocusChng.c was not enough?
+
+Add an f.killsession, that ignores WM_CLOSEDOWN and WM_PREPARE_TO_DIE.
+Add f.killsession and f.kill to the System/Window menus.
+
+Total level 3: 2
+
+				 level 4
+
+ICCCM:  per proposed new section on grabs, grab on parent window instead
+of client window.  Also eliminates existing grab collision bug with 
+xterm.
+
+ICCCM:  per proposed new section on grabs, replay all keys not actually
+used by the wm when doing passive grabs on the client window.
+
+ICCCM: implement WM_TAKE_FOCUS  Necessary for override-redirect if we
+follow ICCCM restriction on installing override-redirect colormaps, 
+since the client must use the Globally active focus model to insure
+that focus moves to the top-level window before the client maps the 
+popup.
+
+The ICCCM is not clear on the border_width to be returned - should it be
+the actual client window border width, the apparent width seen by the user
+(including BorderContext), or the client-requested border width?  Apparent
+seems most informative, however, Tekwm should send the client-requested
+border width, on the argument that the position of the inside of the
+window computed from the Notify should be correct.  Currently, it does not
+appear to be sending what the code sqys it should!
+
+The ICCCM also does not specify the "above" field; Tekwm sets it to None.
+Tekwm should send the client window below the restacked window (if ICCCM 
+adopts this, else this has lower priority)
+
+The ICCCM also does not specify that synthetic ConfigureNotify or
+CirculateNotify requests will be sent by the window manager when it
+restacks the client window.  Tekwm currently does not send such synthetic
+events. It should.
+
+
+Total level 4: 9
+				 level 5
+
+---------------------------------------------------------------------
+All enhancements below here are not planned to be completed before
+the first release.
+---------------------------------------------------------------------
+
+Add an f.null to make (silently) disabling system-wide operations easier.
+Required if we add ability to bind multiple functions to one action.
+Be sure to update explanatory man page text on resetxxx.
+
+Disable "move" gadgets if fixedPosition is set, and disable "resize"
+gadgets if fixedSize is set or if the client sets min_width/height and
+max_width/height size hints the same.  Particularly handy for Peer
+interface and request for immovable windows.
+
+Add ability to map multiple operations to the same event.  Perhaps
+a general syntax (add) <whatever>?  Handy for forming operations that are
+a sequence.
+
+Revise initial window sizing to support USPosition without USSize to
+interact with the user for size given an initial placement.  At map time, 
+initialize rubber box from anchored corner to cursor, with correct quadrant
+angle cursor, ignore button press, accept size on button release.  Cursor
+is constrained to quadrant determined by PositionGravity hint.  If
+PositionGravity is Center or an edge ("NorthGravity"), different feedback
+is required, e.g. a fixed center or the current feedback, with the
+anchored border fixed, one angle cursor to set one opposite corner at
+button press, and a bar cursor to set remaining side at release.
+Only anchored corners are required for Anchored VT.
+
+Add resources icon.pixmap and icon.mask that specifies a pixmap (bitmap)
+and pixmap mask to use as the icon if the client has not specified a
+pixmap.  If both are specified, they must be the same size.  The icon is
+the size of the pixmap.  The existing icon.pixmap resource is renamed
+icon.text.pixmap.  See also "text icon colors" below.  (This is not really
+interesting enough to warrant doing).
+
+Currently, if the client requests initial_state = IconicState, the UL
+corner of the icon is placed at the upper left corner of the screen,
+unless the IconPositionHint is specified, in which case the specified
+position will be the center of the icon (but keeping the icon fully on
+screen).  We should add some automatic icon placement as follows:  add
+resources awm.initialIconX and awm.initialIconY, which give the starting
+UL corner position for new icons (default 0, 0), whether initially iconic
+or iconified by f.iconify (f.newiconify always iconifies at the cursor
+position.)  The first icon is placed at this location, and subsequent
+icons are tiled from this position towards the direction specified by
+IconStackingDirection = {up, down, left, right}, default down.  Should
+the icon stack hit the edge of the screen, (or the edge of a window?)
+the initialIcon position is reset to place the next icon adjacent to the
+first one, building a two-dimensional array of icons.  (Do we need the
+ability to disable this feature?  If so, add IconStackingDirection=none.)
+(Do we need the ability to disable this feature for f.iconify, but leave
+it operable for initial_state=Iconic?  If so, add defaultIconifyPosition,
+class Auto, type Bool. If off, f.iconify switches to f.newiconify, per 
+above.)
+
+Now, lets add the following:  If f.newiconify is executed on an unplaced
+icon and the resource defaultNewIconifyPosition (class Auto) is on, place
+the new icon according to the default icon position rules above, warp the
+cursor to the icon, and continue with interactive placement.  When the
+button is released (if still at initial icon position?), warp the cursor
+back to the button press point.  If defaultNewIconifyPosition is off, 
+f.newiconify works as it does now.
+
+warpOnDeiconify should warp to titlebar, so that the pointer is positioned
+for further actions (like iconify).  Then a series of clicks toggles
+iconification. (FIxed by Rick Faltersack) Best - make deiconify position
+user-configurable via a geometry-style syntax: NorthWest, Center, etc, 
+plus title/window Boolean.
+
+XWS00411
+Suppress warpOnDeiconify and warpOnRaise when automatically
+deiconifying/raising - new resources WarpOnAutoDeiconify/WarpOnAutoRaise.
+
+< With X11 people accomplish this by applying f.move on button press and
+< f.raise on button release (or vice versa).  Similarly, f.iconify should
+< be done in the same way, perhaps even on the same button motion.
+<
+<       f.iconify =             : icon:        right down
+<       f.raise =               : icon:        right down
+Unfortunately, awm (and I presume, uwm) does not allow multiple operations
+to be bound to the same action.  Only the first function declared is used.
+Awm could be easily enhanced to allow this, anybody want it badly?
+Actually, the semantics of the two bindings above is a bit ambiguous -
+should it raise the icon that was selected, or the window mappped by the
+f.iconify?  With the easiest implementation, it would be
+order independent.  If we recomputed the context after each function, it would
+be order dependent, so that a f.raise declared before f.iconify would raise
+the icon, and declaring f.raise after f.iconify would raise the window (if
+warpOnDeIconify is on!)  My vote is to leave it order independent, and 
+explicitly adjust the context on f.iconify per enhancement above. (KISS)
+Once this is done, add an f.raise after all bound f.iconifys, and remove
+code that raises the deiconified window.
+Note that only immediately executed functions can be bound before another
+function on the same action - f.newiconify, f.move, f.moveopaque, f.menu,
+and f.resize cannot be bound except as the last function bound for an
+action.
+
+TRANSIENT_FOR windows should iconify and raise/lower with the FOR window.
+This probably should be backed up by a per-client option to 
+independently disable either mode.
+
+Window groups should iconify, move, and raise/lower together.
+This probably should be backed up by a per-client option to 
+independently disable any effect of window groups.  (Many clients may
+not want move, so it should be off by default.)
+
+Standard colormap support
+
+WM_COLORMAP_WINDOWS setting (wait for resolution of ICCCM issues)
+Apparently, this is now required even on single-colormap hardware
+because WM_COLORMAP_WINDOWS can be dynamically changed by the client.
+
+Need to initialize WM_CLIENT_MACHINE and WM_COMMAND on tekwm's WM_PROTOCOLS
+window.
+
+Make a fancy example tekwmrc file for power users! ()
+
+If WM_ICON_NAME or WM_NAME resolves to be the same as one already created, use
+<WM_ICON_NAME>N, or <WM_NAME>N, where N is an integer incremented from 2 for
+each icon/window with the same name.
+- and/or -
+If the client has not set WM_ICON_NAME or WM_NAME, use <WM_CLASS.res_name>N,
+where N is an integer incremented from 1 for each window with the same 
+WM_CLASS.res_name.  If WM_CLASS.res_name does not exist, use
+WM_COMMAND[0].  If nothing, we are back to " Untitled Window " again, but
+number them 1 -> N.
+While we are at it, recode GetIconName to use XGetIconName() and XFetchName().
+And of course this gets rid of the bug that no icon or window name property
+cases an empty icon.
+
+Redesign resize so it can dynamically change which corner or side is being
+resized like twm - when the size goes to zero in x or y, reset to original
+size and switch to the border or corner based on the current cursor
+position.  Unlike twm, continue to select initial corner/edge immediatel
+on press; don't wait for the user to cross a boundary.
+
+total 19 level 5 to here...
+
+We should fix the protocol converter to put the client name in
+WM_CLASS, and then read Wm_options for override-redirect windows, so
+we can title X10 windows.
+
+Add support for buttons 4 and 5 - allow '1'-'5' for buttons.
+
+If color allocation fails, allocate closest of black/white in default
+colormap.  (GetPixel)
+
+There should be a different shell command action that invokes the command
+on another node, say '@'.  @ "command" invokes on machine given by 
+$DISPLAY, @machine "command" invokes the sommand on the specified machine.
+Of course, requires rsh access.
+
+The client window needs to be protected from the borderContext cursor when
+its cursor is set to None (inheriting the root cursor).  Proposal 1:
+BorderContext cursor should be reset to None (use root window's) if
+frameFocus and nothing is bound to context.  Proposal 2: add an
+intermediate window, and set its cursor to XC_X_cursor.  This works until
+the root cursor is changed.  We can't fix this easily because there is no
+event on cursor change.  Perhaps a periodic check, or else get xsetroot
+to also set a property onthe root window?
+
+Should we obey PPosition?  No, if we get USSize without USPosition, we
+need to collapse all three buttons into the left button semantics, and
+place the pre-sized window at the button release.
+
+The initial rubber box, and the box for left or right button sizing should
+be a move grid instead of a resize grid.
+
+The initial rubber box before a button press should be at default size,
+not minimum size.  A middle button press-release without a move of more
+than delta pixels or size_inc pixels, whichever is smaller, should give
+the default size, just like left button.
+
+Need to figure out a way to eliminate the race between the client mapping
+its window and the user trying to resize it.  Proposal - add a syntax
+to the .awmrc file of ? ["geom"] that tells awm to go ahead and get 
+a bounding box from the user, and stash it away for the next mapped window.
+The user puts the same geometry in this field that he gives to the client.
+This fixes the problem for clients that are brought up from the menu,
+the main area of annoyance.  Problems - certain important hints like 
+Pmin/max size and size increments are not available yet, so the
+user-provided size may get forced larger/smaller, and the resize popup
+will always be in pixel units, not size increments.
+How's this - start up the client immediately, and hold its window
+creation until the user selects it!
+
+Add per-window border width.  This could be added as a per-window resource
+(wm_option) in Tekwm, regardless of the ICCCM.  And the resource could
+even specify that the visible window border is to be taken from the border
+requested by the client at map time.
+
+We need to set the client window border to zero and use a parent window
+border, so that we do not have to modify the client border pixmap, which
+requires that we be able to allocate in the client window colormap in
+order to ever get correct colors on a per-window-colormap hardware, and so
+we don't care if clients modify it after mapping.  (Not an issue unless we
+get clients that dynamically modify the border or we get
+per-window-colormap hardware.)  Current decoration arrangement can be
+preserved by adding the intermediate window above.
+
+Add a client message action.  It sends a WM_PROTOCOLS-style client message
+to the (pre-)selected window, with the atom named in the action rc file line:
+f.message=[context]:events:message" atom name" (suggested by Suresh)
+Similar to WM_PROTOCOLS-based messages in menus idea, but defined in rc file.
+
+More generally, incorporate toolkit translations in reverse - use the tm
+syntax to define a sequence of events or a string to be sent to the
+selected window.
+
+Allow a client specific gadget.  Add the rc file syntax
+gadget[<name>] that declares an unused gadget, and the resource syntax
+wm_option.gadget[n]: <name> to set the gadget number n to gadget name.
+Can then invoke the login xterm with -name login to change its close gadget 
+to a "shutdown X11" gadget.
+
+Allow individual gadgets to be disabled via the resource
+wm_option.gadget[n]: off.  This is needed to disable the
+close gadget on the login (and possibly all xterm?) windows.
+Simultaneously remove "no gaps" restriction, i.e. gadget[0 2 3]...
+
+Allow gadgets to be disabled in the rc file by "gadget[n] = ()".
+Useful in user customization.  May depend on  "no gaps" restriction 
+removal.
+
+Allow a client specific menu, as above.  Add the resource syntax
+wm_option.menu:  <name> to attach menu <name> to the client window
+(replacing any globally defined menu).
+
+Add tekwmrc menu color specification for default menu entry color (after
+highlight and title colors) (Wayne/Purdue's request)
+
+Add per-window icon colors (Wayne/Purdue's request)  For both text 
+and pixmap icons.
+
+add a resource to redirect stderr to console (use in xstart only).
+
+Total level 5 to here: 40
+			       Optimization
+
+Try to resurrect old alternateGC/GXinvert menu optimization for the case
+where no menu colors are specified in the .tekwmrc file and
+menu.title.fore/background and menu.highlight.fore/background are the same
+as menu.fore/background.  A further optimization could generate an invert
+plane mask on the fly, separate initial drawing from inversion, and work
+for any color combination.
+
+Optimize highlighting by globally caching Pixel values for text colors for 
+windows using DefaultColormap. (eliminates a round trip for most windows)
+
+Title seems to be painted twice on window creation, at least for 
+xterm -aro -ado.
+
+We could be caching window sizes, for example to save getting size from
+server in PutGadgets. (Done, but not used or kept up-to-date, as part of 
+awi->xwa.)
+
+We should cache the XWindowAttributes for the client, to avoid at least
+two extra round trips during startup.  (Done) When we do, we should fold
+awi->client_cmap into the attributes (Done, but not used everywhere yet
+(FocusChng, Gadget, Titlebar.c).  (Note that ColormapNotify is already
+caught.)
+
+cache XWMHints (Done, but not used everywhere yet (Iconify, Icons, Restart, 
+Titlebar).
+
+cache the SizeHints for resize, to avoid an extra round trip and sanity
+check at resize.
+
+Make AwmInfos into a linked list so Cleanup can traverse list instead
+of querying window tree.
+
+Look at post-sizing window creation.  Compare with twm.
+
+Look at resize bbox tracking speed, general mouse tracking, window ops
+speed.
+
+Refresh.c should position the covering window just above the target in stacking
+order so it can only cover the target window.  (unless of course the target is 
+root).
+
+change autoRaise to not raise if not obscured by another window (i.e.
+off-screen). (Use f.raiseandlower algorithm, see also uwm menu bug autoRaise.)
+
+XWS00402
+Icon names get repainted multiple times on button release from a move.
+Need to compress exposures across multiple damage events.
+
+Run tekwm remotely, and look for performance problems (and timing problems!).
+
+Stop tekwm from resetting the highlighting when pointer moves from client 
+window into title bar.
+
+Total Deferred optimizations: 14
+
+
+Add a context of "all gadgets" as "gadgets" or "g".  So we can really
+get meta keys over the entire screen, without specifying each gadget
+individually.
+
+On menu functions that take a gin point, erase the menu except for the
+selected menu item after the item is selected, to reduce the chance of the
+menu covering the object you want to select. (XWS00107)
+
+XWS00295
+Change f.iconify to re-adjust the computed event window/x/y to the new
+icon/window for subsequent operations bound to same button event or to
+delta.  This makes an f.raise binding to icon after an f.iconify binding
+to icon raise the window.  Changing it for the up button is probably also
+OK, but not as easy to do.  How about other functions that change the
+apparent context (e.g.  f.lower, raiseandlower, circleup, circledown,
+though adjusting does not seem useful on these)?
+
+Once this is done, add f.raise to icon : middle down.
+Default tekwmrc had an entry of f.iconify on icon :  middle down and
+f.moveopaque on icon :  middle delta.  Should we restore it if this is
+fixed?
+
+Add a f.colormap function which, analogous to f.focus, permanently
+installs the selected window's colormap, so that neither future f.focus
+operations nor pointer motion changes the colormap.  Selecting the root
+window restores colormap following focus (i.e. wherever f.focus goes).
+I can envision cases where the user is more interested in keeping the
+colors correct for some image that getting accurate colors for a menu.
+
+Add binding to a string of keystrokes in addition to mouse buttons,
+including "*".  This latter permits implementing "beep on keys on root 
+window".
+
+Title pixmap or background color should not be visible above or below the
+window name.  Title background color should be filled in around to the 
+extent of vPad.
+
+It would be nice if clients could specify a dynamic display gadget
+(boolean, plus perhaps string, bitmap, window?) which would display the value
+of a client-specified window property.  Perhaps a top-level client window
+property that lists property atoms to be displayed?  Plus perhaps a .awmrc
+specification as to gadget positions for dynamic gadgets (default,
+continue default placement).  
+
+Add 3d shading to the bottom and right of icons (and windows?).  Via a
+black window at the bottom of the window hierarchy.  Possibly a user 
+option...
+
+When window is moved back on screen, leave one pixel at edge of screen
+to get window manager (for Wall, normalw, normali).
+
+Map the popup so that the final cursor position is at the button press.  
+Avoids warping.
+
+Always look in /usr/lib/X11/awm (SYSFILE define) last for pixmaps.
+Needed so tekwm can come up without any resources (e.g. xterminal bootstrap 
+problem).
+
+Allow the title.text.background color to be "transparent", permitting the 
+background pixmap to show through.  Just special case color lookup, by
+checking for "transparent" before looking it up.
+
+Add an f.retitle function, which renames the selected window's title.
+Ugh, must prompt user for a string!  Or else, implement ala Icon_typin.
+
+Turn on and document Icon_typin.  If either window name or icon name
+is defaulted from another property, Icon_typin/Window_typin affects
+window/icon.
+
+Add a title.text.boldBackground, default title.text.background that is used on
+focus in.
+
+A gadget.background and gadget.foreground are needed, default
+title.background and title.foreground.  Either they apply to both pixmaps and 
+text, or else a gadget.text.fore/background are also needed.
+
+The resize box should stay within the bounds of the window being resized,
+if possible, if its normal position is off-screen, rather than just
+putting it in the corner of the screen.
+
+< Why not have another action in addition to {left,right,middle} {up,down,motion}
+< such as "deiconify-request"?
+< 
+< 	f.iconify =             : icon:        deiconify-request
+< 	f.raise =               : icon:        deiconify-request
+< 
+< You could also allow the action "iconify-request" and any number of others.
+< Alternatively, you could say that the deiconify-request implies (absolutely)
+< that the f.iconify operation be performed, but it would allow you to
+< specify additional actions to performed on receipt of the request (in
+< this case f.raise).
+< 
+< Todd
+I kinda like this, so I will put it into the heap of possible
+enhancements.  I would go for providing default bindings of the various
+requests (which are not reset by resetbindings) to their direct
+counterparts, and allowing them to be overridden in the awmrc file.
+
+Make sliding menus work (see uwm article).  However, the last menu bound 
+is the first one displayed, unlike uwm!
+Allow f.menu to be multiply bound to a single action, to produce sliding
+menus.  The last menu bound is the first one invoked; sliding right off
+the menu (or only title?) gets the next menu, sliding left gets the
+previously bound menu.
+
+Need to handle win_gravity on Configuring non-reparented windows with final
+border different than requested, and undo it when undecorated.  For now, 
+simply don't change border width unless reparenting!
+
+make the menu return to the prior selection (but only at the first level, 
+don't propogate to sub menus? - try it both ways).  Enable off "autoSelect"
+resource.  If there is no prior selection or prior cancel, select first 
+item, per current autoSelect semantics.
+
+Total level 3: 1
+Total level 4: 7
+Total required: 8
+
+level 5 above optimization: 36
+level 5 below optimization: 21
+Total level 5 enhancements: 57
+level 5 optimizations: 14
+Total level 5 (deferrable): 71
+
+Total Optimizations: 15
+Grand Total: 79
+
+		    Enhancements Under Consideration
+
+
+			  Enhancements Rejected
+
+Should meta buttons on gadgets execute the gadget function?  Or should we
+keep the meta bindings consistent across the whole screen, even though the
+intuitive expectation is that any set of modifiers over the gadget should
+work?  How about icons?  Currently, meta gets the root bindings
+everywhere.  Answer: (in conferring with documentation) keep meta the same
+everywhere.
+
+The effective context for a delta binding is the context when the button
+was pressed.  Therefore, for example, a binding of f.iconify to "icon :
+right down" and f.move to "icon :  right delta" will not produce an
+intelligible result.  This should be changed to re-establish the context
+for delta operations after any initial function is finished, so that
+the effective context is wherever the mouse is before the first motion
+event.  Possible traps here - if you do a f.lower, and an icon appears
+under the mouse, and you move a bit before releasing the mouse...
+And suppose you drag fast after the button press, and end up getting
+an unintended motion operation...
+Is there a general solution?  I don't think so!  We may want to leave this
+alone.   Instead, fix f.iconify to explicitly reset context.
+
+resize button should initialize rubber box at current size,
+pointer at current position, so down/up is a noop (same as move).
+< This would require warping the pointer around since the box is tracked
+< by querying the mouse (the resize grid is indeed created at the size
+< of the window, it's just that the first mouse position query sets
+< it to wherever you were when you depressed the button.) Are you sure
+< you want your mouse warping around like this?
+I believe that Todd clarified this one correctly - I don't see a need to warp
+the mouse.  
+(Fixed - see resizeRelative resource)
+However, warping might be preferable, as it gives immediate
+feedback as to what resize operation is being performed (edge or corner),
+and makes the transition to opposite edges (see enhancement) work
+when the opposite edge is at edge of screen.
+However if nearest corner/edge is off-screen, it must re-size immediately
+on-screen (not warp cursor to screen edge and be relative from there).
+This gives a "feature" of adjusting to edge of screen automatically!
+5
+
+split resize window h/v padding and title h/v padding into separate resources
+(adding title hpad which causes title to be retained instead of gadgets
+in small titles.) (FIXED except for adding title hpad)
+< Good idea. I assume that the presence of title.hpad would result in
+< no centering of the title being done? Some might balk at this. The original
+< point was to move your gadgets out of the way, not vice-versa. I'm flexible
+< on this one.
+No, all I would make it do is control the padding around the text on 
+both sides, for the purposes of 
+ 1. where background pixmap stops
+ 2. where text background color stops
+ 3. gadgets start disappearing.
+Note - windowName.offset needs to be rethought at the same time - it should
+be relative to the innermost gadget edge, and in addition to hPad.  It does
+not cause title text to be retained over gadgets on oppposite end.
+If title text is too large
+We are controlling four things with two variables - should we reconfigure this?
+Gadgets supercede text; if windowName.offset = left or center, preserve 
+left of text, else preserve right of text??
+5
+
+Also, when title is too small for gadgets, outside gadgets should be retained,
+inside ones suppressed.
+5
+
+Gadget.pad should not allow the background pixmap to show through the gap.
+5
+
+need to suppress title.boldPixmap around gadgets and title.
+5
+

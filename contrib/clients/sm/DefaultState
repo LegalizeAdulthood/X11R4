@@ -1,0 +1,9 @@
+0 1 80 24 571 3 localhost XTerm xterm xterm -geometry 80x24+571+3 -C
+0 3 80 24 536 175 localhost XTerm xterm xterm -title "abc\\\\ def"
+0 1 80 24 3 3 localhost XTerm xterm xterm -geometry 80x24+3+3 -C -n neptune
+0 1 80 23 571 343 localhost XTerm xterm xterm -geometry 80x23+571+343 -n neptune
+0 1 218 161 656 736 localhost XNetload xnetload xnetload -geometry 218x161+656+736 -configuration 2x2 -nolocal neptune pond troll fxgrp
+0 1 80 41 3 344 localhost emacs  emacs -geometry 80x41+3+344
+0 1 80 48 882 738 localhost XBiff xnewscheck xnewscheck -geometry 80x48+882+738
+0 1 261 103 888 794 localhost DClock dclock dclock -geometry 261x103+888+794
+0 1 81 75 572 739 localhost XBiff xbiff xbiff -geometry 81x75+572+739

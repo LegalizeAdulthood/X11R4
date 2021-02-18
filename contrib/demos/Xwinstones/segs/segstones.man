@@ -1,0 +1,43 @@
+.TH SEGSTONES 1 "July 1989" "X Version 11"
+.SH NAME
+segstones -- tests the performance of segment drawing
+.SH SYNOPSIS
+.B "segstones"
+[-option ...]
+.SH DESCRIPTION
+.PP
+\fISegstones\fP tests the performance of the XDrawSegments() library
+routine. The default pattern is a sweep pattern.
+.SH OPTIONS
+.TP 8
+.B \-nsegs \fInum\fP
+This option specifies the number of segments per cal to XDrawSegments.
+The default value is 8190.
+.TP 8
+.B \-maxsegs
+This option specifies the use of the maximum number of segments.
+This value is 8190.
+.TP 8
+.B \-wide \fInum\fP
+This option specifies the width of the lines.  If "0" is specified,
+the server will use a machine dependent algorithm for drawing the lines.
+"0" is the default value.
+.TP 8 
+.B \-length \fInum\fP
+This option specifies the length of each line segment.
+The default value is 200.
+.TP 8
+.B \-dash \fI(1) (2) (3) ... (N)\fP
+This option specifies the use of patterned lines.  The (1) specifies
+the number of values.  The (2) specifies the number of pixels to
+draw on.  The (3) specifies the number of pixels to draw off.
+.TP 8
+.B \-help
+This option displays the help menu.
+.TP 8
+.B \-h
+This option displays the help menu.
+.SH "SEE ALSO"
+X(1)
+.SH "COPYRIGHT"
+International Business Machines--1989

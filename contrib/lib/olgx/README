@@ -1,0 +1,21 @@
+The olgx (OpenLook Graphics for X11) library is currently used by olwm
+(OpenLook Window Manager) and will be used by the XView library in
+a future release.  Olgx is an X11 drawing engine for 2-D and 3-D objects
+which is based upon xlib rather than a toolkit.  This needs to be built before
+olwm can be built.
+
+When building the library, be sure to change the Imakefile to correctly
+represent where things should go when installing.  By default, they are
+set up to install things in place on the contrib tape.  See Imakefile for
+details.
+
+Since olwm is the only application at this time that uses olgx, it does
+not have the shared library building facility in the Imakefile.
+
+Although the content of the library may change in the future, the
+API (Application Programmer's Interface) should remain stable.
+
+Two documents describing olgx reside in the doc directory in PostScript 
+format.  Each document is one file.  The olgx_api.ps describes the 
+current API.  The olgx_paper.ps describes some ideas behind the library.
+

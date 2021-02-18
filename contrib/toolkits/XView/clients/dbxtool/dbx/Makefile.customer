@@ -1,0 +1,15 @@
+#
+# @(#)Makefile.customer 1.3 89/10/31 SMI
+#
+
+CC = cc
+
+MAKEDEFSH = defs.h library.h
+MAKEDEFSOBJ = library.o $(ARCH)_cerror.o
+
+all:  makedefs
+
+makedefs: makedefs.c $(MAKEDEFSH) $(MAKEDEFSOBJ)
+	$(CC) -o makedefs makedefs.c $(MAKEDEFSOBJ)
+
+

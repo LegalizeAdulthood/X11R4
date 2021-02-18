@@ -1,0 +1,12 @@
+NormalObjectRule()
+
+ProgramTarget(conclass,conclass.o, ${UTILLIB} $(BASEDIR)/lib/libclass.a,)
+InstallProgram(conclass, $(DESTDIR)/bin)
+
+InstallFile(fixcons, ${INSTPROGFLAGS}, ${DESTDIR}/etc/)
+InstallFile(convincl, $(INSTINCFLAGS), $(DESTDIR)/lib/)
+InstallFileToFile(r4conv.csh, ${INSTPROGFLAGS}, $(DESTDIR)/etc/r4conv)
+
+NormalHelpRule()
+InstallDocs(conclas.help fixcons.help, ${DESTDIR}/help)
+InstallHelpAlias(conclas, conclass)

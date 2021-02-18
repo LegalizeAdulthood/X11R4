@@ -1,0 +1,183 @@
+***********************************************************************
+
+                     NCSA HDF version 2.80 beta
+                           June 21, 1989
+***********************************************************************
+
+************************
+   Description of HDF
+************************
+
+
+----------- Compiling the HDF source ------------
+
+To use HDF on a UNIX system, after transferring the files, login to your 
+target system, and cd to "src/xxx" where "xxx" is the name of the type 
+of system you are on (one of "unicos", "sun", "alliant", "iris4", "mac", 
+"vms" and "pc"). Use the Makefile and other files in that directory to 
+create the HDF libraries and utilities.
+
+To use the program "hdfseq", create "hdfseq" as a symbolic link to the
+executable "hdfrseq".  "hdfseq" displays images on the console of a
+Sun or Iris workstation.
+
+(Note to Macintosh and PC users:  These routines have been compiled and 
+run successfully on Macs using MPW C Version 2.0.2, and on PCs using 
+Lattice C  Version 3.0.  We cannot guarantee that they will compile 
+correctly with other compilers.  We would appreciate any feedback you 
+can give on experiences you have compiling them on other compilers.
+
+The Makefile for the PC is a batch file which runs the Lattice C 
+compiler. The Mac distribution includes a file called "Makefile.mpw" 
+which is an MPW makefile and should be downloaded in binary mode with
+MacBinary enabled).
+
+If you wish to install these in a different directory from where you 
+keep the source, edit Makefile and fill in the desired values for 
+BINDIR, LIBDIR and INCDIR.  Then, using "make all" will compile all the 
+source files and install the files according to the variable settings.  
+If you merely wish to compile the files and leave the utilities and 
+library in the same directory, you may use "make build".
+
+For a non-Unix system, the Makefile may be used as a guide for compiling 
+the files.  An approximate summary of the procedure is:
+
+  cc -c df.c dfr8.c dfgroup.c dfcomp.c dfimcomp.c dfF.c dfr8F.c dfsd.c \
+        dfsdF.c dfkit.c dfgr.c dfan.c dfp.c df24.c dfanF.c df24F.c
+  f77 -c dfFf.f dfr8Ff.f dfsdFf.f dfanFf.f df24Ff.f
+  ar libdf.a df.o dfr8.o dfgroup.o dfcomp.o dfimcomp.o dfF.o dfr8F.o  \
+         dfsd.o  dfsdF.o dfkit.o dfFf.o dfr8Ff.o dfsdFf.o dfan.o dfp.o df24.o \
+         dfgr.o dfanF.o df24F.o dfanFf.o df24Ff.o
+  ranlib libdf.a
+
+This creates the library file "libdf.a".
+
+To create the utilities "hdfls", "hdfrseq", "r8tohdf", "hdftor8", 
+"tektohdf", "hdftotek", "hdfcomp" and "fp_to_hdf", the procedure is:
+
+     cc hdfls.c libdf.a -o hdfls
+     cc hdfrseq.c libdf.a -o hdfrseq
+     cc r8tohdf.c libdf.a -o r8tohdf
+     cc hdftor8.c libdf.a -o hdftor8
+     cc tektohdf.c libdf.a -o tektohdf
+     cc hdftotek.c libdf.a -o hdftotek
+     cc hdfcomp.c libdf.a -o hdfcomp
+     cc fp_to_hdf.c libdf.a -o fp_to_hdf
+
+The editor "hdfed" must be built using its own Makefile.  See the Makefile to
+get an idea of the procedure.
+
+--------------- Compiling Subsets of HDF ---------------
+
+If you wish to use only some of the HDF Sets, it is possible to create 
+versions of the library which only contain the desired interfaces.  For 
+instance, a user who works only with images, but not with raw floating 
+point data may wish to have only the Raster Image Set (RIS) but not the 
+Scientific Data Set. The following is the list of source files necessary 
+for each of the Sets included in the current version of HDF.
+
+Basic Low level HDF:   df.c dfkit.c df.h dfi.h
+Basic Low level Fortran: df.c dfF.c dfFf.f dfkit.c df.h dfi.h
+
+8-bit Raster Image Set (RIS-8): dfr8.c df.c dfkit.c dfcomp.c dfimcomp.c 
+    dfgroup.c df.h dfi.h dfrig.h
+8-bit Raster Image Set Fortran: dfr8.c dfr8F.c dfr8Ff.f df.c dfkit.c
+    dfcomp.c dfimcomp.c dfgroup.c df.h dfi.h dfrig.h
+
+Scientific Data Set (SDS): dfsd.c df.c dfkit.c dfgroup.c df.h dfi.h dfsd.h
+Scientific Data Set Fortran: dfsd.c dfsdF.c dfsdFf.f df.c dfkit.c
+    dfgroup.c df.h dfi.h dfsd.h
+
+24-bit Raster Image Set (RIS-24): dfr8.c df.c dfkit.c dfcomp.c dfimcomp.c 
+    dfgroup.c dfgr.c df24.c df.h dfi.h dfrig.h dfgr.h
+24-bit Raster Image Set Fortran: df.c dfkit.c dfcomp.c dfimcomp.c dfgroup.c
+    dfgr.c df24.c df24F.c df24Ff.f df.h dfi.h dfrig.h dfgr.h
+
+Annotation Set: dfan.c df.c dfkit.c dfgroup.c df.h dfi.h dfan.h
+Annotation Set Fortran: dfan.c dfanF.c dfanFf.f df.c dfkit.c
+    dfgroup.c df.h dfi.h dfan.h
+
+Palette Set: dfp.c df.c dfkit.c dfgroup.c df.h dfi.h
+
+
+------------ Compiling C programs with HDF ----------------
+
+To use HDF routines in your program, use "#include dfrig.h", "#include dfsd.h"
+etc. at the top of your program, depending on the Sets you are using.
+Call the appropriate HDF routines as described in the 
+documentation. Compile your C program "myprog.c" as follows:
+
+    cc myprog.c libdf.a -o myprog
+
+If the include file "dfrig.h" is in the directory "incdir", and the 
+library file "libdf.a" is in "libdir", use
+
+    cc -Iincdir myprog.c libdir/libdf.a -o myprog
+
+
+------------- Compiling Fortran programs with HDF ---------------
+
+Call the appropriate HDF routines as described in the documentation. 
+Compile your Fortran program "myprog.f" as follows:
+
+    f77 myprog.f libdf.a -o myprog
+
+
+--------------- Description of HDF source files ----------------
+
+The following is a description of the various subdirectories and files. 
+Note that since many of the source files for the various systems are 
+identical, many of the files in the src/xxx subdirectories are hard 
+links to files in the src directory.
+
+Subdirectories:
+     src:            source code
+     doc:            documentation
+
+     src/sun:        SUN source code
+       src/unicos:     UNICOS source code
+       src/alliant:    ALLIANT source code
+       src/iris4:      IRIS4 source code
+       src/mac:        MAC source code
+       src/vms:        VMS source code
+       src/pc:         IBM PC source code
+
+     The files in src/ are the SUN version of the source code.
+
+Files:    (description of files in each source directory)
+       df.h - header file included in all HDF source files and user programs
+       dfi.h - internal header file, included automatically by df.h
+       df.c - low-level routines which perform I/O to HDF files etc.
+       dfrig.h - header file for the Raster Image Group set
+       dfr8.c - routines to implement 8-bit raster image groups
+       dfgroup.c - routines to read and write groups (of tag/refs)
+       dfcomp.c - routines for data compression
+       dfimcomp.c - routines to implement the IMCOMP compression scheme
+       dfF.h - header file for user FORTRAN routines
+       dfF.c - routines which translate Fortran calls to C routines in df.c
+       dfFf.f - Fortran stubs to translate Fortran calls to C stubs in dfF.c
+       dfr8F.c - routines which translate Fortran R8 calls to C 
+               routines in dfr8.c
+       dfr8Ff.f - Fortran stubs to translate Fortran R8 calls to C 
+               stubs in dfr8F.c
+       dfsd.c - routines to implement the Scientific Data set
+       dfsd.h - header file for the Scientific Data set
+       dfsdF.c - routines which translate Fortran SD calls to C 
+               routines in dfsd.c
+       dfsdFf.f - Fortran stubs to translate Fortran SD calls to C 
+               stubs in dfsdF.c
+       dfkit.c - HDF internal utility routines
+       hdfls.c - source for "hdfls" which lists contents of HDF files
+       hdfrseq.c - source for "hdfseq" which displays images in 
+               HDF files and "hdfrseq" which produces ICR output for display
+               on remote screen
+       r8tohdf.c - source for "r8tohdf" which converts raw image,
+              palette files to HDF
+       Makefile - makefile for the HDF system
+
+       doc/ascii/NCSA_HDF/* - ASCII format documentation for HDF
+       doc/ascii/HDF_Specs/* - ASCII format technical specification 
+              of HDF
+       doc/word/NCSA_HDF/* - Microsoft Word format documentation for HDF
+       doc/word/HDF_Specs/* - Microsoft Word format technical 
+              specification of HDF

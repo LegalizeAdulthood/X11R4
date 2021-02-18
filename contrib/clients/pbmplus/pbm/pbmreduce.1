@@ -1,0 +1,29 @@
+.TH pbmreduce 1 "02 August 1989"
+.SH NAME
+pbmreduce - read a portable bitmap and reduce it N times
+.SH SYNOPSIS
+pbmreduce [-floyd|-fs | -threshold] [-value <val>] N [pbmfile]
+.SH DESCRIPTION
+Reads a portable bitmap as input.
+Reduces it by a factor of N, and produces a portable bitmap as output.
+By default, the halftoning after the reduction is done via
+boustrophedonic Floyd-Steinberg error diffusion; however, the -thresh
+flag can be used to specify simple thresholding.  This gives better
+results when reducing line drawings.
+.PP
+The -value flag alters the thresholding value for all quantizations.
+It should be a real number between 0 and 1.
+Above 0.5 means darker images; below 0.5 means lighter.
+.PP
+All flags can be abbreviated to their shortest unique prefix.
+.SH "SEE ALSO"
+pnmenlarge(1), ppmscale(1), pgmtopbm(1), pbm(5)
+.SH AUTHOR
+Copyright (C) 1988 by Jef Poskanzer.
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided
+that the above copyright notice appear in all copies and that both that
+copyright notice and this permission notice appear in supporting
+documentation.  This software is provided "as is" without express or
+implied warranty.

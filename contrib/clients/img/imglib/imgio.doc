@@ -1,0 +1,229 @@
+===============================================================================
+=======                                                                 =======
+=======		    Module Imgio  --  Read and Write Images		=======
+=======				File imgio.c				=======
+=======                                                                 =======
+===============================================================================
+
+
+  Functions:
+
+	This module reads and writes image files.  It creates
+	an Img in order to read a file, but doesn't delete the
+	Img when a file is written.
+
+	All code here is part of the layer of image processing 
+	functions which is independent of the underlying window
+	system, graphics support layer, or operating system.
+
+	Although read_image and write_image accept both color-mapped
+	and RGB images, they actually include logic only for
+	color mapped images.  They handle RGB images by invoking
+	read_rgb and write_rgb, which are local routines.
+
+
+  Public Routines:
+
+	describe_img	Describe image
+	read_img	Read image from file
+	write_img	Write image to file
+
+
+  Local Routines:
+
+	read_rgb	Read RGB image from file
+	write_rgb	Write RGB image to file
+
+
+  Module History:
+
+	11-21-89	Paul Raveling
+	Finalized version for contribution to X11R4.  Changes not
+	documented in this header have been made within the last
+	3 weeks.
+
+	7-14-89		Paul Raveling
+	Fixed bug:  Reading an RGB file gobbled the first 4 bytes
+	of associated data in the header.
+
+	3-14-89		Paul Raveling
+	Created file, based partly on older utility definitions.
+
+===============================================================================
+=======                                                                 =======
+=======			describe_img  --  Describe image		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = describe_img ( image, outfile, format, heading )
+
+
+  Functions:
+
+	Describe image characteristics.
+
+	This writes text describing the image's geometry, color map
+	(if any), and associated data (if any).  Various pieces of
+	info can be omitted or formatted differently under control
+	of the "format" parameter.
+
+	Defaulting file to NULL and format to 0 produces what we
+	think a user would most likely want to see most of the time.
+
+	Details of this are likely to change.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to describe
+
+	outfile		FILE *
+			Pointer to stream to report image info on;
+			NULL => use stdout
+
+	format		int
+			Mask for info to display:
+
+			  0x01 => Heading text
+			  0x02 => Image type
+			  0x04 => Geometry & size
+			  0x08 => Color map size
+			  0x10 => Associated data length
+			  0x20 => Associated data contents
+			  0x40 => Color map contents
+
+			  0x00 defaults to 0x3f
+
+	heading		char *
+			Heading text; NULL => "\n\tImage description:\n\n"
+
+
+  Output:	None to caller
+
+===============================================================================
+=======                                                                 =======
+=======		       read_img --  Read Image from File		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	image = read_img ( filename, imgtype )
+
+
+  Functions:
+
+	Read an image file.
+
+	Under control of imgtype it's possible to read only
+	image attributes, or image attributes + color map.
+
+	For a color mapped image, read_img reads a single
+	optionally compressed file.  If the given filename
+	can't be opened, read_img checks for "filename.p[.Z]"
+	Choice of ".p" is a bit arbitrary, but suggests some
+	relation to X11 pixmaps.
+
+	For an RGB image, read_img reads four files with
+	names of the form:
+
+	    filename.a[.Z]	Attributes of image
+	    filename.r[.Z]	Red pixel components
+	    filename.g[.Z]	Green pixel components
+	    filename.b[.Z]	Blue pixel components
+
+	Although RGB images can have color maps while they're
+	in use, their files never have color maps.
+
+	If called to read an image of type "any_image" or "any_info",
+	read_image reads a color mapped image if one is available.
+	If there is no mapped image, it reads an RGB image.
+
+	"Attributes" are the Img fields indicating the image's
+	width, height, number of colors, number of pixels, and
+	associated data.
+
+
+  Input:
+
+	filename	char *
+			Name of file to read.  Name can include
+			references to home directories (~, ~username),
+			environment variables ($whatnot) in addition
+			to ordinary path info verbiage.
+
+	imgtype		int
+			Type of image, as defined in imglib.h:
+
+			  mapped_image	Color mapped
+			  mapped_info	Color mapped, Info only:  No pixel data
+			  rgb_image	32-bit RGB, unmapped
+			  rgb_info	RGB, Info only:  No pixel data
+
+			  any_image	Either mapped or RGB image
+			  any_info	Either mapped or RGB, no pixel data
+
+
+  Output:
+
+	image		Img *
+	<return value>	Pointer to Img structure for the new image
+			NULL => the image couldn't be read:  Either
+			free memory is insufficient, an input error
+			occurred, or a format error exists in the
+			image file.
+
+===============================================================================
+=======                                                                 =======
+=======		      write_img  --  Write Image to File		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = write_img ( filename, image )
+
+
+  Functions:
+
+	Write an image file or files:
+
+	    --	If the image is color-mapped, write a single file.
+		If the given filename does not contain a '.', name
+		the output file "filename.p.Z".
+
+	    --  If the image is 32-bit RGB, write four files:
+
+		filename.a	Attributes
+		filename.r.Z	Red   component of pixel values
+		filename.g.Z	Green component of pixel values
+		filename.b.Z	Blue  component of pixel values
+
+	Any file whose name ends with ".Z" is written in compressed
+	format by piping its data through compress.
+
+
+  Input:
+
+	filename	char *
+			Name of file to write.  Name can include
+			references to home directories (~, ~username),
+			environment variables ($whatnot) in addition
+			to ordinary path info verbiage.
+
+	image		Img *
+			Pointer to image to write
+
+
+  Output:
+
+	status		int
+			Status:  1 => completed successfully,
+				 0 => couldn't write file
+
+			Inability to write the file may be due to
+			exhaustion of disk space.  It's been known
+			to happen to folks with big bunches of images...

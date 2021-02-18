@@ -1,0 +1,45 @@
+/**/###########################################################################
+/**/#                                                                         #
+/**/#                         Attention xterm porters                         #
+/**/#                                                                         #
+/**/#                                                                         #
+/**/# Xterm assumes that bcopy can handle overlapping arguments.  If your     #
+/**/# bcopy (or memcpy) can't, write a routine called Bcopy that can and      #
+/**/# the -DBcopy argument from the DEFINES list given below.  If possible,   #
+/**/# try to avoid extra procedure calls as this routine is used a lot.       #
+/**/#                                                                         #
+/**/###########################################################################
+
+#ifdef BandAidCompiler
+#include BandAidCompiler
+#endif
+
+/*
+ * The configuration parameter GettyProgramName may be found in the
+ * appropriate .macros in the directory $(TOP)/util/imake.includes/.
+ */
+
+#if defined(SunArchitecture) && SunOSPlatform && OSMajorVersion >= 4
+#define GettyProgram '-DGETTY_EXE="/usr/etc/getty"'
+#else
+#define GettyProgram /* as nothing */
+#endif
+/* add -DWTMP and -DLASTLOG if you want them */
+        DEFINES = -DMODEMENU -DUTMP -DKANJI -DSTATUSLINE \
+		  -DKEEPALIVE -DKCLIENT -DBcopy=bcopy GettyProgram
+          SRCS1 = button.c charproc.c cursor.c data.c input.c \
+		  main.c menu.c misc.c screen.c scrollbar.c tabs.c \
+		  TekPrsTbl.c Tekproc.c util.c VTPrsTbl.c \
+		  convert.c patchlevel.c kconvert.c convlib.c
+          OBJS1 = main.o input.o charproc.o cursor.o util.o tabs.o \
+		  screen.o scrollbar.o button.o Tekproc.o misc.o \
+		  VTPrsTbl.o TekPrsTbl.o data.o menu.o \
+		  convert.o patchlevel.o kconvert.o convlib.o
+       PROGRAMS = kterm
+   INSTALLFLAGS = $(INSTUIDFLAGS)
+       INCLUDES = -I$(TOOLKITSRC) -I$(TOP)
+
+
+ComplexProgramTarget_1(kterm,$(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB),-ltermcap)
+
+InstallAppDefaults(KTerm)

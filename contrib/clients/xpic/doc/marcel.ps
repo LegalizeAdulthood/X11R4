@@ -1,0 +1,1520 @@
+%!
+%%Creator: root@church.csri (Operator)
+%%Title: marcel.x (xpic)
+%%CreationDate: Tue Oct  4 04:23:42 1988
+%%Pages: 1
+%%BoundingBox: 0 0 504 319.05
+%	(in inches) at 0 0, width 7, height 4.43125
+%%EndComments
+% Prolog for xpic to PostScript converter
+% Author: Mark Moraes
+% $Header: x2ps.pro,v 1.2 88/03/19 16:50:09 moraes Exp 
+%	%d D - change style SOLID, DOTTED, SHORT-DASH, LONG-DASH, DOT-DASH
+%	%s F - change font to fontname
+%	%d S - change size (font size in points)
+%	(%s) rj %d t - text right just. (%d is TOPLINE, MIDLINE, BOTLINE)
+%	(%s) lj %d t - text left just. (%d is TOPLINE, MIDLINE, BOTLINE)
+%	(%s) ce %d t - text centered (%d is TOPLINE, MIDLINE, BOTLINE)
+%	%d %d l - lineto
+%	%d %d m - moveto
+%	%d %d s - spline segment
+%	x - flush line, spline
+%	<wid> <ht> <x> <y> b - box
+%	<wid> <ht> <x> <y> e - ellipse
+%	%d ss - setscale
+%	%d W - change linewidth
+save 50 dict begin /xpic exch def
+/StartXpic {newpath 0 0 moveto [] 0 setdash 0 setgray 1 setlinecap} def
+% Set defaults
+/fontname /Times-Roman def
+/ptsize 12 def
+% halign has the values for MIDLINE, TOPLINE, BOTLINE
+/halign 3 array def
+/s {rcurveto} def
+/x {stroke} def
+/l {lineto} def
+/m {moveto} def
+/b {
+	/ury exch def /urx exch def /lly exch def /llx exch def 
+	llx lly moveto urx lly lineto urx ury lineto 
+	llx ury lineto llx lly lineto stroke
+} def
+/mtrx matrix def
+/e {
+	/yc exch def /xc exch def /yrad exch def /xrad exch def
+	xc xrad add yc moveto
+	/savematrix mtrx currentmatrix def
+	xc yc translate
+	xrad yrad scale
+	0 0 1 0 360 arc
+	savematrix setmatrix stroke
+} def
+% The next three take the text string, and moveto the right horiz. position
+% leaving the string on the stack.
+/lj {} def
+/rj {dup stringwidth pop neg 0 rmoveto} def
+/ce {dup stringwidth pop 2 div neg 0 rmoveto} def
+% And this is invoked after one of the three above, and 
+% computes the vert. pos, and then displays the string.
+/t {halign exch get 0 exch rmoveto show newpath} def
+% Store an array of patterns in /styles - a pattern is an array consisting 
+% of an array and an offset. Corresp to xpic patterns
+% solid, dotted, short-dashed, long-dashed, dot-dashed
+/styles [ [] 0 ] [ [1 3] 0 ] [ [4 4] 0 ] [ [8 4] 0 ] [ [1 4 4 4] 0 ]
+	5 array astore def
+% change style to arg.
+/D {stroke styles exch get aload pop setdash newpath} def
+/W {stroke 0.5 mul setlinewidth newpath} def
+% fontbox takes a fontname off the stack, and returns an array
+% containing the values of the bottom line of the bounding box, the
+% mid line of the bounding box, and the top line of the bounding box
+% of that font, taken from the baseline, scaled to a font of size 1
+/fontbox {
+	findfont dup /FontMatrix get /fm exch def /FontBBox get aload pop
+	/ytop exch def pop /ybot exch def pop
+	/ymid ytop ybot sub 2 div def
+	0 ybot fm dtransform exch pop % botline
+	dup neg exch % midline - this works better than (ytop-ybot)/2!
+	0 ytop fm dtransform exch pop exch %topline
+	% now in the order midline, topline, botline.
+	3 array astore
+} def
+% select font
+/F {
+	dup /fontname exch def fontbox
+	/thisfontbox exch def SF 
+} def
+% set point size
+/S {/ptsize exch def SF} def
+% actually set font
+/SF {
+	fontname findfont ptsize curscale div scalefont setfont
+	thisfontbox aload pop
+	1 1 3 {
+		pop ptsize mul curscale div neg 3 1 roll
+	} for
+	halign astore pop
+} def
+% sets the scale to 72 / n, where n is on the stack, and stores the value
+% in curscale for font scaling
+/curscale 1 def
+/ss {/curscale exch 72 exch div dup dup scale def} def
+/land {90 rotate} def
+StartXpic
+%%EndProlog
+0.5 0.5 scale
+80 ss
+1 W
+0 D
+488 104 m
+440 104 l
+0 D
+449 101 m
+440 104 l
+449 108 l
+0 D
+440 104 m
+x
+456 304 m
+456 128 l
+440 128 l
+0 D
+449 125 m
+440 128 l
+449 132 l
+0 D
+440 128 m
+x
+316 368 m
+316 384 l
+0 D
+313 376 m
+316 384 l
+320 376 l
+0 D
+316 384 m
+x
+0.5 W
+/Times-Roman F
+10 S
+408 336 m
+(dPC \(h\)) ce 0 t
+1 W
+488 456 m
+472 456 l
+0 D
+481 453 m
+472 456 l
+481 460 l
+0 D
+472 456 m
+x
+0.5 W
+8 S
+396 392 m
+(Drtx) rj 0 t
+464 456 m
+(PC\(h\)in) rj 0 t
+464 392 m
+(HW_gen) rj 0 t
+316 360 m
+(\(from EU\)) ce 0 t
+304 392 m
+(IBASE) lj 0 t
+640 604 m
+(PC_sel) lj 0 t
+608 580 m
+(\(from EU\) PC\(h\)in) rj 0 t
+604 596 m
+(\(from IFU\) PCout) rj 0 t
+10 S
+816 472 m
+(+) ce 0 t
+1 W
+472 528 m
+504 528 l
+0 D
+496 532 m
+504 528 l
+496 525 l
+0 D
+504 528 m
+x
+808 488 824 456 b
+632 576 m
+784 576 l
+784 544 l
+0 D
+788 553 m
+784 544 l
+781 553 l
+0 D
+784 544 m
+x
+352 504 m
+352 632 l
+1096 632 l
+0 D
+1088 636 m
+1096 632 l
+1088 629 l
+0 D
+1096 632 m
+x
+0.5 W
+436 528 m
+(PC Stack ptr) ce 0 t
+788 512 m
+(PC \(h\)) ce 0 t
+912 464 m
+(Control) ce 0 t
+912 480 m
+(Queue Shift) ce 0 t
+996 416 m
+(QL) ce 0 t
+996 432 m
+(QH) ce 0 t
+1 W
+984 424 m
+1008 424 l
+x
+1048 0 m
+1048 424 l
+0 D
+1045 416 m
+1048 424 l
+1052 416 l
+0 D
+1048 424 m
+x
+1048 424 m
+1008 424 l
+0 D
+1017 421 m
+1008 424 l
+1017 428 l
+0 D
+1008 424 m
+x
+1080 400 m
+960 400 l
+0 D
+969 397 m
+960 400 l
+969 404 l
+0 D
+960 400 m
+x
+1064 496 m
+1064 0 l
+0 D
+1068 9 m
+1064 0 l
+1061 9 l
+0 D
+1064 0 m
+x
+792 496 m
+1064 496 l
+0 D
+1056 500 m
+1064 496 l
+1056 493 l
+0 D
+1064 496 m
+x
+984 424 m
+960 424 l
+0 D
+969 421 m
+960 424 l
+969 428 l
+0 D
+960 424 m
+x
+984 432 m
+960 432 l
+0 D
+969 429 m
+960 432 l
+969 436 l
+0 D
+960 432 m
+x
+984 440 1008 408 b
+0.5 W
+16 S
+360 408 m
+(Controller) ce 0 t
+360 432 m
+(IFU) ce 0 t
+12 S
+72 472 m
+(IRQ) rj 0 t
+72 448 m
+(IRQ_addr) rj 0 t
+10 S
+192 424 m
+(TAG Mismatch) rj 0 t
+192 408 m
+(Read Exception) rj 0 t
+192 392 m
+(Write Exception) rj 0 t
+1 W
+256 472 m
+0 D
+248 476 m
+256 472 l
+248 469 l
+0 D
+256 472 m
+80 472 l
+x
+256 448 m
+0 D
+248 452 m
+256 448 l
+248 445 l
+0 D
+256 448 m
+80 448 l
+x
+256 392 m
+0 D
+248 396 m
+256 392 l
+248 389 l
+0 D
+256 392 m
+200 392 l
+x
+256 408 m
+0 D
+248 412 m
+256 408 l
+248 405 l
+0 D
+256 408 m
+200 408 l
+x
+256 424 m
+0 D
+248 428 m
+256 424 l
+248 421 l
+0 D
+256 424 m
+200 424 l
+x
+0.5 W
+8 S
+800 540 m
+(F) rj 0 t
+788 540 m
+(T) rj 0 t
+532 364 m
+(T) rj 0 t
+544 364 m
+(F) rj 0 t
+552 384 m
+(18) lj 0 t
+1 W
+540 380 m
+548 388 l
+x
+544 392 m
+544 368 l
+0 D
+548 377 m
+544 368 l
+541 377 l
+0 D
+544 368 m
+x
+536 360 m
+536 344 l
+0 D
+540 353 m
+536 344 l
+533 353 l
+0 D
+536 344 m
+x
+528 360 m
+544 360 l
+552 368 l
+520 368 l
+528 360 l
+x
+504 400 m
+496 400 l
+0 D
+505 397 m
+496 400 l
+505 404 l
+0 D
+496 400 m
+x
+0.5 W
+10 S
+536 336 m
+(QA data) ce 0 t
+1 W
+488 336 m
+488 576 l
+624 576 l
+0 D
+616 580 m
+624 576 l
+616 573 l
+0 D
+624 576 m
+x
+0.5 W
+8 S
+464 440 m
+(length) rj 0 t
+1 W
+320 472 m
+320 464 l
+312 456 l
+312 480 l
+320 472 l
+x
+300 464 m
+312 464 l
+0 D
+304 468 m
+312 464 l
+304 461 l
+0 D
+312 464 m
+x
+300 472 m
+312 472 l
+0 D
+304 476 m
+312 472 l
+304 469 l
+0 D
+312 472 m
+x
+384 468 m
+400 468 l
+0 D
+392 472 m
+400 468 l
+392 465 l
+0 D
+400 468 m
+x
+320 468 m
+336 468 l
+0 D
+328 472 m
+336 468 l
+328 465 l
+0 D
+336 468 m
+x
+296 504 m
+296 608 l
+628 608 l
+628 596 l
+0 D
+632 605 m
+628 596 l
+625 605 l
+0 D
+628 596 m
+x
+328 504 m
+328 592 l
+624 592 l
+0 D
+616 596 m
+624 592 l
+616 589 l
+0 D
+624 592 m
+x
+368 504 m
+368 544 l
+752 544 l
+756 540 l
+780 540 l
+0 D
+772 544 m
+780 540 l
+772 537 l
+0 D
+780 540 m
+x
+0.5 W
+264 424 m
+(TAG) lj 0 t
+264 408 m
+(reade) lj 0 t
+264 392 m
+(writee) lj 0 t
+296 496 m
+(PC_sel) ce 0 t
+328 496 m
+(PCout) ce 0 t
+352 496 m
+(RD) ce 0 t
+368 496 m
+(abs) ce 0 t
+360 464 m
+(pre-decode) ce 0 t
+360 472 m
+(uPLA) ce 0 t
+392 496 m
+(fetch) ce 0 t
+424 496 m
+(inc) ce 0 t
+456 496 m
+(dec) ce 0 t
+464 480 m
+(h0_ovr) rj 0 t
+464 472 m
+(offset) rj 0 t
+1 W
+472 440 m
+848 440 l
+848 464 l
+864 464 l
+0 D
+856 468 m
+864 464 l
+856 461 l
+0 D
+864 464 m
+x
+392 504 m
+392 616 l
+1080 616 l
+0 D
+1072 620 m
+1080 616 l
+1072 613 l
+0 D
+1080 616 m
+x
+456 504 m
+456 520 l
+0 D
+453 512 m
+456 520 l
+460 512 l
+0 D
+456 520 m
+x
+424 504 m
+424 520 l
+0 D
+421 512 m
+424 520 l
+428 512 l
+0 D
+424 520 m
+x
+472 472 m
+776 472 l
+0 D
+768 476 m
+776 472 l
+768 469 l
+0 D
+776 472 m
+x
+472 480 m
+736 480 l
+736 528 l
+820 528 l
+820 520 l
+0 D
+824 529 m
+820 520 l
+817 529 l
+0 D
+820 520 m
+x
+408 536 472 520 b
+256 504 472 384 b
+336 480 384 456 b
+960 428 m
+504 428 l
+x
+888 424 m
+888 392 l
+x
+504 424 m
+960 424 l
+x
+504 432 960 392 b
+1 D
+504 408 m
+960 408 l
+x
+0 D
+944 424 m
+944 392 l
+x
+624 552 m
+632 560 l
+632 592 l
+624 600 l
+624 552 l
+x
+632 424 m
+632 392 l
+x
+504 536 680 496 b
+816 520 m
+816 504 l
+x
+824 472 m
+832 472 l
+832 576 l
+800 576 l
+800 544 l
+0 D
+804 553 m
+800 544 l
+797 553 l
+0 D
+800 544 m
+x
+760 520 824 504 b
+792 504 m
+792 480 l
+808 480 l
+0 D
+800 484 m
+808 480 l
+800 477 l
+0 D
+808 480 m
+x
+792 536 m
+792 520 l
+0 D
+796 529 m
+792 520 l
+789 529 l
+0 D
+792 520 m
+x
+784 536 m
+800 536 l
+808 544 l
+776 544 l
+784 536 l
+x
+784 464 m
+808 464 l
+0 D
+800 468 m
+808 464 l
+800 461 l
+0 D
+808 464 m
+x
+776 448 m
+784 456 l
+784 472 l
+776 480 l
+776 448 l
+x
+768 456 m
+776 456 l
+0 D
+768 460 m
+776 456 l
+768 453 l
+0 D
+776 456 m
+x
+0.5 W
+12 S
+764 456 m
+('1') rj 0 t
+1 W
+864 488 960 456 b
+824 424 m
+824 392 l
+x
+760 424 m
+760 392 l
+x
+696 424 m
+696 392 l
+x
+0.5 W
+8 S
+820 512 m
+(h) ce 0 t
+1 W
+592 536 m
+592 560 l
+624 560 l
+0 D
+616 564 m
+624 560 l
+616 557 l
+0 D
+624 560 m
+x
+1080 616 m
+1080 0 l
+0 D
+1084 9 m
+1080 0 l
+1077 9 l
+0 D
+1080 0 m
+x
+1096 632 m
+1096 0 l
+0 D
+1100 9 m
+1096 0 l
+1093 9 l
+0 D
+1096 0 m
+x
+672 572 m
+680 580 l
+x
+596 368 m
+604 376 l
+x
+0.5 W
+608 372 m
+(18) lj 0 t
+672 588 m
+(31) lj 0 t
+752 552 m
+(abs) rj 0 t
+12 S
+592 520 m
+(PC  pseudo-stack) ce 0 t
+592 504 m
+(\(circular buffer\)) ce 0 t
+916 416 m
+(data) ce 0 t
+916 400 m
+(addr \(h\)) ce 0 t
+600 416 m
+(QB) ce 0 t
+664 416 m
+(QC) ce 0 t
+728 416 m
+(QD) ce 0 t
+792 416 m
+(QE) ce 0 t
+856 416 m
+(QF) ce 0 t
+10 S
+600 336 m
+(QB data) ce 0 t
+1 W
+568 344 m
+568 328 l
+x
+504 344 632 328 b
+568 424 m
+568 392 l
+x
+600 392 m
+600 344 l
+0 D
+604 353 m
+600 344 l
+597 353 l
+0 D
+600 344 m
+x
+0.5 W
+12 S
+536 416 m
+(QA) ce 0 t
+1 W
+496 400 m
+496 360 l
+0 D
+500 369 m
+496 360 l
+493 369 l
+0 D
+496 360 m
+x
+0.5 W
+8 S
+464 416 m
+(HW_op) rj 0 t
+1 W
+472 416 m
+480 416 l
+480 384 l
+528 384 l
+528 368 l
+0 D
+532 377 m
+528 368 l
+525 377 l
+0 D
+528 368 m
+x
+496 360 m
+408 360 l
+408 344 l
+0 D
+412 353 m
+408 344 l
+405 353 l
+0 D
+408 344 m
+x
+376 344 440 328 b
+408 328 m
+408 320 l
+456 320 l
+456 304 l
+0 D
+460 313 m
+456 304 l
+453 313 l
+0 D
+456 304 m
+x
+416 280 424 240 b
+416 272 m
+0 0 -2 0 -8 0 s
+-5 0 -9 -2 -12 -6 s
+-2 -4 -2 -8 0 -12 s
+2 -4 9 -6 20 -6 s
+x
+392 224 m
+384 216 l
+384 200 l
+392 192 l
+392 224 l
+x
+416 248 m
+424 248 l
+x
+416 256 m
+424 256 l
+x
+416 264 m
+424 264 l
+x
+416 272 m
+424 272 l
+x
+424 240 m
+424 216 l
+x
+392 260 m
+388 260 l
+388 220 l
+0 D
+392 229 m
+388 220 l
+385 229 l
+0 D
+388 220 m
+x
+504 216 m
+392 216 l
+0 D
+401 213 m
+392 216 l
+401 220 l
+0 D
+392 216 m
+x
+504 200 m
+392 200 l
+0 D
+401 197 m
+392 200 l
+401 204 l
+0 D
+392 200 m
+x
+208 120 m
+240 120 l
+232 112 l
+216 112 l
+208 120 l
+x
+232 160 m
+232 120 l
+0 D
+236 129 m
+232 120 l
+229 129 l
+0 D
+232 120 m
+x
+160 136 m
+160 128 l
+216 128 l
+216 120 l
+0 D
+220 129 m
+216 120 l
+213 129 l
+0 D
+216 120 m
+x
+2 D
+280 160 m
+280 280 l
+x
+0 D
+112 144 200 136 b
+144 280 328 160 b
+424 116 m
+236 116 l
+0 D
+245 113 m
+236 116 l
+245 120 l
+0 D
+236 116 m
+x
+352 216 m
+352 184 l
+344 192 l
+344 208 l
+352 216 l
+x
+384 208 m
+352 208 l
+0 D
+361 205 m
+352 208 l
+361 212 l
+0 D
+352 208 m
+x
+344 200 m
+328 200 l
+0 D
+337 197 m
+328 200 l
+337 204 l
+0 D
+328 200 m
+x
+388 260 m
+0 0 -1 0 -4 0 s
+-2 0 -4 -8 -4 -26 s
+0 -17 -2 -26 -8 -26 s
+x
+224 112 m
+0 0 0 -2 0 -8 s
+0 D
+228 113 m
+224 104 l
+221 113 l
+0 D
+224 104 m
+x
+264 96 328 80 b
+64 88 240 56 b
+320 96 m
+320 80 l
+x
+64 72 m
+240 72 l
+x
+160 72 m
+160 56 l
+x
+112 72 m
+112 56 l
+x
+224 104 m
+152 104 l
+152 88 l
+0 D
+156 97 m
+152 88 l
+149 97 l
+0 D
+152 88 m
+x
+224 104 m
+296 104 l
+296 96 l
+0 D
+300 105 m
+296 96 l
+293 105 l
+0 D
+296 96 m
+x
+324 80 m
+324 72 l
+348 72 l
+348 188 l
+0 D
+345 180 m
+348 188 l
+352 180 l
+0 D
+348 188 m
+x
+296 80 m
+296 64 l
+360 64 l
+360 192 l
+352 192 l
+0 D
+361 189 m
+352 192 l
+361 196 l
+0 D
+352 192 m
+x
+976 112 m
+976 72 l
+0 D
+980 81 m
+976 72 l
+973 81 l
+0 D
+976 72 m
+x
+920 112 m
+920 72 l
+0 D
+924 81 m
+920 72 l
+917 81 l
+0 D
+920 72 m
+x
+348 72 m
+432 72 l
+432 96 l
+0 D
+429 88 m
+432 96 l
+436 88 l
+0 D
+432 96 m
+x
+916 88 m
+924 96 l
+x
+836 88 m
+844 96 l
+x
+772 88 m
+780 96 l
+x
+692 88 m
+700 96 l
+x
+612 88 m
+620 96 l
+x
+572 88 m
+580 96 l
+x
+532 88 m
+540 96 l
+x
+720 72 m
+720 56 l
+x
+824 72 m
+824 56 l
+x
+600 72 m
+600 56 l
+x
+560 72 m
+560 56 l
+x
+960 72 992 56 b
+904 72 936 56 b
+680 72 864 56 b
+520 72 640 56 b
+536 112 m
+536 72 l
+0 D
+540 81 m
+536 72 l
+533 81 l
+0 D
+536 72 m
+x
+576 112 m
+576 72 l
+0 D
+580 81 m
+576 72 l
+573 81 l
+0 D
+576 72 m
+x
+616 112 m
+616 72 l
+0 D
+620 81 m
+616 72 l
+613 81 l
+0 D
+616 72 m
+x
+696 112 m
+696 72 l
+0 D
+700 81 m
+696 72 l
+693 81 l
+0 D
+696 72 m
+x
+776 112 m
+776 72 l
+0 D
+780 81 m
+776 72 l
+773 81 l
+0 D
+776 72 m
+x
+840 112 m
+840 72 l
+0 D
+844 81 m
+840 72 l
+837 81 l
+0 D
+840 72 m
+x
+972 88 m
+980 96 l
+x
+504 280 1000 112 b
+488 40 m
+488 336 l
+0 D
+485 328 m
+488 336 l
+492 328 l
+0 D
+488 336 m
+x
+0.5 W
+160 140 m
+(NOP, length 0) ce 0 t
+256 120 m
+(stall!) lj 0 t
+10 S
+292 88 m
+(nxt addr) ce 0 t
+152 80 m
+(uWord Control Fields) ce 0 t
+136 64 m
+(stage 2) ce 0 t
+88 64 m
+(stage 3) ce 0 t
+200 64 m
+(stage 1) ce 0 t
+540 64 m
+(Breg1) ce 0 t
+580 64 m
+(offset1) ce 0 t
+620 64 m
+(ctrl1) ce 0 t
+700 64 m
+(Breg2) ce 0 t
+776 64 m
+(offset2) ce 0 t
+844 64 m
+(ctrl2) ce 0 t
+920 64 m
+(sop) ce 0 t
+1 W
+424 136 440 96 b
+0.5 W
+8 S
+976 64 m
+(car/cdr) ce 0 t
+10 S
+432 116 m
+(=) ce 0 t
+12 S
+512 200 m
+(ExtraOp) lj 0 t
+536 216 m
+(OpCode) ce 0 t
+20 S
+760 188 m
+(Operand Decode Logic) ce 0 t
+22 S
+760 228 m
+(ODL) ce 0 t
+10 S
+544 92 m
+(5) lj 0 t
+584 92 m
+(5) lj 0 t
+704 92 m
+(5) lj 0 t
+784 92 m
+(30) lj 0 t
+928 92 m
+(2) lj 0 t
+984 92 m
+(1) lj 0 t
+14 S
+232 252 m
+(uROM) ce 0 t
+12 S
+216 216 m
+(Instruction) ce 0 t
+216 192 m
+(Decode ROM) ce 0 t
+304 216 m
+(ODL) ce 0 t
+304 192 m
+(uCode) ce 0 t
+10 S
+232 164 m
+(data) ce 0 t
+488 28 m
+(next_PC) ce 0 t
+304 168 m
+(rtx) ce 0 t
+8 S
+424 392 m
+(stall!) rj 0 t
+1 W
+304 160 m
+304 152 l
+464 152 l
+464 304 l
+0 D
+461 296 m
+464 304 l
+468 296 l
+0 D
+464 304 m
+x
+464 304 m
+464 376 l
+384 376 l
+384 384 l
+0 D
+381 376 m
+384 384 l
+388 376 l
+0 D
+384 384 m
+x
+448 384 m
+448 368 l
+480 368 l
+480 336 l
+0 D
+484 345 m
+480 336 l
+477 345 l
+0 D
+480 336 m
+x
+416 384 m
+0 D
+413 376 m
+416 384 l
+420 376 l
+0 D
+416 384 m
+416 352 l
+472 352 l
+472 336 l
+x
+408 116 m
+408 144 l
+472 144 l
+472 336 l
+0 D
+469 328 m
+472 336 l
+476 328 l
+0 D
+472 336 m
+x
+480 336 m
+480 48 l
+424 48 l
+424 40 l
+0 D
+428 49 m
+424 40 l
+421 49 l
+0 D
+424 40 m
+x
+0.5 W
+10 S
+424 28 m
+(length0) ce 0 t
+1 W
+976 56 m
+976 40 l
+0 D
+980 49 m
+976 40 l
+973 49 l
+0 D
+976 40 m
+x
+920 56 m
+920 40 l
+0 D
+924 49 m
+920 40 l
+917 49 l
+0 D
+920 40 m
+x
+840 56 m
+840 40 l
+0 D
+844 49 m
+840 40 l
+837 49 l
+0 D
+840 40 m
+x
+776 56 m
+776 40 l
+0 D
+780 49 m
+776 40 l
+773 49 l
+0 D
+776 40 m
+x
+696 56 m
+696 40 l
+0 D
+700 49 m
+696 40 l
+693 49 l
+0 D
+696 40 m
+x
+616 56 m
+616 40 l
+0 D
+620 49 m
+616 40 l
+613 49 l
+0 D
+616 40 m
+x
+576 56 m
+576 40 l
+0 D
+580 49 m
+576 40 l
+573 49 l
+0 D
+576 40 m
+x
+536 56 m
+536 40 l
+0 D
+540 49 m
+536 40 l
+533 49 l
+0 D
+536 40 m
+x
+136 56 m
+136 40 l
+0 D
+140 49 m
+136 40 l
+133 49 l
+0 D
+136 40 m
+x
+88 56 m
+88 40 l
+0 D
+92 49 m
+88 40 l
+85 49 l
+0 D
+88 40 m
+x
+0.5 W
+200 32 m
+(\(decoded\)) ce 0 t
+1 W
+200 56 m
+200 40 l
+0 D
+204 49 m
+200 40 l
+197 49 l
+0 D
+200 40 m
+x
+536 328 m
+536 280 l
+0 D
+540 289 m
+536 280 l
+533 289 l
+0 D
+536 280 m
+x
+600 328 m
+600 280 l
+0 D
+604 289 m
+600 280 l
+597 289 l
+0 D
+600 280 m
+x
+2 D
+0 336 m
+368 336 l
+x
+640 336 m
+1120 336 l
+x
+248 64 m
+288 64 l
+x
+368 64 m
+472 64 l
+x
+496 64 m
+512 64 l
+x
+648 64 m
+672 64 l
+x
+872 64 m
+896 64 l
+x
+944 64 m
+952 64 l
+x
+1000 64 m
+1120 64 l
+x
+0 D
+808 376 m
+776 376 l
+0 D
+785 373 m
+776 376 l
+785 380 l
+0 D
+776 376 m
+x
+776 360 m
+808 360 l
+0 D
+800 364 m
+808 360 l
+800 357 l
+0 D
+808 360 m
+x
+0.5 W
+816 376 m
+(shift) lj 0 t
+768 360 m
+(fill) rj 0 t
+22 S
+40 696 m
+(SLIME PROCESSOR) lj 0 t
+1 W
+40 680 m
+264 680 l
+x
+0.5 W
+20 S
+40 584 m
+(IFU) ce 0 t
+40 544 m
+(1 stage) ce 0 t
+40 264 m
+(IDU) ce 0 t
+40 224 m
+(1 stage) ce 0 t
+1 W
+8 600 72 568 b
+0.5 W
+600 696 m
+(Stage Interconnect Diagram \(Part 1\)) ce 0 t
+1 W
+2 D
+0 64 m
+56 64 l
+x
+0 D
+8 280 72 248 b
+%%Trailer
+showpage
+% Trailer for xpic to PostScript converter
+% $Header: x2ps.tra,v 1.1 88/08/31 23:48:01 moraes Exp $
+xpic end restore

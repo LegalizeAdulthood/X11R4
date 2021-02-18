@@ -1,0 +1,470 @@
+##
+## File:         Xtex.ad
+## Description:  Application Default: put in ...app-defaults/Xtex
+## Author:       Dirk Grunwald
+##
+## 
+##  Copyright 1989 Dirk Grunwald
+##  
+##  Permission to use, copy, modify, distribute, and sell this software
+##  and its documentation for any purpose is hereby granted without fee,
+##  provided that the above copyright notice appear in all copies and that
+##  both that copyright notice and this permission notice appear in
+##  supporting documentation, and that the name of Dirk Grunwald or M.I.T.
+##  not be used in advertising or publicity pertaining to distribution of
+##  the software without specific, written prior permission.  Dirk
+##  Grunwald and M.I.T. makes no representations about the suitability of
+##  this software for any purpose.  It is provided "as is" without express
+##  or implied warranty.
+##  
+##  DIRK GRUNWALD AND M.I.T. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS
+##  SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+##  FITNESS, IN NO EVENT SHALL M.I.T.  BE LIABLE FOR ANY SPECIAL, INDIRECT
+##  OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+##  OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+##  OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE
+##  OR PERFORMANCE OF THIS SOFTWARE.
+##  
+##  Author:
+##  	Dr. Dirk Grunwald
+##  	Dept. of Computer Science
+##  	Campus Box 430
+##  	Univ. of Colorado, Boulder
+##  	Boulder, CO 80309
+##  
+##  	grunwald@colorado.edu
+##  	
+##  
+## Please send any improvements, bug fixes, useful modifications, and comments
+## to grunwald@cs.uiuc.edu
+##
+##
+Xtex*.print:lpr -d
+Xtex*.autoSize:True
+Xtex*.useButtons:True
+##
+##	These specify the top and left offsets, in inches. If you decrease
+##	these, and don't intrude on the 1inch default TeX margins, you can
+##	view more of your document at once.
+##
+Xtex*.topOffset: 1
+Xtex*.leftOffset: 1
+##
+##	This is the size, in inches, of the intended paper. If you
+##	swap these values, you can get a landcape printing.
+##
+Xtex*.paperWidth:8.5
+Xtex*.paperHeight:11
+##
+##	Xtex attempts to size the final dvi page to your display.
+##	On a sun3, I use twm & specify no header bar, 2bit bourders
+##	and a maxPageHt of 890, paperHeight of 10.4 and topOffset of 0.75.
+##	This lets me see an entire page without having to move it around
+##	while stilling being able to look at it in large mode.
+##
+Xtex*.pageMaxWd: 0
+Xtex*.pageMaxHt: 0
+#
+#	Use these if you're using shrunken 300dpi fonts
+#
+#	*.mag:333
+#	*.smallMag:333
+#	*.largeMag:500
+#	*.dpiHoriz:300
+#	*.dpiVert:300
+#
+# Use these if you're using metafont generated 85dpi fonts for Suns.
+#
+# Note that the sun does not have 1x1 pixels; they vary slightly,
+# at least on mine. In cases like this, we use the horizontal dpi
+# as the size for selecting fonts. If you don't specify dpiVert,
+# then it defaults to the value in `dpiHoriz'. It they're the same,
+# it's better to leave dpiVert unspecified; otherwise, you need
+# to specify -dpiVert on the Xtex command line to change the vertical
+# spacing.
+#
+# You can use floats, for dpiHoriz and dpiVert
+#
+Xtex*.tfmPath: .:/usr/local/lib/tex82/fonts:/usr/local/lib/tex/fonts:/usr/lib/tex82/fonts:/usr/lib/tex/fonts
+
+Xtex*.dpiHoriz: 85
+Xtex*.dpiVert: 83.5
+##
+##	Valid magnifications:
+##	
+##	For shrunken fonts: 1000,500,333,250,100
+##	For screen resolution fonts: 500, 1000, 1098, 1200, 1440, 1728
+##				2074, 2489
+##
+##	Note: your site may not have 1/2 sizes, e.g. 11point is cmr10 at
+##	1098. If you set your `large' mag to 1440, you'd need cmr10 @ 1581
+##	to match.
+##
+##
+Xtex*.mag: 1000
+Xtex*.smallMag: 1000
+Xtex*.largeMag: 1440
+##
+##	DviPage.MaxDrift determines the maximum drift, in points, allowed
+##	from the ``true'' point. Since the glyphs we lay down aren't *exactly*
+##	like the TeX glyphs, the placement of glyphs can accumulate some
+##	error. We could correct this by plotting each individual glyph
+##	with specific placement, but this is (relatively) slow in X11,
+##	because we make many server calls.
+##
+##	Our comprimize is to allow some ``drift'' from the actual position;
+##	this lets us plot ``runs'' of characters (typically 3 -> 5), making
+##	things faster while still allowing us to place glyphs correctly
+##	to the human eye.
+##
+##	If the default isn't good enough (placement is bad), lower the number.
+##	Be warned that this will make Xtex run slightly slower. To force
+##	exact placement, set MaxDrift to 0.
+##
+
+Xtex*DviPage.MaxDrift: 1
+
+##
+## this is the help display that comes up initially when you run Xtex
+##
+Xtex*helpText:\
+Welcome to Xtex, Version 2.11\n\
+Copyright(C) 1989 Dirk Grunwald\n\
+This is the dialog box.\n
+
+##
+##	The DviPage widget is much faster when you enable backing store,
+##	If it's available, do it.
+##	However, this has caused problems on microvaxen.
+##
+Xtex*DviPage.backingStore: whenMapped
+
+#
+#	For persnicity window manager
+#
+Xtex*input:True
+
+##
+##	The width of the top level display
+##
+
+#Xtex*topLevel.width: 					525
+Xtex*topLevel.fileName.width: 				525
+Xtex*topLevel.markMenuViewPort.width: 			525
+#Xtex*topLevel.markMenuViewPort.markMenuList.width: 	510
+Xtex*topLevel.dialogText.width: 			525
+Xtex*topLevel.directoryLabel.width:			525
+Xtex*topLevel.fileLabel.width: 			525
+
+Xtex*topLevel.dialogText.height:	150
+
+Xtex*topLevel.columnSpacing: 5
+Xtex*topLevel.rowSpacing: 5
+Xtex*topLevel.internalWidth: 5
+Xtex*topLevel.internalHeight: 5
+Xtex*topLevel.layout:\
+	fileName		0 0 6 1 lwh;\
+	quitButton		0 1 1 2 lwh;\
+	openButton		1 1 1 1 lWh;\
+	copyButton		2 1 1 1 lWh;\
+	closeButton		3 1 1 1 lWh;\
+	cdButton		4 1 1 1 lWh;\
+	pageButton		1 2 1 1 lWh;\
+	printAllButton		2 2 1 1 lWh;\
+	printMarkedButton	3 2 1 1 lWh;\
+	printUnmarkedButton	4 2 1 1 lWh;\
+	clearMarksButton	5 2 1 1 lWh;\
+	directoryLabel		0 3 6 1 lwh;\
+	fileLabel		0 4 6 1 lwh;\
+	dialogText		0 5 6 1 lw;\
+	markMenuViewPort	0 6 6 1 lw;
+
+
+Xtex*topLevel.directoryLabel.font: fixed
+Xtex*topLevel.fileLabel.font: fixed
+
+Xtex*markMenuViewPort.height: 50
+Xtex*markMenuViewPort.resize:True
+Xtex*markMenuViewPort.resizable:False
+Xtex*markMenuViewPort.allowHoriz:False
+Xtex*markMenuViewPort.allowVert:True
+Xtex*markMenuViewPort.forceBars:True
+
+Xtex*markMenuList.verticalList:False
+Xtex*markMenuList.resize:False
+Xtex*markMenuList.resizable:False
+Xtex*markMenuList.translations:#override\n\
+	<Btn1Up>:		Notify()\n\
+	<Btn2Up>:		xtex-mark-all(clear)\n\
+	<Btn3Up>:		xtex-mark-all(toggle)
+
+##
+##	Translations for the filename entry widget. Note that the pressing
+##	return *down* opens the file. The upstroke is overriden by the
+##	pageButton accelerator to pop up a page. Thus, to avoid a page popup,
+##	change the pageButton entry, not this one.
+##
+Xtex*topLevel.fileName.translations:#override\n\
+	<KeyDown>Return: xtex-file(reopen)\n\
+	<KeyUp>Return: xtex-page-popup()\n\
+	<Key>Escape:		xtex-noop() \n\
+	Ctrl<Key>M:		xtex-noop() \n\
+	Meta<Key>]:		xtex-noop() \n\
+	Ctrl<Key>[:		xtex-noop() \n\
+	Ctrl<Key>N:		xtex-noop() \n\
+	Ctrl<Key>P:		xtex-noop() \n\
+	Ctrl<Key>V:		xtex-noop() \n\
+	Meta<Key>V:		xtex-noop() \n\
+	Ctrl<Key>Z:		xtex-noop() \n\
+	Meta<Key>Z:		xtex-noop() \n\
+	Ctrl<Key>J:		xtex-noop() \n\
+	Ctrl<Key>O:		xtex-noop() \n
+
+##
+##	Button labels for the top level box
+##
+
+Xtex*topLevel.quitButton.label: Quit
+Xtex*topLevel.quitButton.resize: False
+Xtex*topLevel.quitButton.resizable: False
+Xtex*topLevel.quitButton.font: variable
+Xtex*topLevel.quitButton.translations:#override\n\
+	<Btn1Up>:		xtex-quit() notify() unset()
+
+Xtex*topLevel.openButton.label: Open
+Xtex*topLevel.openButton.resize: False
+Xtex*topLevel.openButton.resizable: False
+Xtex*topLevel.openButton.font: variable
+Xtex*topLevel.openButton.horizDistance: 15
+Xtex*topLevel.openButton.translations:#override\n\
+	<Btn1Up>:		xtex-file(open) notify() unset()
+
+Xtex*topLevel.copyButton.label: Copy
+Xtex*topLevel.copyButton.resize: False
+Xtex*topLevel.copyButton.resizable: False
+Xtex*topLevel.copyButton.font: variable
+Xtex*topLevel.copyButton.translations:#override\n\
+	<Btn1Up>:		xtex-file(copy) notify() unset()
+
+Xtex*topLevel.closeButton.label: Close
+Xtex*topLevel.closeButton.resize: False
+Xtex*topLevel.closeButton.resizable: False
+Xtex*topLevel.closeButton.font: variable
+Xtex*topLevel.closeButton.translations:#override\n\
+	<Btn1Up>:		xtex-file(close) notify() unset()
+
+Xtex*topLevel.cdButton.label: Set Directory
+Xtex*topLevel.cdButton.resize: False
+Xtex*topLevel.cdButton.resizable: False
+Xtex*topLevel.cdButton.font: variable
+Xtex*topLevel.cdButton.translations:#override\n\
+	<Btn1Up>:		xtex-file(cd) notify() unset()
+
+##
+##	note that this must appear *after* the translation table
+##	for fileName for this override to have any affect.
+##
+Xtex*topLevel.pageButton.label: Popup Page
+Xtex*topLevel.pageButton.resize: False
+Xtex*topLevel.pageButton.resizable: False
+Xtex*topLevel.pageButton.font: variable
+Xtex*topLevel.pageButton.horizDistance: 15
+Xtex*topLevel.pageButton.translations:#override\n\
+	<Btn1Up>:		xtex-page-popup() notify() unset()
+
+Xtex*topLevel.printAllButton.label: Print All
+Xtex*topLevel.printAllButton.resize: False
+Xtex*topLevel.printAllButton.resizable: False
+Xtex*topLevel.printAllButton.font: variable
+Xtex*.topLevel.printAllButton.translations:#override\n\
+	<Btn1Up>:		xtex-print-using(all) notify() unset()
+
+Xtex*topLevel.printMarkedButton.label: Print Marked
+Xtex*topLevel.printMarkedButton.resize: False
+Xtex*topLevel.printMarkedButton.resizable: False
+Xtex*topLevel.printMarkedButton.font: variable
+Xtex*.topLevel.printMarkedButton.translations:#override\n\
+	<Btn1Up>:		xtex-print-using(set) xtex-mark-all(clear) notify() unset()
+
+Xtex*topLevel.printUnmarkedButton.label: Print Unmarked
+Xtex*topLevel.printUnmarkedButton.resize: False
+Xtex*topLevel.printUnmarkedButton.resizable: False
+Xtex*topLevel.printUnmarkedButton.font: variable
+Xtex*.topLevel.printUnmarkedButton.translations:#override\n\
+	<Btn1Up>:		xtex-print-using(clear) xtex-mark-all(clear) notify() unset()
+
+Xtex*topLevel.clearMarksButton.label: Clear Marks
+Xtex*topLevel.clearMarksButton.resize: False
+Xtex*topLevel.clearMarksButton.resizable: False
+Xtex*.topLevel.clearMarksButton.translations:#override\n\
+	<Btn1Up>:		xtex-mark-all(clear) notify() unset()
+
+Xtex*topLevel.clearMarksButton.font: variable
+
+Xtex*topLevel.dialogClear.label: Clear Dialog Box
+Xtex*topLevel.dialogClear.resize: False
+Xtex*topLevel.dialogClear.resizable: False
+Xtex*topLevel.dialogClear.font: variable
+
+##
+##	Make ``bad keys'' beep in the ``what page number'' box.
+##	
+Xtex*page.numberText.translations:#override\n\
+	Ctrl<Key>Return:	xtex-noop() \n\
+	Ctrl<Key>M:		xtex-noop() \n\
+	Meta<Key>]:		xtex-noop() \n\
+	Ctrl<Key>[:		xtex-noop() \n\
+	Ctrl<Key>N:		xtex-noop() \n\
+	Ctrl<Key>P:		xtex-noop() \n\
+	Ctrl<Key>V:		xtex-noop() \n\
+	Meta<Key>V:		xtex-noop() \n\
+	Ctrl<Key>Z:		xtex-noop() \n\
+	Meta<Key>Z:		xtex-noop() \n\
+	Ctrl<Key>J:		xtex-noop() \n\
+	Ctrl<Key>O:		xtex-noop() \n
+
+Xtex*page.quitButton.label: Quit
+Xtex*page.quitButton.resize: False
+Xtex*page.quitButton.font: -adobe-courier-bold-r-normal--12-120-75-75-m-70-iso8859-1
+Xtex*.page.quitButton.translations:#override\n\
+	<Btn1Up>:		xtex-page-quit() notify() unset()
+
+Xtex*page.forwardButton.label: Forward
+Xtex*page.forwardButton.horizDistance: 30
+Xtex*page.forwardButton.resize: False
+Xtex*page.forwardButton.font: -adobe-courier-bold-r-normal--12-120-75-75-m-70-iso8859-1
+Xtex*.page.forwardButton.translations:#override\n\
+	<Btn1Up>:		xtex-page-forward() notify() unset()
+
+Xtex*page.backwardButton.label: Backward
+Xtex*page.backwardButton.resize: False
+Xtex*page.backwardButton.font: -adobe-courier-bold-r-normal--12-120-75-75-m-70-iso8859-1
+Xtex*.page.backwardButton.translations:#override\n\
+	<Btn1Up>:		xtex-page-backward() notify() unset()
+
+Xtex*page.markButton.label: Mark
+Xtex*page.markButton.resize: False
+Xtex*page.markButton.font: -adobe-courier-bold-r-normal--12-120-75-75-m-70-iso8859-1
+Xtex*.page.markButton.translations:#replace\n\
+	<Btn1Up>:		xtex-mark-page(toggle) notify() unset()
+
+Xtex*page.dupButton.label: Dup
+Xtex*page.dupButton.resize: False
+Xtex*page.dupButton.font: -adobe-courier-bold-r-normal--12-120-75-75-m-70-iso8859-1
+Xtex*.page.dupButton.translations:#override\n\
+	<Btn1Up>:		xtex-page-duplicate() notify() unset()
+
+Xtex*page.tieButton.label: Tied
+Xtex*page.tieButton.resize: False
+Xtex*page.tieButton.font: -adobe-courier-bold-r-normal--12-120-75-75-m-70-iso8859-1
+Xtex*.page.tieButton.translations:#override\n\
+	<Btn1Up>:		xtex-page-tie() notify() unset()
+
+Xtex*page.largeButton.label: Large
+Xtex*page.largeButton.resize: False
+Xtex*page.largeButton.font: -adobe-courier-bold-r-normal--12-120-75-75-m-70-iso8859-1
+Xtex*.page.largeButton.translations:#override\n\
+	<Btn1Up>:		xtex-page-magnify(large) notify() unset()
+
+Xtex*page.smallButton.label: Small
+Xtex*page.smallButton.resize: False
+Xtex*page.smallButton.font: -adobe-courier-bold-r-normal--12-120-75-75-m-70-iso8859-1
+Xtex*.page.smallButton.translations:#override\n\
+	<Btn1Up>:		xtex-page-magnify(small) notify() unset()
+
+Xtex*page.reopenButton.label: Reopen
+Xtex*page.reopenButton.resize: False
+Xtex*page.reopenButton.font: -adobe-courier-bold-r-normal--12-120-75-75-m-70-iso8859-1
+Xtex*.page.reopenButton.translations:#override\n\
+	<Btn1Up>:		xtex-file(reopen) notify() unset()
+
+Xtex*page.numberText.resize: False
+Xtex*page.numberText.resizable: False
+Xtex*page.numberText.editType: textEdit
+Xtex*page.numberText.horizDistance: 30
+Xtex*page.numberText.width: 40
+Xtex*page.numberText.font: -adobe-courier-bold-r-normal--12-120-75-75-m-70-iso8859-1
+Xtex*.page.numberText.translations:#override\n\
+	<KeyDown>Return: xtex-page-goto(box)
+
+Xtex*page.gotoButton.label: Goto
+Xtex*page.gotoButton.resize: False
+Xtex*page.gotoButton.font: -adobe-courier-bold-r-normal--12-120-75-75-m-70-iso8859-1
+Xtex*.page.gotoButton.translations:#override\n\
+	<Btn1Up>:	xtex-page-goto(box) notify() unset()
+
+##
+##	The following accelerators allow you to press the Up key to
+##	page up, and Down to go down and the Space back to flip
+##	between the two halves; note that space only works when you're
+##	originally looking at the top of the display.
+##
+Xtex*page.viewPort.resize:True
+Xtex*page.viewPort.resizable:True
+Xtex*page.viewPort.allowHoriz:True
+Xtex*page.viewPort.allowVert:True
+Xtex*page.viewPort.vertical.accelerators:\
+  <KeyUp>Up: StartScroll(Backward) NotifyScroll(FullLength) EndScroll() \n\
+  <KeyUp>Down: StartScroll(Forward) NotifyScroll(FullLength) EndScroll() \n\
+  <KeyDown>space: StartScroll(Forward) NotifyScroll(FullLength) EndScroll() \n\
+  <KeyUp>space: StartScroll(Backward) NotifyScroll(FullLength) EndScroll() \n\
+
+Xtex*page.viewPort.horizontal.accelerators:\
+  <KeyUp>Right: StartScroll(Forward) NotifyScroll(FullLength) EndScroll() \n\
+  <KeyUp>Left: StartScroll(Backward) NotifyScroll(FullLength) EndScroll()
+##
+
+##
+##	We define keypresses for equivilent functions to the buttons --
+##	this allows us to omit the buttons, giving us a bigger display area.
+##
+Xtex*.dviPage.resize: True
+Xtex*.dviPage.translations:#replace\n\
+	Shift<Key>q: xtex-quit()\n\
+	Shift<Key>x: xtex-quit()\n\
+	Ctrl<Key>d: xtex-quit()\n\
+	<Key>q: xtex-page-quit()\n\
+	<Key>x: xtex-page-quit()\n\
+\
+	<Key>g: xtex-page-goto() xtex-page-number-reset()\n\
+\
+	<Key>f: xtex-page-foreward() xtex-page-number-reset()\n\
+	<Key>n: xtex-page-foreward() xtex-page-number-reset()\n\
+	Ctrl<Key>n: xtex-page-foreward() xtex-page-number-reset()\n\
+	<Key>Return: xtex-page-foreward() xtex-page-number-reset()\n\
+\
+	<Key>b: xtex-page-backward() xtex-page-number-reset()\n\
+	<Key>p: xtex-page-backward() xtex-page-number-reset()\n\
+\
+	Ctrl<Key>h: xtex-page-backward() xtex-page-number-reset()\n\
+	<Key>BackSpace: xtex-page-backward() xtex-page-number-reset()\n\
+	<Key>Delete: xtex-page-backward() xtex-page-number-reset()\n\
+\
+	Ctrl<Key>t: xtex-mark-push() xtex-mark-page(set) xtex-print-using(set)  xtex-mark-pop()\n\
+\
+	<Key>l: xtex-page-magnify(large) xtex-page-number-reset()\n\
+	<Key>s: xtex-page-magnify(small) xtex-page-number-reset()\n\
+	Shift<Key>m: xtex-page-magnify() xtex-page-number-reset()\n\
+\
+	<Key>t: xtex-mark-page(toggle) xtex-page-number-reset()\n\
+	<Key>m: xtex-mark-page(set) xtex-page-number-reset()\n\
+	<Key>u: xtex-mark-page(clear) xtex-page-number-reset()\n\
+\
+	<Key>F12: xtex-file(reopen) xtex-page-number-reset()\n\
+	<Key>r: xtex-file(reopen) xtex-page-number-reset()\n\
+\
+	Shift<Key>d: xtex-page-duplicate() xtex-page-number-reset()\n\
+	Shift<Key>t: xtex-page-tie() xtex-page-number-reset()\n\
+\
+	<Key>Escape: xtex-page-number-reset()\n\
+	<Key>0: xtex-page-number(0)\n\
+	<Key>1: xtex-page-number(1)\n\
+	<Key>2: xtex-page-number(2)\n\
+	<Key>3: xtex-page-number(3)\n\
+	<Key>4: xtex-page-number(4)\n\
+	<Key>5: xtex-page-number(5)\n\
+	<Key>6: xtex-page-number(6)\n\
+	<Key>7: xtex-page-number(7)\n\
+	<Key>8: xtex-page-number(8)\n\
+	<Key>9: xtex-page-number(9)\n\
+	<Key>-: xtex-page-number-minus()\n

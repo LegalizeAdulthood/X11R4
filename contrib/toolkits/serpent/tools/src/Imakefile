@@ -1,0 +1,33 @@
+#include "../../Serpent.tmpl"
+DIR = tools
+
+SRC = format.c playback.c reader.c runit.c snapshot.c color.c getit.c getopt_sys.c
+
+OBJ = format.o playback.o reader.o runit.o snapshot.o color.o getit.o getopt_sys.o
+
+PERM = dial_make serpent
+
+BIN = format playback reader runit snapshot getit
+
+LIBS = $(SERPENTLIBS) $(SERPENTLIBS) $(SERPENTXLIBS)
+
+SNAPSHOTOBJS = snapshot.o color.o
+
+GETOPTOBJS = getit.o getopt_sys.o
+
+DEPENDINCS = $(SERPENTXINCS)
+
+SerpentObjectRuleX()
+
+all:	$(BIN) install_bin
+
+SerpentSimpleProgram(format)
+SerpentSimpleProgram(playback)
+SerpentSimpleProgram(runit)
+SerpentSimpleProgram(reader)
+SerpentSimpleProgramObjs(snapshot,$(SNAPSHOTOBJS))
+SerpentSimpleProgramObjs(getit,$(GETOPTOBJS))
+
+SerpentInstallPermBin()
+
+SerpentDepend()

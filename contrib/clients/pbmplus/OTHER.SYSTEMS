@@ -1,0 +1,36 @@
+                 List of Other Image-Processing Software
+
+Utah RLE Toolkit.  Conversion and manipulation package, similar to
+PBMPLUS.  Available via FTP as cs.utah.edu:pub/toolkit-2.0.tar.Z and
+ucsd.edu:graphics/utah-raster-toolkit.tar.Z.
+
+Fuzzy Pixmap Manipulation, by Michael Mauldin <mlm@nl.cs.cmu.edu>.
+Conversion and manipulation package, similar to PBMPLUS.  Available via
+FTP as nl.cs.cmu.edu:/usr/mlm/ftp/fbm.tar.Z and ucsd.edu: graphics/
+fbm.tar.Z, and also in your nearest comp.sources.unix archive.
+
+Img-whatnot, by Paul Raveling <raveling@venera.isi.edu>.  Reads and
+writes its own image format, displays on an X.V11 screen, and does some
+image manipulations.  Available via FTP as expo.lcs.mit.edu:contrib/
+Img.tar.Z, and venera.isi.edu:pub/Img.tar.Z along with a large
+collection of color images.
+
+Xim, by Philip R. Thompson.  Reads and writes its own image format,
+displays on an X.V11 screen, and does some image manipulations.
+Available via FTP as expo.lcs.mit.edu:contrib/xim3c.tar.Z.
+
+xloadimage, by Jim Frost <madd@std.com>.  Reads in images in various
+formats and displays them on an X.V11 screen.  Available via FTP as
+expo.lcs.mit.edu:contrib/xloadimage.tar.Z, and in your nearest
+comp.sources.x archive.
+
+TIFF Software, by Sam Leffler <sam@okeeffe.berkeley.edu>.  Nice
+portable library for reading and writing TIFF files, plus a few tools
+for manipulating them and reading other formats.  Available via FTP as
+okeeffe.berkeley.edu:pub/tiff.tar.Z.
+
+HIPS, from the Human Information Processing Laboratory at NYU.  For
+availability contact Michael Landy, Psychology Dept., NYU, 6 Washington
+Place, Room 980, New York NY 10003.  This package is *not* free.
+
+ALV Toolkit, available via email to alv-users-request@cs.bris.ac.uk.

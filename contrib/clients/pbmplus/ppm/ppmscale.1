@@ -1,0 +1,34 @@
+.TH ppmscale 1 "01 August 1989"
+.SH NAME
+ppmscale - scale a portable pixmap
+.SH SYNOPSIS
+.nf
+ppmscale <s> [ppmfile]
+ppmscale -xsize|-width|-ysize|-height <s> [ppmfile]
+ppmscale -xscale|-yscale <s> [ppmfile]
+ppmscale -xscale|-xsize|-width <s> -yscale|-ysize|-height <s> [ppmfile]
+.fi
+.SH DESCRIPTION
+Reads a portable pixmap as input.
+Scales it by the specified factor or factors and produces a portable
+pixmap as output.
+You can both enlarge (scale factor > 1) and reduce (scale factor < 1).
+You can specify one dimension as a pixel size, and the other dimension
+will be scaled correspondingly.
+You can specify one dimension as a scale, and the other dimension
+will not be scaled.
+Or, you can specify different scales for each axis, either as scale
+factors or as pixel sizes.
+.PP
+All flags can be abbreviated to their shortest unique prefix.
+.SH "SEE ALSO"
+pbmreduce(1), pnmenlarge(1), ppm(5)
+.SH AUTHOR
+Copyright (C) 1989 by Jef Poskanzer.
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided
+that the above copyright notice appear in all copies and that both that
+copyright notice and this permission notice appear in supporting
+documentation.  This software is provided "as is" without express or
+implied warranty.

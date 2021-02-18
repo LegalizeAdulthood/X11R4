@@ -1,0 +1,145 @@
+The MIT X Consortium is proud to announce Release 4 of the X Window System,
+Version 11.  Highlights of this version include:
+
+     o	many bugs fixes
+     o	the sample server has been heavily optimized, particularly for
+		monochrome and 8-bit color frame buffers
+     o	support for several additional displays
+     o	correct (and faster) wide lines
+     o	more fonts
+     o	new color database
+     o	non-rectangular windows extension
+     o	support for X Display Manager Control Protocol in server and xdm
+     o	client support for System V, Release 3.2 and STREAMS
+     o	function prototypes and experimental C++ support in Xlib
+     o	security hooks for passing authentication information, plus a
+		sample secret token-based implementation
+     o	enhanced Xt Intrinsics with gadgets and varargs interfaces
+     o	support the ICCCM in libraries, clients, and window managers
+     o	greatly improved Xaw widgets, including menu widget
+     o	many new utility routines for standard colormaps, converters, etc.
+     o	new window managers, including support for a revised twm
+     o	greatly improved xmh interface
+     o	8-bit and on-the-fly font setting in xterm
+     o	new ditroff previewer
+     o	new versions of Andrew, InterViews, and Xw toolkits
+     o	XView toolkit and OPEN LOOK window manager
+     o	Serpent User Interface Management System
+     o	XGKS library
+     o	XJ, Wnn, kinput, xterm Internationalization utilities
+
+
+The software in this release is not in the public domain, but is freely
+available without restrictions.  No license is required and there are no
+royalties; vendors are actively encouraged to base products upon this software.
+
+This release is available from a variety of sources, including:
+
+     o	the Internet and UUCP sites listed below 
+     o	the MIT Software Distribution Center (address below)
+     o	and a variety of consulting/mail-order firms
+
+
+The software is organized into two main distributions: the core X Window System
+software supported by the staff of the MIT X Consortium, and user- contributed
+software that is provided (without support) as a public service.  Sites that
+have access to the Internet or UUCP can retrieve the release from the location
+nearest them listed below.  The indicated directories contain a README file
+with further instructions and copies of the release notes.
+
+                                                               Anonymous
+                        Machine                  Internet      FTP
+    Location            Name                     Address       Directory
+    --------            -------                  --------      -------------
+
+(1) West USA            gatekeeper.dec.com       16.1.0.2      pub/X11/R4
+    Central USA         mordred.cs.purdue.edu    128.10.2.2    pub/X11/R4
+(2) Central USA         giza.cis.ohio-state.edu  128.146.8.61  pub/X.V11R4
+    Southeast USA       uunet.uu.net             192.48.96.2   X/R4
+(3) Northeast USA       crl.dec.com              192.58.206.2  pub/X11/R4
+
+(4) UK Janet            src.doc.ic.ac.uk         129.31.81.36  X.V11R4
+    UK niftp            uk.ac.ic.doc.src                       <XV11R4>*
+
+    Scandinavia	        sunic.sunet.se           130.237.216.2 pub/X.V11R4
+    Europe              mcsun.eu.net             192.16.202.1  windows/X/R4
+
+    Germany    unido.informatik.uni-dortmund.de  129.217.4.64  pub/windows/X/X.V11R4
+
+(5) Australia           munnari.oz.au            128.250.1.21  X.V11/R4
+
+
+Notes:
+
+(1)  The release is also available to UUCP neighbors of decwrl as
+     decwrl!~/pub/X11/R4/... and to DEC Easynet sites as DECWRL::"/pub/X11/R4".
+     The partition on which the anonymous ftp/uucp/dcp software is kept is
+     exported read-only as /archive for public access through NFS.
+
+(2)  The release is also available for general UUCP as follows:
+
+	L.sys (aka Systems) lines follow; the directory tree under
+	X.V11R4 will be accessible as osu-cis!~/X.V11R4/.
+
+	#
+	# Direct Trailblazer
+	#
+	osu-cis Any ACU 19200 1-614-292-5112 in:--in:--in: Uanon
+	#
+	# Micom port selector, at 1200, 2400, or 9600 bps.
+	# Replace ##'s below with 12, 24, or 96 (both speed and phone number).
+	#
+	osu-cis Any ACU ##00 1-614-292-31## "" \r\c Name? osu-cis nected \c GO \d\r\d\r\d\r in:--in:--in: Uanon
+
+
+(3)  The release is available to DEC Easynet sites as CRL::"/pub/X11/R4".
+
+(4)  For now, the release is only available to UK users of Janet; other 
+     European sites are asked to set up their own redistributions.
+
+(5)  Australian sites are strongly urged not to try to get the release from
+     the United States.  "Fetchfile" may also be used to retrieve the release
+     from the same directory.
+
+(oo) Avoid the temptation to get the release from expo.lcs.mit.edu, esp.
+     between the hours of 9am and 6pm.  Connections to expo during those hours
+     will be subject to termination without warning.
+
+
+If you are unable to retrieve the release yourself, a set of four 1600bpi tapes
+in UNIX tar format plus printed versions of the major manuals and a copy of the
+new Gettys, Newman, and Scheifler book "X Window System: C Library and Protocol
+Reference" are available from the MIT Software Center for the following rates
+(prices include shipping):
+
+                                                     tapes,
+                                 manuals,           manuals,
+                                   book               book
+                                ----------         ----------
+
+          North America            $125               $400
+
+         Everywhere Else           $175               $500
+
+
+To order, please send a letter and a check payable to MIT in US currency for
+the appropriate amount to:
+
+
+                        MIT Software Distribution Center
+                        Technology Licensing Office
+                        room E32-300
+                        77 Massachusetts Avenue
+                        Cambridge, MA  02139
+
+
+For ordering information, call the "X Ordering Hotline" at +1 (617) 258-8330.
+
+
+                                    Donna Converse, Jim Fulton, Michelle Leger,
+                                   Keith Packard, Chris Peterson, Bob Scheifler
+                                                                   X Consortium
+                                            MIT Laboratory for Computer Science
+
+                                                                    Ralph Swick
+                                                             MIT Project Athena

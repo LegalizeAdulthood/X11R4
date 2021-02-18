@@ -1,0 +1,222 @@
+
+
+
+Introduction
+
+
+
+
+
+.c2.Overview
+
+This introduction provides an overview of NCSA Hierarchical 
+Data Format (HDF) capabilities on the Cray, Alliant, Sun, 
+Macintosh, and IBM PC. The organization and use of this manual 
+are described and notational conventions explained.
+
+
+What Is HDF?
+
+Hierarchical Data Format (HDF) is a multi-object file format for 
+the transfer of graphical and floating-point data between 
+machines. The design of this format allows self-definition of data 
+content, and easy extensibility for future enhancements or 
+compatibility with other standard formats.
+
+Features of NCSA HDF Version 2.0 include
+
+¥	facilities for sharing data across machines and systems, 
+including Cray (UNICOS), Alliant (CONCENTRIX), Sun 
+(UNIX), Macintosh II, and IBM PC (MS-DOS),
+
+¥	FORTRAN and C calling interfaces for storing and retrieving 
+8-bit raster images with palettes,
+
+¥	FORTRAN and C calling interfaces for storing and retrieving 
+scientific data with accompanying information,
+
+¥	utilities for converting raw data files to HDF files and vice 
+versa, and
+
+¥	general purpose routines for creating HDF files.
+
+
+System Requirements
+
+In order to use HDF software, you need access to one of the 
+following computer systems:  a Cray with UNICOS, an Alliant 
+with CONCENTRIX, a Sun System 3 with UNIX, a Macintosh II, or 
+an IBM PC, or compatible model, with MS-DOS.
+
+
+.c2.Use of This Manual
+
+This manual is designed for users who are working on an 
+application that involves the use of HDF files. If you are completely 
+unfamiliar with HDF, you should read or scan Chapter 1, "HDF 
+Basics."
+
+The most important information about a particular interface is 
+covered in the chapter that deals with that interface. Each chapter 
+contains a description of the set with which the interface deals, 
+descriptions of the routines that constitute the interface, and 
+examples.
+
+
+.c3.Manual Contents
+The manual is organized into the following chapters:
+
+Chapter 1, "NCSA HDF Basics," describes HDF, explains the 
+reasons for its creation, and gives a brief overview of available 
+applications software.
+
+Chapter 2, "Using NCSA HDF for 8-Bit Raster Images," describes 
+the routines that are available for storing and retrieving raster 
+images in HDF format, with or without compression, and with or 
+without palettes.
+
+Chapter 3, "Using NCSA HDF for Storing Scientific Data," 
+describes the routines that are available for storing and retrieving 
+scientific data sets.
+
+Chapter 4, "FORTRAN Language Interface," describes in detail 
+the full set of currently supported HDF FORTRAN-callable 
+routines, including low-level general purpose routines, raster 
+image set routines, and scientific data set routines.
+
+Chapter 5, "C Language Interface," describes in detail the full set 
+of currently supported HDF C routines, including low-level 
+general purpose routines, raster image set routines, and scientific 
+data set routines.
+
+Chapter 6, "NCSA HDF Command Line Utilities," describes the 
+command line utilities currently available for HDF.
+
+Appendix A, "NCSA HDF Tags," presents a table of brief 
+descriptions of most of the tags assigned at NCSA for general use.
+
+Appendix B, "Header Files," includes the general header files 
+used in compiling all HDF libraries.
+
+Appendix C, "Eight-Character FORTRAN Names," lists the 
+official identifier names and their short form equivalents.
+
+Appendix D, "Public HDF Directories on NCSA Computers," lists 
+the names and contents of NCSA-supported HDF directories.
+
+.c2.Form of Presentation
+The material in this manual is presented in text, screen displays, 
+or command line notation.
+
+
+Text
+In explaining various features and commands, this manual often 
+presents a word within a paragraph in italics to indicate that the 
+word is defined within the paragraph.
+
+Portions of this manual refer to other portions of the manual where 
+the other portions explain related topics. These cross references 
+usually mention the title of sections or chapters enclosed in 
+quotation marks, such as, See Chapter 1, "NCSA HDF Basics."
+
+
+Command Line Format Notation
+Throughout this manual, many explanations instruct you to make 
+entries by typing on the keyboard. These entry instructions are 
+printed in courier bold type and appear within a paragraph 
+or on a separate line. The command lines in this manual are 
+normally shown in lowercase, except in rare instances where 
+uppercase is required.
+
+When it is necessary for you to press a key that is labeled with 
+more than one character (such as the RETURN key), this manual 
+identifies the key with all capital (uppercase) letters. Keys to be 
+entered are printed in bold type. Keys that are pressed 
+simultaneously or in succession are linked with a hyphen. For 
+example, press CONTROL-A.
+
+The meaning of each special notation applied to format lines is 
+listed in Table 1.
+
+
+Table 1  Meaning of Entry Format Notations
+
+Appearance	Example	Entry Method
+
+On separate line; 	dothis
+	Enter the keys for 
+each character.
+lowercase, courier bold type		
+
+Within a text line; 
+	RETURN	Press the single key 
+indicated.
+uppercase, bold type		
+
+Within a text line;  
+uppercase,	CONTROL-A	While holding down the 
+first one or two key(s) 
+bold type; hyphens		indicated, press 
+the last key indicated.
+between key names		
+
+On separate line or within a
+	filename	This notation is a 
+variable, which represents 
+text line; italic, 
+lowercase,		a certain kind of 
+entry, but may consist of 
+courier bold type		different characters every 
+time you make 
+		the entry.
+
+Square brackets; bold type	[ ]
+	Do not enter the 
+square brackets.  Material 
+		presented between brackets 
+is optional and 
+		should be entered only 
+in certain cases. 
+
+Ellipses; bold 
+type	. . .	Do not 
+enter ellipses. Ellipses indicate 
+you 
+		may enter more material 
+similar to the 
+		material preceding the 
+ellipses.
+
+
+Figure 1 shows you how to read and enter a command line.
+
+Figure 1	Reading and Entering a Command Line
+
+                                                   
+
+
+
+Further Reading
+More detailed information about the basic HDF structure and how 
+it works can be found in NCSA HDF Specifications, which you 
+may download via FTP (refer to "How to Get HDF" in Chapter 1) or 
+may request by writing NCSA at the addresses listed on the Bugs 
+and Suggestions report form at the back of this manual.
+i	NCSA 
+HDF
+
+Introduction to 
+HDF
+	i
+
+National Center for Supercomputing 
+Applications
+
+February 
+1989
+
+                                                                
+
+
+
+

@@ -1,0 +1,12 @@
+.TH VFT2CH 1 "1st March 1988"
+.AT 3
+.SH NAME
+vft2ch \- Font translation for vfont-style fonts to character format.
+.SH SYNOPSIS
+.B vft2ch
+fontfile  [ character_list ]
+.SH DESCRIPTION
+Reads "fontfile" from current directory (or if not found,
+from BITDIR defined below) and converts it to a character font format
+editable by real people, and convertable BACK to vfont format by the
+ch2rst program.  Output goes to stdout.

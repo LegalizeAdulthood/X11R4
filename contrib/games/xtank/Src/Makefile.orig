@@ -1,0 +1,168 @@
+#
+# This makefile describes how to make xtank
+#
+# Copyright 1988 by Terry Donahue
+#
+
+XOBJS = XMultiSync.o
+XSRCS = XMultiSync.c
+XINCL = Xlibint.h Xlibos.h
+
+OBJS =	main.o interface.o file.o setup.o init.o animate.o game.o program.o \
+	update.o box.o collision.o hit.o display.o 3d.o gr.o graphics.o \
+	objects.o input.o actions.o maze.o console.o mapper.o \
+        radar.o lowlib.o highlib.o status.o unix.o util.o intersect.o \
+	drone.o warrior.o shooter.o eliza.o buddy.o vdesign.o mdesign.o \
+	menu.o icounter.o message.o cosell.o $(XOBJS)
+
+SRCS =	main.c interface.c file.c setup.c init.c animate.c game.c program.c \
+	update.c box.c collision.c hit.c display.c 3d.c gr.c graphics.c \
+	objects.c input.c actions.c maze.c console.c mapper.c \
+	radar.c lowlib.c highlib.c status.c unix.c util.c intersect.c \
+	drone.c warrior.c shooter.c eliza.c buddy.c vdesign.c mdesign.c \
+	menu.c icounter.c message.c cosell.c
+
+PICS =	Objects/lightc.obj \
+	Objects/hexo.obj \
+	Objects/spider.obj \
+	Objects/psycho.obj \
+	Objects/tornado.obj \
+	Objects/marauder.obj \
+	Objects/tiger.obj \
+	Objects/rhino.obj \
+	Objects/medusa.obj \
+	Objects/malice.obj \
+\
+	Objects/shock.obj \
+	Objects/gleam.obj \
+	Objects/tink.obj \
+	Objects/soft.obj \
+	Objects/circle.obj \
+	Objects/fiery.obj \
+	Objects/double.obj \
+	Objects/exhaust.obj \
+\
+	Objects/turret_sm.obj \
+	Objects/all_bullets.obj \
+\
+	Objects/anim_landmarks.obj \
+	Objects/map_landmarks.obj \
+	Objects/design_landmarks.obj \
+\
+	Objects/xtank.obj \
+	Objects/team.obj
+
+INCL =  xtank.h structs.h vehicle.h loc.h disc.h map.h xtanklib.h \
+	graphics.h gr.h graphics.h thread.h mdesign.h vstructs.h \
+	vdesign.h menu.h common.h program.h interface.h icounter.h message.h \
+	config.h screen.h cosell.h buddy.h linetext.h 3d.h box.h x11.h
+
+LIB = -lm -lX mpthd.\$${hosttype}
+CFLAGS = -O
+TOP = /mit/games/src/vax/xtank/Src
+PROGRAM = xtank.\$${hosttype}
+
+
+$(PROGRAM): $(OBJS)
+	/bin/csh -f -c "$(CC) $(OBJS) $(CFLAGS) -o $(PROGRAM) $(LIB)"
+
+farmrt:
+	ln -s $(TOP)/*.[ch] $(TOP)/Objects $(TOP)/Makefile $(TOP)/mpthd.rt \
+	$(TOP)/rt 2> /dev/null
+
+farmvax:
+	ln -s $(TOP)/*.[ch] $(TOP)/Objects $(TOP)/Makefile $(TOP)/mpthd.vax \
+	$(TOP)/vax 2> /dev/null
+
+prof:
+	$(CC) -c -O -pg $(SRCS)
+	$(CC) $(OBJS) -O -pg -o $(PROGRAM).exe $(LIB)
+	
+franz: ($(OBJS)
+	ld -r -x -o franz.o $(OBJS)
+
+lint:
+	rm -f xtank.lint
+	lint -u $(DFLAGS) $(SRCS) > xtank.lint
+
+saber:
+	rm -f saber.h
+	echo "load -w $(SRCS) $(LIB)" > saber.h
+
+dist:
+	cp Makefile $(SRCS) $(XSRCS) x11.c $(INCL) $(XINCL) mpthd.* $(DISTDIR)
+	cp $(PICS) $(DISTDIR)/Objects
+
+clean:
+	rm -f $(OBJS)
+
+print:
+	enscript -2rG Makefile $(INCL) $(SRCS)
+
+# Include file dependency fixer-uppers
+
+common.h:
+	touch common.h
+xtank.h:
+	touch xtank.h
+graphics.h:
+	touch graphics.h
+gr.h:
+	touch gr.h
+menu.h:
+	touch menu.h
+
+
+# Module Dependencies
+
+common.h:	config.h
+xtank.h:	structs.h common.h screen.h
+graphics.h:	x11.h common.h
+menu.h:		common.h
+gr.h:		graphics.h
+
+# Xtank code
+actions.o:	xtank.h gr.h disc.h
+animate.o:   	xtank.h
+box.o:		xtank.h vstructs.h box.h
+collision.o:	xtank.h vstructs.h
+console.o:	xtank.h gr.h
+cosell.o:	xtank.h cosell.h
+display.o:	xtank.h gr.h
+file.o:      	xtank.h vehicle.h
+gr.o:		xtank.h gr.h
+game.o: 	xtank.h
+highlib.o:	xtank.h xtanklib.h
+hit.o:		xtank.h loc.h disc.h
+init.o:      	xtank.h vehicle.h graphics.h
+input.o:	xtank.h gr.h disc.h
+interface.o: 	xtank.h graphics.h menu.h interface.h
+intersect.o:    xtank.h
+lowlib.o:	xtank.h xtanklib.h map.h
+main.o:      	xtank.h
+mapper.o:	xtank.h gr.h map.h
+maze.o:		xtank.h
+message.o:	xtank.h gr.h menu.h message.h map.h
+mdesign.o:	xtank.h gr.h mdesign.h
+objects.o:	xtank.h gr.h $(PICS)
+program.o:	xtank.h thread.h program.h icounter.h
+radar.o:	xtank.h gr.h map.h
+setup.o:     	xtank.h gr.h vstructs.h
+status.o:	xtank.h gr.h
+unix.o:
+update.o:	xtank.h disc.h vehicle.h loc.h
+util.o:		xtank.h gr.h
+vdesign.o:	xtank.h gr.h vehicle.h vstructs.h vdesign.h menu.h
+3d.o:		xtank.h gr.h linetext.h 3d.h
+
+# Xtank robot programs
+drone.o:	xtanklib.h
+warrior.o:	xtanklib.h
+shooter.o:	xtanklib.h
+eliza.o:	xtanklib.h
+buddy.o:	xtanklib.h buddy.h
+
+# Toolkit code
+icounter.o:	icounter.h common.h
+menu.o:		common.h graphics.h menu.h
+graphics.o:	graphics.h x11.c

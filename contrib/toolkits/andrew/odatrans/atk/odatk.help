@@ -1,0 +1,74 @@
+\begindata{text,268833736}
+\textdsversion{12}
+\template{help}
+\chapter{CMU ODA Tool Kit}\chapter{
+
+}
+\section{What the CMU ODA Tool Kit is
+
+}\leftindent{
+The CMU ODA Tool Kit provides low level support for manipulating ODA document 
+structures. The documentation for the ODA tool kit,
+the Local Tool Kit, and the Raster Tool Kit,
+are part of the book
+"Multi-media Document Interchange: ODA and the EXPRES Experience," to
+by published by Springer Verlag
+sometime in 1990. Until the book is published, the
+complete application programmer's interface documentation for this
+tool kit can be obtained, for a modest fee to cover costs,
+by sending mail to oda@andrew.cmu.edu, or by writing:
+
+
+\leftindent{
+CMU ODA Tool Kit
+
+Information Technology Center
+
+4910 Forbes Ave.
+
+Pittsburgh, PA 15213
+
+U.S.A.}
+
+
+Once the book is available, we are by contract no longer allowed to distribute
+copies of the tool kit documentation. You must then purchase the book to
+obtain the documentation.
+
+
+}
+
+\section{Related tools  }\leftindent{
+
+
+Select (highlight) one of the italicized names and choose "Show Help on 
+Selected Word" from the pop-up menu to see the help file for:}\leftindent{
+
+
+\italic{ODA}
+
+\italic{Raster-Toolkit}
+
+\italic{Local-Toolkit
+
+}\italic{atkoda}
+
+\italic{odaatk}
+
+\italic{odatroff}
+
+\italic{odaileaf}}
+
+\leftindent{\italic{ileafoda}}
+
+\leftindent{\italic{proda}}
+
+\leftindent{\italic{prodif}}
+
+\leftindent{\italic{prtext}}
+
+\leftindent{\italic{convert}
+
+}\leftindent{Names of other programs, in a vertical list, no commas or other 
+punctuation marks} \
+\enddata{text,268833736}

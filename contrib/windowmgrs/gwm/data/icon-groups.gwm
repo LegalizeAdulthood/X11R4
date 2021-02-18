@@ -1,0 +1,61 @@
+; iconification following the "group" hint
+
+;;File: icon-groups.gwm -- iconify-window manage groups
+;;Author: colas@mirsa.inria.fr (Colas NAHABOO) -- Bull Research FRANCE
+;;Revision: 1.1 -- May 19 1989
+;;State: Exp
+;;GWM Version: 1.4
+
+; grouping iconifies
+
+(if (not (boundp 'iconify-window-redefined-for-groups))
+    (progn
+	  (: iconify-window-redefined-for-groups t)
+	  (: original-iconify-window iconify-window)
+	  (de iconify-window ()
+	      (if window-group	
+		  ; we are in a group
+		  (if (= window-window (# 0 window-group))
+		      ; leader
+		      (if (= window-status 'window)
+			  ; iconify leader
+			  (progn
+				(for window window-group
+				     (if window-is-mapped
+					 (progn (register-group-member window)
+						(unmap-window))))
+				(map-window window-icon))
+			  ; de-iconify leader
+			  (progn
+				(for w window-group 
+				     (if (is-group-member w)
+					 (map-window w)))
+				(unmap-window window-icon)
+				(clear-group-members window-group)
+			  ))
+		      ; member
+		      (if (= window-status 'window)
+			  ; iconify member
+			  (progn
+				(with (window (# 0 window-group))
+				      (map-window window-icon))
+				(register-group-member window)
+				(unmap-window window))
+			  ; de-iconify member (not possible normally)
+			  (original-iconify-window)))
+		  ; window do not belong to a group
+		  (original-iconify-window)))
+    )
+)))
+
+(de register-group-member (w)
+    (with (window w)
+	  (wob-property (# 'group wob-property t))))
+
+(de is-group-member (w)
+    (with (window w)
+           (# 'group wob-property))))
+
+(de clear-group-members (l)
+    (for window l
+	 (wob-property (# 'group wob-property ())))))

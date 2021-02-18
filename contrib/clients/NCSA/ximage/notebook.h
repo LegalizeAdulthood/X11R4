@@ -1,0 +1,3 @@
+struct NOTEBOOK {
+	Widget topLevel;
+};

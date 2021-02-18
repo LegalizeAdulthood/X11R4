@@ -1,0 +1,52 @@
+#!/bin/csh -f
+#**********************************************************************
+#         Copyright IBM Corporation 1988,1989 - All Rights Reserved
+#         For full copyright information see: 'andrew/config/COPYRITE'
+#**********************************************************************
+%include pobbconfig.defs
+#
+# ?[POBBRunWarning]
+# ?[POBBRunNotice]
+
+%ifdef pobb_RunMachines
+
+# For restarting oldsendmail -- reboot does it
+echo "<critical>(pid $$$$) Reboot in 10 minutes" > /dev/console
+sleep 60
+
+%ifdef pobb_RunAMSDelivery
+set pid = `ps ax | egrep oldsendmail | egrep -v egrep`
+if ($$#pid != 0) then
+    set pid = $$pid[1]
+    echo "<critical>Switching oldsendmail log; pid = $$pid" > /dev/console
+    (echo "<critical>kill -IOT $$pid"; kill -IOT $$pid) > /dev/console
+    sleep 50
+# Send logs to bboard
+    ?[SomeScriptDir]/postlog
+else
+    echo "<critical>No oldsendmail daemon to kill" > /dev/console
+    sleep 60
+endif
+%else pobb_RunAMSDelivery
+sleep 60
+%endif pobb_RunAMSDelivery
+
+?[SmallLocalDir]/pobb.shutdown >& /dev/null
+
+sleep 180
+
+echo "<critical>Reboot in 5 minutes" > /dev/console
+
+sleep 240
+echo "<critical>Reboot in 1 minute" > /dev/console
+
+sleep 60
+sync
+echo "<critical>Rebooting..." > /dev/console
+sleep 2
+sync
+(reboot)
+/etc/reboot
+/bin2/reboot
+
+%endif pobb_RunMachines

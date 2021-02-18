@@ -1,0 +1,6 @@
+The following changes have been made to this directory since R3:
+
+	o  Support for color using MIT cfb.
+	o  New software cursors using MIT mi.
+	o  Support for multiple screens.
+	o  Various R4isms.

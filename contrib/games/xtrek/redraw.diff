@@ -1,0 +1,43 @@
+*** redraw.c	Sat Sep 30 00:18:45 1989
+--- redraw.c~	Sun Sep 24 08:56:27 1989
+***************
+*** 199,217 ****
+      {
+        int             cl_scale = torp->t_range;
+  
+!       if (cl_scale >= 500)
+        {
+  	char            glyph;
+  
+  	x -= ex_hwidth;
+  	y -= ex_hheight;
+! 	if (cl_scale >= 1500)
+  	  cl_scale = 4;
+! 	else if (cl_scale >= 1250)
+  	  cl_scale = 3;
+! 	else if (cl_scale >= 1000)
+  	  cl_scale = 2;
+! 	else if (cl_scale >= 750)
+  	  cl_scale = 1;
+  	else
+  	  cl_scale = 0;
+--- 199,217 ----
+      {
+        int             cl_scale = torp->t_range;
+  
+!       if (cl_scale >= 800)
+        {
+  	char            glyph;
+  
+  	x -= ex_hwidth;
+  	y -= ex_hheight;
+! 	if (cl_scale >= 2400)
+  	  cl_scale = 4;
+! 	else if (cl_scale >= 1800)
+  	  cl_scale = 3;
+! 	else if (cl_scale >= 1500)
+  	  cl_scale = 2;
+! 	else if (cl_scale >= 1350)
+  	  cl_scale = 1;
+  	else
+  	  cl_scale = 0;

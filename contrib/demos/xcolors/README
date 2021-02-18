@@ -1,0 +1,11 @@
+Colordemo V1.0
+April 4, 1988
+Paul Vixie
+vix@ub.com
+
+This is a quick Xt11 program that reads rgb.txt and generates a label widget
+in each color found therein.  It's slow, there are probably better ways to do
+what it does.  It's also reasonably cute.
+
+Distribute freely except don't remove my name.  Add your own copyrights as you
+please.  Note that many excerpts were ripped from the MIT toolkit examples.

@@ -1,0 +1,251 @@
+
+
+
+
+
+
+Introduction
+
+
+
+
+
+
+
+
+
+
+
+Overview
+
+
+
+This introduction provides an overview of the capabilities and purpose of
+NCSA X DataSlice and directs you to sources that offer detailed
+information regarding the X Window System. The organization and purpose
+of this manual are described and notational conventions explained.
+
+
+
+
+
+About NCSA X DataSlice
+
+
+
+NCSA X DataSlice is a color imaging and data analysis tool based on the X
+Window System. It was developed for analysis of three-dimensional 32-bit
+floating-point scientific data stored in NCSA HDF file format. The current
+release of NCSA X DataSlice features:
+
+
+
+%	color raster
+display of 2D slices from 3D datasets
+
+%	display of actual
+data values in spreadsheet form
+
+%	synchronized
+selection between corresponding image and data windows
+
+%	continuous and
+single-step animation of color raster images
+
+%	manual frame
+control, frame skipping, auto-reverse, and asynchronous discontinuation
+animation capabilities
+
+%	tiling of multiple
+images in a single window
+
+%	arbitrary slicing
+and dicing
+
+%	3D visible volume
+rendering
+
+%	interpolation of
+color raster images
+
+%	support for
+user-defined, raw palettes, such as those created in NCSA PalEdit
+
+
+
+
+
+System Requirements
+
+
+
+In order to run NCSA X DataSlice, you must have (1) a system and server
+that support color X WindowsQsuch as Sun 2, 3, and 4 systems, and the IBM
+RT, and (2) installed X version 11 and server release 2 or later on your
+system.
+
+
+
+
+
+Use of This Manual
+
+
+
+This section describes the organization of this manual, and the
+conventions and nomenclature used in developing it. Although the
+instructions in this manual should enable you to successfully use NCSA X
+DataSlice, a working knowledge of your window manager is presupposed.
+For detailed information regarding the X Window System, refer to the
+guides listed in the section entitled "Suggested Reading."
+
+
+
+
+
+Manual Contents
+
+This manual is organized into the following chapters:
+
+
+
+Chapter 1, "Getting Started," explains how you should install and invoke
+NCSA X DataSlice. The chapter contains a tutorial that introduces you to
+the basic procedures involved in using the application, explains
+similarities among the program's windows, and familiarizes you with the
+program's user interface:
+
+
+
+
+
+Chapter 2, "File Formats in NCSA X DataSlice," describes the basic file
+formats used in NCSA X DataSlice, how the program reads and displays
+data files, and how to specify the dimensions of raw files. Information is
+included for obtaining HDF software from NCSA.
+
+
+
+
+
+Chapter 3, "Planes Along Axes," describes options available in the Planes
+Along Axes window. It oulines the various options available to manipulate
+and view both 2D and 3D planes.
+
+
+
+
+
+Chapter 4, "Arbitrary Planes," outlines the options available in the
+Arbitrary Planes window which permits you to manipulate, view, and
+animate 2D oblique slices of data.
+
+
+
+
+
+Chapter 5, "Cartesian Dicer," outlines the options available in the
+Cartesian Dicer window.
+
+
+
+
+
+Chapter 6, "Animate 8bit Raster and Process SDS," describes the use of
+animation controls and how 3D SDSs may be enlarged by pre-processing.
+
+
+
+
+
+Form of Presentation
+
+The material in this manual is presented in text, screen displays, or
+command line notation.
+
+
+
+
+
+Text
+
+In explaining various features and commands, this manual often presents a
+word within a paragraph in italics to indicate that the word is defined
+within the paragraph.
+
+
+
+Portions of this manual refer to other sections or chapters of the manual
+where related topics are discussed. These cross references usually
+indicate the title of sections or chapters enclosed in quotation marks,
+such as, See Chapter 1, "Getting Started."
+
+
+
+
+
+Screen Displays
+
+Screen displays in this manual are presented in courier type.
+
+
+
+
+
+Entry Format Notation
+
+Throughout this manual, several explanations instruct you to make entries
+by typing on the keyboard. These entry instructions are printed in courier
+bold type and appear within a screen display, paragraph, or on a separate
+line.
+
+
+
+Figure I.1 shows you how to read and enter a command line.
+
+
+
+Figure I.1	Reading and
+Entering a Command Line
+
+
+
+ 
+
+
+
+
+
+
+
+Suggested Reading
+
+
+
+This document is not a manual on the X Window System. If you need
+detailed information regarding X Windows, refer to the following works:
+
+
+
+%	The Definitive
+Guides to the X Window System, published and copyrighted by O'Reilly &
+Associates, Inc., 1988.
+
+
+
+%	X Window System,
+by Robert W. Scheifler, James Gettys, and Ron Newman, published and
+copyrighted by the Massachusetts Institute of Technology and Digital
+Equipment Corporation, 1988.
+
+
+
+%	Introduction to the
+Window X System, by Oliver Jones, published and copyrighted by Prentice
+Hall, 1988.
+
+
+
+
+
+

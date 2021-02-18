@@ -1,0 +1,142 @@
+\begindata{text,269597572}
+\textdsversion{12}
+\template{help}
+\chapter{Proclist for Raster
+
+}
+
+raster-copy-subraster:  "\\033w" /* ESC - w */   "Copy~3"    "Copy selected 
+subraster to kill-buffer."
+
+
+raster-replace-subraster:   "\\033y" /* ESC - y */  "Replace~13"  "Replace 
+selected subraster from kill-buffer."
+
+
+raster-replace-subraster: "\\031" /* ^Y */ "Replace~13" "Replace selected 
+subraster from kill-buffer."
+
+
+raster-scale-replace: "\\033\\031"/* ESC ^Y */  "Replace Scaled~15"  "Scale 
+image in paste buffer to fit in selected Region"
+
+
+raster-negative: "\\033n" /* ESC - n */  "Raster Ops~20,Negative~21" 
+"Interchange black and white within selection"
+
+
+raster-white:  "\\033W" /* ESC - W */ "Raster Ops~20,White~22"  "Set white 
+within selection"
+
+
+raster-black: "\\033B" /* ESC - B */  "Raster Ops~20,Black~23"  "Set black 
+within selection"
+
+
+raster-gray: "\\033G"  /* ESC - G */ "Raster Ops~20,Gray~24"  "Set gray within 
+selection"
+
+
+raster-mirror-left-right: "\\033L" /* ESC - L */  "Raster Ops~20,Mirror LR~25" 
+"Interchange left and right within selection"
+
+
+raster-mirror-up-down:  "\\033U" /* ESC - U */ "Raster Ops~20,Mirror UD~26" 
+   "Interchange top and bottom within selection"
+
+
+raster-rotate: "\\033R" /* ESC - R */  "Raster Ops~20,Rotate~27"  "Rotate 
+entire raster image one-quarter turn clockwise"
+
+
+raster-scale:  "\\033S"  /* ESC - S */ "Raster Ops~20,Scale~32"  "Scale the 
+image"
+
+
+raster-shrink-image:  "\\033s"  /* ESC - s */  "Raster Ops~20,Shrink to 
+Button~67"  "Shrink the image of the raster to a button"
+
+
+raster-center-image:  "\\033c"/* ESC - c */    "Raster Ops~20,Center 
+Region~72"  "Center the Selected Region"
+
+
+raster-upperleft-image: "Raster Ops~20,Upper Left Region~73"  "Upper Left the 
+Selected Region"
+
+
+raster-zoom-in:  "\\033Z" /* ESC - Z */  "Raster~20,Zoom In~12"  "Zoom In 
+using upper left of selected region as starting point."
+
+
+raster-zoom-out:  "\\033z" /* ESC - z */  "Raster~20,Zoom Out~13"  "Zoom Out"
+
+
+raster-zoom-out-to-normal-size:   "\\033N"  /* ESC - N */  "Raster~20,Normal 
+Size~15"  "Normal Size"
+
+
+raster-select-entire:   "Raster~20,Select All~22"   "Select entire raster"
+
+
+raster-region-select:  "\\033\\030R"  /* ESC - ^X R */   "Raster~20,Region 
+Select~22"  "Region Select Mode"
+
+
+raster-touchup:  "\\033\\030T"  /* ESC - ^X T */  "Raster~20,Touch Up~23" 
+"Touch Up Mode"
+
+
+raster-pan:  "\\033\\030P"  /* ESC - ^X P */  "Raster~20,Pan~24"  "Pan Mode"
+
+
+raster-move-display-box:  "\\033M"  /* ESC - M */  "Raster~20,Move Display 
+Box~32"   "Move the location of the Display Box"
+
+
+raster-hide-display-box:  "\\033H" /* ESC - H */   "Raster~20,Hide Display 
+Box~34"   "Hide the Display Box "
+
+
+raster-set-print-scaling:  "\\033P" /* ESC - P */  "Raster~30,Set Print 
+Size~53" "Set the scaling factors used when printing"
+
+
+raster-extend-to-mat:   "\\033X"  /* ESC - X */  "Raster~30,Extend to Mat~55" 
+  "Add pixels to image to reach the bordering matte"
+
+
+raster-crop:   "\\033C"  /* ESC - C */  "Raster~30,Crop~63"  "Crop image to 
+the selection"
+
+
+raster-uncrop:  "\\033c" /* ESC - c */  "Raster~30,Uncrop~65"  "Revert image 
+to entire raster"
+
+
+raster-toggle-debug:  "\\033D"  /* ESC - D */  "Toggle the rasterview debug 
+flag"
+
+
+raster-read-file:  "\\033\\022r"  /* ESC - ^R - r */  "File,Read Raster~12" 
+  "Read a raster file"
+
+
+raster-read-macpaint:  "\\033\\022Im"  /* ESC - ^R - I - m */  "Raster 
+I/O~42,Read MacPaint~22"  "Read a file allegedly in MacPaint format"
+
+
+raster-write-macpaint:  "\\033\\022IM"  /* ESC - ^R - I - M */  "Raster 
+I/O~42,Write MacPaint~24"   "Write file in MacPaint format"
+
+
+raster-write-postscript:  "\\033\\022IP"  /* ESC - ^R - I - P */  "Raster 
+I/O~42,Write Postscript~32"   "Write file in postscript format"
+
+
+raster-read-rasterfile:   "\\033\\022r"  /* ESC - ^R - r */    /* same as Read 
+Raster above */   "Raster I/O~42,Read Old Raster~42"  "Read a file allegedly 
+in the old ITC RasterFile format"
+
+
+\enddata{text,269597572}

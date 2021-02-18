@@ -1,0 +1,37 @@
+.TH F2P 1 "29 March 1988"
+.SH NAME
+f2p \- translates fig output into pic language
+.SH SYNOPSIS
+.B f2p
+[-s font_size] [ input_file [ output_file ] ]
+.SH DESCRIPTION
+.I F2p
+translates fig objects in the named
+.I input_file
+into pic language and put them in
+.I output_file.
+If only one file name is presented, it is assumed to be the input file
+(fig output file). The output file
+.I (pic_file), 
+if not presented, will be the stdout.
+If the 
+.I input_file 
+is not presented, input will be assumed to come from the stdin.
+The output from f2p can be edited to change font sizes/types.
+.PP
+The unit of
+.I font_size
+is point.  There are 72 points in an inch. 
+The upper limit of font_size is 300 points (about 4 inches).
+The default size is 11 points.
+The position of text on the hard copy is depended on the specified
+font size.
+.SH "SEE ALSO"
+fig(1),
+pic(1).
+.SH AUTHOR
+Supoj Sutanthavibul (supoj@sally.UTEXAS.EDU),
+.br
+University of Texas at Austin, 
+.br
+January 29, 1985.

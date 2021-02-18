@@ -1,0 +1,95 @@
+#include "./../WnnImake.def"
+
+        DEFINES = $(WNNDEFINES)
+   INSTALLFLAGS = $(INSTLIBFLAGS)
+           ATOD = $(WNNJUTILSRC)/atod
+           ATOF = $(WNNFUZOKUGOSRC)/atof
+       WNNTOUCH = $(WNNJUTILSRC)/wnntouch
+          HINSI = $(WNNJDSRC)/hinsi.data
+       FZK_FLAG =
+
+FZK_SRC= \
+         fzk.master \
+         fzk.attr \
+         fzk.jirattr \
+         fzk.fzkattr \
+         fzk.jircon \
+         fzk.con \
+         fzk.shuutan
+
+DIC= \
+	bio.dic \
+	chimei.dic \
+	computer.dic \
+	jinmei.dic \
+	kihon.dic \
+	koyuu.dic \
+	setsuji.dic \
+	special.dic \
+	symbol.dic \
+	tankan.dic
+
+MORE=\
+	kihon.more \
+	setsuji.more \
+	jinmei.more \
+	chimei.more \
+	koyuu.more \
+	special.more \
+	computer.more \
+	bio.more \
+	symbol.more \
+	tankan.more
+FZKDATA= \
+	 full.fzk \
+	 kougo.fzk \
+	 std.fzk
+
+VERSION=\
+	Version
+
+DICS = $(DIC) $(FZKDATA)
+
+AllTarget($(DICS)) 
+
+install::
+	@for i in $(DICS); \
+	do \
+		(set -x; $(INSTALL) -c $(INSTALLFLAGS) $$i $(WNNPUBDICDIR));\
+		if test -f /etc/chown ; then \
+			/etc/chown $(WNNOWNER) $(WNNPUBDICDIR)/$$i ;\
+		elif test -f /bin/chown ; then \
+			/bin/chown $(WNNOWNER) $(WNNPUBDICDIR)/$$i ;\
+		else \
+			chown $(WNNOWNER) $(WNNPUBDICDIR)/$$i ;\
+		fi ; \
+		$(WNNTOUCH) $(WNNPUBDICDIR)/$$i ;\
+	done
+#	(set -x; $(INSTALL) -c $(INSTALLFLAGS) $(VERSION) $(WNNPUBDICDIR));
+
+depend::
+     @echo "skipping make in my dir"
+
+std.fzk: $(FZK_SRC)
+	$(CPP) $(FZK_FLAG) fzk.master | egrep -v '^(# |$$)' | $(ATOF) -h $(HINSI) $@
+
+full.fzk: $(FZK_SRC)
+	$(MAKE) FZK_FLAG=-DKANSAI std.fzk
+	$(MV) std.fzk $@
+
+kougo.fzk: $(FZK_SRC)
+	$(MAKE) FZK_FLAG=-DKOUGO std.fzk
+	$(MV) std.fzk $@
+
+.SUFFIXES: .hd .u .dic .more
+
+.u.dic:
+	cat $*.hd $< | $(ATOD) -p $(VERSION) -P $(VERSION) -h $(HINSI) $@
+
+.hd.more:
+	$(ATOD) -h $(HINSI) $@ < $<
+
+$(DIC): $(HINSI)
+
+clean::
+	$(RM) -f *.fzk *.dic *.more

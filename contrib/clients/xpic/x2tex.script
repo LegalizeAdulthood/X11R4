@@ -1,0 +1,39 @@
+#!/bin/sh
+# Simple shell script to perform the two steps (x2tpic, tpic) to get from
+# file,.x or file.xpic to file.tex. Inspired by, and cannibalized from
+# an earlier version by Stephen Bellantoni.
+if test $# -lt 1 ; then
+	echo "Usage: x2tex file ...    --- converts file.x to file.tex"
+	exit 1
+fi
+xoptions= 
+toptions= 
+files= 
+while test $# != 0
+do	case "$1" in
+	-s|-f) xoptions="$xoptions $1 $2"; shift ;;
+	-n|-d) toptions="$toptions $1" ;;
+	-*) xoptions="$xoptions $1" ;; # assume unknown options go to x2tpic
+	*) files="$files $1" ;;
+	esac
+	shift
+done
+for arg in $files
+do
+	xfile=`expr $arg : '\(.*\)\.[^\.]*'`
+	if [ x"$xfile" = x ]; then
+		# No extension - add a .x
+		pfile=$arg
+		xfile=$arg.x
+	else
+		pfile=$xfile
+		xfile=$arg
+	fi
+	if [ -f "$xfile" ]; then
+		x2tpic $xoptions $xfile > $pfile.pic
+		tpic $toptions $pfile.pic
+	else
+		echo No file.x specified.
+		exit 1
+	fi
+done

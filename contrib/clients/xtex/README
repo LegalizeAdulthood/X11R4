@@ -1,0 +1,129 @@
+This directory contains several tools to manipulate the DVI files produced
+by TeX and LaTeX. Additionally, it includes a re-distribution of the
+DVI library routines written by Chris Torek at the University of Maryland.
+The utilities included are:
+
+dviselect	select specific pages from a DVI file
+iptex		print a dvi file on an Imagen
+texx		a dvi previewer for X-11 windows
+texsun		a dvi previewer for SunView windows
+
+xtex		a much improved dvi previewer for X-11 windows
+
+To install this package, read the documentation in the file
+doc/installation.tex. The short instructions follow.
+
+FOR xtex:
+
+	+ Change the binary path names in the ./Makefile.
+
+	+ Determine the fonts you'll be using. You have two options:
+		(see subdirectory 'Fonts' for more information)
+
+
+		(1) Using existing fonts (i.e. 300dpi) and ``shrink''
+		    them to make them smaller. See xtex/build-initial-fonts
+		    for ideas on how to do this. This has the advantage
+		    that you don't need to generate any new Metafont
+		    fonts; however, the font's do match your screen
+		    resolution & are sort of hard to read.
+			Also, you can only shrink things intergral (1/2, 1/3)
+		    amounts -- since TeX typically scales things by magsteps,
+		    this means you build two complete sets of your fonts in
+		    the two different mag sizes.
+
+		(2) Using screen resolution fonts. On a Sun-3 lores (normal)
+		    display, this is 85dpi. This allows you to see things
+		    at actual size, measure junk on your display, etc.
+		    But, it takes about a day or two to generate all the
+		    fonts (you can cut down on this a lot if you know what
+		    you use). You can pick up 85dpi fonts from a.cs.uiuc.edu
+		    in pub/TeX/pk-85dpi.tar
+			This also has the advantage that you follow the TeX
+		    magsteps; i.e. if you normally view things at mag 1000,
+		    you'll have fonts in mags 1000, 1098, 1200, 1440, 1728,
+		    2074, 2489. If your ``large view'' is at mag 1440,
+		    you can ``double up'' your fonts by using 1728, 2074,
+		    2489 and then adding e.g., 2989, 3587, etc. Don't worry
+		    if this doesn't make much sense, but you might ask a local
+		    TeX-guru to tell you why this is A Good Thing.
+			In anycase, the ``complete set'' of 85dpi fonts in
+		    compressed SNF format is about 2.5Mb, which isn't bad.
+
+	+ Select a location for your ``font description'' file, and copy and
+	  modify the file in fontdesc-example to suit your local installation.
+	  Change the main makefile to use that path for variable FONTDESC
+
+	  The default is /usr/local/lib/tex82/fontdesc
+
+	  Note that you can use the fontdesc to partition metafont output
+	  based on DPI.
+
+	+ Edit the upper-level Imakefile. Do ``make Makefile''
+	  followed by ``make Makefiles'' and ``make''. This should
+	  build all software selected by SUBDIRS in the main Imakefile
+
+	+ Once you've decided what kind of fonts you'll be using, edit
+	  xtex/xtex.ad to set the following values (I'm showing what
+	  we use).
+					85dpi		300dpi
+				-----------------------------------
+		*.dpi:			85		300
+		*.mag:			1000		333
+		*.smallMag:		1000		333
+		*.largeMag:		1440		500
+		
+	+ if you are using the 300dpi (type 1 above)
+
+		+ in run xtex/mftobdf -mag 1000 -scaled 1000 cmr10. If mftobdf
+		  can't find your font, you've got a bad fontdesc file or the
+		  path to it is wrong.
+	
+		+ assuming that this works, edit xtex/buildfonts to suit your
+		  local X configuration. I keep fonts in
+		  /usr/local/lib/X11/fonts/cmr, and have added this to
+		  my font path using
+			% xset +fp /usr/local/lib/X11/fonts/cmr
+			% xset fp rehash
+
+		+ in xtex, run "buildfonts -mag 500 `cat FONTS` " to build a
+		  fair number of standard fonts. Note that the default is
+		  300 dpi. If you want a smaller set too, say ``-mag 333''.
+
+	+ if you are using the 85dpi (type 2 above)
+		+ cd to Fonts
+		+ run ``make fonts''
+		+ after everything is built, move all the .snf.Z files
+		  and the font.dir files to a directory that everyone
+		  can access. You could include this in your default
+		  font path.
+
+	+ test the system out by storing xtex.ad in the proper place,
+	  using ``make install'' in the xtex directory,
+	  and viewing a .dvi file
+
+	+ You can use other DPI's -- both xtex & mftobdf have switches
+	  for this.
+
+TeXSun is known to work on:
+	Sun-3/monochrome (normal & hires)
+	Sun-3/color
+	Sun-4/monochome (normal & hires)
+
+xtex is known to work on:
+	Sun-3/monochome (normal & hires)
+	PC/RT/monochome
+	Silicon Graphics 4D/20
+		You need to add "-I/usr/include/bsd" to the CFLAGS
+		line when compiling the X11 code. You also need to
+		use "-law -lXt -lX11 -lbsd -lm" for linking.
+	Vaxstation, DECstation-3100
+	Sun-4/Monochrome normal res.
+	Gould NPS1 NUX/32
+	Encore Multimax
+	
+Dirk Grunwald
+Univ. of Colorado at Boulder
+grunwald@foobar.colorado.edu
+grunwald@colorado.edu
+

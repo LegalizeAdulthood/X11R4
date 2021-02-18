@@ -1,0 +1,23 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+LIBS =	${BASEDIR}/lib/libmail.a ${UTILLIB} ${PRSLIB} ${RESOLVLIB}
+
+DOCS = dlc.help
+
+NormalObjectRule()
+.SUFFIXES: .test
+.c.test:
+	$(RM) $@
+	$(CC) -I. ${LOCALINCLUDES} -DTESTINGONLYTESTING $(CFLAGS) $*.c ${DESTDIR}/lib/libmail.a ${UTILLIB} ${PRSLIB} ${RESOLVLIB} -o $*.test
+	$(RM) $*.o
+clean::
+	${RM} *.test
+
+
+ProgramTarget(dlc,readalias.o dlc.o,${LIBS},)
+InstallProgram(dlc, ${DESTDIR}/etc/)
+InstallDocs($(DOCS), $(DESTDIR)/help/)
+DependTarget()
+

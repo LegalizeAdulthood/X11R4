@@ -1,0 +1,225 @@
+.\" 
+.\"  Copyright 1989 Purdue Research Foundation
+.\" 
+.\"  Permission to use, copy, modify, distribute, and sell this software 
+.\"  and its documentation for any purpose is hereby granted without fee, 
+.\"  provided that the above copyright notice appear in all copies and that 
+.\"  both that copyright notice and this permission notice appear in 
+.\"  supporting documentation, and that the name of Purdue not be used in 
+.\"  advertising or publicity pertaining to distribution of the software 
+.\"  without specific, written prior permission.  Purdue makes no 
+.\"  representations about the suitability of this software for any purpose.  
+.\"  It is provided "as is" without express or implied warranty.
+.\" 
+.\"  PURDUE DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING 
+.\"  ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL 
+.\"  PURDUE BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR 
+.\"  ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, 
+.\"  WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, 
+.\"  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS 
+.\"  SOFTWARE.
+.\" 
+.\"  Author:  George Kraft IV (gk4@staff.cc.purdue.edu)
+.\"           Purdue University Computing Center
+.\"           Mathematical Sciences Building
+.\"           West Lafayette, IN 47907
+.\" 
+.TH STARTX 1L PUCC
+.SH NAME
+startx \- robustly start an X windows session
+.SH SYNOPSIS
+.B startx 
+[
+.B -d | -w
+] [
+.B -x
+.I startup
+| [
+.B -r
+.I resources
+] [
+.B -m
+.I window_manager
+]]
+.SH DESCRIPTION
+There are many ways to initiate an X windows session, and \fIstartx\fR
+is designed to ease the burden on the user.  First, \fIstartx\fR sets the user's
+\fBDISPLAY\fR environment variable to identify the X server to the X clients.
+Next a distinction is made between the user's use of a workstation or an X
+display station, then the appropriate invocation is made to get the X windows
+session started.  This invocation entails starting the X server & X clients for
+a workstation, or starting the X clients for an X display station.
+.LP
+\fIStartx\fR redirects X server and X client error messages to the file 
+specified by the user's \fBXERRORS\fR environment variable.  This is very
+useful for debugging, and gives X a clean startup & shutdown appearance on 
+workstations.
+.LP
+You should note that you can use one or both of the \fB\-m\fR and \fB\-r\fR
+options, or the \fB\-x\fR option, but you cannot use the \fB\-x\fR option
+in conjunction with the \fB\-m\fR and \fB\-r\fR options.  In the \fIstartup\fR
+script, it is the responsibility of the user to start a window manager, load 
+X resources, & spawn X clients.
+.LP
+If no \fIstartup\fR script file name is given at the command line with
+the \fB\-x\fR option,
+then \fIstartx\fR looks for a file named in the user's \fBXINITRC\fR 
+environment variable.  If \fBXINITRC\fR is not set, then \fIstartx\fR
+looks in the user's home directory for a file 
+called \fI.Xinit, .xinit, .Xinitrc, .xinitrc,\fR 
+or \fI.xsession,\fR respectively, to begin the X client programs.
+.LP
+If no \fIstartup\fR file is found, \fIstartx\fR runs the
+\fIwindow_manager\fR indicated at the command line with the \fB\-m\fR option, 
+or invokes the window manager \fItwm\fR(1L), \fIawm\fR(1L), or \fIuwm\fR(1L) 
+after finding the associated configuration files \fI .twmrc, .awmrc,\fR 
+or \fI .uwmrc\fR respectively.  If a window manager configuration 
+file is not found in the user's home directory, \fIstartx\fR initiates 
+an \fIxterm\fR(1L) client and the \fItwm\fR(1L) window manager.
+.LP
+When no \fIstartup\fR file is found, \fIstartx\fR also instructs the 
+load of the \fIresources\fR file given at the command line with the \fB\-r\fR
+option, or a file from the user's home directory 
+called \fI.Xdefaults, .xdefaults, .Xresources,\fR 
+or \fI.xresources,\fR respectively.  If an X \fIresources\fR files if not 
+found, then the X windows session will not be personalized.
+.SH OPTIONS
+.IP "\fB-d\fR" 20
+Start X clients for an X display station.  
+.IP "\fB-w\fR" 20
+Start the X server and X clients for an X window session on a 
+workstation.  
+.IP "\fB-x\fR \fIstartup\fR" 20
+Start an X windows session using the \fIstartup\fR script.
+.IP "\fB-r\fR \fIresources\fR" 20
+Load the \fIresources\fR file when no \fIstartup\fR script is found. 
+.IP "\fB-m\fR \fIwindow_manager\fR" 20
+Start the \fIwindow_manager\fR when no \fIstartup\fR scripts is found. 
+.SH EXAMPLES
+.IP "startx" 20
+Start an X windows session on a workstation, or for an X display station.
+.IP "startx -w" 20
+Force start an X windows session on a workstation.
+.IP "startx; kill -9 $$" 20
+Useful for starting an X Windows session for an X display station, and
+logging off the user's \fItelnet\fR(1C) session.
+.IP "startx -x \fI.xinitrc\fR" 20
+Start an X windows session using the \fI.xinitrc\fR script.
+.IP "startx -w \fItwm\fR" 20
+Start an X windows session using the \fItwm\fR window manager; however, if
+a \fIstartup\fR script file is found, then the \fB\-w\fR option is ignored.
+.SH "EXAMPLE STARTUP SCRIPT"
+.LP
+In the \fIstartup\fR script, it is the responsibility of the user to start
+a window manager, load X resources, & spawn X clients.  Below is an 
+example \fI.xsession\fR script.
+.sp
+.RS
+.nf
+#!/bin/csh
+(twm &)
+xrdb -load .xdefaults
+(xclock -g 75x75+0+0 &)
+(xbiff  -g 75x75+101-0 &)
+if ("/dev/console" == "`tty`") then
+        xterm -g 80x24+0+0 +ut -C -T `hostname`
+else
+        xterm -g 80x24+0+0 +ut -T `hostname`
+endif
+.fi
+.RE
+.LP
+For a workstation, the last line in the \fIstartup\fR script 
+should be a foreground \fIxterm\fR(1L) with the \fB-C\fR option for console 
+messages.  
+.LP
+For an X display station, the last line in the \fIstartup\fR script 
+should be a foreground \fIxterm\fR(1L) without the \fB-C\fR option.  
+Also, some X display stations will not terminate the \fItelnet\fR(1C)
+session upon closing; therefore, one should \fIexec\fR(1) \fIstartx\fR
+to over write the current \fItelnet\fR(1C) session and begin the X windows 
+session.
+.SH ENVIRONMENT VARIABLES
+.IP "\fBDISPLAY\fR" 20
+The name of the X server to which X clients should connect to.
+.IP "\fBXERRORS\fR" 20
+Where \fIstartx\fR is to redirect error messages.  By default, \fIstartx\fR 
+redirects errors to the file \fI.xerrors\fR in user's home directory.
+.IP "\fBXINITRC\fR" 20
+An \fIstartup\fR file containing shell commands to start a window manager,
+load X resources, & spawn X clients.
+.SH TERMINOLOGY
+.IP "workstation" 20
+A multi-purpose host computer, normally with a bitmap display and a mouse.
+The X server & X clients run on the workstation.
+.IP "window manager" 20
+A program which allows you to move, resize, and circulate windows on your 
+display.
+.IP "X display station" 20
+Is a machine dedicated as an X server.  Only the X server runs on the
+X display station.
+.IP "X client" 20
+A program that performs a task such as terminal emulation, clock,
+or window management.
+.IP "X resources" 20
+Are the user preferences of your environment such as screen size &
+placement, border & background color, and window title & scroll bars.
+etc.
+.IP "X server" 20
+Is a combination of the graphics display, keyboard, mouse, hardware, and X 
+server software which accepts input from these devices and provides display
+services for X clients.
+.SH BUGS
+.LP
+For a workstation if a \fIstartup\fR exists & no \fIresources\fR are loaded
+by the user, then \fIxinit\fR(1L) within \fIstartx\fR will try to load 
+an \fI.Xdefaults\fR file.
+.LP
+The use of a workstation is assumed when the X session is being initiated
+from \fI/dev/console\fR.  If this is not the case, then user must use
+the \fB-d\fR, or \fB-w\fR option.  See \fItty\fR(1) for more details.
+.LP
+The multitude of names for the same files is confusing; however, \fIstartx\fR
+includes these historical names for robustness.
+.SH AUTHOR
+Copyright 1989 Purdue Research Foundation
+.br
+George Kraft IV, Purdue University Computing Center
+.br
+gk4@staff.cc.purdue.edu
+.SH SEE ALSO
+awm(1U), tty(1), twm(1L), uwm(1L), X(1L), xdm(1U), xinit(1L), xrdb(1L), xterm(1L)
+.br
+O'Reilly & Associates, \fBX Window System User's Guide,\fR 1988.
+.SH FILES
+.IP $HOME/.xerrors 20
+See \fBXERRORS\fR above.
+.IP $HOME/.Xinit 20
+See \fBXINITRC\fR above.
+.IP $HOME/.xinit 20
+See \fBXINITRC\fR above.
+.IP $HOME/.Xinitrc 20
+See \fBXINITRC\fR above.
+.IP $HOME/.xinitrc 20
+See \fBXINITRC\fR above.
+.IP $HOME/.xsession 20
+See \fBXINITRC\fR above.
+.IP $HOME/.Xdefaults 20
+X \fIresources\fR file loaded to set user preferences for X clients.
+.IP $HOME/.xdefaults 20
+X \fIresources\fR file loaded to set user preferences for X clients.
+.IP $HOME/.Xresources 20
+X \fIresources\fR file loaded to set user preferences for X clients.
+.IP $HOME/.xresources 20
+X \fIresources\fR file loaded to set user preferences for X clients.
+.IP $HOME/.twmrc 20
+.IR twm (1L)
+configuration file.
+.IP $HOME/.awmrc 20
+.IR awm (1L)
+configuration file.
+.IP $HOME/.uwmrc 20
+.IR uwm (1L)
+configuration file.
+.IP /dev/console 20
+The \fItty\fR(4) of a workstation's initial \fIlogin\fR(1) shell.

@@ -1,0 +1,71 @@
+.TH XIMTOPS 1 "February 3,  1989"
+.UC 5
+.SH NAME
+ximtops \-  convert an xim image file to postscript
+.SH SYNOPSIS
+.B ximtops
+[-in 
+.I file
+] [-out
+.I file
+] [-height
+.I inches
+] [-enhance=[1-9]]
+.SH DESCRIPTION
+.I Ximtops
+is a program that translates "xim" files to postscript for printing.
+The program will convert both 8 and 24 bit color images.
+Compressed images with .Z suffix maybe read in directly.
+Edge enhancement is also possible, though not recommended for most images.
+.SH OPTIONS
+.TP "\w'\f3\-m\f1name 'u"
+.B -in \fIfile\fP
+This option allows the user to explicitly specify the input 
+file on the command line.
+The default is to take input from standard in.
+File may be in a compressed (*.Z) format.
+.TP "\w'\f3\-m\f1name 'u"
+.B -out \fIfile\fP
+This option allows the user to explicitly specify the output file on the command line.
+The default is to write output to standard out.
+.TP "\w'\f3\-m\f1name 'u"
+.B -height \fIinches\fP
+User specified height in decimal inches.
+.TP
+.B -enhance or -enhance=1-9
+Degrees of enhancement from 1 to 9 maybe specified.
+9 is the default, and is faster than 1 to 8.
+.PP
+.I Note:
+All of the command line options can be abbreviated to their shortest unique spelling.
+.br
+ex: %  ximtops -in color.xim.Z -en=5  -h 5.5 | lpr
+
+.SH OTHER
+The default scale is 1 pixel / point.
+Default postscrit printer resolution is assumed to be the standard 72 points / inch.
+Ximtops maintains at least a 1/4" border, and the image may not be scaled any larger than the page.
+.PP
+The image will reorient itself between landscape and portrait for a best fit on a page.
+.SH "SEE ALSO"
+xim(1), ximtorle(1), compress(1)
+.SH BUGS
+A showpage is always inserted in the end for two reasons:
+.br
+1) Including postscript and positioning images into documents with text formaters just doesn't work very well yet.
+.br
+2) Most images are quite large and slow to print.
+.br
+It is better to just paste them in.
+.SH COPYRIGHT
+Copyright 1989, Massachusetts Institute of Technology.
+.SH AUTHOR
+.br
+Philip R. Thompson  (phils@athena.mit.edu)
+.br
+Computer Resource Laboratory,  
+Dept. of Architecture and Planning,  
+.br
+Massachusetts Institute of Technology,  
+Cambridge, MA  02139
+

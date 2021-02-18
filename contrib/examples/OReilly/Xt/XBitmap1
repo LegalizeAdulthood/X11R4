@@ -1,0 +1,9 @@
+*quit*label:	Quit
+*output*label:	Print Array
+*cellSizeInPixels:	30
+*pixmapWidthInCells:	20
+*pixmapHeightInCells:	20
+*foregroundPixel:	blue
+*buttonbox.width:	200
+*bigBitmap*fromVert:	buttonbox
+.borderWidth:	10

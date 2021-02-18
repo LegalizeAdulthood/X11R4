@@ -1,0 +1,194 @@
+.TH TEXSUN 1
+.SH NAME
+texsun \- view DVI files on your SunView display
+.SH SYNOPSIS
+.B texsun
+.B [many options]
+.B filename
+.SH DESCRIPTION
+.I Texsun
+allows you to preview a DVI file produced by
+.I TeX82, LaTeX,
+etc., under the SunView windowing system on Sun workstations.
+You may specify a number of options via the commandline or
+your
+.B .defaults
+file.  Here is a list of all the options and what they do.
+The name in the
+.B .defaults
+file is shown in parentheses:
+.SH OPTIONS
+.TP
+.B \-rv (ReverseVideo)
+Toggle reverse video.
+.TP
+.B \-rvOn
+Force reverse video on.
+.TP
+.B \-tvOff
+Force reverse video off.
+.TP
+.B \-ns (NormalShrink)
+Specifies the integer shrink size used at the Normal display size.
+.TP
+.B \-ls (LargeShrink)
+Specifies the integer shrink size used in the Large display mode.
+.TP
+.B \-bl (Blackness)
+Specifies an integer blackness threshold for shrunken fonts.
+.TP
+.B \-l (Leaves)
+Specifies the number of leaves to be used in displaying normal text.
+The number must be either 1 or 2.
+.TP
+.B \-tm (TopMargin)
+Specifies the floating point top margin in inches.
+.TP
+.B \-sm (SideMargin)
+Specifies the floating point side margin in inches.
+.TP
+.B \-pg
+Specifies the page number to start viewing.
+.TP
+.B \-dpi (Dpi)
+Specifies the desired integer font resolution in dots per inch.
+.PP
+By now, you're probably wondering what a lot of these options do.
+Note that some of these options can also be specified in your
+SunView defaults file.
+
+.I Texsun
+can display your document at two different sizes,
+.I Normal
+and
+.I Large.
+These two sizes are used for viewing the overall structure of the document
+and checking detailed structure, respectively.
+In Normal mode, you will normally have two
+.I leaves
+on your display simultaneously.  Two adjacent pages of your DVI
+file are displayed in these leaves.  To make the image so small,
+.I texsun
+shrinks the fonts and scales everything down to size.  This is where
+the blackness parameter comes in---you can control the shrinking
+algorithm to some extent.  The default values for NormalShrink and
+LargeShrink are determined by the size of your display and the
+number of leaves you specify (2 is the default, unless the DVI file contains
+only one page), so you normally don't need to specify them yourself.
+Similarly, TopMargin, SideMargin, and Dpi will default to reasonable
+values, so you normally don't need to worry about any of these options
+except perhaps
+.B \-rv.
+.SH COMMANDS
+.I Texsun
+precomputes each page's image before displaying it.  This means that
+you can obscure parts of the
+.I texsun
+window, or move it around, without having to wait for the display to
+be recomputed.  It takes about a second on a 3/50 to compute the image
+when only text is present, though heavy graphics take a little longer.
+.PP
+When
+.I texsun
+starts up, it will be in Normal mode, and you'll normally see two leaves
+of your document, containing the first two pages of your DVI file.
+To go to the next page, just type Return.  This will move page 2 to the
+left leaf, and put page 3 in the right leaf.  Typing ``-Return'',
+or Delete, or Backspace, will move back one page.  Typing a number
+followed by one of these keys will go that many pages in the indicated
+direction.
+.PP
+To see one of the pages in Large mode, put the mouse on top of the
+text to be displayed and hold down any mouse button.  The cursor will
+turn to an hourglass while the enlarged image is being computed.
+Once it has been completely computed, the enlarged image will be displayed,
+taking up the entire
+.I texsun
+window (covering both leaves, if two are in use).
+Release the button to go back to Normal mode.  Once the enlarged image
+for the pages on display have been computed, they are retained, so
+you can switch quickly between the Normal and Large modes.  Once a
+page is not being displayed in either leaf, however, its enlarged image
+is also discarded, so if you come back to it, its normal and enlarged
+images will have to be recomputed.
+.PP
+To move around in the DVI file, you can also go to absolute page numbers
+by typing the number of the page followed by the letter ``g''.  Typing
+``q'' will exit
+.I texsun.
+.PP
+The options displyed in the menu displayed when you depress the
+right mouse button has several submenus.
+You can goto a specific page in the document by selecting the
+.I goto
+menu.
+The
+.I document
+menu allows you to move between detail and overview mode
+or reload the document file.
+This latter option re-reads the DVI file,
+adjusting the display and showing the current contents.
+The
+.I Mark & Print
+menu lets you mark and unmark pages.
+You can also print all the pages, marked pages or unmarked pages.
+When a page is marked, the word ``marked'' appears in the frame title.
+In addition, marked pages are indicated by an asterisk
+in the ``goto page'' menu.
+.PP
+If a subset of the pages are being printed,
+.B dviselect
+is used to generate a new DVI file containing those pages.
+The printing program is invoked with the name of the file to print.
+The local printer can be specified in your defaults file.
+If this is not set,
+pages are printed using the program named in environment variable
+.B TEXSUNPRINT,
+with the default program being used if no program is specified
+in the defaults file or your environment.
+This default value should be configured to ``your local printer'' by
+the person installing TeXsun.
+.PP
+The
+.I Frame
+menu gives you the window frame menu.
+The
+.I Quit
+button justs exits.
+.PP
+.I texsun
+responds to the
+.B OPEN
+and
+.B EXPOSE
+buttons.
+Additionally, if the
+.B AGAIN
+button is pressed, the current file is re-read,
+and the current pages are redisplayed (this is the same as the reload option
+in the document menu).
+This lets you keep the same
+.I texsun
+window open while you edit your document.
+The
+.B DELETE
+button exits
+.I texsun.
+.SH BUGS
+Although
+.I texsun
+understands most
+.I tpic
+graphical commands, it is unable to display shading of objects which are
+not rectangular.  All other graphics commands are supported, however.
+It also outlines the bounding box for psfig illustrations, but doesn't
+attempt to display the postscript figure (don't you wish).
+.SH AUTHOR
+Dirk Grunwald, at the University of Colorado wrote
+.I TeXsun.
+Tim Morgan, at the University of Calif, Irvine,
+wrote the enhanced
+.I tpic
+support.
+Alan Kent, Dept. of Computer Science, RMIT, Melbourne Aus.
+contributed most of the ``goto'' menu and marking and printing commands.

@@ -1,0 +1,75 @@
+==============================================================================
+======									======
+======			      Module Quantcmi				======
+======			Quantize Color Mapped Images			======
+======									======
+==============================================================================
+
+  Function:
+
+	This module contains two subprograms to quantize a color-mapped
+	image, so that it uses a smaller number of colors.
+
+
+  Public subprograms:
+
+	quant_cmi	Quantize color mapped image
+
+
+  Private subprograms:
+
+	prune		Prune subtree of color classification tree
+
+
+  Module history:
+
+	11-21-89	Paul Raveling
+	Finalized version for contribution to X11R4.  Changes not
+	documented in this header have been made within the last
+	3 weeks.
+
+	3-25-89		Paul Raveling
+	Created this module by modifying a copy of alcols.
+
+
+******************************************************************************
+******									******
+******		    quant_cmi  --  Quantize Color Mapped Image		******
+******									******
+******************************************************************************
+
+  Invocation:
+
+	status = quant_cmi ( image, num_colors )
+
+
+  Function:
+
+
+	Quantize colors for an image.  This replaces the image's
+	color map with a smaller map and midifies its pixel data
+	to index the new map.
+
+	The old color map is discarded and a new one is allocated.
+	Pixel data is updated in place.
+
+	The actual number of colors in the quantized map can be
+	slightly less than the number requested.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to quantize
+
+	num_colors	int
+			Maximum number of colors to be retained
+			in the image
+
+
+  Output:
+
+	status		int
+	<return value>	Completion status:
+				0 => Failed
+				1 => Succeeded

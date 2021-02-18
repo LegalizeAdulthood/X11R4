@@ -1,0 +1,51 @@
+#   Makefile for HP X Widgets test programs
+
+OBJECTS = 
+LIBS =  ../lib/libXw.a ../lib/libXt.a -lX11
+#CFLAGS = -O -I./ -I../ -Wc,-Nd4000 -Wc,-Ns4000 +Nt100000
+# DEC and Sun
+CFLAGS = -O -I./ -I../
+
+.c:
+	$(CC) $(CFLAGS) -o $@ $< $(LIBS)
+
+all: bull2 gen2 imageedit2 list9 menuTest1 menuTest5 swin1 \
+     tog11 vpw13 workspace1 xpanel2
+
+clean:
+	rm -f bull2 gen2 imagedit2 list9 menuTest1 menuTest5 \
+              swin1 tog11 vpw13 workspace1 xpanel2
+
+bull2: bull2.h
+	cc $(CFLAGS) -o bull2 bull2.c $(LIBS)
+
+gen2: gen2.h
+	cc $(CFLAGS) -o gen2 gen2.c $(LIBS)
+
+imageedit2:
+	cc $(CFLAGS) -o imageedit2 imageedit2.c $(LIBS)
+
+list9: list9.h
+	cc $(CFLAGS) -o list9 list9.c $(LIBS)
+
+menuTest1:
+	cc $(CFLAGS) -o menuTest1 menuTest1.c $(LIBS)
+
+menuTest5:
+	cc $(CFLAGS) -o menuTest5 menuTest5.c $(LIBS)
+
+swin1: swin1.h
+	cc $(CFLAGS) -o swin1 swin1.c $(LIBS)
+
+tog11: tog11.h
+	cc $(CFLAGS) -o tog11 tog11.c $(LIBS)
+
+vpw13: vpw13.h
+	cc $(CFLAGS) -o vpw13 vpw13.c $(LIBS)
+
+workspace1:
+	cc $(CFLAGS) -o workspace1 workspace1.c $(LIBS)
+
+xpanel2:
+	cc $(CFLAGS) -o xpanel2 xpanel2.c $(LIBS)
+

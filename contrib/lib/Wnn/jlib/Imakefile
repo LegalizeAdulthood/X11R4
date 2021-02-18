@@ -1,0 +1,59 @@
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#include "./../WnnImake.def"
+
+#DEBUG  -DDEBUG , -DJL_DEBBUG
+
+       INCLUDES = -I$(WNNINCLUDESRC) -I$(TOP)
+        DEFINES = $(WNNDEFINES)
+   INSTALLFLAGS = $(INSTBINFLAGS)
+       LINTLIBS = 
+
+SRC1= js.c wnnerrmsg.c jl.c
+OBJ1= js.o wnnerrmsg.o jl.o
+SRC2= getopt.c
+OBJ2= getopt.o
+SRC3= $(WNNROMKANSRC)/rk_bltinfn.c $(WNNROMKANSRC)/rk_main.c \
+	$(WNNROMKANSRC)/rk_modread.c $(WNNROMKANSRC)/rk_read.c \
+	$(WNNROMKANSRC)/rk_vars.c
+OBJ3= $(WNNROMKANSRC)/rk_bltinfn.o $(WNNROMKANSRC)/rk_main.o \
+	$(WNNROMKANSRC)/rk_modread.o $(WNNROMKANSRC)/rk_read.o \
+	$(WNNROMKANSRC)/rk_vars.o
+SRCS= $(SRC1) $(SRC2) $(SRC3)
+OBJS= $(OBJ1) $(OBJ2) $(OBJ3)
+
+NormalLibraryObjectRule()
+AllTarget($(OBJS) libwnn.a)
+
+NormalLibraryTarget(getopt,$(OBJ2))
+LintLibraryTarget(getopt,$(SRC2))
+DependTarget()
+
+js.o : js.c $(WNNETCSRC)/bdic.c $(WNNETCSRC)/pwd.c $(WNNETCSRC)/gethinsi.c
+
+NormalLintTarget($(SRC2))
+
+SingleProgramTarget(kankana,kankana.o,$(WNNLIB),)
+
+
+NormalLibraryTarget(wnn,$(OBJS))
+LintLibraryTarget(wnn,$(SRCS))
+InstallLibrary(wnn,$(USRLIBDIR))
+InstallLintLibrary(wnn,$(USRLIBDIR))
+
+#if ProfileLibJlib
+ProfiledLibraryTarget(wnn,$(OBJS))
+InstallLibrary(wnn_p,$(USRLIBDIR))
+#endif
+
+install::
+	-cp $(WNNINCLUDESRC)/jslib.h		$(WNNINCDIR)
+	-cp $(WNNINCLUDESRC)/jllib.h		$(WNNINCDIR)
+	-cp $(WNNINCLUDESRC)/rk_spclval.h	$(WNNINCDIR)
+	-cp $(WNNINCLUDESRC)/wnnerror.h		$(WNNINCDIR)
+
+#if DebugLibJlib
+DebuggedLibraryTarget(wnn,$(OBJS))
+#endif
+$(OBJ3) : $(SRC3)
+	cd $(WNNROMKANSRC); $(MAKE) PassCDebugFlags $(MFLAGS)

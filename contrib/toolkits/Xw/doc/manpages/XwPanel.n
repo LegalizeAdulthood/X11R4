@@ -1,0 +1,396 @@
+
+
+
+     XWPANEL(3X)                                           XWPANEL(3X)
+
+
+
+
+     NAME
+          XwPanelWidgetClass - An X Widget for creating panels.
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/Panel.h>
+
+
+     CLASSES
+          A subclass of Core, Composite, Constraint and
+          XwManagerClass.
+
+          The widget class to use when creating a Panel widget is
+          XwpanelWidgetClass.
+
+          The class name of Panel is Panel.
+
+     DESCRIPTION
+          Panel provides a simple creation mechanism for the creation
+          of application windows and associated menus.  The panel
+          widget is also appropriate for application sub-windows.
+
+          Panel will manage three types of children. Panel may have at
+          most one child of each type.  The types are titlebar, menu,
+          and work space.  Children are associated with these types
+          via constraint resources (see below).  Panel ignores all
+          extra or unknown children.
+
+          Panel lays out its children such that the child of type
+          titlebar is on the top, the child of type menu is below, and
+          the child of type work space is on the bottom.  Display of
+          the titlebar child can be optionally inhibitted if the panel
+          is under the control of a window manager which provides
+          titlebars.
+
+          When Panel has its width changed by its parent, the menu, if
+          displayed, is allowed to pick its own height, the title
+          remains the same height and the work space is diminished or
+          enlarged to fill the remaining available space.  When Panel
+          has its height reduced by its parent, space is taken from
+          the work space until the work space is completely hidden.
+          Further reductions in the height of Panel are shared between
+          the title and the menu.  When Panel has its height increased
+          by its parent, if either the title or the menu are less than
+          their optimum height, they are given the space until they
+          reach their optimum height for the given width.  If both the
+          title and the menu are at their optimum height all space is
+          given to the work space.
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPANEL(3X)                                           XWPANEL(3X)
+
+
+
+
+          The initial width of Panel is the widest of all its children
+          (padding is taken into account).  The initial height of
+          Panel is the sum of the heights of all its children and
+          their padding.
+
+          When an application is running in a Panel with a titling
+          window manager, there is a possibility of double titling.
+          Unfortunately, the application writer cannot know at the
+          time of development whether or not the user will have a
+          titling window manager. Panel has two resources which
+          together allow runtime decisions about titling.  The first,
+          XtNtopLevel, indicates whether the Panel is a canidate for
+          double titling.  The application must always set this
+          variable appropriately.  The second resource,
+          XtNdisplayTitle, indicates whether or not the Panel should
+          display a title.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPANEL(3X)                                           XWPANEL(3X)
+
+
+
+
+     NEW RESOURCES
+          To specify any of these resources within a resource defaults
+          file, simply drop the XtN prefix from the resource name.
+          Panel defines the following new resources:
+
+
+                               Panel Resource Set
+     Name                       Class                      Type      Default
+     _______________________________________________________________________
+     XtNtopLevel                XtCTopLevel                Boolean   TRUE
+     XtNdisplayTitle            XtCDisplayTitle            Boolean   TRUE
+     XtNvSpace                  XtCVSpace                  int       0
+     XtNhSpace                  XtCHSpace                  int       0
+     XtNtitleToMenuPad          XtCTitleToMenuPad          int       0
+     XtNworkSpaceToSiblingPad   XtCWorkSpaceToSiblingPad   int       0
+
+
+
+          XtNtopLevel
+               Indicates whether not the panel is a candidate for
+               management by a window manager.  This should always be
+               set by the application.
+
+          XtNdisplayTitle
+               Ignored if XtNtopLevel is FALSE.
+
+               Otherwise, if XtNdisplayTitle is TRUE, the titlebar
+               child will be displayed.  If XtNdisplayTitle is FALSE,
+               the titlebar child will not be displayed.
+
+               This resource should be set by the user in the resource
+               defaults file.  If the user runs the application
+               without a window manager or with a non-titling window
+               manager, this resource should be set to TRUE.  If the
+               user runs with a titling window manager this resource
+               should be set to FALSE.
+
+          XtNvSpace
+               Padding between the top of the Panel and the top child
+               in pixels, and between the bottom of the Panel and the
+               bottom child in pixels.
+
+          XtNhSpace
+               Padding between the sides of the Panel and the sides of
+               the displayed children.
+
+          XtNtitleToMenuPad
+               If both a title and a menu child are being displayed,
+               the padding between them in pixels.
+
+          XtNworkSpaceToSiblingPad
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPANEL(3X)                                           XWPANEL(3X)
+
+
+
+
+               The padding between the work space child and the
+               sibling above it.  If there is no title nor menu being
+               displayed this resource is ignored.
+
+     CONSTRAINT RESOURCES
+          The following resources will be attached to every widget
+          inserted into Panel.  Refer to CONSTRAINT(3X) for a general
+          discussion of constraint resources.
+
+
+             Constraint Resource Set -- Children of PANEL(3X)
+      Name              Class             Type           Default
+      _______________________________________________________________
+      XtNwidgetType     XtCWidgetType     XwWidgetType   XwWORK_SPACE
+      XtNcausesResize   XtCCausesResize   Boolean        FALSE
+
+
+
+          XtNwidgetType
+               Indicates to Panel what type of child it is.  The
+               possible values are, XwWORK_SPACE, specified in a
+               resource defaults file as "work space", XwTITLE,
+               specified in a resource defaults file as "title", and
+               XwPULLDOWN, specified in a resource defaults file as
+               "pulldown".
+
+          XtNcausesResize
+               Controls whether changes in the child geometry can
+               cause the Panel to make a geometry request of its
+               parent.  If TRUE for only one child, Panel will request
+               changes whenever that child requests changes.  If TRUE
+               for multiple children, Panel will request changes
+               whenever any of that set of children grow, and when all
+               of that set of children have shrunk.
+
+          The behavior of this resource can be nullified by setting
+          XwNLayout to XwIGNORE.
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPANEL(3X)                                           XWPANEL(3X)
+
+
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+                           Manager Resource Set
+       Name                Class               Type      Default
+       ____________________________________________________________
+       XtNforeground       XtCForeground       Pixel     Black
+       XtNbackgroundTile   XtCBackgroundTile   int       background
+       XtNtraversalOn      XtCTraversalOn      Boolean   FALSE
+       XtNlayout           XtClayout           int       minimize
+
+
+
+     TRANSLATIONS
+          The default translation set defining is as follows:
+
+               <EnterWindow>:          enter()
+               <LeaveWindow>:          leave()
+
+     ACTIONS
+          enter:  If keyboard traversal is active (argument type
+          XtNtraversalOn with argument value TRUE), initiate keyboard
+          traversal.
+
+          leave:  If keyboard traversal is active (argument type
+          XtNtraversalOn with argument value TRUE), terminate keyboard
+          traversal.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPANEL(3X)                                           XWPANEL(3X)
+
+
+
+
+     SEE ALSO
+          CORE(3X), CONSTRAINT(3X), XWMANAGER(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 6 -                   Aug 9, 1988
+
+
+

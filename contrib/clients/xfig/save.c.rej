@@ -1,0 +1,73 @@
+***************
+*** 170,175
+  FILE		*fp;
+  F_ellipse	*e;
+  {
+  	fprintf(fp, "%d %d %d %d %d %d %d %d %.3f %d %.3f %d %d %d %d %d %d %d %d\n",
+  		O_ELLIPSE, e->type, e->style, e->thickness, 
+  		e->color, e->depth, e->pen, e->area_fill,
+
+--- 170,178 -----
+  FILE		*fp;
+  F_ellipse	*e;
+  {
++ 	if( e->radiuses.x == 0 || e->radiuses.y == 0 )
++ 		return;
++ 	
+  	fprintf(fp, "%d %d %d %d %d %d %d %d %.3f %d %.3f %d %d %d %d %d %d %d %d\n",
+  		O_ELLIPSE, e->type, e->style, e->thickness, 
+  		e->color, e->depth, e->pen, e->area_fill,
+***************
+*** 187,192
+  	F_point	*p;
+  	F_arrow	*f, *b;
+  
+  	fprintf(fp, "%d %d %d %d %d %d %d %d %.3f %d %d\n",
+  		O_POLYLINE, l->type, l->style, l->thickness,
+  		l->color, l->depth, l->pen, l->area_fill, l->style_val, 
+
+--- 190,197 -----
+  	F_point	*p;
+  	F_arrow	*f, *b;
+  
++ 	if( l->points == NULL )
++ 		return;
+  	fprintf(fp, "%d %d %d %d %d %d %d %d %.3f %d %d\n",
+  		O_POLYLINE, l->type, l->style, l->thickness,
+  		l->color, l->depth, l->pen, l->area_fill, l->style_val, 
+***************
+*** 212,217
+  	F_point		*p;
+  	F_arrow		*f, *b;
+  
+  	fprintf(fp, "%d %d %d %d %d %d %d %d %.3f %d %d\n",
+  		O_SPLINE, s->type, s->style, s->thickness,
+  		s->color, s->depth, s->pen, s->area_fill, s->style_val,
+
+--- 217,224 -----
+  	F_point		*p;
+  	F_arrow		*f, *b;
+  
++ 	if( s->points == NULL )
++ 		return;
+  	fprintf(fp, "%d %d %d %d %d %d %d %d %.3f %d %d\n",
+  		O_SPLINE, s->type, s->style, s->thickness,
+  		s->color, s->depth, s->pen, s->area_fill, s->style_val,
+***************
+*** 241,246
+  FILE	*fp;
+  F_text	*t;
+  {
+  	fprintf(fp, "%d %d %d %d %d %d %d %.3f %d %d %d %d %d %s\1\n", 
+  		O_TEXT, t->type, t->font, t->size, t->pen,
+  		t->color, t->depth, t->angle,
+
+--- 248,255 -----
+  FILE	*fp;
+  F_text	*t;
+  {
++ 	if( t->length == 0 )
++ 		return;
+  	fprintf(fp, "%d %d %d %d %d %d %d %.3f %d %d %d %d %d %s\1\n", 
+  		O_TEXT, t->type, t->font, t->size, t->pen,
+  		t->color, t->depth, t->angle,

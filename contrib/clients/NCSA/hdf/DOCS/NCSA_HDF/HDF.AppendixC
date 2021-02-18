@@ -1,0 +1,57 @@
+
+
+Appendix  C	Eight-Character FORTRAN Names
+
+
+
+
+
+Some FORTRAN compilers on machines that NCSA supports, such 
+as UNICOS FORTRAN (CFT77) on the CRAY-2 system, only 
+accept identifier names that are eight or fewer characters. 
+Therefore, a set of equivalent names has been devised that can be 
+used when programming with one of these compilers. The 
+following list contains official names, together with the shorter, 
+less descriptive versions. Both sets of names are supported on all 
+HDF-supported machines.
+
+
+Long Version	Short Version
+DFR8getdims	d8gdims
+DFR8getimage	d8gimg
+DFR8setpalette	d8spal
+DFR8putimage	d8pimg
+DFR8addimage	d8aimg
+DFR8restart	d8first
+DFSDgetdims	dsgdims
+DFSDgetdata	dsgdata
+DFSDgetdimstrs	dsgdist
+DFSDgetdatastrs	dsgdast
+DFSDgetdimscale	dsgdisc
+DFSDgetmaxmin	dsgmaxm
+DFSDgetdimlen	dsgdiln
+DFSDgetdatalen	dsgdaln
+DFSDsetdims	dssdims
+DFSDputdata	dspdata
+DFSDadddata	dsadata
+DFSDsetdimstrs	dssdist
+DFSDsetdatastrs	dssdast
+DFSDsetdimscale	dssdisc
+DFSDsetmaxmin	dssmaxm
+DFSDsetlengths	dsslens
+DFSDclear	dsclear
+DFSDrestart	dsfirst
+
+C.1	NCSA HDF
+
+Appendix C	C.1
+
+National Center for Supercomputing Applications
+
+February 1989
+
+                                                                
+
+February 1989
+
+

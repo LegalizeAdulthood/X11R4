@@ -1,0 +1,885 @@
+.tb set 8m 16m 24m 32m 40m 48m 56m 64m 72m 80m 88m 96m 104m 112m 120m 128m 136m
+.df comp type ('GOTHIC'  8)
+.df noprop type ('GOTHIC'  9)
+:frontm
+:titlep
+.ri 20
+:title.XGKS
+:title.
+:title.User Document
+:title.
+:title.
+:date.June 1, 1989
+:author.Bruce Greer
+:author.David Owens
+:address.
+:aline.Technical Computing Services
+:aline.Eighth Floor
+:aline.101 Main Street
+:aline.Cambridge, MA  02142
+:eaddress.
+:etitlep
+.fo left
+:toc
+:body
+.h2 Foreword
+This document is a supplement to the ANSI GKS standard and the
+ANSI GKS C and FORTRAN bindings.  It contains information specific to this
+particular implementation of GKS.  Where the ANSI documents and
+this document disagree, this XGKS document is correct. 
+
+.h2 GKS Level
+ANSI defines several levels of compliance with GKS standards.  These levels are
+referenced by a number and a letter.  The number corresponds to the level of 
+output supported while the letter corresponds to the level of input.  XGKS is
+a level 2C implementation of GKS.  Certain output functions required for level
+two are not supported by XGKS.  These functions are SetPatternSize and
+SetPatternReferencePoint.  They exist in the XGKS library and will return
+valid data for valid parameters, but they have no effect on XGKS output.
+
+.h2 GKS Applications as X Clients
+An XGKS application is an X11 client.  Each GKS workstation opened by the
+application maps to a unique X window.  In this environment, the application
+must communicate with the X server in ways not defined by GKS.  This 
+additional X functionality is handled by the XGKS library on behalf of the 
+application.
+
+.h4 Resizing of X Windows
+Standard GKS does not anticipate workstations changing in size after they 
+have been opened.  Under X, a window may be resized, iconified, or moved at 
+any time by the user or under the control of another program.  In this event, 
+XGKS redraws the image in the window, scaling it appropriately to preserve
+the aspect ratio.  Both segmented and non-segmented primitives will be
+regenerated as well as visible input devices.  Some exceptions do exist,
+and are detailed in the section on escape functions.  Any output made
+after the X window manipulation will be drawn to conform to the new size and 
+shape of the window.  Also, because X windows can be iconified or covered by 
+other X windows, there is no guarantee that the output you are sending to the 
+window will be visible.
+
+.h4 Device Coordinates
+In standard GKS, device coordinates were meant to represent exactly what their
+name implies - coordinates on a physical device.  But because XGKS uses X
+windows as workstations, it can't count on the pixel space of its "device"
+to always be the same.  By introducing an extra level of abstraction known 
+as pseudo device coordinates, we provide a fixed coordinate system that maps
+to any X window.  In XGKS, pseudo device coordinates are 1280x1024 units.
+This value will be reported as the device coordinate (DC) size for any
+workstation opened under XGKS.
+
+.h4 X Colormaps
+A GKS workstation is typically a device, such as a display, printer or plotter.
+Once that workstation has been opened, standard GKS assumes that it has 
+complete control over the device, including any colormap facilities.  
+Under XGKS, a workstation is an X window and may share the display with any 
+number of other X windows created by other applications.  An X display can 
+only have one colormap loaded at a time so when two X windows change the 
+colormap, only one set of color representations can be in effect.  The display
+will only have an XGKS workstation's colormap when it's X window has the 
+focus.  This means that if any application, including an XGKS application,
+changes the colormap, the colors in the XGKS window may not be correct if the
+focus is in a different window.  Note:  The GKS function, SetColourRepresentation,
+changes the colormap for XGKS.
+
+.h4 Workstation Connection IDs
+In X a display is identified in the form "hostname:server[.display]" where
+hostname designates the machine and server[.display] designates the specific
+display on the machine.  
+
+.h6 C binding:
+When an XGKS application program passes a string in the form 
+"hostname:server[.display]" to gopenws() as the connection ID, 
+the XGKS library will open an X window on the display specified.  A 
+NULL connection ID causes XGKS to use the environment variable DISPLAY 
+as a default.
+
+.h6 FORTRAN binding:
+In the FORTRAN binding, the connection ID is passed to OpenWorkstation
+as an integer.  If the value is zero, XGKS uses the environment 
+variable DISPLAY for the connection ID.  If the application program
+needs to use a different conid value, it should first call GESCID,
+passing the connection ID string.  The application should then call
+open workstation, passing any integer greater than zero to use the
+conid set by the call to the escape.
+
+.h2 Escape Function
+Standard GKS provides a function called Escape to access implementation
+specific functions.  Escape functions in XGKS are not accessed through a 
+single escape routine.  Instead, each escape has its own routine.
+
+.h4 EscapeSetRedrawNotify
+.fo off
+
+  C binding:  gescredrawnotify ( ws_id, funcp )
+                        Gint    ws_id;
+                        Gint    *funcp();
+
+  FORTRAN binding:  not implimented
+.fo on
+
+EscapeSetRedrawNotify will cause the function specified by funcp() to be
+called whenever an X window is redrawn.  A redraw can occur when:
+.fo off
+       *  the X window is moved from under another window 
+       *  the X window is resized
+       *  the X window is de-iconified
+       *  the X window is redisplayed when the X screen is being refreshed
+.fo on
+
+.h4 EscapeSetDCSize
+.fo off
+  C binding:  gescsetdcsize ( wsid, size )
+                        Gint    ws_id;
+                        Gpoint  size;
+
+  FORTRAN binding:  GESSDC ( WSID, XSIZE, YSIZE )
+                        INTEGER         WSID
+                        REAL            XSIZE, YSIZE
+.fo on
+
+EscapeSetDCSize sets the pseudo display coordinate range to the values
+specified by XSIZE and YSIZE.  This allows the user to change the DC size 
+to something other than the default 1280x1024 units assumed by XGKS.
+
+.h4 EscapeInquireXAttributes
+.fo off
+  C binding:  gescinqxattr ( ws_id, dpy, win, gc )
+                        Gint    ws_id;
+                        Display **dpy;
+                        Window  *win;
+                        GC      *gc;
+
+  FORTRAN binding:  not implemented
+
+.fo on
+EscapeInquireXAttributes returns the Window (win), Display (dpy), and
+Graphics Context (gc) structures used by the X library for the X window 
+of the given workstation (ws).  With these variables the application 
+program can make calls to X library routines that use these variables 
+as arguments.
+
+.h4 EscapeSetColourMask
+.fo off
+  C binding:  gescsetcolourmask ( ws_id, mask )
+                        Gint            ws;
+                        unsigned long   mask;
+
+  FORTRAN binding:  GESSCM ( WSID, MASK )
+                        INTEGER         WSID
+                        INTEGER         MASK
+
+.fo on
+EscapeSetColourMask allows the user to change the X color plane mask
+that controls witch color planes in a color display are active.
+
+.h4 EscapeSetStorePrimitives
+.fo off
+  C binding:  gescstoreprimi ( ws_id, store )
+                        Gint    ws_id;
+                        Gstore  store;
+
+  FORTRAN binding:  GESSRP ( WSID , STORE )
+                        INTEGER         WSID
+                        INTEGER         STORE
+
+.fo on
+EscapeSetStorePrimitives allows the user to tell XGKS whether or not to
+store non-segmented primitives for the purpose of redraws.
+
+.h4 EscapeSetConId (FORTRAN binding only)
+.fo off
+  FORTRAN binding:  GESCID ( CONID )
+                        CHARACTER*80    CONID
+
+.fo on
+EscapeSetConId allows the FORTRAN application program to open a workstation
+on an X server other than the one specified by the environment variable
+DISPLAY.  Passing any integer greater than zero to OpenWorkstation will
+open a workstation on the X server specified by the last call to 
+EscapeSetConId.  Passing an integer greater than zero to OpenWorkstation
+before any calls to EscapeSetConId have been made will open a workstation 
+on the X server specified by the environment variable DISPLAY.
+(See section above titled "Workstation Connection IDs.") 
+
+.h2 Workstation Types
+XGKS supports the following four types of workstations.  
+
+.h4 X window (XWIN)
+Opening an XWIN workstation causes an X window to be created.  All
+output to the XWIN workstation will be displayed in the X window.
+All input from the XWIN workstation will be derived from input to the
+X window.
+
+.h4 Metafile Output (MO)
+Opening an MO workstation causes a unix file to be created.  All output
+to the MO workstation will be recorded in the unix file.  MO workstations
+do not support input.  
+
+.h4 Metafile Input (MI)
+Opening an MI workstation causes an existing unix file to be opened.  MI
+workstations do not support input or output.  The only operations supported
+on MI workstations are GetItemFromGKSM and ReadItemFromGKSM.  After reading
+an item from an MI workstation a call to InterpretItem will have the same
+effect as executing the equivalent Xgks function.  
+
+.h4 Workstation Independent Segment Storage (WISS)
+Opening a WISS workstation causes no immediately visible effects.  All
+output sent to a WISS workstation will be stored internally, but not 
+displayed.  Output sent to a WISS workstation can later be copied to
+other workstations to produce visible output.  NOTE:  Only one WISS 
+workstation may be open at a time.
+
+.h2 Deferral Mode
+Changing the deferral mode in XGKS has no effect.  All picture changes that are
+immediate, that is, that do not imply a regeneration, are displayed immediately.
+Deferral modes were meant to accommodate the workings of plotters and other
+types of output devices that do not have the refresh capabilities of the
+displays used by X windows.
+
+.h2 Error File
+When an application program opens GKS using the OpenGKS function, it must 
+specify an error file.  XGKS will report all errors to this file.  (See the 
+section on user defined error handlers for exceptions.)  
+
+.h4 C binding
+.fo off
+      * the application must open the error file before calling gopengks
+      * the application program passes a file pointer to gopengks
+      * the file pointer passed to gopengks should not be modified
+      * if no file is specified, XGKS uses stderr
+.fo on
+
+.h4 FORTRAN binding
+.fo off
+      * the application program passes a file number to gopks
+      * the application program does not have to open the error file
+        before calling gopks
+      * the application program can switch to a different error file by
+        closing the present one and opening a new one with the same file
+        number
+      * if no entry is present at the index, stderr is used
+.fo on
+
+.h2 User Defined Error Handler
+The application programmer may replace the default error handler by defining
+a function as follows:
+
+.h4 C binding
+.fo off
+.bf noprop
+     gerrorhand ( errnum, funcname, errfile )
+        Gint    errnum;         /*  Error code that was detected         */
+        Gint    funcname;       /*  Number of function that found error  */
+        Gfile   *errfile;       /*  File to print error message in       */
+.fo on
+.pf
+
+.h4 FORTRAN binding
+.fo off
+.bf noprop
+     GERHND ( ERRNR, FCTID, ERRFIL )
+        INTEGER         ERRNR   /*  Error code that was detected         */
+        INTEGER         FCTID   /*  Number of function that found error  */
+        INTEGER         ERRFIL  /*  Unit table index of error file       */
+.fo on
+.pf
+
+The default error handler passes the argument information along to gerrorlog
+to print out the message to the error file.  The application program is given
+the option to change this function in the event some bookkeeping or error
+tracking is needed.  A user defined error routine may increment certain 
+counters or keep a separate log of certain types of errors.  The user routine
+also typically, though not necessarily, calls the ErrorLogging function to output
+the error message in the same way the default routine does.
+
+.h2 Input Device Modes
+.h4 Request
+If the application program initializes an input device without setting the
+input mode, the device will be in Request mode by default.  In Request mode
+the input device is inactive and not visible until the application makes a
+call to one of the input Request functions.  If the echo switch is ON when
+the Request call is made, a graphical representation of the input device
+will appear on the screen.  After the user has entered one item of input,
+the device will disappear.  For Pick, Stroke, Valuator, and Locator, input
+is triggered when the mouse button is released.  A RequestString call will
+return when the user presses the Return key.  Choice input is complete for
+prompt/echo type 3 when the mouse button is released or when a function key
+is pressed for the other types.
+
+.h4 Sample
+When an input device is put in Sample mode and its echo switch is ON, the
+graphical representation of the device will be displayed and will remain
+visible until the device mode is changed to request or the workstation is
+closed.  Calls to input Sample functions will return the current state of
+the input device.  For Pick, Valuator, and Locator, the value returned will
+be the last segment picked, value chosen, or position picked respectively.
+For Choice, it will be the last choice made with the mouse or the function
+keys.  For String, the Sample function will return a string with all of the
+characters presently in the string buffer.  The Return key has no effect
+when the String device is in Sample mode and the current string is not reset
+until the device mode is changed or the device is reinitialized.  While a
+Stroke device is in Sample mode, every Stroke entered by the user will be
+added to the end of the current Stroke until the buffer is full, the device
+mode is changed or the device is reinitialized.
+
+.h4 Event
+When an input device is put in Event mode with its echo switch set to ON, 
+the graphical representation of the device will be displayed and will remain
+visible until the device mode is changed to request or the workstation is
+closed.  Any user input to a device in event mode will be put in an event
+queue.  A call to AwaitEvent will wait for an event caused by the user, or
+if the event queue is not empty, it will cause the oldest event in the queue
+to be moved to the current event record.  Calls to the GetEvent function
+will return the value in the current event record.  By alternating calls to
+AwaitEvent and GetEvent the application program can dequeue and retrieve all
+input events.
+
+.h2 Input Devices
+.h4 Locator
+The locator device type allows the user to pick a point within the
+specified echo area.  For all prompt/echo types, releasing the mouse
+button signals the chosen position.  The following prompt/echo types are 
+available:
+
+   1:   Locator position is marked by the XGKS cursor.  
+   2:   Crosshairs:  Locator position is marked by the point of intersection
+        of a vertical and horizontal line that extend to the edge of the
+        workstation.  These lines move accordingly when the mouse is dragged.
+   3:   Same as type 1.
+   4:   Rubber Band Line:  Locator position is marked by a line that extends
+        from the locator initial position to the current position.  The
+        initial position is set when the locator device is initialized.  The
+        line is referred to as a rubber-band line and will update its
+        position as the mouse is dragged to different locations.
+   5:   Rubber Band Box:  Locator position is marked by a rectangle that is
+        drawn using the locator initial position and the current position as
+        opposite corners.  The rectangle is updated as the mouse is dragged.
+
+
+.h4 Stroke
+The stroke device type allows the user to enter a series of points by
+dragging the mouse cursor through the points.  The stroke device registers 
+a new point after it has been moved more than a certain distance determined
+by the interval values specified at device initialization.  By continuing 
+to move the mouse with the button held down, the user causes the stroke
+device to tick off point after point until the button is released.  The
+following prompt/echo types are available:
+
+   1:   Stroke points are registered where the XGKS cursor is dragged, but
+        points are not marked.  There is no echo available for type 1.
+   3:   Each stroke point that registers is marked with a specified type of
+        polymarker.
+   4:   Successive stroke points are joined by a specified type of polyline.
+
+
+.h4 Valuator
+The valuator device type allows the user to choose a value from a
+continuous range between two extremes specified by the device
+initialization.  Only one prompt/echo type is available.  The valuator
+device is represented as a graphical slide lever that the user can move
+by dragging it with the mouse.  If the width of the echo area is greater
+than the height, then the slide lever will be horizontal, otherwise, it 
+will be drawn vertically.  The value returned is proportional to distance
+from either endpoint.
+
+
+.h4 Choice
+The choice device presents the user with a set of choices and allows the
+user to pick one.  The following prompt/echo types are available:
+
+   1:   User chooses one of the function keys on the keyboard.
+   2:   Sometimes referred to as lamps.  This prompt type is very similar to
+        type 1, except the application can mask out keys so only a certain
+        set are chooseable.
+   3:   String menu.  A box containing strings is displayed and the user
+        chooses a particular string by clicking on it with the mouse.
+        The choice strings are displayed with a fixed X font and will be
+        the same size regardless of the size of the window.  The application
+        programmer should be certain that the window size and echo area
+        allow room for the entire menu.
+
+
+.h4 Pick
+The pick device type allows the user to select a segment and/or primitive
+from any segment on the workstation designated as "detectable."
+
+
+.h4 String
+The string device type allows the user to enter text from the keyboard.
+Only one prompt/echo type is available.  The device displays a box 
+containing a cursor and an optional prompt string within the echo area.
+The size of the box and in turn, the number of characters allowable, are
+constrained by the smaller of the echo area size and the character
+buffer.  The font used for character entry is a fixed X font, so it does
+not vary in size with the X window.
+
+
+
+
+.h2 Table of Implementation Dependent Values of XGKS
+.h4 GKS Description Table
+.fo off
+.bf comp
+Description                                                     Type            Value
+-----------                                                     ----            -----
+
+level of GKS      (ma,mb,mc,0a,0b,0c,1a,1b,1c,2a,2b,2c)          E              2c
+number of available workstation types            (1..n)          I              4
+list of available workstation types                             nxN             [ NULL,MI,MO,WISS ]
+number of simultaneaously open workstations      (1..n)          I              10
+number of simultaneaously active workstations    (1..n)          I              10
+number of workstations associated with a segment (1..n)          I              10
+maximum normalization transformation number      (1..n)          I              31
+.fo on
+
+.pf
+.h4 Workstation Description Table
+.bf comp
+
+.fo off
+Description                                                     Type            Value
+-----------                                                     ----            -----
+
+workstation type                                                 N              NULL (X_WIN)
+workstation category    (OUTPUT,INPUT,OUTIN,WISS,MO,MI)          E              OUTIN
+
+device coordinate units                  (METRES,OTHER)          E              OTHER
+display space size
+   device coordinate units                                      2xR             1280.0,1024.0
+   raster units                                                 2xI             1280,1024
+
+raster or vector display          (VECTOR,RASTER,OTHER)          E              RASTER
+dynamic modification accepted for:
+   polyline bundle representation             (IRG,IMM)          E              IMM
+   polymarker bundle representation           (IRG,IMM)          E              IMM
+   text bundle representation                 (IRG,IMM)          E              IMM
+   fill area bundle representation            (IRG,IMM)          E              IMM
+   pattern representation                     (IRG,IMM)          E              IMM
+   colour representation                      (IRG,IMM)          E              IMM
+   workstation transformations                (IRG,IMM)          E              IRG
+
+default value for:
+   deferral mode                  (ASAP,BNIG,BNIL,ASTI)          E              ASAP
+   implicit regeneration mode      (SUPPRESSED,ALLOWED)          E              ALLOWED
+
+number of available linetypes                    (4..n)          I              7
+list of available linetypes               (-n..-1,1..n)         nxI             [ -3,-2,-1,1,2,3,4 ]
+number of available linewidths                   (0..n)          I              0
+nominal linewidth                       DC           >0          R              1.0
+minimum linewidth                       DC           >0          R              0.01
+maximum linewidth                       DC           >0          R              1024.0
+number of predefined polyline indices            (5..n)          I              5
+
+table of predefined polyline bundles:
+   index        line type       line width      line colour
+   -----        ---- ----       ---- -----      ---- ------
+     1              1              1.0              1
+     2              2              1.0              1
+     3              3              1.0              1
+     4              4              1.0              1
+     5              1              1.0              1
+
+number of available marker types                 (5..n)          I              5
+list of available marker types            (-n..-1,1..n)         nxI             [ 1,2,3,4,5 ]
+number of available marker sizes                 (0..n)          I              0
+nominal marker size                     DC           >0          R              6.0
+minimum marker size                     DC           >0          R              0.01
+maximum marker size                     DC           >0          R              1024.0
+number of predefined polymarker indices          (5..n)          I              5
+
+table of predefined polymarker bundles:
+   index        marker type     scale factor    polymarker colour
+   -----        ------ ----     ----- ------    ---------- ------
+     1               3              6.0                1
+     2               1              6.0                1
+     3               2              6.0                1
+     4               4              6.0                1
+     5               5              6.0                1
+
+number of text font and precision pairs          (1..n)          I              9
+list of text font and precision pairs
+                       (-n..-1,1..n;STRING,CHAR,STROKE)         nx(I;E)         [ 1-9;STROKE ]
+number of available character expansion factors  (0..n)          I              0
+minimum character expansion factor      DC           >0          R              0.001
+maximum character expansion factor      DC           >0          R              1024.0
+number of available character heights            (0..n)          I              0
+minimum character height                DC           >0          R              0.01
+maximum character height                DC           >0          R              1024.0
+number of predefined text indices                (2..n)          I              6
+
+table of predefined text bundles
+   index        font/precision          expansion       spacing         text colour
+   -----        --------------          ---------       -------         ---- ------
+     1             1/STROKE                1.0            0.15              1
+     2             2/STROKE                1.0            0.15              1
+     3             3/STROKE                1.0            0.2               1
+     4             4/STROKE                1.0            0.15              1
+     5             5/STROKE                1.0            0.1               1
+     6             6/STROKE                1.0            0.1               1
+
+number of available fill area interior styles    (1..4)          I              4
+list of available fill area interior styles 
+                           (HOLLOW,SOLID,PATTERN,HATCH)         nxE             [ 0,1,2,3 ]
+number of available hatch styles                 (0..n)          I              20
+list of available hatch styles            (-n..-1,1..n)         nxI             [ -20..-1 ]
+number of predefined fill area indices           (5..n)          I              5
+
+table of predefined fill area indices
+   index        interior style          style index     fill colour
+   -----        -------- -----          ----- -----     ---- ------
+     1              HOLLOW                   1              1
+     2              SOLID                    1              1
+     3              PATTERN                  1              1
+     4              HATCH                   -1              1
+     5              HATCH                   -1              1
+
+number of predefined pattern indices             (0..n)          I              20
+
+table of predefined pattern representations
+   index        array dimensions        pattern array
+   -----        ----- ----------        ------- -----
+     1               4x4                1  0  0  0
+                                        1  1  0  0
+                                        1  1  1  0
+                                        1  1  1  1
+
+     2               4x4                1  1  1  1
+                                        1  0  0  1
+                                        1  0  0  1
+                                        1  1  1  1
+
+     3               4x4                0  0  0  0
+                                        0  1  1  0
+                                        0  1  1  0
+                                        0  0  0  0
+
+     4               4x4                0  0  1  1
+                                        0  0  1  1
+                                        1  1  0  0
+                                        1  1  0  0
+
+     5               4x4                1  0  0  0
+                                        1  0  0  0
+                                        1  0  0  0
+                                        1  0  0  0
+
+     6               4x4                0  0  0  0
+                                        0  0  0  0
+                                        0  0  0  0
+                                        1  1  1  1
+
+     7               4x4                1  1  1  0
+                                        1  1  1  0
+                                        1  1  1  0
+                                        1  1  1  0
+
+     8               4x4                1  1  1  1
+                                        1  1  1  1
+                                        1  1  1  1
+                                        0  0  0  0
+
+     9               4x4                1  1  1  0
+                                        1  1  0  1
+                                        1  0  1  1
+                                        0  1  1  1
+
+    10               4x4                0  0  0  1
+                                        0  0  1  0
+                                        0  1  0  0
+                                        1  0  0  0
+
+    11               4x4                0  1  1  1
+                                        1  0  1  1
+                                        1  1  0  1
+                                        1  1  1  0
+
+    12               4x4                1  0  0  0
+                                        0  1  0  0
+                                        0  0  1  0
+                                        0  0  0  1
+
+    13               8x8                1  0  0  0  0  0  0  0
+                                        1  0  0  0  0  0  0  0
+                                        1  0  0  0  0  0  0  0
+                                        1  0  0  0  0  0  0  0
+                                        1  0  0  0  0  0  0  0
+                                        1  0  0  0  0  0  0  0
+                                        1  0  0  0  0  0  0  0
+                                        1  1  1  1  1  1  1  1
+
+    14               8x8                1  0  0  0  0  0  0  1
+                                        0  1  0  0  0  0  1  0
+                                        0  0  1  0  0  1  0  0
+                                        0  0  0  1  1  0  0  0
+                                        0  0  0  1  1  0  0  0
+                                        0  0  1  0  0  1  0  0
+                                        0  1  0  0  0  0  1  0
+                                        1  0  0  0  0  0  0  1
+
+    15               8x8                0  0  0  0  0  0  0  0
+                                        0  0  0  0  0  0  0  0
+                                        0  0  0  0  0  0  0  0
+                                        0  0  0  0  0  0  0  0
+                                        1  1  1  1  1  1  1  1
+                                        0  0  0  0  0  0  0  0
+                                        0  0  0  0  0  0  0  0
+                                        1  1  1  1  1  1  1  1
+
+    16               8x8                1  0  0  1  0  0  0  0
+                                        1  0  0  1  0  0  0  0
+                                        1  0  0  1  0  0  0  0
+                                        1  0  0  1  0  0  0  0
+                                        1  0  0  1  0  0  0  0
+                                        1  0  0  1  0  0  0  0
+                                        1  0  0  1  0  0  0  0
+                                        1  0  0  1  0  0  0  0
+
+    17               16x16              1  0  0  0  1  0  1  1  1  0  0  0  1  0  1  1
+                                        1  0  0  0  1  0  1  1  1  0  0  0  1  0  1  1
+                                        1  0  0  0  1  1  1  1  1  0  0  0  1  1  1  1
+                                        0  1  1  1  0  1  1  1  0  1  1  1  0  1  1  1
+                                        1  0  1  1  1  0  0  0  1  0  1  1  1  0  0  0
+                                        1  0  1  1  1  0  0  0  1  0  1  1  1  0  0  0
+                                        1  1  1  1  1  0  0  0  1  1  1  1  1  0  0  0
+                                        0  1  1  1  0  1  1  1  0  1  1  1  0  1  1  1
+                                        1  0  0  0  1  0  1  1  1  0  0  0  1  0  1  1
+                                        1  0  0  0  1  0  1  1  1  0  0  0  1  0  1  1
+                                        1  0  0  0  1  1  1  1  1  0  0  0  1  1  1  1
+                                        0  1  1  1  0  1  1  1  0  1  1  1  0  1  1  1
+                                        1  0  1  1  1  0  0  0  1  0  1  1  1  0  0  0
+                                        1  0  1  1  1  0  0  0  1  0  1  1  1  0  0  0
+                                        1  1  1  1  1  0  0  0  1  1  1  1  1  0  0  0
+                                        0  1  1  1  0  1  1  1  0  1  1  1  0  1  1  1
+
+    18               16x16              0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        1  0  0  0  1  0  1  1  1  0  0  0  1  0  1  1
+                                        1  1  0  0  0  1  1  1  1  1  0  0  0  1  1  1
+                                        1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        0  0  1  1  1  0  1  0  0  0  1  1  1  0  1  0
+                                        0  1  1  1  1  1  0  0  0  1  1  1  1  1  0  0
+                                        1  0  1  1  1  0  0  0  1  0  1  1  1  0  0  0
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        1  0  0  0  1  0  1  1  1  0  0  0  1  0  1  1
+                                        1  1  0  0  0  1  1  1  1  1  0  0  0  1  1  1
+                                        1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        0  0  1  1  1  0  1  0  0  0  1  1  1  0  1  0
+                                        0  1  1  1  1  1  0  0  0  1  1  1  1  1  0  0
+                                        1  0  1  1  1  0  0  0  1  0  1  1  1  0  0  0
+
+    19               16x16              1  0  0  1  0  0  0  0  1  0  0  1  0  0  0  0
+                                        1  0  0  0  1  0  0  0  1  0  0  0  1  0  0  0
+                                        0  0  0  0  1  0  0  1  0  0  0  0  1  0  0  1
+                                        0  0  0  0  1  1  1  0  0  0  0  0  1  1  1  0
+                                        0  0  0  0  1  0  0  1  0  0  0  0  1  0  0  1
+                                        1  0  0  0  1  0  0  0  1  0  0  0  1  0  0  0
+                                        1  0  0  1  0  0  0  0  1  0  0  1  0  0  0  0
+                                        1  1  1  0  0  0  0  0  1  1  1  0  0  0  0  0
+                                        1  0  0  1  0  0  0  0  1  0  0  1  0  0  0  0
+                                        1  0  0  0  1  0  0  0  1  0  0  0  1  0  0  0
+                                        0  0  0  0  1  0  0  1  0  0  0  0  1  0  0  1
+                                        0  0  0  0  1  1  1  0  0  0  0  0  1  1  1  0
+                                        0  0  0  0  1  0  0  1  0  0  0  0  1  0  0  1
+                                        1  0  0  0  1  0  0  0  1  0  0  0  1  0  0  0
+                                        1  0  0  1  0  0  0  0  1  0  0  1  0  0  0  0
+                                        1  1  1  0  0  0  0  0  1  1  1  0  0  0  0  0
+
+    20               16x16              1  1  1  1  0  0  0  1  1  1  1  1  0  0  0  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        0  0  0  1  1  1  1  1  0  0  0  1  1  1  1  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        1  1  1  1  0  0  0  1  1  1  1  1  0  0  0  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        0  0  0  1  1  1  1  1  0  0  0  1  1  1  1  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+                                        0  0  0  1  0  0  0  1  0  0  0  1  0  0  0  1
+
+
+Description                                                     Type            Value
+-----------                                                     ----            -----
+
+number of available colours or intensities     (0,2..n)          I              depends on display type
+colour available                    (COLOUR,MONOCHROME)          E              depends on display type
+number of predefined colour indices              (2..n)          I              depends on display type
+table of predefined colour representations                                      depends on display type
+
+number of generalized drawing primitives         (0..n)          I              0
+
+maximum number of polyline bundle table entries  (5..n)          I              20
+maximum number of polymarker bundle table entries(5..n)          I              20
+maximum number of text bundle table entries      (2..n)          I              20
+maximum number of fill area bundle table entries (5..n)          I              20
+maximum number of pattern indices                (0..n)          I              20
+maximum number of colour indices                 (2..n)          I              depends on display type
+number of segment priorities supported           (0..n)          I              0
+dynamic modification accepted for:
+   segment transformation                     (IRG,IMM)          E              IRG
+   visibility (visible->invisible)            (IRG,IMM)          E              IRG
+   visibility (invisible->visible)            (IRG,IMM)          E              IMM
+   highlighting                               (IRG,IMM)          E              IMM
+   segment priority                           (IRG,IMM)          E              IRG
+   adding primitives to open segment          (IRG,IMM)          E              IMM
+     overlapping segment of higher priority
+
+locator input device:
+   default initial locator position     WC                       P              0.5,0.5
+   number of available prompt and echo types     (1..n)          I              5
+   list of prompt and echo types          (-n..-1,1..n)         nxI             [ 1,2,3,4,5 ]
+   default echo area                    DC                      4xR             0.0,0.0 - 1280.0,1024.0
+stroke input device:
+   maximum input buffer size                    (64..n)          I              limited by memory only
+   number of available prompt and echo types     (1..n)          I              3
+   list of available prompt and echo types(-n..-1,1..n)         nxI             [ 1,3,4 ]
+   default echo area                    DC                      4xR             0.0,0.0 - 1280.0,1024.0
+   default stroke data record:
+      input buffer size                          (1..n)          I              64
+      editing position                           (1..n)          I              1
+      editing x,y interval              WC                      2xR             0.001,0.001
+      time interval                                >0.0          R              0.0
+valuator input device:
+   default initial value                                         R              0.5
+   number of available prompt and echo types     (1..n)          I              1
+   list of available prompt and acho types(-n..-1,1..n)         nxI             [ 1 ]
+   default echo area                    DC                      4xR             200.0,50.0 - 800.0,100.0
+   default valuator data record:
+      low value                                                  R              0.0
+      high value                                                 R              1.0
+choice input device:
+   maximum number of choice alternatives         (1..n)          I              32767
+   number of available prompt and echo types     (1..n)          I              1
+   list of available prompt and echo types(-n..-1,1..n)         nxI             1
+   default echo area                    DC                      4xR             0.0,0.0 - 1280.0,1024.0
+   default choice data record:
+      number of choice strings                   (1..n)          I              0
+      list of choice strings                                    nxC             []
+pick input device:
+   number of available prompt and echo types     (1..n)          I              2
+   list of available prompt and echo types(-n..-1,1..n)         nxI             [ 1,2 ]
+   default echo area                    DC                      4xR             0.0,0.0 - 1280.0,1024.0
+string input device:
+   maximum input buffer size                    (72..n)          I              limited by memory only
+   number of available prompt and echo types     (1..n)          I              1
+   list of available prompt and echo types(-n..-1,1..n)         nxI             [ 1 ]
+   default echo area                    DC                      4xR             0.0,0.0 - 1280.0,1024.0
+   default string data record:
+      input buffer size                          (1..n)          I              1024
+      initial cursor position                    (1..n)          I              1
+.fo on
+
+.pf
+.h4 GKS Error State List
+.bf comp
+
+.fo off
+Description                                                     Type            Value
+-----------                                                     ----            -----
+
+error file                                                       N              stderr
+.pf
+.fo on
+
+ 
+  
+.h2 XGKS Fonts
+
+The fonts used by XGKS are not compiled in and must be accessible
+at run time.  A font is loaded the first time it is used.  By default
+XGKS looks in /usr/lib/xgks/fontdbdir for the fonts.  This can be 
+changed at compile time by changing the FONTDBDIR variable when installing
+XGKS (see the section on installation).  The default can be over-ridden
+at run-time by the environment variable XGKSFontDir.
+    
+  
+
+
+.h2 Metafiles
+
+Metafiles provide a device independent way to record ANSI GKS output to a 
+disk to be displayed at a later time.  The ANSI standard does not provide
+a file format for the storage of GKS output so any format will be 
+implementation dependent.  A metafile produced by XGKS is a text file in
+the following format.  XGKS uses the metafile format detailed in Appendix
+E of the ANSI GKS Standard.
+
+
+
+
+.h2 Output Primitives
+
+.h4 Message
+
+ANSI GKS includes a message primitive to display a string in a implementation
+defined position on the screen.  A call to Message in XGKS will display the
+specified string 20% diagonally into the workstation window from the lower left
+corner.  A call to Message will not be included in an open segment.  Message
+uses the fixed X font "6x10" so it will not vary in size with the workstation
+window.
+
+
+.h4 Pattern Size and Pattern Reference Point
+
+The SetPatternSize and SetPatternReferencePoint functions defined in ANSI GKS 
+are not implemented in XGKS.  The functions can be called, but they will have
+no effect on fill area output.
+
+
+.h4 GDP's
+
+The GDP function is defined in the XGKS library so that existing code can link
+with XGKS, but none of the drawing primitives are implemented.
+
+
+
+
+
+.h2 Installing XGKS
+
+To install XGKS on a machine, follow the following steps.  NOTE: You
+must have write access to all the directories involved.  The default
+installation will require that you have write access to /usr/include, 
+/usr/lib, and the directory into which you will be copying the XGKS
+source tree.
+
+
+   1)  Copy the XGKS source tree into a directory.  The following command can
+       be used to tar XGKS from tape into a directory.  Before executing the
+       tar command, make sure the current directory is the top of destination
+       tree.
+
+       tar -xvf /dev/st0
+
+   2)  There is a make variable in the makefile in the top-level directory
+       called INSTALLHOME that determines where the XGKS libraries will be
+       installed.  If INSTALLHOME is not specified, the XGKS files will be
+       installed in /usr/lib/xgks.  This can be done simply by typing "make
+       install" from the top level of the XGKS source directory.  This will
+       compile all the XGKS code and install the public files.  XGKS can be
+       installed in a different directory by typing "make install
+       INSTALLHOME=<your path>"
+
+   3)  The installed XGKS library files will look like this:
+
+.fo off
+                        /usr/lib/xgks
+                         /           \
+                        /             \
+                      lib             include
+                     /  ----------          ------
+                    /   libxgks.a           xgks.h
+                   /    fortxgks.a
+                fontdb
+              ----------
+           gks font files
+.fo on
+
+The file "xgks.h" contains all structures and enumerated types needed for
+an XGKS application.  The file "libxgks.a" is the C library and 
+"fortxgks.a" is the FORTRAN binding.

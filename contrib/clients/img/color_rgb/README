@@ -1,0 +1,144 @@
+
+
+		color_rgb image sample		11-27-89
+		Paul Raveling		Raveling@isi.edu
+
+
+	This directory (img/color_rgb) contains one sample image
+	in 24-bit RGB format.  It's a rescaled copy of an image
+	available on venera.isi.edu, shrunken to limit file size.
+
+	After building and installing the Img Software Set,
+	you can display this image with the following command:
+
+		[cd <this directory>]
+		dispimg rgb_sample
+
+	This will look great if you have a 24-bit TrueColor
+	display, such as HP SRX or Turbo-SRX.  If you have
+	a color-mapped display, it will be quantized down to
+	many fewer colors and may look relatively awful --
+	this is the most challenging image in my inventory
+	of test cases for color quantization.  If you have
+	a monochrome display, the image will be converted
+	to dithered black-and-white.
+
+	This particular image is a digitized photograph of a
+	model.  I took this picture at a Frank's Camera Day show
+	in (I think) 1978, and it was virtually identical to
+	the photo that won 2nd place in the color division for
+	this show.  The actual 2nd place photo was taken at the
+	same time by the photographer next to me.  The image
+	comes with no strings attached because the models at
+	this show signed blanket model releases.
+
+
+	Other RGB images are available by anonymous FTP from:
+
+		Host:		venera.isi.edu
+		Directory:	[~ftp/] images/color_rgb
+
+	A copy of the corresponding README file from this directory,
+	current on this date, follows.
+
+
+
+Other README files in this directory:
+
+	README.unm	For University of New Mexico images
+	README.new.unm	.... ** See copyright notice in this one **
+	README.hires.unm	... and in this one
+
+
+Original sources of images:
+
+	[ISI has processed some in various ways other than color selection]
+
+	Abbrev		Source			Medium
+	------		------			------
+
+	Cristy	Jon Cristy			email
+	HP	Hewlett Packard			(cartridge tape, Convovotron)
+	ISI	several				video disks
+	ISI/HP	images by Paul Raveling	[ISI]	mostly personal photographs
+		with thanks to Nic Lyons [HP] for digitizing
+	Lyons	Nic Lyons [Hewlett Packard]	(cartridge tape)
+	UNM	University of New Mexico	anonymous FTP
+	Utah	University of Utah		anonymous FTP
+
+
+	**  Filenames end with:
+
+		.a	Image attributes
+		.r	Red component
+		.g	Green component
+		.b	Blue component
+
+	Any of these may be followed by ".Z" for a compressed file
+
+
+RGB images in this directory:
+
+	Image			Dimensions	Source
+	-----			----------	------
+
+	20bill			 738 x 317	Lyons
+	anyemtn			 972 x 813	Lyons
+	balloon			 512 x 482	UNM
+	beach1_hires		1136 x 785	UNM
+	beach2_hires		1128 x 785	UNM
+	beatles			 528 x 539	Lyons
+	beauty			 512 x 482	UNM
+	bird			 512 x 482	UNM
+	boat1			 512 x 482	UNM
+	boat3			 512 x 482	UNM
+	boat4			 315 x 482	UNM
+	boats			 512 x 482	UNM
+	condor1			 204 x 143	ISI/HP
+	condor2			 112 x 144	ISI/HP
+	condor3			 175 x 168	ISI/HP
+	donuts			 532 x 732	Lyons
+	dragon			 370 x 465	UNM
+	ds_train		 704 x 464	ISI/HP
+	everest			1128 x 685	Lyons
+	fish			 512 x 464	ISI
+	gizaa			 512 x 512	UNM
+	graycard		 592 x 480	ISI/HP
+	indocean		 512 x 464	ISI
+	kitty			 512 x 482	UNM
+	lenna			 512 x 480	Utah
+	leopard			 694 x 903	Lyons
+	linespr			 512 x 482	UNM
+	m109			 480 x 480	UNM
+	man			1024 x 1024	HP
+	mandril			 512 x 512	UNM
+	mars			 512 x 476	UNM
+	max			 712 x 692	HP
+	mbg			 512 x 512	UNM
+	model			 815 x 1021	ISI/HP
+	molecule  		 257 x 257	Cristy
+	newyork			 512 x 464	ISI
+	old497			 703 x 466	ISI/HP
+	palms_hires		1153 x 781	UNM
+	pine			 764 x 1024	Lyons
+	pitts			 512 x 482	UNM
+	plane			 480 x 315	UNM
+	potala			1174 x 220	Lyons
+	puff1			 468 x 704	ISI/HP
+	rand			 480 x 480	UNM
+	save100			 480 x 480	UNM
+	san_juans		 706 x 459	ISI/HP
+	scs			 512 x 480	ISI
+	skull			 512 x 512	UNM
+	smurf1			 692 x 467	ISI/HP
+	smurf4			 480 x 319	ISI/HP
+	sphere			 512 x 512	UNM
+	sunset2			 512 x 482	UNM
+	tbirds			1005 x 642	ISI/HP
+	tibetan			 476 x 513	Lyons
+	tm			 512 x 485	UNM
+	tree_hires		 736 x 1121	UNM
+	uzbek			 626 x 921	Lyons
+	wdw			 512 x 512	UNM
+	world			 480 x 480	UNM
+	x-1e			 693 x 456	ISI/HP

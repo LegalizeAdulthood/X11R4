@@ -1,0 +1,421 @@
+ 		       Compliance of Tekwm with the
+	      Inter-Client Communication Conventions Manual
+			      Glenn Widener
+			       XD88 release
+			     November 22, 1989
+
+This application note documents the areas of compliance of the Tekwm
+window manager with Version 1 of the ICCCM.  For each sub-section of ICCCM
+section 4 Client To Window Manager Communication and section 5 Client To
+Session Manager Communication, it specifies the Tekwm response to
+ICCCM-specified client operations, and notes the ICCCM features that are
+not fully supported by Tekwm.  It also documents any client conventions
+supported by Tekwm that are not documented in this version of the ICCCM.
+If an ICCCM section is not specifically mentioned here, one may assume
+that Tekwm complies with the specification.
+
+			    General Operation
+
+Tekwm incorporates some session management features as well as the usual
+window management functions.  Clients can ask for WM_DELETE_WINDOW,
+WM_PREPARE_TO_DIE, and WM_CLOSEDOWN messages.
+
+		   Sec. 2.7.1, 4.1.2 Client Properties
+
+In general, Tekwm reads client properties and attributes when the window
+is mapped.  Some properties will be reread if the client changes them
+after mapping, these are noted below.  If attributes are changed, the
+results in Tekwm are unspecified, except for colormap, which is obeyed by
+Tekwm.  Later versions will probably ignore attribute changes except for
+colormap.
+
+If a property is missing, Tekwm assumes the defaults described below for the
+individual unspecified fields.
+
+Tekwm only accepts TEXT properties of type STRING (i.e.  Latin-1).  (Note
+that the current Xlib routines only support TEXT properties of type
+STRING) Tabs and newlines encountered in strings that are to be displayed
+(e.g.  WM_NAME) are not specially treated, and will result in printing of
+whatever glyph exists in the selected font (typically none).  Note that
+this is actually true for all characters in the property - the encoding
+displayed is totally determined by the selected font.
+
+Tekwm currently modifies two client-supplied property fields:
+IconPositionHint (WMHints.icon_x, WMHints.icon_y) are set to the current
+icon position, and the USPosition and USSize flags in WM_NORMAL_HINTS are
+set once the window is positioned.
+
+			   Sec. 4.1.2.1 WM_NAME
+
+Tekwm displays WM_NAME in the window title bar.  Tekwm adds a space on
+both ends of the string, this is only noticeable if title.text.background
+color differs from title.background.  If WM_NAME does not exist, Tekwm
+labels the window " Untitled Window ".
+
+If the client changes or deletes WM_NAME after the window is mapped, Tekwm
+will update the window title.
+
+			Sec. 4.1.2.2 WM_ICON_NAME
+
+Tekwm displays WM_ICON_NAME in the icon, if IconWindowHint and
+IconPixmapHint are not specified.  If IconWindowHint or IconPixmapHint is
+specified, WM_ICON_NAME is displayed in a "name icon window" under the
+client icon window or pixmap.
+
+WM_NAME is used if WM_ICON_NAME does not exist.  If neither exists, the
+icon is named "Unnamed Icon".  Icon names must not be greater than 256
+characters long, otherwise an error is printed and the name is truncated
+to 256.  The name is not padded with any spaces at the ends.
+
+If the client changes or deletes WM_ICON_NAME after the window is mapped,
+Tekwm will update the icon.
+
+		       Sec. 4.1.2.3 WM_NORMAL_HINTS
+
+Per the new ICCCM, the obsolete WM_NORMAL_HINTS.x, y, width, height
+fields are ignored.  If USPosition is set, the initial window size and
+position are taken from the window position at map time, with size limited
+by min_width/height if PMinSize is set and by max_width/height if PMaxSize
+is set.  No further interaction with the user is done.
+
+Otherwise, the default initial window size is taken from the window
+geometry at map time if PSize or USSize is set, else from min_width/height
+if PMinSize is set, else from max_width/height if PMaxSize is set, else
+the window size at map time is used regardless of PSize or USSize.  The
+new base_width and base_height fields are obeyed, with min_width and
+min_height as a backup if base size is not given.  The PPosition flag is
+always ignored, and the initial window position is always obtained from
+the user.
+
+If the left button is used, the default initial window size applies.
+If the center button is used, the default initial window size is ignored
+and the size taken from the user.
+
+The remaining WM_NORMAL_HINTS fields are all obeyed.  If PMaxSize is not
+set, the screen size is used.  PAspect is obeyed by increasing the smaller
+dimension unless it would exceed the max size, otherwise by decreasing the
+larger dimension unless it would fall below min size.  
+
+			  Sec. 4.1.2.4 WM_HINTS
+
+InputHint is ignored.  See Sec.  4.1.7. 
+
+StateHint is supported.  Unless the -h option is given to Tekwm, StateHint
+is ignored on any windows that are already mapped at Tekwm startup.  The
+default is normal, de-iconified.
+
+IconWindowHint, IconPixmapHint, and IconMaskHint (WMHints.icon_window,
+WMHints.icon_pixmap, and WMHints.icon_mask) are supported.  If the client
+pixmap is not specified, the mask is ignored.  If IconWindowHint and
+IconPixmapHint are both specified, the window is used.  If none is
+specified, WM_ICON_NAME is displayed in a small window.  If IconWindowHint
+or IconPixmapHint is specified, WM_ICON_NAME is displayed in a "name icon
+window" under the icon itself.  The client's icon window border width and
+color are set according to the tekwm icon border resources.
+
+IconPositionHint (WMHints.icon_x, WMHints.icon_y) is obeyed, either with
+the -iconic option, or when f.iconify is executed.  The position is
+interpreted as the upper left corner of the icon (unlike some window
+managers which treat it as the center of the icon.)  Note that there is no
+way for the client to specify an "icon gravity" hint, such as with the new
+WM_NORMAL_HINTS.win_gravity, so an icon geometry of "-0-0" will place the
+upper left corner of the icon at the lower right pixel on the screen, if
+the client properly converts this to screen size - 1.  The default icon
+position is 0,0.
+
+WindowGroupHint is not supported at this time.
+
+			  Sec. 4.1.2.5 WM_CLASS
+
+Tekwm uses the WM_CLASS property to read client-specific resources, as
+described in the Tekwm manual.  Note that if the client fails to set 
+WM_CLASS, the WM_NAME property will be used instead, after compressing
+out any whitespace in the name.
+
+		      Sec. 4.1.2.6 WM_TRANSIENT_FOR
+
+See sec. 4.1.10.
+
+			Sec. 4.1.2.7 WM_PROTOCOLS
+
+WM_TAKE_FOCUS is not supported.  See Sec.  4.1.7.  WM_PREPARE_TO_DIE,
+WM_CLOSEDOWN, and WM_DELETE_WINDOW are fully supported.  See Sections
+5.2.1-2.
+
+		     Sec. 4.1.2.8 WM_COLORMAP_WINDOWS
+
+WM_COLORMAP_WINDOWS is not supported at this time.
+
+			  Sec. 4.1.3.1 WM_STATE
+
+WM_STATE is fully supported.  On restart, Tekwm restores the iconic
+state of the windows, and positions the icons at their previous location,
+based on resetting the IconPositionHint.  (This will change to obtaining
+the icon position from a private property on the client window,
+WM_ICON_POSITION.)
+
+			Sec. 4.1.3.2 WM_ICON_SIZE
+
+The WM_ICON_SIZE property is set on the root window to a
+single XIconSize that permits any size client pixmap or window, as
+follows:
+
+     min_width = min_height = 0;
+     max_width = ScreenWidth;
+     max_height = ScreenHeight;
+     width_inc = height_inc = 1;
+
+
+		     Sec. 4.1.4 Changing Window State
+
+Tekwm fully supports the conventions for window state change in this
+section.
+
+		    Sec. 4.1.5 Configuring the Window
+
+Tekwm fully supports the ICCCM ConfigureRequest/ConfigureNotify protocol.
+Any legitimate Configure Request will be performed.  (Note that sibling
+must be None or there will be a protocol error.)  Restacking is performed
+with respect to the overall window, including decorations, so for example
+a stack_mode of TopIf will raise the window if any part of the outside
+border is occluded.
+
+If the Wall resource is on, Tekwm will limit the client_requested
+configuration so that the window and all its decorations remains fully
+visible.
+
+As a reparenting window manager, Tekwm correctly sends the client Synthetic
+Notify requests where required.  The Synthetic Notifys give an adjusted
+x, y window position, that is, a position which if added to the
+client-requested border width gives the actual position of the upper left
+pixel inside the window.  Note that this is not in general the actual
+root-relative client window position.  
+
+The border width in the Synthetic Notify is the client-requested width,
+per the ICCCM.  The ICCCM does not specify the "above" field; Tekwm sets
+it to None.
+
+The ICCCM recommends that reparenting window managers set client border
+widths to zero.  This will cause borderless windows to remain when a
+reparenting window manager crashes.  Initially, Tekwm will not comply with
+this recommendation, as the main reason for the recommendation is to
+support multiple-colormap hardware.  Instead, it sets the client window's
+border width and pixmap according to Tekwm's border resources.
+
+In the future, Tekwm may set client window borders to zero.
+
+		  Sec. 4.1.6 Changing Window Attributes
+
+The only client window attributes modified by Tekwm are Border pixmap and
+Border pixel - they are reset to the value specified by the borderColor
+resource.  Note that this is contrary to the ICCCM rules.  This may change
+in the future.
+
+			  Sec. 4.1.7 Input Focus
+
+InputHint is ignored, and WM_TAKE_FOCUS is not supported.  If the user has
+directed input to the client, either by setting input focus or by moving
+the pointer, all keyboard input will be passed to the client, regardless
+of the input_hint, or WM_TAKE_FOCUS, and the window will be highlighted to
+reflect this.  Input focus is changed only in response to user actions, so
+clients following the Locally Active Input model should operate, while
+Globally Active clients may encounter some problems retaining focus when
+the user moves the pointer.
+
+			   Sec. 4.1.8 Colormaps
+
+Client window and client icon colormaps are installed when focus is in the
+window.  All window decorations have their colors allocated in the client
+colormap if possible, else in the default map, so that where possible the
+decorations are the correct color when focus is in the window.  The client
+may change the colormap for the window at any time; colormaps set at map
+time and after map time are installed.
+
+WM_COLORMAP_WINDOWS is not supported at this time.
+
+See also section 4.1.10.
+
+			     Sec. 4.1.9 Icons
+
+Icons are fully supported, see Sec.  4.1.2.4 WM_HINTS.  Input events are
+passed to a client's icon window if the focus is in the icon window.
+
+		       Sec. 4.1.10 - Popup Windows
+		       (Override_redirect Windows)
+
+See also sections 4.1.8 and 4.2.2.
+
+The ICCCM specifies that override_redirect windows get minimal support
+from the window manager.  In particular, their colormaps are to be ignored
+by the WM, and there is no assumption that wm ops work on them.  If their
+colormap differs from that of their associated top-level window, they must
+appear in the top-level window's WM_COLORMAP_WINDOWS property.  This has
+several implications on how override_redirect windows may be used:
+
+1.  clients must have a mapped top-level window to map an
+override_redirect window.
+
+2.  The client's override_redirect window must only be mapped when focus
+is in its top-level window.  The client must either use the Globally
+Active focus model, or else hope that the window manager is using a
+real-estate focus model so that it is assured that when it receives an
+event that causes mapping of the override_redirect window the colormap it
+has requested is installed.
+
+Under these rules, a client without a mapped top-level window that pops up
+a menu in response to an event on the root window or another client's
+window, or which asyncronously puts up a notifier when it has no top-level
+window mapped cannot use override_redirect; instead, it must set a
+WM_TRANSIENT_FOR property with window None on the window (and hope the
+window manager pays attention, since the ICCCM does not currently specify
+a response to this action).
+
+Tekwm, however, does not follow the ICCCM in this regard.
+Override_redirect window colormaps are installed when and while the window
+is mapped, under the normal keyboard focus polices for a top-level window,
+and all Tekwm window operations function on the override_redirect windows,
+including iconification, f.decorate, etc.  The
+WM_NORMAL_HINTS.initial_state field is obeyed (default:  normal,
+de-iconified).  Normal processing of client-specific resources is done
+based on the WM_CLASS property, causing reparenting if a borderContext or
+title is requested (the default for override_redirect windows is not to
+reparent or decorate).  If the window is reparented,
+WM_NORMAL_HINTS.win_gravity is obeyed (default, NorthWest).
+
+Unless client-specific resources override, Tekwm does follow the ICCCM
+rules of not decorating or otherwise interfering with override_redirect
+windows when they are mapped, except that it sets the border color per the
+Tekwm*borderColor resource.  In particular, it does not attempt to
+(re-)position the window at map time.
+
+		       Sec. 4.1.10 - Popup Windows
+			(WM_TRANSIENT_FOR Windows)
+
+WM_TRANSIENT_FOR windows are not decorated or reparented by Tekwm, except
+for setting the border color per the Tekwm*borderColor resource.  They are
+mapped immediately, without any user interaction, with the geometry they
+have at map time.
+
+Currently, Tekwm does not couple a WM_TRANSIENT_FOR window with the window
+it is "transient for", e.g.  they iconify separately.  This may change in
+the future.
+
+Tekwm interprets a window with a WM_TRANSIENT_FOR property with a window
+of None the same as a true WM_TRANSIENT_FOR window, except that the window
+will always independently (de-)iconify like a normal independent top-level
+window, even if the full WM_TRANSIENT_FOR semantics are implemented.
+
+		       Sec. 4.1.11 - Window Groups
+
+Tekwm at the present time implements no special semantics for window
+groups.  WindowGroupHint is not supported at this time.
+
+			 Sec. 4.2.1 - Reparenting
+
+Tekwm is a reparenting window manager, therefore all the restrictions in
+this section apply.  Tekwm properly places all reparented window in its
+save set.
+
+		  Sec. 4.2.2 - Redirection of Operations
+
+As discussed under Sec. 4.1.10, Tekwm is more lenient in its handling of
+override_redirect than the ICCCM specifies.  Therefore, there is no
+restriction on mapping of override_redirect windows without a non-Withdraw
+top-level window.
+
+			 Sec. 4.2.7 - Input Focus
+
+InputHint is ignored, and WM_TAKE_FOCUS is not supported.  See Sec. 4.1.7.
+
+		    Sec. 4.2.9 - Redirecting Requests
+
+Tekwm makes no effort to enforce the convention described in this section.
+If the client selects ResizeRedirect, and fails to properly reconfigure
+the window, the client window will not properly match its parent frame.
+
+		   Sec. 5 Session Manager Conventions
+
+While Tekwm is not a session manager, it does use the Session Management
+conventions to perform certain rudimentary session management functions,
+and to implement safe window deletion and termination of clients.
+
+Clients that have multiple independent top-level windows must support the
+WM_DELETE_WINDOW protocol to operate properly with tekwm.
+
+		      Sec. 5.1.1.2 WM_CLIENT_MACHINE
+
+The contents of WM_COMMAND are ignored by Tekwm; it is used only for
+notification that the client is ready to be killed.
+
+		      Sec. 5.1.1.2 WM_CLIENT_MACHINE
+
+Tekwm currently ignores this property.  Clients are restarted from a fixed
+script, and there is no support for saving the current state of a session.
+
+			  Sec. 5.1.1.3 WM_STATE
+
+Tekwm fully supports the WM_STATE property.  The icon field is always
+Tekwm's icon window, whether it is the client's icon window, or the icon
+window created by Tekwm.
+
+		      Sec. 5.2.1 Client Termination
+
+Tekwm fully supports the WM_PREPARE_TO_DIE and WM_CLOSEDOWN protocol, from
+the f.delete, f.destroy, f.terminate, f.restartsession, and f.endsession
+functions.  These protocols are a proposed addition to the ICCCM to
+support safe client/session termination, and were necessitated by the
+restriction of WM_SAVE_YOURSELF to use in checkpointing situations.  If
+the client has not asked for WM_DELETE_WINDOW, WM_PREPARE_TO_DIE, or
+WM_CLOSEDOWN, these functions immediately close the client connection.  If
+the client asks for WM_PREPARE_TO_DIE, it should respond similarly to
+WM_SAVE_YOURSELF, but is allowed to interact with the user to dispose of
+user data.  If the client asks for WM_CLOSEDOWN, it should respond by
+disconnecting from the server and doing any necessary cleanup.
+
+F.terminate ignores WM_DELETE_WINDOW, and proceeds to the
+WM_PREPARE_TO_DIE and WM_CLOSEDOWN protocols.  F.kill ignores all
+WM_PROTOCOLS, and immediately closes the client connection.
+
+Once WM_COMMAND is updated, the client connection will be immediately
+closed or the WM_CLOSEDOWN message sent if requested.
+
+Tekwm uses the WM_PREPARE_TO_DIE protocol to safely shutdown itself.  When
+tekwm starts up, it looks for a top-level window with the string "Wm"
+somewhere it its WM_CLASS.res_name.  If found, Tekwm performs a client
+shutdown on the window by sending the WM_PREPARE_TO_DIE message, then
+waiting for 45 seconds for the window to be deleted before doing a
+KillClient on the window.  Tekwm then creates an unmapped top-level window
+at the bottom of the root window stack, gives it the WM_CLASS.res_name
+name "Tekwm" and .res_class "Tekwm.Wm" and the window name "Tekwm
+WM_PROTOCOLS window", and requests the WM_PREPARE_TO_DIE protocol on that
+window, and procedds with startup.
+
+			Sec. 5.2.2 Window Deletion
+
+Tekwm fully supports the WM_DELETE_WINDOW protocol, from the f.delete,
+f.destroy, f.restartsession, and f.endsession functions.  If the client
+has not asked for WM_DELETE_WINDOW, these functions proceed to the
+WM_PREPARE_TO_DIE and WM_CLOSEDOWN protocols.
+
+			      Sec. 6.3 Grabs
+
+Tekwm does not fully comply with this (recently added) section of the
+ICCCM.  Tekwm will establish Grabs on the client window if its tekwmrc
+files define any bindings to client window context.  If a client attempts
+to Grab the same Button-Modifier combination specified for Tekwm's
+bindings, the client will get an Access error.
+
+This non-compliance may be eliminated in a future release, by grabbing the
+buttons on the Root window.
+
+The Tektronix default user interface configures Tekwm to use any of the
+Mouse Buttons combined with the Meta (MOD1) modifier.
+
+To avoid the conflict, the user must reconfigure either Tekwm's or the
+client's user interface.  This will remain true even if Tekwm is modified
+to comply with the ICCCM.
+
+			    Sec. 6.4 Colormaps
+
+Tekwm does not include any support for Standard Colormaps or
+WM_COLORMAP_WINDOWS at this time.

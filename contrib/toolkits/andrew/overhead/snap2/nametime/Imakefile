@@ -1,0 +1,14 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+
+DependTarget()
+
+NormalObjectRule()
+ProgramTarget(nametime, nametime.o, ,)
+InstallProgram(nametime, $(DESTDIR)/etc/snap)
+#ifdef RESOLVER_ENV
+ProgramTarget(nametimeg, nmtimeg.o,${RESOLVLIB} ,)
+InstallProgram(nametimeg, $(DESTDIR)/etc/snap)
+#endif /* RESOLVER_ENV */

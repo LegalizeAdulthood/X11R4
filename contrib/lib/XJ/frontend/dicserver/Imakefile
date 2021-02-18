@@ -1,0 +1,48 @@
+#include "./../../XJImake.defs"
+
+# If you change WNNWNNDIR, you should change "include/config.h"
+
+       INCLUDES = -I$(WNNINCLUDESRC) -I$(FEROMKANMSRC) -I$(FEXWNMOSRC) \
+                  -I$(XJINCLUDESRC) -I$(TOP)
+        DEFINES = $(XJDEFINES) -DX11 -DX11R3 -DWNMO
+   INSTALLFLAGS = $(INSTBINFLAGS)
+LOCAL_LIBRARIES = $(WNNLIB) $(XLIB)
+
+SRC1= header.c kensaku.c prologue.c touroku.c \
+      jutil.c w_string.c printf.c termio.c hinsi.c \
+      key_bind.c screen.c basic_op.c \
+      uif.c cursor.c jhlp.c epilogue.c select_ele.c \
+      wnnrc_op.c keyin.c display.c \
+      ichiran.c xw_touroku.c
+OBJ1= header.o kensaku.o prologue.o touroku.o \
+      jutil.o w_string.o printf.o termio.o hinsi.o \
+      key_bind.o screen.o basic_op.o \
+      uif.o cursor.o jhlp.o epilogue.o select_ele.o \
+      wnnrc_op.o keyin.o display.o \
+      ichiran.o xw_touroku.o
+SRC2= $(FEXWNMOSRC)/xcvtkey.c
+OBJ2= xcvtkey.o
+SRC3= $(WNNETCSRC)/strings.c
+OBJ3= strings.o
+SRC4= $(WNNETCSRC)/sstrings.c
+OBJ4= sstrings.o
+LOCAL_ETCSRCS= $(SRC3) $(SRC4)
+LOCAL_ETCOBJS= $(OBJ3) $(OBJ4)
+SRCS= $(SRC1) $(SRC2) $(LOCAL_ETCSRCS)
+OBJS= $(OBJ1) $(OBJ2) $(LOCAL_ETCOBJS)
+
+AllTarget(dicserver)
+SingleProgramTarget(dicserver,$(OBJS),$(LOCAL_LIBRARIES),)
+InstallProgram(dicserver,$(WNNBINDIR))
+DependTarget()
+
+install::
+	strip $(WNNBINDIR)/dicserver
+
+WnnSpecialObjectRule($(OBJ2),$(SRC2),$(FEXWNMOSRC))
+WnnSpecialObjectRule($(OBJ3),$(SRC3),$(WNNETCSRC))
+WnnSpecialObjectRule($(OBJ4),$(SRC4),$(WNNETCSRC))
+
+$(WNNLIB):
+	@echo Please make $(WNNLIB)
+	@false

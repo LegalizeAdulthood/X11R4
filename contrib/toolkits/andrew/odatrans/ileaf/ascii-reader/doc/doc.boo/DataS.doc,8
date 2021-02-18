@@ -1,0 +1,49 @@
+
+(Version Page\ Numbering 1)
+(Version Auto\ Numbering 1)
+(Page\ Numbering
+  (Starting 45)
+  (Begin Odd)
+  (Pages 102))
+(Auto\ Numbering
+  (Stream markers
+    (Level 0
+      (Start 0)
+      (Show 0))
+    (Deltas 7)
+    (Restart 0)
+    (FirstLevel 0)
+    (Tag display\ raster
+      (Page 101)
+      (Deltas 7)
+      (Restart 0))
+    (Tag image
+      (Page 97)
+      (Deltas 6)
+      (Restart 0))
+    (Tag patterns
+      (Page 28)
+      (Deltas 3)
+      (Restart 0))
+    (Tag autosize
+      (Page 74)
+      (Deltas 5)
+      (Restart 0))
+    (Tag structure\ ident
+      (Page 2)
+      (Deltas 1)
+      (Restart 0))
+    (Tag languages
+      (Page 39)
+      (Deltas 4)
+      (Restart 0))
+    (Tag tokens
+      (Page 8)
+      (Deltas 2)
+      (Restart 0)))
+  (Stream label
+    (Level 0
+      (Prefix Figure\ ))
+    (Deltas 1)
+    (Restart 1)
+    (FirstLevel 0)))

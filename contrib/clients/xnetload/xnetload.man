@@ -1,0 +1,177 @@
+.TH XNETLOAD l "April 1989" "X Version 11"
+.SH NAME
+xnetload - display load averages from local network machines
+.SH SYNOPSIS
+.B xnetload
+.br
+[
+.B \-configuration
+(<column>x<row>|horizontal|vertical)
+]
+.br
+[
+.B \-nolocal
+]
+.br
+[
+machine
+] ...
+.SH DESCRIPTION
+.I xnetload 
+uses the Athena Load widget and
+.B rwhod
+statistics to display the
+load average of a number of machines on a local network.
+.SH OPTIONS
+.PP
+.I xnetload
+accepts all of the standard X Toolkit command line options along with the 
+following additional options:
+.PP
+.TP 8
+.B \-configuration <column>x<row>
+.I xnetload
+can be configured to show the machine loads horizontally, vertically,
+or in multiple columns and rows:
+
+.br
+\fI-configuration horizontal\fR - display machine loads in one row
+
+.br
+\fI-configuration vertical\fR - display machine loads in one column
+
+.br
+\fI-configuration 4x3\fR - display machine loads in four columns,
+three columns (maximum of 12 machines).
+
+.br
+\fI-configuration 2x*\fR - display machine loads in two columns, no
+maximum number of machines, but an odd number will result in one blank
+entry.
+
+.br
+\fI-configuration *x3\fR - display machine loads in three rows, no
+maximum number of machines, but a number not divisible by three will
+result in blank entries.
+
+.PP
+.TP 8
+.B \-nolocal
+By default, the load for the local machine is displayed and the
+load calculated using the
+Load widget's standard LoadProc.  With this option,
+.I xnetload
+will NOT display
+the local machine's load unless the hostname is listed
+on the command line.  When
+.B \-nolocal
+is used,
+.I xnetload
+will not try to read
+.I kmem.
+.PP
+.TP 8
+.B \-local
+If
+.I xnetload
+is compiled with
+.B \-DNOLOCAL,
+then no local load will
+be displayed by default.
+.B \-local
+will turn the local load back on, and make
+.I xnetload
+read
+.I kmem.
+.PP
+.TP 8
+.B [machine] ...
+The load for each machine listed will be displayed.
+.SH RESOURCES
+.I xnetload
+uses the standard toolkit resources and some private resources.
+These are some of the standard resources that
+I find useful:
+.br
+.sp
+!**** XLOAD ****
+.br
+*Load*font:                          6x10
+.br
+*Load*height:                        35
+.br
+*Load*width:                         90
+.br
+!**** XMULTIMETER ****
+.br
+xnetload.geometry:                   -0+0
+.br
+! number of seconds between updates for local machine
+.br
+xnetload*local*update:               15
+.br
+! number of seconds between updates for remote machines
+.br
+xnetload*remote*update:              60
+.sp
+.PP
+Note - if you define "*Load*update", but not "xnetload*remote*update",
+then
+.I xnetload
+will set both the remote and local update times to the "*Load*update"
+value.  If this time is much less than the
+.B rwhod
+update period, (eg. 5 seconds instead of 60 seconds)
+then the remote load displays will look like bar graphs.
+.PP
+The private
+.I xnetload
+resources are as follows:
+.sp
+.IP "\fBconfiguration\fP (string) ``horizontal''"
+Gives the configuration of the load widgets - use the same syntax as with
+the command line argument: \fIhorizontal\fP for one row \fIvertical\fP
+for one column, \fImxn\fP or \fImXn\fP for m columns and n rows,
+\fImx*\fP for m columns and the rows necessary, and \fI*xn\fP for n
+rows with the necessary number of columns.
+.IP "\fBlocalload\fP (boolean) ``on''"
+If
+.I localload
+is true, then
+.I xnetload
+will use the standard Load widget load function to get the load
+average for the local machine.  There is a compile time switch to make
+this default "off."
+.SH SEE ALSO
+X(1), xload(1), Athena Load widget
+.SH BUGS
+.I xnetload
+uses the Load widget's normal load function for the local
+system, therefore
+.I xnetload
+should be setgid
+.I kmem.
+If
+.I xnetload
+cannot be setgid
+.I kmem,
+then either compile with
+.B \-DNOLOCAL
+or use the
+.B \-nolocal
+option.
+.PP
+.I xnetload
+will also take a width and height on the application
+geometry specification, but sometimes the
+.I Form
+widget will leave small gaps between the loads.
+.PP
+A very wide
+.I xnetload
+will often have wide margins.  I think the
+.I Form
+widget is doing this.
+.SH AUTHOR
+J. Michael Berkley
+(jmberkley@watnext.waterloo.edu)

@@ -1,0 +1,189 @@
+/* ************************************************************************** */
+/* *************************** New R4 Stuff HERE **************************** */
+/* ************************************************************************** */
+
+#define OSName			IRIX
+#define OSMajorVersion		3
+#define OSMinorVersion		2
+
+#define HasLargeTmp		YES	/* don't be paranoid */
+#define StripInstalledPrograms	YES	/* save disk space */
+#define ExecableScripts		YES
+#define SetTtyGroup		YES
+
+/* Extra libraries provide : yp, sockets, BSD directories, & sysV malloc */
+#define ExtraLibraries -lsun -lbsd -lmalloc -lc_s
+
+/* ************************************************************************** */
+/* *************************** END R4 Stuff HERE **************************** */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/* ************************ OS Version Dependancies ************************* */
+/* ************************************************************************** */
+
+#if OSMajorVersion == 3 && OSMinorVersion <= 2
+/* In 3.3 BSD stuff will go in "normal" /usr/include and in libc.a ! */
+#define StandardIncludes -I/usr/include/bsd
+#endif /* OS version Include path dependancies */
+
+/* ************************************************************************** */
+/* ************ Begin Macros defined by the Imake.tmpl template ************* */
+/* ************************************************************************** */
+/* Some things build better if we pretend we're not SystemV, but not all */
+#define SystemV			YES
+
+/* At SGI, we don't need this */
+#define ConstructMFLAGS		NO	/* build MFLAGS from MAKEFLAGS */
+
+/* At SGI, we have TCP/IP sockets only! */
+#define HasSockets		YES	/* bsd does have them */
+
+/* At SGI, we have long file names */
+#define ExpandManNames		YES
+
+/* We support xdm's configuation files */
+#define InstallxdmConfig	YES	/* install sample xdm config */
+
+/* Used only for compressed fonts */
+#define UNCOMPRESSPATH /usr/bsd/uncompress
+
+/* Normally used only to conditionally chose the default font path order */
+#define PrimaryScreenResolution 96
+
+/* We can now use either "fm" or "snf" fonts ! */
+#define DefaultFontPath $(FONTDIR)/misc/,$(FONTDIR)/100dpi/,$(FONTDIR)/75dpi/,/usr/lib/fmfonts/
+
+/* First Reference to "SGI" build parameters */
+#define OptimizedCDebugFlags $(OPTIMIZER)
+#define DefaultCCOptions -float /* this is for floating point, etc. */
+
+/* Installation Build Parameters */
+#define InstBinFlags -s -m 0755 -i "x.sw.eoe"
+#define InstDevBinFlags -s -m 0755 -i "x.sw.dev"
+#define InstUidFlags -s -m 4755 -i "x.sw.eoe"
+#define InstLibFlags -m 0664 -i "x.sw.dev"
+#define InstIncFlags -m 0444 -i "x.sw.dev"
+#define InstDatFlags -m 0444 -i "x.sw.dev"
+#define InstManFlags -m 0444 -i "x.sw.dev"
+#define InstAppFlags -m 0444 -i "x.sw.eoe"
+#define InstKmemFlags -s -m 2755 -g sys -i "x.sw.eoe"
+
+#define ArCmd ar scq
+#define LnCmd ln -s
+#define InstallCmd  $(SCRIPTSRC)/sgiinst.sh -I/etc/install
+#define BootstrapCFlags "$(OPTIMIZER)"
+
+/* for xdm or anyone else to use */
+#define DefaultUserPath :/usr/sbin:/usr/bsd:/usr/bin:/bin:/usr/bin/X11:/etc:/usr/etc
+#define DefaultSystemPath /usr/sbin:/usr/bsd:/bin:/etc:/usr/bin:/usr/etc:/usr/bin/X11
+
+/* Library Build Parameters */
+#define BandAidLibraryNeeded	NO
+
+/* ************************************************************************** */
+/* ************* End Macros defined by the Imake.tmpl template ************** */
+/* ************************************************************************** */
+/* Replacement Rules */
+/*
+ * NormalLibraryObjectRule - generate make rules to build "normal" objects.
+ */
+#define	NormalLibraryObjectRule()					@@\
+.c.o:									@@\
+	$(RM) $@ $*.os							@@\
+	$(CC) -c $(CFLAGS) $*.c						@@\
+	$(LD) -r $@ -o $*.os						@@\
+	$(MV) $*.os $@
+
+/*
+ * ProfiledLibraryObjectRule - generate make rules to build both profiled
+ * and "normal" objects.
+ */
+#define	ProfiledLibraryObjectRule()					@@\
+all::									@@\
+	@if [ ! -d profiled ]; then mkdir profiled; else exit 0; fi	@@\
+									@@\
+.c.o:									@@\
+	$(RM) $@ profiled/$@ $*.os					@@\
+	$(CC) -pg -c $(CFLAGS) $*.c					@@\
+	$(LD) -r $@ -o profiled/$*.o					@@\
+	$(RM) $@							@@\
+	$(CC) -c $(CFLAGS) $*.c						@@\
+	$(LD) -r $@ -o $*.os						@@\
+	$(MV) $*.os $@
+
+/*
+ * DebuggedLibraryObjectRule - generate make rules to build both debuggable
+ * and "normal" objects.
+ */
+#define	DebuggedLibraryObjectRule()					@@\
+all::									@@\
+	@if [ ! -d debugger ]; then mkdir debugger; else exit 0; fi	@@\
+									@@\
+.c.o:									@@\
+	$(RM) $@ debugger/$@ $*.os					@@\
+	$(CC) -g -c $(CFLAGS) $*.c					@@\
+	$(LD) -r $@ -o debugger/$*.o					@@\
+	$(RM) $@							@@\
+	$(CC) -c $(CFLAGS) $*.c						@@\
+	$(LD) -r $@ -o $*.os						@@\
+	$(MV) $*.os $@
+
+/*
+ * DebuggedAndProfiledLibraryOjbectRule - generate make rules to build
+ * debuggable, profiled, and "normal" objects.
+ */
+#define	DebuggedAndProfiledLibraryObjectRule()				@@\
+all::									@@\
+	@if [ ! -d profiled ]; then mkdir profiled; else exit 0; fi	@@\
+	@if [ ! -d debugger ]; then mkdir debugger; else exit 0; fi	@@\
+									@@\
+.c.o:									@@\
+	$(RM) $@ profiled/$@ debugger/$@				@@\
+	$(CC) -pg -c $(CFLAGS) $*.c					@@\
+	$(LD) -r $@ -o profiled/$*.o					@@\
+	$(RM) $@							@@\
+	$(CC) -g -c $(CFLAGS) $*.c					@@\
+	$(LD) -r $@ -o debugger/$*.o					@@\
+	$(RM) $@							@@\
+	$(CC) -c $(CFLAGS) $*.c						@@\
+	$(LD) -r $@ -o $*.os						@@\
+	$(MV) $*.os $@
+
+/*
+ * InstallProgram - generate rules to install an executable program using any
+ * special install flags set in $(INSTBINFLAGS).
+ */
+#if defined InstallProgram
+#undef InstallProgram
+#endif /* defined InstallProgram */
+#define	InstallProgram(program,dest)					@@\
+install:: program							@@\
+	$(INSTALL) -c $(INSTBINFLAGS) program dest
+
+/* END of Replacement Rules */
+
+/* General Parameters Affecting Clients And The Server */
+#define StandardDefines -DSYSV -DMALLOC_0_RETURNS_NULL
+
+/* OS dependant available "IPC" Methods Parameter */
+#define ConnectionFlags -DTCPCONN
+
+/* Server Build Parameters */
+#define XsgiServer Xsgi
+#define FontDefines -DFONT_SNF -DFONT_BDF -DCOMPRESSED_FONTS -DFONT_NEWS
+
+/* For NOW, we build a late release of 'R3 w/ SHAPE extension ! */
+#define BuildOldR3Server YES
+
+/* SGI Specific "make" Variables -- Same as would come from "commondefs" */
+        OPTIMIZER = -O2 $(OLIMIT)
+           OLIMIT = -Olimit $(OLIMITVALUE)
+      OLIMITVALUE = 2500
+
+/* MOTIF -- Don't Build By Default !! */
+#define BuildMotif	NO
+
+
+
+

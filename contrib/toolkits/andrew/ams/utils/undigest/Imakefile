@@ -1,0 +1,17 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+LIBS	=	${BASEDIR}/lib/libmail.a \
+		${UTILLIB} \
+		${BASEDIR}/lib/liberrors.a \
+		${MALLOCLIB}
+
+NormalObjectRule()
+
+ProgramTarget(undigest, undigest.o, ${LIBS},)
+
+InstallProgram(undigest, ${DESTDIR}/etc/)
+
+DependTarget()
+

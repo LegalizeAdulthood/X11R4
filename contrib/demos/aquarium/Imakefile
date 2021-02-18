@@ -1,0 +1,23 @@
+
+LOCAL_LIBRARIES = $(EXTENSIONLIB) $(XTOOLLIB) $(XLIB)
+
+SRCS = aquarium.c
+
+OBJS = aquarium.o
+
+AQUARIUMLIB=$(LIBDIR)/aquarium
+
+BITS=	blimp.li blimp.lm blimp.ri blimp.rm\
+	eye.li eye.lm eye.ri eye.rm\
+ 	face.li face.lm face.ri face.rm\
+ 	fork.li fork.lm fork.ri fork.rm\
+ 	pirhanna.li pirhanna.lm pirhanna.ri pirhanna.rm\
+	fish.li fish.lm fish.ri fish.rm
+
+DEFINES=-DAQUARIUM_DIR=\"$(AQUARIUMLIB)\"
+
+all:: aquarium
+
+ComplexProgramTarget(aquarium)
+
+InstallMultiple($(BITS),$(AQUARIUMLIB))

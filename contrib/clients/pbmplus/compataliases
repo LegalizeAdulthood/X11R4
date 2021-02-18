@@ -1,0 +1,15 @@
+# compataliases - csh aliases to allow users of old versions of PBM to keep
+#                 their habits.
+#
+# This script must be sourced - it will not work if you run it in a sub-shell.
+
+alias pbmcatlr pnmcat -lr
+alias pbmcattb pnmcat -tb
+alias pbmcrop pnmcrop
+alias pbmcut pnmcut
+alias pbmenlarge pnmenlarge
+alias pbmfliplr pnmflip -lr
+alias pbmfliptb pnmflip -tb
+alias pbmtops pgmtops
+alias pbmtrnspos pnmflip -xy
+alias tifftopbm tifftopgm

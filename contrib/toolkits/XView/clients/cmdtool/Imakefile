@@ -1,0 +1,26 @@
+#
+# @(#)Imakefile 1.4 89/12/06 SMI
+#
+# Imakefile for cmdtool
+#
+# LIBRARY_DEST is the location of the XView libraries
+# HEADER_DEST is the location of the XView header files
+# LIBDIR is the directory containing the X11 library (libX11.a)
+#
+
+#include "../../XView.config"
+
+LIBDIR=/home/X11/lib
+INCLUDES= -I.. -I$(HEADER_DEST) -I$(TOP) -DSTANDALONE
+DEPLIBS= $(TOP)/../lib/libxview.a $(DEPXLIB)
+LOCAL_LIBRARIES = $(TOP)/../lib/libxview.a $(XLIB)	
+
+# Uncomment the following line to use libxvol.a and libxvin.a
+#
+#LDFLAGS=-L$(LIBRARY_DEST) -L$(LIBDIR) -lxvol -lxvin -lX11
+
+shelltool: cmdtool
+	ln -s cmdtool shelltool
+
+SimpleProgramTarget(cmdtool)
+

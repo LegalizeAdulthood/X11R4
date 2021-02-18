@@ -1,0 +1,123 @@
+\begindata{text,268965568}
+\textdsversion{12}
+\template{help}
+\chapter{Cmenu: Controlling the menus for Andrew programs
+
+}
+\section{What cmenu is
+
+}\leftindent{
+Cmenu or the Cambridge Menu Package controls certain aspects of the menus that 
+you see when you use Andrew with cwm, the Cambridge Window Manager.  You can 
+customize the menus for Andrew programs by adding cmenu entries to your 
+\italic{.Xdefaults} file as shown below. 
+
+}
+\section{Customizing the menus for Andrew programs 
+
+}\leftindent{
+Here are some entries you can put into a .Xdefaults file in your home 
+directory to change the way that Andrew menus look.  The default value for 
+each entry is shown.  If you like the way the menus in Andrew programs look, 
+there is no need to create or add cmenu entries to the .Xdefaults file.  In 
+fact, setting some entries to their default values in your .Xdefaults file can 
+cause unexpected results, so you should only add lines to .Xdefaults if you 
+want something other than the default.  
+
+
+Entries that begin with "cmenu," such as those listed in this file, do not 
+affect the menus posted by the Cambridge Window Manager, such as the title bar 
+menus.  For information about changing the title bar menus, see the 
+\italic{cwm} help document.
+
+
+Note that when you change cmenu entries in your .Xdefaults file, your changes 
+will not take effect until the next time you start an Andrew program.  Any 
+Andrew programs that you have running when you change these entries will not 
+be affected by the changes.  Capitalization is not important in the entries 
+that you put into .Xdefaults, but punctuation is.
+
+
+\bold{\italic{cmenu.BoundingBoxWidth:} 40}
+
+\leftindent{Controls the width (in pixels) of the line around the menu stack. 
+ Any positive integer can be used.  If a negative number is used, the width 
+defaults to 0.}
+
+
+\bold{\italic{cmenu.MenuFreeze:} 1}
+
+\leftindent{This setting has two effects.  First, it determines whether the X 
+server will be "grabbed" while a menu is posted.  In other words, if 
+cmenu.MenuFreeze is set to 1, input from the mouse (clicks, presses, etc.) 
+will go only to the menus while the menus are displayed.  If cmenu.MenuFreeze 
+is set to 0, input from the mouse will go wherever the mouse cursor is while 
+the menus are displayed.  The second effect of this setting is to determine 
+whether the bits behind the menus are saved when the menus are displayed.  If 
+the value is 1, the bits are saved, which means that the application does not 
+have to redraw the screen when the menus disappear.  If the value is 0, the 
+bits are not saved and the application has to re-draw the screen when the 
+menus disappear.  The default setting of 1 means that the X server will be 
+"grabbed" and the bits behind the menus will be saved.
+
+
+}\bold{\italic{cmenu.PaneSpread:} 1.25}
+
+\leftindent{Determines the horizontal spread of menu panes.  Any value greater 
+than or equal to 0.0 may be used; the value must be specified as a number plus 
+tenths or hundreths (i.e., 1.0 is an appropriate value for cmenu.PaneSpread 
+but 1 is not).  A value of 1.0 means that the horizontal and vertical spread 
+will be equivalent.  A value less than 1.0 will compress the menu panes inward 
+and a value greater than 1.0 will expand them outward.  }
+
+
+\bold{\italic{cmenu.PaneFont:} AndySans12b}
+
+\leftindent{Controls the font that is used for the label or title of each menu 
+pane.  Any valid X font may be used.}
+
+
+\bold{\italic{cmenu.SelectionFont:} AndySans12b}
+
+\leftindent{Controls the font that is used for each item on the menus.  Any 
+valid X font may be used.} 
+
+
+\bold{\italic{cmenu.ShadowWindow:} 1}
+
+\leftindent{Determines whether the menu will have "shadow" windows on its 
+panes.  If the value is 1, "shadow" windows will appear, giving the menus a 
+two-dimensional appearance.  If the value is 0, "shadow" windows will not 
+appear.   }
+
+
+\bold{\italic{cmenu.WormHole:} 1}
+
+\leftindent{Determines whether the menu will have a "wormhole" after an 
+initial selection is made.  A wormhole is a black circle on the front menu. 
+ The user moves the mouse cursor onto the black circle to repeat a previous 
+menu selection.  If the value is 1, a wormhole will appear after an initial 
+selection.  If the value is 0, no wormhole will appear.  (Note: this 
+preference is not working dependably in the current release of Andrew.)}
+
+
+\bold{\italic{cmenu.ClickInterval:} 350}
+
+\leftindent{Determines how long the user has to make a selection after the 
+menus have been displayed.  If the interval between the time the menus appear 
+and the time the user makes a selection is greater than the ClickInterval 
+setting, no selection will take place.  Instead, the menus will stay on the 
+screen until the user either makes the selection again or moves the cursor off 
+the menus.  The value is in milliseconds. }
+
+}\leftindent{
+}\section{Related tools}  
+
+
+Select (highlight) one of the italicized names and choose "Show Help on 
+Selected Word" from the pop-up menu to see the help file for:
+
+\leftindent{
+\italic{preferences
+
+}}\enddata{text,268965568}

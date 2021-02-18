@@ -1,0 +1,40 @@
+#
+# @(#)Imakefile 1.1 89/07/21 SMI
+#
+# Top-level Imakefile for binaries
+#
+#	LIBRARY_DEST is the location of the XView libraries
+#	HEADER_DEST is the location of the XView header file directories
+#	DEMO_DEST is the desired location of the demo binaries
+#	Other binaries will be installed in the standard X11 bin (BINDIR).
+#
+
+#define IHaveSubdirs YES
+#define INCLUDES -I. -I.. 
+
+#include "../XView.config"
+
+DEMO_DEST=/tmp
+HELP_DEST=$(USRLIBDIR)/help
+RANLIBINSTFLAGS=
+AR=ar ruvl
+
+#
+# Uncomment the following line if you wish to use the merged XView library
+# (libxview.a) Comment out the other definition of LDFLAGS.
+#
+#LDFLAGS=-L$(LIBRARY_DEST) -L$(LIBDIR) -lxvin -lxvol -lX11 -lm
+LDFLAGS=-L$(LIBRARY_DEST) -L$(LIBDIR) -lxview -lX11 -lm
+
+SUBDIRS= clock cmdtool dbxtool demos textedit
+
+#
+# PassCDebugFlags will pass information to subdirectories
+#
+#define PassCDebugFlags 'HEADER_DEST=$(HEADER_DEST)' 'CDEBUGFLAGS=$(CDEBUGFLAGS)' 'LIBRARY_DEST=$(LIBRARY_DEST)' 'DEMO_DEST=$(DEMO_DEST)' 'LIBICCCM=$(LIBICCCM)'
+'HELP_DEST=$(HELP_DEST)' 'LDFLAGS=$(LDFLAGS)'
+
+MakeSubdirs($(SUBDIRS))
+
+DependSubdirs($(SUBDIRS))
+

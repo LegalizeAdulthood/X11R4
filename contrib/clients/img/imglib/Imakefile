@@ -1,0 +1,23 @@
+
+    STD_DEFINES = LibraryDefines
+    CDEBUGFLAGS = LibraryCDebugFlags
+       INCLUDES = -I. -I..
+   INSTALLFLAGS = $(INSTINCFLAGS)
+
+        HEADERS = imglib.h imgXlib.h timing.h
+           SRCS = fileutil.c imagen.c imgXlib.c imgcolor.c imgcredel.c \
+                  imgcvt.c imgio.c quantcmi.c quantrgb.c xrand.c
+           OBJS = fileutil.o imagen.o imgXlib.o imgcolor.o imgcredel.o \
+                  imgcvt.o imgio.o quantcmi.o quantrgb.o xrand.o
+
+NormalLibraryObjectRule()
+NormalLibraryTarget(img,$(OBJS))
+LintLibraryTarget(img,$(SRCS))
+InstallLibrary(img,$(USRLIBDIR))
+InstallLintLibrary(img,$(LINTLIBDIR))
+
+InstallMultiple($(HEADERS),$(INCDIR))
+
+DependTarget()
+
+NormalLintTarget($(SRCS))

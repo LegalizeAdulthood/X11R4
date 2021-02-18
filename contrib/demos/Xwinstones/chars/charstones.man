@@ -1,0 +1,48 @@
+.TH CHARSTONES 1 "June 1989" "X Version 11"
+.SH NAME
+charstones -- program to test the performace of characters.
+.SH SYNOPSIS
+.B "charstones"
+[-option ...]
+.SH DESCRIPTION
+.PP
+\fICharstones\fP tests the performace of both polytext characters and
+imagetext characters.
+.PP
+\fI DOES IT TEST BOTH DRAWTEXT AND DRAWTEXT16?  \fB
+
+.SH OPTIONS
+.TP 8
+.B \-stip
+This option specifies a stipple fill.
+The bitmap used for the stipple is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-tile
+This option specifies a tile fill.
+The bitmap used for the tile is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-WHAT ABOUT OPAQUE STIPPLE???
+.TP 8
+.B \-string
+This option specifies the string to use.  The default string is
+"A-Za-z0-9".
+.TP 8 
+.B \-image
+This option specifies the use of XDrawImageString.  The use of
+XDrawString is the default.
+.TP 8
+.B \-fn2 \fIfontname\fP
+This option specifies the name of the font to use.  The default
+value is 6x10.
+.TP 8
+.B \-help
+This option displays the help menu.
+.TP 8
+.B \-h
+This option displays the help menu.
+.SH "SEE ALSO"
+X(1)
+.SH "COPYRIGHT"
+Copyright 1989 International Business Machines

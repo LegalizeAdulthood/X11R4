@@ -1,0 +1,7 @@
+printer.c:	s_color_rep(ws_id, SILVER, 0.9, 0.89, 0.95);
+printer.c:	s_color_rep(ws_id, DARKGRAY, 0.20, 0.20, 0.20);
+printer.c:	s_color_rep(ws_id, BEIGE, 0.96, 0.78, 0.76);
+s9000.c:	s_color_rep(ws_id, 9, 0.9, 0.89, 0.95);
+s9000.c:	s_color_rep(ws_id, 10, 0.74, 0.53, 0.55);
+s9000.c:	s_color_rep(ws_id, 11, 0.96, 0.78, 0.76);
+s9000.c:	s_color_rep(ws_id, 12, 0.0, 0.30, 0.0);

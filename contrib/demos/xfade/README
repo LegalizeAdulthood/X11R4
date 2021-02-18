@@ -1,0 +1,7 @@
+xfade is based on fader, a NeWS demo written using tNt and requiring
+X11/NeWS.
+
+xfade works best with scalable fonts, but should work on any X11.
+it prefers to use X Logical Font Description style names (as in R3)
+but will work without them.
+

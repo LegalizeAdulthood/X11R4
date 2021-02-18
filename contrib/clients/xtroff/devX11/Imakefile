@@ -1,0 +1,92 @@
+# xtroff/devX11/Makefile
+#
+# PostScript is a trademark of Adobe Systems, Inc.
+
+# see README for more information
+# makedev is the program that builds device descriptions
+
+TROFFDIR = ${LIBDIR}/troff
+DEVFONTDIR = ${TROFFDIR}/devX11
+XFONTDIR = $(FONTSRC)/bdf/75dpi
+MAKEDEV = makedev
+
+LOADFONTS = R I B BI H HB C CB S SS
+LOADOUT = R.out I.out B.out BI.out H.out HB.out C.out CB.out S.out SS.out
+LOADAUX = R.aux I.aux B.aux BI.aux H.aux HB.aux C.aux CB.aux S.aux SS.aux
+MOREFONTS = HO HD CO CD nc nC Nc NC
+MOREOUT = HO.out HD.out CO.out CD.out nc.out nC.out Nc.out NC.out
+MOREAUX = HO.aux HD.aux CO.aux CD.aux nc.aux nC.aux Nc.aux NC.aux
+OFILES = DESC.out ${LOADOUT} ${MOREOUT}
+AFILES = ${LOADAUX} ${MOREAUX}
+
+FONTNAMES = ${LOADFONTS} ${MOREFONTS}
+FONTMAP = ${LOADMAP} ${MOREMAP}
+TEMPFILES = temp.header temp.spaces temp.trailer
+
+all:: DESC.out ${MOREOUT}
+
+DESC.out: DESC ${FONTNAMES}
+	${MAKEDEV} DESC
+
+DESC:	bdfdit.awk
+	rm -f DESC
+	echo "# ditroff device description for PostScript" > DESC
+	echo "# PostScript is a trademark of Adobe Systems, Inc." >> DESC
+	echo ${LOADFONTS} | awk '{print "fonts", NF, $$0}' >> DESC
+	awk -f bdfdit.awk DESC >> DESC
+
+#moreout: ${MOREOUT}
+#
+#${MOREOUT}: ${MOREFONTS}
+#	${MAKEDEV} $?
+
+install:: all
+
+MakeDirectories(install, $(DEVFONTDIR))
+InstallMultiple($(OFILES) $(AFILES),$(DEVFONTDIR))
+
+clean::
+	rm -f ${TEMPFILES} core *.out *.font temp*
+
+clobber:: clean
+	rm -f [A-Z] [A-Z][A-Z] *.aux
+
+R:	${XFONTDIR}/timR24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+I:	${XFONTDIR}/timI24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+B:	${XFONTDIR}/timB24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+BI:	${XFONTDIR}/timBI24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+S:	${XFONTDIR}/symb24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+C:	${XFONTDIR}/courR24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+CB:	${XFONTDIR}/courB24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+CD:	${XFONTDIR}/courBO24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+CO:	${XFONTDIR}/courO24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+H:	${XFONTDIR}/helvR24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+HB:	${XFONTDIR}/helvB24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+HD:	${XFONTDIR}/helvBO24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+HO:	${XFONTDIR}/helvO24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+nc:	${XFONTDIR}/ncenR24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+Nc:	${XFONTDIR}/ncenB24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+NC:	${XFONTDIR}/ncenBI24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+nC:	${XFONTDIR}/ncenI24.bdf
+	awk -f bdfdit.awk $? ; cat ${TEMPFILES} > $@; mv temp.aux $@.aux; rm ${TEMPFILES}
+
+.SUFFIXES: .aux .out
+
+.aux.out:
+	$(MAKEDEV) $*

@@ -1,0 +1,85 @@
+.TH RECTSTONES 1 "June 1989" "X Version 11"
+.SH NAME
+rectstones - tests the performance of drawing and filling rectangles
+.SH SYNOPSIS
+.B "rectstones"
+[-option ...]
+.SH DESCRIPTION
+.PP
+Rectstones uses XDrawRectangles or XFillRectangles.
+.SH OPTIONS
+.TP 8
+.B \-nrects \fInum\fP
+This option specifies the number of rectangles per call.  The
+default value is 190.
+.TP 8
+.B \-maxrects \fInum\fP
+This option specifies the use of the maximum number of rectangles.
+This value is 8190.
+.TP 8
+.B \-x \fInum\fP
+This option specifies the x coordinate of the upper left hand corner
+of the first rectangle relative to the parent window.  The default value
+is 300.
+.TP 8 
+.B \-y \fInum\fP
+This option specifies the y coordinate of the upper left hand corner
+of the first rectangle relative to the parent window.  The default value
+is 200.
+.TP 8
+.B \-dx \fInum\fP
+This option specifies the vertical space between the rectangles. The
+default is -1.
+.TP 8
+.B \-dy \fInum\fP
+This option specifies the horizontal space between the rectangles. The
+default is -1.
+.TP 8
+.B \-wd \fInum\fP
+This option specifies the width of the rectangle in pixels.  The default
+value is 1.
+.TP 8
+.B \-ht \fInum\fP
+This option specifies the height of the rectangle in pixels.  The default
+value is 1.
+.TP 8
+.B \-dwd \fInum\fP
+This option indicates the change in the width of the rectangles.
+The default value is 2.
+.TP 8
+.B \-dht \fInum\fP
+This option indicates the change in the height of the rectangles.
+The default value is 2.
+.TP 8
+.B \-solid
+This option indicates that rectangles should be filled with a solid fill
+by the XFillRectangles() library routine. Solid is the default.
+.TP 8
+.B \-tile
+This option specifies the use of tile fill for chords and pieslices.
+The bitmap used for the tile is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-stip
+This option specifies the use of stipple fill for chords and pie slices.
+The bitmap used for the stipple is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-opaqstip
+This option specifies the use of opaque stipple file for chords and pie slices.
+The bitmap used for the stipple is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-opaqstipbg \fIcolor\fP
+This option specifies the background color to use for the
+opaque stipple fill.
+.TP 8
+.B \-help
+This option displays the help menu.
+.TP 8
+.B \-h
+This option displays the help menu.
+.SH "SEE ALSO"
+X(1)
+.SH "COPYRIGHT"
+International Business Machines--1989

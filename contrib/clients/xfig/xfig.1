@@ -1,0 +1,522 @@
+.TH XFIG 1 "8 August 1988"
+.SH NAME
+xfig \- Facility for Interactive Generation of figures under X11
+.SH SYNOPSIS
+.B xfig
+[ \fB-ri[ght]\fP ] 
+[ \fB-le[ft]\fP ]
+[ \fB-L[andscape]\fP ]
+[ \fB-P[ortrait]\fP ]
+[ \fB-w[idth]\fP \fIinches\fP ]
+[ \fB-h[eight]\fP \fIinches\fP ]
+[ \fB-no[track]\fP ]
+[ \fB-tr[ack]\fP ]
+[ \fIfile\fP ]
+.SH DESCRIPTION
+.I Xfig 
+is a menu-driven tool that allows the user to draw and manipulate objects
+interactively in an X window.  It runs under X version 11 release 2 and
+requires a three-button mouse.
+.I File 
+specifies the name of a file to be edited. The description of objects in
+the file will be read at the start of \fIxfig\fP. 
+.PP
+The output from \fIxfig\fP can be printed in several ways
+.PP
+.B troff - 
+f2p (\fIxfig\fP to \fIpic\fP(1) translator, also known by its previous
+name \fIftop\fP(1L)) is used to translate \fIxfig\fP files into 
+.IR pic (1)
+language.
+The resulting file may then be processed in the same maner as any other
+.I pic
+file.
+.PP
+.B postscript -
+f2ps (\fIxfig\fP to \fIpostscript\fP translator) is used to produce
+a 
+.I postscript
+file from an 
+.I xfig
+file.
+The 
+.I postscript
+file can be sent directly to a postscript printer.
+.PP
+.B LaTeX -
+fig2latex (\fIxfig\fP to \fILaTeX\fP translator) produces a
+.I LaTeX
+file from an
+.I xfig
+file.
+This file contains
+.I LaTeX
+picture environment commands and can be
+processed along with other
+.I LaTeX
+commands.
+.PP
+.B PiCTeX -
+fig2tex (\fIxfig\fP to \fIPiCTeX\fP translator) produces a
+.I PiCTeX
+file from an
+.I xfig
+file.  This file contains macros that can be
+used with the
+.I PiCTeX
+environment under
+.I TeX
+or
+.I LaTeX.
+.SH OPTIONS
+.TP
+.B \-ri
+Change the position of the panel window to the right of the canvas window
+(default: left).
+.TP
+.B \-le
+Change the position of the panel window to the left of the canvas window.
+.TP
+.B \-L
+Make \fIxfig\fP come up in landscape mode (10" x 7.5").
+.TP
+.B \-P
+Make \fIxfig\fP come up in portrait mode (7.5" x 10"). This is the
+default.
+.TP
+\fB-w\fP \fIinches\fP
+Make \fIxfig\fP come up \fIinches\fP wide.
+.TP
+\fB-h\fP \fIinches\fP
+Make \fIxfig\fP come up \fIinches\fP high.
+.TP
+\fB-tr\fP
+Turn on cursor (mouse) tracking arrows.
+.TP
+\fB-no\fP
+Turn off cursor (mouse) tracking arrows.
+.SH "GRAPHICAL OBJECTS"
+The objects in \fIxfig\fP are divided into \fBprimitive objects\fP and
+\fBcompound object\fP. The primitive objects are: \fIARC\fP, \fICIRCLE\fP,
+\fICLOSED SPLINE\fP, \fIELLIPSE\fP, \fIPOLYLINE\fP, \fIPOLYGON\fP,
+\fISPLINE\fP, and \fITEXT\fP.  A primitive can be moved, rotated,
+flipped, copied or erased.
+A compound object is composed of primitive objects. The primitive objects
+that constitute a compound can not be individually modified, but they can
+be manipulated as an entity; a compound can be moved, rotated, flipped,
+copied or erased.  An extra function that can be applied to a compound
+object is \fBscaling\fP, which is not available for primitive objects.
+.SH "DISPLAY WINDOWS"
+Five windows comprise the display area of \fIxfig\fP: the 
+top ruler, the side ruler, the panel window, the message window,
+and the canvas window. 
+The message window always appears below the others;
+it is the area in which messages are sent and received.
+The panel window can be placed to the left or right of the
+the canvas window (default: left).
+.SH "POP-UP MENU"
+The pop-up menu appears when the right mouse button is pressed with the
+cursor positioned within the canvas window.
+Positioning the cursor over the desired menu entry and releasing the
+button selects a menu entry.
+.PP
+There are a number of file accessing functions in the pop-up menu.
+Most of the time when one of these functions is selected, the user
+will be asked for a file name.  If the specified file can be located
+and the access permission are granted, \fIxfig\fP will carry out
+the function.  However in case things go wrong, \fIxfig\fP will
+abort the function and printed the causes on the message window.
+.TP
+.I Undo
+Undo the last object creation or modification.
+.TP
+.I Redisplay
+Redraw the canvas.
+.TP
+.I Remove all
+Remove all objects on the canvas window (can be undone).
+.TP
+.I Edit file ...
+The current contents of the canvas are cleared and objects
+are read from the specified file.
+The user will be asked for a file name.
+This file will become the current file.
+.TP
+.I Save
+Save the current contents of the canvas in the current file.
+If no file is being edited, the user will be asked for a file
+name as in the "Save in ..." function.
+.TP
+.I Read file ...
+Read objects from the specified file and merge them with objects already
+shown on the canvas.
+(The user will be asked for a file name.)
+.TP
+.I Save as ...
+Save objects on the screen into a file specified by the user.
+(The user will be asked for a file name.)
+.TP
+.I Status
+Show the name of the current file and directory.
+.TP
+.I Change Directory
+Change the working directory.  Any file name without a full path name
+will employ the current working directory.
+.TP
+.I Save & Exit
+Save the objects in the current file and exit from \fIxfig\fP.
+If there is no current file, the user will be asked for a file name.
+No confirmation will be asked.
+.TP
+.I Quit
+Exit from \fIxfig\fP, discarding all objects. The user will be asked to 
+confirm the action, by clicking the left button.
+.TP
+.I Save as BITMAP ...
+Create a bitmap picture of the drawings for use with other tools (for example,
+for use as an icon).  The smallest rectangular area of pixels
+that encompasses the figure is written to the named file 
+(the user will be asked for a file name) from
+top row to bottom and left to right (in Sun raster format).
+Only \fITEXT\fP objects that are parts of compound objects will be
+treated as parts of the picture; other texts are saved as objects in
+\fIxfig\fP format following the bitmap data.
+The coordinates of these text objects can be used
+to identify locations on the bitmap.
+.SH "PANEL WINDOW MANIPULATION FUNCTIONS"
+Icons in the panel window represent object manipulation functions,
+modes and other drawing or modification aids.
+Manipulation functions are selected by positioning the cursor over it and
+clicking the left mouse button.  The selected icon is highlighted, and
+a message describing its function appears in the message window.
+.PP
+The left and middle buttons are used to creat and modify objects in the canvas
+window.  Most actions start with clicking of the left button
+and end with clicking of the right button.
+There is no need to hold down a button while positioning
+the cursor.
+.SH "PANEL WINDOW COMMAND DESCRIPTIONS"
+Entries in the panel window can be classified into two categories:
+object creation/modification/removal commands (only one of which may be active
+at any one time), and drawing aids (which act as toggle switches).
+There are two ways for drawing circles, two for ellipses, two for splines
+and two for closed splines.
+There are two basic splines.  One is the interpolated spline
+in which the spline pass thorough the entered points (knots).
+The other is the normal spline in which on control points are
+passed by the spline (except for the two end points in the open spline).
+.SH "OBJECT CREATION/MODIFICATION/REMOVAL"
+Multiple commands are grouped thematically in the following
+descriptions (which is listed alphabetically).
+.TP
+.I ADD/DELETE ARROWS
+Add or delete arrow heads for \fIPOLYLINE\fP, \fIPOLYGON\fP, \fISPLINE\fP
+or \fICLOSED SPLINE\fP objects (points of a \fIBOX\fP can not be added or
+deleted).
+.TP
+.I ADD/DELETE POINTS
+Add or delete points for \fIPOLYLINE\fP, \fIPOLYGON\fP, \fISPLINE\fP
+or \fICLOSED SPLINE\fP objects (points of a \fIBOX\fP can not be added
+or deleted).
+.TP
+.I ARC
+Create an arc.  Specify three points using the left button.
+.TP
+.I BOX
+Create rectangular boxes.  Start with the left button and terminate with
+the right button.
+.TP
+.I BREAK COMPOUND
+Break  a compound object to allow manipulation of its component parts.
+Click the left button on the bounding box of
+the compound object.
+.TP
+.I CIRCLE 
+Create circles by specifying their radii or diameters.
+Click the left button on the canvas window, move the cursor until the
+desired radius or diameter is reached, then click the middle button to
+terminate. The circle will be drawn after the pressing of the middle button.
+.TP
+.I CLOSED INTERPOLATED SPLINE
+Create closed or periodic splines.  The function is similar
+to \fIPOLYGON\fP except that a closed interpolated spline is drawn.
+The spline will pass through the points (knots).
+.TP
+.I CLOSED SPLINE
+Create closed or periodic spline objects.
+The function is similar to \fIPOLYGON\fP
+except that a closed spline will be drawn instead of polygon.
+The entered points are just control points; i.e., the spline will
+not pass any of these points.
+.TP
+.I COPY
+Copy object.  Click the left button over part of the object to be
+copied (for \fICIRCLE\fP and \fIELLIPSE\fP
+objects, position on their circumferences).  Drag the object to the desired
+position and click the middle button.
+This function as well as the following three functions 
+(\fIMOVE\fP, \fIMOVE POINT\fP, \fIREMOVE\fP)
+will cause point markers (manipulation aids) to be shown on the canvas window.
+There are no markers for \fICIRCLE\fP or \fIELLIPSE\fP objects.
+.TP
+.I ELLIPSE
+Create ellipses using the same procedure as for the drawing of circles.
+.TP
+.I GLUE
+Glue the objects within a bounding box into a compound object
+(the bounding box itself is not part of the figure; 
+it is a visual aid for manipulating the compound). 
+.TP
+.I INTERPOLATED SPLINE
+Create (cubic spline) spline objects.
+Enter control vectors in the same way as for creation of a
+\fIPOLYLINE\fP object.
+At least three points (two control vectors) must be entered.
+The spline will pass through the entered points.
+.TP
+.I MOVE
+Move objects in the same way as in \fICOPY\fP.
+.TP
+.I MOVE POINT
+Modify the position of points of \fIPOLYLINE, \fIBOX\fP, \fIPOLYGON\fP,
+\fIELLIPSE\fP, \fIARC\fP and \fISPLINE\fP
+objects.  Click the left button over the desired point, reposition the point,
+and click the middle button.  Note that \fIBOX\fP and \fIPOLYGON\fP 
+objects are internally stored as \fIPOLYLINE\fP
+objects, and therefore moving certain points may open these objects.
+.TP
+.I POLYGON
+Same as \fIPOLYLINE\fP
+except that a line segment is drawn connecting the first and last
+points entered.
+.TP
+.I POLYLINE
+Create polylines (line segments connecting a sequence of points).
+Enter points by clicking the left button at the desired positions on the
+canvas window.  Click the middle button to terminate.
+.TP
+.I REMOVE
+Remove (or delete) objects.
+.TP
+.I SCALE COMPOUND
+Only compound objects can be scaled.  Click the left button
+on a corner of the bounding box, stretch the
+bounding box to the desired size, and click the middle button.
+Or click the left button on a side of the bounding box, stretch that
+side to the desired size, and click the middle button.
+.TP
+.I SPLINE
+Create (quadratic spline) spline objects.
+Enter control vectors in the same way as for creation of a
+\fIPOLYLINE\fP object.
+At least three points (two control vectors) must be entered.
+The spline will pass only the two end points.
+.TP
+.I TEXT
+Create text strings. Click the left button at the desired position on
+the canvas window, then enter text from the keyboard.
+A DEL or ^H (backspace) will delete a character, while a ^U will kill
+the entire line.
+Terminate by clicking the middle button or typing the return key.  To
+edit text, click on an existing text string with the left button.
+Insertion of characters will take place at that point.  
+.TP
+.I TURN
+Turn \fIPOLYGON\fP into a \fICLOSED INTERPOLATED SPLINE\fP object, or
+turn \fIPOLYLINE\fP into a \fIINTERPOLATED SPLINE\fP object.
+.SH "DRAWING AIDS"
+Drawing aids act as toggle switches. More than one can be selected at a time
+(except for \fIGRID\fP and the line drawing modes).
+.TP
+.I AUTO FORWARD/BACKWARD ARROW
+Automatically add forward/backward arrow heads to \fIPOLYLINE\fP, \fISPLINE\fP
+or \fIARC\fP objects.
+.TP
+.I FLIP
+Invert the object (middle button) or produce a mirror-image copy of an
+object (left button). Point to part of the object ("the handle"), click
+the appropriate button.
+.TP
+.I GRID
+Display either the quarter- or half-inch grids (left button).
+.TP
+.I MAGNET
+Round points to the nearest 1/16 of an inch.
+This affects every function, and is provided as an alignment aid.
+.TP
+.I UNRESTRICTED
+Allow lines to be drawn with any slope.
+.TP
+.I MANHATTAN
+Enforce drawing of lines in the horizontal and vertical direction only.
+Both \fIMANHATTAN\fP and \fIMOUNTAIN\fP can be turned on simultaneously. The
+creations of \fIPOLYGON\fP, \fIPOLYLINE\fP and \fISPLINE\fP objects are
+affected by these two modes.
+.TP
+.I MOUNTAIN
+Enforce drawing of only diagonal lines.  Both \fIMANHATTAN\fP
+and \fIMOUNTAIN\fP can be turned on simultaneously. The creations
+of \fIPOLYGON\fP, \fIPOLYLINE\fP and \fISPLINE\fP objects are affected
+by these two modes.
+.TP
+.I MANHATTAN MOUNTAIN
+Allow lines to be drawn at any slope allowed when in
+MOUNTIAIN or MANHATTAN modes.
+.TP
+.I LATEX LINE
+Allow lines to be drawn only at slopes which can be handled by LaTeX picture
+environment lines: slope = x/y, where x,y are integers in the range [-6,6].
+.TP
+.I LATEX VECTOR
+Allow lines to be drawn only at slopes which can be handled by LaTeX picture
+environment vectors: slope = x/y, where x,y are integers in the range [-4,4].
+.TP
+.I ROTATE
+Rotate the object (middle button) or copy (left button) +90 degrees.
+.TP
+.I SOLID/DASHED LINE STYLE
+Toggle between solid and dashed line styles. The dash length
+is fixed at 0.05 inch.
+.SH X DEFAULTS
+The overall widget name(Class) is xfig.fig(Fig.TopLevelShell).  This
+set of resources correspond to the command line arguments:
+.TP 1.25i
+trackCursor
+(boolean:on) -track and -notrack arguments
+.TP
+justify
+(boolean:false) -right and -left arguments
+.TP
+landscape
+(boolean:false) -Landscape and -Portrait arguments
+.TP
+debug
+(boolean:off) -debug arguments
+.TP
+width
+(integer:7.5 or 10 inches) -width argument
+.TP
+height
+(integer:10 or 7.5 inches) -height argument
+.TP
+reverseVideo
+(boolean:off) -inverse argument
+.PP
+These arguments correspond to the widgets which make up \fIxfig\fP.
+.TP 1.5i
+overall window
+form(Form)
+.TP
+side panel
+form.panel(Form.Box)
+.TP
+icons
+form.panel.button(Form.Box.Command)
+.TP
+top ruler
+form.truler(Form.Label)
+.TP
+side ruler
+form.sruler(Form.Label)
+.TP
+canvas
+form.canvas(Form.Label)
+.TP
+message window
+form.message(Form.Command)
+.TP
+menu
+form.popup_menu.menu(Form.OverrideShell.Box)
+.TP
+menu title
+form.popup_menu.menu.title(Form.OverrideShell.Box.Label)
+.TP
+menu items
+form.popup_menu.menu.pane(Form.OverrideShell.Box.Command)
+.PP
+For example, to set the background of the panel to blue the resource
+would be:
+.br
+\f(CWxfig*form.panel.background: blue\fP
+.PP
+\fBNOTE\fP: The font used in the canvas cannot be changed at this
+time.
+.SH BUGS
+Text strings will appear differently on hard copy, because the display
+fonts are fixed-width fonts while the fonts used by the typesetter
+systems are variable-width fonts.
+.PP
+A double quote in a text string should be preceded by a back slash if the
+it is to be printed through 
+.IR pic (1).
+.PP
+Objects that extend beyond the canvas window may cause image shrinkage in
+hard copy printed by
+.IR pic (1),
+since it will try to fit every object onto a single 8.5" x 11" page.
+.PP
+Ellipses which are too narrow may cause \fIxfig\fP to loop forever.
+.PP
+Objects which are created while one of the 
+.I grids
+is on may appear ragged. This can be corrected by selecting \fIRedisplay\fP
+from the pop-up menu.
+.PP
+The X11 cursors are not the original ones but chosen from X11's cursor font.
+.SH "SEE ALSO"
+Brian W. Kernighan
+.I "PIC - A Graphics Language for Typesetting User Manual"
+.br
+ditroff(1), f2p(1), f2ps(1), fig2latex(1), fig2tex(1), pic(1),
+troff(1), tex(1), latex(1)
+.SH ACKNOWLEDGEMENT
+Many thanks goes to Professor Donald E. Fussell who inspired the
+creation of this tool.
+.SH AUTHORS
+Original author:
+.br
+Supoj Sutanthavibul
+.br
+University of Texas at Austin 
+.br
+(supoj@sally.utexas.edu) 
+.sp
+Manual page modified by:
+.br
+R. P. C. Rodgers
+.br
+UCSF School of Pharmacy
+.br
+San Francisco, CA 94118 
+.sp
+The LaTeX line drawing modes were contributed by:
+.br
+Frank Schmuck
+.br
+Cornell University
+.sp
+X11 port by:
+.br
+Ken Yap
+.br
+Rochester
+.br
+(ken@cs.rochester.edu)
+.sp
+Variable window sizes, cleanup of X11 port, right hand side panel
+under X11, X11 manual page provided by:
+.br
+Dana Chee
+.br
+Bellcore
+.br
+(dana@bellcore.com)
+.sp
+Cleanup of color port to X11 by:
+.br
+John T. Kohl
+.br
+MIT
+.br
+(jtkohl@athena.mit.edu)
+

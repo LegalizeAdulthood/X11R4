@@ -1,0 +1,39 @@
+DESTDIR=
+CFLAGS=	-O -I../h
+MAKE=	make
+
+BINDIR	= /usr/local/TeX
+IPRBIN  = /usr/local/bin
+MANDIR	= /usr/local/man
+
+CSRCS	= dviselect.c
+SRCS	= $(CSRCS) dviselect.1
+
+default: all
+
+$(SRCS):;	co -q $@
+
+src:	$(SRCS)
+	@echo Done
+
+clean:
+	rm -f core *.o dviselect
+
+inst-dviselect: dviselect dviselect.1
+	install -s dviselect ${BINDIR}/dviselect
+	-install -c -m 444 dviselect.1 ${MANDIR}/man1/dviselect.1
+
+dviselect: dviselect.o ../lib/lib.a
+	${CC} ${CFLAGS} -o dviselect dviselect.o ../lib/lib.a
+
+dvidvi: dvidvi.c
+	$(CC) $(CFLAGS) -o dvidvi dvidvi.c
+
+depend:
+	makedepend $(CFLAGS) $(CSRCS)
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+dviselect.o: ../h/types.h ../h/dvi.h ../h/dviclass.h ../h/dvicodes.h
+dviselect.o: ../h/fio.h ../h/search.h /usr/include/stdio.h
+dviselect.o: /usr/include/ctype.h

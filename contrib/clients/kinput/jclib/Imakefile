@@ -1,0 +1,21 @@
+          WNNSRC = $(CONTRIBSRC)/lib/Wnn
+/*
+ * this one is a kludge. since WNNSRC is passed by the parent,
+ * if the WNNSRC passed is an absolute pathname, -I$(WNNSRC)/include will work.
+ * otherwise, -I../$(WNNSRC)/include will.
+ */
+    WNN_INCLUDES = -I$(WNNSRC)/include -I../$(WNNSRC)/include
+  LOCAL_INCLUDES = -I.
+        INCLUDES = $(LOCAL_INCLUDES) $(WNN_INCLUDES)
+/* if your system's bcopy() (or memcpy() in SysV) cannot handle
+ * overlapped area, you should add -DOVERLAP_BCOPY to DEFINES.
+ */
+         DEFINES =
+
+            SRCS = jclib.c jilib.c
+            OBJS = jclib.o jilib.o
+
+NormalLibraryObjectRule()
+NormalLibraryTarget(jc,$(OBJS))
+
+DependTarget()

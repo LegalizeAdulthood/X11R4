@@ -1,0 +1,31 @@
+      LIBTEXROOT= ../
+      LIBTEXSRC	= ../libtex
+         LIBTEX	= $(LIBTEXSRC)/libtex.a
+      DEPLIBTEX	= $(LIBTEX)
+        DEPLIBS = $(DEPLIBTEX)
+        INCLUDES = -I$(LIBTEXROOT)
+LOCAL_LIBRARIES = $(LIBTEX)
+        SYSLIBS = -lX11 -lm
+
+SRCS = texx.c
+OBJS = texx.o
+
+PROGRAMS = texx
+
+FILES = Imakefile texx.man $(SRCS) 
+
+all:	texx
+
+SingleProgramTarget(texx,$(OBJS),$(LOCAL_LIBRARIES),$(SYSLIBS))
+InstallProgram(texx, $(BINDIR) )
+InstallManPage(texx, $(MANDIR) )
+DependTarget()
+CleanTarget()
+TagsTarget()
+
+tar:
+	cd ../..;\
+	for file in $(FILES); \
+	do \
+	  tar rf $(TARFILE) $(PRODUCT)/Texx/$$file; \
+	done

@@ -1,0 +1,246 @@
+% doc.tex
+% this contains some doc about xtrek
+% much of it is taken directly from the original xtrek doc
+
+\title{Xtrek version 5.4}
+
+\author{Daniel Lovinger dl2n+@andrew.cmu.edu}
+\author{Jon Bennett jcrb@cs.cmu.edu}
+\author{Mike Bolotski mikeb@salmon.ee.ubc.ca}
+\author{David Gagne daveg@salmon.ee.ubc.ca}
+
+\date{September 29, 1989}
+
+\parindent 0in
+\parskip 0.10in 
+\textwidth 6.5in
+\oddsidemargin 0in
+\evensidemargin 0in
+\textheight 8.175in
+\topmargin -0.25in
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents \newpage
+
+\section{Introduction}
+
+Xtrek is one of the all time classic games for X Windows. This release of the game at
+version 5.4 represents almost five straight months of work by various people at 
+Carnegie Mellon University and the University of British Columbia, and in our humble
+opinion constitutes a major improvement over the previous version 4.0. For those familiar
+with version 4.0, much of the game remains on the surface the same : you still fly a ship
+'round the galaxy blowing away your friends and conquering planets. However, where the old
+xtrek was cast in stone (or executable), this version is configurable in almost every respect
+from the power of your torpedoes to the number of configuration of the galaxy. A whole new
+universe is only a few hours of configuration file hacking away ...
+
+The basic object of the game is to conquer sixteen (by default - as with almost everything, 
+this is configurable) planets for your empire. Of course, everyone else is also, and that is where
+all of the fun comes in.
+
+\section{Getting Started}
+
+Xtrek is split up into two seperate programs, xtrek and xtrekd. Xtrekd is the main server process for the game
+and accepts as a command line argument the name of a configuration file for the game. For instance
+
+xtrekd cmu.config
+
+will start a game with the contents of the cmu.config file. The daemon first tries to open the config file
+as an absolute pathname, and then attempts to load the config file from the xtrek library directory (specified
+on compile time). If no config file is specified, ``default.config'' is read from the library. The daemon will
+print out status information during the course of the game, including the number of players each time a death
+or entrance occurs, and notifies you whenever a robot enters for a given empire.
+
+\subsection{Entering the Game}
+
+Once xtrekd is running, players can connect to it by running xtrek with the machine name the daemon is running
+on as the argument on the command line. For instance, assume that a player has a running xtrekd on ligonier.andrew.cmu.edu.
+Then
+
+xtrek ligonier.andrew.cmu.edu
+
+would send a request to the daemon to open an xtrek window on the local machine. Various errors can occur at this point,
+most of which have to do with access protections on you X server - you must first xhost to the machine running the
+daemon.
+
+\subsection{Screen Layout}
+
+\subsection{Command Reference}
+
+\subsection{Shooting}
+
+\section{Ship Details}
+
+\subsection{Cooling}
+
+Firing weapons and running your engines generates heat which must be dissapated through
+your ship's interlinked cooling system. As your systems heat up toward their maximum of
+100% loaded, they try to dump their excess heat off into the opposite cooling system. This 
+can be extremely useful when you are desperately trying to escape an enemy trap, and need
+just that extra boost to get you into home space. Each weapon shot 'costs' given amount of
+heat which is based on the power of the weapon. Warp drive on the other hand costs an amount
+that increases as you increase your warp factor. With all of the above interactions taken into
+account, it is usually possible for a normal ship to pull about warp five before starting
+to accumulate heat.
+
+In addition to these standard sources of heating if you are playing a configuration with
+the teleport option, teleporting costs a large amount.
+
+The cooling systems can only operate at peak efficiency with ship's shields down since the
+entire purpose of the shield system is to repel energy. With shields up the cooling system
+will still operate, but at a lower dissapation rate. Similarly, when the ship is cloaked the
+cooling systems operate at a scaled back rate.
+
+If the ships cooling system exceed 100% capacity, there is a growing probability during each
+time slice that the system being cooled will shut down to protect itself. The capacity of the
+cooling system must approach 0% for the system to be reactivated. When a system 'temps', a flag
+is triggered on the status line, W for weapns, E for engines.
+
+\subsection{Warp Factor}
+
+
+
+
+
+
+\subsection{Status Area}
+
+The status area contains your vessel's 'vital signs.'
+If you are locked onto another ship, in addition to your own you
+will get the status of the other vessel on the second line, minus
+the \bold{Flags} field. There are eleven seperate sections to the
+full status line :
+
+\begin{itemize}
+\item Flags
+	This field contains information about ship activities.  There are twelve status characters
+	that can be activated in this section (in order, left to right):
+
+	\begin{itemize}
+
+	\item \typewriter{S   }-- ship has shields up
+	\item \typewriter{GYR }-- green, yellow, or red alert
+	\item \typewriter{L   }-- ship has sensor or planet lock activated
+	\item \typewriter{R   }-- ship is under repair}
+	\item \typewriter{B   }-- ship is bombing a planet}
+	\item \typewriter{O   }-- ship is orbiting a planet}
+	\item \typewriter{C   }-- ship is cloaked}
+	\item \typewriter{W   }-- ship's weapons are over operating temperature}
+	\item \typewriter{E   }-- ship's engines are over operating temperature}
+	\item \typewriter{u   }-- ship is beaming armies up from planet surface}
+	\item \typewriter{d   }-- ship is beaming armies down to planet surface}
+	\item \typewriter{P   }-- ship is allowing co-pilots}
+
+	\end{itemize}
+
+\item Warp -- shows the ship's current warp speed in x.x format
+
+\item Damage -- shows the ship's current hull damage
+
+\item Shield -- shows the number of damage points your shield
+	generators can absorb
+
+\item Torpedoes -- shows the number of torpedoes the ship has flying
+
+\item Kills -- shows the number of kills the ship has prosecuted in x.xx format
+
+\item Armies -- shows the number of armies currently onboard
+
+\item Fuel -- shows the current amount of fuel onboard
+
+\item Weapon Temp -- weapon temperature as a percentage of maxmimum
+
+\item Engine Temp -- engine temperature as a percentage of maxmimum
+
+\item Failed Systems
+	This field contains info about which of the ship's systems are currently
+	non-operational due to excessive damage.  If a letter is lit, the system
+	is down (in order, left to right)
+
+	\begin{itemize}
+
+	\item \typewriter{C  }-- cloaking device
+	\item \typewriter{L  }-- long range sensors
+	\item \typewriter{P  }-- phaser banks
+	\item \typewriter{S  }-- short range sensors 
+	\item \typewriter{T  }-- torpedoes
+	\item \typewriter{c  }-- cooling system
+	\item \typewriter{l  }-- sensors (locking ablility)
+	\item \typewriter{s  }-- shields
+	\item \typewriter{t  }-- transporters
+
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Armies}
+\subsection{Ship Subsystems}
+\subsubsection{Photon Torpedoes}
+\subsubsection{Phasers}
+\subsubsection{Shields}
+\subsubsection{Engines}
+\subsubsection{Cloak}
+Note that engines and weapons cool 25\% slower when
+cloak is up.
+
+\subsubsection{Mines}
+\subsubsection{Sensors}
+\subsubsection{Transporter}
+
+\section{Planets}
+
+\subsection{Conquering Planets}
+
+Planets are conquered by first bombing them to reduce the number of
+armies to a manageable level and then beaming down your own armies.  A
+ship must be in orbit to bomb a planet.  A side effect of this
+requirement is that shields are dropped and planetary defensive fire
+damages the hull directly.  Planetary fire causes damage proportional
+to the number of defending armies.  The actual formula is
+$(\mbox{armies}/ 10) + 2$ damage points twice per second.
+
+\subsection{Fuel and Repair}
+Fuel replenishes at twice the normal rate when orbiting a planet.  Certain
+planets are marked as {\em fuel} sources;  orbiting these planets doubles
+the rate again.
+
+\section{Default Scenario}
+
+%this is taken from Dan's informal description waay back in July 
+
+Klingon : heavy phasers, low torps. normal engines, but they
+can't slow down very fast, so turning is slower than normal. low fuel
+gain-back, but they make up for that by toasting anything that gets
+near with the phasers. best cloaking costwise ...
+
+Romulan : nickname 'garbage scow', pretty accurate. slowest
+turn rate in the game. heavy torps that will rail an opponent that
+gets caught in a stream. best shields, and in terms of how much energy
+they chew, best cloaking since they also have the best energy regen
+rate. hull strength also highest.
+
+Orion : tend to spit torps, which are generally weak but very
+cheap and fast to fire. best acel/decel in the game, and turn on a
+dime. hull pts and shield are the lowest, so they need those engines
+of theirs often. regen is also low, so they need accuracy on those
+torp shots. phasers are also weak, and don't have a very good range.
+mostly useful for annoyance shots and close in fighting.
+
+Federation : this is basically the standard xtrek ship of old
+(we had to keep one of them around :-). All around average ship. High
+cloak cost, but also have a decent regen rate. Best repair rate
+(Scotty factor :-), and their weapons are both pretty potent. Can get
+out-paced if they don't watch out, though - especially by Orions.
+
+\input{custom.tex}
+
+\input{robot.tex}
+
+\section{Hints}
+\subsection{X Customization}
+\subsection{Credits, Bug Reports, etc}
+\subsection{Key Table}
+
+\end{document}

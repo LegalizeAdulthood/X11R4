@@ -1,0 +1,149 @@
+<< /usr/rcs/serpent/dea/src/de>>
+
+!*****************************************************************************
+! This portion of the sdd defines the view controllers
+! objects, attributes and methods.
+!*****************************************************************************
+
+dea: shared data
+
+dialogue_sdd: record
+  name:			string[32];	!dialogue name
+  file_name:		string[32];	!name of file containing the dialogue
+  prologue:		buffer;		!defines
+  application_sdd_fn:	buffer;		!application shared data definition
+  technologies:		buffer;		!technology shared data definition
+end record;
+
+vc_sdd: record
+  name:			string[32];	!name of view controller
+  comment:		buffer;		!comment
+  create_condition:	buffer;		!creation conditions code snippet
+  variable:		buffer;		!variables declarations
+  create_action:	buffer;		!actions on creation code snippet
+  destroy_action:	buffer;		!actions on duction code snippet
+  parent_vc:		id of vc_sdd;	!parent vc or dialogue
+end record;
+
+object_sdd: record
+  name:		string[32];		!object name
+  comment:	buffer;			!comment
+  parent_vc:	id of vc_sdd;		!object belongs to single vc
+  type:		string[32];		!type of object. e.g. label widget
+end record;
+
+attribute_sdd: record
+  name:		string[32];   		!attribute identifier
+  number:	integer;   		!number of the attribute
+  comment:	buffer;			!comment
+  parent:	id of object_sdd; 	!object id that owns att
+  value:	buffer;       		!attribute value or code snippet
+  specified:	integer;		!0 = default, 1 = specified
+end record;
+
+method_sdd: record
+  name:		string[32];		!method identifier
+  comment:	buffer;			!comment
+  parent:	id of object_sdd;	!parent object id
+  actions:	buffer;			!code snippet when method is invoked
+  specified:	integer;		!0 = default, 1 = specified
+end record;
+
+!*****************************************************************************
+!  Object instances and attribute values used in realization.  
+!*****************************************************************************
+
+object_instance_sdd: record
+  object:	id of object_sdd;	!associated object template
+  name:		string[32];		!object instance name
+  type:		string[32];		!object instance type
+  visible:	boolean;		!true = display, false = don't
+  attr_list:    id of next_attr;	!head of list of children
+end record;
+
+object_instance_attribute_sdd: record
+  name:		string[32];		!attribute name
+  object:	id of object_sdd;	!associated object template
+  value:	string[50];		!value of attribute in universal type
+  attr_list:	id of next_attr;	!pointer to next child on list
+end record;
+
+!*****************************************************************************
+!  Commands to be executed by the application from the dialogue/end user. 
+!  The each command and associated parameters must be packaged in a separate
+!  transaction.  This allows the application to determine which parameters
+!  are associated with which commands and vice versa. 
+!*****************************************************************************
+
+command_sdd: record
+  type:		integer;		!command type enumeration
+  parameters:   id of parameter_sdd;
+end record;
+
+!
+!generic parameter type
+!
+
+parameter_sdd: record			
+  parm_id:	id of parameter_sdd;	!actual id of shared data instance
+  type:		integer;		!parameter type enumeration
+  value:	integer;		!parameter integer value
+  next:		id of parameter_sdd;	!id of next parameter or null if last
+end record;
+
+parameter_integer_sdd: record
+  parm_id:	id of parameter_sdd;	!actual id of shared data instance
+  type:		integer;		!parameter type enumeration
+  value:	integer;		!parameter integer value
+  next:		id of parameter_sdd;	!id of next parameter or null if last
+end record;
+
+parameter_string_sdd: record
+  parm_id:	id of parameter_sdd;	!actual id of shared data instance
+  type:		integer;		!parameter type enumeration
+  value:	string[255];		!parameter string value
+  next:		id of parameter_sdd;	!id of next parameter or null if last
+end record;
+
+parameter_buffer_sdd: record
+  parm_id:	id of parameter_sdd;	!actual id of shared data instance
+  type:		integer;		!parameter type enumeration
+  value:	buffer;			!parameter buffer value
+  next:		id of parameter_sdd;	!id of next parameter or null if last
+end record;
+
+parameter_id_sdd: record
+  parm_id:	id of parameter_sdd;	!actual id of shared data instance
+  type:		integer;		!parameter type enumeration
+  value:	id of parameter_id_sdd;	!parameter id value
+  next:		id of parameter_sdd;	!id of next parameter or null if last
+end record;
+
+status_sdd: record
+  failed_command: id of command_sdd;
+  command_type: integer;
+  status:       integer;
+end record;
+
+!*****************************************************************************
+!
+!  Real DM Shared Data Definitions.
+!
+!*****************************************************************************
+
+vc_list_sdd: record
+  parent:	id;	!* either dialogue or vc id	*!
+end record;
+
+object_list_sdd: record
+  parent:	id;	!* vc id		*!
+end record;
+
+text_sdd: record
+  title:	string[32];
+  title_length:	integer;
+  text:		buffer;
+  parent:	string[32];
+end record;
+
+end shared data;

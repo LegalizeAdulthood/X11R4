@@ -1,0 +1,6 @@
+This directory is new to R3.  It contains a program for generating the font
+name database that is used by the sample server (font names are no longer
+tied to file names).  Some of the code in this directory is also used by the
+sample server.
+
+

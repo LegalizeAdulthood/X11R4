@@ -1,0 +1,129 @@
+5.1	NCSA X Image
+
+
+Animating a Series of Raster Images	5.1
+
+National Center for Supercomputing Appliocations
+
+November 1989
+
+                                                                
+
+
+
+
+5.1	NCSA X Image
+
+
+Animating a Series of Raster Images	5.1
+
+
+National Center for Supercomputing Applications
+
+November 1989
+
+                                                                
+
+
+
+
+
+
+Chapter 5	Animating a Series of Raster Images
+
+
+
+Chapter Overview
+Running an Animation
+
+
+Chapter Overview
+The Animate feature of NCSA X Image allows you view multiple 
+frames in sequence. The jet sequence illustrates this feature by 
+giving an impression of how the jet moves.
+
+Running An Animation
+To animate a series of raster images:
+
+1.	Click Animate in the control window. The directory window 
+appears, displaying the current working directory. 
+
+2.	Enter the path to the directory in which the desired file is 
+stored in the text box labeled Directory, and click Change to 
+locate the appropriate directory.
+
+3.	Select the filename of the dataset that contains the desired 
+animation sequence.
+
+	You have the option of using a wildcard to load a sequence of 
+files. Simply enter the matching part of the filename, 
+followed by an asterisk (*) (See Figure 5.1).
+Figure 5.1	Directory Window
+                                   
+
+
+4.	Click Open. If the image dimensions are found in the file, the 
+directory window disappears and a animation setup window 
+appears (see Figure 5.2). Otherwise, several text boxes appear 
+in the directory so that you may specify the dimensions of the 
+image as described in the section of this chapter entitled, 
+"Loading Image Data."
+
+Figure 5.2	Animation Setup Window
+                            
+
+5.	Enable or disable the option animate from x server memory 
+to specify how you want the animation sequence to be run. 
+When animating from X server memory, NCSA X Image 
+will initially read in all frames and store them in server 
+memory. While this method takes more time initially, it 
+usually produces a faster animation. When animating from 
+disk, each frame is read off disk and displayed.
+
+6.	Click OK. The animation window appears. You can use this 
+window to initiate and control the animation (see Figure 
+5.3).
+
+Figure 5.3	Animation Window
+                                        
+
+
+To run an animation sequence using the animation window:
+
+1.	Enter an integer in the text box labeled Skip and click the Set 
+button immediately beneath it to indicate what intervals are 
+to be skipped during animation. For example, if you wish to 
+skip every third image as your animation is run, you would 
+enter 3.
+
+2.	Enter an integer in the text box labeled Delay (where 1 
+indicates that 1/10th of a second should pass before the next 
+image is shown, 10 indicates a 1 second time-lapse, and so 
+forth) and click the Set button immediately beneath it to set 
+this speed for the animation.
+
+3.	Click the left or right double arrow to initiate and run the 
+entire animation in either direction. Click the left or right 
+single arrow to single step through the animation sequence 
+in either direction.
+
+4.	To view a particular frame, enter a frame number in the 
+Frame dialog box and click on the Set button immediately 
+beneath the Frame box. The bar in the box beneath the 
+animation arrows moves a distance relative to the position of 
+the frame in the sequence that is currently being displayed. 
+You may click on the slide bar to move quickly to a particular 
+frame.
+
+5.	Enable the Repeat option to specify that the animation be 
+rerun continuously.
+
+6.	Click the button labeled <Stop> to halt an animation.
+
+
+Click the button labeled Done to exit the animation window.
+
+
+Enable Lock Palette to lock in the palette currently loaded into the 
+palette control window.
+

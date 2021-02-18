@@ -1,0 +1,58 @@
+; Various utilities used in standard profile
+; ==========================================
+
+;;File: utils.gwm -- General-purpose WOOL utilities
+;;Author: vincent@mirsa.inria.fr (Vincent BOUTHORS) -- Bull Research FRANCE
+;;Author: colas@mirsa.inria.fr (Colas NAHABOO) -- Bull Research FRANCE
+;;Revision: 1.0 -- Feb 7 1989
+;;State: Exp
+;;GWM Version: 1.4
+
+; default
+; returns value of variable if set or evaluated provided value
+
+(df default (variable value)
+    (if (boundp variable)
+	(eval variable)
+	(eval value)))
+
+; defaults-to
+; set variable if was unset
+
+(df defaults-to args
+    (with (i 0 l (length args))
+	  (if (= (% l 2) 1)
+	      (trigger-error "defaults-to must have an even number of args"))
+	  (while (< i l)
+	    (if (not (boundp (# i args)))
+	      (set (# i args) (eval (# (+ 1 i) args))))
+	    (setq i (+ i 2))))))
+
+; autoload
+; specifies that calling this function (with no args!) will load the file
+; and execute the supposedly redefined function
+
+(df autoload (function filename)
+    (set function
+	 (lambda () 
+		 (setq autoload.tmp (eval function)) ; to prevent bug
+		 (load filename)
+		 (eval (list function)))))
+
+(de print-window-info ()
+    (? "Window: " (window-client-class) "." (window-client-name) "."
+       (window-name) "@" (window-machine-name)
+       ": Geometry=" window-width "x" window-height "+" window-x "+" window-y
+       "\n"))
+
+(df place-window-in-screen ()
+    (: x (window-x))
+    (: y (window-y))
+    (: xe (+ x (window-width)))
+    (: ye (+ y (window-height)))
+    (if (< x 0) (move-window 0 y))
+    (if (< y 0) (move-window x 0))
+    (if (> xe screen-width) (move-window (- screen-width
+					    (window-width)) y))
+    (if (> ye screen-height) (move-window x (- screen-height
+					       (window-height))))))

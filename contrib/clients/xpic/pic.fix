@@ -1,0 +1,19 @@
+*** /tmp/,RCSt1a09619	Thu Aug 25 18:35:04 1988
+--- main.c	Fri Mar 11 13:24:47 1988
+***************
+*** 198,203
+  				continue;
+  			}
+  			reset();
+  			yyparse();
+  			/* yylval.i now contains 'E' or 'F' from .PE or .PF */
+  
+
+--- 198,204 -----
+  				continue;
+  			}
+  			reset();
++ 			resetvar();
+  			yyparse();
+  			/* yylval.i now contains 'E' or 'F' from .PE or .PF */
+  

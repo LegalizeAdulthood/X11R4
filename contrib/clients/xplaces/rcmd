@@ -1,0 +1,40 @@
+#! /bin/sh
+# This command runs a command remotely in the background, by pointing
+# stdout and stderr at /dev/null. (Should we point stdin at /dev/null too?)
+# By running this through the Bourne shell at the other end, and
+# we get rid of the rsh and rshd which otherwise hand around at either
+# end. Hacked from a posting by clyde@emx.utexas.edu to list.xpert
+user= 
+HOST=${HOST-`hostname`}
+if test $# -lt 2 ; then
+	echo Usage: $0 remotehost remotecommand
+	exit 1
+else
+	host=$1
+	shift
+	if test "$1" = "-l" ; then
+		shift
+		user=$1
+		shift
+	fi
+fi
+xhostname=`expr "$DISPLAY" : "\([^:]*\).*"`
+xscreen=`expr "$DISPLAY" : "[^:]*\(.*\)"`
+if test x$xscreen = x; then
+	xscreen=":0.0"
+fi
+if test x$xhostname = x -o x$xhostname = x"unix"; then
+	DISPLAY=$HOST$xscreen
+fi
+(
+if test x$xhostname = x -o x$xhostname = x"unix" -o x$xhostname = x$HOST; then
+	xhost +$host
+fi
+if test x$user = x; then
+	echo "TERM=$TERM;export TERM;DISPLAY=$DISPLAY;export DISPLAY;($*)" '\
+	 > /dev/null 2>&1 &' | rsh $host /bin/sh &
+else
+	echo "TERM=$TERM;export TERM;DISPLAY=$DISPLAY;export DISPLAY;($*)" '\
+	 > /dev/null 2>&1 &' | rsh $host -l $user /bin/sh &
+fi
+) &

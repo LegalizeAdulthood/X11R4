@@ -1,0 +1,7 @@
+cc -g -I/usr/local/pkg/X11/include -c "button.c"
+cc -g -I/usr/local/pkg/X11/include -c "scrollbar.c"
+cc -g -I/usr/local/pkg/X11/include -c "init.c"
+cc -g -I/usr/local/pkg/X11/include -c "affirm.c"
+cc -g -I/usr/local/pkg/X11/include -c "dispatch.c"
+cc -g -I/usr/local/pkg/X11/include -c "prompted.c"
+ld -r -o control.o button.o scrollbar.o init.o affirm.o dispatch.o prompted.o

@@ -1,0 +1,22 @@
+# Makefile for xloadimage using standard C compiler
+#
+# Copyright 1989 Jim Frost
+#
+# See file "copyright.h" for complete copyright information.
+
+CC= cc
+CFLAGS= -O -DSYSPATHFILE=\"/usr/lib/xloadimagerc\"
+
+LIBS= -lX11
+OBJS= bright.o clip.o compress.o dither.o faces.o fill.o imagetypes.o \
+      merge.o misc.o new.o options.o path.o pbm.o reduce.o root.o send.o \
+      sunraster.o value.o window.o xbitmap.o xloadimage.o zio.o zoom.o
+
+xloadimage: $(OBJS)
+	$(CC) $(CFLAGS) -o xloadimage $(OBJS) $(LIBS)
+
+clean:
+	rm -f *.o *~ xloadimage
+
+.c.o: xloadimage.h
+	$(CC) -c $(CFLAGS) $*.c

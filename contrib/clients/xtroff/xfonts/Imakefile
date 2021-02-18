@@ -1,0 +1,111 @@
+SRCS = \
+	charB08.bdf charB10.bdf charB12.bdf \
+	charB14.bdf charB18.bdf charB24.bdf \
+	charBI08.bdf charBI10.bdf charBI12.bdf \
+	charBI14.bdf charBI18.bdf charBI24.bdf \
+	charI08.bdf charI10.bdf charI12.bdf \
+	charI14.bdf charI18.bdf charI24.bdf \
+	charR08.bdf charR10.bdf charR12.bdf \
+	charR14.bdf charR18.bdf charR24.bdf \
+	courB08.bdf courB10.bdf courB12.bdf \
+	courB14.bdf courB18.bdf courB24.bdf \
+	courBO08.bdf courBO10.bdf courBO12.bdf \
+	courBO14.bdf courBO18.bdf courBO24.bdf \
+	courO08.bdf courO10.bdf courO12.bdf \
+	courO14.bdf courO18.bdf courO24.bdf \
+	courR08.bdf courR10.bdf courR12.bdf \
+	courR14.bdf courR18.bdf courR24.bdf \
+	helvB08.bdf helvB10.bdf helvB12.bdf \
+	helvB14.bdf helvB18.bdf helvB24.bdf \
+	helvBO08.bdf helvBO10.bdf helvBO12.bdf \
+	helvBO14.bdf helvBO18.bdf helvBO24.bdf \
+	helvO08.bdf helvO10.bdf helvO12.bdf \
+	helvO14.bdf helvO18.bdf helvO24.bdf \
+	helvR08.bdf helvR10.bdf helvR12.bdf \
+	helvR14.bdf helvR18.bdf helvR24.bdf \
+	ncenB08.bdf ncenB10.bdf ncenB12.bdf \
+	ncenB14.bdf ncenB18.bdf ncenB24.bdf \
+	ncenBI08.bdf ncenBI10.bdf ncenBI12.bdf \
+	ncenBI14.bdf ncenBI18.bdf ncenBI24.bdf \
+	ncenI08.bdf ncenI10.bdf ncenI12.bdf \
+	ncenI14.bdf ncenI18.bdf ncenI24.bdf \
+	ncenR08.bdf ncenR10.bdf ncenR12.bdf \
+	ncenR14.bdf ncenR18.bdf ncenR24.bdf \
+	symb08.bdf symb10.bdf symb12.bdf \
+	symb14.bdf symb18.bdf symb24.bdf \
+	timB08.bdf timB10.bdf timB12.bdf \
+	timB14.bdf timB18.bdf timB24.bdf \
+	timBI08.bdf timBI10.bdf timBI12.bdf \
+	timBI14.bdf timBI18.bdf timBI24.bdf \
+	timI08.bdf timI10.bdf timI12.bdf \
+	timI14.bdf timI18.bdf timI24.bdf \
+	timR08.bdf timR10.bdf timR12.bdf \
+	timR14.bdf timR18.bdf timR24.bdf
+
+
+OBJS = \
+	courB08.t.snf.Z courB10.t.snf.Z courB12.t.snf.Z \
+	courB14.t.snf.Z courB18.t.snf.Z courB24.t.snf.Z \
+	courBO08.t.snf.Z courBO10.t.snf.Z courBO12.t.snf.Z \
+	courBO14.t.snf.Z courBO18.t.snf.Z courBO24.t.snf.Z \
+	courO08.t.snf.Z courO10.t.snf.Z courO12.t.snf.Z \
+	courO14.t.snf.Z courO18.t.snf.Z courO24.t.snf.Z \
+	courR08.t.snf.Z courR10.t.snf.Z courR12.t.snf.Z \
+	courR14.t.snf.Z courR18.t.snf.Z courR24.t.snf.Z \
+	helvB08.t.snf.Z helvB10.t.snf.Z helvB12.t.snf.Z \
+	helvB14.t.snf.Z helvB18.t.snf.Z helvB24.t.snf.Z \
+	helvBO08.t.snf.Z helvBO10.t.snf.Z helvBO12.t.snf.Z \
+	helvBO14.t.snf.Z helvBO18.t.snf.Z helvBO24.t.snf.Z \
+	helvO08.t.snf.Z helvO10.t.snf.Z helvO12.t.snf.Z \
+	helvO14.t.snf.Z helvO18.t.snf.Z helvO24.t.snf.Z \
+	helvR08.t.snf.Z helvR10.t.snf.Z helvR12.t.snf.Z \
+	helvR14.t.snf.Z helvR18.t.snf.Z helvR24.t.snf.Z \
+	ncenB08.t.snf.Z ncenB10.t.snf.Z ncenB12.t.snf.Z \
+	ncenB14.t.snf.Z ncenB18.t.snf.Z ncenB24.t.snf.Z \
+	ncenBI08.t.snf.Z ncenBI10.t.snf.Z ncenBI12.t.snf.Z \
+	ncenBI14.t.snf.Z ncenBI18.t.snf.Z ncenBI24.t.snf.Z \
+	ncenI08.t.snf.Z ncenI10.t.snf.Z ncenI12.t.snf.Z \
+	ncenI14.t.snf.Z ncenI18.t.snf.Z ncenI24.t.snf.Z \
+	ncenR08.t.snf.Z ncenR10.t.snf.Z ncenR12.t.snf.Z \
+	ncenR14.t.snf.Z ncenR18.t.snf.Z ncenR24.t.snf.Z \
+	symb08.t.snf.Z symb10.t.snf.Z symb12.t.snf.Z \
+	symb14.t.snf.Z symb18.t.snf.Z symb24.t.snf.Z \
+	timB08.t.snf.Z timB10.t.snf.Z timB12.t.snf.Z \
+	timB14.t.snf.Z timB18.t.snf.Z timB24.t.snf.Z \
+	timBI08.t.snf.Z timBI10.t.snf.Z timBI12.t.snf.Z \
+	timBI14.t.snf.Z timBI18.t.snf.Z timBI24.t.snf.Z \
+	timI08.t.snf.Z timI10.t.snf.Z timI12.t.snf.Z \
+	timI14.t.snf.Z timI18.t.snf.Z timI24.t.snf.Z \
+	timR08.t.snf.Z timR10.t.snf.Z timR12.t.snf.Z \
+	timR14.t.snf.Z timR18.t.snf.Z timR24.t.snf.Z
+
+FONTINSTDIR = $(FONTDIR)/xtroff
+
+all: $(SRCS) $(OBJS) fonts.dir
+
+$(SRCS):
+	rm -f $@
+	$(LN) $(FONTSRC)/bdf/75dpi/$@
+
+clean::
+	rm -f *.snf.Z *.bdf
+
+fonts.dir: $(OBJS)
+	$(MKFONTDIR) .
+
+MakeDirectories(install, $(FONTINSTDIR))
+InstallFonts($(FONTINSTDIR))
+
+.SUFFIXES: .bdf .snf.Z .t.snf.Z
+
+.bdf.snf.Z:
+	rm -f $*.snf $*.snf.Z
+	$(FONTC) $< > $*.snf
+	compress $*.snf
+
+.bdf.t.snf.Z:
+	rm -f $*.t.snf $*.t.snf.Z
+	awk -f adobe.awk $< | $(FONTC) > $*.t.snf
+	compress $*.t.snf
+
+depend::

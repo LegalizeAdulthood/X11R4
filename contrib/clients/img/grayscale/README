@@ -1,0 +1,115 @@
+
+
+		grayscale image sample		11-27-89
+		Paul Raveling		Raveling@isi.edu
+
+
+	This directory (img/grayscale) contains one sample
+	grayscale image in color-mapped format.  It's a copy
+	of a color image available on venera.isi.edu, converted
+	to grayscale.
+
+	After building and installing the Img Software Set,
+	you can display this image with the following command:
+
+		[cd <this directory>]
+		dispimg grayscale_sample
+
+
+	This image is a digitized photo of the Bell X-1E experimental
+	rocket-powered aircraft, plus a joshua tree.  I took this
+	photo earlier this year on a visit to the NASA Ames Dryden
+	Flight Research Facility at Edwards Air Force Base.
+
+
+	Conversion of this image from color to grayscale is an
+	example of using several Img Software Set facilities.
+	Steps were:
+
+	1.  Display grayscale rendition of original RGB image, using
+	    a private colormap.  Displaying on a 6-plane display
+	    defaulted to a 64-color map.  The command to do this was:
+
+	dispimg $img/color_rgb/x-1e -force grayscale -colormap private
+
+	    This could have also been done with a previously
+	    color-mapped copy of the image in $img/color_mapped;
+	    however, using original 24-bit-per-pixel RGB data
+	    assures maximum resolution.
+
+	2.  Save the displayed image with:
+
+	[cd .]
+	savewin grayscale_sample
+
+	    Savewin asks what window to save, grabs the mouse, and
+	    changes the cursor.  An imglib bug discovered too late
+	    to fix for version 1.1 requires that the window's color
+	    map be installed in order to save it; in order to do
+	    this, I invoked savewin and quickly moved the cursor
+	    over the image's window to install its private color map
+	    before savewin could grab the cursor.
+
+
+	Other grayscale images are available by anonymous FTP from:
+
+		Host:		venera.isi.edu
+		Directory:	[~ftp/] images/grayscale
+
+	A copy of the corresponding README file from this directory,
+	current on this date, follows.
+
+
+
+Original sources of images:
+
+	[ISI has processed some in various ways other than color selection]
+
+	Abbrev		Source			Medium
+	------		------			------
+
+	MIT	? (Host m9-520-1.mit.edu)	anonymous FTP
+	ISI	several				mostly video disks, live camera
+	UCB	UC Berkeley (DEC?)		Anonymous FTP
+	UXE	? (Host uxe.cso.uiuc.edu)	anonymous FTP
+
+
+Pixmap image files in this directory:
+
+	Filename      Size, bytes    # Colors	Dimensions	Source
+	--------      -----------    --------   ----------	------
+
+	bearpee		120,217		220	 640 x 400	UXE
+	boston		161,979		128	 512 x 432	UCB
+	creationii	 54,050		 14	 604 x 355	MIT
+	cs9		860,720		 73	1160 x 742	MIT
+	dollar		133,417		 78	 868 x 372	MIT
+	dragon1		 53,578		  8	 572 x 716	MIT
+	drgw480		159,740		 74	1018 x 734	MIT
+	edwinaldren	 64,779		  4	1090 x 1138	MIT
+	einstein_1	 61,369		128	 300 x 300	UCB
+	einstein_2	241,411		128	 600 x 600	UCB
+	einstein_3	503,597		128	1020 x 1020	UCB
+	eyes		  9,563		  5	 512 x 384	MIT
+	isi-far		205,757		220	 512 x 512	ISI
+	isi-near	192,283		220	 512 x 512	ISI
+	kirk2		 90,061		 78	 398 x 556	MIT
+	lennaface	 53,589		131	 256 x 256	ISI
+	livingdaylights	 74,035		209	 400 x 640	MIT
+	london		128,723		128	 512 x 432	UCB
+	m1		127,413		165	 660 x 622	MIT
+	mandelbrot	 46,355		128	 783 x 795	UCB
+	miller		287,635		 86	1152 x 880	MIT
+	mona_lisa	129,167		128	 432 x 512	UCB
+	moon		114,629		128	 512 x 432	UCB
+	owlman		 17,890		  8	 364 x 320	MIT
+	reagan		234,097		128	 600 x 600	UCB
+	san_fran	147,324		128	 512 x 432	UCB
+	spock		106,859		 78	 490 x 642	MIT
+	sr71		119,083		 77	1140 x 406	MIT
+	steinheim	 73,499		 22	 510 x 402	MIT
+	surfer		181,335		 74	 922 x 776	MIT
+	twentydollar	127,117		 78	 888 x 384	MIT
+	unicorn		 50,681		 27	 640 x 400	MIT
+	venus		 85,783		 14	 679 x 388	MIT
+

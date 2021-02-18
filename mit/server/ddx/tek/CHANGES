@@ -1,0 +1,6 @@
+This directory is new for R4.  It provides support for the Tektronix 4319
+workstation using the MIT cfb driver.  The files were donated by Tektronix
+and integrated here at MIT; thus they have only been tested on our 4319;
+simple changes may be necessary to get them running on other Tek
+workstations (some XD88 code is evident in various places, but it is almost
+certainly broken).

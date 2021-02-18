@@ -1,0 +1,20 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#include "./../XJImake.defs"
+
+SUBDIRS= romkan_m dicserver xwnmo
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+install::
+	@A=`egrep "^$(WNNOWNER):" /etc/passwd | cat` ;\
+	if test -z "$$A" ;\
+	then \
+		echo "!!  Stop install" ;\
+		echo "!!  Please make an entry of 'wnn' id in /etc/passwd" ;\
+		exit 1 ;\
+	fi
+
+MakeDirectories(install,$(WNNBINDIR))

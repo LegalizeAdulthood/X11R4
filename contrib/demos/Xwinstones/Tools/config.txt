@@ -1,0 +1,15 @@
+		
+		Machine		:	name 
+		Node		:	name 
+		Processor	:	type
+		FloatingPt 	:   type
+		Memory		:	amount
+		Slot 1		:	
+		Slot 2		:	
+		Slot 3		:
+		Slot .		:	
+		Slot .		:	
+		Slot .		:   
+		Slot N		:
+
+

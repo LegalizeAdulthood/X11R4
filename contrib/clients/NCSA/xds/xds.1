@@ -1,0 +1,75 @@
+.TH XDATASLICE 1 "1 November 1989"
+.SH NAME
+NCSA XDataSlice \- interactive 3D data analysis tool
+.SH SYNOPSIS
+.B xds
+.RB [ " \-options \|.\|.\|." ]
+.LP
+.SH DESCRIPTION
+.IX  XDataSlice  ""  "\fLXDataSlice\fR \(em interactive 3D data analysis tool"
+.IP  
+NCSA XDataSlice (xds) is a 3D interactive data analysis tool that features 
+several methods of examining a 3D array of floating-point numbers.  One
+prominent analysis method is to take 2D slices of the 3D dataset, along
+the cartesian axes, or at any arbitrary angle.  The sliced numerical data is
+then converted, on the fly, to raster images for the purpose of being better
+visualized and understood.  If desired, the numerical slice can be placed in
+a scrollable spreadsheet, with its corresponding image placed beside it for
+reference.
+.LP
+.IP
+Several slices can be generated as a batch with a user-specified increment
+along the axis orthogonal to each slice, and they may be tiled alongside
+one another for comparison.  Alternatively, they may be overlayed on top of
+each another as an animation sequence, thus allowing the use of time as a
+third dimension in visualizing the 3D dataset.
+.LP
+.IP
+The relationship of slices orthogonal to one another may be further examined
+by locating them together in the 3D bounding box outlining the limits of the
+dataset.  The cartesian dicing tool built into XDataSlice is used for this
+purpose.  Slices of various thicknesses or boxes of different sizes may be
+selected and rendered in the 3D matrix with hidden surfaces removed, allowing
+the user to view only what he/she deems interesting.
+.LP
+.IP
+If the data in the 3D dataset is sparse or concentric, it is more useful to
+view the 3D dataset as a whole.  The volumetric renderer featured by XDataSlice
+allows the user to assign various transparency values to any number of
+substances (defined by ranges of values in the dataset) that he/she may be
+interested in.  These substances may then be rendered together, and the results
+are translucent images akin to that of X-ray photographs.
+.LP
+.IP
+At times, it may be desired to map out iso-surfaces within the 3D dataset, just
+as one would want to get contour plots of 2D images.  The iso-surface renderer
+in XDataSlice is sufficiently equipped to perform 3D edge tesselation and
+render the surfaces (with hidden parts removed) with a single light source.
+.LP
+.IP
+XDataSlice provides the ability to change the colormaps used for the
+generated images.  These color maps may be created by NCSA XImage (ximage),
+or some other NCSA software packages.  All generated images may be saved in
+the NCSA Hierarchical Data Format (HDF) for further analysis by XImage
+or other software.  They may also be read by XDataSlice for review.
+.LP
+.IP
+As input data, XDataSlice takes HDF files containing either 8-bit raster
+data or 32 bit 3D floating point data.  NCSA HDF is a standard data format
+originally developed at NCSA.  As input palettes, it takes in HDF palettes,
+and 8 bit palettes where the first 256 bytes specify the 256 entries of red,
+the next 256 bytes specify 256 entries of green and the the last 256 bytes
+specify the blue component.
+.LP
+.SH SEE ALSO
+.IP
+XImage(1)
+.LP
+Full documentation of NCSA XDataSlice is provided along with the distribution.
+.LP
+.SH BUGS
+Please send bug reports to bugs@ncsa.uiuc.edu.
+.IP
+.SH ORIGIN
+National Center for Supercomputing Applications at the University of Illinois
+in Urbana Champaign.

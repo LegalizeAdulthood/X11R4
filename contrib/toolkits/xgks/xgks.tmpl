@@ -1,0 +1,34 @@
+/*
+ * Imake template for xgks.  It is included by all Imakefiles below xgks, which
+ * must set the XGKS_TOP make variable to be the path that should be used to
+ * find the top of the xgks source tree.
+ */
+
+#ifdef UseInstalledXGKS
+#define use(a,b) a
+#else
+#define use(a,b) b
+#endif
+
+DEPXGKSLIB = use($(USRLIBDIR)/libxgks.a,$(XGKS_TOP)/lib/xgks/libxgks.a)
+XGKSLIB = use(-lxgks,$(XGKS_TOP)/lib/xgks/libxgks.a)
+XGKSINCLUDES = use(-I$(INCROOT)/xgks,-I$(XGKS_TOP)/include) -I.
+
+#if HasFortran
+DEPFXGKSLIB = use($(USRLIBDIR)/libfxgks.a,$(XGKS_TOP)/lib/fortran/libfxgks.a)
+FXGKSLIB = use(-lfxgks,$(XGKS_TOP)/lib/fortran/libfxgks.a)
+#endif
+
+#undef use
+
+
+INCLUDES = $(XGKSINCLUDES) $(LOCAL_XGKSINCLUDES)
+FONTDBDIR = $(LIBDIR)/xgks		/* directory in which fonts get put */
+
+
+#define BuildGksFont(fontname,fontnum)					@@\
+fontname.gksfont:  fontname.src $(MKGKSFONT)				@@\
+	$(MKGKSFONT) fontname.src $@					@@\
+									@@\
+InstallNonExec(fontname.gksfont,$(FONTDBDIR)/fontnum)			@@\
+/* leave this line blank */

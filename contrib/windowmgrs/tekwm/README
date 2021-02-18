@@ -1,0 +1,57 @@
+				  Tekwm
+		       The Tektronix Window Manager
+			  Public Domain Release
+			      Glenn Widener
+			     Tektronix, Inc.
+			    November 22, 1989
+
+Tekwm is the current supported Tektronix window manager.  It is based on
+the Ardent Window Manager, awm, which is in turn based on the Ultrix
+Window Manager, uwm.  Tekwm has been extensively bugfixed, and fully
+complies with the ICCCM (with minor exceptions, see the ICCCM compliance
+notes in the file COMPLIANCE).
+
+There are still many minor bugs, and even more features I would like to
+have added, but there are only so many hours in the day for non-nerds.
+Known bugs are listed in the file BUGS; please look here before you send
+me mail.  Mail about bugs I already know about will be generally ignored.
+
+See the file ENHANCEMENTS for a list of interesting proposed enhancements
+that I never had time to do.
+
+For reliability and malleability reasons, I have chosen to revert to the
+uwm menu package, instead of the RTL menus used by awm.  Loses a few minor
+features, but gains a couple of features, and is much easier to maintain.
+
+Note that the final public release of awm was not incorporated into Tekwm,
+due to release timing and the extensive divergence of the code.  There may
+be useful fixes and enhancements to be gleaned from awm, but I have not
+attempted it.
+
+When you build Tekwm, note the following things:
+
+The RTL "neaten" package, neaten.c, has not been re-integrated since the
+awm code was received (and extensive modifications to the tekwm code
+made).  Those who wish to try it will have to do some cleanup.
+
+The sources include the Tektronix standard tekwmrc files, with supporting
+bitmaps in the bitmaps subdirectory.  The tekwmrc files are
+platform-specific, each in their own subdirectory so they can be installed
+without changing the file name.  The Imake rule that installs them is a
+Tek special, hence it is commented out.
+
+Some of the source files pass lint...  Tekwm compiles and is tested on all
+Tek workstations.  An earlier version was ported to several machines at
+Purdue.  You should have no build problems, but don't be surprised if you
+encounter bugs.
+
+If you have problems, suggestions, enhancements, or questions, contact
+
+Glenn Widener
+Tektronix, Inc.
+(503) 685-2494
+glennw@orca.wv.tek.com
+
+You may or may not get assistance as time permits; I am on to other projects!
+
+Happy hacking!

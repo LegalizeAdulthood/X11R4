@@ -1,0 +1,111 @@
+/**/# platform:  $OMRON: SX9100.macros,v 1.00 88/12/19 17:25:33 H.KANAOKA Exp $
+
+/****************************************************************************
+ *                                                                          *
+ *		   SET MAKE VARIABLES THAT ARE OS-DEPENDENT                 *
+ *                                                                          *
+ ****************************************************************************/
+
+
+#ifdef SYSV				/* for documentation purposes only */
+/*
+ * generic System V definitions
+ */
+               AR = ar clq
+#ifdef SX9100DT
+  BOOTSTRAPCFLAGS = -DSX9100 -DSX9100DT			/* set if cpp doesn't have uniq sym */
+#else
+  BOOTSTRAPCFLAGS = -DSX9100				/* set if cpp doesn't have uniq sym */
+#endif
+               CC = cc
+         COMPRESS = compress	
+              CPP = /lib/cpp
+          INSTALL = bsdinstall		/* need to install util/bsdinst.sh */
+               LD = ld
+             LINT = lint
+      LINTLIBFLAG = -o
+         LINTOPTS = -ax
+               LN = ln			/* ln if no symbolic links */
+               MV = mv
+           RANLIB = /bin/true
+RANLIBINSTFLAGS = 
+               RM = rm -f
+  STD_CPP_DEFINES = 						/* for passing things through cpp */
+      STD_DEFINES = -DSX9100 -DSYSV -DINET -Zs			/* actually special compiler flags */
+SYSLAST_LIBRARIES =			/* socket or emulation libraries */
+             TAGS = ctags
+
+#define BandAidLibraryNeeded		YES
+#define BandAidLibrarySources		Berklib.c
+#define BandAidLibraryObjects		Berklib.o
+#define BandAidLibraryMake()					@@\
+Berklib.c: sysV/Berklib.c					@@\
+	-rm -f Berklib.c					@@\
+	-ln sysV/Berklib.c .
+#ifdef SX9100DT
+#define ServerDefines -DSX9100 -DSX9100DT -DSYSV -DINET -Zs
+#else
+#define ServerDefines -DSX9100 -DSYSV -DINET -Zs
+#define LibraryDefines -DSX9100 -DSYSV -Zs
+#endif
+#else
+/*
+ * generic BSD definitions
+ */
+               AR = ar clq
+#ifdef SX9100DT
+  BOOTSTRAPCFLAGS = -DSX9100 -DSX9100BSD -DSX9100DT			/* set if cpp doesn't have uniq sym */
+#else
+  BOOTSTRAPCFLAGS = -DSX9100 -DSX9100BSD 				/* set if cpp doesn't have uniq sym */
+#endif
+               CC = cc
+             MAKE = make   
+         COMPRESS = compress
+              CPP = /lib/cpp
+          INSTALL = install
+               LD = ld
+             LINT = lint
+      LINTLIBFLAG = -C
+         LINTOPTS = -axz
+               LN = ln -s
+               MV = mv
+           RANLIB = ranlib
+  RANLIBINSTFLAGS = 			/* might use -t if supported */
+               RM = rm -f
+  STD_CPP_DEFINES =			/* for passing things through cpp */ */
+      STD_DEFINES = -DSX9100 -DSX9100BSD		/* actually special compiler flags */
+SYSLAST_LIBRARIES =			/* socket or emulation libraries */
+             TAGS = ctags
+#ifdef SX9100DT
+#define ServerDefines -DSX9100 -DSX9100BSD -DSX9100DT
+#else
+#define ServerDefines -DSX9100 -DSX9100BSD
+#define LibraryDefines -DSX9100 -DSX9100BSD
+#endif
+#endif
+
+#define XsxServer Xsx
+
+/*****************************************************************************
+ *                                                                           *
+ *			DEFINE PARAMETERS FOR BUILDING                       *
+ *                                                                           *
+ *****************************************************************************/
+
+/* #define XmumbleServer Xmumble */	/* if BuildServer isn't set false */
+/* #define LibraryDefines */			/* any special flags */
+#define ConnectionFlags -DTCPCONN -DUNIXCONN /* -DDNETCONN */
+/* #define FontDefines -DFONT_SNF -DFONT_BDF -DCOMPRESSED_FONTS */
+#define FontDefines -DFONT_SNF -DFONT_BDF  /* KANA */
+
+
+/*****************************************************************************
+ *                                                                           *
+ *	      OVERRIDE ANY CONFIGURATION PARAMETERS FROM site.def            *
+ *                                                                           *
+ *****************************************************************************/
+
+#ifdef SYSV
+#define SystemV			YES
+#endif
+

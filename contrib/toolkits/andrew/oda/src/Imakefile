@@ -1,0 +1,193 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES	=	-I${BASEDIR}/include/oda
+
+OBJS   = attr1.o \
+	attr10.o \
+	attr11.o \
+	attr12.o \
+	attr13.o \
+	attr14.o \
+	attr15.o \
+	attr16.o \
+	attr17.o \
+	attr18.o \
+	attr19.o \
+	attr2.o \
+	attr20.o \
+	attr21.o \
+	attr22.o \
+	attr23.o \
+	attr24.o \
+	attr25.o \
+	attr26.o \
+	attr3.o \
+	attr4.o \
+	attr5.o \
+	attr6.o \
+	attr7.o \
+	attr8.o \
+	attr9.o \
+	atts1.o \
+	atts2.o \
+	atts3.o \
+	atts4.o \
+	const1.o \
+	const2.o \
+	const3.o \
+	debug1.o \
+	debug2.o \
+	doc1.o \
+	expr1.o \
+	fmt1.o \
+	font1.o \
+	init1.o \
+	io1.o \
+	iter1.o \
+	iter2.o \
+	iter3.o \
+	iter4.o \
+	label1.o \
+	mem1.o \
+	mm1.o \
+	prior1.o \
+	rasn11.o \
+	rasn12.o \
+	rasn13.o \
+	rasn14.o \
+	rodif1.o \
+	rodif2.o \
+	rodif3.o \
+	rodif4.o \
+	seq1.o \
+	str1.o \
+	stubs.o \
+	stubs2.o \
+	tkerr1.o \
+	wasn11.o \
+	wasn12.o \
+	wasn13.o \
+	wasn14.o \
+	wasn15.o \
+	wodif1.o \
+	wodif2.o \
+	wodif3.o \
+	wodif4.o
+
+HFILES	=	acd.h \
+		apirt.h \
+		apityp.h \
+		asn1.h \
+		attr.h \
+		attr0.h \
+		attr1.h \
+		attr10.h \
+		attr11.h \
+		attr12.h \
+		attr13.h \
+		attr14.h \
+		attr15.h \
+		attr16.h \
+		attr17.h \
+		attr18.h \
+		attr19.h \
+		attr2.h \
+		attr20.h \
+		attr21.h \
+		attr22.h \
+		attr23.h \
+		attr24.h \
+		attr25.h \
+		attr26.h \
+		attr3.h \
+		attr4.h \
+		attr5.h \
+	attr6.h \
+	attr7.h \
+	attr8.h \
+	attr9.h \
+	attrid.h \
+	atts.h \
+	atts1.h \
+	atts2.h \
+	atts3.h \
+	atts4.h \
+	aunion.h \
+	const.h \
+	const1.h \
+	const2.h \
+	const3.h \
+	debug.h \
+	debug1.h \
+	debug2.h \
+	doc.h \
+	doc1.h \
+	errors.h \
+	expr.h \
+	expr1.h \
+	fmt.h \
+	fmt1.h \
+	font.h \
+	font1.h \
+	init.h \
+	init1.h \
+	io.h \
+	io1.h \
+	iter.h \
+	iter1.h \
+	iter2.h \
+	iter3.h \
+	iter4.h \
+	label.h \
+	label1.h \
+	mem.h \
+	mem1.h \
+	mm.h \
+	mm1.h \
+	odatk.h \
+	parms.h \
+	prior.h \
+	prior1.h \
+	rasn1.h \
+	rasn11.h \
+	rasn12.h \
+	rasn13.h \
+	rasn14.h \
+	rnames.h \
+	rodif.h \
+	rodif1.h \
+	rodif2.h \
+	rodif3.h \
+	rodif4.h \
+	seq.h \
+	seq1.h \
+	str.h \
+	str1.h \
+	tags.h \
+	tkerr.h \
+	tkerr1.h \
+	values.h \
+	wasn1.h \
+	wasn11.h \
+	wasn12.h \
+	wasn13.h \
+	wasn14.h \
+	wasn15.h \
+	wodif.h \
+	wodif1.h \
+	wodif2.h \
+	wodif3.h \
+	wodif4.h
+
+
+NormalObjectRule()
+
+LibraryTarget(liboda.a, $(OBJS) )
+
+InstallLibrary(liboda.a, $(DESTDIR)/lib/oda)
+
+InstallMultiple( $(HFILES), $(INSTINCFLAGS), $(DESTDIR)/include/oda)
+
+DependTarget()

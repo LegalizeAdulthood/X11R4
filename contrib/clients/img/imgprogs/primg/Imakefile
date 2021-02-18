@@ -1,0 +1,36 @@
+
+
+#define	ProgramAliasTarget(alias,program)				@@\
+AllTarget(alias)							@@\
+									@@\
+alias:	program								@@\
+	ln program alias						@@\
+									@@\
+InstallProgramAlias(alias,program)					@@\
+InstallManPageAlias(alias,program)					@@\
+
+
+#define	InstallProgramAlias(alias,program)				@@\
+install:: program							@@\
+	ln $(BINDIR)/program $(BINDIR)/alias				@@\
+
+
+#define	InstallManPageAlias(alias,program)				@@\
+install.man:: program.man						@@\
+	ln $(MANDIR)/program.ManSuffix $(MANDIR)/alias.ManSuffix	@@\
+
+
+         IMGINC = ../..
+         IMGLIB = ../../imglib/libimg.a
+
+      INCLUDES = -I$(IMGINC)
+LOCAL_LIBRARIES = $(IMGLIB) $(XLIB)
+           SRCS = primg.c
+           OBJS = primg.o
+       PROGRAMS = primg, prscr
+
+
+ComplexProgramTarget(primg)
+ProgramAliasTarget(prscr,primg)
+ProgramAliasTarget(prland,primg)
+ProgramAliasTarget(prport,primg)

@@ -1,0 +1,11 @@
+LOCAL_LIBRARIES = $(XAWLIB) $(XTOOLLIB) $(XMULIB) $(XLIB)
+
+OBJS = ship.o widget.o main.o rocks.o lines.o shot.o score.o
+
+SRCS = ship.c widget.c main.c rocks.c lines.c shot.c score.c
+
+INCLUDES = -I$(TOP) -I$(TOP)/X11
+
+SYS_LIBRARIES = -lm
+
+ComplexProgramTarget(roids)

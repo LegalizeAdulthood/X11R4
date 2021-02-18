@@ -1,0 +1,25 @@
+#include <Server.tmpl>
+
+SRCS =	 apcscrinit.c apcwindow.c apcpixmap.c apcbstore.c apcclip.c apcmisc.c \
+         apcgc.c apcsetsp.c apcfillsp.c apcgetsp.c apcbitblt.c apcpushpxl.c \
+         apcfill.c apczerline.c apclines.c apcpolypnt.c apcpolygen.c \
+         apcgprfont.c apctext.c \
+         apcdispcur.c apcsprite.c
+
+OBJS =   apcscrinit.o apcwindow.o apcpixmap.o apcbstore.o apcclip.o apcmisc.o \
+         apcgc.o apcsetsp.o apcfillsp.o apcgetsp.o apcbitblt.o apcpushpxl.o \
+         apcfill.o apczerline.o apclines.o apcpolypnt.o apcpolygen.o \
+         apcgprfont.o apctext.o \
+         apcdispcur.o apcsprite.o
+
+INCLUDES = -I. -I.. -I../../mi -I../../snf -I../../../include -I$(INCLUDESRC)
+LINTLIBS = ../../../dix/llib-ldix.ln ../../../os/4.2bsd/llib-los.ln ../../mi/llib-lmi.ln
+
+NormalLibraryObjectRule()
+NormalLibraryTarget(apc,$(OBJS))
+
+DependTarget()
+
+lintlib:
+
+NormalLintTarget($(SRCS))

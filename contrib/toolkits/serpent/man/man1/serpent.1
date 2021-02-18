@@ -1,0 +1,305 @@
+.\" $Header: /u/04c/mnt/integ/man/man1/RCS/serpent.1,v 1.11 89/10/31 09:41:43 bmc Exp $
+.\"
+.\" UNIX manual page for serpent command.
+.\"
+.\" ---------------------------------------------------------------------------
+.\" 
+.\"  Distribution: Approved for public release; distribution is unlimited.
+.\" 
+.\"  Copyright (c) 1989  by  Carnegie  Mellon  University, Pittsburgh, PA.  The
+.\" Software Engineering  Institute  (SEI) is a federally  funded  research and
+.\" development center established  and  operated by Carnegie Mellon University
+.\" (CMU).  Sponsored  by  the  U.S.  Department  of   Defense  under  contract
+.\" F19628-85-C-0003,  the  SEI  is  supported  by  the  services  and  defense
+.\" agencies, with the U.S. Air Force as the executive contracting agent.
+.\" 
+.\"   Permission to use,  copy,  modify, or  distribute  this  software and its
+.\" documentation for  any purpose and without fee  is hereby granted, provided
+.\" that  the above copyright notice appear  in  all copies and that both  that
+.\" copyright  notice  and   this  permission  notice  appear   in   supporting
+.\" documentation.   Further,  the  names  Software  Engineering  Institute  or
+.\" Carnegie  Mellon  University  may  not be used in  advertising or publicity
+.\" pertaining to distribution of the software without specific, written  prior
+.\" permission.  CMU makes no claims  or representations  about the suitability
+.\" of this software for any purpose.  This software is provided "as is" and no
+.\" warranty,  express  or  implied,  is  made  by  the  SEI  or CMU, as to the
+.\" accuracy  and  functioning of the program and related program material, nor
+.\" shall   the  fact of  distribution   constitute  any   such  warranty.   No
+.\" responsibility is assumed by the SEI or CMU in connection herewith.
+.\" 
+.\" ---------------------------------------------------------------------------
+.if n .na
+.TH SERPENT 1 "15 August 1989"
+.\"
+.\" ---------------------------------------------------------------------------
+.\"
+.SH NAME
+serpent \- compile, link and execute a Serpent dialogue
+.SH SYNOPSIS
+serpent
+[
+.B \-c
+]
+[
+.B \-d
+]
+[
+.B \-l
+]
+[
+.B \-g
+]
+[
+.BI \-I " directory"
+]
+[
+.BI \-L " libname"
+]
+[
+.BI \-p " component journal"
+]
+[
+\fB\-a\fI TAP "args"\fR
+]
+.I dialogue
+.\"
+.\" --------------------------------------------------------------------------
+.\"
+.SH DESCRIPTION
+.B Serpent
+compiles and links a Slang dialogue source file, and runs an executable
+dialogue, along with any applications and associated Serpent technologies.
+The
+.I dialogue
+argument specifies the pathname of the dialogue to use.
+It can refer to a Slang source file
+or a compiled dialogue executable, depending on context.  Slang source
+files always have the extension ``.sl''; the dialogue pathname may be
+may be specified with or without the extension.
+.\"
+.\" --------------------------------------------------------------------------
+.\"
+.SH OPTIONS
+.\"
+.\"                             -c option
+.\"
+.TP 15
+.BI \-c
+Compile a Slang dialogue source file to intermediate C code.
+.B \-c
+and 
+.B \-d 
+are mutually exclusive.
+.\"
+.\"                             -d option
+.\"
+.TP 15
+.BI \-d
+Compile a Slang dialogue source file to intermediate C code, including
+additional debugging information using the \fIcc\fR(1)
+.B \-g option.
+.B \-c
+and 
+.B \-d 
+are mutually exclusive.
+.\"
+.\"                             -l option
+.\"
+.TP 15
+.BI \-l
+Link a previously compiled Slang dialogue.  This phase actually compiles the
+intermediate C code and links it with the Slang runtime libraries to produce
+a dialogue executable.  Additional libraries can be specified with the
+.B \-L
+option, described below.
+.\"
+.\"                             -g option
+.\"
+.TP 15
+.BI \-g
+Run a dialogue executable.  (The ``g'' stands for ``go''.)  This option is
+assumed if none of
+.B \-c,
+.B \-d,
+.B \-l
+or
+.B \-g 
+is specified.  In this phase,
+.B serpent
+executes the dialogue, the applications (if there are any), and any supporting
+technologies (such as Saw).
+.\"
+.\"                             -I option
+.\"
+.TP 15
+.BI \-I " directory"
+Specifies an additional directory to search to satisfy 
+.B #include
+directives during compilation.  More than one 
+.B \-I 
+option may be specified; directories are searched in the order they appear
+on the command line.
+Both ``\fB\-I\fIdirectory\fR'' and ``\fB\-I \fIdirectory\fR''
+are acceptable to specify an include directory.
+.\"
+.\"                             -L option
+.\"
+.TP 15
+.BI \-L " libname"
+Specifies an additional library to be included in the dialogue link phase.
+The library, specified by the
+.I libname
+argument, must be in standard UNIX \fIar\fR(1) format.  More than one
+.B \-L
+option may be specified.
+Both ``\fB\-L\fIlibname\fR'' and ``\fB\-L \fIlibname\fR'' are
+acceptable to specify a library.
+The libraries are searched in the order they 
+appear on the command line.
+The link phase searches object code libraries in the following order:
+.sp
+\(bu The Serpent-supplied external library
+.br
+\(bu Libraries specified with 
+.B \-L
+.br
+\(bu Slang runtime libraries
+.br
+\(bu C runtime libraries
+.sp
+Note that this search order allows you to substitute your own versions of
+standard C library routines such as 
+.B strcpy().
+Since the Slang runtime system uses many standard C routines, such
+substitution is strongly discouraged.
+.\"
+.\"                             -a option
+.\"
+.TP 15
+\fB\-a\fI TAP "args"\fR
+Provides a mechanism by which one can pass arguments to a Serpent application
+or a Serpent technology.
+.I TAP
+specifies the name of the technology or application to which to pass the
+arguments; the name, here, refers to the name of the program that implements
+the technology or application.
+(\fITAP\fR is an acronym that stands for \fIT\fRechnology or \fIA\fRpplication
+\fIP\fRrogram.)
+The
+.I args
+parameter specifies the argument or arguments to be passed to the TAP.
+If more than one argument is to be passed to the TAP, this parameter must be
+quoted; otherwise, the shell will prematurely expand the TAP argument list
+into multiple arguments.  This option may be specified multiple times
+to pass parameters to more than one TAP.  Examples of usage:
+.sp
+.B \-a
+saw "-d 3 -x 5"
+.sp
+.B \-a
+my_application "fred barney wilma betty"
+.sp
+.B \-a
+your_application debug
+.B \-a
+saw "-d 3 -x 4"
+.\"
+.\"                             -p option
+.\"
+.TP 15
+.BI \-p " component journal"
+Specifies that Serpent should simulate the specified
+.I component,
+using the previously recorded transactions in the
+.I journal
+file.  If 
+.I component 
+specifies the name of a TAP (see the documentation for the
+.B \-a
+option, above), transactions for that TAP will be played back from the
+journal file.  If
+.I component
+specifies the name of the dialogue or the string ``dm'', transactions
+for the dialogue will be played back from the journal file.  The journal
+file must have been created with the standard Serpent transaction recording
+functions available from a dialogue or Serpent application.  Examples of usage:
+.sp
+.B \-p
+saw saw.journal
+.sp
+.B \-p
+my_application my_journal
+.sp
+.B \-p
+dm recording
+.\"
+.PP
+Generally, the placement of options on the command line is irrelevant.
+(The only exceptions, as outlined above, are 
+.B \-L
+and
+.B \-I.)
+When
+.B \-c
+(or
+.B \-d),
+.B \-l
+and
+.B \-g
+are all specified, compilation is always performed first, followed by linking,
+and finally execution, regardless of the order of the options on the
+command line.
+.\"
+.\" --------------------------------------------------------------------------
+.\"
+.SH ENVIRONMENT
+.TP 15
+.B SERPENT_BASE_PATH
+Specifies the root directory of the installed Serpent software.
+This environment variable is currently required.
+.TP 15
+.B SERPENT_DATA_PATH
+Contains a list of include directories to be searched during the compilation
+phase.  Directory names are separated by blanks.  Directories in this
+list are searched prior to directories specified with the
+.B \-I
+option; they are searched in the order they appear in the list.
+.TP 15
+.B SERPENT_EXE_PATH
+Contains a list of directories to search for executables during the run
+phase.  Directory names are separated by blanks.  Be certain that the
+directory containing the dialogue to be executed is in this path list!
+A typical value for this environment variable might be:
+.sp
+". /usr/local/serpent/bin"
+.sp
+This environment variable is currently required.
+.\"
+.\" --------------------------------------------------------------------------
+.\"
+.SH FILES
+.TP 15
+\&\&./.\fIdialogue_name\fR?*.[ch]
+Intermediate C source files.
+.TP 15
+\&\&./.\fIdialogue_name\fR?*.o
+Intermediate C objects.
+.TP 15
+\&\&./.\fIdialogue_name\fR?.d
+Serpent runtime initialization files.
+.PP
+Note that all intermediate files are created in the current working 
+directory, regardless of the location of the dialogue.
+.\"
+.\" --------------------------------------------------------------------------
+.\"
+.SH "SEE ALSO"
+ar(1), cc(1), ld(1), format(1), sdd(1)
+.sp
+\fISEI Serpent Slang Reference Manual (Draft Report)\fR,
+CMU/SEI-UG-89-5, Software Engineering Institute, Carnegie Mellon University
+(Pittsburgh, Pennsylvania, 15213), August 1989.
+.sp
+\fISEI Serpent Application Developer's Guide (Draft Report)\fR,
+Software Engineering Institute, Carnegie Mellon University
+(Pittsburgh, Pennsylvania, 15213), August 1989.

@@ -1,0 +1,702 @@
+$Header: xpic.doc,v 1.11 89/02/10 04:12:27 xwindows Exp $
+                              Using xpic.
+                              -----------
+
+                             Mark Moraes
+                  Computer Systems Research Institute
+                      (moraes@csri.toronto.edu)
+
+Xpic is a drawing package for the X Windows system, inspired
+strongly by a similar, much-used package written by Bruno Preiss
+for the BitGraph (bgpic).  Xpic was not intended for painting, but
+drawing diagrams, and figures. It was intended to produce output
+for pic(1) and PostScript(tm), and some of its features stem from
+that. But it outputs a simple file of object descriptions, which
+can be translated to any device you like, if you write the
+appropriate filter. At present, filters exist for pic (the troff
+and TeX versions) and PostScript.
+
+Usage:
+xpic [host:display] [geometry] [iconGeometry] option ..... file ... 
+
+The list of options is shown below - either the short form, or the 
+long form is valid. The option is followed by a description, and the 
+default.
+
+Option   Resource name    Action                 Default
+
+-grid,   gridOn "off"     Turns grid off         (On)
++grid,   gridOn "on"      Turns grid on          (On)
+-gs,     gridSpacing      Grid spacing in pixels (8)
+-ph,     pageHeight       PageHeight in 10*in.   (110)
+-pw,     pageWidth        PageWidth in 10*in.    (85)
+-rotate, rotate "on"      swap page height and width
++rotate, rotate "off"     normal page height and width
+-backup, backup "off"     No backup file on write(On)
++backup, backup "on"      Make backup file on write(On)
+-cr,     cursorColor      Sets cursor color      (Black)
+-hl,     highlight        Sets highlight color   (Black)
+
+Thanks to a sneak trick in the way xpic saves files, *executing* a file
+saved by xpic will cause it to start up xpic on itself. This feature
+may not be available on all systems.
+
+(Note that we refer to two types of buttons in this document - mouse
+buttons, and screen buttons (which are pieces of text on the screen
+surrounded by borders, which darken when the mouse cursor moves into
+them, and highlight and select when the left mouse button is pressed
+in them. We will always call a mouse button a 'left button', 'right
+button', or 'middle button' or just a 'mouse button'. Any other use of
+button means a screen button)
+
+The basic screen consists of three sections: the drawing window, the
+text interaction window, and the button area.
+
+ The Drawing Window
+ ------------------
+The drawing window has a grid, with crosses every five grid points. Each
+cross is supposed to be at 0.5 inch spacings - as such, the default page
+size is supposed to represent an 8.5x11" page. Changing the size results
+in the picture window resizing as best as it can, while the menus and
+the input window remain constant. (There is a minimum window size, which
+can be discovered by experimentation) Resizing assumes the so-called
+'quarter-plane' model - i.e. the upper-left corner of the picture is the
+origin, and remains fixed; Increasing the size means that more room is
+available to draw, but the scale does NOT change. If you make the window
+smaller, then stuff that may go outside the window boundaries will be
+clipped, but will still be part of the picture.
+
+The cross-hairs cursor in the drawing window tracks the mouse. The
+tracking is done by the X server, and possesses all the disadvantages of
+X tracking. However, the cursor position, as far as xpic is concerned,
+is "snapped" to the nearest grid point, (or a fraction thereof,
+depending on the Snap setting - more on this later.)
+
+All objects in the drawing window "rubber-band", i.e. they follow the
+mouse, re-drawing on each mouse movement. This means that hyper-speed
+movement of the mouse is very unwise. 
+
+The mouse button convention is reasonably consistent:
+
+The Left mouse button selects a point. This is really the action mouse button for
+most tasks. (In edit mode, i.e. copy, move, delete, paste, adjust, this
+mouse button selects the nearest selectable object - 'nearest' means the
+object whose bounding-box centre is closest to the mouse)
+
+The Right mouse button ends lines, and splines at the last point at which the
+Left mouse button was clicked. i.e. the rubber-banded segment vanishes.
+(In edit mode, this deselects the object that has been selected, and
+makes it non-selectable. So a subsequent Left click will select the 
+next-nearest object. This selection cycles around)
+
+The Middle mouse button aborts the operation, and erases the element being
+drawn. Use with care - It cannot be undone. (Maybe this should become
+SHIFT-Middle mouse button.) (In edit mode, in addition to aborting whatever
+operation was in progress, it also makes all objects selectable again)
+
+Small fonts are barely readable - they are meant to give an idea of size
+more than anything. Using 6 point fonts requires considerable imagination.
+The fonts are not exact replicas of what you can get on paper, and are
+limited to a small subset of fonts which I could scale and generate for
+X.
+
+ The Button Area
+ ---------------
+The buttons are grouped in button-boxes. Click the left mouse button on a
+button to select it.  There are three types of buttons - radio-buttons,
+command buttons and updown buttons. The radio-buttons when clicked on, turn
+on, AND the button in the same button box which was on turns off - i.e. only
+one radio-button in any button box will be on at any one time. The selected
+button will be in inverse video, and will remain that way till another
+button is selected. The updown buttons have a "+" sign on the left and a "-"
+sign on the right - clicking the left mouse button will cause the updown
+button to advance to the next selection, which is displayed in the centre of
+the button. Clicking the right mouse button will cause the updown button to
+move to the previous selection.
+
+In the command button boxes, no item remains permanantly selected.
+When a button is pressed, it executes a command, and unhighlights
+automatically.
+
+ Button functions:
+ -----------------
+The top button box consists of basic functions - for drawing elements,
+and for editing them.
+
+The basic element drawing functions are:
+
+Box:
+	Draws a rectangle. Select the button, and click the left mouse
+button in the drawing window to start the box, (this specifies one
+corner) and move the mouse to the other corner of the desired box and
+click the left mouse button again to end the box.
+
+Line:
+	This is a continuous "poly-line". To draw the line, select
+this button, and go into the drawing window. Each left click puts down
+a point for the line, and clicking the right button ends the line.
+(Note that the point where you click the right button is not part of
+the line)
+
+Spline:
+	Works just like a line, except that it draws a quadratic
+B-spline connecting the points instead of a line.
+
+Circle:
+	The first click of the left mouse button sets the centre, and
+the second click sets the radius.
+
+Ellipse:
+	The first click sets one corner of the box enclosing the
+ellipse, and the second click sets the other corner.
+
+
+Text: 
+	To put text, select the Text button. Then, click the left mouse
+button somewhere in the drawing window. The interaction window will
+prompt for text with a "?". After inputting the text, (and hitting
+return), move the mouse (which will now have the text string attached)
+to the place where the text should be and click the left mouse button
+again. The way the text string is attached to the mouse depends on the
+text positioning attributes (left justified, centred, right-justified,
+etc).
+
+	Xpic tries to display onscreen text as a reasonable approximation of
+what you will see on the hardcopy output. This is subject to the
+availability of reasonable fonts, and xpic's interfaces with the output
+devices (the filter programs x2ps, x2pic, and x2tpic, documented below).
+However, since the output medium (presently pic for troff, or PostScript) is
+likely to have non-ascii characters which xpic cannot display easily on the
+screen (not without putting the full pic or PostScript text semantics in
+xpic) there are bound to be differences. For example, the troff notation for
+bullet is \(bu - if you put this on screen, it will appear as such. If you
+print it with pic and troff, it will come out on paper as a bullet. If you
+try printing it with tpic and TeX, it will come out as \(bu. For tpic and
+TeX, you have to say \bullet. For PostScript, you have to say \267.  In all
+cases, xpic will not understand and will print \(bu, \bullet or \267 on the
+screen respectively. The user is expected to understand this. If you want
+snazzy effects like special characters or equations on your output device,
+be sure you understand the output device - xpic will try not to get it the
+way - it won't help much either.
+
+Obviously, if you want a real honest-to-goodness backslash, you have to
+escape it with another backslash, for TeX, troff and PostScript. Backslash,
+in xpic text, like in most other aspects of Unix, is magic - it unleashes
+spells and incantations that are wondrous to behold if you know what you are
+doing, and devastating if you don't. Beware.
+
+The text interaction window is used whenever text is needed, or
+filenames, or such-like. It allows a decent subset of EMACS (actually,
+JOVE) commands to edit the text in the line. The usual concepts of
+point and mark apply, and killing, and yanking back killed text. Note
+that there is no kill ring, or mark stack - and C-X performs the
+function of C-X C-X (There are no prefixes!) The keys to which
+commands are bound can be changed : the default bindings are:
+
+    /* motion bindings */
+
+    <Ctrl>F:            forward-character
+    <Key>168:           forward-character       /* Cursor -> key */
+    <Ctrl>B:            backward-character
+    <Key>167:           backward-character      /* Cursor <- key */
+    <Ctrl>A:            beginning-of-line
+    <Ctrl>E:            end-of-line
+    <Ctrl>U:            universal-argument      /* Multiplies by four */
+
+    /* delete bindings */
+
+    <Ctrl>D:            delete-next-character
+    <Ctrl>H:            delete-previous-character
+    <Key>113:           delete-previous-character
+    <Key>188:           delete-previous-character
+
+    /* kill bindings */ 
+
+    <Ctrl>X:            exchange-point-and-mark
+    <Ctrl> :            make-this-the-mark
+    <Ctrl>W:            kill-region
+    <Ctrl>K:            kill-to-end-of-line
+    <Meta>D:            kill-to-beginning-of-line
+
+    /* yank bindings */ 
+
+    <Ctrl>Y:            yank-killed-text
+
+    /* exit quit stuff */
+
+    <Ctrl>J:            newline
+    <Key>115:           newline
+    <Ctrl>M:            newline
+    <Key>189:           newline
+    <Ctrl>G:            abort
+    <Ctrl>C:            abort
+
+    /* selection stuff */
+
+    <BtnDown>left:      set-cursor-to-mouse
+    <BtnDown>middle:    set-mark-to-mouse
+    <BtnDown>right:     get-x-buffer
+
+Their functions should be sort-of obvious - if not, grab a Jove manual.
+(USD-17 in the 4.3 manuals).  vi users have my sympathies. The minibuf
+becomes the Focus of input whenever it is required, so you need not move
+the mouse into the interaction window to type. When input is over, Focus is
+given to the RootWindow, as it presumably was before the program
+started. (If it wasn't, tough!) Clicking the left mouse button at a point in
+the interaction window moves the point there, clicking the middle
+mouse button sets the mark there, (indicated by the text cursor flashing there
+briefly) Clicking the right mouse button extracts the text in the global X cut
+buffer and pastes it in at the point.
+
+Changing these bindings can be done by putting a file of bindings in the
+above format (without the C style comments) somewhere, and adding the
+line 
+    xpic.Minibuf.eventBindings:         filename
+
+in you .Xdefaults file. 'filename' can be an absolute pathname (starting
+with a '/') or a pathname relative to your home directory (starting without
+a '/'. i.e. the ~ character is implicit. ~ does not work, however.) See more
+on resources below. 
+
+Note that xpic will not go on if it expects input from the input window,
+unless a newline (RETURN, LINE-FEED) or abort (^G) is input. It does
+not, however, stop other applications from continuing.
+
+The editing operations have two modes, selected in the second button
+box - they should be discussed before the editing functions.
+
+Element:
+	This allows editing of individual objects. You select an
+object to edit by going into the drawing window and clicking near
+it (after selecting one of the editing functions in the "Elements"
+box) The selected object will highlight - lines, boxes, splines,
+ellipses, circles by being redrawn thicker, and text will get a
+shaded box over it. If you happen to have selected the wrong
+object, simply click the right mouse button (which will deselect
+the object, i.e unhighlight it, and mark it rejected) and click the
+left mouse button again. This time, it will select the second
+nearest object, since the first selection is marked as rejected.
+You can cycle through all objects on the screen without moving the
+mouse, simply by clicking the left and right button alternately.
+
+	Once selected, you can perform the appropriate editing
+operation on the object.
+
+Block:
+	In this mode, you operate on all objects contained within a
+box which you draw in the drawing window - first left mouse button
+click sets one corner of the box, and the second mouse click sets the
+other corner. This will usually highlight all the elements within the
+box, and put a box on the mouse cursor, which you can drag around and
+position with another left click. The selected objects will be redrawn
+at the new position, and highlighted. You can keep dragging the box
+around and repositioning it as long as you like - when you're
+satisfied with the position/shape of the new object, click the right
+button and the objects unhighlight, and the drag box vanishes.
+
+The editing operations available are:
+
+Copy:
+	This makes a copy of the selected object(s). In element mode, it
+puts the copy of the object on the mouse cursor and allows you to
+drag it around and place it with another click of the mouse. In block
+mode, you can drag the enclosing box around, which is why you get
+multiple chances to place it - since you can't see all the elements
+move.
+
+Move: 
+	Similar to copy, except the objects in question themselves
+move, instead of making a copy.
+
+Delete:
+	The selected object(s) highlight, and you are prompted to
+click again to confirm the delete. The most recently deleted
+element/block is stored in a kill-buffer, and can be retrieved with a
+Paste operation.
+
+Paste:
+	A left click in the drawing window puts the element/block most
+recently deleted on the mouse cursor and allows it to be dragged
+around and positioned. (one try for elements, multiple tries for
+blocks, as usual)
+
+Adjust:
+	This differs considerably in element and block modes. In
+element mode, the selected object can be adjusted depending on the
+type of object. For lines and splines, the nearest point in the
+line/spline is selected and moves with the mouse cursor, the object
+being redrawn appropriately. For boxes, the nearest corner is
+adjusted. In circles, the radius is changed. For ellipses, like boxes,
+the nearest corner (of the enclosing box) is moved. Text is put in the
+minibuffer and can be edited - hitting return puts it back on the
+drawing window.
+
+	In block mode, adjustment is primarily useful for lines and
+splines. (But works on other objects). All control points within the
+block are moved around. (This is an exception to the strict
+containment rule which applies to all other block operations. Here,
+even those elements which have only part of them in the selected block
+are selected). For lines/splines, the control points are any point,
+for a boxes/ellipses, they are any corner enclosed, for circles, the
+centres are the control points, and for text, the text origin is the
+control point moved. This mode is best learnt by experimenting - it is
+more easily seen than described.
+
+Get, Put:
+	These work only in block mode (and make loud and persistent
+complaints if selected in element mode). Get will prompt for the name
+of an xpic file when the left mouse button is cliecked in the drawing
+window, and will read it in, and put the enclosing box on the
+mouse cursor to be positioned. The elements from the file will be
+inserted into the figure. 
+
+	Put does exactly the reverse - it prompts for a file name to
+save the selected block to. The saved file can be read in with the Get
+command, or used as a full xpic picture (xpicture?)  in its own right.
+
+Change Attributes:
+	This will change the attributes of the selected object(s) to
+the current set of attributes. Th eattributes are described below.
+
+ Attributes
+ ----------
+
+The following attributes affect all objects excpet Text. (i.e. Line,
+Spline, Box, Circle, Ellipse).
+
+Patterns:
+	The five patterns are Solid, Dotted, Short-Dashed,
+Long-Dashed, and Dot-Dashed.
+
+Line Thickness:
+	Ranges from 0 to 10. A zero line width means a thin line, that
+is half the width of a line of width 1, but is drawn with the same
+width as a line of width 1 because of screen resolution.
+
+	This attribute affects only lines and splines:
+
+Arrows:
+	Whether to draw arrows at the start of a line, the end of a
+line, both ends of a line, or not at all.
+
+
+The following attributes apply to only Text objects:
+
+Font:
+	This is an updown button - it will display the current font.  By
+clicking the right or left button, one can cycle through the available fonts
+- which are determined from the X server.  See the section on fonts (later)
+for more on this.
+
+Point Size:  
+	Also an updown button, which permits cycling through the
+available pointsizes for the current font. 
+
+Text Vertical, Horizontal Alignment:
+	These two boxes indicate how the text should be placed at the
+mouse position. The vertical alignment Top means that the mouse is at
+the Top of the text, Middle is for the mouse at the bottom of the
+text, and Bottom means that the mouse is below the text.
+
+	The horizontal alignment decides if the mouse if to be to the
+Left, Centre, or Right of the text.
+
+The next attribute decides how to round off the mouse position:
+
+Snap:
+	The grid points are 8 pixels apart. There are 10 grid points
+to every inch. (i.e 80 points per inch). The default snap value makes
+sure that all points in the diagram are rounded off to the nearest
+grid point. This makes drawing precise figures much easier. If you
+need more resolution, you can reduce the snap value (snap of 1 means
+that there is no real snap) or increase it. Since X Windows does the
+mouse cursor tracking, you can move the cursor in between the grip
+points even at snap of 8. But the rubber banding of the objects will
+show you the effect of snap - objects will not allow you to select a
+pixel in between two grid points if you have a snap of 8.
+
+ Command Boxes
+ -------------
+
+The file operations are:
+
+Read:
+	Reads in a new file and puts it into a new cell. (Eventually,
+you should be able to switch between buffers easily. For now, it isn't
+possible, so xpic insists you must save a file before reading in
+another one).
+
+Save:
+	Saves the current cell in a file. If the cell has no filename
+associated with it, it will prompt for a cell in the interaction
+window. When xpic saves a file, it makes a backup of the file before
+the save in a file of the form filename~ for the file filename.
+
+Save As:
+	It will prompt for a filename in the interaction window, and
+save the cell there. From then on, the new filename is th eone
+associated with the cell.
+
+
+The miscellaneous operations are:
+
+Undo:
+	This extremely handy operation allows one level of undo - it
+will exactly undo the last operation performed EXCEPT for File
+operations. Also, undo is effective for block operations immediately
+after the block operation only. The first edit operation performed
+(even if it is aborted) after a block operation makes the undo
+impossible (and strange things will happen if the undo is performed -
+this is due to the way undo is implemented; unlikely to change).  If
+undo is clicked twice, the first undo is undone. 
+
+Redisplay:
+	Refreshes the drawing window, and cleans up internal data structures
+somewhat. (xpic will automatically refresh itself if the window is
+obscured and later exposed)
+
+Grid:
+	Toggles the grid on and off. With th egrid off, you usually
+get a reasonable idea of what the picture will look when on paper.
+This wins the least used command sweepstakes hands-down.
+
+Status:
+	Prints the status of the buffer, in the form
+
+XPIC version.patchlevel   Buffer: buffername   File: filename   [Modified]
+
+	The [Modified] flag indicates that changes have been made to
+the picture since it was last saved.
+
+Exit:
+	The advanced user will deduce what this is for.
+
+ Resources
+ ---------
+
+The buttons and button boxes used by xpic are standard toolkit items, their
+resources may be set easily. The interaction window and drawing window have
+the following resource names:
+
+                            name                class
+    Program:                xpic                XPic
+    Form enclosing it:      form                Form
+    Interaction window:     minibuf             Minibuf
+    Drawing Window:         picture             Window
+    Labels:                 label               StaticText
+    ButtonBoxes:            label.box           RowCol
+    Buttons:                button name         PushButton
+
+Program level resources are
+    Resource name           Resource class      default
+    name                    Name                xpic
+    iconGeometry            IconGeometry        (none)
+    iconPixmap              IconPixmap          one is provided
+    pageWidth               PageWidth           85
+    pageHeight              PageHeight          105
+    gridSpacing             GridSpacing         8
+    gridOn                  GridOn              True
+    gridColor               GridColor           Black
+    cursorColor             CursorColor         Black
+    highlight               Highlight           Black
+    rotate                  Rotate              False
+    backup                  Backup              True
+    printer                 Printer             PostScript
+    lprcommand              LprCommand          x2ps -w | lpr -P%s
+    
+A sample resource file is: 
+
+	xpic*picture.background:	#80cfdf
+	xpic*picture.foreground:	black
+	xpic*RowCol.background:		MediumTurquoise
+	xpic*RowCol.borderWidth:	0
+	xpic*PushButton.font:		helv10b
+	xpic*PushButton.background:	SkyBlue
+	xpic*PushButton.foreground:	DarkSlateGrey
+	xpic*PushButton.border:		MediumAquamarine
+	xpic*Minibuf.background:	#13e5e5
+	xpic*Minibuf.foreground:	black
+	xpic*Minibuf.font:		9x15
+	xpic*Minibuf.borderWidth:	0
+	xpic*StaticText.background:	white
+	xpic*StaticText.font:		fg-13
+	xpic*StaticText.borderWidth:	0
+	xpic*background:		SkyBlue
+	
+ Output
+ ------
+	Xpic saves files in an internal, (ascii) easy to read/write
+format (easy for xpic and me, that is!) This format can be translated
+into PostScript and pic.
+
+pic:
+    Use the program x2pic - no options etc. Just
+        x2pic [-s scale] [-f numfonts] [filename] ...
+
+-s scale 
+scales the picture by 'scale', where scale can be a float. It tries to
+scale the fonts too, unlike pic's scale command, but don't expect
+miracles.
+
+-f numfonts
+sets the maximum number of fonts in the font mapping table. See the
+section on fonts below. The default is usually adequate unless the
+user has lots of fonts in the ~/.x2pic or ~/.x2tpic file.
+
+Each file becomes a separate .PS/.PE and the pic output is written to
+stdout. If no filename is given, it is read from stdin.
+
+Then process it normally through pic. Note that the fonts on the screen
+match the output fonts closely, but not perfectly.  So don't try to draw
+boxes/ellipses/stuff around text with no tolerance - be generous.
+(Remember the old cartoonists adage - draw the bubble AFTER the text,
+not before)
+
+pic cannot do anything other than solid circles/ellipses/splines. It
+has a silent limit of 50 points per spline which it enforces by core
+dump.
+
+There is a similar program called x2tpic which generates almost
+exactly the same output, but with font style/size selection commands
+in TeX. It can be used with tpic.
+
+PostScript:
+	x2ps [-w] [-r] [-x] [-s scale] [-p prologuefile] [-t trailerfile] 
+		[-f numfonts] [-h hoffset] [-v voffset] [filename] ....
+
+-w WYSIWYG mode, prints the figure as it was in the screen without moving the
+picture so the picture's lower left corner is at the page lower left corner.
+Useful for sending the picture straight to the printer. (The Print button on
+xpic uses this by default. If you don't have a PostScript printer, you
+may want to change the printing command to use x2pic, pic, and troff)
+
+-r prints the figure in landscape mode, rotated by 90 degrees. It
+goes together with the -r option on xpic.
+
+-x suppresses the showpage emitted by x2ps - LaTeX used to need this.
+(Locally, we've fixed LaTeX by defining /showpage to be null in the 
+special header).
+
+-s scale 
+scales the picture by 'scale', where scale can be a float.
+
+-p prologuefile
+-t trailerfile
+specify the prologue and trailer to be used. The defaults are
+/usr/local/lib/xpic/x2ps.pro and x2ps.tra. Use these only if you know
+what you're doing. Typically, you'd take x2ps.{pro,tra} and modify
+them to change something you don't like - or you think is buggy. On
+your own head be it.
+
+-h hoffset
+-v voffset
+specify the horizontal and vertical offset to add to the figure, in
+inches. hoffset and voffset may be floats.
+
+-f numfonts
+sets the maximum number of fonts in the font mapping table. See the
+section on fonts below. The default is usually adequate unless the
+user has lots of fonts in the ~/.x2ps file.
+
+ FONTS
+ -----
+	xpic reads a font description file to decide what fonts it can use
+from the server, and to deal with differing resolutions of available screen
+fonts.  The fontdesc file should be something like 
+
+	<Full name(used in label)> <font-pattern>
+
+(eg)
+Times-Roman *-times-medium-r-normal-*
+Times-Italic *-times-medium-i-normal-*
+Times-Bold *-times-bold-r-normal-*
+Times-BoldItalic *-times-bold-i-normal-*
+
+The patterns are the same as the patterns used for xlsfonts. xpic will
+ignore fonts that do not follow X.V11R3 font naming conventions.
+
+To set the default, a line of the form 
+	default <Full name> <pointsize>
+could be put in. (If it isn't there, the default is the first fontname
+and the first size of that font.
+
+The default fontdesc file it reads is XPICLIBDIR/fontdesc/xpic. It also 
+checks for a ~/.xpic file, and anything in that overrides the system
+defaults.
+
+	x2pic uses a similar fontdesc file, which lists the mapping of
+xpic font names to pic (or really, troff) font changing commands.
+
+(eg)
+Roman 	\fR
+Italic 	\fI
+Bold 	\fB
+Special	\fS
+BigBold	\f(BB
+
+The default x2pic fontdesc is in XPICLIBDIR/fontdesc/x2pic, and it also
+reads ~/.x2pic.
+
+	x2ps does the same thing to map xpic font names to PostScript names.
+
+(eg)
+Roman Times-Roman
+Italic Times-Italic
+Bold Times-Bold
+Special Symbol
+BigBold Helvetica-Bold
+
+The default x2ps fontdesc is in XPICLIBDIR/fontdesc/x2ps, and it also
+reads ~/.x2ps.
+
+
+	x2tpic has a slightly more complex font description file,
+which has the following fields:
+	<Full xpic name> <pointsize> <tex name> <tex font> <optional tex scale>
+
+(eg)
+Roman 	9		\Xninerm	cmr9
+
+-- maps xpic Roman, 9 pt, to the name \Xninerm, corresponding to cmr9.
+
+Roman 	11		\Xelevenrm	cmr10  \magstephalf
+
+-- maps xpic Roman, 11 pt, to the name \Xelevenrm, corresponding to
+cmr10, scaled by magstephalf. (See the TeXbook for more in this)
+
+Italic 	6		\Xsixit		cmti7  857
+
+-- maps xpic Italic, 6 pt, to the name \Xsixit, corresponding to cmti7
+scaled 857.
+
+Special 6		\Xsixsp		PS-Symbol pointsize6
+
+-- We store the .tfm file for PostScript(tm) fonts under the names
+PS-postscriptname. (eg) PS-Symbol. Other sites may use different names
+(eg) pssymbol. The above line generates the appropriate scaled at
+command to get 6 point Symbol.
+
+x2tpic will search this table to find the closest font to the one
+requested. It will find the closest size in either the same font style
+or Roman.
+
+If you want to add to the table, keep the entries in ~/.x2tpic.
+Usually, your system will have the right map of fonts in the default.
+If not, ask the person who installed xpic to talk to the person who
+looks after TeX.
+
+ BUGS
+ ----
+Please report bugs to me, as specifically as you can. Note that if
+the system crashes, xpic cannot retrieve work like text editors.
+If xpic dies due to some unpleasant cause (program error, network
+error, a signal), it dumps the current unsaved cell into some
+temporary directory - usually /tmp.
+
+If you make improvements, or think they should be made, tell me. If
+you send code, please use context diffs - the -c flag on diff.
+
+Good luck.
+
+-----------
++ PostScript is a trademark of Adobe, Inc.

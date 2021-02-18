@@ -1,0 +1,24 @@
+;;
+;;	default uumrc
+;;	For uum (Wnn V4)
+
+setconvenv	@LIBDIR/wnnenvrc.rev
+setkankanaenv	@LIBDIR/wnnenvrc_R.rev
+;setkanaromenv	@LIBDIR/wnnenvrc_Roma
+
+setjishopath    @LIBDIR/dic/pubdic/
+sethindopath    @LIBDIR/dic/usr/@USR/
+
+setuumkey	@LIBDIR/uumkey
+setrkfile	@LIBDIR/rk
+
+setconvkey      	@LIBDIR/cvt_key_tbl
+;setconvkey      ST*	@LIBDIR/cvt_key_tbl.ST
+;setconvkey      gmw*	@LIBDIR/cvt_key_tbl.gm
+;setconvkey      gmw16*	@LIBDIR/cvt_key_tbl.gm
+;setconvkey      gmw24*	@LIBDIR/cvt_key_tbl.gm
+;setconvkey      kterm*	@LIBDIR/cvt_key_tbl.kt
+
+waking_up_no_henkan_mode
+;flow_control_on
+;send_ascii_char

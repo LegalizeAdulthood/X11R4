@@ -1,0 +1,93 @@
+#
+# XXXX-XXX (C) COPYRIGHT IBM CORPORATION 1988
+# LICENSED MATERIALS - PROPERTY OF IBM
+# REFER TO COPYRIGHT INSTRUCTIONS FORM NUMBER G120-2083
+#
+#	XGKS demos make script
+#
+# $Header: Makefile,v 3.12 89/03/10 10:37:10 amy Exp $
+SHELL = /bin/sh
+
+ILIBDIR = $(INSTALLHOME)/lib
+IHDIR = $(INSTALLHOME)/include
+FONTDBDIR = $(ILIBDIR)/fontdb
+
+ALLIVARS = INSTALLHOME=$(INSTALLHOME) ILIBDIR=$(ILIBDIR) IHDIR=$(IHDIR) \
+	FONTDBDIR=$(FONTDBDIR)
+
+LIBS  = ../lib/libxgks.a -lX11 -lm
+CFLAGS = -I$(IHDIR)
+
+SRCS =  bsort.c clock.c defcolors.c font.c hanoi.c mi.c pline.c pmark.c usa.c wong.c
+BINS =  bsort clock defcolors font hanoi mi pline pmark usa wong
+
+SUBDIRS = Logo example stratego
+
+all: $(BINS) 
+	@for i in $(SUBDIRS); do \
+		(echo '*** making: '`pwd`'/'$$i; \
+		cd $$i; make $(MFLAGS) all; \
+		echo '*** done making: '`pwd`'/'$$i ) done
+
+bsort : bsort.o
+	$(CC) $(CFLAGS) -o $@ $@.o $(LIBS)
+
+clock : clock.o
+	$(CC) $(CFLAGS) -o $@ $@.o $(LIBS)
+
+defcolors : defcolors.o
+	$(CC) $(CFLAGS) -o $@ $@.o $(LIBS)
+
+font : font.o
+	$(CC) $(CFLAGS) -o $@ $@.o $(LIBS)
+
+hanoi : hanoi.o
+	$(CC) $(CFLAGS) -o $@ $@.o $(LIBS)
+
+mi : mi.o
+	$(CC) $(CFLAGS) -o $@ $@.o $(LIBS)
+
+pline : pline.o
+	$(CC) $(CFLAGS) -o $@ $@.o $(LIBS)
+
+pmark : pmark.o
+	$(CC) $(CFLAGS) -o $@ $@.o $(LIBS)
+
+usa : usa.o
+	$(CC) $(CFLAGS) -o $@ $@.o $(LIBS)
+
+wong : wong.o
+	$(CC) $(CFLAGS) -o $@ $@.o $(LIBS)
+
+clean:
+	-rm *.o core 
+	@for i in $(SUBDIRS); do \
+		(echo '*** making: '`pwd`'/'$$i; \
+		cd $$i; make $(MFLAGS) clean; \
+		echo '*** done making: '`pwd`'/'$$i ) done
+
+depend:
+	../utils/makedepend/makedepend  -I$(IHDIR) *.c
+	@for i in $(SUBDIRS); do \
+		(echo '*** makedepend ' `pwd`'/'$$i; \
+		cd $$i; make depend;); done
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+bsort.o: /usr/include/stdio.h /usr/include/string.h /usr/include/NLchar.h
+bsort.o: /usr/include/sys/NLchar.h /u/amy/xgks/include/xgks.h demo.h
+bsort.o: /usr/include/sys/time.h /usr/include/sys/time.h
+clock.o: /usr/include/stdio.h /usr/include/setjmp.h /usr/include/signal.h
+clock.o: /usr/include/sys/signal.h /usr/include/ieeetrap.h
+clock.o: /usr/include/sys/fpfp.h /usr/include/sys/fpfpi.h
+clock.o: /u/amy/xgks/include/xgks.h
+defcolors.o: /usr/include/stdio.h /u/amy/xgks/include/xgks.h demo.h
+font.o: /usr/include/stdio.h /u/amy/xgks/include/xgks.h demo.h
+hanoi.o: /usr/include/stdio.h /usr/include/math.h /usr/include/values.h
+hanoi.o: /u/amy/xgks/include/xgks.h demo.h
+mi.o: /usr/include/stdio.h /u/amy/xgks/include/xgks.h demo.h
+pline.o: /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+pmark.o: /u/amy/xgks/include/xgks.h /usr/include/stdio.h
+usa.o: /usr/include/stdio.h /usr/include/strings.h /u/amy/xgks/include/xgks.h
+usa.o: demo.h
+wong.o: /u/amy/xgks/include/xgks.h /usr/include/stdio.h demo.h

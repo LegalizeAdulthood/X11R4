@@ -1,0 +1,24 @@
+<< app >>
+
+!******************************************************************************
+! Application Shared Data for the Concentration demo.
+!******************************************************************************
+
+/*
+$Log:	concent.sdd,v $
+Revision 1.2  89/10/13  16:21:13  bmc
+Changed name of application to 'app'.
+
+Revision 1.1  89/09/14  14:02:15  bmc
+Initial revision
+
+*/
+
+concentration : shared data
+
+    square_sdd: record
+	number      : integer;
+	prize_name  : string [50];
+    end record;
+
+end shared data;

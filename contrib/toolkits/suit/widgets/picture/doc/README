@@ -1,0 +1,24 @@
+	Here are some documents on the picture widget.
+
+	The contents of each file is as follows:
+
+==> coordinates <==
+
+	Some explanation about the coordinates.
+
+==> file_format <==
+
+	Some explanation about the picture file format.
+
+==> makefile <==
+
+	Can be used to print out the 'picture.n' file.
+
+==> picture.n <==
+
+	MAN pages for the picture widget.
+	This file is in troff format, and includes some pic and tbl commands.
+
+==> text <==
+
+	Some supplementary explanation for the text primitive.

@@ -1,0 +1,119 @@
+===============================================================================
+=======                                                                 =======
+=======		  Module Imgcvt  --  Image Conversion Functions		=======
+=======				File imgcvt.c				=======
+=======                                                                 =======
+===============================================================================
+
+
+  Functions:
+
+	This module includes a set of image conversion functions.
+	These are generally simple conversions that fall short
+	of hard-core full-bore image processing.
+
+
+  Public Routines:
+
+	color_to_gray	Convert color image to gray scale
+	color_to_mono	Convert color image to dithered monochrome
+	dither		Reduce color content by dithering
+	img_init_dither_tables
+			Initialize dithering tables
+
+			img_init_dither_tables is shared with other
+			imglib modules but isn't advertised as something
+			useful to imglib users.
+
+
+  Local Routines:
+
+	rgb_to_mono	Convert RGB image to dithered monochrome
+
+
+  Module History:
+
+	11-21-89	Paul Raveling
+	Finalized version for contribution to X11R4.  Changes not
+	documented in this header have been made within the last
+	3 weeks.
+
+	3-17-89		Paul Raveling
+	Created module.
+
+===============================================================================
+=======                                                                 =======
+=======	      color_to_gray --  Convert Color Image to Grayscale	=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	color_to_gray (image)
+
+
+  Functions:
+
+	Convert colors in an image to gray scale.  Conversion
+	is based on:
+
+	    gray = .299*red + .587*green + .114*blue
+
+	but uses the following approximation for the sake of speed:
+
+	    gray = (77*red + 150*green + 29*blue) >> 8
+
+	This is accurate enough to suit human perception, and
+	it's adequately fast as long as the C compiler decomposes
+	multiplication by constants into shifts, adds, and subtracts.
+
+	If the image is an RGB image without a colormap, color_to_gray
+	supplies a 256-entry grayscale map and sets the map index
+	in all pixels.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to convert
+
+
+  Output:
+
+	No direct output;  Image is modified to change colors to gray scale
+
+===============================================================================
+=======                                                                 =======
+=======	 color_to_mono  --  Convert Color Image to Dithered Monochrome	=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = color_to_mono (image)
+
+
+  Functions:
+
+
+	Convert  a color image to gray scale and dither the grayscale
+	values to black and white.
+
+	If the image is color-mapped, this replaces the color map
+	with a 2-entry map.  Pixel values become 0 for black,
+	1 for white.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to convert
+
+
+  Output:
+
+	status		int
+	<return value>	Success/failure status:
+			    0 => Failure:  Image isn't color mapped,
+					   or is info-only (no pixels!)
+			    1 => Success

@@ -1,0 +1,43 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+
+STRIPCPPLINES = egrep -v -f pat.grp
+YYHIDE = ./yyhide -vv
+CPP = ${CC} -E -I. ${LOCALINCLUDES} ${INCLUDES} ${STD_DEFINES} ${DEFINES}
+
+POBJS = pgrammar.o support.o ptokens.o
+OBJS = grammar.o support.o tokens.o
+
+NormalObjectRule()
+
+LibraryTarget(libpparsec.a, ${POBJS})
+ProgramTarget(yyhide, yyhide.o, libpparsec.a, ${UTILLIB})
+LibraryTarget(libparsec.a, ${OBJS})
+
+CleanTarget(preyyhide pparsec.h parsec.h lex.yy.c y.tab.c y.tab.h y.output pgrammar.c ptokens.c grammar.c tokens.c)
+
+InstallFile(parsec.h, ${INSTINCFLAGS}, ${DESTDIR}/include)
+InstallDocs(parsec.d yyhide.d, ${DESTDIR}/doc)
+InstallProgram(yyhide, ${DESTDIR}/bin)
+InstallLibrary(libparsec.a, ${DESTDIR}/lib)
+
+CppAndFilter(grammar.c, y.tab.c, p1.h, ${STRIPCPPLINES} | ${YYHIDE})
+CppAndFilter(pgrammar.c, y.tab.c, p1.h, ${STRIPCPPLINES})
+CppAndFilter(tokens.c, lex.yy.c, parsec.h, ${STRIPCPPLINES} | ${YYHIDE})
+CppAndFilter(ptokens.c, lex.yy.c, parsec.h, ${STRIPCPPLINES})
+
+AppendFiles(parsec.h, p1.h y.tab.h)
+
+NCYaccWithHeader(grammar.y)
+NCLex(tokens.l)
+
+grammar.o: grammar.c
+support.o: support.c parsec.h
+tokens.o: tokens.c
+
+yyhide.o: yyhide.c parsec.h
+
+pgrammar.o: pgrammar.c
+ptokens.o: ptokens.c

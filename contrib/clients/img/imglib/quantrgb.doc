@@ -1,0 +1,78 @@
+==============================================================================
+======									======
+======			      Module Quantrgb				======
+======		       Quantize RGB (Unmapped) Images			======
+======									======
+==============================================================================
+
+  Function:
+
+	This module contains one subprograms to quantize a color
+	image in RGB format.
+
+
+  Public subprograms:
+
+	quant_rgb	Quantize RGB image
+
+
+  Private subprograms:
+
+	prune		Prune subtree of color classification tree
+	prune_level	Prune bottom level from tree
+
+
+  Module history:
+
+	11-21-89	Paul Raveling
+	Finalized version for contribution to X11R4.  Changes not
+	documented in this header have been made within the last
+	3 weeks.
+
+	3-25-89		Paul Raveling
+	Created this module by modifying a copy of alcols.
+
+
+******************************************************************************
+******									******
+******			quant_rgb  --  Quantize RGB Image		******
+******									******
+******************************************************************************
+
+  Invocation:
+
+	status = quant_rgb ( image, num_colors )
+
+
+  Function:
+
+
+	Quantize colors for an image.  This selects a set of colors
+	to represent the RGB image, defines them in a color map
+	added to the image, and stores an index to entries in this color
+	map in the "tag" field of each pixel.
+
+	After calling quant_rgb, a color-mapped version of the image
+	can be created by using copy_img and specifying mapped_image
+	as the new image type.
+
+	The actual number of colors in the quantized map can be
+	slightly less than the number requested.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to quantize
+
+	num_colors	int
+			Maximum number of colors to be retained
+			in the image
+
+
+  Output:
+
+	status		int
+	<return value>	Completion status:
+				0 => Failed
+				1 => Succeeded

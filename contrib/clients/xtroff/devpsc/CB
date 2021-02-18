@@ -1,0 +1,202 @@
+# STARTFONT 2.1
+# 
+#  Copyright 1984, 1987 Adobe Systems, Inc.
+#  Portions Copyright 1988 Digital Equipment Corporation
+# 
+#  Permission to use, copy, modify, and distribute this software and
+#  its documentation for any purpose and without fee is hereby granted,
+#  provided that the above copyright notices appear in all copies and
+#  that both those copyright notices and this permission notice appear
+#  in supporting documentation, and that the names of Adobe Systems and
+#  Digital Equipment Corporation not be used in advertising or
+#  publicity pertaining to distribution of the software without
+#  specific, written prior permission. Adobe Systems and Digital
+#  Equipment Corporation make no representations about the suitability
+#  of this software for any purpose. It is provided "as is" without
+#  express or implied warranty.
+# 
+#  ADOBE SYSTEMS AND DIGITAL EQUIPMENT CORPORATION DISCLAIM ALL
+#  WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED
+#  WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL ADOBE
+#  SYSTEMS AND DIGITAL EQUIPMENT CORPORATION BE LIABLE FOR ANY SPECIAL,
+#  INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER
+#  RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF
+#  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+#  CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# 
+# 
+#  FONT -Adobe-Courier-Bold-R-Normal--24-240-75-75-M-150-ISO8859-1
+#  devpsc.CB.24.75
+name CB
+ligatures fi fl 0
+spacewidth 120
+charset
+\|	33 0 000	1/6 em space
+\^	17 0 000	1/12 em space
+\&	00 0 000	no space
+!	120 2 041	exclam
+"	120 2 042	quotedbl
+#	120 3 043	numbersign
+$	120 3 044	dollar
+%	120 2 045	percent
+&	120 2 046	ampersand
+'	120 2 047	quoteright
+(	120 3 050	parenleft
+)	120 3 051	parenright
+*	120 2 052	asterisk
++	120 2 053	plus
+,	120 1 054	comma
+.	120 0 056	period
+/	120 3 057	slash
+sl	"
+0	120 2 060	zero
+1	120 2 061	one
+2	120 2 062	two
+3	120 2 063	three
+4	120 2 064	four
+5	120 2 065	five
+6	120 2 066	six
+7	120 2 067	seven
+8	120 2 070	eight
+9	120 2 071	nine
+:	120 0 072	colon
+;	120 1 073	semicolon
+<	120 2 074	less
+=	120 0 075	equal
+>	120 2 076	greater
+?	120 2 077	question
+@	120 3 0100	at
+A	120 2 0101	A
+B	120 2 0102	B
+C	120 2 0103	C
+D	120 2 0104	D
+E	120 2 0105	E
+F	120 2 0106	F
+G	120 2 0107	G
+H	120 2 0110	H
+I	120 2 0111	I
+J	120 2 0112	J
+K	120 2 0113	K
+L	120 2 0114	L
+M	120 2 0115	M
+N	120 2 0116	N
+O	120 2 0117	O
+P	120 2 0120	P
+Q	120 3 0121	Q
+R	120 2 0122	R
+S	120 2 0123	S
+T	120 2 0124	T
+U	120 2 0125	U
+V	120 2 0126	V
+W	120 2 0127	W
+X	120 2 0130	X
+Y	120 2 0131	Y
+Z	120 2 0132	Z
+[	120 3 0133	bracketleft
+\	120 3 0134	backslash
+]	120 3 0135	bracketright
+a^	120 2 0136	asciicircum
+_	120 1 0137	underscore
+ul	"
+\_	"
+`	120 2 0140	quoteleft
+a	120 0 0141	a
+b	120 2 0142	b
+c	120 0 0143	c
+d	120 2 0144	d
+e	120 0 0145	e
+f	120 2 0146	f
+g	120 1 0147	g
+h	120 2 0150	h
+i	120 2 0151	i
+j	120 3 0152	j
+k	120 2 0153	k
+l	120 2 0154	l
+m	120 0 0155	m
+n	120 0 0156	n
+o	120 0 0157	o
+p	120 1 0160	p
+q	120 1 0161	q
+r	120 0 0162	r
+s	120 0 0163	s
+t	120 2 0164	t
+u	120 0 0165	u
+v	120 0 0166	v
+w	120 0 0167	w
+x	120 0 0170	x
+y	120 1 0171	y
+z	120 0 0172	z
+{	120 3 0173	braceleft
+|	120 3 0174	bar
+or	"
+}	120 3 0175	braceright
+a~	120 0 0176	asciitilde
+!!	120 1 0241	exclamdown
+I!	"
+ct	120 2 0242	cent
+ps	120 2 0243	sterling
+po	"
+yi	120 2 0245	yen
+yn	"
+$J	"
+sc	120 3 0247	section
+um	120 2 0310	dieresis
+..	"
+d<	120 0 0253	guillemotleft
+-	120 0 055	hyphen
+hy	"
+mc	120 2 0305	macron
+ma	"
+aa	120 2 0302	acute
+\'	"
+pp	120 3 0266	paragraph
+cd	120 1 0313	cedilla
+d>	120 0 0273	guillemotright
+14	120 2 0201	onequarter
+12	120 2 0202	onehalf
+34	120 2 0203	threequarters
+??	120 1 0277	questiondown
+I?	"
+AE	120 2 0341	AE
+O/	120 3 0351	Oslash
+ss	120 2 0373	germandbls
+ae	120 0 0361	ae
+o/	120 3 0371	oslash
+PL	120 2 0350	Lslash
+ui	120 0 0365	dotlessi
+em	120 0 0320	emdash
+hc	120 2 0317	caron
+Pl	120 2 0370	lslash
+''	120 2 0315	hungarumlaut
+dt	120 2 0307	dotaccent
+be	120 2 0306	breve
+^	120 2 0303	circumflex
+ga	120 2 0301	grave
+\`	"
+og	120 1 0316	ogonek
+bu	120 0 0267	bullet
+bq	120 1 0271	quotedblbase
+dd	120 3 0263	daggerdbl
+dg	120 3 0262	dagger
+en	120 0 0261	endash
+rq	120 2 0272	quotedblright
+cq	"
+ri	120 2 0312	ring
+r>	120 0 0255	guilsinglright
+l<	120 0 0254	guilsinglleft
+lq	120 2 0252	quotedblleft
+oq	"
+n'	120 2 0251	quotesingle
+$D	120 3 0246	florin
+~	120 2 0304	tilde
+OE	120 2 0352	OE
+fi	120 2 0256	fi
+fl	120 2 0257	fl
+oe	120 0 0372	oe
+pm	120 2 0275	perthousand
+13	167 0 0210	fudgedproc!
+23	167 0 0211	fudgedproc!
+18	167 0 0204	fudgedproc!
+38	167 0 0205	fudgedproc!
+58	167 0 0206	fudgedproc!
+78	167 0 0207	fudgedproc!

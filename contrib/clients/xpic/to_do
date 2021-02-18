@@ -1,0 +1,33 @@
+This varies from things that probably should be fixed, to things that
+would be sort of nice, but which i doubt if I'll ever get around to.
+Not to be interpreted as things that may get fixed - just things that
+I would like to fix.
+
+---------------------------------------------------------------------
+
+Scale, Rotate, Mirror
+
+Clean up obj_line and obj_spline - too much code duplication there.
+
+Checkpointing using changes
+
+Multiple buffer handling.
+
+Enhancements:
+	ordering of gels so that we can use filled regions, Raise, Lower
+	initially fill regions with setgray
+	later fill regions with general bitmaps - load and save bitmaps
+	grab bitmaps from the screen
+	macros, groups
+
+Text display routines that interpret TeX/Troff codes like \bullet or
+\(bu so that we get a better WYSIWYG effect. means taking stuff from
+dvix/xtroff and using that for char code mapping. Get really amibtious
+and add some level of equation support.
+
+Generalize so that all global variables are in a struct to which a pointer
+is passed for all routines - eg. picWin becomes pic->win, picDpy becomes
+pic->dpy, gcInvert becomes pic->gcInvert, etc. This is a step towards
+widgetification of xpic. Should have obj_ stuff truly objectified using
+pointers to procs to call them, rather than the present unwieldy case
+statements. Should be able to add objects easily then. (AddObject()?)

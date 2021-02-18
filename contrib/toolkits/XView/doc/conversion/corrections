@@ -1,0 +1,49 @@
+Corrections to the "Converting SunView Applications" guide for 1.0.1
+--------------------------------------------------------------------
+
+Page 45.  Change category of the attribute MENU_ACTION_PROC from C
+(Compatibility Attribute) to U (Unchanged Attribute).
+
+Page 49.  Change category of the attribute PANEL_CLIENT_DATA from C
+(Compatibility Attribute) to U (Unchanged Attribute).
+
+Page 50.  Change category of the attribute PANEL_CHOICES_BOLD from U
+(Unchanged Attribute) to C (Compatibility Attribute).
+
+Page 50.  Change category of the attribute PANEL_CHOICE_FONT from U
+(Unchanged Attribute) to C (Compatibility Attribute).
+
+Page 51.  Change category of the attribute PANEL_VALUE_FONT from U
+(Unchanged Attribute) to C (Compatibility Attribute).
+
+Page 84, Section 5.7, first paragraph, last sentence.  Replace this
+sentence with the following:  Colormap segments can be allocated either
+dynamic (PseudoColor) or static (StaticColor).
+
+Page 84, Section 5.7, second paragraph should be removed.  The
+paragraph
+starts as follows: "The cells in a static . . ."
+
+Page 84, Section 5.7, third paragraph.  Remove the parenthesis from
+this
+paragraph, and add the following sentence to the beginning of the
+paragraph: The colors in a Static Colormap Segment are the closest
+matching
+colors returned by the server.
+
+Page 85, Section 5.7, fourth paragraph, first sentence.  Replace this
+sentence with the following:  Applications must always use static
+colormap segments unless they absolutely require exact colors.
+
+Page 85, Section 5.7, fifth paragraph, first sentence.  Replace this
+sentence with the following:  Full compatibility is maintained with the
+SunView 1 API and semantics.
+
+Page 87, under the description of the attribute FRAME_BACKGROUND_COLOR,
+first sentence.  Change the word colors to color.
+
+Page 88, under the description of the attribute FRAME_FOREGROUND_COLOR,
+first sentence.  Replace the first sentence with the following:
+Specifies
+the frame's foreground color.
+

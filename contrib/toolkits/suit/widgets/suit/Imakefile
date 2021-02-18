@@ -1,0 +1,9 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#include "./SWImake.defs"
+
+SUBDIRS= lib Examples
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

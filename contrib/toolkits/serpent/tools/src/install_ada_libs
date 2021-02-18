@@ -1,0 +1,71 @@
+#!  /bin/csh  -f
+ 
+ 
+set PROGRAM   = $0 ; set PROGRAM = $PROGRAM:t 
+ 
+
+set SERPENT_BASE_PATH = ~/integ
+ 
+# go to correct dir
+pushd $SERPENT_BASE_PATH/int/ada >& /dev/null
+
+# used to initialize VERDIX libs and dirs.
+#   It should only be used once or after an "a.rmlib"
+if( -e $SERPENT_BASE_PATH/int/ada/ada.lib ) then
+   
+	echo " "
+	echo "EXITING with no install taking place."
+	echo "There is some VERDIX structure(s) already existent in:"
+	echo " "
+	echo "       $SERPENT_BASE_PATH/int/ada"
+	echo " "
+	echo 'If you want to re-intialize, run "a.rmlib" ,'
+	echo "then re-execute this ( $PROGRAM ) script."
+	echo " "
+	exit 11
+endif
+
+
+# call a.mklib to initialize with standard VERDIX stuff
+echo " "
+echo "Initializing VERDIX Ada libs and dirs.... "
+echo 'Answer the following "a.mklib" with VERDIX version desired....'
+echo " "
+a.mklib  -i 
+ 
+ 
+
+# following sets the WITHx  number to start the links at
+# (See a.info calls below.)
+set with_num = 1
+set used_with_num = `a.info -a | grep WITH | wc -l`
+repeat $used_with_num  @ with_num ++
+
+
+echo " "
+echo 'Adding Serpent 'C' libraries to search path with "a.info"....'
+echo " "
+ 
+# Each WITHx is bumped up 1 for each Serpent lib.
+a.info +link WITH$with_num  $SERPENT_BASE_PATH/lib/vax/libdm.a 
+@ with_num ++
+a.info +link WITH$with_num  $SERPENT_BASE_PATH/lib/vax/libint.a 
+@ with_num ++
+a.info +link WITH$with_num  $SERPENT_BASE_PATH/lib/vax/libutl.a 
+@ with_num ++
+a.info +link WITH$with_num  $SERPENT_BASE_PATH/lib/vax/liblist.a 
+
+ 
+
+date > $SERPENT_BASE_PATH/int/ada/date_built
+echo " "
+echo "$PROGRAM completed. "
+echo "The date of installation is in: $SERPENT_BASE_PATH/int/ada/date_built."
+echo " "
+echo " "
+
+# Go back to where you were.
+popd >& /dev/null
+ 
+exit 0
+

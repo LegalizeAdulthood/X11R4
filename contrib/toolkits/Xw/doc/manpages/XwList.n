@@ -1,0 +1,462 @@
+
+
+
+     XWLIST(3X)                                             XWLIST(3X)
+
+
+
+
+     NAME
+          XwlistWidgetClass - the X Widget's list manager widget
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/SWindow.h>
+          #include <Xw/List.h>
+
+
+     CLASSES
+          List is built from the Core, Composite, Constraint,
+          XwManager and XwSWindow classes.
+
+          The widget class to use when creating a list manager is
+          XwlistWidgetClass. The class name is List.
+
+     DESCRIPTION
+          The List widget allows a two-dimensional set of widgets to
+          be presented to the user in a rows/columns fashion.  The
+          layout will typically consist of n columns, not all of which
+          need to be visible on the screen at one time.  Each column
+          will have some number of objects, such as labels or icons,
+          arranged vertically.  Separate columns may have unequal
+          numbers of members--column A may have 10 elements, while
+          column B has 17 elements.  All members of each column are
+          not required to be visible on the screen.  The entire list
+          window can be scrolled either vertically or horizontally,
+          but the individual columns cannot be individually scrolled.
+          If an application needs to have columnar scrolling, it may
+          instanstiate multiple List widgets, each having only one
+          column.
+
+          By default, each column is wide enough to display the
+          longest item in the data.  A resource is availible to allow
+          each column to be a fixed width, with the excess characters
+          being clipped.  When the List widget is shrunk by a Resize
+          call, columns that are beyond the right edge of the new size
+          will be clipped. List elements are also adjusted to force a
+          common height, with each element being set to the height of
+          the tallest member of the column.  This automatic sizing can
+          be turned off through a resource, or forced to an arbitrary
+          height.  If a constant height is selected, any element that
+          will not fit in the specified space will be clipped.
+
+          The List widget provides management and layout functions for
+          its elements, as well as a means for the user to choose
+          elements, and allows an application to be notified when
+          those elements are selected.  However, it is the
+          responsibility of the application to create the actual
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWLIST(3X)                                             XWLIST(3X)
+
+
+
+
+          widgets that are to be inserted into the list.  The widgets
+          may be of any type, but currently only Primitive class
+          widgets will work correctly.
+
+          To construct a list, the application must create each
+          element as a child of the List widget. The row and column
+          position of the element can be specified by means of a
+          constraint resource.  If the row and column are not given,
+          the list will be constructed as a one column by n row
+          structure. The List widget will fill in the position of the
+          element and store it in the constraint record so that it may
+          be examined later.
+
+          The List widget supports two methods of choosing an item
+          from its displayed list: single and multiple.  A resource
+          controls which mode is currently active.
+
+          In single choice  mode, the user may move the cursor onto
+          any element in the list and click the mouse button defined
+          as "Begin Select." By default, this is the left button.
+          When the button is pressed, the list item is highlighted.
+          If the user drags the mouse with the button held down, the
+          highlighted selection will track the pointer.  If the
+          pointer moves off the currently highlighted item,  it will
+          become unselected, returning to its original state, and the
+          item that the pointer has moved onto becomes highlighted.
+          When the user releases the button, the currently selected
+          item becomes the "choice," and the List widget invokes the
+          select callback associated with the chosen item.  The
+          application must take over the widget's select callback in
+          order to be notified that the item has been selected.
+
+          Multiple  item  selection  is designed to allow the user to
+          easily select several elements from the displayed list.
+          When the user  presses the mouse button bound to "Begin
+          Select,"  the item currently under the pointer is
+          highlighted to indicate that it is included in the selection
+          set.  As the user drags the mouse with the button down, the
+          original choice remains highlighted, and any new items that
+          the pointer touches also becomes highlighted.  At any time,
+          the user can "back up" the selection by leaving an item on
+          the same side as it was entered.  When the user finally
+          releases the button, all highlighted elements are marked as
+          chosen, and the selection callback is invoked for each item.
+
+          Selections can be either "sticky" or "instant." The
+          selection mode is set through a resource. If set to sticky,
+          the selection will remain highlighted after the user
+          releases the mouse button, and will not be cleared until the
+          next button press. In instant mode, the highlight will
+          dissappear when the button is released.
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWLIST(3X)                                             XWLIST(3X)
+
+
+
+
+          The selection mechanism can be affected by a "bias" that is
+          controlled  through  a widget  resource.  The  allowable
+          bias types are row, column, and none (default).  In this
+          mode only list items that are actually  touched with the
+          pointer are included in the selection.  In Row Bias mode.
+          entire rows of items may be selected by moving the pointer
+          vertically within a column.  For example, consider the
+          following case:
+
+
+               1       2       3       4       5       6
+               7       8       9       10      11      12
+               13      14      15      16      17      18
+
+
+     If the user pressed the mouse button when the pointer was over
+     item 3 and then moved to item 9, items 4 thru 8 would also be
+     highlighted.  In Column Bias mode, entire columns can be selected
+     by movement between rows.  Using the above  diagram, and assuming
+     column bias, if the user clicked on item 2 and moved to item 3,
+     elements 8 and 14 would also be selected.
+
+          Additional  selections  can be made without  disturbing the
+          original by following the above  procedures, by depressing
+          the button bound to the "Begin Extended Choice" function
+          (which is defined as SHIFT + Left button in the default
+          case).
+
+          The visual effect of highlighting can be accomplished in two
+          ways: simple border highlighting, and inverse video.  This
+          may be configured through a List widget resource.  Both
+          styles are necessary--the inverse style of highlighting is
+          by far the most common and natural interface, but could
+          possibly conflict with an application or window manager that
+          uses inverse to indicate the X11 "selection."  The default
+          highlighting style is inverse.
+
+          A user can select items that are not currently visible by
+          simply extending the selection out of the visible window in
+          the desired direction.  The list will automatically scroll
+          under the selection as needed, until there are no more list
+          elements availible in the given direction.  For example, in
+          single-selection mode, if the user were to begin the
+          selection on a visible element, and then drag the cursor
+          down the column past the last visible item, the window would
+          scroll up to display further choices.
+
+          When a list element is destroyed, the list will be re-
+          ordered according to the value of the XtNdestroyMode
+          resource. When it is XwSHRINK_COLUMN (the default), all list
+          elements below the affected widget and in the same column
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWLIST(3X)                                             XWLIST(3X)
+
+
+
+
+          will be moved up one row, and their row constraint resources
+          will be updated to reflect the new positioning. When this
+          resource is set to XwSHRINK_ALL, the elements will be moved
+          in a row-wise fashion to fill the spot left by the affected
+          element.  The widget to the right of the affected one will
+          be moved to the left, and so on to the last column. The
+          first element of the next row will be moved into the last
+          spot on the current column. This process will continue for
+          all remainin g rows in the list. If the value of this
+          resource is XwNO_SHRINK, the list will not change its
+          ordering and a "hole " will appear in the place of the
+          affected element.
+
+     NEW RESOURCES
+          The List widget defines a unique set of resource types which
+          can be used by the programmer to control the appearence and
+          behavior of the list.  The programmer can also set the
+          values for the Core, Composite, Constraint, Manager and
+          SWindow widget classes to set attributes for this widget.
+          To reference a resource in a .Xdefaults file, drop the XtN
+          from the resource name.  The following table contains the
+          set of resources defined by List.
+
+
+                                    List Resource Set
+     Name                     Class                    Type          Default
+     _______________________________________________________________________________
+     XtNnumColumns            XtCNumColumns            int           1
+     XtNcolumnWidth           XtCColumnWidth           int           0
+     XtNelementHeight         XtCElementHeight         int           0
+     XtNselectionStyle        XtCSelectionStyle        int           XwINSTANT
+     XtNselectionMethod       XtCSelectionMethod       int           XwSINGLE
+     XtNselectionBias         XtCSelectionBias         int           XwNO_BIAS
+     XtNelementHighlight      XtCElementHighlight      int           XwBORDER
+     XtNdestroyMode           XtCDestroyMode           int           XwSHRINK_COLUMN
+     XtNnumSelectedElements   XtCNumSelectedElements   int           0
+     XtNselectedElements      XtCSelectedElements      WidgetList*   NULL
+
+
+
+          XtNnumColumns
+               The number of columns in the list.
+
+          XtNcolumnWidth
+               The width of each column. If the value is 0, the width
+               defaults to the width of the largest element.
+
+          XtNelementHeight
+               The height of each element. Zero implies that each
+               element is resized to the height of the tallest
+               element.
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWLIST(3X)                                             XWLIST(3X)
+
+
+
+
+          XtNselectionStyle
+               Controls the type of selection - either XwINSTANT or
+               XwSTICKY.
+
+          XtNselectionMethod
+               Controls the selection mode - either one element at a
+               time (XwSINGLE) or multiple (XwMULTIPLE).
+
+          XtNselectionBias
+               Bias mode - either XwNO_BIAS, XwROW_BIAS or XwCOL_BIAS.
+
+          XtNelementHighlight
+               This controls the highlight mode on selection - either
+               border highlighting (XwBORDER) or inversion (XwINVERT).
+
+          XtNdestroyMode
+               Controls the visual appearance of the list when an
+               element is deleted. One of XwSHRINK_COLUMN,
+               XwSHRINK_ALL or XwNO_SHRINK.
+
+          XtNSelectedElements
+               This is a list of the widgets currently marked as
+               selected. An application program can issue a call to
+               XtGetValues on this resource at any time to query the
+               selected elements.
+
+          XtNnumSelectedElements
+               The number of widgets currently selected (in the list
+               pointed to by XtNselectedElements).
+
+     CONSTRAINT RESOURCES
+          The following resources are attached to every widget
+          inserted into List.  Refer to CONSTRAINT(3X) for a general
+          discussion of constraint resources.
+
+
+            Constraint Resource Set -- Children of XWLIST(3X)
+          Name                Class               Type   Default
+          ______________________________________________________
+          XtNrowPosition      XtCRowPosition      int    -1
+          XtNcolumnPosition   XtCColumnPosition   int    -1
+
+
+
+          XtNrowPosition,XtNcolumnPosition
+               This is the row,column location of the element in the
+               list.  If these values are greater than or equal to
+               zero, the widget is inserted into the list at that
+               position. If the values are left at -1, the List widget
+               will create a list with XtNnumColumns number of
+               columns, assigning row and column positions as needed.
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWLIST(3X)                                             XWLIST(3X)
+
+
+
+
+     INCORPORATED RESOURCES
+          No incorporated resources are currently exported by the List
+          widget.
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+            ScrolledWindow Resource Set - XWSCROLLEDWINDOW(3X)
+      Name                   Class                  Type      Default
+      _______________________________________________________________
+      XtNvsbX                XtCVsbX                int       -1
+      XtNvsbY                XtCVsbY                int       -1
+      XtNvsbWidth            XtCVsbWidth            int       20
+      XtNvsbHeight           XtCVsbHeight           int       285
+      XtNhsbX                XtCHsbX                int       -1
+      XtNhsbY                XtCHsbY                int       -1
+      XtNhsbWidth            XtCHsbWidth            int       285
+      XtNhsbHeight           XtCHsbHeight           int       20
+      XtNforceHorizontalSB   XtCForceHorizontalSB   Boolean   FALSE
+      XtNforceVerticalSB     XtCForceVerticalSB     Boolean   FALSE
+      XtNvScrollEvent        XtCCallBack            Pointer   NULL
+      XtNhScrollEvent        XtCCallBack            Pointer   NULL
+      XtNinitialX            XtCInitialX            int       0
+      XtNinitialY            XtCInitialY            int       0
+
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 6 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWLIST(3X)                                             XWLIST(3X)
+
+
+
+
+                             Manager Resource Set
+     Name                    Class                   Type      Default
+     ____________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNtraversalOn          XtCTraversalOn          Boolean   FALSE
+     XtNlayout               XtCLayout               int       minimize
+     XtNnextTop              XtCCallback             Pointer   NULL
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalType resource is set to
+          highlight_traversal (XwHIGHLIGHT_TRAVERSAL in an argument
+          list) at either create time or during a call to XtSetValues,
+          the XwPrimitive superclass will automatically augment the
+          primitive widget's translations to support keyboard
+          traversal.  Refer to the XwPrimitive man page for a complete
+          description of these translations.  Refer to the
+          TRANSLATIONS section in this man page for a description of
+          the translations local to the list widget.
+
+
+
+     TRANSLATIONS
+          The translations used for List are as follows:
+
+               <EnterWindow>:        enter()
+               <LeaveWindow>:        leave()
+
+     ACTIONS
+          enter:  Enter window events occurring on the list window are
+          handled by this action.
+
+          leave:  Leave window events occurring on the list window are
+          handled by this action.
+
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), COMPOSITE(3X), CONSTRAINT(3X), XWMANAGERCLASS(3X),
+          XWSCROLLEDWINDOW(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+     Hewlett-Packard Company       - 7 -                   Aug 9, 1988
+
+
+

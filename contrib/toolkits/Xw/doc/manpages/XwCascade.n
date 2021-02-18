@@ -1,0 +1,264 @@
+
+
+
+     XWCASCADE(3X)                                       XWCASCADE(3X)
+
+
+
+
+     NAME
+          XwcascadeWidgetClass - the X Widgets popup and pulldown
+          menupane widget.
+
+     SYNOPSIS
+          #include <X11/Intrinsic.h>
+          #include <X11/StringDefs.h>
+          #include <Xw/Xw.h>
+          #include <Xw/Cascade.h>
+
+
+     CLASSES
+          The Cascade menupane widget is built from the Core,
+          Composite, Constraint, XwManager and XwMenuPane classes.
+          Note that the Constraint fields are not used in this widget
+          and are not listed in the resource tables below.  Also,
+          since the Composite class contains no resources that can be
+          set by the user, there is no table for Composite class
+          resources.
+
+          The widget class to use when creating a cascading menupane
+          is XwcascadeWidgetClass.  The class name is Cascade.
+
+     DESCRIPTION
+          The Cascade menupane widget is a composite widget which may
+          be used by an application when creating a set of menus.
+
+          The Cascade menupane widget always displays its managed
+          children in a single column, and always attempts to size
+          itself to the smallest possible size, as described by the
+          children it contains; as the children grow or shrink in
+          size, the menupane will attempt to adapt its size
+          accordingly.
+
+          The Cascade menupane widget allows a title to be displayed
+          at the top of the menupane, the bottom of the menupane, or
+          at both places.  Additionally, the title may be either a
+          text string or an image.  The title is always centered
+          horizontally within the menupane.
+
+          Refer to the manual page for XwManager(3X) for a description
+          of how to specify the order in which menubuttons are
+          inserted into a menupane.
+
+     NEW RESOURCES
+          The MenuPane defines a set of resource types used by the
+          programmer to specify the data for the menupane.  The
+          programmer can also set the values for the Core, Composite
+          Manager and MenuPane widget classes to set attributes for
+          this widget.  To specify any of these resources within the
+          .Xdefaults file, simply drop the XtN prefix from the
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWCASCADE(3X)                                       XWCASCADE(3X)
+
+
+
+
+          resource name.  The following table contains the set of
+          resources defined by Cascade.
+
+
+                           Cascade Resource Set
+           Name               Class              Type   Default
+           ____________________________________________________
+           XtNtitlePosition   XtCTitlePosition   int    top
+
+
+
+          XtNtitlePosition
+               This resource is used to control where the title is
+               displayed within the cascading menupane.  To
+               programmatically set this resource, use either the
+               XwTOP, XwBOTTOM or XwBOTH define.  To set this resource
+               using the .Xdefaults file, use one of the strings top,
+               bottom or both.
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWCASCADE(3X)                                       XWCASCADE(3X)
+
+
+
+
+                     Manager Resource Set -- XWMANAGER(3X)
+     Name                    Class                   Type        Default
+     ______________________________________________________________________
+     XtNforeground           XtCForeground           Pixel       Black
+     XtNbackgroundTile       XtCBackgroundTile       int         background
+     XtNhighlightThickness   XtCHighlightThickness   int         0
+     XtNtraversalOn           XtCTraversalOn          Boolean     FALSE
+
+
+
+
+                   MenuPane Resource Set -- XWMENUPANE(3X)
+     Name                  Class              Type            Default
+     ____________________________________________________________________
+     XtNtitleShowing       XtCTitleShowing    Boolean         FALSE
+     XtNmgrTitleOverride   XtCTitleOverride   Boolean         FALSE
+     XtNtitleType          XtCTitleType       int             XwSTRING
+     XtNtitleString        XtCTitleString     String          widget name
+     XtNtitleImage         XtCTitleImage      XImage *        NULL
+     XtNfont               XtCFont            XFontStruct *   "fixed"
+     XtNattachTo           XtCAttachTo        String          NULL
+     XtNmnemonic           XtCMnemonic        String          NULL
+     XtNselect             XtCCallback        Pointer         NULL
+
+
+     TRANSLATIONS
+          The input to the Cascade menupane widget is driven by the
+          mouse buttons.  The default translations set by this widget
+          are as follows:
+
+               <Btn1Down>:        select()
+               <LeaveWindow>:     leave()
+               <visible>:         visible()
+               <unmap>:           unmap()
+
+     ACTIONS
+          select:
+               Informs the menu manager, if present, that a select
+               occurred, and then invokes the select callbacks, unless
+               instructed not to by the menu manager.  If no menu
+               manager is present, then the select callbacks will be
+               invoked.
+
+          leave:
+               This routine overrides the leave action routine
+               provided by the XwManager meta class.
+
+          visible:
+               This action overrides the visible action routine
+               provided by the XwManager meta class.
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWCASCADE(3X)                                       XWCASCADE(3X)
+
+
+
+
+          unmap:
+               This action overrides the unmap action provided by the
+               XwManager meta class.
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalOn resource is set to TRUE at create time
+          or during a call to XtSetValues, the XwManager superclass
+          will automatically augment the manager widget's translations
+          to support keyboard traversal.  Refer to the XwManager man
+          page for a complete description of these translations.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), CONSTRAINT(3X), XWMANAGER(3X), XWMENUPANE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+

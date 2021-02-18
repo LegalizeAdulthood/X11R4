@@ -1,0 +1,163 @@
+#Imakefile for xtrek 5.4
+
+TARGET_ARCH 	=
+
+PREFIX		= /c/games/xtrek
+XTREKBINDIR	= $(PREFIX)
+XTREKLIBDIR	= $(PREFIX)
+FONTDIR		= /usr/lib/X11/fonts/misc/
+TEMPDIR		= /tmp
+PLANETFILE	= /tmp/.planets
+SCOREFILE	= $(prefix)/scores
+MOTDFILE	= $(XTREKLIBDIR)/motd
+DEFCONFIG	= $(XTREKLIBDIR)/default.config
+XTREKOWNER	= kit
+XTREKGROUP	= src
+XTREK		= xtrek
+XTREKD		= xtrekd
+SYS_LIBRARIES 	= -lm -lX11
+XTREKFONT	= xtrek
+
+#========= Do Not Change Anything Below
+
+
+INSTALLFLAGS    = -s -g $(XTREKGROUP) -o $(XTREKOWNER) 
+ 
+SRCS	= \
+	XTextExt.c \
+	clock.c \
+	colors.c \
+	coup.c \
+	damage.c \
+	data.c \
+	death.c \
+	dmessage.c \
+	enter.c \
+	getship.c \
+	help.c \
+	icon.c \
+	inform.c \
+	input.c \
+	interface.c \
+	itoa.c \
+	main.c \
+	minisubs.c \
+	newwin.c \
+	orbit.c \
+	parseutil.c \
+	phaser.c \
+	planet.c \
+	planetlist.c \
+	playerlist.c \
+	redraw.c \
+	resource.c \
+	rotate.c \
+	rmove.c \
+	scorelist.c \
+	smessage.c \
+	stats.c \
+	statline.c \
+	subdaemon.c \
+	teleport.c \
+	torp.c \
+	util.c \
+	war.c \
+	warning.c \
+	xtparse.c
+
+OBJS = \
+	XTextExt.o \
+	clock.o \
+	colors.o \
+	coup.o \
+	damage.o \
+	data.o \
+	death.o \
+	dmessage.o \
+	enter.o \
+	getship.o \
+	help.o \
+	icon.o \
+	inform.o \
+	input.o \
+	interface.o \
+	itoa.o \
+	main.o \
+	minisubs.o \
+	newwin.o \
+	orbit.o \
+	parseutil.o \
+	phaser.o \
+	planet.o \
+	planetlist.o \
+	playerlist.o \
+	redraw.o \
+	resource.o \
+	rotate.o \
+	rmove.o \
+	scorelist.o \
+	smessage.o \
+	stats.o \
+	statline.o \
+	subdaemon.o \
+	teleport.o \
+	torp.o \
+	util.o \
+	war.o \
+	warning.o \
+	xtparse.o
+
+HEADERS	= \
+	Xlibint.h \
+	Xlibos.h \
+	data.h \
+	decl.h \
+	defs.h \
+	paths.h \
+	planets.h \
+	polar.h \
+	struct.h \
+	xdefs.h \
+	xtrekfont.h
+
+SingleProgramTarget($(XTREKD),$(OBJS),,)
+SingleProgramTarget($(XTREK),xtrek.o,,)
+InstallMultiple($(XTREKD) $(XTREK),$(XTREKBINDIR))
+
+FontTarget($(XTREKFONT))
+
+clean::
+	$(RM) *.o xtrek.snf xtparse.c xttoken.c 
+	$(RM) *.aux *.dvi *.log
+
+paths.h:  dummy 
+	@echo	"/* Machine Generated: DO NOT EDIT */" > paths.h
+	@echo	\#define FONTDIR \"$(FONTDIR)\" >> paths.h
+	@echo	\#define LIBDIR \"$(XTREKLIBDIR)\" >> paths.h
+	@echo	\#define PROGRAM_NAME \"$(XTREK)\" >> paths.h
+	@echo	\#define DIR \"$(TEMPDIR)\" >> paths.h
+	@echo	\#define PLFILE \"$(PLANETFILE)\" >> paths.h
+	@echo	\#define MOTD \"$(MOTDFILE)\" >> paths.h
+	@echo	\#define SCOREFILE \"$(SCOREFILE)\" >> paths.h
+	@echo	\#define FONTNAME \"$(XTREKFONT)\" >> paths.h
+	@echo	\#define DEFAULT_CONFIG \"$(DEFCONFIG)\" >> paths.h
+
+dummy:
+
+decl.h:   $(SRCS) 
+	@grep GLOBAL *.c > decl.temp	
+	@echo	"/* Machine Generated: DO NOT EDIT */" > decl.h
+	@sed -e "s/.*GLOBAL/extern/" -e  "s/(.*)/();/" decl.temp >> decl.h
+	@$(RM) decl.temp
+
+xtparse.o: xttoken.c xtparse.c
+
+xttoken.c: xttoken.l
+	lex xttoken.l
+	mv lex.yy.c xttoken.c
+
+xtparse.c: xtparse.y
+	yacc xtparse.y
+	mv y.tab.c xtparse.c
+
+

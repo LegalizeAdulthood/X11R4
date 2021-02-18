@@ -1,0 +1,9 @@
+# 
+#  xmandel - Mandelbrot set and Julia set tool
+# 
+LOCAL_LIBRARIES = $(XAWLIB) $(XTOOLLIB) $(XMULIB) $(XLIB) 
+           SRCS = main.c mandel.c julia.c
+           OBJS = main.o mandel.o julia.o
+
+ComplexProgramTarget(xmandel)
+InstallAppDefaults(Xmandel)

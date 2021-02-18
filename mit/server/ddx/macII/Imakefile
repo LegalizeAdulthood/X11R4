@@ -1,0 +1,47 @@
+#include <Server.tmpl>
+
+SRCS =	\
+	macIIMono.c \
+	macIIIo.c \
+	macIIKbd.c \
+	macIIMouse.c \
+	macIIUtils.c \
+	macIIKMap.c
+
+SLOTSRCS = \
+	macIIInitS.c \
+	macIIColor.c
+
+SLOTOFILES = macIIInitS.o macIIColor.o
+
+OBJS = \
+	macIIMono.o \
+	macIIIo.o \
+	macIIKbd.o \
+	macIIMouse.o \
+	macIIUtils.o \
+	macIIKMap.o
+
+   INCLUDES = -I.  -I../../include -I../mi -I../mfb -I../../dix -I$(INCLUDESRC)
+   LINTLIBS = ../../dix/llib-ldix.ln ../../os/4.2bsd/llib-los.ln \
+	      ../mfb/llib-lmfb.ln ../mi/llib-lmi.ln ../cfb/llib-lcfb.ln
+
+NormalLibraryObjectRule()
+
+all:: $(SLOTOFILES) Xrepair
+
+lintlib:
+
+NormalLibraryTarget(macII,$(OBJS))
+NormalLintTarget($(SRCS))
+SingleProgramTarget(Xrepair, Xrepair.o,,)
+InstallProgram(Xrepair,$(BINDIR))
+InstallScript(X11R4,$(BINDIR))
+InstallProgram($(BINDIR)/X11R4,$(BINDIR)/X11)
+InstallNonExec(def.x11start,$(LIBDIR)/.x11start)
+InstallNonExec(xterms.tic,$(USRLIBDIR)/terminfo/x/xterm)
+InstallNonExec(xterms.tic,$(USRLIBDIR)/terminfo/x/xterms)
+InstallNonExec(xterm.tic,$(LIBDIR))
+InstallNonExec(xterms.tic,$(LIBDIR))
+DependTarget()
+InstallManPage(XmacII,$(MANDIR))

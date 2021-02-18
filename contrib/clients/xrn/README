@@ -1,0 +1,74 @@
+
+/*
+ * $Header: /users/ricks/xrn-11/R4/RCS/README,v 1.10 89/11/17 11:47:32 ricks Rel $
+ */
+
+This is the X11R4 version of XRN.  This version is missing some 
+functionality that the pre-R4 version of XRN had.  This functionality
+will be added once I get a copy of R4 and figure out how to do it
+in R4 (in particular, the ability to programmatically scroll a text
+widget).
+
+
+How to get XRN (other than from the MIT X11R4 distribution):
+
+% ftp shambhala.berkeley.edu (128.32.132.54)
+user: anonymous
+password: guest
+ftp> cd pub
+ftp> binary
+ftp> get xrn6-3.tar.Z
+ftp> quit
+% uncompress xrn6-3.tar.Z
+% tar xf xrn6-3.tar
+
+
+How to install XRN:
+
+0. See the file CHANGES for a list of changes from the last release.
+
+1. Does an NNTP server (version 1.5 or greater) exist on your network?
+   - if not, get the NNTP server code and install it
+     (via anonymous ftp from ucbvax.berkeley.edu)
+   - make sure that XHDR (in nntp/common/conf.h) was defined
+     when your NNTP server was installed.
+
+2. Look at `config.h' and make the necessary modifications
+   (default settings, location of various files, domain name, etc.)
+   See ALT-MAILER for information on using a mailer other than sendmail.
+
+3. Some versions of the X toolkit may not have MIT patch #8.  This
+   patch fixed some problems with accelerators.  If you do not have
+   this patch installed (you can tell, if XRN core dumps when you
+   pop up a dialog you don't have the patch), define ACCELERATORBUG
+   in config.h
+
+4. Make xrn
+
+   a. if you have an X11R3 source tree:
+	  make TOP=<source-tree-top>
+      1. if you are running on a macII under AUX, you will need to
+	 rebuild the Makefile with imake.
+
+   b. if no source tree, but the X libraries installed in the `right places':
+	  make -f Makefile.NoXtr
+
+	  you may need to specify values for LDFLAGS and INCLUDES
+	  (see Makefile.NoXtr)
+
+5. Copy `xrn' to your favorite binary location
+   (i.e. /usr/local/bin/xrn)
+
+6. Copy `xrn.man' to the proper man page location
+   (i.e. /usr/man/manl/xrn.l)
+
+7. Copy XRn.ad to the program place
+   (i.e. /usr/X11/lib/app-defaults/XRn)
+
+8. Check out `.Xresources' for example resource settings
+
+
+	    Ellen Sentovich (ellen@ic.berkeley.edu)
+	    Rick Spickelmier (ricks@berkeley.edu)
+
+

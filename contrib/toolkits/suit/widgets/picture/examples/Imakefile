@@ -1,0 +1,9 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#include ".././PWImake.defs"
+
+SUBDIRS= bare stedit
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

@@ -1,0 +1,45 @@
+Kterm is a terminal emulator allowing to use Japanese on X11 Window System.
+It is expansion of xterm and have some bugs like xterm. Further there may
+be some bugs in the expanded part. If you find such bugs, send me them please.
+
+                                     1989 November 18  Hiroto Kagotani
+                                              kagotani@cs.titech.ac.jp
+
+INSTALLING
+
+Modify Imakefile for following options.
+-DKANJI		allow you to see, cut and paste Japanese texts.
+-DSTATUSLINE	allow you to use a status line at the bottom of kterm.
+-DKEEPALIVE	allow you to choose connection to X server with or without
+		KEEPALIVE option.
+-DKCLIENT	allow you to input Japanese texts with "kinput" command,
+		which is a client of "jserver" Kana-Kanji converter
+		program.
+If none of these options is given, kterm provides same function as xterm.
+
+Type "make install" as root.
+
+Make sure that there is a kterm entry in your termcap or terminfo.
+
+Install a14, r14, k14 and kana14 fonts, which are in the X11R4
+distribution tape, I suppose.
+
+
+CUTTING and PASTING
+
+Kterm uses selection with COMPOUND_TEXT encoding for cutting Japanese
+because any CutBuffers does not allowed to contain non-ASCII character as
+defined in the ICCCM. Therefore non-ASCII text cutted this version of
+kterm can not be pasted to previously released kterm (version 2.1.1 or less)
+nor Nemacs, though pasting in opposite direction works well.
+
+Encoding used in COMPOUND_TEXT is based on "Compound Text Encoding Version 1"
+and G0 and G1 are used as follows:
+	G0 is invoked into GL and G1 is invoked into GR, and they are fixed.
+	ASCII		normaly, designated into G0.
+	JIS Roman	G0 if needed.
+	Latin-1 right	normaly, designated into G1.
+	JIS Kana	G1 if needed.
+	JIS Kanji	G1 if needed.
+But for pasting, any character sets designated into any of G0 or G1 are
+recognized correctly.

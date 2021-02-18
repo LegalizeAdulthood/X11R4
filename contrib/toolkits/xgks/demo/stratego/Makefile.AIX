@@ -1,0 +1,45 @@
+#
+# XXXX-XXX (C) COPYRIGHT IBM CORPORATION 1988
+# LICENSED MATERIALS - PROPERTY OF IBM
+# REFER TO COPYRIGHT INSTRUCTIONS FORM NUMBER G120-2083
+#
+# standard makefile for use with U. of I. GKS
+#
+ILIBDIR = $(INSTALLHOME)/lib
+IHDIR = $(INSTALLHOME)/include
+FONTDBDIR = $(ILIBDIR)/fontdb
+
+ALLIVARS = INSTALLHOME=$(INSTALLHOME) ILIBDIR=$(ILIBDIR) IHDIR=$(IHDIR) \
+	FONTDBDIR=$(FONTDBDIR)
+
+CFLAGS = -O -DBSD_INCLUDES -DREMAP_SIGNAL_TO_SIGVEC -I$(IHDIR) -Nd4000 -Nn3000
+
+# gks libraries
+
+#LIBS = -lgks -lgksrpc -lrpc -lm
+LIBS = $(ILIBDIR)/libxgks.a -lX11 -lm
+
+all: red blue
+
+red: red.o 
+	$(CC) $(CFLAGS) -o $@ $@.o $(LIBS)
+
+blue: blue.o 
+	$(CC) $(CFLAGS) -o $@ $@.o $(LIBS)
+
+clean:
+	-rm *.o core red blue
+
+depend:
+	../../utils/makedepend/makedepend -I$(IHDIR) *.c
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+blue.o: /usr/include/stdio.h /u/amy/xgks/include/xgks.h
+blue.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h /usr/include/X11/X.h
+blue.o: /usr/include/X11/Xutil.h /usr/include/X11/Xatom.h stratego.h
+blue.o: pictures.h strat.bitmap stratego.MASK
+red.o: /usr/include/stdio.h /u/amy/xgks/include/xgks.h
+red.o: /usr/include/X11/Xlib.h /usr/include/sys/types.h /usr/include/X11/X.h
+red.o: /usr/include/X11/Xutil.h /usr/include/X11/Xatom.h stratego.h
+red.o: pictures.h strat.bitmap stratego.MASK

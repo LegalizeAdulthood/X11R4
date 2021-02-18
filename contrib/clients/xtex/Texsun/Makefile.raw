@@ -1,0 +1,19 @@
+OBJS	=texsun.o
+SRCS	=texsun.c
+
+      LIBTEXROOT= ../
+      LIBTEXSRC	= ../libtex
+         LIBTEX	= $(LIBTEXSRC)/libtex.a
+      DEPLIBTEX	= $(LIBTEX)
+        SYSLIBS = -lsuntool -lsunwindow -lpixrect -lm
+        DEPLIBS = $(DEPLIBTEX) 
+LOCAL_LIBRARIES = $(LIBTEX)
+
+        DEFINES = -I$(LIBTEXROOT)
+
+         CFLAGS = $(DEFINES) -I$(LIBTEXROOT)
+
+all: texsun
+
+texsun: texsun.c
+	$(CC) $(CFLAGS) -o texsun texsun.c $(LOCAL_LIBRARIES) $(SYSLIBS)

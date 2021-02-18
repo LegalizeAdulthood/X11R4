@@ -1,0 +1,26 @@
+#! /bin/sh -x
+# Lint filter that resubstitutes lint library names for X Windows libraries
+# with the real file name, assuming TOPDIR is set correctly. (Any non-X
+# libraries are assumed to have llib-l* libraries of stubs in LINTDIR.
+# It also filters out the six million bogus X Toolkit related errors
+# that either stem from problems within the toolkit (indicated by ???)
+# or by the use of ArgLists, thus resulting in casting to long and back.
+# One can then step through them one at a time in Jove with parse-errors,
+# and use a macro to show the library file in a third window.
+# Mark Moraes, CSRI, University of Toronto
+TOPDIR=${1-/csri3/X}
+LINTDIR=/usr/lib/lint
+LIBSRC=$TOPDIR/lib
+sed	-e '/^[^:]*:$/d' \
+	-e '/\?\?\?/d' \
+	-e '/long assignment/d' \
+	-e '/assignment to long/d' \
+	-e '/llib.*:: *llib/d' \
+	-e 's,llib-lX11:,'$LIBSRC'/X/,' \
+	-e 's,llib-lXt:,'$LIBSRC'/Xt/,' \
+	-e 's,llib-lXaw:,'$LIBSRC'/Xaw/,' \
+	-e 's,llib-lXmu:,'$LIBSRC'/Xmu/,' \
+	-e 's,llib-lXw:,'$LIBSRC'/Xw/,' \
+	-e 's,llib-lXext:,'$LIBSRC'/Xext/,' \
+	-e 's,llib-loldX:,'$LIBSRC'/oldX/,' \
+	-e 's,\(llib-l[^(]*(\),'$LINTDIR'/\1,'

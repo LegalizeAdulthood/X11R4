@@ -1,0 +1,34 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES	=	-I${BASEDIR}/include/oda
+
+OBJS   = ckcontent.o \
+	errormsg.o \
+	initfonts.o \
+	invokefont.o \
+	jmain.o \
+	procchar.o \
+	raster.o \
+	rasttab.o \
+	troff.o
+
+HFILES =  ckcontent.h \
+	ext.h \
+	initfonts.h \
+	invokefont.h
+
+ODALIBS = \
+	$(DESTDIR)/lib/oda/libisode.a \
+	$(DESTDIR)/lib/oda/liboda.a \
+	$(DESTDIR)/lib/oda/libraster.a \
+	$(DESTDIR)/lib/oda/liblocal.a
+
+NormalObjectRule()
+
+ProgramTarget(odatroff, $(OBJS), $(ODALIBS), )
+
+InstallProgram(odatroff, $(DESTDIR)/bin)
+
+DependTarget()

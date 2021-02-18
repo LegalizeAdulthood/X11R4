@@ -1,0 +1,210 @@
+		       X11 Compose Sequence Support
+		   Internal Design - Protocol Encoding
+
+			     November 4, 1989
+			      Glenn Widener
+			     Tektronix, Inc.
+
+
+This specification defines the database that augments the X11
+keycode-keysym mapping to support compose sequences.
+
+In this implementation, the data is stored in a set of named properties on
+the root window of screen zero on the X11 server.  Because some of the
+data may carry server-side semantics, it is desirable that the data be
+stored via a protocol extension.  However, since switching from properties
+to an extension can be done without change to the Xlib-level interface,
+this property-based implementation is considered a viable non-standard
+short-term implementation, more than adequate for a prototype or interim
+product.  If only Xlib semantics are used, the implementation is perfectly
+fine.
+
+		     Mnemonic Compose Key Processing
+
+A "mnemonic compose sequence" is a sequence of KeyPress events which is to
+be converted to a specific string in an encoding.  The generation could be
+done either on the server or in XLookupString.  Typically, the sequence will
+begin with a keycode bound to the Keysym "Multi_Key", or some diacritical
+mark, but the implementation supports any arbitrary set of non-modifier
+key sequences, plus a modifier for each keycode in the sequence.  The
+modifiers are specified by a modifier mask which takes the standard
+XGrabButton modifer mask values, including AnyModifier, which matches any
+modifier combination, including none.
+
+The sequence must occur in the order specified in the property; to support
+order-independent sequences, all permutations must be listed.  Modifier keys
+pressed during the sequence are processed normally, and do not affect the
+compose sequence in progress.
+
+A keycode that initiates a Compose sequence should not be assigned to a
+Modifier, as the result is undefined.  If compose processing is done in
+the server, keys occuring in mnemonic compose sequences are suppressed and
+the modifier is not changed, so assigning an initial compose sequence
+keycode to a modifier is a noop.  If compose processing is done in the
+client, modifiers are affected regardless of whether the keycode is part
+of a compose sequence.
+
+A keycode assigned to a toggling modifier may occur in a Compose sequence
+only if Compose processing is done in the server, since Compose processing
+in the server supercedes toggling of modifiers.  If compose processing is
+done in Xlib, the modifier state will be changed by the keypress, which is
+not what the user wants.
+
+When the first character of a compose sequence is pressed, the Compose
+light (if any) will be lit on the keyboard.  When a valid or invalid
+sequence is detected, the compose light is turned off.  If an invalid
+sequence is detected, the compose sequence is cancelled, and the events
+discarded.  The invalid KeyPress event is discarded if it contains a
+keycode listed in neither or both of the "cancel" and "abort" lists in the
+KB_COMPOSE_TABLE property.  The bell is rung if enabled by KeyboardControl
+and if the invalid KeyPress event contains a keycode listed in neither
+list, or only the "abort" list.  Mouse buttons always cancel a compose
+sequence silently, with the mouse event being processed normally.
+
+Either the server or Xlib does the conversion to a keysym/string by
+mapping the compose sequence to the keycode/modifier pair specified in the
+property.  If the server is processing the compose sequence, no KeyPress
+or KeyRelease events are generated for any keys in the compose sequence.
+When a valid compose sequence is recognized, a KeyPress/KeyRelease event
+pair is generated, with the values at the last physical key press for
+server time, windows, key/button state, and x and y coordinates appearing
+in both events.  The keycode and modifier in the events are as defined by
+KB_COMPOSE_TABLE.  XLookupString treats the key event normally, looking up
+in the server-stored keymap tables to get the associated keysym.
+
+Server-side compose is necessary for keyboards with Compose status
+feedback (i.e.  an LED), to prevent the server compose status from getting
+out of sync with the events sent to the clients should input focus move in
+the middle of a compose sequence, in the absence of the LED protocol
+extension proposed elsewhere.
+
+Note that these compose sequences should be interpreted to be in a
+pre-defined encoding, regardless of the current language modifier state,
+under any of the multilingual keyboard proposals.
+
+The generation can also be done in XLookupString, for servers that do not
+offer feedback on compose status, or if the LED protocol extension is
+available to arbitrate client and server setting of LED's.
+
+Either way, the sequences, the associated modifier pattern, and the
+keycode are defined in a user-configurable table in a property on the root
+window.  This table is then read either by the server or by XLookupString.
+While this implementation is tantamount to a protocol change, it is
+completely backward-compatible, and permits the implementor the choice of
+an Xlib or a server-based implementation, using the same means of storing
+the Compose sequence tables.  (Note - the X Consortium could decide to
+replace the property with a protocol extension.)
+
+If the KB_COMPOSE_TABLE property is deleted, compose processing is
+disabled.
+
+The mnemonic compose table properties:
+
+name		KB_COMPOSE_TABLE_SHORTS
+type		KB_COMPOSE_TABLE_SHORTS
+format		16
+data[0]		number of compose sequences, num_seq
+data[1+(N*(KB_COMPOSE_TABLE[0])) : ((N+1)*(KB_COMPOSE_TABLE[0]))],
+    0 < N < num_seq 
+		A list of num_seq compose sequence modifier masks.  If 
+		the property is short, AnyModifier is assumed.
+
+name		KB_COMPOSE_TABLE
+type		KB_COMPOSE_TABLE
+format		8
+data[0]		maximum number of modifier + keycodes in any compose sequence.
+		(minimum 2)
+data[1:48]	keycodes for the hexadecimal characters for numeric compose.
+data[49+(N*(data[0])) : 48+((N+1)*(data[0]))], 0 < N < num_seq 
+		A list of num_seq compose sequences, 
+		each sequence being a list of two or more keycodes 
+		in the order they must be pressed, NULL terminated if 
+		shorter than data[0].  Each keycode is qualified
+		by the corresponding modifier in KB_COMPOSE_TABLE_SHORTS.
+data[49+(num_seq*data[0])+N], 0 < N < num_seq 
+		A list of N+1 modifier patterns, one per compose sequence
+data[49+(num_seq*(data[0]+1))+N], 0 < N < num_seq 
+		A list of N+1 keycodes, one keycode per compose sequence
+data[49+(num_seq*(data[0]+2)]
+		number of cancel keycodes to follow
+data[50+(num_seq*(data[0]+2)) : 
+     49+(num_seq*(data[0]+2))+data[49+(num_seq*(data[0]+2)]]
+		A list of "cancel" keycodes which silently cancel the
+		compose sequence, and are processed normally.  May contain
+		meaningless keycodes of value zero.
+data[50+(num_seq*(data[0]+2))+data[49+(num_seq*(data[0]+2)]] : end-of-prop]
+		A list of "abort" keycodes which cancel the compose
+		sequence and are processed normally after the bell is
+		rung.  A keycode appearing in both of these lists cancels
+		the compose sequence and is silently discarded.  May
+		contain meaningless keycodes of value zero.
+
+For example, if there is a maximum of 5 keycodes per compose sequence,
+including the initiating keycode, the only compose sequence listed is the
+keycodes 0x34, 0x67, the initiating keycode is 0x5C (Multi_key), the
+initiating modifier is AnyModifier (0x8000), the resulting keycode is 0x87,
+and the resulting modifier pattern is 0x0A, the KB_COMPOSE_PROP begins
+0x05, <48 hex keycodes>, 0x5C, 0x34, 0x67, 0x00, 0xXX, 0x0A, 0x87, 
+where 0xXX is a don't care.
+
+The list is searched starting at data[49], with the first match encountered
+taken.  No other ordering of the list is implied.  The shortest match is
+taken, ie. as soon as a sequence matches, the corresponding
+keycode/modifier pair are used, so longer sequences are ignored.
+
+To insure consistency, the KB_COMPOSE_TABLE_SHORTS property is always
+updated first, and the data is ignored until the KB_COMPOSE_TABLE is
+updated.  Deletion of either property disables Compose processing.
+
+			     Numeric Compose
+
+Numeric compose gets an encoded 8-bit value directly from the user, in the
+"current encoding".  The user presses an initial keycode (possibly with a
+modifier), followed by a sequence of two, three, or eight binary, octal,
+decimal, or hex digit keys.  Modifiers are ignored when processing the
+numeric keycodes in a numeric compose sequence; any combination of
+modifiers is allowed, regardless of whether the numeric keysym is shifted
+or not.
+
+The conversion must be performed on the client side; XLookupString returns
+a single character.  Servers that give user feedback on compose status
+(i.e.  an LED) must hold the key events until the compose sequence is
+completed, in order to keep server and client state in sync.  The server
+is not required to send the actual modifier state on the numeric keycodes;
+it may send the modifier state for the last initiating KeyPress on all of
+the numeric keycode events.  Also, the server time, windows, and x and y
+coordinates at the last physical key press will appear in all of the
+events.  (Is this really OK?)
+
+KB_COMPOSE_TABLE.data[1:48] lists 48 keycodes to be used for the 16 hex
+characters 0-9, a-f in numeric compose sequences.  Up to three different
+equivalent keycodes can be specified for each hex character.  Each group
+of three keycodes is listed in order, i.e.  the keycodes for '0' first,
+the keycodes for 'f' last.  Normally, these keycodes will be the keycodes
+whose keysyms are 0-9, KP_0-KP_9, A-F.  Unused keycodes are set to zero.
+
+The numeric compose sequences are defined, and numeric compose enabled, by
+any entry in the KB_COMPOSE_TABLE property with an initial
+keycode/modifier, followed by one of the following reserved keycode
+values:
+
+keycode value		radix		compose sequence digit keycodes
+1			2		8 x data[1:6]
+2			8		3 x data[1:24]
+3			10		2 x data[1:30]
+4			16		2 x data[1:48]
+
+The compose sequence consists of the specified initial keycode/modifier,
+followed by the specified number of the specified digit keycodes, most
+significant digit first, including leading zeros.
+
+The output modifier and keycode in the KB_COMPOSE_TABLE are ignored.
+
+If the initial part of a mnemonic compose sequence matches the initial
+part of a numeric compose sequence, including at least one numeral (e.g.
+Compose-a-degree and Compose-hex or Compose-0-1-z and Compose-binary), or if
+two numeric compose sequences are specified using the same initial keycode
+and modifier, the first one listed in the KB_COMPOSE_TABLE property is
+used and the second ignored, even if the first fails to match.  (Possible
+enhancement here - insure that if the first fails, later matches are
+found.)

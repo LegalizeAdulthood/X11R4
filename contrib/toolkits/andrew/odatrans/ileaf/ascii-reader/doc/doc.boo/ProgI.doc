@@ -1,0 +1,2719 @@
+<!OPS, Version = 6.4>
+
+<!Document,
+	Final Output Device =	"ps",
+	Default Printer =	"nearest-ps">
+
+<!Font Definitions,
+	F20 = Times 10,
+	F28 = Times 12,
+	F148 = Courier 12,
+	F29 = Times 12 Bold,
+	F24 = Times 11,
+	F26 = Times 11 Italic,
+	F85 = Helvetica 11 Bold,
+	F46 = Times 24 Italic,
+	F72 = Helvetica 8,
+	F47 = Times 24 Bold Italic,
+	F77 = Helvetica 9 Bold,
+	F76 = Helvetica 9,
+	F84 = Helvetica 11,
+	F68 = Helvetica 6,
+	F101 = Helvetica 18 Bold,
+	F81 = Helvetica 10 Bold,
+	F31 = Times 12 Bold Italic,
+	F93 = Helvetica 14 Bold,
+	F89 = Helvetica 12 Bold,
+	F25 = Times 11 Bold,
+	F22 = Times 10 Italic,
+	F41 = Times 18 Bold,
+	F33 = Times 14 Bold,
+	F21 = Times 10 Bold,
+	F80 = Helvetica 10,
+	F8 = Times 6>
+
+<!Color Definitions,
+	C0 = 0, 0, 0,
+	C1 = 3.13, 3.13, 3.13,
+	C2 = 6.25, 6.25, 6.25,
+	C3 = 12.50, 12.50, 12.50,
+	C4 = 25, 25, 25,
+	C5 = 50, 50, 50,
+	C6 = 75, 75, 75,
+	C7 = 100, 100, 100>
+
+<!Page,
+	Bottom Margin =		0.83 inches,
+	Left Margin =		0.87 inches,
+	Right Margin =		0.88 inches,
+	Inner Margin =		0.50 inches,
+	Outer Margin =		0.94 inches,
+	First Page =		Right,
+	Margins =			Left/Right,
+	Starting Page # = 	Inherit,
+	Hyphenation =		on,
+	Consecutive Hyphens =	2,
+	Revision Bar Placement = Right,
+	Margin Stretch =	150,
+	Margin Shrink =		75,
+	Feathering =		off,
+	Begin With = Odd>
+
+<!Autonumber Stream, Chapters, 1,
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, footnote, 1,
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, List, 1>
+
+<!Autonumber Stream, Outline, 3,
+	Level 1 Symbol Type =	Upper Roman,
+	Level 2 Symbol Type =	Upper Alpha>
+
+<!Autonumber Stream, chap, 1,
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, label, 1,
+	Level 1 Prefix =	"Figure ",
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, step, 1,
+	Level 1 Suffix =	>
+
+<!Autonumber Stream, REFstream, 3,
+	Level 1 Symbol Type =	Upper Roman,
+	Level 1 Show =		no,
+	Level 2 Symbol Type =	Upper Alpha,
+	Level 2 Prefix =	" ",
+	Level 2 Show =		no,
+	Level 3 Prefix =	" ",
+	Level 3 Show =		no>
+
+<!Class, "|:bullet",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F28@i*,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+S<Tab>
+
+<!Class, "|:Outline4",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F20@i*,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab>D<Tab>
+
+<!Class, 12x2:cell,
+	Top Margin =		0.03 inches,
+	Bottom Margin =		0.03 inches,
+	Line Spacing =		1.114 lines,
+	Alignment =		Left,
+	Font =			F28,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum>
+
+<!Class, Csubtopic,
+	Top Margin =		0.06 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1 inches,
+	First Indent =		-1 inches,
+	Line Spacing =		1.162 lines,
+	Alignment =		Left,
+	Font =			F148,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		0/1*3 Inches,
+	TOC Doc Name =		TOC,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:Csubtopic",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F29><Autonum, Outline, 3><Tab><End Sub><F0>
+
+<!Class, Ctopic,
+	Top Margin =		0.06 inches,
+	Bottom Margin =		0.04 inches,
+	Left Margin =		1 inches,
+	First Indent =		-1 inches,
+	Line Spacing =		1.162 lines,
+	Alignment =		Left,
+	Font =			F148,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		-0.50/0.50*3/2/3 Inches,
+	TOC Doc Name =		TOC,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:Ctopic",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F29><Autonum, Outline, 2><Tab><End Sub><F0>
+
+<!Class, heading,
+	Top Margin =		0.07 inches,
+	Bottom Margin =		0.07 inches,
+	Line Spacing =		1.206 lines,
+	Font =			F29,
+	Allow Page Break After = no,
+	Left Tab =		0/0.50*7 Inches,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:heading",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F0><Autonum, Outline, 1> <End Sub><F0>
+
+<!Class, micro:ftnote,
+	Top Margin =		0.03 inches,
+	Bottom Margin =		0.03 inches,
+	Line Spacing =		1.114 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Left Tab =		0/0.25 Inches,
+	Composition =		Optimum>
+
+<!Class, "|:Csubtopic",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F148@i*,
+	Left Tab =		0/1*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<F29><Autonum, Outline, 3><Tab>
+
+<!Class, "|:Ctopic",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F148@i*,
+	Left Tab =		0/1*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<F29><Autonum, Outline, 2><Tab>
+
+<!Class, "|:heading",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F29@i*,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Autonum, Outline, 1> 
+
+<!Class, "|:list",
+	Font =			F24,
+	Contents =	Shared>
+
+<Tab><F25>><F0><Tab>
+
+<!Class, "|:listLA",
+	Font =			F24>
+
+<Tab><F25>><F0><Tab>
+
+<!Class, "|:listempty1",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24@i*,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab><Tab>
+
+<!Class, "|:note:caution",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Frame,
+	Name =			note:caution,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.047423,0.706667,0.047423,7,0,4,0)
+       (v6,3,0,0.706667,0.047423,0.706667,0.005911,7,0,4,0)
+       (v6,4,0,0.706667,0.005911,0,0.005911,7,0,4,0)
+       (v6,5,0,0,0.005911,0,0.047423,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+<Tab><F26>Caution:<F0><Tab>
+
+<!Class, "|:note:note",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Frame,
+	Name =			note:standard,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.037045,0.706667,0.037045,7,0,4,0)
+       (v6,3,0,0.706667,0.037045,0.706667,0.016289,7,0,4,0)
+       (v6,4,0,0.706667,0.016289,0,0.016289,7,0,4,0)
+       (v6,5,0,0,0.016289,0,0.037045,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+<Tab><F26>Note:<F0><Tab>
+
+<!Class, "|:note:warning",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Frame,
+	Name =			note:warning,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.062266,0.706667,0.062266,7,0,4,0)
+       (v6,3,0,0.706667,0.062266,0.706667,0,7,0,4,0)
+       (v6,4,0,0.706667,0,0,0,7,0,4,0)
+       (v6,5,0,0,0,0,0.062266,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+<Tab><F26>Warning:<F0><Tab>
+
+<!Class, "|:numlist",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab><Autonum, List, 1><Tab>
+
+<!Class, "|:step:OR1",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<F20>. . . or . . .<F26><Tab><F0>
+
+<!Class, "|:step:numb1",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F24,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<F85><Autonum, step, 1>.<F0><Tab>
+
+<!Class, "|:titlexcer",
+	Font =			F85,
+	Contents =	Shared>
+
+<Tab><F20>"<F0><Tab>
+
+<!Class, chapname,
+	Top Margin =		0.50 inches,
+	Bottom Margin =		1 inches,
+	Line Spacing =		1.100 lines,
+	Alignment =		Left,
+	Font =			F46@K1,
+	Begin New Page =		yes,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		7/8.25/0.75*18 Inches,
+	TOC Doc Name =		TOC,
+	Composition =		Optimum>
+
+<!Class, chaprefs,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F72,
+	Left Tab =		0/0.75*13 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Autonum, label, 1>                            <Autonum, chap, 1>
+
+<!Class, keyside,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.200 lines,
+	Font =			F77,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches>
+
+Action<F76><HR>
+Apollo<Tab.>Key<HR>
+DEC<Tab.>Key<HR>
+Sun<Tab.>Key
+
+<!Class, list,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		2 inches,
+	First Indent =		-1.13 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Allow Page Break Within = no,
+	Left Tab =		-0.25/0/0.25/0.75/0.75*18/15.75/0.75*7 Inches,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:list",
+	Hidden =		yes,
+	Font =			F24,
+	Subcomponent =	yes,
+	Contents =	Shared><F0><Tab><F25>><F0><Tab><End Sub><F0>
+
+<!Class, listLA,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0.17 inches,
+	Left Margin =		2 inches,
+	First Indent =		-1.13 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Allow Page Break Within = no,
+	Left Tab =		-0.25/0/0.25/0.75/0.75*18/15.75/0.75*7 Inches,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:listLA",
+	Hidden =		yes,
+	Font =			F24,
+	Subcomponent =	yes><F0><Tab><F25>><F0><Tab><End Sub><F0>
+
+<!Class, option,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.200 lines,
+	Alignment =		Left,
+	Font =			F77,
+	Hyphenation =		2,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Wordspace Min =		0.483,
+	Wordspace Nom =		0.800,
+	Wordspace Max =		1.420,
+	Letterspace Max =		0.483,
+	Composition =		Optimum>
+
+Optional Feature<HR>
+<F76>The <<name> feature is <HR>
+available in the <<package><HR>
+etc.
+
+<!Class, para,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Composition =		Optimum>
+
+<!Class, paraAT,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Allow Page Break After = no,
+	Composition =		Optimum>
+
+<!Class, rule:Adot,
+	Bottom Margin =		0.08 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F84,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		10.50/0.75*15 Inches,
+	Right Tab =		6.75/10 Inches,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<Tab.>
+
+<!Class, rule:sm,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F68,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break Within = no,
+	Left Tab =		0 Inches,
+	Composition =		Optimum>
+
+<!Class, titleA,
+	Top Margin =		0.50 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F101@K1,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0/7/8.25/0.75*18 Inches,
+	TOC Doc Name =		TOC>
+
+<!Class, titleD,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+titleD component in a sideD frame
+
+<!Class, 6x4:cell,
+	Top Margin =		0.03 inches,
+	Bottom Margin =		0.03 inches,
+	Left Margin =		0.15 inches,
+	Line Spacing =		1.114 lines,
+	Font =			F28,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum>
+
+<!Class, 8x3:cell,
+	Top Margin =		0.03 inches,
+	Bottom Margin =		0.03 inches,
+	Line Spacing =		1.114 lines,
+	Font =			F29,
+	Left Tab =		0/0.50*3 Inches,
+	Composition =		Optimum>
+
+<!Class, foot_prelim,
+	Top Margin =		0.07 inches,
+	Bottom Margin =		0.07 inches,
+	Line Spacing =		1.308 lines,
+	Font =			F31,
+	Contents =	Shared>
+
+PRELIMINARY  ( June 19, 1989 )
+
+<!Class, unique,
+	Top Margin =		0.07 inches,
+	Bottom Margin =		0.07 inches,
+	Line Spacing =		1.308 lines,
+	Font =			F20>
+
+<!Class, Cpara,
+	Top Margin =		0.08 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Composition =		Optimum>
+
+<!Class, CparaD,
+	Top Margin =		0.17 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F24,
+	Composition =		Optimum>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+CtitleD component in a CsideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Class, Cstuff,
+	Top Margin =		0.17 inches,
+	Bottom Margin =		0.07 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.308 lines,
+	Alignment =		Left,
+	Font =			F20,
+	Left Tab =		0/0.25*12 Inches>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+CtitleD component in a CsideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Class, CtitleB,
+	Top Margin =		0.50 inches,
+	Bottom Margin =		0 inches,
+	Line Spacing =		1 lines,
+	Alignment =		Left,
+	Font =			F93,
+	Begin New Page =		yes,
+	Straddle =		yes,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		7/8.25/0.75*18 Inches,
+	TOC Doc Name =		TOC>
+
+<!Class, CtitleC,
+	Top Margin =		0.25 inches,
+	Bottom Margin =		0 inches,
+	Left Margin =		1.75 inches,
+	Line Spacing =		1.100 lines,
+	Alignment =		Left,
+	Font =			F89,
+	Allow Page Break Within = no,
+	Allow Page Break After = no,
+	Left Tab =		7/7.50/0.75*19 Inches>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Hidden =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+CtitleD component in a CsideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Class, CtitleD,
+	Bottom Margin =		0.17 inches,
+	Line Spacing =		1.150 lines,
+	Alignment =		Left,
+	Font =			F81,
+	Hyphenation =		off,
+	Straddle =		yes,
+	Allow Page Break After = no,
+	Left Tab =		0 Inches,
+	Right Tab =		1.50 Inches,
+	Composition =		Optimum>
+
+titleD component in a<HR>
+sideD frame
+
+<!Master Frame,
+	Name =			Auto,
+	Placement =		At Anchor,
+	Width =			0.50 inches,
+	Height =		0.167 inches,
+	Diagram =
+V6,
+(g9,0,0)>
+
+<!Master Frame,
+	Name =			Chapter,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 1.40 inches,
+	Width =			1.75 inches,
+	Height =		1.75 inches,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,268,0.08,1.546667,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.547 inches, Height = 0.11 inches,
+	Revision Bar Placement = Left>
+<chaprefs,
+	Hidden =		yes>
+
+<Autonum, label, 1>                            <Autonum, chap, 1>
+
+<End Text>)
+ (t14,2,128,0,0.92,0,7,0,0,t1,wst:timsps24bi,)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			note:caution,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Diagram =
+V6,
+(g9,0,0)>
+
+<!Master Frame,
+	Name =			note:standard,
+	Placement =		At Anchor,
+	Vertical Alignment =	Baseline - 0.111 inches,
+	Width =			0.73 inches,
+	Height =		0.111 inches,
+	Shared Contents =	yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,0,0,0.020756,0.706667,0.020756,7,0,4,0)
+       (v6,3,0,0.706667,0.020756,0.706667,0,7,0,4,0)
+       (v6,4,0,0.706667,0,0,0,7,0,4,0)
+       (v6,5,0,0,0,0,0.020756,7,0,4,0))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			note:warning,
+	Placement =		At Anchor,
+	Width =			0.73 inches,
+	Height =		0.10 inches,
+	Diagram =
+V6,
+(g9,0,0)>
+
+<!Master Frame,
+	Name =			rule:intro,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 0.04 inches,
+	Width =			5 inches,
+	Height =		0.10 inches,
+	Shared Contents =	yes,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,7,0
+   (g9,2,0
+     (g9,2,0
+       (v6,2,65536,0,0,4.986667,0,7,0,4,0)
+       (v6,3,65536,4.986667,0,4.986667,0.041511,7,0,4,0)
+       (v6,4,65536,4.986667,0.041511,0,0.041511,7,0,4,0)
+       (v6,5,65536,0,0.041511,0,0,7,0,4,0))))
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			sideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<titleD,
+	Hidden =		yes>
+
+titleD component in a<HR>
+sideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.293 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes>
+
+CtitleD component in a CsideD frame
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			CsideDdesc,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.137 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes>
+
+Usage
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			CsideDfield,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.137 inches,
+	Revision Bar Placement = Left>
+<CtitleD,
+	Hidden =		yes>
+
+Field Descriptions
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Table, 6x4,
+	Columns =		4,
+	Column 1 Width =	1.591 inches,
+	Column 2 Width =	1.591 inches,
+	Column 3 Width =	1.591 inches,
+	Column 4 Width =	1.591 inches,
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row">
+
+<Master Row, "row">
+
+<Cell><6x4:cell,
+	Hidden =		yes>
+
+<Cell><6x4:cell,
+	Hidden =		yes>
+
+<Cell><6x4:cell,
+	Hidden =		yes>
+
+<Cell><6x4:cell,
+	Hidden =		yes>
+
+<End Table>
+
+<!Master Table, 8x3,
+	Columns =		3,
+	Column 1 Width =	2.131 inches,
+	Column 2 Width =	2.131 inches,
+	Column 3 Width =	2.131 inches,
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row",
+	Row =			"row">
+
+<Master Row, "row">
+
+<Cell><8x3:cell,
+	Hidden =		yes>
+
+<Cell><8x3:cell,
+	Hidden =		yes>
+
+<Cell><8x3:cell,
+	Hidden =		yes>
+
+<End Table>
+
+<Right Page Header, Frame =
+V6,
+(g9,1,0
+ (t14,1,4,6.493333,0.438782,2,7,0,0,,wst:timsps10,)
+ (t14,2,4,3.246667,0.438782,1,7,0,0,,wst:timsps10,)
+ (t14,3,4,0,0.438782,0,7,0,0,,wst:timsps10,)
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<Right Page Footer, Frame =
+V6,
+(g9,1,0
+ (t14,1,4,6.493333,0.478772,2,7,0,0,,wst:timsps10,)
+ (t14,2,4,3.366667,0.446667,1,7,0,0,,wst:timsps10,\X80a0)
+ (t14,3,4,0,0.478772,0,7,0,0,,wst:timsps10,)
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<Left Page Footer, Frame =
+V6,
+(g9,1,0
+ (T12,1,12,0.04,0.32,7,127,5,7,127,8,0,2,
+<!Page, Width = 3.20 inches, Height = 0.167 inches>
+<unique>
+
+<foot_prelim, Subcomponent = yes><F31>PRELIMINARY  ( June 19, 1989 
+)<End Sub><F0>
+
+<End Text>))>
+
+<chapname>
+
+<|,147>
+<Frame,
+	Name =			Chapter,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 1.40 inches,
+	Width =			1.75 inches,
+	Height =		1.75 inches,
+	Diagram =
+V6,
+(g9,4,0
+ (g9,4,0
+   (O5,4,8,1,wst:bsdutch0bi,53
+     (s@"8"637
+       (s@"8"0
+         (J0"8"7"6"2"7
+           (s@"8"0
+             (J0"8"5738"6"2"532
+               (s@"8"5713
+                 (s@"8"5713
+                   (D4"8"7"7/528555"7/42482@"7/852843"7/544570"2"532"0"7)
+                   (D4"6"7"7/852843"7/544570"7/@10@35"7/544570"2"532"0"7)
+                   (D4"4"7"7/@10@35"7/544570"7/0013@0"7/161706"2"532"0"7)
+                   (D4"2"7"7/0013@0"7/161706"7/8763@8"7/161706"2"532"0"7)
+                   (D4"0"7"7/8763@8"7/161706"7/187@20"7/8027@0"2"532"0"7)
+                   (y0"@"7"5"!3/652@45"7/355372"7/187@20"7/8027@0"7/830262"7/8@@
+                    @12"7/656444"7/635473"1/384212"5/18@050"7/656444"7/635473"6"
+                    2"532"2"532"0"7)
+                   (y0"57"7"5"!5/86@18"!7/555514"7/656444"7/635473"7/430465"7/62
+                    8646"7/233658"7/46875"1/1@5481"1/436435"7/233658"7/46875"6"2
+                    "532"2"532"0"7)
+                   (y0"55"7"5"!5/555040"!5/104@05"7/233658"7/46875"7/24@884"7/23
+                    3335"7/2@410@"7/2@@360"5/136@@2"1/8745@3"7/2@410@"7/2@@360"6
+                    "2"532"2"532"0"7)
+                   (y0"53"7"5"7/107206"!5/060743"7/2@410@"7/2@@360"7/075473"7/08
+                    7@02"7/07835"7/003254"7/00@56@"1/644236"7/07835"7/003254"6"2
+                    "532"2"532"0"7)
+                   (y0"51"7"5"7/078021"!7/061@@3"7/07835"7/003254"7/2@5523"7/@00
+                    41@"7/263@13"5/700@8@"!7/744082"3/465@46"7/263@13"5/700@8@"6
+                    "2"532"2"532"0"7)
+                   (y0"58"7"5"5/418813"!7/852755"7/263@13"5/700@8@"7/40226"5/526
+                    454"7/478154"5/384316"!3/10010@"1/34280"7/478154"5/384316"6"
+                    2"532"2"532"0"7)
+                   (y0"56"7"5"3/35576@"7/583875"7/478154"5/384316"7/8@0304"5/171
+                    372"7/107@66"5/114@55"!5/604702"5/401008"7/107@66"5/114@55"6
+                    "2"532"2"532"0"7)
+                   (y0"54"7"5"3/87@64@"5/77466"7/107@66"5/114@55"7/154488"5/188@
+                    12"7/3615@0"5/180586"!5/074100"5/122302"7/3615@0"5/180586"6"
+                    2"532"2"532"0"7)
+                   (y0"52"7"5"3/65072@"5/321462"7/3615@0"5/180586"7/503078"5/188
+                    512"7/55602@"5/130706"!3/751842"7/455440"7/55602@"5/130706"6
+                    "2"532"2"532"0"7)
+                   (y0"50"7"5"5/@8814"5/@7@@45"7/55602@"5/130706"7/746821"5/1738
+                    72"7/732310"5/343301"!7/@07073"!7/345654"7/732310"5/343301"6
+                    "2"532"2"532"0"7)
+                   (y0"5@"7"5"5/10@103"1/4@7666"7/732310"5/343301"7/750684"5/381
+                    733"7/751111"5/333560"!7/878114"!5/806684"7/751111"5/333560"
+                    6"2"532"2"532"0"7)
+                   (y0"37"7"5"7/537@@8"8/514624"7/751111"5/333560"7/75@852"5/520
+                    038"7/787323"5/51@678"5/025@@0"!5/316@11"7/787323"5/51@678"6
+                    "2"532"2"532"0"7)
+                   (y0"35"7"5"!5/@5255"1/142132"7/787323"5/51@678"7/726715"5/558
+                    415"7/55@16@"5/574476"5/42586@"5/542282"7/55@16@"5/574476"6"
+                    2"532"2"532"0"7)
+                   (y0"33"7"5"!5/467628"5/727@32"7/55@16@"5/574476"7/54@244"5/55
+                    2716"7/353165"5/586535"3/431@22"1/610076"7/353165"5/586535"6
+                    "2"532"2"532"0"7)
+                   (y0"31"7"5"!3/83@182"!5/628733"7/353165"5/586535"7/315821"5/5
+                    442@"7/380061"5/5@7041"5/34855@"3/260203"7/380061"5/5@7041"6
+                    "2"532"2"532"0"7)
+                   (y0"38"7"5"!5/567263"!5/335004"7/380061"5/5@7041"7/328760"5/3
+                    36125"7/172706"5/366745"3/418165"3/@67@08"7/172706"5/366745"
+                    6"2"532"2"532"0"7)
+                   (y0"36"7"5"!3/821014"!7/@05820"7/172706"5/366745"7/11768@"5/3
+                    40278"7/1628@3"5/326535"3/5@1761"5/88725"7/1628@3"5/326535"6
+                    "2"532"2"532"0"7)
+                   (y0"34"7"5"!3/75412@"5/53220"7/1628@3"5/326535"7/1@1531"5/321
+                    652"7/830262"5/341002"3/456@54"7/1@2683"7/830262"5/341002"6"
+                    2"532"2"532"0"7)
+                   (y0"32"7"5"!5/0@8031"3/50012@"7/830262"5/341002"7/8@174@"5/33
+                    4@26"7/68180"5/521372"5/0@5731"!7/078768"7/68180"5/521372"6"
+                    2"532"2"532"0"7)
+                   (y0"30"7"5"!5/135301"1/@88222"7/68180"5/521372"7/604@13"5/703
+                    613"7/475270"7/@08415"7/477@2"!7/484056"7/475270"7/@08415"6"
+                    2"532"2"532"0"7)
+                   (y0"3@"7"5"7/452342"1/754145"7/475270"7/@08415"7/628246"7/040
+                    34@"7/677738"7/225523"!5/555144"!7/453816"7/677738"7/225523"
+                    6"2"532"2"532"0"7)
+                   (y0"17"7"5"3/700876"3/78670@"7/677738"7/225523"7/882770"7/216
+                    048"7/100205"7/257503"!5/603455"7/71381@"7/100205"7/257503"6
+                    "2"532"2"532"0"7)
+                   (y0"15"7"5"3/174782"5/15@83@"7/100205"7/257503"7/160141"7/275
+                    162"7/132@1@"7/4@8516"!5/480456"7/32416"7/132@1@"7/4@8516"6"
+                    2"532"2"532"0"7)
+                   (y0"13"7"5"3/24@37@"5/536421"7/132@1@"7/4@8516"7/3676@"7/403@
+                    "7/528555"7/42482@"!3/172534"7/681732"7/528555"7/42482@"6"2"
+                    532"2"532"0"7)))))))
+       (s@"11"0
+         (D4"11"54222678"7/718500"7"7/718500"7"2"532"0"7)
+         (D4"18"54222678"7/@23058"7"7/@23058"7"2"532"0"7)
+         (D4"16"54222678"7/718500"5/211111"7/718500"5/211111"2"532"0"7)
+         (D4"14"54222678"7/@23058"5/211111"7/@23058"5/211111"2"532"0"7)))))
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+Program Interface
+
+<rule:sm>
+
+<Frame,
+	Name =			rule:intro,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 0.04 inches,
+	Width =			5 inches,
+	Height =		0.10 inches,
+	Shared Contents =	yes>
+
+<para>
+
+This section discusses the function-call interface. Each function 
+description includes the function's intended usage, a description 
+of its parameters, and any side-effects.
+
+<para>
+
+The functions are grouped into four classes:
+
+<list>
+
+<"|:list", Subcomponent = yes><F0><Tab><F25>><F0><Tab><End Sub><F0>Initializati
+on functions
+
+<list>
+
+<"|:list", Subcomponent = yes><F0><Tab><F25>><F0><Tab><End Sub><F0>Memory 
+management functions
+
+<list>
+
+<"|:list", Subcomponent = yes><F0><Tab><F25>><F0><Tab><End Sub><F0>High-level 
+read functions
+
+<listLA>
+
+<"|:listLA", Subcomponent = yes><F0><Tab><F20>H<F0><Tab><End Sub><F0>High-level 
+write functions
+
+<para>
+
+Before using the <F25>ASCII Reader<F0>'s data structures, initialize 
+the input file with <F25>ArFileInit()<F0> and the AR state variable 
+with <F25>ArStateInit()<F0>. 
+
+<para>
+
+The memory management routines free the user from checking the return 
+status on memory allocation calls. The two functions are <F25>ArSafeMalloc() 
+<F0>and <F25>ArSafeRealloc()<F0>.
+
+<para>
+
+The read and write routines of greatest importance are <F25>ArDocRead() <F0>and 
+<F25>ArDocWrite(). <F0>For many interfaces these are the only functions 
+that will be required. These functions read and write ASCII documents 
+in their entirety. The other functions within this function-class 
+provide access to smaller units of a document, such as components 
+or document declarations.
+
+<rule:sm>
+
+<Frame,
+	Name =			rule:intro,
+	Placement =		At Anchor,
+	Vertical Alignment =	Bottom + 0.04 inches,
+	Width =			5 inches,
+	Height =		0.10 inches,
+	Shared Contents =	yes>
+
+<titleA,
+	Begin New Page =		yes>
+
+<|,148>Initializations functions
+
+<rule:Adot>
+
+<Tab.>
+
+<paraAT>
+
+The initialization routines fall into two categories. The first group 
+- <F25>ArInit()<F0>, <F25>ArStateInit()<F0>, and <F25>ArFileInit()<F0> 
+- manage the environment in which the <F25>ASCII Reader <F0>functions. 
+The second group of functions initialize various component and structure 
+types.
+
+<CtitleB>
+
+<|,149>ArInit()
+
+<Cpara>
+
+Initialize internal measures.
+
+<Cstuff>
+
+void ArInit( initP )<HR>
+Ar_init_t *initP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		149,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+Void
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		149,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+initP
+
+<Cpara>
+
+An initialized AR_init_t structure passed by reference.
+
+<Cpara>
+
+The client allocates and initializes the AR_init_t structure to reflect 
+the desired measures and actions before passing it to this routine.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		149,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This function allows a client to configure some of the internal measures 
+and actions of AR in order to minimize the set of conversions needed 
+for distance measures. If the client does not call this function, 
+default values are used.  
+
+<Cpara>
+
+The <F25>initP <F0>structure tells AR to use a new number of <F25>Rsu<F0>'s 
+per inch. All internal measures that are kept in <F25>Rsu<F0>'s are 
+updated by this function. The default tabs in a component, component 
+line spacing and bottom margin are affected by this conversion. The 
+default component top margin is 0 and therefore unaffected. The default 
+page measures and microdocument page measures are changed, and the 
+conversion table for units such as picas and millimeters is updated. 
+The default metric measures are likewise affected.
+
+<Cpara>
+
+There is no guard within AR to prevent this function from being called 
+more than once. However, the results are not predictable if the basis 
+of <F25>Rsu<F0>'s is changed in mid-stream.
+
+<CtitleB>
+
+<|,150>ArStateInit()
+
+<Cpara>
+
+Initialize the <F25>ASCII Reader <F0>state variable
+
+<Cstuff>
+
+Il_state_t *ArStateInit( stateP )<HR>
+Il_state_t *stateP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		150,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+II_state_t*
+
+<Cpara>
+
+An initialized state variable. This variable is required input for 
+some of the high-level I/O routines.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		150,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+stateP
+
+<Cpara>
+
+An uninitialized, allocated, state variable passed by reference.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		150,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This function takes a pointer to an Interleaf document state variable, 
+an <F25>Il_state_t<F0>.  If the pointer is non-NULL,  the default 
+Interleaf document state values are written into it.
+
+<CtitleB>
+
+<|,151>ArFileInit()
+
+<Cpara>
+
+Initialize a file for reading by <F25>ArDocRead()<F0>.
+
+<Cstuff>
+
+File_info_t *ArFileInit( ifile )<HR>
+FILE *ifile;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		151,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+File_info_t*
+
+<Cpara>
+
+An initialized file information structure. This structure is required 
+input for any read-type function.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		151,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ifile
+
+<Cpara>
+
+A file pointer from a successful <F25>fopen() <F0>call.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		151,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+An open file is initialized via this routine for <F25>ArDocRead()<F0>.
+
+<Cpara>
+
+AR needs to retain some information about the input file between read 
+calls from the client; this is mostly a push-back stack of characters.  
+This function allocates a <F25>File_info_t<F0> variable and initializes 
+it.  The return value is a pointer to the newly-allocated variable.  
+If the parameter <F25>ifile<F0> is NULL, the return value is NULL.
+
+<CtitleB>
+
+<|,152>ArCmpnInit()
+
+<Cpara>
+
+Initialize a default component structure.
+
+<Cstuff>
+
+Cmpn_t *ArCmpnInit( cmP )<HR>
+Cmpn_t *cmP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		152,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+Cmpn_t*
+
+<Cpara>
+
+An initialized component structure.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		152,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+cmP
+
+<Cpara>
+
+An allocated, but uninitialized, component structure.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		152,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+The default component properties are copied into the referenced <F25>Cmpn_t 
+<F0>structure. The list of effectivity attributes is set to NULL.
+
+<Cpara>
+
+A client should use <F25>ArCmpnInit()<F0> whenever a new <F25>Cmpn_t<F0> 
+variable is allocated, to insure that none of its fields is garbage. 
+After the new component is allocated and initialized with <F25>ArCmpnInit()
+<F0>, find its master definition (if one exists) and copy the relevent 
+fields to the new structure. Then, if there are instance-specific 
+properties, modify the <F25>Cmpn_t<F0> structure to reflect them.
+
+<CtitleB>
+
+<|,153>ArFontValueInit()
+
+<Cpara>
+
+Initialize a font value structure.
+
+<Cstuff>
+
+Font_value_t ArFontValueInit( )
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		153,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+Font_value_t
+
+<Cpara>
+
+An initialized font value structure. Notice that this routine returns 
+a structure, not a pointer. Also note that this function does not 
+allocate a new structure, so you must assign the result of the function 
+to a structure.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		153,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+None
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		153,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This function initializes all the fields in a <F25>Font_value_t <F0>structure.  
+All inheritances are set to <F25>fn_INHERIT_NONE<F0>, and each font 
+attribute is set to its default.  This means that all attributes are 
+off except pair-kerning, which is on by default, and the color, which 
+is set to black.  The font token number is zero, which is not legal 
+in a component-master but is legal everywhere else that a <F25>Font_value_t 
+<F0>is used.
+
+<Cpara>
+
+The client will typically use this function to initialize a local 
+variable before adding information from the input file.
+
+<titleA,
+	Begin New Page =		yes>
+
+<|,154>Memory functions
+
+<rule:Adot>
+
+<Tab.>
+
+<paraAT>
+
+There are two services available to a client program for allocating 
+memory.  They are based on standard LibC allocators, but they check 
+for failure and exit with a message on the standard error output if 
+failure occurs.  Thus, the client does not need to check for failure 
+and can use these services as if they never fail.
+
+<CtitleB>
+
+<|,155>ArSafeMalloc()
+
+<Cpara>
+
+Allocate memory.
+
+<Cstuff>
+
+char *ArSafeMalloc( n )<HR>
+unsigned int n;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		155,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+char*
+
+<Cpara>
+
+Allocated memory via the C <F25>malloc() <F0>function.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		155,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+n
+
+<Cpara>
+
+The number of bytes to allocate.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		155,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+Allocates n bytes. On failure the program exits with a message to 
+standard error.
+
+<CtitleB>
+
+<|,156>ArSafeRealloc()
+
+<Cpara>
+
+Reallocate memory.
+
+<Cstuff>
+
+<Autonum, REFstream, 1, First = Yes>char *ArSafeRealloc( ptr, n )<HR>
+char *ptr;<HR>
+int n;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		156,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+char*
+
+<Cpara>
+
+Allocated memory via the C <F25>realloc() <F0>function.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		156,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ptr
+
+<Cpara>
+
+A pointer to previously allocated storage. The value must be the same 
+as the one returned from a previous call to <F25>ArSafeMalloc()<F0>.
+
+<CtitleC>
+
+n
+
+<Cpara>
+
+The number of bytes to allocate.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		156,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+Allocates n bytes. On failure the program exits with a message to 
+standard error. The previously allocated storage is returned to the 
+operating system.
+
+<titleA,
+	Begin New Page =		yes>
+
+<|,157>High-level Read functions
+
+<rule:Adot>
+
+<Tab.>
+
+<paraAT>
+
+There are two high-level read functions provided by AR.  The highest-level 
+one is <F25>ArDocRead()<F0>.  It reads the entire input Interleaf 
+ASCII markup document and builds an umbrella data structure to contain 
+it.  This maximizes the amount of memory used, since the entire document 
+is in client memory at once; it is also the simplest way to read an 
+Interleaf ASCII markup document. <F25>ArDocRead()<F0> is based on 
+a function named <F25>ArNextObject()<F0>, which reads part of the 
+input file, builds the next top-level object that it finds, and returns 
+a pointer to it.
+
+<para>
+
+An <#7f>object" is the next discrete structural chunk of the input 
+document.  It is one entire declaration, such as <<!Page, ...> or 
+one individual stream or component master from a <<!Autonumber Stream, 
+...> or <<!Class, ...> statement.  In the body of the document, it 
+is one entire component.  The component properties are directly available, 
+while the contents are in the token buffer.  Nested objects are read 
+from the input file and placed appropriately; microdocuments are placed 
+in their frames, and frames are in their components, and in-line components 
+are in their components to any depth of nesting.
+
+<para>
+
+These two functions are the only input-parsing routines available 
+to a client program.  By taking this object-oriented approach, AR 
+insulates the client from the details of Interleaf ASCII markup syntax.  
+Because the set of parsing and output routines is complete, a client 
+never needs to read or write markup directly.  The client can work 
+entirely within the realm of the AR data structures.
+
+<CtitleB>
+
+<|,158>ArNextObject()
+
+<Cpara>
+
+Read the next high-level object from an ASCII markup document.
+
+<Cstuff>
+
+NullObj_t *ArNextObject( fiP, ilP )<HR>
+File_info_t *fiP;<HR>
+Il_state_t *ilP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		158,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+NullObj_t*
+
+<Cpara>
+
+Pointer to the next high-level object in the document. The object 
+is in storage allocated by <F25>ArNextObject()<F0>. The object is 
+identified through the <F25>Identify() <F0>macro.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		158,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+fiP
+
+<Cpara>
+
+The file info structure initialized by <F25>ArFileInit()<F0>.
+
+<CtitleC>
+
+ilP
+
+<Cpara>
+
+The current document state information structure. If this is NULL, 
+the basic defaults are used whenever a master component is required.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		158,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+This function returns the next high-level object in the document. 
+If this object (a class definition, component, autostream master, 
+etc.) contains embedded components (frames, microdocuments, inline 
+components), they are included in the returned high-level object.
+
+<Cpara>
+
+Only objects returned by this function will have an Identifier_t as 
+the first element.
+
+<Cpara>
+
+The <F25>ilP<F0> parameter can be NULL, but it should be a pointer 
+to an <F25>Il_state_t<F0> initialized by <F25>ArStateInit()<F0>.  
+When <F25>ArNextObject()<F0> is reading a component instance in the 
+body of the document, it needs access to the component master in order 
+to set the inheritance of properties from the master.  Likewise, when 
+reading <<!Class, ...> declarations, <F25>ArNextObject()<F0> must 
+have access to the class-defaults values.  All the AR code will work 
+properly when the <F25>ilP<F0> pointer is NULL, but values that should 
+be inherited will instead have their basic default values.  Nothing 
+will be garbage, but the meaning of the output document will be changed 
+when TPS loads it.
+
+<Cpara>
+
+The return value is NULL if an error was encountered.
+
+<Cpara>
+
+If the file referenced by the <F25>fiP<F0> parameter is not an Interleaf 
+ASCII markup file (that is, it does not begin with the characters 
+<#7f><<!"),  AR causes the client program to exit after printing a 
+message to standard error.
+
+<CtitleB>
+
+<|,159>ArDocRead()
+
+<Cpara>
+
+Read an entire document into AR data structures.
+
+<Cstuff>
+
+NullObj_t *ArDocRead( fiP, ilP )<HR>
+File_info_t *fiP;<HR>
+Il_state_t *ilP;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		159,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+NullObj_t*
+
+<Cpara>
+
+The resulting II_state_t object or NULL.
+
+<Cpara>
+
+The return value is NULL if either <F25>fiP<F0> or <F25>ilP<F0> is 
+NULL.  Otherwise, the return value is equal to <F25>ilP<F0>.  If an 
+error occurs part way through the input file, a message is printed 
+and the function returns, with <F25>*ilP<F0> filled in for as much 
+as was successfully read.  (There are not many errors that are not 
+fatal, so this is not likely to happen.)
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		159,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+fiP
+
+<Cpara>
+
+The file information structure initialized with <F25>ArFileInit()<F0>.
+
+<CtitleC>
+
+ilP
+
+<Cpara>
+
+The existing state variable initialized with <F25>ArStateInit()<F0>.
+
+<CparaD>
+
+<F25>
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		159,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ArDocRead()<F0> reads the entire Interleaf ASCII markup file referenced 
+by the <F25>fiP<F0> parameter.  As each object is read by <F25>ArNextObject()
+<F0>, its type is identified and it is placed in the right spot within 
+the <F25>Il_state_t<F0> variable pointed to by <F25>ilP<F0>.
+
+<titleA,
+	Begin New Page =		yes>
+
+<|,160>High-level Write Functions
+
+<rule:Adot>
+
+<Tab.>
+
+<paraAT>
+
+There are three high-level output functions: a function to write all 
+declarations, a function to write the entire document body, and one 
+that calls each of them to write a whole document.
+
+<CtitleB>
+
+<|,161>ArDocWrite()
+
+<Cpara>
+
+Write an ASCII markup document.
+
+<Cstuff>
+
+bool ArDocWrite( ilP, ofile )<HR>
+Il_state_t *ilP;<HR>
+FILE *ofile;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		161,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+bool
+
+<Cpara>
+
+Always <F25>YES.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		161,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ilP
+
+<Cpara>
+
+A complete AR state structure describing the output document.
+
+<CtitleC>
+
+ofile
+
+<Cpara>
+
+A pointer to an output file opened with <F25>fopen()<F0>.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		161,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+The document described in the state structure is written to the output 
+file.  This is generally the last action required of an interface 
+builder.
+
+<CtitleB>
+
+<|,162>ArDocDeclWrite()
+
+<Cpara>
+
+Write the document declarations sections.
+
+<Cstuff>
+
+bool ArDocDeclWrite( ilP, ofile )<HR>
+Il_state_t *ilP;<HR>
+FILE *ofile;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		162,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+bool
+
+<Cpara>
+
+Always <F25>YES.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		162,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ilP
+
+<Cpara>
+
+A complete AR state structure describing the output document.
+
+<CtitleC>
+
+ofile
+
+<Cpara>
+
+A pointer to an output file opened with <F25>fopen()<F0>.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		162,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+The declarations section of the document described in the state structure 
+is written to the output file. The declaration fields are everything 
+but the <F25>bodyP<F0> field of the <F25>Il_state_t<F0> structure.
+
+<CtitleB>
+
+<|,163>ArDocBodyWrite()
+
+<Cpara>
+
+Write the body of the ASCII markup document.
+
+<Cstuff>
+
+bool ArDocBodyWrite( ilP, ofile )<HR>
+Il_state_t *ilP;<HR>
+FILE *ofile;
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		163,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Returns
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+bool
+
+<Cpara>
+
+Always <F25>YES.
+
+<CtitleC>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		163,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Arguments
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+ilP
+
+<Cpara>
+
+A complete AR state structure describing the output document.
+
+<CtitleC>
+
+ofile
+
+<Cpara>
+
+A pointer to an output file opened with <F25>fopen()<F0>.
+
+<CparaD>
+
+<Frame,
+	Name =			CsideD,
+	Placement =		Overlay,
+	Horizontal Alignment =	Right + 1.50 inches,
+	Vertical Alignment =	Top,
+	Horizontal Reference =	Left Page Margin,
+	Vertical Reference =	Anchor,
+	Width =			1.50 inches,
+	Height =		0.30 inches,
+	Auto Edit =		yes,
+	Page # =		163,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 1.48 inches, Height = 0.139 inches,
+	Revision Bar Placement = Left>
+<CtitleD>
+
+Description
+
+<End Text>)
+ (E15,0,0,5,8,0,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,0,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+The body of the document described in the state structure is written 
+to the output file. The components in the <F25>bodyP<F0> field of 
+the <F25>Il_state_t <F0>structure comprise the body of the document. 
+
+<CparaD>
+
+The declarations component masters are written with <F25>ArDocDeclWrite()<F0>.
+

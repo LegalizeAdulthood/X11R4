@@ -1,0 +1,26 @@
+#include "./../SWImake.defs"
+
+       INCLUDES = -I$(SWINCLUDESRC) -I$(TOP)
+LOCAL_LIBRARIES = $(SWLIB) $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+
+SRCS=	exButton.c \
+	exCheckBox.c \
+	exMenu.c \
+	exSBoxSw.c \
+	exSubMenu.c \
+	exView.c \
+	exViewMan.c \
+	exWView.c
+
+all: exButton exCheckBox exMenu exSBoxSw exSubMenu exView exViewMan exWView
+
+SingleProgramTarget(exButton,exButton.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(exCheckBox,exCheckBox.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(exMenu,exMenu.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(exSBoxSw,exSBoxSw.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(exSubMenu,exSubMenu.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(exView,exView.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(exViewMan,exViewMan.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(exWView,exWView.o,$(LOCAL_LIBRARIES),)
+
+DependTarget()

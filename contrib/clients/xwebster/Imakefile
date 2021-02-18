@@ -1,0 +1,37 @@
+#
+# This assumes that the HP Xwidget sources patched for r3 have been placed
+# in $(TOP)/lib/Xw.
+#
+XWLIB	       = $(TOP)/lib/Xw/libXw.a
+
+#
+# HP Xwidget header includes are of the form "#include <Xw/xxx.h>". We 
+# need to put $(TOP)/lib on the include path so that we get headers in
+# $(TOP)/lib/Xw/*.h
+#
+INCLUDES      = -I$(TOP)/lib -I$(TOP)
+
+# 
+# Define SLOW_X_SERVER here if you have an X server that is too slow to draw
+# the stippling on pushbuttons that have temporarily been desensitized (aka
+# greyed out). On Suns with the MIT sample server, it is VERY painful.
+# HP's product X11 server, on the other hand, is quite fast and has no such
+# problems, even in color.
+#
+DEFINES       = -DAPPDEFAULTSDIR=\"$(XAPPLOADDIR)\"
+HDRS	      = user_prefs.h \
+		xwebster.h
+LOCAL_LIBRARIES = $(XWLIB) \
+		$(XTOOLLIB) \
+		$(XLIB)
+OBJS	      = controlpanel.o \
+		display_def.o \
+		wordlist.o \
+		xwebster.o
+SRCS	      = controlpanel.c \
+		display_def.c \
+		wordlist.c \
+		xwebster.c
+
+ComplexProgramTarget(xwebster)
+InstallAppDefaults(Xwebster)

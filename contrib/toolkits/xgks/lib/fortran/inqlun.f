@@ -1,0 +1,30 @@
+C
+C********************************************************
+C XXXX-XXX (C) COPYRIGHT IBM CORPORATION 1988
+C LICENSED MATERIALS - PROPERTY OF IBM
+C REFER TO COPYRIGHT INSTRUCTIONS FORM NUMBER G120-2083
+C
+C IBM CONFIDENTIAL
+C
+C FORTRAN to C binding for XGKS
+C
+C    inqlun 
+C
+C Todd Gill
+C TCS Development
+C Cambridge MA
+C
+C $Header:$
+C
+C $Source:$
+C
+C $Log:$
+C*******************************************************/
+C
+	SUBROUTINE INQLUN(LUN,FNAME)
+	INTEGER LUN
+	LOGICAL NAMED,OPENED
+	CHARACTER*80 FNAME
+	INQUIRE(UNIT=LUN,NAME=FNAME,NAMED=NAMED,OPENED=OPENED)
+	RETURN
+	END

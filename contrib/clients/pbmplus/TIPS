@@ -1,0 +1,61 @@
+Some notes and rules of thumb on using PBM, PGM, PPM, and PNM:
+
+
+To make a full-screen version of an image, or as close to it as you can
+get, compute the ratio x/y for your image and for your screen.  If the
+ratio is higher for your image, do a ppmscale -xsize <screenwidth>; if
+your image's ratio is lower, do a ppmscale -ysize <screenheight>.
+
+Even margins: an easy way to get nice equal-sized margins on all sides
+of a non-full-screen image is to pnmcrop it, get the size and add 10%
+or so, pbmmake a bitmap of that size, and pnmpaste the image into the
+bitmap.
+
+Smoothing when enlarging: if you pnmenlarge or ppmscale up by a factor
+of three or more, you should add a ppmsmooth step.  Otherwise you can
+see the original pixels in the resulting image.
+
+Rotating: as mentioned in its manual entry, pnmflip can be used for 90
+degree rotations.  Ppmrotate can be used for other angles between -90
+and 90.  To go all the way around the circle, combine these two
+programs.
+
+When using pbmpaste's logical operations to do masking, it is important
+to remember that while the PBM file format represents black as 1 and
+white as 0, pbmpaste acts as if the reverse is true: black is 0 and
+white is 1.  See the pbmmask manual entry for examples.
+
+Enhancing contrast in a grayscale image: do a pgmhist, and look for
+likely values of -bvalue and -wvalue to use with pgmnorm.  If you just
+want to enhance the contrast, then choose values at elbows in the
+histogram; e.g. if value 29 represents 3% of the image but value 30
+represents 20%, choose 30 for bvalue.  If you want to lighten the
+image, then set bvalue to 0 and just fiddle with wvalue; similarly, to
+darken the image, set wvalue to maxval and play with bvalue.
+
+Avoid odd-numbered widths.  Displaying them causes problems on some machines.
+
+To turn a Usenix FaceSaver image into PBM, first do an "fstopgm > /dev/null".
+This will tell you whether you need to use ppmscale.  Then use one of the
+following pipelines:
+  fstopgm | pnmenlarge -3 | ppmtopgm | pgmnorm | pgmtopbm
+  fstopgm | pnmenlarge -3 | ppmscale -whatever | ppmtopgm | pgmnorm | pgmtopbm
+Enlarging by more than 3 does not look good.
+
+Re-halftoning with pbmreduce: Let's say you have a scanner that only
+produces black&white, not grayscale, and it does a terrible job of
+halftoning (most scanners fit this description).  One way to fix the
+halftoning is to scan at the highest possible resolution, say 300 dpi,
+and then reduce by a factor of three or so using pbmreduce.  Pbmreduce
+duplicates a lot of the functionality of pgmtopbm -- you could do
+something like ppmscale | ppmtopgm | pgmtopbm, but pbmreduce is a lot
+faster and doesn't use as much memory.  You can even correct the
+brightness of an image with pbmreduce, by using the -value flag.
+
+If you compiled with the RAWBITS option, you may sometimes want some
+non-raw output.  Maybe you want to use sed to change one color to
+another, or something.  Here's one way to get this conversion:  unset
+RAWBITS; choose one of the PNM programs that can be used like "cat",
+for instance, pnmflip; compile the libraries, compile pnmflip; rename
+your non-raw pnmflip to something like pnmunraw; set RAWBITS again, and
+recompile things.

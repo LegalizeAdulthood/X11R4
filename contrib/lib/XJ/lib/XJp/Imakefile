@@ -1,0 +1,47 @@
+#include "./../../XJImake.defs"
+
+       INCLUDES = -I$(XJINCLUDESRC) -I$(TOP)
+        DEFINES = $(XJDEFINES)
+       LINTLIBS = 
+
+SRCS= XJp_open.c XJp_begin.c XJp_visible.c XJp_invisi.c \
+      XJp_read.c XJp_close.c XJp_end.c XJp_move.c XJp_change.c \
+      XJp_string.c XJp_error.c XJp_reset.c XJp_util.c \
+      kanjibind.c
+
+OBJS= XJp_open.o XJp_begin.o XJp_visible.o XJp_invisi.o \
+      XJp_read.o XJp_close.o XJp_end.o XJp_move.o XJp_change.o \
+      XJp_string.o XJp_error.o XJp_reset.o XJp_util.o \
+      kanjibind.o
+
+#if DebugLibXJp && ProfileLibXJp
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugLibXJp
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileLibXJp
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+NormalLibraryTarget(XJp,$(OBJS))
+LintLibraryTarget(XJp,$(SRCS))
+InstallLibrary(XJp,$(USRLIBDIR))
+InstallLintLibrary(XJp,$(LINTLIBDIR))
+
+#if ProfileLibXJp
+ProfiledLibraryTarget(XJp,$(OBJS))
+InstallLibrary(XJp_p,$(USRLIBDIR))
+#endif
+
+#if DebugLibXJp
+DebuggedLibraryTarget(XJp,$(OBJS))
+#endif
+
+DependTarget()
+
+NormalLintTarget($(SRCS))

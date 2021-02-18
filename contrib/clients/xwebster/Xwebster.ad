@@ -1,0 +1,452 @@
+################################################################################
+#
+# File:         Xwebster
+# RCS:          $Header: Xwebster.ad,v 1.8 89/03/06 01:38:49 mayer Exp $
+# Description:  Application Default: put in /usr/lib/X11/app-defaults/Xwebster
+# Author:       Niels Mayer, HPLabs
+# Created:      Thu Sep  1 01:14:17 1988
+# Modified:     Mon Mar  6 01:10:41 1989 (Niels Mayer) mayer@hplnpm
+# Language:     N/A
+# Package:      N/A
+# Status:       G-Job
+#
+# xwebster - dictionary browser
+#
+# Copyright 1988 Hewlett-Packard Company
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted, provided
+# that the above copyright notice appear in all copies and that both that
+# copyright notice and this permission notice appear in supporting
+# documentation, and that the name of HP not be used in advertising or
+# publicity pertaining to distribution of the software without specific,
+# written prior permission.  HP makes no representations about the
+# suitability of this software for any purpose.  It is provided "as is"
+# without express or implied warranty.
+#
+# Please send any improvements, bug fixes, useful modifications, and comments
+# to mayer@hplabs.hp.com.
+################################################################################
+
+##
+## this is the help display that comes up initially when you run Xwebster.
+##
+*helpText: WELCOME TO XWEBSTER, by Niels Mayer (mayer@hplabs.hp.com)\n\n\
+    Webster's 7th Collegiate Dictionary, Copyright (C) 1963 by Merriam-Webster,\n\
+    Inc.  No part of this information may be copied or reprinted without the\n\
+    express written consent of the publisher.\n\n\
+This program connects to a Webster dictionary server to get definitions of\n\
+words.  Words are entered in the TextEdit Widget in the center panel of\n\
+this program.  You may then type <ret> or mouse [Define] to get the\n\
+definition of the word. If the word has any cross-references, they will be\n\
+presented in the word browser panel in xwebster. If the word is\n\
+"slightly misspelled", then a list of words is presented in the word browser\n\
+panel, one of which might be the word that you had intended.\n\n\
+Typing '?' or mousing [Endings] following part of a word will cause\n\
+xwebster to list all words beginning with the partial word in the word\n\
+browser panel. The program will beep and give an error message if nothing\n\
+matches.\n\n\
+Typing <esc> or mousing [Complete] causes the program to attempt to\n\
+complete the word.  If the word can be completed, the new word is placed in\n\
+the TextEdit widget; otherwise, the program beeps and displays a message\n\
+indicating that the word is ambiguous.\n\n\
+In all the above cases, the wildcard characters '%' and '*' may be used to\n\
+specify partial words. The '%' character matches exactly one character,\n\
+while the '*' matches zero or more characters.  If wildcards are used, the\n\
+program will return either "No match" or a browser of matching words.\n
+
+##
+## The following are parameters for accessing the webster server. Note that
+## hostAddrList is a list of internet adresses that are tried in succession
+## incase there's problems connecting to a server. In the following example, 
+## we try the two different SRI-NIC server addresses for a total of 10 times
+## before giving up. Or replace these with your own webster server's parameters
+##
+## (Webster servers are available at ???.bu.edu, ???.indiana.edu, ???.mit.edu,
+## ??.purdue.edu, and others. If you have the webster(1) tty interface to 
+## webster, then run strings on it to find out which server host it uses 
+## (or look at the source  code). Webster servers tend to be located on port 
+## 103 or 2627.)
+##
+*hostAddrList: 26.0.0.73 10.0.0.51 26.0.0.73 10.0.0.51 26.0.0.73 10.0.0.51 26.0.0.73 10.0.0.51 26.0.0.73 10.0.0.51
+*hostPort: 103
+*hostServiceName: webster
+
+##
+## This is the width of the wordinput widget. I figure that most words are
+## less than 30 characters long.
+##
+*wordInputWidgetWidth: 30
+
+##
+## if useEditorAsDisplay is true, then a TextEdit widget is used to display,
+## definitions.
+## if useEditorAsDisplay is false, then a statictext widget within a
+## scrolled window is used to display definitions.
+##
+## Advantages for "*useEditorAsDisplay: FALSE" are:
+## 	1) obvious to use -- move around the definition with the scrollbar.
+## Disadvantages are:
+## 	1) Can only cut entire text of definition via left-mouse selection,
+##	   cannot cut an individual region of text, such as a single word.
+##      2) Scrolling refreshes in an ugly fashion.
+##
+## Advantages for "*useEditorAsDisplay: TRUE" are:
+## 	1) can cut individual regions from the definition text.
+## Disadvantages are:
+## 	1) "beginners" may not know that "emacs" commands allow moving around
+##         the definition. The TexEdit widget doesn't have a scrollbar, so it's
+##         not visually obvious that part of the definition may be off-screen.
+##
+*useEditorAsDisplay: FALSE
+
+##
+## The following control the size of the pane that display's word definitions.
+## The webster server formats it's output for 80-column wide displays, and 
+## therefore, *displayWidth should be at least this wide. Due to weirdness
+## of this implementation and the Xwidgets, "85" width allows for a scrollbar
+## to fit in the display pane without covering up 80-column wide text.
+##
+*displayWidth: 85
+*displayHeight: 10
+
+##
+## When a long list of words is being sent by the server (eg, list endings of
+## all words beginning with "a"), the wordlist display is updated every 
+## "numWordsBeforeRefresh" words. If the server is very slow (or the network is 
+## slow), it is useful to see its progress, so as to show that xwebster hasn't 
+## hung. On the other hand, if the server is very fast, then the wordlist display
+## will update too much. So Adjust this value upwards if you don't care to see 
+## the words in the wordlist arrive from the server incementally or if you want
+## to reduce the amount of display updating.
+## 
+*numWordsBeforeRefresh: 10
+
+###############################################################################
+# *panel -- XwvPanedWidgetClass.
+#
+*panel.sashIndent: -20
+
+###############################################################################
+##
+## *panel.display_scroller and *panel.display_scroller.display below only
+## count if "*useEditorAsDisplay" resource is false. In that case, the 
+## widget displaying the definition is made up from a statictext widget within
+## a scrollbar.
+##
+# *panel.display_scroller -- XwswindowWidgetClass
+#
+## preset: *panel.display_scroller.width = displayWidth*fontwidth where by default
+## *displayWidth: 85
+#
+## preset: *panel.display_scroller.height = displayHeight*fonthheight where by default
+## *displayHeight: 10
+#
+## Constraint resources added by VerticallyPanedWidget (XwvPanedWidgetClass):
+# *panel.display_scroller.min: 1
+# *panel.display_scroller.max: 10000
+# *panel.display_scroller.allowResize: FALSE
+# *panel.display_scroller.skipAdjust: FALSE
+
+#
+# *panel.display_scroller.display -- XwstaticTextWidgetClass
+#
+*panel.display_scroller.display.borderWidth: 0
+*panel.display_scroller.display.shadowOn: no
+*panel.display_scroller.display.alignment: Left
+*panel.display_scroller.display.gravity: CenterGravity
+*panel.display_scroller.display.wrap: FALSE
+*panel.display_scroller.display.strip: FALSE
+# it would be very silly to use proportional fonts here, since the webster
+# server formats the text output for fixed width fonts.
+*display_scroller.display.font: 6x13
+
+###############################################################################
+##
+## *panel.display below only counts if "*useEditorAsDisplay" resource is true.
+## In that case, the widget displaying the definition is made up from a 
+## TextEdit widget.
+##
+# *panel.display -- XwtexteditWidgetClass
+#
+## preset: *display.width = displayWidth*fontwidth where by default
+## *displayWidth: 85
+#
+## preset: *display.height = displayHeight*fonthheight where by default
+## *displayHeight: 10
+#
+## Constraint resources added by VerticallyPanedWidget (XwvPanedWidgetClass):
+# *panel.display.min: 1
+# *panel.display.max: 10000
+# *panel.display.allowResize: FALSE
+# *panel.display.skipAdjust: FALSE
+
+*panel.display.wrap: wrapoff
+## it would be very silly to use proportional fonts here, since the webster
+## server formats the text output for fixed width fonts.
+*panel.display.font: 6x13
+## this is the default TextEdit txlation table with all bindings that alter 
+## the editor's text removed. In addition, backspace and space move to 
+## previous and next pages, respectively. 
+*panel.display.translations: \
+     <Key>BackSpace:		previous-page() \n\
+     Ctrl<Key>H:		previous-page() \n\
+     <Key>\\ :		        next-page() \n\
+     Ctrl<Key>F:		forward-character() \n\
+     Ctrl<Key>Right:		traverse-right() \n\
+     <Key>Right:		forward-character() \n\
+     Ctrl<Key>B:		backward-character() \n\
+     Ctrl<Key>Left:		traverse-left() \n\
+     <Key>Left: 		backward-character() \n\
+     Meta<Key>F:		forward-word() \n\
+     Meta<Key>B:		backward-word() \n\
+     Meta<Key>]:		forward-paragraph() \n\
+     Ctrl<Key>[:		backward-paragraph() \n\
+     Ctrl<Key>A:		beginning-of-line() \n\
+     Ctrl<Key>E:		end-of-line() \n\
+     Ctrl<Key>N:		next-line() \n\
+     Ctrl<Key>Down:		traverse-down() \n\
+     <Key>Down: 		next-line() \n\
+     Ctrl<Key>P:		previous-line() \n\
+     Ctrl<Key>Up:           	traverse-up() \n\
+     <Key>Up:  	 	 	previous-line() \n\
+     Ctrl<Key>V:		next-page() \n\
+     Ctrl<Key>Next:		traverse-next() \n\
+     <Key>Next:			next-page() \n\
+     Meta<Key>V:		previous-page() \n\
+     Ctrl<Key>Prior:		traverse-prev() \n\
+     <Key>Prior:		previous-page() \n\
+     Meta<Key>\\<:		beginning-of-file() \n\
+     Meta<Key>\\>:		end-of-file() \n\
+     Ctrl<Key>Home:		traverse-home() \n\
+     Shift<Key>Home:		end-of-file() \n\
+     <Key>Home:			beginning-of-file() \n\
+     Ctrl<Key>Z:		scroll-one-line-up() \n\
+     Meta<Key>Z:		scroll-one-line-down() \n\
+     Ctrl<Key>L:		redraw-display() \n\
+     <FocusIn>:			focus-in() \n\
+     <FocusOut>:		focus-out() \n\
+     <Btn1Down>:		select-start() \n\
+     Button1<PtrMoved>:		extend-adjust() \n\
+     <Btn1Up>:			extend-end() \n\
+     <Btn3Down>:		extend-start() \n\
+     Button3<PtrMoved>:		extend-adjust() \n\
+     <Btn3Up>:			extend-end() \n\
+     <Key>Execute:		execute() \n\
+     <EnterWindow>:		enter() \n\
+     <LeaveWindow>:		leave()
+
+###############################################################################
+# *panel.titlebar -- XwtitlebarWidgetClass
+#
+## preset: *panel.titlebar.titleForeground == *panel.titlebar.foreground
+## preset: *panel.titlebar.titleBackground == *panel.titlebar.background
+
+## Constraint resources added by VerticallyPanedWidget (XwvPanedWidgetClass):
+## preset: *panel.titlebar.min == *panel.titlebar.height
+## preset: *panel.titlebar.max == *panel.titlebar.height
+# *panel.titlebar.allowResize: FALSE
+# *panel.titlebar.skipAdjust: FALSE
+
+*panel.titlebar.titlePrecedence: 0
+*panel.titlebar.titleRegion: Center
+
+#
+# *panel.titlebar.StaticText -- the label text on the titlebar panel
+#
+*panel.titlebar.StaticText.gravity: CenterGravity
+*panel.titlebar.StaticText.borderWith: 0
+*panel.titlebar.StaticText.shadowOn: no
+*panel.titlebar.alignment: Left
+*panel.titlebar.wrap: FALSE
+*panel.titlebar.font: variable
+
+#
+# *panel.titlebar.PushButton -- XwpushButtonWidgetClass
+#
+*panel.titlebar.PushButton.traversalType: highlight_enter
+*panel.titlebar.PushButton.highlightThickness: 1
+## color display users might want to uncomment the following line and set
+## .highlightTile to foreground as well. 
+# *panel.titlebar.PushButton.highlightColor: white
+*panel.titlebar.PushButton.highlightTile: 50_foreground
+*panel.titlebar.PushButton.font: variable
+
+*panel.titlebar.quit_button.label: Quit
+*panel.titlebar.quit_button.region: Left
+# *panel.titlebar.quit_button.lPadding: 2
+# *panel.titlebar.quit_button.rPadding: 2
+# *panel.titlebar.quit_button.precedence: 1
+
+*panel.titlebar.help_button.label: Help
+*panel.titlebar.help_button.region: Right
+# *panel.titlebar.help_button.lPadding: 2
+# *panel.titlebar.help_button.rPadding: 2
+# *panel.titlebar.help_button.precedence: 1
+
+###############################################################################
+# *panel.wordlist_scroller -- XwswindowWidgetClass
+#
+*panel.wordlist_scroller.height: 100
+
+## Constraint resources added by VerticallyPanedWidget (XwvPanedWidgetClass):
+# *panel.wordlist_scroller.min: 1
+# *panel.wordlist_scroller.max: 10000
+# *panel.wordlist_scroller.allowResize: FALSE
+# *panel.wordlist_scroller.skipAdjust: FALSE
+
+#
+# *panel.wordlist_scroller.wordlist -- XwrowColWidgetClass
+#
+*panel.wordlist_scroller.wordlist.hSpace: 2
+*panel.wordlist_scroller.wordlist.vSpace: 2
+*panel.wordlist_scroller.wordlist.layoutType: requested_columns
+*panel.wordlist_scroller.wordlist.columns: 4
+*panel.wordlist_scroller.wordlist.forceSize: TRUE
+*panel.wordlist_scroller.wordlist.singleRow: FALSE
+*panel.wordlist_scroller.wordlist.mode: n_of_many
+*panel.wordlist_scroller.wordlist.borderWidth: 0
+
+#
+# *panel.wordlist_scroller.wordlist.word -- XwpushButtonWidgetClass
+# ??? for some reason, I must spec this as *panel.wordlist_scroller*wordlist...
+# ??? rather than panel.wordlist_scroller.wordlist... even though
+# ??? wordlist_scroller is the parent of wordlist -- an Xtk bug, perhaps?
+*panel.wordlist_scroller*wordlist.word.font: 6x13
+*panel.wordlist_scroller*wordlist.word.traversalType: highlight_enter
+*panel.wordlist_scroller*wordlist.word.highlightThickness: 1
+## color display users might want to uncomment the following line and set
+## .highlightTile to foreground as well. 
+# *panel.wordlist_scroller*wordlist.word.highlightColor: white
+*panel.wordlist_scroller*wordlist.word.highlightTile: 50_foreground
+
+###############################################################################
+# *panel.control_panel -- XwtitlebarWidgetClass
+
+## Constraint resources added by VerticallyPanedWidget (XwvPanedWidgetClass):
+## preset: *panel.control_panel.min == *panel.control_panel.height
+## preset: *panel.control_panel.max == *panel.control_panel.height
+# *panel.control_panel.allowResize: FALSE
+# *panel.control_panel.skipAdjust: FALSE
+
+#
+# *panel.control_panel.PushButton -- XwpushButtonWidgetClass
+#
+*panel.control_panel.PushButton.traversalType: highlight_enter
+*panel.control_panel.PushButton.highlightThickness: 1
+## color display users might want to uncomment the following line and set
+## .highlightTile to foreground as well. 
+# *panel.control_panel.PushButton.highlightColor: white
+*panel.control_panel.PushButton.highlightTile: 50_foreground
+*panel.control_panel.PushButton.font: variable
+
+*panel.control_panel.define_button.label: Define <ret>
+*panel.control_panel.define_button.region: Center
+*panel.control_panel.define_button.precedence: 0
+# *panel.control_panel.define_button.lPadding: 2
+# *panel.control_panel.define_button.rPadding: 2
+
+*panel.control_panel.complete_button.label: Complete <esc>
+*panel.control_panel.complete_button.region: Center
+*panel.control_panel.complete_button.precedence: 1
+# *panel.control_panel.complete_button.lPadding: 2
+# *panel.control_panel.complete_button.rPadding: 2
+
+*panel.control_panel.endings_button.label: Endings <?>
+*panel.control_panel.endings_button.region: Center
+*panel.control_panel.endings_button.precedence: 1
+# *panel.control_panel.endings_button.lPadding: 2
+# *panel.control_panel.endings_button.rPadding: 2
+
+#
+# *panel.control_panel.word_input -- XwtexteditWidgetClass
+#
+## preset: *word_input.height = 1*fontheight, 
+## preset: *word_input.width = wordInputWidgetWidth*fontheight where by default
+## *wordInputWidgetWidth: 30
+#
+*panel.control_panel.word_input.traversalType: highlight_enter
+*panel.control_panel.word_input.highlightThickness: 1
+## color display users might want to uncomment the following line and set
+## .highlightTile to foreground as well. 
+# *panel.control_panel.word_input.highlightColor: white
+*panel.control_panel.word_input.highlightTile: 50_foreground
+*panel.control_panel.word_input.font: 6x13
+
+*panel.control_panel.word_input.region: Center
+*panel.control_panel.word_input.precedence: 0
+# *panel.control_panel.word_input.lPadding: 2
+# *panel.control_panel.word_input.rPadding: 2
+*panel.control_panel.word_input.shadowOn: FALSE
+
+## TextEdit's default translation table that has been munged so that
+## (1) ?, <esc> and <return> call endings, complete, and define.
+## (2) since the word_input widget is only for a single line of text, all
+## keystrokes from the default TextEdit table that deal with multiline text
+## have been rebound to webster-no-op(), a function that just beeps.
+*panel.control_panel.word_input.translations: \
+     <Key>Return:		webster-define-word() \n\
+     <Key>Escape:		webster-complete-word() \n\
+     <Key>?:			webster-list-endings() \n\
+     Shift<Key>/:		webster-list-endings() \n\
+     Ctrl<Key>M:		webster-no-op() \n\
+     Meta<Key>]:		webster-no-op() \n\
+     Ctrl<Key>[:		webster-no-op() \n\
+     Ctrl<Key>N:		webster-no-op() \n\
+     Ctrl<Key>P:		webster-no-op() \n\
+     Ctrl<Key>V:		webster-no-op() \n\
+     Meta<Key>V:		webster-no-op() \n\
+     Ctrl<Key>Z:		webster-no-op() \n\
+     Meta<Key>Z:		webster-no-op() \n\
+     Ctrl<Key>J:		webster-no-op() \n\
+     Ctrl<Key>O:		webster-no-op() \n\
+     Ctrl<Key>F:		forward-character() \n\
+     Ctrl<Key>Right:		traverse-right() \n\
+     <Key>Right:		forward-character() \n\
+     Ctrl<Key>B:		backward-character() \n\
+     Ctrl<Key>Left:		traverse-left() \n\
+     <Key>Left: 		backward-character() \n\
+     Meta<Key>F:		forward-word() \n\
+     Meta<Key>B:		backward-word() \n\
+     Ctrl<Key>A:		beginning-of-line() \n\
+     Ctrl<Key>E:		end-of-line() \n\
+     Ctrl<Key>Down:		traverse-down() \n\
+     <Key>Down:			webster-no-op() \n\
+     Ctrl<Key>Up:           	traverse-up() \n\
+     <Key>Up:			webster-no-op() \n\
+     Ctrl<Key>Next:		traverse-next() \n\
+     Ctrl<Key>Prior:		traverse-prev() \n\
+     <Key>Prior:		webster-no-op() \n\
+     Meta<Key>\\<:		beginning-of-file() \n\
+     Meta<Key>\\>:		end-of-file() \n\
+     Ctrl<Key>Home:		traverse-home() \n\
+     Shift<Key>Home:		end-of-file() \n\
+     <Key>Home:			beginning-of-file() \n\
+     Shift Meta<Key>D:		kill-word() \n\
+     Ctrl<Key>D:		delete-next-character() \n\
+     <Key>Delete:		delete-previous-character() \n\
+     <Key>BackSpace:		delete-previous-character() \n\
+     Ctrl<Key>H:		delete-previous-character() \n\
+     Meta<Key>D:		delete-next-word() \n\
+     Meta<Key>H:		delete-previous-word() \n\
+     Shift Meta<Key>H:		backward-kill-word() \n\
+     Ctrl<Key>W:		kill-selection() \n\
+     Ctrl<Key>K:		kill-to-end-of-line() \n\
+     Meta<Key>K:		kill-to-end-of-paragraph() \n\
+     Ctrl<Key>Y:		unkill() \n\
+     Meta<Key>Y:		stuff() \n\
+     Ctrl<Key>L:		redraw-display() \n\
+     <FocusIn>:			focus-in() \n\
+     <FocusOut>:		focus-out() \n\
+     <Btn1Down>:		select-start() \n\
+     Button1<PtrMoved>:		extend-adjust() \n\
+     <Btn1Up>:			extend-end() \n\
+     <Btn2Down>:		stuff() \n\
+     <Btn3Down>:		extend-start() \n\
+     Button3<PtrMoved>:		extend-adjust() \n\
+     <Btn3Up>:			extend-end() \n\
+     <Key>Execute:		execute() \n\
+     <Key>:			insert-char() \n\
+     Shift<Key>:		insert-char() \n\
+     <EnterWindow>:		enter() \n\
+     <LeaveWindow>:		leave()

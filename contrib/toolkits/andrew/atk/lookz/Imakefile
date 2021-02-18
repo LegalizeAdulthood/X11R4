@@ -1,0 +1,35 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+DOBJS = lookz.do lookzv.do
+IHFILES = lookz.ih lookzv.ih
+
+NormalObjectRule()
+NormalATKRule()
+
+DynamicObject(lookzv, ${UTILLIB},)
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+TESTLIBS = ${BASEDIR}/lib/atk/libframe.a \
+	${BASEDIR}/lib/atk/libtext.a \
+	${BASEDIR}/lib/atk/libsupviews.a \
+	${BASEDIR}/lib/atk/libsupport.a
+
+BASETESTLIBS = ${BASEDIR}/lib/atk/libbasics.a \
+	${BASEDIR}/lib/libclass.a \
+	${BASEDIR}/lib/libwm.a \
+	${BASEDIR}/lib/liberrors.a \
+	${BASEDIR}/lib/libplumber.a \
+	${UTILLIB}
+
+
+TestProgramTarget(lookzt,lookzt.o lookz.o, ${BASETESTLIBS}, -lm)
+TestProgramTarget(lookzvt,lookzvt.o lookz.o lookzv.o, ${TESTLIBS} ${BASETESTLIBS}, -lm)
+
+DependTarget()
+
+NormalHelpRule()
+InstallDocs(lookz.help lkzproc.help, ${DESTDIR}/help)
+InstallHelpAlias(lkzproc, lookzproc lookzprocs)

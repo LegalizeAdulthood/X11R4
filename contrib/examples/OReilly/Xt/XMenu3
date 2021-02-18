@@ -1,0 +1,30 @@
+!
+! Appearance resources
+!
+*pressme.label:	Invoke Menu
+*quit*label:	Quit
+*menulabel.label:  MAIN MENU
+*pshell.Box.hSpace: 0
+*pshell.Box.vSpace: 0
+*menubox*width:  80
+*menupane0.label:  Good
+*menupane1.label:  Google
+*menupane2.label:  Goolash
+*menupane3.label:  Goop
+*menupane4.label:  Garp
+*menupane5.label:  Grunch
+*menupane6.label:  Garbage
+*menupane7.label:  Greek
+*menupane8.label:  Green
+*menupane9.label:  Gretsch
+*menubox.Command.justify: left
+!
+!  Functional resources
+!
+*pshell.translations:\
+	<BtnUp>: MenuPopdown(pshell)
+!
+*menubox.Command.translations:\
+   <EnterWindow>:     highlight()             \n\
+   <LeaveWindow>:     reset()  \n\
+   <BtnUp>:          set() notify() unset()

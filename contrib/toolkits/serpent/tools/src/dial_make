@@ -1,0 +1,38 @@
+
+LIB_PATH = $(BASE_PATH)/lib
+LIBS =     $(LIB_PATH)/libsext.a $(USER_LIBS) $(LIB_PATH)/libdm.a \
+	$(LIB_PATH)/libint.a $(LIB_PATH)/libutl.a $(LIB_PATH)/liblist.a
+INCS =     -I$(BASE_PATH)/include
+CFLAGS =   -O
+
+.SUFFIXES:	.src .obj
+
+GENERATED_C_OBJS = .$(DIALOGUE)a.o \
+		   .$(DIALOGUE)v.o \
+		   .$(DIALOGUE)c.o \
+		   .$(DIALOGUE)m.o \
+		   .$(DIALOGUE)p.o \
+		   .$(DIALOGUE)s.o
+
+#	load source into saber
+.c.src:
+	#load $(INCS) $<
+
+#	load object into saber
+.o.obj:
+	#load $<
+
+#	compile a c file
+.c.o:
+	@- rm -f $*.o
+	$(CC) $(CFLAGS) $(INCS) -c $<
+	@chmod g+w $*.o
+
+$(DIALOGUE):	$(LIBS) $(GENERATED_C_OBJS)
+		@- rm -f *i.d  2> /dev/null
+		@- rm -f $(DIALOGUE)
+		cc $(CFLAGS) $(GENERATED_C_OBJS) $(LIBS) -lm -o $(DIALOGUE)
+		@chmod a+rx $(DIALOGUE)
+
+.$(DIALOGUE)s.o:	.$(DIALOGUE)0.h
+.$(DIALOGUE)s.o:	.$(DIALOGUE)1.h

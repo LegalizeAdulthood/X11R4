@@ -1,0 +1,42 @@
+# $Id: ccdef.kinput,v 1.1 89/10/19 21:07:05 ishisone Rel $
+
+# 
+#	ccdef for kinput
+#
+
+# モードの宣言
+defmode Ascii ZenkakuAscii Kana All
+
+# 初期モードの指定
+initialmode Kana
+
+# 各モードに対するルールの記述
+
+# ローマ字
+mode Kana	"ローマ"	fallthrough All
+    include 'rule.roma'
+	""	Tab		""	goto Ascii
+	""	shift-Tab	""	goto ZenkakuAscii
+	"n"	EXITMODE	"ん"
+endmode
+
+# アスキー
+mode Ascii	"Ascii"	fallthrough All
+#	特にルールを記述する必要はない
+	""	Tab		""	goto ZenkakuAscii
+	""	shift-Tab	""	goto Kana
+endmode
+
+# 全角アスキー
+mode ZenkakuAscii	"Ａscii"	fallthrough All
+    include 'rule.zascii'
+	""	Tab		""	goto Kana
+	""	shift-Tab	""	goto Ascii
+endmode
+
+# All -- 共通定義
+mode All	"?"
+	""	control-Kanji	""	end-conversion
+	""	shift-space	""	end-conversion
+    include 'rule.func'
+endmode

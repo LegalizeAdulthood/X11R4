@@ -1,0 +1,3 @@
+define-macro parse-lint-errors ^[xparse-errors^M^X1^[xcurrent-error^M^X2
+define-macro find-declaration ^Xn^\::^M^[b^@^[f^[w^[b^[b^[f^@^R^I^M^F^[w^A^Xp^Xp^X^F^Y^M^[xgoto-line^M^Y^[y^M^Xn
+bind-macro-to-key find-declaration ^Xl

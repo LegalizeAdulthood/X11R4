@@ -1,0 +1,157 @@
+                               CONCENTRATION
+
+This demo implements the once-popular game of Concentration.
+
+
+I. THE CONCEPT OF THE GAME
+
+The rules of the game are very simple.  There are 30 boxes on the screen;
+each box hides the name of a fabulous prize.  Each prize is located under
+exactly two boxes.  There are two players who take turns trying to match
+prizes.  During a player's turn, he or she selects two two boxes.  If the
+prizes underneath the boxes match, the player is awarded a point, the boxes
+are taken off the screen, and the player gets to try again.  If the prizes do
+not match, the prizes are covered up again, and the other player takes over.
+At the end of the game, the player with the most matches wins.
+
+In the original television version of the game, there was also a rebus (a
+picture puzzle of sorts) underneath the squares.  As each pair of prizes was
+matched, a part of the puzzle was exposed.  To win the game, a player had to
+solve the puzzle.  Since the Serpent Athena Widget binding cannot handle
+X bitmaps, this feature of the game is missing from our implementation.
+
+The television version also awarded to the winner every prize he or she
+matched during the game.  In our version you only gain the satisfaction of
+beating your opponent.  We can't afford all to give away all those prizes.
+Sorry.
+
+
+II. HOW TO FIRE UP THE DEMO
+
+To run the game, type
+
+	% serpent concent
+
+(The "%" represents the shell prompt.  Don't type it.)   Several messages
+from the Serpent runtime system will appear in your window; soon afterwards,
+the game board will come up.  Now you're ready to play, so find a worthy
+opponent.
+
+If you need to rebuild the demo, please consult the section entitled
+REBUILDING THIS DEMO, below.
+
+
+III. HOW TO PLAY THIS VERSION OF THE GAME
+
+The game was designed to be intuitively obvious; the information in Section
+I, coupled with the layout of the board, should be sufficient information to
+play.  However, in the interest of completeness, this section provides a
+detailed description of how to play.
+
+We'll start with a description of the game board.  The game board consists of
+four basic areas.  From top to bottom, they are:
+
+	1 - The title area, containing the name of the game.
+
+	2 - The control area.  This bar, immediately below the title, contains
+
+	    a - a QUIT button, used to terminate the game;
+	    b - an instructional message area where prompts are displayed;
+	    c - an OK button, used to tell the program to continue play.
+		(You'll know when to use the display button by reading the
+		messages that appear in the message area.)
+
+	3 - The playing area, consisting of 30 numbered squares.
+
+	4 - The player status area.  This bar, at the bottom of the game
+	    board, shows the current score and indicates whether player 1
+	    or player 2 is taking a turn.
+
+When the game starts, the message area will prompt with
+
+	Choose a square
+
+At this point, Player 1 should select a square from the board by moving the
+mouse cursor to it and depressing the left mouse button.   The number on the
+square will be replaced by the name of the underlying prize.  Now the message
+area will prompt with
+
+	Enter second choice
+
+Using the same procedure as above, Player 1 should select another square.
+Once again, the number will be replaced by the associated prize name.  If the
+two names match, or if either of the prize names is "WILD CARD", the message
+
+	MATCH! Press OK to continue.
+
+will appear in the message area.  If the names do not match, the message
+
+	No match.  Press OK to continue.
+
+will appear instead.  In either case, Player 1 should then select the OK
+button.  If the two prizes matched, the squares will disappear, and Player 1
+will be credited with a point and prompted to choose again.  Otherwise, the
+squares will revert to their numbered state, and Player 2 will be prompted to
+choose a square.  The game is over when no more matches are possible.
+
+
+IV. WHAT CONCEPTS DOES THE SOURCE CODE ILLUSTRATE?
+
+The Slang source code for the dialogue illustrates the following:
+
+    1. The specification of widgets that are parented to a form.
+
+    2. The specification of an objects as a collection of attributes.
+
+    3. The specification of a 'notify' method for a command widget.
+       This demo contains two rather complex methods, one for the OK
+       button and one for the command widget embodied by the square_vc
+       view controller (VC).
+
+    4. The use of macros.  Slang is passed through the C preprocessor before
+       compiling.  Thus, macros are a convenient mechanism for abstraction.
+
+    5. The use of Actions on Create (i.e., "ON CREATE").  The dialogue
+       specifies an ON CREATE section for the top-most VC (called "Eve" in
+       the Slang Reference Manual).  The code in this section executes once
+       when the program begins execution.
+
+    6. The use of different fonts in command widgets and label
+       widgets.   For the command widget associated with a given square, the
+       font even changes depending upon whether the prize or the number is
+       currently displayed.   For this feature to work correctly, you must
+       ensure that your version of X/11 has access to all its fonts.  If any
+       of the fonts the demo uses are not available, try changing the
+       definitions for the fonts to some that are available.  Typically, the
+       command xlsfonts(1) will show you what fonts you have on your system.
+
+    7. The use of dialogue manager (DM) shared data to communicate information
+       between a VC and an object.  Status information is passed to the
+       VC that control the squares by means of the shared data that causes
+       each VC to be created.
+
+    8. The use of the constraint mechanism.  For example, look at the
+       msg_area label widget.  Its label_text is entirely dependent on the
+       value of global variable msg.  When msg changes, the msg_area's
+       label_text changes.  In other words, to change the message in the
+       game's message area, one only needs to assign a new string to the msg
+       variable.
+
+    9. The use of external functions.  The dialogue uses external string
+       functions (defined by including "sstring.ext") and extended
+       arithmetic functions (defined by including "arith.ext").
+       These functions are available as part of a general-purpose Serpent
+       Slang library.  The source code, library and include files reside
+       under the "externs" subdirectory of your installed Serpent root 
+       directory.
+
+In addition the source code for the application, which was written in C,
+can serve as a template for simple applications.  The application only
+sends data to the dialogue; it does not read any data back from the dialogue,
+so its usefulness as a boiler-place is limited.
+
+V. REBUILDING THIS DEMO
+
+Rebuilding the demo is very simple.  From this directory, simply type
+'make'.  The demo will be rebuilt according to the instructions in
+'Makefile' and installed.

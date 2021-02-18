@@ -1,0 +1,149 @@
+/**/###########################################################################
+/**/#                                                                         #
+/**/#		   IMakefile for Multi-Llingual X Window Package	      #
+/**/#									      #
+/**/#                       Attention Mlxterm porters                         #
+/**/#                                                                         #
+/**/#                                                                         #
+/**/# Xterm assumes that bcopy can handle overlapping arguments.  If your     #
+/**/# bcopy (or memcpy) can't, write a routine called Bcopy that can and      #
+/**/# the -DBcopy argument from the DEFINES list given below.  If possible,   #
+/**/# try to avoid extra procedure calls as this routine is used a lot.       #
+/**/#                                                                         #
+/**/###########################################################################
+
+
+#ifdef BandAidCompiler
+#include BandAidCompiler
+#endif
+
+/*
+ * The configuration parameter GettyProgramName may be found in the
+ * appropriate .macros in the directory $(TOP)/util/imake.includes/.
+ */
+
+#if defined(SunArchitecture) && SunOSPlatform && OSMajorVersion >= 4
+#define GettyProgram '-DGETTY_EXE="/usr/etc/getty"'
+#else
+#define GettyProgram /* as nothing */
+#endif
+
+/* add -DWTMP and -DLASTLOG if you want them in $(MlLDFLAGS) */
+	DEFINES = -DHANZI -DMODEMENU -DUTMP -DBcopy=bcopy 
+        SRCS1 = button.c charproc.c cursor.c data.c input.c \
+		  main.c menu.c misc.c screen.c scrollbar.c tabs.c \
+		  TekPrsTbl.c Tekproc.c util.c VTPrsTbl.c haninit.c
+        OBJS1 = main.o input.o charproc.o cursor.o util.o tabs.o \
+		  screen.o scrollbar.o button.o Tekproc.o misc.o \
+		  VTPrsTbl.o TekPrsTbl.o data.o menu.o haninit.o mlcalls.o
+
+        SRCS2 = resize.c
+        OBJS2 = resize.o
+
+        SRCS3 = looktbl.c display.c mlinput.c chuyin.c
+       	OBJS3 = looktbl.o display.o mlinput.o chuyin.o
+
+	SRCS4 = windowtest.c
+	OBJS4 = windowtest.o
+   
+	SRCS5 = xtermtest.c
+	OBJS5 = xtermtest.o
+
+	SRCS6 = xfd.c wsimple.c
+	OBJS6 = xfd.o wsimple.o
+
+	SRCS7 = parse.y scan.l output.c dialog.c xfed.c
+	OBJS7 = parse.o scan.o output.o dialog.o xfed.o
+
+	SRCS8 = Csong16.bdf Csong24.bdf Txian16.bdf Jming16.bdf Jsong24.bdf 
+	OBJS8 = Csong16.snf Csong24.snf Txian16.snf Jming16.snf Jsong24.snf 
+
+SYS_LIBRARIES = -ll
+
+Mllocallibs = $(XAWLIB) $(XMULIB) $(XTOOLLIB) 
+
+PROGRAMS = mlxterm resize input sample sample0 xfd xfed mlfonts 
+AllTarget($(PROGRAMS))
+
+/* Generate Ml XTERM */
+mlxterm: $(OBJS1) $(Mllocallibs)
+	$(RM) $@
+
+#ifdef SunSharedLibs
+	$(CC) -o $@ $(OBJS1) $(Mllocallibs) -lX11 -ltermcap  $(SYSLAST_LIBRARIES)
+#else
+	$(CC) -o $@ $(OBJS1) $(Mllocallibs) $(XLIB) -ltermcap $(SYSLAST_LIBRARIES)
+
+#endif
+
+relink::
+	$(RM) mlxterm
+	$(MAKE) $(MFLAGES) mlxterm
+
+clean:: 
+	$(RM) mlxterm
+
+
+
+SingleProgramTarget(resize,$(OBJS2),,-lc -ltermcap)
+
+/* generate MLcalls Library, INPUT WINDOW and samples */
+
+libXML.a: mlcalls.o
+	$(RM) $@
+	$(AR) $@ mlcalls.o
+	$(RANLIB) $@
+
+SingleProgramTarget(input,$(OBJS3),$(XWLIB) $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB),)
+SingleProgramTarget(sample,$(OBJS4),$(XMLLIB) $(XWLIB) $(XAWLIB) $(XTOOLLIB) $(XLIB),)
+SingleProgramTarget(sample0,$(OBJS5),,)
+
+/* generate Font utilities: xfd and xfed */
+SingleProgramTarget(xfd,$(OBJS6),$(XLIB),)
+SingleProgramTarget(xfed,$(OBJS7),$(XLIB),)
+
+scan.o:		y.tab.h defs.h scan.l
+		lex scan.l
+		$(CC) $(CFLAGS) -c lex.yy.c
+		mv lex.yy.o scan.o
+
+y.tab.h:	parse.y
+
+y.tab.c:	parse.y
+		yacc -d parse.y
+
+parse.o:	defs.h y.tab.c
+		$(CC) $(CFLAGS) -c y.tab.c
+		mv y.tab.o parse.o
+
+main.o:		defs.h
+
+output.o:	defs.h
+
+
+/* Generate Fonts under standard font directory */
+
+FONTINSTDIR = $(FONTDIR)/misc
+
+/*MakeFonts($(FONTINSTDIR))*/
+mlfonts::$(OBJS8) fonts.dir
+
+FontTarget(Csong16)
+FontTarget(Csong24)
+FontTarget(Txian16)
+FontTarget(Jming16)
+FontTarget(Jsong24)
+
+
+/*InstallMultiple($(OBJS8),$(FONTINSTDIR))*/
+
+fonts.dir: $(OBJS8)
+	@case '${MFLAGS}' in *[i]) set +e;; esac;\
+	for i in $(OBJS8); do\
+		(set -x; $(INSTALL) -c $(INSTALLFLAGS) $$i $(FONTINSTDIR));\
+	done
+	$(MKFONTDIR) $(FONTINSTDIR)
+
+clean::
+	$(RM) *.snf font.dir 
+

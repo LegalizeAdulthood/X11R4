@@ -1,0 +1,1075 @@
+
+#
+#		(c) Copyright Carnegie Mellon University
+#
+# See "The CMU ODA Tool Kit" (available as CMU/ITC tech report
+# CMU-ITC-071) for full text & permitted uses.
+#
+
+#
+# Makefile for site type 'macintosh', directory 'src'
+# Generated on Thu Nov  2 10:21:30 1989
+#
+
+# Std definitions
+COptions = -m -b3 -i : -i ::valid -i ::prog -i ::raster -i ::isode -i ::site:mac
+LDFLAGS = 
+AR1 = Lib -b
+
+# Default compilation rule
+.o	Ä	.c
+	{C} {COptions} -s {Default} {DepDir}{Default}.c -o {TargDir}{Default}.o
+
+
+# Rules for LIB "liboda.a"
+
+wasn14.o Ä  wasn14.c wasn1.h ::site:mac:lcsite.h tkerr.h  ¶
+	     errors.h tkerr1.h values.h io.h  ¶
+	     io1.h acd.h attr.h apirt.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h asn1.h  ¶
+	     wodif.h debug.h debug1.h debug2.h  ¶
+	     wodif1.h wodif2.h wodif3.h wodif4.h  ¶
+	     wasn11.h wasn12.h wasn13.h wasn14.h  ¶
+	     wasn15.h tags.h parms.h
+
+wodif3.o Ä  wodif3.c wodif.h ::site:mac:lcsite.h acd.h  ¶
+	     attr.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     debug.h debug1.h debug2.h values.h  ¶
+	     io.h io1.h asn1.h wasn1.h  ¶
+	     wasn11.h wasn12.h wasn13.h wasn14.h  ¶
+	     wasn15.h wodif1.h wodif2.h wodif3.h  ¶
+	     wodif4.h tags.h
+
+wodif2.o Ä  wodif2.c wodif.h ::site:mac:lcsite.h acd.h  ¶
+	     attr.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     debug.h debug1.h debug2.h values.h  ¶
+	     io.h io1.h asn1.h wasn1.h  ¶
+	     wasn11.h wasn12.h wasn13.h wasn14.h  ¶
+	     wasn15.h wodif1.h wodif2.h wodif3.h  ¶
+	     wodif4.h tags.h
+
+attr16.o Ä  attr16.c parms.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     str.h tags.h seq.h seq1.h  ¶
+	     str1.h mm.h ::site:mac:local.h mm1.h  ¶
+	     attr0.h rnames.h
+
+wodif4.o Ä  wodif4.c wodif.h ::site:mac:lcsite.h acd.h  ¶
+	     attr.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     debug.h debug1.h debug2.h values.h  ¶
+	     io.h io1.h asn1.h wasn1.h  ¶
+	     wasn11.h wasn12.h wasn13.h wasn14.h  ¶
+	     wasn15.h wodif1.h wodif2.h wodif3.h  ¶
+	     wodif4.h tags.h font.h font1.h  ¶
+	     seq.h seq1.h
+
+wasn13.o Ä  wasn13.c parms.h wasn1.h ::site:mac:lcsite.h  ¶
+	     tkerr.h errors.h tkerr1.h values.h  ¶
+	     io.h io1.h acd.h attr.h  ¶
+	     apirt.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     asn1.h wodif.h debug.h debug1.h  ¶
+	     debug2.h wodif1.h wodif2.h wodif3.h  ¶
+	     wodif4.h wasn11.h wasn12.h wasn13.h  ¶
+	     wasn14.h wasn15.h
+
+wasn12.o Ä  wasn12.c seq.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h apityp.h const.h attrid.h  ¶
+	     tkerr.h tkerr1.h const1.h const2.h  ¶
+	     const3.h tags.h seq1.h wasn1.h  ¶
+	     values.h io.h io1.h acd.h  ¶
+	     attr.h aunion.h attr1.h attr2.h  ¶
+	     attr3.h attr4.h attr5.h attr6.h  ¶
+	     attr7.h attr8.h attr9.h attr10.h  ¶
+	     attr11.h attr12.h attr13.h attr15.h  ¶
+	     attr14.h attr16.h attr17.h attr18.h  ¶
+	     attr19.h attr20.h attr21.h attr22.h  ¶
+	     attr23.h attr24.h attr25.h attr26.h  ¶
+	     doc.h doc1.h asn1.h wodif.h  ¶
+	     debug.h debug1.h debug2.h wodif1.h  ¶
+	     wodif2.h wodif3.h wodif4.h wasn11.h  ¶
+	     wasn12.h wasn13.h wasn14.h wasn15.h  ¶
+	     parms.h
+
+mem1.o Ä   mem1.c ::site:mac:lcsite.h acd.h attr.h  ¶
+	     errors.h apirt.h tkerr.h tkerr1.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h mem.h  ¶
+	     mem1.h
+
+wasn15.o Ä  wasn15.c wasn1.h ::site:mac:lcsite.h tkerr.h  ¶
+	     errors.h tkerr1.h values.h io.h  ¶
+	     io1.h acd.h attr.h apirt.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h asn1.h  ¶
+	     wodif.h debug.h debug1.h debug2.h  ¶
+	     wodif1.h wodif2.h wodif3.h wodif4.h  ¶
+	     wasn11.h wasn12.h wasn13.h wasn14.h  ¶
+	     wasn15.h tags.h parms.h font.h  ¶
+	     font1.h
+
+wasn11.o Ä  wasn11.c wasn1.h ::site:mac:lcsite.h tkerr.h  ¶
+	     errors.h tkerr1.h values.h io.h  ¶
+	     io1.h acd.h attr.h apirt.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h asn1.h  ¶
+	     wodif.h debug.h debug1.h debug2.h  ¶
+	     wodif1.h wodif2.h wodif3.h wodif4.h  ¶
+	     wasn11.h wasn12.h wasn13.h wasn14.h  ¶
+	     wasn15.h
+
+wodif1.o Ä  wodif1.c wodif.h ::site:mac:lcsite.h acd.h  ¶
+	     attr.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     debug.h debug1.h debug2.h values.h  ¶
+	     io.h io1.h asn1.h wasn1.h  ¶
+	     wasn11.h wasn12.h wasn13.h wasn14.h  ¶
+	     wasn15.h wodif1.h wodif2.h wodif3.h  ¶
+	     wodif4.h seq.h tags.h seq1.h  ¶
+	     label.h label1.h init.h str.h  ¶
+	     str1.h init1.h
+
+seq1.o Ä   seq1.c rnames.h seq.h ::site:mac:lcsite.h  ¶
+	     errors.h apirt.h apityp.h const.h  ¶
+	     attrid.h tkerr.h tkerr1.h const1.h  ¶
+	     const2.h const3.h tags.h seq1.h  ¶
+	     attr.h aunion.h attr1.h attr2.h  ¶
+	     attr3.h attr4.h attr5.h attr6.h  ¶
+	     attr7.h attr8.h attr9.h attr10.h  ¶
+	     attr11.h attr12.h attr13.h attr15.h  ¶
+	     attr14.h attr16.h attr17.h attr18.h  ¶
+	     attr19.h attr20.h attr21.h attr22.h  ¶
+	     attr23.h attr24.h attr25.h attr26.h  ¶
+	     mm.h ::site:mac:local.h mm1.h str.h  ¶
+	     str1.h values.h parms.h
+
+rodif4.o Ä  rodif4.c font.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h apityp.h const.h attrid.h  ¶
+	     tkerr.h tkerr1.h const1.h const2.h  ¶
+	     const3.h font1.h rodif.h tags.h  ¶
+	     acd.h attr.h aunion.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h seq.h  ¶
+	     seq1.h io.h io1.h parms.h  ¶
+	     mm.h ::site:mac:local.h mm1.h str.h  ¶
+	     str1.h rasn1.h values.h asn1.h  ¶
+	     rasn11.h rasn12.h rasn13.h rasn14.h  ¶
+	     rodif1.h rodif2.h rodif3.h rodif4.h
+
+rodif3.o Ä  rodif3.c rodif.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h tkerr.h tkerr1.h tags.h  ¶
+	     acd.h attr.h aunion.h apityp.h  ¶
+	     const.h attrid.h const1.h const2.h  ¶
+	     const3.h attr1.h attr2.h attr3.h  ¶
+	     attr4.h attr5.h attr6.h attr7.h  ¶
+	     attr8.h attr9.h attr10.h attr11.h  ¶
+	     attr12.h attr13.h attr15.h attr14.h  ¶
+	     attr16.h attr17.h attr18.h attr19.h  ¶
+	     attr20.h attr21.h attr22.h attr23.h  ¶
+	     attr24.h attr25.h attr26.h doc.h  ¶
+	     doc1.h seq.h seq1.h io.h  ¶
+	     io1.h parms.h mm.h ::site:mac:local.h  ¶
+	     mm1.h str.h str1.h rasn1.h  ¶
+	     values.h asn1.h rasn11.h rasn12.h  ¶
+	     rasn13.h rasn14.h rodif1.h rodif2.h  ¶
+	     rodif3.h rodif4.h
+
+stubs2.o Ä  stubs2.c ::site:mac:lcsite.h tkerr.h errors.h  ¶
+	     tkerr1.h rnames.h const.h apirt.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr.h aunion.h apityp.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h
+
+stubs.o Ä  stubs.c ::site:mac:lcsite.h tkerr.h errors.h  ¶
+	     tkerr1.h rnames.h const.h apirt.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr.h aunion.h apityp.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h
+
+str1.o Ä   str1.c mm.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h tkerr.h tkerr1.h ::site:mac:local.h  ¶
+	     mm1.h seq.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     tags.h seq1.h str.h str1.h
+
+rodif2.o Ä  rodif2.c rodif.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h tkerr.h tkerr1.h tags.h  ¶
+	     acd.h attr.h aunion.h apityp.h  ¶
+	     const.h attrid.h const1.h const2.h  ¶
+	     const3.h attr1.h attr2.h attr3.h  ¶
+	     attr4.h attr5.h attr6.h attr7.h  ¶
+	     attr8.h attr9.h attr10.h attr11.h  ¶
+	     attr12.h attr13.h attr15.h attr14.h  ¶
+	     attr16.h attr17.h attr18.h attr19.h  ¶
+	     attr20.h attr21.h attr22.h attr23.h  ¶
+	     attr24.h attr25.h attr26.h doc.h  ¶
+	     doc1.h seq.h seq1.h io.h  ¶
+	     io1.h parms.h mm.h ::site:mac:local.h  ¶
+	     mm1.h str.h str1.h rasn1.h  ¶
+	     values.h asn1.h rasn11.h rasn12.h  ¶
+	     rasn13.h rasn14.h rodif1.h rodif2.h  ¶
+	     rodif3.h rodif4.h
+
+rodif1.o Ä  rodif1.c rodif.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h tkerr.h tkerr1.h tags.h  ¶
+	     acd.h attr.h aunion.h apityp.h  ¶
+	     const.h attrid.h const1.h const2.h  ¶
+	     const3.h attr1.h attr2.h attr3.h  ¶
+	     attr4.h attr5.h attr6.h attr7.h  ¶
+	     attr8.h attr9.h attr10.h attr11.h  ¶
+	     attr12.h attr13.h attr15.h attr14.h  ¶
+	     attr16.h attr17.h attr18.h attr19.h  ¶
+	     attr20.h attr21.h attr22.h attr23.h  ¶
+	     attr24.h attr25.h attr26.h doc.h  ¶
+	     doc1.h seq.h seq1.h io.h  ¶
+	     io1.h parms.h mm.h ::site:mac:local.h  ¶
+	     mm1.h str.h str1.h rasn1.h  ¶
+	     values.h asn1.h rasn11.h rasn12.h  ¶
+	     rasn13.h rasn14.h rodif1.h rodif2.h  ¶
+	     rodif3.h rodif4.h
+
+rasn13.o Ä  rasn13.c rasn1.h ::site:mac:lcsite.h tkerr.h  ¶
+	     errors.h tkerr1.h values.h io.h  ¶
+	     io1.h acd.h attr.h apirt.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h tags.h  ¶
+	     parms.h seq.h seq1.h asn1.h  ¶
+	     rasn11.h rasn12.h rasn13.h rasn14.h  ¶
+	     rodif.h mm.h ::site:mac:local.h mm1.h  ¶
+	     str.h str1.h rodif1.h rodif2.h  ¶
+	     rodif3.h rodif4.h
+
+rasn12.o Ä  rasn12.c rasn1.h ::site:mac:lcsite.h tkerr.h  ¶
+	     errors.h tkerr1.h values.h io.h  ¶
+	     io1.h acd.h attr.h apirt.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h tags.h  ¶
+	     parms.h seq.h seq1.h asn1.h  ¶
+	     rasn11.h rasn12.h rasn13.h rasn14.h  ¶
+	     init.h str.h str1.h init1.h  ¶
+	     mm.h ::site:mac:local.h mm1.h rodif.h  ¶
+	     rodif1.h rodif2.h rodif3.h rodif4.h
+
+rasn11.o Ä  rasn11.c mm.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h tkerr.h tkerr1.h ::site:mac:local.h  ¶
+	     mm1.h rasn1.h values.h io.h  ¶
+	     io1.h acd.h attr.h aunion.h  ¶
+	     apityp.h const.h attrid.h const1.h  ¶
+	     const2.h const3.h attr1.h attr2.h  ¶
+	     attr3.h attr4.h attr5.h attr6.h  ¶
+	     attr7.h attr8.h attr9.h attr10.h  ¶
+	     attr11.h attr12.h attr13.h attr15.h  ¶
+	     attr14.h attr16.h attr17.h attr18.h  ¶
+	     attr19.h attr20.h attr21.h attr22.h  ¶
+	     attr23.h attr24.h attr25.h attr26.h  ¶
+	     doc.h doc1.h tags.h parms.h  ¶
+	     seq.h seq1.h asn1.h rasn11.h  ¶
+	     rasn12.h rasn13.h rasn14.h str.h  ¶
+	     str1.h
+
+label1.o Ä  label1.c parms.h str.h ::site:mac:lcsite.h  ¶
+	     apityp.h const.h errors.h apirt.h  ¶
+	     attrid.h tkerr.h tkerr1.h const1.h  ¶
+	     const2.h const3.h tags.h seq.h  ¶
+	     seq1.h str1.h label.h label1.h  ¶
+	     acd.h attr.h aunion.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h fmt.h  ¶
+	     fmt1.h debug.h debug1.h debug2.h
+
+iter4.o Ä  iter4.c debug.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h tkerr.h tkerr1.h debug1.h  ¶
+	     debug2.h mm.h ::site:mac:local.h mm1.h  ¶
+	     iter.h acd.h attr.h aunion.h  ¶
+	     apityp.h const.h attrid.h const1.h  ¶
+	     const2.h const3.h attr1.h attr2.h  ¶
+	     attr3.h attr4.h attr5.h attr6.h  ¶
+	     attr7.h attr8.h attr9.h attr10.h  ¶
+	     attr11.h attr12.h attr13.h attr15.h  ¶
+	     attr14.h attr16.h attr17.h attr18.h  ¶
+	     attr19.h attr20.h attr21.h attr22.h  ¶
+	     attr23.h attr24.h attr25.h attr26.h  ¶
+	     doc.h doc1.h iter1.h iter2.h  ¶
+	     iter3.h iter4.h
+
+iter3.o Ä  iter3.c mm.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h tkerr.h tkerr1.h ::site:mac:local.h  ¶
+	     mm1.h iter.h acd.h attr.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h iter1.h  ¶
+	     iter2.h iter3.h iter4.h tags.h
+
+iter2.o Ä  iter2.c debug.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h tkerr.h tkerr1.h debug1.h  ¶
+	     debug2.h mm.h ::site:mac:local.h mm1.h  ¶
+	     iter.h acd.h attr.h aunion.h  ¶
+	     apityp.h const.h attrid.h const1.h  ¶
+	     const2.h const3.h attr1.h attr2.h  ¶
+	     attr3.h attr4.h attr5.h attr6.h  ¶
+	     attr7.h attr8.h attr9.h attr10.h  ¶
+	     attr11.h attr12.h attr13.h attr15.h  ¶
+	     attr14.h attr16.h attr17.h attr18.h  ¶
+	     attr19.h attr20.h attr21.h attr22.h  ¶
+	     attr23.h attr24.h attr25.h attr26.h  ¶
+	     doc.h doc1.h iter1.h iter2.h  ¶
+	     iter3.h iter4.h
+
+prior1.o Ä  prior1.c prior.h ::site:mac:lcsite.h acd.h  ¶
+	     attr.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     tags.h prior1.h
+
+io1.o Ä    io1.c ::site:mac:lcsite.h errors.h tkerr.h  ¶
+	     tkerr1.h ::site:mac:local.h io.h io1.h
+
+mm1.o Ä    mm1.c mm.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h tkerr.h tkerr1.h ::site:mac:local.h  ¶
+	     mm1.h
+
+doc1.o Ä   doc1.c acd.h attr.h ::site:mac:lcsite.h  ¶
+	     errors.h apirt.h tkerr.h tkerr1.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h mm.h  ¶
+	     ::site:mac:local.h mm1.h
+
+debug2.o Ä  debug2.c values.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     attr0.h rnames.h str.h tags.h  ¶
+	     seq.h seq1.h str1.h io.h  ¶
+	     io1.h debug.h debug1.h debug2.h  ¶
+	     init.h init1.h parms.h font.h  ¶
+	     font1.h
+
+iter1.o Ä  iter1.c iter.h ::site:mac:lcsite.h acd.h  ¶
+	     attr.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     iter1.h iter2.h iter3.h iter4.h
+
+debug1.o Ä  debug1.c values.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     attr0.h rnames.h str.h tags.h  ¶
+	     seq.h seq1.h str1.h io.h  ¶
+	     io1.h debug.h debug1.h debug2.h  ¶
+	     parms.h
+
+const3.o Ä  const3.c acd.h attr.h ::site:mac:lcsite.h  ¶
+	     errors.h apirt.h tkerr.h tkerr1.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h mm.h  ¶
+	     ::site:mac:local.h mm1.h
+
+const2.o Ä  const2.c acd.h attr.h ::site:mac:lcsite.h  ¶
+	     errors.h apirt.h tkerr.h tkerr1.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h mm.h  ¶
+	     ::site:mac:local.h mm1.h values.h
+
+init1.o Ä  init1.c init.h ::site:mac:lcsite.h apityp.h  ¶
+	     const.h errors.h apirt.h attrid.h  ¶
+	     tkerr.h tkerr1.h const1.h const2.h  ¶
+	     const3.h tags.h acd.h attr.h  ¶
+	     aunion.h attr1.h attr2.h attr3.h  ¶
+	     attr4.h attr5.h attr6.h attr7.h  ¶
+	     attr8.h attr9.h attr10.h attr11.h  ¶
+	     attr12.h attr13.h attr15.h attr14.h  ¶
+	     attr16.h attr17.h attr18.h attr19.h  ¶
+	     attr20.h attr21.h attr22.h attr23.h  ¶
+	     attr24.h attr25.h attr26.h doc.h  ¶
+	     doc1.h str.h seq.h seq1.h  ¶
+	     str1.h init1.h mm.h ::site:mac:local.h  ¶
+	     mm1.h debug.h debug1.h debug2.h  ¶
+	     label.h label1.h atts.h atts1.h  ¶
+	     atts2.h atts3.h atts4.h
+
+font1.o Ä  font1.c font.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h apityp.h const.h attrid.h  ¶
+	     tkerr.h tkerr1.h const1.h const2.h  ¶
+	     const3.h font1.h seq.h tags.h  ¶
+	     seq1.h mm.h ::site:mac:local.h mm1.h
+
+expr1.o Ä  expr1.c acd.h attr.h ::site:mac:lcsite.h  ¶
+	     errors.h apirt.h tkerr.h tkerr1.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h str.h  ¶
+	     tags.h seq.h seq1.h str1.h  ¶
+	     expr.h expr1.h
+
+const1.o Ä  const1.c acd.h attr.h ::site:mac:lcsite.h  ¶
+	     errors.h apirt.h tkerr.h tkerr1.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h mm.h  ¶
+	     ::site:mac:local.h mm1.h attr0.h rnames.h  ¶
+	     values.h
+
+fmt1.o Ä   fmt1.c errors.h tkerr.h ::site:mac:lcsite.h  ¶
+	     tkerr1.h fmt.h apirt.h fmt1.h
+
+atts3.o Ä  atts3.c apirt.h atts.h ::site:mac:lcsite.h  ¶
+	     errors.h apityp.h const.h attrid.h  ¶
+	     tkerr.h tkerr1.h const1.h const2.h  ¶
+	     const3.h atts1.h atts2.h acd.h  ¶
+	     attr.h aunion.h attr1.h attr2.h  ¶
+	     attr3.h attr4.h attr5.h attr6.h  ¶
+	     attr7.h attr8.h attr9.h attr10.h  ¶
+	     attr11.h attr12.h attr13.h attr15.h  ¶
+	     attr14.h attr16.h attr17.h attr18.h  ¶
+	     attr19.h attr20.h attr21.h attr22.h  ¶
+	     attr23.h attr24.h attr25.h attr26.h  ¶
+	     doc.h doc1.h atts3.h atts4.h  ¶
+	     tags.h mm.h ::site:mac:local.h mm1.h  ¶
+	     seq.h seq1.h
+
+attr7.o Ä  attr7.c acd.h attr.h ::site:mac:lcsite.h  ¶
+	     errors.h apirt.h tkerr.h tkerr1.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h rnames.h  ¶
+	     attr0.h
+
+attr6.o Ä  attr6.c parms.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     rnames.h attr0.h
+
+attr5.o Ä  attr5.c rnames.h apityp.h ::site:mac:lcsite.h  ¶
+	     const.h errors.h apirt.h attrid.h  ¶
+	     tkerr.h tkerr1.h const1.h const2.h  ¶
+	     const3.h acd.h attr.h aunion.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     seq.h tags.h seq1.h mm.h  ¶
+	     ::site:mac:local.h mm1.h parms.h
+
+attr4.o Ä  attr4.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     seq.h tags.h seq1.h mm.h  ¶
+	     ::site:mac:local.h mm1.h parms.h attr0.h
+
+attr3.o Ä  attr3.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     seq.h tags.h seq1.h mm.h  ¶
+	     ::site:mac:local.h mm1.h parms.h values.h  ¶
+	     str.h str1.h init.h init1.h  ¶
+	     attr0.h
+
+atts2.o Ä  atts2.c atts.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h apityp.h const.h attrid.h  ¶
+	     tkerr.h tkerr1.h const1.h const2.h  ¶
+	     const3.h atts1.h atts2.h acd.h  ¶
+	     attr.h aunion.h attr1.h attr2.h  ¶
+	     attr3.h attr4.h attr5.h attr6.h  ¶
+	     attr7.h attr8.h attr9.h attr10.h  ¶
+	     attr11.h attr12.h attr13.h attr15.h  ¶
+	     attr14.h attr16.h attr17.h attr18.h  ¶
+	     attr19.h attr20.h attr21.h attr22.h  ¶
+	     attr23.h attr24.h attr25.h attr26.h  ¶
+	     doc.h doc1.h atts3.h atts4.h  ¶
+	     parms.h
+
+atts1.o Ä  atts1.c atts.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h apityp.h const.h attrid.h  ¶
+	     tkerr.h tkerr1.h const1.h const2.h  ¶
+	     const3.h atts1.h atts2.h acd.h  ¶
+	     attr.h aunion.h attr1.h attr2.h  ¶
+	     attr3.h attr4.h attr5.h attr6.h  ¶
+	     attr7.h attr8.h attr9.h attr10.h  ¶
+	     attr11.h attr12.h attr13.h attr15.h  ¶
+	     attr14.h attr16.h attr17.h attr18.h  ¶
+	     attr19.h attr20.h attr21.h attr22.h  ¶
+	     attr23.h attr24.h attr25.h attr26.h  ¶
+	     doc.h doc1.h atts3.h atts4.h  ¶
+	     values.h parms.h
+
+attr25.o Ä  attr25.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     seq.h tags.h seq1.h mm.h  ¶
+	     ::site:mac:local.h mm1.h parms.h attr0.h
+
+attr9.o Ä  attr9.c acd.h attr.h ::site:mac:lcsite.h  ¶
+	     errors.h apirt.h tkerr.h tkerr1.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h seq.h  ¶
+	     tags.h seq1.h
+
+attr8.o Ä  attr8.c acd.h attr.h ::site:mac:lcsite.h  ¶
+	     errors.h apirt.h tkerr.h tkerr1.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h values.h  ¶
+	     attr0.h rnames.h parms.h
+
+atts4.o Ä  atts4.c apirt.h atts.h ::site:mac:lcsite.h  ¶
+	     errors.h apityp.h const.h attrid.h  ¶
+	     tkerr.h tkerr1.h const1.h const2.h  ¶
+	     const3.h atts1.h atts2.h acd.h  ¶
+	     attr.h aunion.h attr1.h attr2.h  ¶
+	     attr3.h attr4.h attr5.h attr6.h  ¶
+	     attr7.h attr8.h attr9.h attr10.h  ¶
+	     attr11.h attr12.h attr13.h attr15.h  ¶
+	     attr14.h attr16.h attr17.h attr18.h  ¶
+	     attr19.h attr20.h attr21.h attr22.h  ¶
+	     attr23.h attr24.h attr25.h attr26.h  ¶
+	     doc.h doc1.h atts3.h atts4.h  ¶
+	     mm.h ::site:mac:local.h mm1.h parms.h  ¶
+	     tags.h seq.h seq1.h str.h  ¶
+	     str1.h
+
+attr24.o Ä  attr24.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     seq.h tags.h seq1.h str.h  ¶
+	     str1.h mm.h ::site:mac:local.h mm1.h  ¶
+	     attr0.h parms.h
+
+attr23.o Ä  attr23.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     mm.h ::site:mac:local.h mm1.h seq.h  ¶
+	     tags.h seq1.h attr0.h values.h
+
+attr26.o Ä  attr26.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     seq.h tags.h seq1.h mm.h  ¶
+	     ::site:mac:local.h mm1.h parms.h attr0.h
+
+attr21.o Ä  attr21.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     seq.h tags.h seq1.h str.h  ¶
+	     str1.h mm.h ::site:mac:local.h mm1.h  ¶
+	     parms.h attr0.h
+
+attr20.o Ä  attr20.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     seq.h tags.h seq1.h mm.h  ¶
+	     ::site:mac:local.h mm1.h values.h init.h  ¶
+	     str.h str1.h init1.h attr0.h  ¶
+	     parms.h
+
+attr2.o Ä  attr2.c acd.h attr.h ::site:mac:lcsite.h  ¶
+	     errors.h apirt.h tkerr.h tkerr1.h  ¶
+	     aunion.h apityp.h const.h attrid.h  ¶
+	     const1.h const2.h const3.h attr1.h  ¶
+	     attr2.h attr3.h attr4.h attr5.h  ¶
+	     attr6.h attr7.h attr8.h attr9.h  ¶
+	     attr10.h attr11.h attr12.h attr13.h  ¶
+	     attr15.h attr14.h attr16.h attr17.h  ¶
+	     attr18.h attr19.h attr20.h attr21.h  ¶
+	     attr22.h attr23.h attr24.h attr25.h  ¶
+	     attr26.h doc.h doc1.h attr0.h  ¶
+	     rnames.h str.h tags.h seq.h  ¶
+	     seq1.h str1.h mm.h ::site:mac:local.h  ¶
+	     mm1.h parms.h
+
+attr19.o Ä  attr19.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     init.h tags.h str.h seq.h  ¶
+	     seq1.h str1.h init1.h values.h
+
+attr18.o Ä  attr18.c parms.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     str.h tags.h seq.h seq1.h  ¶
+	     str1.h mm.h ::site:mac:local.h mm1.h  ¶
+	     attr0.h rnames.h
+
+attr15.o Ä  attr15.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     seq.h tags.h seq1.h font.h  ¶
+	     font1.h
+
+attr17.o Ä  attr17.c parms.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     str.h tags.h seq.h seq1.h  ¶
+	     str1.h mm.h ::site:mac:local.h mm1.h  ¶
+	     attr0.h rnames.h
+
+attr13.o Ä  attr13.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     mm.h ::site:mac:local.h mm1.h seq.h  ¶
+	     tags.h seq1.h
+
+attr14.o Ä  attr14.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     seq.h tags.h seq1.h
+
+attr12.o Ä  attr12.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     mm.h ::site:mac:local.h mm1.h parms.h  ¶
+	     tags.h attr0.h values.h
+
+attr11.o Ä  attr11.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     seq.h tags.h seq1.h mm.h  ¶
+	     ::site:mac:local.h mm1.h str.h str1.h  ¶
+	     parms.h values.h attr0.h
+
+attr10.o Ä  attr10.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     seq.h tags.h seq1.h mm.h  ¶
+	     ::site:mac:local.h mm1.h values.h str.h  ¶
+	     str1.h attr0.h
+
+attr1.o Ä  attr1.c parms.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     str.h tags.h seq.h seq1.h  ¶
+	     str1.h mm.h ::site:mac:local.h mm1.h  ¶
+	     attr0.h rnames.h
+
+rasn14.o Ä  rasn14.c font.h ::site:mac:lcsite.h errors.h  ¶
+	     apirt.h apityp.h const.h attrid.h  ¶
+	     tkerr.h tkerr1.h const1.h const2.h  ¶
+	     const3.h font1.h rasn1.h values.h  ¶
+	     io.h io1.h acd.h attr.h  ¶
+	     aunion.h attr1.h attr2.h attr3.h  ¶
+	     attr4.h attr5.h attr6.h attr7.h  ¶
+	     attr8.h attr9.h attr10.h attr11.h  ¶
+	     attr12.h attr13.h attr15.h attr14.h  ¶
+	     attr16.h attr17.h attr18.h attr19.h  ¶
+	     attr20.h attr21.h attr22.h attr23.h  ¶
+	     attr24.h attr25.h attr26.h doc.h  ¶
+	     doc1.h tags.h parms.h seq.h  ¶
+	     seq1.h asn1.h rasn11.h rasn12.h  ¶
+	     rasn13.h rasn14.h rodif.h mm.h  ¶
+	     ::site:mac:local.h mm1.h str.h str1.h  ¶
+	     rodif1.h rodif2.h rodif3.h rodif4.h
+
+attr22.o Ä  attr22.c rnames.h acd.h attr.h  ¶
+	     ::site:mac:lcsite.h errors.h apirt.h tkerr.h  ¶
+	     tkerr1.h aunion.h apityp.h const.h  ¶
+	     attrid.h const1.h const2.h const3.h  ¶
+	     attr1.h attr2.h attr3.h attr4.h  ¶
+	     attr5.h attr6.h attr7.h attr8.h  ¶
+	     attr9.h attr10.h attr11.h attr12.h  ¶
+	     attr13.h attr15.h attr14.h attr16.h  ¶
+	     attr17.h attr18.h attr19.h attr20.h  ¶
+	     attr21.h attr22.h attr23.h attr24.h  ¶
+	     attr25.h attr26.h doc.h doc1.h  ¶
+	     str.h tags.h seq.h seq1.h  ¶
+	     str1.h mm.h ::site:mac:local.h mm1.h  ¶
+	     parms.h values.h attr0.h
+
+tkerr1.o Ä  tkerr1.c ::site:mac:lcsite.h init.h apityp.h  ¶
+	     const.h errors.h apirt.h attrid.h  ¶
+	     tkerr.h tkerr1.h const1.h const2.h  ¶
+	     const3.h tags.h acd.h attr.h  ¶
+	     aunion.h attr1.h attr2.h attr3.h  ¶
+	     attr4.h attr5.h attr6.h attr7.h  ¶
+	     attr8.h attr9.h attr10.h attr11.h  ¶
+	     attr12.h attr13.h attr15.h attr14.h  ¶
+	     attr16.h attr17.h attr18.h attr19.h  ¶
+	     attr20.h attr21.h attr22.h attr23.h  ¶
+	     attr24.h attr25.h attr26.h doc.h  ¶
+	     doc1.h str.h seq.h seq1.h  ¶
+	     str1.h init1.h io.h io1.h  ¶
+	     fmt.h fmt1.h
+
+liboda.a Ä    wasn14.o wodif3.o wodif2.o attr16.o wodif4.o wasn13.o  ¶
+	    wasn12.o mem1.o wasn15.o wasn11.o wodif1.o seq1.o  ¶
+	    rodif4.o rodif3.o stubs2.o stubs.o str1.o rodif2.o  ¶
+	    rodif1.o rasn13.o rasn12.o rasn11.o label1.o iter4.o  ¶
+	    iter3.o iter2.o prior1.o io1.o mm1.o doc1.o  ¶
+	    debug2.o iter1.o debug1.o const3.o const2.o init1.o  ¶
+	    font1.o expr1.o const1.o fmt1.o atts3.o attr7.o  ¶
+	    attr6.o attr5.o attr4.o attr3.o atts2.o atts1.o  ¶
+	    attr25.o attr9.o attr8.o atts4.o attr24.o attr23.o  ¶
+	    attr26.o attr21.o attr20.o attr2.o attr19.o attr18.o  ¶
+	    attr15.o attr17.o attr13.o attr14.o attr12.o attr11.o  ¶
+	    attr10.o attr1.o rasn14.o attr22.o tkerr1.o
+	   {AR1} wasn14.o wodif3.o wodif2.o attr16.o wodif4.o  ¶
+	    wasn13.o wasn12.o mem1.o wasn15.o wasn11.o  ¶
+	    wodif1.o seq1.o rodif4.o rodif3.o stubs2.o  ¶
+	    stubs.o str1.o rodif2.o rodif1.o rasn13.o  ¶
+	    rasn12.o rasn11.o label1.o iter4.o iter3.o  ¶
+	    iter2.o prior1.o io1.o mm1.o doc1.o  ¶
+	    debug2.o iter1.o debug1.o const3.o const2.o  ¶
+	    init1.o font1.o expr1.o const1.o fmt1.o  ¶
+	    atts3.o attr7.o attr6.o attr5.o attr4.o  ¶
+	    attr3.o atts2.o atts1.o attr25.o attr9.o  ¶
+	    attr8.o atts4.o attr24.o attr23.o attr26.o  ¶
+	    attr21.o attr20.o attr2.o attr19.o attr18.o  ¶
+	    attr15.o attr17.o attr13.o attr14.o attr12.o  ¶
+	    attr11.o attr10.o attr1.o rasn14.o attr22.o  ¶
+	    tkerr1.o -p -o liboda.a

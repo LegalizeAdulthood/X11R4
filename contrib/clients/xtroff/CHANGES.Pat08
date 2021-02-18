@@ -1,0 +1,52 @@
+to be released 
+
+- devX11 added - this is the collating sequence for the ISO fonts
+  provided with X11.  This allows the use of these fonts when the
+  devpsc fonts are not available.  Some troff characters are not
+  available with the X11 fonts, such as "fl" "fi" "ffi" and "ffl".
+  These are simulated with combinations of characters.
+
+- app-defaults handling was added to map from [di]troff font names
+  to X11 font names.  This allows for the addition of additional
+  fonts and allows arbitrary mapping from [di]troff names to
+  X11 style font names.
+
+- xfont.c - default mapping for X11 fonts.  This allows mapping to
+  the X11 fonts if no description file is available.
+
+- general mapping of lpr string.  This allows a mapping of the
+  [di]troff file to lpr through a filter.  e.g.
+
+  XTroff.lprcommand: psdit -F/usr/lib/font/devpsc/../../NewCentury | lpr -P%s
+
+  uses the NewCenturySchoolBook mapping for psdit.  On our machine
+  the Transcript files are setup so each font family has a directory
+  that maps the R, I, B and BI fonts to that family.  The rather
+  rather obscure path for the -F parameter for psdit follows
+  a path /usr/lib/font and then a symbolic link to devpsc in
+  another directory.  The ../.. then moves to the top of the 
+  family and the NewCentury moves into the family.  In this
+  directory the DESC.out file and the R.aux, I.aux, B.aux and
+  BI.aux files relate to the NewCenturySchoolBook font.
+
+  An example of the mapping in the .Xdefaults file to map the
+  NewCenturySchoolbook font to the R, I, B and BI fonts is:
+
+XTroff.fontMap:\
+C	-*-courier-medium-r-normal--*-*-75-75-*-*-iso8859-1\n\
+CO	-*-courier-medium-o-normal--*-*-75-75-*-*-iso8859-1\n\
+CB	-*-courier-bold-r-normal--*-*-75-75-*-*-iso8859-1\n\
+CD	-*-courier-bold-o-normal--*-*-75-75-*-*-iso8859-1\n\
+H	-*-helvetica-medium-r-normal--*-*-75-75-*-*-iso8859-1\n\
+HO	-*-helvetica-medium-o-normal--*-*-75-75-*-*-iso8859-1\n\
+HB	-*-helvetica-bold-r-normal--*-*-75-75-*-*-iso8859-1\n\
+HD	-*-helvetica-bold-o-normal--*-*-75-75-*-*-iso8859-1\n\
+R	-*-new century schoolbook-medium-r-normal--*-*-75-75-*-*-iso8859-1\n\
+I	-*-new century schoolbook-medium-i-normal--*-*-75-75-*-*-iso8859-1\n\
+B	-*-new century schoolbook-bold-r-normal--*-*-75-75-*-*-iso8859-1\n\
+BI	-*-new century schoolbook-bold-i-normal--*-*-75-75-*-*-iso8859-1\n\
+S	-*-symbol-medium-r-normal--*-*-75-75-*-*-adobe-fontspecific\n\
+SS	-*-symbol-medium-r-normal--*-*-75-75-*-*-adobe-fontspecific\n
+
+David Cahlander (dac@cray.com)
+Nov 21, 1989

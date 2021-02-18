@@ -1,0 +1,12 @@
+.TH RST2CH 1 "84/04/07"
+.AT 3
+.SH NAME
+rst2ch \- Font translation for Imagen-style fonts (RST format) to character format.
+.SH SYNOPSIS
+.B rst2ch
+fontfile  [ character_list ]
+.SH DESCRIPTION
+Reads "fontfile" from current directory (or if not found,
+from BITDIR defined below) and converts it to a character font format
+editable by real people, and convertable BACK to rst format by the
+ch2rst program.  Output goes to stdout.

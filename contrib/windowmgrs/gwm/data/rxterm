@@ -1,0 +1,94 @@
+#!/bin/sh
+#
+# Original Author: fm@mirsa.inria.fr
+# modified by hleroy@presto.irisa.fr
+# PUT HERE YOUR DOMAIN NAME
+inetdomainname='inria.fr'
+logf='${HOME}/.rx.log'
+
+rx()
+{ shift; comm="$*"
+
+   if [ "$mach" = "$HOSTNAME" ]
+   then
+        # eval to have double evaluation as when using rsh
+        # Hack: use "| :" instead of "&" to spawn a process in background
+	# without catching INT and QUIT (for a bug of xterm X10)
+	eval "$comm < /dev/null > $logf 2>&1 | :"
+   else
+        # Rshd  open one file-descriptor (number 7 often) and does'nt terminate
+        # before its closing!!!!
+        # Cshell close first every file-descriptors ...
+        # ~~ Assume that the remote shell is the same that the current one
+
+     PATH=/usr/bin/X11:${PATH} ; export PATH
+
+# valider :
+
+	xhost +$mach > /dev/null
+
+        case $SHELL in
+          *csh* )
+		rsh $mach -n "setenv PATH $PATH; setenv DISPLAY $DISPLAY; \
+		setenv MANPATH $MANPATH; setenv PRINTER $PRINTER; \
+		exec $comm </dev/null >&! $logf"
+	    ;;
+	  *sh* )rsh $mach -n "PATH=$PATH DISPLAY=$DISPLAY MANPATH=$MANPATH; \
+                export PATH DISPLAY MANPATH ; \
+		$comm < /dev/null > $logf 2>&1 \
+		3>&1 4>&1 5>&1 6>&1 7>&1 8>&1 9>&1 \
+		3>&- 4>&- 5>&- 6>&- 7>&- 8>&- 9>&- | :"
+	    ;;
+          * )
+	    echo "Unknown shell: SHELL=$SHELL"
+	    exit 10
+	    ;;
+	esac
+ fi
+}
+
+rxterm()
+{ shift;
+
+    [ "$mach" != "$HOSTNAME" ] && set -- -ls "$@"	# Login shell if remote
+    case $* in
+      *-e* )
+# Extract the entry name of the command to execute
+        name=`echo $* | sed -e "s/^.*-e //" | awk '{print $1}'`
+         if [ -z "$name" ]
+          then echo "missing command name for -e switch" ;exit 1
+         fi
+        name=`basename $name`@$mach        # Ex: emacs@mirsa
+        ;;
+      * )
+        # Just the machine name
+        name=$mach
+        ;;
+    esac
+    # Use of -n and not -T to be compatible with X10
+    # X11 xterm uses -n to specify the icon name but default the title name
+    # with the icon name
+
+   rx $mach xterm -n $name "$@"
+}
+
+rxload()
+{  shift;   rx $mach xload "$@"
+}
+
+mach=$1;
+#Current Host :
+HOSTNAME=`hostname 2> /dev/null || uuname -l 2>/dev/null || uname -n `
+screen=`expr "$DISPLAY" : "[^:]*\(.*\)"`
+if [ x$screen = x ]
+then
+	screen=":0.0"
+fi
+	DISPLAY=unix:0   # Default for DISPLAY
+
+if [ "$HOSTNAME" != "$mach" ]
+then
+	DISPLAY=${HOSTNAME}.$inetdomainname$screen
+fi
+
+    `basename $0` "$@"

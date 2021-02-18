@@ -1,0 +1,11 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989		        *
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+
+#define	IHaveSubdirs
+
+/* ============================================================ */
+
+SUBDIRS = src doc
+

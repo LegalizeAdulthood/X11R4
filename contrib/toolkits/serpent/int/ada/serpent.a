@@ -1,0 +1,404 @@
+with system;
+ 
+with text_io;
+use text_io;
+
+with C_to_ada_types;
+use C_to_ada_types;
+
+with C_strings;
+use C_strings;
+
+with c_serpent;
+use c_serpent;
+
+with serpent_type_definitions;
+use serpent_type_definitions;
+
+package serpent is
+
+  procedure serpent_init (mailbox, ill_file : in string);
+
+  function start_transaction return transaction_type;
+
+  function add_shared_data (
+    transaction : in transaction_type;
+    element_name, component_name : in string;
+    data : in system.address
+  ) return id_type;
+
+  procedure put_shared_data(
+    transaction    : in transaction_type;
+    id             : in id_type; 
+    element_name   : in string;
+    component_name : in string; 
+    data           : in system.address 
+  );
+
+  procedure remove_shared_data(
+    transaction  : in transaction_type; 
+    element_name : in string; 
+    id           : in id_type
+  );
+ 
+  procedure rollback_transaction(
+    transaction : in transaction_type
+  );
+
+  procedure commit_transaction(
+    transaction : in transaction_type 
+  );
+
+  function get_transaction return transaction_type;
+
+  function get_transaction_no_wait return transaction_type;
+
+  function get_first_changed_element(
+    transaction : in transaction_type
+  ) return id_type;
+
+  function get_next_changed_element(
+    transaction : in transaction_type
+  ) return id_type;
+
+  function get_element_name(
+    transaction : in transaction_type;
+    id : in id_type 
+  ) return string;
+ 
+
+
+  function get_change_type(
+    transaction : in transaction_type;
+    id : in id_type 
+  ) return change_type;
+
+  function create_changed_component_list(
+    transaction : in transaction_type;
+    id : in id_type 
+  ) return LIST;
+
+  procedure destroy_changed_component_list(
+    changed_component_list : in LIST 
+  );
+
+  procedure incorporate_changes(
+    transaction : in transaction_type;
+    id   : in id_type;
+    data : in system.address     
+  );
+
+  function get_shared_data (
+    transaction : in transaction_type;
+    id		: in id_type;
+    component_name : in string
+  ) return system.address;
+    
+
+  function get_shared_data_type (
+    element_name    : in string;
+    component_name  : in string
+  ) return shared_data_types;
+
+
+  procedure purge_transaction(
+    transaction : in transaction_type
+  );
+
+  procedure start_recording(
+    transaction : in transaction_type; 
+    file_name   : in string 
+  );
+
+  procedure stop_recording;
+
+ 
+  function get_status return status_codes;
+
+  procedure print_status(
+    error_msg : in string
+  );
+ 
+-- NOT IMPLEMENTED YET ??????
+--  procedure playback(
+--    file_name   : in string 
+--  );
+
+  procedure serpent_cleanup;
+    
+end serpent;
+
+package body serpent is
+
+  procedure serpent_init (mailbox, ill_file : in string) is
+    c_mailbox : c_string;
+    c_ill_file : c_string;
+  begin
+    c_mailbox := convert_string_to_c(mailbox);
+    c_ill_file := convert_string_to_c(ill_file);
+    c_serpent_init(c_mailbox, c_ill_file);
+  end serpent_init;
+
+  function start_transaction return transaction_type is
+  begin
+    return transaction_type (c_start_transaction);
+  end start_transaction;
+
+  function add_shared_data (
+    transaction : in transaction_type;
+    element_name, component_name : in string;
+    data : in system.address
+  ) return id_type is
+
+    c_element_name : c_string;		-- "C" version of element name parm
+    c_component_name : c_string;	-- "C" version of component name parm
+    
+  begin
+--
+--  Convert ada string parameters.
+--
+    c_element_name := convert_string_to_c(element_name);
+    c_component_name := convert_string_to_c(component_name);
+ 
+    if c_element_name(1) = ascii.nul then
+       c_element_name := null;
+    end if;
+
+    if c_component_name(1) = ascii.nul then
+       c_component_name := null;
+    end if;
+--
+--  Call corresponding c add shared data routine.
+--    
+    return id_type (c_add_shared_data (
+                      c_handle (transaction),
+                      c_element_name,
+                      c_component_name,
+                      data
+                    )
+           );
+  end;
+
+  procedure put_shared_data(
+    transaction    : in transaction_type;
+    id             : in id_type; 
+    element_name   : in string;
+    component_name : in string; 
+    data           : in system.address 
+  ) is
+    c_element_name : c_string;
+    c_component_name : c_string;
+  begin
+    c_element_name := convert_string_to_c(element_name);
+    c_component_name := convert_string_to_c(component_name);
+    if c_component_name(1) = ascii.nul then
+       c_component_name := null;
+    end if;
+    c_put_shared_data(
+      c_handle (transaction), 
+      int (id),
+      c_element_name,
+      c_component_name,
+      data
+    );
+  end;
+
+
+  procedure remove_shared_data(
+    transaction  : in transaction_type; 
+    element_name : in string; 
+    id           : in id_type
+  ) is
+    c_element_name : c_string;
+  begin
+    c_element_name := convert_string_to_c(element_name);
+    c_remove_shared_data (
+      c_handle (transaction),
+      c_element_name,
+      int (id)
+    );
+  end;
+
+  procedure rollback_transaction(
+    transaction : in transaction_type
+  ) is
+  begin
+    c_rollback_transaction (c_handle (transaction));
+  end;
+
+  procedure commit_transaction(
+    transaction : in transaction_type 
+  ) is
+  begin
+    c_commit_transaction (c_handle (transaction));
+  end;
+
+  function get_transaction return transaction_type is
+  begin
+    return transaction_type (c_get_transaction);    
+  end;
+
+  function get_transaction_no_wait return transaction_type is
+  begin
+        return transaction_type (c_get_transaction_no_wait);    
+  end;
+
+  function get_first_changed_element(
+    transaction : in transaction_type
+  ) return id_type is
+  begin
+    return id_type (c_get_first_changed_element (c_handle (transaction)));
+  end;
+
+  function get_next_changed_element(
+    transaction : in transaction_type
+  ) return id_type is
+  begin
+    return id_type (c_get_next_changed_element (c_handle (transaction)));
+  end;
+
+  function get_element_name(
+    transaction : in transaction_type;
+    id : in id_type 
+  ) return string is
+    c_element_name : c_string;
+    n : natural;
+  begin
+    c_element_name := c_get_element_name( c_handle (transaction), int (id));
+    n := 1;
+    while (n <= c_element_name'length) and (c_element_name(n) /= ascii.nul) 
+      loop
+        n := n+1;
+      end loop;
+    n := n-1;
+    return c_element_name(1..n);
+  end;
+
+  function get_change_type(
+    transaction : in transaction_type;
+    id : in id_type 
+  ) return change_type is
+    change : int;
+  begin
+    change := c_get_change_type ( c_handle (transaction), int (id));
+    return create;
+  end;
+
+  function create_changed_component_list(
+    transaction : in transaction_type;
+    id : in id_type 
+  ) return LIST is
+  begin
+    return LIST (c_create_changed_component_list (c_handle (transaction), int (id)));
+  end;
+
+  procedure destroy_changed_component_list(
+    changed_component_list : in LIST 
+  ) is
+  begin
+    c_destroy_changed_component_list (c_handle (changed_component_list));
+  end;
+
+  procedure incorporate_changes(
+    transaction : in transaction_type;
+    id   : in id_type;
+    data : in system.address     
+  ) is
+  begin
+    c_incorporate_changes ( c_handle (transaction),int (id), data);
+  end;
+
+  function get_shared_data_type (
+    element_name    : in string;
+    component_name  : in string
+  ) return shared_data_types is
+    c_component_name : c_string;
+    c_element_name   : c_string;
+  begin
+    c_component_name := convert_string_to_c(component_name);
+    c_element_name   := convert_string_to_c(element_name);
+    if c_component_name(1) = ascii.nul then
+       c_component_name := null;
+    end if;
+    if c_element_name(1) = ascii.nul then
+       c_element_name := null;
+    end if;
+    return c_get_shared_data_type ( c_element_name, c_component_name);
+  end;
+
+    
+
+
+
+function get_shared_data(
+    transaction : in transaction_type;
+    id             : in id_type;
+    component_name : in string 
+  ) return system.address is
+    c_component_name : c_string;
+  begin
+    c_component_name := convert_string_to_c(component_name);
+    if c_component_name(1) = ascii.nul then
+       c_component_name := null;
+    end if;
+    return c_get_shared_data ( c_handle (transaction),int (id), c_component_name);
+  end;
+
+    
+  procedure purge_transaction(
+    transaction : in transaction_type
+  ) is
+  begin
+    c_purge_transaction (c_handle (transaction));
+  end;
+
+  procedure start_recording(
+    transaction : in transaction_type; 
+    file_name   : in string 
+  ) is
+    c_file_name : c_string;
+  begin
+    c_file_name := convert_string_to_c(file_name);
+    c_start_recording(c_handle (transaction), c_file_name);
+  end;
+
+  procedure stop_recording
+  is
+  begin
+    c_stop_recording;
+  end;
+
+ 
+--  MSUT CHECK OUT THIS IMPLEMENTATION !!!!!
+--  procedure playback(
+--    file_name   : in string 
+--  ) is
+--    c_file_name : c_string;
+--  begin
+--    c_file_name := convert_string_to_c(file_name);
+--    c_playback(c_file_name);
+--  end;
+ 
+  function get_status return status_codes is
+  begin
+    return c_get_status;
+  end get_status;
+
+
+  procedure print_status(
+    error_msg : in string
+  ) is
+    c_error_msg : c_string;
+  begin
+    c_error_msg := convert_string_to_c(error_msg);
+    c_print_status( c_error_msg);
+  end;
+
+
+  procedure serpent_cleanup is
+  begin
+    c_serpent_cleanup;
+  end;
+
+end serpent;
+ 

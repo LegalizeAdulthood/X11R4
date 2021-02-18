@@ -1,0 +1,5832 @@
+.SUFFIXES: .snf .bdf .pk .gf .mf
+
+goals: snf-fonts
+	echo Done
+#
+# NAME=cmb10
+# SCALE = 1300
+# EXTENSION = 159
+#
+cmb10.159pk:
+	-mf '\mode:=sun;mag=1300/1000;input cmb10'
+	-gftopk cmb10.159gf && rm -f cmb10.159gf
+cmb10.159.snf:	cmb10.159pk
+	-mftobdf -dpi 85 cmb10.159pk
+	bdftosnf < cmb10.159.bdf > cmb10.159.snf
+#
+# NAME=cmb10
+# SCALE = 1300
+# EXTENSION = 111
+#
+cmb10.111pk:
+	-mf '\mode:=sun;mag=1300/1000;input cmb10'
+	-gftopk cmb10.111gf && rm -f cmb10.111gf
+cmb10.111.snf:	cmb10.111pk
+	-mftobdf -dpi 85 cmb10.111pk
+	bdftosnf < cmb10.111.bdf > cmb10.111.snf
+#
+# NAME=cmtt10
+# SCALE = 1300
+# EXTENSION = 159
+#
+cmtt10.159pk:
+	-mf '\mode:=sun;mag=1300/1000;input cmtt10'
+	-gftopk cmtt10.159gf && rm -f cmtt10.159gf
+cmtt10.159.snf:	cmtt10.159pk
+	-mftobdf -dpi 85 cmtt10.159pk
+	bdftosnf < cmtt10.159.bdf > cmtt10.159.snf
+#
+# NAME=cmtt10
+# SCALE = 1300
+# EXTENSION = 111
+#
+cmtt10.111pk:
+	-mf '\mode:=sun;mag=1300/1000;input cmtt10'
+	-gftopk cmtt10.111gf && rm -f cmtt10.111gf
+cmtt10.111.snf:	cmtt10.111pk
+	-mftobdf -dpi 85 cmtt10.111pk
+	bdftosnf < cmtt10.111.bdf > cmtt10.111.snf
+#
+# NAME=culogo
+# SCALE = 1000
+# EXTENSION = 122
+#
+culogo.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input culogo'
+	-gftopk culogo.122gf && rm -f culogo.122gf
+culogo.122.snf:	culogo.122pk
+	-mftobdf -dpi 85 culogo.122pk
+	bdftosnf < culogo.122.bdf > culogo.122.snf
+#
+# NAME=culogo
+# SCALE = 1000
+# EXTENSION = 85
+#
+culogo.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input culogo'
+	-gftopk culogo.85gf && rm -f culogo.85gf
+culogo.85.snf:	culogo.85pk
+	-mftobdf -dpi 85 culogo.85pk
+	bdftosnf < culogo.85.bdf > culogo.85.snf
+#
+# NAME=cminch
+# SCALE = 1000
+# EXTENSION = 122
+#
+cminch.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cminch'
+	-gftopk cminch.122gf && rm -f cminch.122gf
+cminch.122.snf:	cminch.122pk
+	-mftobdf -dpi 85 cminch.122pk
+	bdftosnf < cminch.122.bdf > cminch.122.snf
+#
+# NAME=cminch
+# SCALE = 1000
+# EXTENSION = 85
+#
+cminch.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cminch'
+	-gftopk cminch.85gf && rm -f cminch.85gf
+cminch.85.snf:	cminch.85pk
+	-mftobdf -dpi 85 cminch.85pk
+	bdftosnf < cminch.85.bdf > cminch.85.snf
+#
+# NAME=manfnt
+# SCALE = 1000
+# EXTENSION = 122
+#
+manfnt.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input manfnt'
+	-gftopk manfnt.122gf && rm -f manfnt.122gf
+manfnt.122.snf:	manfnt.122pk
+	-mftobdf -dpi 85 manfnt.122pk
+	bdftosnf < manfnt.122.bdf > manfnt.122.snf
+#
+# NAME=manfnt
+# SCALE = 1000
+# EXTENSION = 85
+#
+manfnt.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input manfnt'
+	-gftopk manfnt.85gf && rm -f manfnt.85gf
+manfnt.85.snf:	manfnt.85pk
+	-mftobdf -dpi 85 manfnt.85pk
+	bdftosnf < manfnt.85.bdf > manfnt.85.snf
+#
+# NAME=linew10
+# SCALE = 1000
+# EXTENSION = 122
+#
+linew10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input linew10'
+	-gftopk linew10.122gf && rm -f linew10.122gf
+linew10.122.snf:	linew10.122pk
+	-mftobdf -dpi 85 linew10.122pk
+	bdftosnf < linew10.122.bdf > linew10.122.snf
+#
+# NAME=linew10
+# SCALE = 1000
+# EXTENSION = 85
+#
+linew10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input linew10'
+	-gftopk linew10.85gf && rm -f linew10.85gf
+linew10.85.snf:	linew10.85pk
+	-mftobdf -dpi 85 linew10.85pk
+	bdftosnf < linew10.85.bdf > linew10.85.snf
+#
+# NAME=line10
+# SCALE = 1000
+# EXTENSION = 122
+#
+line10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input line10'
+	-gftopk line10.122gf && rm -f line10.122gf
+line10.122.snf:	line10.122pk
+	-mftobdf -dpi 85 line10.122pk
+	bdftosnf < line10.122.bdf > line10.122.snf
+#
+# NAME=line10
+# SCALE = 1000
+# EXTENSION = 85
+#
+line10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input line10'
+	-gftopk line10.85gf && rm -f line10.85gf
+line10.85.snf:	line10.85pk
+	-mftobdf -dpi 85 line10.85pk
+	bdftosnf < line10.85.bdf > line10.85.snf
+#
+# NAME=lcirclew10
+# SCALE = 1000
+# EXTENSION = 122
+#
+lcirclew10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input lcirclew10'
+	-gftopk lcirclew10.122gf && rm -f lcirclew10.122gf
+lcirclew10.122.snf:	lcirclew10.122pk
+	-mftobdf -dpi 85 lcirclew10.122pk
+	bdftosnf < lcirclew10.122.bdf > lcirclew10.122.snf
+#
+# NAME=lcirclew10
+# SCALE = 1000
+# EXTENSION = 85
+#
+lcirclew10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input lcirclew10'
+	-gftopk lcirclew10.85gf && rm -f lcirclew10.85gf
+lcirclew10.85.snf:	lcirclew10.85pk
+	-mftobdf -dpi 85 lcirclew10.85pk
+	bdftosnf < lcirclew10.85.bdf > lcirclew10.85.snf
+#
+# NAME=lcircle10
+# SCALE = 1000
+# EXTENSION = 122
+#
+lcircle10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input lcircle10'
+	-gftopk lcircle10.122gf && rm -f lcircle10.122gf
+lcircle10.122.snf:	lcircle10.122pk
+	-mftobdf -dpi 85 lcircle10.122pk
+	bdftosnf < lcircle10.122.bdf > lcircle10.122.snf
+#
+# NAME=lcircle10
+# SCALE = 1000
+# EXTENSION = 85
+#
+lcircle10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input lcircle10'
+	-gftopk lcircle10.85gf && rm -f lcircle10.85gf
+lcircle10.85.snf:	lcircle10.85pk
+	-mftobdf -dpi 85 lcircle10.85pk
+	bdftosnf < lcircle10.85.bdf > lcircle10.85.snf
+#
+# NAME=lasyb10
+# SCALE = 900
+# EXTENSION = 110
+#
+lasyb10.110pk:
+	-mf '\mode:=sun;mag=900/1000;input lasyb10'
+	-gftopk lasyb10.110gf && rm -f lasyb10.110gf
+lasyb10.110.snf:	lasyb10.110pk
+	-mftobdf -dpi 85 lasyb10.110pk
+	bdftosnf < lasyb10.110.bdf > lasyb10.110.snf
+#
+# NAME=lasyb10
+# SCALE = 900
+# EXTENSION = 77
+#
+lasyb10.77pk:
+	-mf '\mode:=sun;mag=900/1000;input lasyb10'
+	-gftopk lasyb10.77gf && rm -f lasyb10.77gf
+lasyb10.77.snf:	lasyb10.77pk
+	-mftobdf -dpi 85 lasyb10.77pk
+	bdftosnf < lasyb10.77.bdf > lasyb10.77.snf
+#
+# NAME=lasyb10
+# SCALE = 800
+# EXTENSION = 98
+#
+lasyb10.98pk:
+	-mf '\mode:=sun;mag=800/1000;input lasyb10'
+	-gftopk lasyb10.98gf && rm -f lasyb10.98gf
+lasyb10.98.snf:	lasyb10.98pk
+	-mftobdf -dpi 85 lasyb10.98pk
+	bdftosnf < lasyb10.98.bdf > lasyb10.98.snf
+#
+# NAME=lasyb10
+# SCALE = 800
+# EXTENSION = 68
+#
+lasyb10.68pk:
+	-mf '\mode:=sun;mag=800/1000;input lasyb10'
+	-gftopk lasyb10.68gf && rm -f lasyb10.68gf
+lasyb10.68.snf:	lasyb10.68pk
+	-mftobdf -dpi 85 lasyb10.68pk
+	bdftosnf < lasyb10.68.bdf > lasyb10.68.snf
+#
+# NAME=lasyb10
+# SCALE = 700
+# EXTENSION = 86
+#
+lasyb10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input lasyb10'
+	-gftopk lasyb10.86gf && rm -f lasyb10.86gf
+lasyb10.86.snf:	lasyb10.86pk
+	-mftobdf -dpi 85 lasyb10.86pk
+	bdftosnf < lasyb10.86.bdf > lasyb10.86.snf
+#
+# NAME=lasyb10
+# SCALE = 700
+# EXTENSION = 59
+#
+lasyb10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input lasyb10'
+	-gftopk lasyb10.59gf && rm -f lasyb10.59gf
+lasyb10.59.snf:	lasyb10.59pk
+	-mftobdf -dpi 85 lasyb10.59pk
+	bdftosnf < lasyb10.59.bdf > lasyb10.59.snf
+#
+# NAME=lasyb10
+# SCALE = 600
+# EXTENSION = 73
+#
+lasyb10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input lasyb10'
+	-gftopk lasyb10.73gf && rm -f lasyb10.73gf
+lasyb10.73.snf:	lasyb10.73pk
+	-mftobdf -dpi 85 lasyb10.73pk
+	bdftosnf < lasyb10.73.bdf > lasyb10.73.snf
+#
+# NAME=lasyb10
+# SCALE = 600
+# EXTENSION = 51
+#
+lasyb10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input lasyb10'
+	-gftopk lasyb10.51gf && rm -f lasyb10.51gf
+lasyb10.51.snf:	lasyb10.51pk
+	-mftobdf -dpi 85 lasyb10.51pk
+	bdftosnf < lasyb10.51.bdf > lasyb10.51.snf
+#
+# NAME=lasyb10
+# SCALE = 500
+# EXTENSION = 61
+#
+lasyb10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input lasyb10'
+	-gftopk lasyb10.61gf && rm -f lasyb10.61gf
+lasyb10.61.snf:	lasyb10.61pk
+	-mftobdf -dpi 85 lasyb10.61pk
+	bdftosnf < lasyb10.61.bdf > lasyb10.61.snf
+#
+# NAME=lasyb10
+# SCALE = 500
+# EXTENSION = 43
+#
+lasyb10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input lasyb10'
+	-gftopk lasyb10.43gf && rm -f lasyb10.43gf
+lasyb10.43.snf:	lasyb10.43pk
+	-mftobdf -dpi 85 lasyb10.43pk
+	bdftosnf < lasyb10.43.bdf > lasyb10.43.snf
+#
+# NAME=lasyb10
+# SCALE = 2488
+# EXTENSION = 305
+#
+lasyb10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input lasyb10'
+	-gftopk lasyb10.305gf && rm -f lasyb10.305gf
+lasyb10.305.snf:	lasyb10.305pk
+	-mftobdf -dpi 85 lasyb10.305pk
+	bdftosnf < lasyb10.305.bdf > lasyb10.305.snf
+#
+# NAME=lasyb10
+# SCALE = 2488
+# EXTENSION = 211
+#
+lasyb10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input lasyb10'
+	-gftopk lasyb10.211gf && rm -f lasyb10.211gf
+lasyb10.211.snf:	lasyb10.211pk
+	-mftobdf -dpi 85 lasyb10.211pk
+	bdftosnf < lasyb10.211.bdf > lasyb10.211.snf
+#
+# NAME=lasyb10
+# SCALE = 2074
+# EXTENSION = 254
+#
+lasyb10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input lasyb10'
+	-gftopk lasyb10.254gf && rm -f lasyb10.254gf
+lasyb10.254.snf:	lasyb10.254pk
+	-mftobdf -dpi 85 lasyb10.254pk
+	bdftosnf < lasyb10.254.bdf > lasyb10.254.snf
+#
+# NAME=lasyb10
+# SCALE = 1728
+# EXTENSION = 212
+#
+lasyb10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input lasyb10'
+	-gftopk lasyb10.212gf && rm -f lasyb10.212gf
+lasyb10.212.snf:	lasyb10.212pk
+	-mftobdf -dpi 85 lasyb10.212pk
+	bdftosnf < lasyb10.212.bdf > lasyb10.212.snf
+#
+# NAME=lasyb10
+# SCALE = 1440
+# EXTENSION = 176
+#
+lasyb10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input lasyb10'
+	-gftopk lasyb10.176gf && rm -f lasyb10.176gf
+lasyb10.176.snf:	lasyb10.176pk
+	-mftobdf -dpi 85 lasyb10.176pk
+	bdftosnf < lasyb10.176.bdf > lasyb10.176.snf
+#
+# NAME=lasyb10
+# SCALE = 1200
+# EXTENSION = 147
+#
+lasyb10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input lasyb10'
+	-gftopk lasyb10.147gf && rm -f lasyb10.147gf
+lasyb10.147.snf:	lasyb10.147pk
+	-mftobdf -dpi 85 lasyb10.147pk
+	bdftosnf < lasyb10.147.bdf > lasyb10.147.snf
+#
+# NAME=lasyb10
+# SCALE = 1200
+# EXTENSION = 102
+#
+lasyb10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input lasyb10'
+	-gftopk lasyb10.102gf && rm -f lasyb10.102gf
+lasyb10.102.snf:	lasyb10.102pk
+	-mftobdf -dpi 85 lasyb10.102pk
+	bdftosnf < lasyb10.102.bdf > lasyb10.102.snf
+#
+# NAME=lasyb10
+# SCALE = 1095
+# EXTENSION = 134
+#
+lasyb10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input lasyb10'
+	-gftopk lasyb10.134gf && rm -f lasyb10.134gf
+lasyb10.134.snf:	lasyb10.134pk
+	-mftobdf -dpi 85 lasyb10.134pk
+	bdftosnf < lasyb10.134.bdf > lasyb10.134.snf
+#
+# NAME=lasyb10
+# SCALE = 1095
+# EXTENSION = 93
+#
+lasyb10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input lasyb10'
+	-gftopk lasyb10.93gf && rm -f lasyb10.93gf
+lasyb10.93.snf:	lasyb10.93pk
+	-mftobdf -dpi 85 lasyb10.93pk
+	bdftosnf < lasyb10.93.bdf > lasyb10.93.snf
+#
+# NAME=lasyb10
+# SCALE = 1000
+# EXTENSION = 122
+#
+lasyb10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasyb10'
+	-gftopk lasyb10.122gf && rm -f lasyb10.122gf
+lasyb10.122.snf:	lasyb10.122pk
+	-mftobdf -dpi 85 lasyb10.122pk
+	bdftosnf < lasyb10.122.bdf > lasyb10.122.snf
+#
+# NAME=lasyb10
+# SCALE = 1000
+# EXTENSION = 85
+#
+lasyb10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasyb10'
+	-gftopk lasyb10.85gf && rm -f lasyb10.85gf
+lasyb10.85.snf:	lasyb10.85pk
+	-mftobdf -dpi 85 lasyb10.85pk
+	bdftosnf < lasyb10.85.bdf > lasyb10.85.snf
+#
+# NAME=lasy9
+# SCALE = 1000
+# EXTENSION = 122
+#
+lasy9.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasy9'
+	-gftopk lasy9.122gf && rm -f lasy9.122gf
+lasy9.122.snf:	lasy9.122pk
+	-mftobdf -dpi 85 lasy9.122pk
+	bdftosnf < lasy9.122.bdf > lasy9.122.snf
+#
+# NAME=lasy9
+# SCALE = 1000
+# EXTENSION = 85
+#
+lasy9.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasy9'
+	-gftopk lasy9.85gf && rm -f lasy9.85gf
+lasy9.85.snf:	lasy9.85pk
+	-mftobdf -dpi 85 lasy9.85pk
+	bdftosnf < lasy9.85.bdf > lasy9.85.snf
+#
+# NAME=lasy8
+# SCALE = 1000
+# EXTENSION = 122
+#
+lasy8.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasy8'
+	-gftopk lasy8.122gf && rm -f lasy8.122gf
+lasy8.122.snf:	lasy8.122pk
+	-mftobdf -dpi 85 lasy8.122pk
+	bdftosnf < lasy8.122.bdf > lasy8.122.snf
+#
+# NAME=lasy8
+# SCALE = 1000
+# EXTENSION = 85
+#
+lasy8.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasy8'
+	-gftopk lasy8.85gf && rm -f lasy8.85gf
+lasy8.85.snf:	lasy8.85pk
+	-mftobdf -dpi 85 lasy8.85pk
+	bdftosnf < lasy8.85.bdf > lasy8.85.snf
+#
+# NAME=lasy7
+# SCALE = 1000
+# EXTENSION = 122
+#
+lasy7.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasy7'
+	-gftopk lasy7.122gf && rm -f lasy7.122gf
+lasy7.122.snf:	lasy7.122pk
+	-mftobdf -dpi 85 lasy7.122pk
+	bdftosnf < lasy7.122.bdf > lasy7.122.snf
+#
+# NAME=lasy7
+# SCALE = 1000
+# EXTENSION = 85
+#
+lasy7.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasy7'
+	-gftopk lasy7.85gf && rm -f lasy7.85gf
+lasy7.85.snf:	lasy7.85pk
+	-mftobdf -dpi 85 lasy7.85pk
+	bdftosnf < lasy7.85.bdf > lasy7.85.snf
+#
+# NAME=lasy6
+# SCALE = 1000
+# EXTENSION = 122
+#
+lasy6.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasy6'
+	-gftopk lasy6.122gf && rm -f lasy6.122gf
+lasy6.122.snf:	lasy6.122pk
+	-mftobdf -dpi 85 lasy6.122pk
+	bdftosnf < lasy6.122.bdf > lasy6.122.snf
+#
+# NAME=lasy6
+# SCALE = 1000
+# EXTENSION = 85
+#
+lasy6.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasy6'
+	-gftopk lasy6.85gf && rm -f lasy6.85gf
+lasy6.85.snf:	lasy6.85pk
+	-mftobdf -dpi 85 lasy6.85pk
+	bdftosnf < lasy6.85.bdf > lasy6.85.snf
+#
+# NAME=lasy5
+# SCALE = 1000
+# EXTENSION = 122
+#
+lasy5.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasy5'
+	-gftopk lasy5.122gf && rm -f lasy5.122gf
+lasy5.122.snf:	lasy5.122pk
+	-mftobdf -dpi 85 lasy5.122pk
+	bdftosnf < lasy5.122.bdf > lasy5.122.snf
+#
+# NAME=lasy5
+# SCALE = 1000
+# EXTENSION = 85
+#
+lasy5.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasy5'
+	-gftopk lasy5.85gf && rm -f lasy5.85gf
+lasy5.85.snf:	lasy5.85pk
+	-mftobdf -dpi 85 lasy5.85pk
+	bdftosnf < lasy5.85.bdf > lasy5.85.snf
+#
+# NAME=lasy10
+# SCALE = 2488
+# EXTENSION = 305
+#
+lasy10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input lasy10'
+	-gftopk lasy10.305gf && rm -f lasy10.305gf
+lasy10.305.snf:	lasy10.305pk
+	-mftobdf -dpi 85 lasy10.305pk
+	bdftosnf < lasy10.305.bdf > lasy10.305.snf
+#
+# NAME=lasy10
+# SCALE = 2488
+# EXTENSION = 211
+#
+lasy10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input lasy10'
+	-gftopk lasy10.211gf && rm -f lasy10.211gf
+lasy10.211.snf:	lasy10.211pk
+	-mftobdf -dpi 85 lasy10.211pk
+	bdftosnf < lasy10.211.bdf > lasy10.211.snf
+#
+# NAME=lasy10
+# SCALE = 2074
+# EXTENSION = 254
+#
+lasy10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input lasy10'
+	-gftopk lasy10.254gf && rm -f lasy10.254gf
+lasy10.254.snf:	lasy10.254pk
+	-mftobdf -dpi 85 lasy10.254pk
+	bdftosnf < lasy10.254.bdf > lasy10.254.snf
+#
+# NAME=lasy10
+# SCALE = 1728
+# EXTENSION = 212
+#
+lasy10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input lasy10'
+	-gftopk lasy10.212gf && rm -f lasy10.212gf
+lasy10.212.snf:	lasy10.212pk
+	-mftobdf -dpi 85 lasy10.212pk
+	bdftosnf < lasy10.212.bdf > lasy10.212.snf
+#
+# NAME=lasy10
+# SCALE = 1440
+# EXTENSION = 176
+#
+lasy10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input lasy10'
+	-gftopk lasy10.176gf && rm -f lasy10.176gf
+lasy10.176.snf:	lasy10.176pk
+	-mftobdf -dpi 85 lasy10.176pk
+	bdftosnf < lasy10.176.bdf > lasy10.176.snf
+#
+# NAME=lasy10
+# SCALE = 1200
+# EXTENSION = 147
+#
+lasy10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input lasy10'
+	-gftopk lasy10.147gf && rm -f lasy10.147gf
+lasy10.147.snf:	lasy10.147pk
+	-mftobdf -dpi 85 lasy10.147pk
+	bdftosnf < lasy10.147.bdf > lasy10.147.snf
+#
+# NAME=lasy10
+# SCALE = 1200
+# EXTENSION = 102
+#
+lasy10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input lasy10'
+	-gftopk lasy10.102gf && rm -f lasy10.102gf
+lasy10.102.snf:	lasy10.102pk
+	-mftobdf -dpi 85 lasy10.102pk
+	bdftosnf < lasy10.102.bdf > lasy10.102.snf
+#
+# NAME=lasy10
+# SCALE = 1095
+# EXTENSION = 134
+#
+lasy10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input lasy10'
+	-gftopk lasy10.134gf && rm -f lasy10.134gf
+lasy10.134.snf:	lasy10.134pk
+	-mftobdf -dpi 85 lasy10.134pk
+	bdftosnf < lasy10.134.bdf > lasy10.134.snf
+#
+# NAME=lasy10
+# SCALE = 1095
+# EXTENSION = 93
+#
+lasy10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input lasy10'
+	-gftopk lasy10.93gf && rm -f lasy10.93gf
+lasy10.93.snf:	lasy10.93pk
+	-mftobdf -dpi 85 lasy10.93pk
+	bdftosnf < lasy10.93.bdf > lasy10.93.snf
+#
+# NAME=lasy10
+# SCALE = 1000
+# EXTENSION = 122
+#
+lasy10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasy10'
+	-gftopk lasy10.122gf && rm -f lasy10.122gf
+lasy10.122.snf:	lasy10.122pk
+	-mftobdf -dpi 85 lasy10.122pk
+	bdftosnf < lasy10.122.bdf > lasy10.122.snf
+#
+# NAME=lasy10
+# SCALE = 1000
+# EXTENSION = 85
+#
+lasy10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input lasy10'
+	-gftopk lasy10.85gf && rm -f lasy10.85gf
+lasy10.85.snf:	lasy10.85pk
+	-mftobdf -dpi 85 lasy10.85pk
+	bdftosnf < lasy10.85.bdf > lasy10.85.snf
+#
+# NAME=cmu10
+# SCALE = 900
+# EXTENSION = 110
+#
+cmu10.110pk:
+	-mf '\mode:=sun;mag=900/1000;input cmu10'
+	-gftopk cmu10.110gf && rm -f cmu10.110gf
+cmu10.110.snf:	cmu10.110pk
+	-mftobdf -dpi 85 cmu10.110pk
+	bdftosnf < cmu10.110.bdf > cmu10.110.snf
+#
+# NAME=cmu10
+# SCALE = 900
+# EXTENSION = 77
+#
+cmu10.77pk:
+	-mf '\mode:=sun;mag=900/1000;input cmu10'
+	-gftopk cmu10.77gf && rm -f cmu10.77gf
+cmu10.77.snf:	cmu10.77pk
+	-mftobdf -dpi 85 cmu10.77pk
+	bdftosnf < cmu10.77.bdf > cmu10.77.snf
+#
+# NAME=cmu10
+# SCALE = 800
+# EXTENSION = 98
+#
+cmu10.98pk:
+	-mf '\mode:=sun;mag=800/1000;input cmu10'
+	-gftopk cmu10.98gf && rm -f cmu10.98gf
+cmu10.98.snf:	cmu10.98pk
+	-mftobdf -dpi 85 cmu10.98pk
+	bdftosnf < cmu10.98.bdf > cmu10.98.snf
+#
+# NAME=cmu10
+# SCALE = 800
+# EXTENSION = 68
+#
+cmu10.68pk:
+	-mf '\mode:=sun;mag=800/1000;input cmu10'
+	-gftopk cmu10.68gf && rm -f cmu10.68gf
+cmu10.68.snf:	cmu10.68pk
+	-mftobdf -dpi 85 cmu10.68pk
+	bdftosnf < cmu10.68.bdf > cmu10.68.snf
+#
+# NAME=cmu10
+# SCALE = 700
+# EXTENSION = 86
+#
+cmu10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input cmu10'
+	-gftopk cmu10.86gf && rm -f cmu10.86gf
+cmu10.86.snf:	cmu10.86pk
+	-mftobdf -dpi 85 cmu10.86pk
+	bdftosnf < cmu10.86.bdf > cmu10.86.snf
+#
+# NAME=cmu10
+# SCALE = 700
+# EXTENSION = 59
+#
+cmu10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input cmu10'
+	-gftopk cmu10.59gf && rm -f cmu10.59gf
+cmu10.59.snf:	cmu10.59pk
+	-mftobdf -dpi 85 cmu10.59pk
+	bdftosnf < cmu10.59.bdf > cmu10.59.snf
+#
+# NAME=cmu10
+# SCALE = 600
+# EXTENSION = 73
+#
+cmu10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input cmu10'
+	-gftopk cmu10.73gf && rm -f cmu10.73gf
+cmu10.73.snf:	cmu10.73pk
+	-mftobdf -dpi 85 cmu10.73pk
+	bdftosnf < cmu10.73.bdf > cmu10.73.snf
+#
+# NAME=cmu10
+# SCALE = 600
+# EXTENSION = 51
+#
+cmu10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input cmu10'
+	-gftopk cmu10.51gf && rm -f cmu10.51gf
+cmu10.51.snf:	cmu10.51pk
+	-mftobdf -dpi 85 cmu10.51pk
+	bdftosnf < cmu10.51.bdf > cmu10.51.snf
+#
+# NAME=cmu10
+# SCALE = 500
+# EXTENSION = 61
+#
+cmu10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input cmu10'
+	-gftopk cmu10.61gf && rm -f cmu10.61gf
+cmu10.61.snf:	cmu10.61pk
+	-mftobdf -dpi 85 cmu10.61pk
+	bdftosnf < cmu10.61.bdf > cmu10.61.snf
+#
+# NAME=cmu10
+# SCALE = 500
+# EXTENSION = 43
+#
+cmu10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input cmu10'
+	-gftopk cmu10.43gf && rm -f cmu10.43gf
+cmu10.43.snf:	cmu10.43pk
+	-mftobdf -dpi 85 cmu10.43pk
+	bdftosnf < cmu10.43.bdf > cmu10.43.snf
+#
+# NAME=cmu10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmu10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmu10'
+	-gftopk cmu10.305gf && rm -f cmu10.305gf
+cmu10.305.snf:	cmu10.305pk
+	-mftobdf -dpi 85 cmu10.305pk
+	bdftosnf < cmu10.305.bdf > cmu10.305.snf
+#
+# NAME=cmu10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmu10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmu10'
+	-gftopk cmu10.211gf && rm -f cmu10.211gf
+cmu10.211.snf:	cmu10.211pk
+	-mftobdf -dpi 85 cmu10.211pk
+	bdftosnf < cmu10.211.bdf > cmu10.211.snf
+#
+# NAME=cmu10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmu10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmu10'
+	-gftopk cmu10.254gf && rm -f cmu10.254gf
+cmu10.254.snf:	cmu10.254pk
+	-mftobdf -dpi 85 cmu10.254pk
+	bdftosnf < cmu10.254.bdf > cmu10.254.snf
+#
+# NAME=cmu10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmu10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmu10'
+	-gftopk cmu10.212gf && rm -f cmu10.212gf
+cmu10.212.snf:	cmu10.212pk
+	-mftobdf -dpi 85 cmu10.212pk
+	bdftosnf < cmu10.212.bdf > cmu10.212.snf
+#
+# NAME=cmu10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmu10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmu10'
+	-gftopk cmu10.176gf && rm -f cmu10.176gf
+cmu10.176.snf:	cmu10.176pk
+	-mftobdf -dpi 85 cmu10.176pk
+	bdftosnf < cmu10.176.bdf > cmu10.176.snf
+#
+# NAME=cmu10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmu10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmu10'
+	-gftopk cmu10.147gf && rm -f cmu10.147gf
+cmu10.147.snf:	cmu10.147pk
+	-mftobdf -dpi 85 cmu10.147pk
+	bdftosnf < cmu10.147.bdf > cmu10.147.snf
+#
+# NAME=cmu10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmu10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmu10'
+	-gftopk cmu10.102gf && rm -f cmu10.102gf
+cmu10.102.snf:	cmu10.102pk
+	-mftobdf -dpi 85 cmu10.102pk
+	bdftosnf < cmu10.102.bdf > cmu10.102.snf
+#
+# NAME=cmu10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmu10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmu10'
+	-gftopk cmu10.134gf && rm -f cmu10.134gf
+cmu10.134.snf:	cmu10.134pk
+	-mftobdf -dpi 85 cmu10.134pk
+	bdftosnf < cmu10.134.bdf > cmu10.134.snf
+#
+# NAME=cmu10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmu10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmu10'
+	-gftopk cmu10.93gf && rm -f cmu10.93gf
+cmu10.93.snf:	cmu10.93pk
+	-mftobdf -dpi 85 cmu10.93pk
+	bdftosnf < cmu10.93.bdf > cmu10.93.snf
+#
+# NAME=cmu10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmu10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmu10'
+	-gftopk cmu10.122gf && rm -f cmu10.122gf
+cmu10.122.snf:	cmu10.122pk
+	-mftobdf -dpi 85 cmu10.122pk
+	bdftosnf < cmu10.122.bdf > cmu10.122.snf
+#
+# NAME=cmu10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmu10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmu10'
+	-gftopk cmu10.85gf && rm -f cmu10.85gf
+cmu10.85.snf:	cmu10.85pk
+	-mftobdf -dpi 85 cmu10.85pk
+	bdftosnf < cmu10.85.bdf > cmu10.85.snf
+#
+# NAME=cmtt9
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmtt9.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmtt9'
+	-gftopk cmtt9.122gf && rm -f cmtt9.122gf
+cmtt9.122.snf:	cmtt9.122pk
+	-mftobdf -dpi 85 cmtt9.122pk
+	bdftosnf < cmtt9.122.bdf > cmtt9.122.snf
+#
+# NAME=cmtt9
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmtt9.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmtt9'
+	-gftopk cmtt9.85gf && rm -f cmtt9.85gf
+cmtt9.85.snf:	cmtt9.85pk
+	-mftobdf -dpi 85 cmtt9.85pk
+	bdftosnf < cmtt9.85.bdf > cmtt9.85.snf
+#
+# NAME=cmtt8
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmtt8.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmtt8'
+	-gftopk cmtt8.122gf && rm -f cmtt8.122gf
+cmtt8.122.snf:	cmtt8.122pk
+	-mftobdf -dpi 85 cmtt8.122pk
+	bdftosnf < cmtt8.122.bdf > cmtt8.122.snf
+#
+# NAME=cmtt8
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmtt8.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmtt8'
+	-gftopk cmtt8.85gf && rm -f cmtt8.85gf
+cmtt8.85.snf:	cmtt8.85pk
+	-mftobdf -dpi 85 cmtt8.85pk
+	bdftosnf < cmtt8.85.bdf > cmtt8.85.snf
+#
+# NAME=cmtt12
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmtt12.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmtt12'
+	-gftopk cmtt12.122gf && rm -f cmtt12.122gf
+cmtt12.122.snf:	cmtt12.122pk
+	-mftobdf -dpi 85 cmtt12.122pk
+	bdftosnf < cmtt12.122.bdf > cmtt12.122.snf
+#
+# NAME=cmtt12
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmtt12.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmtt12'
+	-gftopk cmtt12.85gf && rm -f cmtt12.85gf
+cmtt12.85.snf:	cmtt12.85pk
+	-mftobdf -dpi 85 cmtt12.85pk
+	bdftosnf < cmtt12.85.bdf > cmtt12.85.snf
+#
+# NAME=cmtt10
+# SCALE = 700
+# EXTENSION = 86
+#
+cmtt10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input cmtt10'
+	-gftopk cmtt10.86gf && rm -f cmtt10.86gf
+cmtt10.86.snf:	cmtt10.86pk
+	-mftobdf -dpi 85 cmtt10.86pk
+	bdftosnf < cmtt10.86.bdf > cmtt10.86.snf
+#
+# NAME=cmtt10
+# SCALE = 700
+# EXTENSION = 59
+#
+cmtt10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input cmtt10'
+	-gftopk cmtt10.59gf && rm -f cmtt10.59gf
+cmtt10.59.snf:	cmtt10.59pk
+	-mftobdf -dpi 85 cmtt10.59pk
+	bdftosnf < cmtt10.59.bdf > cmtt10.59.snf
+#
+# NAME=cmtt10
+# SCALE = 600
+# EXTENSION = 73
+#
+cmtt10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input cmtt10'
+	-gftopk cmtt10.73gf && rm -f cmtt10.73gf
+cmtt10.73.snf:	cmtt10.73pk
+	-mftobdf -dpi 85 cmtt10.73pk
+	bdftosnf < cmtt10.73.bdf > cmtt10.73.snf
+#
+# NAME=cmtt10
+# SCALE = 600
+# EXTENSION = 51
+#
+cmtt10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input cmtt10'
+	-gftopk cmtt10.51gf && rm -f cmtt10.51gf
+cmtt10.51.snf:	cmtt10.51pk
+	-mftobdf -dpi 85 cmtt10.51pk
+	bdftosnf < cmtt10.51.bdf > cmtt10.51.snf
+#
+# NAME=cmtt10
+# SCALE = 500
+# EXTENSION = 61
+#
+cmtt10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input cmtt10'
+	-gftopk cmtt10.61gf && rm -f cmtt10.61gf
+cmtt10.61.snf:	cmtt10.61pk
+	-mftobdf -dpi 85 cmtt10.61pk
+	bdftosnf < cmtt10.61.bdf > cmtt10.61.snf
+#
+# NAME=cmtt10
+# SCALE = 500
+# EXTENSION = 43
+#
+cmtt10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input cmtt10'
+	-gftopk cmtt10.43gf && rm -f cmtt10.43gf
+cmtt10.43.snf:	cmtt10.43pk
+	-mftobdf -dpi 85 cmtt10.43pk
+	bdftosnf < cmtt10.43.bdf > cmtt10.43.snf
+#
+# NAME=cmtt10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmtt10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmtt10'
+	-gftopk cmtt10.305gf && rm -f cmtt10.305gf
+cmtt10.305.snf:	cmtt10.305pk
+	-mftobdf -dpi 85 cmtt10.305pk
+	bdftosnf < cmtt10.305.bdf > cmtt10.305.snf
+#
+# NAME=cmtt10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmtt10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmtt10'
+	-gftopk cmtt10.211gf && rm -f cmtt10.211gf
+cmtt10.211.snf:	cmtt10.211pk
+	-mftobdf -dpi 85 cmtt10.211pk
+	bdftosnf < cmtt10.211.bdf > cmtt10.211.snf
+#
+# NAME=cmtt10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmtt10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmtt10'
+	-gftopk cmtt10.254gf && rm -f cmtt10.254gf
+cmtt10.254.snf:	cmtt10.254pk
+	-mftobdf -dpi 85 cmtt10.254pk
+	bdftosnf < cmtt10.254.bdf > cmtt10.254.snf
+#
+# NAME=cmtt10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmtt10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmtt10'
+	-gftopk cmtt10.212gf && rm -f cmtt10.212gf
+cmtt10.212.snf:	cmtt10.212pk
+	-mftobdf -dpi 85 cmtt10.212pk
+	bdftosnf < cmtt10.212.bdf > cmtt10.212.snf
+#
+# NAME=cmtt10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmtt10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmtt10'
+	-gftopk cmtt10.176gf && rm -f cmtt10.176gf
+cmtt10.176.snf:	cmtt10.176pk
+	-mftobdf -dpi 85 cmtt10.176pk
+	bdftosnf < cmtt10.176.bdf > cmtt10.176.snf
+#
+# NAME=cmtt10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmtt10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmtt10'
+	-gftopk cmtt10.147gf && rm -f cmtt10.147gf
+cmtt10.147.snf:	cmtt10.147pk
+	-mftobdf -dpi 85 cmtt10.147pk
+	bdftosnf < cmtt10.147.bdf > cmtt10.147.snf
+#
+# NAME=cmtt10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmtt10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmtt10'
+	-gftopk cmtt10.102gf && rm -f cmtt10.102gf
+cmtt10.102.snf:	cmtt10.102pk
+	-mftobdf -dpi 85 cmtt10.102pk
+	bdftosnf < cmtt10.102.bdf > cmtt10.102.snf
+#
+# NAME=cmtt10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmtt10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmtt10'
+	-gftopk cmtt10.134gf && rm -f cmtt10.134gf
+cmtt10.134.snf:	cmtt10.134pk
+	-mftobdf -dpi 85 cmtt10.134pk
+	bdftosnf < cmtt10.134.bdf > cmtt10.134.snf
+#
+# NAME=cmtt10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmtt10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmtt10'
+	-gftopk cmtt10.93gf && rm -f cmtt10.93gf
+cmtt10.93.snf:	cmtt10.93pk
+	-mftobdf -dpi 85 cmtt10.93pk
+	bdftosnf < cmtt10.93.bdf > cmtt10.93.snf
+#
+# NAME=cmtt10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmtt10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmtt10'
+	-gftopk cmtt10.122gf && rm -f cmtt10.122gf
+cmtt10.122.snf:	cmtt10.122pk
+	-mftobdf -dpi 85 cmtt10.122pk
+	bdftosnf < cmtt10.122.bdf > cmtt10.122.snf
+#
+# NAME=cmtt10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmtt10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmtt10'
+	-gftopk cmtt10.85gf && rm -f cmtt10.85gf
+cmtt10.85.snf:	cmtt10.85pk
+	-mftobdf -dpi 85 cmtt10.85pk
+	bdftosnf < cmtt10.85.bdf > cmtt10.85.snf
+#
+# NAME=cmti9
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmti9.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmti9'
+	-gftopk cmti9.122gf && rm -f cmti9.122gf
+cmti9.122.snf:	cmti9.122pk
+	-mftobdf -dpi 85 cmti9.122pk
+	bdftosnf < cmti9.122.bdf > cmti9.122.snf
+#
+# NAME=cmti9
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmti9.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmti9'
+	-gftopk cmti9.85gf && rm -f cmti9.85gf
+cmti9.85.snf:	cmti9.85pk
+	-mftobdf -dpi 85 cmti9.85pk
+	bdftosnf < cmti9.85.bdf > cmti9.85.snf
+#
+# NAME=cmti8
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmti8.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmti8'
+	-gftopk cmti8.122gf && rm -f cmti8.122gf
+cmti8.122.snf:	cmti8.122pk
+	-mftobdf -dpi 85 cmti8.122pk
+	bdftosnf < cmti8.122.bdf > cmti8.122.snf
+#
+# NAME=cmti8
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmti8.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmti8'
+	-gftopk cmti8.85gf && rm -f cmti8.85gf
+cmti8.85.snf:	cmti8.85pk
+	-mftobdf -dpi 85 cmti8.85pk
+	bdftosnf < cmti8.85.bdf > cmti8.85.snf
+#
+# NAME=cmti7
+# SCALE = 857
+# EXTENSION = 105
+#
+cmti7.105pk:
+	-mf '\mode:=sun;mag=857/1000;input cmti7'
+	-gftopk cmti7.105gf && rm -f cmti7.105gf
+cmti7.105.snf:	cmti7.105pk
+	-mftobdf -dpi 85 cmti7.105pk
+	bdftosnf < cmti7.105.bdf > cmti7.105.snf
+#
+# NAME=cmti7
+# SCALE = 857
+# EXTENSION = 73
+#
+cmti7.73pk:
+	-mf '\mode:=sun;mag=857/1000;input cmti7'
+	-gftopk cmti7.73gf && rm -f cmti7.73gf
+cmti7.73.snf:	cmti7.73pk
+	-mftobdf -dpi 85 cmti7.73pk
+	bdftosnf < cmti7.73.bdf > cmti7.73.snf
+#
+# NAME=cmti7
+# SCALE = 714
+# EXTENSION = 87
+#
+cmti7.87pk:
+	-mf '\mode:=sun;mag=714/1000;input cmti7'
+	-gftopk cmti7.87gf && rm -f cmti7.87gf
+cmti7.87.snf:	cmti7.87pk
+	-mftobdf -dpi 85 cmti7.87pk
+	bdftosnf < cmti7.87.bdf > cmti7.87.snf
+#
+# NAME=cmti7
+# SCALE = 714
+# EXTENSION = 61
+#
+cmti7.61pk:
+	-mf '\mode:=sun;mag=714/1000;input cmti7'
+	-gftopk cmti7.61gf && rm -f cmti7.61gf
+cmti7.61.snf:	cmti7.61pk
+	-mftobdf -dpi 85 cmti7.61pk
+	bdftosnf < cmti7.61.bdf > cmti7.61.snf
+#
+# NAME=cmti7
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmti7.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmti7'
+	-gftopk cmti7.122gf && rm -f cmti7.122gf
+cmti7.122.snf:	cmti7.122pk
+	-mftobdf -dpi 85 cmti7.122pk
+	bdftosnf < cmti7.122.bdf > cmti7.122.snf
+#
+# NAME=cmti7
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmti7.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmti7'
+	-gftopk cmti7.85gf && rm -f cmti7.85gf
+cmti7.85.snf:	cmti7.85pk
+	-mftobdf -dpi 85 cmti7.85pk
+	bdftosnf < cmti7.85.bdf > cmti7.85.snf
+#
+# NAME=cmti12
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmti12.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmti12'
+	-gftopk cmti12.122gf && rm -f cmti12.122gf
+cmti12.122.snf:	cmti12.122pk
+	-mftobdf -dpi 85 cmti12.122pk
+	bdftosnf < cmti12.122.bdf > cmti12.122.snf
+#
+# NAME=cmti12
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmti12.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmti12'
+	-gftopk cmti12.85gf && rm -f cmti12.85gf
+cmti12.85.snf:	cmti12.85pk
+	-mftobdf -dpi 85 cmti12.85pk
+	bdftosnf < cmti12.85.bdf > cmti12.85.snf
+#
+# NAME=cmti10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmti10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmti10'
+	-gftopk cmti10.305gf && rm -f cmti10.305gf
+cmti10.305.snf:	cmti10.305pk
+	-mftobdf -dpi 85 cmti10.305pk
+	bdftosnf < cmti10.305.bdf > cmti10.305.snf
+#
+# NAME=cmti10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmti10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmti10'
+	-gftopk cmti10.211gf && rm -f cmti10.211gf
+cmti10.211.snf:	cmti10.211pk
+	-mftobdf -dpi 85 cmti10.211pk
+	bdftosnf < cmti10.211.bdf > cmti10.211.snf
+#
+# NAME=cmti10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmti10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmti10'
+	-gftopk cmti10.254gf && rm -f cmti10.254gf
+cmti10.254.snf:	cmti10.254pk
+	-mftobdf -dpi 85 cmti10.254pk
+	bdftosnf < cmti10.254.bdf > cmti10.254.snf
+#
+# NAME=cmti10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmti10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmti10'
+	-gftopk cmti10.212gf && rm -f cmti10.212gf
+cmti10.212.snf:	cmti10.212pk
+	-mftobdf -dpi 85 cmti10.212pk
+	bdftosnf < cmti10.212.bdf > cmti10.212.snf
+#
+# NAME=cmti10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmti10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmti10'
+	-gftopk cmti10.176gf && rm -f cmti10.176gf
+cmti10.176.snf:	cmti10.176pk
+	-mftobdf -dpi 85 cmti10.176pk
+	bdftosnf < cmti10.176.bdf > cmti10.176.snf
+#
+# NAME=cmti10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmti10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmti10'
+	-gftopk cmti10.147gf && rm -f cmti10.147gf
+cmti10.147.snf:	cmti10.147pk
+	-mftobdf -dpi 85 cmti10.147pk
+	bdftosnf < cmti10.147.bdf > cmti10.147.snf
+#
+# NAME=cmti10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmti10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmti10'
+	-gftopk cmti10.102gf && rm -f cmti10.102gf
+cmti10.102.snf:	cmti10.102pk
+	-mftobdf -dpi 85 cmti10.102pk
+	bdftosnf < cmti10.102.bdf > cmti10.102.snf
+#
+# NAME=cmti10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmti10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmti10'
+	-gftopk cmti10.134gf && rm -f cmti10.134gf
+cmti10.134.snf:	cmti10.134pk
+	-mftobdf -dpi 85 cmti10.134pk
+	bdftosnf < cmti10.134.bdf > cmti10.134.snf
+#
+# NAME=cmti10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmti10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmti10'
+	-gftopk cmti10.93gf && rm -f cmti10.93gf
+cmti10.93.snf:	cmti10.93pk
+	-mftobdf -dpi 85 cmti10.93pk
+	bdftosnf < cmti10.93.bdf > cmti10.93.snf
+#
+# NAME=cmti10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmti10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmti10'
+	-gftopk cmti10.122gf && rm -f cmti10.122gf
+cmti10.122.snf:	cmti10.122pk
+	-mftobdf -dpi 85 cmti10.122pk
+	bdftosnf < cmti10.122.bdf > cmti10.122.snf
+#
+# NAME=cmti10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmti10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmti10'
+	-gftopk cmti10.85gf && rm -f cmti10.85gf
+cmti10.85.snf:	cmti10.85pk
+	-mftobdf -dpi 85 cmti10.85pk
+	bdftosnf < cmti10.85.bdf > cmti10.85.snf
+#
+# NAME=cmsy9
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmsy9.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsy9'
+	-gftopk cmsy9.122gf && rm -f cmsy9.122gf
+cmsy9.122.snf:	cmsy9.122pk
+	-mftobdf -dpi 85 cmsy9.122pk
+	bdftosnf < cmsy9.122.bdf > cmsy9.122.snf
+#
+# NAME=cmsy9
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmsy9.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsy9'
+	-gftopk cmsy9.85gf && rm -f cmsy9.85gf
+cmsy9.85.snf:	cmsy9.85pk
+	-mftobdf -dpi 85 cmsy9.85pk
+	bdftosnf < cmsy9.85.bdf > cmsy9.85.snf
+#
+# NAME=cmsy8
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmsy8.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsy8'
+	-gftopk cmsy8.122gf && rm -f cmsy8.122gf
+cmsy8.122.snf:	cmsy8.122pk
+	-mftobdf -dpi 85 cmsy8.122pk
+	bdftosnf < cmsy8.122.bdf > cmsy8.122.snf
+#
+# NAME=cmsy8
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmsy8.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsy8'
+	-gftopk cmsy8.85gf && rm -f cmsy8.85gf
+cmsy8.85.snf:	cmsy8.85pk
+	-mftobdf -dpi 85 cmsy8.85pk
+	bdftosnf < cmsy8.85.bdf > cmsy8.85.snf
+#
+# NAME=cmsy7
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmsy7.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsy7'
+	-gftopk cmsy7.122gf && rm -f cmsy7.122gf
+cmsy7.122.snf:	cmsy7.122pk
+	-mftobdf -dpi 85 cmsy7.122pk
+	bdftosnf < cmsy7.122.bdf > cmsy7.122.snf
+#
+# NAME=cmsy7
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmsy7.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsy7'
+	-gftopk cmsy7.85gf && rm -f cmsy7.85gf
+cmsy7.85.snf:	cmsy7.85pk
+	-mftobdf -dpi 85 cmsy7.85pk
+	bdftosnf < cmsy7.85.bdf > cmsy7.85.snf
+#
+# NAME=cmsy6
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmsy6.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsy6'
+	-gftopk cmsy6.122gf && rm -f cmsy6.122gf
+cmsy6.122.snf:	cmsy6.122pk
+	-mftobdf -dpi 85 cmsy6.122pk
+	bdftosnf < cmsy6.122.bdf > cmsy6.122.snf
+#
+# NAME=cmsy6
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmsy6.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsy6'
+	-gftopk cmsy6.85gf && rm -f cmsy6.85gf
+cmsy6.85.snf:	cmsy6.85pk
+	-mftobdf -dpi 85 cmsy6.85pk
+	bdftosnf < cmsy6.85.bdf > cmsy6.85.snf
+#
+# NAME=cmsy5
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmsy5.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsy5'
+	-gftopk cmsy5.122gf && rm -f cmsy5.122gf
+cmsy5.122.snf:	cmsy5.122pk
+	-mftobdf -dpi 85 cmsy5.122pk
+	bdftosnf < cmsy5.122.bdf > cmsy5.122.snf
+#
+# NAME=cmsy5
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmsy5.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsy5'
+	-gftopk cmsy5.85gf && rm -f cmsy5.85gf
+cmsy5.85.snf:	cmsy5.85pk
+	-mftobdf -dpi 85 cmsy5.85pk
+	bdftosnf < cmsy5.85.bdf > cmsy5.85.snf
+#
+# NAME=cmsy10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmsy10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmsy10'
+	-gftopk cmsy10.305gf && rm -f cmsy10.305gf
+cmsy10.305.snf:	cmsy10.305pk
+	-mftobdf -dpi 85 cmsy10.305pk
+	bdftosnf < cmsy10.305.bdf > cmsy10.305.snf
+#
+# NAME=cmsy10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmsy10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmsy10'
+	-gftopk cmsy10.211gf && rm -f cmsy10.211gf
+cmsy10.211.snf:	cmsy10.211pk
+	-mftobdf -dpi 85 cmsy10.211pk
+	bdftosnf < cmsy10.211.bdf > cmsy10.211.snf
+#
+# NAME=cmsy10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmsy10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmsy10'
+	-gftopk cmsy10.254gf && rm -f cmsy10.254gf
+cmsy10.254.snf:	cmsy10.254pk
+	-mftobdf -dpi 85 cmsy10.254pk
+	bdftosnf < cmsy10.254.bdf > cmsy10.254.snf
+#
+# NAME=cmsy10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmsy10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmsy10'
+	-gftopk cmsy10.212gf && rm -f cmsy10.212gf
+cmsy10.212.snf:	cmsy10.212pk
+	-mftobdf -dpi 85 cmsy10.212pk
+	bdftosnf < cmsy10.212.bdf > cmsy10.212.snf
+#
+# NAME=cmsy10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmsy10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmsy10'
+	-gftopk cmsy10.176gf && rm -f cmsy10.176gf
+cmsy10.176.snf:	cmsy10.176pk
+	-mftobdf -dpi 85 cmsy10.176pk
+	bdftosnf < cmsy10.176.bdf > cmsy10.176.snf
+#
+# NAME=cmsy10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmsy10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmsy10'
+	-gftopk cmsy10.147gf && rm -f cmsy10.147gf
+cmsy10.147.snf:	cmsy10.147pk
+	-mftobdf -dpi 85 cmsy10.147pk
+	bdftosnf < cmsy10.147.bdf > cmsy10.147.snf
+#
+# NAME=cmsy10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmsy10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmsy10'
+	-gftopk cmsy10.102gf && rm -f cmsy10.102gf
+cmsy10.102.snf:	cmsy10.102pk
+	-mftobdf -dpi 85 cmsy10.102pk
+	bdftosnf < cmsy10.102.bdf > cmsy10.102.snf
+#
+# NAME=cmsy10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmsy10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmsy10'
+	-gftopk cmsy10.134gf && rm -f cmsy10.134gf
+cmsy10.134.snf:	cmsy10.134pk
+	-mftobdf -dpi 85 cmsy10.134pk
+	bdftosnf < cmsy10.134.bdf > cmsy10.134.snf
+#
+# NAME=cmsy10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmsy10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmsy10'
+	-gftopk cmsy10.93gf && rm -f cmsy10.93gf
+cmsy10.93.snf:	cmsy10.93pk
+	-mftobdf -dpi 85 cmsy10.93pk
+	bdftosnf < cmsy10.93.bdf > cmsy10.93.snf
+#
+# NAME=cmsy10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmsy10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsy10'
+	-gftopk cmsy10.122gf && rm -f cmsy10.122gf
+cmsy10.122.snf:	cmsy10.122pk
+	-mftobdf -dpi 85 cmsy10.122pk
+	bdftosnf < cmsy10.122.bdf > cmsy10.122.snf
+#
+# NAME=cmsy10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmsy10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsy10'
+	-gftopk cmsy10.85gf && rm -f cmsy10.85gf
+cmsy10.85.snf:	cmsy10.85pk
+	-mftobdf -dpi 85 cmsy10.85pk
+	bdftosnf < cmsy10.85.bdf > cmsy10.85.snf
+#
+# NAME=cmssqi8
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmssqi8.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmssqi8'
+	-gftopk cmssqi8.122gf && rm -f cmssqi8.122gf
+cmssqi8.122.snf:	cmssqi8.122pk
+	-mftobdf -dpi 85 cmssqi8.122pk
+	bdftosnf < cmssqi8.122.bdf > cmssqi8.122.snf
+#
+# NAME=cmssqi8
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmssqi8.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmssqi8'
+	-gftopk cmssqi8.85gf && rm -f cmssqi8.85gf
+cmssqi8.85.snf:	cmssqi8.85pk
+	-mftobdf -dpi 85 cmssqi8.85pk
+	bdftosnf < cmssqi8.85.bdf > cmssqi8.85.snf
+#
+# NAME=cmssq8
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmssq8.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmssq8'
+	-gftopk cmssq8.122gf && rm -f cmssq8.122gf
+cmssq8.122.snf:	cmssq8.122pk
+	-mftobdf -dpi 85 cmssq8.122pk
+	bdftosnf < cmssq8.122.bdf > cmssq8.122.snf
+#
+# NAME=cmssq8
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmssq8.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmssq8'
+	-gftopk cmssq8.85gf && rm -f cmssq8.85gf
+cmssq8.85.snf:	cmssq8.85pk
+	-mftobdf -dpi 85 cmssq8.85pk
+	bdftosnf < cmssq8.85.bdf > cmssq8.85.snf
+#
+# NAME=cmssi17
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmssi17.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmssi17'
+	-gftopk cmssi17.122gf && rm -f cmssi17.122gf
+cmssi17.122.snf:	cmssi17.122pk
+	-mftobdf -dpi 85 cmssi17.122pk
+	bdftosnf < cmssi17.122.bdf > cmssi17.122.snf
+#
+# NAME=cmssi17
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmssi17.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmssi17'
+	-gftopk cmssi17.85gf && rm -f cmssi17.85gf
+cmssi17.85.snf:	cmssi17.85pk
+	-mftobdf -dpi 85 cmssi17.85pk
+	bdftosnf < cmssi17.85.bdf > cmssi17.85.snf
+#
+# NAME=cmssi10
+# SCALE = 900
+# EXTENSION = 110
+#
+cmssi10.110pk:
+	-mf '\mode:=sun;mag=900/1000;input cmssi10'
+	-gftopk cmssi10.110gf && rm -f cmssi10.110gf
+cmssi10.110.snf:	cmssi10.110pk
+	-mftobdf -dpi 85 cmssi10.110pk
+	bdftosnf < cmssi10.110.bdf > cmssi10.110.snf
+#
+# NAME=cmssi10
+# SCALE = 900
+# EXTENSION = 77
+#
+cmssi10.77pk:
+	-mf '\mode:=sun;mag=900/1000;input cmssi10'
+	-gftopk cmssi10.77gf && rm -f cmssi10.77gf
+cmssi10.77.snf:	cmssi10.77pk
+	-mftobdf -dpi 85 cmssi10.77pk
+	bdftosnf < cmssi10.77.bdf > cmssi10.77.snf
+#
+# NAME=cmssi10
+# SCALE = 800
+# EXTENSION = 98
+#
+cmssi10.98pk:
+	-mf '\mode:=sun;mag=800/1000;input cmssi10'
+	-gftopk cmssi10.98gf && rm -f cmssi10.98gf
+cmssi10.98.snf:	cmssi10.98pk
+	-mftobdf -dpi 85 cmssi10.98pk
+	bdftosnf < cmssi10.98.bdf > cmssi10.98.snf
+#
+# NAME=cmssi10
+# SCALE = 800
+# EXTENSION = 68
+#
+cmssi10.68pk:
+	-mf '\mode:=sun;mag=800/1000;input cmssi10'
+	-gftopk cmssi10.68gf && rm -f cmssi10.68gf
+cmssi10.68.snf:	cmssi10.68pk
+	-mftobdf -dpi 85 cmssi10.68pk
+	bdftosnf < cmssi10.68.bdf > cmssi10.68.snf
+#
+# NAME=cmssi10
+# SCALE = 700
+# EXTENSION = 86
+#
+cmssi10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input cmssi10'
+	-gftopk cmssi10.86gf && rm -f cmssi10.86gf
+cmssi10.86.snf:	cmssi10.86pk
+	-mftobdf -dpi 85 cmssi10.86pk
+	bdftosnf < cmssi10.86.bdf > cmssi10.86.snf
+#
+# NAME=cmssi10
+# SCALE = 700
+# EXTENSION = 59
+#
+cmssi10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input cmssi10'
+	-gftopk cmssi10.59gf && rm -f cmssi10.59gf
+cmssi10.59.snf:	cmssi10.59pk
+	-mftobdf -dpi 85 cmssi10.59pk
+	bdftosnf < cmssi10.59.bdf > cmssi10.59.snf
+#
+# NAME=cmssi10
+# SCALE = 600
+# EXTENSION = 73
+#
+cmssi10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input cmssi10'
+	-gftopk cmssi10.73gf && rm -f cmssi10.73gf
+cmssi10.73.snf:	cmssi10.73pk
+	-mftobdf -dpi 85 cmssi10.73pk
+	bdftosnf < cmssi10.73.bdf > cmssi10.73.snf
+#
+# NAME=cmssi10
+# SCALE = 600
+# EXTENSION = 51
+#
+cmssi10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input cmssi10'
+	-gftopk cmssi10.51gf && rm -f cmssi10.51gf
+cmssi10.51.snf:	cmssi10.51pk
+	-mftobdf -dpi 85 cmssi10.51pk
+	bdftosnf < cmssi10.51.bdf > cmssi10.51.snf
+#
+# NAME=cmssi10
+# SCALE = 500
+# EXTENSION = 61
+#
+cmssi10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input cmssi10'
+	-gftopk cmssi10.61gf && rm -f cmssi10.61gf
+cmssi10.61.snf:	cmssi10.61pk
+	-mftobdf -dpi 85 cmssi10.61pk
+	bdftosnf < cmssi10.61.bdf > cmssi10.61.snf
+#
+# NAME=cmssi10
+# SCALE = 500
+# EXTENSION = 43
+#
+cmssi10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input cmssi10'
+	-gftopk cmssi10.43gf && rm -f cmssi10.43gf
+cmssi10.43.snf:	cmssi10.43pk
+	-mftobdf -dpi 85 cmssi10.43pk
+	bdftosnf < cmssi10.43.bdf > cmssi10.43.snf
+#
+# NAME=cmssi10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmssi10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmssi10'
+	-gftopk cmssi10.305gf && rm -f cmssi10.305gf
+cmssi10.305.snf:	cmssi10.305pk
+	-mftobdf -dpi 85 cmssi10.305pk
+	bdftosnf < cmssi10.305.bdf > cmssi10.305.snf
+#
+# NAME=cmssi10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmssi10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmssi10'
+	-gftopk cmssi10.211gf && rm -f cmssi10.211gf
+cmssi10.211.snf:	cmssi10.211pk
+	-mftobdf -dpi 85 cmssi10.211pk
+	bdftosnf < cmssi10.211.bdf > cmssi10.211.snf
+#
+# NAME=cmssi10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmssi10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmssi10'
+	-gftopk cmssi10.254gf && rm -f cmssi10.254gf
+cmssi10.254.snf:	cmssi10.254pk
+	-mftobdf -dpi 85 cmssi10.254pk
+	bdftosnf < cmssi10.254.bdf > cmssi10.254.snf
+#
+# NAME=cmssi10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmssi10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmssi10'
+	-gftopk cmssi10.176gf && rm -f cmssi10.176gf
+cmssi10.176.snf:	cmssi10.176pk
+	-mftobdf -dpi 85 cmssi10.176pk
+	bdftosnf < cmssi10.176.bdf > cmssi10.176.snf
+#
+# NAME=cmssi10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmssi10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmssi10'
+	-gftopk cmssi10.147gf && rm -f cmssi10.147gf
+cmssi10.147.snf:	cmssi10.147pk
+	-mftobdf -dpi 85 cmssi10.147pk
+	bdftosnf < cmssi10.147.bdf > cmssi10.147.snf
+#
+# NAME=cmssi10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmssi10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmssi10'
+	-gftopk cmssi10.102gf && rm -f cmssi10.102gf
+cmssi10.102.snf:	cmssi10.102pk
+	-mftobdf -dpi 85 cmssi10.102pk
+	bdftosnf < cmssi10.102.bdf > cmssi10.102.snf
+#
+# NAME=cmssi10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmssi10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmssi10'
+	-gftopk cmssi10.134gf && rm -f cmssi10.134gf
+cmssi10.134.snf:	cmssi10.134pk
+	-mftobdf -dpi 85 cmssi10.134pk
+	bdftosnf < cmssi10.134.bdf > cmssi10.134.snf
+#
+# NAME=cmssi10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmssi10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmssi10'
+	-gftopk cmssi10.93gf && rm -f cmssi10.93gf
+cmssi10.93.snf:	cmssi10.93pk
+	-mftobdf -dpi 85 cmssi10.93pk
+	bdftosnf < cmssi10.93.bdf > cmssi10.93.snf
+#
+# NAME=cmssi10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmssi10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmssi10'
+	-gftopk cmssi10.122gf && rm -f cmssi10.122gf
+cmssi10.122.snf:	cmssi10.122pk
+	-mftobdf -dpi 85 cmssi10.122pk
+	bdftosnf < cmssi10.122.bdf > cmssi10.122.snf
+#
+# NAME=cmssi10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmssi10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmssi10'
+	-gftopk cmssi10.85gf && rm -f cmssi10.85gf
+cmssi10.85.snf:	cmssi10.85pk
+	-mftobdf -dpi 85 cmssi10.85pk
+	bdftosnf < cmssi10.85.bdf > cmssi10.85.snf
+#
+# NAME=cmssbx10
+# SCALE = 900
+# EXTENSION = 110
+#
+cmssbx10.110pk:
+	-mf '\mode:=sun;mag=900/1000;input cmssbx10'
+	-gftopk cmssbx10.110gf && rm -f cmssbx10.110gf
+cmssbx10.110.snf:	cmssbx10.110pk
+	-mftobdf -dpi 85 cmssbx10.110pk
+	bdftosnf < cmssbx10.110.bdf > cmssbx10.110.snf
+#
+# NAME=cmssbx10
+# SCALE = 900
+# EXTENSION = 77
+#
+cmssbx10.77pk:
+	-mf '\mode:=sun;mag=900/1000;input cmssbx10'
+	-gftopk cmssbx10.77gf && rm -f cmssbx10.77gf
+cmssbx10.77.snf:	cmssbx10.77pk
+	-mftobdf -dpi 85 cmssbx10.77pk
+	bdftosnf < cmssbx10.77.bdf > cmssbx10.77.snf
+#
+# NAME=cmssbx10
+# SCALE = 800
+# EXTENSION = 98
+#
+cmssbx10.98pk:
+	-mf '\mode:=sun;mag=800/1000;input cmssbx10'
+	-gftopk cmssbx10.98gf && rm -f cmssbx10.98gf
+cmssbx10.98.snf:	cmssbx10.98pk
+	-mftobdf -dpi 85 cmssbx10.98pk
+	bdftosnf < cmssbx10.98.bdf > cmssbx10.98.snf
+#
+# NAME=cmssbx10
+# SCALE = 800
+# EXTENSION = 68
+#
+cmssbx10.68pk:
+	-mf '\mode:=sun;mag=800/1000;input cmssbx10'
+	-gftopk cmssbx10.68gf && rm -f cmssbx10.68gf
+cmssbx10.68.snf:	cmssbx10.68pk
+	-mftobdf -dpi 85 cmssbx10.68pk
+	bdftosnf < cmssbx10.68.bdf > cmssbx10.68.snf
+#
+# NAME=cmssbx10
+# SCALE = 700
+# EXTENSION = 86
+#
+cmssbx10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input cmssbx10'
+	-gftopk cmssbx10.86gf && rm -f cmssbx10.86gf
+cmssbx10.86.snf:	cmssbx10.86pk
+	-mftobdf -dpi 85 cmssbx10.86pk
+	bdftosnf < cmssbx10.86.bdf > cmssbx10.86.snf
+#
+# NAME=cmssbx10
+# SCALE = 700
+# EXTENSION = 59
+#
+cmssbx10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input cmssbx10'
+	-gftopk cmssbx10.59gf && rm -f cmssbx10.59gf
+cmssbx10.59.snf:	cmssbx10.59pk
+	-mftobdf -dpi 85 cmssbx10.59pk
+	bdftosnf < cmssbx10.59.bdf > cmssbx10.59.snf
+#
+# NAME=cmssbx10
+# SCALE = 600
+# EXTENSION = 73
+#
+cmssbx10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input cmssbx10'
+	-gftopk cmssbx10.73gf && rm -f cmssbx10.73gf
+cmssbx10.73.snf:	cmssbx10.73pk
+	-mftobdf -dpi 85 cmssbx10.73pk
+	bdftosnf < cmssbx10.73.bdf > cmssbx10.73.snf
+#
+# NAME=cmssbx10
+# SCALE = 600
+# EXTENSION = 51
+#
+cmssbx10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input cmssbx10'
+	-gftopk cmssbx10.51gf && rm -f cmssbx10.51gf
+cmssbx10.51.snf:	cmssbx10.51pk
+	-mftobdf -dpi 85 cmssbx10.51pk
+	bdftosnf < cmssbx10.51.bdf > cmssbx10.51.snf
+#
+# NAME=cmssbx10
+# SCALE = 500
+# EXTENSION = 61
+#
+cmssbx10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input cmssbx10'
+	-gftopk cmssbx10.61gf && rm -f cmssbx10.61gf
+cmssbx10.61.snf:	cmssbx10.61pk
+	-mftobdf -dpi 85 cmssbx10.61pk
+	bdftosnf < cmssbx10.61.bdf > cmssbx10.61.snf
+#
+# NAME=cmssbx10
+# SCALE = 500
+# EXTENSION = 43
+#
+cmssbx10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input cmssbx10'
+	-gftopk cmssbx10.43gf && rm -f cmssbx10.43gf
+cmssbx10.43.snf:	cmssbx10.43pk
+	-mftobdf -dpi 85 cmssbx10.43pk
+	bdftosnf < cmssbx10.43.bdf > cmssbx10.43.snf
+#
+# NAME=cmssbx10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmssbx10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmssbx10'
+	-gftopk cmssbx10.305gf && rm -f cmssbx10.305gf
+cmssbx10.305.snf:	cmssbx10.305pk
+	-mftobdf -dpi 85 cmssbx10.305pk
+	bdftosnf < cmssbx10.305.bdf > cmssbx10.305.snf
+#
+# NAME=cmssbx10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmssbx10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmssbx10'
+	-gftopk cmssbx10.211gf && rm -f cmssbx10.211gf
+cmssbx10.211.snf:	cmssbx10.211pk
+	-mftobdf -dpi 85 cmssbx10.211pk
+	bdftosnf < cmssbx10.211.bdf > cmssbx10.211.snf
+#
+# NAME=cmssbx10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmssbx10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmssbx10'
+	-gftopk cmssbx10.254gf && rm -f cmssbx10.254gf
+cmssbx10.254.snf:	cmssbx10.254pk
+	-mftobdf -dpi 85 cmssbx10.254pk
+	bdftosnf < cmssbx10.254.bdf > cmssbx10.254.snf
+#
+# NAME=cmssbx10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmssbx10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmssbx10'
+	-gftopk cmssbx10.212gf && rm -f cmssbx10.212gf
+cmssbx10.212.snf:	cmssbx10.212pk
+	-mftobdf -dpi 85 cmssbx10.212pk
+	bdftosnf < cmssbx10.212.bdf > cmssbx10.212.snf
+#
+# NAME=cmssbx10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmssbx10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmssbx10'
+	-gftopk cmssbx10.176gf && rm -f cmssbx10.176gf
+cmssbx10.176.snf:	cmssbx10.176pk
+	-mftobdf -dpi 85 cmssbx10.176pk
+	bdftosnf < cmssbx10.176.bdf > cmssbx10.176.snf
+#
+# NAME=cmssbx10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmssbx10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmssbx10'
+	-gftopk cmssbx10.147gf && rm -f cmssbx10.147gf
+cmssbx10.147.snf:	cmssbx10.147pk
+	-mftobdf -dpi 85 cmssbx10.147pk
+	bdftosnf < cmssbx10.147.bdf > cmssbx10.147.snf
+#
+# NAME=cmssbx10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmssbx10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmssbx10'
+	-gftopk cmssbx10.102gf && rm -f cmssbx10.102gf
+cmssbx10.102.snf:	cmssbx10.102pk
+	-mftobdf -dpi 85 cmssbx10.102pk
+	bdftosnf < cmssbx10.102.bdf > cmssbx10.102.snf
+#
+# NAME=cmssbx10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmssbx10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmssbx10'
+	-gftopk cmssbx10.134gf && rm -f cmssbx10.134gf
+cmssbx10.134.snf:	cmssbx10.134pk
+	-mftobdf -dpi 85 cmssbx10.134pk
+	bdftosnf < cmssbx10.134.bdf > cmssbx10.134.snf
+#
+# NAME=cmssbx10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmssbx10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmssbx10'
+	-gftopk cmssbx10.93gf && rm -f cmssbx10.93gf
+cmssbx10.93.snf:	cmssbx10.93pk
+	-mftobdf -dpi 85 cmssbx10.93pk
+	bdftosnf < cmssbx10.93.bdf > cmssbx10.93.snf
+#
+# NAME=cmssbx10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmssbx10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmssbx10'
+	-gftopk cmssbx10.122gf && rm -f cmssbx10.122gf
+cmssbx10.122.snf:	cmssbx10.122pk
+	-mftobdf -dpi 85 cmssbx10.122pk
+	bdftosnf < cmssbx10.122.bdf > cmssbx10.122.snf
+#
+# NAME=cmssbx10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmssbx10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmssbx10'
+	-gftopk cmssbx10.85gf && rm -f cmssbx10.85gf
+cmssbx10.85.snf:	cmssbx10.85pk
+	-mftobdf -dpi 85 cmssbx10.85pk
+	bdftosnf < cmssbx10.85.bdf > cmssbx10.85.snf
+#
+# NAME=cmss17
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmss17.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmss17'
+	-gftopk cmss17.122gf && rm -f cmss17.122gf
+cmss17.122.snf:	cmss17.122pk
+	-mftobdf -dpi 85 cmss17.122pk
+	bdftosnf < cmss17.122.bdf > cmss17.122.snf
+#
+# NAME=cmss17
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmss17.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmss17'
+	-gftopk cmss17.85gf && rm -f cmss17.85gf
+cmss17.85.snf:	cmss17.85pk
+	-mftobdf -dpi 85 cmss17.85pk
+	bdftosnf < cmss17.85.bdf > cmss17.85.snf
+#
+# NAME=cmss12
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmss12.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmss12'
+	-gftopk cmss12.122gf && rm -f cmss12.122gf
+cmss12.122.snf:	cmss12.122pk
+	-mftobdf -dpi 85 cmss12.122pk
+	bdftosnf < cmss12.122.bdf > cmss12.122.snf
+#
+# NAME=cmss12
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmss12.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmss12'
+	-gftopk cmss12.85gf && rm -f cmss12.85gf
+cmss12.85.snf:	cmss12.85pk
+	-mftobdf -dpi 85 cmss12.85pk
+	bdftosnf < cmss12.85.bdf > cmss12.85.snf
+#
+# NAME=cmss10
+# SCALE = 900
+# EXTENSION = 110
+#
+cmss10.110pk:
+	-mf '\mode:=sun;mag=900/1000;input cmss10'
+	-gftopk cmss10.110gf && rm -f cmss10.110gf
+cmss10.110.snf:	cmss10.110pk
+	-mftobdf -dpi 85 cmss10.110pk
+	bdftosnf < cmss10.110.bdf > cmss10.110.snf
+#
+# NAME=cmss10
+# SCALE = 900
+# EXTENSION = 77
+#
+cmss10.77pk:
+	-mf '\mode:=sun;mag=900/1000;input cmss10'
+	-gftopk cmss10.77gf && rm -f cmss10.77gf
+cmss10.77.snf:	cmss10.77pk
+	-mftobdf -dpi 85 cmss10.77pk
+	bdftosnf < cmss10.77.bdf > cmss10.77.snf
+#
+# NAME=cmss10
+# SCALE = 800
+# EXTENSION = 98
+#
+cmss10.98pk:
+	-mf '\mode:=sun;mag=800/1000;input cmss10'
+	-gftopk cmss10.98gf && rm -f cmss10.98gf
+cmss10.98.snf:	cmss10.98pk
+	-mftobdf -dpi 85 cmss10.98pk
+	bdftosnf < cmss10.98.bdf > cmss10.98.snf
+#
+# NAME=cmss10
+# SCALE = 800
+# EXTENSION = 68
+#
+cmss10.68pk:
+	-mf '\mode:=sun;mag=800/1000;input cmss10'
+	-gftopk cmss10.68gf && rm -f cmss10.68gf
+cmss10.68.snf:	cmss10.68pk
+	-mftobdf -dpi 85 cmss10.68pk
+	bdftosnf < cmss10.68.bdf > cmss10.68.snf
+#
+# NAME=cmss10
+# SCALE = 700
+# EXTENSION = 86
+#
+cmss10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input cmss10'
+	-gftopk cmss10.86gf && rm -f cmss10.86gf
+cmss10.86.snf:	cmss10.86pk
+	-mftobdf -dpi 85 cmss10.86pk
+	bdftosnf < cmss10.86.bdf > cmss10.86.snf
+#
+# NAME=cmss10
+# SCALE = 700
+# EXTENSION = 59
+#
+cmss10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input cmss10'
+	-gftopk cmss10.59gf && rm -f cmss10.59gf
+cmss10.59.snf:	cmss10.59pk
+	-mftobdf -dpi 85 cmss10.59pk
+	bdftosnf < cmss10.59.bdf > cmss10.59.snf
+#
+# NAME=cmss10
+# SCALE = 600
+# EXTENSION = 73
+#
+cmss10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input cmss10'
+	-gftopk cmss10.73gf && rm -f cmss10.73gf
+cmss10.73.snf:	cmss10.73pk
+	-mftobdf -dpi 85 cmss10.73pk
+	bdftosnf < cmss10.73.bdf > cmss10.73.snf
+#
+# NAME=cmss10
+# SCALE = 600
+# EXTENSION = 51
+#
+cmss10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input cmss10'
+	-gftopk cmss10.51gf && rm -f cmss10.51gf
+cmss10.51.snf:	cmss10.51pk
+	-mftobdf -dpi 85 cmss10.51pk
+	bdftosnf < cmss10.51.bdf > cmss10.51.snf
+#
+# NAME=cmss10
+# SCALE = 500
+# EXTENSION = 61
+#
+cmss10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input cmss10'
+	-gftopk cmss10.61gf && rm -f cmss10.61gf
+cmss10.61.snf:	cmss10.61pk
+	-mftobdf -dpi 85 cmss10.61pk
+	bdftosnf < cmss10.61.bdf > cmss10.61.snf
+#
+# NAME=cmss10
+# SCALE = 500
+# EXTENSION = 43
+#
+cmss10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input cmss10'
+	-gftopk cmss10.43gf && rm -f cmss10.43gf
+cmss10.43.snf:	cmss10.43pk
+	-mftobdf -dpi 85 cmss10.43pk
+	bdftosnf < cmss10.43.bdf > cmss10.43.snf
+#
+# NAME=cmss10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmss10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmss10'
+	-gftopk cmss10.305gf && rm -f cmss10.305gf
+cmss10.305.snf:	cmss10.305pk
+	-mftobdf -dpi 85 cmss10.305pk
+	bdftosnf < cmss10.305.bdf > cmss10.305.snf
+#
+# NAME=cmss10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmss10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmss10'
+	-gftopk cmss10.211gf && rm -f cmss10.211gf
+cmss10.211.snf:	cmss10.211pk
+	-mftobdf -dpi 85 cmss10.211pk
+	bdftosnf < cmss10.211.bdf > cmss10.211.snf
+#
+# NAME=cmss10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmss10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmss10'
+	-gftopk cmss10.254gf && rm -f cmss10.254gf
+cmss10.254.snf:	cmss10.254pk
+	-mftobdf -dpi 85 cmss10.254pk
+	bdftosnf < cmss10.254.bdf > cmss10.254.snf
+#
+# NAME=cmss10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmss10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmss10'
+	-gftopk cmss10.212gf && rm -f cmss10.212gf
+cmss10.212.snf:	cmss10.212pk
+	-mftobdf -dpi 85 cmss10.212pk
+	bdftosnf < cmss10.212.bdf > cmss10.212.snf
+#
+# NAME=cmss10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmss10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmss10'
+	-gftopk cmss10.176gf && rm -f cmss10.176gf
+cmss10.176.snf:	cmss10.176pk
+	-mftobdf -dpi 85 cmss10.176pk
+	bdftosnf < cmss10.176.bdf > cmss10.176.snf
+#
+# NAME=cmss10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmss10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmss10'
+	-gftopk cmss10.147gf && rm -f cmss10.147gf
+cmss10.147.snf:	cmss10.147pk
+	-mftobdf -dpi 85 cmss10.147pk
+	bdftosnf < cmss10.147.bdf > cmss10.147.snf
+#
+# NAME=cmss10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmss10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmss10'
+	-gftopk cmss10.102gf && rm -f cmss10.102gf
+cmss10.102.snf:	cmss10.102pk
+	-mftobdf -dpi 85 cmss10.102pk
+	bdftosnf < cmss10.102.bdf > cmss10.102.snf
+#
+# NAME=cmss10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmss10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmss10'
+	-gftopk cmss10.134gf && rm -f cmss10.134gf
+cmss10.134.snf:	cmss10.134pk
+	-mftobdf -dpi 85 cmss10.134pk
+	bdftosnf < cmss10.134.bdf > cmss10.134.snf
+#
+# NAME=cmss10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmss10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmss10'
+	-gftopk cmss10.93gf && rm -f cmss10.93gf
+cmss10.93.snf:	cmss10.93pk
+	-mftobdf -dpi 85 cmss10.93pk
+	bdftosnf < cmss10.93.bdf > cmss10.93.snf
+#
+# NAME=cmss10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmss10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmss10'
+	-gftopk cmss10.122gf && rm -f cmss10.122gf
+cmss10.122.snf:	cmss10.122pk
+	-mftobdf -dpi 85 cmss10.122pk
+	bdftosnf < cmss10.122.bdf > cmss10.122.snf
+#
+# NAME=cmss10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmss10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmss10'
+	-gftopk cmss10.85gf && rm -f cmss10.85gf
+cmss10.85.snf:	cmss10.85pk
+	-mftobdf -dpi 85 cmss10.85pk
+	bdftosnf < cmss10.85.bdf > cmss10.85.snf
+#
+# NAME=cmsltt10
+# SCALE = 900
+# EXTENSION = 110
+#
+cmsltt10.110pk:
+	-mf '\mode:=sun;mag=900/1000;input cmsltt10'
+	-gftopk cmsltt10.110gf && rm -f cmsltt10.110gf
+cmsltt10.110.snf:	cmsltt10.110pk
+	-mftobdf -dpi 85 cmsltt10.110pk
+	bdftosnf < cmsltt10.110.bdf > cmsltt10.110.snf
+#
+# NAME=cmsltt10
+# SCALE = 900
+# EXTENSION = 77
+#
+cmsltt10.77pk:
+	-mf '\mode:=sun;mag=900/1000;input cmsltt10'
+	-gftopk cmsltt10.77gf && rm -f cmsltt10.77gf
+cmsltt10.77.snf:	cmsltt10.77pk
+	-mftobdf -dpi 85 cmsltt10.77pk
+	bdftosnf < cmsltt10.77.bdf > cmsltt10.77.snf
+#
+# NAME=cmsltt10
+# SCALE = 800
+# EXTENSION = 98
+#
+cmsltt10.98pk:
+	-mf '\mode:=sun;mag=800/1000;input cmsltt10'
+	-gftopk cmsltt10.98gf && rm -f cmsltt10.98gf
+cmsltt10.98.snf:	cmsltt10.98pk
+	-mftobdf -dpi 85 cmsltt10.98pk
+	bdftosnf < cmsltt10.98.bdf > cmsltt10.98.snf
+#
+# NAME=cmsltt10
+# SCALE = 800
+# EXTENSION = 68
+#
+cmsltt10.68pk:
+	-mf '\mode:=sun;mag=800/1000;input cmsltt10'
+	-gftopk cmsltt10.68gf && rm -f cmsltt10.68gf
+cmsltt10.68.snf:	cmsltt10.68pk
+	-mftobdf -dpi 85 cmsltt10.68pk
+	bdftosnf < cmsltt10.68.bdf > cmsltt10.68.snf
+#
+# NAME=cmsltt10
+# SCALE = 700
+# EXTENSION = 86
+#
+cmsltt10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input cmsltt10'
+	-gftopk cmsltt10.86gf && rm -f cmsltt10.86gf
+cmsltt10.86.snf:	cmsltt10.86pk
+	-mftobdf -dpi 85 cmsltt10.86pk
+	bdftosnf < cmsltt10.86.bdf > cmsltt10.86.snf
+#
+# NAME=cmsltt10
+# SCALE = 700
+# EXTENSION = 59
+#
+cmsltt10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input cmsltt10'
+	-gftopk cmsltt10.59gf && rm -f cmsltt10.59gf
+cmsltt10.59.snf:	cmsltt10.59pk
+	-mftobdf -dpi 85 cmsltt10.59pk
+	bdftosnf < cmsltt10.59.bdf > cmsltt10.59.snf
+#
+# NAME=cmsltt10
+# SCALE = 600
+# EXTENSION = 73
+#
+cmsltt10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input cmsltt10'
+	-gftopk cmsltt10.73gf && rm -f cmsltt10.73gf
+cmsltt10.73.snf:	cmsltt10.73pk
+	-mftobdf -dpi 85 cmsltt10.73pk
+	bdftosnf < cmsltt10.73.bdf > cmsltt10.73.snf
+#
+# NAME=cmsltt10
+# SCALE = 600
+# EXTENSION = 51
+#
+cmsltt10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input cmsltt10'
+	-gftopk cmsltt10.51gf && rm -f cmsltt10.51gf
+cmsltt10.51.snf:	cmsltt10.51pk
+	-mftobdf -dpi 85 cmsltt10.51pk
+	bdftosnf < cmsltt10.51.bdf > cmsltt10.51.snf
+#
+# NAME=cmsltt10
+# SCALE = 500
+# EXTENSION = 61
+#
+cmsltt10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input cmsltt10'
+	-gftopk cmsltt10.61gf && rm -f cmsltt10.61gf
+cmsltt10.61.snf:	cmsltt10.61pk
+	-mftobdf -dpi 85 cmsltt10.61pk
+	bdftosnf < cmsltt10.61.bdf > cmsltt10.61.snf
+#
+# NAME=cmsltt10
+# SCALE = 500
+# EXTENSION = 43
+#
+cmsltt10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input cmsltt10'
+	-gftopk cmsltt10.43gf && rm -f cmsltt10.43gf
+cmsltt10.43.snf:	cmsltt10.43pk
+	-mftobdf -dpi 85 cmsltt10.43pk
+	bdftosnf < cmsltt10.43.bdf > cmsltt10.43.snf
+#
+# NAME=cmsltt10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmsltt10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmsltt10'
+	-gftopk cmsltt10.305gf && rm -f cmsltt10.305gf
+cmsltt10.305.snf:	cmsltt10.305pk
+	-mftobdf -dpi 85 cmsltt10.305pk
+	bdftosnf < cmsltt10.305.bdf > cmsltt10.305.snf
+#
+# NAME=cmsltt10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmsltt10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmsltt10'
+	-gftopk cmsltt10.211gf && rm -f cmsltt10.211gf
+cmsltt10.211.snf:	cmsltt10.211pk
+	-mftobdf -dpi 85 cmsltt10.211pk
+	bdftosnf < cmsltt10.211.bdf > cmsltt10.211.snf
+#
+# NAME=cmsltt10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmsltt10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmsltt10'
+	-gftopk cmsltt10.254gf && rm -f cmsltt10.254gf
+cmsltt10.254.snf:	cmsltt10.254pk
+	-mftobdf -dpi 85 cmsltt10.254pk
+	bdftosnf < cmsltt10.254.bdf > cmsltt10.254.snf
+#
+# NAME=cmsltt10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmsltt10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmsltt10'
+	-gftopk cmsltt10.212gf && rm -f cmsltt10.212gf
+cmsltt10.212.snf:	cmsltt10.212pk
+	-mftobdf -dpi 85 cmsltt10.212pk
+	bdftosnf < cmsltt10.212.bdf > cmsltt10.212.snf
+#
+# NAME=cmsltt10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmsltt10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmsltt10'
+	-gftopk cmsltt10.176gf && rm -f cmsltt10.176gf
+cmsltt10.176.snf:	cmsltt10.176pk
+	-mftobdf -dpi 85 cmsltt10.176pk
+	bdftosnf < cmsltt10.176.bdf > cmsltt10.176.snf
+#
+# NAME=cmsltt10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmsltt10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmsltt10'
+	-gftopk cmsltt10.147gf && rm -f cmsltt10.147gf
+cmsltt10.147.snf:	cmsltt10.147pk
+	-mftobdf -dpi 85 cmsltt10.147pk
+	bdftosnf < cmsltt10.147.bdf > cmsltt10.147.snf
+#
+# NAME=cmsltt10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmsltt10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmsltt10'
+	-gftopk cmsltt10.102gf && rm -f cmsltt10.102gf
+cmsltt10.102.snf:	cmsltt10.102pk
+	-mftobdf -dpi 85 cmsltt10.102pk
+	bdftosnf < cmsltt10.102.bdf > cmsltt10.102.snf
+#
+# NAME=cmsltt10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmsltt10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmsltt10'
+	-gftopk cmsltt10.134gf && rm -f cmsltt10.134gf
+cmsltt10.134.snf:	cmsltt10.134pk
+	-mftobdf -dpi 85 cmsltt10.134pk
+	bdftosnf < cmsltt10.134.bdf > cmsltt10.134.snf
+#
+# NAME=cmsltt10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmsltt10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmsltt10'
+	-gftopk cmsltt10.93gf && rm -f cmsltt10.93gf
+cmsltt10.93.snf:	cmsltt10.93pk
+	-mftobdf -dpi 85 cmsltt10.93pk
+	bdftosnf < cmsltt10.93.bdf > cmsltt10.93.snf
+#
+# NAME=cmsltt10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmsltt10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsltt10'
+	-gftopk cmsltt10.122gf && rm -f cmsltt10.122gf
+cmsltt10.122.snf:	cmsltt10.122pk
+	-mftobdf -dpi 85 cmsltt10.122pk
+	bdftosnf < cmsltt10.122.bdf > cmsltt10.122.snf
+#
+# NAME=cmsltt10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmsltt10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsltt10'
+	-gftopk cmsltt10.85gf && rm -f cmsltt10.85gf
+cmsltt10.85.snf:	cmsltt10.85pk
+	-mftobdf -dpi 85 cmsltt10.85pk
+	bdftosnf < cmsltt10.85.bdf > cmsltt10.85.snf
+#
+# NAME=cmsl9
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmsl9.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsl9'
+	-gftopk cmsl9.122gf && rm -f cmsl9.122gf
+cmsl9.122.snf:	cmsl9.122pk
+	-mftobdf -dpi 85 cmsl9.122pk
+	bdftosnf < cmsl9.122.bdf > cmsl9.122.snf
+#
+# NAME=cmsl9
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmsl9.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsl9'
+	-gftopk cmsl9.85gf && rm -f cmsl9.85gf
+cmsl9.85.snf:	cmsl9.85pk
+	-mftobdf -dpi 85 cmsl9.85pk
+	bdftosnf < cmsl9.85.bdf > cmsl9.85.snf
+#
+# NAME=cmsl8
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmsl8.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsl8'
+	-gftopk cmsl8.122gf && rm -f cmsl8.122gf
+cmsl8.122.snf:	cmsl8.122pk
+	-mftobdf -dpi 85 cmsl8.122pk
+	bdftosnf < cmsl8.122.bdf > cmsl8.122.snf
+#
+# NAME=cmsl8
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmsl8.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsl8'
+	-gftopk cmsl8.85gf && rm -f cmsl8.85gf
+cmsl8.85.snf:	cmsl8.85pk
+	-mftobdf -dpi 85 cmsl8.85pk
+	bdftosnf < cmsl8.85.bdf > cmsl8.85.snf
+#
+# NAME=cmsl12
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmsl12.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsl12'
+	-gftopk cmsl12.122gf && rm -f cmsl12.122gf
+cmsl12.122.snf:	cmsl12.122pk
+	-mftobdf -dpi 85 cmsl12.122pk
+	bdftosnf < cmsl12.122.bdf > cmsl12.122.snf
+#
+# NAME=cmsl12
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmsl12.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsl12'
+	-gftopk cmsl12.85gf && rm -f cmsl12.85gf
+cmsl12.85.snf:	cmsl12.85pk
+	-mftobdf -dpi 85 cmsl12.85pk
+	bdftosnf < cmsl12.85.bdf > cmsl12.85.snf
+#
+# NAME=cmsl10
+# SCALE = 700
+# EXTENSION = 86
+#
+cmsl10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input cmsl10'
+	-gftopk cmsl10.86gf && rm -f cmsl10.86gf
+cmsl10.86.snf:	cmsl10.86pk
+	-mftobdf -dpi 85 cmsl10.86pk
+	bdftosnf < cmsl10.86.bdf > cmsl10.86.snf
+#
+# NAME=cmsl10
+# SCALE = 700
+# EXTENSION = 59
+#
+cmsl10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input cmsl10'
+	-gftopk cmsl10.59gf && rm -f cmsl10.59gf
+cmsl10.59.snf:	cmsl10.59pk
+	-mftobdf -dpi 85 cmsl10.59pk
+	bdftosnf < cmsl10.59.bdf > cmsl10.59.snf
+#
+# NAME=cmsl10
+# SCALE = 600
+# EXTENSION = 73
+#
+cmsl10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input cmsl10'
+	-gftopk cmsl10.73gf && rm -f cmsl10.73gf
+cmsl10.73.snf:	cmsl10.73pk
+	-mftobdf -dpi 85 cmsl10.73pk
+	bdftosnf < cmsl10.73.bdf > cmsl10.73.snf
+#
+# NAME=cmsl10
+# SCALE = 600
+# EXTENSION = 51
+#
+cmsl10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input cmsl10'
+	-gftopk cmsl10.51gf && rm -f cmsl10.51gf
+cmsl10.51.snf:	cmsl10.51pk
+	-mftobdf -dpi 85 cmsl10.51pk
+	bdftosnf < cmsl10.51.bdf > cmsl10.51.snf
+#
+# NAME=cmsl10
+# SCALE = 500
+# EXTENSION = 61
+#
+cmsl10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input cmsl10'
+	-gftopk cmsl10.61gf && rm -f cmsl10.61gf
+cmsl10.61.snf:	cmsl10.61pk
+	-mftobdf -dpi 85 cmsl10.61pk
+	bdftosnf < cmsl10.61.bdf > cmsl10.61.snf
+#
+# NAME=cmsl10
+# SCALE = 500
+# EXTENSION = 43
+#
+cmsl10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input cmsl10'
+	-gftopk cmsl10.43gf && rm -f cmsl10.43gf
+cmsl10.43.snf:	cmsl10.43pk
+	-mftobdf -dpi 85 cmsl10.43pk
+	bdftosnf < cmsl10.43.bdf > cmsl10.43.snf
+#
+# NAME=cmsl10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmsl10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmsl10'
+	-gftopk cmsl10.305gf && rm -f cmsl10.305gf
+cmsl10.305.snf:	cmsl10.305pk
+	-mftobdf -dpi 85 cmsl10.305pk
+	bdftosnf < cmsl10.305.bdf > cmsl10.305.snf
+#
+# NAME=cmsl10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmsl10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmsl10'
+	-gftopk cmsl10.211gf && rm -f cmsl10.211gf
+cmsl10.211.snf:	cmsl10.211pk
+	-mftobdf -dpi 85 cmsl10.211pk
+	bdftosnf < cmsl10.211.bdf > cmsl10.211.snf
+#
+# NAME=cmsl10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmsl10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmsl10'
+	-gftopk cmsl10.254gf && rm -f cmsl10.254gf
+cmsl10.254.snf:	cmsl10.254pk
+	-mftobdf -dpi 85 cmsl10.254pk
+	bdftosnf < cmsl10.254.bdf > cmsl10.254.snf
+#
+# NAME=cmsl10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmsl10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmsl10'
+	-gftopk cmsl10.212gf && rm -f cmsl10.212gf
+cmsl10.212.snf:	cmsl10.212pk
+	-mftobdf -dpi 85 cmsl10.212pk
+	bdftosnf < cmsl10.212.bdf > cmsl10.212.snf
+#
+# NAME=cmsl10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmsl10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmsl10'
+	-gftopk cmsl10.176gf && rm -f cmsl10.176gf
+cmsl10.176.snf:	cmsl10.176pk
+	-mftobdf -dpi 85 cmsl10.176pk
+	bdftosnf < cmsl10.176.bdf > cmsl10.176.snf
+#
+# NAME=cmsl10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmsl10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmsl10'
+	-gftopk cmsl10.147gf && rm -f cmsl10.147gf
+cmsl10.147.snf:	cmsl10.147pk
+	-mftobdf -dpi 85 cmsl10.147pk
+	bdftosnf < cmsl10.147.bdf > cmsl10.147.snf
+#
+# NAME=cmsl10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmsl10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmsl10'
+	-gftopk cmsl10.102gf && rm -f cmsl10.102gf
+cmsl10.102.snf:	cmsl10.102pk
+	-mftobdf -dpi 85 cmsl10.102pk
+	bdftosnf < cmsl10.102.bdf > cmsl10.102.snf
+#
+# NAME=cmsl10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmsl10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmsl10'
+	-gftopk cmsl10.134gf && rm -f cmsl10.134gf
+cmsl10.134.snf:	cmsl10.134pk
+	-mftobdf -dpi 85 cmsl10.134pk
+	bdftosnf < cmsl10.134.bdf > cmsl10.134.snf
+#
+# NAME=cmsl10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmsl10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmsl10'
+	-gftopk cmsl10.93gf && rm -f cmsl10.93gf
+cmsl10.93.snf:	cmsl10.93pk
+	-mftobdf -dpi 85 cmsl10.93pk
+	bdftosnf < cmsl10.93.bdf > cmsl10.93.snf
+#
+# NAME=cmsl10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmsl10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsl10'
+	-gftopk cmsl10.122gf && rm -f cmsl10.122gf
+cmsl10.122.snf:	cmsl10.122pk
+	-mftobdf -dpi 85 cmsl10.122pk
+	bdftosnf < cmsl10.122.bdf > cmsl10.122.snf
+#
+# NAME=cmsl10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmsl10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmsl10'
+	-gftopk cmsl10.85gf && rm -f cmsl10.85gf
+cmsl10.85.snf:	cmsl10.85pk
+	-mftobdf -dpi 85 cmsl10.85pk
+	bdftosnf < cmsl10.85.bdf > cmsl10.85.snf
+#
+# NAME=cmr9
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmr9.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr9'
+	-gftopk cmr9.122gf && rm -f cmr9.122gf
+cmr9.122.snf:	cmr9.122pk
+	-mftobdf -dpi 85 cmr9.122pk
+	bdftosnf < cmr9.122.bdf > cmr9.122.snf
+#
+# NAME=cmr9
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmr9.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr9'
+	-gftopk cmr9.85gf && rm -f cmr9.85gf
+cmr9.85.snf:	cmr9.85pk
+	-mftobdf -dpi 85 cmr9.85pk
+	bdftosnf < cmr9.85.bdf > cmr9.85.snf
+#
+# NAME=cmr8
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmr8.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr8'
+	-gftopk cmr8.122gf && rm -f cmr8.122gf
+cmr8.122.snf:	cmr8.122pk
+	-mftobdf -dpi 85 cmr8.122pk
+	bdftosnf < cmr8.122.bdf > cmr8.122.snf
+#
+# NAME=cmr8
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmr8.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr8'
+	-gftopk cmr8.85gf && rm -f cmr8.85gf
+cmr8.85.snf:	cmr8.85pk
+	-mftobdf -dpi 85 cmr8.85pk
+	bdftosnf < cmr8.85.bdf > cmr8.85.snf
+#
+# NAME=cmr7
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmr7.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmr7'
+	-gftopk cmr7.254gf && rm -f cmr7.254gf
+cmr7.254.snf:	cmr7.254pk
+	-mftobdf -dpi 85 cmr7.254pk
+	bdftosnf < cmr7.254.bdf > cmr7.254.snf
+#
+# NAME=cmr7
+# SCALE = 2074
+# EXTENSION = 176
+#
+cmr7.176pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmr7'
+	-gftopk cmr7.176gf && rm -f cmr7.176gf
+cmr7.176.snf:	cmr7.176pk
+	-mftobdf -dpi 85 cmr7.176pk
+	bdftosnf < cmr7.176.bdf > cmr7.176.snf
+#
+# NAME=cmr7
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmr7.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr7'
+	-gftopk cmr7.122gf && rm -f cmr7.122gf
+cmr7.122.snf:	cmr7.122pk
+	-mftobdf -dpi 85 cmr7.122pk
+	bdftosnf < cmr7.122.bdf > cmr7.122.snf
+#
+# NAME=cmr7
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmr7.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr7'
+	-gftopk cmr7.85gf && rm -f cmr7.85gf
+cmr7.85.snf:	cmr7.85pk
+	-mftobdf -dpi 85 cmr7.85pk
+	bdftosnf < cmr7.85.bdf > cmr7.85.snf
+#
+# NAME=cmr6
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmr6.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr6'
+	-gftopk cmr6.122gf && rm -f cmr6.122gf
+cmr6.122.snf:	cmr6.122pk
+	-mftobdf -dpi 85 cmr6.122pk
+	bdftosnf < cmr6.122.bdf > cmr6.122.snf
+#
+# NAME=cmr6
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmr6.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr6'
+	-gftopk cmr6.85gf && rm -f cmr6.85gf
+cmr6.85.snf:	cmr6.85pk
+	-mftobdf -dpi 85 cmr6.85pk
+	bdftosnf < cmr6.85.bdf > cmr6.85.snf
+#
+# NAME=cmr5
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmr5.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr5'
+	-gftopk cmr5.122gf && rm -f cmr5.122gf
+cmr5.122.snf:	cmr5.122pk
+	-mftobdf -dpi 85 cmr5.122pk
+	bdftosnf < cmr5.122.bdf > cmr5.122.snf
+#
+# NAME=cmr5
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmr5.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr5'
+	-gftopk cmr5.85gf && rm -f cmr5.85gf
+cmr5.85.snf:	cmr5.85pk
+	-mftobdf -dpi 85 cmr5.85pk
+	bdftosnf < cmr5.85.bdf > cmr5.85.snf
+#
+# NAME=cmr17
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmr17.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr17'
+	-gftopk cmr17.122gf && rm -f cmr17.122gf
+cmr17.122.snf:	cmr17.122pk
+	-mftobdf -dpi 85 cmr17.122pk
+	bdftosnf < cmr17.122.bdf > cmr17.122.snf
+#
+# NAME=cmr17
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmr17.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr17'
+	-gftopk cmr17.85gf && rm -f cmr17.85gf
+cmr17.85.snf:	cmr17.85pk
+	-mftobdf -dpi 85 cmr17.85pk
+	bdftosnf < cmr17.85.bdf > cmr17.85.snf
+#
+# NAME=cmr12
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmr12.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr12'
+	-gftopk cmr12.122gf && rm -f cmr12.122gf
+cmr12.122.snf:	cmr12.122pk
+	-mftobdf -dpi 85 cmr12.122pk
+	bdftosnf < cmr12.122.bdf > cmr12.122.snf
+#
+# NAME=cmr12
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmr12.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr12'
+	-gftopk cmr12.85gf && rm -f cmr12.85gf
+cmr12.85.snf:	cmr12.85pk
+	-mftobdf -dpi 85 cmr12.85pk
+	bdftosnf < cmr12.85.bdf > cmr12.85.snf
+#
+# NAME=cmr10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmr10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmr10'
+	-gftopk cmr10.305gf && rm -f cmr10.305gf
+cmr10.305.snf:	cmr10.305pk
+	-mftobdf -dpi 85 cmr10.305pk
+	bdftosnf < cmr10.305.bdf > cmr10.305.snf
+#
+# NAME=cmr10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmr10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmr10'
+	-gftopk cmr10.211gf && rm -f cmr10.211gf
+cmr10.211.snf:	cmr10.211pk
+	-mftobdf -dpi 85 cmr10.211pk
+	bdftosnf < cmr10.211.bdf > cmr10.211.snf
+#
+# NAME=cmr10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmr10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmr10'
+	-gftopk cmr10.254gf && rm -f cmr10.254gf
+cmr10.254.snf:	cmr10.254pk
+	-mftobdf -dpi 85 cmr10.254pk
+	bdftosnf < cmr10.254.bdf > cmr10.254.snf
+#
+# NAME=cmr10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmr10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmr10'
+	-gftopk cmr10.176gf && rm -f cmr10.176gf
+cmr10.176.snf:	cmr10.176pk
+	-mftobdf -dpi 85 cmr10.176pk
+	bdftosnf < cmr10.176.bdf > cmr10.176.snf
+#
+# NAME=cmr10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmr10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmr10'
+	-gftopk cmr10.134gf && rm -f cmr10.134gf
+cmr10.134.snf:	cmr10.134pk
+	-mftobdf -dpi 85 cmr10.134pk
+	bdftosnf < cmr10.134.bdf > cmr10.134.snf
+#
+# NAME=cmr10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmr10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmr10'
+	-gftopk cmr10.93gf && rm -f cmr10.93gf
+cmr10.93.snf:	cmr10.93pk
+	-mftobdf -dpi 85 cmr10.93pk
+	bdftosnf < cmr10.93.bdf > cmr10.93.snf
+#
+# NAME=cmr10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmr10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr10'
+	-gftopk cmr10.122gf && rm -f cmr10.122gf
+cmr10.122.snf:	cmr10.122pk
+	-mftobdf -dpi 85 cmr10.122pk
+	bdftosnf < cmr10.122.bdf > cmr10.122.snf
+#
+# NAME=cmr10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmr10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmr10'
+	-gftopk cmr10.85gf && rm -f cmr10.85gf
+cmr10.85.snf:	cmr10.85pk
+	-mftobdf -dpi 85 cmr10.85pk
+	bdftosnf < cmr10.85.bdf > cmr10.85.snf
+#
+# NAME=cmmib10
+# SCALE = 900
+# EXTENSION = 110
+#
+cmmib10.110pk:
+	-mf '\mode:=sun;mag=900/1000;input cmmib10'
+	-gftopk cmmib10.110gf && rm -f cmmib10.110gf
+cmmib10.110.snf:	cmmib10.110pk
+	-mftobdf -dpi 85 cmmib10.110pk
+	bdftosnf < cmmib10.110.bdf > cmmib10.110.snf
+#
+# NAME=cmmib10
+# SCALE = 900
+# EXTENSION = 77
+#
+cmmib10.77pk:
+	-mf '\mode:=sun;mag=900/1000;input cmmib10'
+	-gftopk cmmib10.77gf && rm -f cmmib10.77gf
+cmmib10.77.snf:	cmmib10.77pk
+	-mftobdf -dpi 85 cmmib10.77pk
+	bdftosnf < cmmib10.77.bdf > cmmib10.77.snf
+#
+# NAME=cmmib10
+# SCALE = 800
+# EXTENSION = 98
+#
+cmmib10.98pk:
+	-mf '\mode:=sun;mag=800/1000;input cmmib10'
+	-gftopk cmmib10.98gf && rm -f cmmib10.98gf
+cmmib10.98.snf:	cmmib10.98pk
+	-mftobdf -dpi 85 cmmib10.98pk
+	bdftosnf < cmmib10.98.bdf > cmmib10.98.snf
+#
+# NAME=cmmib10
+# SCALE = 800
+# EXTENSION = 68
+#
+cmmib10.68pk:
+	-mf '\mode:=sun;mag=800/1000;input cmmib10'
+	-gftopk cmmib10.68gf && rm -f cmmib10.68gf
+cmmib10.68.snf:	cmmib10.68pk
+	-mftobdf -dpi 85 cmmib10.68pk
+	bdftosnf < cmmib10.68.bdf > cmmib10.68.snf
+#
+# NAME=cmmib10
+# SCALE = 700
+# EXTENSION = 86
+#
+cmmib10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input cmmib10'
+	-gftopk cmmib10.86gf && rm -f cmmib10.86gf
+cmmib10.86.snf:	cmmib10.86pk
+	-mftobdf -dpi 85 cmmib10.86pk
+	bdftosnf < cmmib10.86.bdf > cmmib10.86.snf
+#
+# NAME=cmmib10
+# SCALE = 700
+# EXTENSION = 59
+#
+cmmib10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input cmmib10'
+	-gftopk cmmib10.59gf && rm -f cmmib10.59gf
+cmmib10.59.snf:	cmmib10.59pk
+	-mftobdf -dpi 85 cmmib10.59pk
+	bdftosnf < cmmib10.59.bdf > cmmib10.59.snf
+#
+# NAME=cmmib10
+# SCALE = 600
+# EXTENSION = 73
+#
+cmmib10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input cmmib10'
+	-gftopk cmmib10.73gf && rm -f cmmib10.73gf
+cmmib10.73.snf:	cmmib10.73pk
+	-mftobdf -dpi 85 cmmib10.73pk
+	bdftosnf < cmmib10.73.bdf > cmmib10.73.snf
+#
+# NAME=cmmib10
+# SCALE = 600
+# EXTENSION = 51
+#
+cmmib10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input cmmib10'
+	-gftopk cmmib10.51gf && rm -f cmmib10.51gf
+cmmib10.51.snf:	cmmib10.51pk
+	-mftobdf -dpi 85 cmmib10.51pk
+	bdftosnf < cmmib10.51.bdf > cmmib10.51.snf
+#
+# NAME=cmmib10
+# SCALE = 500
+# EXTENSION = 61
+#
+cmmib10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input cmmib10'
+	-gftopk cmmib10.61gf && rm -f cmmib10.61gf
+cmmib10.61.snf:	cmmib10.61pk
+	-mftobdf -dpi 85 cmmib10.61pk
+	bdftosnf < cmmib10.61.bdf > cmmib10.61.snf
+#
+# NAME=cmmib10
+# SCALE = 500
+# EXTENSION = 43
+#
+cmmib10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input cmmib10'
+	-gftopk cmmib10.43gf && rm -f cmmib10.43gf
+cmmib10.43.snf:	cmmib10.43pk
+	-mftobdf -dpi 85 cmmib10.43pk
+	bdftosnf < cmmib10.43.bdf > cmmib10.43.snf
+#
+# NAME=cmmib10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmmib10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmmib10'
+	-gftopk cmmib10.305gf && rm -f cmmib10.305gf
+cmmib10.305.snf:	cmmib10.305pk
+	-mftobdf -dpi 85 cmmib10.305pk
+	bdftosnf < cmmib10.305.bdf > cmmib10.305.snf
+#
+# NAME=cmmib10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmmib10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmmib10'
+	-gftopk cmmib10.211gf && rm -f cmmib10.211gf
+cmmib10.211.snf:	cmmib10.211pk
+	-mftobdf -dpi 85 cmmib10.211pk
+	bdftosnf < cmmib10.211.bdf > cmmib10.211.snf
+#
+# NAME=cmmib10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmmib10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmmib10'
+	-gftopk cmmib10.254gf && rm -f cmmib10.254gf
+cmmib10.254.snf:	cmmib10.254pk
+	-mftobdf -dpi 85 cmmib10.254pk
+	bdftosnf < cmmib10.254.bdf > cmmib10.254.snf
+#
+# NAME=cmmib10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmmib10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmmib10'
+	-gftopk cmmib10.212gf && rm -f cmmib10.212gf
+cmmib10.212.snf:	cmmib10.212pk
+	-mftobdf -dpi 85 cmmib10.212pk
+	bdftosnf < cmmib10.212.bdf > cmmib10.212.snf
+#
+# NAME=cmmib10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmmib10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmmib10'
+	-gftopk cmmib10.176gf && rm -f cmmib10.176gf
+cmmib10.176.snf:	cmmib10.176pk
+	-mftobdf -dpi 85 cmmib10.176pk
+	bdftosnf < cmmib10.176.bdf > cmmib10.176.snf
+#
+# NAME=cmmib10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmmib10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmmib10'
+	-gftopk cmmib10.147gf && rm -f cmmib10.147gf
+cmmib10.147.snf:	cmmib10.147pk
+	-mftobdf -dpi 85 cmmib10.147pk
+	bdftosnf < cmmib10.147.bdf > cmmib10.147.snf
+#
+# NAME=cmmib10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmmib10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmmib10'
+	-gftopk cmmib10.102gf && rm -f cmmib10.102gf
+cmmib10.102.snf:	cmmib10.102pk
+	-mftobdf -dpi 85 cmmib10.102pk
+	bdftosnf < cmmib10.102.bdf > cmmib10.102.snf
+#
+# NAME=cmmib10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmmib10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmmib10'
+	-gftopk cmmib10.134gf && rm -f cmmib10.134gf
+cmmib10.134.snf:	cmmib10.134pk
+	-mftobdf -dpi 85 cmmib10.134pk
+	bdftosnf < cmmib10.134.bdf > cmmib10.134.snf
+#
+# NAME=cmmib10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmmib10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmmib10'
+	-gftopk cmmib10.93gf && rm -f cmmib10.93gf
+cmmib10.93.snf:	cmmib10.93pk
+	-mftobdf -dpi 85 cmmib10.93pk
+	bdftosnf < cmmib10.93.bdf > cmmib10.93.snf
+#
+# NAME=cmmib10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmmib10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmib10'
+	-gftopk cmmib10.122gf && rm -f cmmib10.122gf
+cmmib10.122.snf:	cmmib10.122pk
+	-mftobdf -dpi 85 cmmib10.122pk
+	bdftosnf < cmmib10.122.bdf > cmmib10.122.snf
+#
+# NAME=cmmib10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmmib10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmib10'
+	-gftopk cmmib10.85gf && rm -f cmmib10.85gf
+cmmib10.85.snf:	cmmib10.85pk
+	-mftobdf -dpi 85 cmmib10.85pk
+	bdftosnf < cmmib10.85.bdf > cmmib10.85.snf
+#
+# NAME=cmmi9
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmmi9.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi9'
+	-gftopk cmmi9.122gf && rm -f cmmi9.122gf
+cmmi9.122.snf:	cmmi9.122pk
+	-mftobdf -dpi 85 cmmi9.122pk
+	bdftosnf < cmmi9.122.bdf > cmmi9.122.snf
+#
+# NAME=cmmi9
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmmi9.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi9'
+	-gftopk cmmi9.85gf && rm -f cmmi9.85gf
+cmmi9.85.snf:	cmmi9.85pk
+	-mftobdf -dpi 85 cmmi9.85pk
+	bdftosnf < cmmi9.85.bdf > cmmi9.85.snf
+#
+# NAME=cmmi8
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmmi8.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi8'
+	-gftopk cmmi8.122gf && rm -f cmmi8.122gf
+cmmi8.122.snf:	cmmi8.122pk
+	-mftobdf -dpi 85 cmmi8.122pk
+	bdftosnf < cmmi8.122.bdf > cmmi8.122.snf
+#
+# NAME=cmmi8
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmmi8.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi8'
+	-gftopk cmmi8.85gf && rm -f cmmi8.85gf
+cmmi8.85.snf:	cmmi8.85pk
+	-mftobdf -dpi 85 cmmi8.85pk
+	bdftosnf < cmmi8.85.bdf > cmmi8.85.snf
+#
+# NAME=cmmi7
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmmi7.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi7'
+	-gftopk cmmi7.122gf && rm -f cmmi7.122gf
+cmmi7.122.snf:	cmmi7.122pk
+	-mftobdf -dpi 85 cmmi7.122pk
+	bdftosnf < cmmi7.122.bdf > cmmi7.122.snf
+#
+# NAME=cmmi7
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmmi7.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi7'
+	-gftopk cmmi7.85gf && rm -f cmmi7.85gf
+cmmi7.85.snf:	cmmi7.85pk
+	-mftobdf -dpi 85 cmmi7.85pk
+	bdftosnf < cmmi7.85.bdf > cmmi7.85.snf
+#
+# NAME=cmmi6
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmmi6.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi6'
+	-gftopk cmmi6.122gf && rm -f cmmi6.122gf
+cmmi6.122.snf:	cmmi6.122pk
+	-mftobdf -dpi 85 cmmi6.122pk
+	bdftosnf < cmmi6.122.bdf > cmmi6.122.snf
+#
+# NAME=cmmi6
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmmi6.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi6'
+	-gftopk cmmi6.85gf && rm -f cmmi6.85gf
+cmmi6.85.snf:	cmmi6.85pk
+	-mftobdf -dpi 85 cmmi6.85pk
+	bdftosnf < cmmi6.85.bdf > cmmi6.85.snf
+#
+# NAME=cmmi5
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmmi5.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi5'
+	-gftopk cmmi5.122gf && rm -f cmmi5.122gf
+cmmi5.122.snf:	cmmi5.122pk
+	-mftobdf -dpi 85 cmmi5.122pk
+	bdftosnf < cmmi5.122.bdf > cmmi5.122.snf
+#
+# NAME=cmmi5
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmmi5.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi5'
+	-gftopk cmmi5.85gf && rm -f cmmi5.85gf
+cmmi5.85.snf:	cmmi5.85pk
+	-mftobdf -dpi 85 cmmi5.85pk
+	bdftosnf < cmmi5.85.bdf > cmmi5.85.snf
+#
+# NAME=cmmi12
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmmi12.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi12'
+	-gftopk cmmi12.122gf && rm -f cmmi12.122gf
+cmmi12.122.snf:	cmmi12.122pk
+	-mftobdf -dpi 85 cmmi12.122pk
+	bdftosnf < cmmi12.122.bdf > cmmi12.122.snf
+#
+# NAME=cmmi12
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmmi12.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi12'
+	-gftopk cmmi12.85gf && rm -f cmmi12.85gf
+cmmi12.85.snf:	cmmi12.85pk
+	-mftobdf -dpi 85 cmmi12.85pk
+	bdftosnf < cmmi12.85.bdf > cmmi12.85.snf
+#
+# NAME=cmmi10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmmi10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmmi10'
+	-gftopk cmmi10.305gf && rm -f cmmi10.305gf
+cmmi10.305.snf:	cmmi10.305pk
+	-mftobdf -dpi 85 cmmi10.305pk
+	bdftosnf < cmmi10.305.bdf > cmmi10.305.snf
+#
+# NAME=cmmi10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmmi10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmmi10'
+	-gftopk cmmi10.211gf && rm -f cmmi10.211gf
+cmmi10.211.snf:	cmmi10.211pk
+	-mftobdf -dpi 85 cmmi10.211pk
+	bdftosnf < cmmi10.211.bdf > cmmi10.211.snf
+#
+# NAME=cmmi10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmmi10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmmi10'
+	-gftopk cmmi10.254gf && rm -f cmmi10.254gf
+cmmi10.254.snf:	cmmi10.254pk
+	-mftobdf -dpi 85 cmmi10.254pk
+	bdftosnf < cmmi10.254.bdf > cmmi10.254.snf
+#
+# NAME=cmmi10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmmi10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmmi10'
+	-gftopk cmmi10.212gf && rm -f cmmi10.212gf
+cmmi10.212.snf:	cmmi10.212pk
+	-mftobdf -dpi 85 cmmi10.212pk
+	bdftosnf < cmmi10.212.bdf > cmmi10.212.snf
+#
+# NAME=cmmi10
+# SCALE = 1728
+# EXTENSION = 147
+#
+cmmi10.147pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmmi10'
+	-gftopk cmmi10.147gf && rm -f cmmi10.147gf
+cmmi10.147.snf:	cmmi10.147pk
+	-mftobdf -dpi 85 cmmi10.147pk
+	bdftosnf < cmmi10.147.bdf > cmmi10.147.snf
+#
+# NAME=cmmi10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmmi10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmmi10'
+	-gftopk cmmi10.176gf && rm -f cmmi10.176gf
+cmmi10.176.snf:	cmmi10.176pk
+	-mftobdf -dpi 85 cmmi10.176pk
+	bdftosnf < cmmi10.176.bdf > cmmi10.176.snf
+#
+# NAME=cmmi10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmmi10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmmi10'
+	-gftopk cmmi10.134gf && rm -f cmmi10.134gf
+cmmi10.134.snf:	cmmi10.134pk
+	-mftobdf -dpi 85 cmmi10.134pk
+	bdftosnf < cmmi10.134.bdf > cmmi10.134.snf
+#
+# NAME=cmmi10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmmi10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmmi10'
+	-gftopk cmmi10.93gf && rm -f cmmi10.93gf
+cmmi10.93.snf:	cmmi10.93pk
+	-mftobdf -dpi 85 cmmi10.93pk
+	bdftosnf < cmmi10.93.bdf > cmmi10.93.snf
+#
+# NAME=cmmi10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmmi10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi10'
+	-gftopk cmmi10.122gf && rm -f cmmi10.122gf
+cmmi10.122.snf:	cmmi10.122pk
+	-mftobdf -dpi 85 cmmi10.122pk
+	bdftosnf < cmmi10.122.bdf > cmmi10.122.snf
+#
+# NAME=cmmi10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmmi10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmmi10'
+	-gftopk cmmi10.85gf && rm -f cmmi10.85gf
+cmmi10.85.snf:	cmmi10.85pk
+	-mftobdf -dpi 85 cmmi10.85pk
+	bdftosnf < cmmi10.85.bdf > cmmi10.85.snf
+#
+# NAME=cmitt10
+# SCALE = 900
+# EXTENSION = 110
+#
+cmitt10.110pk:
+	-mf '\mode:=sun;mag=900/1000;input cmitt10'
+	-gftopk cmitt10.110gf && rm -f cmitt10.110gf
+cmitt10.110.snf:	cmitt10.110pk
+	-mftobdf -dpi 85 cmitt10.110pk
+	bdftosnf < cmitt10.110.bdf > cmitt10.110.snf
+#
+# NAME=cmitt10
+# SCALE = 900
+# EXTENSION = 77
+#
+cmitt10.77pk:
+	-mf '\mode:=sun;mag=900/1000;input cmitt10'
+	-gftopk cmitt10.77gf && rm -f cmitt10.77gf
+cmitt10.77.snf:	cmitt10.77pk
+	-mftobdf -dpi 85 cmitt10.77pk
+	bdftosnf < cmitt10.77.bdf > cmitt10.77.snf
+#
+# NAME=cmitt10
+# SCALE = 800
+# EXTENSION = 98
+#
+cmitt10.98pk:
+	-mf '\mode:=sun;mag=800/1000;input cmitt10'
+	-gftopk cmitt10.98gf && rm -f cmitt10.98gf
+cmitt10.98.snf:	cmitt10.98pk
+	-mftobdf -dpi 85 cmitt10.98pk
+	bdftosnf < cmitt10.98.bdf > cmitt10.98.snf
+#
+# NAME=cmitt10
+# SCALE = 800
+# EXTENSION = 68
+#
+cmitt10.68pk:
+	-mf '\mode:=sun;mag=800/1000;input cmitt10'
+	-gftopk cmitt10.68gf && rm -f cmitt10.68gf
+cmitt10.68.snf:	cmitt10.68pk
+	-mftobdf -dpi 85 cmitt10.68pk
+	bdftosnf < cmitt10.68.bdf > cmitt10.68.snf
+#
+# NAME=cmitt10
+# SCALE = 700
+# EXTENSION = 86
+#
+cmitt10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input cmitt10'
+	-gftopk cmitt10.86gf && rm -f cmitt10.86gf
+cmitt10.86.snf:	cmitt10.86pk
+	-mftobdf -dpi 85 cmitt10.86pk
+	bdftosnf < cmitt10.86.bdf > cmitt10.86.snf
+#
+# NAME=cmitt10
+# SCALE = 700
+# EXTENSION = 59
+#
+cmitt10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input cmitt10'
+	-gftopk cmitt10.59gf && rm -f cmitt10.59gf
+cmitt10.59.snf:	cmitt10.59pk
+	-mftobdf -dpi 85 cmitt10.59pk
+	bdftosnf < cmitt10.59.bdf > cmitt10.59.snf
+#
+# NAME=cmitt10
+# SCALE = 600
+# EXTENSION = 73
+#
+cmitt10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input cmitt10'
+	-gftopk cmitt10.73gf && rm -f cmitt10.73gf
+cmitt10.73.snf:	cmitt10.73pk
+	-mftobdf -dpi 85 cmitt10.73pk
+	bdftosnf < cmitt10.73.bdf > cmitt10.73.snf
+#
+# NAME=cmitt10
+# SCALE = 600
+# EXTENSION = 51
+#
+cmitt10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input cmitt10'
+	-gftopk cmitt10.51gf && rm -f cmitt10.51gf
+cmitt10.51.snf:	cmitt10.51pk
+	-mftobdf -dpi 85 cmitt10.51pk
+	bdftosnf < cmitt10.51.bdf > cmitt10.51.snf
+#
+# NAME=cmitt10
+# SCALE = 500
+# EXTENSION = 61
+#
+cmitt10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input cmitt10'
+	-gftopk cmitt10.61gf && rm -f cmitt10.61gf
+cmitt10.61.snf:	cmitt10.61pk
+	-mftobdf -dpi 85 cmitt10.61pk
+	bdftosnf < cmitt10.61.bdf > cmitt10.61.snf
+#
+# NAME=cmitt10
+# SCALE = 500
+# EXTENSION = 43
+#
+cmitt10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input cmitt10'
+	-gftopk cmitt10.43gf && rm -f cmitt10.43gf
+cmitt10.43.snf:	cmitt10.43pk
+	-mftobdf -dpi 85 cmitt10.43pk
+	bdftosnf < cmitt10.43.bdf > cmitt10.43.snf
+#
+# NAME=cmitt10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmitt10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmitt10'
+	-gftopk cmitt10.305gf && rm -f cmitt10.305gf
+cmitt10.305.snf:	cmitt10.305pk
+	-mftobdf -dpi 85 cmitt10.305pk
+	bdftosnf < cmitt10.305.bdf > cmitt10.305.snf
+#
+# NAME=cmitt10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmitt10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmitt10'
+	-gftopk cmitt10.211gf && rm -f cmitt10.211gf
+cmitt10.211.snf:	cmitt10.211pk
+	-mftobdf -dpi 85 cmitt10.211pk
+	bdftosnf < cmitt10.211.bdf > cmitt10.211.snf
+#
+# NAME=cmitt10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmitt10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmitt10'
+	-gftopk cmitt10.254gf && rm -f cmitt10.254gf
+cmitt10.254.snf:	cmitt10.254pk
+	-mftobdf -dpi 85 cmitt10.254pk
+	bdftosnf < cmitt10.254.bdf > cmitt10.254.snf
+#
+# NAME=cmitt10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmitt10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmitt10'
+	-gftopk cmitt10.212gf && rm -f cmitt10.212gf
+cmitt10.212.snf:	cmitt10.212pk
+	-mftobdf -dpi 85 cmitt10.212pk
+	bdftosnf < cmitt10.212.bdf > cmitt10.212.snf
+#
+# NAME=cmitt10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmitt10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmitt10'
+	-gftopk cmitt10.176gf && rm -f cmitt10.176gf
+cmitt10.176.snf:	cmitt10.176pk
+	-mftobdf -dpi 85 cmitt10.176pk
+	bdftosnf < cmitt10.176.bdf > cmitt10.176.snf
+#
+# NAME=cmitt10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmitt10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmitt10'
+	-gftopk cmitt10.147gf && rm -f cmitt10.147gf
+cmitt10.147.snf:	cmitt10.147pk
+	-mftobdf -dpi 85 cmitt10.147pk
+	bdftosnf < cmitt10.147.bdf > cmitt10.147.snf
+#
+# NAME=cmitt10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmitt10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmitt10'
+	-gftopk cmitt10.102gf && rm -f cmitt10.102gf
+cmitt10.102.snf:	cmitt10.102pk
+	-mftobdf -dpi 85 cmitt10.102pk
+	bdftosnf < cmitt10.102.bdf > cmitt10.102.snf
+#
+# NAME=cmitt10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmitt10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmitt10'
+	-gftopk cmitt10.134gf && rm -f cmitt10.134gf
+cmitt10.134.snf:	cmitt10.134pk
+	-mftobdf -dpi 85 cmitt10.134pk
+	bdftosnf < cmitt10.134.bdf > cmitt10.134.snf
+#
+# NAME=cmitt10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmitt10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmitt10'
+	-gftopk cmitt10.93gf && rm -f cmitt10.93gf
+cmitt10.93.snf:	cmitt10.93pk
+	-mftobdf -dpi 85 cmitt10.93pk
+	bdftosnf < cmitt10.93.bdf > cmitt10.93.snf
+#
+# NAME=cmitt10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmitt10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmitt10'
+	-gftopk cmitt10.122gf && rm -f cmitt10.122gf
+cmitt10.122.snf:	cmitt10.122pk
+	-mftobdf -dpi 85 cmitt10.122pk
+	bdftosnf < cmitt10.122.bdf > cmitt10.122.snf
+#
+# NAME=cmitt10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmitt10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmitt10'
+	-gftopk cmitt10.85gf && rm -f cmitt10.85gf
+cmitt10.85.snf:	cmitt10.85pk
+	-mftobdf -dpi 85 cmitt10.85pk
+	bdftosnf < cmitt10.85.bdf > cmitt10.85.snf
+#
+# NAME=cmex10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmex10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmex10'
+	-gftopk cmex10.122gf && rm -f cmex10.122gf
+cmex10.122.snf:	cmex10.122pk
+	-mftobdf -dpi 85 cmex10.122pk
+	bdftosnf < cmex10.122.bdf > cmex10.122.snf
+#
+# NAME=cmex10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmex10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmex10'
+	-gftopk cmex10.85gf && rm -f cmex10.85gf
+cmex10.85.snf:	cmex10.85pk
+	-mftobdf -dpi 85 cmex10.85pk
+	bdftosnf < cmex10.85.bdf > cmex10.85.snf
+#
+# NAME=cmdunh10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmdunh10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmdunh10'
+	-gftopk cmdunh10.122gf && rm -f cmdunh10.122gf
+cmdunh10.122.snf:	cmdunh10.122pk
+	-mftobdf -dpi 85 cmdunh10.122pk
+	bdftosnf < cmdunh10.122.bdf > cmdunh10.122.snf
+#
+# NAME=cmdunh10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmdunh10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmdunh10'
+	-gftopk cmdunh10.85gf && rm -f cmdunh10.85gf
+cmdunh10.85.snf:	cmdunh10.85pk
+	-mftobdf -dpi 85 cmdunh10.85pk
+	bdftosnf < cmdunh10.85.bdf > cmdunh10.85.snf
+#
+# NAME=cmcsc10
+# SCALE = 900
+# EXTENSION = 110
+#
+cmcsc10.110pk:
+	-mf '\mode:=sun;mag=900/1000;input cmcsc10'
+	-gftopk cmcsc10.110gf && rm -f cmcsc10.110gf
+cmcsc10.110.snf:	cmcsc10.110pk
+	-mftobdf -dpi 85 cmcsc10.110pk
+	bdftosnf < cmcsc10.110.bdf > cmcsc10.110.snf
+#
+# NAME=cmcsc10
+# SCALE = 900
+# EXTENSION = 77
+#
+cmcsc10.77pk:
+	-mf '\mode:=sun;mag=900/1000;input cmcsc10'
+	-gftopk cmcsc10.77gf && rm -f cmcsc10.77gf
+cmcsc10.77.snf:	cmcsc10.77pk
+	-mftobdf -dpi 85 cmcsc10.77pk
+	bdftosnf < cmcsc10.77.bdf > cmcsc10.77.snf
+#
+# NAME=cmcsc10
+# SCALE = 800
+# EXTENSION = 98
+#
+cmcsc10.98pk:
+	-mf '\mode:=sun;mag=800/1000;input cmcsc10'
+	-gftopk cmcsc10.98gf && rm -f cmcsc10.98gf
+cmcsc10.98.snf:	cmcsc10.98pk
+	-mftobdf -dpi 85 cmcsc10.98pk
+	bdftosnf < cmcsc10.98.bdf > cmcsc10.98.snf
+#
+# NAME=cmcsc10
+# SCALE = 800
+# EXTENSION = 68
+#
+cmcsc10.68pk:
+	-mf '\mode:=sun;mag=800/1000;input cmcsc10'
+	-gftopk cmcsc10.68gf && rm -f cmcsc10.68gf
+cmcsc10.68.snf:	cmcsc10.68pk
+	-mftobdf -dpi 85 cmcsc10.68pk
+	bdftosnf < cmcsc10.68.bdf > cmcsc10.68.snf
+#
+# NAME=cmcsc10
+# SCALE = 700
+# EXTENSION = 86
+#
+cmcsc10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input cmcsc10'
+	-gftopk cmcsc10.86gf && rm -f cmcsc10.86gf
+cmcsc10.86.snf:	cmcsc10.86pk
+	-mftobdf -dpi 85 cmcsc10.86pk
+	bdftosnf < cmcsc10.86.bdf > cmcsc10.86.snf
+#
+# NAME=cmcsc10
+# SCALE = 700
+# EXTENSION = 59
+#
+cmcsc10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input cmcsc10'
+	-gftopk cmcsc10.59gf && rm -f cmcsc10.59gf
+cmcsc10.59.snf:	cmcsc10.59pk
+	-mftobdf -dpi 85 cmcsc10.59pk
+	bdftosnf < cmcsc10.59.bdf > cmcsc10.59.snf
+#
+# NAME=cmcsc10
+# SCALE = 600
+# EXTENSION = 73
+#
+cmcsc10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input cmcsc10'
+	-gftopk cmcsc10.73gf && rm -f cmcsc10.73gf
+cmcsc10.73.snf:	cmcsc10.73pk
+	-mftobdf -dpi 85 cmcsc10.73pk
+	bdftosnf < cmcsc10.73.bdf > cmcsc10.73.snf
+#
+# NAME=cmcsc10
+# SCALE = 600
+# EXTENSION = 51
+#
+cmcsc10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input cmcsc10'
+	-gftopk cmcsc10.51gf && rm -f cmcsc10.51gf
+cmcsc10.51.snf:	cmcsc10.51pk
+	-mftobdf -dpi 85 cmcsc10.51pk
+	bdftosnf < cmcsc10.51.bdf > cmcsc10.51.snf
+#
+# NAME=cmcsc10
+# SCALE = 500
+# EXTENSION = 61
+#
+cmcsc10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input cmcsc10'
+	-gftopk cmcsc10.61gf && rm -f cmcsc10.61gf
+cmcsc10.61.snf:	cmcsc10.61pk
+	-mftobdf -dpi 85 cmcsc10.61pk
+	bdftosnf < cmcsc10.61.bdf > cmcsc10.61.snf
+#
+# NAME=cmcsc10
+# SCALE = 500
+# EXTENSION = 43
+#
+cmcsc10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input cmcsc10'
+	-gftopk cmcsc10.43gf && rm -f cmcsc10.43gf
+cmcsc10.43.snf:	cmcsc10.43pk
+	-mftobdf -dpi 85 cmcsc10.43pk
+	bdftosnf < cmcsc10.43.bdf > cmcsc10.43.snf
+#
+# NAME=cmcsc10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmcsc10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmcsc10'
+	-gftopk cmcsc10.305gf && rm -f cmcsc10.305gf
+cmcsc10.305.snf:	cmcsc10.305pk
+	-mftobdf -dpi 85 cmcsc10.305pk
+	bdftosnf < cmcsc10.305.bdf > cmcsc10.305.snf
+#
+# NAME=cmcsc10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmcsc10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmcsc10'
+	-gftopk cmcsc10.211gf && rm -f cmcsc10.211gf
+cmcsc10.211.snf:	cmcsc10.211pk
+	-mftobdf -dpi 85 cmcsc10.211pk
+	bdftosnf < cmcsc10.211.bdf > cmcsc10.211.snf
+#
+# NAME=cmcsc10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmcsc10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmcsc10'
+	-gftopk cmcsc10.254gf && rm -f cmcsc10.254gf
+cmcsc10.254.snf:	cmcsc10.254pk
+	-mftobdf -dpi 85 cmcsc10.254pk
+	bdftosnf < cmcsc10.254.bdf > cmcsc10.254.snf
+#
+# NAME=cmcsc10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmcsc10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmcsc10'
+	-gftopk cmcsc10.212gf && rm -f cmcsc10.212gf
+cmcsc10.212.snf:	cmcsc10.212pk
+	-mftobdf -dpi 85 cmcsc10.212pk
+	bdftosnf < cmcsc10.212.bdf > cmcsc10.212.snf
+#
+# NAME=cmcsc10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmcsc10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmcsc10'
+	-gftopk cmcsc10.176gf && rm -f cmcsc10.176gf
+cmcsc10.176.snf:	cmcsc10.176pk
+	-mftobdf -dpi 85 cmcsc10.176pk
+	bdftosnf < cmcsc10.176.bdf > cmcsc10.176.snf
+#
+# NAME=cmcsc10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmcsc10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmcsc10'
+	-gftopk cmcsc10.147gf && rm -f cmcsc10.147gf
+cmcsc10.147.snf:	cmcsc10.147pk
+	-mftobdf -dpi 85 cmcsc10.147pk
+	bdftosnf < cmcsc10.147.bdf > cmcsc10.147.snf
+#
+# NAME=cmcsc10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmcsc10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmcsc10'
+	-gftopk cmcsc10.102gf && rm -f cmcsc10.102gf
+cmcsc10.102.snf:	cmcsc10.102pk
+	-mftobdf -dpi 85 cmcsc10.102pk
+	bdftosnf < cmcsc10.102.bdf > cmcsc10.102.snf
+#
+# NAME=cmcsc10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmcsc10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmcsc10'
+	-gftopk cmcsc10.134gf && rm -f cmcsc10.134gf
+cmcsc10.134.snf:	cmcsc10.134pk
+	-mftobdf -dpi 85 cmcsc10.134pk
+	bdftosnf < cmcsc10.134.bdf > cmcsc10.134.snf
+#
+# NAME=cmcsc10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmcsc10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmcsc10'
+	-gftopk cmcsc10.93gf && rm -f cmcsc10.93gf
+cmcsc10.93.snf:	cmcsc10.93pk
+	-mftobdf -dpi 85 cmcsc10.93pk
+	bdftosnf < cmcsc10.93.bdf > cmcsc10.93.snf
+#
+# NAME=cmcsc10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmcsc10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmcsc10'
+	-gftopk cmcsc10.122gf && rm -f cmcsc10.122gf
+cmcsc10.122.snf:	cmcsc10.122pk
+	-mftobdf -dpi 85 cmcsc10.122pk
+	bdftosnf < cmcsc10.122.bdf > cmcsc10.122.snf
+#
+# NAME=cmcsc10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmcsc10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmcsc10'
+	-gftopk cmcsc10.85gf && rm -f cmcsc10.85gf
+cmcsc10.85.snf:	cmcsc10.85pk
+	-mftobdf -dpi 85 cmcsc10.85pk
+	bdftosnf < cmcsc10.85.bdf > cmcsc10.85.snf
+#
+# NAME=cmbxsl10
+# SCALE = 900
+# EXTENSION = 110
+#
+cmbxsl10.110pk:
+	-mf '\mode:=sun;mag=900/1000;input cmbxsl10'
+	-gftopk cmbxsl10.110gf && rm -f cmbxsl10.110gf
+cmbxsl10.110.snf:	cmbxsl10.110pk
+	-mftobdf -dpi 85 cmbxsl10.110pk
+	bdftosnf < cmbxsl10.110.bdf > cmbxsl10.110.snf
+#
+# NAME=cmbxsl10
+# SCALE = 900
+# EXTENSION = 77
+#
+cmbxsl10.77pk:
+	-mf '\mode:=sun;mag=900/1000;input cmbxsl10'
+	-gftopk cmbxsl10.77gf && rm -f cmbxsl10.77gf
+cmbxsl10.77.snf:	cmbxsl10.77pk
+	-mftobdf -dpi 85 cmbxsl10.77pk
+	bdftosnf < cmbxsl10.77.bdf > cmbxsl10.77.snf
+#
+# NAME=cmbxsl10
+# SCALE = 800
+# EXTENSION = 98
+#
+cmbxsl10.98pk:
+	-mf '\mode:=sun;mag=800/1000;input cmbxsl10'
+	-gftopk cmbxsl10.98gf && rm -f cmbxsl10.98gf
+cmbxsl10.98.snf:	cmbxsl10.98pk
+	-mftobdf -dpi 85 cmbxsl10.98pk
+	bdftosnf < cmbxsl10.98.bdf > cmbxsl10.98.snf
+#
+# NAME=cmbxsl10
+# SCALE = 800
+# EXTENSION = 68
+#
+cmbxsl10.68pk:
+	-mf '\mode:=sun;mag=800/1000;input cmbxsl10'
+	-gftopk cmbxsl10.68gf && rm -f cmbxsl10.68gf
+cmbxsl10.68.snf:	cmbxsl10.68pk
+	-mftobdf -dpi 85 cmbxsl10.68pk
+	bdftosnf < cmbxsl10.68.bdf > cmbxsl10.68.snf
+#
+# NAME=cmbxsl10
+# SCALE = 700
+# EXTENSION = 86
+#
+cmbxsl10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input cmbxsl10'
+	-gftopk cmbxsl10.86gf && rm -f cmbxsl10.86gf
+cmbxsl10.86.snf:	cmbxsl10.86pk
+	-mftobdf -dpi 85 cmbxsl10.86pk
+	bdftosnf < cmbxsl10.86.bdf > cmbxsl10.86.snf
+#
+# NAME=cmbxsl10
+# SCALE = 700
+# EXTENSION = 59
+#
+cmbxsl10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input cmbxsl10'
+	-gftopk cmbxsl10.59gf && rm -f cmbxsl10.59gf
+cmbxsl10.59.snf:	cmbxsl10.59pk
+	-mftobdf -dpi 85 cmbxsl10.59pk
+	bdftosnf < cmbxsl10.59.bdf > cmbxsl10.59.snf
+#
+# NAME=cmbxsl10
+# SCALE = 600
+# EXTENSION = 73
+#
+cmbxsl10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input cmbxsl10'
+	-gftopk cmbxsl10.73gf && rm -f cmbxsl10.73gf
+cmbxsl10.73.snf:	cmbxsl10.73pk
+	-mftobdf -dpi 85 cmbxsl10.73pk
+	bdftosnf < cmbxsl10.73.bdf > cmbxsl10.73.snf
+#
+# NAME=cmbxsl10
+# SCALE = 600
+# EXTENSION = 51
+#
+cmbxsl10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input cmbxsl10'
+	-gftopk cmbxsl10.51gf && rm -f cmbxsl10.51gf
+cmbxsl10.51.snf:	cmbxsl10.51pk
+	-mftobdf -dpi 85 cmbxsl10.51pk
+	bdftosnf < cmbxsl10.51.bdf > cmbxsl10.51.snf
+#
+# NAME=cmbxsl10
+# SCALE = 500
+# EXTENSION = 61
+#
+cmbxsl10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input cmbxsl10'
+	-gftopk cmbxsl10.61gf && rm -f cmbxsl10.61gf
+cmbxsl10.61.snf:	cmbxsl10.61pk
+	-mftobdf -dpi 85 cmbxsl10.61pk
+	bdftosnf < cmbxsl10.61.bdf > cmbxsl10.61.snf
+#
+# NAME=cmbxsl10
+# SCALE = 500
+# EXTENSION = 43
+#
+cmbxsl10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input cmbxsl10'
+	-gftopk cmbxsl10.43gf && rm -f cmbxsl10.43gf
+cmbxsl10.43.snf:	cmbxsl10.43pk
+	-mftobdf -dpi 85 cmbxsl10.43pk
+	bdftosnf < cmbxsl10.43.bdf > cmbxsl10.43.snf
+#
+# NAME=cmbxsl10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmbxsl10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmbxsl10'
+	-gftopk cmbxsl10.305gf && rm -f cmbxsl10.305gf
+cmbxsl10.305.snf:	cmbxsl10.305pk
+	-mftobdf -dpi 85 cmbxsl10.305pk
+	bdftosnf < cmbxsl10.305.bdf > cmbxsl10.305.snf
+#
+# NAME=cmbxsl10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmbxsl10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmbxsl10'
+	-gftopk cmbxsl10.211gf && rm -f cmbxsl10.211gf
+cmbxsl10.211.snf:	cmbxsl10.211pk
+	-mftobdf -dpi 85 cmbxsl10.211pk
+	bdftosnf < cmbxsl10.211.bdf > cmbxsl10.211.snf
+#
+# NAME=cmbxsl10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmbxsl10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmbxsl10'
+	-gftopk cmbxsl10.254gf && rm -f cmbxsl10.254gf
+cmbxsl10.254.snf:	cmbxsl10.254pk
+	-mftobdf -dpi 85 cmbxsl10.254pk
+	bdftosnf < cmbxsl10.254.bdf > cmbxsl10.254.snf
+#
+# NAME=cmbxsl10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmbxsl10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmbxsl10'
+	-gftopk cmbxsl10.212gf && rm -f cmbxsl10.212gf
+cmbxsl10.212.snf:	cmbxsl10.212pk
+	-mftobdf -dpi 85 cmbxsl10.212pk
+	bdftosnf < cmbxsl10.212.bdf > cmbxsl10.212.snf
+#
+# NAME=cmbxsl10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmbxsl10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmbxsl10'
+	-gftopk cmbxsl10.176gf && rm -f cmbxsl10.176gf
+cmbxsl10.176.snf:	cmbxsl10.176pk
+	-mftobdf -dpi 85 cmbxsl10.176pk
+	bdftosnf < cmbxsl10.176.bdf > cmbxsl10.176.snf
+#
+# NAME=cmbxsl10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmbxsl10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmbxsl10'
+	-gftopk cmbxsl10.147gf && rm -f cmbxsl10.147gf
+cmbxsl10.147.snf:	cmbxsl10.147pk
+	-mftobdf -dpi 85 cmbxsl10.147pk
+	bdftosnf < cmbxsl10.147.bdf > cmbxsl10.147.snf
+#
+# NAME=cmbxsl10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmbxsl10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmbxsl10'
+	-gftopk cmbxsl10.102gf && rm -f cmbxsl10.102gf
+cmbxsl10.102.snf:	cmbxsl10.102pk
+	-mftobdf -dpi 85 cmbxsl10.102pk
+	bdftosnf < cmbxsl10.102.bdf > cmbxsl10.102.snf
+#
+# NAME=cmbxsl10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmbxsl10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmbxsl10'
+	-gftopk cmbxsl10.134gf && rm -f cmbxsl10.134gf
+cmbxsl10.134.snf:	cmbxsl10.134pk
+	-mftobdf -dpi 85 cmbxsl10.134pk
+	bdftosnf < cmbxsl10.134.bdf > cmbxsl10.134.snf
+#
+# NAME=cmbxsl10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmbxsl10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmbxsl10'
+	-gftopk cmbxsl10.93gf && rm -f cmbxsl10.93gf
+cmbxsl10.93.snf:	cmbxsl10.93pk
+	-mftobdf -dpi 85 cmbxsl10.93pk
+	bdftosnf < cmbxsl10.93.bdf > cmbxsl10.93.snf
+#
+# NAME=cmbxsl10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmbxsl10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbxsl10'
+	-gftopk cmbxsl10.122gf && rm -f cmbxsl10.122gf
+cmbxsl10.122.snf:	cmbxsl10.122pk
+	-mftobdf -dpi 85 cmbxsl10.122pk
+	bdftosnf < cmbxsl10.122.bdf > cmbxsl10.122.snf
+#
+# NAME=cmbxsl10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmbxsl10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbxsl10'
+	-gftopk cmbxsl10.85gf && rm -f cmbxsl10.85gf
+cmbxsl10.85.snf:	cmbxsl10.85pk
+	-mftobdf -dpi 85 cmbxsl10.85pk
+	bdftosnf < cmbxsl10.85.bdf > cmbxsl10.85.snf
+#
+# NAME=cmbx9
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmbx9.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx9'
+	-gftopk cmbx9.122gf && rm -f cmbx9.122gf
+cmbx9.122.snf:	cmbx9.122pk
+	-mftobdf -dpi 85 cmbx9.122pk
+	bdftosnf < cmbx9.122.bdf > cmbx9.122.snf
+#
+# NAME=cmbx9
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmbx9.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx9'
+	-gftopk cmbx9.85gf && rm -f cmbx9.85gf
+cmbx9.85.snf:	cmbx9.85pk
+	-mftobdf -dpi 85 cmbx9.85pk
+	bdftosnf < cmbx9.85.bdf > cmbx9.85.snf
+#
+# NAME=cmbx8
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmbx8.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx8'
+	-gftopk cmbx8.122gf && rm -f cmbx8.122gf
+cmbx8.122.snf:	cmbx8.122pk
+	-mftobdf -dpi 85 cmbx8.122pk
+	bdftosnf < cmbx8.122.bdf > cmbx8.122.snf
+#
+# NAME=cmbx8
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmbx8.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx8'
+	-gftopk cmbx8.85gf && rm -f cmbx8.85gf
+cmbx8.85.snf:	cmbx8.85pk
+	-mftobdf -dpi 85 cmbx8.85pk
+	bdftosnf < cmbx8.85.bdf > cmbx8.85.snf
+#
+# NAME=cmbx7
+# SCALE = 857
+# EXTENSION = 105
+#
+cmbx7.105pk:
+	-mf '\mode:=sun;mag=857/1000;input cmbx7'
+	-gftopk cmbx7.105gf && rm -f cmbx7.105gf
+cmbx7.105.snf:	cmbx7.105pk
+	-mftobdf -dpi 85 cmbx7.105pk
+	bdftosnf < cmbx7.105.bdf > cmbx7.105.snf
+#
+# NAME=cmbx7
+# SCALE = 857
+# EXTENSION = 73
+#
+cmbx7.73pk:
+	-mf '\mode:=sun;mag=857/1000;input cmbx7'
+	-gftopk cmbx7.73gf && rm -f cmbx7.73gf
+cmbx7.73.snf:	cmbx7.73pk
+	-mftobdf -dpi 85 cmbx7.73pk
+	bdftosnf < cmbx7.73.bdf > cmbx7.73.snf
+#
+# NAME=cmbx7
+# SCALE = 714
+# EXTENSION = 87
+#
+cmbx7.87pk:
+	-mf '\mode:=sun;mag=714/1000;input cmbx7'
+	-gftopk cmbx7.87gf && rm -f cmbx7.87gf
+cmbx7.87.snf:	cmbx7.87pk
+	-mftobdf -dpi 85 cmbx7.87pk
+	bdftosnf < cmbx7.87.bdf > cmbx7.87.snf
+#
+# NAME=cmbx7
+# SCALE = 714
+# EXTENSION = 61
+#
+cmbx7.61pk:
+	-mf '\mode:=sun;mag=714/1000;input cmbx7'
+	-gftopk cmbx7.61gf && rm -f cmbx7.61gf
+cmbx7.61.snf:	cmbx7.61pk
+	-mftobdf -dpi 85 cmbx7.61pk
+	bdftosnf < cmbx7.61.bdf > cmbx7.61.snf
+#
+# NAME=cmbx7
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmbx7.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx7'
+	-gftopk cmbx7.122gf && rm -f cmbx7.122gf
+cmbx7.122.snf:	cmbx7.122pk
+	-mftobdf -dpi 85 cmbx7.122pk
+	bdftosnf < cmbx7.122.bdf > cmbx7.122.snf
+#
+# NAME=cmbx7
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmbx7.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx7'
+	-gftopk cmbx7.85gf && rm -f cmbx7.85gf
+cmbx7.85.snf:	cmbx7.85pk
+	-mftobdf -dpi 85 cmbx7.85pk
+	bdftosnf < cmbx7.85.bdf > cmbx7.85.snf
+#
+# NAME=cmbx6
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmbx6.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx6'
+	-gftopk cmbx6.122gf && rm -f cmbx6.122gf
+cmbx6.122.snf:	cmbx6.122pk
+	-mftobdf -dpi 85 cmbx6.122pk
+	bdftosnf < cmbx6.122.bdf > cmbx6.122.snf
+#
+# NAME=cmbx6
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmbx6.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx6'
+	-gftopk cmbx6.85gf && rm -f cmbx6.85gf
+cmbx6.85.snf:	cmbx6.85pk
+	-mftobdf -dpi 85 cmbx6.85pk
+	bdftosnf < cmbx6.85.bdf > cmbx6.85.snf
+#
+# NAME=cmbx5
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmbx5.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx5'
+	-gftopk cmbx5.122gf && rm -f cmbx5.122gf
+cmbx5.122.snf:	cmbx5.122pk
+	-mftobdf -dpi 85 cmbx5.122pk
+	bdftosnf < cmbx5.122.bdf > cmbx5.122.snf
+#
+# NAME=cmbx5
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmbx5.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx5'
+	-gftopk cmbx5.85gf && rm -f cmbx5.85gf
+cmbx5.85.snf:	cmbx5.85pk
+	-mftobdf -dpi 85 cmbx5.85pk
+	bdftosnf < cmbx5.85.bdf > cmbx5.85.snf
+#
+# NAME=cmbx12
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmbx12.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx12'
+	-gftopk cmbx12.122gf && rm -f cmbx12.122gf
+cmbx12.122.snf:	cmbx12.122pk
+	-mftobdf -dpi 85 cmbx12.122pk
+	bdftosnf < cmbx12.122.bdf > cmbx12.122.snf
+#
+# NAME=cmbx12
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmbx12.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx12'
+	-gftopk cmbx12.85gf && rm -f cmbx12.85gf
+cmbx12.85.snf:	cmbx12.85pk
+	-mftobdf -dpi 85 cmbx12.85pk
+	bdftosnf < cmbx12.85.bdf > cmbx12.85.snf
+#
+# NAME=cmbx10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmbx10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmbx10'
+	-gftopk cmbx10.305gf && rm -f cmbx10.305gf
+cmbx10.305.snf:	cmbx10.305pk
+	-mftobdf -dpi 85 cmbx10.305pk
+	bdftosnf < cmbx10.305.bdf > cmbx10.305.snf
+#
+# NAME=cmbx10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmbx10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmbx10'
+	-gftopk cmbx10.211gf && rm -f cmbx10.211gf
+cmbx10.211.snf:	cmbx10.211pk
+	-mftobdf -dpi 85 cmbx10.211pk
+	bdftosnf < cmbx10.211.bdf > cmbx10.211.snf
+#
+# NAME=cmbx10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmbx10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmbx10'
+	-gftopk cmbx10.254gf && rm -f cmbx10.254gf
+cmbx10.254.snf:	cmbx10.254pk
+	-mftobdf -dpi 85 cmbx10.254pk
+	bdftosnf < cmbx10.254.bdf > cmbx10.254.snf
+#
+# NAME=cmbx10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmbx10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmbx10'
+	-gftopk cmbx10.212gf && rm -f cmbx10.212gf
+cmbx10.212.snf:	cmbx10.212pk
+	-mftobdf -dpi 85 cmbx10.212pk
+	bdftosnf < cmbx10.212.bdf > cmbx10.212.snf
+#
+# NAME=cmbx10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmbx10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmbx10'
+	-gftopk cmbx10.176gf && rm -f cmbx10.176gf
+cmbx10.176.snf:	cmbx10.176pk
+	-mftobdf -dpi 85 cmbx10.176pk
+	bdftosnf < cmbx10.176.bdf > cmbx10.176.snf
+#
+# NAME=cmbx10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmbx10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmbx10'
+	-gftopk cmbx10.147gf && rm -f cmbx10.147gf
+cmbx10.147.snf:	cmbx10.147pk
+	-mftobdf -dpi 85 cmbx10.147pk
+	bdftosnf < cmbx10.147.bdf > cmbx10.147.snf
+#
+# NAME=cmbx10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmbx10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmbx10'
+	-gftopk cmbx10.102gf && rm -f cmbx10.102gf
+cmbx10.102.snf:	cmbx10.102pk
+	-mftobdf -dpi 85 cmbx10.102pk
+	bdftosnf < cmbx10.102.bdf > cmbx10.102.snf
+#
+# NAME=cmbx10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmbx10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmbx10'
+	-gftopk cmbx10.134gf && rm -f cmbx10.134gf
+cmbx10.134.snf:	cmbx10.134pk
+	-mftobdf -dpi 85 cmbx10.134pk
+	bdftosnf < cmbx10.134.bdf > cmbx10.134.snf
+#
+# NAME=cmbx10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmbx10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmbx10'
+	-gftopk cmbx10.93gf && rm -f cmbx10.93gf
+cmbx10.93.snf:	cmbx10.93pk
+	-mftobdf -dpi 85 cmbx10.93pk
+	bdftosnf < cmbx10.93.bdf > cmbx10.93.snf
+#
+# NAME=cmbx10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmbx10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx10'
+	-gftopk cmbx10.122gf && rm -f cmbx10.122gf
+cmbx10.122.snf:	cmbx10.122pk
+	-mftobdf -dpi 85 cmbx10.122pk
+	bdftosnf < cmbx10.122.bdf > cmbx10.122.snf
+#
+# NAME=cmbx10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmbx10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbx10'
+	-gftopk cmbx10.85gf && rm -f cmbx10.85gf
+cmbx10.85.snf:	cmbx10.85pk
+	-mftobdf -dpi 85 cmbx10.85pk
+	bdftosnf < cmbx10.85.bdf > cmbx10.85.snf
+#
+# NAME=cmbsy10
+# SCALE = 900
+# EXTENSION = 110
+#
+cmbsy10.110pk:
+	-mf '\mode:=sun;mag=900/1000;input cmbsy10'
+	-gftopk cmbsy10.110gf && rm -f cmbsy10.110gf
+cmbsy10.110.snf:	cmbsy10.110pk
+	-mftobdf -dpi 85 cmbsy10.110pk
+	bdftosnf < cmbsy10.110.bdf > cmbsy10.110.snf
+#
+# NAME=cmbsy10
+# SCALE = 900
+# EXTENSION = 77
+#
+cmbsy10.77pk:
+	-mf '\mode:=sun;mag=900/1000;input cmbsy10'
+	-gftopk cmbsy10.77gf && rm -f cmbsy10.77gf
+cmbsy10.77.snf:	cmbsy10.77pk
+	-mftobdf -dpi 85 cmbsy10.77pk
+	bdftosnf < cmbsy10.77.bdf > cmbsy10.77.snf
+#
+# NAME=cmbsy10
+# SCALE = 800
+# EXTENSION = 98
+#
+cmbsy10.98pk:
+	-mf '\mode:=sun;mag=800/1000;input cmbsy10'
+	-gftopk cmbsy10.98gf && rm -f cmbsy10.98gf
+cmbsy10.98.snf:	cmbsy10.98pk
+	-mftobdf -dpi 85 cmbsy10.98pk
+	bdftosnf < cmbsy10.98.bdf > cmbsy10.98.snf
+#
+# NAME=cmbsy10
+# SCALE = 800
+# EXTENSION = 68
+#
+cmbsy10.68pk:
+	-mf '\mode:=sun;mag=800/1000;input cmbsy10'
+	-gftopk cmbsy10.68gf && rm -f cmbsy10.68gf
+cmbsy10.68.snf:	cmbsy10.68pk
+	-mftobdf -dpi 85 cmbsy10.68pk
+	bdftosnf < cmbsy10.68.bdf > cmbsy10.68.snf
+#
+# NAME=cmbsy10
+# SCALE = 700
+# EXTENSION = 86
+#
+cmbsy10.86pk:
+	-mf '\mode:=sun;mag=700/1000;input cmbsy10'
+	-gftopk cmbsy10.86gf && rm -f cmbsy10.86gf
+cmbsy10.86.snf:	cmbsy10.86pk
+	-mftobdf -dpi 85 cmbsy10.86pk
+	bdftosnf < cmbsy10.86.bdf > cmbsy10.86.snf
+#
+# NAME=cmbsy10
+# SCALE = 700
+# EXTENSION = 59
+#
+cmbsy10.59pk:
+	-mf '\mode:=sun;mag=700/1000;input cmbsy10'
+	-gftopk cmbsy10.59gf && rm -f cmbsy10.59gf
+cmbsy10.59.snf:	cmbsy10.59pk
+	-mftobdf -dpi 85 cmbsy10.59pk
+	bdftosnf < cmbsy10.59.bdf > cmbsy10.59.snf
+#
+# NAME=cmbsy10
+# SCALE = 600
+# EXTENSION = 73
+#
+cmbsy10.73pk:
+	-mf '\mode:=sun;mag=600/1000;input cmbsy10'
+	-gftopk cmbsy10.73gf && rm -f cmbsy10.73gf
+cmbsy10.73.snf:	cmbsy10.73pk
+	-mftobdf -dpi 85 cmbsy10.73pk
+	bdftosnf < cmbsy10.73.bdf > cmbsy10.73.snf
+#
+# NAME=cmbsy10
+# SCALE = 600
+# EXTENSION = 51
+#
+cmbsy10.51pk:
+	-mf '\mode:=sun;mag=600/1000;input cmbsy10'
+	-gftopk cmbsy10.51gf && rm -f cmbsy10.51gf
+cmbsy10.51.snf:	cmbsy10.51pk
+	-mftobdf -dpi 85 cmbsy10.51pk
+	bdftosnf < cmbsy10.51.bdf > cmbsy10.51.snf
+#
+# NAME=cmbsy10
+# SCALE = 500
+# EXTENSION = 61
+#
+cmbsy10.61pk:
+	-mf '\mode:=sun;mag=500/1000;input cmbsy10'
+	-gftopk cmbsy10.61gf && rm -f cmbsy10.61gf
+cmbsy10.61.snf:	cmbsy10.61pk
+	-mftobdf -dpi 85 cmbsy10.61pk
+	bdftosnf < cmbsy10.61.bdf > cmbsy10.61.snf
+#
+# NAME=cmbsy10
+# SCALE = 500
+# EXTENSION = 43
+#
+cmbsy10.43pk:
+	-mf '\mode:=sun;mag=500/1000;input cmbsy10'
+	-gftopk cmbsy10.43gf && rm -f cmbsy10.43gf
+cmbsy10.43.snf:	cmbsy10.43pk
+	-mftobdf -dpi 85 cmbsy10.43pk
+	bdftosnf < cmbsy10.43.bdf > cmbsy10.43.snf
+#
+# NAME=cmbsy10
+# SCALE = 2488
+# EXTENSION = 305
+#
+cmbsy10.305pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmbsy10'
+	-gftopk cmbsy10.305gf && rm -f cmbsy10.305gf
+cmbsy10.305.snf:	cmbsy10.305pk
+	-mftobdf -dpi 85 cmbsy10.305pk
+	bdftosnf < cmbsy10.305.bdf > cmbsy10.305.snf
+#
+# NAME=cmbsy10
+# SCALE = 2488
+# EXTENSION = 211
+#
+cmbsy10.211pk:
+	-mf '\mode:=sun;mag=2488/1000;input cmbsy10'
+	-gftopk cmbsy10.211gf && rm -f cmbsy10.211gf
+cmbsy10.211.snf:	cmbsy10.211pk
+	-mftobdf -dpi 85 cmbsy10.211pk
+	bdftosnf < cmbsy10.211.bdf > cmbsy10.211.snf
+#
+# NAME=cmbsy10
+# SCALE = 2074
+# EXTENSION = 254
+#
+cmbsy10.254pk:
+	-mf '\mode:=sun;mag=2074/1000;input cmbsy10'
+	-gftopk cmbsy10.254gf && rm -f cmbsy10.254gf
+cmbsy10.254.snf:	cmbsy10.254pk
+	-mftobdf -dpi 85 cmbsy10.254pk
+	bdftosnf < cmbsy10.254.bdf > cmbsy10.254.snf
+#
+# NAME=cmbsy10
+# SCALE = 1728
+# EXTENSION = 212
+#
+cmbsy10.212pk:
+	-mf '\mode:=sun;mag=1728/1000;input cmbsy10'
+	-gftopk cmbsy10.212gf && rm -f cmbsy10.212gf
+cmbsy10.212.snf:	cmbsy10.212pk
+	-mftobdf -dpi 85 cmbsy10.212pk
+	bdftosnf < cmbsy10.212.bdf > cmbsy10.212.snf
+#
+# NAME=cmbsy10
+# SCALE = 1440
+# EXTENSION = 176
+#
+cmbsy10.176pk:
+	-mf '\mode:=sun;mag=1440/1000;input cmbsy10'
+	-gftopk cmbsy10.176gf && rm -f cmbsy10.176gf
+cmbsy10.176.snf:	cmbsy10.176pk
+	-mftobdf -dpi 85 cmbsy10.176pk
+	bdftosnf < cmbsy10.176.bdf > cmbsy10.176.snf
+#
+# NAME=cmbsy10
+# SCALE = 1200
+# EXTENSION = 147
+#
+cmbsy10.147pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmbsy10'
+	-gftopk cmbsy10.147gf && rm -f cmbsy10.147gf
+cmbsy10.147.snf:	cmbsy10.147pk
+	-mftobdf -dpi 85 cmbsy10.147pk
+	bdftosnf < cmbsy10.147.bdf > cmbsy10.147.snf
+#
+# NAME=cmbsy10
+# SCALE = 1200
+# EXTENSION = 102
+#
+cmbsy10.102pk:
+	-mf '\mode:=sun;mag=1200/1000;input cmbsy10'
+	-gftopk cmbsy10.102gf && rm -f cmbsy10.102gf
+cmbsy10.102.snf:	cmbsy10.102pk
+	-mftobdf -dpi 85 cmbsy10.102pk
+	bdftosnf < cmbsy10.102.bdf > cmbsy10.102.snf
+#
+# NAME=cmbsy10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmbsy10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmbsy10'
+	-gftopk cmbsy10.134gf && rm -f cmbsy10.134gf
+cmbsy10.134.snf:	cmbsy10.134pk
+	-mftobdf -dpi 85 cmbsy10.134pk
+	bdftosnf < cmbsy10.134.bdf > cmbsy10.134.snf
+#
+# NAME=cmbsy10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmbsy10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmbsy10'
+	-gftopk cmbsy10.93gf && rm -f cmbsy10.93gf
+cmbsy10.93.snf:	cmbsy10.93pk
+	-mftobdf -dpi 85 cmbsy10.93pk
+	bdftosnf < cmbsy10.93.bdf > cmbsy10.93.snf
+#
+# NAME=cmbsy10
+# SCALE = 1000
+# EXTENSION = 122
+#
+cmbsy10.122pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbsy10'
+	-gftopk cmbsy10.122gf && rm -f cmbsy10.122gf
+cmbsy10.122.snf:	cmbsy10.122pk
+	-mftobdf -dpi 85 cmbsy10.122pk
+	bdftosnf < cmbsy10.122.bdf > cmbsy10.122.snf
+#
+# NAME=cmbsy10
+# SCALE = 1000
+# EXTENSION = 85
+#
+cmbsy10.85pk:
+	-mf '\mode:=sun;mag=1000/1000;input cmbsy10'
+	-gftopk cmbsy10.85gf && rm -f cmbsy10.85gf
+cmbsy10.85.snf:	cmbsy10.85pk
+	-mftobdf -dpi 85 cmbsy10.85pk
+	bdftosnf < cmbsy10.85.bdf > cmbsy10.85.snf
+#
+# NAME=cmb10
+# SCALE = 1095
+# EXTENSION = 134
+#
+cmb10.134pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmb10'
+	-gftopk cmb10.134gf && rm -f cmb10.134gf
+cmb10.134.snf:	cmb10.134pk
+	-mftobdf -dpi 85 cmb10.134pk
+	bdftosnf < cmb10.134.bdf > cmb10.134.snf
+#
+# NAME=cmb10
+# SCALE = 1095
+# EXTENSION = 93
+#
+cmb10.93pk:
+	-mf '\mode:=sun;mag=1095/1000;input cmb10'
+	-gftopk cmb10.93gf && rm -f cmb10.93gf
+cmb10.93.snf:	cmb10.93pk
+	-mftobdf -dpi 85 cmb10.93pk
+	bdftosnf < cmb10.93.bdf > cmb10.93.snf
+pk-fonts:\
+	cmb10.159pk\
+	cmb10.111pk\
+	cmtt10.159pk\
+	cmtt10.111pk\
+	culogo.122pk\
+	culogo.85pk\
+	cminch.122pk\
+	cminch.85pk\
+	manfnt.122pk\
+	manfnt.85pk\
+	linew10.122pk\
+	linew10.85pk\
+	line10.122pk\
+	line10.85pk\
+	lcirclew10.122pk\
+	lcirclew10.85pk\
+	lcircle10.122pk\
+	lcircle10.85pk\
+	lasyb10.110pk\
+	lasyb10.77pk\
+	lasyb10.98pk\
+	lasyb10.68pk\
+	lasyb10.86pk\
+	lasyb10.59pk\
+	lasyb10.73pk\
+	lasyb10.51pk\
+	lasyb10.61pk\
+	lasyb10.43pk\
+	lasyb10.305pk\
+	lasyb10.211pk\
+	lasyb10.254pk\
+	lasyb10.212pk\
+	lasyb10.176pk\
+	lasyb10.147pk\
+	lasyb10.102pk\
+	lasyb10.134pk\
+	lasyb10.93pk\
+	lasyb10.122pk\
+	lasyb10.85pk\
+	lasy9.122pk\
+	lasy9.85pk\
+	lasy8.122pk\
+	lasy8.85pk\
+	lasy7.122pk\
+	lasy7.85pk\
+	lasy6.122pk\
+	lasy6.85pk\
+	lasy5.122pk\
+	lasy5.85pk\
+	lasy10.305pk\
+	lasy10.211pk\
+	lasy10.254pk\
+	lasy10.212pk\
+	lasy10.176pk\
+	lasy10.147pk\
+	lasy10.102pk\
+	lasy10.134pk\
+	lasy10.93pk\
+	lasy10.122pk\
+	lasy10.85pk\
+	cmu10.110pk\
+	cmu10.77pk\
+	cmu10.98pk\
+	cmu10.68pk\
+	cmu10.86pk\
+	cmu10.59pk\
+	cmu10.73pk\
+	cmu10.51pk\
+	cmu10.61pk\
+	cmu10.43pk\
+	cmu10.305pk\
+	cmu10.211pk\
+	cmu10.254pk\
+	cmu10.212pk\
+	cmu10.176pk\
+	cmu10.147pk\
+	cmu10.102pk\
+	cmu10.134pk\
+	cmu10.93pk\
+	cmu10.122pk\
+	cmu10.85pk\
+	cmtt9.122pk\
+	cmtt9.85pk\
+	cmtt8.122pk\
+	cmtt8.85pk\
+	cmtt12.122pk\
+	cmtt12.85pk\
+	cmtt10.86pk\
+	cmtt10.59pk\
+	cmtt10.73pk\
+	cmtt10.51pk\
+	cmtt10.61pk\
+	cmtt10.43pk\
+	cmtt10.305pk\
+	cmtt10.211pk\
+	cmtt10.254pk\
+	cmtt10.212pk\
+	cmtt10.176pk\
+	cmtt10.147pk\
+	cmtt10.102pk\
+	cmtt10.134pk\
+	cmtt10.93pk\
+	cmtt10.122pk\
+	cmtt10.85pk\
+	cmti9.122pk\
+	cmti9.85pk\
+	cmti8.122pk\
+	cmti8.85pk\
+	cmti7.105pk\
+	cmti7.73pk\
+	cmti7.87pk\
+	cmti7.61pk\
+	cmti7.122pk\
+	cmti7.85pk\
+	cmti12.122pk\
+	cmti12.85pk\
+	cmti10.305pk\
+	cmti10.211pk\
+	cmti10.254pk\
+	cmti10.212pk\
+	cmti10.176pk\
+	cmti10.147pk\
+	cmti10.102pk\
+	cmti10.134pk\
+	cmti10.93pk\
+	cmti10.122pk\
+	cmti10.85pk\
+	cmsy9.122pk\
+	cmsy9.85pk\
+	cmsy8.122pk\
+	cmsy8.85pk\
+	cmsy7.122pk\
+	cmsy7.85pk\
+	cmsy6.122pk\
+	cmsy6.85pk\
+	cmsy5.122pk\
+	cmsy5.85pk\
+	cmsy10.305pk\
+	cmsy10.211pk\
+	cmsy10.254pk\
+	cmsy10.212pk\
+	cmsy10.176pk\
+	cmsy10.147pk\
+	cmsy10.102pk\
+	cmsy10.134pk\
+	cmsy10.93pk\
+	cmsy10.122pk\
+	cmsy10.85pk\
+	cmssqi8.122pk\
+	cmssqi8.85pk\
+	cmssq8.122pk\
+	cmssq8.85pk\
+	cmssi17.122pk\
+	cmssi17.85pk\
+	cmssi10.110pk\
+	cmssi10.77pk\
+	cmssi10.98pk\
+	cmssi10.68pk\
+	cmssi10.86pk\
+	cmssi10.59pk\
+	cmssi10.73pk\
+	cmssi10.51pk\
+	cmssi10.61pk\
+	cmssi10.43pk\
+	cmssi10.305pk\
+	cmssi10.211pk\
+	cmssi10.254pk\
+	cmssi10.176pk\
+	cmssi10.147pk\
+	cmssi10.102pk\
+	cmssi10.134pk\
+	cmssi10.93pk\
+	cmssi10.122pk\
+	cmssi10.85pk\
+	cmssbx10.110pk\
+	cmssbx10.77pk\
+	cmssbx10.98pk\
+	cmssbx10.68pk\
+	cmssbx10.86pk\
+	cmssbx10.59pk\
+	cmssbx10.73pk\
+	cmssbx10.51pk\
+	cmssbx10.61pk\
+	cmssbx10.43pk\
+	cmssbx10.305pk\
+	cmssbx10.211pk\
+	cmssbx10.254pk\
+	cmssbx10.212pk\
+	cmssbx10.176pk\
+	cmssbx10.147pk\
+	cmssbx10.102pk\
+	cmssbx10.134pk\
+	cmssbx10.93pk\
+	cmssbx10.122pk\
+	cmssbx10.85pk\
+	cmss17.122pk\
+	cmss17.85pk\
+	cmss12.122pk\
+	cmss12.85pk\
+	cmss10.110pk\
+	cmss10.77pk\
+	cmss10.98pk\
+	cmss10.68pk\
+	cmss10.86pk\
+	cmss10.59pk\
+	cmss10.73pk\
+	cmss10.51pk\
+	cmss10.61pk\
+	cmss10.43pk\
+	cmss10.305pk\
+	cmss10.211pk\
+	cmss10.254pk\
+	cmss10.212pk\
+	cmss10.176pk\
+	cmss10.147pk\
+	cmss10.102pk\
+	cmss10.134pk\
+	cmss10.93pk\
+	cmss10.122pk\
+	cmss10.85pk\
+	cmsltt10.110pk\
+	cmsltt10.77pk\
+	cmsltt10.98pk\
+	cmsltt10.68pk\
+	cmsltt10.86pk\
+	cmsltt10.59pk\
+	cmsltt10.73pk\
+	cmsltt10.51pk\
+	cmsltt10.61pk\
+	cmsltt10.43pk\
+	cmsltt10.305pk\
+	cmsltt10.211pk\
+	cmsltt10.254pk\
+	cmsltt10.212pk\
+	cmsltt10.176pk\
+	cmsltt10.147pk\
+	cmsltt10.102pk\
+	cmsltt10.134pk\
+	cmsltt10.93pk\
+	cmsltt10.122pk\
+	cmsltt10.85pk\
+	cmsl9.122pk\
+	cmsl9.85pk\
+	cmsl8.122pk\
+	cmsl8.85pk\
+	cmsl12.122pk\
+	cmsl12.85pk\
+	cmsl10.86pk\
+	cmsl10.59pk\
+	cmsl10.73pk\
+	cmsl10.51pk\
+	cmsl10.61pk\
+	cmsl10.43pk\
+	cmsl10.305pk\
+	cmsl10.211pk\
+	cmsl10.254pk\
+	cmsl10.212pk\
+	cmsl10.176pk\
+	cmsl10.147pk\
+	cmsl10.102pk\
+	cmsl10.134pk\
+	cmsl10.93pk\
+	cmsl10.122pk\
+	cmsl10.85pk\
+	cmr9.122pk\
+	cmr9.85pk\
+	cmr8.122pk\
+	cmr8.85pk\
+	cmr7.254pk\
+	cmr7.176pk\
+	cmr7.122pk\
+	cmr7.85pk\
+	cmr6.122pk\
+	cmr6.85pk\
+	cmr5.122pk\
+	cmr5.85pk\
+	cmr17.122pk\
+	cmr17.85pk\
+	cmr12.122pk\
+	cmr12.85pk\
+	cmr10.305pk\
+	cmr10.211pk\
+	cmr10.254pk\
+	cmr10.176pk\
+	cmr10.134pk\
+	cmr10.93pk\
+	cmr10.122pk\
+	cmr10.85pk\
+	cmmib10.110pk\
+	cmmib10.77pk\
+	cmmib10.98pk\
+	cmmib10.68pk\
+	cmmib10.86pk\
+	cmmib10.59pk\
+	cmmib10.73pk\
+	cmmib10.51pk\
+	cmmib10.61pk\
+	cmmib10.43pk\
+	cmmib10.305pk\
+	cmmib10.211pk\
+	cmmib10.254pk\
+	cmmib10.212pk\
+	cmmib10.176pk\
+	cmmib10.147pk\
+	cmmib10.102pk\
+	cmmib10.134pk\
+	cmmib10.93pk\
+	cmmib10.122pk\
+	cmmib10.85pk\
+	cmmi9.122pk\
+	cmmi9.85pk\
+	cmmi8.122pk\
+	cmmi8.85pk\
+	cmmi7.122pk\
+	cmmi7.85pk\
+	cmmi6.122pk\
+	cmmi6.85pk\
+	cmmi5.122pk\
+	cmmi5.85pk\
+	cmmi12.122pk\
+	cmmi12.85pk\
+	cmmi10.305pk\
+	cmmi10.211pk\
+	cmmi10.254pk\
+	cmmi10.212pk\
+	cmmi10.147pk\
+	cmmi10.176pk\
+	cmmi10.134pk\
+	cmmi10.93pk\
+	cmmi10.122pk\
+	cmmi10.85pk\
+	cmitt10.110pk\
+	cmitt10.77pk\
+	cmitt10.98pk\
+	cmitt10.68pk\
+	cmitt10.86pk\
+	cmitt10.59pk\
+	cmitt10.73pk\
+	cmitt10.51pk\
+	cmitt10.61pk\
+	cmitt10.43pk\
+	cmitt10.305pk\
+	cmitt10.211pk\
+	cmitt10.254pk\
+	cmitt10.212pk\
+	cmitt10.176pk\
+	cmitt10.147pk\
+	cmitt10.102pk\
+	cmitt10.134pk\
+	cmitt10.93pk\
+	cmitt10.122pk\
+	cmitt10.85pk\
+	cmex10.122pk\
+	cmex10.85pk\
+	cmdunh10.122pk\
+	cmdunh10.85pk\
+	cmcsc10.110pk\
+	cmcsc10.77pk\
+	cmcsc10.98pk\
+	cmcsc10.68pk\
+	cmcsc10.86pk\
+	cmcsc10.59pk\
+	cmcsc10.73pk\
+	cmcsc10.51pk\
+	cmcsc10.61pk\
+	cmcsc10.43pk\
+	cmcsc10.305pk\
+	cmcsc10.211pk\
+	cmcsc10.254pk\
+	cmcsc10.212pk\
+	cmcsc10.176pk\
+	cmcsc10.147pk\
+	cmcsc10.102pk\
+	cmcsc10.134pk\
+	cmcsc10.93pk\
+	cmcsc10.122pk\
+	cmcsc10.85pk\
+	cmbxsl10.110pk\
+	cmbxsl10.77pk\
+	cmbxsl10.98pk\
+	cmbxsl10.68pk\
+	cmbxsl10.86pk\
+	cmbxsl10.59pk\
+	cmbxsl10.73pk\
+	cmbxsl10.51pk\
+	cmbxsl10.61pk\
+	cmbxsl10.43pk\
+	cmbxsl10.305pk\
+	cmbxsl10.211pk\
+	cmbxsl10.254pk\
+	cmbxsl10.212pk\
+	cmbxsl10.176pk\
+	cmbxsl10.147pk\
+	cmbxsl10.102pk\
+	cmbxsl10.134pk\
+	cmbxsl10.93pk\
+	cmbxsl10.122pk\
+	cmbxsl10.85pk\
+	cmbx9.122pk\
+	cmbx9.85pk\
+	cmbx8.122pk\
+	cmbx8.85pk\
+	cmbx7.105pk\
+	cmbx7.73pk\
+	cmbx7.87pk\
+	cmbx7.61pk\
+	cmbx7.122pk\
+	cmbx7.85pk\
+	cmbx6.122pk\
+	cmbx6.85pk\
+	cmbx5.122pk\
+	cmbx5.85pk\
+	cmbx12.122pk\
+	cmbx12.85pk\
+	cmbx10.305pk\
+	cmbx10.211pk\
+	cmbx10.254pk\
+	cmbx10.212pk\
+	cmbx10.176pk\
+	cmbx10.147pk\
+	cmbx10.102pk\
+	cmbx10.134pk\
+	cmbx10.93pk\
+	cmbx10.122pk\
+	cmbx10.85pk\
+	cmbsy10.110pk\
+	cmbsy10.77pk\
+	cmbsy10.98pk\
+	cmbsy10.68pk\
+	cmbsy10.86pk\
+	cmbsy10.59pk\
+	cmbsy10.73pk\
+	cmbsy10.51pk\
+	cmbsy10.61pk\
+	cmbsy10.43pk\
+	cmbsy10.305pk\
+	cmbsy10.211pk\
+	cmbsy10.254pk\
+	cmbsy10.212pk\
+	cmbsy10.176pk\
+	cmbsy10.147pk\
+	cmbsy10.102pk\
+	cmbsy10.134pk\
+	cmbsy10.93pk\
+	cmbsy10.122pk\
+	cmbsy10.85pk\
+	cmb10.134pk\
+	cmb10.93pk\
+#	end of pk-fonts
+snf-fonts:\
+	cmb10.159.snf\
+	cmb10.111.snf\
+	cmtt10.159.snf\
+	cmtt10.111.snf\
+	culogo.122.snf\
+	culogo.85.snf\
+	cminch.122.snf\
+	cminch.85.snf\
+	manfnt.122.snf\
+	manfnt.85.snf\
+	linew10.122.snf\
+	linew10.85.snf\
+	line10.122.snf\
+	line10.85.snf\
+	lcirclew10.122.snf\
+	lcirclew10.85.snf\
+	lcircle10.122.snf\
+	lcircle10.85.snf\
+	lasyb10.110.snf\
+	lasyb10.77.snf\
+	lasyb10.98.snf\
+	lasyb10.68.snf\
+	lasyb10.86.snf\
+	lasyb10.59.snf\
+	lasyb10.73.snf\
+	lasyb10.51.snf\
+	lasyb10.61.snf\
+	lasyb10.43.snf\
+	lasyb10.305.snf\
+	lasyb10.211.snf\
+	lasyb10.254.snf\
+	lasyb10.212.snf\
+	lasyb10.176.snf\
+	lasyb10.147.snf\
+	lasyb10.102.snf\
+	lasyb10.134.snf\
+	lasyb10.93.snf\
+	lasyb10.122.snf\
+	lasyb10.85.snf\
+	lasy9.122.snf\
+	lasy9.85.snf\
+	lasy8.122.snf\
+	lasy8.85.snf\
+	lasy7.122.snf\
+	lasy7.85.snf\
+	lasy6.122.snf\
+	lasy6.85.snf\
+	lasy5.122.snf\
+	lasy5.85.snf\
+	lasy10.305.snf\
+	lasy10.211.snf\
+	lasy10.254.snf\
+	lasy10.212.snf\
+	lasy10.176.snf\
+	lasy10.147.snf\
+	lasy10.102.snf\
+	lasy10.134.snf\
+	lasy10.93.snf\
+	lasy10.122.snf\
+	lasy10.85.snf\
+	cmu10.110.snf\
+	cmu10.77.snf\
+	cmu10.98.snf\
+	cmu10.68.snf\
+	cmu10.86.snf\
+	cmu10.59.snf\
+	cmu10.73.snf\
+	cmu10.51.snf\
+	cmu10.61.snf\
+	cmu10.43.snf\
+	cmu10.305.snf\
+	cmu10.211.snf\
+	cmu10.254.snf\
+	cmu10.212.snf\
+	cmu10.176.snf\
+	cmu10.147.snf\
+	cmu10.102.snf\
+	cmu10.134.snf\
+	cmu10.93.snf\
+	cmu10.122.snf\
+	cmu10.85.snf\
+	cmtt9.122.snf\
+	cmtt9.85.snf\
+	cmtt8.122.snf\
+	cmtt8.85.snf\
+	cmtt12.122.snf\
+	cmtt12.85.snf\
+	cmtt10.86.snf\
+	cmtt10.59.snf\
+	cmtt10.73.snf\
+	cmtt10.51.snf\
+	cmtt10.61.snf\
+	cmtt10.43.snf\
+	cmtt10.305.snf\
+	cmtt10.211.snf\
+	cmtt10.254.snf\
+	cmtt10.212.snf\
+	cmtt10.176.snf\
+	cmtt10.147.snf\
+	cmtt10.102.snf\
+	cmtt10.134.snf\
+	cmtt10.93.snf\
+	cmtt10.122.snf\
+	cmtt10.85.snf\
+	cmti9.122.snf\
+	cmti9.85.snf\
+	cmti8.122.snf\
+	cmti8.85.snf\
+	cmti7.105.snf\
+	cmti7.73.snf\
+	cmti7.87.snf\
+	cmti7.61.snf\
+	cmti7.122.snf\
+	cmti7.85.snf\
+	cmti12.122.snf\
+	cmti12.85.snf\
+	cmti10.305.snf\
+	cmti10.211.snf\
+	cmti10.254.snf\
+	cmti10.212.snf\
+	cmti10.176.snf\
+	cmti10.147.snf\
+	cmti10.102.snf\
+	cmti10.134.snf\
+	cmti10.93.snf\
+	cmti10.122.snf\
+	cmti10.85.snf\
+	cmsy9.122.snf\
+	cmsy9.85.snf\
+	cmsy8.122.snf\
+	cmsy8.85.snf\
+	cmsy7.122.snf\
+	cmsy7.85.snf\
+	cmsy6.122.snf\
+	cmsy6.85.snf\
+	cmsy5.122.snf\
+	cmsy5.85.snf\
+	cmsy10.305.snf\
+	cmsy10.211.snf\
+	cmsy10.254.snf\
+	cmsy10.212.snf\
+	cmsy10.176.snf\
+	cmsy10.147.snf\
+	cmsy10.102.snf\
+	cmsy10.134.snf\
+	cmsy10.93.snf\
+	cmsy10.122.snf\
+	cmsy10.85.snf\
+	cmssqi8.122.snf\
+	cmssqi8.85.snf\
+	cmssq8.122.snf\
+	cmssq8.85.snf\
+	cmssi17.122.snf\
+	cmssi17.85.snf\
+	cmssi10.110.snf\
+	cmssi10.77.snf\
+	cmssi10.98.snf\
+	cmssi10.68.snf\
+	cmssi10.86.snf\
+	cmssi10.59.snf\
+	cmssi10.73.snf\
+	cmssi10.51.snf\
+	cmssi10.61.snf\
+	cmssi10.43.snf\
+	cmssi10.305.snf\
+	cmssi10.211.snf\
+	cmssi10.254.snf\
+	cmssi10.176.snf\
+	cmssi10.147.snf\
+	cmssi10.102.snf\
+	cmssi10.134.snf\
+	cmssi10.93.snf\
+	cmssi10.122.snf\
+	cmssi10.85.snf\
+	cmssbx10.110.snf\
+	cmssbx10.77.snf\
+	cmssbx10.98.snf\
+	cmssbx10.68.snf\
+	cmssbx10.86.snf\
+	cmssbx10.59.snf\
+	cmssbx10.73.snf\
+	cmssbx10.51.snf\
+	cmssbx10.61.snf\
+	cmssbx10.43.snf\
+	cmssbx10.305.snf\
+	cmssbx10.211.snf\
+	cmssbx10.254.snf\
+	cmssbx10.212.snf\
+	cmssbx10.176.snf\
+	cmssbx10.147.snf\
+	cmssbx10.102.snf\
+	cmssbx10.134.snf\
+	cmssbx10.93.snf\
+	cmssbx10.122.snf\
+	cmssbx10.85.snf\
+	cmss17.122.snf\
+	cmss17.85.snf\
+	cmss12.122.snf\
+	cmss12.85.snf\
+	cmss10.110.snf\
+	cmss10.77.snf\
+	cmss10.98.snf\
+	cmss10.68.snf\
+	cmss10.86.snf\
+	cmss10.59.snf\
+	cmss10.73.snf\
+	cmss10.51.snf\
+	cmss10.61.snf\
+	cmss10.43.snf\
+	cmss10.305.snf\
+	cmss10.211.snf\
+	cmss10.254.snf\
+	cmss10.212.snf\
+	cmss10.176.snf\
+	cmss10.147.snf\
+	cmss10.102.snf\
+	cmss10.134.snf\
+	cmss10.93.snf\
+	cmss10.122.snf\
+	cmss10.85.snf\
+	cmsltt10.110.snf\
+	cmsltt10.77.snf\
+	cmsltt10.98.snf\
+	cmsltt10.68.snf\
+	cmsltt10.86.snf\
+	cmsltt10.59.snf\
+	cmsltt10.73.snf\
+	cmsltt10.51.snf\
+	cmsltt10.61.snf\
+	cmsltt10.43.snf\
+	cmsltt10.305.snf\
+	cmsltt10.211.snf\
+	cmsltt10.254.snf\
+	cmsltt10.212.snf\
+	cmsltt10.176.snf\
+	cmsltt10.147.snf\
+	cmsltt10.102.snf\
+	cmsltt10.134.snf\
+	cmsltt10.93.snf\
+	cmsltt10.122.snf\
+	cmsltt10.85.snf\
+	cmsl9.122.snf\
+	cmsl9.85.snf\
+	cmsl8.122.snf\
+	cmsl8.85.snf\
+	cmsl12.122.snf\
+	cmsl12.85.snf\
+	cmsl10.86.snf\
+	cmsl10.59.snf\
+	cmsl10.73.snf\
+	cmsl10.51.snf\
+	cmsl10.61.snf\
+	cmsl10.43.snf\
+	cmsl10.305.snf\
+	cmsl10.211.snf\
+	cmsl10.254.snf\
+	cmsl10.212.snf\
+	cmsl10.176.snf\
+	cmsl10.147.snf\
+	cmsl10.102.snf\
+	cmsl10.134.snf\
+	cmsl10.93.snf\
+	cmsl10.122.snf\
+	cmsl10.85.snf\
+	cmr9.122.snf\
+	cmr9.85.snf\
+	cmr8.122.snf\
+	cmr8.85.snf\
+	cmr7.254.snf\
+	cmr7.176.snf\
+	cmr7.122.snf\
+	cmr7.85.snf\
+	cmr6.122.snf\
+	cmr6.85.snf\
+	cmr5.122.snf\
+	cmr5.85.snf\
+	cmr17.122.snf\
+	cmr17.85.snf\
+	cmr12.122.snf\
+	cmr12.85.snf\
+	cmr10.305.snf\
+	cmr10.211.snf\
+	cmr10.254.snf\
+	cmr10.176.snf\
+	cmr10.134.snf\
+	cmr10.93.snf\
+	cmr10.122.snf\
+	cmr10.85.snf\
+	cmmib10.110.snf\
+	cmmib10.77.snf\
+	cmmib10.98.snf\
+	cmmib10.68.snf\
+	cmmib10.86.snf\
+	cmmib10.59.snf\
+	cmmib10.73.snf\
+	cmmib10.51.snf\
+	cmmib10.61.snf\
+	cmmib10.43.snf\
+	cmmib10.305.snf\
+	cmmib10.211.snf\
+	cmmib10.254.snf\
+	cmmib10.212.snf\
+	cmmib10.176.snf\
+	cmmib10.147.snf\
+	cmmib10.102.snf\
+	cmmib10.134.snf\
+	cmmib10.93.snf\
+	cmmib10.122.snf\
+	cmmib10.85.snf\
+	cmmi9.122.snf\
+	cmmi9.85.snf\
+	cmmi8.122.snf\
+	cmmi8.85.snf\
+	cmmi7.122.snf\
+	cmmi7.85.snf\
+	cmmi6.122.snf\
+	cmmi6.85.snf\
+	cmmi5.122.snf\
+	cmmi5.85.snf\
+	cmmi12.122.snf\
+	cmmi12.85.snf\
+	cmmi10.305.snf\
+	cmmi10.211.snf\
+	cmmi10.254.snf\
+	cmmi10.212.snf\
+	cmmi10.147.snf\
+	cmmi10.176.snf\
+	cmmi10.134.snf\
+	cmmi10.93.snf\
+	cmmi10.122.snf\
+	cmmi10.85.snf\
+	cmitt10.110.snf\
+	cmitt10.77.snf\
+	cmitt10.98.snf\
+	cmitt10.68.snf\
+	cmitt10.86.snf\
+	cmitt10.59.snf\
+	cmitt10.73.snf\
+	cmitt10.51.snf\
+	cmitt10.61.snf\
+	cmitt10.43.snf\
+	cmitt10.305.snf\
+	cmitt10.211.snf\
+	cmitt10.254.snf\
+	cmitt10.212.snf\
+	cmitt10.176.snf\
+	cmitt10.147.snf\
+	cmitt10.102.snf\
+	cmitt10.134.snf\
+	cmitt10.93.snf\
+	cmitt10.122.snf\
+	cmitt10.85.snf\
+	cmex10.122.snf\
+	cmex10.85.snf\
+	cmdunh10.122.snf\
+	cmdunh10.85.snf\
+	cmcsc10.110.snf\
+	cmcsc10.77.snf\
+	cmcsc10.98.snf\
+	cmcsc10.68.snf\
+	cmcsc10.86.snf\
+	cmcsc10.59.snf\
+	cmcsc10.73.snf\
+	cmcsc10.51.snf\
+	cmcsc10.61.snf\
+	cmcsc10.43.snf\
+	cmcsc10.305.snf\
+	cmcsc10.211.snf\
+	cmcsc10.254.snf\
+	cmcsc10.212.snf\
+	cmcsc10.176.snf\
+	cmcsc10.147.snf\
+	cmcsc10.102.snf\
+	cmcsc10.134.snf\
+	cmcsc10.93.snf\
+	cmcsc10.122.snf\
+	cmcsc10.85.snf\
+	cmbxsl10.110.snf\
+	cmbxsl10.77.snf\
+	cmbxsl10.98.snf\
+	cmbxsl10.68.snf\
+	cmbxsl10.86.snf\
+	cmbxsl10.59.snf\
+	cmbxsl10.73.snf\
+	cmbxsl10.51.snf\
+	cmbxsl10.61.snf\
+	cmbxsl10.43.snf\
+	cmbxsl10.305.snf\
+	cmbxsl10.211.snf\
+	cmbxsl10.254.snf\
+	cmbxsl10.212.snf\
+	cmbxsl10.176.snf\
+	cmbxsl10.147.snf\
+	cmbxsl10.102.snf\
+	cmbxsl10.134.snf\
+	cmbxsl10.93.snf\
+	cmbxsl10.122.snf\
+	cmbxsl10.85.snf\
+	cmbx9.122.snf\
+	cmbx9.85.snf\
+	cmbx8.122.snf\
+	cmbx8.85.snf\
+	cmbx7.105.snf\
+	cmbx7.73.snf\
+	cmbx7.87.snf\
+	cmbx7.61.snf\
+	cmbx7.122.snf\
+	cmbx7.85.snf\
+	cmbx6.122.snf\
+	cmbx6.85.snf\
+	cmbx5.122.snf\
+	cmbx5.85.snf\
+	cmbx12.122.snf\
+	cmbx12.85.snf\
+	cmbx10.305.snf\
+	cmbx10.211.snf\
+	cmbx10.254.snf\
+	cmbx10.212.snf\
+	cmbx10.176.snf\
+	cmbx10.147.snf\
+	cmbx10.102.snf\
+	cmbx10.134.snf\
+	cmbx10.93.snf\
+	cmbx10.122.snf\
+	cmbx10.85.snf\
+	cmbsy10.110.snf\
+	cmbsy10.77.snf\
+	cmbsy10.98.snf\
+	cmbsy10.68.snf\
+	cmbsy10.86.snf\
+	cmbsy10.59.snf\
+	cmbsy10.73.snf\
+	cmbsy10.51.snf\
+	cmbsy10.61.snf\
+	cmbsy10.43.snf\
+	cmbsy10.305.snf\
+	cmbsy10.211.snf\
+	cmbsy10.254.snf\
+	cmbsy10.212.snf\
+	cmbsy10.176.snf\
+	cmbsy10.147.snf\
+	cmbsy10.102.snf\
+	cmbsy10.134.snf\
+	cmbsy10.93.snf\
+	cmbsy10.122.snf\
+	cmbsy10.85.snf\
+	cmb10.134.snf\
+	cmb10.93.snf\
+#	end of snf-fonts

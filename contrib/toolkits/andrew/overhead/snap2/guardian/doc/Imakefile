@@ -1,0 +1,3 @@
+NormalHelpRule()
+InstallDocs(guardn.help, $(DESTDIR)/help)
+InstallHelpAlias(guardn, guardian)

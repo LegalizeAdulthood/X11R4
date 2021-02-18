@@ -1,0 +1,55 @@
+This is Version 1.4 of the Xcu Widget Set.
+See Readme/changes* for the differences between this and other versions.
+The Xcu Widget Set is based on the R3 intrinsics.
+
+This distribution should make easily within the X source tree.
+For those of you without that luxury, you probably are familiar
+with the difficulties involved.  I'm not :-)
+
+To Make:
+   1) need to make a top level Makefile from the Imakefile.
+   2) make Makefiles
+   3) make 
+
+(There will be a couple "Usage" messages toward the end of the make.
+ This is because the makefiles are set up to make the modules only
+ by explicitly making the individual targets.  O.w., the example clients
+ could take up a lot of disk space.  Just make those targets when you
+ are ready to look at them.)
+
+To help struggling beginners,
+for what it's worth, I would do it this way:
+
+    Untar the distribution into the directory $(TOP)/lib/Xcu.
+
+    Then to make the Makefile from Imakefile, use the command:
+	../../util/imake/imake -DTOPDIR=../.. \
+	-T ../../util/imake.includes/Imake.tmpl -s Makefile
+
+After making, see the README's in examples/* to run the test programs.
+
+There are seven subdirectories in this directory: man, src, bin, doc,
+examples, wlmCompiler, and Geometry.
+
+    Subdirectory "examples" contains test program subdirectories.
+
+    Subdirectory "src" contains widgets, resource converters,
+    and utility routines.
+
+    Subdirectory "man" contains manuals in both troff and postcript formats.
+
+    Subdirectory "doc" contains a tutorial and a "hello, world" example
+    for the Wlm Widget Layout Manager widget.
+
+    Subdirectory "wlmCompiler" contains the Widget Layout Description Language
+    Compiler required for using the Wlm widget.
+
+    Subdirectory "bin" contains some executable scripts useful for Makefiles
+    that use the Wlm widget.
+
+    Subdirectory "Geometry" contains a bug fix for the intrinsics routine,
+    XtMakeGeometryRequest().  The xtbl demonstrations will not work
+    properly without patching this bug.  There may have been an official
+    R3 patch for this, and I assume that R4 will certainly have it fixed.
+
+

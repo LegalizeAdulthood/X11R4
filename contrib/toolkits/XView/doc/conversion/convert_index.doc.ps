@@ -1,0 +1,1515 @@
+%!
+%%Pages: (atend)
+%%DocumentFonts: (atend)
+%%EndComments
+%
+% Frame Maker PostScript Prolog 1.3, for use with Maker 1.3
+% Copyright (c) 1986-1988 by Frame Technology, Inc.  All rights reserved.
+%
+% Known Problems:
+%	Due to bugs in Transcript, the 'PS-Adobe-' is omitted from line 1
+/FMversion (1.2) def 
+/FrameDict 123 dict def 
+% The readline in 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} def
+	} if
+/FMVERSION {
+	FMversion ne {
+		/Times-Roman findfont 18 scalefont setfont
+		100 100 moveto
+		(Maker version does not match postscript_prolog!)
+		dup =
+		show showpage
+		} if
+	} def 
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/landscape FMLOCAL
+	/docheight FMLOCAL
+	/docwidth FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/organgle FMLOCAL
+	/orgfreq FMLOCAL
+/FMDOCUMENT {
+	array /FMfonts exch def
+	/#copies exch def
+	FrameDict begin
+	0 ne /landscape exch def 
+	/docheight exch def
+	/docwidth exch def
+	/yscale exch def
+	/xscale exch def
+	currenttransfer cvlit /orgxfer exch def
+	currentscreen cvlit /orgproc exch def
+		/organgle exch def /orgfreq exch def
+	end 
+	} def 
+	/pagesave FMLOCAL
+	/orgmatrix FMLOCAL
+/FMBEGINPAGE {
+	FrameDict begin 
+	/pagesave save def
+	
+	2 setlinecap
+	xscale yscale scale
+	landscape {
+		90 rotate
+		0 docheight neg translate
+		/fillprocs /fillprocs90 load store
+		}
+		{/fillprocs /fillprocs0 load store}
+		ifelse
+	/orgmatrix matrix def
+	gsave 
+	} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+	/fontname FMLOCAL
+	/fontscale FMLOCAL
+	/fontnum FMLOCAL
+	/fontdict FMLOCAL
+/FMDEFINEFONT {
+	FrameDict begin
+	/fontname exch def
+	/fontscale exch def
+	/fontnum exch def
+	/fontdict fontname findfont fontscale scalefont def
+	fontdict /Encoding get StandardEncoding eq
+	{
+		fontdict DiacriticEncode 
+		/fontdict exch def
+	} {
+		fontdict NonDiacriticEncode
+		/fontdict exch def
+	} ifelse
+	FMfonts fontnum
+		fontnum fontdict definefont
+	put
+	end 
+	} def 
+/FMLINEWIDTHS { 
+	FrameDict begin
+	dup array /FMlinewidths exch def 
+	1 sub -1 0 {exch FMlinewidths 3 1 roll lnormalize put} for
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 setgray
+	} bind def
+/FMBEGINEPSF {
+	end 
+	/FMEPSF save def
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fy translate 
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	} bind def
+ 
+/FMENDEPSF {
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+ 
+FrameDict begin 
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi	72 0 dmatrix defaultmatrix dtransform
+	dup mul exch   dup mul add   sqrt
+def
+/max	{2 copy lt {exch} if pop} bind def
+/min	{2 copy gt {exch} if pop} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+	/basefontdict FMLOCAL
+	/newfontdict FMLOCAL
+/DiacriticEncode {
+	/basefontdict exch def
+	/newfontdict basefontdict maxlength dict def
+	basefontdict
+	{exch dup /FID ne
+		{dup /Encoding eq
+			{exch pop DiacriticEncoding}
+			{exch}
+			ifelse
+			newfontdict 3 1 roll put
+			}
+		{pop pop}
+		ifelse
+		} forall
+	newfontdict
+	} bind def
+/NonDiacriticEncode {
+	/basefontdict exch def
+	/newfontdict basefontdict maxlength dict def
+	basefontdict
+	{exch dup /FID ne
+		{exch newfontdict 3 1 roll put}
+		{pop pop}
+		ifelse
+		} forall
+	newfontdict
+	} bind def
+	/freq FMLOCAL
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setpattern {
+	 /freq    exch def
+	 /bwidth  exch def
+	 /bpside  exch def
+	 /bstring exch def
+	 /onbits 0 def  /offbits 0 def
+	 freq 0 {/y exch def
+		 /x exch def
+		 /xindex x 1 add 2 div bpside mul cvi def
+		 /yindex y 1 add 2 div bpside mul cvi def
+		 bstring yindex bwidth mul xindex 8 idiv add get
+		 1 7 xindex 8 mod sub bitshift and 0 ne
+		 {/onbits  onbits  1 add def 1}
+		 {/offbits offbits 1 add def 0}
+		 ifelse
+		}
+		setscreen
+	 {} settransfer
+	 offbits offbits onbits add div setgray
+	} bind def
+/grayness {
+	setgray
+	orgxfer cvx settransfer
+	orgfreq organgle orgproc cvx setscreen
+	} bind def
+/normalize {
+	transform cvi exch cvi exch itransform
+	} bind def
+/dnormalize {
+	dtransform cvi exch cvi exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/fillprocs0
+	[{0.00 grayness}
+	 {0.10 grayness}
+	 {0.30 grayness}
+	 {0.50 grayness} 
+	 {0.70 grayness}
+	 {0.90 grayness}
+	 {0.97 grayness} 
+	 {1.00 grayness} 
+	 {<0F1E3C78F0E1C387> 8 1 dpi 16 div setpattern} 
+	 {<0F87C3E1F0783C1E> 8 1 dpi 16 div setpattern} 
+	 {<CCCCCCCCCCCCCCCC> 8 1 dpi 16 div setpattern} 
+	 {<FFFF0000FFFF0000> 8 1 dpi 16 div setpattern} 
+	 {<8142241818244281> 8 1 dpi 16 div setpattern} 
+	 {<03060C183060C081> 8 1 dpi 16 div setpattern} 
+	 {<8040201008040201> 8 1 dpi 16 div setpattern} 
+	 {}
+	 {1.00 grayness}
+	 {0.90 grayness}
+	 {0.70 grayness}
+	 {0.50 grayness} 
+	 {0.30 grayness}
+	 {0.10 grayness}
+	 {0.03 grayness} 
+	 {0.00 grayness} 
+	 {<F0E1C3870F1E3C78> 8 1 dpi 16 div setpattern} 
+	 {<F0783C1E0F87C3E1> 8 1 dpi 16 div setpattern} 
+	 {<3333333333333333> 8 1 dpi 16 div setpattern} 
+	 {<0000FFFF0000FFFF> 8 1 dpi 16 div setpattern} 
+	 {<7EBDDBE7E7DBBD7E> 8 1 dpi 16 div setpattern} 
+	 {<FCF9F3E7CF9F3F7E> 8 1 dpi 16 div setpattern} 
+	 {<7FBFDFEFF7FBFDFE> 8 1 dpi 16 div setpattern} 
+	 {}
+	] def
+/fillprocs90
+	 [{0.00 grayness}
+	 {0.10 grayness}
+	 {0.30 grayness}
+	 {0.50 grayness}
+	 {0.70 grayness}
+	 {0.90 grayness}
+	 {0.97 grayness}
+	 {1.00 grayness}
+	 {<87c3e1f0783c1e0f> 8 1 dpi 16 div setpattern}
+	 {<f0e1c3870f1e3c78> 8 1 dpi 16 div setpattern}
+	 {<0000ffff0000ffff> 8 1 dpi 16 div setpattern}
+	 {<cccccccccccccccc> 8 1 dpi 16 div setpattern}
+	 {<8142241818244281> 8 1 dpi 16 div setpattern}
+	 {<81c06030180c0603> 8 1 dpi 16 div setpattern}
+	 {<0102040810204080> 8 1 dpi 16 div setpattern}
+	 {}
+	 {1.00 grayness}
+	 {0.90 grayness}
+	 {0.70 grayness}
+	 {0.50 grayness}
+	 {0.30 grayness}
+	 {0.10 grayness}
+	 {0.03 grayness}
+	 {0.00 grayness}
+	 {<783c1e0f87c3e1f0> 8 1 dpi 16 div setpattern}
+	 {<0f1e3c78f0e1c387> 8 1 dpi 16 div setpattern}
+	 {<ffff0000ffff0000> 8 1 dpi 16 div setpattern}
+	 {<3333333333333333> 8 1 dpi 16 div setpattern}
+	 {<7ebddbe7e7dbbd7e> 8 1 dpi 16 div setpattern}
+	 {<7e3f9fcfe7f3f9fc> 8 1 dpi 16 div setpattern}
+	 {<fefdfbf7efdfbf7f> 8 1 dpi 16 div setpattern}
+	 {}
+	] def
+/fillprocs /fillprocs0 load def
+/H { 
+	FMlinewidths exch get setlinewidth
+	} bind def
+/X { 
+	fillprocs exch get exec
+	} bind def
+/V { 
+	gsave eofill grestore
+	} bind def
+/N { 
+	gsave stroke grestore 
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+/K { 
+ 	/n exch def
+	newpath
+	moveto 
+	3 1 n {pop curveto} for
+	} bind def
+/J { 
+ 	/n exch def
+	newpath
+	moveto 
+	1 1 n {pop curveto} for
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	} bind def
+/U { 
+	grestore
+	gsave
+	} bind def
+/F { 
+	FMfonts exch get
+	setfont
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/Q { 
+	moveto
+	gsave show grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/dx FMLOCAL
+	/dy FMLOCAL
+	/dl FMLOCAL
+	/t FMLOCAL
+	/t2 FMLOCAL
+	/Cos FMLOCAL
+	/Sin FMLOCAL
+	/r FMLOCAL
+/W { 
+	dnormalize
+	/dy exch def
+	/dx exch def
+	normalize
+	/y  exch def
+	/x  exch def
+	/dl dx dx mul dy dy mul add sqrt def
+	dl 0.0 gt {
+		/t currentlinewidth def
+		savematrix
+		/Cos dx dl div def
+		/Sin dy dl div def
+		/r [Cos Sin Sin neg Cos 0.0 0.0] def
+		/t2 t 2.5 mul 3.5 max def
+		newpath
+		x y translate
+		r concat
+		0.0 0.0 moveto
+		dl t 2.7 mul sub 0.0 rlineto
+		stroke
+		restorematrix
+		x dx add y dy add translate
+		r concat
+		t 0.67 mul setlinewidth
+		t 1.61 mul neg  0.0 translate
+		0.0 0.0 moveto
+		t2 1.7 mul neg  t2 2.0 div     moveto
+		0.0 0.0 lineto
+		t2 1.7 mul neg  t2 2.0 div neg lineto
+		stroke
+		t setlinewidth
+		restorematrix
+		} if
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath eofill
+	grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+/A { 
+	/y exch def
+	/x exch def
+	/h exch def
+	/w exch def
+	x y normalize /yy exch def /xx exch def
+	w h dnormalize /hh exch def /ww exch def
+	ww abs hh abs xx ww add yy hh sub
+	gsave
+	savematrix
+	newpath
+	translate
+	scale
+	0.0 0.0 1.0 5 3 roll arc
+	0 setlinecap
+	restorematrix
+	stroke
+	grestore
+	} bind def
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE {
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 6 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	translate
+	FMNORMALIZEGRAPHICS
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/BEGINBITMAP { 
+	gsave
+	translate scale /h exch def /w exch def
+	/lb w 7 add 8 idiv def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h 1 [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+%%EndProlog
+%%BeginSetup
+(1.2) FMVERSION
+1. 1. 612. 792. 0 1 3 FMDOCUMENT
+0 10. /Times-Roman  FMDEFINEFONT
+1 14. /Times-Bold  FMDEFINEFONT
+2 24. /Times-Roman  FMDEFINEFONT
+0.5 1. 3. 4. 4 FMLINEWIDTHS
+%%EndSetup
+%%Page: "148" 8
+FMBEGINPAGE
+558. 727. 54. 727. 2 L
+0 H
+0 X
+N
+0 F
+(\320 148 \320) 291. 36. T
+(Index   Continued) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+(win_get_button_orde   130) 54. 695. T
+(win_getcursor   130) 54. 683. T
+(win_get_designee   130) 54. 671. T
+(win_get_event_timeout   130) 54. 659. T
+(win_get_fd   130) 54. 647. T
+(win_get_focus_event   131) 54. 635. T
+(win_getgfxwindow   129) 54. 623. T
+(win_get_kbd_mask   131) 54. 611. T
+(win_getowner   130) 54. 599. T
+(win_getparentwindow   130) 54. 587. T
+(win_get_pick_mask   131) 54. 575. T
+(win_get_pixwin   131) 54. 563. T
+(win_getsavedrect   130) 54. 551. T
+(win_get_scaling   131) 54. 539. T
+(win_getscreenposition   130) 54. 527. T
+(win_get_swallow_event   131) 54. 515. T
+(win_get_tree_layer   131) 54. 503. T
+(win_getuserflag   130) 54. 491. T
+(win_initscreenfromargv   131) 54. 479. T
+(WIN_INPUT_DESIGNEE   58) 54. 467. T
+(WIN_INPUT_MASK   58) 54. 455. T
+(win_insertblanket   131) 54. 443. T
+(WIN_IN_TRANSIT_EVENTS   58) 54. 431. T
+(win_isblanket   131) 54. 419. T
+(win_is_input_device   131) 54. 407. T
+(WIN_KBD_INPUT_MASK   58) 54. 395. T
+(WIN_META_EVENTS   84) 54. 383. T
+(WIN_MOUSE_XY   84) 54. 371. T
+(WIN_NOTIFY_EVENT_PROC   58) 54. 359. T
+(WIN_NOTIFY_IMMEDIATE_EVENT_PROC   58) 54. 347. T
+(win_numbertoname   131) 54. 335. T
+(WIN_PICK_INPUT   131) 54. 323. T
+(WIN_PICK_INPUT_MASK   58) 54. 311. T
+(WIN_RECT   58) 54. 299. T
+(win_release_event_lock   131) 54. 287. T
+(win_removeblanket   131) 54. 275. T
+(win_remove_input_device   131) 54. 263. T
+(win_screendestroy   131) 54. 251. T
+(win_screenget   131) 54. 239. T
+(win_screennew   131) 54. 227. T
+(win_set_button_order   131) 54. 215. T
+(win_set_clip\050\051   69) 54. 203. T
+(win_setcursor   131) 54. 191. T
+(win_set_designee   132) 54. 179. T
+(win_set_event_timeout   132) 54. 167. T
+(win_set_focus_event   132) 54. 155. T
+(win_setgfxwindow   129) 54. 143. T
+(win_set_input_device   132) 54. 131. T
+(win_setkbd   131) 54. 119. T
+(win_set_kbd_mask   132) 54. 107. T
+(win_setms   131) 54. 95. T
+(win_setowner   131) 313. 695. T
+(win_setparentwindow   131) 313. 683. T
+(win_set_pick_mask   132) 313. 671. T
+(win_setsavedrect   131) 313. 659. T
+(win_setscreenposition   131) 313. 647. T
+(win_set_swallow_event   132) 313. 635. T
+(win_setuserflag   131) 313. 623. T
+(WIN_STOP   66) 313. 611. T
+(WIN_UP_META_EVENTS   84) 313. 599. T
+(WIN_X   59) 313. 587. T
+(WIN_X_COLOR_INDICES   90) 313. 575. T
+(wmgr   73) 313. 563. T
+(wmgr_*   132) 313. 551. T
+1 F
+(X) 313. 523. T
+0 F
+(XFlush   123) 313. 503. T
+(XSync   123) 313. 491. T
+(XV   30, 54, 56, 57) 313. 479. T
+(XV_LEFT_MARGIN   46) 313. 467. T
+(XV_MARGIN   46) 313. 455. T
+(XV_RECT   58) 313. 443. T
+(XV_RIGHT_MARGIN   46) 313. 431. T
+(xv_rop\050\051   121) 313. 419. T
+(XV_SHOW   43) 313. 407. T
+FMENDPAGE
+%%Page: "147" 7
+FMBEGINPAGE
+558. 727. 54. 727. 2 L
+0 H
+0 X
+N
+0 F
+(\320 147 \320) 291. 36. T
+(Index   Continued) 486.06 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+(SunView vs. XView Defaults   107, 137) 54. 695. T
+1 F
+(T) 54. 667. T
+0 F
+(Text Subwindow Package   55) 54. 647. T
+(TEXTSW   55) 54. 635. T
+(textsw   27) 54. 623. T
+(TEXTSW_*   55) 54. 611. T
+(TEXTSW_ADJUST_IS_PENDING_DELETE   55) 54. 599. T
+(textsw_get*   130) 54. 587. T
+(tiles   71) 54. 575. T
+(tool   71) 54. 563. T
+(tool_   130) 54. 551. T
+(TOOL_*   130) 54. 539. T
+(tool_begin\050\051   29) 54. 527. T
+(tool_create\050\051   29) 54. 515. T
+(tool_hs.h   130) 54. 503. T
+(tool_make\050\051   29) 54. 491. T
+(tool_parse_all   130) 54. 479. T
+(tool_parse_all\050\051   29) 54. 467. T
+(tool_parse_one\050\051   29) 54. 455. T
+(tool_struct.h   130) 54. 443. T
+(tool_usage\050\051   29, 34) 54. 431. T
+(TTY   56) 54. 419. T
+(TTY Package   56) 54. 407. T
+(TTY_*   56) 54. 395. T
+(ttysw   74) 54. 383. T
+(ttysw_*   130) 54. 371. T
+(ttytlsw   74) 54. 359. T
+1 F
+(U) 54. 331. T
+0 F
+(Unimplemented Cursor RasterOps   77) 54. 311. T
+(unnecessary flicker   77) 54. 299. T
+(Unsupported Frame Attributes   63) 54. 287. T
+(Unsupported Menu Structures and Functions   66) 54. 275. T
+(Unsupported struct fullscreen Fields   68) 54. 263. T
+(Unsupported struct inputmask Fields   69) 54. 251. T
+(Unsupported Type Definitions   69) 54. 239. T
+1 F
+(V) 54. 211. T
+0 F
+(view window   7, 74) 54. 191. T
+(VU_ Generic and Common Attributes   56) 54. 179. T
+(VU_*   56, 57) 54. 167. T
+(vu_create\050\051   6, 81) 54. 155. T
+(vu_destroy\050\051   6, 81) 54. 143. T
+(vu_find\050\051   6, 81) 54. 131. T
+(VU_FONT   44, 45) 54. 119. T
+(vu_get\050\051   6, 81) 54. 107. T
+(VU_HEIGHT   44) 54. 95. T
+(VU_HELP_DATA   34) 313. 695. T
+(vu_init\050\051   6, 81) 313. 683. T
+(VU_INIT_ARGC_PRT_ARGV   43) 313. 671. T
+(VU_INIT_ARGS   43) 313. 659. T
+(VU_LABEL   44) 313. 647. T
+(VU_LEFT_MARGIN   45) 313. 635. T
+(VU_MARGIN   45) 313. 623. T
+(VU_OWNER   45, 47, 49) 313. 611. T
+(vu_parse_one\050\051   29) 313. 599. T
+(VU_RECT   44) 313. 587. T
+(VU_RIGHT_MARGIN   47) 313. 575. T
+(vu_set\050\051   6, 81) 313. 563. T
+(VU_SHOW   49) 313. 551. T
+(vu_usage\050\051   29) 313. 539. T
+(VU_USAGE_PROC   43) 313. 527. T
+(VU_WI   44) 313. 515. T
+(VU_X   49) 313. 503. T
+(VU_XID   57) 313. 491. T
+(VU_Y   49) 313. 479. T
+1 F
+(W) 313. 451. T
+0 F
+(we   72) 313. 431. T
+(WIN   30, 31, 57, 58, 59, 66, 70, 76, 131) 313. 419. T
+(win   30, 71, 72, 73, 130) 313. 407. T
+(WIN_*   57, 59) 313. 395. T
+(WIN_BACKGROUND_COLOR   89) 313. 383. T
+(WIN_BIT_GRAVITY   25) 313. 371. T
+(WIN_CMS_DATA   88) 313. 359. T
+(WIN_CMS_NAME   89) 313. 347. T
+(WIN_COL_GAP   57) 313. 335. T
+(WIN_COLUMN_GAP   57) 313. 323. T
+(WIN_COLUMN_WIDTH   57) 313. 311. T
+(WIN_COL_WIDTH   57) 313. 299. T
+(WIN_CONSUME_   130) 313. 287. T
+(WIN_CONSUME_EVENTS   26) 313. 275. T
+(window   72) 313. 263. T
+(Window Package   57) 313. 251. T
+(window_release_event_lock   130) 313. 239. T
+(windows   24) 313. 227. T
+(window_set_cursor   130) 313. 215. T
+(WIN_DYNAMIC_VISUAL   86, 89) 313. 203. T
+(win_enumall   130) 313. 191. T
+(win_enumerate_*   130) 313. 179. T
+(win_enum_input_device   130) 313. 167. T
+(win_enumscreen   130) 313. 155. T
+(win_errorhandler   130) 313. 143. T
+(WIN_FD   130) 313. 131. T
+(win_fdto   130) 313. 119. T
+(win_findintersect   129) 313. 107. T
+(WIN_FOREGROUND_COLOR   89) 313. 95. T
+FMENDPAGE
+%%Page: "146" 6
+FMBEGINPAGE
+558. 727. 54. 727. 2 L
+0 H
+0 X
+N
+0 F
+(\320 146 \320) 291. 36. T
+(Index   Continued) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+(pw_dbl_*   129) 54. 695. T
+(Pw_dbl_attribute   129) 54. 683. T
+(pw_donedamaged   129) 54. 671. T
+(pw_exposed   129) 54. 659. T
+(pw_open   129) 54. 647. T
+(pw_pfsysopen   129) 54. 635. T
+(pw_polygon2\050\051   76) 54. 623. T
+(pw_preparesurface   129) 54. 611. T
+(pw_preparesurface\050\051   75) 54. 599. T
+(pw_region   129) 54. 587. T
+(pw_repairretained   129) 54. 575. T
+(pw_restrict*   129) 54. 563. T
+(pw_set_*   129) 54. 551. T
+(pw_traprop   129) 54. 539. T
+(pw_traprop\050\051   26) 54. 527. T
+(pw_use_fast_mono   129) 54. 515. T
+1 F
+(R) 54. 487. T
+0 F
+(Removed #DEFINE Items   65) 54. 467. T
+(Removed Command Line Functions   71) 54. 455. T
+(Removed Cursor Attributes   64) 54. 443. T
+(Removed Double-Buffering Attributes   70) 54. 431. T
+(Removed Low-Level Window Functions   72) 54. 419. T
+(Removed Panel Functions   71) 54. 407. T
+(Removed PANEL_MENU Attributes   64) 54. 395. T
+(Removed Pixwin Functions   69) 54. 383. T
+(Removed Pre-SunView Panel Attributes   65) 54. 371. T
+(Removed Screen Functions   73) 54. 359. T
+(Removed Tile/Agent Functions   71) 54. 347. T
+(Removed Ttysw Functions   74) 54. 335. T
+(Removed Window Manager Functions   73) 54. 323. T
+(Removed Window Tree Enumeration Functions   72) 54. 311. T
+(Removed Workstation Functions   73) 54. 299. T
+(resource   111) 54. 287. T
+(class   111) 72. 275. T
+(instance   111) 72. 263. T
+(retained canvas   26) 54. 251. T
+(Run-Time Incompatibilities Affecting Basic Clients   74) 54. 239. T
+(Run-Time Incompatibilities for Advanced Clients   78) 54. 227. T
+(Run-Time Incompatibilitiesfor Intermediate Clients   77) 54. 215. T
+1 F
+(S) 54. 187. T
+0 F
+(SCREEN   52) 54. 167. T
+(Screen   10) 54. 155. T
+(Screen Objects   82) 54. 143. T
+(Screen Package   52) 54. 131. T
+(SCREEN_*   52) 54. 119. T
+(SCROLL   52, 53) 54. 107. T
+(SCROLL_*   52, 53, 129) 54. 95. T
+(SCROLLBAR   52) 313. 695. T
+(SCROLLBAR _DIRECTION   52) 313. 683. T
+(SCROLLBAR _LAST_VIEW_START   52) 313. 671. T
+(SCROLLBAR _NOTIFY_CLIENT   52) 313. 659. T
+(SCROLLBAR _OBJECT_LENGTH   52) 313. 647. T
+(Scrollbar Package   52) 313. 635. T
+(SCROLLBAR _VIEW_LENGTH   53) 313. 623. T
+(SCROLLBAR _VIEW_START   53) 313. 611. T
+(SCROLLBAR_*   52, 129) 313. 599. T
+(scrollbar_create\050\051   28, 77) 313. 587. T
+(SCROLLBAR_DEFAULT   28) 313. 575. T
+(scrollbar_paint\050\051   77) 313. 563. T
+(SCROLLBAR_PIXELS_PER_UNIT   52) 313. 551. T
+(scrollbars   28) 313. 539. T
+(SCROLLBAR_SPLITTABLE   29) 313. 527. T
+(SCROLL_DIRECTION   52) 313. 515. T
+(SCROLL_LAST_VIEW_START   52) 313. 503. T
+(SCROLL_LINE_HEIGHT   52) 313. 491. T
+(SCROLL_NOTIFY_CLIENT   52) 313. 479. T
+(SCROLL_OBJECT_LENGTH   52) 313. 467. T
+(SCROLL_VIEW_LENGTH   53) 313. 455. T
+(SCROLL_VIEW_START   53) 313. 443. T
+(SCROLL_WIDTH   53) 313. 431. T
+(Selection Package   53) 313. 419. T
+(SELN   53) 313. 407. T
+(SELN_REQ_*   53) 313. 395. T
+(SELN_REQ_FAILED   53) 313. 383. T
+(SERVER   54) 313. 371. T
+(Server   10) 313. 359. T
+(server image objects   10, 11) 313. 347. T
+(Server Images   84) 313. 335. T
+(server images   121) 313. 323. T
+(Server Objects   82) 313. 311. T
+(Server Package   54) 313. 299. T
+(SERVER_*   54) 313. 287. T
+(SERVER_SYNC   123) 313. 275. T
+(SERVER_SYNC_PROCESS_EVENTS   123) 313. 263. T
+(SIGURG   66) 313. 251. T
+(StaticColor   84) 313. 239. T
+(Stop key   66) 313. 227. T
+(struct   129) 313. 215. T
+(struct cursor   129) 313. 203. T
+(struct icon   129) 313. 191. T
+(struct menu   66, 129) 313. 179. T
+(struct menu_item   66) 313. 167. T
+(struct msgsubwindow   67) 313. 155. T
+(struct pixwin   129) 313. 143. T
+(struct prompt   66, 129) 313. 131. T
+(struct screen   129) 313. 119. T
+(struct tool   29, 129) 313. 107. T
+(Structures   68) 313. 95. T
+FMENDPAGE
+%%Page: "145" 5
+FMBEGINPAGE
+558. 727. 54. 727. 2 L
+0 H
+0 X
+N
+0 F
+(\320 145 \320) 291. 36. T
+(Index   Continued) 486.06 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+(old input mask   30) 54. 695. T
+(Openwin Package   47) 54. 683. T
+(OPENWIN_*   48) 54. 671. T
+(OPENWIN_ADJUST_FOR_HORIZONTAL_SCROLLB) 54. 659. T
+(AR   47) 90. 647. T
+(OPENWIN_ADJUST_FOR_VERTICAL_SCROLLBAR  ) 54. 635. T
+( 47) 90. 623. T
+(OPENWIN_AUTO_CLEAR   42, 47) 54. 611. T
+(OPENWIN_NO_MARGIN   48) 54. 599. T
+(OPENWIN_NTH_VIEW   48) 54. 587. T
+(OPENWIN_NUMBER_OF_VIEWS   48) 54. 575. T
+(OPENWIN_SELECTED_VIEW   48) 54. 563. T
+(OPENWIN_SHOW_BORDERS   48) 54. 551. T
+(OPENWIN_SPLIT   48) 54. 539. T
+(OPENWIN_SPLIT_DIRECTION   48) 54. 527. T
+(OPENWIN_SPLIT_POSITION   48) 54. 515. T
+(OPENWIN_SPLIT_VIEW   48) 54. 503. T
+(OPENWIN_SPLIT_VIEW_OFFSET   48) 54. 491. T
+(OPENWIN_VERTICAL_SCROLLBAR   48) 54. 479. T
+(OPENWIN_VIEW_ATTRS   48) 54. 467. T
+(Overview   63) 54. 455. T
+1 F
+(P) 54. 427. T
+0 F
+(paint window   7, 74) 54. 407. T
+(PANEL   49, 50, 51, 64, 65, 71) 54. 395. T
+(panel   71) 54. 383. T
+(Panel Area Attributes   48, 49) 54. 371. T
+(Panel Button Attributes   50) 54. 359. T
+(Panel Choice and Toggle Attributes   50) 54. 347. T
+(Panel item   9) 54. 335. T
+(Panel List Attributes   51) 54. 323. T
+(Panel Message Attributes   51) 54. 311. T
+(Panel Package   48) 54. 299. T
+(Panel Slider Attributes   51) 54. 287. T
+(Panel Text Attributes   51) 54. 275. T
+(PANEL_*   48, 50, 51) 54. 263. T
+(PANEL_ACCEPT_KEYSTROKE   30, 48) 54. 251. T
+(PANEL_BACKGROUND_PROC   48) 54. 239. T
+(PANEL_BLINK_CARET   48) 54. 227. T
+(PANEL_BUTTON   48) 54. 215. T
+(panel_button_image   128) 54. 203. T
+(panel_button_image\050\051   71) 54. 191. T
+(PANEL_CARET_ITEM   48) 54. 179. T
+(PANEL_CHECK_BOX   48) 54. 167. T
+(PANEL_CHOICE   48) 54. 155. T
+(PANEL_CHOICE_*   50) 54. 143. T
+(PANEL_CHOICE_STACK   48) 54. 131. T
+(PANEL_CU   128) 54. 119. T
+(PANEL_CU\050\051   30) 54. 107. T
+(PANEL_CYCLE   30, 48, 50) 54. 95. T
+(PANEL_DEFAULT_ITEM   48) 313. 695. T
+(PANEL_EVENT_PROC   48) 313. 683. T
+(PANEL_EXTRA_PAINT_HEIGHT   48) 313. 671. T
+(PANEL_EXTRA_PAINT_WIDTH   48) 313. 659. T
+(PANEL_FIRST_ITEM   49) 313. 647. T
+(panel_get*   128) 313. 635. T
+(PANEL_INACTIVE   50) 313. 623. T
+(PANEL_ITEM_*   49) 313. 611. T
+(PANEL_ITEM_MENU   50) 313. 599. T
+(PANEL_ITEM_X   49) 313. 587. T
+(PANEL_ITEM_X_GAP   49) 313. 575. T
+(PANEL_ITEM_Y   49) 313. 563. T
+(PANEL_ITEM_Y_GAP   49) 313. 551. T
+(PANEL_LABEL_*   49) 313. 539. T
+(PANEL_LABEL_BOLD   49) 313. 527. T
+(PANEL_LABEL_IMAGE   128) 313. 515. T
+(PANEL_LABEL_STRING   71, 128) 313. 503. T
+(PANEL_LAYOUT   49) 313. 491. T
+(PANEL_LIST   48) 313. 479. T
+(panel_make*   128) 313. 467. T
+(PANEL_MENU_*   49, 128) 313. 455. T
+(PANEL_MESSAGE   48) 313. 443. T
+(PANEL_NOTIFY_*   49) 313. 431. T
+(PANEL_PARENT_PANEL   49) 313. 419. T
+(PANEL_REPAINT_PROC   49) 313. 407. T
+(Panels   76) 313. 395. T
+(panels   27) 313. 383. T
+(panel_set*   129) 313. 371. T
+(PANEL_SHOW_ITEM   49) 313. 359. T
+(PANEL_SHOW_MENU   49) 313. 347. T
+(PANEL_SLIDER   48) 313. 335. T
+(PANEL_TEXT   48) 313. 323. T
+(PANEL_VALUE_X   50) 313. 311. T
+(PANEL_VALUE_Y   50) 313. 299. T
+(pf   70) 313. 287. T
+(PIX   77) 313. 275. T
+(pixrects   121) 313. 263. T
+(Pixwin   7, 75, 77) 313. 251. T
+(pixwins   26) 313. 239. T
+(Pre-SunView Code   29) 313. 227. T
+(Preface   xix) 313. 215. T
+(PseudoColor   84) 313. 203. T
+(PW   70) 313. 191. T
+(Pw   69) 313. 179. T
+(pw   69, 70, 75) 313. 167. T
+(pw_*   26) 313. 155. T
+(pw_* calls   123) 313. 143. T
+(Pw_attribute_value   129) 313. 131. T
+(pw_close   129) 313. 119. T
+(pw_damaged   129) 313. 107. T
+(PW_DBL_*   129) 313. 95. T
+FMENDPAGE
+%%Page: "144" 4
+FMBEGINPAGE
+558. 727. 54. 727. 2 L
+0 H
+0 X
+N
+0 F
+(\320 144 \320) 291. 36. T
+(Index   Continued) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+(MENU_CLASS   45) 54. 695. T
+(MENU_CLIENT_DATA   45, 46) 54. 683. T
+(MENU_COL_MAJOR   45) 54. 671. T
+(MENU_DEFAULT   45) 54. 659. T
+(MENU_DEFAULT_ITEM   45) 54. 647. T
+(MENU_DEFAULT_SELECTION   45) 54. 635. T
+(MENU_DESCEND_FIRST   45) 54. 623. T
+(menu_display   128) 54. 611. T
+(menu_display\050\051   66) 54. 599. T
+(MENU_FEEDBACK   46) 54. 587. T
+(MENU_FIRST_EVENT   45) 54. 575. T
+(MENU_FONT   45, 46, 128) 54. 563. T
+(MENU_GEN_PIN_WINDOW   45) 54. 551. T
+(MENU_GEN_PROC   45, 46) 54. 539. T
+(MENU_GEN_PROC_IMAGE   46) 54. 527. T
+(MENU_GEN_PROC_ITEM   46) 54. 515. T
+(MENU_GEN_PULLRIGHT   46) 54. 503. T
+(MENU_GEN_PULLRIGHT_IMAGE   45, 46) 54. 491. T
+(MENU_GEN_PULLRIGHT_ITEM   45, 46) 54. 479. T
+(MENU_IMAGE   46) 54. 467. T
+(MENU_IMAGE_ITEM   45, 46) 54. 455. T
+(MENU_IMAGES   45) 54. 443. T
+(MENU_INACTIVE   46) 54. 431. T
+(MENU_INITIAL_SELECTION   45) 54. 419. T
+(MENU_INITIAL_SELECTION_EXPANDED   45) 54. 407. T
+(MENU_INITIAL_SELECTION_SELECTED   45) 54. 395. T
+(MENU_INSERT   45) 54. 383. T
+(MENU_INSERT_ITEM   45) 54. 371. T
+(MENU_INVERT   46) 54. 359. T
+(MENU_ITEM   45) 54. 347. T
+(MENU_JUMP_AFTER_NO_SELECTION   45) 54. 335. T
+(MENU_JUMP_AFTER_SELECTION   45) 54. 323. T
+(MENU_LAST_EVENT   45) 54. 311. T
+(MENU_LEFT_MARGIN   45, 46) 54. 299. T
+(MENU_MARGIN   45, 46) 54. 287. T
+(MENU_NCOLS   45) 54. 275. T
+(MENU_NITEMS   45) 54. 263. T
+(MENU_NOTIFY_PROC   45) 54. 251. T
+(MENU_NOTIFY_STATUS   46) 54. 239. T
+(MENU_NROWS   45) 54. 227. T
+(MENU_NTH_ITEM   45) 54. 215. T
+(MENU_PARENT   45, 47) 54. 203. T
+(MENU_PIN   45) 54. 191. T
+(MENU_PIN_WINDOW   45) 54. 179. T
+(menu_prompt\050\051   66) 54. 167. T
+(MENU_PULLRIGHT   47) 54. 155. T
+(MENU_PULLRIGHT_DELTA   46) 54. 143. T
+(MENU_PULLRIGHT_IMAG   46) 54. 131. T
+(MENU_PULLRIGHT_IMAGE   47) 54. 119. T
+(MENU_PULLRIGHT_ITEM   46, 47) 54. 107. T
+(MENU_RELEASE   47) 54. 95. T
+(MENU_RELEASE_IMAGE   47) 313. 695. T
+(MENU_REMOVE   46) 313. 683. T
+(MENU_REMOVE_ITEM   46) 313. 671. T
+(MENU_REPLACE   46) 313. 659. T
+(MENU_REPLACE_ITEM   46) 313. 647. T
+(MENU_RIGHT_MARGIN   46, 47) 313. 635. T
+(menus   27) 313. 623. T
+(Menus and Prompts   66) 313. 611. T
+(MENU_SELECTED   46, 47, 128) 313. 599. T
+(MENU_SELECTED_ITEM   46) 313. 587. T
+(MENU_SHADOW   46) 313. 575. T
+(MENU_STAY_UP   46, 128) 313. 563. T
+(MENU_STRING   47) 313. 551. T
+(MENU_STRING_ITEM   46, 47) 313. 539. T
+(MENU_STRINGS   46) 313. 527. T
+(MENU_TITLE   47) 313. 515. T
+(MENU_TITLE_IMAGE   46) 313. 503. T
+(MENU_TITLE_ITEM   46) 313. 491. T
+(MENU_TYPE   46, 47) 313. 479. T
+(MENU_VALID_RESULT   46) 313. 467. T
+(Message Subwindow   67) 313. 455. T
+(message subwindows   31) 313. 443. T
+(MIN   22, 65) 313. 431. T
+(min   22, 65) 313. 419. T
+(msgsw   31, 67) 313. 407. T
+(msgsw_*   128) 313. 395. T
+(msgsw_setstring\050\051   31) 313. 383. T
+(multiple servers   83) 313. 371. T
+1 F
+(N) 313. 343. T
+0 F
+(New XView Defaults   116) 313. 323. T
+(Notice   9) 313. 311. T
+(Notice Package   47) 313. 299. T
+(NOTICE_*   47) 313. 287. T
+(NOTICE_BUTTON   47) 313. 275. T
+(NOTICE_BUTTON_YES   47) 313. 263. T
+(NOTICE_FOCUS_XY   47) 313. 251. T
+(NOTICE_FONT   47) 313. 239. T
+(NOTICE_MESSAGE_STRINGS   47) 313. 227. T
+(NOTICE_NO_BEEPING   47) 313. 215. T
+(notice_prompt\050\051   47) 313. 203. T
+(NOTICE_TRIGGER   47) 313. 191. T
+(Notifier   11, 12) 313. 179. T
+1 F
+(O) 313. 151. T
+0 F
+(Obsolete Empty Subwindow Items   67) 313. 131. T
+(Obsolete Input Events   66) 313. 119. T
+(Obsolete Message Subwindow Items   67) 313. 107. T
+(odd-sized icon   28) 313. 95. T
+FMENDPAGE
+%%Page: "143" 3
+FMBEGINPAGE
+558. 727. 54. 727. 2 L
+0 H
+0 X
+N
+0 F
+(\320 143 \320) 291. 36. T
+(Index   Continued) 486.06 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+(FRAME_NO_CONFIRM   44) 54. 695. T
+(FRAME_NTH_*   128) 54. 683. T
+(FRAME_NTH_SUBFRAME   44, 63) 54. 671. T
+(FRAME_NTH_SUBWINDOW   44) 54. 659. T
+(FRAME_NTH_WINDOW   44, 63, 128) 54. 647. T
+(FRAME_OPEN_RECT   44) 54. 635. T
+(FRAME_PROPERTIES_ACTIVE   44) 54. 623. T
+(FRAME_PROPERTIES_PROC   44) 54. 611. T
+(FRAME_PROPS_ACTION_PROC   44) 54. 599. T
+(FRAME_PROPS_ACTIVE   44) 54. 587. T
+(FRAME_PROPS_APPLY PROC   44) 54. 575. T
+(FRAME_PROPS_PANEL   44) 54. 563. T
+(FRAME_PROPS_PUSHPIN_IN   44) 54. 551. T
+(FRAME_PROPS_RESET_PROC   44) 54. 539. T
+(FRAME_RIGHT_FOOTER   44) 54. 527. T
+(FRAME_SHOW_FOOTER   44) 54. 515. T
+(FRAME_SHOW_HEADER   44) 54. 503. T
+(FRAME_SHOW_LABEL   44) 54. 491. T
+(FRAME_SHOW_RESIZE_CORNER   44) 54. 479. T
+(FRAME_SUBWINDOWS_ADJUSTABLE   128) 54. 467. T
+(fs   68) 54. 455. T
+(fs_*   128) 54. 443. T
+(Full-Screen Mode   78) 54. 431. T
+(Fullscreen Package   44) 54. 419. T
+(FULLSCREEN_*   44) 54. 407. T
+(fullscreen_*   128) 54. 395. T
+(FULLSCREEN_COLORMAP_WINDOW   44) 54. 383. T
+(FULLSCREEN_INPUT_WINDOW   44) 54. 371. T
+(FULLSCREEN_PAINT_WINDOW   44) 54. 359. T
+(FULLSCREEN_RECT   44) 54. 347. T
+(Functions and Procedures   69) 54. 335. T
+1 F
+(G) 54. 307. T
+0 F
+(Generic Attributes   44) 54. 287. T
+(Generic Functions   81) 54. 275. T
+(generic objects   81) 54. 263. T
+(gfx   67, 72) 54. 251. T
+(gfx Subwindow   67) 54. 239. T
+(gfx_*   67) 54. 227. T
+1 F
+(H) 54. 199. T
+0 F
+(help text   34) 54. 179. T
+(hourglass cursor   27) 54. 167. T
+1 F
+(I) 54. 139. T
+0 F
+(ICCCM   14) 54. 119. T
+(Icon   9) 54. 107. T
+(Icon Package   44) 54. 95. T
+(ICON_*   44) 313. 695. T
+(ICON_FONT   44) 313. 683. T
+(ICON_HEIGHT   44) 313. 671. T
+(ICON_IMAGE_RECT   44) 313. 659. T
+(ICON_LABEL   44) 313. 647. T
+(ICON_LABEL_RECT   44) 313. 635. T
+(Icons   77) 313. 623. T
+(icons   28) 313. 611. T
+(ICON_WIDTH   44) 313. 599. T
+(im   69) 313. 587. T
+(im_*   128) 313. 575. T
+(include \050#include\051   22) 313. 563. T
+(include files   21) 313. 551. T
+(Initialization   84) 313. 539. T
+(initialization   23) 313. 527. T
+(Input   78, 84) 313. 515. T
+(Input Events   66) 313. 503. T
+(input mask   30) 313. 491. T
+(input_read_event   128) 313. 479. T
+(Inter-Client Communications Conventions Manual   14) 313. 467. T
+1 F
+(K) 313. 439. T
+0 F
+(KBD_REQUEST   66) 313. 419. T
+1 F
+(L) 313. 391. T
+0 F
+(legend to attribute categories   41) 313. 371. T
+(LINT_CAST   128) 313. 359. T
+(localtime\050\051   78) 313. 347. T
+(LOC_RGN*   128) 313. 335. T
+(LOC_RGNENTER   26, 66) 313. 323. T
+(LOC_RGNEXIT   66) 313. 311. T
+(LOC_STILL   66) 313. 299. T
+(LOC_TRAJECTORY   66) 313. 287. T
+(LOC_WINENTER   26) 313. 275. T
+1 F
+(M) 313. 247. T
+0 F
+(MAX   22, 65) 313. 227. T
+(max   22, 65) 313. 215. T
+(memory pixrects   11) 313. 203. T
+(Menu Item Package   46) 313. 191. T
+(Menu Package   45) 313. 179. T
+(MENU_*   45, 47) 313. 167. T
+(MENU_ACTION_*   46) 313. 155. T
+(MENU_ACTION_ITEM   45, 46) 313. 143. T
+(MENU_ACTION_PROC   45, 46) 313. 131. T
+(MENU_APPEND_ITEM   45, 46) 313. 119. T
+(MENU_BOXED   45, 46, 128) 313. 107. T
+(MENU_CENTER   45, 46) 313. 95. T
+FMENDPAGE
+%%Page: "142" 2
+FMBEGINPAGE
+558. 727. 54. 727. 2 L
+0 H
+0 X
+N
+0 F
+(\320 142 \320) 291. 36. T
+(Index   Continued) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+(Common Attributes   42) 54. 695. T
+(Compile-Time Incompatibilities Impacting Advanced ) 54. 683. T
+(Clients   68) 90. 671. T
+(Compile-Time Incompatibilities Impacting Basic ) 54. 659. T
+(Clients   63) 90. 647. T
+(convert_to_Xdefaults   117) 54. 635. T
+(convert_to_xview   133) 54. 623. T
+(Creating Objects in a Multiple Server/Screen ) 54. 611. T
+(Environment   84) 90. 599. T
+(crosshair attributes   28) 54. 587. T
+(CURSOR   64) 54. 575. T
+(Cursor   9, 76) 54. 563. T
+(Cursor Attributes   43) 54. 551. T
+(cursor crosshairs   64) 54. 539. T
+(cursor objects   9) 54. 527. T
+(CURSOR_*   43, 127) 54. 515. T
+(CURSOR_BACKGROUND_COLOR   87) 54. 503. T
+(CURSOR_CROSSHAIR_*   43) 54. 491. T
+(CURSOR_CROSSHAIR_GAP   43) 54. 479. T
+(CURSOR_CROSSHAIR_LENGTH   43) 54. 467. T
+(CURSOR_CROSSHAIR_OP   43) 54. 455. T
+(CURSOR_CROSSHAIR_THICKNESS   43) 54. 443. T
+(CURSOR_FOREGROUND_COLOR   87) 54. 431. T
+(CURSOR_FULLSCREEN   43) 54. 419. T
+(CURSOR_HORIZ_HAIR_BORDER_GRAVITY   43) 54. 407. T
+(CURSOR_HORIZ_HAIR_COLOR   43) 54. 395. T
+(CURSOR_HORIZ_HAIR_GAP   43) 54. 383. T
+(CURSOR_HORIZ_HAIR_LENGTH   43) 54. 371. T
+(CURSOR_HORIZ_HAIR_OP   43) 54. 359. T
+(CURSOR_HORIZ_HAIR_THICKNESS   43) 54. 347. T
+(CURSOR_IMAGE   43) 54. 335. T
+(CURSOR_OP   43) 54. 323. T
+(cursors   27) 54. 311. T
+(CURSOR_SHOW_CROSSHAIRS   43) 54. 299. T
+(CURSOR_SHOW_CURSOR   43) 54. 287. T
+(CURSOR_SHOW_HORIZ_HAIR   43) 54. 275. T
+(CURSOR_SHOW_VERT_HAIR   43) 54. 263. T
+(CURSOR_VERT_HAIR_BORDER_GRAVITY   43) 54. 251. T
+(CURSOR_VERT_HAIR_COLOR   43) 54. 239. T
+(CURSOR_VERT_HAIR_GAP   43) 54. 227. T
+(CURSOR_VERT_HAIR_LENGTH   43) 54. 215. T
+(CURSOR_VERT_HAIR_OP   43) 54. 203. T
+(CURSOR_VERT_HAIR_THICKNESS   43) 54. 191. T
+(CURSOR_XHOT   43) 54. 179. T
+(CURSOR_YHOT   43) 54. 167. T
+1 F
+(D) 54. 139. T
+0 F
+(Default Calling Parameters   23) 54. 119. T
+(default calling parameters   22) 54. 107. T
+(defaults.h   111) 54. 95. T
+(defaults_lookup\050\051   23) 313. 695. T
+(DEFINE   65) 313. 683. T
+(Define Macros   65) 313. 671. T
+(DEFINE_CURSOR_*   127) 313. 659. T
+(DEFINE_CURSOR_FROM_IMAGE   27) 313. 647. T
+(DEFINE_ICON_FROM_IMAGE   127) 313. 635. T
+(double-buffering   69, 70) 313. 623. T
+(double-buffering attributes   70) 313. 611. T
+1 F
+(E) 313. 583. T
+0 F
+(Empty Subwindow   67) 313. 563. T
+(emptysubwindow   127) 313. 551. T
+(errno   78) 313. 539. T
+(esw   67) 313. 527. T
+(esw_*   127) 313. 515. T
+(Event Timestamps   78) 313. 503. T
+(event_time\050\051   78) 313. 491. T
+1 F
+(F) 313. 463. T
+0 F
+(Font   10) 313. 443. T
+(Fonts   77) 313. 431. T
+(fonts   24) 313. 419. T
+(FRAME   63, 74) 313. 407. T
+(Frame   74) 313. 395. T
+(Frame Package   43) 313. 383. T
+(FRAME_*   43, 44) 313. 371. T
+(FRAME_ARGC_PTR_ARGV   43, 127) 313. 359. T
+(FRAME_ARGS   43, 74, 128) 313. 347. T
+(FRAME_BACKGROUND_COLOR   87) 313. 335. T
+(FRAME_BASE_CLOSED   43) 313. 323. T
+(FRAME_BASE_CLOSED_RECT   43) 313. 311. T
+(FRAME_BASE_ICON   44) 313. 299. T
+(FRAME_BASE_NO_CONFIRM   44) 313. 287. T
+(FRAME_BUSY   43) 313. 275. T
+(FRAME_CLOSED   43) 313. 263. T
+(FRAME_CLOSED_RECT   43) 313. 251. T
+(frame_cmdline_help\050\051   34) 313. 239. T
+(FRAME_CMDLINE_HELP_PROC   43) 313. 227. T
+(FRAME_CMD_PANEL   43, 44) 313. 215. T
+(FRAME_CMD_PUSHPIN_IN   43, 44) 313. 203. T
+(FRAME_CURRENT_RECT   43) 313. 191. T
+(FRAME_DEFAULT_DONE_PROC   43) 313. 179. T
+(FRAME_DONE_PROC   43) 313. 167. T
+(FRAME_EMBOLDEN_LABEL   43, 128) 313. 155. T
+(FRAME_FOREGROUND_COLOR   44, 88) 313. 143. T
+(FRAME_ICON   44) 313. 131. T
+(FRAME_INHERIT_COLORS   44, 88) 313. 119. T
+(FRAME_LABEL   44) 313. 107. T
+(FRAME_LEFT_FOOTER   44) 313. 95. T
+FMENDPAGE
+%%Page: "141" 1
+FMBEGINPAGE
+558. 727. 54. 727. 2 L
+0 H
+0 X
+N
+0 F
+(\320 141 \320) 291. 36. T
+(Revision A of 25 August 1989) 435.5 36. T
+2 F
+(Index) 53. 598. T
+52. 642. 560. 650. R
+4 X
+V
+N
+52. 651. 560. 651. 2 L
+1 H
+0 X
+N
+36. 724. 576. 738. C
+36. 724. 576. 738. R
+7 X
+V
+U
+1 F
+0 X
+(C) 313. 529. T
+0 F
+(Canvas   74) 313. 509. T
+(canvas paint window   25) 313. 497. T
+(canvas subwindow   74, 75) 313. 485. T
+(CANVAS_*   42) 313. 473. T
+(CANVAS_AUTO_CLEAR   42) 313. 461. T
+(CANVAS_AUTO_SHRINK   42) 313. 449. T
+(canvases   25) 313. 437. T
+(CANVAS_FAST_MONO   42) 313. 425. T
+(CANVAS_FIXED_IMAGE   26, 42) 313. 413. T
+(CANVAS_HEIGHT   42) 313. 401. T
+(CANVAS_MARGIN   42, 127) 313. 389. T
+(CANVAS_MIN_PAINT_HEIGHT   42) 313. 377. T
+(CANVAS_MIN_PAINT_WIDTH   42) 313. 365. T
+(CANVAS_NO_CLIPPIN   26) 313. 353. T
+(CANVAS_NTH_PAINT_WINDOW   42) 313. 341. T
+(CANVAS_NTH_WINDOW   42) 313. 329. T
+(Canvas_Package   42) 313. 317. T
+(CANVAS_PIXWIN   42, 127) 313. 305. T
+(CANVAS_REPAINT_PROC   42) 313. 293. T
+(CANVAS_RESIZE_PROC   42) 313. 281. T
+(CANVAS_RETAINED   26, 42, 127) 313. 269. T
+(CANVAS_VIEWABLE_RECT   42) 313. 257. T
+(CANVAS_VIEW_MARGIN   42) 313. 245. T
+(Changed Inputmask Attributes   76) 313. 233. T
+(Changed pf_* Functions   70) 313. 221. T
+(Changed Pixwin Functions   75) 313. 209. T
+(Changes to the defaults.h Interface   112) 313. 197. T
+(clipping   10) 313. 185. T
+(coexistence   10) 313. 173. T
+(Color   84) 313. 161. T
+(Color API) 313. 149. T
+(Attributes   87) 331. 137. T
+(Types   86) 331. 125. T
+(colormap segments   84) 313. 113. T
+(colormap usage   91) 313. 101. T
+1 F
+(Symbols) 54. 529. T
+0 F
+(#DEFINE_CURSOR_*   127) 54. 509. T
+(#DEFINE_CURSOR_FROM_IMAGE   27) 54. 497. T
+(#DEFINE_ICON_FROM_IMAGE   127) 54. 485. T
+1 F
+(A) 54. 457. T
+0 F
+(agent   71) 54. 437. T
+(ALERT_*   47) 54. 425. T
+(ALERT_BUTTON   47) 54. 413. T
+(ALERT_BUTTON_FONT   47) 54. 401. T
+(ALERT_BUTTON_YES   47) 54. 389. T
+(ALERT_FAILED   47) 54. 377. T
+(ALERT_MESSAGE_FONT   47) 54. 365. T
+(ALERT_MESSAGE_STRINGS   47) 54. 353. T
+(ALERT_NO   47) 54. 341. T
+(ALERT_NO_BEEPING   47) 54. 329. T
+(ALERT_OPTIONAL   47) 54. 317. T
+(ALERT_POSITION   47) 54. 305. T
+(alert_prompt\050\051   47) 54. 293. T
+(ALERT_SREEN_CENTERED   47) 54. 281. T
+(ALERT_TRIGGER   47) 54. 269. T
+(ALERT_TRIGGERED   47) 54. 257. T
+(ALERT_YES   47) 54. 245. T
+(arbitrary key data storage   81) 54. 233. T
+(ATTR_COL   34) 54. 221. T
+(ATTR_COL\050\051   30) 54. 209. T
+(Attributes Collapsed Into Common VU_ Attributes   33) 54. 197. T
+(ATTR_ROW   34) 54. 185. T
+(ATTR_ROW\050\051   30) 54. 173. T
+1 F
+(B) 54. 145. T
+0 F
+(backing store   26) 54. 125. T
+(Basic, Intermediate, Advanced Clients   63) 54. 113. T
+(bit gravity   25, 75) 54. 101. T
+FMENDPAGE
+%%Trailer
+%%Pages: 8 -1
+%%DocumentFonts: Times-Roman
+%%+ Times-Bold

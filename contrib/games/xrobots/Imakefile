@@ -1,0 +1,24 @@
+
+     SCORE_FILE = -DSCORE_FILE=\"./xrobotscores\"
+      MAXSCORES = -DMAXSCORES=20
+           MAXX = -DMAXX=35
+           MAXY = -DMAXY=20
+        DEFINES = $(SCORE_FILE) $(MAXSCORES) $(MAXX) $(MAXY)
+
+           SRCS = actions.c game.c graphics.c main.c score.c
+           OBJS = actions.o game.o graphics.o main.o score.o
+
+       INCLUDES = -I$(TOP) -I$(TOOLKITSRC)
+LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+  SYS_LIBRARIES = -lm
+
+all:: xrobots
+
+ComplexProgramTarget(xrobots)
+/*
+ *  The following is a matter of preference:
+ *
+ *  InstallManPage(xrobots,$(MANDIR))
+ *  InstallProgram(xrobots,$(BINDIR))
+ */
+

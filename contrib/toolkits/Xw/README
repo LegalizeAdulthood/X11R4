@@ -1,0 +1,99 @@
+
+
+				 Xw Widget Set
+
+
+
+    This directory contains the Xw widgets used in Doug Young's book "X Window
+    System: Programming and Applications".  They were originally provided by
+    Hewlett-Packard Company as unsupported, user-contributed code.  The version
+    in this release was ported to the MIT R3 Xt Intrinsics by:
+
+	Martin Friedmann, CITI, University of Michigan
+	martin@citi.umich.edu
+
+	John Carlson, Lawrence Livermore National Laboratories
+	carlson@tis.llnl.gov
+
+
+    and was contributed by Friedmann and:
+
+	Mark Moraes, University of Toronto
+	moraes@csri.toronto.edu
+
+
+    This code is not supported by HP and any bugs should be reported to the
+    individuals listed above.  
+
+
+    --------------------------  Copyright  ------------------------------
+				
+    The following copyright pertains to the source code in this release of Xw:
+
+	Copyright (c) 1988 by Hewlett-Packard Company
+	Copyright (c) 1988 by the Massachusetts Institute of Technology
+
+	Permission to use, copy, modify, and distribute this software
+	and its documentation for any purpose and without fee is hereby
+	granted, provided that the above copyright notice appear in all
+	copies and that both that copyright notice and this permission
+	notice appear in supporting documentation, and that the names of
+	Hewlett-Packard or  M.I.T.  not be used in advertising or publicity
+	pertaining to distribution of the software without specific, written
+	prior permission.
+
+
+    
+    --------------------------  Contents  ------------------------------
+	
+
+    The following are components of this release:
+	
+	./MButton	MultiButton example directory
+
+	./Imakefile	used to generate the Makefile for this directory
+
+	./README	this file
+
+	./Xw		X widgets library source directory
+
+	./doc		X widgets documentation
+			(see ./doc/README for description of
+			contents and printing procedures)
+
+	./test		X widgets test programs
+
+    Use "make all" in this directory to build the libraries
+    and compile the test programs.  A total of about 10 megabytes
+    of disk space are required for sources and executables.
+	
+
+    ---------------------------  Status  -------------------------------
+
+
+    1.  Chapter 7 of "Programming with the HP X Widgets" discusses how to
+        write a widget.  The code listings that appear in this chapter,
+        along with a simple demo program are located in the MButton 
+	directory.
+
+    2.  Applications using the titlebar widget should not issue a SetValues
+        to the static text widget created by the titlebar.  If this is
+        necessary, the application should create its own static text widget
+        as a child of the titlebar and set the constraints as is appropriate.
+
+    3.  The panel widget can occasionally clip its workspace if the
+        application destroys and then recreates its pulldown menu.  Resizing
+        the application window through the window manager causes the widgets
+        to redisplay properly.
+
+    4.  There are several problems in the text edit man page. On page 4,
+        the constants XttextRead, XttextEdit and  XttextAppend should be
+        XwtextRead, XwtextEdit and XwtextAppend. On the same page, the
+        default value for the DiskSrc XtNeditType resource should be
+        XwtextRead, not XwtextEdit.
+
+    5.  There is an additional resource in the scrolled window widget: 
+        XtNborderPad. This is an integer which defines the number of pixels 
+        between the scrollbars and the viewable area of the scrolled window.  
+        The default padding is 4 pixels.
+

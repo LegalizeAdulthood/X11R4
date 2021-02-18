@@ -1,0 +1,16 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+LIBS	=	${UTILLIB} \
+		${BASEDIR}/lib/liberrors.a \
+		${MALLOCLIB}
+
+NormalObjectRule()
+ProgramTarget(mail, mail.o, ${LIBS},)
+#ifndef CMU_ENV
+#ifdef RUN_AMDS_ENV
+InstallProgram(mail, ${ROOTDIR}/bin/)
+#endif /* RUN_AMDS_ENV */
+#endif /* CMU_ENV */
+DependTarget()

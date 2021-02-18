@@ -1,0 +1,20 @@
+#define frame3d_paxformat 1
+#define frame3d_width 12
+#define frame3d_height 8
+#define frame3d_ncolors 3
+#define frame3d_chars_per_pixel 2
+static char * frame3d_colors[] = {
+"  " , "#FFFFFFFFFFFF",
+". " , "#A800A800A800",
+"X " , "#000"
+} ;
+static char * frame3d_pixels[] = {
+"                        ",
+"                        ",
+". . . . . . . . . . . . ",
+". . . . . . . . . . . . ",
+". . . . . . . . . . . . ",
+"                        ",
+". . . . . . . . . . . . ",
+"X X X X X X X X X X X X 
+} ;

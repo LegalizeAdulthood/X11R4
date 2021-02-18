@@ -1,0 +1,1 @@
+{printf("grep ',%s()' ../function_list| echo -n `awk -F, '{printf(\".FH \\\"%%s\\\" \\\"\",$1)}'`; echo `grep ' %s ' Cbinding.src`\\\"\n",$1,$1)}

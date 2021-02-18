@@ -1,0 +1,154 @@
+
+
+
+
+Chapter 4	Arbitrary Planes
+
+
+
+
+
+
+
+Chapter Overview
+
+Viewing Oblique Planes
+
+Manipulating the Image
+
+Viewing the Image
+
+Animating the Image
+
+Chapter Overview
+
+
+
+This chapter outlines the options available in the Arbitrary Planes window
+which permits you to manipulate, view, and animate 2D oblique slices of
+data.
+
+
+
+
+
+Viewing Oblique Planes
+
+
+
+Manipulating the Image
+
+To view arbitrarily selected 2D oblique slices of data:
+
+
+
+1.	Enable the option
+Arbitrary Planes in the Attributes window (Figure 4.1). An Arbitrary
+Display Mode window appears (see Figure 4.2). This window allows you to
+specify an angle for the slicing plane so that NCSA X DataSlice slices 2D
+planes from the 3D volume in an arbitrary fashion.
+
+
+
+Figure 4.1	Attributes Window
+
+ 
+
+
+
+
+
+Figure 4.2	Arbitrary Display
+Mode
+
+ 
+
+
+
+2.	Drag the Yaw
+Slider beneath the Front View drawing or the Pitch Slider beneath the Left
+Side View drawing to rotate the drawings horizontally or vertically,
+respectively. The Front View drawing depicts the orthogonal view of the
+3D volume, whereas the Left Side View shows a left side view of the
+volume.
+
+
+
+3.	Enter an integer in
+the text box labeled, View Scale, to indicate the desired magnification
+value. This value is used to determine the actual pixel size of the
+generated image(s). Note that the speed of image generation is directly
+dependent on the size of the dataset image and the view scale window.
+
+
+
+4.	Enter an integer in
+the text box labeled, No. of Frames, to specify the number of frames NCSA
+X DataSlice should slice along the orthogonal axis during batch
+processing (animation).
+
+
+
+5.	Enter an integer in
+the text box labeled, Percent Incr, to indicate the intervals at which you
+wish NCSA X DataSlice to slice the frames (along the orthogonal axis) for
+batch processing (animation sequences). For example if you were to enter
+10, multiple slices, each separated by a 10% distance, would appear within
+your image.
+
+
+
+6.	Check the box
+labeled, Interpolated, to specify that the generated raster image(s) be
+interpolated trilinearly by the factor indicated in the View Scale text box.
+If this option is not checked, the default slicing uses the floor of the data
+values during fractional slicing.
+
+
+
+7.	Click the View or
+Animate button to specify that the program either generate an image for
+the data slice or animate the sequence of 2D data slices, respectively.
+
+
+
+
+
+Viewing the Image
+
+Clicking View in the Arbitrary Display Mode window produces a generated
+image of your data slice. Three options common to most image windows in
+X DataSlice, Close, Palette, and Save, exist for you to manipulate your
+object (Figure 4.3). For more information on these buttons, refer to
+Chapter One, "Getting Started."
+
+
+
+
+
+Animating the Image
+
+Clicking Animate in the arbitrary display mode window opens an animation
+window (see Figure 4.4). To manipulate your image using the available
+options, refer to the section, "Animation Window," in Chapter Three,
+"Planes Along Axes."
+
+Figure 4.3	Arbitrary Display
+View Window
+
+ 
+
+
+
+
+
+
+
+Figure 4.4	Arbitrary Display
+Animation Window
+
+ 
+
+
+
+

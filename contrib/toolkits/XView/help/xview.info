@@ -1,0 +1,346 @@
+#
+#
+# This section provides help text for the elements of the scrollbar.
+#
+:scrollbarBottom
+	Scrollbar Bottom Cable Anchor
+
+Click SELECT to scroll to the end of the data
+displayed in the pane.
+
+Press SELECT and drag the cable anchor to split
+the pane into multiple views.  The cable anchor
+highlights, and a bounding line is displayed to
+show you where the pane will split.  Release
+SELECT to split the pane.  To delete a split
+pane, press SELECT and drag the bottom cable
+anchor to the top of the pane, and then release.
+The split pane is removed and the remaining panes
+readjust to fill the available space.
+
+Press or click MENU anywhere in the scrollbar to
+display the scrollbar menu.
+##
+:scrollbarTop
+	Scrollbar Top Cable Anchor
+
+Click SELECT to scroll to the beginning of the
+data displayed in the pane.
+
+Press SELECT and drag the cable anchor to split
+the pane into multiple views.  The cable anchor
+highlights, and a bounding line is displayed to
+show you where the pane will split.  Release
+SELECT to split the pane.  To delete a split
+pane, press SELECT and drag the top cable anchor
+to the bottom of the pane, and then release.  The
+split pane is removed and the remaining panes
+readjust to fill the available space.
+
+Press or click MENU anywhere in the scrollbar to
+display the scrollbar menu.
+#
+:scrollbarLineForward
+	Scrollbar Down arrow
+
+Use the down arrow button on the scrollbar
+elevator to change the view on the data that is
+displayed in the pane. Click SELECT to scroll the
+contents of the pane forward in the document one
+unit.  Press and hold SELECT to repeatedly scroll
+the contents of the pane.
+Press or click MENU anywhere in the scrollbar to
+display the scrollbar menu.
+#
+:scrollbarLineBackward
+	Scrollbar Up Arrow
+	
+Use the up arrow button on the scrollbar elevator
+to change the view on the data that is displayed
+in the pane. Click SELECT to scroll the contents
+of the pane backward in the document one unit.
+Press and hold SELECT to repeatedly scroll the
+contents of the pane.
+Press or click MENU anywhere in the scrollbar to
+display the scrollbar menu.
+#
+:scrollbarDrag
+	Scrollbar Drag Area
+
+Use the drag area of the scrollbar elevator to
+move to an arbitrary location in the data.  Move
+the pointer to the drag area and press SELECT.
+The drag area highlights.  Drag the pointer to
+move the view in the pane forward or backward in
+the application data.  The pointer can be moved
+anywhere, but remains constrained to the drag
+area until you release SELECT.  Press or click
+MENU anywhere in the scrollbar to display the
+scrollbar menu.
+#
+:scrollbarPageForward
+	Scrollbar Cable
+
+Click SELECT in this part of the cable to page
+forward - scroll the pane forward an amount equal
+to its size.
+
+The length of the scrollbar cable represents the
+total size of the data from the application.  The
+position of the elevator on the cable shows the
+location of the pane contents in the total data.
+The dark area of the scrollbar cable shows the
+portion of the total application data that is
+currently visible in the pane.  If the cable is
+mostly dark, most of the file is visible.  If the
+dark area of the cable is small, the file is
+large relative to the size of the pane.
+
+Press or click MENU anywhere in the scrollbar to
+display the scrollbar menu.
+#
+:scrollbarPageBackward
+	Scrollbar Cable
+
+Click SELECT in this part of the cable to page
+backwards - scroll the pane forward an amount
+equal to its size.
+
+The length of the scrollbar cable represents the
+total size of the data from the application.  The
+position of the elevator on the cable shows the
+location of the pane contents in the total data.
+The dark area of the scrollbar cable shows the
+portion of the total application data that is
+currently visible in the pane.  If the cable is
+mostly dark, most of the file is visible.  If the
+dark area of the cable is small, the file is
+large relative to the size of the pane.
+
+Press or click MENU anywhere in the scrollbar to
+display the scrollbar menu.
+#
+# This section provides help text for the pushpin, and for common 
+# elements of Help and Properties windows.
+#
+#
+:help_window
+	Help Window
+	
+The Help window for each application displays
+help for the object under the pointer.  To see
+more help text for the same application without
+dismissing the Help window, move the pointer to
+another object in the same application and press
+the Help key again.  The view in the magnifying
+glass changes, and appropriate help text is
+displayed in the pane of the same Help window.
+If you move the pointer to a different
+application window and press the Help key without
+dismissing the original Help window, a second
+Help window is displayed.  Dismiss a Help window
+by moving the pointer to the close mark and
+clicking SELECT, or by moving the pointer to the
+header of the Help window, pressing MENU, moving
+the pointer onto the Dismiss button, and
+releasing MENU.
+#
+:help.magnifying_glass
+	Help Magnifying Glass
+	
+The view in the magnifying glass shows the object
+at the pointer position when you pressed the Help
+key.  To change the view in the magnifying glass,
+and display help text in the pane for the new
+object, move the pointer to another object in the
+same application and press the Help key again.
+#
+:icon
+	Icon
+	
+An icon is a window that has been closed.  To
+open an icon, move the pointer onto the icon and
+double-click SELECT, or press or click MENU to
+display the Window menu and choose Open.  To move
+an icon, move the pointer onto the icon, press
+SELECT, drag the pointer to a new location, and
+release SELECT.  Clicking ADJUST toggles the
+state of the icon between the selected and
+unselected state.
+#
+:active_caret
+	Active Caret
+	
+The active caret shows the place in the window
+where characters that you type are displayed.  To
+set an active caret in a text area, move the
+pointer to the place you want to type characters
+and click SELECT or ADJUST.
+
+The header of a window that has the active input
+area is highlighted.
+#
+:inactive_caret
+	Inactive Caret
+
+The inactive caret shows the place in the window
+that had the last active input area.  To active
+an inactive caret, click SELECT on the window
+background.  To set a new active caret, move the
+pointer to the place you want to type characters
+and click SELECT or ADJUST.
+#
+:menu.pushpin
+	Menu Pushin
+	
+You can pin up frequently-used menus (when they
+have a pushpin) for continued access.  To do
+this, press MENU and drag the pointer to the
+pushpin.  When the pin pops into the hole,
+release MENU.  The pinned menu turns into a
+pop-up window, and you use the controls in the
+same way you use controls in a control area:
+
+o  	Press SELECT on a button to execute a 
+	command.
+o	Press SELECT on a button stack to execute
+	the default from the button stack menu.
+o	Press MENU on a button stack to display 
+	the button stack menu, drag the pointer 
+	to the button you want to choose, and 
+	release MENU.
+#
+:scrollbar_menu
+	Scrollbar Menu
+	
+You use the Scrollbar menu as another way to
+change the view on the data that is displayed in
+a scrollable pane.  You can move the text at the
+top or left of the pane to the pointer location,
+move the text at the pointer location to the top
+or left of the pane, or return to the previous
+scrolling position.
+You can view and choose from the Scrollbar menu
+in two ways using the MENU mouse button:
+o	Press-Drag-Release
+o	Click-Move-Click
+
+Using Press-Drag-Release
+To use press-drag release, move the pointer
+anywhere in the scrollbar region, press MENU,
+drag the pointer to the control you want, and
+release MENU.  If you do not want to choose a
+control, move the pointer off the menu and
+release the mouse button.
+
+Using Click-Move-Click
+To use click-move-click, move the pointer
+anywhere in the scrollbar region and click MENU.
+The Scrollbar menu is displayed and stays on the
+screen.  Move the pointer to the control you want
+and click SELECT or MENU.  The control is
+executed and the menu is dismissed.  If you do
+not want to choose a control, move the pointer
+off the menu and click SELECT or MENU to dismiss
+the menu without choosing a control.
+
+Changing the Default Setting
+Each menu in a menu group has a default setting,
+which is shown by a default ring.  You can change
+the default setting for any menu using the steps
+below:
+1)	Press the default modifier key and MENU.
+2)	Drag the pointer from control to control.
+	The default ring follows the pointer.
+3)	When the default ring is on the control 
+	you want to use as the default, release 
+	MENU and then release the modifier key.
+If you release the modifier key first and then
+release MENU, in addition to setting the default,
+the command is executed.
+#
+:scrollbar_menu.here_to_top_button
+	Scrollbar Here to Top menu item
+	
+Use the Here to Top button to scroll the line at
+the pointer location to the top of the pane.
+
+Drag MENU onto the button and release MENU.
+#
+:scrollbar_menu.here_to_left_button
+	Scrollbar Here to Left menu item
+	
+Use the Here to Left button to scroll the line at
+the pointer location to the left of the pane.
+
+Drag MENU onto the button and release MENU.
+#
+:scrollbar_menu.top_to_here_buttonmenu item
+	Scrollbar Top to Here menu item
+	
+Use the Top to Here button to scroll the line at
+the top of the pane to the pointer location.
+
+Drag MENU onto the button and release MENU.
+#
+:scrollbar_menu.left_to_here_button
+	Scrollbar Left to Here menu item
+	
+Use the Left to Here button to scroll the line at
+the left of the pane to the pointer location.
+
+Drag MENU onto the button and release MENU.
+#
+:scrollbar_menu.previous_button
+	Scrollbar Previous menu item
+	
+Use the Previous button to undo the last
+scrolling action and restore the view in the pane
+to its condition before you did the last
+scrolling action.
+
+Drag MENU onto the button and release MENU.
+#
+:menu
+	Menu
+	
+You probably are requesting on-line help for the
+specific menu item over which the cursor is
+positioned. The fact that you are seeing this
+message instead says that XView help data has
+not been specified for this item using the
+XV_HELP_DATA attribute.
+#
+:panel
+	Panel
+	
+You probably are requesting on-line help for the
+specific panel control item over which the cursor
+is positioned. The fact that you are seeing this
+message instead says that XView help data has not
+been specified for this item using the
+XV_HELP_DATA attribute.
+#
+:ttysw
+	Term
+	
+You probably are requesting on-line help for the
+specific terminal emulator over which the cursor
+is positioned. The fact that you are seeing this
+message instead says that XView help data has not
+been specified for this item using the
+XV_HELP_DATA attribute.
+#
+:notice
+	Notices
+
+Notice windows will appear whenever the system
+need your immediate attention.  Notice require
+that you read their message and answer them by
+pressing one of the buttons it will provide.  The
+button with the double-outline is the *default*
+button.
+Keyboard Accelerator: The *default* button can be
+chosen by pressing the RETURN key.
+#
+:bogus_key_to_mark_end

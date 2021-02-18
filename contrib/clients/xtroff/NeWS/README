@@ -1,0 +1,42 @@
+Convert Sun NeWS font to X11 format.
+This assumes that your Sun system has the NeWS fonts in
+
+	/usr/NeWS/fonts
+
+and the the program "dumpfont" is located in your search
+path.  "dumpfont(1)" is normally located in
+
+	/usr/NeWS/bin
+
+My version of dumpfont generates an old version of the .bdf
+file.  The news.awk script changes what is needed for bdftosnf
+to be able to handle the file.  Some care has been taken to
+get correct character widths for times-roman font.  The other
+fonts get some arbitrary number for SWIDTH.
+
+The font name has been chosen to match what is expected by
+xtroff.  i.e.
+	devpsc.f.sz.dpi
+
+	where	f = one or two character font name
+		sz = point size of font
+		dpi = dots per inch of font
+
+The character location is the same as that assigned in the NeWS
+font.  This matches the assignment for the first 256 characters
+in the PostScript font.  The fonts also match the the widths
+described for the PostScript fonts so troff can be run using
+-Tpsc and previewed with xtroff.
+
+The files in this directory also make the ditroff description files
+for the xtroff "device" and its fonts.  I have included the width
+description files (R I B etc.)  These cannot be extracted from the
+bdf files that discribe the NeWS fonts since the SWIDTH field is
+not discribed correctly.
+
+"Make install" will install all of the .out files into the destination
+directory from which xtroff reads them.  This is usually
+/usr/lib/X11/troff/devpsc/  (devpsc stands for the PostScript device).
+
+David A. Cahlander  89/01/01.
+dac@cray.com	...!uunet!cray!dac

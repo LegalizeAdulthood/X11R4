@@ -1,0 +1,72 @@
+.de Ss
+.    sp
+.    ft CW
+.    nf
+..
+.de Se
+.    fi
+.    ft P
+.    sp
+..
+.TH pnm 3
+.SH NAME
+pnm - functions to support portable anymap programs
+.SH SYNOPSIS
+.Ss
+#include <pbm.h>
+cc ... libpbm.a
+.Se
+.SH DESCRIPTION
+.SS MESSAGE MANAGEMENT
+.Ss
+char *pm_progname;
+.Se
+This variable should be set at the beginning of all programs to point to
+argv[0].
+.Ss
+void
+pm_message( fmt, ... )
+char *fmt;
+.Se
+Use this function to write an informational message.
+.Ss
+void
+pm_error( fmt, ... )
+char *fmt;
+.Se
+Use this function to write an error message (and exit).
+.Ss
+void
+pm_usage( usage )
+char *usage;
+.Se
+Use this function to write a usage message.
+The string should indicate what arguments are to be provided to the program.
+.SS GENERIC FILE MANAGEMENT
+.Ss
+FILE *
+pm_openr( name )
+char *name;
+.Se
+Open the given file for reading, with appropriate error checking.
+A filename of ``-'' is taken as equivalent to stdin.
+.Ss
+void
+pm_close( f )
+FILE *f;
+.Se
+Close the file descriptor, with appropriate error checking.
+.SH "SEE ALSO"
+pgm(3), ppm(3)
+.SH AUTHOR
+Manual by Tony Hansen.
+
+Copyright (C) 1989 by Jef Poskanzer.
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided
+that the above copyright notice appear in all copies and that both that
+copyright notice and this permission notice appear in supporting
+documentation.  This software is provided "as is" without express or
+implied warranty.
+

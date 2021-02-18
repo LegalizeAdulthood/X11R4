@@ -1,0 +1,421 @@
+				  Tekwm
+		       The Tektronix Window Manager
+				Bug Status
+			  Public Domain Release
+			      Glenn Widener
+			     Tektronix, Inc.
+			    November 22, 1989
+
+The following is a list of known bugs, with Tek "XWS" bug tracking numbers
+where they have been encountered by someone other than the author, and bug
+priorities noted at the end of the description.  (1=crash, 2=serious, no
+workaround, 3=serious with workaround, or in minor feature, 4=minor,
+5=enhancement).
+
+
+XWS00526
+If a decorated window is undecorated, resize, etc, is screwed because it 
+is based on the awi->attrs regardless of whether the window is 
+currently reparented.
+3
+
+XWS00527
+Certain tekwm ops don't always stop at the exact button release position.
+If you do a moveOpaque, and release the button while moving the mouse, the
+window ends up at a position reached after the button is released.  This is
+a "timing bug" in the way that "tekwm" (window manager) handles the motion
+vs button activity.  tekwm does a "queryposition" rather than getting the
+next position from the event queue....  so it can end up moving after the
+button up transition.  Need to either dispense with QueryPointer and use
+Motion Events (best), or else place the window at the button release location
+on completion. (uwm's approach).
+3
+
+XWS00528
+Race condition between client window changes and tekwm button presses.
+In my 'xuserclients' I put up a window that overlaps the console
+window.  Usually I've manually collapsed the console window before the
+new window gets a chance to map.  This time, however, I clicked in the
+title bar of the console window just as the new window was mapping.
+Tekwm grabbed the mouse event, and I suspect did an X call to find out
+where it was, found the newly mapped window, and collapsed it instead
+of the other window (the new one doesn't have a title bar).
+Two possible solutions - make sure the click was from a known title
+bar (easy), or get the window data from the keyclick event (better).
+Tekwm does a TranslateCoordinates to find the top-level window when the button
+is pressed in a client's subwindow.  So yes, the problem you see can happen.
+3
+
+---------------------------------------------------------------------
+				    Level 4
+---------------------------------------------------------------------
+
+XWS00148
+When icon is drug off-screen, text is not redrawn.  Need to process 
+expose events as they occur.
+4 - uwm fix?
+
+XWS00523
+autoRaise should be suppressed when the tekwm menu is up.  Actually, this
+is a general problem - it shows up with xterm windows.  So instead of
+raising a window to the top, tekwm should raise above the highest
+non-override-redirect non-TRANSIENT_FOR window, so that popup windows are
+ignored.  
+Also, f.raiseandlower should ignore popup menus (i.e.  override-redirect and
+tekwm menus) when computing whether to raise or lower.
+4
+
+raiseandlower fails to lower window if not highest window and partially
+off-screen.
+4
+
+XWS00522
+f.restart complains that gadgets are redefined and aborts wm (if -f option 
+used?  Is it re-reading the wrong file?).
+< I blew it here. FIXED.
+Actually, this problem is eliminated if resetgadgets is given.  Jordan's fix
+left the complaint, but allowed awm to continue.  It should not complain
+since it does not complain about menus or bindings. 
+It should take the new definition.
+You should not have to rebind a gadget to redefine it.
+4
+
+XWS00530
+If autoraise is on, and icon is drug around the screen, even if the idon
+is not redrawn, it is several seconds after release before tekwm will
+respond to another button press.  Apparently, it gets clogged up
+with motion events.  Either speed up event loop, or turn motion off?
+4
+
+XWS00531
+If mouse moves off window on which button was pressed, wrong window is used.
+Make functions on button up use the button press context window and position.
+Prevents problems with erratic operation if button is released off of item, 
+but means that you never press button, drag to item of interest, and release.
+Also needed to fully fix problem with button release in client window losing 
+the next button input.
+4
+
+XWS00532
+Chorded buttons cancel function, but button goes to client.
+If another button is pressed while a DownFunction (Resize, Move, etc.)  is
+active, the function is cancelled, but not all button releases are absorbed.
+4
+
+XWS00533
+If a mouse button is held down on root while tekwm is starting up, RootWindow
+fails to be registered!
+4
+
+XWS00534
+If frameFocus is off, initial focus window does not get highlighted at
+tekwm startup.
+4
+
+XWS00535
+f.decorate fails if the window is initially undecorated at tekwm startup.
+4
+
+XWS00536
+With frameFocus=off, client colormap should still be installed when the cursor
+enters the title.
+4
+
+XWS00537
+If Wm.gadgets is on and wm_options.gadgets is off, the title height still
+allows for the gadgets.
+4
+
+XWS00308
+Warp on Raise does not work.  (Not verified.)
+4
+
+XWS00539
+Window position is not always recovered exactly at tekwm startup.
+If a window is placed at ur or ll corner (-geom -0+0 or +0-0), when
+tekwm is killed and restarted, the window moves to the right or down 6 
+pixels for a borderWidth of 3 and borderContext of 4.
+Actually, the whole thing is wrong - see wm mail:
+One way to actually make this work:  If the window was last positioned by
+the client, the deltax and deltay should reflect the difference between
+the client's mapped position and the current client window position.  If
+the window was last positioned by the wm, the deltax and deltay should
+reflect the difference between the frame position and the current client
+window position.  Then we need to add a flag to the XWMDecoration property
+to tell the new wm whether to ignore the win_gravity.
+4
+
+XWS00540
+f.decorate does not cause the title background to get repainted.  Need to
+force a repaint.
+4
+
+Tekwm and x10tox11 are fighting over button events in icons.  Tekwm must 
+passive-grab icon buttons iff there is a button binding to icons.  Ungrab
+is already taken care of.
+4
+
+XWS00544
+The defaulting to "colors of root window"  (What does this mean?)
+when you run out of colors is not consistent. - sometimes we get white
+on black, other time green on black (the default).
+4
+
+XWS00546
+If you release a button before the menu gets mapped, you may actually
+cause an action to occur.  This needs to be syncronized better, and abort
+if the button release event is not actually in the menu.
+4
+
+XWS00471
+Is it acceptable to grab on unreparented windows?  Not according to the
+new grab section in the ICCCM.  Tekwm needs to change to grab buttons on
+the root window, and replay the ButtonEvents if they are not being used
+on the client window (i.e. used only on root).
+Window manager button bindings to a WINDOW context will currently not
+operate on override_redirect windows that were present when the window
+manager started up, and which are not reparented.  What should we allow?
+Let's assume that if a normal override-redirect window is mapped, any 
+Active Button grabs will already be in effect, so we won't interfere.
+Sequence: we grab on root, we replay a ButtonPress on the client window, 
+the client grabs the pointer, maps the popup, and everything is fine.
+4
+
+XWS00547
+If autoRaise is on and the move gadget is partly off-screen, the move function
+is delayed by raiseDelay.
+4
+
+XWS00548
+Tekwm should delete the WM_ICON_SIZE property on the root window when it
+exits, so that if another wm fails to set it, it won't mislead a client.
+4
+
+If you pop up a tekwm menu at the edge of the screen, and move the mouse
+and stop moving right when you press the button, occasionally the item
+under the initial pointer position is selected until the mouse moves
+again.  Note that the item is alwasy briefly highlighted, only
+occasionally it remains selected.
+4
+
+Set a gadget to a string, and bind a menu narrower than the string.  If
+the menu obscures only the one gadget, on menu release, the gadget fails
+to redraw! (Wayne@purdue).
+4
+
+Some windows fail to re-iconify on tekwm restart. Perhaps particualr to the
+"xcolors" client? (errol)
+4
+
+Occasionally, an iconify followed by an immediate deiconify fails to deiconify.
+(David S; also Jeff G?)
+4
+
+				    Level 5
+
+On initial window sizing, right button does not allow for border when setting
+vertical size to fit from cursor to bottom of screen.  But anyway, what
+kind of brain-damaged function is this?  It should be something useful like 
+"tile to the borders of all windows above the selected window".
+5
+
+XWS00263
+Tekwm ignores WM_SIZE_HINTS after the window is mapped.  Xt clients
+need to set min_size after mapping the window.
+ 2 - ignore - must solve in toolkit.
+
+Take "X-SHELL" out of xshell picture (now in title bar).
+
+Why should saveUnder imply backingStore for icons?
+5
+
+title fg/bg is not responding to foreground/background resources??
+(not sent in - recheck)
+ 4 - probably long gone...
+
+Umm, why do you have to make your foster parent and titlebar windows the
+same depth as the client window?  The only reason I can see that this is
+required is if the client window sets its background to ParentRelative, a
+generally strange thing to do to a top-level window, and even stranger
+once awm runs.  This points out that to be really robust, awm probably
+should handle this case, and reset the client window's background to be
+explicitly whatever is the root window background (including aligning the
+origin).  Of course, then when xsetroot changes the root background, we
+would have to update the client background, and there is no
+NotifyBackground event, so the only way to know when to re-check the root
+background is to select for exposure events (I am guessing a bit here),
+and this is getting to be gross!  So I would just set such a client's
+background to the current root window background, and leave it at that.
+(Hmm, this is the second time I have wanted to select for notification on 
+a change to a window attribute (other than colormap)!)
+5
+
+borderContext cursor gets inherited by the client window if the client
+window has not set a cursor.
+< I know.. I don't know how to correct this as it's a server issue. I
+< can't exactly just set a root cursor arbitrarily since I don't know which
+< clients have cursors and which don't. These are the breaks. Suggestions
+< welcome.
+Right you are, the XWindowAttributes structure is missing cursor and
+border/background pixel/pixmap.  We could ask for another client
+convention to fix cursor, by setting a window property.  It could even be
+wired into the appropriate window routines (XCreateWindow,
+XCreateSimpleWindow, XChangeAttributes), so that when windows are created
+as children of root or have their cursor changed, they get the property
+set.  Or we could just ask for a protocol fix...  Should we query Bob
+Scheifler on this one?
+5
+
+move loading of default font in GetFontRes to end, put font name in .h file,
+< fixed.
+Actually, Jordan did not do this yet.
+5
+
+
+		Bugs being investigated by Jordan Hubbard
+
+Startup file error should give the file name.
+< Right. I'm in the process of rationalizing all the error messages.
+5
+
+			   bugs fixed by Jordan
+
+reverseVideo should cause swapping of foreground and background colors,
+not just swapping the black/white defaults.  (This means all colors with
+resource class Foreground or Background, including menu.foreground, etc.)
+(FIXED by Jordan)
+Well, not quite.  Only the Foreground and Background 
+default resources are swapped.  All resources should be swapped.
+5
+
+				SYSV fixes
+
+The select() call for autoRaiseDelay (Titlebar.c) needs to be replaced with 
+a timer. (Not required for Blackbird)
+ 2 Don't count anymore
+
+			   Found in pre-SIR release:
+
+Xterm will paint first shell prompt in a column down the screen if
+it is printed before the window is mapped. (Xterm problem - don't count) 5
+
+If xterm is initially iconic (-iconic) it is iconified, then a second
+mapRequest is received by tekwm and tekwm de-iconifies it.  Bug has
+probably existed forever...only with xterm, not even with xclock.  Tekwm
+is getting two MapRequests with the same serial (sequence #),
+window(xterm's shell), and parent (root).  This says that xterm is mapping
+only once.  However, xterm is indeed mapping its shell (top-level) window
+twice, as demonstrated by instrumenting the Xlib XMapWindow call, and it
+should be mapping only once.
+
+tekwm event trace:
+
+mainloop: EVENT MapRequest(20), serial 69939 on window 11534341(0xb00005), parent 524397(0x8006d)
+mainloop: EVENT MapRequest(20), serial 69939 on window 11534341(0xb00005), parent 524397(0x8006d)
+
+The server bug is that it is giving two consecutive MapRequest events the
+same sequence number even though they are from two different requests.
+I do not believe I have seen this problem with any other events.
+
+However, I don't know why I get two DestroyNotifys fron the same window:
+
+mainloop: EVENT UnmapNotify(18), serial 69677 on window 3146530(0x300322)
+mainloop: EVENT DestroyNotify(17), serial 69677 on window 3146530(0x300322)
+mainloop: EVENT DestroyNotify(17), serial 69678 on window 3146550(0x300336)
+mainloop: EVENT Expose(12), serial 69679 on window 3145836(0x30006c)
+mainloop: EVENT Expose(12), serial 69679 on window 3145836(0x30006c)
+mainloop: EVENT Expose(12), serial 69679 on window 3145836(0x30006c)
+mainloop: EVENT Expose(12), serial 69679 on window 3145852(0x30007c)
+mainloop: EVENT Expose(12), serial 69679 on window 3145846(0x300076)
+mainloop: EVENT Expose(12), serial 69679 on window 3145840(0x300070)
+mainloop: EVENT Expose(12), serial 69679 on window 3145795(0x300043)
+mainloop: EVENT DestroyNotify(17), serial 69679 on window 3146530(0x300322)
+ 2 (Don't count - xterm bug)
+
+The red rubber box is not very visible against the default root
+background.  Change to fluorescent orange??
+Really, what is needed here is to have xsetroot examine the root window
+tile, then allocate all unallocated default cmap entries, set them to
+a color not used in the root tile, else white, then deallocate the
+entries.  Or xsetroot or tekwm can take an option of the color to set.
+Also, we should consider xoring with a user-specified plane mask, default
+00001 (or BlackPixel & WhitePixel)?
+5
+
+ICCCM says that wm's do not modify client properties, tekwm modifies
+GetButton.c:     XSetIconName(dpy, awi->client, ICONSTR);
+GetButton.c:     XSetSizeHints(dpy, awi->client, &wsh, XA_WM_NORMAL_HINTS);
+5
+
+If a tekwmrc declaration appears twice in one file, which takes precedence?
+First one encountered is the wrong answer...
+5
+
+Ignore events that propogate to the root window from a client window that
+is not selecting events, so root bindings do not take effect on some 
+windows, e.g. xclock or xmail.
+5
+
+Menus bound to a client window do not use client window colormap. This 
+causes the colormap to change when menus are popped up.  Also, focus is tracked
+while menu is up.  Focus should be set to None while menu is up, supressing
+keyboard input?
+fix 1:  On a HandleFocusOut/In with a Leave/EnterNotify with mode 
+NotifyGrab/Ungrab, change colormap, but leave highlighting and focus
+alone.
+fix 2: Ditto, but set focus to None.
+fix 3: create a menu for each client cmap, and use it if button context is
+client window. Then ignore these Leave/EnterNotifys.
+5
+
+Various apparently harmless protocol errors (printed when print ProtoErrors is
+on):
+
+From ???
+tekwm: X Protocol error detected by server: BadMatch (parameter mismatch)
+  Failed request major op code 42: X_SetInputFocus
+  Failed request minor op code 0 (if applicable)
+  ResourceID 0x400001 in failed request (if applicable)
+
+From UnRegister...  we start to unregister on an UnmapNotify from a window
+deletion, and we get errors on the destroyed resources.  Problem is
+compounded if we are futzing with focus while the client window is
+destroyed (e.g.  on exit of close popup window over client).  We might
+want to immediately unregister window before killing the client.  But this
+is only a partial solution to a generally unsolvable problem.  
+5 
+
+If a tekwm menu is brought up with user focus set to a window, then the
+mouse is moved out of the menu, then back in, the client window colormap
+stays installed.  If we start registering override-redirect windows, we
+can distinguish them from tekwm menus, and always install the window
+colormap if the window is unregistered, on the assumption that it is a
+tekwm menu and should take precedence over the focus window.
+4-
+
+Should colormap be set to a transient_for window belonging to the window
+that has user focus set to it?  Or should the client be required to set
+input focus to get the colormap to change?
+5
+
+If most allocations in the client colormap failed, set the title and gadget
+colormaps to Default.
+5 - not needed until we have per-window-colormap hardware.
+
+If cursor is moved out of a client window with a non-default colormap
+immediately after mapping, the client's colormap is installed.
+4-
+
+		      Unclassified New Possible Bugs
+
+title.background should be effective even if no title pixmaps are specified.
+
+I suspect that context and keymask expressions that end with '|' will match
+anything...
+
+				 Rejected Bugs
+
+f.pushXXX and f.redraw are not disabled on an override-redirect window.
+Once override-redirect wins are registered, and wm ops on them are
+considered legal, this becomes a non-bug...
+ 5 - rejected based on not following ICCCM

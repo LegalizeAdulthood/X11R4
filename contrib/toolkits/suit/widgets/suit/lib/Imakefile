@@ -1,0 +1,48 @@
+#include "./../SWImake.defs"
+
+       INCLUDES = -I$(SWINCLUDESRC) -I$(TOP) -I$(TOP)/lib/Xt
+       DEFINES = $(SWDEFINES)
+
+SRCS=	StButton.c StCkBxSw.c StCom.c StDisplay.c StFormMgr.c \
+	StLabel.c StMaskedBt.c StMaskedSw.c StMenu.c StMenuItem.c \
+	StPictrlSw.c StPpStBt.c StPpStView.c StPrimitiv.c StRadioSw.c \
+	StRectangl.c StRepeatBn.c StSimpleBn.c StSimpleSw.c StStBxSw.c \
+	StViewMngr.c
+
+OBJS=	StButton.o StCkBxSw.o StCom.o StDisplay.o StFormMgr.o \
+	StLabel.o StMaskedBt.o StMaskedSw.o StMenu.o StMenuItem.o \
+	StPictrlSw.o StPpStBt.o StPpStView.o StPrimitiv.o StRadioSw.o \
+	StRectangl.o StRepeatBn.o StSimpleBn.o StSimpleSw.o StStBxSw.o \
+	StViewMngr.o
+
+#if DebugLibsuit && ProfileLibsuit
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugLibsuit
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileLibsuit
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+NormalLibraryTarget(suit,$(OBJS))
+LintLibraryTarget(suit,$(SRCS))
+InstallLibrary(suit,$(USRLIBDIR))
+InstallLintLibrary(suit,$(LINTLIBDIR))
+
+#if ProfileLibsuit
+ProfiledLibraryTarget(suit,$(OBJS))
+InstallLibrary(suit_p,$(USRLIBDIR))
+#endif
+
+#if DebugLibsuit
+DebuggedLibraryTarget(suit,$(OBJS))
+#endif
+
+DependTarget()
+
+NormalLintTarget($(SRCS))

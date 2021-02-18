@@ -1,0 +1,50 @@
+#
+# @(#) Makefile 1.4 89/07/31
+#
+# Copyright (c) 1988 by Sun Microsystems, Inc.
+#
+SRCDOT=..
+
+include ${SRCDOT}/Makefile.master
+
+MANSUBDIRS = \
+	${MANDIR}/man1
+
+MANPAGES = clock.1 cmdtool.1 convert_to_Xdefaults.1 default_links.1  \
+		dbxtool.1  filemgr.1 iconedit.1 mailtool.1 perfmeter.1 \
+		snapshot.1 shelltool.1 textedit.1
+
+MANSECTION = ${MANPAGES}
+
+
+all: ${MANSECTION}
+
+${MANDIR}:
+	-mkdir ${MANDIR}
+
+${MANSUBDIRS}:
+	-mkdir $@
+
+# Need to include the string.defs file in each manual page.
+# Be careful that the 'rm -f ${TMPMAN}' remains in the same
+# shell (ie, the same line) as when ${TMPMAN} is created,
+# otherwise /tmp/manpage.$$ will pick up a different PID.
+install: ${MANDIR} ${MANSUBDIRS} ${MANSECTION}
+	for f in ${MANPAGES} ; do \
+		doc=${MANDIR}/man`echo $$f | sed -e 's,.*\.,,'` ; \
+		rm -f $$doc/$$f; \
+		install -m 644 $$f $$doc/$$f; \
+	done ; \
+
+install_sources:
+
+.SUFFIXES: .1 .1~ .6 .6~ .3 .3~ 
+.1~.1:
+	${GET} -G$*.1 ${GFLAGS} $<
+.6~.6:
+	${GET} -G$*.6 ${GFLAGS} $<
+.3~.3:
+	${GET} -G$*.3 ${GFLAGS} $<
+
+clean:
+	rm -f ${MANSECTION}

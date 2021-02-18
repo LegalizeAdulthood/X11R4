@@ -1,0 +1,51 @@
+
+This contribution consists of documentation and C header files for
+the Display PostScript System extension to X Windows.
+
+CONTENTS
+	
+README		This file.
+	
+dps-protocol	The specification of the extension protocol.
+
+XDPS.h		The C header file defining constants for the extension,
+		analogous to X.h.
+
+XDPSproto.h	The C header file defining the data structures for
+		the extension protocol, analogous to Xproto.h
+
+NOTE: In XDPSproto.h, the name of the extension is specified as
+"Adobe-DPS-Extension", which is the name registered with the
+X Consortium.  However, the DPS extension in Digital's UWS 2.2
+DECWindows server is named "DPSExtension".  Your client should query
+both names to determine if the extension is available.
+
+The Display PostScript System extension to X Windows is 
+specified in the Display PostScript developer manuals,
+available in a reference binder from Adobe Systems.
+The developer reference binder includes the following 
+documents:
+
+	The Display PostScript System: Perspectives for Software Developers
+	PostScript Language Extensions for the Display PostScript System
+	Display PostScript Client Library Reference Manual
+	Display PostScript pswrap Reference Manual
+	PostScript Language Color Extensions
+	Display PostScript/X Window System Supplement
+	
+Because the documentation is over 200 pages long, we have arranged to
+ship hardcopy to interested parties upon written request.  To obtain
+the Display PostScript developer manuals, send a check or money order
+for $45.00 (payable to Adobe Systems) to cover the cost of production
+and shipping to:
+	
+	Developer Support/DPS Reference
+	Adobe Systems Incorporated
+	1585 Charleston Road
+	Moutain View, CA 94039-7900
+
+
+
+
+
+

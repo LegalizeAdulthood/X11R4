@@ -1,0 +1,60 @@
+#!	/bin/csh -f
+
+set status_save = 0
+
+if ($1 == "") then
+  echo " "
+  echo "USAGE"
+  echo "	$0 slang_file_name (including extension) [compiler options]"
+  echo " "
+  exit (1)
+  endif
+
+echo "compiling $1"
+set d_name = $1:t
+set t_name = /tmp/$$.preprocessed_slang.$d_name
+set v_name = /tmp/$$.vars
+
+cp /dev/null $v_name
+if ($?SERPENT_DATA_PATH) then
+  foreach g ($SERPENT_DATA_PATH)
+    echo "-I$g" >>$v_name
+    end
+  endif
+
+set root_name = $1:r
+set incs = `cat $v_name`
+/lib/cpp $incs $1 >$t_name
+if ($status) then
+  echo " "
+  echo "preprocessor run for $1 failed"
+  echo " "
+  set no_continue
+  endif
+if ($?no_continue) then
+ else
+  if  ($2 == "") then
+    slang_comp $t_name $root_name
+    set status_save = $status
+   else
+    shift
+    slang_comp $* $t_name $root_name
+    set status_save = $status
+    endif
+  if ($status_save) then
+    echo " "
+    echo "slang compile for $1 failed"
+    echo " "
+    set no_continue
+    endif
+  endif
+
+rm -f $t_name
+rm -f $v_name
+
+if ($?no_continue) then
+  exit(1)
+ else
+  exit (0)
+  endif
+

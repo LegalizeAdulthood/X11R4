@@ -1,0 +1,39 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+
+MkdirTarget($(DESTDIR)/help)
+
+/* Everywhere: put help.aliases in ${DESTDIR}/help */
+
+InstallFile(help.aliases, $(INSTLIBFLAGS), $(DESTDIR)/help)
+
+/* Put site-specific help.overview and help.programs in ${DESTDIR}/lib */
+
+#ifdef CMU_ENV
+
+InstallFileToFile(cmu.ovrvw, $(INSTINCFLAGS), $(DESTDIR)/lib/help.overviews)
+InstallFileToFile(cmu.prgms, $(INSTINCFLAGS), $(DESTDIR)/lib/help.programs)
+
+#else /* CMU_ENV */
+
+InstallFileToFile(help.ovrvw, $(INSTINCFLAGS), $(DESTDIR)/lib/help.overviews)
+InstallFileToFile(help.prgms, $(INSTINCFLAGS), $(DESTDIR)/lib/help.programs)
+
+/*  If not at CMU, install a simple help index. */
+
+install.time::
+	rm -fr ${DESTDIR}/lib/help.index
+	sed -e s,DESTDIR,${DESTDIR},g index.tpl > index.idx
+	-mkdir ${DESTDIR}/lib/help.index
+	${DESTDIR}/etc/mkindex -v index.idx ${DESTDIR}/lib/help.index
+
+#endif /* CMU_ENV */
+
+/*******************************
+ Note: to install a file under a different name, just use
+	the InstallFileToFile rule with a full path as the last
+	argument.
+	 ie InstallFileToFile(file.site_specific, $(INSTINCFLAGS), file.common)
+*******************************/

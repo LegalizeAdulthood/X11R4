@@ -1,0 +1,390 @@
+.TH XGKS 1 "15 February 1988" "XGKS Version 1"
+.SH NAME
+XGKS - A GKS library for the X window system
+.SH DESCRIPTION
+.PP
+XGKS is an implementation of the ANSI Graphical Kernel System for use
+with the X 11 windowing system.  XGKS was developed at the
+University of Illinois, Urbana, Illinois.
+.SH STANDARDS
+.PP
+XGKS is an  implementation  of  the  ANSI  Graphical  Kernel
+System  as  defined  by  the  functional description and the
+proposed C language binding.  Thus, the  ultimate  reference
+for any programmer is the C binding manual which details the
+data types and functions available.   XGKS  is  a  level  2C
+implementation  of  the  GKS  specification.    It  supports
+REQUEST, SAMPLE, and EVENT input modes for all  six  logical
+input  devices, workstation independent segment storage, and
+metafiles.
+.SH CAPABILITIES
+The XGKS library supports all  functions  specified  by  the
+ANSI standard with the exception of :
+.sp
+.nf
+.in +0.5i
+ESCAPE (in its most general form)
+GENERALIZED DRAWING PRIMITIVE (in its most general form)
+INQUIRE GENERALIZED DRAWING PRIMITIVE
+INQUIRE LIST OF AVAILABLE GENERALIZED DRAWING PRIMITIVES
+SET PATTERN REFERENCE POINT
+SET PATTERN SIZE
+.fi
+.in -0.5i
+.sp
+The escape and gdp functions are implemented  as  a  set  of
+functions which follow the naming convention outlined in the
+C  binding.    That   is,   escape   functions   are   named
+gesc<function>  and  gdp functions are named ggdp<function>,
+where <function> is a  descriptive  name  for  the  function
+performed.
+.SH "OUTPUT PRIMITIVES"
+.PP
+Polylines of any width and  color  can  be  displayed  while
+seven line styles are supported they are:
+.sp
+.nf
+	GLN_DASH		long dash
+	GLN_DDOTDASH	double dot dash
+	GLN_SDASH		short dash
+	GLN_SOLID		solid
+	GLN_DASH		medium dash
+	GLN_DOT		dotted
+	GLN_DOTDASH	dot dash
+.fi
+.PP
+Polymarkers of any size and color  can  be  displayed,  five
+marker styles are provided:
+.sp
+.nf
+	GMK_POINT		filled circle
+	GMK_PLUS		+
+	GMK_STAR		*
+	GMK_O		unfilled circle
+	GMK_X		X
+.fi
+.PP
+All text within XGKS is implemented  through  stroke  fonts,
+thus  text  primitives  are  fully transformable.  Nine font
+styles are supported:
+.sp
+.nf
+	1	SanSerif Roman
+	2	Serif Roman
+	3	SansSerif Bold Roman
+	4	Serif Bold Roman
+	5	Sanserif Italic Roman
+	6	Serif Italic Roman
+	7	SanSerif Script
+	8	Serif Script
+	9	Gothic
+.fi
+.PP
+Fill Area output primitives  can  be  displayed  as  hollow,
+solid,  hatched  and  patterned.   Twenty (numbered one to
+twenty)  hatch and pattern styles are predefined.
+The application program can redefine these patterns, however, the programmer
+should be aware that the gsetpatrep function expects patterns to be stored
+in column major order from bottom to top.
+This means that cell[0][0] is the bottom-left corner, cell[dx-1][dy-1] is the
+top-right corner, and cell[0][1] is directly above cell[0][0].
+.PP
+GKS  Cell  Arrays  are  supported  in  their  most   general
+transformable form.
+.SH "LOGIAL INPUT DEVICES"
+.PP
+XGKS supports the full GKS input model.  Thus,  all  logical
+input  devices  operate in request, sample, and event modes.
+Any number of logical input devices can be created for  each
+of the six input classes.  All logical devices are triggered
+through the use of  the  mouse  and  its  buttons  with  the
+exception of the choice device where one prompting technique
+uses the  keyboard's  function  buttons.   A  logical  input
+device is only active when the mouse is within the echo area
+of the device and one  or  more  of  the  mouse  buttons  is
+pressed.   When  the  mouse button is released, the physical
+device triggers all logical  input  devices  in  request  or
+event mode whose echo area surrounds the cursor.  Devices in
+sample mode are triggered whenever the  mouse  moves  within
+the  echo  area  while  the  mouse  is  pressed.   Any input
+operation can be aborted by pressing the Break  key  on  the
+keyboard.
+.PP
+Five prompting types are defined for the locator:
+.sp
+.nf
+	1	tracking cross
+	2	crosshair spanning X window
+	3	tracking cross
+	4	rubberband line
+	5	rubberband rectangle
+.fi
+.PP
+The only restriction placed on these prompts is that  prompt
+and  echo  type  5 does not allow the rectangle to be a fill
+area  style  other  than  hollow.   The  fixed  end  of  the
+rubberband  line  and  rubber  rectangle  is  at the initial
+locator position while  the  floating  end  is  the  current
+value.
+.PP
+The stroke input device differs from the locator by allowing
+more  than  one  coordinate  point to be entered.  There are
+three stroke prompts supported:
+.sp
+.nf
+	1	tracking cross
+	3	polymarker at each point
+	4	polyline joining points
+.fi
+.PP
+The closeness  of  selected  points  can  be  controlled  by
+specifying  a  minimum  X  and minimum Y displacement in the
+stroke data record during stroke  initialization.   Although
+specified  as  a  distance  in  World  Coordinate space, the
+restriction is enforced in Normalized Device space.
+.PP
+The valuator input device allows the user to select  a  real
+numbered value within the application specified range.  Only
+one  visual  representation  is  currently  supported:   the
+valuator appears as a bar with a sliding knob whose relative
+position determines the current value.  A horizontal bar  is
+displayed  if  the  echo  area  is  wider  than  it is tall,
+otherwise a vertical bar is used.  This prompt technique  is
+selected by valuator prompt and echo types one and two.
+.PP
+Two types of choice devices are provided.    Choice  prompts
+one  and  two  use  the  keyboard  function keys as a choice
+device, thus function key  F1  returns  choice  number  one.
+Prompt  and  echo  type  one enables all function keys while
+prompt type two enables only those  keys  specified  in  the
+data  record  when the device is initialized.  Choice prompt
+type three presents the user with  a  menu  from  which  the
+current  choice  is  selected.  These  menus  appear and act
+similar to most X11 window  manager  menus.   That  is,  the
+current  selection  is  highlighted and selection is made by
+releasing the mouse button when the desired choice  is  lit.
+A  word  of warning, these menus are displayed in the choice
+echo  area  and  DO  NOT  attempt  to  restore  any   output
+primitives that they cover.
+.PP
+Currently only two pick prompt types are supported: one  and
+three.   Both  prompt types highlight the currently selected
+segment by flashing a  bounding  box  around  the  segment's
+extent.   
+.PP
+The string device has only one prompt and echo type:  number
+1.   This  prompt  type  gives the user one line on which to
+type.  This line is positioned in the upper-left  corner  of
+the  string echo area and is displayed as a hollow fill area
+within which  an  insertion  point  cursor  and  typed  text
+appear.   As  the  user  types,  the  only  special keys are
+Backspace, Delete,  and  Enter  which  perform  the  obvious
+functions.   The  length of the line is limited by the width
+of the echo area and  the  size  of  the  string  buffer  as
+specified   by   the   application   program  during  string
+initialization.
+.SH LIMITS
+.PP
+Four workstation types are defined by XGKS:  MI,  MO,  WISS,
+and  X11.   When  calling  the open workstation function the
+application must specify three  parameters:  1)  workstation
+identifier,  an  integer  used  to identify this workstation
+throughout the application;  2)  workstation  connection,  a
+file name for the metafile workstations (MI and MO), ignored
+for the workstation independent segment  store  (WISS),  and
+the  X11  DISPLAY  specification string (see the X man page)
+which tells XGKS to open a new window on the display; and 3)
+the  workstation  type  which  is  MI,  MO, WISS, or the X11
+DISPLAY   string.    Ten   workstations    can    be    open
+simultaneously,  however,  only  one WISS workstation can be
+open.
+.PP
+For monochrome displays GKS color number zero always refers to the
+X window background color while GKS color number one refers to the
+X window foreground color.  By default these are black and white but
+can be inverted by placing the following line in the .Xdefaults
+file:
+.sp
+	xgks.invertmono: on
+.sp
+For color displays the background color is always color zero and the
+foreground color is always one.
+.PP
+There are thirty-one normalization transformations, numbered
+0  to  30.   Transformation  number  zero  is  the  identity
+transformation and cannot be changed.
+.PP
+Every X11 window workstation has a fixed  device  coordinate
+space that is 0 to 1279 on the X axis and 0 to 1023 on the Y
+axis.  This is not to say that the X window is that big, the
+GKS  workstation  will  be  scaled to fit the X window; this
+scaling preserves the aspects ratio.
+.PP
+There are twenty bundle  table  entries  for  each  type  of
+bundle table.
+.PP
+The size of the color table is determined by the X11  window
+server   and   the  hardware  being  used.   The  IBM  apa16
+monochrome display  provides  two  colors  and  the  Megapel
+display supports 255 out of 4096 possible colors.  Since X11
+allows multiple color maps, each XGKS workstation  initially
+shares the color map with its parent window and only creates
+a new color map when the application program changes a color
+table  entry  via  the  SET  COLOR  REPRESENTATION function.
+Since many displays only support one physical color map, the
+color map associated with the X11 window which has the input
+focus is loaded into the hardware.
+.SH "PROGRAMMING"
+.PP
+Here is a simple XGKS program that displays "Hello World" in
+the   center  of  the  default  workstation  window.   After
+displaying the greeting, the program  uses  a  choice  input
+device to wait for the user to press the break key.  This is
+done because the X window that represents  this  workstation
+is  removed  from  the  screen as soon as the workstation is
+closed.  The for loop in the main program  is  a  convenient
+way  for  the  application  to allow the user to specify the
+workstation  connection  id  on  the  command  line  via   a
+hostname:serverNumber  pair.   If  the  connection id is not
+specified  XGKS  will  use  the  value  of  the  environment
+variable DISPLAY in the users environment.
+.sp
+.nf
+#include <stdio.h>
+#include <xgks.h>
+
+/*
+ * This function is called when the program is finished
+ * and we just want to wait until the user is done looking
+ * at the output.  Here we set up a choice device to use
+ * the function keys. However, we ignore all choices and
+ * wait for the user to press the Break key.
+ */
+WaitForBreak( wsid )
+    Gint wsid;
+{
+    Gchoice init;
+    Gchoicerec record;
+    Glimit earea = { 0.0, 1279.0, 0.0, 1023.0 };
+    
+    gmessage(wsid, "Done, press Break to quit ...");
+    
+    init.status = GC_NOCHOICE;
+    init.choice = 0;
+    record.pet1.data = NULL;
+    ginitchoice( wsid, 1, &init, 1, &earea, &record );
+    gsetchoicemode( wsid, 1, GREQUEST, GECHO );
+    for( ; init.status != GC_NONE ; )
+        greqchoice( wsid, 1, &init );
+}
+
+/*
+ * set up various text parameters and print "Hello World"
+ */
+PrintHello()
+{
+    Gpoint tpt;
+    Gpoint up;
+    Gtxfp txfp;
+    Gtxalign align;
+    
+    txfp.font = 4;           /* use Serif Bold Roman font */
+    txfp.prec = GSTROKE;
+    gsettextfontprec(&txfp);
+    
+    gsetcharexpan(0.5);
+    gsetcharspace(0.2);
+    gsettextcolorind( 1 );   /* should be white */
+    
+    gsetcharheight(0.05);
+    
+    up.x = 0.0; up.y = 1.0;  /* characters are straight up */
+    gsetcharup(&up);
+    
+    align.hor = GTH_CENTER;
+    align.ver = GTV_HALF;
+    gsettextalign(&align);
+    
+    gsettextpath(GTP_RIGHT); /* print from left to right */
+    
+    tpt.x = 0.5; tpt.y = 0.5;/* center of the window */
+    gtext(&tpt,"Hello World!");
+}
+
+main(argc,argv)
+    int argc;
+    char *argv[];
+{
+    int i, wsid=1;
+    char *conn = (char *)NULL;
+    
+    for( i=1; i<argc; i++){
+        if (index( argv[i], ':'))
+            conn = argv[i];
+    /* Application dependent options here */
+    }
+    
+    gopengks(stdout,0);
+    
+    if (gopenws( wsid , conn, conn) != 0)
+        exit(0);
+    gactivatews( wsid );
+    
+    PrintHello();
+    WaitForBreak ( wsid );
+    
+    gdeactivatews( wsid );
+    gclosews( wsid );
+    
+    gclosegks();
+    exit(0);
+}
+.PP
+To compile the program we use the following command line:
+.sp
+	cc hello.c -o hello -lxgks -lX -lm
+.sp
+To execute just type:
+.sp
+	hello
+.sp
+.fi
+(note: you must be running X windows when you run  any  XGKS
+application.)
+.PP
+When the program opens the GKS workstation  the  X11  window
+system  will  prompt  the  user  to  open a new window.  The
+program will display "Hello World!" and then  wait  for  the
+user  to  press  the  Break  key.  While the GKS workstation
+window is on the screen the user can  resize,  move,  cover,
+and   uncover   the  window  and  XGKS  will  take  care  of
+redisplaying the greeting.
+.SH FILES
+.PP
+/usr/lib/libxgks.a		The library.
+.br
+/usr/lib/xgks/fontdb	Font data base.
+/usr/lib/xgks/cbinding.trf	Simple form of C binding.
+/usr/include/xgks.h	C include file.
+.SH "SEE ALSO"
+.PP
+X(1)
+.sp
+Computer Graphics - Graphical Kernel System (GKS) Functional Description.
+ANSI, X3.124-1985.
+.sp
+C Language Binding of GKS. ANSI X3H34/83-12R5, March 1986.
+.sp
+Computer Graphics, Donald Hearn and Pauline Baker, Prentice-Hall, 1986.
+.SH AUTHORS
+.br
+Greg Rogers (grogers@a.cs.uiuc.edu)
+.br
+Sung Hsien Ching (ksung@a.cs.uiuc.edu)
+.br
+Yu Pan
+.sp
+This project was directed by Professors Bill Kubitz and Roy Campbell
+of the Department of Computer Science and supported by IBM ACIS.
+Special thanks go to David Berkowitz and Terry Rowan, our IBM contacts,
+who helped us get early versions of the X server for our workstations.

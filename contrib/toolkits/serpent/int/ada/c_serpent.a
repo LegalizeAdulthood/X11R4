@@ -1,0 +1,238 @@
+with system;
+
+with C_to_ada_types;
+use C_to_ada_types;
+
+with C_strings;
+use C_strings;
+
+with serpent_type_definitions;
+use serpent_type_definitions;
+
+package c_serpent is
+
+  procedure c_serpent_init(
+    mailbox : in c_string;
+    ill_file : in c_string
+  );
+
+  function c_start_transaction return c_handle;
+
+  function c_add_shared_data (
+    transaction : in c_handle;
+    element_name, component_name : in c_string;
+    data : in system.address
+  ) return int;
+
+
+  procedure c_put_shared_data(
+    transaction    	: in c_handle;
+    id             	: in int; 
+    element_name   	: in c_string;
+    component_name 	: in c_string; 
+    data           	: in system.address
+  );
+
+  procedure c_remove_shared_data(
+    transaction  : in c_handle; 
+    element_name : in c_string; 
+    id           : in int
+  );
+
+  procedure c_rollback_transaction(
+    transaction : in c_handle
+  );
+
+  procedure c_commit_transaction(
+    transaction : in c_handle 
+  );
+
+  function c_get_transaction return c_handle;
+
+  function c_get_transaction_no_wait return c_handle;
+
+  function c_get_first_changed_element(
+    transaction : in c_handle
+  ) return int;
+
+  function c_get_next_changed_element(
+    transaction : in c_handle
+  ) return int;
+
+  function c_get_element_name(
+    transaction : in c_handle;
+    id : in int 
+  ) return c_string;
+
+  function c_get_change_type(
+    transaction : in c_handle;
+    id : in int 
+  ) return int;
+
+  function c_create_changed_component_list(
+    transaction : in c_handle;
+    id : in int 
+  ) return c_handle;
+
+  procedure c_destroy_changed_component_list(
+    changed_component_list : in c_handle
+  );
+
+  procedure c_incorporate_changes(
+    transaction : in c_handle;
+    id   : in int;
+    data : in system.address     
+  );
+
+
+  procedure c_purge_transaction(
+    transaction : in c_handle
+  );
+
+  procedure c_start_recording(
+    transaction : in c_handle; 
+    file_name   : in c_string 
+  );
+
+  procedure c_stop_recording;
+
+ 
+--  this not implemented yet ?????
+--  procedure c_playback(
+--    file_name  : in c_string 
+--  );
+                                                                
+  procedure c_serpent_cleanup;
+
+  function c_get_shared_data_type (
+    element_name    : in c_string;
+    component_name  : in c_string
+  ) return shared_data_types;
+
+  function c_get_shared_data (
+    transaction : in c_handle;
+    id		: in int;
+    component_name : in c_string
+  ) return system.address;
+    
+  function c_get_length (
+    element_name    : in c_string
+  ) return int;
+
+  procedure c_get_component_lop (
+    element_name	: in c_string;
+    component_name	: in c_string;
+    length 		: in int_ptr;
+    offset 		: in int_ptr;
+    position 		: in int_ptr
+  );
+
+  function c_create_component_list (
+    element_name : in c_string
+  ) return c_handle;
+
+  procedure c_destroy_component_list(
+    component_list : in c_handle
+  );
+
+  function c_get_status return status_codes;
+
+  procedure c_print_status(
+    error_msg : in c_string
+  );
+
+private
+
+--
+--  Putting information into the interface.
+--
+  pragma INTERFACE (C, c_serpent_init, "_isd_init");
+  pragma INTERFACE (C, c_start_transaction, "_isd_start_transaction");
+  pragma INTERFACE (C, c_add_shared_data, "_isd_add_shared_data");
+  pragma INTERFACE (C, c_put_shared_data, "_isd_put_shared_data");
+  pragma INTERFACE (C, c_remove_shared_data, "_isd_remove_shared_data");
+  pragma INTERFACE (C, c_rollback_transaction, "_isd_rollback_transaction");
+  pragma INTERFACE (C, c_commit_transaction, "_isd_commit_transaction");
+--
+--  Getting information out of the interface.
+--
+  pragma INTERFACE (C, c_get_transaction, "_isd_get_transaction");
+  pragma INTERFACE (
+    C, 
+    c_get_transaction_no_wait, 
+    "_isd_get_transaction_no_wait"
+  );
+  pragma INTERFACE (
+    C, 
+    c_get_first_changed_element, 
+    "_isd_get_first_changed_element"
+  );
+  pragma INTERFACE (
+    C, 
+    c_get_next_changed_element, 
+    "_isd_get_next_changed_element"
+  );
+  pragma INTERFACE (C, c_get_element_name, "_isd_get_element_name");
+  pragma INTERFACE (C, c_get_change_type, "_isd_get_change_type");
+  pragma INTERFACE (
+    C, 
+    c_create_changed_component_list, 
+    "_isd_create_changed_component_list"
+  );
+  pragma INTERFACE (
+    C, 
+    c_destroy_changed_component_list, 
+    "_isd_destroy_changed_component_list"
+  );
+  pragma INTERFACE (C, c_incorporate_changes, "_isd_incorporate_changes");
+  pragma INTERFACE (C, c_get_shared_data, "_isd_get_shared_data");
+  pragma INTERFACE (C, c_purge_transaction, "_isd_purge_transaction");
+  pragma INTERFACE (C, c_start_recording, "_ipb_start_recording");
+  pragma INTERFACE (C, c_stop_recording, "_ipb_stop_recording");
+ 
+-- NOT IMPLEMENTED YET ???????
+--  pragma INTERFACE (C, c_playback, "_ipb_playback");
+ 
+
+  pragma INTERFACE (C, c_serpent_cleanup, "_isd_cleanup");
+--
+--  Non-transaction specific queries.
+--
+  pragma INTERFACE (
+    C, 
+    c_get_shared_data_type, 
+    "_isd_get_shared_data_type"
+  );
+  pragma INTERFACE (
+    C, 
+    c_get_length, 
+    "_isd_get_length"
+  );
+  pragma INTERFACE (
+    C, 
+    c_get_component_lop, 
+    "_isd_get_component_lop"
+  );
+  pragma INTERFACE (
+    C, 
+    c_create_component_list, 
+    "_isd_get_component_list"
+  );
+  pragma INTERFACE (
+    C, 
+    c_destroy_component_list, 
+    "_isd_get_component_list"
+  );
+--
+--  Status routines.
+--
+  pragma INTERFACE (C, c_print_status, "_isc_print_status");
+  pragma INTERFACE (C, c_get_status, "_isc_fget_status");
+
+end;
+
+
+package body c_serpent is
+
+end c_serpent;
+  

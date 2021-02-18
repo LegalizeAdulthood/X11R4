@@ -1,0 +1,729 @@
+\chapter{The Standard GWM Packages}
+
+\sloppy
+
+This chapter describes the {\WOOL} packages available on the standard GWM
+distribution. The name of the involved files are listed in the title of each
+package.
+
+{\GWM} does not try to enforce any policy in writing profiles, but for the
+sake of simplicity and maintainability, all the {\WOOL} packages delivered
+with {\GWM} will try to be compliant with a set of rules described in
+section~\ref{standard-styleguide}, page~\pageref{standard-styleguide}, which
+should assure the compatibility between them.
+
+\section{The Standard Profile\hfill{\tt .profile.gwm}}
+\label{standard-profile}
+
+The standard profile can be customized to your taste by creating a
+\verb".profile.gwm" file in your home directory, or by copying the one in
+the {\GWM} distribution directory in your home directory and editing it.
+\footnote{The standard profile is the default one, which you get if you do
+not have a \verb".gwmrc.gwm" file in your home directory. It is a
+real-estate overlapping environment. It is defined in the \verb".gwmrc.gwm"
+file in the {\GWM} distribution directory.}
+
+\subsection{mouse buttons}
+
+The default behavior for clicking of the mouse buttons is, in a window
+decoration or an icon:
+
+\begin{description}
+
+\item[left button] Moves the window. Releasing the button actually moves the
+window, pressing another one while still holding down the left button
+cancels the move operation
+
+\item[middle button in a window] Resizes the window. The size of the window
+will be displayed in the upper-left corner of the screen. Releasing the
+button actually resizes the window, pressing another one while still holding
+down the middle button cancels the resize operation
+
+\item[middle button in an icon] de-iconifies the icon
+
+\item[right button] brings up a pop-up menu for additional functions, such
+as iconification and destruction
+
+\end{description} 
+
+These functions are enabled only in the {\GWM}-added decoration around the
+window, or anywhere in the window if the {\bf alternate} (or {\bf meta} or
+{\bf left} key on some keyboards) modifier key is depressed when clicking,
+in the \verb"uwm" style of interaction.
+
+Moreover, if you click in the icon in the upper left of the frame around the
+xterm windows with the left or right button, the window will be iconified,
+and with the middle button, it will be iconified and the icon moved just
+underneath the pointer. You can still move the icon elsewhere by
+dragging it while the middle button is down.
+
+\subsection{customization}
+
+Customization is achieved by creating a \verb".profile.gwm" file in
+your home directory (or anywhere in your \verb"GWMPATH"). In this file
+you can set the variables to modify the standard profile to suit your
+taste. Note that you must set variables used in decorations {\bf
+before} loading this decoration by a \verb"set-window" or
+\verb"set-icon-window" call.
+
+Your \verb".profile.gwm" will be loaded once for each screen
+managed, and since pixmaps, colors, cursors and menus are screen-dependent
+objects, try to define them as \verb"names" in the \verb"screen." namespace
+(\seep{namespace-make}).
+
+\subsubsection{Mouse bindings}
+
+The standard mouse button bindings can be redefined by re-defining the
+default {\bf states} (\seep{state-make}) for a
+click in a window decoration, an icon and the root window, which are
+respectively the global variables {\bf standard-behavior}, {\bf
+icon-behavior}, {\bf root-behavior}. These states will be used to build the
+{\bf fsms} of the windows, icons and root window. You may then need to
+redefine the events grabbed by {\GWM}, in the {\bf grabs} variable.
+
+\subsubsection{global switches}
+
+The following global variables (which are names in the \verb"screen."
+namespace for all pixmaps, colors, cursor and menus) controlling the way the
+standard profile operates can be set in your \verb".profile.gwm" file:
+
+\begin{description}
+
+\itemtt{cursor} to the cursor displayed in any decoration or icon
+\itemtt{root-cursor} to the cursor displayed on the root window. The
+available cursors in the distribution are:
+\begin{description} 
+\itemtt{arrow} a big arrow
+\itemtt{arrowhole} same with a hole inside
+\itemtt{arrow3d} a 3d-looking triangular shape. Especially nice on a clear
+background.
+\end{description}
+For instance, to use the ``{\tt arrow3d}'' cursor, just say:
+{\exemplefont\begin{verbatim}
+        (setq root-cursor (cursor-make "arrow3d"))
+\end{verbatim}}
+
+\itemtt{screen-tile} to the pixmap used to tile the root window with.
+Provided bitmaps are \verb"back.xbm" (default) and \verb"grainy.xbm"
+
+\itemtt{autoraise} if set to \verb"t", (defaults to \verb"()"), {\GWM} will
+raise on top of others the window which has the input focus
+
+\itemtt{xterm-list} the list of machines the user wants to launch a remote
+xterm on (via the \verb"rxterm"\footnote{{\tt rxterm}, {\tt rxload}
+and {\tt rx} are Bourne shell scripts used to start remote xterms,
+xloads or any other X command. The rxterm script is included in the
+distribution, in the {\tt gwm} subdirectory, install it and make rx
+and rxload as links to it} command)
+
+\itemtt{xload-list} the list of machines the user wants to launch a remote
+xload on (via the \verb"rxload" command) 
+
+\itemtt{icon-pixmap} the pixmap to be displayed in the upper left
+corner of window to iconify it 
+
+\itemtt{to-be-done-after-setup} the list (\verb"progn"-prefixed) of things
+to be executed after all windows already present have been decorated.  
+
+\itemtt{look-3d} to \verb"t" to specify that window decoration packages that
+support it should adopt a tridimensional look. The default for this variable
+is \verb"()" on monochrome displays and \verb"t" on color and grayscale ones.
+
+\end{description}
+
+\subsubsection{Window and icon decoration}
+
+Moreover, you can decide to change the decoration (look and feel)
+of a client or an associated icon by using the following functions.
+
+{\bf Note:} for all functions, to set defaults for a screen type or a client
+class, use the \verb"any" keyword.
+
+\begin{description}
+
+\itemtt{(set-window [screen-type] client-class decoration)}
+\label{set-window} will tell {\GWM} to use the decoration described in {\tt
+decoration} for all clients of client class {\tt client-class} in the
+current screen of type \verb"screen-type". {\tt decoration} can be either:
+
+\begin{itemize} 
+\item a real decoration made with a {\tt window-make} call
+\item a function returning a decoration when called without parameters 
+\item the file name (as a string or atom) of one of the standard decorations 
+as listed in the section \ref{standard-decorations}. The file will be loaded
+and should set the {\tt decoration} atom to either a real decoration or a
+function returning a decoration 
+\end{itemize}
+
+For instance, these declarations say that xterms on this screen, if it is a
+monochrome one will be decorated by the \verb"simple-ed-win" style, but if
+the screen is a color or grayscale one, will use the \verb"simple-win"
+decoration, and will use the ``no-decoration'' style for windows not otherwise
+describe (The {\tt no-decoration} window description adds no visible
+decoration to a window).
+
+{\exemplefont\begin{verbatim}
+        (set-window mono XTerm simple-ed-win)
+        (set-window any XTerm simple-win)
+        (set-window any no-decoration)
+\end{verbatim}}
+
+To choose decorations on other criteria than just class, define a function
+that will return a {\WOOL} expression which will give the good decoration when
+evaluated. For instance, to put a \verb"simple-ed-win" decoration on all
+XTerms, except those less than 200 pixels wide, use this in your .profile.gwm:
+
+{\exemplefont\begin{verbatim}
+        (defun decide-which-xterm-deco ()
+            '(if (< window-width 200) (no-frame)
+                 (simple-ed-win)))
+        (set-window any XTerm decide-which-xterm-deco)
+\end{verbatim}}
+
+\itemtt{(set-icon [screen-type] client-class bitmap-file)} \label{set-icon}
+will associate to a client a simple icon made of the the X11 bitmap stored
+in \verb"bitmap-file" (with the current value of \verb"foreground" and
+\verb"background" at the time of the call to \verb"set-icon") and the name
+of the icon underneath it. 
+
+If a list is given as the last argument, it is evaluated and the pixmap is
+taken as the result of the evaluation.
+
+Suppose that you designed a picture of a mailbox named ``mail-icon.xbm'',
+saved it somewhere in your GWMPATH, and want to use it for the icon of the
+client \verb"xmh". You would add in your \verb".profile.gwm" one of the two
+forms:
+
+{\exemplefont\begin{verbatim}
+        (set-icon XMh mail-icon.xbm)
+        (set-icon XMh (pixmap-make black "mail-icon.xbm" white))
+\end{verbatim}}
+
+{\bf Note:} the icon bitmap can only be set for icon decorations
+supporting it, such as the (default) \verb"simple-icon" decoration style.
+
+\itemtt{(set-icon-window client-class icon-file)}\label{set-icon-window} This
+call will associate more complex icons to a given client, such as those
+listed in section~\ref{standard-icons}, p~\pageref{standard-icons}. For
+instance to have \verb"xterm" icons look like a mini computer display, add
+in your \verb".profile.gwm":
+
+{\exemplefont\begin{verbatim}
+        (set-icon-window XTerm term-icon)
+\end{verbatim}}
+
+The \verb"term-icon" argument can be either a client window decoration, a
+function returning a decoration or a file name, as for the \see{set-window}
+function. On startup, {\GWM} does a:
+
+{\exemplefont\begin{verbatim}
+        (set-icon-window any any simple-icon)
+\end{verbatim}}
+
+\end{description}
+
+\subsubsection{Desktop space management\hfil{\tt placements.gwm}}
+
+The standard profile supports functions to automatically place your windows
+or icons on the screen. These functions manage only some type of clients (or
+all of them if affected to the \verb"any" client), and they are called
+with one argument set to {\bf t} on opening the window, and to {\bf ()} on
+closing (destruction) it. They are associated to clients by the calls:
+
+\begin{description}
+
+\itemtt{(set-placement [screen-type] client-class function-name)} for the
+main windows of a client. 
+
+\itemtt{(set-icon-placement [screen-type] client-class function-name)} for
+its associated icons.
+
+\end{description}
+
+The currently pre-defined placement functions are:
+
+\begin{description}
+
+\itemtt{()} does nothing, the window justs maps where it was created
+by the client (this is the default value)
+
+\itemtt{user-positioning} asks the user to place it interactively
+
+\itemtt{rows.XXX.placement} automatically aligns the windows or icons on the
+sides of the screen. Replace {\tt XXX} by one of the eight names in the 
+following figure:
+
+\centerline{\texpsfig{places1.id}{261}{117}}
+
+You can set the space where the {\tt XXX} row lives by issuing calls to the
+control function \verb"rows.limits" whith the syntax:
+
+\begin{verbatim}
+        (rows.limits rows.XXX [key value] ...)
+\end{verbatim}
+
+where {\tt key} is an atom setting a value (in pixels). Key can be either
+start, end, offset, and separator as shown in the following figure for 
+{\tt XXX = top-left}:
+
+\centerline{\texpsfig{places2.id}{195}{90}}
+
+\end{description}
+
+For instance you can manage your \verb"xterm" windows by:
+
+{\exemplefont\begin{verbatim}
+        (set-placement XTerm user-positioning)
+        (set-icon-placement any XTerm rows.right-top.placement)
+        (rows.limits rows.right-top 'start 100 'separator 2)
+\end{verbatim}}
+
+You can define your own window placement functions and use them by the
+\verb"set-placement" call. They will be called with one argument, {\bf t}
+when the window (or icon) is first created, and {\bf ()} when the window is
+destroyed. This is why we needed an interpretive extension langage!
+
+{\exemplefont\begin{verbatim}
+        (defun do-what-I-mean (flag) ...great code...)
+        (set-icon-placement any any do-what-I-mean)
+\end{verbatim}}
+
+\subsubsection{Menus}
+
+The displayed menus can be redefined by setting the following global
+variables to menus made with the choosen menu package. The default package
+is the \seeref{std-popups} package.
+
+\begin{description}
+\itemtt{window-pop} for the menu triggered in windows
+\itemtt{icon-pop} for the menu triggered in icons
+\itemtt{root-pop} for the menu triggered in the root window
+\end{description}
+
+You can look at their standard implementation in the \verb"def-menus.gwm"
+distribution file.
+
+\section{Duane Voth's rooms\hfill{\tt dvrooms.gwm}}
+\label{dvroom}
+
+{\bf Duane Voth} (\verb"duanev@mcc.com") made a mini {\em rooms} 
+package to manage groups of windows. To use it, put in your .profile.gwm
+the line
+\begin{verbatim}
+        (load "dvrooms")
+\end{verbatim}
+before any calls to any \verb"(set-..." call.
+Then, with the standard profile, you can add new rooms by the root pop-up menu,
+or by explicitly calling the \verb"new-dvroom-manager" function in your
+profile, with the name of the room as arguments.
+{\exemplefont\begin{verbatim}
+        (new-dvroom-manager "mail")
+        (new-dvroom-manager "dbx")
+\end{verbatim}}
+The name of the room itself is the same editable plug as the one used for
+the \verb"simple-ed-win" window decoration, so that you can edit it
+by double-clicking or control-alt clicking with the left button.
+
+Only one room is ``open'' (non-iconified) at a time, and calling the
+functions \verb"add-to-dvroom" or \verb"remove-from-dvroom" (from the
+window menu or from {\WOOL}) on a window will add or remove it from the group
+of windows that will be iconified or de-iconified along with the room manager.
+Opening a room will close the previously open one, iconifying all its managed
+windows. New rooms start as icons.
+
+This package will recognize as a room manager any window with the name 
+\verb"rmgr". You can then create new rooms by other Unix processes.
+
+Context used:
+\begin{description}
+\itemtt{dvroom.font} font of the name of the room
+\itemtt{dvroom.background} background color
+\itemtt{dvroom.foreground} color of the text of the name
+\itemtt{dvroom.borderwidth} borderwidth of the room
+\itemtt{dvroom.x, dvroom.y} initial position of the room
+\itemtt{dvroom.name} string used to build the name of the room. Defaults
+to \verb|"Room #"| (a number will be concatenated to it).
+\itemtt{edit-keys.return, edit-keys.backspace, edit-keys.delete} keys used
+for editing, see \verb"simple-ed-win", p~\pageref{simple-ed-win}
+\end{description}
+
+\section{Group Iconification\hfill{\tt icon-groups.gwm}}
+\label{icon-groups}
+
+Loading the {\tt icon-groups} package redefines the {\tt iconify-window}
+function to use only one icon for all windows of the same group. Iconifying
+the group leader will iconify all the windows in the group, whereas
+iconifying a non-leader member of the group will only unmap it and map the
+common icon if it is not already present.
+
+\section{Standard pop-up menus\hfill{\tt std-popups.gwm}}
+\label{std-popups}
+
+This package implements a very simple pop-up menu package. A menu is created
+by the \seeref{menu-make} call, with the help of two functions to create the
+items of the menu:
+
+\begin{description}
+
+\itemtt{pop-label-make} to create an inactive label on top of the menu, by
+\verb|(pop-label-make Label)| where \verb"Label" is the string to be
+displayed as the title of the menu.
+
+\itemtt{item-make} to create a label triggering a {\WOOL} function call, by
+\verb|(item-make Label Expr)| where \verb"Label" is the string to be
+displayed as the item of the menu, and \verb"Expr" will be evaluated when
+releasing the button in the item.
+
+\end{description}
+
+For instance, the default root menu is made by the call:
+
+{\exemplefont\begin{verbatim}
+        (setq root-pop
+            (menu-make
+                (pop-label-make "Gwm")
+                (item-make "Xterms..." (pop-menu xterm-pop))
+                (item-make "refresh" (refresh))
+                (item-make "restart" (restart))
+                (item-make "reload" (load ".gwmrc"))
+                (item-make "Xloads..." (pop-menu xload-pop))
+                (item-make "Wool infos" 
+                    (progn (hashinfo)(gcinfo)(wlcfinfo)(meminfo)))
+                (item-make "Exec cut" 
+                    (execute-string (+ "(? " cut-buffer ")")))
+                (item-make "End" (end))
+            ))
+\end{verbatim}}
+
+Moreover, you can control the appearance of the label and the items of the menu by the following variables:
+
+\begin{description}
+\itemtt{pop-item.font} font of the items
+\itemtt{pop-item.foreground} color of their text
+\itemtt{pop-item.background} color of their background
+\itemtt{pop-label.font} font of the labels on top of menus
+\itemtt{pop-label.foreground} color of their text
+\itemtt{pop-label.background} color of their background
+\end{description}
+
+\section{Gosling Emacs mouse support\hfill{\tt emacs-mouse.gwm}}
+\label{emacs-mouse}
+
+This package implements a way to use the mouse with the {\bf Gosling} emacs,
+sold by {\bf Interpress}. You will need to load the emacs macros contained
+in the {\tt gwm.ml} file included in the distribution in your emacs. Then,
+in a window decorated with the {\tt simple-ed-win} package, pressing
+{\bf Control} and:
+
+\begin{description}
+\item[left mouse button] will set the emacs text cursor under the mouse
+pointer
+\item[middle mouse button] will set the mark under the mouse pointer
+\item[right mouse button] will pop a menu of commonly-used emacs functions
+(execute macro, cut, copy, paste, go to a C function definition, re-do last
+search)
+\end{description}
+
+Clicking in the mode lines will do a full screen recursive edit on the
+buffer if not in a target and in the targets:
+
+\begin{description}
+\item[{\tt [EXIT]}] will delete the window if it is not the only one on
+the screen, or do an {\tt exit-emacs}
+\item[{\tt [DOWN]}] will scroll one page down the file
+\item[{\tt [ UP ]}] will scroll one page up the file
+\end{description}
+
+This package is included rather as an example of things that can be done
+to work with old non-windowed applications than as a recommended way of
+developping code.
+
+\section{Sample window decorations\hfill{\tt *-win.gwm}}
+\label{standard-decorations}
+
+These are standard window decorations which can be used via the
+\verb"set-window" function of the standard profile. They can be found in
+files whose names end in {\tt -win.gwm} in the distribution directory of
+{\GWM}.
+
+\subsection{Simple window\hfill{\tt simple-win.gwm}}
+\label{simple-win}
+
+\centerline{\texpsfig{simple-win.ps}{168}{75}}
+
+This is a really simple window decoration with only a title bar on top of
+the window. The name of the window is centered in the bar and the bar
+changes its background color to show which currently has the input focus.
+
+This style is customizable by setting the following variables at the top
+of your .profile, before any call to \verb"set-window":
+
+\begin{description}
+\itemtt{simple-win.font} to the font used for printing the title.
+\itemtt{simple-win.active} to the color of the top bar for the window having
+the keyboard focus (defaults to darkgrey).
+\itemtt{simple-win.inactive} to the color of the top bar when the window
+do not have the keyboard focus (defaults to grey).
+\itemtt{simple-win.label.background} background color of the name.
+\itemtt{simple-win.label.foreground} color of text of the name.
+\end{description}
+
+\subsection{Simple editable window\hfill{\tt simple-ed-win.gwm}}
+\label{simple-ed-win}
+
+\centerline{\texpsfig{simple-ed-win.ps}{176}{89}}
+
+This decoration has a titlebar on top of it, including an iconification
+plug and an editable name plug. Moreover the whole border changes color to
+track input focus changes.The look of this
+frame can be altered by setting the following variables:
+
+\begin{description}
+\itemtt{icon-pixmap} to a pixmap used as an iconification button.
+\itemtt{simple-ed-win.borderwidth} to the width in pixels of the 
+sensitive border of the window
+\itemtt{simple-ed-win.font} to the font used for printing the title.
+\itemtt{simple-ed-win.active} to the color of the top bar and border
+ for the window having the keyboard focus (defaults to darkgrey).
+\itemtt{simple-ed-win.inactive} to the color of the top bar and border
+when the window do not have the keyboard focus (defaults to grey).
+\itemtt{simple-ed-win.label.background} background color of the name.
+\itemtt{simple-ed-win.label.foreground} color of text of the name.
+\end{description}
+
+When you click in the icon button at the left of the titlebar (whose pixmap
+can be redefined by setting the global variable \verb"icon-pixmap" to a
+pixmap) with the left button, the window is iconified. If you click with the
+middle button, you will be able to drag the ouline of the icon and release
+it where you want it to be placed.
+
+If you double-click a mouse button, or do a click with the {\bf control} and
+{\bf alternate} keys depressed, in the editable name plug at the right of
+the titlebar, you will be able to edit the name of the window (and the
+associated icon name) by a simple keyboard-driven text editor whose keys
+are are given as strings in the following variables:
+
+\begin{description}
+\itemtt{edit-keys.return} to end edition (defaults to \verb|"Return"|).
+\itemtt{edit-keys.delete} to wipe off all the text (defaults to 
+\verb|"Delete"|).
+\itemtt{edit-keys.backspace} to erase last character (defaults to 
+\verb|"Backspace"|).
+\itemtt{{\em any key}} to be appended to the text.
+\end{description}
+
+The plug will invert itself during the time where it is editable. You quit
+editing by pressing {\bf Return}, double-clicking in the plug or exiting the
+window.
+
+This decoration style also supports the \verb"emacs-mouse" package.
+
+\subsection{Frame\hfill{\tt frame-win.gwm}}
+\label{frame-win}
+
+\centerline{\hfil
+\texpsfig{frame-3d.ps}{85}{85}\hfil
+\texpsfig{frame-2d.ps}{72}{72}\hfil}
+
+This decoration consists in a frame around the window. The look of this
+frame can be altered by setting the following variables:
+
+\begin{description}
+\itemtt{look-3d} to {\tt t} to have a ``3D-looking'' frame (left figure) 
+instead of the 2d-looking one (right figure).
+\itemtt{frame.top-text} to an object which will be evaluated to yield the
+text to be put on top of the frame
+\itemtt{frame.bottom-text} to an object which will be evaluated to yield the
+text to be put on the bottom of the frame, for instance:
+{\exemplefont\begin{verbatim}
+        (setq frame.bottom-text '(machine-name))
+\end{verbatim}}
+\itemtt{frame.pixmap-file} to the prefix of the 8 bitmaps (or pixmaps) files
+used to build the frame. The suffixes will be {\tt .tl .t .tr .r .br .b .bl
+.l}, clockwise from upper left corner.
+\itemtt{frame.pixmap-format} to the format of the files: \verb"'bitmap"
+(default) or \verb"'pixmap"
+\itemtt{frame.bar-width} to the width of the four bars (should match the
+pixmap files)
+\itemtt{frame.inner-border-width} to the inner border width
+\end{description}
+
+\section{Sample icons\hfill{\tt *-icon.gwm}}
+\label{standard-icons}
+
+These are standard icon windows descriptions which can be used via the
+\verb"set-icon-window" function of the standard profile. They can be found in
+files whose names end in {\tt -icon.gwm} in the distribution directory of
+{\GWM}.
+
+\subsection{Simple icon\hfill{\tt simple-icon.gwm}}
+\label{simple-icon}
+
+This icon consists in an (optional) image and the icon-name of the
+window below it. The image is by priority order:
+
+\begin{description}
+\item[the user pixmap] set by the \seeref{set-icon} call
+\item[the window] the client has set in its hints to the window manager to
+use as an icon
+\item[the pixmap] the client has set in its hints to the window manager to
+use for its icon
+\end{description}
+
+Used context variables:
+
+\begin{description}
+\itemtt{simple-icon.font} for the font used to display the icon-name.
+\end{description}
+
+\subsection{Terminal display icon\hfill{\tt term-icon.gwm}}
+\label{term-icon}
+
+\centerline{\hfil
+\texpsfig{term-icon1.ps}{42}{34}\hfil
+\texpsfig{term-icon2.ps}{66}{34}\hfil}
+
+This icon looks like a small computer display with the window name inside
+it. Note that the icon resizes itself to adjust to the dimensions of the
+displayed name.
+
+Used context variables:
+
+\begin{description}
+\itemtt{term-icon.font} for the font used to display the icon-name.
+\end{description}
+
+\section{Utilities\hfill{\tt utils.gwm}}
+\label{utils}
+
+This package implements some useful functions for the {\WOOL} programmer.
+List this file to see the current ones.
+
+\section{Programming Styleguide for the standard distribution}
+\label{standard-styleguide}
+
+The styleguide to write decorations is to be written. Until then, look at
+existing files such as {\tt .gwmrc.gwm, .profile.gwm, simple-ed-win.gwm} to
+see what is the current style. We will appreciate all feedback to these
+conventions, which are not settled yet.
+
+The main idea is that a decoration package \verb"foo" should, when loaded,
+define a \verb"foo" function which, once executed will return the appropriate
+decoration, using the pre-defined behaviors.
+
+All persistent variables of the packages should be prefixed by the package
+name, as in \verb"foo.bar".
+
+Do not forget to define in fact one decoration per screen or be cautious not
+to mix colors, pop-ups, pixmaps and cursors from screen to screen. Use 
+\verb"defname screen." to declare screen-specific variables.
+
+The user should be allowed to customize the decoration by setting global
+variables in its \verb".profile.gwm" file, which will be interpreted during
+the loading of your package.
+
+The fsm you make for your package should be contructed from the behaviors
+defined in \verb".gwmrc.gwm", such as standard-behavior,
+standard-title-behavior, window-behavior, icon-behavior, root-behavior, or
+already built fsms such as fsm, window-fsm, icon-fsm, root-fsm.
+
+All values you want to attach to windows or wobs should be put as properties
+in the property-list of the wobs, by calls to 
+\verb"(## 'key wob value)"
+
+The main idea is, if you must modify {\tt .gwmrc.gwm} to code your window
+decoration, mail us your desiderata and/or enhancements, so that we should
+be able to keep the same .gwmrc for all decorations.
+I maintain mailing lists for people to exchange ideas about {\GWM}. Mail me
+a request if you are interested at \verb"gwm@mirsa.inria.fr".
+
+\section{Other profiles}
+
+Other nice profiles have also been developed in parallel to the standard
+profile, but they have not been integrated yet, i.e. they need their own
+{\tt .gwmrc.gwm}.
+
+\subsection{The MWM emulation package\hfill{\tt mwm.gwm}}
+
+{\bf Frederic Charton} made this profile emulating the {\bf M}otif
+{\bf W}indow {\bf M}anager. To use it, you must give the command line 
+option {\bf -f mwm} to {\GWM}.
+
+You can customize it by copying in your
+\verb"gwm" directory (in you GWMPATH) the files:
+
+\begin{description}
+\itemtt{mwmrc.gwm} all the resources settable in ``.mwmrc'' for {\sc Mwm}
+are also settable here, except for the menus.
+\itemtt{mwm-menusrc.gwm} description of the menus.
+\itemtt{mwmprofile.gwm} miscellaneous wool customizations (needs {\WOOL}
+knowledge)
+\end{description}
+
+and editing it. You may want to get the {\sc Mwm} manual for the description
+of all the available functions. For instance, to set the input focus management
+from ``click to type'' (default) to ``real estate'' (input focus is always
+to the window underneath the pointer), edit \verb"mwmrc.gwm" and change
+the line \verb"(: keyboardFocusPolicy 'explicit)" to 
+\verb"(: keyboardFocusPolicy 'pointer)".
+
+{\bf Warning:} This profile is still mono-screen, i.e. to manage 2 screens
+on your machine, you must run 2 gwms, for instance by:
+{\exemplefont\begin{verbatim}
+        gwm -1 -f mwm unix:0.0 &
+        gwm -1 -f mwm unix:0.1 &
+\end{verbatim}}
+
+\subsection{The TWM emulation package\hfill{\tt twm.gwm}}
+
+{\bf Arup Mukherjee} (\verb"arup@grasp.cis.upenn.edu") made a {\sc
+Twm} emulator. To use it, you must give the command line 
+option {\bf -f twm} to {\GWM}.
+
+You can customize it by copying in your \verb"gwm"
+directory (in you GWMPATH) and editing the files:
+
+\begin{description}
+
+\itemtt{twmrc.gwm} Contains numerous options (mainly colors) that can be
+set from here. The file is well commented, and most of the color
+variables have self-explanatory names. You can also specify from here
+whether or not the icon manager code is to be loaded.
+It also contains definitions for the three variables
+\verb"emacs-list", \verb"xterm-list", and \verb"xload-list". 
+The specified hostnames are
+used to build menus from which you can have gwm execute the respective
+command on a host via the ``rsh'' mechanism (note that your .rhosts
+files must be set up correctly for this to work). Note that unlike
+with the standard profile, the rxterm and rxload scripts are {\bf NOT}
+used.
+
+\itemtt{twm-menus.gwm} The contents of all the menus are specified
+here. To change more than the xterm, xload, or emacs lists, you should
+modify this file.
+
+\itemtt{twm.gwm} The only things that one might wish to customize here are the
+behaviors (which specify the action of a given button on a given
+portion of the screen)
+\end{description}
+
+\section{Troubleshooting}
+
+To debug a {\WOOL} program, you can:
+
+\begin{itemize}
+
+\item use the \verb"trace" function to trace code execution or evaluate an
+expression at each expression evaluation.
+
+\item read, execute, and print {\WOOL} code by selecting it and using
+the {\bf Exec cut} (for execute cut buffer) menu function.
+
+\item use the \verb"-s" command line option to synchronise X calls, if you want
+to know where you issue a non-legal X call.
+
+\item compile {\GWM} with the -DDEBUG compile option, which will turn on many
+checks (stack overflow, malloc checks, etc...) in case you manage 
+to make {\GWM} crash.
+
+\end{itemize}

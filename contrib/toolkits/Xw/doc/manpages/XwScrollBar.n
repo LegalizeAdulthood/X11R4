@@ -1,0 +1,264 @@
+
+
+
+     XWSCROLLBAR(3X)                                   XWSCROLLBAR(3X)
+
+
+
+
+     NAME
+          XwscrollbarWidgetClass - the X Widget's scrollbar widget
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/Valuator.h>
+          #include <Xw/Arrow.h>
+          #include <Xw/ScrollBar.h>
+
+
+     CLASSES
+          The ScrollBar is built from the Core, Composite, and
+          XwManager classes.
+
+          The widget class to use when creating a scrollbar is
+          XwscrollbarWidgetClass.  The class name for scrollbar is
+          ScrollBar.
+
+     DESCRIPTION
+          The ScrollBar widget combines the Valuator and Arrow widgets
+          to implement a horizontal or vertical scrolling widget
+          containing a valuator and an arrow on each end of the
+          valuator.
+
+          As with the Valuator, input is supported through interactive
+          slider movement and selections on the slide area not
+          occupied by the slider.  Both types of input have a separate
+          callback list for communicating with the application.  The
+          arrows on each end of the valuator control additional input
+          to the valuator.  When an arrow is selected, the slider
+          within the valuator will be moved in the direction of the
+          arrow by an application supplied amount.  If the button is
+          held down, the slider will continue to move at a constant
+          rate.
+
+          The ScrollBar can be used by the application to attach to
+          objects scrolled under application control, or used by
+          composite widgets to implement predefined scrolled objects.
+
+     NEW RESOURCES
+          The ScrollBar defines a set of resource types used by the
+          programmer to specify the data for the scrollbar.  The
+          programmer can also set the values for the Core, Composite
+          and Manager widget classes to set attributes for this
+          widget. To reference a resource in a .Xdefaults file, strip
+          off the XtN from the resource string.  The following table
+          contains the set of resources defined by ScrollBar.
+
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSCROLLBAR(3X)                                   XWSCROLLBAR(3X)
+
+
+
+
+                          ScrollBar Resource Set
+            Name              Class             Type   Default
+            __________________________________________________
+            XtNinitialDelay   XtCinitialDelay   int    500
+            XtNrepeatRate     XtCRepeatRate     int    100
+            XtNgranularity    XtCGranularity    int    2
+
+
+
+          XtNinitialDelay
+               The ScrollBar supports smooth time sequenced movement
+               of the slider when a selection occurs on the arrows.
+               This resource defines the amount of delay to wait
+               between the initial selection and the slider starting
+               its repetitive movement.  The value is defined in
+               milliseconds.
+
+          XtNrepeatRate
+               This resource defines the continuous repeat rate to use
+               to move the slider while the button is being held down
+               on an arrow.  The value is also defined in
+               milliseconds.
+
+          XtNgranularity
+               This resource defines the increment in the valuator's
+               coordinate system to move the slider while continuous
+               scrolling.
+
+     INCORPORATED RESOURCES
+          The ScrollBar creates itself by internally creating two
+          Arrow widgets and a Valuator.  As such, it uses a large
+          number of the resources defined by these widgets.  Many of
+          the attributes for these widgets can be set through the
+          .Xdefaults file or by use of XtSetValues() when
+          communicating with the ScrollBar.
+
+          It should be noted, that only the resources within the
+          following tables will have any effect on the valuator or
+          arrows.  The other resource types defined by the Valuator
+          and Arrow widgets are either overridden or unused by
+          ScrollBar.
+
+          The following tables list the resources incorporated by
+          ScrollBar.  For a complete description of these resources,
+          refer to the manual page listed in the table heading.
+
+
+                Primitive Resource Set -- XWPRIMITIVE(3X)
+      Name                Class               Type    Default
+      ______________________________________________________________
+      XtNhighlightColor   XtCForeground       Pixel   Black
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSCROLLBAR(3X)                                   XWSCROLLBAR(3X)
+
+
+
+
+      XtNhighlightStyle   XtCHighlightStyle   int     pattern_border
+      XtNhighlightTile    XtCHighlightTile    int     50_foreground
+      XtNtraversalType    XtCTraversalType    int     highlight_off
+
+
+
+
+                 Valuator Resource Set -- XWVALUATOR(3X)
+      Name                  Class                 Type      Default
+      ______________________________________________________________
+      XtNsliderMin          XtCSliderMin          int       0
+      XtNsliderMax          XtCSliderMax          int       100
+      XtNsliderExtent       XtCSliderExtent       int       10
+      XtNsliderOrigin       XtCSliderOrigin       int       0
+      XtNslideOrientation   XtCSlideOrientation   int       vertical
+      XtNsliderMoved        XtCCallback           Pointer   NULL
+      XtNsliderReleased     XtCCallback           Pointer   NULL
+      XtNareaSelected       XtCCallback           Pointer   NULL
+
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+                    Manager Resource Set -- XWMANAGER(3X)
+     Name                    Class                   Type      Default
+     ____________________________________________________________________
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSCROLLBAR(3X)                                   XWSCROLLBAR(3X)
+
+
+
+
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNtraversalOn          XtCTraversalOn          Boolean   FALSE
+     XtNlayout               XtCLayout               int       minimize
+     XtNnextTop              XtCCallback             Pointer   NULL
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalOn resource is set to True at either
+          create time or during a call to XtSetValues, the XwManager
+          superclass will automatically augment the manager widget's
+          translations to support keyboard traversal.  Refer to the
+          XwManager man page for a complete description of these
+          translations.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWMANAGER(3X), XWPRIMITIVE(3X), XWCREATETILE(3X),
+          XWVALUATOR(3X), XWARROW(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+

@@ -1,0 +1,41 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+#ifdef	AFS_ENV
+VICEDOBJS = vopcona.do
+VICEIHFILES = vopcona.ih
+VICEOBJS = vopcona.o viceop.o 	
+#endif /* AFS_ENV */
+
+LOCALINCLUDES = -I../lib
+
+DOBJS = $(VICEDOBJS) consolea.do
+IHFILES = $(VICEIHFILES) consolea.ih
+OBJS = consolea.o mailmon.o notop.o $(VICEOBJS) frlibcmu.o
+LIBS = $(BASEDIR)/lib/atk/libbasics.a \
+	$(BASEDIR)/lib/atk/libtext.a \
+	../lib/libconsole.a \
+	$(BASEDIR)/lib/liberrors.a \
+	$(UTILLIB)
+
+NormalObjectRule()
+NormalATKRule()
+
+DynamicMultiObject(consolea.do, consolea.o mailmon.o notop.o frlibcmu.o,$(LIBS), -lm)
+
+#ifdef AFS_ENV
+/* libcont.a is part of an old version of AFS not part of AFS3.0, but AFS-related anyway. */
+VLIBS = $(AFSBASEDIR)/lib/afs/libcont.a \
+	$(AFSBASEDIR)/lib/afs/libafsint.a \
+	$(AFSBASEDIR)/lib/libr.a \
+	$(AFSBASEDIR)/lib/liblwp.a
+
+DynamicMultiObject(vopcona.do, vopcona.o viceop.o frlibcmu.o,$(LIBS) $(VLIBS), -lm)
+InstallLink(runapp,${DESTDIR}/bin/vopcon)
+#endif /* AFS_ENV */
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+InstallLink(runapp,${DESTDIR}/bin/console)
+
+DependTarget()

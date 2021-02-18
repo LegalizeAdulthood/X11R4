@@ -1,0 +1,7 @@
+LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+           SRCS = xcpustate.c Bar.c s.c
+           OBJS = xcpustate.o Bar.o s.o
+
+   INSTALLFLAGS = $(INSTKMEMFLAGS)
+
+ComplexProgramTarget(xcpustate)

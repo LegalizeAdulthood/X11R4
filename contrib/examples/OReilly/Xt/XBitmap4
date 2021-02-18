@@ -1,0 +1,24 @@
+*quit*fromHoriz:	output
+*bitmap*fromVert:	output
+
+!xbitmap4*bitmap*width:	300
+!xbitmap4*bitmap*height:	300
+xbitmap4.width:	300
+xbitmap4.height:	300
+
+*foreground:	blue
+
+*quit*label:	Quit
+
+*output*label:	Print Array
+
+*cellSizeInPixels:	40
+*pixmapWidthInCells:	20
+*pixmapHeightInCells:	20
+#
+#                            toplevel
+#                               |
+#                           form (Form)
+#                       /       |       \
+#       (Command)  output     quit      bitmap (Core)
+#                           (Command)

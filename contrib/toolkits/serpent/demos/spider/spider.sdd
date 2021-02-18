@@ -1,0 +1,33 @@
+<< spider_app >>
+
+! $Header: /u/04c/mnt/integ/demos/RCS/spider.sdd,v 1.1 89/08/01 14:58:46 serpent Exp $
+!
+! $Log:	spider.sdd,v $
+! Revision 1.1  89/08/01  14:58:46  serpent
+! Initial revision
+
+!Revision 1.1  89/03/16  17:47:23  bmc
+!Initial revision
+!
+
+spider_chart:	shared data
+
+sensor_sdd:	record
+  self:		id of sensor_sdd;
+  site_abbr:	string[3];
+  status:	integer;
+  site:		string[50];
+  last_message:	string[8];
+  rfo:		string[50];
+  etro:		string[8];
+end record;
+
+communication_line_sdd:	record
+  self:		id of communication_line_sdd;
+  from_sensor:	id of sensor;
+  to_cc:	integer;   ! constrained by defs in "shared_defs.h"
+  etro:		string[8];
+  status:	integer;
+end record;
+
+end shared data;

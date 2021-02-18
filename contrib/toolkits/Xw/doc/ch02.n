@@ -1,0 +1,444 @@
+
+
+       2  Widgets
+
+
+       The X Widgets library contains a variety of widgets, each
+       designed for a different task.  A widget may be thought of
+       as a rectangle with associated input and output semantics.
+       Some widgets display information, others are merely
+       containers for other widgets.  Some widgets are restricted
+       to displaying information and do not react to keyboard or
+       mouse input.  Others change their display in response to
+       input, and can invoke functions when instructed to do so.
+       You can customize some aspects of a widget, such as fonts,
+       foreground and background colors, border widths and colors,
+       and sizes.
+
+       A widget instance is composed of two parts:
+
+          o A data structure that contains values and procedures
+            for that particular widget instance.
+
+          o A class structure that contains values and procedures
+            applicable to all widgets of that class.
+
+       Widgets are grouped into several classes, depending on the
+       function of the widget.  Logically, a widget class is the
+       procedures and data associated with all widgets belonging to
+       that class.  These procedures and data can be inherited by
+       subclasses.  Physically, a widget class is a pointer to a
+       structure.  The contents of this structure are constant for
+       all widgets of the widget class.  A widget instance is
+       allocated and initialized by XtCreateWidget or
+       XtCreateManagedWidget.  Refer to chapter 3, "Using Widgets
+       in Programs," for more information on creating widgets.
+
+       There are also some functions to aid you in using the
+       widgets.  This chapter provides an overview of what is
+       available.  The man pages at the back of this manual contain
+       details for each of the widgets.  Figure 2-1 shows how
+       widgets might be combined in an application.
+
+
+                  Figure 2-1.  Widget Application Screen
+
+       Several types of widgets are shown in figure 2-1.  The large
+       box that contains the rest of the widgets is a bulletin
+       board widget.  In  the upper left-hand corner is a simple
+       static text widget.  Below that is another static text
+
+
+       widget, and below that is a set of toggle widgets that are
+       managed by a row column manager widget.  Note that two of
+       the toggles, ``Exit'' and ``Cancel'' are "selected" as
+       indicated by the black square.  Below the toggles is another
+       static text widget, and below that a set of pushbutton
+       widgets that are also managed  by a row column manager
+       widget.  The ``Stop'' pushbutton is highlighted to show that
+       it is selected.  At the upper right is another static text
+       widget, and below that is a scrolled window widget with some
+       text in it.  Note the scrollbars at the right and bottom of
+       the scrolled window widget.  Finally, there is yet another
+       static text widget, and below that a static raster widget.
+       This example does not show all of the available widgets,
+       however it does show how you can combine several types of
+       widgets within the same window.
+
+       The sections in this chapter divide the widgets into six
+       categories as shown in Table 2-1 below.
+
+
+                    TABLE 2-1.  Categories of Widgets
+            
+
+            |        Widget         |      Widget Class       |
+
+            |Display Widgets        |                         |
+            |Static raster          | XwsrasterWidgetClass    |
+            |Static text            | XwstatictextWidgetClass |
+            |                       |                         |
+
+            |Editing Widgets        |                         |
+            |Image Edit             | XwimageeditWidgetClass  |
+            |Text edit              | XwtexteditWidgetClass   |
+            |                       |                         |
+
+            |Selection Widgets      |                         |
+            |Push button            | XwpushButtonWidgetClass |
+            |Toggle                 | XwtoggleWidgetClass     |
+            |                       |                         |
+
+            |Layout Widgets         |                         |
+            |Bulletin board         | XwbulletinWidgetClass   |
+            |Form                   | XwformWidgetClass       |
+            |List                   | XwlistWidgetClass       |
+            |Panel                  | XwpanelWidgetClass      |
+            |Row column manager     | XwrowColWidgetClass     |
+            |Scrolled window        | XwswindowWidgetClass    |
+            |Vertical paned manager | XwvPanedWidgetClass     |
+            |                       |                         |
+
+            |Menu Widgets           |                         |
+            |Cascade                | XwcascadeWidgetClass    |
+            |Menu Button            | XwmenubuttonWidgetClass |
+            |Menu Manager           | XwmenumgrWidgetClass    |
+            |Menu Pane              | XwmenupaneWidgetClass   |
+            |Menu Separator         | XwmenuSepWidgetClass    |
+            |PopUp                  | XwpopupmgrWidgetClass   |
+            |                       |                         |
+
+            |Miscellaneous Widgets  |                         |
+            |Arrow                  | XwarrowWidgetClass      |
+            |Sash                   | XwsashWidgetClass       |
+            |Scroll bar             | XwscrollbarWidgetClass  |
+            |Title bar              | XwtitlebarWidgetClass   |
+            |Valuator               | XwvaluatorWidgetClass   |
+            |                       |                         |
+
+
+       2.1  Display Widgets
+
+
+       Display widgets normally do not provide any interaction,
+       they only display data on the screen.
+
+
+       Static Raster (XwstaticrasterWidgetClass)
+
+       This widget will display a picture (raster image).  You can
+       indicate selection of the widget by moving the mouse cursor
+       over the widget and clicking the left mouse button.  The
+       default window size will fit the dimensions of the raster
+       image.  If you specify a larger one, the image is centered.
+       For a smaller window, the image is clipped along the right
+       and bottom sides, as required.
+
+
+                    Figure 2-2.  Static Raster Widget
+
+
+       Static Text (XwstatictextWidgetClass)
+
+       Use this widget to display short messages to users.  The
+       widget will create a window for the text.  If you supply
+       your own window dimensions, you can cause the text to be
+       centered in a larger window, or wrapped in a smaller one.
+
+
+                     Figure 2-3.  Static Text Output
+
+
+       2.2  Editing Widgets
+
+
+       The widget in this category allows the user to modify the
+       data being displayed.
+
+
+       Image Edit (XwimageeditWidgetClass)
+
+       The image edit widget allows an image to be displayed in an
+       enlarged version so that it can be edited on a pixel-by-
+       pixel basis.  To edit the image, move the mouse pointer to
+       the desired point and press the mouse button.  The pixel
+       under the pointer will change to the foreground color.  If
+       the button is held down while the pointer is moved, all
+       pixels that are touched will change to the foreground color.
+
+
+       Text Edit (XwtexteditWidgetClass)
+
+       The text edit widget provides a single or multi-line text
+       editor that has a user and programmer interface that you can
+       customize.  It can be used for single-line string entry,
+       forms entry with verification procedures, multi-page
+       document viewing, and full-screen editing.
+
+
+       2.3  User Selection Widgets
+
+
+       Use these widgets to allow users to specify choices.  Each
+       of these widgets corresponds to a single choice.  By
+       combining several of these widgets with a manager widget
+       (discussed later in this section), you can build forms and
+       menus to provide a variety of input choices.
+
+
+       Push Button (XwpushButtonWidgetClass)
+
+       This widget consists of a text label surrounded by a button
+       border.  You select the button by moving the mouse cursor to
+       the button and pressing the left mouse button.  When the
+       mouse button is pressed, the widget colors will invert.
+       When the mouse button is released, the button colors will
+       revert to the original color scheme.
+
+
+                         Figure 2-4.  Push Button
+
+
+       Toggle (XwtoggleWidgetClass)
+
+       This widget consists of a box and a label.  You select the
+       checkbox by moving the mouse cursor to the box and pressing
+       the left mouse button (button 1).  The interior of the box
+       will then be filled with the selection color.  The selection
+       color is the foreground color by default, but this can be
+       changed.
+
+
+                           Figure 2-5.  Toggle
+
+
+       2.4  Layout Widgets
+
+
+       These widgets make it easier to combine several widgets into
+       one combination widget.  They can be used as a ``backdrop''
+       on which other widgets can be placed.  The layout widget is
+       the parent widget.  The widgets being combined are called
+       children widgets.
+
+
+       Bulletin Board (XwbulletinWidgetClass)
+
+       This is a general layout widget which will accept any number
+       of children.  The bulletin board widget will automatically
+       make the bulletin board the appropriate size to hold the
+       child widgets.  You, the programmer, must specify the x and
+       y coordinates of each child widget.  You can also control
+       the bulletin board size.
+
+
+       Form (XwformWidgetClass)
+
+       The form widget is a constraint-based manager that provides
+       a layout language used to establish spatial relationships
+       between its children.  It manipulates these relationships
+       when any of the following occur:
+
+          o The form is realized.
+
+          o New children are added to the form.
+
+          o The children are resized, unmanaged, remanaged, or
+            destroyed.
+
+
+                         Figure 2-6.  Form Widget
+
+       For example, you can specify one widget to be always next to
+       another regardless of the size of the form window.  Chapter
+       5, ``Forms'' provides a detailed description of this layout
+       widget.
+
+
+       List (XwlistWidgetClass)
+
+       The list widget allows a two-dimensional set of widgets to
+       be presented in a row-column fashion.  There can be any
+       number of columns, and by default each column will be wide
+       enough to display the longest item in the column.  The
+       entire list window can be scrolled either horizontally or
+       vertically, but the columns cannot be scrolled individually.
+       The list widget also provides the capability to select one
+       or more elements of the list, and the application can then
+       perform some action as a result.
+
+
+                         Figure 2-7.  List Widget
+
+
+       Panel (XwpanelWidgetClass)
+
+       The panel widget provides a simple mechanism for the
+       creation of application windows and associated menus.  This
+       widget is also appropriate for application subwindows.
+
+
+       Row Column Manager (XwrowcolWidgetClass)
+
+       This widget controls the layout of its children in a grid.
+       You specify the number of columns and the width of each
+       column will be the width of the widest widget in the column.
+       The children are laid out one row at a time.
+
+       You can select any or all of the children in accordance with
+       the children's selection processes.  Alternatively, you can
+       specify that only one widget can be selected at any time
+       (selection policy one of many ).  In that case, if you
+       select a second widget, the manager will unselect the child
+       that was selected earlier.
+
+
+                     Figure 2-8.  Row Column Manager
+
+
+       Scrolled Window (XwswindowWidgetClass)
+
+       This widget manages one and only one child widget.  If the
+       manager is sized so that the entire child is not visible, it
+       will display vertical and horizontal scrollbars to allow the
+       entire child to be displayed.  Figure 2-9 shows a scrolled
+       window with some text in it.  Note that the horizontal
+       scrollbar is positioned to the left, indicating that
+       horizontal scrolling is possible.
+
+
+                       Figure 2-9.  Scrolled Window
+
+
+       Figure 2-10 shows the same window after scrolling to the
+       right.  Compare the position of the horizontal scrollbar and
+       the text with those of figure 2-9.
+
+
+                      Figure 2-10.  Scrolled Window
+
+
+       Vertical Pane (XwvPaneWidgetClass)
+
+       This widget arranges its children vertically.  Each child is
+       placed in its own pane.  A sash (usually a small square box)
+       appears at the bottom of each pane except the lowest pane.
+       This allows the pane to be resized vertically.
+
+
+       2.5  Menu Widgets
+
+
+       Menu widgets combine to form menus that are then attached to
+       a other widget.  Refer to chapter 4, "Menus" or the
+       individual widget man pages for more information.
+
+
+       Cascade (XwcascadeWidgetClass)
+
+       The cascade widget is a composite widget that may be used by
+       an application to create a set of menus.  This widget always
+       displays its managed children in a single column, and it
+       always attempts to size itself to the smallest size
+       possible, as determined by its children.
+
+
+       Menu Button (XwmenubuttonWidgetClass)
+
+       The menu button is commonly used with menu manager and menu
+       pane widgets to build a menu system.  It consists of a
+       single label, a mark, and a cascade indicator.  It can be
+       used by itself as a button widget.
+
+
+       Menu Manager (XwmenumgrWidgetClass)
+
+       The menu manager controls the menu system and controls the
+       presentation of the menu.  It is a meta class widget and is
+       therefore never instantiated.  Its only function is to
+       provide a supporting superclass widget for other widgets.
+       Popup cascade is the only menu presentation style currently
+       available.
+
+
+       Menu Pane (XwmenupaneWidgetClass)
+
+       Menu pane is a meta class widget and is therefore never
+       instantiated.  It acts as a supporting superclass for other
+       menu pane widget classes, and provides a set of resources
+       that are needed by menu pane subclasses.
+
+
+       Menu Separator (XwmenuSepWidgetClass)
+
+       The menu separator is a primitive widget used to seperate
+       items or groups of items in a menu.  Several different types
+       of lines (solid, dashed, double, etc.) are available.
+
+
+       Popup (XwpopupmgrWidgetClass)
+
+       The popup menu manager widget is a composite widget used by
+       an application to manage a collection of menu panes that
+       form a  popup menu.
+
+
+       2.6  Miscellaneous Widgets
+
+
+       These widgets are helpful in designing special windows for
+       your application.  They form a class hierarchy, and each
+       class in the hierarchy is available, as are some special
+       routines.
+
+
+       Arrow (XwarrowWidgetClass)
+
+       The arrow widget draws an arrow inside a box.
+
+
+       Scroll Bar (XwscrollbarWidgetClass)
+
+       The scroll bar combines the valuator and arrow widgets to
+       draw either a horizontal or vertical scroll bar.  The
+       scrollbar is shown in figure 2-11.
+
+
+                      Figure 2-11.  Scrollbar Widget
+
+
+       Title Bar (XwtitlebarWidgetClass)
+
+       The title bar widget will display a text and other widgets.
+       By setting priorities appropriately, you can control how
+       this widget responds to being resized by the user.
+
+
+       Valuator ( XwvaluatorWidgetClass )
+
+       The valuator is a widget that combines a slider within a
+       box.  This combination is used to denote the viewable
+       portion of a widget whose contents are too large to fit in
+       the available window.
+
+
+       2.6.1  Utility Functions
+
+       This section describes utility functions that are currently
+       available.
+
+
+       Create tile
+
+       (XwCreateTile(screen,background,foreground,tile))
+       This utility is used to create background tiling in
+       primitive widgets.  Nine tile patterns are available, as
+       shown in figure 2-12.
+
+
+                 Figure 2-12.  Available Background Tiles
+
+       The next chapter will show you how to use many of these
+       widgets in an application.
+
+

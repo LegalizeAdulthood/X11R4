@@ -1,0 +1,16 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+LIBS	=	${BASEDIR}/lib/libmail.a \
+		${UTILLIB}
+
+NormalObjectRule()
+ProgramTarget(arpadate, arpadate.o, ${LIBS},)
+InstallProgram(arpadate, ${DESTDIR}/etc/)
+ProgramTarget(decode_id, decodeid.o, ${LIBS},)
+InstallProgram(decode_id, $(DESTDIR)/etc/)
+ProgramTarget(ams_genid, amsgenid.o, ${LIBS},)
+InstallProgram(ams_genid, $(DESTDIR)/etc/)
+
+DependTarget()

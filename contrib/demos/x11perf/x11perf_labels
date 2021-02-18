@@ -1,0 +1,222 @@
+Dot
+1x1 rectangle
+10x10 rectangle
+100x100 rectangle
+500x500 rectangle
+1x1 stippled rectangle
+10x10 stippled rectangle
+100x100 stippled rectangle
+500x500 stippled rectangle
+1x1 opaque stippled rectangle
+10x10 opaque stippled rectangle
+100x100 opaque stippled rectangle
+500x500 opaque stippled rectangle
+1x1 4x4 tiled rectangle
+10x10 4x4 tiled rectangle
+100x100 4x4 tiled rectangle
+500x500 4x4 tiled rectangle
+1x1 161x145 tiled rectangle
+10x10 161x145 tiled rectangle
+100x100 161x145 tiled rectangle
+500x500 161x145 tiled rectangle
+1-pixel line segment
+10-pixel line segment
+100-pixel line segment
+500-pixel line segment
+100-pixel line segment (1 kid)
+100-pixel line segment (2 kids)
+100-pixel line segment (3 kids)
+10-pixel dashed segment
+100-pixel dashed segment
+100-pixel double-dashed segment
+1-pixel line
+10-pixel line
+100-pixel line
+500-pixel line
+10-pixel dashed line
+100-pixel dashed line
+100-pixel double-dashed line
+10x1 wide line
+100x10 wide line
+500x50 wide line
+100x10 wide dashed line
+100x10 wide double-dashed line
+1-pixel circle
+10-pixel circle
+100-pixel circle
+500-pixel circle
+100-pixel dashed circle
+100-pixel double-dashed circle
+10-pixel wide circle
+100-pixel wide circle
+500-pixel wide circle
+100-pixel wide dashed circle
+100-pixel wide double-dashed circle
+10-pixel partial circle
+100-pixel partial circle
+1-pixel solid circle
+10-pixel solid circle
+100-pixel solid circle
+500-pixel solid circle
+10-pixel fill chord partial circle
+100-pixel fill chord partial circle
+10-pixel fill slice partial circle
+100-pixel fill slice partial circle
+10-pixel ellipse
+100-pixel ellipse
+500-pixel ellipse
+100-pixel dashed ellipse
+100-pixel double-dashed ellipse
+10-pixel wide ellipse
+100-pixel wide ellipse
+500-pixel wide ellipse
+100-pixel wide dashed ellipse
+100-pixel wide double-dashed ellipse
+10-pixel partial ellipse
+100-pixel partial ellipse
+10-pixel filled ellipse
+100-pixel filled ellipse
+500-pixel filled ellipse
+10-pixel fill chord partial ellipse
+100-pixel fill chord ellipse
+10-pixel fill slice partial ellipse
+100-pixel fill slice ellipse
+Fill 1-pixel/side triangle
+Fill 10-pixel/side triangle
+Fill 100-pixel/side triangle
+Fill 10x10 trapezoid
+Fill 100x100 trapezoid
+Fill 10x10 stippled trapezoid
+Fill 100x100 stippled trapezoid
+Fill 10x10 opaque stippled trapezoid
+Fill 100x100 opaque stippled trapezoid
+Fill 10x10 tiled trapezoid
+Fill 100x100 tiled trapezoid
+Fill 10-pixel/side complex polygon
+Fill 100-pixel/side complex polygons
+Char in 80-char line (6x13)
+Char in 80-char line (TR 10)
+Char in 30-char line (TR 24)
+Char in 20/40/20 line (6x13, TR 10)
+Char in 80-char image line (6x13)
+Char in 80-char image line (TR 10)
+Char in 30-char image line (TR 24)
+Scroll 10x10 pixels
+Scroll 100x100 pixels
+Scroll 500x500 pixels
+Copy 10x10 from window to window
+Copy 100x100 from window to window
+Copy 500x500 from window to window
+Copy 10x10 from pixmap to window
+Copy 100x100 from pixmap to window
+Copy 500x500 from pixmap to window
+Copy 10x10 from window to pixmap
+Copy 100x100 from window to pixmap
+Copy 500x500 from window to pixmap
+Copy 10x10 from pixmap to pixmap
+Copy 100x100 from pixmap to pixmap
+Copy 500x500 from pixmap to pixmap
+Copy 10x10 1-bit deep plane
+Copy 100x100 1-bit deep plane
+Copy 500x500 1-bit deep plane
+PutImage 10x10 square
+PutImage 100x100 square
+PutImage 500x500 square
+GetImage 10x10 square
+GetImage 100x100 square
+GetImage 500x500 square
+X protocol NoOperation
+GetAtomName
+GetProperty
+Change graphics context
+Create and map subwindows (4 kids)
+Create and map subwindows (16 kids)
+Create and map subwindows (25 kids)
+Create and map subwindows (50 kids)
+Create and map subwindows (75 kids)
+Create and map subwindows (100 kids)
+Create and map subwindows (200 kids)
+Create unmapped window (4 kids)
+Create unmapped window (16 kids)
+Create unmapped window (25 kids)
+Create unmapped window (50 kids)
+Create unmapped window (75 kids)
+Create unmapped window (100 kids)
+Create unmapped window (200 kids)
+Map window via parent (4 kids)
+Map window via parent (16 kids)
+Map window via parent (25 kids)
+Map window via parent (50 kids)
+Map window via parent (75 kids)
+Map window via parent (100 kids)
+Map window via parent (200 kids)
+Unmap window via parent (4 kids)
+Unmap window via parent (16 kids)
+Unmap window via parent (25 kids)
+Unmap window via parent (50 kids)
+Unmap window via parent (75 kids)
+Unmap window via parent (100 kids)
+Unmap window via parent (200 kids)
+Destroy window via parent (4 kids)
+Destroy window via parent (16 kids)
+Destroy window via parent (25 kids)
+Destroy window via parent (50 kids)
+Destroy window via parent (75 kids)
+Destroy window via parent (100 kids)
+Destroy window via parent (200 kids)
+Hide/expose window via popup (4 kids)
+Hide/expose window via popup (16 kids)
+Hide/expose window via popup (25 kids)
+Hide/expose window via popup (50 kids)
+Hide/expose window via popup (75 kids)
+Hide/expose window via popup (100 kids)
+Hide/expose window via popup (200 kids)
+Move window (4 kids)
+Move window (16 kids)
+Move window (25 kids)
+Move window (50 kids)
+Move window (75 kids)
+Move window (100 kids)
+Move window (200 kids)
+Moved unmapped window (4 kids)
+Moved unmapped window (16 kids)
+Moved unmapped window (25 kids)
+Moved unmapped window (50 kids)
+Moved unmapped window (75 kids)
+Moved unmapped window (100 kids)
+Moved unmapped window (200 kids)
+Move window via parent (4 kids)
+Move window via parent (16 kids)
+Move window via parent (25 kids)
+Move window via parent (50 kids)
+Move window via parent (75 kids)
+Move window via parent (100 kids)
+Move window via parent (200 kids)
+Resize window (4 kids)
+Resize window (16 kids)
+Resize window (25 kids)
+Resize window (50 kids)
+Resize window (75 kids)
+Resize window (100 kids)
+Resize window (200 kids)
+Resize unmapped window (4 kids)
+Resize unmapped window (16 kids)
+Resize unmapped window (25 kids)
+Resize unmapped window (50 kids)
+Resize unmapped window (75 kids)
+Resize unmapped window (100 kids)
+Resize unmapped window (200 kids)
+Circulate window (4 kids)
+Circulate window (16 kids)
+Circulate window (25 kids)
+Circulate window (50 kids)
+Circulate window (75 kids)
+Circulate window (100 kids)
+Circulate window (200 kids)
+Circulate Unmapped window (4 kids)
+Circulate Unmapped window (16 kids)
+Circulate Unmapped window (25 kids)
+Circulate Unmapped window (50 kids)
+Circulate Unmapped window (75 kids)
+Circulate Unmapped window (100 kids)
+Circulate Unmapped window (200 kids)

@@ -1,0 +1,1438 @@
+
+
+
+
+
+
+
+
+
+                        The Andrew Distribution  
+
+                       Release 3  (November 1989)
+
+                 Distributed with MIT's X 11 Release 4 
+
+
+
+
+
+
+
+
+
+                                   For more information, please contact: 
+
+                                            Information Technology Center
+                                               Carnegie Mellon University
+                                                       4910 Forbes Avenue
+                                               Pittsburgh, PA  15213-3890
+                                                                   U.S.A.
+                                                           (412) 268-6700
+                                                      FAX: (412) 268-6787
+
+                                 Mailing list: info-andrew@andrew.cmu.edu
+                   (info-andrew-request@andrew.cmu.edu for subscriptions)
+                                          Newsgroup: comp.soft-sys.andrew
+
+
+1	Installation Instructions for the Andrew Distribution
+
+This document contains instructions for the installation of the Andrew
+software (ATK, AMS, ODA) from MIT's X 11, Release 4 tape.  
+
+This release includes innumerable bug fixes and evolutionary
+improvements to many of Andrew's components.  Several new sub-systems
+and components are included in this release, including an ODA Toolkit,
+Ness (an extension language), the AMS Delivery System and White Pages,
+new language editors, and new buttons, charts, and other building
+blocks.  The text object has undergone extensive renovation, and now
+features footnotes, page breaks, indices, and tables of contents.
+
+The list of currently-known bugs appears in the top-level directory as
+the file bugs.open .
+
+
+1.1	Assumptions and Requirements 
+
+The Andrew Distribution is portable to a number of system types.  Andrew
+is able to run on RT AOS 3.4, RT AIX 2.2.1, Sun3 3.5, Vax Ultrix 3.0,
+Vax BSD, DEC MIPS, Apollo, HP, and Macintosh II MacMach.  We run it on
+RT AOS 3.4 and Sun3 3.5.
+
+As shipped, the Andrew Toolkit distribution is about 55 megabytes of
+source that generates many megabytes of object files, libraries, fonts
+and applications (where the exact amount of object space varies with
+each machine).  The default configuration generates about 41 megabytes;
+changing that configuration to include building everything generates
+about 85 megabytes.  If you do not have sufficient disk space, the
+procedures for building a partial system are described later in this
+document.
+
+In addition to space requirements, the distribution assumes that you
+have the X Window System Distribution from MIT, which contains the
+following files and programs:
+
+    imake -- part of program construction (makefile) facility
+    bdftosnf -- font compiler
+    makedepend --part of program construction (makefile) facility
+    Xlib -- X.V11 include files and libraries
+
+
+1.2	Modifying the Configuration Files 
+
+The construction and installation of Andrew requires a local site to
+provide a variety of information to the construction process:
+
+    a.  What kind of machine and operating system are being used
+    b.  Location of various pieces of system software (including the X
+    distribution)
+    c.  Location and configuration of services for installed Andrew system
+
+This information is conveyed to the build process through various
+configuration files.  This section describes each of the major
+configuration files and how an installer should edit them for a local
+site.
+
+Through the use of various switches ("DEFINE"s), one can control how
+much of the system is built and select appropriate operating system and
+machine dependent pieces.  Because of the large size of the system, many
+options are provided.  Definitions that you must provide are described
+in this section.  Optional definitions are described later.
+
+Before building the Andrew Toolkit, you should look through the several
+files that configure the system, and change them as necessary so that
+the Andrew software will be built and installed correctly for your
+environment.  Each file, and the modifications you might want to make to
+it, are explained below.  Looking from the top of the extracted source
+tree, the files are:
+
+	config/allsys.mcr
+	config/<machine>/system.mcr
+	config/site.mcr	 (your site's adjustments to allsys.mcr and system.mcr)
+
+	config/allsys.h
+	config/<machine>/system.h
+	config/site.h	(your site's adjustments to allsys.h and system.h)
+
+	atk/console/lib/sitevars.h
+	overhead/util/lib/svcconf.c
+	overhead/mail/lib/mailconf.c
+	helpindex/index.tpl
+
+where "<machine>" is the machine type on which you plan to install and
+build Andrew.  The (intended) available machine types are:
+
+Machine Type	Operating System Version	<machine>
+
+IBM RT		AOS December 1988		rt_r3
+IBM RT		AIX 2.2.1			rt_aix221
+Sun 2		SunOS 3.5			sun2_35
+Sun 3		SunOS 3.5			sun3_35
+Sun 3		SunOS 4.0			sun3_4
+Sun 4		SunOS 4.0			sun4_40
+DEC Vax		Ultrix 2.2			vax_22
+DEC Vax		Ultrix 3.0			vax_3
+DEC Vax		BSD (4.3)			vax_43
+HP 300		HP UX			hp300
+Macintosh II	MacMach			mac2_51
+Apollo		DomainOS		apollo68k
+DEC MIPS	Ultrix 3.0			pmax_3
+IBM PS/2 Model 70	AIX 1.1			ps_aix11 
+
+
+1.2.1	The allsys.mcr, system.mcr, and site.mcr Files
+
+config/allsys.mcr, config/<machine>/system.mcr, config/site.mcr -- The
+definitions in these files specify where to find various programs,
+include files, and libraries for building Andrew.  The definitions that
+are likely to change are clustered near the top of the allsys.mcr file.
+
+Definitions in these files are structured so that definitions in
+allsys.mcr come first, then system-dependent overrides in system.mcr,
+then site-specific overrides in site.mcr.
+
+You should NOT edit either allsys.mcr or your system.mcr.  Instead, an
+empty site.mcr file is distributed, in which you can make your edits by
+overriding what has come before, typically with #undef and #define,
+possibly within #ifdef/#endif pairs, or by simply setting a Make
+variable with as ``FOO=bar''.  (Make does lazy evaluation of its $(FOO)
+variables, so it's reasonable to override variables such as XUTILDIR in
+site.mcr.)
+
+XBASEDIR	[Default: /] 
+
+    XBASEDIR should point to the root of your installed X tree.  X
+    include files are assumed to be in $(XBASEDIR)/usr/include/X11. 
+    Xlib and bdftosnf are also found in this tree.  If your compiler
+    cannot handle paths like ``//usr/include/X11'' (with the double
+    slash), you may wish to redefine this as the null string.
+
+BASEDIR	[Default: DEFAULT_ANDREWDIR_ENV, from allsys.h/site.h] 
+
+    BASEDIR specifies where you want the root of the installed
+    Andrew tree of system software.  It is not possible to build
+    Andrew without installing it.  This directory will have several
+    subdirectories created under it during the build process,
+    including: include, bin, lib, dlib, etc, doc, and help.  The
+    value for BASEDIR is the path in which the installation process
+    should put the Andrew system software, while the value for
+    DEFAULT_ANDREWDIR_ENV (cf. section 1.2.5) is the path via which
+    users, by default, will execute that software.  To override this
+    value, edit your site.mcr file, or override
+    DEFAULT_ANDREWDIR_ENV in your site.h file.
+
+    BASEDIR must be different from the root of your copy of the
+    source tree.  That is, in general, when you start, BASEDIR will
+    point to an empty directory.
+
+DESTDIR	[Default: $(BASEDIR)] 
+
+    DESTDIR should always be identical to BASEDIR for system builds.
+     It may be set to other values only in the course of testing
+    developments.
+
+AFSBASEDIR	[Default: /usr/andy] 
+
+    AFSBASEDIR denotes the full path to files exported by an AFS
+    (Andrew File System) installation.  (AFS is a distributed file
+    system available from Transarc Corporation.)  It is used only if
+    AFS_ENV is defined; otherwise, it is ignored entirely.  If it is
+    used, it is presumed that AFSBASEDIR/include/afs,
+    AFSBASEDIR/lib/afs, and AFSBASEDIR/bin exist.  Other specific
+    requirements are listed in the discussion of AFS_ENV and
+    AFS30_ENV in the section describing the *.h files.
+
+    The default value is /usr/andy .  Override it in your site.mcr
+    file if you need to.
+
+CDEBUGFLAGS	[Default: -O] 
+
+    CDEBUGFLAGS are passed to the C compiler when compiling programs.
+
+XUTILDIR	[Default: /usr/local/bin] 
+IMAKE		[Default: $(XUTILDIR)/imake] 
+XMAKEDEPEND	[Default: $(XUTILDIR)/makedepend] 
+
+    IMAKE and XMAKEDEPEND need to be full paths to the X11 imake and
+    makedepend programs.  These are not normally installed as a part
+    of X11, but are found in the X11 source tree in util/imake/imake
+    and util/makedepend/makedepend.  You can set either IMAKE and
+    XMAKEDEPEND, or XUTILDIR, to point to the appropriate place.
+
+XINCDIR     [Default: $(XBASEDIR)/usr/include/X11] 
+XMKFONTDIR  [Default: $(XBASEDIR)/usr/bin/X11/mkfontdir] 
+XLIBDIR     [Default: $(XBASEDIR)/usr/lib] 
+XFC [Default: $(XBASEDIR)/usr/bin/X11/bdftosnf, or under
+    RELEASE2_ENV, $(XSRCDIR)/fonts/compiler/fc] 
+XSRCDIR     [Default: empty string] 
+
+    These are miscellaneous X-related absolute paths.  INCDIR needs
+    to point to where your X include files are installed; it is used
+    in the Andrew build process.  XMKFONTDIR needs to point to the
+    ``mkfontdir'' program from the X installation.  XLIBDIR needs to
+    point to where libX11.a is installed.    XFC should point to the
+    ``bdftosnf'' font processor.  Under RELEASE2_ENV, XSRCDIR should
+    point to the top of an X11 source tree for the definition of
+    XFC, but is otherwise not used.
+
+RESOLVLIB	[Default: empty string] 
+
+    RESOLVLIB denotes the full path of the domain name resolver
+    library.  It is used only if RESOLVER_ENV is defined, which it
+    is unless your system.h or site.h file undefines it.  The
+    default value (the empty string) is useful if the resolver code
+    is in your libc.a.  If the resolver code is in a separate
+    library, such as /usr/lib/libresolv.a, that name should be the
+    definition for RESOLVLIB; define it in your site.mcr file.
+
+    The programmer's interface to the resolver library has changed
+    over time.  The file overhead/mail/lib/valhost.c (which is built
+    into DESTDIR/lib/libmail.a) makes calls to different versions of
+    that programmer's interface, using the fact that definitions in
+    the resolver's exported ``include'' files changed slightly with
+    successive releases.  In particular, it checks for the
+    definition of NO_DATA in the 4.8 version of /usr/include/netdb.h
+    and for the definition of CQUERYM in the pre-4.7.3 version of
+    /usr/include/arpa/nameser.h.  If your versions of these include
+    files correspond to the version of the resolver named by
+    RESOLVLIB (or libc.a otherwise), you will have no trouble with
+    its interface to Andrew.  The overhead/mail/lib/valhost.c file
+    contains suggestions for what to do if this is not the case.
+
+INSTALL	[Default: install] 
+
+    INSTALL denotes the name of the install program on your system. 
+    If you do not have an install program, or if your install
+    program does not work, edit the site.h file and:
+
+    #define BUILDANDREWINSTALL_ENV   1
+
+    and then re-make your Makefiles (if already made) and continue
+    from there.  (The setting of INSTALL is based upon the setting
+    of BUILDANDREWINSTALL_ENV and will be picked up correctly if set
+    in the site.h file.)
+
+Additional definitions are unlikely to change.  However, you may want to
+check these values:
+
+SHELL	[Default: /bin/sh] 
+
+    SHELL specifies the path to the Bourne shell.
+
+CSHELL	[Default: /bin/csh] 
+
+    CSHELL specifies the path to the C shell.
+
+CC		[Default: cc] 
+
+    C compiler to use.  On IBM equipment, it is the hc Metaware
+    compiler.  On other systems, it is the pcc compiler.
+
+ConstructMFLAGS	[Default: not defined]
+
+    Define ``ConstructMFLAGS'' in your site.mcr if your make program
+    accepts MAKEFLAGS but not MFLAGS.
+
+1.2.2	The sitevars.h File
+
+atk/console/lib/sitevars.h -- contains defines indicating default values
+for the console program.  You probably need to be concerned with only
+the following entries:
+
+_SITE_NON_ANDREW_MAIL       [Default: /usr/spool/mail]
+
+        Directory where console should look to see if incoming mail
+        has arrived.
+
+_SITE_NON_ANDREW_PRINTDIR   [Default: /usr/spool/lpd]
+
+        Directory where console should look to see if any
+        outstanding printing requests are waiting.
+
+_SITE_LOGFILE       [Default: /tmp/ConsoleLog]
+
+        Default file where console logs should be written when
+        requested by the user of console.
+
+_SITE_MTAB  [Default: /etc/mtab]
+
+        File that console should use for obtaining information about
+        the mounted file systems.
+
+_SITE_BIN_SH        [Default: /bin/sh]
+
+        Default shell to use for exec'ing sub-programs.
+
+_SITE_DEV_TTY       [Default: /dev/tty]
+
+
+_SITE_DEV_PTYP      [Default: /dev/ptyp]
+
+
+_SITE_DEV_CONSOLE   [Default: /dev/console]
+
+        Stream that console intercepts for its log (actually, its 0th log).
+
+_SITE_DEV_KMEM      [Default: /dev/kmem]
+
+        Device that console should use to obtain memory statistics.
+
+_SITE_VMUNIX        [Default: /vmunix]
+
+    File where console should get information about the kernel's
+        symbol table.
+
+
+1.2.3	The mailconf.c and svcconf.c Files
+
+overhead/util/lib/svcconf.c and overhead/mail/lib/mailconf.c -- These
+files contain configuration information for the mail system.  You will
+not likely have to change anything in this file; instead, once the
+system is built, you will be able to change these options via the
+AndrewSetup mechanism.  The details concerning the information in this
+file can be found in the AndrewSetup documentation (SetUp.ref), the
+Andrew Message System Installation manual (AMS.ins), the Andrew Message
+Delivery System Installation manual (AMDS.ins), and in the White Pages
+installation manual (WP.ins).
+
+After making your initial system build, but before expecting the
+mail-related software to work, you should review the AndrewSetup help
+file to check whether the settings for the available options are correct
+for your system.
+
+If you have problems bringing up the mail system and you believe that it
+is a result of information contained in the svcconf.c or mailconf.c
+files, you should send mail to: 
+
+    info-andrew-bugs@andrew.cmu.edu
+
+
+1.2.4	The allsys.h, system.h, and site.h Files: Defining What Parts of
+Andrew to Build
+
+config/allsys.h, config/<machine>/system.h, config/site.h -- These files
+specify several things: what parts of Andrew will be built, where the
+resulting systems should be placed, and what flags and facilities are
+available for that build.  This section, 1.2.4, describes the options in
+config/<machine>/system.h that select what parts of Andrew will be
+built.  The next section, 1.2.5, describes the options in
+config/<machine>/system.h that specify where the Andrew system is to be
+installed and what facilities are available for its use.
+
+Definitions in these files are structured so that definitions in
+allsys.h come first, then system-dependent overrides in system.h, then
+site-specific overrides in site.h.
+
+You should NOT edit either allsys.h or system.h.  Instead, an empty
+site.h file is distributed, in which you can make your edits by
+overriding what has come before.  (You can do this using both #undef and
+#define.)
+
+In the simplest case, you would not edit site.h, which results in all
+facilities being built into /usr/andrew.  The success of this simplest
+case, however, depends on the assumptions made in config/allsys.h and
+config/<machine>/system.h being correct for your environment, so you may
+need to review the options described in section 1.2.5.  
+
+The default settings for this first group of options will build only a
+portion of the Andrew system.  This includes the basic editor and
+typescript, the help system, a number of objects (including text,
+c-text, raster, spreadsheet/table, drawing, animation and equations),
+and the messages interface programs (messages, cui, vui).  The set has
+been chosen to allow you to view most of the messages demonstration
+folder.  You may add other parts of the system by defining the
+appropriate flags in your site.h file. You can also choose to build a
+smaller portion of the system by undefining the appropriate flags.  A
+description of the space requirements for setting certain switches is
+presented later in this document.
+
+AMS_ENV	[Default: defined]
+
+    AMS_ENV is defined if the Andrew Message System should be built.
+     This is the messages program and related libraries and programs.
+
+AMS_DELIVERY_ENV	[Default: not defined]
+
+    AMS_DELIVERY_ENV is defined if the Andrew Message Delivery
+    System is to be built, regardless of whether it is expected to
+    be used locally.  Also see RUN_AMDS_ENV in a following section.
+
+WHITEPAGES_ENV	[Defined: not defined]
+
+    WHITEPAGES_ENV is defined if the white pages facility (including
+    phonetic name lookup) is to be built and used by the Andrew
+    Message System.
+
+SNAP_ENV	[Default: not defined]
+
+    SNAP_ENV is defined if the Message Server is to be built.
+
+WM_ENV	[Default: not defined]
+
+    WM_ENV is defined if the Andrew Toolkit is to be built for the
+    native Andrew Window System (wm).  WM support is not available
+    on the X tape distribution.
+
+X11_ENV		[Default: defined]
+
+    X11_ENV is defined if the Andrew Toolkit is to be built for the
+    X.11 Window System.
+
+ANDREW_MALLOC_ENV	[Default: defined]
+
+    ANDREW_MALLOC_ENV, if defined, causes the Andrew Toolkit memory
+    management package to be used.  This memory allocator package
+    not only saves VM space but also provides more error detection,
+    when compared to many of the memory allocators distributed with
+    Unix systems.  On some system platforms, use of this allocator
+    has led to multiply defined symbols.  If this occurs, you can
+    undefine this symbol and rebuild atk/basics and atk/apps.
+
+DEBUG_MALLOC_ENV	[Default: not defined]
+
+    DEBUG_MALLOC_ENV is defined if the debugging version of the
+    Andrew Toolkit  memory management package should be used.  Its
+    definition implies the definition of ANDREW_MALLOC_ENV.
+
+ODA_ENV	[Default: not defined]
+
+    ODA_ENV controls the construction of the ODA tool kit and its
+    associated translators.
+
+CONTRIB_ENV	[Default: not defined]
+
+    CONTRIB_ENV controls the construction of the contributed
+    software found under source directory ./contrib .  At present,
+    this includes various ATK mode packages and an experimental
+    hyper-link inset.
+
+MK_BASIC_UTILS	[Default: not defined]
+MK_BASIC_INSETS	[Default: defined]
+MK_BLD_BLKS	[Default:  defined]
+MK_HELP	[Default: defined]
+MK_TEXT_EXT	[Default: defined]
+MK_AUTHORING	[Default: not defined]
+MK_AUX_UTILS	[Default: not defined]
+MK_AUX_INSETS	[Default: not defined]
+MK_EXAMPLES	[Default: not defined]
+
+    These flags control the building of groups of software; the core
+    of the ATK is not dependent upon these flags, but will be built
+    if any part of the ATK is built.  Normally, these flags are all
+    defined.
+
+        MK_BASIC_UTILS  (= console + ezprint + champ + preview)
+        MK_BASIC_INSETS         (= eq + fad + table)
+        MK_BLD_BLKS     (= apt + org + bush + zip + chart + calc)
+        MK_HELP         (= glist + rofftext + help)
+        MK_TEXT_EXT     (= ctext + lookz)
+        MK_AUTHORING    (= value + lset + controllers + music + ness)
+        MK_AUX_UTILS    (= datacat + toez)
+        MK_AUX_INSETS   (= gob)
+        MK_EXAMPLES     (= examples)
+
+    If you only want to build part of one (or more) of these groups,
+    a flag MK_<SUBDIRECTORY> can be used to specify the ones you
+    want to build; i.e.:
+
+        MK_APT
+        MK_BUSH
+        MK_CALC
+        MK_CHAMP
+        MK_CHART
+        MK_CONSOLE
+        MK_CONTROLLERS
+        MK_CTEXT
+        MK_DATACAT
+        MK_EQ
+        MK_EXAMPLES
+        MK_EZPRINT
+        MK_FAD
+        MK_GLIST
+        MK_GOB
+        MK_HELP
+        MK_LOOKZ
+        MK_LSET
+        MK_MUSIC
+        MK_NESS
+        MK_ORG
+        MK_PREVIEW
+        MK_ROFFTEXT
+        MK_TABLE
+        MK_TOEZ
+        MK_VALUE
+        MK_ZIP
+
+    The ATK Imakefile (atk/Imakefile), that uses these flags, has
+    been fairly carefully set up so that it will build parts of the
+    toolkit to support the parts that you ask to be built; in other
+    words, it knows about the various inter-dependencies.  Thus even
+    if you don't have MK_AUTHORING set, it will build 'value' if you
+    have AMS_ENV set, because it knows that the program 'Messages'
+    uses the 'value' inset.
+
+
+1.2.5	The config/allsys.h, config/<machine>/system.h, and config/site.h
+Files: Describing Your Environment
+
+The config/allsys.h, config/<machine>/system.h, and config/site.h files
+also contain a number of flags that need to be set appropriately for
+your environment, describing whether or not various facilities are
+available, where and how the software is to be installed, etc.
+
+LINKINSTALL_ENV	[Default: defined]
+
+    LINKINSTALL_ENV controls the method by which constructed files
+    are installed.  The choice is to copy or link the files.  If
+    LINKINSTALL_ENV is defined, the destination tree is constructed
+    as a symbolic link tree, rather than actually installing
+    (copying) the binaries, libraries, etc. into $(DESTDIR).  This
+    saves considerable space.
+
+AFS_ENV	[Default: not defined]
+
+    AFS_ENV is defined if the Andrew File System is being used. 
+    This is a distributed file system available from Transarc
+    Corporation.  If AFS_ENV is defined, it is assumed that the
+    following files will be available under AFSBASEDIR :
+        include/afs/afsint.h include/afs/auth.h
+        include/afs/cellconfig.h include/afs/print.h
+        include/afs/prserver.h include/afs/comauth.h
+        include/afs/auth.h include/afs/errors.h
+        include/afs/prs_fs.h include/afs/venus.h
+        include/afs/vice.h include/rx/xdr.h lib/afs/libauth.a
+        lib/afs/libsys.a lib/librx.a lib/liblwp.a
+    If vopcon is to be built from atk/console/cmd, other files
+    needed under AFSBASEDIR are:
+        include/lwp.h include/r/r.h lib/afs/libcont.a
+        lib/afs/libafsint.a lib/libr.a lib/liblwp.a
+    If SNAP_ENV is also defined, other files needed under AFSBASEDIR are:
+        lib/afs/librauth.a lib/afs/libacl.a lib/libr.a lib/libscrypt.a
+    If RUN_AMDS_ENV is also defined, so that overhead/pobbconf will
+    be built, AFSBASEDIR/bin/fs will also be needed.
+
+AFS30_ENV	[Default: not defined]
+
+    AFS30_ENV is defined if version 3.0 or later of the Andrew File
+    System (including the protection server) is being used.  If
+    AFS30_ENV is defined, so should AFS_ENV be.  If this is defined,
+    it is assumed that the following files will be available under
+    AFSBASEDIR, in addition to those listed in the basic AFS_ENV
+    discussion:
+        include/afs/acl.h include/afs/prclient.h
+        include/afs/prerror.h lib/afs/libprot.a lib/libubik.a
+        lib/librxkad.a lib/libscrypt.a lib/afs/libcom_err.a
+
+RUN_AMDS_ENV	[Default: not defined]
+
+    RUN_AMDS_ENV is defined is the Andrew Message Delivery System is
+    to be run at the site.  This option affects only the default
+    option values in mail system configuration, specified in the
+    files overhead/util/lib/svcconf.c and
+    overhead/mail/lib/mailconf.c, and whether /bin/mail and
+    /usr/lib/sendmail are replaced with stubs that call AMDS.  See
+    AMS_DELIVERY_ENV in the previous section for actually building
+    the delivery system.
+
+RESOLVER_ENV	[Default: defined]
+
+    RESOLVER_ENV is defined is the Internet Domain Name Resolver is
+    to be used by the Andrew Message Delivery System.  See also the
+    discussion for the symbol RESOLVLIB in the section describing
+    the *.mcr files, because if RESOLVER_ENV is defined, RESOLVLIB
+    will be used as the path to the resolver library routines.
+
+DITROFF_ENV	[Default: defined]
+
+    DITROFF_ENV is defined if ditroff is available for printing
+    Andrew Toolkit documents.  (see installation of printing.)
+
+DEFAULT_ANDREWDIR_ENV	[Default: /usr/andrew]
+
+    DEFAULT_ANDREWDIR_ENV should be the pathname of the top of the
+    installed tree containing Andrew software.  This value is the
+    pathname by which users will, by default, execute the Andrew
+    software; for example, it is used by some Andrew software to
+    know, at execution time, where other pieces of installed Andrew
+    facilities may be found.  This value may differ from the value
+    for BASEDIR in allsys.mcr/system.mcr/site.mcr if, for instance,
+    all the Andrew software is to be built using one path, and
+    executed using another path.
+
+    Because Andrew software uses dynamic binding of information, it
+    needs to know where to find various installed objects, libraries
+    and files.  The software assumes that everything will be found
+    relative to the installed Andrew tree.  The pathname of the top
+    of the tree is, by default, $(DEFAULT_ANDREWDIR_ENV).  If,
+    however, you have not installed the Andrew software in
+    DEFAULT_ANDREWDIR_ENV, you may override the software's idea of
+    where the Andrew installation is to be found.  This value may be
+    overridden by each user's setting the environment variable
+    ANDREWDIR to another pathname, or by the administrator using the
+    AndrewSetup mechanism (cf. setup.help) and specifying a value
+    for the ``AndrewDir:'' attribute.
+
+    See the discussion under LOCAL_ANDREW_SETUP_ENV.
+
+LOCAL_ANDREW_SETUP_ENV	[Default: not defined]
+
+    The AndrewSetup mechanism, described in setup.help, is used for
+    specifying system options to Andrew software at execution time. 
+    LOCAL_ANDREW_SETUP_ENV is defined if an additional path (or
+    paths) for the AndrewSetup file should be compiled into Andrew
+    software.
+
+    Andrew software has many options that may be re-bound
+    dynamically with the AndrewSetup mechanism (cf. setup.help),
+    where a configuration file is read in at execution time.  (One
+    of the options that may be re-bound, for example, is the
+    location of the installed Andrew software.)  One option that
+    cannot be configured by the AndrewSetup mechanism is the
+    location of the AndrewSetup configuration file itself.  Instead,
+    Andrew software searches a path to find the AndrewSetup file to
+    use.  The LOCAL_ANDREW_SETUP_ENV option is the way that the
+    Andrew installer may specify that Andrew software look in
+    additional locations for the AndrewSetup file.
+
+    Andrew software looks in the following five (or more) locations
+    for an AndrewSetup file:
+        /AndrewSetup
+        /etc/AndrewSetup
+        $(LOCAL_ANDREW_SETUP_ENV)
+        /usr/vice/etc/AndrewSetup
+        $(DEFAULT_ANDREWDIR_ENV)/etc/AndrewSetup
+        /usr/andrew/etc/AndrewSetup
+    (These alternatives have arisen from feedback about how typical
+    sites protect their system directories.)  If any file is found
+    in this path, its values are used and no further files are
+    examined; otherwise, compilation-time default values are used. 
+    The default condition for the LOCAL_ANDREW_SETUP_ENV option,
+    that it not be defined, specifies that only those five locations
+    are read.  If LOCAL_ANDREW_SETUP_ENV is defined, it should be a
+    path name of an AndrewSetup file, in double-quotes.  It may also
+    be a comma-separated list of double-quoted path names if many
+    paths should be checked.
+
+    An AndrewSetup file could, for example, contain the line
+
+        AndrewDir: "full path of andrew tree base not in quotations"
+        RequiredSubsFile: /usr/lib/RequiredSubscriptions
+
+DEFAULT_LOCALDIR_ENV	[Default: "/usr/local"]
+
+    DEFAULT_LOCALDIR_ENV controls where to find locally-installed
+    information.  Only a few options are specified via this
+    ``local'' directory; two examples are the name of a library of
+    console files and the name of the file that names the folders to
+    which all users must subscribe (via AMS).  Andrew software's
+    idea of the ``local'' directory may be overridden by either the
+    value of the LOCALDIR environment variable or the value of the
+    AndrewSetup option ``LocalDir''.
+
+NDBM_ENV	[Default: defined for only some platforms]
+
+    NDBM_ENV controls whether some parts of AMDS, the Andrew Message
+    Delivery System, can use the ``ndbm'' package to manage small
+    local databases.
+
+GETDOMAIN_ENV	[Default: defined for only some platforms]
+
+    GETDOMAIN_ENV, if defined, says that the getdomainname(2) call
+    is available on this system and may be concatenated with the
+    result of gethostname(2) to obtain a fully-qualified domain name
+    for the local machine, for use by AMS.  While this option is not
+    defined in the distributed allsys.h file, it is defined in the
+    platform-dependent system.h file for all Suns, for Vax BSD, and
+    for Vax Ultrix version 3.0 and later.
+
+RELEASE2_ENV	[Default: not defined]
+
+    RELEASE2_ENV controls the use of some X.V11R2 specific files. 
+    By default, this is undefined (which then assumes an X11 release
+    3 or 4 environment).  This only affects which font compiler (fc
+    versus bdftosnf) is used, how aliases for fonts are generated,
+    and some workarounds for early bugs in the Xlib region code.
+
+
+1.2.6	Other Machine Types
+
+If you are building this software on another machine type (other than
+one for which a .mcr and .h file have been provided for) you will need
+to create config/<machine>/system.mcr and config/<machine>/system.h
+files, and rework the config/imake.tmpl file to include your new
+config/<machine>/system.mcr file.  Other directories that need
+customization are:
+	overhead/class/machdep
+	atk/console/stats
+	atk/console/stats/<machine>
+	atk/console/stats/common
+
+1.2.7	Notes on Installation on a MIPS system
+
+The MIPS compiler tools have a notion of a global area into which small
+data items are allocated.  This allows the compiler to generate
+small-offset addresses for these items, which gives better performance. 
+By default, any item eight (8) bytes or smaller gets allocated into this
+area.  Unfortunately, the global area mechanism clashes horribly with
+the way dynamic loading works.  The problem is that the global area is
+fixed in size at link time and cannot be expanded at run time. 
+Therefore if a dynamic object (.do file) contains any data that must go
+in the global area, the object cannot be loaded.
+
+In order to get around this problem, all code that goes into .do files
+must be compiled with the "-G 0" switch.  For source code shipped in the
+Andrew distribution, this is not really a problem, since we just compile
+everything -G 0.  However, one must also provide -G 0 versions of
+certain system libraries as well.  In particular, the following
+libraries are needed in -G 0 form:
+
+    libc.a
+    libm.a
+    libX11.a
+    All of the AFS libraries, if AFS_ENV is set.
+
+On some systems, these libraries will be available in the same place as
+their -G 8 couterparts, but with _G0 appended to their names (e.g.
+libc_G0.a instead of libc.a).  On other systems, one must compile these
+libraries from source.
+
+Once the appropriate libraries are collected, they must be made lnown to
+the build process.  At present, this is done in a somewhat ad-hoc
+fashion.  There is a make macro MIPSLIBC_G0 which should be set in
+config/site.h to the path of one's -G 0 libc.a .  This macro is used in
+overhead/class/machdep/dec_mips/Imakefile .  The rest of the libraries
+must be placed in a directory that will be searched by the makedo shell
+script.  By default, this directory is $(BASEDIR)/lib/mips_G0/ .  This
+can be changed by editing the path following the -L on the following
+line in overhead/class/machdep/dec_mips/makedo.csh:
+
+ld -L${libdir}/mips_G0 -r -o ${outfile:r}.dog $filelist
+${libdir}/libcx.a | egrep "ld:"
+
+If a dynamic object contains some non -G 0 code, makedo will print an
+error message and exit, thereby stopping the build.
+
+1.2.8	Notes on Installation on a Sun 4 (SPARC) system
+
+There appears to be a problem with the Bourne shell dumping core on the
+SPARCstation 1 running SunOS 4.0.3c. (There have been reports of this
+behavior on other Sun 4 platforms as well.) By unsetenv'ing all
+unnecessary environment variables, one should be able to get the base
+system to build. However, removing environment variables is just random
+magic that sometimes works. This method is unreliable at best, the real
+solution is for Sun to fix the shell.
+
+2	Building the System
+
+We assume you have a C preprocessor or static preprocessor similar to
+the 4.3BSD cpp.c.  You should set  symisiz at 7500 and sbfsize at
+125*4096.
+
+To build the Andrew Toolkit, as distributed on the X.V11R4 tape, 'cd' to
+the top-level Andrew source directory (contrib/andrew ?) and type the
+following:
+
+     {path}/imake  -I.  -I./config  -Timake.tmpl  -s Makefile  -DTOPDIR=.
+
+This will generate the top-level Makefile from which the rest becomes
+easier to do.  Continuing from the same directory, use the following
+commands:
+
+    make World
+
+If you want to build Andrew in stages, these are the steps:
+
+    make Makefiles
+    make dependInstall
+
+You can clean out the directories using:
+
+    make Clean
+
+> ("Clean" recurses from that point on.  "clean" only cleans out the
+> current directory.)
+
+NOTE: if you are using LINKINSTALL_ENV (default on) you will probably
+want to use 'make Tidy' instead of 'make Clean'.  Tidy will only remove
+the non-installed generated files--i.e. it will leave libraries,
+programs, and .do files alone.  "Tidy" recurses; "tidy" does not.
+
+If you do not want to regenerate the dependencies, you can just do a
+"make Install" instead of a "make dependInstall".  The dependencies
+shipped with the tape should work for all machine types; we remove
+general system include files from the dependency list.
+
+NOTE: On vaxes we have found it necessary to increase the stack size. 
+You can do this by:
+
+    limit stack 2048
+
+
+2.1	Error Recovery
+
+2.1.1	Errors in the Build Process Itself
+
+If the build process should fail sometime before it has completely built
+and installed, you  can do several things, depending on what has caused
+the build to fail.  The simplest and most time consuming is to fix the
+problem and then do a "make dependInstall" from the root of the Andrew
+tree.
+
+A faster approach is to continue the make manually.  For example, assume
+the make died in atk/eq.  After correcting the problem, you could move
+into the atk directory and do a 
+
+    make dependInstall SUBDIRS="glist rofftext help ..."
+
+where the actual contents of the SUBDIRS entry can be determined by
+looking at atk/Imakefile.  When the build for atk completes, examine the
+Imakefile for the top level and observe that the remaining SUBDIRS that
+need to be built are: ams atkams helpindex helpaliases xmkfontd.  So
+change directory to the root of the object tree and do
+
+    make dependInstall SUBDIRS="ams atkams helpindex helpaliases xmkfontd"
+
+After building the entire system you can recompile and install a subtree
+or directory, by moving to that directory and issuing
+
+    make Install
+
+2.1.2	Common Problems and their Causes
+
+AMS Mail Aliases: 
+
+If you build your UCB sendmail with the ``DBM'' option set, aliases in
+/usr/lib/aliases are case-sensitive; if you build it without that
+option, they're case-insensitive.  For purposes of validating user
+names, AMS assumes that aliases in /usr/lib/aliases are
+case-insensitive.  This might mean that a name that validates OK with
+AMS might be rejected by UCB sendmail, if that sendmail uses DBM to do
+its alias lookup.
+
+CLASSPATH:  
+
+The location of ATK dynamically-loaded files has changed, from
+ANDREWDIR/dlib/be2 to ANDREWDIR/dlib/atk.  If you previously ran Andrew
+at your site and your users set their CLASSPATH environment variables to
+a path containing a reference to ANDREWDIR/dlib/be2, they should switch
+their CLASSPATH path entry to the new name.  You'll see an error like
+the following if CLASSPATH was set as in a previous distribution: 
+
+    CLASS runtime warning:  CLASSPATH directory /usr/andrew/dlib/be2 is 
+    not readable (error 2); ignoring it.
+
+Console: 
+
+You may see the following error message: 
+
+    |>> console:<getstats/gvm> Cannot open /dev/kmem - will not
+    monitor Disk and GVMStats <<|  
+    console: ->> Try 'Restart Stats' Menu <<
+
+If you get this message, your ``getstats'' program, installed from
+atk/console/stats/common, wasn't installed with sufficient privilege to
+be able to open /dev/kmem.  This happens because your /dev/kmem is
+protected against global reading, but you didn't do an Andrew
+installation from an account with enough privilege to install
+``getstats'' set-uid or set-gid.  One possibility for this is that you
+are running AFS although you didn't turn the AFS flag on for the
+compilation.  In order for console to monitor information available only
+through /dev/kmem, you'll have to do the following: 
+
+    cd ..../atk/console/stats/common
+    su admin (or su root)
+    chmod 4555 getstats
+
+We have not included any consoles specifically tailored to a non-AMDS,
+non-AFS environment.  We hope to have some available in future patch
+distributions.  
+
+Fonts:
+
+Some users do not remember to run mkfontdir in the ${DESDIR}/X11fonts
+directory after the dependInstall operation is complete.  If you do not
+do so, you will see an error message similar to the following: 
+
+    <appname>X error BadValue, integer parameter out of range ...
+
+Running on HP-UX,  you may see problems with the fonts. A possible
+workaround for the font problem is to change the bodyfont font
+preference in your preferences file to some font that is in the X
+default font path. 
+
+Some formulation of the bdf files causes either convertfont or the
+window system to miscount the position of the glyphs in the font.  This
+means that the window system doesn't believe that you have glyphs for
+lower-case characters. 
+
+The distributed Andrew fonts are tailored for about 80 pixels to the
+inch.  For workstations with other resolutions it may be best to utilize
+X fonts instead of Andrew fonts.  To do so you may use as fonts.alias
+the file  non-andrew.fonts.alias in source directory xmkfontd/ instead
+of the fonts.alias file generated by doing make in xmkfontd.
+
+Help:  
+
+If help files cannot be found or the alias data base is missing, the
+following make operations from the root of the object tree may help:
+
+    make dependInstall SUBDIRS='helpindex helpaliases'
+
+These operations can be repeated as desired.
+
+Imakefile/Makefile:  
+
+Changes should never be made to the Makefile.  All changes should be
+made to Imakefile; "make Makefile" to regenerate that one file, or "make
+Makefiles" to regenerate that file as well as the Makefiles in all
+subdirectories, recursively.
+
+"make clean" and "make Clean" do not delete the Makefile,  so a
+subsequent "make Makefile" says it is up to date, i.e., comparing its
+own timestamp against itself.  Beware: once you remove the Makefile from
+a directory, you can't say "make Makefile" there again, You can,
+however, rename Makefile to another name and say "make Makefile -f
+newname".  
+
+Spell Checking: 
+
+If Ispell, the spelling checker used by ez, is not available at your
+site or is not along your path, ez will not be able to perform this
+function.  Ispell is widely available (e.g. via anonymous FTP off of
+uunet.uu.net).  All an installer has to do to get ez spell checking to
+work is to install ispell somewhere along users' path.  The following
+.be2init line will then be useful:
+
+    addmenu "spell-check-document" "Search/Spell~1,Check Spelling~30" textview
+2.2	System Components
+
+The major parts of the distribution consists of: underlying libraries
+and programs (overhead), the Andrew Toolkit (ATK), the Andrew Message
+System (AMS), applications of both ATK and AMS (ATKAMS), and the Andrew
+Documentation.  In addition, we also include a small collection of
+contributed ATK insets and a package of ODA-based translators for ATK,
+Interleaf and troff documents (for more information on the ODA Toolkit,
+see the ODA section near the end of this document).
+
+This document contains a brief description of the contents of the Andrew
+Distribution.  The content descriptions are noted in order of
+installation.  
+
+
+2.2.1	Overhead
+    addalias - adds aliases for help probes
+    class - an object-oriented C language preprocessor used by ATK
+    cmenu - the ATK stack-of-cards X11 menu package
+    conv - several conversion programs for sites which have used
+        earlier versions of the Andrew distribution.
+    eli - the ``embedded lisp interpreter'' used by AMS
+    errors - a package for handling some low-level error reports
+        in a uniform way
+    fonts - fonts used by ATK programs
+    genmake - a script for generating Makefiles from Andrew
+        style Imakefiles
+    index - utility to map class names to file names
+    mail - library of AMS functions
+    malloc - the Andrew version of malloc
+    parsec - a C language parser plus a procedure to clean up
+        YACC output
+    pobbconf - houses the mechanism to turn on AMDS at your site
+    rxp - a regular-expression package used in ELI
+    snap2 - an RPC package used by the Andrew Message System
+    sys - a program used for distinguishing between different
+        system (hardware/os) types
+    util - lots of utility functions.  Includes the White Pages readers
+    wpi - allows mail-based updates to White Pages entries
+    wputil - programs and data to initialize and build a White Pages
+    xicons - a small collection of icons for use under X window
+        managers
+
+
+2.2.2	ATK
+
+        1.  Basics (or Core):
+            - underlying ATK libraries
+            - ez - a multi-media editor
+            - typescript - a flexible csh window (not TERMCAP)
+            - raster - a raster (bitmap) editor
+        2.  Basic Utilities
+            - console - a system monitoring program
+            - ezprint - allows printing of ATK format documents
+            - champ - a calendar program
+            - preview - a ditroff previewer
+        3.  Basic Insets
+            - eq - an equation editor
+            - fad - a simple frame animator
+            - table - a simple spreadsheet
+        4.  Building Blocks
+            - apt - basic components
+            - org - an organizational chart editor
+            - bush - a directory tree/file browser (built on org)
+            - zip - an hierarchical drawing editor
+            - chart - a chart/graph program (line graphs, pie
+            charts, histograms etc.)
+            - calc - a simple calculator
+        5.  Help (program)
+            - help - a user interface for help files and man pages
+        6.  Text Extensions
+            - ctext - a C text editing package
+            (this package is not an active interpreter - only a formatter)
+            - lookz - a style editor
+            - spell  - a spell checker.  See note below.
+        7.  Authoring Systems
+            - adew - A direct manipulation user interface builder
+            - ness - An embedded string manipulation authoring system
+        8.  Auxiliary Utilities
+            - datacat - a utility for concatenating two (or more)
+            ATK format files together
+            - toez - a utility for converting files (scribe, troff)
+            into ATK format
+        9.  Auxiliary Insets
+            - gob - 
+        10.  Example Programs
+            - examples illustrating how to write an inset and application
+            - examples from N. Borenstein's book on the Andrew Toolkit
+
+
+2.2.3	AMS
+
+    delivery - the fundamental programs in AMDS that manage mail
+        queues and deliver mail
+    demo - builds a multi-media folder that you can use as an
+        AMS/ATK demo
+    doc - AMS documentation of all sorts
+    flames - ELI application that handles new messages interpretively
+    libs - libraries used in building AMS user agent programs
+    ms - the RPC veneer over the lower-level parts of those AMS
+        libraries, making the MessageServer process
+    msclients - AMS user agent programs
+    utils - useful programs in managing AMDS installations
+
+
+2.2.4	ATKAMS
+
+    messages - our flagship AMS program; multi-media mail and bboards
+
+
+2.2.5	Contrib
+    - ltext - a LISP text editing package
+    - mtext - a MODULA2 text editing package
+    - ptext - a PASCAL text editing package
+    - rctext - another C text editing package
+    - rmtext - another MODULA 2 text editing package
+    - m3text - a MODULA 3 text editing package
+    - hyplink - a hypertext-like link inset
+    - tm - an alternative typescript
+
+
+2.2.6	ODA Package
+    - liboda - an ODA tool kit
+    - libraster - a raster tool kit
+    - atkoda, odaatk - translators between ODA and Andrew
+        Toolkit format
+    - ileafoda, odaileaf - translators between ODA and Interleaf format
+    - ileaftroff - translator from ODA to troff
+    - prodif, proda, prtext - Utilities for printing out ODA
+        information from ODIF files
+    - convert - program for converting between raster images
+
+
+2.3	Make Targets
+
+The generated Makefiles contain the following targets:
+
+        Makefile: Generates the Makefile from the Imakefile in the
+        current directory (assuming there is already a Makefile present).
+
+        Makefiles: Generates the Makefiles for subdirectories (does not
+        generate the Makefile for the current directory).
+
+        all:
+                Builds the contents of the current directory.
+                
+        depend:
+                Generates dependency information for the current directory.
+                
+        doc:
+                Installs documentation from the current directory.
+                
+        Doc:
+                Same as above but recurses thought subdirectories.
+                (depends on "doc")
+
+        aliases:
+                Generates 'help alias' information for the current directory.
+                
+        Aliases:
+                Same as above but recurses through subdirectories.
+                (depends on "aliases")
+
+        install:
+                Installs the binaries, libraries, include files, etc.
+        for the current directory.
+                (depends on "all" and "doc")
+
+        Install:
+                Same as above but recurses through subdirectories.
+                (depends on "install")
+
+        dependInstall:
+                Generates dependency information.
+                Installs binaries, libraries, include files etc.
+                Installs documentation.
+                Recurses through subdirectories.
+
+        world:
+                (depends on "depend", "install", "aliases")
+                (for current directory only)
+
+        World:
+                Same as above but recurses through subdirectories.
+
+        tidy:
+                Removes only non-installed generated files (*.o *.BAK
+        core, etc) thus not removing files which have links pointing to
+        them from DESTDIR.
+
+        Tidy:
+                Same as above but recurses through subdirectories.
+
+        clean:
+                Removes all generated files (*.o, *.a, etc.) in current
+        directory only.
+                (depends on "tidy")
+
+        Clean:
+                Same as above but recurses through subdirectories.
+
+
+
+2.4	What Gets Built
+
+During the build process, the ATK makefile constructs applications,
+dynamically loadable objects, libraries, fonts, templates, console
+descriptions, help files and include files.  Each of these collections
+goes into its own directory.  At runtime, ATK applications and objects
+assume that there will be an environment variable called ANDREWDIR that
+will be the root of all andrew related run-time files.  (See the
+discussion of DEFAULT_ANDREWDIR_ENV, above.)  Within the makefiles, the
+variable BASEDIR is used for the value you expect to use for ANDREWDIR
+during run time.  In particular, the system should install files so that
+the following directories are used for each category:
+
+        ${ANDREWDIR}/bin - Runnable applications
+        ${ANDREWDIR}/dlib/atk - Dynamic objects
+        ${ANDREWDIR}/X11fonts -ATK specific fonts for X
+        ${ANDREWDIR}/lib/tpls - Style templates for text-oriented objects
+        ${ANDREWDIR}/lib/consoles - Console descriptions
+        ${ANDREWDIR}/lib/atk - Compile time libraries
+        ${ANDREWDIR}/include/atk - Compile time include files
+        ${ANDREWDIR}/help  - Help files
+        ${ANDREWDIR}/doc  - Doc files
+        ${ANDREWDIR}/etc  - Auxiliary files, usually not accessed
+        directly by users
+
+
+2.5	Size of the System
+
+The following list provides information about building the Andrew
+system.  These are approximate values, derived from building the system
+on a Sun3 with optimization turned on.  If you have left LINKINSTALL_ENV
+turned on then you should only be concerned with the size of the objects
+(the installed tree will just contain links back to the object tree). If
+you compile the system with -g on a Sun3 the object numbers will
+approximately double in size.
+
+Objects:
+    Minimum: 9M (including help and the text extensions)
+    Default: 29M (includes everything for running the MESSAGES demo,
+    except the piano)
+    Atk & Messages: 37M (not including the examples or auxiliary insets)
+
+    Whitepages: 1.6M
+    Snap: 5.3M
+    AMS_Delivery: 2.1M
+    ODA: 8.7M
+
+    Total: 55M
+
+Binaries:
+    Minimum: 11M
+    Default: 23M
+    Atk & Messages: 27M
+
+    Whitepages: 1.5M
+    Snap: 3.1M
+    AMS_Delivery: 1.2M
+    ODA: 5.2M
+
+    Total: 41M
+
+3	Setting up the Environment to Run Applications
+
+
+To run our software you must be running X11, and have your DISPLAY
+environment variable set appropriately.  Our applications support the
+-fg, -bg, -display and -geometry switches.
+
+In addition, most ATK applications also reference the file ~/preferences
+or ~/.Xdefaults for lines of the form:
+
+appname.foregroundcolor: colorspec
+appname.backgroundcolor: colorspec
+appname.geometry: geometryspec
+
+where appname is the name of the application (i.e. console, ez, etc.).
+
+If you want the Check Spelling menu in text to work, you will need the
+ispell program.  Ispell is executed along a user's path.
+
+Before running AMS, you may want to review the options available with
+the AndrewSetup mechanism, described in the setup.help file
+(BASEDIR/help/setup.help).
+
+
+4	Printing
+
+The ATK software uses the new version of troff (ditroff) and Adobe's
+TransScript software to provide printing support for Postscript
+printers.  The defaults are set up to use lpr to spool print requests. 
+Our applications use two values found in the user's preferences file to
+control printing:
+
+    formatcommand: Command used to generate a file to be shipped to
+        the printer.
+    printcommand: Command used to ship the file to the printer.
+
+The defaults for these commands are:
+
+    formatcommand: eqn  /tmp/%s.n  | troff  - |
+    printcommand: lpr -n
+
+A temporary troff file is generated automatically in /tmp in the process
+of printing a file.  You should run 
+
+    help preferences
+
+once you have brought up the system to see how to change your preferences.
+
+A document describing in some detail how printing works and giving some
+guidelines for testing printing is in the source tree in
+atk/ezprint/printing.ins.
+
+5	Configuring a Help System 
+
+5.1	The index
+
+Help is configured by default to index (and thus make available) files
+in the following directories:
+
+    $(DESTDIR)/help
+    /usr/man/man[1-8,n,o,l,p]
+
+This collection of directories indexed by the Help system is specified
+in an input file to an index-making program, mkindex.  If you want to
+index more than the Andrew help files and man pages in
+/usr/man(/man[1-8,n,o,l,p]), you should edit the file
+``helpindex/index.tpl'' and add lines for each of the directories you
+want to be included in the Help system, in the following format (teh
+following description is taken from BASEDIR/doc/help/Maint.d):
+
+#	comment
+dir	actual-directory-name	link-directory-name
+include	filename
+key	keyword	filename
+
+The white space between the words on each line can be any number of tabs
+or spaces.  Here is an explanation of the commands:
+
+#	comment
+    Any line beginning with "#" is a comment and is ignored.
+
+dir	actual-directory-name	link-directory-name
+    This command tells mkindex to index the files in
+    actual-directory-name, and record the path to those files as
+    starting with link-directory-name.  At Carnegie Mellon, /usr/man is
+    a link to /afs/andrew/<machine>/usr/man, so mkindex's input file
+    contains the line:
+
+    dir /afs/andrew/machinetype/usr/man/man1 /usr/man/man1
+
+    where machinetype is the name used to refer to a specific machine's
+    system-specific directories.
+
+include	filename
+    This line tells mkindex to read in the file filename as more
+    mkindex commands.  At Carnegie Mellon, this facility is used to
+    allow different indices on different machine types to all
+    include a set of common system directories.
+
+key	keyword		filename
+    This line tells mkindex to explicitly use the given keyword as
+    an alias for the file filename.  This alias functions
+    identically to aliases in the help.aliases file, as described in
+    the section Aliases in Maint.doc.
+
+When the whole system is built, helpindex is built last and will make an
+index for Help using index.tpl as an input file.  The build is
+accomplished by changing directory to the root of the object tree and
+saying
+
+    make dependInstall SUBDIRS=helpindex
+
+The aliases can be rebuiilt from the root with
+
+    make dependInstall SUBDIRS=helpaliases
+
+or for any subtree with the command:
+
+    make Aliases
+
+Further information on configuring the Help system and program can be
+found in the Help Maintainer's Guide which, once the system is
+installed, is in:
+
+    $(DESTDIR)/doc/help/Maint.doc
+
+5.2	The documents
+
+The documents ("help files") that describe the system will probably need
+to be edited at some point to reflect the system you have built
+correctly, if you intend users not to be unpleasantly surprised by the
+lack of a documented feature.  Unfortunately, the help files describe a
+full installation of Andrew; they are not configured during the building
+process to reflect partial installations.  In particular, the Message
+System documentation may need to be reviewed because it describes a
+system that includes the White Pages, the Andrew Message Delivery
+System, and (at times) a bulletin board system.  See the Help
+Maintainer's guide for more information.
+
+6	Building ODA Alone
+
+The ODA Tool Kit is designed so that it can be installed and used
+without any of the rest of the X distribution.  This can be done by
+keeping only the subtree rooted at "oda". 
+
+Unlike the rest of the Andrew Toolkit distribution, the ODA Tool Kit can
+run on non-Unix machines.  In addition to the Imakefiles necessary for
+the X distribution, the ODA subdirectories contain makefiles (or their
+equivalents) for BSD Unix, System V Unix, VMS, Macintosh MPW and PC DOS.
+ Instructions on how to build the ODA Tool Kit independently of the rest
+of the distribution can be found in the file oda/doc/install.txt. More
+information about building, installing and using the ODA materials can
+be found in "Multi-media Document Interchange: ODA and the EXPRES
+Experience" from Springer Verlag (scheduled to be available sometime
+winter 1990.  Contact oda@andrew.cmu.edu if you need immediate
+information).
+
+
+7	Hard Copy Documentation
+
+Hard copy user and programmer documentation is available by U.S. mail. 
+The documents are provided at cost, plus shipping and handling.  More
+information, as it becomes available, will be posted to info-andrew (see
+below), or you can write:
+
+    Andrew Toolkit Information
+    Information Technology Center
+    4910 Forbes Avenue
+    Carnegie-Mellon University
+    Pittsburgh, PA  15213-3890
+    U.S.A.
+    (412) 268-6700
+    FAX: (412) 268-6787
+
+
+8	How to Get More Information about Andrew 
+
+There are two(*) mailing lists read by the developers and others
+interested in the Andrew Toolkit.  The first is a moderated bug report
+list, which also includes official announcements about fixes and patches:
+
+    info-andrew-bugs@andrew.cmu.edu
+
+The second is an unmoderated list devoted (but not limited) to getting,
+compiling, and installing Andrew, bug reports, fixes, and request for
+features.  This address is: 
+
+    info-andrew@andrew.cmu.edu
+
+Subscription requests should be sent to one of the following addresses:
+
+    info-andrew-bugs-request@andrew.cmu.edu
+    info-andrew-request@andrew.cmu.edu
+
+When you send in a request, you will be put on both lists, unless you
+specify otherwise.  If you are running the Andrew Message System, you
+can also request to be put on the multi-media list.  This list receives
+exactly the same messages as info-andrew and info-andrew-bugs, except
+that the messages are sent out with their formatting intact, so you can
+see the multi-media portions of messages that have them.  If you don't
+request multi-media, you will be put by default on the non-multi-media
+list.
+
+(*)Note: the second list, info-andrew@andrew.cmu.edu, is
+bi-directionally gatewayed with the Netnews group comp.soft-sys.andrew. 
+You do not/can not subscribe to the netnews group through us, and the
+netnews group  contains ONLY non-multi-media posts.

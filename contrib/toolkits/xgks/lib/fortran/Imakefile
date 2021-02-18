@@ -1,0 +1,74 @@
+#
+# $XConsortium: Imakefile,v 1.1 89/09/19 09:22:27 jim Exp $
+#
+
+XGKS_TOP = ../..
+#include  "../../xgks.tmpl"
+
+OBJS =	control.o \
+        error.o \
+        gerhnd.o\
+	escapes.o \
+        inputevent.o\
+        inputinit.o \
+        inputmode.o \
+        inputreq.o \
+        inputsamp.o \
+        inqerrlist.o \
+        inqgksdesc.o \
+        inqgkslist.o \
+	inqlun.o \
+        inqpixel.o \
+        inqseglist.o \
+        inqstate.o \
+        inqwsdesc.o \
+        inqwslist.o \
+        meta.o \
+        output.o \
+        rep.o \
+        segattr.o \
+        segment.o \
+        transform.o \
+        wsioutattr.o \
+        utils.o 
+
+SRCS =	control.c \
+        error.c \
+        gerhnd.c\
+	escapes.c \
+        inputevent.c\
+        inputinit.c \
+        inputmode.c \
+        inputreq.c \
+        inputsamp.c \
+        inqerrlist.c \
+        inqgksdesc.c \
+        inqgkslist.c \
+	inqlun.f \
+        inqpixel.c \
+        inqseglist.c \
+        inqstate.c \
+        inqwsdesc.c \
+        inqwslist.c \
+        meta.c \
+        output.c \
+        rep.c \
+        segattr.c \
+        segment.c \
+        transform.c \
+        wsioutattr.c \
+        utils.c 
+
+all::
+
+NormalLibraryObjectRule()
+
+NormalFortranObjectRule()
+
+NormalLibraryTarget(fxgks,$(OBJS))
+InstallLibrary(fxgks,$(USRLIBDIR))
+
+LintLibraryTarget(fxgks,$(SRCS))
+
+NormalLintTarget($(SRCS))
+

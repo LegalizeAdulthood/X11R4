@@ -1,0 +1,52 @@
+    STD_DEFINES = LibraryDefines
+    CDEBUGFLAGS = LibraryCDebugFlags
+       INCLUDES = -I.. -I$(TOP) -I$(INCLUDESRC)
+   INSTALLFLAGS = $(INSTINCFLAGS)
+       LINTLIBS =
+       BASENAME = Xim
+
+OBJS = alcols.o \
+        fant.o \
+        fbquant.o \
+        smooth.o \
+        ximRdBit.o \
+        xim_io.o \
+        ximconvert.o \
+        ximdither.o \
+        ximedit.o \
+        ximmisc.o \
+        ximtops.o \
+        ximxlib.o \
+        xwdtoxim.o
+
+SRCS = alcols.c \
+        fant.c \
+        fbquant.c \
+        smooth.c \
+        ximRdBit.c \
+        xim_io.c \
+        ximconvert.c \
+        ximdither.c \
+        ximedit.c \
+        ximmisc.c \
+        ximtops.c \
+        ximxlib.c \
+        xwdtoxim.c
+
+NormalLibraryTarget($(BASENAME),$(OBJS))
+
+library: lib$(BASENAME).a
+
+InstallLibrary($(BASENAME), $(USRLIBDIR))
+
+LintLibraryTarget($(BASENAME), $(SRCS))
+InstallLintLibrary($(BASENAME),$(LINTLIBDIR))
+
+#if BandAidLibraryNeeded
+BandAidLibraryMake()
+depend::  BandAidLibrarySources
+#endif
+
+DependTarget()
+NormalLintTarget($(SRCS))
+

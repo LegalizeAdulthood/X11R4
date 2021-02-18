@@ -1,0 +1,46 @@
+#
+#   WARNING    WARNING    WARNING    WARNING    WARNING    WARNING    WARNING
+#
+# This is NOT an automatically generated Makefile!  It is hand-crafted as a 
+# bootstrap, may need editing for your system.  The BOOTSTRAPCFLAGS variable
+# may be given at the top of the build tree for systems that do not define
+# any machine-specific preprocessor symbols.
+#
+
+BOOTSTRAPCFLAGS = -DSX9100 
+    CDEBUGFLAGS = -O -Zs -DSYSV
+         CFLAGS = $(BOOTSTRAPCFLAGS) $(CDEBUGFLAGS)
+          SHELL = /bin/sh
+             RM = rm -f
+           MAKE = make
+         RM_CMD = $(RM) *.CKP *.ln *.BAK *.bak *.o core errs ,* *~ *.a \
+			tags TAGS make.log
+
+imake::
+	@echo "making imake with BOOTSTRAPCFLAGS=$(BOOTSTRAPCFLAGS)"
+
+imake:: ccflags imake.c
+	$(CC) -o imake $(CFLAGS) imake.c `./ccflags`
+
+ccflags: ccflags.c
+	$(CC) -o ccflags $(CFLAGS) ccflags.c
+
+relink:
+	$(RM) imake
+	$(MAKE) $(MFLAGS) imake
+
+clean:
+	$(RM) ccflags imake
+	$(RM_CMD) \#*
+
+depend:
+
+Makefile:
+
+tags:
+
+install:
+
+install.man:
+
+Makefiles:

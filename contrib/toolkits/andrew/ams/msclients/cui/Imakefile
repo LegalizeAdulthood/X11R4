@@ -1,0 +1,58 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES	=	-I${BASEDIR}/include/ams
+
+#ifdef SNAP_ENV
+    PRODUCTS 	=	cuin cuis cuit
+#else /* SNAP_ENV */
+    PRODUCTS 	=	cuin
+#endif /* SNAP_ENV */
+
+ANDVOBJS	=	unixmach.o
+
+PCVOBJS	=	pcmach.o
+
+OBJS		=	cui.o cuifns.o ${ANDVOBJS} morprntf.o
+
+LIBS		=	${BASEDIR}/lib/libmail.a ${BASEDIR}/lib/liberrors.a \
+			${MALLOCLIB} ${UTILLIB} ${RESOLVLIB}
+
+NOSNAPLIBS	=	${BASEDIR}/lib/libcui.a ${BASEDIR}/lib/libcuin.a \
+			${BASEDIR}/lib/libmssrv.a ${BASEDIR}/lib/libmsshr.a \
+			${BASEDIR}/lib/libeli.a ${BASEDIR}/lib/librxp.a \
+			${LIBS}	${PRSLIB}
+
+
+#define parameterized_snap_libs(kind_of_snap) \ @@\
+	${BASEDIR}/lib/libcui.a \ @@\
+	${BASEDIR}/lib/libcuis.a \ @@\
+	${BASEDIR}/lib/kind_of_snap.a \ @@\
+	${BASEDIR}/lib/libmsshr.a \ @@\
+	${BASEDIR}/lib/librxp.a \ @@\
+	${LIBS} \
+
+NormalObjectRule()
+
+#ifdef SNAP_ENV
+ProgramTarget(cuis, ${OBJS}, parameterized_snap_libs(libsnap), )
+ProgramTarget(cuit, ${OBJS}, parameterized_snap_libs(libsnapt), )
+#endif /* SNAP_ENV */
+ProgramTarget(cuin, ${OBJS}, ${NOSNAPLIBS}, )
+
+InstallMultiple(${PRODUCTS}, $(INSTPROGFLAGS), ${DESTDIR}/bin)
+InstallHardLink($(BASEDIR)/bin/cuin, $(DESTDIR)/bin/cui)
+DependTarget()
+
+NormalHelpRule()
+InstallDocs(cuiclss.help cuicust.help cuiedit.help cuixprt.help cuifltr.help cuipref.help cuiqr.help cuiwiz.help cui.help cui.tutr, ${DESTDIR}/help)
+InstallHelpAlias(cuiclss, cui-classification)
+InstallHelpAlias(cuicust, cui-customization)
+InstallHelpAlias(cuiedit, cui-edit)
+InstallHelpAlias(cuixprt, cui-expert)
+InstallHelpAlias(cuifltr, cui-filtering cui-filter)
+InstallHelpAlias(cuipref, cui-preferences)
+InstallHelpAlias(cuiqr, cui-quickref)
+InstallHelpAlias(cuiwiz, cui-wizard)
+InstallHelpAlias(cui, cui-novice)

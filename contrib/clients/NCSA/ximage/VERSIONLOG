@@ -1,0 +1,67 @@
+Please send bug reports and fixes to davet@ncsa.uiuc.edu.
+
+
+Version 1.0.0	(9/17/89)
+		First Release
+
+Version 1.0.1	(9/24/89)
+		Fixed XtTextReplace() call in PrintMesg() in module control.c
+
+		Fixed IsItHDF() in read.c.  DFR8GetDims() dumped core b/c 
+			hasPal was char instead of int.
+
+		palette.c: no longer assumes 8 planes means 256 colors.
+			It does a XDisplayCells() lookup now.
+
+		Changed (void *) to (char *) for portability.
+
+Version 1.0.2	(10/19/89)
+		xstuff.c: 
+			Added Callback for EnterWindow event to all 
+			dialog widgets.  Callback sets input focus to the 
+			window when cursor enters.  
+			Makes text input compatible with OpenLook 
+			and Motif wm.  
+
+			MakeRasterImage(): image param not defined.
+			fixed.
+
+		animate.c: Prevent user from hitting 'Done' button
+			while animation is still running.
+
+			Put in XSync after XClearArea to get events
+			from server dispatched while animation going on.
+
+			Added support for machines with > 8 bit planes.
+
+			Defined a usleep macro for SYSV machines.
+
+		palette.c:
+			Added support for machines with > 8 bit planes.
+
+			didn't uninstall palette before XtDestroy.
+			with some wm, palette was screwed up.
+
+		xinit.c:
+			(Added) Print out Display information upon startup.
+
+		image.c:
+			Added support for machines with > 8 bit planes.
+
+		getfile.c:
+			Clear current filename when opening getfile.
+
+			Allocate space to hold filenames instead hoping
+			that the values returned from readdir() would
+			stick around long enough.
+
+		i.c:
+			NewIMAGE() didn't set i->prev to previous IMAGE.
+
+Version 1.0.3 (11/29/89)
+		Several changes made to source to make it comply with
+		X11R4 contrib tape guidelines.
+
+		getfile.c:
+			Change directory when user presses return.
+			Change directory when user selects on directory.

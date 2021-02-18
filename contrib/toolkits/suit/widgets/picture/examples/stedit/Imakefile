@@ -1,0 +1,11 @@
+#include "./../../PWImake.defs"
+
+       INCLUDES = -I$(PWINCLUDESRC) -I$(TOP)
+LOCAL_LIBRARIES = $(PWLIB) $(MENULIB) $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+  SYS_LIBRARIES = -lm
+
+SRCS=	stedit.c callback.c
+
+OBJS=	stedit.o callback.o
+
+ComplexProgramTarget(stedit)

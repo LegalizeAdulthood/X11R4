@@ -1,0 +1,44 @@
+#	Not standalone - it gets a lot of variables from the invocation.
+#	VFONTS, RSTFONTS, SUNTROFF_FONTS, PERCENT, PREVIEWER, FC
+
+DEFINES=-DVFONTDIR=\"$(VFONTS)\" -DRSTFONTDIR=\"$(RSTFONTS)\"
+SRCS = vft2ch.c ch2vft.c ch2rst.c rst2ch.c scalech.c vf2bdf.c
+
+all: vft2ch ch2vft ch2rst rst2ch scalech vf2bdf
+
+SingleProgramTarget(vft2ch,vft2ch.o,,)
+InstallProgram(vft2ch, $(BINDIR))
+InstallManPage(vft2ch, $(MANDIR))
+
+SingleProgramTarget(ch2vft,ch2vft.o,,)
+InstallProgram(ch2vft, $(BINDIR))
+InstallManPage(ch2vft, $(MANDIR))
+
+SingleProgramTarget(ch2rst,ch2rst.o,,)
+InstallProgram(ch2rst, $(BINDIR))
+InstallManPage(ch2rst, $(MANDIR))
+
+SingleProgramTarget(rst2ch,rst2ch.o,,)
+InstallProgram(rst2ch, $(BINDIR))
+InstallManPage(rst2ch, $(MANDIR))
+
+SingleProgramTarget(scalech,scalech.o,,)
+InstallProgram(scalech, $(BINDIR))
+InstallManPage(scalech, $(MANDIR))
+
+SingleProgramTarget(vf2bdf,vf2bdf.o,,)
+InstallProgram(vf2bdf, $(BINDIR))
+InstallManPage(vf2bdf, $(MANDIR))
+
+DependTarget()
+
+#		The two scripts check for suntroff or xtroff.
+sunfonts:	all
+		if test -d ${VFONTS}; then \
+			./MakeSunFonts ${VFONTS} ${SUNTROFF_FONTS} \
+			${SUNPERCENT} ${PREVIEWER} ${FC} ${SUNDEVICE}; fi
+
+rstfonts:	all
+		if test -d ${RSTFONTS}; then \
+			./MakeImFonts ${RSTFONTS} ${SUNTROFF_FONTS} \
+			${RSTPERCENT} ${PREVIEWER} ${FC} ${RSTDEVICE}; fi

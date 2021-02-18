@@ -1,0 +1,28 @@
+.TH SHOWPCF 1 "17 August 1988" "X Version 11"
+.SH NAME
+showpcf - display contents of an font file
+.SH SYNOPSIS
+.B showpcf
+[-v] [-g]
+.SH DESCRIPTION
+.PP
+The \fIshowpcf\fP utility displays the contents of font files in the Portable
+Compiled Format produced by \fIbdftopcf\fP.  It is usually only to verify that
+a font file hasn't been corrupted or to convert the individual glyphs into 
+arrays of characters for proofreading or for conversion to some other format.
+.SH OPTIONS
+.TP 8
+.B \-v
+This option indicates that character bearings and sizes should be printed.
+.TP 8
+.B \-g
+This option indicates that character glyph bitmaps should be printed.
+.TP 8
+.SH "SEE ALSO"
+X(1), Xserver(1), bdftopcf(1)
+.SH BUGS
+There is no way to just print out a single glyph.
+.SH COPYRIGHT
+Copyright 1988, Massachusetts Institute of Technology.
+.br
+See \fIX(1)\fP for a full statement of rights and permissions.

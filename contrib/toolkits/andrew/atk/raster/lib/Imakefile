@@ -1,0 +1,37 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+DOBJS = heximage.do \
+	oldrf.do \
+	paint.do \
+	plusspc.do \
+	rasterio.do
+
+IHFILES = heximage.ih \
+	oldrf.ih \
+	paint.ih \
+	plusspc.ih \
+	rasterio.ih
+
+OBJS = heximage.o \
+	oldrf.o \
+	paint.o \
+	plusspc.o \
+	rasterio.o
+
+NormalObjectRule()
+NormalATKRule()
+
+DynamicObject(heximage, , -lm)
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+LibraryTarget(libraster.a, $(OBJS))
+InstallLibrary(libraster.a, ${DESTDIR}/lib/atk)
+
+#ifdef WM_ENV
+InstallFile(rastfile.h, $(INSTINCFLAGS), $(DESTDIR)/include/)
+#endif /* WM_ENV */
+
+DependTarget()

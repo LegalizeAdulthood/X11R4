@@ -1,0 +1,25 @@
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#include "./../WnnImake.def"
+
+       INCLUDES = -I$(WNNINCLUDESRC)
+        DEFINES = $(WNNDEFINES) -DWNNDEFAULT
+       LINTLIBS = 
+
+SRCS= rk_bltinfn.c rk_main.c rk_modread.c rk_read.c rk_vars.c
+OBJS= rk_bltinfn.o rk_main.o rk_modread.o rk_read.o rk_vars.o
+
+#if DebugLibRomkan && ProfileLibRomkan
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugLibRomkan
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileLibRomkan
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+AllTarget($(OBJS))

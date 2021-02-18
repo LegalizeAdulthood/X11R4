@@ -1,0 +1,151 @@
+
+                          SERPENT ALPHA RELEASE 0.7
+
+                           FILE/STRUCTURAL CHANGES
+
+The  following  is  a list of all file names that have been changed in Serpent
+from Alpha Release 0.6.
+in c_toolkit:
+        listCompatible.h => listComp.h
+
+in compiler:
+        c22_compile.c => c22_comp.c
+        slang_compiler => slang_comp
+
+in externs:
+        arithmetic.ext => arith.ext
+        slang_string.ext => sstring.ext
+        slang_string_macros.h => sstring.h
+        arithmetic.c => arith.c
+        slang_string.c => sstring.c
+
+in int:
+        s22_cleanup.c => s22_clean.c
+        s22_cleanup => s22_clean
+
+in saddle:
+        .saddle_first => saddle1
+        .saddle_last => saddle2
+
+in tools:
+        dialogue_makefile => make_dial
+        print_journal.c => format.c
+        run_serpent.c => runit.c
+        run_serpent => runit
+        serpent_getopt.c => getit.c
+        serpent_getopt => getit
+
+in utilities:
+        cus_private.h => cus_priv.h
+        u22_runtime.h => u22_rt.h
+        u22_runtime_defines.h => u22_rtd.h
+        cud_printers.c => cud.c
+        u22_runtime.c => u22_rt.c
+
+in demos:
+        in calc:
+                calc.slang => calc.sl
+        in change_color: (directory renamed to color)
+                change_color.slang => color.sl
+        in concentration: (directory renamed to concent)
+                application.c => app.c
+                concentration.slang => concent.sl
+                concentration.sdd => concent.sdd
+                shared_defs.h => shared.h
+        in counter:
+                counter.slang => counter.sl
+        in grouping:
+                grouping.slang => grouping.sl
+                group_instance.slang => group_ins.sl
+                instance.slang => instance.sl
+        in icse:
+                icse.slang => icse.sl
+        in icse_color: (directory renamed to icsec)
+                icse_color.slang => icsec.sl
+        in menubar:
+                menubar.slang => menubar.sl
+        in proto:
+                proto.slang => proto.sl
+        in se:
+                boolean_attribute.slang => batt.sl
+                button.slang => button.sl
+                command_definitions.slang => command.sl
+                create_attr.slang => catt.sl
+                cw.slang => cw.sl
+                cw_defaults.slang => cwd.sl
+                data_access.slang => da.sl
+                data_types.slang => dt.sl
+                de.slang => de.sl
+                define_attr.slang => datt.sl
+                de_obj.slang => deo.sl
+                dual_title_bar.slang => dtb.sl
+                editable_title_bar.slang => etb.sl
+                help.slang => help.sl
+                help_template.slang => ht.sl
+                id_attribute.slang => idatt.sl
+                initialize_attr.slang => inatt.sl
+                make_visible.slang => visi.sl
+                menu_bar_item.slang => bar1.sl
+                menu_item.slang => menu1.sl
+                non_editable_bar.slang => ntb.sl
+                page_selector.slang => page.sl
+                save_attr.slang => satt.sl
+                saw_attributes.slang => sawatt.sl
+                saw_obj_types.slang => sawobj.sl
+                se.slang => se.sl
+                select_item.slang => select.sl
+                text_input.slang => text.sl
+                visualize.slang => visu.sl
+        in spider:
+                non_selectable_line.slang => nsl.sl
+                shared_defs.h => shared.h
+                spider_defines.slang => defs.sl
+        in vis_prog:
+                component.slang => comp.sl
+                create_op.slang => create.sl
+                set_line_values.slang => slv.sl
+                vis_prog.slang => vis_prog.sl
+        in visualize: (directory renamed to visu)
+                attribute_cc.slang => ccatt.sl
+                boolean_attribute.slang => batt.sl
+                button.slang => button.sl
+                create_attr.slang => catt.sl
+                cw.slang => cw.sl
+                cw_defaults.slang => cwd.sl
+                define_attr.slang => datt.sl
+                editable_title_bar.slang => etb.sl
+                id_attribute.slang => idatt.sl
+                initialize_attr.slang => inatt.sl
+                make_visible.slang => visi.sl
+                move_attr.slang => matt.sl
+                page_selector.slang => page.sl
+                save_attr.slang => satt.sl
+                saw_attributes.slang => sawatt.sl
+                table.slang => table.sl
+                visualize.slang => visu.sl
+
+In addition, the output files  generated  by  the  Slang  compiler  have  been
+changed  in the following way (where <dialogue> stands for the name of the top
+level slang file in a Serpent dialogue):
+        .<dialogue>_snip.c => .<dialogue>s.c
+        .<dialogue>_pets.c => .<dialogue>p.c
+        .<dialogue>_methods.c => .<dialogue>m.c
+        .<dialogue>_creation_actions.c => .<dialogue>c.c
+        .<dialogue>_variables.c => .<dialogue>v.c
+        .<dialogue>_attributes.c => .<dialogue>a.c
+        .<dialogue>_proc_headers0.h => .<dialogue>0.h
+        .<dialogue>_proc_headers1.h => .<dialogue>1.h
+        .<dialogue>.exec.dm_rt.c => .<dialogue>e.d
+        .<dialogue>.dial.init.dm_rt.c => .<dialogue>i.d
+        .<dialogue>.symbol_table.data => .<dialogue>t.d
+
+Virtually all of the docs directory has been changed.  Following is a list  of
+all of the documents and what they are:
+        appdev.ps       Application Developer's Guide
+        overview.ps     Overview
+        saddle.ps       Saddle User's Guide
+        slang.ps        Slang User's Guide
+        tech.ps         Technology Integrator's Guide
+        toolbox.ps      C Programmer's Toolbox Reference Manual
+Information    on    printing    Serpent    documents    can   be   found   in
+$SERPENT/docs/README.

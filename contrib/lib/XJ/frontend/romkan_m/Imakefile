@@ -1,0 +1,52 @@
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#include "./../../XJImake.defs"
+
+       INCLUDES = -I$(WNNINCLUDESRC)
+        DEFINES = $(XJDEFINES) -DWNNDEFAULT -DWNNV4
+       LINTLIBS = 
+
+SRC1= rk_bltinfn.c rk_main.c rk_modread.c rk_read.c rk_vars.c
+OBJ1= rk_bltinfn.o rk_main.o rk_modread.o rk_read.o rk_vars.o
+SRCS= $(SRC1) $(SRC2)
+OBJS= $(OBJ1) $(OBJ2)
+
+#if DebugLibRomkanM && ProfileLibRomkanM
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugLibRomkanM
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileLibRomkanM
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+AllTarget(libwnn_m.a)
+
+libwnn_m.a: $(OBJS) $(WNNLIB)
+	cp $(WNNLIB) $@
+	ar rv $@ $(OBJS)
+	$(RANLIB) $@
+
+LintLibraryTarget(wnn_m,$(SRCS))
+InstallLibrary(wnn_m,$(USRLIBDIR))
+
+#if ProfileLibRommkanM
+ProfiledLibraryTarget(wnn_m,$(OBJS))
+InstallLibrary(wnn_m_p,$(USRLIBDIR))
+#endif
+
+#if DebugLibRommkanM
+DebuggedLibraryTarget(wnn_m,$(OBJS))
+#endif
+
+DependTarget()
+NormalLintTarget($(SRCS))
+
+$(WNNLIB):
+	@echo Please make $(WNNLIB)
+	@false

@@ -1,0 +1,80 @@
+#include <Server.tmpl>
+
+#ifdef RtAIX
+OSDEP_SRC = aixRTOS.c
+OSDEP_OBJ = aixRTOS.o
+#else
+OSDEP_SRC = aixPS2OS.s
+OSDEP_OBJ = aixPS2OS.o
+#endif /* OPERATING_SYSTEM == "AIXrt" */
+
+SRCS =		aixCursor.c	\
+		aixEvents.c	\
+		aixInit.c	\
+		aixKeybd.c	\
+		aixMouse.c	\
+		hftQueue.c	\
+		hftUtils.c	\
+		$(OSDEP_SRC)
+
+LIBOBJS =	aixCursor.o	\
+		aixEvents.o	\
+		aixInit.o	\
+		aixKeybd.o	\
+		aixMouse.o	\
+		hftQueue.o	\
+		hftUtils.o	\
+		$(OSDEP_OBJ)
+
+OBJS =		$(OTHROBJS) $(LIBOBJS)
+
+#if ibmIncludeGSL
+STD_DEFINES = ServerDefines -Nn5000 -Nd5000 -DIBM_GSL
+#else
+STD_DEFINES = ServerDefines -Nn5000 -Nd5000
+#endif
+
+#if ibmSpecialMalloc
+DEFINES = -DIBM_SPECIAL_MALLOC
+#else
+DEFINES =
+#endif
+
+INCLUDES = -I. -I../../../include -I$(INCLUDESRC) -I../common -I../../../../extensions/include -I../gsl -I../../../os/4.2bsd
+
+#if DebugServer && ProfileServer
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugServer
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileServer
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+all::	$(OTHROBJS)
+
+NormalRelocatableTarget(OPERATING_SYSTEM,$(LIBOBJS))
+
+#ifdef LCGBUILD
+COMPILE_LIST = $(OBJS)
+BUILD_LIST = aix.o
+#endif
+
+#if ProfileServer
+ProfiledRelocatableTarget(OPERATING_SYSTEM,$(LIBOBJS))
+#endif
+#if DebugServer
+DebuggedRelocatableTarget(OPERATING_SYSTEM,$(LIBOBJS))
+#endif
+
+DependTarget()
+
+#ifndef LCGBUILD
+LintLibraryTarget(OPERATING_SYSTEM,$(SRCS))
+NormalLintTarget($(SRCS))
+#endif

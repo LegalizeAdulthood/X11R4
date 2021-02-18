@@ -1,0 +1,9 @@
+	Here are some application programss making use of the picture widget.
+
+	The contents of each subdirectory is as follows:
+
+	bare
+		a naked picture widget graphic editor
+
+	stedit
+		a modified picture widget graphic editor

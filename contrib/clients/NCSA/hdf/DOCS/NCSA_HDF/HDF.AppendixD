@@ -1,0 +1,75 @@
+
+
+Appendix  D	Public HDF Directories on NCSA Computers
+
+
+
+
+There are public HDF directories on several machines at NCSA. 
+In each supported HDF directory you will find the following:
+
+¥	a README file that gives further information about the 
+software and how to use it. Be sure to read this file before using 
+the software, because it may contain important information 
+about recent changes to the software;
+
+¥	the subdirectory lib/ with the library file libdf.a, which 
+contains the high-level routines described in this manual for 
+working with raster image sets and scientific data sets, as well 
+as the lower-level general purpose routines for building and 
+manipulating HDF routines of any type;
+
+¥	the subdirectory bin/ with the executable utility programs listed 
+in Chapter 6;
+
+¥	the subdirectory src/, which contains the source code for the 
+latest supported version of all programs;
+
+¥	the subdirectory include/, which contains the header files 
+listed in Appendix B of this manual; and
+
+¥	the subdirectory examples/, which contains one or more sample 
+programs that use HDF.
+
+The HDF public directories are currently accessible on the 
+CRAY-2, CRAY X-MP, Alliant FX/8 (medusa), Alliant FX/80 
+(replicant), and NCSA Sun systems. The pathnames of these 
+directories are listed in Table D.1.
+
+Table D.1	Pathnames of NCSA 
+HDF Directories
+NCSA Computer	Directory Path
+CRAY-2	/usr/local/apps/hdf
+CRAY X-MP	/usr/local/apps/hdf
+Alliant FX/8 (medusa)	/usr/hdf
+Alliant FX/80 (replicant)	/usr/hdf
+Sun systems	/soft/hdf
+
+
+
+In order to compile a program that uses one of the NCSA HDF 
+library routines, you need to link the library to your program when 
+you compile or link your program. For example, suppose you have 
+a program called myprog.f written in FORTRAN for the CRAY-2 
+system. If myprog.f contains calls to HDF routines, you can link 
+libdf.a to your program when you compile it by entering:
+
+
+cf77 myprog.f /usr/local/apps/hdf/lib/libdf.a -o myprog
+
+
+where myprog is the name of the executable program.
+
+D.1	NCSA HDF
+
+Public HDF Directories on NCSA Computers	D.1
+
+National Center for Supercomputing Applications
+
+February 1989
+
+                                                                
+
+February 1989
+
+

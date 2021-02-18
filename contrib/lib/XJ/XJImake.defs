@@ -1,0 +1,81 @@
+/**/#########################################################
+/**/# definitions common to all XJ Makefiles  - do not  edit
+/*
+   XJ Imakefiles written by TOSHIBA Corp.
+*/
+       WNNOWNER = wnn
+
+      WNNBINDIR = $(DESTDIR)/usr/local/bin/Wnn4
+      WNNWNNDIR = $(DESTDIR)/usr/local/lib/wnn
+
+          XJTOP = $(CONTRIBSRC)/lib/XJ
+         WNNSRC = $(CONTRIBSRC)/lib/Wnn
+          FESRC = $(XJTOP)/frontend
+   XJINCLUDESRC = $(XJTOP)/include
+    XJCLIENTSRC = $(XJTOP)/clients
+       XJLIBSRC = $(XJTOP)/lib
+       XJDOCSRC = $(XJTOP)/doc
+       XJEUCSRC = $(XJLIBSRC)/XJeuc
+      XJPLIBSRC = $(XJLIBSRC)/XJp
+      WNNETCSRC = $(WNNSRC)/etc
+  WNNINCLUDESRC = $(WNNSRC)/include
+     WNNJLIBSRC = $(WNNSRC)/jlib
+   FEROMKANMSRC = $(FESRC)/romkan_m
+     FEXWNMOSRC = $(FESRC)/xwnmo
+   FEDICSERVSRC = $(FESRC)/dicserver
+        FEJDSRC = $(FESRC)/jd
+
+         XJPLIB = $(XJPLIBSRC)/libXJp.a
+       XJEUCLIB = $(XJEUCSRC)/libXJeuc.a
+         WNNLIB = $(WNNJLIBSRC)/libwnn.a
+        WNNMLIB = $(FEROMKANMSRC)/libwnn_m.a
+
+#if SystemV
+       XJSYSTEM = -DSYSV -DSYSVR2
+         XJTERM = -DTERMINFO
+     XJTERM_LIB = -lcurses
+#else
+       XJSYSTEM = -DBSD42
+         XJTERM = -DTERMCAP
+     XJTERM_LIB = -ltermcap
+#endif
+/**/#########################################################
+/**/# start of XJ's Imakefile
+
+#define XJSUN	1
+/* XJDEFINES general XJ defines */
+
+#ifdef XJEWS4800 /* for NEC workstation */
+      XJDEFINES = $(XJSYSTEM) -DEWS -DINET
+#undef XJEWS4800
+#endif /* XJEWS4800 */
+
+#ifdef XJSUN /* for SUN workstation */
+      XJDEFINES = $(XJSYSTEM) -DSUN -DINET
+#undef XJSUN
+#endif /* XJSUN */
+
+#ifdef XJSX8870 /* for OMRON workstation (UniOS-U)*/
+      XJDEFINES = $(XJSYSTEM) -DSX8870
+#undef XJSX8870
+#endif /* XJSX8870 */
+
+#ifdef XJSX9100BSD /* for OMRON workstation (UniOS-B)*/
+      XJDEFINES = $(XJSYSTEM) -f -20
+#undef XJSX9100BSD
+#endif /* XJSX9100BSD */
+
+#ifdef XJSigma230 /* for FACOM workstation */
+      XJDEFINES = $(XJSYSTEM) -DFACOM -DINET
+#undef XJSigma230
+#endif /* XJSigma230 */
+
+#ifdef XJUX386 /* for TOSHIBA workstation */
+      XJDEFINES = $(XJSYSTEM) -DUX386 -DINET -DUXSYSVR3
+#define UXSYSVR3 1
+#undef XJUX386
+#endif /* XJUX386 */
+
+#define WnnSpecialObjectRule(obj,depends,direct)	@@\
+obj : depends						@@\
+	$(CC) -c $(CFLAGS) direct/`basename $@  .o`.c	@@\

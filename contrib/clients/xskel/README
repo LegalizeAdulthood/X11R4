@@ -1,0 +1,7 @@
+A simple program that puts up a window and allows sketching in it.
+(If compiled with -DOUTPUT_ONLY, then it doesnt' accept input,
+and acts as a simple window, suitable for graphic output)
+
+Uses the X Toolkit which makes it easy to expand and change.
+
+	- moraes@csri.toronto.edu

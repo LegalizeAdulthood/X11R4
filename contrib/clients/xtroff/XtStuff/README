@@ -1,0 +1,16 @@
+Some useful widgets which aren't part of any official widget set.  We have
+'em as libXtStuff.
+
+The Menu widgets from contrib/menus after Dana Chee's extensive fixes
+to get them to compile and work. Thanks Dana. Included because the
+context diffs were longer than the code.
+
+The Window widget from Chris Peterson's xman - also mentioned in a
+posting. Wonderful thingy, er, widget. Thanks Chris.
+
+The Minibuf widget is mine. I got tired of trying to convince the Text
+widget to do single line editable text input way back in the X10 days.
+It's probably possible now (xwebster does it) For file completion, you
+should define -DDIRENT if your system has dirent.h instead of sys/dir.h.
+
+	Mark.

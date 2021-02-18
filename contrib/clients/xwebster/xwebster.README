@@ -1,0 +1,145 @@
+	Xwebster, A Dictionary Browser
+		Niels P. Mayer
+		Hewlett-Packard Laboratories
+		Software Technology Lab.
+		Human-Computer Interaction Department.
+------------------------------------------------------------------------------
+
+Xwebster is used to look up words in the online copy of Webster's 7th
+dictionary, stored at SRI-NIC  and also available on machines located at
+Boston U., Indiana U, Purdue U., MIT, Stanford, etc. In order to run xwebster
+you must have access to a webster server. In order to make xwebster run faster
+and more reliably (the "arpanet" can be flaky), you may want to ask your 
+system administrators whether there is a webster server running locally.
+Chances are, if people at your site are using the tty-based webster(1) 
+interface, there is probably a webster server "nearby".
+
+Using xwebster is simple -- words are typed into a TextEdit widget in
+xwebster, and then one of three actions can be taken:
+
+	1) mousing [Define] (or hitting <ret>) after typing in a
+	word will attempt to show you a complete dictionary entry for the
+	word including definitions,  pronunciation, and derivation. If the word
+	is misspelled, then a browser of similar words will be presented. If
+	the word contains wildcard characters (%=any char; *=any char seq),
+	then a browser of all matching words will be presented.
+	
+	2) mousing [Complete] (or hitting <esc>) after a partial word has
+	been typed will attempt to complete what you have typed so far.  If 
+	what you have typed is a unique abbreviation for a word, the word is 
+	completed. Otherwise xwebster will beep and indicate the ambiguity of 
+	the partial word.
+
+	3) mousing [Endings] (or hitting <?>) after a partial word has been
+	entered will display a browser of all the words matching the partial
+	word.
+
+Anytime there are words in the word browser panel, clicking on a word will
+cause its definition to be dispayed. 
+
+				----------
+COMPILING:
+
+Xwebster expects to use the X11r3 HP Xwidgets library, libXw.a, and the
+X11R3 Xt intrinsics, libXt.a (with the latest patches, particularly
+fixes/fix8). The HP widgets are on the X11R3 tape (under
+contrib/widgets/Xhp/Xw/), and require a set of fixes by Martin Friedmann
+<martin@citi.umich.edu> in order to work under R3. These will probably be
+available from the usual archive sites, and in particular, from
+expo.lcs.mit.edu:contrib/Xhp.patch.works.tar.Z.
+
+Xwebster has been tested under HPUX 6.2 and SunOS3.5. I've avoided any
+particularly hairy SYSVisms, so you sholdn't have any trouble getting it to
+run on your machine. You'll need the strtok() call - if your system doesn't
+have it (HPUX, System V, SunOS have it), get Henry Spencer's public domain
+strings(3) library from some comp.sources.unix archive site.
+
+				----------
+
+CUSTOMIZING:
+
+All the resources for xwebster are specified in the application default
+file Xwebster.ad, which MUST be installed in APPDEFAULTSDIR/Xwebster.  Fully
+qualified resource names are used in this app-defaults file so as to
+document the widget hierarchy in the application. Documentation on
+customizing xwebster also appears in this defaults file.  (APPDEFAULTSDIR
+is set in the imake defaults, it is usually /usr/lib/X11/app-defaults/)
+
+Parameters for connecting to a webster server are contained in the
+resources "hostAddrList", "hostPort", and "hostServiceName". See the
+Xwebster.ad file for details and documentation.
+
+Xwebster allows dictionary definitions to be viewed in either a scrolled
+StaticText widget (for those who like scrollbars), or in a TextEdit widget
+(for those who like Emacs, and need better control of cut/paste
+operations). The resource that controls this is "useEditorAsDisplay"
+
+I personally use the following set of .Xdefaults for xwebster, in addition
+to the defaults provided by APPDEFAULTSDIR/Xwebster:
+
+#
+# Global Defaults.
+#
+*foreground:			White
+*background:			DarkSlateGray
+*font:				6x13
+*Sash*background:		wheat
+*Sash*foreground:		black
+*topShadowColor:		light blue
+*topShadowTile:			foreground
+*bottomShadowColor:		black
+*bottomShadowTile:		foreground
+*TextEdit*background:		IndianRed
+*TextEdit*foreground:		Green
+*TextEdit*highlightThickness:	1
+*TextEdit*font:			fixed
+*StaticText*background:         DarkSlateGray
+*StaticText*foreground:         White
+*StaticText.BorderWidth:	1
+*StaticText.ShadowOn:		yes
+*StaticText*font:		variable
+*PushButton*background: 	Blue
+*PushButton*foreground:		White
+*PushButton*font:		variable
+
+#
+# Xwebster
+#
+xwebster*hostAddrList: 26.0.0.73 10.0.0.51
+xwebster*hostPort: 103
+xwebster*useEditorAsDisplay: TRUE
+xwebster*highlightColor: white
+xwebster*highlightTile: foreground
+xwebster*display.foreground: White
+xwebster*display.background: IndianRed
+xwebster*word_input*foreground: Green
+xwebster*word_input*background: IndianRed
+
+				----------
+
+HISTORY/THANKS/AUTHORS:
+
+This program was inspired by the webster(1) tty-based client to a webster
+server written by Dave Curry <davy@riacs.edu>, although most of the code
+was written from scratch because I didn't find the webster(1) source code
+until after the application was prototyped. The original webster
+client/server was written in MIDAS and ran under Tops-20, it was probably
+done by someone at SRI-NIC.
+
+Xwebster was originally written and released by Niels Mayer
+<mayer@hplabs.hp.com> on the X11r3 contrib tape. Mark Moraes
+<moraes@csri.toronto.edu> took that version, updated it to work with the r3
+HP Xwidgets and r3 Toolkit Intrinsics, and fixed a bunch of stupid bugs
+that were making xwebster dump core an a SUN. He also made xwebster
+disconnect gracefully after the webster dictionary server times out.
+Finally, he wrote up a manual page and put together an Imake file. Thanks
+Mark! 
+
+If you have contributions to make to xwebster, please send them to me via
+email.
+
+-------------------------------------------------------------------------------
+	    Niels Mayer -- hplabs!mayer -- mayer@hplabs.hp.com
+		       Hewlett-Packard Laboratories
+			      Palo Alto, CA.
+				   *

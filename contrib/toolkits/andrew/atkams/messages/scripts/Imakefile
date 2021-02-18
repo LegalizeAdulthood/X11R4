@@ -1,0 +1,26 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+CSHFILES	=	msgsn.csh msgss.csh \
+			sendmsgn.csh sendmsgs.csh \
+			sendmsg.csh readmail.csh
+
+SHFILES	=	sendmail.sh sendnews.sh
+
+LINKS		=	messages sendmessage
+
+InstallFileToFile(msgsn.csh,${INSTPROGFLAGS},${DESTDIR}/bin/messagesn)
+InstallFileToFile(sendmsgn.csh,${INSTPROGFLAGS},${DESTDIR}/bin/sendmessagen)
+InstallFileToFile(sendmsg.csh,${INSTPROGFLAGS},${DESTDIR}/bin/sendmessage)
+#ifdef SNAP_ENV
+InstallFileToFile(msgss.csh,${INSTPROGFLAGS},${DESTDIR}/bin/messagess)
+InstallFileToFile(sendmsgs.csh,${INSTPROGFLAGS},${DESTDIR}/bin/sendmessages)
+#endif /* SNAP_ENV */
+InstallFileToFile(readmail.csh,${INSTPROGFLAGS},${DESTDIR}/bin/readmail)
+InstallFileToFile(sendmail.sh,${INSTPROGFLAGS},${DESTDIR}/bin/sendmail)
+InstallFileToFile(sendnews.sh,${INSTPROGFLAGS},${DESTDIR}/bin/sendnews)
+
+
+InstallLink(runapp, ${DESTDIR}/bin/messages)
+DependTarget()

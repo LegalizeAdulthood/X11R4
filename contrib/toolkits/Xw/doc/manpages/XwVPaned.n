@@ -1,0 +1,528 @@
+
+
+
+     XWVPANED(3X)                                         XWVPANED(3X)
+
+
+
+
+     NAME
+          XwvPanedWidgetClass - the X Widgets vertical paned manager
+          widget.
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/VPW.h>
+
+
+     CLASSES
+          The vertical paned manager widget is built out of the Core,
+          Composite, Constraint and XwManager classes. Note that since
+          the Composite class contains no user settable resources,
+          there is no table for Composite class resources.
+
+          The widget class to use when creating a vertical paned
+          manager is XwvPanedWidgetClass.  The class name is
+          VPanedWindow.
+
+     DESCRIPTION
+          The vertical paned manager is a composite widget which lays
+          children out in a vertically tiled format.  Children appear
+          in a top to bottom fashion, with the first child inserted
+          appearing at the top of the paned widget and the last child
+          inserted appearing at the bottom of the paned widget.  The
+          vertical paned manager will grow to match the width of its
+          widest child and all other children are forced to this
+          width. The vertical paned mananger does not grow if
+          setValues is performed on a child, making it the widest
+          child.  It is clipped instead.  The height of the vertical
+          paned manager will be equal to the sum of the heights of all
+          its children and the (optional) padding surrounding them.
+
+          It is also possible for the end user to adjust the size of
+          the panes. To facilitate this adjustment, a control widget
+          (XwsashWidgetClass) is created for most children.  The
+          control widget appears as a square box positioned on the
+          bottom of the pane which it controls.  Using the mouse (see
+          the description on translations below) a user can adjust the
+          size of a pane.
+
+          The vertical paned manager is a constraint widget, which
+          means that it creates and manages a set of constraints for
+          each child.  It is possible to specify a minimum and maximum
+          size for each pane.  The vertical paned widget will not
+          allow a pane to be adjusted below its minimum nor beyond its
+          maximum.  Also, when the minimum size of a pane is equal to
+          its maximum then no control widget will be presented for
+          that pane.  Nor will a control widget be presented for the
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWVPANED(3X)                                         XWVPANED(3X)
+
+
+
+
+          bottom-most pane.
+
+          The vertical paned manager supports 2 presentation modes:
+          framed and unframed.  When framed, each pane is offset from
+          the edges of the vertical paned manager and from other panes
+          by a specified (and settable) number of pixels.  In this
+          mode the entire borderwidth of each child is also visible.
+          Note that the vertical paned manager enforces a particular
+          (and settable) border width on each pane.  The second mode
+          is unframed where the edge of a pane exactly corresponds to
+          the edge of the vertical paned manager so that only a border
+          between panes is visible.
+
+          No callbacks are defined for this manager.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWVPANED(3X)                                         XWVPANED(3X)
+
+
+
+
+     NEW RESOURCES
+          The vertical paned manager defines a set of resource types
+          used by the programmer to specify data for the manager
+          widget.  The programmer can also set the values for the Core
+          and XwManager widget classes to set attributes for this
+          widget.  The following table contains the settable resources
+          defined by the vertical paned manager.  Recall that the
+          string to be used when setting any of these resources in an
+          application defaults file (like .Xdefaults) can be obtained
+          by stripping the preface "XtN" off of the resource name.
+          For instance, XtNmin becomes min.
+
+
+                       Vertical Paned Resource Set
+           Name              Class            Type      Default
+           ____________________________________________________
+           XtNsashIndent     XtCSashIndent    int       -10
+           XtNborderFrame    XtCBorderWidth   int       1
+           XtNframed         XtCBoolean       Boolean   TRUE
+           XtNpadding        XtCPadding       int       3
+           XtNrefigureMode   XtCBoolean       Boolean   TRUE
+
+
+
+          XtNsashIndent
+               This controls where along the bottom of the pane the
+               control widget (the pane's sash) will be placed.  A
+               positive number will cause the sash to be offset from
+               the left side of the pane, a negative number will cause
+               the sash to be offset from the right side of the pane.
+               If the offset specified is greater than the width of
+               the vertical paned manager, minus the width of the
+               sash, the sash will be placed flush against the left
+               hand side of the paned manager.
+
+          XtNborderFrame
+               The application can specify the thickness of the
+               borderwidth of all panes in the paned manager.  The
+               value must be greater than or equal to 0.
+
+          XtNframed
+               The application can specify whether the panes should be
+               displayed with some padding surrounding each pane
+               (TRUE) or whether the panes should be set flush with
+               the paned manager (FALSE).
+
+          XtNpadding
+               The application can specify how many pixels of padding
+               should surround each pane when it is being displayed in
+               framed mode.  This value must be greater than or equal
+               to 0.
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWVPANED(3X)                                         XWVPANED(3X)
+
+
+
+
+          XtNrefigureMode
+               This setting is useful if a large number of
+               programmatic manipulations are taking place.  It will
+               prevent the manager from recomputing and displaying new
+               positions for the child panes (FALSE).  Once the
+               changes have been executed this flag should be set to
+               TRUE to allow the vertical paned manager to show the
+               correct positions of the current children.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWVPANED(3X)                                         XWVPANED(3X)
+
+
+
+
+     CONSTRAINT RESOURCES
+          The following resources are attached to every widget
+          inserted into vertical paned manager.  See CONSTRAINT(3X)
+          for a general discussion of constraint resources.
+
+
+          Constraint Resource Set -- Children of VPANEDWINDOW(3X)
+          Name             Class           Type        Default
+          _______________________________________________________
+          XtNmin           XtCMin          int         1
+          XtNmax           XtCMax          int         10000
+          XtNallowResize   XtCBoolean      Boolean     FALSE
+          XtNskipAdjust    XtCBoolean      Boolean     FALSE
+
+
+
+          XtNmin
+               Allows an application to specify the mimimum size to
+               which a pane may be resized.  This value must be
+               greater than 0.
+
+          XtNmax
+               Allows an application to specify the maximum size to
+               which a pane may be resized.  This value must be
+               greater than the specified minimum.
+
+          XtNallowResize
+               Allows an application to specify whether the vertical
+               paned manager should allow a pane to request to be
+               resized.  This flag only has an effect after the paned
+               manager and its children have been realized.  If this
+               flag is set to TRUE, the manager will try to honor
+               requests to alter the height of the pane. If false, it
+               will always deny pane requests to resize.
+
+          XtNskipAdjust
+               Allows an application to specify that the vertical
+               paned manager should not automatically resize this pane
+               (flag set to TRUE).
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWVPANED(3X)                                         XWVPANED(3X)
+
+
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+                  Manager Resource Set -- XWMANAGER(3X)
+       Name                Class               Type      Default
+       ____________________________________________________________
+       XtNforeground       XtCForeground       Pixel     Black
+       XtNbackgroundTile   XtCBackgroundTile   int       background
+       XtNtraversalOn      XtCTraversalOn      Boolean   FALSE
+       XtNlayout           XtCLayout           int       minimize
+       XtNnextTop          XtCCallback         Pointer   NULL
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalOn resource is set to TRUE at either
+          create time or during a call to XtSetValues, the XwManager
+          superclass will automatically augment the manager widget's
+          translations to support keyboard traversal.  Refer to the
+          XwManager man page for a complete description of these
+          translations.
+
+     SASH TRANSLATIONS
+          The translations which control the sashes created for each
+          adjustable pane are replicated here for convenience.
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 6 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWVPANED(3X)                                         XWVPANED(3X)
+
+
+
+
+            <Btn1Down>:      SashAction(Start, UpperPane)
+            <Btn2Down>:      SashAction(Start, ThisBorderOnly)
+            <Btn3Down>:      SashAction(Start, LowerPane)
+            <Btn1Motion>:    SashAction(Move, Upper)
+            <Btn2Motion>:    SashAction(Move, ThisBorder)
+            <Btn3Motion>:    SashAction(Move, Lower)
+            Any<BtnUp>:      SashAction(Commit)
+            <EnterWindow>:   enter()
+            <LeaveWindow>:   leave()
+
+
+          SashAction(Start, UpperPane):
+               Change the cursor from the crosshair to an upward
+               pointing arrow.  Determine the upper pane which will be
+               adjusted (usually the pane to which the sash is
+               attached).
+
+          SashAction(Start, ThisBorderOnly):
+               Change the cursor from the crosshair to a double headed
+               arrow.  The panes that will be adjusted are the pane to
+               which the sash is attached and the first pane below it
+               that can be adjusted. Unlike the UpperPane and
+               LowerPane mode, only 2 panes will be effected.  If one
+               of the panes reaches its minimum or maximum, adjustment
+               will stop, instead of finding the next adjustable pane.
+
+          SashAction(Start, LowerPane):
+               Change the cursor from the crosshair to a downward
+               pointing arrow.  Determine the lower pane which will be
+               adjusted (usually the pane below the pane to which the
+               sash is attached).
+
+          SashAction(Move, Upper):
+               Draw a series of track lines to illustrate what the
+               heights of the panes would be if the Commit action were
+               invoked.  Determine which widget below the upper pane
+               can be adjusted and make the appropriate adjustments.
+
+          SashAction(Move, ThisBorder):
+               Draw a series of track lines to illustrate what the
+               heights of the panes would be if the Commit action were
+               invoked.  Adjust as needed (and as possible) the upper
+               and lower panes selected when the SashAction(Start,
+               ThisBorderOnly) action was invoked.
+
+          SashAction(Move, Lower):
+               Draw a series of track lines to illustrate what the
+               heights of the panes would be if the Commit action were
+               invoked.  Determine which widget above the lower pane
+               can be adjusted and make the appropriate adjustments.
+
+
+
+
+     Hewlett-Packard Company       - 7 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWVPANED(3X)                                         XWVPANED(3X)
+
+
+
+
+          enter:
+               Enter window events occurring on the scrolled window
+               are handled by this action.
+
+          leave:
+               Leave window events occurring on the scrolled window
+               are handled by this action.
+
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWMANAGER(3X), XWPRIMITIVE(3X), XWSASH(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 8 -                   Aug 9, 1988
+
+
+

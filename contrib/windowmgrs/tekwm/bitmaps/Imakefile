@@ -1,0 +1,57 @@
+
+#ifdef UBEArchitecture
+
+ SRC= \
+	bars.bm \
+	blank.bm \
+	bury.bm \
+	close.bm \
+	cover.bm \
+	death.bm \
+	destroy.bm \
+	die.bm \
+	foc.bm \
+	hilite.bm \
+	ic.bm \
+	iconify.bm \
+	mac_close.bm \
+	move.bm \
+	raise.bm \
+	raisenlower.bm \
+	res.bm \
+	resize.bm \
+	rmove.bm \
+	rresize.bm \
+	titlehilite.bm \
+	twm.focus.bm \
+	twm.gray.bm \
+	twm.hilite.bm \
+	twm.iconify.bm \
+	twm.pull.bm \
+	twm.resize.bm \
+	twm.twm.bm \
+	xterm.bm
+
+all:: $(SRC)
+
+clean::
+	-rm -f $(SRCS)
+
+depend:: $(SRC)
+
+redepend: $(SRC)
+
+#else	/* NOT  UBEArchitecture */
+
+all::
+
+clean::
+
+depend::
+
+redepend: $(SRC)
+
+#endif	/* UBEArchitecture */
+
+ExampleMakefileTarget()
+

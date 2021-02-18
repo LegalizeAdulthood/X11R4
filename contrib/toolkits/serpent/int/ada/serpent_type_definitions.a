@@ -1,0 +1,251 @@
+with system;
+
+with C_to_ada_types;
+use C_to_ada_types;
+
+package serpent_type_definitions is
+
+  type change_type is (no_change,create, modify, remove,get);
+
+  for change_type'size use 32;
+ 
+  for change_type use (   no_change  => -1,
+		  	  create     =>  0,
+			  modify     =>  1,
+			  remove     =>  2,
+			  get        =>  3  );
+
+
+  type shared_data_types is (
+    sd_boolean,
+    sd_integer,
+    sd_real,
+    sd_string,
+    sd_record,
+    sd_id,
+    sd_buffer,
+    sd_undefined,
+    sd_no_data_type
+  );
+
+  for shared_data_types'size use 32;
+
+  for shared_data_types use (   sd_boolean        => 0,
+		  	  	sd_integer        => 1,
+		  	  	sd_real           => 2,
+		  	  	sd_string         => 3,
+		  	  	sd_record         => 4,
+		  	  	sd_id             => 5,
+		  	  	sd_buffer         => 6,
+		  	  	sd_undefined      => 7,
+			  	sd_no_data_type   => 8  );
+
+--
+--|  Type: status_codes
+--|
+--|  Description:
+--|     The isc status codes type enumerates the possible returned status
+--|     values from the interface layer.
+--|
+-- Definition:
+
+	type status_codes is (
+
+--   Fairly general status codes.
+	  ok 		,
+	  invalid_handle,
+	  invalid_id,
+	  not_available,
+	  out_of_memory,
+	  system_operation_failed,
+	  null_memory_ptr	,
+	  invalid_request,
+	  not_found	,
+	  empty	,
+	  bad_parameter,
+ 
+--   Interface status codes. 
+	  already_recording,
+          invalid_transaction_handle,
+          invalid_process_handle,
+	  invalid_received_transaction_handle	,
+	  null_element_name			,
+	  null_component_name			,
+	  null_mailbox_name			,
+	  null_ill_file_name			,
+          element_not_a_record			,
+          overflow				,
+          undefined_conversion			,
+          io_failure                            ,
+          end_of_file                           ,
+          inconsistent_jour_file                ,
+          invalid_journal_file                  ,
+          invalid_change_type			,
+          not_implemented			,
+          shm_out_of_bounds			,
+          component_not_changed			,
+ 
+--   Dialogue compiler status codes 
+          c22_no_sd_definition                  ,
+ 
+--   Symbol table status codes 
+          cus_no_property			,
+          cus_null_symbol			,
+ 
+--   Dialogue compiler status codes 
+--   Object base status codes 
+          invalid_data_type			,
+          invalid_symbol			,
+          symbol_not_found			,
+          invalid_shared_data			,
+          invalid_data_object			,
+ 
+--   Dialogue manager runtime status codes. 
+          illegal_boolean_operation		,
+          operation_undefined_types		,
+	  unknown_handling			,
+	  handling_undefined			,
+	  illegal_conversion			,
+	  failed_conversion			,
+	  illegal_assignment			,
+ 	  illegal_arithmetic_operation		,
+	  null_operand				,
+	  null_first_operand			,
+	  null_second_operand			,
+ 
+--   Dialogue manager runtime status codes. 
+          dpg_unknown_type                      ,
+          dpg_no_st_entry                       ,
+          dpg_no_ops_wme                        ,
+          dpg_bad_ops_store_symbol              ,
+          dpg_bad_ops_store_symbol_array        ,
+          dpg_no_id_name                        ,
+          dpg_cannot_make_wme                   ,
+          dpg_no_template_entry                 ,
+          dpg_cannot_get_symbol_type            ,
+          dpg_cannot_get_ask_prop               ,
+	  dra_cannot_find_element		,
+ 
+--   Dialogue Editor Application (DEA) status codes.
+          invalid_dialogue 		,
+          invalid_vc 				,
+          invalid_list 				,
+          invalid_integer 			,
+          invalid_string 			,
+          invalid_buffer 			,
+          invalid_object                        ,
+          invalid_attribute                     ,
+          invalid_method                        ,
+          invalid_object_instance               ,
+ 
+--   Add new status codes here: 
+	  removed_data_object			,
+	  xxx 
+	);
+
+  for status_codes'size use 32;
+ 
+  for status_codes use (
+
+--   Fairly general status codes.
+	  ok 		  			  =>  0,
+	  invalid_handle  			  =>  1,
+	  invalid_id  				  =>  2,
+	  not_available  			  =>  3,
+	  out_of_memory  			  =>  4,
+	  system_operation_failed  		  =>  5,
+	  null_memory_ptr	  		  =>  6,
+	  invalid_request  			  =>  7,
+	  not_found	  			  =>  8,
+	  empty	  				  =>  9,
+	  bad_parameter  			  =>  10,
+ 
+--   Interface status codes. 
+	  already_recording  			  =>  11,
+          invalid_transaction_handle  		  =>  12,
+          invalid_process_handle  		  =>  13,
+	  invalid_received_transaction_handle	  =>  14,
+	  null_element_name			  =>  15,
+	  null_component_name			  =>  16,
+	  null_mailbox_name			  =>  17,
+	  null_ill_file_name			  =>  18,
+          element_not_a_record			  =>  19,
+          overflow				  =>  20,
+          undefined_conversion			  =>  21,
+          io_failure                              =>  22,
+          end_of_file                             =>  23,
+          inconsistent_jour_file                  =>  24,
+          invalid_journal_file                    =>  25,
+          invalid_change_type			  =>  26,
+          not_implemented			  =>  27,
+          shm_out_of_bounds			  =>  28,
+          component_not_changed			  =>  29,
+ 
+--   Dialogue compiler status codes2
+          c22_no_sd_definition                    =>  30,
+ 
+--   Symbol table status codes 
+          cus_no_property			  =>  31,
+          cus_null_symbol			  =>  32,
+ 
+--   Dialogue compiler status codes 
+--   Object base status codes 
+          invalid_data_type			  =>  33,
+          invalid_symbol			  =>  34,
+          symbol_not_found			  =>  35,
+          invalid_shared_data			  =>  36,
+          invalid_data_object			  =>  37,
+ 
+--   Dialogue manager runtime status codes. 
+          illegal_boolean_operation		  =>  38,
+          operation_undefined_types		  =>  39,
+	  unknown_handling			  =>  40,
+	  handling_undefined			  =>  41,
+	  illegal_conversion			  =>  42,
+	  failed_conversion			  =>  43,
+	  illegal_assignment			  =>  44,
+ 	  illegal_arithmetic_operation		  =>  45,
+	  null_operand				  =>  46,
+	  null_first_operand			  =>  47,
+	  null_second_operand			  =>  48,
+ 
+--   Dialogue manager runtime status codes. 
+          dpg_unknown_type                        =>  49,
+          dpg_no_st_entry                         =>  50,
+          dpg_no_ops_wme                          =>  51,
+          dpg_bad_ops_store_symbol                =>  52,
+          dpg_bad_ops_store_symbol_array          =>  53,
+          dpg_no_id_name                          =>  54,
+          dpg_cannot_make_wme                     =>  55,
+          dpg_no_template_entry                   =>  56,
+          dpg_cannot_get_symbol_type              =>  57,
+          dpg_cannot_get_ask_prop                 =>  58,
+	  dra_cannot_find_element		  =>  59,
+ 
+--   Dialogue Editor Application (DEA) status codes.
+          invalid_dialogue 		  	  =>  60,
+          invalid_vc 				  =>  61,
+          invalid_list 				  =>  62,
+          invalid_integer 			  =>  63,
+          invalid_string 			  =>  64,
+          invalid_buffer 			  =>  65,
+          invalid_object                          =>  66,
+          invalid_attribute                       =>  67,
+          invalid_method                          =>  68,
+          invalid_object_instance                 =>  69,
+ 
+--   Add new status codes here: 
+	  removed_data_object			  =>  70,
+	  xxx 				          =>  71
+	);
+ 
+
+  type transaction_type is new c_handle;
+  type process_type is new c_handle;
+  type element_type is new c_handle;
+  type id_type is new int;
+  null_id :  constant id_type := -1;
+  type LIST is new c_handle;
+
+end serpent_type_definitions;
+ 

@@ -1,0 +1,120 @@
+! $Header: Xkm.Compose,v 1.1 89/09/20 11:38:23 glennw Exp $
+!
+! Note that some of these are not needed on all keyboards, since some 
+! keyboards actually have some 8-bit keys...  But its simpler just to add 
+! them all.
+! So that the compose sequences that generate ASCII still work when the 
+! usual ASCII keycodes are redefined, include them here.  There are not
+! enough keycodes, so use the shifted keysym.  
+! In order to get correct compose output keycodes, without specifiying
+! them by keycode, load common compose sequences after defining
+! keyboard-specific keycodes.
+
+keycode 118 = nobreakspace bracketleft
+keycode 119 = exclamdown backslash
+keycode 120 = cent bracketright
+keycode 121 = sterling braceleft
+keycode 122 = currency bar
+keycode 123 = yen braceright
+keycode 124 = brokenbar numbersign
+! asciitilde, asciicircum, grave are 215-217 below
+keycode 125 = section at
+keycode 126 = diaeresis dollar
+keycode 127 = copyright quotedbl
+keycode 128 = ordfeminine
+keycode 129 = guillemotleft
+keycode 130 = notsign
+keycode 131 = hyphen
+keycode 132 = registered
+keycode 133 = macron
+keycode 134 = degree
+keycode 135 = plusminus
+keycode 136 = twosuperior
+keycode 137 = threesuperior
+keycode 138 = acute
+keycode 139 = mu
+keycode 140 = paragraph
+keycode 141 = periodcentered
+keycode 142 = cedilla
+keycode 143 = onesuperior
+keycode 144 = masculine
+keycode 145 = guillemotright
+keycode 146 = onequarter
+keycode 147 = onehalf
+keycode 148 = threequarters
+keycode 149 = questiondown
+keycode 150 = Agrave
+keycode 151 = Aacute
+keycode 152 = Acircumflex
+keycode 153 = Atilde
+keycode 154 = Adiaeresis
+keycode 155 = Aring
+keycode 156 = AE
+keycode 157 = Ccedilla
+keycode 158 = Egrave
+keycode 159 = Eacute
+keycode 160 = Ecircumflex
+keycode 161 = Ediaeresis
+keycode 162 = Igrave
+keycode 163 = Iacute
+keycode 164 = Icircumflex
+keycode 165 = Idiaeresis
+keycode 166 = ETH
+keycode 167 = Ntilde
+keycode 168 = Ograve
+keycode 169 = Oacute
+keycode 170 = Ocircumflex
+keycode 171 = Otilde
+keycode 172 = Odiaeresis
+keycode 173 = multiply
+keycode 174 = Ooblique
+keycode 175 = Ugrave
+keycode 176 = Uacute
+keycode 177 = Ucircumflex
+keycode 178 = Udiaeresis
+keycode 179 = Yacute
+keycode 180 = THORN
+keycode 181 = ssharp
+keycode 182 = agrave
+keycode 183 = aacute
+keycode 184 = acircumflex
+keycode 185 = atilde
+keycode 186 = adiaeresis
+keycode 187 = aring
+keycode 188 = ae
+keycode 189 = ccedilla
+keycode 190 = egrave
+keycode 191 = eacute
+keycode 192 = ecircumflex
+keycode 193 = ediaeresis
+keycode 194 = igrave
+keycode 195 = iacute
+keycode 196 = icircumflex
+keycode 197 = idiaeresis
+keycode 198 = eth
+keycode 199 = ntilde
+keycode 200 = ograve
+keycode 201 = oacute
+keycode 202 = ocircumflex
+keycode 203 = otilde
+keycode 204 = odiaeresis
+keycode 205 = division
+keycode 206 = oslash
+keycode 207 = ugrave
+keycode 208 = uacute
+keycode 209 = ucircumflex
+keycode 210 = udiaeresis
+keycode 211 = yacute
+keycode 212 = thorn
+keycode 213 = ydiaeresis
+! Extra keycodes for compose output of diacritical keys that initiate a 2-key
+! sequence, so server compose won't get re-interpreted by Xlib compose:
+keycode 214 = acute
+! well, could use 138 for acute, since it is not an actual key...
+keycode 215 = asciicircum
+keycode 216 = asciitilde
+! use 126 for diaeresis, since it is not an actual key...
+keycode 217 = grave
+! stop at 217 so it works on 4315-7
+! apostrophe and macron are not needed; there are no apostrophe or macron
+! 2-key compose sequences.

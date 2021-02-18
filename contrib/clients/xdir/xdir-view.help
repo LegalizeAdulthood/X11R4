@@ -1,0 +1,5 @@
+This window views a file for Xdir.  The currently selected file is always
+displayed; that is, if you select another file in the directory window,
+the new file will be displayed here.
+
+To close this view, click on the "Close" button.

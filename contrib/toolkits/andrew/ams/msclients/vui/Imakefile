@@ -1,0 +1,60 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES	=	-I${BASEDIR}/include/ams
+
+#ifdef SNAP_ENV
+    PRODUCTS 	=	vuin vuis vuit
+#else /* SNAP_ENV */
+    PRODUCTS 	=	vuin
+#endif /* SNAP_ENV */
+
+ANDVOBJS	=	andmach.o andmpc.o andpnlm.o
+
+PCVOBJS	=	pcmach.o pcmpc.o pcpnlm.o
+
+OBJS		=	${ANDVOBJS} cmdargs.o \
+			lmenus.o panelp.o vui.o vuibase.o vuipnl.o \
+			vuiscrns.o vuisend.o vuimenus.o vuimsgs.o
+
+LIBS		=	${BASEDIR}/lib/libmail.a ${BASEDIR}/lib/liberrors.a \
+			${MALLOCLIB} ${UTILLIB} \
+			${RESOLVLIB}
+
+NOSNAPLIBS	=	${BASEDIR}/lib/libcui.a ${BASEDIR}/lib/libcuin.a \
+			${BASEDIR}/lib/libmssrv.a ${BASEDIR}/lib/libmsshr.a \
+			${BASEDIR}/lib/libeli.a ${BASEDIR}/lib/librxp.a \
+			${LIBS} ${PRSLIB}
+
+#define parameterized_snap_libs(kind_of_snap) \ @@\
+	${BASEDIR}/lib/libcui.a \ @@\
+	${BASEDIR}/lib/libcuis.a \ @@\
+	${BASEDIR}/lib/kind_of_snap.a \ @@\
+	${BASEDIR}/lib/libmsshr.a \ @@\
+	${BASEDIR}/lib/librxp.a \ @@\
+	${LIBS} \
+
+NormalObjectRule()
+
+#ifdef AIX
+CURSESLIBS = -lcurses 
+#else /* AIX */
+CURSESLIBS = -lcurses -ltermcap
+#endif /* AIX */
+
+#ifdef SNAP_ENV
+ProgramTarget(vuis, ${OBJS}, parameterized_snap_libs(libsnap), ${CURSESLIBS})
+ProgramTarget(vuit, ${OBJS}, parameterized_snap_libs(libsnapt), ${CURSESLIBS})
+#endif /* SNAP_ENV */
+ProgramTarget(vuin, ${OBJS}, ${NOSNAPLIBS}, ${CURSESLIBS})
+
+InstallMultiple(${PRODUCTS}, ${INSTPROGFLAGS}, ${DESTDIR}/bin/)
+InstallHardLink(${DESTDIR}/bin/vuin, ${DESTDIR}/bin/vui)
+DependTarget()
+
+NormalHelpRule()
+InstallDocs(vui.help, ${DESTDIR}/help)
+InstallDocs(vui.tutr, ${DESTDIR}/help)
+InstallDocs(VuiInternals.d HowToPC.d PanelsNMenus.d, ${DESTDIR}/doc/ams)
+InstallHelpAlias(vui, pcmessages pcmsgs visualuserinterface ams-vui)

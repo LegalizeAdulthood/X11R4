@@ -1,0 +1,1440 @@
+
+#
+#		(c) Copyright Carnegie Mellon University
+#
+# See "The CMU ODA Tool Kit" (available as CMU/ITC tech report
+# CMU-ITC-071) for full text & permitted uses.
+#
+
+#
+# Makefile for site type 'macintosh', directory 'isode'
+# Generated on Thu Nov  2 10:21:22 1989
+#
+
+# Std definitions
+COptions = -m -b3 -i : -i ::valid -i ::prog -i ::raster -i ::src -i ::site:mac
+LDFLAGS = 
+AR1 = Lib -b
+
+# Default compilation rule
+.o	Ä	.c
+	{C} {COptions} -s {Default} {DepDir}{Default}.c -o {TargDir}{Default}.o
+
+
+# Rules for LIB "libisode.a"
+
+vprint.o Ä  vprint.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h logger.h
+
+tailor.o Ä  tailor.c general.h config.h ::site:mac:lcsite.h  ¶
+	     manifest.h isoaddrs.h tailor.h logger.h
+
+str2vec.o Ä  str2vec.c general.h config.h ::site:mac:lcsite.h  ¶
+	     manifest.h
+
+str2prim.o Ä  str2prim.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+str2oid.o Ä  str2oid.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+str2elem.o Ä  str2elem.c general.h config.h ::site:mac:lcsite.h  ¶
+	     manifest.h
+
+std2ps.o Ä  std2ps.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+sprintoid.o Ä  sprintoid.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+set_find.o Ä  set_find.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+set_add.o Ä  set_add.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+serror.o Ä  serror.c general.h config.h ::site:mac:lcsite.h  ¶
+	     manifest.h
+
+seq_find.o Ä  seq_find.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+seq_del.o Ä  seq_del.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+seq_addon.o Ä  seq_addon.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+seq_add.o Ä  seq_add.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+py_advise.o Ä  py_advise.c
+
+ps_prime.o Ä  ps_prime.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ps_io.o Ä  ps_io.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ps_get_abs.o Ä  ps_get_abs.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ps_free.o Ä  ps_free.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ps_flush.o Ä  ps_flush.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ps_alloc.o Ä  ps_alloc.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ps2pe.o Ä  ps2pe.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h tailor.h logger.h
+
+prim2str.o Ä  prim2str.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+prim2set.o Ä  prim2set.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+prim2oid.o Ä  prim2oid.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+prim2num.o Ä  prim2num.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+prim2flag.o Ä  prim2flag.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+prim2bit.o Ä  prim2bit.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+pl_tables.o Ä  pl_tables.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+pe_free.o Ä  pe_free.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+pe_error.o Ä  pe_error.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+pe_alloc.o Ä  pe_alloc.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+pe2ps.o Ä  pe2ps.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h tailor.h logger.h
+
+oid_free.o Ä  oid_free.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+oid_cpy.o Ä  oid_cpy.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+oid_cmp.o Ä  oid_cmp.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+oid2ode.o Ä  oid2ode.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h tailor.h logger.h
+
+objectbyoid.o Ä  objectbyoid.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h tailor.h logger.h
+
+obj2prim.o Ä  obj2prim.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+num2prim.o Ä  num2prim.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+logger.o Ä  logger.c general.h config.h ::site:mac:lcsite.h  ¶
+	     manifest.h logger.h tailor.h
+
+iswr9.o Ä  iswr9.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr8.o Ä  iswr8.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr7.o Ä  iswr7.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr6.o Ä  iswr6.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr5.o Ä  iswr5.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr4.o Ä  iswr4.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr3.o Ä  iswr3.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr20.o Ä  iswr20.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:apityp.h ::src:const.h  ¶
+	     ::src:errors.h ::src:apirt.h ::src:attrid.h ::src:tkerr.h  ¶
+	     ::src:tkerr1.h ::src:const1.h ::src:const2.h ::src:const3.h  ¶
+	     iswr.h iswr19.h iswr20.h ::src:str.h  ¶
+	     ::src:tags.h ::src:seq.h ::src:seq1.h ::src:str1.h  ¶
+	     ::src:mm.h ::site:mac:local.h ::src:mm1.h
+
+iswr2.o Ä  iswr2.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr19.o Ä  iswr19.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:values.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:init.h ::src:tags.h ::src:acd.h  ¶
+	     ::src:attr.h ::src:aunion.h ::src:attr1.h ::src:attr2.h  ¶
+	     ::src:attr3.h ::src:attr4.h ::src:attr5.h ::src:attr6.h  ¶
+	     ::src:attr7.h ::src:attr8.h ::src:attr9.h ::src:attr10.h  ¶
+	     ::src:attr11.h ::src:attr12.h ::src:attr13.h ::src:attr15.h  ¶
+	     ::src:attr14.h ::src:attr16.h ::src:attr17.h ::src:attr18.h  ¶
+	     ::src:attr19.h ::src:attr20.h ::src:attr21.h ::src:attr22.h  ¶
+	     ::src:attr23.h ::src:attr24.h ::src:attr25.h ::src:attr26.h  ¶
+	     ::src:doc.h ::src:doc1.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     iswr.h iswr19.h iswr20.h
+
+iswr18.o Ä  iswr18.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+iswr17.o Ä  iswr17.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr16.o Ä  iswr16.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr15.o Ä  iswr15.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr14.o Ä  iswr14.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr13.o Ä  iswr13.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr12.o Ä  iswr12.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr11.o Ä  iswr11.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr10.o Ä  iswr10.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+iswr1.o Ä  iswr1.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h iswr.h  ¶
+	     iswr19.h iswr20.h
+
+isrd9.o Ä  isrd9.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd8.o Ä  isrd8.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd7.o Ä  isrd7.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd6.o Ä  isrd6.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd5.o Ä  isrd5.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd4.o Ä  isrd4.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd3.o Ä  isrd3.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd20.o Ä  isrd20.c ::src:values.h ::src:apityp.h ::site:mac:lcsite.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:init.h ::src:tags.h ::src:acd.h  ¶
+	     ::src:attr.h ::src:aunion.h ::src:attr1.h ::src:attr2.h  ¶
+	     ::src:attr3.h ::src:attr4.h ::src:attr5.h ::src:attr6.h  ¶
+	     ::src:attr7.h ::src:attr8.h ::src:attr9.h ::src:attr10.h  ¶
+	     ::src:attr11.h ::src:attr12.h ::src:attr13.h ::src:attr15.h  ¶
+	     ::src:attr14.h ::src:attr16.h ::src:attr17.h ::src:attr18.h  ¶
+	     ::src:attr19.h ::src:attr20.h ::src:attr21.h ::src:attr22.h  ¶
+	     ::src:attr23.h ::src:attr24.h ::src:attr25.h ::src:attr26.h  ¶
+	     ::src:doc.h ::src:doc1.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     isrd.h isrd19.h isrd20.h ishsh.h  ¶
+	     ::src:mm.h ::site:mac:local.h ::src:mm1.h psap.h  ¶
+	     manifest.h config.h general.h
+
+isrd2.o Ä  isrd2.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd19.o Ä  isrd19.c ::src:values.h ::src:apityp.h ::site:mac:lcsite.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:init.h ::src:tags.h ::src:acd.h  ¶
+	     ::src:attr.h ::src:aunion.h ::src:attr1.h ::src:attr2.h  ¶
+	     ::src:attr3.h ::src:attr4.h ::src:attr5.h ::src:attr6.h  ¶
+	     ::src:attr7.h ::src:attr8.h ::src:attr9.h ::src:attr10.h  ¶
+	     ::src:attr11.h ::src:attr12.h ::src:attr13.h ::src:attr15.h  ¶
+	     ::src:attr14.h ::src:attr16.h ::src:attr17.h ::src:attr18.h  ¶
+	     ::src:attr19.h ::src:attr20.h ::src:attr21.h ::src:attr22.h  ¶
+	     ::src:attr23.h ::src:attr24.h ::src:attr25.h ::src:attr26.h  ¶
+	     ::src:doc.h ::src:doc1.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     isrd.h isrd19.h isrd20.h ishsh.h  ¶
+	     ::src:mm.h ::site:mac:local.h ::src:mm1.h psap.h  ¶
+	     manifest.h config.h general.h
+
+isrd18.o Ä  isrd18.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd17.o Ä  isrd17.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd16.o Ä  isrd16.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd15.o Ä  isrd15.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd14.o Ä  isrd14.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd13.o Ä  isrd13.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd12.o Ä  isrd12.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd11.o Ä  isrd11.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd10.o Ä  isrd10.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+isrd1.o Ä  isrd1.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h ::src:odatk.h ::src:apityp.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:aunion.h ::src:acd.h ::src:attr.h  ¶
+	     ::src:attr1.h ::src:attr2.h ::src:attr3.h ::src:attr4.h  ¶
+	     ::src:attr5.h ::src:attr6.h ::src:attr7.h ::src:attr8.h  ¶
+	     ::src:attr9.h ::src:attr10.h ::src:attr11.h ::src:attr12.h  ¶
+	     ::src:attr13.h ::src:attr15.h ::src:attr14.h ::src:attr16.h  ¶
+	     ::src:attr17.h ::src:attr18.h ::src:attr19.h ::src:attr20.h  ¶
+	     ::src:attr21.h ::src:attr22.h ::src:attr23.h ::src:attr24.h  ¶
+	     ::src:attr25.h ::src:attr26.h ::src:doc.h ::src:doc1.h  ¶
+	     ::src:atts.h ::src:atts1.h ::src:atts2.h ::src:atts3.h  ¶
+	     ::src:atts4.h ::src:debug.h ::src:debug1.h ::src:debug2.h  ¶
+	     ::src:expr.h ::src:expr1.h ::src:font.h ::src:font1.h  ¶
+	     ::src:init.h ::src:tags.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ::src:iter.h  ¶
+	     ::src:iter1.h ::src:iter2.h ::src:iter3.h ::src:iter4.h  ¶
+	     ::src:label.h ::src:label1.h ::site:mac:local.h ::src:mem.h  ¶
+	     ::src:mem1.h ::src:parms.h ::src:prior.h ::src:prior1.h  ¶
+	     ::src:rodif.h ::src:io.h ::src:io1.h ::src:mm.h  ¶
+	     ::src:mm1.h ::src:rasn1.h ::src:values.h ::src:asn1.h  ¶
+	     ::src:rasn11.h ::src:rasn12.h ::src:rasn13.h ::src:rasn14.h  ¶
+	     ::src:rodif1.h ::src:rodif2.h ::src:rodif3.h ::src:rodif4.h  ¶
+	     ::src:wodif.h ::src:wasn1.h ::src:wasn11.h ::src:wasn12.h  ¶
+	     ::src:wasn13.h ::src:wasn14.h ::src:wasn15.h ::src:wodif1.h  ¶
+	     ::src:wodif2.h ::src:wodif3.h ::src:wodif4.h isrd.h  ¶
+	     isrd19.h isrd20.h ishsh.h
+
+ispr9.o Ä  ispr9.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr8.o Ä  ispr8.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr7.o Ä  ispr7.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr6.o Ä  ispr6.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr5.o Ä  ispr5.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr4.o Ä  ispr4.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr3.o Ä  ispr3.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr2.o Ä  ispr2.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr19.o Ä  ispr19.c ::src:values.h ::src:apityp.h ::site:mac:lcsite.h  ¶
+	     ::src:const.h ::src:errors.h ::src:apirt.h ::src:attrid.h  ¶
+	     ::src:tkerr.h ::src:tkerr1.h ::src:const1.h ::src:const2.h  ¶
+	     ::src:const3.h ::src:init.h ::src:tags.h ::src:acd.h  ¶
+	     ::src:attr.h ::src:aunion.h ::src:attr1.h ::src:attr2.h  ¶
+	     ::src:attr3.h ::src:attr4.h ::src:attr5.h ::src:attr6.h  ¶
+	     ::src:attr7.h ::src:attr8.h ::src:attr9.h ::src:attr10.h  ¶
+	     ::src:attr11.h ::src:attr12.h ::src:attr13.h ::src:attr15.h  ¶
+	     ::src:attr14.h ::src:attr16.h ::src:attr17.h ::src:attr18.h  ¶
+	     ::src:attr19.h ::src:attr20.h ::src:attr21.h ::src:attr22.h  ¶
+	     ::src:attr23.h ::src:attr24.h ::src:attr25.h ::src:attr26.h  ¶
+	     ::src:doc.h ::src:doc1.h ::src:str.h ::src:seq.h  ¶
+	     ::src:seq1.h ::src:str1.h ::src:init1.h ispr.h  ¶
+	     ispr19.h psap.h manifest.h config.h  ¶
+	     general.h
+
+ispr18.o Ä  ispr18.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr17.o Ä  ispr17.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr16.o Ä  ispr16.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr15.o Ä  ispr15.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr14.o Ä  ispr14.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr13.o Ä  ispr13.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr12.o Ä  ispr12.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr11.o Ä  ispr11.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr10.o Ä  ispr10.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+ispr1.o Ä  ispr1.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+isofiles.o Ä  isofiles.c general.h config.h ::site:mac:lcsite.h  ¶
+	     manifest.h tailor.h logger.h
+
+isobject.o Ä  isobject.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h tailor.h logger.h
+
+bit_ops.o Ä  bit_ops.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+asprintf.o Ä  asprintf.c general.h config.h ::site:mac:lcsite.h  ¶
+	     manifest.h
+
+UPEPY-52.o Ä  UPEPY-52.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-51.o Ä  UPEPY-51.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-50.o Ä  UPEPY-50.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-49.o Ä  UPEPY-49.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-48.o Ä  UPEPY-48.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-47.o Ä  UPEPY-47.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-46.o Ä  UPEPY-46.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-36.o Ä  UPEPY-36.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-35.o Ä  UPEPY-35.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-34.o Ä  UPEPY-34.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-12.o Ä  UPEPY-12.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-11.o Ä  UPEPY-11.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-10.o Ä  UPEPY-10.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-09.o Ä  UPEPY-09.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-08.o Ä  UPEPY-08.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-07.o Ä  UPEPY-07.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-03.o Ä  UPEPY-03.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-02.o Ä  UPEPY-02.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+UPEPY-01.o Ä  UPEPY-01.c psap.h manifest.h config.h  ¶
+	     ::site:mac:lcsite.h general.h
+
+libisode.a Ä    vprint.o tailor.o str2vec.o str2prim.o str2oid.o str2elem.o  ¶
+	    std2ps.o sprintoid.o set_find.o set_add.o serror.o seq_find.o  ¶
+	    seq_del.o seq_addon.o seq_add.o py_advise.o ps_prime.o ps_io.o  ¶
+	    ps_get_abs.o ps_free.o ps_flush.o ps_alloc.o ps2pe.o prim2str.o  ¶
+	    prim2set.o prim2oid.o prim2num.o prim2flag.o prim2bit.o pl_tables.o  ¶
+	    pe_free.o pe_error.o pe_alloc.o pe2ps.o oid_free.o oid_cpy.o  ¶
+	    oid_cmp.o oid2ode.o objectbyoid.o obj2prim.o num2prim.o logger.o  ¶
+	    iswr9.o iswr8.o iswr7.o iswr6.o iswr5.o iswr4.o  ¶
+	    iswr3.o iswr20.o iswr2.o iswr19.o iswr18.o iswr17.o  ¶
+	    iswr16.o iswr15.o iswr14.o iswr13.o iswr12.o iswr11.o  ¶
+	    iswr10.o iswr1.o isrd9.o isrd8.o isrd7.o isrd6.o  ¶
+	    isrd5.o isrd4.o isrd3.o isrd20.o isrd2.o isrd19.o  ¶
+	    isrd18.o isrd17.o isrd16.o isrd15.o isrd14.o isrd13.o  ¶
+	    isrd12.o isrd11.o isrd10.o isrd1.o ispr9.o ispr8.o  ¶
+	    ispr7.o ispr6.o ispr5.o ispr4.o ispr3.o ispr2.o  ¶
+	    ispr19.o ispr18.o ispr17.o ispr16.o ispr15.o ispr14.o  ¶
+	    ispr13.o ispr12.o ispr11.o ispr10.o ispr1.o isofiles.o  ¶
+	    isobject.o bit_ops.o asprintf.o UPEPY-52.o UPEPY-51.o UPEPY-50.o  ¶
+	    UPEPY-49.o UPEPY-48.o UPEPY-47.o UPEPY-46.o UPEPY-36.o UPEPY-35.o  ¶
+	    UPEPY-34.o UPEPY-12.o UPEPY-11.o UPEPY-10.o UPEPY-09.o UPEPY-08.o  ¶
+	    UPEPY-07.o UPEPY-03.o UPEPY-02.o UPEPY-01.o
+	   {AR1} vprint.o tailor.o str2vec.o str2prim.o str2oid.o  ¶
+	    str2elem.o std2ps.o sprintoid.o set_find.o set_add.o  ¶
+	    serror.o seq_find.o seq_del.o seq_addon.o seq_add.o  ¶
+	    py_advise.o ps_prime.o ps_io.o ps_get_abs.o ps_free.o  ¶
+	    ps_flush.o ps_alloc.o ps2pe.o prim2str.o prim2set.o  ¶
+	    prim2oid.o prim2num.o prim2flag.o prim2bit.o pl_tables.o  ¶
+	    pe_free.o pe_error.o pe_alloc.o pe2ps.o oid_free.o  ¶
+	    oid_cpy.o oid_cmp.o oid2ode.o objectbyoid.o obj2prim.o  ¶
+	    num2prim.o logger.o iswr9.o iswr8.o iswr7.o  ¶
+	    iswr6.o iswr5.o iswr4.o iswr3.o iswr20.o  ¶
+	    iswr2.o iswr19.o iswr18.o iswr17.o iswr16.o  ¶
+	    iswr15.o iswr14.o iswr13.o iswr12.o iswr11.o  ¶
+	    iswr10.o iswr1.o isrd9.o isrd8.o isrd7.o  ¶
+	    isrd6.o isrd5.o isrd4.o isrd3.o isrd20.o  ¶
+	    isrd2.o isrd19.o isrd18.o isrd17.o isrd16.o  ¶
+	    isrd15.o isrd14.o isrd13.o isrd12.o isrd11.o  ¶
+	    isrd10.o isrd1.o ispr9.o ispr8.o ispr7.o  ¶
+	    ispr6.o ispr5.o ispr4.o ispr3.o ispr2.o  ¶
+	    ispr19.o ispr18.o ispr17.o ispr16.o ispr15.o  ¶
+	    ispr14.o ispr13.o ispr12.o ispr11.o ispr10.o  ¶
+	    ispr1.o isofiles.o isobject.o bit_ops.o asprintf.o  ¶
+	    UPEPY-52.o UPEPY-51.o UPEPY-50.o UPEPY-49.o UPEPY-48.o  ¶
+	    UPEPY-47.o UPEPY-46.o UPEPY-36.o UPEPY-35.o UPEPY-34.o  ¶
+	    UPEPY-12.o UPEPY-11.o UPEPY-10.o UPEPY-09.o UPEPY-08.o  ¶
+	    UPEPY-07.o UPEPY-03.o UPEPY-02.o UPEPY-01.o -p -o libisode.a

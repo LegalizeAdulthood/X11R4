@@ -1,0 +1,18 @@
+Xcu V1.4 has two "new" widgets -- versions of XcuSimple (XcuSimpleComp and
+XcuSimpleCompConst) that allow composite and constrained composite widgets
+to have picture frames or shadows.
+
+XcuLabel now works for XtNbitmap resources.
+
+XcuTbl now permits its children or layout to be changed after initialization.
+(See the public functiions.)
+
+Still big on the TODO list:
+
+    Add additional constraint resources to XcuTbl so that children can
+    be customized with respect to behavior on resizes.
+
+    Add "at least N of many" and "at most N of many" semantics to XcuBmgr.
+
+    Permit popup widgets in the widget layout description language.
+    Incorporate XtAddInput as a public function.

@@ -1,0 +1,27 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989		        *
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+
+#define	IHaveSubdirs
+
+/* ============================================================ */
+
+SUBDIRS = dev_kit
+
+OBJS = ar5printf.o ar5memory.o ar5shrutls.o ar5csave.o \
+	  ar5init.o ar5dump.o ar5error.o ar5lex.o ar5strings.o \
+	  ar5stubs.o ar5io.o ar5font.o ar5cvt.o ar5read.o \
+	  ar5framerd.o ar5cmpn.o ar5docread.o ar5buf.o ar5token.o \
+	  ar5autonum.o ar5index.o ar5ref.o ar5table.o ar5loadDg.o \
+	  ar5dumpDg.o ar5unknwns.o \
+	  ar5inchrmp.o ar5free.o ar5freeDg.o
+
+HFILES = ar5defs.h ar5private.h ar5csave.h ar5errs.h
+
+NormalObjectRule()
+
+LibraryTarget(libAR5_0.a, $(OBJS) )
+
+DependTarget()
+

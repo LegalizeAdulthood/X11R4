@@ -1,0 +1,23 @@
+<< >>
+
+!*****************************************************************************
+! This defines the shared data for the grouping demo
+!*****************************************************************************
+
+groups: shared data
+
+group_sdd: record
+  group_name:	        string[32];             !name of group
+  x_offset:             integer;         	!x base value for group
+  y_offset:             integer;         	!y base value for group
+  group_color: 		string[20];		!background color
+  exist:		boolean;		!set to false when group deleted
+end record;
+
+instance_sdd: record
+  instance_name:	string[32];		!name of instance
+  group_id:		id of group_sdd;	!id when belongs to group
+  create:		boolean;		!should this instance be created
+end record;
+
+end shared data;

@@ -1,0 +1,351 @@
+.IX "xtroff"
+.IX "X Version 11" "xtroff"
+.TH XTROFF 1 "1 May 1988" "X Version 11"
+.SH NAME
+xtroff - Device Independent Troff Previewer for X Windows version 11.
+.SH SYNOPSIS
+.br
+.B xtroff
+[
+.B Toolkit options
+] [
+.B -scrollbars
+] [
+.B -full
+] [
+.B -command \"Troff Command Pipe\"
+]
+.sp
+.B
+xtroff 
+[
+.B Toolkit Arguments
+] [
+.B -scrollbars
+] [
+.B -full
+] [
+.B Troff_Output_File
+]
+.sp
+.B Troff Command Pipe | xtroff 
+[
+.B Toolkit Arguments
+] [
+.B -scrollbars
+] [
+.B -full
+] [
+.B troff output file
+]
+.SH DESCRIPTION
+\fIXtroff\fR reads (device independent) \fItroff\fR(L) output files
+and displays an approximation of the typeset output in a window. (In
+this document, wherever we refer to \fItroff\fP, we mean
+\fBditroff\fP, not the Sun supplied \fItroff\fP which drives a CAT
+typesetter directly. \fBDitroff\fP is part of the Documenter's
+WorkBench, and is also supplied with the Research Editions of Unix -
+v8, etc)
+Using the mouse the user can pan each page image
+within the window, and move to other pages, look at different files and
+finally send the file to \fIlpr\fR(1) for typesetting.
+.PP
+The program can be used in three different ways.
+Perhaps the most efficient way to use this program is to execute
+\fIxtroff\fR in the command mode (first example in the
+synopsis above).
+In the command mode a troff command string is specified that includes
+all the processing steps (\fIeqn, tbl, pic, ideal, troff)\fR
+that are needed to transform a user's document into troff output.
+Then whenever a change is made in the document 
+a "rerasterize" command 
+can be used to rerun
+the command string and show the new document on the screen.
+The "rerasterize" command is an option available on a menu that pops
+up when the right mouse button is pressed or by pressing the 'r' key.
+.PP
+Alternatively, the output from \fItroff\fR can be used as input to this
+program (second example in the synopsis above.)  In this case, each time the
+document changes it is up to the user to rerun the \fItroff\fR pipe to
+produce input for the \fIxtroff\fR program. The user must then indicate to
+\fIxtroff\fP that the file has changed.  This can be easily done using the
+"rerasterize" command.
+.PP
+A third possibility is to treat 
+.I xtroff
+as a filter and feed the output of the troff command string to it. It will
+read from the standard input in no 
+.B -command
+or file argument is specified.
+.PP
+Fonts used by \fIxtroff\fR are rough approximations to those that will be
+printed in the final typesetter output.  The best fonts available are the X
+Windows fonts provided with the MIT distribution courtesy Adobe, Bitstream
+and DEC. These fonts approximate the fonts in a PostScript printer very well
+indeed.
+.PP
+In addition, the 300 dot per inch (dpi) Imagen fonts and the 200 dpi
+Versatec fonts can be properly scaled for \fIxtroff\fR.  For those with
+Imagen printers, the Imagen fonts may well be preferable - the Versatec
+fonts are provided only as a last resort - in olden times, they used to be
+the default but they have now been supplanted by the much higher quality X
+fonts. All output destined for printers other than the Imagens will be shown
+using X fonts.  Although the actual bit maps used for the characters might
+not be correct all \fIxtroff\fR output will have the correct horizontal and
+vertical spacing. Remember to use the 
+.B -T
+option to
+.I troff
+to indicate the device you are using if the default has not been set to
+devpsc (the PostScript device).
+.SH COMMANDS
+\fIXtroff\fR can be controlled using a combination of mouse, menu and
+typed commands.  
+Within the main text window when the middle button of the mouse is
+pressed the cursor is changed into the shape of a hand that grabs the
+text.  
+As the mouse is moved around inside the window the displayed text (and
+the hand) move accordingly.
+When the right button is pressed a menu pops up that contains options
+for moving to different pages, 
+print parts of the document, 
+and rerasterizing the input.
+.\" and finally popping up a more extensive status and command window.
+.\" .PP
+.\"The \fIxtroff\fR command and status window allows the user to
+.\"specify the source of input, search for text within the document,
+.\"move to any page within the document and to print either one page or the
+.\"entire document.
+.\"This panel is hidden at first and is displayed when the user picks the
+.\""show status" option on the right mouse button menu.
+.SH OPTIONS
+.TP
+\fB\-full\fR
+Display full page on screen.
+.TP
+\fB\-scrollbars\fR
+Disable scrollbar display.
+.SH ACTIONS
+There are a number of \fIactions\fP defined in the main window. They
+can be invoked in a number of ways, using different \fIbindings\fP.
+(keys, or mouse buttons, or a combination of both). Most actions can
+also be invoked from the menu that pops up when the right mouse button
+is pressed in the main window.
+.IP "Move Around within Page" 15
+Use the middle mouse button.  
+When it is first pressed a hand will appear on the page and effectively
+grab the text.
+As the mouse (and hand) move the page will move within the frame.
+.br
+Another way to do this is to use the scrollbars on the right and
+bottom of the page.
+.IP "Advance by a viewing section"
+A \fIviewing section\fP is the part of the page that can be displayed
+on the screen. Advancing to the next section will move the page so
+that the next section of the page is visible, or advance to the next
+page if at the end of a page. This command is bound by default to the
+SPACE bar, the mouse left button, and the cursor-down arrow key.
+.IP "Previous Section"
+This is the opposite of the previous command. It backs up to the
+previous section of the page, or to the previous page. It is bound to
+the cursor-up arrow key, and to the shifted left mouse button. 
+.IP "Next Page"
+This rasterizes and displays the next page in the document. A clock
+cursor is displayed while the rasterizing is done, which can take a
+few moments. This is bound to the cursor-right arrow, the 'n', and 'f'
+keys, and RETURN and LINEFEED.
+.IP "Previous Page"
+This rasterizes and displays the previous page in the document. A clock
+cursor is displayed while the rasterizing is done, which can take a
+few moments. This is bound to the cursor-left arrow, the 'p', and 'b'
+keys, and DELETE and BACKSPACE.
+.IP "Go To Another Page"
+This goes to a specific page number.
+Type the desired page number to the main \fIxtroff\fR
+window followed by the 'g' key. If you make a mistake in the page
+number, just hit ESC and type it again.
+This is not available on the menu.
+.IP "Search for a Pattern"
+To find a pattern in the output enter the desired search pattern in
+the input window at the bottom when prompted.
+Note, the only valid characters in a search pattern are printable ascii
+characters and the space character.
+orward and backward searches are performed using the appropriate button
+in the menu.
+A search ignores the current page and will find the next page that
+contains the desired words.  
+.\"Hopefully, at some point in the future the desired pattern will be
+.\"highlighted.
+.IP "Print Part of Document"
+Either a single page ('P' key - shifted 'p') or the entire document
+can be printed using entries in the right mouse button's pop-up menu.
+The printer name is "PostScript", or from the PRINTER variable in the
+environment. The command used for printing can be changed using the
+"Set Printer" item on the menu.
+.IP "Set Printer"
+This reads the command to be used to print pages or the document from
+the input window at the bottom. It leaves the current default value in
+the input window for editing.
+.IP "Change Command"
+This changes xtroff to command mode, and requests the command to use to
+generate ditroff output to preview. The current command, if any, is
+displayed in the input window for editing. This may be used even if xpic was
+started in file mode.
+.IP "Change File"
+This changes xtroff to file mode, and requests the name of a file containing
+ditroff output from the input window. The current file, if any, is displayed
+there for editing.  Filename completion is enabled.  This may be used even
+if xtroff was originally started in command mode. Note however that there is
+now way to get xpic to read from the standard input.
+.IP Rerasterize
+After changes are made to a document it is necessary to tell 
+\fIxtroff\fR to rerasterize the file. 
+This can be done by hitting the 'R' key, or selecting from the menu.
+Note that this is only really useful if you run \fIxtroff\fP using the
+\fI\-command\fP option. If used with a file, it can still be used,
+provided the command to create the \fItroff\fP file is run again. If
+neither the file nor the command is used, and \fIxtroff\fP is reading
+from standard input, then rerasterize will not work, and the whole
+command must be run again.
+.IP Quit
+This exits the program. It is bound to the 'q' key.
+.SH "EXAMPLES"
+To preview a file that has already been processed by troff
+.br
+	xtroff file-containing-troff-output
+.br
+When the "rerasterize" command is issued then the indicated file will
+be reopened and its new contents displayed.
+.sp
+To typeset and preview a document use the following command
+.br
+	xtroff -command "eqn troff-input-file | troff -ms"
+.br
+The "rerasterize" command will close any open files (or pipes) and
+open a new pipe.
+The indicated command will be run on the input side of the pipe to
+provide \fIxtroff\fR with its input.
+The command providing input to \fIxtroff\fR can contain any combination
+of programs as long as the final output is \fItroff\fR output. If it
+contains pipes '|', or shell metacharacters, remember to enclose it
+within quotes.
+.PP
+The latter is the most common usage of \fIxtroff\fP. Typically, the
+user would start \fIxtroff\fP on a document, preview it, iconfiy
+xtroff, or put it under the other windows, and edit the document,
+fixing and adjusting things, and then deiconify or raise \fIxtroff\fP,
+and \fIrerasterize\fP to see the effect of the changes. 
+.SH RESOURCES
+\fIXtroff\fP supports the general X Toolkit resource specifications.
+Here are the names and classes of the widgets used in \fIxtroff\fP.
+.IP \fBName,Class\fP 2i
+\fBComment\fP
+.IP xtroff,XTroff
+The toplevel shell that encloses the application.
+.IP form,Form
+The frame that manages the geometry of the widgets.
+.IP canvas,Window
+The main \fIxtroff\fP window name if -full is NOT specified.
+.IP full,Window
+The main \fIxtroff\fP window name if -full is specified.
+.IP popupShell,Shell
+The shell that encloses the pop-up menu.
+.IP vscroll,Scrollbar
+The vertical scrollbar
+.IP hscroll,Scrollbar
+The horizontal scrollbar
+.PP
+In addition to the widgets' resources, \fIxtroff\fP also gets the following 
+resources for the main program:
+
+.IP \fPName,Class\fP 2i
+\fBComment\fP
+.IP scrollbars,ScrollBars
+to determine whether the user wants the scrollbars or not. This is of
+the form \fIxtroff.scrollbar:on\fP or \fIoff\fP. It corresponds to the
+command line argument \fI\-scrollbar\fP. 
+.IP fontMap,FontMap
+describes the font mapping from ditroff name to X font names. The
+X font names should be patterns of the same type as accepted by
+.IR xlsfonts (1).
+.IP printer,Printer
+sets the name of the printer to be used when printing parts of the
+document within 
+.I xtroff. 
+The default is 
+.I PostScript.
+.IP lprcommand, LprCommand
+stes the command to be used to print parts of the document within
+.I xtroff.
+The default is 
+.I lpr -n -P%s. 
+The command may contain a 
+.I %s
+which will be substituted by the printer name.
+.SH "TOOLKIT OPTIONS"
+\fIxtroff\fP also accepts the standard Toolkit command options viz.
+"+rv",
+"-background",
+"-bd",
+"-bg",
+"-borderwidth",
+"-bordercolor",
+"-bw",
+"-display",
+"-fg",
+"-fn",
+"-font",
+"-foreground",
+"-geometry",
+"-iconic",
+"-name",
+"-reverse",
+"-rv",
+"-synchronous",
+"-title",
+"-xrm".
+Some of the options are meaningless for \fIxtroff\fP. 
+.SH "FILES"
+WIDTHDIR/*	- troff width tables
+.br
+FONTDIR/*	- bitmap fonts for xtroff
+.br
+XAPPLOADDIR/XTroff	- default resources
+.SH "SEE ALSO"
+.LP
+.I Using and Specifying X Resources
+.br
+.IR X (x), x11 (x), troff (L)
+.br
+.SH BUGS
+Ligatures look a little displaced.
+.SH AUTHOR
+Credit for this program goes to a number of people including
+.br
+Brian Kernighan (Bell Labs) for first developing Device Independent
+Troff, 
+.br
+University of Toronto for developing the
+original \fIvcat\fR program.
+.br
+Richard L. Hyde, Purdue University, and David Slattengren, U.C. Berkeley,
+wrote the original version of this program to rasterize \fItroff\fR
+output for the Suns.
+.br
+Malcolm Slaney, Schlumberger Palo Alto Research, rewrote most
+of the code to make it run under Sun-3 Unix and to extend the
+user interface.
+.br
+Support for X11 was added by Mark Moraes, University of Toronto.
+(moraes@csri.toronto.edu)
+.br
+Dave Cahlander (dac@cray.com) reworked the X11 drawing functions to
+draw words, use the X11R3 fonts and draw special characters.
+.SH SUPPORT
+This command was developed as an independent project to satisfy a need
+of the author.  This program may contain bugs and the user is
+cautioned to independently verify that the program is suitable for the
+user's intended purpose.  The program is made available on an ``as
+is'' basis with all faults and without any implied or expressed
+warranties or support from any of the authors or organizations listed
+above in the AUTHOR section.

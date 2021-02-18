@@ -1,0 +1,9 @@
+  INCLUDES = -I. -I$(TOP) -I$(TOP)/X11
+      SRCS = xwstr.c wstring.c xtwstr.c ctext.c
+      OBJS = xwstr.o wstring.o xtwstr.o ctext.o
+
+NormalLibraryObjectRule()
+
+NormalLibraryTarget(Xlocal,$(OBJS))
+
+DependTarget()

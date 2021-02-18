@@ -1,0 +1,325 @@
+.\" @(#)olwm.man 4.1 89/12/06
+.TH OLWM 1 "6 December 1989"
+.SH NAME
+olwm \- OPEN LOOK window manager
+.SH SYNOPSIS
+.B olwm
+[
+.B \-23acfops
+] [
+.B \-d
+.I display
+]
+.SH DESCRIPTION
+.LP
+.B olwm
+is a window manager for the X Window System that implements
+parts of the OPEN LOOK user interface.
+.SH OPTIONS
+.TP
+.B \-2
+Force two-dimensional look.
+.TP
+.B \-3
+Force three-dimensional look.
+.TP
+.B \-c
+Use click-to-focus mode.  This will override any focus mode setting in
+the resource database.
+.TP
+.B \-d display
+Specify the name of the display to manage.  By default uses the
+value of the environment variable DISPLAY.
+.TP
+.B \-f
+Use focus-follows-mouse mode.  Default mode is click-to-focus.  This
+will override any focus mode setting in the resource database.
+.TP
+.B \-p
+Do not reparent windows which are currently
+displayed.
+.SH DEBUGGING OPTIONS
+.LP
+The following options are strictly for debugging.  Don't use them
+unless you know what you are doing.
+.TP
+.B \-a
+Print all events.
+.TP
+.B \-o
+Print orphaned events.  Orphaned events are 
+events that are associated with a window or frame that has no entry in
+the frame hash table, or events that are not handled by the various
+event handlers.
+.TP
+.B \-s
+Run the window manager in synchronous mode.
+.SH INPUT FOCUS
+The
+.I
+input focus
+.P
+is the window that will receive keyboard events.
+.B olwm
+has two different input focus
+.I modes ,
+which are different ways of transferring the input focus from one
+window to another.  By default,
+.B olwm
+uses "click-to-focus" mode.  This means that you must click on the
+window in order to get the focus to it.  While a window has the input
+focus, the mouse can be anywhere on the screen; the keyboard events
+will still go to that window.  You can set the input focus to a window
+and simultaneously raise it to the top by clicking the left mouse
+button in the window's title bar or border.
+.LP
+.B olwm
+has another focus mode called "focus-follows-mouse."  In this mode,
+whatever window the mouse is pointing to will receive the input focus.
+To switch the input focus from one window to another, you simply move
+the mouse to the other window; you don't have to click at all.
+.LP
+The input focus mode can be controlled with command-line options or by
+entries in the resource database.  Neither focus mode has inherent
+advantages.  Which one you choose is a matter of personal preference.
+.SH Summary of OPEN LOOK behavior
+Full documentation for the "look and feel" of
+.B olwm
+is contained in the OPEN LOOK Graphical User Interface Functional
+Specification.
+The following is a brief summary of the parts pertinent to window managment.
+.LP
+.I olwm
+is designed to allow you to manipulate windows using the mouse.
+It uses three mouse buttons.  The effect of the buttons depends upon
+where the mouse pointer is.
+.LP
+IN A TITLE BAR OR BORDER.  The title bar is the narrow strip at the top of each
+window.  It normally contains the name of the program running in the
+window.  The border is a narrow black stripe surrounding the window.
+In most of the title bar and all of the border, the buttons behave as follows:
+.TP
+.B left button
+SELECT.  Brings the window to the front.
+In click-to-focus mode, this also transfers the focus to this window.
+Selects this window, and deselects anything else.
+.TP
+.B middle button
+ADJUST.  Toggles the selected state current window or icon.  If the
+window isn't yet selected, it becomes selected without affecting the
+rest of the selection.  If the window is already selected, it becomes
+unselected.
+.TP
+.B right button
+MENU.  Brings up a menu, listing things that you can do with the
+window.
+The menu options are described in the following section.
+.LP
+WINDOW MENU.  When you hit the menu button in a title bar or border,
+you bring up a menu with the following entries:
+.TP
+.B Close 
+Close the window to an icon
+.TP
+.B Full Size
+Expand the
+window to take the full length of the screen.  If this has already
+done the button is "normal size", which puts it back
+.TP
+.B Back
+Move the window under any other windows that occupy the same space.
+.TP
+.B Refresh
+Clear and redisplay the window.
+.TP
+.B Quit
+Kill the program running in the window and remove the window.
+.LP
+WINDOW BUTTON.  Near the left end of the title bar there is a small
+box with a triangle in it.  If you click the left mouse button on this
+mark, the window will be closed to an icon.  This is the same action
+as the "close" entry in the menu.
+.LP
+WHAT TO DO WITH ICONS.  Once a window has been closed to an icon,
+you can still do most of the same operations as with a normal window.
+If you move the mouse onto the icon, you can move the icon by holding
+down the left mouse button or bring up a menu with the right
+mouse button.  So the icon acts much like the title bar of a normal
+window.  To reopen the window, bring up the menu and select "open",
+or "double-click" the left mouse button.  Double clicking means
+clicking the button twice rapidly.
+.LP
+MOVING THE WINDOW.  To move a window, put the mouse in the border, and
+hold down the left mouse button.  The window will then move as you
+move the mouse.  Note that you must keep the left button down as you
+are moving the window.  If several windows are selected, and you drag
+one of them, all selected windows will move.
+.LP
+CHANGING WINDOW SIZE/SHAPE.  To change the size or shape of a window,
+move the mouse to one of the corners, and hold down the left mouse
+button.  That corner will then move as you move the mouse.  The
+opposite corner of the window will stay put.  So you end up changing
+the window's shape.  Note that you must keep the left button down
+as you are doing this.
+.LP
+OUTSIDE ALL WINDOWS.  When the mouse cursor is outside any windows
+(on the general background), the right button brings up the "root
+menu".  This menu allows you to do a number of utility functions.
+Entries in the root menu bring up sub-menus.  The "programs"
+submenu lists programs that you can run.  You can add more entries
+via you .olwmmenu file.  (See below.)  Utilities allows you to
+refresh (clear and redisplay) the whole screen, gives you access to
+the clipboard, and lets you print the entire screen.  Exit lets
+you exit from the window manager.  This normally causes the X
+window system to exit.
+.SH RESOURCES
+.TP
+.B OpenWindows.foreground
+foreground color
+.TP
+.B OpenWindows.WindowColor
+background color
+.TP
+.B OpenWindows.borderColor
+Color of border around the window
+.TP
+.B OpenWindows.WorkspaceColor
+The color of the root window.  This can be a color name, an RGB color
+specification (starting with a `#') or an absolute pathname that
+specifies an X bitmap file.
+.TP
+.B OpenWindows.MultiClickTimeout
+The time, in tenths of a second, that differentiates a double-click
+from two single clicks.  Default is half a second.
+.TP
+.B OpenWindows.SetInput
+This controls the input focus mode.  If the value is "select", it
+means click-to-focus.  If the value is "followmouse", it means
+focus-follows-mouse.
+.TP
+.B OpenWindows.IconLocation
+One of the four strings "top", "bottom", "right", or "left".  This
+determines the edge of the screen along which icons should be placed.
+.TP
+.B OpenWindows.FrontKeySym
+Specifies the keysym of the key to be used as the "Front" key.
+.TP
+.B OpenWindows.HelpKeySym
+Specifies the keysym of the key to be used as the "Help" key.
+.TP
+.B OpenWindows.OpenKeySym
+Specifies the keysym of the key to be used as the "Open" key.
+.TP
+.B OpenWindows.FocusLenience
+If this is set to true, 
+.B olwm
+will not enforce the ICCCM requirement that windows must have the
+input hint set in order to receive the input focus.  This option is
+useful if you run clients that aren't ICCCM-compliant.
+.TP
+.B olwm.TitleFont
+Font used in title bars above the windows.  Default is Lucida-Sans Bold.
+.TP
+.B olwm.IconFont
+Font used in icons.  Default is Lucida-Sans.
+.TP
+.B olwm.MenuTitleFont
+Font used in the title (first line) of menus.  Default is lucidasans-bold-12.
+.TP
+.B olwm.MenuButtonFont
+Font used for individual entries in menus.  Default is lucidasans-12.
+.TP
+.B olwm.GlyphFont
+Glyph font used for drawing OPEN LOOK graphics.  You probably don't
+want to change this.
+.TP
+.B olwm.FlashTime
+Amount of time, in
+.I microseconds ,
+for which the title bar is flashed after the "Owner?"
+menu item is activated.  Default is 100000.
+.SH Menu Customization
+.LP
+You can customize
+.B olwm 's
+root menu with a menu specification language.
+This specification should be placed in your
+home directory in a file called ".olwmmenu".
+.LP
+In general, each line specifies one item on the menu.  There are two parts to
+each item:  a label and a function.  The label is a string, enclosed in
+double quotes; it is the string that is displayed on the menu when it is
+popped up.  The function can either be one of the keywords (described below)
+or a shell command enclosed in double quotes.  To make an item be the default
+item, the special keyword DEFAULT should appear before the item's label on
+the same line.
+.LP
+If the special keyword TITLE is used as a label instead of a quoted string,
+it makes the function string be the menu's title.  This does not add an item
+to the menu.
+.LP
+If the special keyword PIN is used as a label instead of a quoted string, it
+makes the current menu pinnable.  It does not add an item to the menu.
+.LP
+The following keywords specify functions that are built-in to olwm.  They
+can be used as a menu function in place of a shell command.
+.ta 1i 3i
+.nf
+	NOP		no-operation
+	EXIT		kill all applications and exit
+	REFRESH		refresh the screen
+	MENU		specify a pull-right menu
+	PROPERTIES	bring up Workspace Properties
+.fi
+.LP
+To specify a menu item as a pull-right submenu, put MENU as that item's
+function.  All label-function pairs until the END keyword will be put into
+that submenu.  Submenus can be nested arbitrarily.
+.LP
+Here is an example root menu specification.
+.LP
+.nf
+TITLE	"Workspace"
+PIN
+
+DEFAULT "Programs"	MENU
+    "cmdtool"		"cmdtool"
+    DEFAULT "textedit"	"textedit"
+    "mailtool"		"mailtool"
+    "filemgr"		"filemgr"
+    "other"		    MENU
+	TITLE			"Other Tools"
+	PIN
+	"shelltool"		"shelltool"
+	"iconedit"		"iconedit"
+	"clock"			"clock -Wi"
+	"perfmeter"		"perfmeter"
+    END
+END
+
+"Repaint Screen"	REFRESH
+
+"Properties ..."	    PROPERTIES
+
+Exit		EXIT
+.fi
+.SH ACKNOWLEDGMENTS
+Thanks to Charles Hedrick at Rutgers for supplying a lot of bug
+reports and a lot of text for this manual page.
+.SH TRADEMARKS
+OPEN LOOK is a trademark of AT&T.
+.br
+The X Window system is a trademark of the Massachusetts Institute of
+Technology.
+.SH BUGS
+.LP
+The resource names are somewhat disorganized.
+.LP
+When a window is Withdrawn (i.e. unmapped by the owner client),
+.B olwm
+doesn't reparent it back to the root.
+.LP
+In the two-dimensional look, the bottom border is missing from menus
+that have no title or pin.
+.LP
+Menu items sometimes have the last character truncated.

@@ -1,0 +1,7 @@
+; $Header: /afs/.andrew.cmu.edu/itc/sm/releases/X.V11R4/andrew/overhead/eli/elifiles/RCS/elilib.eli,v 2.2 89/05/18 12:47:06 mcinerny Exp $
+; $Source: /afs/.andrew.cmu.edu/itc/sm/releases/X.V11R4/andrew/overhead/eli/elifiles/RCS/elilib.eli,v $
+
+(load "strings")
+(load "lists")
+(load "ints")
+(load "misc")

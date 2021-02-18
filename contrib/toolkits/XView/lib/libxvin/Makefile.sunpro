@@ -1,0 +1,289 @@
+#
+# @(#)Makefile 15.69 89/07/31 SMI
+#
+# Copyright (c) 1987 Sun Microsystems, Inc.
+#
+WHOAMI=xvin
+# Global data for .sa library: (SysV: only first 14 chars significant)
+GLOBAL_DATA=	base_data.o   \
+		curs_data.o   \
+		font_data.o   \
+		fs_data.o     \
+		notifydata.o  \
+		rect_data.o   \
+		scrn_data.o   \
+		svr_data.o    \
+		svrim_data.o  \
+		windowdata.o  \
+		sel_data.o
+
+all:		xall
+
+include Makefile.arch
+include Makefile.master
+
+SUBDIRS=	attr base cursor defaults filter font \
+		fullscreen io_stream misc \
+		notify pw rect screen \
+		sel server server_image string_utils \
+		win window
+		
+SCCS_USER=
+SOURCE_SCCS= ${SCCS_DIRS}/SCCS_DIRECTORIES/usr.lib/lib${WHOAMI}
+SUBTREE_ROOT=
+
+SUBDIR_TARGET=
+
+VERS-mc68010=	version
+VERS-mc68020=	$(VERS-mc68010)
+VERS-sparc=	$(VERS-mc68010)
+VERS-i386=	$(VERS-mc68010)
+
+SPECIAL_MACRO1="NO_XSTR=${NO_XSTR}"
+SPECIAL_MACRO1${NO_XSTR}=
+
+SPECIAL_MACRO2="DBX=$(DBX)"
+SPECIAL_MACRO2$(DBX)=
+
+SPECIAL_MACRO3="SV_DEBUG=$(SV_DEBUG)"
+SPECIAL_MACRO3$(SV_DEBUG)=
+
+xall:		$(LIBS) $(LIBS_SA)
+
+MAKE_C_MACROS= "INCLUDE=${INCLUDE}" \
+	"TARGET_ARCH=${ARCH}" "DESTDIR=${DESTDIR}" \
+	"LINTFLAGS=${LINTFLAGS}"
+ZMAKE=	${MAKE} ${MFLAGS} ${MAKE_C_MACROS} ${SPECIAL_MACRO1} ${SPECIAL_MACRO2} ${SPECIAL_MACRO3}
+
+#   for_all always affects the subtree-root-directory as well as the rest of
+# the subtree, while for_subdirs only affects the rest of the subtree.
+for_all:	do_cmd for_subdirs
+
+for_subdirs:=	SUBDIR_TARGET=do_cmd
+for_subdirs:	${SUBDIRS}
+
+info:=		CMD=sccs info ${SCCS_USER}
+info:		for_all
+
+tags:=		SUBDIR_TARGET=tags
+tags::		tag_set ${SUBDIRS}
+
+tag_set:	FRC
+	-@if [ ! -f tags ]; then touch tags; fi;
+
+isolate:=	SUBDIR_TARGET=isolate
+isolate::	${SUBDIRS}
+
+connect:=	SUBDIR_TARGET=connect
+connect::	${SUBDIRS}
+
+libxview.a:	libxvin.a
+
+do_lib:	libxvin.a
+
+do_libs: libxvin.a libxvin.sa libxvin.so
+
+XSTR=		strings
+
+$(LIBS): 	$(SUBDIRS) $$(MAKE_TMP) $$(DIRS) objsort lorder-sparc
+		$(FINAL_COMMAND)
+	
+$(XSTR):	FRC
+	@if [ ! -f ../../libxview/strings ]; then \
+		touch ../../libxview/strings; \
+	fi
+	
+#
+#    This is the workhorse dependency that iterates over the subdirectories.
+#    The test for NO_DESCENT allows SUBLIBS to be constructed without doing
+# the iteration over the subtree.
+
+${SUBDIRS}:	FRC
+	   -@if [ "${NO_DESCENT}" = "" ]; then \
+	        if [ ! -d $@ ]; then \
+		    ${ZMAKE} "SUBDIRS=$@" new_subdir; \
+	        fi; \
+	        echo ""; echo "Descending into directory: $@"; \
+	        cd $@; \
+		rm -f strings; \
+		if [ -f ../../libxview/strings ]; then \
+	        	ln ../../libxview/strings strings; \
+		fi; \
+	        $(ZMAKE) 'CMD_DISPLAY=${CMD_DISPLAY}' 'CMD=${CMD}' \
+	            ${SUBDIR_TARGET} $(LIB); \
+	    fi
+        	
+libxvin.a	:= DIRS = $(SUBDIRS:%=%.load_$(LIB))
+libxvin_p.a 	:= DIRS = $(SUBDIRS:%=%.load_$(LIB))
+libxvin.so	:= DIRS = $(SUBDIRS:%=%.load_$(LIB))
+	
+HELP=		$(LIB)($(@:%.load_$(LIB)=%)/$(VARIANT)/*.o)
+
+$(SUBDIRS:%=%.load_libxvin.a) $(SUBDIRS:%=%.load_libxvin_p.a) : $$(HELP)
+	ar ruvl $(LIB)  $?
+
+$(SUBDIRS:%=%.load_libxvin.so): FRC
+	ln  $(@:%.load_libxvin.so=%)/$(VARIANT)/*.o tmp/
+
+libxvin.so libxvin_p.so	:= MAKE_TMP = make_tmp
+libxvin.a libxvin_p.a 	:= MAKE_TMP = FRC
+
+make_tmp:	FRC
+	rm -fr tmp
+	mkdir tmp
+
+libxvin.a libxvin_p.a	:= FINAL_COMMAND = \
+	-if [ "${NO_XSTR}" = "" ]; then \
+	    cd ../libxview; \
+	    xstr -l _libxview_xstr; \
+	    cp xs.c ../libxvin; \
+	    cd ../libxvin; \
+	    $(CC) $(CFLAGS) $(ROI_DATA) $(CFLAGS$(TARGET_MACH)) \
+		-o $(LIB).xs.o -c xs.c; \
+	    ar rv $(LIB) $(LIB).xs.o; \
+	    rm -f xs.c; \
+	fi; \
+	ranlib $@
+	
+libxvin.so libxvin_p.so	:= FINAL_COMMAND = \
+	cd ../libxview; \
+	xstr -l _libxview_xstr; \
+	cp xs.c ../libxvin; \
+	cd ../libxvin; \
+	$(CC) $(CFLAGS) $(ROI_DATA) $(CFLAGS$(TARGET_MACH)) \
+		-o tmp/$(LIB).xs.o -c xs.c; \
+	$(LD) `objsort lorder-sparc tmp`; mv a.out $(LIB); \
+	rm -f xs.c
+
+libxvin.sa:	FRC
+	rm -rf tmp_sa
+	mkdir tmp_sa
+	cd tmp_sa; ar x ../libxvin.a $(GLOBAL_DATA);ar rv ../$@ \
+		$(GLOBAL_DATA)
+	ranlib $@;
+	-cd tmp_sa; rm $(GLOBAL_DATA)
+	
+$$(LIB)(%.o):	%.o
+	@true
+
+clean:	FRC
+	@for i in ${SUBDIRS}; do \
+	(	echo ""; echo "Descending into directory: $$i"; \
+	        cd $$i; \
+		$(MAKE) $(MFLAGS) $(LINT_FLAGS) 'CMD_DISPLAY=${CMD_DISPLAY}' \
+		    'CMD=${CMD}' ${SUBDIR_TARGET} $(LIB); \
+	); done
+	rm -rf include tmp libxvin.a libxvin_p.a libxvin.so \
+	  libxvin_p.so libxvin.sa strings libxvin.a.strings \
+	  libxvin_p.a.strings libxvin.so.strings \
+	  libxvin_p.so.strings libxvin.sa.strings \
+	  libxvin.a.xs.o libxvin_p.a.xs.o libxvin.so.xs.o \
+	  libxvin_p.so.xs.o libxvin.sa.xs.o
+
+clean_obj clean_obj_p clean_shared:	$(SUBDIRS)
+
+install:: install_h 
+	-install -c -m 644 libxvin.a ${DESTDIR}/usr/lib
+	${RANLIB} ${DESTDIR}/usr/lib/libxvin.a
+
+#install:: install_lint $(VERS$(TARGET_MACH)) install_h install_libxvin.sh
+#	-install -c -m 644 libxvin.a ${DESTDIR}/usr/lib
+#	${RANLIB} ${DESTDIR}/usr/lib/libxvin.a
+#	-install -c -m 644 libxvin_p.a ${DESTDIR}/usr/lib
+#	${RANLIB} ${DESTDIR}/usr/lib/libxvin_p.a
+#	sh -x install_libxvin.sh $(INSTALL) $(VERS$(TARGET_MACH)) $(DESTDIR)
+
+llib-lsuntool:
+	@if [ ! -f llib-lsuntool ]; then \
+		sccs get llib-lsuntool; \
+	fi
+	
+llib-lsuntool.ln:	llib-lsuntool
+	-${LINT} -I${INCLUDE} -Csuntool llib-lsuntool
+
+#
+# empty target created to avoid fatal error
+# no lint library available yet.  -Janice C. Hsia 5/25/88
+#
+install_lint:
+#install_lint:		llib-lsuntool.ln
+#	-install -c -m 644 llib-lsuntool ${DESTDIR}/usr/lib/lint/llib-lsuntool
+#	-install -c -m 644 llib-lsuntool.ln ${DESTDIR}/usr/lib/lint/llib-lsuntool.ln
+	
+install_h::	FRC
+	-@if [ ! -d ${PRODINCLUDEDIR} ]; then \
+		mkdir ${PRODINCLUDEDIR} && \
+		chown bin ${PRODINCLUDEDIR} && \
+		chmod 755 ${PRODINCLUDEDIR}; \
+	fi
+	-@for i in ${SUBDIRS}; do (cd $$i; \
+		make ${MFLAGS} DESTDIR=${DESTDIR} install_subdir_h); done
+
+
+tags::
+	-for i in ${SUBDIRS}; do (cd $$i; make ${MFLAGS} "DESTDIR=${DESTDIR}" tags); done
+
+lint::
+	-for i in ${SUBDIRS}; do \
+	(       echo "Descending into directory: $$i"; \
+		cd $$i; \
+		${MAKE} ${MFLAGS} "LINTFLAGS=${LINTFLAGS}" lint \
+	); done
+
+new_subdir:	create_subdir usr_latest_dev
+
+create_subdir:
+	-@for subdir in ${SUBDIRS}; do \
+	(   if [ ! -d $${subdir} ]; then \
+		echo "Adding new subdirectory $${subdir} ..."; \
+		mkdir $${subdir}; \
+		cd $${subdir}; \
+		    ln -s ${SOURCE_SCCS}/$${subdir}/SCCS .; \
+		    ln -s ../tags .; \
+	    fi; \
+	); done
+
+subtree:
+	-@if [ "${SUBTREE_ROOT}" = "" ]; then \
+	    echo -n "SUBTREE_ROOT not defined."; \
+	    if [ -d attr ]; then \
+		echo "  Updating current hierarchy's subtree."; \
+		${ZMAKE} -s "SUBDIRS=${SUBDIRS}" new_subdir; \
+	    else \
+		echo "  This does not look like a subtree-root, aborting."; \
+	    fi; \
+	elif [ -d ${SUBTREE_ROOT} ]; then \
+		cd ${SUBTREE_ROOT}; \
+		echo "Making directories"; \
+		mkdir -p usr/src/usr.lib/libxvin; \
+		cd usr/src/usr.lib/libxvin; \
+		rm -f SCCS;\
+		ln -s ${SOURCE_SCCS}/SCCS .; \
+		for subdir in ${SUBDIRS}; do \
+		  ( \
+		    echo "Directory $${subdir}"; \
+		    mkdir $${subdir}; \
+		    cd $${subdir}; \
+		    rm -f SCCS tags; \
+		    echo "Making SCCS links"; \
+		    ln -s ${SOURCE_SCCS}/$${subdir}/SCCS .; \
+		    ln -s ../tags .; \
+# 	            echo "Making include files links"; \
+#		    ${MAKE} "DESTDIR=${SUBTREE_ROOT}" -s usr_latest; \
+		    cd ..; \
+		  ); done; \
+	else \
+		echo "${SUBTREE_ROOT}: No such file or directory"; \
+	fi
+
+usr_latest::
+	-mkdir ${DESTDIR}/usr_latest ${DESTDIR}/usr_latest/include ${DESTDIR}/usr_latest/include/xview ${DESTDIR}/usr_latest/include/xview_private
+	-@for i in ${SUBDIRS}; do \
+	(       echo "Descending into directory: $$i"; \
+		cd $$i; make ${MFLAGS} "INCLUDE=${INCLUDE}"\
+		"CFLAGS=${CFLAGS}" "CPUFLAG=${CPUFLAG}"\
+		"CC=${CC}" "DESTDIR=${DESTDIR}" "MAKE=${MAKE}"\
+		"LINTLIBS=${LINTLIBS}" usr_latest \
+	); done
+
+libxvin:	

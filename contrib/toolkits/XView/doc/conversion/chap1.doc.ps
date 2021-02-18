@@ -1,0 +1,4157 @@
+%!
+%%Pages: (atend)
+%%DocumentFonts: (atend)
+%%EndComments
+%
+% Frame Maker PostScript Prolog 1.3, for use with Maker 1.3
+% Copyright (c) 1986-1988 by Frame Technology, Inc.  All rights reserved.
+%
+% Known Problems:
+%	Due to bugs in Transcript, the 'PS-Adobe-' is omitted from line 1
+/FMversion (1.2) def 
+/FrameDict 123 dict def 
+% The readline in 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} def
+	} if
+/FMVERSION {
+	FMversion ne {
+		/Times-Roman findfont 18 scalefont setfont
+		100 100 moveto
+		(Maker version does not match postscript_prolog!)
+		dup =
+		show showpage
+		} if
+	} def 
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/landscape FMLOCAL
+	/docheight FMLOCAL
+	/docwidth FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/organgle FMLOCAL
+	/orgfreq FMLOCAL
+/FMDOCUMENT {
+	array /FMfonts exch def
+	/#copies exch def
+	FrameDict begin
+	0 ne /landscape exch def 
+	/docheight exch def
+	/docwidth exch def
+	/yscale exch def
+	/xscale exch def
+	currenttransfer cvlit /orgxfer exch def
+	currentscreen cvlit /orgproc exch def
+		/organgle exch def /orgfreq exch def
+	end 
+	} def 
+	/pagesave FMLOCAL
+	/orgmatrix FMLOCAL
+/FMBEGINPAGE {
+	FrameDict begin 
+	/pagesave save def
+	
+	2 setlinecap
+	xscale yscale scale
+	landscape {
+		90 rotate
+		0 docheight neg translate
+		/fillprocs /fillprocs90 load store
+		}
+		{/fillprocs /fillprocs0 load store}
+		ifelse
+	/orgmatrix matrix def
+	gsave 
+	} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+	/fontname FMLOCAL
+	/fontscale FMLOCAL
+	/fontnum FMLOCAL
+	/fontdict FMLOCAL
+/FMDEFINEFONT {
+	FrameDict begin
+	/fontname exch def
+	/fontscale exch def
+	/fontnum exch def
+	/fontdict fontname findfont fontscale scalefont def
+	fontdict /Encoding get StandardEncoding eq
+	{
+		fontdict DiacriticEncode 
+		/fontdict exch def
+	} {
+		fontdict NonDiacriticEncode
+		/fontdict exch def
+	} ifelse
+	FMfonts fontnum
+		fontnum fontdict definefont
+	put
+	end 
+	} def 
+/FMLINEWIDTHS { 
+	FrameDict begin
+	dup array /FMlinewidths exch def 
+	1 sub -1 0 {exch FMlinewidths 3 1 roll lnormalize put} for
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 setgray
+	} bind def
+/FMBEGINEPSF {
+	end 
+	/FMEPSF save def
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fy translate 
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	} bind def
+ 
+/FMENDEPSF {
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+ 
+FrameDict begin 
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi	72 0 dmatrix defaultmatrix dtransform
+	dup mul exch   dup mul add   sqrt
+def
+/max	{2 copy lt {exch} if pop} bind def
+/min	{2 copy gt {exch} if pop} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+	/basefontdict FMLOCAL
+	/newfontdict FMLOCAL
+/DiacriticEncode {
+	/basefontdict exch def
+	/newfontdict basefontdict maxlength dict def
+	basefontdict
+	{exch dup /FID ne
+		{dup /Encoding eq
+			{exch pop DiacriticEncoding}
+			{exch}
+			ifelse
+			newfontdict 3 1 roll put
+			}
+		{pop pop}
+		ifelse
+		} forall
+	newfontdict
+	} bind def
+/NonDiacriticEncode {
+	/basefontdict exch def
+	/newfontdict basefontdict maxlength dict def
+	basefontdict
+	{exch dup /FID ne
+		{exch newfontdict 3 1 roll put}
+		{pop pop}
+		ifelse
+		} forall
+	newfontdict
+	} bind def
+	/freq FMLOCAL
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setpattern {
+	 /freq    exch def
+	 /bwidth  exch def
+	 /bpside  exch def
+	 /bstring exch def
+	 /onbits 0 def  /offbits 0 def
+	 freq 0 {/y exch def
+		 /x exch def
+		 /xindex x 1 add 2 div bpside mul cvi def
+		 /yindex y 1 add 2 div bpside mul cvi def
+		 bstring yindex bwidth mul xindex 8 idiv add get
+		 1 7 xindex 8 mod sub bitshift and 0 ne
+		 {/onbits  onbits  1 add def 1}
+		 {/offbits offbits 1 add def 0}
+		 ifelse
+		}
+		setscreen
+	 {} settransfer
+	 offbits offbits onbits add div setgray
+	} bind def
+/grayness {
+	setgray
+	orgxfer cvx settransfer
+	orgfreq organgle orgproc cvx setscreen
+	} bind def
+/normalize {
+	transform cvi exch cvi exch itransform
+	} bind def
+/dnormalize {
+	dtransform cvi exch cvi exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/fillprocs0
+	[{0.00 grayness}
+	 {0.10 grayness}
+	 {0.30 grayness}
+	 {0.50 grayness} 
+	 {0.70 grayness}
+	 {0.90 grayness}
+	 {0.97 grayness} 
+	 {1.00 grayness} 
+	 {<0F1E3C78F0E1C387> 8 1 dpi 16 div setpattern} 
+	 {<0F87C3E1F0783C1E> 8 1 dpi 16 div setpattern} 
+	 {<CCCCCCCCCCCCCCCC> 8 1 dpi 16 div setpattern} 
+	 {<FFFF0000FFFF0000> 8 1 dpi 16 div setpattern} 
+	 {<8142241818244281> 8 1 dpi 16 div setpattern} 
+	 {<03060C183060C081> 8 1 dpi 16 div setpattern} 
+	 {<8040201008040201> 8 1 dpi 16 div setpattern} 
+	 {}
+	 {1.00 grayness}
+	 {0.90 grayness}
+	 {0.70 grayness}
+	 {0.50 grayness} 
+	 {0.30 grayness}
+	 {0.10 grayness}
+	 {0.03 grayness} 
+	 {0.00 grayness} 
+	 {<F0E1C3870F1E3C78> 8 1 dpi 16 div setpattern} 
+	 {<F0783C1E0F87C3E1> 8 1 dpi 16 div setpattern} 
+	 {<3333333333333333> 8 1 dpi 16 div setpattern} 
+	 {<0000FFFF0000FFFF> 8 1 dpi 16 div setpattern} 
+	 {<7EBDDBE7E7DBBD7E> 8 1 dpi 16 div setpattern} 
+	 {<FCF9F3E7CF9F3F7E> 8 1 dpi 16 div setpattern} 
+	 {<7FBFDFEFF7FBFDFE> 8 1 dpi 16 div setpattern} 
+	 {}
+	] def
+/fillprocs90
+	 [{0.00 grayness}
+	 {0.10 grayness}
+	 {0.30 grayness}
+	 {0.50 grayness}
+	 {0.70 grayness}
+	 {0.90 grayness}
+	 {0.97 grayness}
+	 {1.00 grayness}
+	 {<87c3e1f0783c1e0f> 8 1 dpi 16 div setpattern}
+	 {<f0e1c3870f1e3c78> 8 1 dpi 16 div setpattern}
+	 {<0000ffff0000ffff> 8 1 dpi 16 div setpattern}
+	 {<cccccccccccccccc> 8 1 dpi 16 div setpattern}
+	 {<8142241818244281> 8 1 dpi 16 div setpattern}
+	 {<81c06030180c0603> 8 1 dpi 16 div setpattern}
+	 {<0102040810204080> 8 1 dpi 16 div setpattern}
+	 {}
+	 {1.00 grayness}
+	 {0.90 grayness}
+	 {0.70 grayness}
+	 {0.50 grayness}
+	 {0.30 grayness}
+	 {0.10 grayness}
+	 {0.03 grayness}
+	 {0.00 grayness}
+	 {<783c1e0f87c3e1f0> 8 1 dpi 16 div setpattern}
+	 {<0f1e3c78f0e1c387> 8 1 dpi 16 div setpattern}
+	 {<ffff0000ffff0000> 8 1 dpi 16 div setpattern}
+	 {<3333333333333333> 8 1 dpi 16 div setpattern}
+	 {<7ebddbe7e7dbbd7e> 8 1 dpi 16 div setpattern}
+	 {<7e3f9fcfe7f3f9fc> 8 1 dpi 16 div setpattern}
+	 {<fefdfbf7efdfbf7f> 8 1 dpi 16 div setpattern}
+	 {}
+	] def
+/fillprocs /fillprocs0 load def
+/H { 
+	FMlinewidths exch get setlinewidth
+	} bind def
+/X { 
+	fillprocs exch get exec
+	} bind def
+/V { 
+	gsave eofill grestore
+	} bind def
+/N { 
+	gsave stroke grestore 
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+/K { 
+ 	/n exch def
+	newpath
+	moveto 
+	3 1 n {pop curveto} for
+	} bind def
+/J { 
+ 	/n exch def
+	newpath
+	moveto 
+	1 1 n {pop curveto} for
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	} bind def
+/U { 
+	grestore
+	gsave
+	} bind def
+/F { 
+	FMfonts exch get
+	setfont
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/Q { 
+	moveto
+	gsave show grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/dx FMLOCAL
+	/dy FMLOCAL
+	/dl FMLOCAL
+	/t FMLOCAL
+	/t2 FMLOCAL
+	/Cos FMLOCAL
+	/Sin FMLOCAL
+	/r FMLOCAL
+/W { 
+	dnormalize
+	/dy exch def
+	/dx exch def
+	normalize
+	/y  exch def
+	/x  exch def
+	/dl dx dx mul dy dy mul add sqrt def
+	dl 0.0 gt {
+		/t currentlinewidth def
+		savematrix
+		/Cos dx dl div def
+		/Sin dy dl div def
+		/r [Cos Sin Sin neg Cos 0.0 0.0] def
+		/t2 t 2.5 mul 3.5 max def
+		newpath
+		x y translate
+		r concat
+		0.0 0.0 moveto
+		dl t 2.7 mul sub 0.0 rlineto
+		stroke
+		restorematrix
+		x dx add y dy add translate
+		r concat
+		t 0.67 mul setlinewidth
+		t 1.61 mul neg  0.0 translate
+		0.0 0.0 moveto
+		t2 1.7 mul neg  t2 2.0 div     moveto
+		0.0 0.0 lineto
+		t2 1.7 mul neg  t2 2.0 div neg lineto
+		stroke
+		t setlinewidth
+		restorematrix
+		} if
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath eofill
+	grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+/A { 
+	/y exch def
+	/x exch def
+	/h exch def
+	/w exch def
+	x y normalize /yy exch def /xx exch def
+	w h dnormalize /hh exch def /ww exch def
+	ww abs hh abs xx ww add yy hh sub
+	gsave
+	savematrix
+	newpath
+	translate
+	scale
+	0.0 0.0 1.0 5 3 roll arc
+	0 setlinecap
+	restorematrix
+	stroke
+	grestore
+	} bind def
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE {
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 6 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	translate
+	FMNORMALIZEGRAPHICS
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/BEGINBITMAP { 
+	gsave
+	translate scale /h exch def /w exch def
+	/lb w 7 add 8 idiv def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h 1 [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+%%EndProlog
+%%BeginSetup
+(1.2) FMVERSION
+1. 1. 612. 792. 0 1 24 FMDOCUMENT
+0 7. /Helvetica  FMDEFINEFONT
+1 24. /Times-Bold  FMDEFINEFONT
+2 10. /Times-Roman  FMDEFINEFONT
+3 11. /Times-Roman  FMDEFINEFONT
+4 11. /Times-Italic  FMDEFINEFONT
+5 14. /Times-Bold  FMDEFINEFONT
+6 12. /Times-Roman  FMDEFINEFONT
+7 12. /Times-Italic  FMDEFINEFONT
+8 11. /Courier  FMDEFINEFONT
+9 11. /Times-BoldItalic  FMDEFINEFONT
+10 12. /Helvetica  FMDEFINEFONT
+11 11. /Times-Bold  FMDEFINEFONT
+12 14. /Times-Roman  FMDEFINEFONT
+13 18. /Times-Roman  FMDEFINEFONT
+14 12. /Times-Bold  FMDEFINEFONT
+15 9. /Times-Roman  FMDEFINEFONT
+16 9. /Helvetica  FMDEFINEFONT
+17 10. /Courier  FMDEFINEFONT
+18 10. /Helvetica  FMDEFINEFONT
+19 10. /Times-Bold  FMDEFINEFONT
+20 8. /Times-Roman  FMDEFINEFONT
+21 10. /Helvetica-Bold  FMDEFINEFONT
+22 24. /Times-Roman  FMDEFINEFONT
+23 36. /Times-Roman  FMDEFINEFONT
+0.5 1. 3. 4. 4 FMLINEWIDTHS
+%%EndSetup
+%%Page: "16" 14
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(16) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+FMENDPAGE
+%%Page: "15" 13
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(15) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+(The SunView window manager is built into SunView, and thus only ) 216. 694. T
+(SunView-style window management is provided.  However, XView on ) 216. 681. T
+(X11 lets a user select a window manager.  For maximal functionality ) 216. 668. T
+(and user interface consistency, an ) 216. 655. T
+2 F
+(OPEN LOOK UI) 366.9 655. T
+3 F
+( window manager that ) 436.33 655. T
+(conforms to the guidelines of the ) 216. 642. T
+2 F
+(ICCCM) 363.87 642. T
+3 F
+( is the preferred XView ) 396.1 642. T
+(window manager .) 216. 629. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(XView was originally intended as a migration path for users of the ) 216. 606. T
+(SunView toolkit.  During the process of implementing it on X11, ) 216. 593. T
+(however, there were relatively few problems in porting the toolkit to ) 216. 580. T
+(other hardware platforms.  The main problem with porting was that ) 216. 567. T
+(SunView uses the Pixrect library, which is available only on Sun ) 216. 554. T
+(hardware.  XView supports, but does not ) 216. 541. T
+4 F
+(require) 399. 541. T
+3 F
+(, pixrects, and is ) 431.38 541. T
+(implemented purely on top of X11.  Thus few, if any, problems are ) 216. 528. T
+(anticipated in porting XView to other platforms that fully implement ) 216. 515. T
+(X11.  In fact, XView is available from MIT\325s X Consortium, and a fairly ) 216. 502. T
+(large number of ports to a variety of platforms is expected shortly.) 216. 489. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Most of the features in Sun\325s proprietary window system, ) 216. 466. T
+(SunWindows, are now available in X11, which has the substantial ) 216. 453. T
+(benefit of supporting distributed window applications.  Also, the object-) 216. 440. T
+(oriented system model yields a clean application programming ) 216. 427. T
+(interface.  In SunView, this model was used in the text, panel and menu ) 216. 414. T
+(packages; in XView, the object-oriented system model, using C\325s varargs ) 216. 401. T
+(to support attribute-value lists, was extended to almost all packages.  ) 216. 388. T
+(XView thus adds capabilities that were previously impossible, and is ) 216. 375. T
+(portable to non-Sun hardware.) 216. 362. T
+55. 555. 198. 622. C
+55. 555. 198. 622. R
+7 X
+V
+5 F
+0 X
+(1.13) 59. 606. T
+(Portability) 90. 606. T
+U
+55. 415. 198. 482. C
+55. 415. 198. 482. R
+7 X
+V
+5 F
+0 X
+(1.14) 59. 466. T
+(Summary) 90. 466. T
+U
+FMENDPAGE
+%%Page: "14" 12
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(14) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+6 F
+(Figure 1-5) 147.67 693. T
+7 F
+(Sample ) 216. 693. T
+4 F
+(OPEN LOOK UI) 254.33 693. T
+7 F
+( applications) 329.49 693. T
+54. 90. 558. 702. C
+54. 317. 555. 679. C
+54. 317. 555. 679. R
+7 X
+V
+0 X
+1174 799 494. 354. 58. 321. 
+
+%%BeginBinary:  64552    
+BEGINBITMAP
+z"
+Q(AAABz"
+Q(5557z"
+Q(AAABz"
+Q(5557z"
+Q(AAABz"b"z"
+P'554001F5557z"R"z"j$
+P'AAAFFC2AA801AAAAABz"="z#D&
+P'554FFD2555FFC0FFE555557z"="z#Y&
+P'AAAFFC2AA9FFDEFFEAAAAABz"="z"G$
+P'554FFD2555F555557z"="z"G$
+P'AAAFFC2AA9FAAAAABz"8'z"G$
+P'554F80000003FFFD2555F555557z%8$z#D&
+P'AAAFFFFE0000FFFC2AA9F01E03EAAAAABz*z#D&
+P'554FFFFC03FFFFFC7FFD2555F7FFFBE555557"j"z"8"8$z"G$
+AAO22AAAAAF01FE7FFC2AA9FAAAAAB$J$z*z"G$
+54FFE0O.03FF95A554FFFF801F807FF3FFD2555F555557"Jz"="z"G$
+AAO2BAAAFFC2AA9FAAAAAB"J"z"="z%D$
+54O295A554FFD2555F7FE003555557$Z#z$;"z%C%
+AAFFEFO.FBFFBAAAFFF00FC2AA807FDFFD80AAAAAB"J"z%:"z%;"=%
+54O295A554FFF3FFDFD2554FFFBFFEC7FC555557#j"z"="z"9$8"8";$
+AAF8O00FBAAAFFC2AA8F7FFFE09FF7AAAAAB"J"z"="z%8#:";$
+54O295A554FFD2554FFFB806E67FE7555557"Jz"9#8"z%9)9$
+AAO2BAAAFF9FFFC2AA8FFFBBEE61C9064CF0C18727AAAAAB"J"z"="z$:(:$
+54O295A554FFD2554FFFBD4CC99E22666733555557"Jz%:"z"8"9%9"9$
+AAO2BAAAFFF3C01FC2AA8FDECCC79E661FAAAAAB"J"z%:"z$9$8%9$
+54O295A554FFF3FFDFD2554FFFBEE1C0CF6067033F555557&J#z%:"z"8"8#9$:$
+AA0000FFE0O-002AAAAAFFF3E01FC2AA8FBEE7CF67E73FAAAAAB&J":"J#z%:"z%9":#:$
+541801FFF0:6063;0C15A554FFF3FFDFD2554FFFBF3ECE673B555557"J"J"z"8#9"z"8"9"9$:$
+AAD10;2AAAAAF01FFFC2AA8F7EE170F187AAAAAB"8#J":#J"z"8":&R)8"8T9$
+54C030:006030;15A554FFDFD55555547F95555555555554FFE555557"8#J(J#j"r"=&=)G$
+AADF70:63C786C3C3E37C;2A80802AAAFFCAAAAAAAFFCAAAAAAAAAAAA8FAAAAAB"8"J(J$J#r"=&b,D$
+54EF;666CC766666330;155FFC63FF9554FFD5555554A0D5555555555554FFFC000555557"8#J#J$Z#r%:&R-C$
+AAEEF0;0CC6?2A9FFD6BFFAAAAFFF0001FCAAAAAAACC4AAAAAAAAAAAA8FFFE000FFAAAAAB"8"J#J#J"r$;&=,D$
+54F6>67E6=155F8F9554FFFE0FD55555549E55555555555554FFFFFFF555557"8"J#J#J"r"8+=)G$
+AAF5>6606=2A9F8FAAAAF000000003FFCAAAAAAABE4AAAAAAAAAAAA8FAAAAAB"8"J"8#J#J"r$;&=)G$
+54F9<2C26E3<155F8F9554FFFC0FD5555554BE55555555555554F555557"8"J(J$J#r.=)G$
+AAFB;63C78663C3631C;2A9F01680FAAAAFFF97F4FBF7FFFFFCAAAAAAABE4AAAAAAAAAAAA8FAAAAAB"8"JbJ$J#r%:&=)G$
+54FF;;155F7F6FEF9554FFF2FE9FD5555554BE55555555555554F555557"J#J"r%:5G$
+AAO22A9F8FAAAAFFE5FD34FCAAAAAAABFFF80000000FFFE4AAAAAAAAAAAA8FAAAAAB&J#J"r%:(9+G$
+5418000000O.155F8F9554FFCBFA7FD5555554BFFF007FFE55555555555554F555557"J#J"r%:5G$
+AAO22A9F8FAAAAFF97F4F4FCAAAAAAABFFF3FFFFFFE7FFE4AAAAAAAAAAAA8FAAAAAB"J&J"r%:5G$
+54O2155F7FE0035F9554FF2FE9F4FD5555554BFFF200000027FFE55555555555554F555557"J&J"r%:&8$8)G$
+AAO22A807FDFFD502AAAFE5FD3FFCAAAAAAAB555555E4AAAAAAAAAAAA8FAAAAAB"J&@"?#r%:&8.G$
+54O2154FFFBFFE3FFFF1554FCBFA7FFD5555554BAAAAAAA7FFE55555555555554F555557"J#9"="8#>"r%:&8.G$
+AAO22A8F7FCFCFF3F2AAAF97F4FFFCAAAAAAAB55555527FFE4AAAAAAAAAAAA8FAAAAAB#Z'A#>"r$;&8.G$
+541FO0FC154FFFB8060FE3F1554FAFE9FD5555554BAAAAFEA7FFE55555555555554F555557#j'>&>"r$;&8.G$
+AA18O03C2A8FFFBBEECE673FCFD3F2AAAFAFD3FCAAAAAAAB55557D27FFE4AAAAAAAAAAAA8FAAAAAB#Z&C">"r$;&8.G$
+541FO0FC154FFFBDB3F1554F8007FD5555554BAAAAFEA7FFE55555555555554F555557"J#8"B">"r'8&8.G$
+AAO22A8FDE73F2AAAFC01FFFF807FCAAAAAAAB55557D27FFE4AAAAAAAAAAAA8FAAAAAB"J%C">"r$;&8.G$
+54O2154FFFBE01F1554FFFFFFD5555554BAAAAFEA7FFE55555555555554F555557$`$a$`"J#8"J"r"9#8&8.G$
+AA1FFC3FFFFC3FFFFC0FG2A8FBE5F2AAAFFFFFFCAAAAAAAB55555527FFE4AAAAAAAAAAAA8FAAAAAB$P$Q$P"J&?"8">"r"=&8.G$
+541FF3CFFFF3CFFFF3F3G154FFFBF3E47F3F1554FFD5555554BAAAAAAA7FFE55555555555554F555557$;$<$;"J#8">#A"r"=&8.G$
+AA1FEFF7FFEFF7FFEFFDG2A8F7ECF27F2AAAFFCAAAAAAAB55555527FFE4AAAAAAAAAAAA8FAAAAAB$;$<$;"J#8">&>"r"=&8.G$
+541FDFFBFFDFFBFFDFFEG154FFE1FFFFFFFFFF1554FFD5555554BAAAAAAA7FFE55555555555554F555557"=">">"J#A"B"r"=&8.<"@$
+AAF9F97FF2A8FFFF2AAAFFCAAAAAAAB55555527FFE4AAAAAAAAAAAA8FF7AAAAAB$;$<$;"J&J"r"=&8.G$
+541FBFFDFFBFFDFFBFFFG154FFFC0005F1554FFD5555554BAAAAAAA7FFE55555555555554F555557"=">">"J'J"r"=&8.G$
+AAFCFC3FF2A8FFFE000FF4F2AAAFFCAAAAAAAB55555527FFE4AAAAAAAAAAAA8FAAAAAB"9"=">#J&J"r"=&8.G$
+54DDEFFDDFJ154FFFFFFF5F1554FFD5555554BAAAAAAA7FFE55555555555554F555557"8"8#9"9#9&J#J"r"=&8.G$
+AAE1E00FDEE00FC1FDDDF803H2A8F8F2AAAFFCAAAAAAAB55555527FFE4AAAAAAAAAAAA8FAAAAAB"8&:"8#9&J#J"r"8"8(8$8)G$
+54EFFDFFF7DFFFF7DFDFFDFDFDF7H154F8F1554F77EFFFFD5555554B000000E55555555555554F555557"9#<$<$J#J"r"9"95G$
+AADDC7EE3BFBE1D87DI2A8F8F2AAAF7F4FCAAAAAAABFFF3FFFFFFE7FFE4AAAAAAAAAAAA8FAAAAAB":$:&:%J#J"r"8":5G$
+54BBFBBFEDDBBBFBBFDDDDFEEFH154F8F1554FF74FD5555554BFFF000000007FFE55555555555554F555557"8"=%;"J#j#s&8(9+G$
+AAE1EDEDDDB7C3L2A8F703F2AA678F761CF9FCAAAAAAABFFF80FFFE4AAAAAAAAAAAA8FAAAAAB"8&:&9"8#J$Z#r'8&R)G$
+54EFDD83FD7FEC1D57FD7FDFFF5FH154F7F6FBF155499B77777B76FD5555554BE55555555555554F555557":"<#J#J"r.=)G$
+AABFEDFDO%2A8F8F2AAABBBF77777AF6FFFFCAAAAAAABE4AAAAAAAAAAAA8FAAAAAB":$9':"8"J#J"r$;5>">$
+54BBFEFFF3EDDEEFFEFFD9BFH154F8F1554BBB874FD5555554BFF8000000000FFE55555555555554FEF555557":#;%:&J#J"r$;5G$
+AAC7FFEE3EEFFFC1E5DE7FFFH2A8F8F2AAABBB774FCAAAAAAABFF3FFFFFFFFE7FE4AAAAAAAAAAAA8FAAAAAB"8$;%;%J#J"r"95G$
+54FFFFFFFFFFFFFFFFFFFFFFI154F8F1554B87B76EFFFFD5555554BFE75555555573FE55555555555554F555557"J#J"r'85G$
+AAO22A8F8F2AAABBB8B779CF94FCAAAAAAABFCEAAAAAAAAB9FE4AAAAAAAAAAAA8FAAAAAB$;$<$;"J#J"r"R5;"A$
+541FDFF8FFDFF8FFDFFEG154F8F1554F4FD5555554BF9D555555555CFE55555555555554FF7555557"=">">"J#J"r"='P*G$
+AAF9F97FF2A8F8F2AAAFFCAAAAAAABF9CFE4AAAAAAAAAAAA8FAAAAAB$;$<$;"J#J"r"='`*G$
+541FEFF1FFEFF1FFEFFCG154F8F1554FFD5555554BF80FE55555555555554F555557$;$<$;#J#J"r"c%=)G$
+AA1FF3CBFFF3CBFFF3F2FFF2A8F8F2AAA0AAAAAAABE4AAAAAAAAAAAA8FAAAAAB$`$a$`"J#J"z"R)G$
+541FF807FFF807FFF801G154F8F13554BE55555555555554F555557$;$<$;"J#J"z"=)>">$
+AA1FFE1FFFFE1FFFFE07G2A8F8F23AAABE4AAAAAAAAAAAA8FCFAAAAAB#ZJ#J"z"=)G$
+541F8G154F8F13554BE55555555555554F555557"J#J"z"=)G$
+AAO22A8F8F23AAABE4AAAAAAAAAAAA8FAAAAAB"J#J"z"=)G$
+54O2154F8F13554BE55555555555554F555557"J#J"z"=)G$
+AAO22A8F8F23AAABE4AAAAAAAAAAAA8FAAAAAB"J#;$=$<"r"b&=);#@$
+54O2154FE0000FF80007F15540015555554BE55555555555554FE7E7555557"J#9&;&<"r"R&=)G$
+AAO22A8FEFFFF00017F7FFF4000BF2AAAFFCAAAAAAABE4AAAAAAAAAAAA8FAAAAAB"J#9&;&<"r"r&=)8";">$
+54O2154FCFFFFFFFE7E7FFF3FFF3F1554AAAAD5555554BE55555555555554FFDCD555557"J#J"r"r&=)?"=$
+AAO22A8F8F2AAAD5554AAAAAAAFFCAAAAAAAAAAAA8FBFAAAAAB"J#I#9"r"r&=)G$
+54O2154FEE7FF1554AAAAD5555554FFD5555555555554F555557"J#I#9"r"r5E$
+AAO22A8FCDBFF2AAAD55654AAAAAAAE1F0FBDC3C3EF07FCAAAAAAAAAAAA8FFFF7AAAAAB"J#I":"r"r58"9$>$
+54O2154FADF1554AAA4AD5555554DEEF79DBFBDEF7FFD5555555555554FF9EBFFC9555557"J#?#>":"r"r(8"8)>">$
+AAO22A8FFE7F6DF2AAAD5554AAAAAAABFDFB7EFCAAAAAAAAAAAA8FD2AAAAAB"J#?#>":"r"r&8#9+8"B$
+54O2154FFC3F05F1554AAAAD5555554BAD9FFD5555555555554FFFF6FB555557"J#?#>":"r"r&8#8*G$
+AAO22A8FFE7FEDF2AAAD5554AAAAAAABA5C70FFCAAAAAAAAAAAA8FAAAAAB"J#?#>#9"r"r&8#8*G$
+54O2154FFFFFEE7FF1554AAAAD5555554BB5F37FFD5555555555554F555557"J#9&;)9"r"r&8#9)G$
+AAO22A8FEFFFF80017F7FFF4000BFFFFFFF2AAAD5554AAAAAAABB9FBFCAAAAAAAAAAAA8FAAAAAB"J#9&;&<"r"r(8"8)G$
+54O2154FFFFFF0000FFFFFF80007F1554AAAAD5555554DEEF7BDFD5555555555554F555557#j$9&;&<"r"r5B$
+AA18O03C2A8FEFFFEFFFFFF7FFFFFFFBF2AAAD55954AAAAAAAE1F0FBD87C3E107FCAAAAAAAAAAAA8FFFF4F9BFF9AAAAAB#Z$9$="9"<"r"r&R)G$
+541BO0BC154FCFFFE7E7F3F1554AAAAD5555554FFD5555555555554F555557"J#?#C"r"r&=)G$
+AAO22A8FFE7FF2AAAD5554AAAAAAAFFCAAAAAAAAAAAA8FAAAAAB"J#?#C"r"r&=)8"D$
+54O2154FFC3FF1554AAAAD5555554FFD5555555555554FF6555557"J#?#C"r"r&c.A$
+AAO22A8FFE7FF2AAAD5554AAAAAAA0AAAAAAAAAAAA8FFFF576BFF5EBAAAAAB"J#?#C"r"r"z$<">$
+54O2154FFFFFF1554AAA1D2554FFFF1B2555557"J#I#9"r*z";"8">$
+AAO22A8F5D6FF2AAAD55555555555552EC2AA8FDBB6AAAAAB"J#I#9"r*z"C"9$
+54O2154F2C97F1554AAAAAAAAAAAAAACF52554FDF555557"J#I#9"r*z#B"9$
+AAO22A8F6DB7F2AAAD55555555555553742AA8FFBCFAAAAAB"J#;$=$<"r*z"C"9$
+54O2154FE4001FFE0013F1554AAAAAAAAAAAAAA3B52554F4F555557"J#9&;&<"r*z">#=$
+AAO22A8FEFFFE8000FF7FFFC000BF2AAAD5555555555554DC42AA8F365FAAAAAB"J#9P;Q":"r*z$;"?$
+54O2154F1DF1554AAAAAAAAAAAAA8EED2554FFBE9FE555557"J#I#9"r*z%9"@$
+AAO22A8F7FFFF2AAAD555555555555A7542AA8FFBAB6EDBAAAAAB"J#J"r*z"9"C$
+54O2154F8F1554AAAAAAAAAAAAA5B2D2554F9F555557"J#I":"r*z#=";"8$
+AAO22A8FFFF2AAAD555555555555B4542AA8FF337EFAAAAAB"J#J"r*z"8(>$
+54O2154F8F1554AAAAAAAAAAAA96CAD2554FAE5FF69BDB7EB7555557"J#J"r*z">">$
+AAO22A8F8F2AAAD55555555554ADD542AA8FBFAAAAAB"J#J"r*z";#@$
+54O2154F8F1554AAAAAAAAAAAB5B2AD2554FBBDA555557"J#J"r*z"8"8#<"9$
+AAO22A8F8F2AAAD55555555554B6D542AA8F9E79BA37AAAAAB"J#J"r*z$;":#9$
+54O2154F8F1554AA00000000016C0052554FF3AFBDFEB7555557"J#J"r#:$z(>"8$
+AAO22A8F8F2AAAD502D80042AA8FF5AFDE5FEE78CFAAAAAB"J#J"r*z$<";"8$
+54O2154F8F1554AA3FFFFFFFF5B7FE52554FF52FFFD5555557"J#J"r*z&A&
+AAO22A8F8F2AAAD52191FFFFEB6E0242AA8FF54FDE5B7FFCAAAAAB"J#J"r*z"8&8#:&
+54O2154F8F1554AA2080FFFFD6DEFA52554FFF5B6EF9395DE63FFC555557"J#J"r*z"<(:$
+AAO22A8F8F2AAAD53FFFFFFFADBEFA42AA8FF9DDFF4CE67F7EAAAAAB"J#J"r*z#9#9#9"8$
+54O2154F8F1554AA22267FFF5B7EFA52554FED2FFB44E9D4555557"J#J"r*z"<"8,
+AAO22A8F8F2AAAD522027FFEB6FEFA42AA8FFD42D97E7EB2D4BFFCAAAAAB"J#J"r*z"9#:$8'
+54O2154F8F1554AA3FFFFFFD6DFEFA52554F650F4B5BA952DFFC555557":"j"9#J"r*z"9#8)8$
+AA80O)7F2A8F8F2AAAD52134FFFADBFEFA42AA8F64FFEBFF5B5F8BBEBD32AAAAAB":5:#J"r*z"<"8'8$
+54O*95AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56A154F8F1554AA20107FF5B7FE0252554FFF5F3F97BDFD3A555557":5:#J"r*z"9"9.
+AAO*AAD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB52A8F8F2AAAD53FFFFFEB6FFFFE42AA8FF4E7FFDFFFB7BDFFBBCFFCAAAAAB":5:#j#r#8#8"z$=%8&
+54O*95AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56A154F703F1554AA3FD6DE52554FECDFFFFFFF83F1FC555557":5:#Z"r#8#8"z"S:)
+AAO*AAD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB52A8F8F2AAAD53F8DBE42AA8FFFFFFFFFFCAAAAAB":5:#J"r#8#8"z"G$
+54O*95AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56A154F8F1554AA3F6B7E52554F555557":5:#J"r#8#8"z"G$
+AAO*AAD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB52A8F8F2AAAD53F76FE42AA8FAAAAAB":"Z:$J#r#8#8"z"C(
+54BFO)15407F6FE01554AA3EF9FE52554FF79E7FFC555557":"J":#J"r#9"8"z%@(
+AA95O(EA2A9F8FAAAAD533FE42AA8FF8D76FE76DBFFCAAAAAB":"J":#J"r#8#8"z$A(
+54AAO(F5155F8F9554AA3CCFFE52554FF7CBF74D3FFC555557":"J":#J"r#8"9"z$B'
+AA95O(EA2A9F8FAAAAD53C3E42AA8FF7DB2CBFFCAAAAAB":"J":#J"r#8"9"z%A"8$
+54AAO(F5155F8F9554AA38FE52554FF7CB4F6D555557":"J":#J"r#8"9"z%@(
+AA95O(EA2A9F8FAAAAD53BFE42AA8FF8D7AFE39E7FFCAAAAAB":"J":$J#r#8"9"z%@(
+54AAO(F5155F01680F9554AA3FFE52554FFFDFFFFFFFFFFC555557":"J":$J#r#<"z$E$
+AABFO(FF2A9FFD6BFFAAAAD53E42AA8FFFFFAAAAAB":5:#J"r#<"z"G$
+54O*95FF56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5ABFEA155F8F9554AA3E52554F555557":5:#J"r#<"z"G$
+AAO*AAFFAB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5FF52A9F8FAAAAD53E42AA8FAAAAAB":5:#J"r#<"z"G$
+54O*95FF56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5ABFEA155F8F9554AA3E52554F555557":5:$j#r#<"z"G$
+AAO*AAFFAB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5FF52A9FFC63FFAAAAD53E42AA8FAAAAAB":5:$J#r#<"z"G$
+54O*95FF56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5ABFEA15400060001554AA3E52554F555557":5:"z#<"z"G$
+AAO*AAFFAB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5FF52AAAAAD53E42AA8FAAAAAB":"Z:"z#<"z#E%
+54BFO)15A554AA3E5255407F80555557":$J$:"z#<"z"F%
+AA95FF57O$FABFEA2AAAAAD53E42AA9FBEAAAAAB":$J$:"z#a"z"G$
+54AAFFABO$FD5FF515A554AA0052555F555557":$J$:"z#<"z"G$
+AA95FF57O$FABFEA2AAAAAD50042AA9FAAAAAB":$J$:"z"R"z"G$
+54AAFFABO$FD5FF515A554FFD2555F555557":$J$:"z"cz"G$
+AA95FF57O$FABFEA2AAAAA02AA9FAAAAAB":$J$:"z#D&
+54AAFFABO$FD5FF515O.555F01E03E555557":$J$:"z#D&
+AABFFFFFO$FFFFFF2AO.AA9FFDEFFEAAAAAB":$J$:"z"G$
+5495FF57O$FABFEA15O.555F555557":$J$:"z"G$
+AAAAFFABO$FD5FF52AO.AA9FAAAAAB":$J$:"z"G$
+5495FF57O$FABFEA15O.555F555557":$J$:"z#i&
+AAAAFFABO$FD5FF52AO.AA9FFC0FFEAAAAAB":$J$:#jD&
+5495FF57O$FABFEA1550O/0000015557":$J$:$J%
+AAAAFFABO$FD5FF52AA7FFO=3FFAAAAB":$J$:%Z%
+54BFFFFFO$FFFFFF1557FF7FO<BFF95557":$J$:#J$
+AA95FF57O$FABFEA2AA7O?FAAAAB":$J$:#J$
+54AAFFABO$FD5FF51557O?F95557":$J$:#J$
+AA95FF57O$FABFEA2AA7O?FAAAAB":$J$:$J%
+54AAFFABO$FD5FF51557C0O=80F95557":$J$:%J%
+AA95FF57O$FABFEA2AA7DFFFO<FEFAAAAB":$J$:#J$
+54AAFFABO$FD5FF51557O?F95557":$J$:#J$
+AABFFFFFO$FFFFFF2AA7O?FAAAAB":$J*J$:#J$
+5495FF575FD5AB56AD5AB56AD5F4FABFEA1557O?F95557":$J*J$:&J$
+AAAAFFAB5FEAD5AB56AD5AB56AF4FD5FF52AA7DFF800O<FAAAAB":$J*J$:'J$
+5495FF575FD5AB56AD5AB56AD5F4FABFEA15501FF7FF7FO;015557":$J*J$:'J#9"8$8"8"8"J%
+AAAAFFAB5FEAD5AB56AD5AB56AF4FD5FF52AA3FFEFFFBF9F3F33FFCFFCFF93FE7;FFF2AAAB":$J*J$:#9"J$J$
+5495FF575FD5AB56AD5AB56AD5F4FABFEA15539FO"8787876F15557":$J*J$:&J"8#8$8"8"8"9$J$
+AAAAFFAB5FEAD5AB56AD5AB56AF4FD5FF52AA3FFEE01;FFFE7FF9FFFFF3FFCF3333336F2AAAB":$JTJ$:#8"J5J$
+54BFFFFF54FFFFFF1553FB6>0727873F333393C19E7338327999CE1CFCF332673873F3CE0E6727F3333F6F15557":$H0G$:&J48*J$
+AA95FF57D5AB56AD5ABFEAD5ABFEAD5AB56AD5FABFEA2AA3FFEF7B5FE7F133333337389999CF333F27399CCCCCCE73333339CFE6713F3137F2AAAB":$H0G$:#8"J.8%8*J$
+54AAFFABEAD5AB56AD5FF56AD5FF56AD5AB56AFD5FF515537763F33339272F39999F8F331F1E3CE49C79639271C7E6733C787076F15557":$H0G$:#8"J#9"9.8#8$J$
+AA95FF57D5AB56AD5ABFEAD5ABFEAD5AB56AD5FABFEA2AA3B75FF0F70F9F33873E7CBCC0E49CFCF2F303E1EF323336F2AAAB":$H0G$:#8"J"8+8+9"J$
+54AAFFABEAD5AB56AD5FF56AD5FF56AD5AB56AFD5FF51553AF6C78072739991F3F33E33CFFE019FA72F33F8067F8E337F15557":$H0G$:#8"J"8)80J$
+AA95FF57D5AB56AD5ABFEAD5ABFEAD5AB56AD5FABFEA2AA3CF6E7CCF33399C993F23FE7CCEF339F339F33BCCE7FCE4733338F2AAAB":$H0G$:#8"J%:,8+J$
+54AAFFABEAD5AB56AD5FF56AD5FF56AD5AB56AFD5FF51553DF5FE0F3387F987F930739FE7CE1F333F387CCCFC1F27338787876F15557":$HZG$:#8"JS1RJ$
+AABFFFFF/FFFFFF2AA3FF599E7FFFFFF9FFFFFFFFF3FFFFFFFFFFC6F2AAAB":$F#8,8#E$:#J#9":":"J$
+5495FF57F56AFEAFFFF57FD5FF57FFFABFAB57FABFEA1553@C3FFFFFFFF=F15557":$F08#E$:'J"J$
+AAAAFFABFAB57FFFFF57FFFABFEAFFABFFFD5FD5ABFD5FF52AA3FFF0001F<FFLF2AAAB":$F08#E$:'J$
+5495FF57F56AFFFFFEAFFFF57FD5FF57FFFABFAB57FABFEA1553FFF8003FO;F15557":$F08#E$:'J$
+AAAAFFABFAB57FFFFF57FFFABFEAFFABFFFD5FD5ABFD5FF52AA3FFFFFFFFO;F2AAAB":$F08#E$:#J$
+5495FF57F56AFFFFFEAFFFF57FD5FF57FFFABFAB57FABFEA1553O?F15557":$F08#E$:#J$
+AAAAFFABFAB57FFFFF57FFFABFEAFFABFFFD5FD5ABFD5FF52AA3O?F2AAAB":$F$8U8#E$:#J$
+54BFFFFFFFFFFFFFFFFFFFFF1553O?F15557":$D$8#8&8#8$C$:#J$
+AA95FF57FD5ABFAB57F57FD5FF57F56AFEAD5FFABFEA2AA3O?F2AAAB":$D$8#8&8(C$:$j'
+54AAFFABFEAD5FD5ABFABFEAFFABFAB57FFFFF56AFFD5FF51553C0O;060003F15557":$D$8#8&8(C$:$Z'
+AA95FF57FD5ABFAB57F57FD5FF57F56AFFFFFEAD5FFABFEA2AA3DFO;F6FFFBF2AAAB":$D$8#8&8(C$:#8$8$:$8$8"8#;":"J$
+54AAFFABFEAD5FD5ABFABFEAFFABFAB57FFFFF56AFFD5FF51553E3F78F7FFFFB7FFFFBDFFFFEF7BC7EBFBFEF15557":$D$8#8&8(C$:#8$<"<":"9"="J$
+AA95FF57FD5ABFAB57F57FD5FF57F56AFFFFFEAD5FFABFEA2AA3FBF7EFDFDFF7BFFDIF2AAAB":$D$8#8&8(C$:#?"<":"8"9";":"J$
+54AAFFABFEAD5FD5ABFABFEAFFABFAB57FFFFF56AFFD5FF51553FFFFFFFF7FFFDFEF15557":$D$8#8P8$8#C$:&85J&
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2AA3DFF87BB4F4F7A7A63D3838F4F7A7A63D383DE9E98F4E0C7A787BF78F4F1FFA7A63D3838F4E7D0003F2AAAB":$C#9"9(9"9$A$:&85J'
+5495FF5756AFD5FABFFFD5FFFEAFD5FAB57FFABFEA1553DFF7FBC373F79B9FBCDDF773F79B9FBCDDFDE6E7EF377F79B77BF7EF36EFF9B9FBCDDF773E7EFBF7FFFFF15557":$C#9"9(9"9$A$:#;'8&8$8"9"8$8#J$
+AAAAFFABAB57EAFD5FFFEAFFFF57EAFD5ABFFD5FF52AA3777F7BBBFBDD7F7BBBFBDDEEFEF7BBF7BBBFBD77FFFF2AAAB":$C#9"9(9"9$A$:%@"G";"J&
+5495FF5756AFD5FABFFFD5FFFEAFD5FAB57FFABFEA1553DFF80760F0FFAFFF15557":$C#9"9(9"9$A$:&?"C"9";%J&
+AAAAFFABAB57EAFD5FFFEAFFFF57EAFD5ABFFD5FF52AA3DFFF7B7F676FF7F7FFF7CFDFFF2AAAB":$C#9"9(9"9$A$:#B"C"9"<#J&
+5495FF5756AFD5FABFFFD5FFFEAFD5FAB57FFABFEA155377976E77E7DFAFFF15557":$C#9"9(9"9$A$:&8%8&8$8"8"9$8&J&
+AAAAFFABAB57EAFD5FFFEAFFFF57EAFD5ABFFD5FF52AA3DFF0FB0F7F787BE38F7F787BE3DE1E78F771FF87DE38F7E7FBCFDFFF2AAAB":$C#9"9%8"9"9$A$:+Q'Q8&QJ&
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553DFFFFFF7FF7FFF7B7BFFFFFFFFDEFFFFFFFFBFDFAFFF15557":$B":"9#8"8#9":"A$:#9"9"<":"<#A"J&
+AA95FF57ABEAFD5FD5FD5FABEAFABFEA2AA3FFFBFBFE8FFFFFCFDFFF2AAAB":$B":#8#8"8#9":#@$:#;$<":"<";"J&
+54AAFFABD5F57FFEAFEAFEAFD5F57FFD5FF51553FFFFFFFFFFFFFFJFAFFF15557":$B":#8#8"8#9":#@$:#;#<%;"J&
+AA95FF57ABEAFFFD5FD5FD5FABEAFFFABFEA2AA37FBFFDFEFFEFF7O&FDFFF2AAAB":$B":#8#8"8#9":#@$:#?$B"J&
+54AAFFABD5F57FFEAFEAFEAFD5F57FFD5FF51553FBE39FEFO$FAFFF15557":$B":#8#8"8#9":#@$:#<"8$8"J&
+AA95FF57ABEAFFFD5FD5FD5FABEAFFFABFEA2AA3FFF3DD6DFFO.FDFFF2AAAB":$B":#8#8"8#9":#@$:5J&
+54AAFFABD5F57FFEAFEAFEAFD5F57FFD5FF5;1553DFF869E37D763D3C3FEBDF6BFDF538FC69FFC34F1D3C34F1C1O$FAFFF15557":$B":#8#8"8#9":#@$:5J&
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;2AA3DFF7E6DD6D6FBCDBBFFBDF97FDB4DEFBE6FFBF36ECDBF36EEFO$FDFFF2AAAB":$A":#9#8"8#:":"@$:#8"8#9(8%J&
+5495FF57D5F57FFD5FD5FD5F57D5FABFEA1553EE5FBDC3EFFDB5DEF7EE77EDDBF7O&FAFFF15557":$A":#9#8"8#:":"@$:%8#:%:&J&
+AAAAFFABEAFABFFEAFEAFEAFABEAFD5FF52AA3DFF8551FDDD3FD55C7770DDC77O&FDFFF2AAAB":$A":#9#8"8#:":"@$:)8"8$:&J&
+5495FF57D5F57FFD5FD5FD5F57D5FABFEA1553DFFF6EDDBB6F3FADFEEDFB76EDDFB7O&FAFFF15557":$A":#9#8"8#:":"@$:#;%8"9"J&
+AAAAFFABEAFABFFEAFEAFEAFABEAFD5FF52AA377BDDCBF6DFBO-FDFFF2AAAB":$A":#9#8"8#:":"@$:+8#9+J&
+5495FF57D5F57FFD5FD5FD5F57D5FABFEA1553DFF0EEE3BB7BBDDFE3F3FC6EFF877714387771F1O$FAFFF15557":$A":#9#8"8#:":"@$:$R"V&J&
+AAAAFFABEAFABFFEAFEAFEAFABEAFD5FF52AA3DFBFFDFFFFFFFFO$FDFFF2AAAB":$A":#9#8"8#:":"@$:#=#J&
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553FC7FO4FAFFF15557":$@":#9#9"9#9#:"?$:#=#A"J&
+AA95FF57EAFABFFEAFD5FABFFEAFABFABFEA2AA3FFFFFFO(FDFFF2AAAB":$@#9#9#9"9#9#:"?$:#;"A#9"9"9#8"8%:"J&
+54AAFFABF57FFD5FFF57EAFD5FFF57D5FD5FF51553FEC7EFBFF77FF7EF6FF7FFF7DF=FAFFF15557":$@#9#9#9"9#9#:"?$:#="?";"J"<"J&
+AA95FF57EAFFFABFFEAFD5FABFFEAFABFABFEA2AA3FDF7F77BFCF4FDFFF2AAAB":$@#9#9#9"9#9#:"?$:#H"="8$8(C"J&
+54AAFFABF57FFD5FFF57EAFD5FFF57D5FD5FF51553FFEFFEFFFFDFFFFEEFFFFFEFB74FAFFF15557":$@#9#9#9"9#9#:"?$:,=5J&
+AA95FF57EAFFFABFFEAFD5FABFFEAFABFABFEA2AA3DFF869E3A7869E3839EF1F78F8F0E3C3FE0E3FFEEEE1D3EEEC7C6FBDD3C7EE9C7A7EF0D3C74F0D3C707FE1A78F4F16FDFFF2AAAB":$@#9#9#9"9#9#:"?$:,=5J&
+54AAFFABF57FFD5FFF57EAFD5FFF57D5FD5FF51553DFF7E6DD9B7E6DDDF9GEEF7EF76FDDBBFF7DDFFDEEDFCFDEEF7BADBBCDBBDE6F79BDEFCDBB36FCDBBBFFDF9B773EFFFCF4FAFFF15557":$@#9#:"9"9#:":"?$:#8(="8">";"8*9'J&
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2AA3EEFDBB7EEDDDFFFEF6FDBDEEF7BBDEFDDFB76FDDFBBF77DFFF9B4FDFFF2AAAB":$?#9#:#9"9#:#:">$:)@"8$;+9&9$9"J&
+5495FF57F57FFD5FFEAFD5FABFFD5F57FABFEA1553DFF8EEE1BB8EF0871C1BEE3DFDF5F782ABBDD83DDF1DDC3771FE3BB86B4FAFFF15557":$?#9#:#9"9#:#:">$:)@"8$:%8&9&9$9"J&
+AAAAFFABFABFFEAFFF57EAFD5FFEAFABFD5FF52AA3DFFF6EDDBBF6EE77EDFBBEEFDDFBBF777DDBFBBFEDDBB77EFFDBB7774FDFFF2AAAB":$?#9#:#9"9#:#:">$:#>"B#:"8$9"A"9"J&
+5495FF57F57FFD5FFEAFD5FABFFD5F57FABFEA1553F9DB3FCFFBF7BBBB3FEF6FAFFF15557":$?#9#:#9"9#:#:">$:,=/8'80J&
+AAAAFFABFABFFEAFFF57EAFD5FFEAFABFD5FF52AA3DFF0EEE2870EEE3E39F177EF8A1E3CBFF8E3FF7F2C3DF7C776FC3C77E17E1DDC50E1DDC7C73C3878B7F1FF8B4FDFFF2AAAB":$?#9#:#9"9#:#:">$:,=T82P"PJ&
+5495FF57F57FFD5FFEAFD5FABFFD5F57FABFEA1553DFFFFFFFBFFFFFFFFFFFFFF7FFFFFFFEFDFFF7FFFFFF7FFFFFF7FB4FAFFF15557":$?#9#:#9"9#:#:">$:#J"8"9"8"9"J&
+AAAAFFABFABFFEAFFF57EAFD5FFEAFABFD5FF52AA3:FFFFFFFFFFBFDFFF2AAAB":$?#9#;"9"9#:#:">$:#:"G"j:";"J&
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553FFF80FFFF9F8FFF15557":$>5=$:#;#@":"Z"J$
+AA95FF57CFAB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AFFABFEA2AA37FBFDFFB/FEFF2AAAB":$>5=$:#?$="J$
+54AAFFABCFD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB57FD5FF51553FBC19FBFO+F15557":$>5=$:#<"8$J&
+AA95FF57CFAB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AFFABFEA2AA3FFF3FD6DO10007F2AAAB":$>5=$:5J'
+54AAFFABCFD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB57FD5FF561553DFF869E37D763D3C3FEBFD6BFF0D3C74F0D3C707O(F6FFF3F15557":$>5=$:5J$
+AA95FF57CFAB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AFFABFEA62AA3DFF7E6DD6D6FBCDBBFFBFB97FEFCDBB36FCDBBBFO+F2AAAB":$>5=$:#8"8#9)J$
+54AAFFABCFD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB57FD5FF51553EE5FBDF7EFFEFDDFB76FDDO-F15557":$>Z=$:%8#;'J"J$
+AABFFFFFCFFFFFF2AA3DFF8551FD3FF1DDC3771607EF2AAAB":$=#:#;":":#:#:#<$:)8*?#9"="J&
+5495FF57FD5FFEAF57D5F57FFABFFD5FFABFEA1553DFFF6EDDBB6F3FFBEFADFFEDDBB77EFE07C157CF9F3F15557":$=#:#;":":#:#:#<$:#;%8"D#9"="J&
+AAAAFFABFEAFFF57ABEAFABFFD5FFEAFFD5FF52AA377BDDCBF6DFF9FCC07CF0F3F2AAAB":$=#:#;":":#:#:#<$:+9*=):"J&
+5495FF57FD5FFEAF57D5F57FFABFFD5FFABFEA1553DFF0EEE3BB7BBDDFF3FE1DDC50E1DDC7C79E1C907FCCC3270F57CE073F15557":$=#:#;":":#:#:#<$:$R"Q&=):"J&
+AAAAFFABFEAFFF57ABEAFABFFD5FFEAFFD5FF52AA3DFBFF7FFFFFFFF9CCC92BFCC99126707CC033F2AAAB":$=#:#;":":#:#:#<$:#=#J&;"J$
+5495FF57FD5FFEAF57D5F57FFABFFD5FFABFEA1553FC7F472BFCDF93257EF15557":$=#:#;":":#:#:#<$:#=#<"B(:"J&
+AAAAFFABFEAFFF57ABEAFABFFD5FFEAFFD5FF52AA3FFFFFF0CF2BFC3C1320707CFFF3F2AAAB":$=#;";":":#:#:#<$:'J"8%:"J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553DFFC7FC78FCCF99327F57EF15557":$<#;"<":":#;#:#;$:,I";":"J$
+AA95FF57FEAF5757D5F57FF57FFABFFABFEA2AA3DFFDFBF7FFDE0C1C78EC7707EF2AAAB":$<#;"<":":#;#:#;$:#8"8&G#9$:"J$
+54AAFFABFF57ABABEAFABFFABFFD5FFD5FF51553F39FEDFBB77F9E1CC5330F57EF15557":$<#;"<":":#;#:#;$:#8"8"8"HS:"J$
+AA95FF57FEAF5757D5F57FF57FFABFFABFEA2AA3EB5FBF07EF2AAAB":$<#;"<":":#;#:#;$:#8"8$Fh$J&
+54AAFFABFF57ABABEAFABFFABFFD5FFD5FF51553FBDFDC3B07FE57C0003F15557":$<#;"<":":#;#:#;$:#<%DY#J&
+AA95FF57FEAF5757D5F57FF57FFABFFABFEA2AA3BFDC3CFFFE07CFFF3F2AAAB":$<#;"<":":#;#:#;$:#=$J"J$
+54AAFFABFF57ABABEAFABFFABFFD5FFD5FF51553DFBF7F=57EF15557":$=";"<":":#;#:#;$:#<"J"J$
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2AA37F@07EF2AAAB":$<#:"<";";"<":#;$:#<$J"J$
+5495FF57FEAFABABD5EAEAFABFFABFEA15537DDBB7>57EF15557":$<#:"<";";#;#9#;$:#<%J"J$
+AAAAFFABFF57D5D5EAF57FF57FFD5FFD5FF52AA37E3C78FF=07EF2AAAB":$<#:"<";";#;#9#;$:'PJ"J$
+5495FF57FEAFABABD5EAFFEAFFFABFFABFEA1553DFFC7FC7>57EF15557":$<#:"<";";#;#9#;$:'J"B"J$
+AAAAFFABFF57D5D5EAF57FF57FFD5FFD5FF52AA3DFFFFFFF67F07EF2AAAB":$<#:"<";";#;#9#;$:#J%<":"J$
+5495FF57FEAFABABD5EAFFEAFFFABFFABFEA15538FEEF7FFBFE57EF15557":$<#:"<";";#;#9#;$:#;#>%=">"9"8"9"?$H$
+AAAAFFABFF57D5D5EAF57FF57FFD5FFD5FF52AA37FBFF1FEFFE7FF3F03F8EF7FFFFEF2AAAB":$=":"<";";#;#9#;$:#?(9";':"9"8"8":'<"D$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553FBE39FFF8FFFFDBFEC7C3071E9BBCF53FEEFF0E1F1FFFC077FF15557":$<";"<";";"<";#:$:#<"8&:"<&;"9"<"9(J$
+AA95FF5757ABABD5EAEAF57FFABFEA2AA3FFF3DD6DFF6FCFEF7BFBEEE7F303FFF76EEDFFFFBFFF4F2AAAB":$<";"<";";#;#:#:$:58"9";"9,8,D$
+54AAFFABABD5D5EAF57FF57FFABFFD5FF591553DFF869E37D763D3C3FEBDD6BFEFE3BBDF0D3FF07FE9C7B0FEFFD53FF0E3EF8F8C18F8E9E7FDFCFFFBC75B8F0FFC7760FF15557":$<";"<";";#;#:#:$:58$8":"9+<)D$
+AA95FF5757ABABD5EAFFEAFFF57FFABFEA92AA3DFF7E6DD6D6FBCDBBFFBDD97FEFDDBBDEECDFFBFFE7BB3EF7C7BD7F303FEFDDEF777EFEF766EBF72576EFFBB777FF2AAAB":$<";"<";";#;#:#:$:#8"8#9#;"9#9#="9":"9'8#I$
+54AAFFABABD5D5EAF57FF57FFABFFD5FF51553EE5FBDE3EFDDFBBB7FBBCF536FEFFFF0EEDFFF76D7F15557":$<";"<";";#;#:#:$:%8#:#?#=":"9&<#;"G&
+AA95FF5757ABABD5EAFFEAFFF57FFABFEA2AA3DFF8551FDDD3F83BEF3F03FF1C1EF0F6E1D00003F2AAAB":$<";"<";";#;#:#:$:)8"8"?#9$<"9';#;#F&
+54AAFFABABD5D5EAF57FF57FFABFFD5FF51553DFFF6EDDBB6F3FADFBF3787C71FF53FFEDFEF7EFF76FD7EEFFF3F15557":$<";"<";";#;#:#:$:#;%8';"R"9":"8$9#8#:"8"E$
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2AA377BDDCBF6DFF7DDB3DECB3DFFF03DEF777EE7FEFCF6C67F2AAAB":$<":"=";";"=":#:$:+8(8%=">*:":'D$
+5495FF5757D5ABD5EAD5F57FFABFEA1553DFF0EEE3BB7BBDDFE3F3FF8E3CBDF2C7FEFC7B9F53FE1E3EF8F8F1EF8EF1D8F2FFC7978FF15557":$<":"=";";#<":#:$:$R"X"=">"ZD$
+AAAAFFABABEAD5EAF57FEAFABFFD5FF52AA3DFBFFBFF077F2AAAB":$<":"=";";#<":#:$:#=#J"J$
+5495FF5757D5ABD5EAFFD5F57FFABFEA1553FC7F>57EF15557":$<":"=";";#<":#:$:#=#J"J&
+AAAAFFABABEAD5EAF57FEAFABFFD5FF52AA3FFFF>07CC033F2AAAB":$<":"=";";#<":#:$:#J"J$
+5495FF5757D5ABD5EAFFD5F57FFABFEA1553G57EF15557":$<":"=";";#<":#:$:#J"J&
+AAAAFFABABEAD5EAF57FEAFABFFD5FF52AA3G07CE073F2AAAB":$<":"=";";#<":#:$:#J"J&
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553G57CF0F3F15557":$;";"<"<"<"<";":$:#J"J&
+AA95FF57ABD5D5D5D5D5EAFABFEA2AA3G07CF9F3F2AAAB":$;";"<"<"<"<";#9$:#J"B"J&
+54AAFFABD5EAEAEAEAEAF57FFD5FF51553:DE57CFFF3F15557":$;";"<"<"<"<";#9$:#J%<":"J$
+AA95FF57ABD5D5D5D5D5EAFFFABFEA2AA38FE0FDEFBFE07EF2AAAB":$;";"<"<"<"<";#9$:#J#>"9"J$
+54AAFFABD5EAEAEAEAEAF57FFD5FF515539FFDF3F57EF15557":$;";"<"<"<"<";#9$:#J%<"9"J$
+AA95FF57ABD5D5D5D5D5EAFFFABFEA2AA39FE18F07FCF07EF2AAAB":$;";"<"<"<"<";#9$:#J%<"9"J&
+54AAFFABD5EAEAEAEAEAF57FFD5FF515539FDDEFBFFF357C0003F15557":$;";"<"<"<"<";#9$:%J"?"9"J'
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFF2AA3DFDF71DFD07BF70007F2AAAB":$;";"<"<"<"<";":$:%J"?"9"J&
+5495FF57ABD5D5D5D5D5EAFABFEA1553DFAF7FDF357CFFFFF15557":$;";"<"<"<"<";#9$:%J"9"J$
+AAAAFFABD5EAEAEAEAEAF57FFD5FF52AA3DF57ACF07EF2AAAB":$;";"<"<"<"<";#9$:%J">"9"J'
+5495FF57ABD5D5D5D5D5EAFFFABFEA1553DEAB89E3F57BF60003F15557":$;";"<"<"<"<";#9$:%J%<"9"J&
+AAAAFFABD5EAEAEAEAEAF57FFD5FF52AA3DF5770E5EFC7FFF07CFFFBF2AAAB":$;";"<"<"<"<";#9$:%JP;":"J$
+5495FF57ABD5D5D5D5D5EAFFFABFEA1553DFAF6FF57EF15557":$;";"<"<"<"<";#9$:%J"J$
+AAAAFFABD5EAEAEAEAEAF57FFD5FF52AA3DFDFE07EF2AAAB":$;";"<"<"<"<";#9$:%J"J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFF1553DFFFE57EF15557":$:59$:$j"Fj'
+AA95FF57KD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5FABFEA2AA3C0503C060003F2AAAB":$:59$:#Z"F"Z$
+54AAFFABKEAD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AFD5FF515536FB57EF15557":$:59$:#J"J$
+AA95FF57KD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5FABFEA2AA3G07EF2AAAB":$:59$:#J"J$
+54AAFFABKEAD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AFD5FF51553G57EF15557":$:59$:#J"J$
+AA95FF57KD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5FABFEA2AA3G07EF2AAAB":$:59$:#J"J$
+54AAFFABKEAD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AFD5FF51553G57EF15557":$:Z9$:#J$@"J$
+AABFFFFFKFFFFFF2AA3:7FFF7F07EF2AAAB":$:";"="<"<"=";"9$:#J">":"J$
+5495FF57D5EAD5D5D5ABD5FABFEA155390FFE57EF15557":$:";#<"<"<"=";"9$:*8"`"8&8#>"9"J$
+AAAAFFABEAF57FEAEAEAD5EAFD5FF52AA3FFE00000000001E001E0000000037FFF3F07EF2AAAB":$:";#<"<"<"=";"9$:-P)8$="9"J$
+5495FF57D5EAFFD5D5D5ABD5FABFEA1553FF9FFFFFFFFFFE7FFF9FFE7FFF9FFFFFFFFB7C7A78CF57EF15557":$:";#<"<"<"=";"9$:%:%;%<$="9"J$
+AAAAFFABEAF57FEAEAEAD5EAFD5FF52AA3FF7FFFBFFF7FFFBFFF7F7F79B7F307EF2AAAB":$:";#<"<"<"=";"9$:%;$<$<#>"9"J$
+5495FF57D5EAFFD5D5D5ABD5FABFEA1553FEFFDFFEFFDFFEFF0F7BFD57EF15557":$:";#<"<"<"=";"9$:#=">">"?"9"J$
+AAAAFFABEAF57FEAEAEAD5EAFD5FF52AA3CFCF7FF307EF2AAAB":$:";#<"<"<"=";"9$:$<#=#G"9"J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFF1553FDEFFDEFFDCF57EF15557":$:";"<"="="<";"9$:#=">"@"="9"J$
+AA95FF57D5EAEAD5ABABD5FABFEA2AA3E7E7B63F07EF2AAAB":$:";#;#<"="<";"9$:#8#=">"<"="9"J$
+54AAFFABEAF57FF57FEAD5D5EAFD5FF51553FEEF7FEEB9FF57EF15557":$:";#;#<"="<";"9$:#8"8#8#9#8&8%;":"J$
+AA95FF57D5EAFFEAFFD5ABABD5FABFEA2AA30E007FFEF7007FFE0FEEEFC3FFFFFFFFFF07EF2AAAB":$:";#;#<"="<";"9$:#8"8#:"8#9%F"J$
+54AAFFABEAF57FF57FEAD5D5EAFD5FF515537FBEFFFFBEFFFFEFEFEB57EF15557":$:";#;#<"="<";"9$:#8$<$<#G"J$
+AA95FF57D5EAFFEAFFD5ABABD5FABFEA2AA37EEE3F71DFDF0EC307EF2AAAB":$:";#;#<"="<";"9$:#9$;%:%F"J$
+54AAFFABEAF57FF57FEAD5D5EAFD5FF51553EDDFDD6EDDDFDDFEEEEFF357EF15557":$:";#;#<"="<";"9$:#8"<&;"I"J$
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2AA30EFF6F6EEDBF1E07EF2AAAB":$:";"<"="="<";"9$:#8%;%:"8"D"dJ$
+5495FF57D5EAEAD5ABABD5FABFEA15537EEC1FEB60EABFEBFEFBC0>F15557":$:";#;#<"="<";"9$:#9#<"J"S"J$
+AAAAFFABEAF57FF57FEAD5D5EAFD5FF52AA3EDFF6F9DFFE>F2AAAB":$:";#;#<"="<";"9$:#:#:&;"J$
+5495FF57D5EAFFEAFFD5ABABD5FABFEA1553DFF79F6EF77FF7CEO*F15557":$:";#;#<"="<";"9$:#9$;"8":$J$
+AAAAFFABEAF57FF57FEAD5D5EAFD5FF52AA3EE3FFF71FF0F2EF3O)F2AAAB":$:";#;#<"="<";"9$:#8$;%:%J$
+5495FF57D5EAFFEAFFD5ABABD5FABFEA1553FFFFFFFFFFFFFFFFFFFFFFO)F15557":$:";#;#<"="<";"9$:#J$="8"cJ$
+AAAAFFABEAF57FF57FEAD5D5EAFD5FF52AA38FE0FFDFEDE?F2AAAB":$:";#;#<"="<";"9$:$<#=#="?"J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553FEC7FEC7FEFF3FIF15557":$9"C"J";"8$:#=">">&;"8"Q$J$
+AA95FF57EAEA757ABFABFEA2AA3CFCFFDD83A71E1CF7FFCFE07=F2AAAB":$9#B#J";"8$:%;$<$=%;"A"J$
+54AAFFABF57FF57F6ABD5FD5FF51553FF7F8FFF7F8FFF7FDDF9EEDFF357=F15557":$9#B#J";"8$:%:%;%<%<"A"J$
+AA95FF57EAFFEAFF657ABFABFEA2AA3FF9FFE5FFF9FFE5FFF9F1EBDFBFEFD07=F2AAAB":$9#B#J";"8$:%`$a(8&;"A"J$
+54AAFFABF57FF57F6ABD5FD5FF51553FFC03FFFC03FFFC000000003FF7DFBF0E3F357=F15557":$9#B#J";"8$:%;$<$<&;";#:"8"J$
+AA95FF57EAFFEAFF657ABFABFEA2AA3FFF0FFFFF0FFFFF0FEBDFBEEFDCFF7E307F9:F2AAAB":$9#B#J";"8$:#R8R8&8#>"8#8":"8#J$
+54AAFFABF57FF57F6ABD5FD5FF51553FFFFFFFFFBFDDD3F7E0FFB57F87F9F15557":$9#B#J";"8$:#J&;"9"="8#J$
+AABFFFFFFFFFFFFF6FFFFFFFFFF2AA390DDE3BF143FFFF07FC1F9F2AAAB":$9":'9";%9%=";"8$:#JQ:":&9"9"J$
+5495FF57EAFAB57FFFAB57EAF56AD5ABF56AD5AB57ABFABFEA15538FFFD3C74FBE357079F15557":$9#9'9#:%9%=";"8$:#J&9"8#J$
+AAAAFFABF57FFD5ABFFFD5ABF57FFAB56AD5FAB56AD5ABD5FD5FF52AA3GFCDBB37BDD07FE019F2AAAB":$9#9'9#:%9%=";"8$:#J$;"9#J$
+5495FF57EAFFFAB57FFFAB57EAFFF56AD5ABF56AD5AB57ABFABFEA1553G1DDFB757007F8F15557":$9#9'9#:%9%=";"8$:#J&9"8"J$
+AAAAFFABF57FFD5ABFFFD5ABF57FFAB56AD5FAB56AD5ABD5FD5FF52AA3GFDDC377BC107FF:F2AAAB":$9#9'9#:%9%=";"8$:#J%9"9#J$
+5495FF57EAFFFAB57FFFAB57EAFFF56AD5ABF56AD5AB57ABFABFEA1553HDBB77BDF5703FF8F15557":$9#9'9#:%9%=";"8$:#J"9"9"J$
+AAAAFFABF57FFD5ABFFFD5ABF57FFAB56AD5FAB56AD5ABD5FD5FF52AA3KDD07819F2AAAB":$9#9Q9#:%9%=";"8$:#J"f"8&9"9"J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF15538E0030DDC50FBE357889F15557":$9":'A#;#C"8$:#J"V$P9"9#J$
+AA95FF57EAFAB57FFFAB57D5ABD5ABABFABFEA2AA389FFCDE7F07CC7F8F2AAAB":$9#9'A#;#C"8$:#J"v#?"9#J$
+54AAFFABF57FFD5ABFFFD5ABEAD5EAD5D5FD5FF5155387EFEFF5E57CE3F8F15557":$9#9'A#;#C"8$:#J0c#9#J$
+AA95FF57EAFFFAB57FFFAB57D5ABD5ABABFABFEA2AA37FEDFDF58DFDFDFDBDFDFDFDFDFDF9EFE07FF1F8F2AAAB":$9#9'A#;#C"8$:#J.@":"J$
+54AAFFABF57FFD5ABFFFD5ABEAD5EAD5D5FD5FF515538FB0B7AFBFBC1FBDB7BFBFAFBFB578F8F15557":$9#9'A#;#C"8$:#J0R$:"J$
+AA95FF57EAFFFAB57FFFAB57D5ABD5ABABFABFEA2AA37FDFF7F7E7F7F5F7B7F7F7F7E3F7FDEFEFE07C78F2AAAB":$9#9'A#;#C"8$:#J.@":"J$
+54AAFFABF57FFD5ABFFFD5ABEAD5EAD5D5FD5FF515538EF6C6EE8EFCFC30E0E2D2ECFEF57E78F15557":$9#9QA#;#C"8$:#J.@":"J$
+AABFFFFFFFFFFFFFFFFFFFFFFFFF2AA38FD7D7CF57DDDB9DD7DDCFCF1FD07FF8F2AAAB":$9":'8%;#;#9%<"8$:#J.@"J$
+5495FF57EAFAB57FFFAB57F56AD5ABD5ABD5ABF56AD5ABABFABFEA15538BF0F3EB73F83BB9F3D9DBEBDBF57=F15557":$9#9'8%;#;#9%<"8$:#J.@"J$
+AAAAFFABF57FFD5ABFFFD5ABFAB56AD5EAD5EAD5FAB56AD5D5FD5FF52AA38F77776F077D7B3D775D5F6F3F707=F2AAAB":$9#9'8%;#;#9%<"8$:$j09%9"j'
+5495FF57EAFFFAB57FFFAB57F56AD5ABD5ABD5ABF56AD5ABABFABFEA1553C0503FDFE7E7EF6FEDEBADE7CDCFECEFE7FFFEFC750:060003F15557":$9#9'8%;#;#9%<"8$:$Z39"9"Z'
+AAAAFFABF57FFD5ABFFFD5ABFAB56AD5EAD5EAD5FAB56AD5D5FD5FF52AA3DF5FBFDDF5F5ED75FDF93DF5DDDDE1FDFDEFE3FF707:F6FFFBF2AAAB":$9#9'8%;#;#9%<"8$:#J3<"J$
+5495FF57EAFFFAB57FFFAB57F56AD5ABD5ABD5ABF56AD5ABABFABFEA15537FEFB7B7AF8FBC1CBDB8A39FAFBFB9EFEDFFF57=F15557":$9#9'8%;#;#9%<"8$:#J"w8'8"J$
+AAAAFFABF57FFD5ABFFFD5ABFAB56AD5EAD5EAD5FAB56AD5D5FD5FF52AA38FF7FEC7C38E9F7C707=F2AAAB":$9#9Q8%;#;#9%<"8$:#J#w)8"J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF15537FF6FEF5EFEEF7BF766F7BB57=F15557":$93:#;#8-8$:#J"V#9#:"J&
+AA95FF57EAD5AB57FFFAB57FFFAB57FFFAB57FFFAB57D5ABD5ABFAB57FFFAB57FFFAB56AD5ABFABFEA2AA389FFCDEFF6E07;0003F2AAAB":$93:#;#8-8$:#J"f"9#8"8"J'
+54AAFFABF56AD5ABFFFD5ABFFFD5ABFFFD5ABFFFD5ABEAD5EAD5FD5ABFFFD5ABFFFD5AB56AD5FD5FF515538C0017C788357:F7FFFFF15557":$93:#;#8-8$:#JX9#8"8"J$
+AA95FF57EAD5AB57FFFAB57FFFAB57FFFAB57FFFAB57D5ABD5ABFAB57FFFAB57FFFAB56AD5ABFABFEA2AA387FB7BF07=F2AAAB":$93:#;#8-8$:#J":"8"J&
+54AAFFABF56AD5ABFFFD5ABFFFD5ABFFFD5ABFFFD5ABEAD5EAD5FD5ABFFFD5ABFFFD5AB56AD5FD5FF51553GDFBB57;0007F15557":$93:#;#8-8$:#J'8"J'
+AA95FF57EAD5AB57FFFAB57FFFAB57FFFAB57FFFAB57D5ABD5ABFAB57FFFAB57FFFAB56AD5ABFABFEA2AA3G3F7878A1F7C707:F6FFF3F2AAAB":$93:#;#8-8$:#JR8"J$
+54AAFFABF56AD5ABFFFD5ABFFFD5ABFFFD5ABFFFD5ABEAD5EAD5FD5ABFFFD5ABFFFD5AB56AD5FD5FF51553F57=F15557":$9Z:#;#8W8$:%J"J$
+AABFFFFF2FFFFFFFFFFFFFF2AA3DFDFM07=F2AAAB":$9":.:#;#8';"8$:%J$F"J$
+5495FF57EAFAB56AD5AB57FFFAB57FFFAB57D5ABD5ABFAB57FFFAB57ABFABFEA1553DFAF:E3C7EF57=F15557":$9#9.:#;#8';"8$:%J"8#:"9c#J&
+AAAAFFABF57FFD5AB56AD5ABFFFD5ABFFFD5ABEAD5EAD5FD5ABFFFD5ABD5FD5FF52AA3DF5770FFBF7FEFE07;F9F3F2AAAB":$9#9.:#;#8';"8$:%J#:":$S#J&
+5495FF57EAFFFAB56AD5AB57FFFAB57FFFAB57D5ABD5ABFAB57FFFAB57ABFABFEA1553DEAB6FEFFFF3FFFDFFE57;F0F3F15557":$9#9.:#;#8';"8$:%J#8$8"A"J&
+AAAAFFABF57FFD5AB56AD5ABFFFD5ABFFFD5ABEAD5EAD5FD5ABFFFD5ABD5FD5FF52AA3DF5781D388F4F0FCF07;E073F2AAAB":$9#9.:#;#8';"8$:%J)8"A"J&
+5495FF57EAFFFAB56AD5AB57FFFAB57FFFAB57D5ABD5ABFAB57FFFAB57ABFABFEA1553DFAF77EFCF77BF7EF36EFF357;C033F15557":$9#9.:#;#8';"8$:%J$:"9"A"J$
+AAAAFFABF57FFD5AB56AD5ABFFFD5ABFFFD5ABEAD5EAD5FD5ABFFFD5ABD5FD5FF52AA3DFDF6FF1DFD76FD07=F2AAAB":$9#9X:#;#8Q;"8$:%J"?"A"J&
+54BFFFFFFFFFFFFFFFFFFFFFFFFF1553DFFF7CDF357;FFF3F15557":$9":.:#;#8';"8$:#J"<"8"A"J$
+AA95FF57EAFAB57FFFAB57FFFAB56AD5AB57D5ABD5ABFAB57FFFAB57ABFABFEA2AA39EDCFCF07=F2AAAB":$9#9.:#;#8';"8$:#J";#8"A"J$
+54AAFFABF57FFD5ABFFFD5ABFFFD5AB56AD5ABEAD5EAD5FD5ABFFFD5ABD5FD5FF515539EE772F3F57=F15557":$9#9.:#;#8';"8$:#J&9"8$d"J$
+AA95FF57EAFFFAB57FFFAB57FFFAB56AD5AB57D5ABD5ABFAB57FFFAB57ABFABFEA2AA38FE1F1DF8FBEFFFFFC007=F2AAAB":$9#9.:#;#8';"8$:#JS8"8#s"J$
+54AAFFABF57FFD5ABFFFD5ABFFFD5AB56AD5ABEAD5EAD5FD5ABFFFD5ABD5FD5FF515538FFFFD55557=F15557":$9#9.:#;#8';"8$:#J";"c"J&
+AA95FF57EAFFFAB57FFFAB57FFFAB56AD5AB57D5ABD5ABFAB57FFFAB57ABFABFEA2AA3@1F8007;0003F2AAAB":$9#9.:#;#8';"8$:#J";"s"J&
+54AAFFABF57FFD5ABFFFD5ABFFFD5AB56AD5ABEAD5EAD5FD5ABFFFD5ABD5FD5FF51553@FFD55557;FFF3F15557":$9#9X:#;#8Q;"8$:#J"c"J$
+AABFFFFFFFFFFFFFFFFFFFFFFFFF2AA3F8007=F2AAAB":$9":+=#;#8';"8$:#J"s"J$
+5495FF57EAFAB57FFFAB57FFFAB57FD5ABD5ABFAB57FFFAB57ABFABFEA1553FD55557=F15557":$9#9+=#;#8';"8$:#J#SJ$
+AAAAFFABF57FFD5ABFFFD5ABFFFD5ABFEAD5EAD5FD5ABFFFD5ABD5FD5FF52AA3FFE07=F2AAAB":$9#9+=#;#8';"8$:#J"J$
+5495FF57EAFFFAB57FFFAB57FFFAB57FD5ABD5ABFAB57FFFAB57ABFABFEA1553G57EF15557":$9#9+=#;#8';"8$:#J"J$
+AAAAFFABF57FFD5ABFFFD5ABFFFD5ABFEAD5EAD5FD5ABFFFD5ABD5FD5FF52AA3G07EF2AAAB":$9#9+=#;#8';"8$:#J"jJ$
+5495FF57EAFFFAB57FFFAB57FFFAB57FD5ABD5ABFAB57FFFAB57ABFABFEA15536F80FF15557":$9#9+=#;#8';"8$:#J#z"J$
+AAAAFFABF57FFD5ABFFFD5ABFFFD5ABFEAD5EAD5FD5ABFFFD5ABD5FD5FF52AA36FFFA/AAAFEF2AAAB":$9#9U=#;#8Q;"8$:#J"j"J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFF15537F0/07EF15557":$9":.:#;#8';"8$:#J"z"J$
+AA95FF57EAFAB57FFFAB57FFFAB57FFFAB57D5ABD5ABFAB57FFFAB57ABFABFEA2AA37FA/AAAFEF2AAAB":$9#9.:#;#8';"8$:#J"j"J$
+54AAFFABF57FFD5ABFFFD5ABFFFD5ABFFFD5ABEAD5EAD5FD5ABFFFD5ABD5FD5FF515537F0/07EF15557":$9#9.:#;#8';"8$:#J"z"J$
+AA95FF57EAFFFAB57FFFAB57FFFAB57FFFAB57D5ABD5ABFAB57FFFAB57ABFABFEA2AA37FA/AAAFEF2AAAB":$9#9.:#;#8';"8$:#JZJ$
+54AAFFABF57FFD5ABFFFD5ABFFFD5ABFFFD5ABEAD5EAD5FD5ABFFFD5ABD5FD5FF5155371EF15557":$9#9.:#;#8';"8$:#J$
+AA95FF57EAFFFAB57FFFAB57FFFAB57FFFAB57D5ABD5ABFAB57FFFAB57ABFABFEA2AA3O?F2AAAB":$9#9.:#;#8';"8$:#J&
+54AAFFABF57FFD5ABFFFD5ABFFFD5ABFFFD5ABEAD5EAD5FD5ABFFFD5ABD5FD5FF51553O=0003F15557":$9#9X:#;#8Q;"8$:#J&
+AABFFFFFFFFFFFFFFFFFFFFFFFFF2AA3O=FFF3F2AAAB":$:"9'8%;#;#9%;"9$:#J$
+5495FF57D5FAB57FFFAB57F56AD5ABD5ABD5ABF56AD5ABD5FABFEA1553O?F15557":$:"9'8%;#;#9%;"9$:#J$
+AAAAFFABEAFD5ABFFFD5ABFAB56AD5EAD5EAD5FAB56AD5EAFD5FF52AA3O?F2AAAB":$:"9'8%;#;#9%;"9$:#J$
+5495FF57D5FAB57FFFAB57F56AD5ABD5ABD5ABF56AD5ABD5FABFEA1553O?F15557":$:"9'8%;#;#9%;"9$:#J$
+AAAAFFABEAFD5ABFFFD5ABFAB56AD5EAD5EAD5FAB56AD5EAFD5FF52AA3O?F2AAAB":$:"9'8%;#;#9%;"9$:#J&
+5495FF57D5FAB57FFFAB57F56AD5ABD5ABD5ABF56AD5ABD5FABFEA1553O=C033F15557":$:"9'8%;#;#9%;"9$:#J$
+AAAAFFABEAFD5ABFFFD5ABFAB56AD5EAD5EAD5FAB56AD5EAFD5FF52AA3O?F2AAAB":$:"9Q8%;#;#9%;"9$:#J&
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553O=E073F15557":$:"J"9$:#J&
+AA95FF57D5ID5FABFEA2AA3O=F0F3F2AAAB":$:"J"9$:#J&
+54AAFFABEAIEAFD5FF51553O=F9F3F15557":$:"J"9$:#J&
+AA95FF57D5ID5FABFEA2AA3O=FFF3F2AAAB":$:"J"9$:#J$
+54AAFFABEAIEAFD5FF51553O?F15557":$:"J"9$:#J$
+AA95FF57D5ID5FABFEA2AA3O?F2AAAB":$:"J"9$:#J$
+54AAFFABEAIEAFD5FF51553O?F15557":$:"J"9$:#J&
+AABFFFFFFFIFFFFFFFF2AA3O=0003F2AAAB":$:";"="<"<"=";"9$:#J'
+5495FF57D5EAD5D5D5ABD5FABFEA1553O<F70007F15557":$:";#<"<"<"=";"9$:#J&
+AAAAFFABEAF57FEAEAEAD5EAFD5FF52AA3O=F8FFF2AAAB":$:";#<"<"<"=";"9$:#J$
+5495FF57D5EAFFD5D5D5ABD5FABFEA1553O?F15557":$:";#<"<"<"=";"9$:#J$
+AAAAFFABEAF57FEAEAEAD5EAFD5FF52AA3O?F2AAAB":$:";#<"<"<"=";"9$:#J$
+5495FF57D5EAFFD5D5D5ABD5FABFEA1553O?F15557":$:";#<"<"<"=";"9$:#J$
+AAAAFFABEAF57FEAEAEAD5EAFD5FF52AA3O?F2AAAB":$:";#<"<"<"=";"9$:#J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFF1553O?F15557":$:59$:#J$
+AA95FF57KD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5FABFEA2AA3O?F2AAAB":$:59$:#J$
+54AAFFABKEAD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AFD5FF51553O?F15557":$:59$:#J$
+AA95FF57KD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5FABFEA2AA3O?F2AAAB":$:59$:#J$
+54AAFFABKEAD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AFD5FF51553O?F15557":$:59$:#J$
+AA95FF57KD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5FABFEA2AA3O?F2AAAB":$:59$:#J$
+54AAFFABKEAD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AFD5FF51553O?F15557":$:Z9$:#J$
+AABFFFFFKFFFFFF2AA3O?F2AAAB":$;";"<"<"<"<";":$:#J$
+5495FF57ABD5D5D5D5D5EAFABFEA1553O?F15557":$;";"<"<"<"<";#9$:#J$
+AAAAFFABD5EAEAEAEAEAF57FFD5FF52AA3O?F2AAAB":$;";"<"<"<"<";#9$:#J$
+5495FF57ABD5D5D5D5D5EAFFFABFEA1553O?F15557":$;";"<"<"<"<";#9$:#J$
+AAAAFFABD5EAEAEAEAEAF57FFD5FF52AA3O?F2AAAB":$;";"<"<"<"<";#9$:#J$
+5495FF57ABD5D5D5D5D5EAFFFABFEA1553O?F15557":$;";"<"<"<"<";#9$:#J$
+AAAAFFABD5EAEAEAEAEAF57FFD5FF52AA3O?F2AAAB":$;";"<"<"<"<";#9$:#J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFF1553O?F15557":$;";"<"<"<"<";":$:#J$
+AA95FF57ABD5D5D5D5D5EAFABFEA2AA3O?F2AAAB":$;";"<"<"<"<";#9$:#J$
+54AAFFABD5EAEAEAEAEAF57FFD5FF51553O?F15557":$;";"<"<"<"<";#9$:#J$
+AA95FF57ABD5D5D5D5D5EAFFFABFEA2AA3O?F2AAAB":$;";"<"<"<"<";#9$:#J$
+54AAFFABD5EAEAEAEAEAF57FFD5FF51553O?F15557":$;";"<"<"<"<";#9$:#J$
+AA95FF57ABD5D5D5D5D5EAFFFABFEA2AA3O?F2AAAB":$;";"<"<"<"<";#9$:#J$
+54AAFFABD5EAEAEAEAEAF57FFD5FF51553O?F15557":$;";"<"<"<"<";#9$:#J$
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFF2AA3O?F2AAAB":$<":"=";";"=":#:$:#J$
+5495FF5757D5ABD5EAD5F57FFABFEA1553O?F15557":$<":"=";";#<":#:$:#J$
+AAAAFFABABEAD5EAF57FEAFABFFD5FF52AA3O?F2AAAB":$<":"=";";#<":#:$:#J$
+5495FF5757D5ABD5EAFFD5F57FFABFEA1553O?F15557":$<":"=";";#<":#:$:#J$
+AAAAFFABABEAD5EAF57FEAFABFFD5FF52AA3O?F2AAAB":$<":"=";";#<":#:$:#J$
+5495FF5757D5ABD5EAFFD5F57FFABFEA1553O?F15557":$<":"=";";#<":#:$:#J$
+AAAAFFABABEAD5EAF57FEAFABFFD5FF52AA3O?F2AAAB":$<":"=";";#<":#:$:#J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553O?F15557":$<";"<";";"<";#:$:#J$
+AA95FF5757ABABD5EAEAF57FFABFEA2AA3O?F2AAAB":$<";"<";";#;#:#:$:#J$
+54AAFFABABD5D5EAF57FF57FFABFFD5FF51553O?F15557":$<";"<";";#;#:#:$:#J$
+AA95FF5757ABABD5EAFFEAFFF57FFABFEA2AA3O?F2AAAB":$<";"<";";#;#:#:$:#J$
+54AAFFABABD5D5EAF57FF57FFABFFD5FF51553O?F15557":$<";"<";";#;#:#:$:#J$
+AA95FF5757ABABD5EAFFEAFFF57FFABFEA2AA3O?F2AAAB":$<";"<";";#;#:#:$:#J$
+54AAFFABABD5D5EAF57FF57FFABFFD5FF51553O?F15557":$<";"<";";#;#:#:$:#J$
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2AA3O?F2AAAB":$<#:"<";";"<":#;$:#J$
+5495FF57FEAFABABD5EAEAFABFFABFEA1553O?F15557":$<#:"<";";#;#9#;$:#J$
+AAAAFFABFF57D5D5EAF57FF57FFD5FFD5FF52AA3O?F2AAAB":$<#:"<";";#;#9#;$:#J$
+5495FF57FEAFABABD5EAFFEAFFFABFFABFEA1553O?F15557":$<#:"<";";#;#9#;$:#J$
+AAAAFFABFF57D5D5EAF57FF57FFD5FFD5FF52AA3O?F2AAAB":$<#:"<";";#;#9#;$:#J$
+5495FF57FEAFABABD5EAFFEAFFFABFFABFEA1553O?F15557":$<#:"<";";#;#9#;$:#J$
+AAAAFFABFF57D5D5EAF57FF57FFD5FFD5FF52AA3O?F2AAAB":$=":"<";";#;#9#;$:#J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553O?F15557":$<#;"<":":#;#:#;$:#J$
+AA95FF57FEAF5757D5F57FF57FFABFFABFEA2AA3O?F2AAAB":$<#;"<":":#;#:#;$:#J$
+54AAFFABFF57ABABEAFABFFABFFD5FFD5FF51553O?F15557":$<#;"<":":#;#:#;$:#J$
+AA95FF57FEAF5757D5F57FF57FFABFFABFEA2AA3O?F2AAAB":$<#;"<":":#;#:#;$:#J$
+54AAFFABFF57ABABEAFABFFABFFD5FFD5FF51553O?F15557":$<#;"<":":#;#:#;$:#J$
+AA95FF57FEAF5757D5F57FF57FFABFFABFEA2AA3O?F2AAAB":$<#;"<":":#;#:#;$:#J$
+54AAFFABFF57ABABEAFABFFABFFD5FFD5FF51553O?F15557":$=";"<":":#;#:#;$:#J$
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2AA3O?F2AAAB":$=#:#;":":#:#:#<$:#J$
+5495FF57FD5FFEAF57D5F57FFABFFD5FFABFEA1553O?F15557":$=#:#;":":#:#:#<$:#J$
+AAAAFFABFEAFFF57ABEAFABFFD5FFEAFFD5FF52AA3O?F2AAAB":$=#:#;":":#:#:#<$:#J$
+5495FF57FD5FFEAF57D5F57FFABFFD5FFABFEA1553O?F15557":$=#:#;":":#:#:#<$:#J$
+AAAAFFABFEAFFF57ABEAFABFFD5FFEAFFD5FF52AA3O?F2AAAB":$=#:#;":":#:#:#<$:#J$
+5495FF57FD5FFEAF57D5F57FFABFFD5FFABFEA1553O?F15557":$=#:#;":":#:#:#<$:#J$
+AAAAFFABFEAFFF57ABEAFABFFD5FFEAFFD5FF52AA3O?F2AAAB":$=#;";":":#:#:#<$:#J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553O?F15557":$>5=$:#J$
+AA95FF57CFAB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AFFABFEA2AA3O?F2AAAB":$>5=$:#J$
+54AAFFABCFD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB57FD5FF51553O?F15557":$>5=$:#J$
+AA95FF57CFAB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AFFABFEA2AA3O?F2AAAB":$>5=$:#J$
+54AAFFABCFD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB57FD5FF51553O?F15557":$>5=$:#J$
+AA95FF57CFAB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AFFABFEA2AA3O?F2AAAB":$>5=$:#J$
+54AAFFABCFD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB57FD5FF51553O?F15557":$>Z=$:#J$
+AABFFFFFCFFFFFF2AA3O?F2AAAB":$?#9#:#9"9#:#:">$:#J$
+5495FF57F57FFD5FFEAFD5FABFFD5F57FABFEA1553O?F15557":$?#9#:#9"9#:#:">$:#J$
+AAAAFFABFABFFEAFFF57EAFD5FFEAFABFD5FF52AA3O?F2AAAB":$?#9#:#9"9#:#:">$:#J$
+5495FF57F57FFD5FFEAFD5FABFFD5F57FABFEA1553O?F15557":$?#9#:#9"9#:#:">$:#J$
+AAAAFFABFABFFEAFFF57EAFD5FFEAFABFD5FF52AA3O?F2AAAB":$?#9#:#9"9#:#:">$:#J$
+5495FF57F57FFD5FFEAFD5FABFFD5F57FABFEA1553O?F15557":$?#9#:#9"9#:#:">$:#J$
+AAAAFFABFABFFEAFFF57EAFD5FFEAFABFD5FF52AA3O?F2AAAB":$?#9#;"9"9#:#:">$:#J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553O?F15557":$@":#9#9"9#9#:"?$:#J$
+AA95FF57EAFABFFEAFD5FABFFEAFABFABFEA2AA3O?F2AAAB":$@#9#9#9"9#9#:"?$:#J$
+54AAFFABF57FFD5FFF57EAFD5FFF57D5FD5FF51553O?F15557":$@#9#9#9"9#9#:"?$:#J$
+AA95FF57EAFFFABFFEAFD5FABFFEAFABFABFEA2AA3O?F2AAAB":$@#9#9#9"9#9#:"?$:#J$
+54AAFFABF57FFD5FFF57EAFD5FFF57D5FD5FF51553O?F15557":$@#9#9#9"9#9#:"?$:#J$
+AA95FF57EAFFFABFFEAFD5FABFFEAFABFABFEA2AA3O?F2AAAB":$@#9#9#9"9#9#:"?$:#J$
+54AAFFABF57FFD5FFF57EAFD5FFF57D5FD5FF51553O?F15557":$@#9#:"9"9#:":"?$:#J$
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2AA3O?F2AAAB":$A":#9#8"8#:":"@$:#J$
+5495FF57D5F57FFD5FD5FD5F57D5FABFEA1553O?F15557":$A":#9#8"8#:":"@$:#J$
+AAAAFFABEAFABFFEAFEAFEAFABEAFD5FF52AA3O?F2AAAB":$A":#9#8"8#:":"@$:#J$
+5495FF57D5F57FFD5FD5FD5F57D5FABFEA1553O?F15557":$A":#9#8"8#:":"@$:#J$
+AAAAFFABEAFABFFEAFEAFEAFABEAFD5FF52AA3O?F2AAAB":$A":#9#8"8#:":"@$:#J$
+5495FF57D5F57FFD5FD5FD5F57D5FABFEA1553O?F15557":$A":#9#8"8#:":"@$:#J&
+AAAAFFABEAFABFFEAFEAFEAFABEAFD5FF52AA3O=FFFFF2AAAB":$A":#9#8"8#:":"@$:#J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1553O?F15557":$B":"9#8"8#9":"A$:#J'
+AA95FF57ABEAFD5FD5FD5FABEAFABFEA2AA3O<F60003F2AAAB":$B":#8#8"8#9":#@$:#J&
+54AAFFABD5F57FFEAFEAFEAFD5F57FFD5FF51553O=FFFBF15557":$B":#8#8"8#9":#@$:#J$
+AA95FF57ABEAFFFD5FD5FD5FABEAFFFABFEA2AA3O?F2AAAB":$B":#8#8"8#9":#@$:#J$
+54AAFFABD5F57FFEAFEAFEAFD5F57FFD5FF51553O?F15557":$B":#8#8"8#9":#@$:#J$
+AA95FF57ABEAFFFD5FD5FD5FABEAFFFABFEA2AA3O?F2AAAB":$B":#8#8"8#9":#@$:$j'
+54AAFFABD5F57FFEAFEAFEAFD5F57FFD5FF51553C0O;060003F15557":$B":#8#8"8#9":#@$:#Z$
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2AA3O?F2AAAB":$C#9"9(9"9$A$:#J$
+5495FF5756AFD5FABFFFD5FFFEAFD5FAB57FFABFEA1553O?F15557":$C#9"9(9"9$A$:#J$
+AAAAFFABAB57EAFD5FFFEAFFFF57EAFD5ABFFD5FF52AA3O?F2AAAB":$C#9"9(9"9$A$:$J%
+5495FF5756AFD5FABFFFD5FFFEAFD5FAB57FFABFEA15501FO=FE015557":$C#9"9(9"9$A$:$J$
+AAAAFFABAB57EAFD5FFFEAFFFF57EAFD5ABFFD5FF52AA7DFO>FAAAAB":$C#9"9(9"9$A$:#J$
+5495FF5756AFD5FABFFFD5FFFEAFD5FAB57FFABFEA1557O?F95557":$C#9"9(9"9$A$:#J$
+AAAAFFABAB57EAFD5FFFEAFFFF57EAFD5ABFFD5FF52AA7O?FAAAAB":$C#9"9%8"9"9$A$:#J$
+54BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1557O?F95557":$D$8#8&8#8$C$:#J$
+AA95FF57FD5ABFAB57F57FD5FF57F56AFEAD5FFABFEA2AA7O?FAAAAB":$D$8#8&8(C$:%J%
+54AAFFABFEAD5FD5ABFABFEAFFABFAB57FFFFF56AFFD5FF51557C07FO<80F95557":$D$8#8&8(C$:$J%
+AA95FF57FD5ABFAB57F57FD5FF57F56AFFFFFEAD5FFABFEA2AA7FFO=BFFAAAAB":$D$8#8&8(C$:#J$
+54AAFFABFEAD5FD5ABFABFEAFFABFAB57FFFFF56AFFD5FF51557O?F95557":$D$8#8&8(C$:#J$
+AA95FF57FD5ABFAB57F57FD5FF57F56AFFFFFEAD5FFABFEA2AA7O?FAAAAB":$D$8#8&8(C$:#J$
+54AAFFABFEAD5FD5ABFABFEAFFABFAB57FFFFF56AFFD5FF51557O?F95557":$D$8#8P8$8#C$:$j%
+AABFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2AA7FFO=3FFAAAAB":$F#8,8#E$:$J%
+5495FF57F56AFEAFFFF57FD5FF57FFFABFAB57FABFEA155000O=00015557":$F08#E$:"z"
+AAAAFFABFAB57FFFFF57FFFABFEAFFABFFFD5FD5ABFD5FF52AOBAAAB":$F08#E$:"z"
+5495FF57F56AFFFFFEAFFFF57FD5FF57FFFABFAB57FABFEA15OB5557":$F08#E$:"z"
+AAAAFFABFAB57FFFFF57FFFABFEAFFABFFFD5FD5ABFD5FF52AOBAAAB":$F08#E$:$j#
+5495FF57F56AFFFFFEAFFFF57FD5FF57FFFABFAB57FABFEA155550O?5557":$F08#E$:&J%
+AAAAFFABFAB57FFFFF57FFFABFEAFFABFFFD5FD5ABFD5FF52AAAABFF80O;07FF2AAB":$F$8U8#E$:&Z%
+54BFFFFFFFFFFFFFFFFFFFFF155553FFBFO;F7FF5557":$H0G$:$J#
+AA95FF57D5AB56AD5ABFEAD5ABFEAD5AB56AD5FABFEA2AAAABO?2AAB":$H0G$:$J#
+54AAFFABEAD5AB56AD5FF56AD5FF56AD5AB56AFD5FF5155553O?5557":$H0G$:$J#
+AA95FF57D5AB56AD5ABFEAD5ABFEAD5AB56AD5FABFEA2AAAABO?2AAB":$H0G$:&J%
+54AAFFABEAD5AB56AD5FF56AD5FF56AD5AB56AFD5FF5155553E03FO;F01F5557":$H0G$:&J%
+AA95FF57D5AB56AD5ABFEAD5ABFEAD5AB56AD5FABFEA2AAAABEFFFO;FFDF2AAB":$H0G$:$J#
+54AAFFABEAD5AB56AD5FF56AD5FF56AD5AB56AFD5FF5155553O?5557":$HZG$:$J#
+AABFFFFF/FFFFFF2AAAABO?2AAB":$J*J$:$J#
+5495FF575FD5AB56AD5AB56AD5F4FABFEA155553O?5557":$J*J$:(J#
+AAAAFFAB5FEAD5AB56AD5AB56AF4FD5FF52AAAABEFFC007FO;2AAB":$J*J$:(J$
+5495FF575FD5AB56AD5AB56AD5F4FABFEA1555500FFBFFBFO:C05557":$J*J$:(J#8"8%8"J$
+AAAAFFAB5FEAD5AB56AD5AB56AF4FD5FF52AAAA9FFF7FFDF>FCE7C7F3FFFE739F<FE2AAB":$J*J$:$9"J$9%>"J#
+5495FF575FD5AB56AD5AB56AD5F4FABFEA155551CF:DFFFFD7FFF9FFEFB<5557":$J*J$:$8"J$8"9":"8#J#
+AAAAFFAB5FEAD5AB56AD5AB56AF4FD5FF52AAAA900;9FFFF9FEFC7F3FF3<2AAB":$JTJ$:$8"J5J#
+54BFFFFF54FFFFFF1555517D;4061CC061E0E41FFF060830F27FF07324FF3860C3;5557":$J$:$8"J/8%J#
+AA95FF57O$FABFEA2AAAA9BD;9CCCC9CCCCE67FFF9CFCE6713FE6FE733399;2AAB":$J$:$8"J#:&9#8"J#
+54AAFFABO$FD5FF5155551BB<CE591F9C7CFE731FFC9F;5557":$J$:$8"J$9%:$J#
+AA95FF57O$FABFEA2AAAA9DB<0F39C0FF9E1CF03FFCF0=2AAB":$J$:$8"J$:$;$J#
+54AAFFABO$FD5FF5155551D7<FE99CF9F8CE6F9F3F3<5557":$J$:$8"J%:"8%8#J#
+AA95FF57O$FABFEA2AAAA9E7<ECC9CEC8CC33E4733CB39D;2AAB":$J$:$8"J/8%J#
+54AAFFABO$FD5FF5155551EF;C61CCC61E4E71FFF9C1E313073F2F3F878C3;5557":$J$:$8"JW)J#
+AABFFFFFO$FFFFFF2AAAA9FF;FBFFFFFFF3FFFFFF;2AAB":$J$:$J"9"J#
+5495FF57O$FABFEA155551JF7FF>5557":$J$:(J"J#
+AAAAFFABO$FD5FF52AAAA9FFF8000FFFFB2AAB":$J$:(J#
+5495FF57O$FABFEA155551FFFC001FO;5557":$J$:(J#
+AAAAFFABO$FD5FF52AAAA9FFFFFFFFO;2AAB":$J$:$J#
+5495FF57O$FABFEA155551O?5557":$J$:$J#
+AAAAFFABO$FD5FF52AAAA9O?2AAB":$J$:$J#
+54BFFFFFO$FFFFFF155551O?5557":$J$:$J#
+AA95FF57O$FABFEA2AAAA9O?2AAB":$J$:%j$
+54AAFFABO$FD5FF5155551E0O=7E5557":$J$:$Z$
+AA95FF57O$FABFEA2AAAA9O>FE2AAB":$J$:$J#
+54AAFFABO$FD5FF5155551O?5557":$J$:$J#
+AA95FF57O$FABFEA2AAAA9O?2AAB":$J$:&`8"a8"`$`"J#
+54AAFFABO$FD5FF5155551FFF0F0F03FFFFC01L5557":$J$:&P$Q$P$P#J#
+AABFFFFFO$FFFFFF2AAAA9FFCF3FFFCF3FFFCFCFFFF3FE7FK2AAB":$J$:&;$<$;$;#J#
+5495FF57O$FABFEA155551FFBFDFFFBFDFFFBFF7FFEFFFBFK5557":$J$:&;$<$;$<"J#
+AAAAFFABO$FD5FF52AAAA9FF7FEFFF7FEFFF7FFBFFDFDFK2AAB":$J$:$=">"=">"J#
+5495FF57O$FABFEA155551E7E7F9CFK5557":$J$:&;$<$;$<"J#
+AAAAFFABO$FD5FF52AAAA9FEFFF7FEFFF7FEFFFDFFBFEFK2AAB":$J$:$=">"=">"J#
+5495FF57O$FABFEA155551F3F3FCE7K5557":$J$:$9"=">#<$J#
+AAAAFFABO$FD5FF52AAAA977BFF77FDFFFDFO 2AAB":$J$:$8"8#9"9#9&9"9#J#
+54BFFFFFO$FFFFFF15555187803F7B803F07F777E00FE1007FL5557":5:$8&:"8#9&9#8#J#
+AAO*95FF56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5ABFEA2AAAA9BFF7FFDF7FFFDF7F7FF7F7F7DFEFFFBEFFL2AAB":5:$9#<$<#<$J#
+54O*AAFFAB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5FF5155551771FB8EFEF8761DD3E1FO 5557":5:$9%:&:%:%J#
+AAO*95FF56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5ABFEA2AAAA976EFEEFFB76EEFEEFF7777FBBFDCDDDFDDM2AAB":5:$8"=%;"=#J#
+54O*AAFFAB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5FF515555187B7B776DF0FE1DDO"5557":5:$8%;%:"8#9"9"J#
+AAO*95FF56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5ABFEA2AAAA9BF760FF5B0755FF57FFD7FEFEBM2AAB":5:$:"<#J#
+54O*AAFFAB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5FF5155551FFB7F5O25557":"Z:$:#:&;%<#J#
+AABFO)2AAAA9EFFBCFB77BBFFB6777FEFF9FF7M2AAB":"J":$9$;%:%<$J#
+5495O(EA155551771FFFB8FBBFFF079779FFDE5FFFM5557":"J":$8$;%;$;%J#
+AAAAO(F52AAAA9FFFFFFFFFFFFFFFFFFFFFFFFFFFFO 2AAB":"J":$J#
+5495O(EA155551O?5557":"J":&;$<$;$<"J#
+AAAAO(F52AAAA9FF7FE3FF7FE3FF7FF8FFDFC7K2AAB":"J":$=">"=">"J#
+5495O(EA155551E7E7F9CFK5557":"J":&;$<$;$<"J#
+AAAAO(F52AAAA9FFBFC7FFBFC7FFBFF1FFEF8FK2AAB":"J":&;$<$;$;#J#
+54BFO(FF155551FFCF2FFFCF2FFFCFCBFFF3FE5FK5557":5:&`$a$`$a"J#
+AAO*95AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56A2AAAA9FFE01FFFE01FFFE007FFF83FK2AAB":5:&;$<$;$<"J#
+54O*AAD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB5155551FFF87FFFF87FFFF81FFFFEFFK5557":5:$ZJ#
+AAO*95AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56A2AAAA9AL2AAB":5:$J#
+54O*AAD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB5155551O?5557":5:$J#
+AAO*95AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56AD5AB56A2AAAA9O?2AAB":"j:$J#
+5480O)155551O?5557":Z9$J#
+AAO+2AAAA9O?2AAB"J$J#
+54O2155551O?5557"J$J#
+AAO22AAAA9O?2AAB"J$J#
+54O2155551O?5557"J$J#
+AAO22AAAA9O?2AAB"J$J#
+54O2155551O?5557"J$J#
+AAO22AAAA9O?2AAB"J$J#
+54O2155551O?5557"J$J#
+AAO22AAAA9O?2AAB"J$J#
+54O2155551O?5557"J$J#
+AAO22AAAA9O?2AAB"J$J#
+54O2155551O?5557"J$J#
+AAO22AAAA9O?2AAB"J%j&
+54O2155551E0O;C0007E5557"J%Z'
+AAO22AAAA9EFO:FEDFFF7E2AAB"J$8'J"J#
+54O2155551BF7FFFFBFFEF6BFO 5557"J$=#J#:#J#
+AAO22AAAA9EE3FC7FF17FFD92AAB"J$8"8%J"B$9$J#
+54O21555517FF7FFEDDF57FFE7FEEFE7FF995557"J$8)J*J&
+AAO22AAAA97871DDF7870DDC7FAFD7FFEFFD2FBFD7FF56C0007E2AAB"J.I#B"9&J&
+54O2155551EFFEF76EDDEF7EEDDBBFFEFFFBCEDBFF7FFD6FFFFFE5557"J$>"J&J#
+AAO22AAAA9DFBF77FFDFFDE=2AAB"J$9(J$8"J&
+54O215555160EBEF8EEDDC3FAF03FFBAB9E000FE5557"J.I"C'J&
+AAO22AAAA9EFFDF76FEBDFF6EDDBBFFDFF7FF7FFDF779DFFE7E2AAB"J$8$8"J#J#
+54O2155551F66EF7CDD79EF?5557#j/I"E"J#
+AA18O03C2AAAA9EFEBF971F7BF0F2E3C5FFBE0?2AAB#Z/JSJ#
+541FO0FC155551EFD3FFFFFFBFFFFFFFFFB95557"J&9"J"J%
+AAO22AAAA9EFABFF7FFM3E7E2AAB"J&J&
+54O2155551EF55O:DE1E7E5557"J,J"J&
+AAO22AAAA9EFABBF7FFFFBFFEF6BFKDC0E7E2AAB"J&;#J#:#J&
+54O2155551EFD7EE3FC7FF17FF86D8067E5557"J'8%J"B$9%J#
+AAO22AAAA9EFEF7FF7FFEDDF57FFE7FEEFE7FF77F82AAB"J.J$@*J&
+54O2155551EFFF7871DDF7870DDC3F47770E9FD7FFEFFD2FBFD7FFF6DFFE7E5557"J.I%@"9$J#
+AAO22AAAA9EFFEF76EDDEF7EEDDBBFFEF76FE7FBCEDBFF;2AAB"J$J"@&9#J#
+54O2155551@EFF77FFDFFDEFEFF85557"J$9%J"A$8"8"J#
+AAO22AAAA960EBEF8E871F03FFBABFD92AAB"J+8"I$A'8"J#
+54O2155551EFFDF76FEBDFF63FFDF77EFF7FF7FFDF77FB95557"J$8$8$J"C#;"J&
+AAO22AAAA9F66EF7CDDCBF4F679EFF76C0007E2AAB#J.J$C";#J&
+5403O0E0155551EFFBF971F7BF0F2E3F4FBF961E0F07F5DFFE7E5557#J%8(J$ATJ#
+AAFBO0EFAAAAA9FFFFFFBFFFFFFF5FFFFFF82AAB"J&9"8#I"J#
+54O2955551EFFFFFFC7FFFO!5557"J$>#J#
+AAO2AAAAA9FFFFO52AAB"J$8'J"J#
+54O2955551BF7FFFFBFFEF6B7O 5557"J$>"J#:#J#
+AAO2AAAAA97FC7FF17FF892AAB$J&8"8$J"B$9%J#
+54F80FO.F80F9555517FF7FFEE677FE7FEEFE7FF77F85557$J&8)J%?*J#
+AAFFEFO.FBFFAAAAA97871DDF7870D7C3F474F1ADC7FD7FFEFFD2FBFD7FFF92AAB"J.I&?"9$J#
+54O2955551EFFEF76EDDEF7EEF7BBFFEF36E92BBFBCEDBFF;5557$j&J$@&9#J#
+AAFFE0O.03FFAAAAA9>F76EB6F77FFDFFDEFCFF82AAB"J$9%J"?$8"8#J#
+54O295555160EBEF8E:83F03FFBABFF7F85557"J+8"I"9"?'J#
+AAO2AAAAA9EFFDF76FEBDFF63FFDBFFF7FF7FFDF77<2AAB$J&8$8$J"@#;"J#
+540000O.0000155551F66EF7CF7CBF7BB79EFF795557z+J&A";#J#
+O5AAA9EFFBF971F7BF0F2F7F4FBF771B6C7E0F8FF82AABz"8(J%@SJ&
+O55551FFFFFFBFFFFFFF5FFFFFFFF6C0007E5557z$9"8#I"J&
+O5AAA9EFFFFFFC7FFFLDFFE7E2AABz">#J#
+O55551FFFFO55557z"J#
+O5AAA9O?2AABz%J#
+O55551EFFDBFO<5557z"J#
+O5AAA9O?2AABz%J&
+O55551EFF81FO9D8067E5557z%J#
+O5AAA9EFFDBFO<2AABz"J&
+O55551O<DC0E7E5557z%J&
+O5AAA9EFF81FO9DE1E7E2AABz%J&
+O55551EFFDBFO9DF3E7E5557z"J%
+O5AAA9O=FE7E2AABz"J#
+O55551O?5557z%J#
+O5AAA9EFFFFFO<2AAB$j#J#
+555555O10551O?5557$J#J&
+AAAAAAO102A9O<C0007E2AAB%Z#>%9"9":$9"9$=#9"8$9"E&
+5555553FO0E551DFFDFFFDDFEFE3FFBFB7F7FF7FFC7FFDFEFFEFF7E000FE5557$J&H%C";#@":$@&
+AAAAAAO1E2A9EFFDBFFE3FFFFBF1FBFF7FC7FF1FFF1FFE2AAB$J#>#;"9%="9&E"<$C#
+555555O1E551BFFFBFFFFFFDDF77EFFFFFFFEEFFBBFEEF5557$J58*:2G#
+AAAAAAO1>E2A9EFF818D6E3C38F3FB7D1E9E1C6FB0FBC3769DD8F8DF7DFF8FBD3A78F74F1ADC7EEEC7C6FBEFA7070FFD2FBFD3C7A70FF8F4E0E9FF4F02AAB$J5;2E%
+555555O1HE551EFFDB7495DBB773F76DDE6DDBADAFF7BF766DDEF75B7DFF77BCD9B77FFFEF36E92BBDEEF7BADF9BBEFFFCEDBFCDBB9EEFFEF377E7FF36E5FFE5557$J#9"8#8"<":'8$;":"9&9%F%
+AAAAAAO1E2A95BF7FFEE6EB01F7BDDBBF7F76EB6BDFBDEDBFDDFBB777EFFF7BFFE2AAB$J-9,9";'<"8%J%
+555555O1E551EFF8175B41BB87FF755DAB1F7C776EEBEF05577FF88783DF5F782ABBF1ABFDDC3B75FFE5557$J-8&9%9$9'<(="E%
+AAAAAAO1E2A9EFFDB75B5FB377FEFBBDBB77EEFFB77EEEFFF777FFFDBFBF5F7BF777FEFFDF77FDDBBB6CBFFE2AAB$J#:%9":'A'@"8#9$E%
+555555O1E5515DCB773ED9B66EF7EF76EDBBBFBF7BB76F9DECF3FE77725FFE5557$J#8'9'94<":$9)A%
+AAAAAAO1E2A9B8DB63FB8B3DE5C7761DF8798EEC1FF8BBC3BB8BFFFBF771B6C77FBF7C7760E1DC5BF28EFE70FEFFC7FF1FBFFE2AAB$9"J+Q"U$8*:Q+8$A%
+555555F1O-E551EFFFFFFFFFFBFFFDFDDFFFFFFFFFFFFF7FFFFFFFFF3FFFFFFFE7FFFFFFFCFFFFFFFF5FFE5557$9$J#;$<"D":"D"9"9$E%
+AAAAAAF6FE7FO+E2A9C7FFFFFFFFFFFFFFFFFFF1BFFE2AAB$9$J'J#;"I"J"E%
+555555F77DFF7FC03FFFEFE1E<E551FFFFAFF5FFE5557$:"J'J#8"9#9#9"<"="9"9#8"<"<"G%
+AAAAAA038FF9FFFFCFCCC<E2A9F77F8FFDBFBFF16FEFDFEFDFF81FBFFE2AAB$:"J(J&:$C"J";#G%
+5555557B:0E6024F830E4C39E551EFFDB77FFFFBFD:FEFEFF5FFE5557$8#J)J#A":"C#9":"8"J%
+AAAAAAC007:9E6664E47CE664999E2A9FB7FFEEFDFFFBF?BFFE2AAB$8"J'J595F%
+555555E0<672CFE1CE663:>E551EFF814F4E3C7760E3C3073FBA78D6E3F7769E37D87FE9C7DF1E3C38F<E9E35B8FDE1A78DF5D8F4F0FBBB4F1BEC3FF4E3EF8F1E1C7FE9C1C3F5FFE5557$8#J(J585F%
+AAAAAAFFF7;079CFF8CE667819>E2A9EFFDB373DDBB6F7DDBFBF3F79B7495DEF766DD6D7FFE7BBDEEDDBF77=FDE6DD2577BDF9B75B5BEF36EF7BB36EB6BFFF3DDEF76EDFBBFE6EFBFFBFFE2AAB$8$J%8"J#8'8)8$8";$8"8'8$8"9"H%
+555555BFF703:7F4CFFCC9F9E551B777DDFB5F7FFFF7BB75B5DEFAEE7C06FBFDEEDD6DFB57EF76EF7D77BE037D7EEE5FFE5557$8$J$9"J-:/<'9-8#F%
+AAAAAA5FF601:7664E49D9E2A9EFF81777C1C31F7E1C7BB41EFDEEC1558FFEF83DE0E1C70707BE3BB755477EF760AAC7FF7C1EF070E383FC7FBFFE2AAB*J)J/8/8"9'8.8#F%
+5555553FFEEFF0FC7F89F0E66261E30E7C39E551EFFDB777DFBB6F7DDFBBFFEFB5FDFAEEDFBBF7FEFBFDEFDDFB7FFB7F7FDBB76EDBCEFD776FDDFBFF7DFEF7EEFDBFFFBF5FFE5557$9#JSJ#:$9":%:#8"<":(:&J%
+AAAAAAF1FE99E2A9DDBB77F3DDF76EDDBDEE7777DDEF772EFBB76EDEF76EFDBB4BFFE2AAB*J#8/8+8+8"8+8#F%
+5555553FFF5FFFFFFFO+E551B0F7E3C57B7E287C73DFBB8DB63BE3BB0FFEFC7DF1E2878FF7EEE36D8EFC3BB8EEDEED71DD87FF7E3EF8F143C7F87F5FFE5557$8"J$U&W9%R"ZF%
+AAAAAAFFO.E2A9EFDFFFFFFFFBFFFFFFFEED0BFFE2AAB$J#A"9"D"9"="J%
+555555O1E551FFFFFFFF1F@5FFE5557$J#J"J%
+AAAAAAO1E2A9JFF@BFFE2AAB$J#A"8#:"8"J%
+555555O1E551DFEFFE7FFDO%5FFE5557$J#>">":":#8":&J%
+AAAAAAO1E2A9FDF7FDFE0FF7F83FF1FFC7BBFFE2AAB$J#E"=":"=&J%
+555555O1E551FFFFFFFBFFEEFFBBB5FFE5557$J58(J%
+AAAAAAO1=E2A9EFFD38FFD3C786EE3838FFD3C7A70FF8F4E0E9FF4F0FF831D6E3C7FD38E0E9C74F0FGBFFE2AAB%j5J%
+5555553CO/I07E551EFFCF77FCDBB76EDDDF77FCDBB9EEFFEF377E7FF36EFFDFDC95DBA021FFCF777E7BB36F8087FE5FFE5557%Z%8":&8&9'8'J%
+AAAAAA3FO0E2A9EFFDDDFF7FDDFBBEF777EFFF76DB5DBBFFEFFDEFFB76FFFFBFEBFFE2AAB$J#?"8"B$8"8%J%
+555555O1E551F8C341BA03F0C377180FF5FFE5557$J#?"8">"9$8(J%
+AAAAAAO1E2A9F7BBCF5FBBFFF7F7EFBB77EFFFFBFFE2AAB$J#9"8#8"9#9%8(:"J%
+555555O1E5517966CD79CF3EE7772F3D5DBBFEEF3DF777FBF5FFE5557$8">"8"8#9$8":"J#8.8"85J%
+AAAAAAFCBFDFBFDF7FFFBFDFFD>E2A9F8F9DDC7972E3E38B9DDC5BF2F7850FEF3E3DDB63C7FF1F3DF8F8EFC5761FFC7FF1FFC7BBFFE2AAB'9"J5P#VJ%
+5555553FF07C7FO*9E551EFFFFFF3FFFFF7FFFFFFF3FFFFFFFE7FFFFFFFCFFFEE7FFE7FB5FFE5557'8";"8"8"9%8"J#9"<"9#9%;#J%
+AAAAAA3FF33FFE7FBF7FFEFFFFFFBFCE2A9FFFFFFFFFFFF1FFFFFFFMBFFE2AAB$85J#<"D"J%
+555555A9CC9878418724E4FFF7771A7B8D38F71D3C74C7EDDBBB8EFEFB8EEE3D33D3DC78F<E551FFFFO'5FFE5557$:%8-8,J#<"9&8$A"9%9#8"J%
+AAAAAA33327332FEF76F9F77CF7EEFCDBB3BBDB76EEF776EDDCCDCDDBB7F<E2A9FEFEFFEFFFEFFBC78F6FEFFEFFFEBC78F1<BFFE2AAB$9(9+8(J&E#J#8"J%
+555555C7333E7331CEFFBF77DEFEEFDDFB7BBDEB76DF7775FDDDDD?E551EFFDBFF7EF6BF7EEF<5FFE5557$9#8#9$8.9#J#@$:"B#9#;"J%
+AAAAAACF0333E473BF79F3DDC3783DF7D7B0755F707BE1839F<E2A9FDFFFFFFFEEFDFFFFF@BFFE2AAB$:"959#J5C-8$J%
+5555553F6E5FFFDF77DBEFEDEFDFDDDBB7BFBEBD7B7F55EF7F5DDBFEF<4E551EFF81C74E3C3869E3D39FDBE8F4F0E37D863E9E35B8FDBE8F4F0E37D863FE9C1C3;5FFE5557$8%8%9#:):"J5B.8$J%
+AAAAAA3CCF3B3AF1CFFDF6DF7DBBDDEFB77BBEF76EBB=4E2A9EFFDBBF3DDBF7E6DDCF9FBB6EF36EDD6D7FBFDE6DD2577BB6EF36EDD6D7FBFE6EFBF;BFFE2AAB58,J#8#9$9"G$9"="J%
+95555553FF07CCF87871873F3CFFBF963BDF1DF8BE3DDC57C77B8FBBDF8EEE2DDDC3DC71F<E551B7F7EFDDFF76EEDD6DF7EE=5FFE5557%R5J&8%8"9#G$9#;"J%
+AAAAAA3F;E7FFFBFFFFFDFFFFFBFFFFFFFFF7FFFFFFFFFDFFFFFFFFFDFFFFFF<E2A9EFF817C78EEE1DAAD55807BAAE558FC7;BFFE2AAB$@"8"8":":"J&8(9$B"9$9#;"J%
+555555FFFFFFFFFFDE551EFFDB7FBF6EDDDFFF7DDDBBF7BFB7F7DDEBBF7FB;5FFE5557$>"J"J#8"<":"I"9"J%
+AAAAAAFF6FF?E2A9BBF9CD776CDBFFE2AAB$@"j"8#8*8&B'8%;"J%
+555555F0O#0FE551BC77E3870E1E2DF9EF772E3BB0FBF7EEE36D8EFD72E3BB0F87;5FFE5557$@Z8$T"TA%XJ%
+AAAAAAO%E2A9EFEFFFFFFFFE;BFFE2AAB$J#@"I"9"J%
+555555O1E551FFFFFFH5FFE5557$J#J%
+AAAAAAO1E2A9O=BFFE2AAB$J#A"8#:"8"J%
+555555O1E551DFEFFE7FFDO%5FFE5557$J#>">":":#8":&J%
+AAAAAAO1E2A9FDF7FDFE0FF7F83FF1FFC7BBFFE2AAB$J#E"=":"=&J%
+555555O1E551FFFFFFFBFFEEFFBBB5FFE5557$J58(J%
+AAAAAAO1=E2A9EFFD38FFD3C786EE3838FFD3C7A70FF8F4E0E9FF4F0FF831D6E3C7FD38E0E9C74F0FGBFFE2AAB$J5J%
+555555O1HE551EFFCF77FCDBB76EDDDF77FCDBB9EEFFEF377E7FF36EFFDFDC95DBA021FFCF777E7BB36F8087FE5FFE5557$J%8":&8&9'8'J%
+AAAAAAO1E2A9EFFDDDFF7FDDFBBEF777EFFF76DB5DBBFFEFFDEFFB76FFFFBFEBFFE2AAB$J#?"8"B$8"8%J%
+555555O1E551F8C341BA03F0C377180FF5FFE5557$J#?"8">"9$8(J%
+AAAAAAO1E2A9F7BBCF5FBBFFF7F7EFBB77EFFFFBFFE2AAB$J#9"8#8"9#9%8(:"J%
+555555O1E5517966CD79CF3EE7772F3D5DBBFEEF3DF777FBF5FFE5557$J#8.8"85J%
+AAAAAAO1E2A9F8F9DDC7972E3E38B9DDC5BF2F7850FEF3E3DDB63C7FF1F3DF8F8EFC5761FFC7FF1FFC7BBFFE2AAB$J5P#VJ%
+555555O19E551EFFFFFF3FFFFF7FFFFFFF3FFFFFFFE7FFFFFFFCFFFEE7FFE7FB5FFE5557$J#9"<"9#9%;#J%
+AAAAAAO1E2A9FFFFFFFFFFFF1FFFFFFFMBFFE2AAB$J#<"D"J%
+555555O1E551FFFFO'5FFE5557$J#<"9%9"B"9"?#J%
+AAAAAAO1E2A97F7FF7FFF77FB7F7FC7F=BFFE2AAB$J#J#J%
+555555O1E551LFBFF=5FFE5557$J#?$:#B"9"J%
+AAAAAAO1E2A9FEFFFFFEFF77EFHBFFE2AAB$J5>*:$J%
+555555O18E551EFFE3A71E1C34F1E9CFEDF47A7871BEC3EEED3C6FB0F74F1ADC7EEED3C6FB0FA7070=5FFE5557$J5=+:$J%
+AAAAAAO18E2A9EFFDF9EEDFBF36EE7CFDDB779B76EB6BFDEECDBADAFFFEF36E92BBDEECDBADAFF9BBEF=BFFE2AAB$J&9$9":#A'="J%
+555555O1E551EFFBFB77EEFFBBF5DDF76EB6BBDF5DFB?5FFE5557$J#:%8"9)A'<"J%
+AAAAAAO1E2A9E3C7770ED5EAAC7DFBDD82AB1F83DFBDD82AB1F1=BFFE2AAB$J#:)8)="9'<"J%
+555555O1E551FDFB76EEFFFBEEF7EDDFBBF5DDBF77EFFDBFBF5DDBF77EFE=5FFE5557$=#8"J%<":"9$C&J%
+AAAAAAE73F9FO%E2A9EFFDFC66EEDDBBBBBEEDDBB7EBFFE2AAB$<#9"J-9%8$=+<"J%
+555555F0277FO%E551EFFE3BF1C3870F16FCF7971DD877C7761FFBF771B6C77EEDDC7761E1=5FFE5557$<#J$S"Q"P>*:$J%
+AAAAAAF3FFO)E2A9EFF7F7FFFFFFFF7FFFFFFFFFFFFFFF=BFFE2AAB$=)J#?"<"B":"J%
+555555E73873FE1CF9FE3FO"E551FFFFFFFFH5FFE5557$>(J#J%
+AAAAAA3333FF7B76FDFFO"E2A9O=BFFE2AAB$<)J#A"8#:"8"J%
+555555F067333FFF77AF7BO#E551DFEFFE7FFDO%5FFE5557$<$J#>">":":#8":&J%
+AAAAAAF3E730O(E2A9FDF7FDFE0FF7F83FF1FFC7BBFFE2AAB$>#J#E"=":"=&J%
+55555533FFO'E551FFFFFFFBFFEEFFBBB5FFE5557$?'J58(J%
+AAAAAAB3FF7B76DDBFO"=E2A9EFFD38FFD3C786EE3838FFD3C7A70FF8F4E0E9FF4F0FF831D6E3C7FD38E0E9C74F0FGBFFE2AAB$>(J5J%
+5555553873FF7CF9DE9FO"HE551EFFCF77FCDBB76EDDDF77FCDBB9EEFFEF377E7FF36EFFDFDC95DBA021FFCF777E7BB36F8087FE5FFE5557$<R#J%8":&8&9'8'J%
+AAAAAAFEAFO"E2A9EFFDDDFF7FDDFBBEF777EFFF76DB5DBBFFEFFDEFFB76FFFFBFEBFFE2AAB$C#J#?"8"B$8"8%J%
+555555FD57O"E551F8C341BA03F0C377180FF5FFE5557$C#J#?"8">"9$8(J%
+AAAAAAFEAFO"E2A9F7BBCF5FBBFFF7F7EFBB77EFFFFBFFE2AAB$@&j"8#9"8#8"9#9%8(:"J%
+555555FC000000A0M03E5517966CD79CF3EE7772F3D5DBBFEEF3DF777FBF5FFE5557$@&Z8#8.8"85J%
+AAAAAAFFFFFFFFBFO E2A9F8F9DDC7972E3E38B9DDC5BF2F7850FEF3E3DDB63C7FF1F3DF8F8EFC5761FFC7FF1FFC7BBFFE2AAB$D"J5P#VJ%
+555555FFO"9E551EFFFFFF3FFFFF7FFFFFFF3FFFFFFFE7FFFFFFFCFFFEE7FFE7FB5FFE5557$J#9"<"9#9%;#J%
+AAAAAAO1E2A9FFFFFFFFFFFF1FFFFFFFMBFFE2AAB$J#<"D"J%
+555555O1E551FFFFO'5FFE5557$J#8#:"8#:%?"8$>#;%9"F%
+AAAAAAO1E2A9FC7FDFFDE37FFF8FF7BFFBFFFDFC7FFC7FFFEFF7BFFE2AAB$J'>"<"J#;#9":$A%
+555555O1E551EFFDBBFFDFEF8FBFFFBF77FC7FF1F5FFE5557$J#>"8":#B"J"<$A%
+AAAAAAO1E2A9BFFBFEFF7F7FFBBFEEFBFFE2AAB$J5<(<2E%
+555555O1:E551EFF81071E9C38F3FBBB874FB838F4E1C7EF0E3EF869E3D3F786ED3C38F0DDFFA7070FFD38FFE1C7060FF8F4E0E9FF4F05FFE5557$J5;)<2E%
+AAAAAAO1:E2A9EFFDBBEEE7BB773F7BB7F3F7DF773DDBBDEEDDEF766DDCFFFEF7EECDBB76FDBFF9BBEFFFCF77FDFBBBF7FFEF377E7FF36EBFFE2AAB$J#9#8"8"8#<#?"9"<"9"=%F%
+555555O1E551FEEFFFF7F77DEDDDDD7FFBDF777EFFF75FFE5557$J';"9"=#="9#?"9#J%
+AAAAAAO1E2A9EFF81BF0B887EC1DF8071CF1FE3B8BFFE2AAB$J59#<$8$>"9#>"E%
+555555O14E551EFFDBBEEEFB377FEFBBF77EFDF777D9BBBECEDFDFDFF6E7FEDBFFEFFDB6C5FFE5557$J#;&:%8$>'B"9"9$E%
+AAAAAAO1E2A9CB773EFB3F7E5BBBF266EDDD6CDDB377EDDF9FF3FE7772BFFE2AAB$J#95<)>"8&9)A%
+555555O1E5514F16FFB8F3DFCB0F7DFDF8B7FDC77FEE3EF96EE3DFBF0F2DDCB8E1DEFE18F9C3C7BF88EFE70FEFFC7FF1F5FFE5557$J5P=R<Q+8$A%
+AAAAAAO14E2A9EFFFFFFFFFFBFFFDFFFFFFDFFFFFFFDFF7FE3FFFFFFFE7FFFFFFFCFFFFFFFFBFFE2AAB$J#;$9"8%A"I"9"9$E%
+555555O1E551C7FFFFFFFE3FFFF1FFFFFFFFFFF15FFE5557$J#;">%J"E%
+AAAAAAO1E2A9FFFFFFFFFFIFFBFFE2AAB$J#8#:"8#:%9"8&;"8':#;%9"@%
+555555O1E551FC7FDFFDE37FFF8FF77FFE3F7BFFF8BFFB1FBDFFBC7FFE3FFE3FFFF7FB5FFE5557$J'>"<"=#8"8"<"8%8#;#9":$;%
+AAAAAAO1E2A9EFFDBBFFDFEFFFBFF7BFDFBBFFFFDFFDFFFDFBBFE3FF8FBFFE2AAB$J#>"8":#;#:"="8&E"<$;%
+555555O1E551BFFBFEFFFEFFFB7FF7DFFDFF7BFFDDFF775FFE5557$J5>%
+AAAAAAO1O7E2A9EFF81071E9C38F3FBBB874FB838F4E1C7EF0E3EF869E3D3EEEE1D3FFBC7A7FE0E3A7070FFF7770E9F7DE3D3F7071D38387FD38387FE9C7FF0E38307FC7A7074FFA787FBFFE2AAB$J5?%
+555555O1O6E551EFFDBBEEE7BB773F7BB7F3F7DF773DDBBDEEDDEF766DDCFDEEDFCFFFBF79BFF7DD9BBEFFFEF76FE7EFDFBCDEFBEECDDF7FFCDDF7FFE7BBFEFDDDFBFFF79BBF3FF9B75FFE5557$J#9#8"8"8#<#9"8"9";"8"9"8"9"=%@%
+AAAAAAO1E2A9FEEFFFF7F77DEDDDDF7BBBEFBDDDFDEFBBBF7FFBBFFE2AAB$J"h"J';"9"=#8">#8"?"8"9#H%
+555555;FE035E551EFF81BF0B887EC1DE3BF1F718FF8FF1D5FFE5557$J"X"J59&?'8":"8#9">"?%
+AAAAAA;F9FC54E2A9EFFDBBEEEFB377FEFBBF77EFDF777D9BBBECEDFDFBEEFDEFFDF77EEFDFDDF7FF7FEDB6BFFE2AAB$J"h#J#;&:%8&B"G"9":#?%
+555555;F7077F4E551CB773EFB3F7E5BBBF266EDDDFBECF6CFF93BB95FFE5557$J"X#J#95958*8);%
+AAAAAA;ECF9BF4E2A97F16FFB8F3DFCB0F7DFDF8B7FDC77FEE3EF96EE3DF7F2C34787FF7E3BBC61FFBF961EFBFDFBC3BFBF1DDE30FF0FFEFC7CE1E3DFC79C77F387F7FE3FF8FBFFE2AAB$J"C#J5P5V0;%
+555555;EBFE9F44E551EFFFFFFFFFFBFFFDFFFFFFDFFFFFFFDFF7FE5F7FFFFFE03FFFFE03FFFFFFFFFFBFFFFFFBFFFFFFB9FFFFFFFF3FFFFFFFE7FFF7FFFFFFF5FFE5557$J"D"J#;$9"8%;"8#8#:"9"8"A"9"9%>%
+AAAAAA;DBDF4E2A9C7FFFFFFFE3FFFF1FFFFFFFFFFFFFFFFFFFFFFFFF8FFBFFE2AAB$J"C#J#;">%J"?%
+555555;D7FF4F4E551FFFFFFFFFFO!FF5FFE5557$J#J#="9"H"9"?#;%8"G%
+AAAAAAGFDDF6E2A9EDFDB7F7FC7FFC7FFFBF7FBFFE2AAB$J#;"8#J#J#;#;"8$A%
+555555<F0EF7BFE1D7E551LFBFFFBF7FBC7FF1F5FFE5557$J"<"9"J#="9"H"9"J"9$A%
+AAAAAA<EF3BFF7E2A9DDFB77EF6FFBBFEEFBFFE2AAB$J.J4C*:2E%
+555555=C39D31FE3C7F3B8EFEFEFDDC7F5E551EFFC6B71E1C79FDD3C6B71FBC6B71E1C7F74F1ADC7EF1ADC7871FA7070FFD2FBFE1C7060FFA787FC7A70745FFE5557$J+8#J4B+:2E%
+AAAAAA<E7EF6CEEFDDBFF5B76EEDBBF5E2A9EFFBA4AEDDBB9FBCDBA4AEF7BA4AEDDBBFFEF36E92BBDEE92BB76EF9BBEFFFCEDBFDFBBBF7FF9B77FF79BBF3BFFE2AAB$J&8&J#8"8&9$D$8%:"9"<"8$E%
+555555<F1EEF5EEFF4B776DFE1D7E551ADFBFFBDDBADDAEDDFF76EB6EB6BB77EFBDEBB7BBBF75FFE5557$J"8,J#9$:"9$F"8$<"8$J%
+AAAAAA<FCE0FE1CFF6B0755FEFDD83F5E2A9A0DDC3A00DDC3F83683770F1ABFE3B8BFFE2AAB$J"8'9#J#9&8#8$B"9'<':"I%
+555555<FEEFFDDF7F737FDBFF5E551AFD9BBFF7DAFEFFD9BBFFDBFBEEB6BF66EFEFFDF77FFDB675FFE5557$J$:#9"J#9%9"9#G"9"A"9%H%
+AAAAAA=EF6DEE77BBBF5E2A9AEE5BB9FAEEE5BBBB99FF3BB979FBFFE2AAB$J*9#J4B,;"9(8'A%
+555555<E1F39DF1FE28FF7B8FDC7F5E551EFFC6DB1FDC59EFDDC6DB1DFC6DB1FDC5FFBF771B6C77F1B6C7F717FE19C3C7BF8F387F7BC77FFC7FF1F5FFE5557$JYJ4C+9Q)RA%
+AAAAAA<5E2A9EFFFFFFFFDFFFEFFFFFFFFDFFFFFFFDFFFFFFFFFFF7FFFFFFF7FFF3FFFFFFFE7FFF73FBFFE2AAB$J"C#J#:$:"8#C":"8#@"9%H%
+555555;DBFECF4E551E3FFFFFFFE3FFFFFF8FFFFFFFF8FFFFFFE5557$J"D"J#:"?#J"G"J#
+AAAAAA;EB8F4E2A9FFFFFF5FFFF52AAB$J"C#J#J&
+555555;ECF99F4E551O<C0007E5557$J"h#J#J&
+AAAAAA;F7071F4E2A9O<DFFF7E2AAB$J"X#J#J#
+555555;F9FCBF4E551O?5557$J"i"J#J#
+AAAAAA;FC7F4E2A9O?2AAB$J"C#J#J#
+555555;FF01FF4E551O?5557$JYJ$j&
+AAAAAA<5E2A9E0O;C0007E2AAB$J#Z$
+555555O1E551O>FE5557$J#J#
+AAAAAAO1E2A9O?2AAB$J#J#
+555555O1E551O?5557$J$J$
+AAAAAAO1E2A80FO=C02AAB$J$J$
+555555O1E553EFO=DF5557$J#J#
+AAAAAAO1E2ABO?2AAB$J#J#
+555555O1E553O?5557$J#J#
+AAAAAAO1E2ABO?2AAB$J#J#
+555555O1E553O?5557$J%J%
+AAAAAAO1E2ABE03FO;F01F2AAB$J%J%
+555555O1E553FFBFO;F7FF5557$J#J#
+AAAAAAO1E2ABO?2AAB$J#J#
+555555O1E553O?5557$J#J#
+AAAAAAO1E2ABO?2AAB$J%j%
+555555O1E553FF80O;07FF5557$J%J%
+AAAAAAO1E2A80000O;00002AAB$J"z"
+555555O1E5OA5557$J"z"
+AAAAAAO1E2OAAAAB$J"z"
+555555O1E5OA5557$J"z"
+AAAAAAO1E2OAAAAB$j"z"
+555555O105OA5557$J"z"
+AAAAAAO102OAAAABz"
+Q(5557z"
+Q(AAABz"
+Q(5557z"
+Q(AAABz"
+Q(5557z"
+Q(AAAB
+ENDBITMAP
+
+%%EndBinary
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(XView supports the ability to select objects on the screen, such as ) 216. 297. T
+(drawings or portions of text, and transfer the selection between ) 216. 284. T
+(applications.  Selections within XView are managed in conjunction ) 216. 271. T
+(with the server according to a set of conventions referred to as the ) 216. 258. T
+4 F
+(Inter-Client Communications Conventions Manual) 216. 245. T
+3 F
+( \050) 439.97 245. T
+(ICCCM\051, which is ) 446.38 245. T
+(a draft standard in technical review by the X11 Consortium.  ) 216. 232. T
+(Additionally, XView\325s interactions with an external window manager ) 216. 219. T
+(are defined by the ICCCM.) 216. 206. T
+(In SunView, a separate daemon process communicates with all ) 216. 188. T
+(selection service clients.  In XView, the window server provides the ) 216. 175. T
+(same facility as the SunView selection service daemon.  Each ) 216. 162. T
+(application program communicates with the server through an XView ) 216. 149. T
+(selection service interface, which is actually a front-end to XView\325s ) 216. 136. T
+(implementation of the ICCCM.  The XView selection model is, like ) 216. 123. T
+(SunView, based upon the requestor/holder model of peer-to-peer ) 216. 110. T
+(communications.) 216. 97. T
+55. 246. 198. 313. C
+55. 246. 198. 313. R
+7 X
+V
+5 F
+0 X
+(1.12) 59. 297. T
+(Inter-client ) 90. 297. T
+(Communication) 90. 282. T
+U
+FMENDPAGE
+%%Page: "13" 11
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(13) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+(events through the XView Notifier to the application\325s event ) 216. 694. T
+(procedures.) 216. 681. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The use of fonts in SunView is generally unorganized and left to the ) 216. 658. T
+(discretion of the application programmer.  There are no symbolic ) 216. 645. T
+(relationships \050such as family, style, size\051 among the different fonts ) 216. 632. T
+(other than those their file names imply \050such as ) 216. 619. T
+8 F
+(screen.r.12) 427.11 619. T
+3 F
+(,  ) 499.71 619. T
+8 F
+(screen.r.14) 216. 606. T
+3 F
+(\051. Various different fonts are provided with SunView, ) 288.6 606. T
+(and other fonts can easily be created with a font editing tool, called ) 216. 593. T
+8 F
+(fontedit) 216. 580. T
+3 F
+(.  SunView fonts are manipulated through the Pixfont font ) 268.8 580. T
+(routines, part of the  Pixrect library.) 216. 567. T
+(XView requires a richer font manipulation environment for ) 216. 549. T
+(application programmers.  The standard X11 fonts are not guaranteed to ) 216. 536. T
+(have any properties, and the interpretations of the property values still ) 216. 523. T
+(have to be derived from a prior knowledge of the property.  Though these ) 216. 510. T
+(properties added a few interesting pieces of information when compared ) 216. 497. T
+(with Pixfonts, they are still not quite what XView application ) 216. 484. T
+(programmers will need.  XView font objects have the following new ) 216. 471. T
+(attributes:) 216. 458. T
+9 F
+(Family) 234. 440. T
+3 F
+(The name of the font-family \050such as Times, ) 342. 440. T
+8 F
+(Courier) 342. 426. T
+3 F
+(, ) 388.2 426. T
+10 F
+(Helvetica) 393.7 426. T
+3 F
+(\051) 443.04 426. T
+9 F
+(Style) 234. 408. T
+3 F
+(The style of this font in the family \050such as ) 342. 408. T
+11 F
+(Bold) 342. 395. T
+3 F
+(, ) 364.01 395. T
+4 F
+(Italic) 369.51 395. T
+3 F
+(, ) 392.73 395. T
+9 F
+(Bold Italic Strike Underline) 398.23 395. T
+398.23 393.33 524.44 393.92 R
+V
+3 F
+(\051) 524.45 395. T
+9 F
+(Size) 234. 376. T
+3 F
+(The pixel size of the font \050such as ) 342. 376. T
+2 F
+(10) 493.52 376. T
+3 F
+(, 11, ) 503.52 376. T
+6 F
+(12,) 525.52 376. T
+3 F
+( ) 540.52 376. T
+12 F
+(14,) 342. 358. T
+13 F
+( 18) 359.5 358. T
+3 F
+(\051) 382. 358. T
+9 F
+(Scale) 234. 338. T
+3 F
+(The relationship of this font\325s size to similar ) 342. 338. T
+(fonts in the same family/style group \050such as ) 342. 325. T
+(small, medium, large, extra-large\051) 342. 312. T
+9 F
+(Rescale) 234. 294. T
+3 F
+(This property allows a font to be ) 342. 294. T
+4 F
+(scaled) 488.34 294. T
+3 F
+( from ) 516.45 294. T
+(one pixel size to another within a ) 342. 281. T
+(family/style group \050such as from the small ) 342. 268. T
+(font to the large font\051.) 342. 255. T
+(XView font objects effectively replace the standard X11 font ) 216. 237. T
+(properties and routines.) 216. 224. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The ) 216. 201. T
+2 F
+(OPEN LOOK) 235.85 201. T
+3 F
+( Graphical User Interface was chosen for XView ) 292.24 201. T
+(because the ) 216. 188. T
+2 F
+(OPEN LOOK UI) 269.76 188. T
+3 F
+( will be the standard graphical interface for ) 339.19 188. T
+2 F
+(UNIX) 216. 175. T
+3 F
+( System V release 4.  Besides offering programmers greatly ) 240.99 175. T
+(enhanced functionality, it permits \324\324look and feel\325\325 consistency with other ) 216. 162. T
+2 F
+(OPEN LOOK UI) 216. 149. T
+3 F
+( applications. ) 285.43 149. T
+55. 628. 198. 674. C
+55. 628. 198. 674. R
+7 X
+V
+5 F
+0 X
+(1.10) 59. 658. T
+(Font Handling) 90. 658. T
+U
+55. 150. 198. 217. C
+55. 150. 198. 217. R
+7 X
+V
+5 F
+0 X
+(1.11) 59. 201. T
+(OPEN LOOK ) 90. 201. T
+(Graphical User ) 90. 186. T
+(Interface) 90. 171. T
+U
+FMENDPAGE
+%%Page: "12" 10
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(12) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+3 F
+(then sent to the appropriate package.  In other words, the XView ) 216. 694. T
+(Notifier has been unplugged from the kernel and its dependence on file-) 216. 681. T
+(descriptors, then plugged into the X11 input stream without disturbing ) 216. 668. T
+(the basic implementation.) 216. 655. T
+(In X11, events are asynchronous data generated by the server as a result ) 216. 637. T
+(of some device activity or, possibly, as a side-effect of a request from an ) 216. 624. T
+(Xlib function.  Events are dispatched to a client program whose ) 216. 611. T
+(window\325s event mask matches the event being processed.  The XView ) 216. 598. T
+(Notifier reads the server connection by waiting for input on the ) 216. 585. T
+2 F
+(UNIX) 496.75 585. T
+3 F
+( ) 521.74 585. T
+(socket connected to the X11 window server.  If the application is ) 216. 572. T
+(displaying on two or more different machines, the Notifier waits for ) 216. 559. T
+(input on more than one socket.  As in SunView, an application can also ) 216. 546. T
+(register other file descriptors \050such as a pipe\051 or certain ) 216. 533. T
+2 F
+(UNIX) 461.6 533. T
+3 F
+( signals ) 486.59 533. T
+(with the Notifier.) 216. 520. T
+6 F
+(Figure 1-4) 147.67 499. T
+7 F
+(The XView Notifier) 216. 499. T
+54. 90. 558. 702. C
+54. 219. 558. 495. C
+54. 219. 558. 495. R
+7 X
+V
+1 H
+0 X
+291. 392. 0. -54. W
+291. 343. 0. 56. W
+330. 459. 414. 490. R
+V
+14 F
+(X11 Server) 343.18 469. T
+330. 459. 414. 490. R
+0 H
+N
+1 H
+291. 305. 0. -23. W
+235. 345. 341. 377. R
+V
+(Events) 270.67 359. T
+235. 345. 341. 377. R
+0 H
+N
+237. 306. 342. 334. R
+V
+(Notifier) 269.51 316. T
+237. 306. 342. 334. R
+N
+1 H
+291. 437. 0. -15. W
+291. 399. 0. -17. W
+291. 383. 0. 17. W
+235. 390. 341. 420. R
+V
+(XView) 270.67 402. T
+235. 390. 341. 420. R
+0 H
+N
+1 H
+225. 458. 0. -19. W
+225. 440. 0. 19. W
+6 F
+(Network) 118. 441. T
+327. 462. 411. 492. R
+7 X
+V
+14 F
+0 X
+(X11 Server) 340.18 471. T
+327. 462. 411. 492. R
+0 H
+N
+120. 439. 468. 439. 2 L
+2 H
+4 X
+N
+1 H
+0 X
+289. 305. -109. -20. W
+289. 305. 107. -20. W
+233. 347. 339. 377. R
+7 X
+V
+0 X
+(Translate Events) 242.5 359. T
+233. 347. 339. 377. R
+0 H
+N
+232. 309. 339. 338. R
+7 X
+V
+0 X
+(Distribute Events) 240.67 320. T
+232. 309. 339. 338. R
+N
+1 H
+372. 458. 0. -17. W
+372. 444. 0. 15. W
+232. 392. 338. 421. R
+7 X
+V
+0 X
+(XView Notifier) 246.18 403. T
+232. 392. 338. 421. R
+0 H
+N
+180. 459. 264. 489. R
+V
+(X11 Server) 193.18 468. T
+180. 459. 264. 489. R
+N
+177. 461. 261. 491. R
+7 X
+V
+0 X
+(X11 Server) 190.18 470. T
+177. 461. 261. 491. R
+N
+251. 226. 334. 278. R
+V
+(Event) 277.5 260. T
+(Procedure) 265.84 246. T
+251. 226. 334. 278. R
+N
+248. 230. 331. 279. R
+7 X
+V
+0 X
+(Application ) 259.49 261. T
+(Event ) 274.5 247. T
+(Procedure) 262.84 233. T
+248. 230. 331. 279. R
+N
+(Signal) 398. 396. T
+1 H
+387. 406. -45. 0. W
+(Pipe) 150. 397. T
+183. 406. 46. 0. W
+138. 227. 221. 279. R
+V
+(Event) 164.5 261. T
+(Procedure) 152.84 247. T
+138. 227. 221. 279. R
+0 H
+N
+135. 231. 218. 280. R
+7 X
+V
+0 X
+(Application ) 146.49 262. T
+(Event ) 161.5 248. T
+(Procedure) 149.84 234. T
+135. 231. 218. 280. R
+N
+364. 226. 447. 278. R
+V
+(Event) 390.5 260. T
+(Procedure) 378.84 246. T
+364. 226. 447. 278. R
+N
+361. 230. 444. 279. R
+7 X
+V
+0 X
+(Application ) 372.49 261. T
+(Event ) 387.5 247. T
+(Procedure) 375.84 233. T
+361. 230. 444. 279. R
+N
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The Notifier weaves events from all these sources into a single, ordered ) 216. 204. T
+(event stream.  This event stream eliminates the need for the ) 216. 191. T
+(application to poll separate streams from the different devices.  Because ) 216. 178. T
+(the underlying ) 216. 165. T
+(Notifier multiplexes the input stream between ) 282.61 165. T
+(windows, each individual window operates under the illusion that it ) 216. 152. T
+(has the user\325s full attention.  That is, it sees precisely those events that ) 216. 139. T
+(the user has directed to it.  Figure 1-4 shows the relationship of the ) 216. 126. T
+(XView Notifier to multiple X11 servers.  It also shows the flow of ) 216. 113. T
+FMENDPAGE
+%%Page: "11" 9
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(11) 548. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+(In SunView, Pixrect provides Pixwin with a hardware-abstracted ) 216. 694. T
+(library of  graphical operations for the display of images.  Pixrect ) 216. 681. T
+(supports the concepts of screen coordinates, pixels, bitmaps, raster ) 216. 668. T
+(operations, vectors, and text drawing.) 216. 655. T
+(In XView, Xlib provides the hardware-abstracted library of graphical ) 216. 637. T
+(operations.  Because the actual implementation of the graphical ) 216. 624. T
+(routines is in the server, the graphics can be implemented for any ) 216. 611. T
+(hardware or operating system.  The X11 library provides the same ) 216. 598. T
+(concepts of screen coordinates, pixels, bitmaps, and assorted drawing ) 216. 585. T
+(operations as Pixwin.  To provide seamless transition for SunView ) 216. 572. T
+(programmers, the Pixwin interface of SunView was retained, but the ) 216. 559. T
+(implementation was discarded and replaced by X11 graphical operations.) 216. 546. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(In SunView, all images are pixrects, which are manipulated either as ) 216. 523. T
+(data structures in memory \050called ) 216. 510. T
+4 F
+(memory pixrects) 366. 510. T
+3 F
+(\051 or as device files ) 439. 510. T
+(that represent the ability to access a display device.  When a pixrect is ) 216. 497. T
+(ready to be displayed, the bits representing the image already reside on ) 216. 484. T
+(the same machine as the display hardware that will display it.  This is ) 216. 471. T
+(the optimal way of handling the data, since the image data resides where ) 216. 458. T
+(it is needed.) 216. 445. T
+(In XView however, the window server may potentially run on a ) 216. 427. T
+(different machine or even a different architecture.  It is even possible ) 216. 414. T
+(that the client and the server represent data altogether differently.  In ) 216. 401. T
+(order to store the bits of an image on the window server, and thus avoid ) 216. 388. T
+(the need to ship the same data across the server connection repeatedly, ) 216. 375. T
+(XView provides ) 216. 362. T
+4 F
+(server image objects) 291.15 362. T
+3 F
+(, which take advantage of the data ) 382.19 362. T
+(format conversion provided in the X11 protocol.  A server image object ) 216. 349. T
+(is an X11 Pixmap, which is represented on the client-side as a pixrect.  ) 216. 336. T
+(This approach allows server images to be treated as pixrects, ) 216. 323. T
+(maintaining SunView compatibility.  The client program manipulates ) 216. 310. T
+(server images in the same way it manipulates other XView objects.) 216. 294. T
+15 F
+(\240) 512.03 298. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+( ) 516.53 294. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The SunView ) 216. 271. T
+(Notifier facility was converted from the kernel-based ) 279.55 271. T
+(SunWindows input environment to X11 with few outward signs of ) 216. 258. T
+(change.  ) 216. 245. T
+(In SunView, every window is represented as a file descriptor, while in ) 216. 227. T
+(XView, a single file descriptor is used to connect to the server.  In ) 216. 214. T
+(SunView, windows are registered with the Notifier, which waits for ) 216. 201. T
+(input on the file descriptor for each window and sends the input to the ) 216. 188. T
+(appropriate package.  In XView, windows are also registered, but the ) 216. 175. T
+(Notifier waits for input on the file descriptor that is connected to the ) 216. 162. T
+(server.  X11 input events are then translated to XView semantic ) 216. 149. T
+(events, such as ) 216. 136. T
+8 F
+(ACTION_SELECT) 284.43 136. T
+3 F
+(, ) 370.23 136. T
+8 F
+(ACTION_PASTE) 375.73 136. T
+3 F
+(, ) 454.93 136. T
+8 F
+(ACTION_STOP) 460.43 136. T
+3 F
+(, and ) 533.03 136. T
+55. 505. 198. 539. C
+55. 505. 198. 539. R
+7 X
+V
+14 F
+0 X
+(Server Images) 59. 525. T
+U
+54. 90. 558. 702. C
+54. 90. 551. 128. C
+54. 90. 551. 128. R
+7 X
+V
+15 F
+0 X
+(\240) 218. 109. T
+16 F
+(With ) 222.5 105. T
+17 F
+(xv_create\050\051, xv_get\050\051, xv_set\050\051,) 243. 105. T
+16 F
+( and so on.) 435. 105. T
+220. 124. 431. 124. 2 L
+0 H
+N
+54. 90. 558. 702. C
+U
+55. 220. 198. 287. C
+55. 220. 198. 287. R
+7 X
+V
+5 F
+0 X
+(1.9) 59. 271. T
+(The XView ) 90. 271. T
+(Notifier) 90. 256. T
+U
+FMENDPAGE
+%%Page: "10" 8
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(10) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+4 F
+(server image objects) 216. 694. T
+3 F
+( to represent the image on the server.  This is one ) 307.04 694. T
+(area where the XView API is significantly different from the ) 216. 681. T
+(SunView API.) 216. 668. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(XView icons are, as in SunView, pictures representing an application ) 216. 645. T
+(in a closed state.  In SunView, the icon is displayed by sizing the open ) 216. 632. T
+(window to the shape of the icon image and painting the image into that ) 216. 619. T
+(\050usually\051 smaller window.  In XView, the icon is manipulated by the ) 216. 606. T
+(window manager.  When the window manager determines that the icon ) 216. 593. T
+(should be shown \050for example, when the user presses a "Close" button in ) 216. 580. T
+(the window header\051, it queries that window\325s properties for the icon to ) 216. 567. T
+(display.  XView sets these properties for its applications.  This is ) 216. 554. T
+(another area where the XView API is different from the SunView API.) 216. 541. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Non-visual objects cannot be drawn into or displayed directly, but are ) 216. 518. T
+(still subclassed from the generic object:) 216. 505. T
+9 F
+(Server) 234. 487. T
+3 F
+(The XView front-end for an X11 server ) 342. 487. T
+(connection.  The window-server is the ) 342. 474. T
+(program that actually does the drawing for ) 342. 461. T
+(XView and any other X11 client programs.  It ) 342. 448. T
+(also receives the user\325s mouse and keyboard ) 342. 435. T
+(input.  The server may run on a different ) 342. 422. T
+(computer, which in turn may run under a ) 342. 409. T
+(different operating system, than the one the ) 342. 396. T
+(XView application is running on.  An XView ) 342. 383. T
+(application can also connect to more than one ) 342. 370. T
+(server.) 342. 357. T
+9 F
+(Screen) 234. 339. T
+3 F
+(The actual screen on which the program\325s ) 342. 339. T
+(drawing/output appears.  Some computers ) 342. 326. T
+(have multiple screens, of different ) 342. 313. T
+(resolutions and color capabilities.) 342. 300. T
+9 F
+(Font) 234. 282. T
+3 F
+(The font used when drawing text.  Different ) 342. 282. T
+(servers have different fonts available.  ) 342. 269. T
+(XView can use any font available to X11 ) 342. 256. T
+(clients.  For forward compatibility purposes, ) 342. 243. T
+(the otherwise opaque font object is type-) 342. 230. T
+(compatible with a Pixfont.  The bits that ) 342. 217. T
+(represent the font images are stored on the ) 342. 204. T
+(server, not with the XView application.) 342. 191. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(In SunView, the Pixwin interface is responsible for imaging.  Pixwin is ) 216. 168. T
+(a logical layer over the Pixrect library.  It implements the basic ) 216. 155. T
+(windowing notions of) 216. 142. T
+4 F
+( ) 312.56 142. T
+(clipping) 315.31 142. T
+3 F
+( and ) 351.37 142. T
+4 F
+(coexistence) 372.75 142. T
+3 F
+( with other windows.  In ) 423.45 142. T
+(XView, imaging is carried out by the X11 window server, through ) 216. 129. T
+(whatever graphical imaging implementation it uses.) 216. 116. T
+55. 622. 198. 661. C
+55. 622. 198. 661. R
+7 X
+V
+14 F
+0 X
+(Icons) 59. 647. T
+U
+55. 495. 198. 534. C
+55. 495. 198. 534. R
+7 X
+V
+5 F
+0 X
+(1.7) 59. 518. T
+(Non-Visual ) 90. 518. T
+(Objects) 90. 503. T
+U
+55. 140. 198. 184. C
+55. 140. 198. 184. R
+7 X
+V
+5 F
+0 X
+(1.8) 59. 168. T
+(Imaging ) 90. 168. T
+(Facilities) 90. 153. T
+U
+FMENDPAGE
+%%Page: "9" 7
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(9) 553. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+(include most of the same ) 216. 694. T
+2 F
+(OPEN LOOK UI) 328.74 694. T
+3 F
+( editing features found in the ) 398.17 694. T
+(text subwindow.) 216. 681. T
+(In XView, as in SunView, the shell is a separate process that runs ) 216. 663. T
+(concurrently with the client program.  The implementation of this ) 216. 650. T
+(parent-child model assures the user\325s ability to choose the underlying ) 216. 637. T
+(shell program \050C-Shell, Borne Shell, Korn Shell, and so on\051 while ) 216. 624. T
+(continuing to run the same subwindow package on top of it.) 216. 611. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Openwin is a new package that provides XView window pane ) 216. 588. T
+(management services.  Openwin clients register with Openwin that ) 216. 575. T
+(they are going to represent some unknown type of data \050such as  ) 216. 562. T
+(WYSIWYG text or raster images\051.  Openwin then manages the ) 216. 549. T
+(application program\325s windows.  Openwin also supports ) 216. 536. T
+4 F
+(split ) 467.14 536. T
+3 F
+(and) 488.84 536. T
+4 F
+( join) 504.73 536. T
+3 F
+( of ) 524.59 536. T
+(window panes.  Thus, a user can split the viewing area into multiple ) 216. 523. T
+(viewing areas, each of which represents the same data in a different ) 216. 510. T
+(view, without the need for application program intervention.  The text, ) 216. 497. T
+(term, and canvas subwindows are implemented as subclasses of ) 216. 484. T
+(Openwin.) 216. 471. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(There are other types of visual objects displayed on the screen that ) 216. 448. T
+(differ from the subwindows described above in that they are less ) 216. 435. T
+(general and serve more specific functions.  They include:) 216. 422. T
+9 F
+(Panel item) 234. 404. T
+3 F
+(An object in a control panel that allows ) 342. 404. T
+(interaction between the user and the ) 342. 391. T
+(application.  Panel items can be moved, ) 342. 378. T
+(displayed and undisplayed.  There are several ) 342. 365. T
+(predefined types of items, including buttons, ) 342. 352. T
+(choice items \050both exclusive and non-) 342. 339. T
+(exclusive\051, message items, text items, and ) 342. 326. T
+(sliders.  Panel items are not implemented as ) 342. 313. T
+(windows; instead they use the panel\325s event ) 342. 300. T
+(dispatcher to receive input events.) 342. 287. T
+9 F
+(Notice) 234. 269. T
+3 F
+(A box on the screen that informs the user of ) 342. 269. T
+(some condition that requires attention.  It ) 342. 256. T
+(usually has one or more buttons which the ) 342. 243. T
+(user can push to confirm, deny \050if a decision ) 342. 230. T
+(is required\051, or continue.) 342. 217. T
+9 F
+(Cursor) 234. 199. T
+3 F
+(A shape on the screen representing the user\325s ) 342. 199. T
+(point of attention, controlled by the mouse.) 342. 186. T
+9 F
+(Icon) 234. 168. T
+3 F
+(A window representing an application when ) 342. 168. T
+(the application\325s frame is in the \324\324closed\325\325 state.) 342. 155. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(XView cursors have a similar function to SunView cursors, and cursor ) 216. 132. T
+(shape varies according to window.  However, in XView, the method by ) 216. 119. T
+(which cursors are implemented differs from SunView.  In SunView, ) 216. 106. T
+(cursors are memory pixrects, while in XView, ) 216. 93. T
+4 F
+(cursor objects) 422.21 93. T
+3 F
+( use ) 484.84 93. T
+55. 571. 198. 604. C
+55. 571. 198. 604. R
+7 X
+V
+5 F
+0 X
+(1.5) 59. 588. T
+(Openwin) 90. 588. T
+U
+55. 423. 198. 464. C
+55. 423. 198. 464. R
+7 X
+V
+5 F
+0 X
+(1.6) 59. 448. T
+(Other Visual ) 90. 448. T
+(Objects) 90. 433. T
+U
+55. 106. 198. 140. C
+55. 106. 198. 140. R
+7 X
+V
+14 F
+0 X
+(Cursors) 59. 125. T
+U
+FMENDPAGE
+%%Page: "8" 6
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(8) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+3 F
+(The panel or menu, acting as a mini-notifier) 216. 694. T
+11 F
+(, ) 409.69 694. T
+3 F
+(can deal with the ) 415.19 694. T
+(distribution of events to the individual panel and menu item objects ) 216. 681. T
+(better than can an implementation where every item is a window.) 216. 668. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(A text editing area is another basic component of any toolkit.  The ) 216. 645. T
+(XView text subwindow retains most of the features of the SunView ) 216. 632. T
+(text subwindow, except that it now uses the ) 216. 619. T
+2 F
+(OPEN LOOK UI) 410.62 619. T
+3 F
+( selection ) 480.05 619. T
+(model.  In XView, the text subwindow\325s contents are stored in the client ) 216. 606. T
+(process; the server only displays the text, it does not store or ) 216. 593. T
+(manipulate it.) 216. 580. T
+(As in SunView \050since SunOS 4.0\051, the text subwindow is a full-featured ) 216. 562. T
+(text editor that supports the ) 216. 549. T
+2 F
+(ISO) 339.13 549. T
+3 F
+( Latin-1 character set.  It provides: ) 355.24 549. T
+6 F
+(\245) 234. 528. T
+3 F
+(checkpointing \050automatic save after so many keystrokes\051) 252. 528. T
+6 F
+(\245) 234. 512. T
+3 F
+(keyboard-control of the insertion point \050in addition to using the ) 252. 512. T
+(mouse\051) 253. 498. T
+6 F
+( ) 285.38 498. T
+(\245) 234. 482. T
+3 F
+(both memory and file editing ) 252. 482. T
+6 F
+(\245) 234. 466. T
+3 F
+(arbitrary numbers of Undo and Again actions) 252. 466. T
+6 F
+(\245) 234. 450. T
+3 F
+(find-and-replace pop-up windows ) 252. 450. T
+6 F
+(\245) 234. 434. T
+3 F
+(a customizable user-specific menu ) 252. 434. T
+6 F
+( ) 406.57 434. T
+3 F
+(As a result of implementing the ) 216. 416. T
+2 F
+(OPEN LOOK) 357.77 416. T
+3 F
+( User Interface, the text ) 414.15 416. T
+(subwindow also provides the wipe-through-pending-delete text ) 216. 403. T
+(selection and editing model.   Additionally, the drag/move editing ) 216. 390. T
+(accelerator allows direct manipulation of selected text.) 216. 377. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(In XView, scrollbars are windows that implement the ) 216. 354. T
+2 F
+(OPEN LOOK UI) 454.6 354. T
+3 F
+( ) 524.03 354. T
+(scrollbar metaphor of an elevator on a cable.  The scrollbar package only ) 216. 341. T
+(manages its scrollbar window.  It is responsible for keeping the elevator ) 216. 328. T
+(and proportional indicator up to date, but it is the responsibility of the ) 216. 315. T
+(window attached to the scrollbar to update the window\325s contents.  For ) 216. 302. T
+(example, the text subwindow package is responsible for scrolling the ) 216. 289. T
+(text.) 216. 276. T
+(In SunView, scrollbars are implemented on Pixwins, rather than on  ) 216. 258. T
+(windows, because of the limited number of windows available to an ) 216. 245. T
+(application.  \050Every window is represented by a file-descriptor, and ) 216. 232. T
+(there are only so many per process\051.) 216. 219. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(A common building-block for any ) 216. 196. T
+2 F
+(UNIX) 369.68 196. T
+3 F
+(-based toolkit is a tty/shell ) 394.67 196. T
+(emulation capability.  XView provides both a basic shell subwindow ) 216. 183. T
+(package ) 216. 170. T
+8 F
+(\050TTY\051) 254.79 170. T
+3 F
+( and a more user-friendly, scrollable shell subwindow ) 287.79 170. T
+(package ) 216. 157. T
+8 F
+(\050TERM\051) 254.79 157. T
+3 F
+(.  The ) 294.39 157. T
+8 F
+(TTY) 322.49 157. T
+3 F
+( package provides a standard ) 342.29 157. T
+2 F
+(UNIX) 472.11 157. T
+3 F
+( shell in an ) 497.1 157. T
+(XView subwindow.  It is a no-frills package for users who feel a ) 216. 144. T
+(scrolling shell is either unnecessary or undesirable.  The ) 216. 131. T
+8 F
+(TERM) 465.9 131. T
+3 F
+( package ) 492.3 131. T
+(is a derivative of the ) 216. 118. T
+8 F
+(TTY) 308.57 118. T
+3 F
+( package, which is subclassed from both the tty ) 328.36 118. T
+(and text subwindow classes. ) 216. 105. T
+18 F
+( ) 343.4 105. T
+8 F
+(TERM) 346.18 105. T
+3 F
+( subwindows are scrollable and ) 372.58 105. T
+55. 594. 198. 661. C
+55. 594. 198. 661. R
+7 X
+V
+14 F
+0 X
+(Text Subwindows) 59. 647. T
+U
+55. 303. 198. 370. C
+55. 303. 198. 370. R
+7 X
+V
+14 F
+0 X
+(Scrollbars) 59. 356. T
+U
+55. 137. 198. 212. C
+55. 137. 198. 212. R
+7 X
+V
+14 F
+0 X
+(Tty and Terminal ) 59. 198. T
+(Emulation Subwindows) 59. 185. T
+U
+FMENDPAGE
+%%Page: "7" 5
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(7) 553. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+6 F
+(Figure 1-3) 147.67 693. T
+7 F
+(The XView Canvas Model) 216. 693. T
+54. 90. 558. 702. C
+54. 519. 558. 679. C
+54. 519. 558. 679. R
+7 X
+V
+266. 587. 335. 620. 2 L
+1 H
+0 X
+N
+266. 587. 403. 587. 2 L
+N
+403. 587. 472. 620. 2 L
+N
+335. 620. 472. 620. 2 L
+N
+3 F
+(View Window) 72. 604. T
+(Canvas Subwindow) 72. 653. T
+(Paint Window) 72. 558. T
+186. 525. 437. 525. 2 L
+N
+186. 525. 300. 578. 2 L
+N
+300. 578. 540. 578. 2 L
+N
+437. 525. 540. 578. 2 L
+N
+266. 633. 266. 538. 2 L
+3 X
+N
+403. 631. 403. 538. 2 L
+N
+472. 669. 472. 571. 2 L
+N
+335. 669. 335. 571. 2 L
+N
+0 X
+151. 554. 81. 0. W
+151. 604. 138. 0. W
+266. 633. 335. 669. 2 L
+3 H
+N
+266. 633. 403. 633. 2 L
+N
+403. 633. 472. 669. 2 L
+N
+335. 669. 472. 669. 2 L
+N
+19 F
+(Figure 3:) 225. 511. T
+2 F
+( The Canvas Model) 264.16 511. T
+1 H
+173. 650. 109. 0. W
+266. 538. 335. 571. 2 L
+0 H
+4 X
+N
+266. 538. 403. 538. 2 L
+N
+403. 538. 472. 571. 2 L
+N
+335. 571. 472. 571. 2 L
+N
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(While the SunView drawing surface is implemented as a ) 216. 504. T
+(Pixwin ) 468.65 504. T
+(region, the XView drawing surface is a separate window, the ) 216. 491. T
+4 F
+(paint ) 487.26 491. T
+(window) 216. 478. T
+3 F
+(.  The paint window is clipped to another window, the) 250.23 478. T
+( ) 487.93 478. T
+4 F
+(view ) 490.68 478. T
+(window) 216. 465. T
+3 F
+(, so that only the part of the paint window \324\324underneath\325\325 the view ) 250.23 465. T
+(window shows through.  The view window appears, together with ) 216. 452. T
+(\050optional\051 scrollbars, in the actual canvas subwindow.  The result is a ) 216. 439. T
+(much cleaner implementation than in SunView, both conceptually and ) 216. 426. T
+(programmatically.) 216. 413. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(SunView panels and menus are separate packages, offering almost no ) 216. 390. T
+(overlapping functional or visual consistency, while in XView, control ) 216. 377. T
+(panels and menus are visually identical.  Many of the objects available ) 216. 364. T
+(as panel items, such as buttons and choice-items, are also available as ) 216. 351. T
+(menu items.  Menus are no longer only transient objects.  They can be ) 216. 338. T
+(pinned) 216. 322. T
+15 F
+(.*) 245.94 326. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(  , and thereafter behave like panels.) 252.69 322. T
+(In XView, panels and menus are implemented as windows, while the ) 216. 304. T
+(individual panel and menu items in them are not.  There are two reasons ) 216. 291. T
+(for this approach: ) 216. 278. T
+6 F
+(\245) 234. 257. T
+3 F
+(SunView windows are \324\324heavy-weight\325\325 objects, in which every ) 252. 257. T
+(window is represented by a ) 253. 244. T
+2 F
+(UNIX) 376.11 244. T
+3 F
+( file descriptor.  They have to ) 401.1 244. T
+(be used sparingly.  XView preserves the tradition of sparing use ) 253. 231. T
+(of windows.) 253. 218. T
+6 F
+(\245) 234. 202. T
+3 F
+(Windows are not that much \324\324lighter-weight\325\325 in X11, so complex ) 252. 202. T
+(panels and menus containing large numbers of items would ) 253. 189. T
+(sustain poor performance if every item were a window.  ) 253. 176. T
+55. 339. 198. 406. C
+55. 339. 198. 406. R
+7 X
+V
+14 F
+0 X
+(Panels and Menus) 59. 392. T
+U
+54. 90. 558. 702. C
+54. 90. 551. 144. C
+54. 90. 551. 144. R
+7 X
+V
+15 F
+0 X
+(*) 218. 126. T
+(Pinning a menu is the ) 222.5 122. T
+20 F
+(OPEN LOOK UI) 302.75 122. T
+15 F
+( concept of clicking on a visual push-pin in an ) 358.3 122. T
+(object to make it stay on the screen.   See the \324\324) 218. 111. T
+20 F
+(OPEN LOOK) 388.22 111. T
+15 F
+( Graphical User Interface ) 433.32 111. T
+(Specification\325\325 for more information.) 218. 100. T
+215. 139. 421. 139. 2 L
+0 H
+N
+54. 90. 558. 702. C
+U
+FMENDPAGE
+%%Page: "6" 4
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(6) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(XView also provides a set of generic procedures.  Where possible, as ) 216. 694. T
+(with ) 216. 681. T
+8 F
+(Font) 238.31 681. T
+3 F
+( and ) 264.71 681. T
+8 F
+(Server) 286.09 681. T
+3 F
+( objects, XView uses reference counting.  ) 325.69 681. T
+8 F
+(xv_init\050\051) 234. 663. T
+3 F
+(initializes the notifier; reads passed ) 342. 663. T
+(attributes; initializes, loads, and reads ) 342. 650. T
+(appropriate databases.) 342. 637. T
+8 F
+(xv_find\050\051) 234. 619. T
+3 F
+( ) 293.4 619. T
+(can be used instead to locate and share ) 342. 619. T
+(common objects; if unsuccessful, ) 342. 606. T
+8 F
+(xv_find\050\051) 491.4 606. T
+3 F
+( ) 550.8 606. T
+(reverts to ) 342. 593. T
+8 F
+(xv_create\050\051) 385.99 593. T
+3 F
+(.) 458.59 593. T
+8 F
+(xv_create\050\051) 234. 575. T
+3 F
+(creates objects.) 342. 575. T
+8 F
+(xv_get\050\051) 234. 557. T
+3 F
+(queries an object\325s attributes.) 342. 557. T
+8 F
+(xv_set\050\051) 234. 539. T
+3 F
+( ) 286.8 539. T
+(changes the object\325s attributes.) 342. 539. T
+8 F
+(xv_destroy\050\051) 234. 521. T
+3 F
+( ) 313.2 521. T
+(destroys an object when it is no longer needed.) 342. 521. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Window objects include frames and subwindows.  Frames contain non-) 216. 498. T
+(overlapping subwindows within their borders.  Currently, there are ) 216. 485. T
+(seven types of subwindow objects in XView:  ) 216. 472. T
+9 F
+(Canvas subwindow) 234. 454. T
+3 F
+(A subwindow into which programs can draw.) 342. 454. T
+9 F
+(Menu) 234. 436. T
+3 F
+(An object through which a user makes ) 342. 436. T
+(choices and issues commands.  Menus can be ) 342. 423. T
+(attached to buttons or can pop up over ) 342. 410. T
+(subwindows.) 342. 397. T
+9 F
+(Panel subwindow) 234. 379. T
+3 F
+(A control panel subwindow containing ) 342. 379. T
+(control objects.) 342. 366. T
+9 F
+(Scrollbar) 234. 348. T
+3 F
+(An object attached to and usually displayed ) 342. 348. T
+(with a subwindow, through which a user can ) 342. 335. T
+(control which portion of a subwindow\325s ) 342. 322. T
+(contents are displayed.) 342. 309. T
+9 F
+(Term subwindow) 234. 291. T
+3 F
+(A scrollable, editable terminal emulator.) 342. 291. T
+9 F
+(Text subwindow) 234. 273. T
+3 F
+(A subwindow containing text.) 342. 273. T
+9 F
+(Tty subwindow) 234. 255. T
+3 F
+(A terminal emulator in which commands can ) 342. 255. T
+(be given and programs executed.) 342. 242. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The most basic, and perhaps most important, feature of any toolkit is ) 216. 219. T
+(the ability to provide application programmers with a drawing surface.  ) 216. 206. T
+(Here they can build applications with features not already in the ) 216. 193. T
+(toolkit or unique to the application.  XView provides a canvas object ) 216. 180. T
+(that lets applications draw on an area larger than the visible window ) 216. 167. T
+(where the drawing appears. ) 216. 154. T
+55. 662. 198. 702. C
+55. 662. 198. 702. R
+7 X
+V
+14 F
+0 X
+(Generic Procedures) 59. 688. T
+U
+55. 468. 198. 514. C
+55. 468. 198. 514. R
+7 X
+V
+5 F
+0 X
+(1.4) 59. 498. T
+(Window Objects) 90. 498. T
+U
+55. 209. 198. 235. C
+55. 209. 198. 235. R
+7 X
+V
+14 F
+0 X
+(Canvas Subwindows) 59. 221. T
+U
+FMENDPAGE
+%%Page: "5" 3
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(5) 553. 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+6 F
+(Figure 1-2) 147.67 693. T
+7 F
+(XView Object Class Hierarchy) 216. 693. T
+54. 90. 558. 702. C
+54. 372. 557. 679. C
+54. 372. 557. 679. R
+7 X
+V
+174. 539. 273. 565. R
+0 X
+V
+0 H
+N
+172. 542. 270. 566. R
+7 X
+V
+21 F
+0 X
+(Server Image) 189.59 548. T
+172. 542. 270. 566. R
+N
+273. 645. 373. 669. R
+V
+N
+268. 648. 370. 675. R
+7 X
+V
+0 X
+(Generic Object) 283.43 657. T
+268. 648. 370. 675. R
+N
+318. 539. 392. 565. R
+V
+N
+315. 542. 389. 566. R
+7 X
+V
+0 X
+(Window) 332.83 548. T
+315. 542. 389. 566. R
+N
+326. 431. 392. 457. R
+V
+N
+324. 434. 389. 458. R
+7 X
+V
+0 X
+(Canvas) 338.71 440. T
+324. 434. 389. 458. R
+N
+225. 431. 296. 457. R
+V
+N
+223. 434. 293. 458. R
+7 X
+V
+0 X
+(Text) 247.72 440. T
+223. 434. 293. 458. R
+N
+326. 377. 392. 403. R
+V
+N
+325. 380. 390. 404. R
+7 X
+V
+0 X
+(Panel) 344.16 386. T
+325. 380. 390. 404. R
+N
+139. 377. 210. 403. R
+V
+N
+138. 380. 208. 404. R
+7 X
+V
+0 X
+(Term) 160.78 386. T
+138. 380. 208. 404. R
+N
+404. 593. 469. 619. R
+V
+N
+401. 596. 466. 620. R
+7 X
+V
+0 X
+(Fullscreen) 408.49 602. T
+401. 596. 466. 620. R
+N
+308. 593. 383. 619. R
+V
+N
+305. 596. 379. 620. R
+7 X
+V
+0 X
+(\050Drawable\051) 316.44 602. T
+305. 596. 379. 620. R
+N
+78. 593. 134. 619. R
+V
+N
+75. 596. 130. 620. R
+7 X
+V
+0 X
+(Server) 86.94 602. T
+75. 596. 130. 620. R
+N
+325. 647. 344. 620. 2 L
+N
+325. 647. 431. 620. 2 L
+N
+325. 647. 517. 620. 2 L
+N
+325. 647. 258. 620. 2 L
+N
+325. 647. 181. 620. 2 L
+N
+325. 647. 105. 620. 2 L
+N
+344. 593. 220. 566. 2 L
+N
+344. 593. 354. 566. 2 L
+N
+354. 539. 114. 512. 2 L
+N
+354. 539. 181. 512. 2 L
+N
+354. 539. 268. 512. 2 L
+N
+354. 539. 354. 512. 2 L
+N
+354. 539. 440. 512. 2 L
+N
+354. 539. 517. 512. 2 L
+N
+354. 485. 354. 458. 2 L
+N
+354. 431. 354. 404. 2 L
+N
+354. 485. 258. 458. 2 L
+N
+258. 431. 172. 404. 2 L
+3 X
+N
+191. 485. 172. 404. 2 L
+N
+155. 593. 210. 619. R
+0 X
+V
+N
+151. 596. 207. 620. R
+7 X
+V
+0 X
+(Screen) 162.32 602. T
+151. 596. 207. 620. R
+N
+232. 593. 287. 619. R
+V
+N
+227. 596. 284. 620. R
+7 X
+V
+0 X
+(Cursor) 239.11 602. T
+227. 596. 284. 620. R
+N
+164. 485. 210. 511. R
+V
+N
+159. 488. 207. 512. R
+7 X
+V
+0 X
+(Tty) 175.5 494. T
+159. 488. 207. 512. R
+N
+77. 485. 143. 511. R
+V
+N
+75. 488. 140. 512. R
+7 X
+V
+0 X
+(Frame) 92.5 494. T
+75. 488. 140. 512. R
+N
+230. 485. 302. 511. R
+V
+N
+227. 488. 298. 512. R
+7 X
+V
+0 X
+(Menu) 249.44 494. T
+227. 488. 298. 512. R
+N
+327. 485. 392. 511. R
+V
+N
+323. 488. 388. 512. R
+7 X
+V
+0 X
+(\050Openwin\051) 331.06 494. T
+323. 488. 388. 512. R
+N
+412. 485. 474. 511. R
+V
+N
+410. 488. 471. 512. R
+7 X
+V
+0 X
+(Scrollbar) 418.82 494. T
+410. 488. 471. 512. R
+N
+489. 485. 536. 511. R
+V
+N
+485. 488. 532. 512. R
+7 X
+V
+0 X
+(Icon) 498.22 494. T
+485. 488. 532. 512. R
+N
+489. 593. 536. 619. R
+V
+N
+486. 596. 533. 620. R
+7 X
+V
+0 X
+(Font) 498.67 602. T
+486. 596. 533. 620. R
+N
+54. 90. 558. 702. C
+U
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(All classes are subclasses of the Generic Object class.  Generic objects ) 216. 342. T
+(implement all the features that allow objects to be created and ) 216. 329. T
+(destroyed, and provide some truly ) 216. 316. T
+4 F
+(generic attributes) 368.76 316. T
+3 F
+( \050which take the ) 446.67 316. T
+(prefix ) 216. 303. T
+8 F
+(XV_) 245.02 303. T
+3 F
+(\051, such as ) 264.82 303. T
+8 F
+(XV_TYPE) 308.81 303. T
+3 F
+(, ) 355.01 303. T
+8 F
+(XV_LABEL) 360.51 303. T
+3 F
+(, ) 413.31 303. T
+8 F
+(XV_KEY_DATA) 418.81 303. T
+3 F
+(, and ) 491.41 303. T
+8 F
+(XV_OWNER) 515.54 303. T
+3 F
+(.  ) 568.34 303. T
+(A few attributes, such as ) 216. 285. T
+8 F
+(XV_X) 327.2 285. T
+3 F
+(, ) 353.6 285. T
+8 F
+(XV_RIGHT_MARGIN) 359.1 285. T
+3 F
+(, and ) 458.1 285. T
+8 F
+(XV_FONT) 482.23 285. T
+3 F
+(, are ) 528.43 285. T
+(not actually attributes of the generic object, even though they have the ) 216. 272. T
+(generic ) 216. 259. T
+8 F
+(XV_) 251.12 259. T
+3 F
+(  prefix.  These attributes are ) 270.92 259. T
+4 F
+(common) 399.83 259. T
+3 F
+( rather than universal, ) 437.1 259. T
+(and there are some XView classes that do not support them.  Attributes ) 216. 246. T
+(shared among objects are ordinarily named at the lowest level of ) 216. 233. T
+(commonality, usually at the generic level.  When different objects have ) 216. 220. T
+(related properties, they are controlled by attributes of the same name; ) 216. 207. T
+(for example,) 216. 194. T
+18 F
+( ) 271.59 194. T
+8 F
+(XV_FONT) 274.37 194. T
+3 F
+( is used instead of ) 320.57 194. T
+8 F
+(WIN_FONT) 402.15 194. T
+3 F
+(, ) 454.95 194. T
+8 F
+(PANEL_FONT) 460.45 194. T
+3 F
+(, and ) 526.45 194. T
+8 F
+(MENU_FONT) 216. 181. T
+3 F
+(.) 275.4 181. T
+55. 318. 198. 358. C
+55. 318. 198. 358. R
+7 X
+V
+14 F
+0 X
+(Generic Objects, ) 59. 344. T
+(Common Attributes) 59. 331. T
+U
+FMENDPAGE
+%%Page: "4" 2
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+2 F
+(Chapter 1\321XView Overview) 246.01 731. T
+(4) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+3 F
+(machine anywhere on the network, regardless of machine architecture, ) 216. 694. T
+(operating systems, display resolutions, and color capabilities.) 216. 681. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Application architecture is identical in XView and in SunView.  Each ) 216. 658. T
+(toolkit provides a framework for assembling the pre-built user ) 216. 645. T
+(interface components with application-specific code.  But instead of ) 216. 632. T
+(simply providing programmers with a library of procedures they can  ) 216. 619. T
+(call to ) 216. 606. T
+4 F
+(build) 245.94 606. T
+3 F
+( applications, XView provides a framework for defining and ) 268.56 606. T
+(then ) 216. 593. T
+4 F
+(managing) 237.69 593. T
+3 F
+( applications.  ) 281.69 593. T
+(In XView, the application programmer uses variable-length attribute-) 216. 575. T
+(value lists based on C\325s ) 216. 562. T
+4 F
+(varargs) 322.63 562. T
+3 F
+( to specify objects to be created, such as ) 356.85 562. T
+(windows, menus, and scrollbars.  Since the usual behavior for each ) 216. 549. T
+(object is already defined, the programmer only need specify deviations ) 216. 536. T
+(from the default behavior.  With a typical procedural interface, on the ) 216. 523. T
+(other hand, the programmer must completely describe the object being ) 216. 510. T
+(specified.  \050While procedural interfaces generally result in applications ) 216. 497. T
+(filled with boiler-plate code, XView largely eliminates it.\051  ) 216. 484. T
+(After specifying objects, the XView programmer defines call-back ) 216. 466. T
+(procedures, which the toolkit calls to notify the application of events ) 216. 453. T
+(or user actions.  Finally, the programmer connects, or registers, the ) 216. 440. T
+(application-specific code with XView and lets XView manage the ) 216. 427. T
+(application.  ) 216. 414. T
+(With XView\325s attribute-value interface, calls are short when the ) 216. 396. T
+(default values are sufficient, and long\321but understandable\321when the ) 216. 383. T
+(developer needs to specify many values.  In any case, the fact that the ) 216. 370. T
+(XView toolkit provides default values for the attributes frees the ) 216. 357. T
+(application programmer to specify ) 216. 344. T
+4 F
+(less) 370.58 344. T
+3 F
+( toolkit behavior.) 387.08 344. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Since XView is an object-oriented system with static subclassing,  a ) 216. 321. T
+(programmer can use building blocks such as windows, text, panels, and ) 216. 308. T
+(icons to construct an application.  All XView objects share a common ) 216. 295. T
+(set of functions and retain SunView\325s facility for variable-length ) 216. 282. T
+(argument lists of attributes.) 216. 269. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(XView\325s classes are implemented mostly as static leaf classes; there ) 216. 246. T
+(are almost no hidden classes without instances.  Subclasses inherit ) 216. 233. T
+(attributes from their superclass, and, with one exception, all ) 216. 220. T
+(inheritance is single inheritance. ) 216. 207. T
+(Figure 1-2 shows the XView class hierarchy and the relationships ) 216. 189. T
+(between the classes.  For example, a ) 216. 176. T
+4 F
+(Panel) 378.82 176. T
+3 F
+( is a subclass of ) 404.49 176. T
+4 F
+(Canvas) 476.28 176. T
+3 F
+(, ) 509.28 176. T
+(which is a particular subclass of ) 216. 163. T
+4 F
+(Window) 359.58 163. T
+3 F
+(, which in turn is a particular ) 395.64 163. T
+(subclass of the ) 216. 150. T
+4 F
+(Generic Object) 283.52 150. T
+3 F
+(.  Objects that act as drawing surfaces are ) 351.02 150. T
+(referred to as drawable objects, and are instances of subclasses of the ) 216. 137. T
+4 F
+(Drawable) 216. 124. T
+3 F
+( class. ) 260. 124. T
+55. 607. 198. 674. C
+55. 607. 198. 674. R
+7 X
+V
+5 F
+0 X
+(1.2) 59. 658. T
+(XView ) 90. 658. T
+(Application ) 90. 643. T
+(Architecture) 90. 628. T
+U
+55. 270. 198. 337. C
+55. 270. 198. 337. R
+7 X
+V
+5 F
+0 X
+(1.3) 59. 321. T
+(XView Object ) 90. 321. T
+(Model) 90. 306. T
+U
+55. 222. 198. 262. C
+55. 222. 198. 262. R
+7 X
+V
+14 F
+0 X
+(Object Class Hierarchy) 59. 248. T
+U
+FMENDPAGE
+%%Page: "3" 1
+FMBEGINPAGE
+558. 726. 54. 726. 2 L
+0 H
+0 X
+N
+-192. -31. 27. 26. 192. 31. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+ENDPRINTCODE
+0 F
+(microsystems) 223. 30. T
+1 F
+3. (sun) 223. 38. S
+54. 90. 558. 619. C
+210. 539. 558. 619. C
+210. 539. 558. 619. R
+7 X
+V
+22 F
+0 X
+(XView Overview) 381.06 598. T
+54. 90. 558. 619. C
+U
+3 F
+0 X
+(The XView Toolkit is an objected-oriented user interface toolkit ) 216. 517. T
+(designed for the X Window System version 11 \050X11\051.  As currently ) 216. 504. T
+(configured on Sun workstations, it runs on the \324\324X\325\325 side of the X11/NeWS ) 216. 491. T
+(server.  XView functionality is based on the mature SunView toolkit, ) 216. 478. T
+(so it not only provides familiar, comprehensive functionality, but also ) 216. 465. T
+(offers a sensible migration path for existing SunView application.  This ) 216. 452. T
+(overview describes XView\325s architecture and contrasts it with that of ) 216. 439. T
+(SunView.) 216. 426. T
+54. 90. 558. 619. C
+U
+3 F
+0 X
+(XView system architecture differs markedly from SunView\325s.  XView ) 216. 403. T
+(is implemented for a server-based window system \050X11\051 while ) 216. 390. T
+(SunView was implemented for a kernel-based window system ) 216. 377. T
+(\050SunWindows\051.  ) 216. 364. T
+6 F
+(Figure 1-1) 147.67 343. T
+7 F
+(System Structure:  an XView application running on a network) 216. 343. T
+54. 90. 558. 619. C
+187. 177. 558. 339. C
+187. 177. 559. 339. R
+7 X
+V
+19 F
+0 X
+(Network) 340.39 196. T
+440. 217. 440. 187. 2 L
+2 H
+3 X
+N
+268. 218. 268. 188. 2 L
+N
+179. 187. 566. 187. 2 L
+3 H
+0 X
+N
+500. 295. 440. 271. 2 L
+1 H
+3 X
+N
+440. 295. 440. 271. 2 L
+N
+380. 295. 440. 271. 2 L
+N
+474. 295. 517. 325. R
+0 X
+V
+6 F
+(D) 492. 304. T
+474. 295. 517. 325. R
+0 H
+N
+420. 295. 456. 325. R
+V
+(M) 438. 304. T
+420. 295. 456. 325. R
+N
+355. 295. 401. 325. R
+V
+(K) 373. 304. T
+355. 295. 401. 325. R
+N
+472. 299. 514. 329. R
+7 X
+V
+19 F
+0 X
+(Display) 476.88 309. T
+472. 299. 514. 329. R
+N
+418. 299. 453. 329. R
+7 X
+V
+0 X
+(Mouse) 421.34 309. T
+418. 299. 453. 329. R
+N
+353. 299. 398. 329. R
+7 X
+V
+0 X
+(Keyboard) 354.11 309. T
+353. 299. 398. 329. R
+N
+390. 241. 490. 269. R
+V
+6 F
+12.35 (Device Li-) 408. 248. P
+390. 241. 490. 269. R
+N
+390. 216. 490. 241. R
+V
+(X11 Server) 408. 220. T
+390. 216. 490. 241. R
+N
+387. 245. 487. 273. R
+7 X
+V
+19 F
+0 X
+(Device Library) 404.64 253. T
+387. 245. 487. 273. R
+N
+387. 219. 487. 245. R
+7 X
+V
+0 X
+(X11 Server) 412.98 225. T
+387. 219. 487. 245. R
+N
+213. 245. 319. 276. R
+V
+6 F
+13.68 (The XView) 231. 255. P
+213. 245. 319. 276. R
+N
+213. 276. 319. 305. R
+V
+(Application) 231. 284. T
+213. 276. 319. 305. R
+N
+213. 218. 319. 245. R
+V
+(X11 Library) 231. 224. T
+213. 218. 319. 245. R
+N
+208. 249. 315. 279. R
+7 X
+V
+19 F
+0 X
+(XView Toolkit) 230.25 259. T
+208. 249. 315. 279. R
+N
+208. 279. 315. 309. R
+7 X
+V
+0 X
+(Application) 236.5 289. T
+208. 279. 315. 309. R
+N
+208. 221. 315. 249. R
+7 X
+V
+0 X
+(X11 Library) 234.69 229. T
+208. 221. 315. 249. R
+N
+54. 90. 558. 619. C
+U
+3 F
+0 X
+(The basic difference between these two system architectures is that ) 216. 153. T
+(kernel-based systems are usually hardware and operating system ) 216. 140. T
+(specific, while server-based systems use a protocol that is independent ) 216. 127. T
+(of hardware and operating systems.  Server-based window systems can ) 216. 114. T
+(run on one machine and display their output in windows on another ) 216. 101. T
+55. 382. 198. 419. C
+55. 382. 198. 419. R
+7 X
+V
+5 F
+0 X
+(1.1) 59. 403. T
+(System ) 90. 403. T
+(Architecture) 90. 388. T
+U
+23 F
+0 X
+(1) 541. 668. T
+216. 642. 560. 650. R
+4 X
+V
+0 H
+N
+216. 651. 560. 651. 2 L
+1 H
+0 X
+N
+36. 724. 576. 738. C
+36. 724. 576. 738. R
+7 X
+V
+U
+FMENDPAGE
+%%Trailer
+%%Pages: 14 -1
+%%DocumentFonts: Helvetica
+%%+ Times-Bold
+%%+ Times-Roman
+%%+ Times-Italic
+%%+ Courier
+%%+ Times-BoldItalic
+%%+ Helvetica-Bold

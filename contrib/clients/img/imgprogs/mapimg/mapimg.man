@@ -1,0 +1,49 @@
+.TH MAPIMG 1 "27 October 1989" "X Version 11"
+.SH NAME
+mapimg \- Map or remap an image
+.SH SYNOPSIS
+.PP
+.B mapimg
+.I file
+.I colors
+.br
+.SH DESCRIPTION
+.PP
+.B mapimg
+translates an RGB image, with 24 bits of color information per pixel,
+into a color mapped image with at most 256 colors.  Alternatively,
+it can reduce the number of colors used by an existing color-mapped image.
+.PP
+.I colors
+is the maximum number of colors to use in the output image, as a decimal
+number.
+.PP
+The
+.I file
+argument normally is a "base" filename.  If
+the given name is not an existing file, it is presumed to be the
+base for one of the following forms of names:
+.IP ""
+.I file.a [.Z]:
+Attribute file for an RGB (unmapped) image
+.IP ""
+.I file.r [.Z]:
+Red pixel values for an RGB image
+.IP ""
+.I file.g [.Z]:
+Green pixel values for an RGB image
+.IP ""
+.I file.b [.Z]:
+Blue pixel values for an RGB image
+.PP
+Any file whose names ends with
+.I .Z
+is presumed to be in compressed format.
+.PP
+If it is impossible to read an RGB image,
+.B mapimg
+attempts to read a color-mapped image file named
+.I file.p [.Z]
+and requantize it to use fewer colors.
+.SH AUTHOR
+Paul Raveling, USC Information Sciences Institute (Raveling@isi.edu)

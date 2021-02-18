@@ -1,0 +1,95 @@
+===============================================================================
+=======                                                                 =======
+=======	       Module Imagen  --  Imagen Reformatting Functions		=======
+=======			     File imagen.c				=======
+=======                                                                 =======
+===============================================================================
+
+
+  Functions:
+
+	This module includes a set of functions to reformat an
+	image to dithered monochrome at a larger scale and print
+	the image on an Imagen printer.
+
+	These are minimally modified versions of routines from
+	the old X10.4 printpix utility.  We hope to replace
+	the relative crudity of most in the foreseeable future.
+
+
+  Public Routines:
+
+	print_img	Print image
+
+
+  Local Routines:
+
+	add_byte	Buffer 8 bits of data for Imagen
+	write_patches	Write array of patches for Imagen
+	write_imp_init  Write initialization for Imagen
+	write_imp_end	Terminate output for Imagen
+	dithergm	Dither grayscale to monochrome
+	dither2x2	Generate 2x2 dithered output
+	dither3x3	Generate 3x3 dithered output
+	dither4x4	Generate 4x4 dithered output
+
+
+  Module History:
+
+	11-21-89	Paul Raveling
+	Finalized version for contribution to X11R4.  Changes not
+	documented in this header have been made within the last
+	3 weeks.
+
+	3-27-89		Paul Raveling
+	Created module from a major part of printpix.c.  Some
+	of printpix's code was adopted from a different program
+	for printing rasters to Imagens.  Unfortunately I no longer
+	remember what that program was.
+
+===============================================================================
+=======                                                                 =======
+=======			print_img  --  Print Image			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	print_img ( image, prfile, orientation, docname )
+
+
+  Functions:
+
+	Print the given image on an Imagen printer.  Convert
+	color to grayscale and dither to monochrome.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to print
+
+	prfile		FILE *
+			Pointer to output file; file must already
+			be open and will be left open when print_img
+			returns.  Callers should prefer to supply
+			a pipe to lpr or an equivalent program, but
+			writing to disk also works.  It just eats
+			a lot of space.
+
+	orientation	int
+			Orientation code, defined in <imglib.h>:
+
+			  PIO_DEFAULT:	    Default:  Choose best of:
+			  PIO_PORTRAIT:		Portrait (unrotated)
+			  PIO_LANDSCAPE:	Landscape (rotated 90-deg)
+
+	docname		char *
+			Pointer to document name (name of file containing
+			image or some other string, such as "Screen Dump")
+
+
+  Output:	No direct output:
+
+		Memory is buffered into a local "patches" array, then
+		written to the designated output file.

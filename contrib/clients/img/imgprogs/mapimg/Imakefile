@@ -1,0 +1,11 @@
+
+         IMGINC = ../..
+         IMGLIB = ../../imglib/libimg.a
+
+LOCAL_LIBRARIES = $(IMGLIB) $(XLIB)
+           SRCS = mapimg.c
+           OBJS = mapimg.o
+
+       INCLUDES = -I$(IMGINC)
+
+ComplexProgramTarget(mapimg)

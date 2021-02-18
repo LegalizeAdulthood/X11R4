@@ -1,0 +1,185 @@
+.de Ss
+.    sp
+.    ft CW
+.    nf
+..
+.de Se
+.    fi
+.    ft P
+.    sp
+..
+.TH ppm 3
+.SH NAME
+ppm - functions to support portable pixelmap programs
+.SH SYNOPSIS
+.Ss
+#include <ppm.h>
+cc ... libppm.a libpgm.a libpbm.a
+.Se
+.SH DESCRIPTION
+.SS TYPES AND CONSTANTS
+.Ss
+typedef gray pixval;
+#define PGM_MAXMAXVAL 255
+typedef struct
+    {
+    pixval r, g, b;
+    } pixel;
+extern pixval ppm_pbmmaxval;
+.Se
+Each
+.IR pixval
+should contain only the values between
+.IR 0
+and
+.IR PGM_MAXMAXVAL .
+.IR ppm_pbmmaxval
+is the maxval used when a PPM program reads a PBM file.
+Normally it is 1; however, for some programs, a larger value gives better
+results.
+.SS PIXEL MANIPULATIONS
+.Ss
+pixval PPM_GETR(p)
+pixel p;
+
+pixval PPM_GETG(p)
+pixel p;
+
+pixval PPM_GETB(p)
+pixel p;
+.Se
+These three macros retrieve the red, green or blue value from the given
+pixel.
+.Ss
+void PPM_ASSIGN(p,red,grn,blu)
+pixel p;
+pixval red, grn, blu;
+.Se
+This macro assigns the given red, green and blue values to the pixel.
+.Ss
+int PPM_EQUAL(p,q)
+pixel p, q;
+.Se
+This macro checks two pixels for equality.
+.Ss
+void PPM_CSCALE(newp, p, oldmaxval, newmaxval)
+pixel newp, p;
+pixval oldmaxval, newmaxval;
+.Se
+This macro scales the colors of pixel
+.IR p
+according the old and new maximum values and assigns the new values to
+.IR newp .
+It is intended to make writing ppmtowhatever easier.
+.Ss
+double PPM_LUMIN(p)
+pixel p;
+.Se
+This macro determines the luminance of the pixel
+.IR p .
+.SS PGM MEMORY MANAGEMENT
+.Ss
+pixel **pgm_allocarray(int cols, int rows)
+.Se
+Allocate an array of pixels.
+.Ss
+pixel *pgm_allocrow( int cols )
+.Se
+Allocate a row of the given number of pixels.
+.Ss
+void pgm_freearray( pixelrow, rows )
+.Se
+Free the array allocated with
+.IR pgm_allocarray()
+containing the given number
+of rows.
+.Ss
+pbm_freerow( pixelrow )
+.Se
+Free a row of pixels.
+.SS READING PBM FILES
+.Ss
+void
+ppm_readppminit( file, colsP, rowsP, maxvalP, formatP )
+FILE *file;
+int *colsP, *rowsP, *formatP;
+pixval *maxvalP;
+.Se
+Read the header from a pgm file, filling in the rows, cols, maxval and format
+variables.
+.Ss
+void
+ppm_readppmrow( file, pixelrow, cols, maxval, format )
+FILE *file;
+pixel *pixelrow;
+pixval maxval;
+int cols, format;
+.Se
+Read a row of pixels into the pixelrow array.
+Format and cols were filled in by
+.IR ppm_readppminit() .
+.Ss
+pixel **
+ppm_readppm( file, colsP, rowsP, maxvalP )
+FILE *file;
+int *colsP, *rowsP;
+pixval *maxvalP;
+.Se
+Read an entire pixelmap file into memory, returning the allocated array and
+filling in the rows, cols and maxval variables.
+This function combines
+.IR ppm_readppminit() ,
+.IR ppm_allocarray()
+and
+.IR ppm_readppmrow() .
+.SS WRITING PGM FILES
+.Ss
+void
+ppm_writeppminit( file, cols, rows, maxval )
+FILE *file;
+int cols, rows;
+pixval maxval;
+.Se
+Write the header for a portable pixelmap file.
+.Ss
+void
+ppm_writeppmrow( file, pixelrow, cols, maxval )
+FILE *file;
+pixel *pixelrow;
+int cols;
+pixval maxval;
+.Se
+Write a row from a portable pixelmap.
+.Ss
+void
+ppm_writeppm( file, bits, cols, rows, maxval )
+FILE *file;
+pixel **bits;
+int cols, rows;
+pixval maxval;
+.Se
+Write the header and all data for a portable pixelmap.
+This function combines
+.IR ppm_writeppminit()
+and
+.IR ppm_writeppmrow() .
+.Ss
+pixel ppm_backgroundpixel(pixels, cols, rows)
+pixel **pixels;
+int cols;
+int rows;
+.Se
+Intuit the value of the background.
+.SH "SEE ALSO"
+pgm(3), ppm(3)
+.SH AUTHOR
+Manual by Tony Hansen.
+
+Copyright (C) 1989 by Jef Poskanzer.
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided
+that the above copyright notice appear in all copies and that both that
+copyright notice and this permission notice appear in supporting
+documentation.  This software is provided "as is" without express or
+implied warranty.

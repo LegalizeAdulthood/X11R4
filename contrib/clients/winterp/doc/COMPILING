@@ -1,0 +1,60 @@
+BUILDING WINTERP:
+================
+So far, winterp has run succesfully on the following machines/OS's
+	* HP9000s3xx running HPUX 7.0 or HPUX 6.5
+	* HP9000s8xx running HPUX 7.0 or HPUX 3.1
+	* Apollo
+	* Sun 3 running the latest SunOS.
+	* MIPS (Mips RS2030)
+
+I don't think you should have any problems getting winterp running on other
+machines. If you do, please tell me what you did to fix it.
+
+Hints:
+	** Motif is not free nor public domain. Contact the OSF for
+	ordering info on the Motif toolkit. I will not and cannot send you
+	the Motif libraries -- Motif is licensed software. Sources are
+	available from OSF for $1000.00. The Motif binary distributions for
+	SUNS is available from ICS. Motif is included with HPUX 7.0, which
+	should be shipping now.
+
+	** The makefiles named Makefile.hpux might be useful to those of
+	you not using IMAKE. You will undoubtedly need to edit these
+	Makefiles unless you are running on an s300 (68030) HPUX system.
+
+	** By default, the program 'wl' attempts to connect to the winterp
+	server through your machine's loopback adress, which it assumes is
+	127.0.0.1. If that is not your loopback adress (isn't that IP adress
+	standard??), then you may have to specify 'localhost' or the
+	hostname of your machine. 'wl' will be able to connect to the
+	winterp server more quickly if it can get an IP address without
+	having to do a gethostbyname(). That's why I hardcoded the loopback
+	address into wl.c... you may want to change this and recompile wl.
+
+	** If you are compiling WINTERP on a system that provides separate
+	SYSV and BSD compilation worlds, you may want to compile within the
+	BSD world. winterp.c and wl.c use alot of BSD socket code that
+	isn't in vanilla SYSV. Merged systems like SUNOS and HPUX have no
+	problems with this. With Apollo or MIPS systems, use the BSD world.
+
+	** MIPS bug (supposedly fixed in next OS release):
+
+		WINTERP uses the motif file selection box widget which
+		uses libPW.a to link in regex and regcmp (and getcwd).
+
+		XtInitialize makes a call to a routine called index() which
+		it is picking out of libPW.a instead of the Xlibs. This
+		causes XtInitialize() to crash as soon as WINTERP comes up.
+
+		The easiest fix for now is to remove inclusion of file
+		src-server/wc_FileSB.c from linking, and then you won't
+		need to include libPW.a and you won't get the wrong version
+		of index(). There may be better solutions -- the above is
+		the solution that worked for a MIPS user.
+
+-------------------------------------------------------------------------------
+	    Niels Mayer -- hplabs!mayer -- mayer@hplabs.hp.com
+		  Human-Computer Interaction Department
+		       Hewlett-Packard Laboratories
+			      Palo Alto, CA.
+				   *

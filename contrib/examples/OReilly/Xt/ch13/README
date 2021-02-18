@@ -1,0 +1,6 @@
+xbanapp does it on two displays
+
+xbantry tries to do it on two displays with two application contexts -
+this can only work on parallel procession machines, and only with 
+system-specific additions that indicate parallelism.
+

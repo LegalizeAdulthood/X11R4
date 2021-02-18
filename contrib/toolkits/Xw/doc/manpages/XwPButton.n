@@ -1,0 +1,330 @@
+
+
+
+     XWPUSHBUTTON(3X)                                 XWPUSHBUTTON(3X)
+
+
+
+
+     NAME
+          XwpushButtonWidgetClass - the X Widgets pushbutton widget.
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/PButton.h>
+
+
+     CLASSES
+          The pushbutton widget is built from the Core, XwPrimitive
+          and XwButton classes.
+
+          The widget class to use when creating a pushbutton is
+          XwpushButtonWidgetClass.  The class name is PushButton.
+
+     DESCRIPTION
+          The pushbutton widget consists of a text label surrounded by
+          a button border.
+
+          By default, button 1 down will invert the interior of the
+          button: the background will be filled with the foreground
+          color and the text will be written in the background color.
+          Button 1 down also sets the button state to TRUE and issues
+          any XtNselect callbacks that have been registered.  Button 1
+          up will repaint the button in the normal state, set the
+          button state to FALSE and issue any XtNrelease callbacks
+          that have been registered.
+
+          As mentioned above, the XtNselect and XtNrelease callbacks
+          can be attached to this widget.  This widget can also be set
+          to respond to Enter and Leave window events by highlighting
+          and unhighlighting the button.  This widget is also capable
+          of handling  keyboard traversal.  See the translations below
+          for the default traversal keycodes.
+
+          A final feature is that by setting the XtNtoggle resource to
+          TRUE the pushbutton can be made to act like a toggle button.
+
+     NEW RESOURCES
+          The pushbutton widget class defines a set of resource types
+          that can be used by the programmer to specify data for
+          widgets of this class. Recall that the string to be used
+          when setting any of these resources in an application
+          defaults file (like .Xdefaults) can be obtained by stripping
+          the preface "XtN" off of the resource name.  For instance,
+          XtNfont becomes font.
+
+
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPUSHBUTTON(3X)                                 XWPUSHBUTTON(3X)
+
+
+
+
+                    PushButton Resource Set -- CORE(3X)
+                 Name        Class       Type      Default
+                 _________________________________________
+                 XtNtoggle   XtCToggle   Boolean   FALSE
+
+
+
+          XtNtoggle
+               If set to TRUE makes the pushbutton act like a toggle
+               button.
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses.  The defaults used for the pushbutton when
+          being created are as follows:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPUSHBUTTON(3X)                                 XWPUSHBUTTON(3X)
+
+
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightColor       XtCForeground           Pixel     Black
+     XtNhighlightTile        XtCHighlightTile        int       50_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNrecomputeSize        XtCRecomputeSize        Boolean   TRUE
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+
+
+                     Button Resource Set -- XWBUTTON(3X)
+     Name               Class              Type            Default
+     ___________________________________________________________________
+     XtNfont            XtCFont            XFontStruct *   Fixed
+     XtNlabel           XtCLabel           caddr_t         NULL
+     XtNlabelLocation   XtCLabelLocation   int             right
+     XtNvSpace          XtCVSpace          int             2
+     XtNhSpace          XtCHSpace          int             2
+     XtNset             XtCSet             Boolean         FALSE
+     XtNsensitiveTile   XtCSensitiveTile   int             75_foreground
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalType resource is set to
+          highlight_traversal (XwHIGHTLIGHT_TRAVERSAL in an argument
+          list) at either create time or during a call to XtSetValues,
+          the XwPrimitive superclass will automatically augment the
+          primitive widget's translations to support keyboard
+          traversal.  See the XwPrimitive man page for a complete
+          description of these translations.  See the TRANSLATIONS
+          section in this man page for a description of the
+          translations local to the pushbutton widget.
+
+     TRANSLATIONS
+          The input to the pushbutton is driven by the mouse buttons.
+          The default translation set defining this button is as
+          follows:
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPUSHBUTTON(3X)                                 XWPUSHBUTTON(3X)
+
+
+
+
+              <Btn1Down>:        select()
+              <Btn1Up>:          release()
+              <EnterWindow>:     enter()
+              <LeaveWindow>:     leave()
+              <KeyDown>Select:   select()     HP "Select" key
+              <KeyUp>Select:     unselect()   HP "Select" key
+
+
+     ACTIONS
+          Note that this widget contains some actions which are not
+          bound to any events by the default translations.  The
+          purpose of these additional actions are to allow advanced
+          users to alter the button semantics to their liking.
+
+          toggle:
+               Toggle the set state of the button (make it TRUE if it
+               was FALSE, FALSE if it was TRUE).  Redraw the
+               pushbutton to reflect the current button setting (if
+               set, invert the button, otherwise draw normally).  If
+               the current state of the button is set (TRUE) issue the
+               XtNselect callbacks, if not set (FALSE) issue the
+               XtNrelease callbacks.  No additional data beyond the
+               widget id and the specified closure is sent with these
+               callbacks.
+
+          select:
+               Select sets the state of the button to TRUE.  It also
+               redraws the pushbutton to reflect the current setting.
+               It then issues any XtNselect callbacks which have been
+               registered.  No additional data beyond the widget id
+               and the specified closure is sent with these callbacks.
+
+          unselect:
+               Release sets the state of the button to FALSE.  It also
+               redraws the pushbutton to reflect the current setting.
+               It then issues any XtNrelease callbacks which have been
+               registered.  No additional data beyond the widget id
+               and the specified closure is sent with these callbacks.
+
+          enter:
+               If the XtNtraversalType resource has been set to
+               XwHIGHLIGHT_ENTER then the button will be highlighted.
+               Otherwise no action is taken.
+
+          leave:
+               If the XtNtraversalType resouces has been set to
+               XwHIGHLIGHT_ENTER then the button will be
+               unhighlighted.  Otherwise no action is taken.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPUSHBUTTON(3X)                                 XWPUSHBUTTON(3X)
+
+
+
+
+     SEE ALSO
+          CORE(3X), XWPRIMITIVE(3X), XWBUTTON(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+

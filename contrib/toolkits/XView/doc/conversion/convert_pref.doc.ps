@@ -1,0 +1,1265 @@
+%!
+%%Pages: (atend)
+%%DocumentFonts: (atend)
+%%EndComments
+%
+% Frame Maker PostScript Prolog 1.3, for use with Maker 1.3
+% Copyright (c) 1986-1988 by Frame Technology, Inc.  All rights reserved.
+%
+% Known Problems:
+%	Due to bugs in Transcript, the 'PS-Adobe-' is omitted from line 1
+/FMversion (1.2) def 
+/FrameDict 123 dict def 
+% The readline in 23.0 doesn't recognize cr's as nl's on AppleTalk
+FrameDict /tmprangecheck errordict /rangecheck get put 
+errordict /rangecheck {FrameDict /bug true put} put 
+FrameDict /bug false put 
+mark 
+% Some PS machines read past the CR, so keep the following 3 lines together!
+currentfile 5 string readline
+00
+0000000000
+cleartomark 
+errordict /rangecheck FrameDict /tmprangecheck get put 
+FrameDict /bug get { 
+	/readline {
+		/gstring exch def
+		/gfile exch def
+		/gindex 0 def
+		{
+			gfile read pop 
+			dup 10 eq {exit} if 
+			dup 13 eq {exit} if 
+			gstring exch gindex exch put 
+			/gindex gindex 1 add def 
+		} loop
+		pop 
+		gstring 0 gindex getinterval true 
+		} def
+	} if
+/FMVERSION {
+	FMversion ne {
+		/Times-Roman findfont 18 scalefont setfont
+		100 100 moveto
+		(Maker version does not match postscript_prolog!)
+		dup =
+		show showpage
+		} if
+	} def 
+/FMLOCAL {
+	FrameDict begin
+	0 def 
+	end 
+	} def 
+	/gstring FMLOCAL
+	/gfile FMLOCAL
+	/gindex FMLOCAL
+	/landscape FMLOCAL
+	/docheight FMLOCAL
+	/docwidth FMLOCAL
+	/yscale FMLOCAL
+	/xscale FMLOCAL
+	/orgxfer FMLOCAL
+	/orgproc FMLOCAL
+	/organgle FMLOCAL
+	/orgfreq FMLOCAL
+/FMDOCUMENT {
+	array /FMfonts exch def
+	/#copies exch def
+	FrameDict begin
+	0 ne /landscape exch def 
+	/docheight exch def
+	/docwidth exch def
+	/yscale exch def
+	/xscale exch def
+	currenttransfer cvlit /orgxfer exch def
+	currentscreen cvlit /orgproc exch def
+		/organgle exch def /orgfreq exch def
+	end 
+	} def 
+	/pagesave FMLOCAL
+	/orgmatrix FMLOCAL
+/FMBEGINPAGE {
+	FrameDict begin 
+	/pagesave save def
+	
+	2 setlinecap
+	xscale yscale scale
+	landscape {
+		90 rotate
+		0 docheight neg translate
+		/fillprocs /fillprocs90 load store
+		}
+		{/fillprocs /fillprocs0 load store}
+		ifelse
+	/orgmatrix matrix def
+	gsave 
+	} def 
+/FMENDPAGE {
+	grestore 
+	pagesave restore
+	end 
+	showpage
+	} def 
+	/fontname FMLOCAL
+	/fontscale FMLOCAL
+	/fontnum FMLOCAL
+	/fontdict FMLOCAL
+/FMDEFINEFONT {
+	FrameDict begin
+	/fontname exch def
+	/fontscale exch def
+	/fontnum exch def
+	/fontdict fontname findfont fontscale scalefont def
+	fontdict /Encoding get StandardEncoding eq
+	{
+		fontdict DiacriticEncode 
+		/fontdict exch def
+	} {
+		fontdict NonDiacriticEncode
+		/fontdict exch def
+	} ifelse
+	FMfonts fontnum
+		fontnum fontdict definefont
+	put
+	end 
+	} def 
+/FMLINEWIDTHS { 
+	FrameDict begin
+	dup array /FMlinewidths exch def 
+	1 sub -1 0 {exch FMlinewidths 3 1 roll lnormalize put} for
+	end 
+	} def 
+/FMNORMALIZEGRAPHICS { 
+	newpath
+	0.0 0.0 moveto
+	1 setlinewidth
+	0 setlinecap
+	0 setgray
+	} bind def
+/FMBEGINEPSF {
+	end 
+	/FMEPSF save def
+	/showpage {} def 
+	FMNORMALIZEGRAPHICS
+	[/fy /fx /fh /fw /ury /urx /lly /llx] {exch def} forall 
+	fx fy translate 
+	fw urx llx sub div fh ury lly sub div scale 
+	llx neg lly neg translate 
+	} bind def
+ 
+/FMENDEPSF {
+	FMEPSF restore
+	FrameDict begin 
+	} bind def
+ 
+FrameDict begin 
+/savematrix {
+	orgmatrix currentmatrix pop
+	} bind def
+/restorematrix {
+	orgmatrix setmatrix
+	} bind def
+/dmatrix matrix def
+/dpi	72 0 dmatrix defaultmatrix dtransform
+	dup mul exch   dup mul add   sqrt
+def
+/max	{2 copy lt {exch} if pop} bind def
+/min	{2 copy gt {exch} if pop} bind def
+/DiacriticEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle /parenleft
+/parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E /F /G /H /I /J /K
+/L /M /N /O /P /Q /R /S /T /U /V /W /X /Y /Z /bracketleft /backslash
+/bracketright /asciicircum /underscore /grave /a /b /c /d /e /f /g /h
+/i /j /k /l /m /n /o /p /q /r /s /t /u /v /w /x /y /z /braceleft /bar
+/braceright /asciitilde /.notdef /Adieresis /Aring /Ccedilla /Eacute
+/Ntilde /Odieresis /Udieresis /aacute /agrave /acircumflex /adieresis
+/atilde /aring /ccedilla /eacute /egrave /ecircumflex /edieresis
+/iacute /igrave /icircumflex /idieresis /ntilde /oacute /ograve
+/ocircumflex /odieresis /otilde /uacute /ugrave /ucircumflex
+/udieresis /dagger /.notdef /cent /sterling /section /bullet
+/paragraph /germandbls /registered /copyright /trademark /acute
+/dieresis /.notdef /AE /Oslash /.notdef /.notdef /.notdef /.notdef
+/yen /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/ordfeminine /ordmasculine /.notdef /ae /oslash /questiondown
+/exclamdown /logicalnot /.notdef /florin /.notdef /.notdef
+/guillemotleft /guillemotright /ellipsis /.notdef /Agrave /Atilde
+/Otilde /OE /oe /endash /emdash /quotedblleft /quotedblright
+/quoteleft /quoteright /.notdef /.notdef /ydieresis /Ydieresis
+/fraction /currency /guilsinglleft /guilsinglright /fi /fl /daggerdbl
+/periodcentered /quotesinglbase /quotedblbase /perthousand
+/Acircumflex /Ecircumflex /Aacute /Edieresis /Egrave /Iacute
+/Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex /.notdef /Ograve
+/Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde /macron
+/breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
+] def
+	/basefontdict FMLOCAL
+	/newfontdict FMLOCAL
+/DiacriticEncode {
+	/basefontdict exch def
+	/newfontdict basefontdict maxlength dict def
+	basefontdict
+	{exch dup /FID ne
+		{dup /Encoding eq
+			{exch pop DiacriticEncoding}
+			{exch}
+			ifelse
+			newfontdict 3 1 roll put
+			}
+		{pop pop}
+		ifelse
+		} forall
+	newfontdict
+	} bind def
+/NonDiacriticEncode {
+	/basefontdict exch def
+	/newfontdict basefontdict maxlength dict def
+	basefontdict
+	{exch dup /FID ne
+		{exch newfontdict 3 1 roll put}
+		{pop pop}
+		ifelse
+		} forall
+	newfontdict
+	} bind def
+	/freq FMLOCAL
+	/bwidth FMLOCAL
+	/bpside FMLOCAL
+	/bstring FMLOCAL
+	/onbits FMLOCAL
+	/offbits FMLOCAL
+	/xindex FMLOCAL
+	/yindex FMLOCAL
+	/x FMLOCAL
+	/y FMLOCAL
+/setpattern {
+	 /freq    exch def
+	 /bwidth  exch def
+	 /bpside  exch def
+	 /bstring exch def
+	 /onbits 0 def  /offbits 0 def
+	 freq 0 {/y exch def
+		 /x exch def
+		 /xindex x 1 add 2 div bpside mul cvi def
+		 /yindex y 1 add 2 div bpside mul cvi def
+		 bstring yindex bwidth mul xindex 8 idiv add get
+		 1 7 xindex 8 mod sub bitshift and 0 ne
+		 {/onbits  onbits  1 add def 1}
+		 {/offbits offbits 1 add def 0}
+		 ifelse
+		}
+		setscreen
+	 {} settransfer
+	 offbits offbits onbits add div setgray
+	} bind def
+/grayness {
+	setgray
+	orgxfer cvx settransfer
+	orgfreq organgle orgproc cvx setscreen
+	} bind def
+/normalize {
+	transform cvi exch cvi exch itransform
+	} bind def
+/dnormalize {
+	dtransform cvi exch cvi exch idtransform
+	} bind def
+/lnormalize { 
+	0 dtransform exch cvi 2 idiv 2 mul 1 add exch idtransform pop
+	} bind def
+/fillprocs0
+	[{0.00 grayness}
+	 {0.10 grayness}
+	 {0.30 grayness}
+	 {0.50 grayness} 
+	 {0.70 grayness}
+	 {0.90 grayness}
+	 {0.97 grayness} 
+	 {1.00 grayness} 
+	 {<0F1E3C78F0E1C387> 8 1 dpi 16 div setpattern} 
+	 {<0F87C3E1F0783C1E> 8 1 dpi 16 div setpattern} 
+	 {<CCCCCCCCCCCCCCCC> 8 1 dpi 16 div setpattern} 
+	 {<FFFF0000FFFF0000> 8 1 dpi 16 div setpattern} 
+	 {<8142241818244281> 8 1 dpi 16 div setpattern} 
+	 {<03060C183060C081> 8 1 dpi 16 div setpattern} 
+	 {<8040201008040201> 8 1 dpi 16 div setpattern} 
+	 {}
+	 {1.00 grayness}
+	 {0.90 grayness}
+	 {0.70 grayness}
+	 {0.50 grayness} 
+	 {0.30 grayness}
+	 {0.10 grayness}
+	 {0.03 grayness} 
+	 {0.00 grayness} 
+	 {<F0E1C3870F1E3C78> 8 1 dpi 16 div setpattern} 
+	 {<F0783C1E0F87C3E1> 8 1 dpi 16 div setpattern} 
+	 {<3333333333333333> 8 1 dpi 16 div setpattern} 
+	 {<0000FFFF0000FFFF> 8 1 dpi 16 div setpattern} 
+	 {<7EBDDBE7E7DBBD7E> 8 1 dpi 16 div setpattern} 
+	 {<FCF9F3E7CF9F3F7E> 8 1 dpi 16 div setpattern} 
+	 {<7FBFDFEFF7FBFDFE> 8 1 dpi 16 div setpattern} 
+	 {}
+	] def
+/fillprocs90
+	 [{0.00 grayness}
+	 {0.10 grayness}
+	 {0.30 grayness}
+	 {0.50 grayness}
+	 {0.70 grayness}
+	 {0.90 grayness}
+	 {0.97 grayness}
+	 {1.00 grayness}
+	 {<87c3e1f0783c1e0f> 8 1 dpi 16 div setpattern}
+	 {<f0e1c3870f1e3c78> 8 1 dpi 16 div setpattern}
+	 {<0000ffff0000ffff> 8 1 dpi 16 div setpattern}
+	 {<cccccccccccccccc> 8 1 dpi 16 div setpattern}
+	 {<8142241818244281> 8 1 dpi 16 div setpattern}
+	 {<81c06030180c0603> 8 1 dpi 16 div setpattern}
+	 {<0102040810204080> 8 1 dpi 16 div setpattern}
+	 {}
+	 {1.00 grayness}
+	 {0.90 grayness}
+	 {0.70 grayness}
+	 {0.50 grayness}
+	 {0.30 grayness}
+	 {0.10 grayness}
+	 {0.03 grayness}
+	 {0.00 grayness}
+	 {<783c1e0f87c3e1f0> 8 1 dpi 16 div setpattern}
+	 {<0f1e3c78f0e1c387> 8 1 dpi 16 div setpattern}
+	 {<ffff0000ffff0000> 8 1 dpi 16 div setpattern}
+	 {<3333333333333333> 8 1 dpi 16 div setpattern}
+	 {<7ebddbe7e7dbbd7e> 8 1 dpi 16 div setpattern}
+	 {<7e3f9fcfe7f3f9fc> 8 1 dpi 16 div setpattern}
+	 {<fefdfbf7efdfbf7f> 8 1 dpi 16 div setpattern}
+	 {}
+	] def
+/fillprocs /fillprocs0 load def
+/H { 
+	FMlinewidths exch get setlinewidth
+	} bind def
+/X { 
+	fillprocs exch get exec
+	} bind def
+/V { 
+	gsave eofill grestore
+	} bind def
+/N { 
+	gsave stroke grestore 
+	} bind def
+/M {newpath moveto} bind def
+/E {lineto} bind def
+/D {curveto} bind def
+/O {closepath} bind def
+	/n FMLOCAL
+/L { 
+ 	/n exch def
+	newpath
+	normalize
+	moveto 
+	2 1 n {pop normalize lineto} for
+	} bind def
+/Y { 
+	L 
+	closepath
+	} bind def
+/K { 
+ 	/n exch def
+	newpath
+	moveto 
+	3 1 n {pop curveto} for
+	} bind def
+/J { 
+ 	/n exch def
+	newpath
+	moveto 
+	1 1 n {pop curveto} for
+	} bind def
+	/x1 FMLOCAL
+	/x2 FMLOCAL
+	/y1 FMLOCAL
+	/y2 FMLOCAL
+/R { 
+	/y2 exch def
+	/x2 exch def
+	/y1 exch def
+	/x1 exch def
+	x1 y1
+	x2 y1
+	x2 y2
+	x1 y2
+	4 Y 
+	} bind def
+/C { 
+	grestore
+	gsave
+	R 
+	clip
+	} bind def
+/U { 
+	grestore
+	gsave
+	} bind def
+/F { 
+	FMfonts exch get
+	setfont
+	} bind def
+/T { 
+	moveto show
+	} bind def
+/P { 
+	moveto
+	0 32 3 2 roll widthshow
+	} bind def
+/S { 
+	moveto
+	0 exch ashow
+	} bind def
+/B { 
+	moveto
+	0 32 4 2 roll 0 exch awidthshow
+	} bind def
+/Q { 
+	moveto
+	gsave show grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/dx FMLOCAL
+	/dy FMLOCAL
+	/dl FMLOCAL
+	/t FMLOCAL
+	/t2 FMLOCAL
+	/Cos FMLOCAL
+	/Sin FMLOCAL
+	/r FMLOCAL
+/W { 
+	dnormalize
+	/dy exch def
+	/dx exch def
+	normalize
+	/y  exch def
+	/x  exch def
+	/dl dx dx mul dy dy mul add sqrt def
+	dl 0.0 gt {
+		/t currentlinewidth def
+		savematrix
+		/Cos dx dl div def
+		/Sin dy dl div def
+		/r [Cos Sin Sin neg Cos 0.0 0.0] def
+		/t2 t 2.5 mul 3.5 max def
+		newpath
+		x y translate
+		r concat
+		0.0 0.0 moveto
+		dl t 2.7 mul sub 0.0 rlineto
+		stroke
+		restorematrix
+		x dx add y dy add translate
+		r concat
+		t 0.67 mul setlinewidth
+		t 1.61 mul neg  0.0 translate
+		0.0 0.0 moveto
+		t2 1.7 mul neg  t2 2.0 div     moveto
+		0.0 0.0 lineto
+		t2 1.7 mul neg  t2 2.0 div neg lineto
+		stroke
+		t setlinewidth
+		restorematrix
+		} if
+	} bind def
+/G { 
+	gsave
+	newpath
+	normalize translate 0.0 0.0 moveto 
+	dnormalize scale 
+	0.0 0.0 1.0 5 3 roll arc 
+	closepath eofill
+	grestore
+	} bind def
+	/x FMLOCAL
+	/y FMLOCAL
+	/w FMLOCAL
+	/h FMLOCAL
+	/xx FMLOCAL
+	/yy FMLOCAL
+	/ww FMLOCAL
+	/hh FMLOCAL
+/A { 
+	/y exch def
+	/x exch def
+	/h exch def
+	/w exch def
+	x y normalize /yy exch def /xx exch def
+	w h dnormalize /hh exch def /ww exch def
+	ww abs hh abs xx ww add yy hh sub
+	gsave
+	savematrix
+	newpath
+	translate
+	scale
+	0.0 0.0 1.0 5 3 roll arc
+	0 setlinecap
+	restorematrix
+	stroke
+	grestore
+	} bind def
+	/FMsaveobject FMLOCAL
+	/FMoptop FMLOCAL
+	/FMdicttop FMLOCAL
+/BEGINPRINTCODE {
+	/FMdicttop countdictstack 1 add def 
+	/FMoptop count 6 sub def 
+	/FMsaveobject save def
+	userdict begin 
+	/showpage {} def 
+	translate
+	FMNORMALIZEGRAPHICS
+	} bind def
+/ENDPRINTCODE {
+	count -1 FMoptop {pop pop} for 
+	countdictstack -1 FMdicttop {pop end} for 
+	FMsaveobject restore 
+	} bind def
+/gn { 
+	0 
+	{	46 mul 
+		cf read pop 
+		32 sub 
+		dup 46 lt {exit} if 
+		46 sub add 
+		} loop
+	add 
+	} bind def
+	/str FMLOCAL
+/cfs { 
+	/str sl string def 
+	0 1 sl 1 sub {str exch val put} for 
+	str def 
+	} bind def
+/ic [ 
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0223
+	0
+	{0 hx} {1 hx} {2 hx} {3 hx} {4 hx} {5 hx} {6 hx} {7 hx} {8 hx} {9 hx}
+	{10 hx} {11 hx} {12 hx} {13 hx} {14 hx} {15 hx} {16 hx} {17 hx} {18 hx}
+	{19 hx} {gn hx} {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}
+	{13} {14} {15} {16} {17} {18} {19} {gn} {0 wh} {1 wh} {2 wh} {3 wh}
+	{4 wh} {5 wh} {6 wh} {7 wh} {8 wh} {9 wh} {10 wh} {11 wh} {12 wh}
+	{13 wh} {14 wh} {gn wh} {0 bl} {1 bl} {2 bl} {3 bl} {4 bl} {5 bl} {6 bl}
+	{7 bl} {8 bl} {9 bl} {10 bl} {11 bl} {12 bl} {13 bl} {14 bl} {gn bl}
+	{0 fl} {1 fl} {2 fl} {3 fl} {4 fl} {5 fl} {6 fl} {7 fl} {8 fl} {9 fl}
+	{10 fl} {11 fl} {12 fl} {13 fl} {14 fl} {gn fl}
+	] def
+	/sl FMLOCAL
+	/val FMLOCAL
+	/ws FMLOCAL
+	/im FMLOCAL
+	/bs FMLOCAL
+	/cs FMLOCAL
+	/len FMLOCAL
+	/pos FMLOCAL
+/ms { 
+	/sl exch def 
+	/val 255 def 
+	/ws cfs 
+	/im cfs 
+	/val 0 def 
+	/bs cfs 
+	/cs cfs 
+	} bind def
+400 ms 
+/ip { 
+	is 
+	0 
+	cf cs readline pop 
+	{	ic exch get exec 
+		add 
+		} forall 
+	pop 
+	
+	} bind def
+/wh { 
+	/len exch def 
+	/pos exch def 
+	ws 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/bl { 
+	/len exch def 
+	/pos exch def 
+	bs 0 len getinterval im pos len getinterval copy pop
+	pos len 
+	} bind def
+/s1 1 string def
+/fl { 
+	/len exch def 
+	/pos exch def 
+	/val cf s1 readhexstring pop 0 get def
+	pos 1 pos len add 1 sub {im exch val put} for
+	pos len 
+	} bind def
+/hx { 
+	3 copy getinterval 
+	cf exch readhexstring pop pop 
+	} bind def
+	/h FMLOCAL
+	/w FMLOCAL
+	/lb FMLOCAL
+	/bitmapsave FMLOCAL
+	/is FMLOCAL
+	/cf FMLOCAL
+/BEGINBITMAP { 
+	gsave
+	translate scale /h exch def /w exch def
+	/lb w 7 add 8 idiv def 
+	sl lb lt {lb ms} if 
+	/bitmapsave save def 
+	/is im 0 lb getinterval def 
+	ws 0 lb getinterval is copy pop 
+	/cf currentfile def 
+	w h 1 [w 0 0 h neg 0 h] 
+	{ip} image 
+	bitmapsave restore 
+	grestore
+	} bind def
+/ENDBITMAP {
+	} bind def
+end 
+%%EndProlog
+%%BeginSetup
+(1.2) FMVERSION
+1. 1. 612. 792. 0 1 14 FMDOCUMENT
+0 7. /Helvetica  FMDEFINEFONT
+1 24. /Times-Bold  FMDEFINEFONT
+2 10. /Times-Roman  FMDEFINEFONT
+3 11. /Times-Roman  FMDEFINEFONT
+4 11. /Times-Italic  FMDEFINEFONT
+5 11. /Courier  FMDEFINEFONT
+6 11. /Courier-Bold  FMDEFINEFONT
+7 14. /Times-Bold  FMDEFINEFONT
+8 12. /Times-Bold  FMDEFINEFONT
+9 24. /Times-Roman  FMDEFINEFONT
+10 8. /Times-Roman  FMDEFINEFONT
+11 10. /Symbol  FMDEFINEFONT
+12 10. /Times-Italic  FMDEFINEFONT
+13 9. /Times-Roman  FMDEFINEFONT
+0.5 1. 3. 4. 4 FMLINEWIDTHS
+%%EndSetup
+%%Page: "xviii" 4
+FMBEGINPAGE
+558. 727. 54. 727. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(\320 xviii \320) 289.33 36. T
+(Preface   Continued) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Body text is set in Times Roman, with ) 216. 694. T
+4 F
+(italics) 388.04 694. T
+3 F
+( for emphasis.  Attributes, ) 414.93 694. T
+(procedures, macros, and anything resembling C code are all set in ) 216. 681. T
+5 F
+(Courier) 216. 668. T
+3 F
+(, using the following C conventions:) 262.2 668. T
+(Procedures are lower case and are followed by parentheses, as in) 216. 647. T
+5 F
+(xv_get\050\051) 270. 626. T
+3 F
+(Macros are all upper case and are followed by parentheses, as in the ) 216. 605. T
+(following example, except where they are lower case in source code.) 216. 592. T
+5 F
+(OPENWIN_EACH_VIEW\050\051) 270. 571. T
+3 F
+(Attributes are all upper case but are not followed by parentheses, as in) 216. 550. T
+5 F
+(CANVAS_MIN_PAINT_HEIGHT) 270. 529. T
+3 F
+(Representations of anything that might appear on your screen are set in ) 216. 498. T
+5 F
+(Courier) 216. 485. T
+3 F
+(, with any information a user is expected to type in set in ) 262.2 485. T
+6 F
+(Courier Bold) 216. 472. T
+3 F
+(.) 295.2 472. T
+(In addition, code examples are set in round-cornered boxes to set them ) 216. 451. T
+(off from the surrounding text; when these boxes contain user type-in, ) 216. 438. T
+(their surrounding round-cornered boxes are shaded as well. ) 216. 425. T
+( ) 216. 394. T
+55. 659. 198. 702. C
+55. 659. 198. 702. R
+7 X
+V
+7 F
+0 X
+(Typographical ) 59. 686. T
+(Conventions) 59. 671. T
+U
+FMENDPAGE
+%%Page: "xvii" 3
+FMBEGINPAGE
+558. 727. 54. 727. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(\320 xvii \320) 290.72 36. T
+(Preface   Continued) 478.85 731. T
+(Revision A of 25 August 1989) 435.5 36. T
+3 F
+(Programmer\325s Interfaces \050API\051 are similar.  Experienced SunView ) 216. 694. T
+(programmers will also want to consult the other XView manuals as ) 216. 681. T
+(they become available, to learn more about specific aspects of the ) 216. 668. T
+(XView API.  ) 216. 655. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(To convert a SunView program to XView format without SunView ) 216. 634. T
+(experience, you will definitely want to study this document.  It will ) 216. 621. T
+(provide you with most of what you need to know, and further ) 216. 608. T
+(information will be available shortly.  The series of manuals on the X ) 216. 595. T
+(Window System published by O\325Reilly & Associates are highly ) 216. 582. T
+(recommended; and, if you have access to a copy of the ) 216. 569. T
+4 F
+(SunView 1 ) 459.77 569. T
+(Programmer\325s Guide) 216. 556. T
+3 F
+(, you will probably want to keep it handy, too.  ) 310.4 556. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(The contents of this manual are as follows:) 216. 525. T
+(\245) 234. 504. T
+(Chapter 1 presents an architectural overview of the XView ) 252. 504. T
+(toolkit.) 252. 493. T
+(\245) 234. 477. T
+(Chapter 2 contains instructions for converting SunView ) 252. 477. T
+(programs to XView format.) 252. 464. T
+(\245) 234. 446. T
+(Chapter 3 is a comparative listing of SunView and XView ) 252. 446. T
+(attributes.) 252. 433. T
+(\245) 234. 415. T
+(Chapter 4 documents incompatibilities and removed functions.) 252. 415. T
+(\245) 234. 397. T
+(Chapter 5 introduces new features, including  color mapping.) 252. 397. T
+(\245) 234. 379. T
+(Appendix A lists defaults.  It also contains a man page for the ) 252. 379. T
+(conversion  script ) 252. 366. T
+5 F
+(convert_to_Xdefaults) 332.96 366. T
+3 F
+(.  ) 464.96 366. T
+(\245) 234. 348. T
+(Appendix B contains hints for improving performance.) 252. 348. T
+(\245) 234. 330. T
+(Appendix C consists of a table of cross references called by the ) 252. 330. T
+(conversion script ) 252. 317. T
+5 F
+(convert_to_xview) 330.21 317. T
+3 F
+(,  and  a man page for the ) 435.81 317. T
+(script.) 252. 304. T
+(\245) 234. 286. T
+(Appendix D contains a global listing of changes in reserved ) 252. 286. T
+(prefixes from SunView to XView.) 252. 273. T
+(There are also tables of contents, figures, and tables, and an index.) 216. 252. T
+55. 594. 198. 650. C
+55. 594. 198. 650. R
+7 X
+V
+8 F
+0 X
+(If You Do Not Have ) 59. 636. T
+(SunView Programming ) 59. 623. T
+(Experience) 59. 610. T
+U
+55. 498. 198. 541. C
+55. 498. 198. 541. R
+7 X
+V
+7 F
+0 X
+(How This Manual is ) 59. 525. T
+(Organized) 59. 510. T
+U
+FMENDPAGE
+%%Page: "xvi" 2
+FMBEGINPAGE
+558. 727. 54. 727. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(\320 xvi \320) 292.11 36. T
+(Preface   Continued) 54. 731. T
+(Revision A of 25 August 1989) 54. 36. T
+3 F
+(implementation\051 in future XView releases.  A full conversion requires ) 216. 694. T
+(a few more changes now, but it reduces the number of changes that may ) 216. 681. T
+(be required with subsequent releases.) 216. 668. T
+(The current release tape includes a set of sed scripts \050called by a shell ) 216. 647. T
+(script\051 to help you convert with minimum effort.  However, while ) 216. 634. T
+(these scripts can save you considerable time and effort, they cannot do ) 216. 621. T
+(everything, so we are also supplying all the reference material you will ) 216. 608. T
+(need.  There are instructions for using these scripts in Chapter 2.) 216. 595. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(Every effort has been made to automate the conversion process.  ) 216. 574. T
+(However, depending upon your individual SunView application, you will ) 216. 561. T
+(need to spend some time and effort on completing the process.  You will ) 216. 548. T
+(find that some applications will convert almost entirely ) 216. 535. T
+(automatically.  With others, you will need to put more work in to a ) 216. 522. T
+(final, converted program.) 216. 509. T
+(Here are some general guidelines that may help you to gauge the amount ) 216. 488. T
+(of time it will take to convert your existing program:) 216. 475. T
+(\245) 234. 454. T
+(If you program uses any of the low-level functionality described ) 252. 454. T
+(in the ) 252. 441. T
+4 F
+(SunView 1 System Programmer\325s Guide) 279.5 441. T
+3 F
+(, you will find ) 456.7 441. T
+(that this functionality will need to be converted manually.  One ) 252. 428. T
+(rule of thumb to use when contemplating a conversion project is ) 252. 415. T
+(to assume that the more heavily you rely on low-level routines, ) 252. 402. T
+(the more time you should budget to complete the conversion.) 252. 389. T
+(\245) 234. 371. T
+(If your program includes any routines that predate SunView ) 252. 371. T
+(from the SunOS releases prior to release 3.0, or if it includes any ) 252. 358. T
+(low-level SunWindows features, you will find that you must ) 252. 345. T
+(redesign portions of your code to accommodate the fact that ) 252. 332. T
+(functionality at this level is now the responsibility of the X11 ) 252. 319. T
+(\050or X11/NeWS\051 server, or has been removed completely.) 252. 306. T
+(\245) 234. 288. T
+(Some Pixrect routines are now implemented by the server, or ) 252. 288. T
+(are not supported at all.  If you use any of these routines, you ) 252. 275. T
+(will need to rework those portions of your code.) 252. 262. T
+(\245) 234. 244. T
+(If your application uses a lot of graphics and has been tuned for ) 252. 244. T
+(performance in a kernel-based window system, you will ) 252. 231. T
+(probably need to redesign the graphics portion to tune it for ) 252. 218. T
+(performance in a server-based window system.  You can still ) 252. 205. T
+(have your application converted and running in a short time, but ) 252. 192. T
+(the  re-tuning may take somewhat longer.) 252. 179. T
+54. 90. 558. 702. C
+U
+3 F
+0 X
+(One of the major XView design objectives was to preserve as much ) 216. 158. T
+(compatibility  as possible between SunView and XView applications.  If ) 216. 145. T
+(you are an experienced SunView programmer, this manual should ) 216. 132. T
+(contain most of the information you need to convert an application.  ) 216. 119. T
+(Converting SunView programs to XView format is a largely ) 216. 106. T
+(mechanical and not very difficult task, since the two Application ) 216. 93. T
+55. 522. 198. 590. C
+55. 522. 198. 590. R
+7 X
+V
+8 F
+0 X
+(Planning Your ) 59. 576. T
+(Conversion Effort) 59. 563. T
+U
+55. 122. 198. 174. C
+55. 122. 198. 174. R
+7 X
+V
+8 F
+0 X
+(If You Have SunView ) 59. 160. T
+(Programming Experience) 59. 147. T
+U
+FMENDPAGE
+%%Page: "xv" 1
+FMBEGINPAGE
+558. 727. 54. 727. 2 L
+0 H
+0 X
+N
+-185. -35. 27. 26. 185. 35. BEGINPRINTCODE
+% Sun Logo for Frame Maker - a skinny version for small prints
+%
+% stolen from NeWS/lib/NeWS/demomenu.ps Sunlogo definition
+% and modified to scale to fill bounding textrect
+% 
+% "greyvalue" accepts numbers from 0 (black) to 1 (white)
+
+% Frame Maker "printer code" textrect puts x y w h on stack
+
+/greyvalue 0 def
+/height exch def
+/width exch def
+/ypos exch def
+/xpos exch def
+
+gsave
+
+width 2 div height 10.5 div translate
+width 10.5 div height 10.5 div scale 
+45 rotate
+
+/Uchar {
+		newpath
+		-.2 0 moveto
+		0 0 .2 180 360 arc
+		0 2.9 rlineto
+		.7 0 rlineto
+		0 -2.9 rlineto
+		0 0 .9 0 180 arcn
+		0 2.9 rlineto
+		.7 0 rlineto
+		closepath
+		greyvalue setgray
+		fill
+		} def
+/2Uchar { Uchar gsave 4 4 translate Uchar grestore
+		} def
+ 4 { 2Uchar 6 0 translate 90 rotate } repeat
+    
+grestore
+
+
+ENDPRINTCODE
+0 F
+(microsystems) 216. 34. T
+1 F
+3. (sun) 216. 42. S
+2 F
+(\320 xv \320) 293.5 36. T
+(Revision A of 25 August 1989) 435.5 36. T
+54. 90. 558. 616. C
+216. 536. 558. 616. C
+216. 536. 564. 616. R
+7 X
+V
+9 F
+0 X
+(Preface) 485.05 595. T
+54. 90. 558. 616. C
+U
+3 F
+0 X
+(The XView) 216. 523. T
+10 F
+(TM) 267.62 526. T
+3 F
+( toolkit is a server-based, object-oriented user interface ) 279.62 523. T
+(toolkit designed for the X Window System) 216. 509. T
+10 F
+(TM) 404.83 512. T
+3 F
+( version 11 \050and ) 416.83 509. T
+(X11/NeWS) 216. 495. T
+10 F
+(TM) 267.33 498. T
+3 F
+(\051.  Based upon the same feature set as the kernel-based  ) 279.33 495. T
+(SunView) 216. 481. T
+10 F
+(TM) 256.94 484. T
+3 F
+( toolkit, the XView toolkit has been redesigned and extended ) 268.94 481. T
+(to take advantage of the features of a networked window system while ) 216. 468. T
+(maintaining much of the flavor and the Application Programmer\325s ) 216. 455. T
+(Interface \050API\051 of its predecessor.  The XView toolkit is portable ) 216. 442. T
+(across many versions of the ) 216. 428. T
+2 F
+(UNIX) 340.95 428. T
+11 F
+(\322) 365.94 428. T
+3 F
+( operating system, and provides an ) 373.84 428. T
+(approximation of the) 216. 414. T
+2 F
+( ) 308.27 414. T
+12 F
+(OPEN LOOK) 310.77 414. T
+10 F
+(TM) 366.05 417. T
+4 F
+( Graphical User Interface ) 378.05 414. T
+(Specification) 216. 401. T
+3 F
+(.) 273.44 401. T
+54. 90. 558. 616. C
+U
+3 F
+0 X
+(   ) 276.19 401. T
+54. 90. 558. 616. C
+U
+3 F
+0 X
+(The XView Toolkit is based on an early version of the ) 216. 370. T
+12 F
+(OPEN LOOK) 458.26 370. T
+4 F
+( ) 513.54 370. T
+(Graphical User Interface Specification Release 1.0) 216. 357. T
+3 F
+(, and it therefore ) 441.47 357. T
+(does not necessarily implement every element in the most recent ) 216. 344. T
+(revision of that specification.  \324\324) 216. 331. T
+2 F
+(OPEN LOOK) 357.14 331. T
+3 F
+(\325\325 references thus point to ) 413.52 331. T
+(software that has not yet been validated by A T & T as fully ) 216. 318. T
+2 F
+(OPEN LOOK) 216. 305. T
+3 F
+(-compliant, although full validation is expected shortly.  ) 272.38 305. T
+(Differences between the current state of the software and the ) 216. 292. T
+12 F
+(OPEN ) 486.02 292. T
+(LOOK) 216. 279. T
+4 F
+( Graphical User Interface Specification) 242.67 279. T
+3 F
+( are documented in detail ) 417.43 279. T
+(in Appendix D of the ) 216. 266. T
+4 F
+(XView Reference Manual:  Summary of the ) 312.24 266. T
+(XView API.) 216. 253. T
+54. 90. 558. 616. C
+U
+3 F
+0 X
+(This manual shows how to convert an existing SunView program to ) 216. 222. T
+(XView format.  ) 216. 209. T
+(There are two conversion scenarios:  for a quick) 216. 188. T
+4 F
+(, minimal conversion) 427.99 188. T
+3 F
+(, ) 520.57 188. T
+(and) 216. 175. T
+4 F
+( ) 231.88 175. T
+3 F
+(for a ) 234.63 175. T
+4 F
+(full conversion) 257.84 175. T
+3 F
+(.  The minimal conversion lets you convert a ) 323.54 175. T
+(program quickly by retaining a number of SunView features and ) 216. 162. T
+(facilities that may not be supported \050or supported with the same ) 216. 149. T
+54. 90. 558. 616. C
+54. 90. 551. 135. C
+54. 90. 551. 135. R
+7 X
+V
+13 F
+0 X
+(\240) 218. 110. T
+(OPEN LOOK is a trademark of A T & T; UNIX is a registered trademark of A T & T.) 222.5 106. T
+216. 126. 423. 126. 2 L
+0 H
+N
+54. 90. 558. 616. C
+U
+55. 324. 198. 386. C
+55. 324. 198. 386. R
+7 X
+V
+7 F
+0 X
+(Disclaimer) 59. 370. T
+U
+55. 178. 198. 238. C
+55. 178. 198. 238. R
+7 X
+V
+7 F
+0 X
+(Converting to ) 59. 222. T
+(XView Format) 59. 207. T
+U
+216. 642. 560. 650. R
+4 X
+V
+0 H
+N
+216. 651. 560. 651. 2 L
+1 H
+0 X
+N
+36. 724. 576. 738. C
+36. 724. 576. 738. R
+7 X
+V
+U
+FMENDPAGE
+%%Trailer
+%%Pages: 4 -1
+%%DocumentFonts: Helvetica
+%%+ Times-Bold
+%%+ Times-Roman
+%%+ Times-Italic
+%%+ Courier
+%%+ Courier-Bold
+%%+ Symbol

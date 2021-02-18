@@ -1,0 +1,12 @@
+#include "../../Serpent.tmpl"
+DIR = icsec
+
+DIALOGUE = icsec
+
+DEPENDINCS = -I$(SERPENTBASEDIR)/data
+
+all:	$(DIALOGUE)
+
+SerpentSerpent()
+
+SerpentDependDialogue()

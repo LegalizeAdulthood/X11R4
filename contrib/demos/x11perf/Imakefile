@@ -1,0 +1,39 @@
+       PROGRAMS = x11perf x11perf_labels
+        HEADERS = x11perf.h bitmaps.h
+           SRCS = x11perf.c bitmaps.c do_tests.c \
+		  do_simple.c do_rects.c do_valgc.c \
+		  do_lines.c do_segs.c \
+		  do_dots.c do_windows.c do_movewin.c do_text.c \
+		  do_copyarea.c do_arcs.c \
+		  do_triangles.c do_complex.c do_traps.c
+           OBJS = x11perf.o bitmaps.o do_tests.o \
+		  do_simple.o do_rects.o do_valgc.o \
+		  do_lines.o do_segs.o \
+		  do_dots.o do_windows.o do_movewin.o do_text.o \
+		  do_copyarea.o do_arcs.o \
+		  do_triangles.o do_complex.o do_traps.o
+ SYS_LIBRARIES	= -lX11 -lm
+
+ComplexProgramTarget(x11perf)
+
+all:: x11perf_labels
+
+x11perf_labels: do_tests.c
+	./x11perf -labels > x11perf_labels
+
+clean::
+	$(RM) $(PROGRAMS)
+
+tar:	$(DEPEND)
+	-rm -f x11perf.tar x11perf.tar.Z
+	cp Makefile Makefile.bak
+	$(DEPEND) -s "# DO NOT DELETE" -- -- $(SRCS)
+#	awk '/^# DO NOT DELETE/ {print; exit}; {print}' Makefile.bak >Makefile
+	tar chf x11perf.tar Imakefile Makefile $(HEADERS) $(SRCS) \
+		x11perf_labels x11perf.man *.sh RCS \
+		link.com link.options make.com;
+	mv Makefile.bak Makefile
+	compress x11perf.tar
+
+DependTarget()
+

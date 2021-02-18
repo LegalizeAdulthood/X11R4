@@ -1,0 +1,29 @@
+This little awk program is used to display the characters
+in a font that is used by troff (ditroff).  e.g.
+
+	psfd /usr/lib/fonts/devpsc/R | pic | troff | lpr -n
+
+will display the characters that can be printed in the "R" font.
+
+I used this to test out xtroff and the characters that can be displayed
+with the various fonts:
+
+	xtroff -full -command 'psfd R | pic | troff -Tpsc -F /usr/lib/X11/troff'
+
+or:
+
+	xtroff -full -command 'psfd S | pic | troff -Tpsc -F /usr/lib/X11/troff'
+
+Of course, this can also be used to display them on the PostScript printer:
+
+	psfd S | pic | troff -Tpsc -F /usr/lib/X11/troff | psdit -F /usr/lib/X11/troff | lpr
+
+The reference to the "/usr/lib/X11/troff" directory is to get the font
+description file:
+
+	/usr/lib/X11/troff/devpsc/DESC.out
+
+that may define more characters than defined by your PostScript file.
+
+David Cahlander
+dac@cray.com

@@ -1,0 +1,46 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+#ifdef AMS_ENV
+MAILLIB = ${BASEDIR}/lib/libmail.a
+#else /* AMS_ENV */
+MAILLIB =
+#endif /* AMS_ENV */
+
+WPINI=wp.cfg
+WPINIHIST=lastpass oldpass passwd.add passwd.chg wpadd wpadd.old
+WPININAMES=givenmap nickanal.awk nickbun.awk nickmap nickmap.old override override.old
+LIBS	=	${MAILLIB} \
+		${UTILLIB} \
+		${BASEDIR}/lib/liberrors.a \
+		${MALLOCLIB}
+
+DIRS = ${DESTDIR}/etc/initial_wp \
+	${DESTDIR}/etc/initial_wp/hist \
+	${DESTDIR}/etc/initial_wp/names
+
+NormalObjectRule()
+
+MkdirTarget($(DIRS))
+
+ProgramTarget(makeboth, makeboth.o, ${LIBS},)
+InstallProgram(makeboth, ${DESTDIR}/etc)
+ProgramTarget(nickgen, nickgen.o, ${LIBS},)
+InstallProgram(nickgen, ${DESTDIR}/etc)
+ProgramTarget(genaccts, genaccts.o, ${LIBS},)
+InstallProgram(genaccts, ${DESTDIR}/etc)
+ProgramTarget(brisk, brisk.o, ${LIBS} ${RESOLVLIB},)
+InstallProgram(brisk, ${DESTDIR}/etc)
+InstallProgram(wpbuild, ${DESTDIR}/etc)
+InstallMultiple(${WPINI}, ${INSTINCFLAGS}, ${DESTDIR}/etc/initial_wp/)
+InstallFileToFile(sample.drv, ${INSTPROGFLAGS}, ${DESTDIR}/etc/initial_wp/SAMPLE.driver)
+InstallMultiple(${WPINIHIST}, ${INSTINCFLAGS}, ${DESTDIR}/etc/initial_wp/hist/)
+InstallMultiple(${WPININAMES}, ${INSTINCFLAGS}, ${DESTDIR}/etc/initial_wp/names/)
+ProgramTarget(fwdpoll, fwdpoll.o, ${LIBS},)
+InstallProgram(fwdpoll, ${DESTDIR}/etc)
+ProgramTarget(fwdlist, fwdlist.o, ${LIBS},)
+InstallProgram(fwdlist, ${DESTDIR}/etc)
+
+DependTarget()
+

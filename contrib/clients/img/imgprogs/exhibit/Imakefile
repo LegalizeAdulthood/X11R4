@@ -1,0 +1,17 @@
+
+         IMGINC = ../..
+         IMGLIB = ../../imglib/libimg.a
+
+LOCAL_LIBRARIES = $(IMGLIB) $(XLIB)
+  SYS_LIBRARIES = -lm
+           SRCS = exhibit.c maint_back.c
+           OBJS = exhibit.o maint_back.o
+
+       INCLUDES = -I$(IMGINC)
+
+        DEFINES = -DMIN_DELAY_LOCKED=30 \
+                  -DMIN_DELAY_UNLOCKED=10 \
+                  -DDEFAULT_DELAY=45
+
+
+ComplexProgramTarget(exhibit)

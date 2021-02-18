@@ -1,0 +1,6 @@
+SYS_LIBRARIES = -lm
+LOCAL_LIBRARIES = $(XLIB)
+SRCS = xshowcmap.c
+OBJS = xshowcmap.o
+
+ComplexProgramTarget(xshowcmap)

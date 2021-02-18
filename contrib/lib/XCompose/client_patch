@@ -1,0 +1,5037 @@
+--- X11/Imakefile
+***************
+*** 8,13
+  	X.h \
+  	XWDFile.h \
+  	Xatom.h \
+  	Xmd.h \
+  	Xos.h \
+  	Xproto.h \
+
+--- 8,14 -----
+  	X.h \
+  	XWDFile.h \
+  	Xatom.h \
++ 	Xkbd.h \
+  	Xmd.h \
+  	Xos.h \
+  	Xproto.h \
+
+--- lib/X/Imakefile
+***************
+*** 18,24
+          HEADERS = Xlib.h Xresource.h Xutil.h cursorfont.h
+         LINTLIBS =
+  
+! OBJS1 =\
+  	Context.o \
+  	GetPRoot.o \
+  	ParseCmd.o \
+
+--- 18,26 -----
+          HEADERS = Xlib.h Xresource.h Xutil.h cursorfont.h
+         LINTLIBS =
+  
+! OBJS1 = \
+! 	XSetKbd.o \
+! 	XKeysym.o \
+  	Context.o \
+  	GetPRoot.o \
+  	ParseCmd.o \
+
+--- lib/X/XKeyBind.c
+***************
+*** 3,9
+  static char *rcsid=  "$Header: XKeyBind.c,v 1.15 89/10/18 16:21:51 glennw Exp $";
+  #endif RCS_ID
+  #endif LINT
+- #include "copyright.h"
+  
+  /* $XConsortium: XKeyBind.c,v 11.47 89/04/17 17:06:31 rws Exp $ */
+  /* Copyright 1985, 1987, Massachusetts Institute of Technology */
+
+--- 3,8 -----
+  static char *rcsid=  "$Header: XKeyBind.c,v 1.15 89/10/18 16:21:51 glennw Exp $";
+  #endif RCS_ID
+  #endif LINT
+  
+  /* $XConsortium: XKeyBind.c,v 11.47 89/04/17 17:06:31 rws Exp $ */
+  /* Copyright 1985, 1987, Massachusetts Institute of Technology */
+
+***************
+*** 6,12
+  #include "copyright.h"
+  
+  /* $XConsortium: XKeyBind.c,v 11.47 89/04/17 17:06:31 rws Exp $ */
+! /* Copyright 1985, 1987, Massachusetts Institute of Technology */
+  
+  /* Beware, here be monsters (still under construction... - JG */
+  
+
+--- 5,37 -----
+  #endif LINT
+  
+  /* $XConsortium: XKeyBind.c,v 11.47 89/04/17 17:06:31 rws Exp $ */
+! 
+! /*
+!  * Copyright 1985, 1987, 1988, 1989 by the Massachusetts Institute of
+!  * Technology, Cambridge, Massachusetts, and Tektronix, Inc. Beaverton, Oregon.
+!  * 
+!  * Permission to use, copy, modify, distribute, and sell this software and
+!  * its documentation for any purpose is hereby granted without fee, provided
+!  * that the above copyright notice appear in all copies and that both that
+!  * copyright notice and this permission notice appear in supporting
+!  * documentation, and that the names of Tektronix or M.I.T. not be used in
+!  * advertising or publicity pertaining to distribution of the software
+!  * without specific, written prior permission.  Tektronix and M.I.T. make no
+!  * representations about the suitability of this software for any purpose.
+!  * It is provided "as is" without express or implied warranty.
+!  *
+!  * TEKTRONIX AND M.I.T. DISCLAIM ALL WARRANTIES WITH REGARD TO THIS
+!  * SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS,
+!  * IN NO EVENT SHALL TEKTRONIX OR M.I.T. BE LIABLE FOR ANY SPECIAL, INDIRECT
+!  * OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
+!  * USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+!  * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+!  * PERFORMANCE OF THIS SOFTWARE.
+!  *
+!  * Author:  Jim Fulton, MIT X Consortium
+!  * compose 
+!  * support: Glenn Widener, Tektronix, Inc.
+!  *          P.O. Box 1000
+!  *          Wilsonville, OR, 97070
+!  *          glennw@orca.wv.tek.com
+!  */
+  
+  /* Beware, here be monsters (still under construction... - JG */
+  
+***************
+*** 17,22
+  #include "keysym.h"
+  #include <stdio.h>
+  
+  static ComputeMaskFromKeytrans();
+  static int Initialize();
+  
+
+--- 17,26 -----
+  #include "keysym.h"
+  #include <stdio.h>
+  
++ #define AllModifiersMask ( \
++ 	ShiftMask | LockMask | ControlMask | Mod1Mask | Mod2Mask | \
++ 	Mod3Mask | Mod4Mask | Mod5Mask )
++ 
+  static ComputeMaskFromKeytrans();
+  static int Initialize();
+  
+***************
+*** 159,164
+  	/* should read keymap file and initialize list */
+  }
+  
+  /*ARGSUSED*/
+  int XUseKeymap(filename) 
+      char *filename;
+
+--- 163,221 -----
+  	/* should read keymap file and initialize list */
+  }
+  
++ static InitComposeTable(dpy)
++     Display *dpy;
++ {
++     int i, j, last_key;
++ 
++     /* always toss any existing table and reread */
++     if (dpy->Compose.sequences != NULL)
++ 	XFreeKBCompose (&dpy->Compose, False);
++     /* sets dpy->Compose.sequences == NULL;
++        remains so if valid prop does not exist */
++     if (dpy->InitComposeKeys)
++ 	Xfree(dpy->InitComposeKeys);
++     if (XGetKBCompose (dpy, DefaultRootWindow(dpy), &(dpy->Compose))) {
++ 	/* Cache the set of keycodes/modifiers that can initiate a compose
++ 	   sequence */
++ 	dpy->InitComposeKeys = (KeyCode *)Xmalloc(
++ 					      dpy->Compose.num_composes + 1);
++ 	if (dpy->InitComposeModifiers)
++ 	    Xfree(dpy->InitComposeModifiers);
++ 	dpy->InitComposeModifiers = (unsigned short *)Xmalloc(
++ 		    sizeof(unsigned short) * (dpy->Compose.num_composes + 1));
++ 	/* worst case: each sequence has a different initiator, plus 0 term */
++ 	last_key = 0;
++ 	for (i = 0; i < dpy->Compose.num_composes * dpy->Compose.max_keycodes;
++ 	    i += dpy->Compose.max_keycodes) {
++ 	    if (dpy->Compose.sequences[i] == (KeyCode) NULL)
++ 		/* skip deleted sequences; Init list NULL terminated */
++ 		continue;
++ 	    for (j = last_key - 1; j >= 0; j--) {
++ 		/* search from end, faster assuming localized defs */
++ 		if ((dpy->InitComposeModifiers[j] == 
++ 		     dpy->Compose.modifiers[i]) &&
++ 		    (dpy->InitComposeKeys[j] == 
++ 		     dpy->Compose.sequences[i])) {
++ 		    break;
++ 		}
++ 	    }
++ 	    if (j < 0) {
++ 		dpy->InitComposeModifiers[last_key] = 
++ 		dpy->Compose.modifiers[i];
++ 		dpy->InitComposeKeys[last_key++] = 
++ 		dpy->Compose.sequences[i];
++ 	    }
++ 	}
++ 	dpy->InitComposeKeys[last_key] = 0;
++ 	dpy->InitComposeModifiers[last_key] = 0;	/* Null terminate */
++ 	/* in case a compose sequence is in process, reset it */
++ 	/* ResetComposeSequence(); */
++     }
++     else
++ 	dpy->InitComposeKeys = (KeyCode *)NULL;
++ }
++ 
+  /*ARGSUSED*/
+  int XUseKeymap(filename) 
+      char *filename;
+***************
+*** 224,229
+          InitModMap(dpy);
+      }
+      if (dpy->key_bindings == NULL) InitTranslationList(dpy);
+  }
+  
+  static int KeySymRebound(event, buf, symbol)
+
+--- 281,288 -----
+          InitModMap(dpy);
+      }
+      if (dpy->key_bindings == NULL) InitTranslationList(dpy);
++     /* always re-init keyboard map tables */
++     InitComposeTable(dpy);
+  }
+  
+  static int KeySymRebound(event, buf, symbol)
+***************
+*** 243,250
+  }
+    
+  /*ARGSUSED*/
+! int XLookupString (event, buffer, nbytes, keysym, status)
+!      register XKeyEvent *event;
+       char *buffer;	/* buffer */
+       int nbytes;	/* space in buffer for characters */
+       KeySym *keysym;
+
+--- 302,309 -----
+  }
+    
+  /*ARGSUSED*/
+! int XLookupString (keyevent, buffer, nbytes, keysym, status)
+!      XKeyEvent *keyevent;
+       char *buffer;	/* buffer */
+       int nbytes;	/* space in buffer for characters */
+       KeySym *keysym;
+***************
+*** 248,254
+       char *buffer;	/* buffer */
+       int nbytes;	/* space in buffer for characters */
+       KeySym *keysym;
+!      XComposeStatus *status;	/* not implemented */
+  {
+       register Display *dpy;
+       register KeySym symbol, usymbol;
+
+--- 307,313 -----
+       char *buffer;	/* buffer */
+       int nbytes;	/* space in buffer for characters */
+       KeySym *keysym;
+!      XComposeStatus *status;
+  {
+       register Display *dpy;
+       register KeySym symbol, usymbol;
+***************
+*** 253,259
+       register Display *dpy;
+       register KeySym symbol, usymbol;
+       int length = 0;
+!      char buf[BUFSIZ];
+       unsigned char c;
+       unsigned long hiBytes;
+  
+
+--- 312,318 -----
+       register Display *dpy;
+       register KeySym symbol, usymbol;
+       int length = 0;
+!      unsigned char buf[BUFSIZ];
+       unsigned char c;
+       unsigned long hiBytes;
+       XKeyEvent event = *keyevent;
+***************
+*** 256,261
+       char buf[BUFSIZ];
+       unsigned char c;
+       unsigned long hiBytes;
+  
+       dpy = event->display;
+       if (dpy->keysyms == NULL)
+
+--- 315,323 -----
+       unsigned char buf[BUFSIZ];
+       unsigned char c;
+       unsigned long hiBytes;
++      XKeyEvent event = *keyevent;
++      /* don't modify client event */
++      dpy = event.display;
+  
+       if (dpy->keysyms == NULL)
+           Initialize(dpy);
+***************
+*** 257,263
+       unsigned char c;
+       unsigned long hiBytes;
+  
+-      dpy = event->display;
+       if (dpy->keysyms == NULL)
+           Initialize(dpy);
+  
+
+--- 319,324 -----
+       /* don't modify client event */
+       dpy = event.display;
+  
+       if (dpy->keysyms == NULL)
+           Initialize(dpy);
+  
+***************
+*** 261,267
+       if (dpy->keysyms == NULL)
+           Initialize(dpy);
+  
+!      symbol = KeyCodetoKeySym(dpy, event->keycode, 0);
+  
+       /* apply Shift first */
+       if ((event->state & ShiftMask) ||
+
+--- 322,371 -----
+       if (dpy->keysyms == NULL)
+           Initialize(dpy);
+  
+!      if (CheckForCompose(&event, status, buf)) {
+! 	 /* event is part of a compose sequence; toss it */
+! 	 if (keysym != NULL) *keysym = NoSymbol;
+! 	 return 0;
+!      }
+!      /* else CheckForEvent will modify event on completion of sequence */
+! 	
+!      if (event.keycode == 0) {
+! 	/* got a numeric compose coded character.  XXX Currently cannot return
+! 	   a keysym; when we have the keyboard rearchitecture, we will be able
+! 	   to: 
+! 	char *ccs_half, *ccs_8, *ct;
+! 	unsigned int modifier;
+! 	
+! 	modifier = event.status & AllModifiersMask;
+! 	buf[1] = NULL;
+! 	/ Future XLookupText will return ccs /
+! 	XModifierToCCS(dpy, modifier, &ccs_half, &ccs_8, &ct);
+! 	Actually, this is per-string:
+! 	if (ccs_half)
+! 	    *ccs_return = ccs_half;
+! 	else if (ccs_8)
+! 	    *ccs_return = ccs_8;
+! 	else if (cs)
+! 	    *ccs_return = cs;
+! 	else
+! 	    *ccs_return = NULL;
+! */
+! 	if (keysym != NULL) {
+! /*
+! 	if (XTextAndModifierToKeycode(dpy, &buf, modifier, &event.keycode))
+! 	    *keysym = KeyCodeToKeySym(dpy, event.keycode, 
+! 			XModifierToColumn(dpy, modifier, &column));
+! 	else
+! */
+! 	    *keysym = NoSymbol;
+! 	}
+! 	if (nbytes >= 1) {
+! 	    buffer[0] = (char) buf[0];
+! 	    return (1);
+! 	}
+! 	else
+! 	    return (0);
+!      }
+  
+  
+       symbol = KeyCodetoKeySym(dpy, event.keycode, 0);
+***************
+*** 263,268
+  
+       symbol = KeyCodetoKeySym(dpy, event->keycode, 0);
+  
+       /* apply Shift first */
+       if ((event->state & ShiftMask) ||
+  	 ((event->state & LockMask) && (dpy->lock_meaning == XK_Shift_Lock))) {
+
+--- 367,375 -----
+  	    return (0);
+       }
+  
++ 
++      symbol = KeyCodetoKeySym(dpy, event.keycode, 0);
++ 
+       /* apply Shift first */
+       if ((event.state & ShiftMask) ||
+  	 ((event.state & LockMask) && (dpy->lock_meaning == XK_Shift_Lock))) {
+***************
+*** 264,272
+       symbol = KeyCodetoKeySym(dpy, event->keycode, 0);
+  
+       /* apply Shift first */
+!      if ((event->state & ShiftMask) ||
+! 	 ((event->state & LockMask) && (dpy->lock_meaning == XK_Shift_Lock))) {
+! 	     usymbol = KeyCodetoKeySym(dpy, event->keycode, 1);
+  	     if (usymbol != NoSymbol)
+  	          symbol = usymbol;
+       }
+
+--- 371,379 -----
+       symbol = KeyCodetoKeySym(dpy, event.keycode, 0);
+  
+       /* apply Shift first */
+!      if ((event.state & ShiftMask) ||
+! 	 ((event.state & LockMask) && (dpy->lock_meaning == XK_Shift_Lock))) {
+! 	     usymbol = KeyCodetoKeySym(dpy, event.keycode, 1);
+  	     if (usymbol != NoSymbol)
+  	          symbol = usymbol;
+       }
+***************
+*** 272,278
+       }
+       /* then apply Caps, as protocol suggests*/
+       /* XXX this should really work for all character sets */
+!      if ((event->state & LockMask) && (dpy->lock_meaning == XK_Caps_Lock)) {
+  	    if (symbol >= XK_a && symbol <= XK_z)
+  	          symbol -= (XK_a - XK_A);
+  	    else if (symbol >= XK_agrave && symbol <= XK_odiaeresis)
+
+--- 379,385 -----
+       }
+       /* then apply Caps, as protocol suggests*/
+       /* XXX this should really work for all character sets */
+!      if ((event.state & LockMask) && (dpy->lock_meaning == XK_Caps_Lock)) {
+  	    if (symbol >= XK_a && symbol <= XK_z)
+  	          symbol -= (XK_a - XK_A);
+  	    else if (symbol >= XK_agrave && symbol <= XK_odiaeresis)
+***************
+*** 287,293
+        * see if symbol rebound, if so, return that string.
+        * if special Keyboard, convert to ascii.  handle control.
+        */
+!      if ((length = KeySymRebound(event, buf, symbol)) == -1) {
+  	    c = symbol & 0xFF;
+  	    hiBytes = symbol >> 8;
+              if ( ((hiBytes != 0) && (hiBytes != 0xFF))
+
+--- 394,400 -----
+        * see if symbol rebound, if so, return that string.
+        * if special Keyboard, convert to ascii.  handle control.
+        */
+!      if ((length = KeySymRebound(&event, (char *)buf, symbol)) == -1) {
+  	    c = symbol & 0xFF;
+  	    hiBytes = symbol >> 8;
+              if ( ((hiBytes != 0) && (hiBytes != 0xFF))
+***************
+*** 305,311
+  		/* if X keysym, convert to ascii by grabbing low 7 bits */
+  		if (hiBytes == 0xFF) c &= 0x7F;
+  		/* only apply Control key if it makes sense, else ignore it */
+! 		if (event->state & ControlMask) {
+  		    if ((c >= '@' && c <= '\177') || c == ' ') c &= 0x1F;
+  		    else if (c == '2') c = '\000';
+  		    else if (c >= '3' && c <= '7') c -= ('3' - '\033');
+
+--- 412,418 -----
+  		/* if X keysym, convert to ascii by grabbing low 7 bits */
+  		if (hiBytes == 0xFF) c &= 0x7F;
+  		/* only apply Control key if it makes sense, else ignore it */
+! 		if (event.state & ControlMask) {
+  		    if ((c >= '@' && c <= '\177') || c == ' ') c &= 0x1F;
+  		    else if (c == '2') c = '\000';
+  		    else if (c >= '3' && c <= '7') c -= ('3' - '\033');
+***************
+*** 414,417
+  	}
+      }
+      return;
+  }
+
+--- 521,813 -----
+  	}
+      }
+      return;
++ }
++ 
++ /*
++  * Tek compose processing code.
++  * "Real" Compose sequence status structure, used in XLookupString.
++  */
++ 
++ #define NUM_CHORDED_COMPOSE_KEYS 12 /* in case someone has 12 fingers!! */
++ 
++ typedef struct _XRealComposeStatus {
++    XComposeStatus *extern_status;	/* address of client compose status */
++    int ComposeMatchSeq;			/* currently matched compose seq */
++    int ComposeKeyCount;			/* number of sequence keys so far */
++    int HexComposeKeyCount;		/* number of numeric keys so far */
++    unsigned char HexComposeChar;	/* compute hex character */
++    struct _XRealComposeStatus *next;
++ } XRealComposeStatus;
++ 
++ static XRealComposeStatus *RealCStatList = 0;
++ 
++ extern int ResetComposeSequence(realcstat)
++     XRealComposeStatus *realcstat;
++ {
++     realcstat->ComposeMatchSeq = -1;
++     realcstat->ComposeKeyCount = realcstat->HexComposeKeyCount = 0;
++     realcstat->HexComposeChar = (char) 0;
++     /* SetComposeLED(False); */
++     /* this will be done later with LED extension */
++ }
++ 
++ Bool CancelComposeSequence(event, realcstat, char_return)
++     XKeyEvent	*event;
++     XRealComposeStatus *realcstat;
++     unsigned char *char_return;	  /* return coded character (keycode = 0) */
++ {
++     int i, j;
++     register Display *dpy;
++ 
++     dpy = event->display;
++ 
++     ResetComposeSequence(realcstat);
++     for (i = 0; i < dpy->Compose.num_cancel_keycodes; i++)
++ 	if (event->keycode == dpy->Compose.cancel_keycodes[i])
++ 	    break;
++     for (j = 0; j < dpy->Compose.num_abort_keycodes; j++)
++ 	if (event->keycode == dpy->Compose.abort_keycodes[j])
++ 	    break;
++     /* ring bell with default volume (may be zero) if it appears in neither
++        or abort list */
++     if (((i == dpy->Compose.num_cancel_keycodes) && 
++ 	(j == dpy->Compose.num_abort_keycodes)) || 
++ 	((i == dpy->Compose.num_cancel_keycodes) && 
++ 	(j != dpy->Compose.num_abort_keycodes)))
++ 	XBell(event->display, 100); 
++     /* If keycode appears in neither or both lists, it is to be discarded.
++        Otherwise, see if we are starting another compose sequence */
++     if (((i == dpy->Compose.num_cancel_keycodes) && 
++ 	(j == dpy->Compose.num_abort_keycodes)) || 
++ 	((i != dpy->Compose.num_cancel_keycodes) && 
++ 	(j != dpy->Compose.num_abort_keycodes)))
++ 	/* discard key */
++ 	return(True);
++     else
++ 	return(CheckForCompose(event, realcstat->extern_status, char_return));
++ }
++ 
++ Bool CheckForCompose(event, status, char_return)
++     XKeyEvent	*event;		/* In: Key event struct */
++     XComposeStatus *status;	/* In: address of client compose status */
++     unsigned char *char_return;	/* Out: coded character (keycode = 0) */
++ {
++     KeyCode keycode = event->keycode;
++     register int	    i, j;
++     KeyCode cur_sequence_keycode;
++     int TempMatchSeq;
++     int max_char, num_digits;
++     int digit;
++     XRealComposeStatus *realcstat, *prevcstat;
++     Display *dpy = event->display;
++     XModifierKeymap *m = dpy->modifiermap;
++ 
++     /*
++      * XXX XLookupString has a major design flaw - there is no provision for
++      * the clients to initialize the XComposeStatus structure.  Therefore, all
++      * compose state has to be maintained internally, with the compose
++      * structures looked up by the address of the client-suppplied structure.
++      *
++      * Clients can pass us Press or Release events; we must assume that they
++      * won't pass both events for the same key.
++      */
++     if (status == (XComposeStatus *)NULL)
++ 	/* client has disabled compose processing */
++ 	return (False);
++     
++     for(realcstat = RealCStatList, prevcstat = 0; realcstat != 0; 
++ 	realcstat = realcstat->next) {
++ 	prevcstat = realcstat;
++ 	if (realcstat->extern_status == status)
++ 	    break;
++     }
++     if (realcstat == 0) {
++ 	/* new client status; allocate our status */
++ 	realcstat = (XRealComposeStatus *)Xmalloc(sizeof(XRealComposeStatus));
++ 	if(prevcstat)
++ 	    prevcstat->next = realcstat;
++ 	else
++ 	    RealCStatList = realcstat;
++ 	realcstat->next = 0;
++ 	realcstat->extern_status = status;
++ 	realcstat->ComposeMatchSeq = -1;
++ 	realcstat->ComposeKeyCount = realcstat->HexComposeKeyCount = 0;
++ 	realcstat->HexComposeChar = (char) 0;
++     }
++ 
++     if (realcstat->ComposeMatchSeq != -1) {
++ 	/* Must ignore modifier keys while processing compose */
++ 	for (i = 0; i < (m->max_keypermod<<3); i++) {
++ 	    if (keycode == m->modifiermap[i])
++ 		return (False);
++ 		/* let XLookupString return modifier keysym */
++ 	}
++ 
++ 	TempMatchSeq = realcstat->ComposeMatchSeq;
++ 	/* find first sequence that matches keycodes so far */
++ 	while (TempMatchSeq < dpy->Compose.num_composes) {
++ 	    i = (TempMatchSeq * dpy->Compose.max_keycodes) +
++ 		realcstat->ComposeKeyCount;
++ 	    cur_sequence_keycode = dpy->Compose.sequences[i];
++ 	    if ((keycode == cur_sequence_keycode) && 
++ 		((dpy->Compose.modifiers[i] & AnyModifier) ||
++ 		 ((event->state & AllModifiersMask)
++ 		/* modifier state before event; ignore Button bits */
++ 		  == dpy->Compose.modifiers[i]))) {
++ 		/* new key event matches, move to next key in sequence */
++ 		if ((++(realcstat->ComposeKeyCount)
++ 		     == dpy->Compose.max_keycodes) ||
++ 		    (dpy->Compose.sequences[i + 1] == NULL)) {
++ 		    /* completed sequence - change event to output key */
++ 		    event->keycode =dpy->Compose.output_keycodes[TempMatchSeq];
++ 		    event->state = dpy->Compose.output_modifiers[TempMatchSeq];
++ 		    ResetComposeSequence(realcstat);
++ 		    return (False);
++ 		}
++ 		/* continue to toss sequence key events */
++ 		return (True);
++ 	    }
++ 	    else {
++ 		if ((cur_sequence_keycode > 0) && (cur_sequence_keycode < 5)){
++ 		    /* we are looking for a numeric compose key */
++ 		    switch (cur_sequence_keycode) {
++ 			case 1: /* binary */
++ 			    max_char = 2; num_digits = 8;
++ 			    break;
++ 			case 2: /* octal */
++ 			    max_char = 8; num_digits = 3;
++ 			    break;
++ 			case 3: /* decimal */
++ 			    max_char = 10; num_digits = 3;
++ 			    break;
++ 			case 4: /* hex */
++ 			default:    /* invalid - use hex */
++ 			    max_char = 16; num_digits = 2;
++ 			    break;
++ 		    }
++ 		    for (i = 0; i < max_char; i++) {
++ 			for (j = 0; j < 3; j++) {
++ 			    /* hardwired three keycodes per digit */
++ 			    if (dpy->Compose.numeric_keycodes[(i * 3) + j] == 
++ 				keycode) {
++ 				goto found;
++ 			    }
++ 			}
++ 		    }
++ 		    if (realcstat->HexComposeKeyCount != 0)
++ 		    /* we don't have a matching numeric compose key */
++ 			return (CancelComposeSequence(event, realcstat, 
++ 			        char_return));
++ 		    /* if we already had a numeric key, cancel.  Note that we
++ 		       could search for a matching mnemonic compose, or a a
++ 		       numeric compose of higher radix, but it hardly seems
++ 		       worthwhile.  Keep looking for other matches on the first
++ 		       key. */
++ 		    goto not_found;
++ 
++ found:		    /* we got a matching numeric compose key - convert */
++ 		    realcstat->HexComposeKeyCount++;
++ 		    /* build coded char: i * radix^digit position */
++ 		    digit = num_digits - realcstat->HexComposeKeyCount;
++ 		    switch (max_char) {
++ 		      case 2:
++ 		        if (i)
++ 			    realcstat->HexComposeChar |= (unsigned char)(1 << 
++ 			    digit);
++ 			break;
++ 		      case 8:
++ 		    	realcstat->HexComposeChar |= (unsigned char)
++ 			(i * (1 << (3 * digit)));
++ 			break;
++ 		      case 10:
++ 		      case 16:
++ 		      default:    /* invalid - use hex */
++ 		    	if (digit == 2)
++ 			    realcstat->HexComposeChar |= (unsigned char)
++ 			    (i * 100);
++ 		    	else if (digit == 1)
++ 		    	    realcstat->HexComposeChar |= (unsigned char)
++ 			    (i * max_char);
++ 		    	else
++ 		    	    realcstat->HexComposeChar |= (unsigned char)i;
++ 		    }
++ 		    if (realcstat->HexComposeKeyCount == num_digits)
++ 		    {
++ 		        /* hex compose complete - convert it, and emit coded
++ 			   character instead of event */
++ 		        /* state is the current modifier state (current
++ 			   encoding); leave it alone */	
++ 			event->keycode = 0;
++ 		        *char_return = realcstat->HexComposeChar;
++ 		        ResetComposeSequence(realcstat);
++ 		        return (False);
++ 		    }			
++ 		    /* if incomplete, absorb event */
++ 		    return(True);
++ 		}
++ 
++ not_found:
++ 		/* else keycode doesn't match seq; look for one that does */
++ 		TempMatchSeq++;
++ 		while (TempMatchSeq < dpy->Compose.num_composes) {
++ 		    for (i = 0; (i < realcstat->ComposeKeyCount) &&
++ 	     (dpy->Compose.sequences[realcstat->ComposeMatchSeq * 
++ 				dpy->Compose.max_keycodes + i] ==
++ 	      dpy->Compose.sequences[TempMatchSeq * 
++ 				     dpy->Compose.max_keycodes + i]) &&
++ 	     (dpy->Compose.modifiers[realcstat->ComposeMatchSeq * 
++ 				dpy->Compose.max_keycodes + i] ==
++ 	      dpy->Compose.modifiers[TempMatchSeq * 
++ 				     dpy->Compose.max_keycodes + i]);
++ 			 i++);
++ 		    if (i == realcstat->ComposeKeyCount) {
++ 			/* found a new match for previous keys */
++ 			realcstat->ComposeMatchSeq = TempMatchSeq;
++ 			break;  /* go back to check newest key */
++ 		    }
++ 		    TempMatchSeq++;
++ 		}
++ 	    }
++ 	}
++ 	/* TempMatchSeq >= dpy->Compose.num_composes:
++ 	   invalid compose sequence found */
++ 	return (CancelComposeSequence(event, realcstat, char_return));
++     }
++     else if (dpy->InitComposeKeys) {
++ 	/* QUICKLY see if we are starting one */
++         for (i = 0; dpy->InitComposeKeys[i] != (KeyCode) NULL; i++) {
++ 	    /* check current modifier state to see if modifiers match */
++ 	    if ((keycode == dpy->InitComposeKeys[i]) &&
++ 		((dpy->InitComposeModifiers[i] & AnyModifier) ||
++ 		 ((event->state & AllModifiersMask)
++ 		/* modifier state before event; ignore Button bits */
++ 		  == dpy->InitComposeModifiers[i]))) {
++ 		/* we have a match; find first candidate */
++ 		for (i = 0; 
++ 		     i < dpy->Compose.num_composes * dpy->Compose.max_keycodes;
++ 		     i += dpy->Compose.max_keycodes) {
++ 		    if ((keycode == dpy->Compose.sequences[i]) &&
++ 			((dpy->Compose.modifiers[i] & AnyModifier) ||
++ 			 ((event->state & AllModifiersMask) 
++ 			  == dpy->Compose.modifiers[i]))) {
++ 			/* initialize match_ptr to first candidate */
++ 			realcstat->ComposeMatchSeq = i / 
++ 						     dpy->Compose.max_keycodes;
++ 			/* SetComposeLED(True); */
++ 			/* XXX this will be done later with LED extension */
++ 			/* compose sequence with single keycode not allowed */
++ 			realcstat->ComposeKeyCount = 1;
++ 			return(True);
++ 		    }
++ 		}
++ 		/* if (i == (dpy->Compose.num_composes *
++ 			     dpy->Compose.max_keycodes)) */
++ /* fprintf(stderr, "CheckForCompose: internal error: cached dpy->Compose sequences conflict with actual ones!"); */
++ 	    }
++ 	}
++ 	/* fall through; Compose not found */
++ 	return(False);
++     }
++     /* if (!dpy->InitComposeKeys), there are no Compose sequences */
++     return (False);
+  }
+--- lib/X/Xlib.h
+***************
+*** 39,44
+  
+  #define Bool int
+  #define Status int
+  #define True 1
+  #define False 0
+  
+
+--- 39,47 -----
+  
+  #define Bool int
+  #define Status int
++ 
++ #include <X11/Xkbd.h>	/* needs Status */
++ 
+  #define True 1
+  #define False 0
+  
+***************
+*** 480,485
+  	KeySym lock_meaning;	   /* for XLookupString */
+  	struct XKeytrans *key_bindings; /* for XLookupString */
+  	Font cursor_font;	   /* for XCreateFontCursor */
+  } Display;
+  
+  #ifndef _XEVENT_
+
+--- 483,491 -----
+  	KeySym lock_meaning;	   /* for XLookupString */
+  	struct XKeytrans *key_bindings; /* for XLookupString */
+  	Font cursor_font;	   /* for XCreateFontCursor */
++ 	XKBCompose Compose;    /* definition of compose key sequences */
++         KeyCode *InitComposeKeys;   /* cache of compose sequence */
++ 	unsigned short *InitComposeModifiers; /* cache of compose sequence */
+  } Display;
+  
+  #ifndef _XEVENT_
+--- lib/X/XOpenDis.c
+***************
+*** 178,183
+  	dpy->max_keycode	= u.setup->maxKeyCode;
+  	dpy->keysyms		= (KeySym *) NULL;
+  	dpy->modifiermap	= NULL;
+  	dpy->lock_meaning	= NoSymbol;
+  	dpy->keysyms_per_keycode = 0;
+  	dpy->current		= None;
+
+--- 178,186 -----
+  	dpy->max_keycode	= u.setup->maxKeyCode;
+  	dpy->keysyms		= (KeySym *) NULL;
+  	dpy->modifiermap	= NULL;
++ 	dpy->Compose.sequences  = NULL;	/* needed to say uninit */
++ 	dpy->InitComposeKeys	= NULL;
++ 	dpy->InitComposeModifiers = NULL;
+  	dpy->lock_meaning	= NoSymbol;
+  	dpy->keysyms_per_keycode = 0;
+  	dpy->current		= None;
+--- clients/xmodmap/xmodmap.h
+***************
+*** 23,28
+  extern Display *dpy;
+  extern int min_keycode, max_keycode;
+  extern Bool verbose;
+  extern Bool dontExecute;
+  extern char *inputFilename;
+  extern int lineno;
+
+--- 23,29 -----
+  extern Display *dpy;
+  extern int min_keycode, max_keycode;
+  extern Bool verbose;
++ extern Bool fast;
+  extern Bool dontExecute;
+  extern Bool noCompose;
+  extern Bool resetCompose;
+***************
+*** 24,29
+  extern int min_keycode, max_keycode;
+  extern Bool verbose;
+  extern Bool dontExecute;
+  extern char *inputFilename;
+  extern int lineno;
+  
+
+--- 25,33 -----
+  extern Bool verbose;
+  extern Bool fast;
+  extern Bool dontExecute;
++ extern Bool noCompose;
++ extern Bool resetCompose;
++ extern Bool compose_initialized;
+  extern char *inputFilename;
+  extern char *bindingFilename;
+  extern int lineno;
+***************
+*** 25,30
+  extern Bool verbose;
+  extern Bool dontExecute;
+  extern char *inputFilename;
+  extern int lineno;
+  
+  extern void initialize_map ();
+
+--- 29,35 -----
+  extern Bool resetCompose;
+  extern Bool compose_initialized;
+  extern char *inputFilename;
++ extern char *bindingFilename;
+  extern int lineno;
+  extern int errors;
+  
+***************
+*** 26,31
+  extern Bool dontExecute;
+  extern char *inputFilename;
+  extern int lineno;
+  
+  extern void initialize_map ();
+  extern int process_file ();
+
+--- 31,37 -----
+  extern char *inputFilename;
+  extern char *bindingFilename;
+  extern int lineno;
++ extern int errors;
+  
+  extern void initialize_map ();
+  extern void badmsg ();
+***************
+*** 28,33
+  extern int lineno;
+  
+  extern void initialize_map ();
+  extern int process_file ();
+  extern int process_line ();
+  extern int handle_line ();
+
+--- 34,41 -----
+  extern int errors;
+  
+  extern void initialize_map ();
++ extern void badmsg ();
++ extern void badmsgn ();
+  extern int process_file ();
+  extern int process_line ();
+  extern int handle_line ();
+--- clients/xmodmap/xmodmap.c
+***************
+*** 8,14
+   *
+   * $XConsortium: xmodmap.c,v 1.16 88/10/08 15:42:44 jim Exp $
+   *
+!  * Copyright 1988 Massachusetts Institute of Technology
+   *
+   * Permission to use, copy, modify, and distribute this software and its
+   * documentation for any purpose and without fee is hereby granted, provided
+
+--- 8,15 -----
+   *
+   * $XConsortium: xmodmap.c,v 1.16 88/10/08 15:42:44 jim Exp $
+   *
+!  * Copyright 1988, 1989 by Tektronix, Inc. Beaverton, Oregon,
+!  * and the Massachusetts Institute of Technology, Cambridge, Massachusetts.
+   *
+   * Permission to use, copy, modify, distribute, and sell this software and
+   * its documentation for any purpose is hereby granted without fee, provided
+***************
+*** 10,17
+   *
+   * Copyright 1988 Massachusetts Institute of Technology
+   *
+!  * Permission to use, copy, modify, and distribute this software and its
+!  * documentation for any purpose and without fee is hereby granted, provided
+   * that the above copyright notice appear in all copies and that both that
+   * copyright notice and this permission notice appear in supporting
+   * documentation, and that the name of M.I.T. not be used in advertising or
+
+--- 11,18 -----
+   * Copyright 1988, 1989 by Tektronix, Inc. Beaverton, Oregon,
+   * and the Massachusetts Institute of Technology, Cambridge, Massachusetts.
+   *
+!  * Permission to use, copy, modify, distribute, and sell this software and
+!  * its documentation for any purpose is hereby granted without fee, provided
+   * that the above copyright notice appear in all copies and that both that
+   * copyright notice and this permission notice appear in supporting
+   * documentation, and that the names of Tektronix or M.I.T. not be used in
+***************
+*** 14,24
+   * documentation for any purpose and without fee is hereby granted, provided
+   * that the above copyright notice appear in all copies and that both that
+   * copyright notice and this permission notice appear in supporting
+!  * documentation, and that the name of M.I.T. not be used in advertising or
+!  * publicity pertaining to distribution of the software without specific,
+!  * written prior permission.  M.I.T. makes no representations about the
+!  * suitability of this software for any purpose.  It is provided "as is"
+!  * without express or implied warranty.
+   *
+   * Author:  Jim Fulton, MIT X Consortium
+   */
+
+--- 15,25 -----
+   * its documentation for any purpose is hereby granted without fee, provided
+   * that the above copyright notice appear in all copies and that both that
+   * copyright notice and this permission notice appear in supporting
+!  * documentation, and that the names of Tektronix or M.I.T. not be used in
+!  * advertising or publicity pertaining to distribution of the software
+!  * without specific, written prior permission.  Tektronix and M.I.T. make no
+!  * representations about the suitability of this software for any purpose.
+!  * It is provided "as is" without express or implied warranty.
+   *
+   * TEKTRONIX AND M.I.T. DISCLAIM ALL WARRANTIES WITH REGARD TO THIS
+   * SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS,
+***************
+*** 20,25
+   * suitability of this software for any purpose.  It is provided "as is"
+   * without express or implied warranty.
+   *
+   * Author:  Jim Fulton, MIT X Consortium
+   */
+  
+
+--- 21,34 -----
+   * representations about the suitability of this software for any purpose.
+   * It is provided "as is" without express or implied warranty.
+   *
++  * TEKTRONIX AND M.I.T. DISCLAIM ALL WARRANTIES WITH REGARD TO THIS
++  * SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS,
++  * IN NO EVENT SHALL TEKTRONIX OR M.I.T. BE LIABLE FOR ANY SPECIAL, INDIRECT
++  * OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
++  * USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
++  * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
++  * PERFORMANCE OF THIS SOFTWARE.
++  *
+   * Author:  Jim Fulton, MIT X Consortium
+   * compose 
+   * support: Glenn Widener, Tektronix, Inc.
+***************
+*** 21,26
+   * without express or implied warranty.
+   *
+   * Author:  Jim Fulton, MIT X Consortium
+   */
+  
+  #include <X11/Xos.h>
+
+--- 30,40 -----
+   * PERFORMANCE OF THIS SOFTWARE.
+   *
+   * Author:  Jim Fulton, MIT X Consortium
++  * compose 
++  * support: Glenn Widener, Tektronix, Inc.
++  *          P.O. Box 1000
++  *          Wilsonville, OR, 97070
++  *          glennw@orca.wv.tek.com
+   */
+  
+  #include <X11/Xos.h>
+***************
+*** 33,38
+  Display *dpy = NULL;
+  int min_keycode, max_keycode;
+  Bool verbose = False;
+  Bool dontExecute = False;
+  
+  void Exit (status)
+
+--- 33,39 -----
+  Display *dpy = NULL;
+  int min_keycode, max_keycode;
+  Bool verbose = False;
++ Bool fast = False;
+  Bool dontExecute = False;
+  Bool noCompose = False;
+  Bool noBindings = False;
+***************
+*** 34,39
+  int min_keycode, max_keycode;
+  Bool verbose = False;
+  Bool dontExecute = False;
+  
+  void Exit (status)
+      int status;
+
+--- 35,45 -----
+  Bool verbose = False;
+  Bool fast = False;
+  Bool dontExecute = False;
++ Bool noCompose = False;
++ Bool noBindings = False;
++ Bool resetCompose = False;
++ Bool compose_initialized = False;
++ int errors = 0;
+  
+  extern void initialize_compose();
+  extern int new_seq_count;
+***************
+*** 35,40
+  Bool verbose = False;
+  Bool dontExecute = False;
+  
+  void Exit (status)
+      int status;
+  {
+
+--- 41,50 -----
+  Bool compose_initialized = False;
+  int errors = 0;
+  
++ extern void initialize_compose();
++ extern int new_seq_count;
++ extern Bool have_compose_chg;
++ 
+  void Exit (status)
+      int status;
+  {
+***************
+*** 49,54
+  static char *help_message[] = {
+  "\nwhere options include:",
+  "    -display host:dpy            X server to use",
+  "    -verbose, -quiet             turn logging on or off",
+  "    -n                           don't execute changes, just show like make",
+  "    -e expression                execute string",
+
+--- 59,67 -----
+  static char *help_message[] = {
+  "\nwhere options include:",
+  "    -display host:dpy            X server to use",
++ "    -b bindingfile               binding file for multilingual keyboards",
++ "    -nb                          delete multilingual keyboard bindings",
++ "    -fast                        minimize sanity checks, run faster",
+  "    -verbose, -quiet             turn logging on or off",
+  "    -n                           don't execute changes, just show like make",
+  "    -e expression                execute string",
+***************
+*** 56,61
+  "    -pk                          print keymap table",
+  "    -pp                          print pointer map",
+  "    -grammar                     print out short help on allowable input",
+  "    -                            read standard input",
+  "",
+  NULL};
+
+--- 69,76 -----
+  "    -pk                          print keymap table",
+  "    -pp                          print pointer map",
+  "    -grammar                     print out short help on allowable input",
++ "    -noc[ompose]                 delete existing compose properties",
++ "    -resetc[ompose]              reset compose properties to default",
+  "    -                            read standard input",
+  "",
+  NULL};
+***************
+*** 65,71
+  {
+      char **cpp;
+  
+!     fprintf (stderr, "usage:  %s [-options ...] [filename]\n", ProgramName);
+      for (cpp = help_message; *cpp; cpp++) {
+  	fprintf (stderr, "%s\n", *cpp);
+      }
+
+--- 80,86 -----
+  {
+      char **cpp;
+  
+!     fprintf (stderr, "usage:  %s [-options ...] [filename ...] ...\n", ProgramName);
+      for (cpp = help_message; *cpp; cpp++) {
+  	fprintf (stderr, "%s\n", *cpp);
+      }
+***************
+*** 73,85
+  }
+  
+  static char *grammar_message[] = {
+! "    pointer = default              reset pointer buttons to default",
+! "    pointer = NUMBER ...           set pointer button codes",
+! "    keycode NUMBER = KEYSYM ...    assign keysyms to the given keycode",
+! "    keysym KEYSYM = KEYSYM ...     look up keysym and do a keycode line",
+! "    clear MODIFIER                 remove all keys for this modifier",
+! "    add MODIFIER = KEYSYM ...      add the keysyms to the modifier",
+! "    remove MODIFIER = KEYSYM ...   remove the keysyms from the modifier",
+  "",
+  "where NUMBER is a decimal, octal, or hex constant; KEYSYM is a valid",
+  "Key Symbol name; and MODIFIER is one of the eight modifier names:  Shift,",
+
+--- 88,125 -----
+  }
+  
+  static char *grammar_message[] = {
+! "pointer = default                  reset pointer buttons to default",
+! "pointer = NUMBERLIST               set pointer button codes",
+! "keycode KEYCODE = KEYSYMLIST       assign keysyms to the given keycode",
+! "keysym KEYSYM = KEYSYMLIST         look up keysym and do a keycode line",
+! "clear MODIFIER                     remove all keys for this modifier",
+! "add MODIFIER = KEYSYMLIST          add the keysyms to the modifier",
+! "remove MODIFIER = KEYSYMLIST       remove the keysyms from the modifier",
+! "compose ANYORALLMODNAMES KEYCODELIST = ANYMODNAMES KEYCODE",
+! "compose ANYORALLMODNAMES keysyms KEYSYMLIST = ANYMODNAMES KEYCODE",
+! "compose ANYORALLMODNAMES KEYCODELIST = ANYMODNAMES keysym KEYSYM",
+! "compose ANYORALLMODNAMES keysyms KEYSYMLIST = ANYMODNAMES keysym KEYSYM",
+! "                                   add a mnemonic compose sequence",
+! "compose ANYORALLMODNAMES KEYCODE NUMERIC",
+! "compose ANYORALLMODNAMES keysym KEYSYM NUMERIC",
+! "                                   add a numeric compose sequence",
+! "compose numeric HEXDIGIT = KEYCODE",
+! "compose numeric HEXDIGIT = keysym KEYSYM",
+! "                                   add a numeric compose number key",
+! "compose cancel KEYCODE             add a compose sequence cancel keycode",
+! "remove compose ANYORALLMODNAMES KEYCODELIST",
+! "remove compose ANYORALLMODNAMES keysyms KEYSYMLIST",
+! "remove compose ANYORALLMODNAMES KEYCODE NUMERIC",
+! "remove compose ANYORALLMODNAMES keysym KEYSYM NUMERIC",
+! "                                   remove a compose sequence",
+! "remove compose numeric HEXDIGIT = KEYCODE",
+! "remove compose numeric HEXDIGIT = keysym KEYSYM",
+! "                                   remove a numeric compose number key",
+! "remove compose cancel KEYCODE      remove a compose sequence cancel keycode",
+! "clear compose sequences            remove all compose sequences",
+! "clear compose numeric              remove all numeric compose number keys",
+! "clear compose cancel               remove all compose sequence cancel keycodes",
+! "execute                            execute all expressions so far",
+  "",
+  "where:",
+  "  NUMBERLIST is a list of decimal, octal, or hex constants,",
+***************
+*** 81,91
+  "    add MODIFIER = KEYSYM ...      add the keysyms to the modifier",
+  "    remove MODIFIER = KEYSYM ...   remove the keysyms from the modifier",
+  "",
+! "where NUMBER is a decimal, octal, or hex constant; KEYSYM is a valid",
+! "Key Symbol name; and MODIFIER is one of the eight modifier names:  Shift,",
+! "Lock, Control, Mod1, Mod2, Mod3, Mod4, or Mod5.  Lines beginning with",
+! "an exclamation mark (!) are taken as comments.  Case is significant except",
+! "for MODIFIER names.",
+  "",
+  "Keysyms on the left hand side of the = sign are looked up before any changes",
+  "are made; keysyms on the right are looked up after all of those on the left",
+
+--- 121,138 -----
+  "clear compose cancel               remove all compose sequence cancel keycodes",
+  "execute                            execute all expressions so far",
+  "",
+! "where:",
+! "  NUMBERLIST is a list of decimal, octal, or hex constants,",
+! "  KEYCODE is a decimal, octal, or hex constant, range 8-255,",
+! "  KEYSYM is a valid Key Symbol name,",
+! "  MODIFIER is one of the eight modifier names:  Shift, Lock, Control,", 
+! "    Mod1, Mod2, Mod3, Mod4, or Mod5,",
+! "  KEYCODELIST is a list of KEYCODEs,", 
+! "  KEYSYMLIST is a list of KEYSYMs,", 
+! "  ANYMODNAMES is a list of MODIFIERs, or \"none\",", 
+! "  ANYORALLMODNAMES is a list of MODIFIERS or AnyModifier,", 
+! "  NUMERIC is one of \"binary\", \"octal\", \"decimal\", or \"hex\",", 
+! "  HEXDIGIT is one of 0-9 or a-f.", 
+  "",
+  "Lines beginning with an exclamation mark (!) are taken as comments.",
+  "Case is significant except for MODIFIER names and HEXDIGITs.",
+***************
+*** 87,92
+  "an exclamation mark (!) are taken as comments.  Case is significant except",
+  "for MODIFIER names.",
+  "",
+  "Keysyms on the left hand side of the = sign are looked up before any changes",
+  "are made; keysyms on the right are looked up after all of those on the left",
+  "have been resolved.  This makes it possible to swap modifier keys.",
+
+--- 134,142 -----
+  "  NUMERIC is one of \"binary\", \"octal\", \"decimal\", or \"hex\",", 
+  "  HEXDIGIT is one of 0-9 or a-f.", 
+  "",
++ "Lines beginning with an exclamation mark (!) are taken as comments.",
++ "Case is significant except for MODIFIER names and HEXDIGITs.",
++ "",
+  "Keysyms on the left hand side of the = sign are looked up before any changes",
+  "are made; keysyms on the right (except for compose expressions are looked up",
+  "after all of those on the left have been resolved.  This makes it possible",
+***************
+*** 88,95
+  "for MODIFIER names.",
+  "",
+  "Keysyms on the left hand side of the = sign are looked up before any changes",
+! "are made; keysyms on the right are looked up after all of those on the left",
+! "have been resolved.  This makes it possible to swap modifier keys.",
+  "",
+  NULL };
+  
+
+--- 138,146 -----
+  "Case is significant except for MODIFIER names and HEXDIGITs.",
+  "",
+  "Keysyms on the left hand side of the = sign are looked up before any changes",
+! "are made; keysyms on the right (except for compose expressions are looked up",
+! "after all of those on the left have been resolved.  This makes it possible",
+! "to swap modifier keys.",
+  "",
+  NULL };
+  
+***************
+*** 112,119
+  {
+      int i;
+      char *displayname = NULL;
+!     char *filename = NULL;
+!     int status, errors;
+      Bool printMap = False;
+      Bool printKeyTable = False;
+      Bool printPointerMap = False;
+
+--- 163,169 -----
+  {
+      int i;
+      char *displayname = NULL;
+!     int status;
+      Bool printMap = False;
+      Bool printKeyTable = False;
+      Bool printPointerMap = False;
+***************
+*** 145,151
+  
+      /*
+       * scan the arg list again to do the actual work (since it requires
+!      * the display being open.
+       */
+  
+      status = 0;
+
+--- 195,201 -----
+  
+      /*
+       * scan the arg list again to do the actual work (since it requires
+!      * the display being open.)
+       */
+  
+      status = 0;
+***************
+*** 149,155
+       */
+  
+      status = 0;
+-     errors = 0;
+      for (i = 1; i < argc; i++) {
+  	char *arg = argv[i];
+  
+
+--- 199,204 -----
+       */
+  
+      status = 0;
+      for (i = 1; i < argc; i++) {
+  	char *arg = argv[i];
+  
+***************
+*** 158,163
+  	      case 'd':			/* -display host:dpy */
+  		++i;			/* handled above */
+  		continue;
+  	      case 'v':			/* -verbose */
+  		verbose = True;
+  		continue;
+
+--- 207,218 -----
+  	      case 'd':			/* -display host:dpy */
+  		++i;			/* handled above */
+  		continue;
++ 	      case 'b':			/* -b <binding file> */
++ 		if (process_binding_file (argv[++i]) != 0) errors++;
++ 		continue;
++ 	      case 'f':			/* -fast */
++ 		fast = True;
++ 		continue;
+  	      case 'v':			/* -verbose */
+  		verbose = True;
+  		continue;
+***************
+*** 164,169
+  	      case 'q':			/* -quiet */
+  		verbose = False;
+  		continue;
+  	      case 'n':			/* -n (like make) */
+  		dontExecute = True;
+  		continue;
+
+--- 219,234 -----
+  	      case 'q':			/* -quiet */
+  		verbose = False;
+  		continue;
++ 	      case 'r':			/* -resetc[ompose] */
++ 		if (!strcmp(&arg[2], "esetc") || !strcmp(&arg[2], "esetcompose")) {
++ 		    if (compose_initialized)
++ 			fprintf(stderr, 
++ "Warning: cannot reset compose after a compose expressions is executed;\n\
++ -resetcompose ignored.\n");
++ 		    else
++ 			resetCompose = True;
++ 		    continue;
++ 		}
+  	      case 'n':			/* -n (like make) */
+  		if (!strcmp(&arg[2], "oc") || !strcmp(&arg[2], "ocompose")) {
+  		    noCompose = True;
+***************
+*** 165,170
+  		verbose = False;
+  		continue;
+  	      case 'n':			/* -n (like make) */
+  		dontExecute = True;
+  		continue;
+  	      case 'e':			/* -e expression */
+
+--- 230,243 -----
+  		    continue;
+  		}
+  	      case 'n':			/* -n (like make) */
++ 		if (!strcmp(&arg[2], "oc") || !strcmp(&arg[2], "ocompose")) {
++ 		    noCompose = True;
++ 		    continue;
++ 		}
++ 		if (!strcmp(&arg[2], "ob") || !strcmp(&arg[2], "obindings")) {
++ 		    noBindings = True;
++ 		    continue;
++ 		}
+  		dontExecute = True;
+  		continue;
+  	      case 'e':			/* -e expression */
+***************
+*** 300,305
+  	fprintf (stderr, "%s:  %d errors encountered, aborting.\n",
+  		 ProgramName, errors);
+      } else {
+  	status = execute_work_queue ();
+      }
+  
+
+--- 373,379 -----
+  	fprintf (stderr, "%s:  %d errors encountered, aborting.\n",
+  		 ProgramName, errors);
+      } else {
++ 	initialize_compose();
+  	status = execute_work_queue ();
+  	if (resetCompose || (have_compose_chg == True))
+  	    UpdateComposeProperty();
+***************
+*** 301,306
+  		 ProgramName, errors);
+      } else {
+  	status = execute_work_queue ();
+      }
+  
+      if (printMap) {
+
+--- 375,382 -----
+      } else {
+  	initialize_compose();
+  	status = execute_work_queue ();
++ 	if (resetCompose || (have_compose_chg == True))
++ 	    UpdateComposeProperty();
+      }
+  
+      if (printMap) {
+--- clients/xmodmap/handle.c
+***************
+*** 8,14
+   *
+   * $XConsortium: handle.c,v 1.16 88/11/07 11:13:13 jim Exp $
+   *
+-  * Copyright 1988 Massachusetts Institute of Technology
+   *
+   * Permission to use, copy, modify, and distribute this software and its
+   * documentation for any purpose and without fee is hereby granted, provided
+
+--- 8,13 -----
+   *
+   * $XConsortium: handle.c,v 1.16 88/11/07 11:13:13 jim Exp $
+   *
+   *
+   * Copyright 1988, 1989 by Tektronix, Inc. Beaverton, Oregon,
+   * and the Massachusetts Institute of Technology, Cambridge, Massachusetts.
+***************
+*** 10,17
+   *
+   * Copyright 1988 Massachusetts Institute of Technology
+   *
+!  * Permission to use, copy, modify, and distribute this software and its
+!  * documentation for any purpose and without fee is hereby granted, provided
+   * that the above copyright notice appear in all copies and that both that
+   * copyright notice and this permission notice appear in supporting
+   * documentation, and that the name of M.I.T. not be used in advertising or
+
+--- 9,19 -----
+   * $XConsortium: handle.c,v 1.16 88/11/07 11:13:13 jim Exp $
+   *
+   *
+!  * Copyright 1988, 1989 by Tektronix, Inc. Beaverton, Oregon,
+!  * and the Massachusetts Institute of Technology, Cambridge, Massachusetts.
+!  *
+!  * Permission to use, copy, modify, distribute, and sell this software and
+!  * its documentation for any purpose is hereby granted without fee, provided
+   * that the above copyright notice appear in all copies and that both that
+   * copyright notice and this permission notice appear in supporting
+   * documentation, and that the names of Tektronix or M.I.T. not be used in
+***************
+*** 14,24
+   * documentation for any purpose and without fee is hereby granted, provided
+   * that the above copyright notice appear in all copies and that both that
+   * copyright notice and this permission notice appear in supporting
+!  * documentation, and that the name of M.I.T. not be used in advertising or
+!  * publicity pertaining to distribution of the software without specific,
+!  * written prior permission.  M.I.T. makes no representations about the
+!  * suitability of this software for any purpose.  It is provided "as is"
+!  * without express or implied warranty.
+   *
+   * Author:  Jim Fulton, MIT X Consortium
+   */
+
+--- 16,26 -----
+   * its documentation for any purpose is hereby granted without fee, provided
+   * that the above copyright notice appear in all copies and that both that
+   * copyright notice and this permission notice appear in supporting
+!  * documentation, and that the names of Tektronix or M.I.T. not be used in
+!  * advertising or publicity pertaining to distribution of the software
+!  * without specific, written prior permission.  Tektronix and M.I.T. make no
+!  * representations about the suitability of this software for any purpose.
+!  * It is provided "as is" without express or implied warranty.
+   *
+   * TEKTRONIX AND M.I.T. DISCLAIM ALL WARRANTIES WITH REGARD TO THIS
+   * SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS,
+***************
+*** 20,25
+   * suitability of this software for any purpose.  It is provided "as is"
+   * without express or implied warranty.
+   *
+   * Author:  Jim Fulton, MIT X Consortium
+   */
+  
+
+--- 22,35 -----
+   * representations about the suitability of this software for any purpose.
+   * It is provided "as is" without express or implied warranty.
+   *
++  * TEKTRONIX AND M.I.T. DISCLAIM ALL WARRANTIES WITH REGARD TO THIS
++  * SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS,
++  * IN NO EVENT SHALL TEKTRONIX OR M.I.T. BE LIABLE FOR ANY SPECIAL, INDIRECT
++  * OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
++  * USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
++  * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
++  * PERFORMANCE OF THIS SOFTWARE.
++  *
+   * Author:  Jim Fulton, MIT X Consortium
+   * compose 
+   * support: Glenn Widener, Tektronix, Inc.
+***************
+*** 21,26
+   * without express or implied warranty.
+   *
+   * Author:  Jim Fulton, MIT X Consortium
+   */
+  
+  #include <X11/Xos.h>
+
+--- 31,41 -----
+   * PERFORMANCE OF THIS SOFTWARE.
+   *
+   * Author:  Jim Fulton, MIT X Consortium
++  * compose 
++  * support: Glenn Widener, Tektronix, Inc.
++  *          P.O. Box 1000
++  *          Wilsonville, OR, 97070
++  *          glennw@orca.wv.tek.com
+   */
+  
+  #include <X11/Xos.h>
+***************
+*** 24,30
+   */
+  
+  #include <X11/Xos.h>
+! #include <X11/Xlib.h>
+  #include <stdio.h>
+  #include <ctype.h>
+  #include "xmodmap.h"
+
+--- 24,31 -----
+   */
+  
+  #include <X11/Xos.h>
+! #include <X11/Xlib.h>   /* includes Xkbd.h */
+! #include <X11/keysym.h>
+  #include <stdio.h>
+  #include <ctype.h>
+  #include "xmodmap.h"
+***************
+*** 73,79
+      fprintf (stderr, "%s:  %s:%d:  bad ", ProgramName, inputFilename, lineno);
+  }
+  
+! static void badmsg (what, arg)
+      char *what;
+      char *arg;
+  {
+
+--- 74,80 -----
+      fprintf (stderr, "%s:  %s:%d:  bad ", ProgramName, inputFilename, lineno);
+  }
+  
+! void badmsg (what, arg)
+      char *what;
+      char *arg;
+  {
+***************
+*** 83,89
+      return;
+  }
+  
+! static void badmsgn (what, s, len)
+      char *what;
+      char *s;
+      int len;
+
+--- 84,90 -----
+      return;
+  }
+  
+! void badmsg2 (what, arg1, arg2)
+      char *what;
+      char *arg1, *arg2;
+  {
+***************
+*** 85,90
+  
+  static void badmsgn (what, s, len)
+      char *what;
+      char *s;
+      int len;
+  {
+
+--- 86,101 -----
+  
+  void badmsg2 (what, arg1, arg2)
+      char *what;
++     char *arg1, *arg2;
++ {
++     badheader ();
++     fprintf (stderr, what, arg1, arg2);
++     fprintf (stderr, "\n");
++     return;
++ }
++ 
++ void badmsgn (what, s, len)
++     char *what;
+      char *s;
+      int len;
+  {
+***************
+*** 100,106
+  }
+  
+  static int do_keycode(), do_keysym(), finish_keycode(), get_keysym_list();
+! static int do_add(), do_remove(), do_clear(), do_pointer();
+  
+  int skip_word(), skip_space(), skip_chars();
+  
+
+--- 111,118 -----
+  }
+  
+  static int do_keycode(), do_keysym(), finish_keycode(), get_keysym_list();
+! static int do_add(), do_remove(), do_clear(), do_pointer(), do_execute();
+! static int do_remove_compose(), do_compose();
+  
+  int skip_word(), skip_space(), skip_chars();
+  
+***************
+*** 115,120
+      { "remove", 6, do_remove },
+      { "clear", 5, do_clear },
+      { "pointer", 7, do_pointer },
+      { NULL, 0, NULL }};
+  
+  /*
+
+--- 127,134 -----
+      { "remove", 6, do_remove },
+      { "clear", 5, do_clear },
+      { "pointer", 7, do_pointer },
++     { "compose", 7, do_compose },
++     { "execute", 7, do_execute },
+      { NULL, 0, NULL }};
+  
+  /*
+***************
+*** 323,329
+   * listed.
+   */
+  
+! static int do_keycode (line, len)
+      char *line;
+      int len;
+  {
+
+--- 337,343 -----
+   * listed.
+   */
+  
+! static int parse_keycode (line, len, keycode, err_type)
+      char *line;
+      int len;
+      KeyCode *keycode;
+***************
+*** 326,331
+  static int do_keycode (line, len)
+      char *line;
+      int len;
+  {
+      int n;
+      int dummy;
+
+--- 340,347 -----
+  static int parse_keycode (line, len, keycode, err_type)
+      char *line;
+      int len;
++     KeyCode *keycode;
++     char *err_type;
+  {
+      int dummy;
+      char *fmt = "%d";
+***************
+*** 327,333
+      char *line;
+      int len;
+  {
+-     int n;
+      int dummy;
+      char *fmt = "%d";
+      KeyCode keycode;
+
+--- 343,348 -----
+      KeyCode *keycode;
+      char *err_type;
+  {
+      int dummy;
+      char *fmt = "%d";
+  
+***************
+*** 330,336
+      int n;
+      int dummy;
+      char *fmt = "%d";
+-     KeyCode keycode;
+  
+      if (len < 3 || !line || *line == '\0') {  /* 5=a minimum */
+  	badmsg ("keycode input line", NULL);
+
+--- 345,350 -----
+  {
+      int dummy;
+      char *fmt = "%d";
+  
+      if (*line == '0') line++, len--, fmt = "%o";
+      if (*line == 'x' || *line == 'X') line++, len--, fmt = "%x";
+***************
+*** 332,342
+      char *fmt = "%d";
+      KeyCode keycode;
+  
+-     if (len < 3 || !line || *line == '\0') {  /* 5=a minimum */
+- 	badmsg ("keycode input line", NULL);
+- 	return (-1);
+-     }
+- 
+      if (*line == '0') line++, len--, fmt = "%o";
+      if (*line == 'x' || *line == 'X') line++, len--, fmt = "%x";
+  
+
+--- 346,351 -----
+      int dummy;
+      char *fmt = "%d";
+  
+      if (*line == '0') line++, len--, fmt = "%o";
+      if (*line == 'x' || *line == 'X') line++, len--, fmt = "%x";
+  
+***************
+*** 342,348
+  
+      dummy = 0;
+      if (sscanf (line, fmt, &dummy) != 1 || dummy == 0) {
+! 	badmsg ("keycode value", NULL);
+  	return (-1);
+      }
+      keycode = (KeyCode) dummy;
+
+--- 351,357 -----
+  
+      dummy = 0;
+      if (sscanf (line, fmt, &dummy) != 1 || dummy == 0) {
+! 	badmsg2 ("%s (syntax error) at\n    \"%s\"", err_type, line);
+  	return (-1);
+      }
+      *keycode = (KeyCode) dummy;
+***************
+*** 345,353
+  	badmsg ("keycode value", NULL);
+  	return (-1);
+      }
+!     keycode = (KeyCode) dummy;
+!     if (keycode < min_keycode || keycode > max_keycode) {
+! 	badmsg ("keycode value (out of range)", NULL);
+  	return (-1);
+      }
+  
+
+--- 354,362 -----
+  	badmsg2 ("%s (syntax error) at\n    \"%s\"", err_type, line);
+  	return (-1);
+      }
+!     *keycode = (KeyCode) dummy;
+!     if (*keycode < min_keycode || *keycode > max_keycode) {
+! 	badmsg ("%s (keycode %d out of range)", err_type, *keycode);
+  	return (-1);
+      }
+      return (0);
+***************
+*** 350,355
+  	badmsg ("keycode value (out of range)", NULL);
+  	return (-1);
+      }
+  
+      return (finish_keycode (line, len, keycode));
+  }
+
+--- 359,366 -----
+  	badmsg ("%s (keycode %d out of range)", err_type, *keycode);
+  	return (-1);
+      }
++     return (0);
++ }
+  
+  static int do_keycode (line, len)
+      char *line;
+***************
+*** 351,356
+  	return (-1);
+      }
+  
+      return (finish_keycode (line, len, keycode));
+  }
+  
+
+--- 362,379 -----
+      return (0);
+  }
+  
++ static int do_keycode (line, len)
++     char *line;
++     int len;
++ {
++     KeyCode keycode;
++ 
++     if (len < 3 || !line || *line == '\0') {  /* 5=a minimum */
++ 	badmsg ("keycode input line", NULL);
++ 	return (-1);
++     }
++     if (parse_keycode (line, len, &keycode, "keycode expression value"))
++ 	return (-1);
+      return (finish_keycode (line, len, keycode));
+  }
+  
+***************
+*** 371,378
+      int n;
+      KeyCode keycode;
+      KeySym keysym;
+-     KeySym *kslist;
+-     struct op_keycode *opk;
+      char *tmpname;
+  
+      if (len < 3 || !line || *line == '\0') {  /* a=b minimum */
+
+--- 394,399 -----
+      int n;
+      KeyCode keycode;
+      KeySym keysym;
+      char *tmpname;
+  
+      if (len < 3 || !line || *line == '\0') {  /* a=b minimum */
+***************
+*** 436,442
+      opk = AllocStruct (struct op_keycode);
+      if (!opk) {
+  	badmsg ("attempt to allocate a %ld byte keycode opcode",
+! 		(long) sizeof (struct op_keycode));
+  	return (-1);
+      }
+  
+
+--- 457,464 -----
+      opk = AllocStruct (struct op_keycode);
+      if (!opk) {
+  	badmsg ("attempt to allocate a %ld byte keycode opcode",
+! 		(char *) sizeof (struct op_keycode));
+! 		/* shut up lint */
+  	return (-1);
+      }
+  
+***************
+*** 445,451
+      opk->count = n;
+      opk->keysyms = kslist;
+  
+!     add_to_work_queue (opk);
+  
+  #ifdef later
+      /* make sure we handle any special keys */
+
+--- 467,473 -----
+      opk->count = n;
+      opk->keysyms = kslist;
+  
+!     add_to_work_queue ((union op *)opk);
+  
+  #ifdef later
+      /* make sure we handle any special keys */
+***************
+*** 470,475
+      { "mod4", 4, 6 },
+      { "mod5", 4, 7 },
+      { "ctrl", 4, 2 },
+      { NULL, 0, 0 }};
+  
+  static int parse_modifier (line, n)
+
+--- 492,505 -----
+      { "mod4", 4, 6 },
+      { "mod5", 4, 7 },
+      { "ctrl", 4, 2 },
++     { "s", 5, 0 },
++     { "l", 4, 1 },
++     { "c", 7, 2 },
++     { "m1", 4, 3 },
++     { "m2", 4, 4 },
++     { "m3", 4, 5 },
++     { "m4", 4, 6 },
++     { "m5", 4, 7 },
+      { NULL, 0, 0 }};
+  
+  static int parse_modifier (line, n)
+***************
+*** 491,496
+      return (-1);
+  }
+  
+  
+  /*
+   * do_add - parse off lines of the form
+
+--- 521,531 -----
+      return (-1);
+  }
+  
++ static int parse_modifier_or_none (line, n)
++     register char *line;
++     register int n;
++ {
++     int modifier;
+  
+      if ((modifier = parse_modifier (line, n)) != -1)
+  	return (modifier);
+***************
+*** 492,497
+  }
+  
+  
+  /*
+   * do_add - parse off lines of the form
+   *
+
+--- 527,570 -----
+  {
+      int modifier;
+  
++     if ((modifier = parse_modifier (line, n)) != -1)
++ 	return (modifier);
++     else if (n == 4 && strncmp (line, "none", n) == 0)
++ 	return (-2);
++     return (-1);
++ }
++ static
++ char * print_modifiers(modmask)
++     unsigned short modmask;
++ {
++     static char buf[256];
++     char * bufptr = buf;
++     static char * anym = "AnyModifier, ";
++     Bool havemods = False;
++     int i;
++ 
++     buf[0] = NULL;
++     if (modmask & AnyModifier) {
++ 	sprintf (bufptr, anym);
++ 	bufptr += strlen(anym);
++ 	havemods = True;
++ 	modmask ^= AnyModifier;
++     }
++     for (i = 0; modmask != 0; modmask = modmask >> 1, i++)
++ 	if (modmask & 1) {
++ 	    sprintf (bufptr, modifier_table[i].name);
++ 	    bufptr += modifier_table[i].length;
++ 	    sprintf (bufptr, ", ");
++ 	    bufptr += 2;
++ 	    havemods = True;
++ 	}
++     if (!havemods) {
++ 	sprintf (bufptr, "<None>, ");
++     }
++ 	
++     return (buf);
++ }
++ 
+  /*
+   * do_add - parse off lines of the form
+   *
+***************
+*** 546,552
+      opam = AllocStruct (struct op_addmodifier);
+      if (!opam) {
+  	badmsg ("attempt to allocate %ld byte addmodifier opcode",
+! 		(long) sizeof (struct op_addmodifier));
+  	return (-1);
+      }
+  
+
+--- 619,625 -----
+      opam = AllocStruct (struct op_addmodifier);
+      if (!opam) {
+  	badmsg ("attempt to allocate %ld byte addmodifier opcode",
+! 		(char *) sizeof (struct op_addmodifier));
+  	return (-1);
+      }
+  
+***************
+*** 555,561
+      opam->count = n;
+      opam->keysyms = kslist;
+  
+!     add_to_work_queue (opam);
+      
+      return (0);
+  }
+
+--- 628,634 -----
+      opam->count = n;
+      opam->keysyms = kslist;
+  
+!     add_to_work_queue ((union op *)opam);
+      
+      return (0);
+  }
+***************
+*** 560,565
+      return (0);
+  }
+  
+  /*
+   * make_add - stick a single add onto the queue
+   */
+
+--- 633,639 -----
+      return (0);
+  }
+  
++ #ifdef later
+  /*
+   * make_add - stick a single add onto the queue
+   */
+***************
+*** 573,579
+      opam = AllocStruct (struct op_addmodifier);
+      if (!opam) {
+  	badmsg ("attempt to allocate %ld byte addmodifier opcode",
+! 		(long) sizeof (struct op_addmodifier));
+  	return;
+      }
+  
+
+--- 647,653 -----
+      opam = AllocStruct (struct op_addmodifier);
+      if (!opam) {
+  	badmsg ("attempt to allocate %ld byte addmodifier opcode",
+! 		(char *) sizeof (struct op_addmodifier));
+  	return;
+      }
+  
+
+***************
+*** 582,588
+      opam->count = 1;
+      opam->keysyms = (KeySym *) malloc (sizeof (KeySym));
+      if (!opam->keysyms) {
+! 	badmsg ("attempt to allocate %ld byte KeySym", (long) sizeof (KeySym));
+  	free ((char *) opam);
+  	return;
+      }
+
+--- 656,662 -----
+      opam->count = 1;
+      opam->keysyms = (KeySym *) malloc (sizeof (KeySym));
+      if (!opam->keysyms) {
+! 	badmsg ("attempt to allocate %ld byte KeySym", (char *) sizeof (KeySym));
+  	free ((char *) opam);
+  	return;
+      }
+***************
+*** 588,594
+      }
+      opam->keysyms[0] = keysym;
+  
+!     add_to_work_queue (opam);
+      return;
+  }
+  
+
+--- 662,668 -----
+      }
+      opam->keysyms[0] = keysym;
+  
+!     add_to_work_queue ((union op *)opam);
+      return;
+  }
+  #endif /* later */
+***************
+*** 591,596
+      add_to_work_queue (opam);
+      return;
+  }
+  
+  
+  /*
+
+--- 665,671 -----
+      add_to_work_queue ((union op *)opam);
+      return;
+  }
++ #endif /* later */
+  
+  /*
+   * do_remove - parse off lines of the form
+***************
+*** 592,598
+      return;
+  }
+  
+- 
+  /*
+   * do_remove - parse off lines of the form
+   *
+
+--- 667,672 -----
+  }
+  #endif /* later */
+  
+  /*
+   * do_remove - parse off lines of the form
+   *
+***************
+*** 600,605
+   *                        ^
+   * where the MODIFIER is one of Shift, Lock, Control, Mod[1-5] where case
+   * is not important.  There should also be an alias Ctrl for control.
+   */
+  
+  static int do_remove (line, len)
+
+--- 674,685 -----
+   *                        ^
+   * where the MODIFIER is one of Shift, Lock, Control, Mod[1-5] where case
+   * is not important.  There should also be an alias Ctrl for control.
++  * Also, lines of the form
++  *		  remove compose ANYORALLMODNAMES KEYCODELIST
++  *		  remove compose ANYORALLMODNAMES keysyms KEYSYMNAMELIST
++  *		  remove compose numeric HEXDIGIT = KEYCODE
++  *		  remove compose numeric HEXDIGIT = KEYSYM
++  *		  remove compose cancel KEYCODE
+   */
+  
+  static int do_remove (line, len)
+***************
+*** 615,621
+      struct op_removemodifier *oprm;
+  
+      if (len < 6 || !line || *line == '\0') {  /* Lock=a minimum */
+! 	badmsg ("remove modifier input line", NULL);
+  	return (-1);
+      }
+  
+
+--- 695,701 -----
+      struct op_removemodifier *oprm;
+  
+      if (len < 6 || !line || *line == '\0') {  /* Lock=a minimum */
+! 	badmsg ("remove input line", NULL);
+  	return (-1);
+      }
+  
+***************
+*** 621,627
+  
+      n = skip_chars (line, len);
+      if (n < 1) {
+! 	badmsg ("remove modifier name %s", line);
+  	return (-1);
+      }
+  
+
+--- 701,707 -----
+  
+      n = skip_chars (line, len);
+      if (n < 1) {
+! 	badmsg ("remove name %s", line);
+  	return (-1);
+      }
+      /* now, is this a modifier or a compose specification? */
+***************
+*** 624,629
+  	badmsg ("remove modifier name %s", line);
+  	return (-1);
+      }
+  
+      modifier = parse_modifier (line, n);
+      if (modifier < 0) {
+
+--- 704,713 -----
+  	badmsg ("remove name %s", line);
+  	return (-1);
+      }
++     /* now, is this a modifier or a compose specification? */
++     if ((n == 7) && !strncmp(line, "compose", 7))
++ 	return (do_remove_compose(line+n, len-n));
++     /* failed, this is a modifier */
+  
+      modifier = parse_modifier (line, n);
+      if (modifier < 0) {
+***************
+*** 654,660
+      kclist = (KeyCode *) malloc (n * sizeof (KeyCode));
+      if (!kclist) {
+  	badmsg ("attempt to allocate %ld byte keycode list",
+! 		(long) (n * sizeof (KeyCode)));
+  	free ((char *) kslist);
+  	return (-1);
+      }
+
+--- 738,744 -----
+      kclist = (KeyCode *) malloc (n * sizeof (KeyCode));
+      if (!kclist) {
+  	badmsg ("attempt to allocate %ld byte keycode list",
+! 		(char *) (n * sizeof (KeyCode)));
+  	free ((char *) kslist);
+  	return (-1);
+      }
+***************
+*** 674,680
+  	    printf ("out of range [0x%x, 0x%x]\n", 
+  		    min_keycode, max_keycode);
+  	    badmsg ("keycode value 0x%lx in remove modifier list",
+! 		    (long) kc);
+  	    continue;
+  	}
+  	kclist[nc++] = kc;		/* okay, add it to list */
+
+--- 758,764 -----
+  	    printf ("out of range [0x%x, 0x%x]\n", 
+  		    min_keycode, max_keycode);
+  	    badmsg ("keycode value 0x%lx in remove modifier list",
+! 		    (char *) kc);
+  	    continue;
+  	}
+  	kclist[nc++] = kc;		/* okay, add it to list */
+***************
+*** 685,691
+      oprm = AllocStruct (struct op_removemodifier);
+      if (!oprm) {
+  	badmsg ("attempt to allocate %ld byte removemodifier opcode",
+! 		(long) sizeof (struct op_removemodifier));
+  	return (-1);
+      }
+  
+
+--- 769,775 -----
+      oprm = AllocStruct (struct op_removemodifier);
+      if (!oprm) {
+  	badmsg ("attempt to allocate %ld byte removemodifier opcode",
+! 		(char *) sizeof (struct op_removemodifier));
+  	return (-1);
+      }
+  
+***************
+*** 694,700
+      oprm->count = nc;
+      oprm->keycodes = kclist;
+  
+!     add_to_work_queue (oprm);
+      
+      return (0);
+  }
+
+--- 778,784 -----
+      oprm->count = nc;
+      oprm->keycodes = kclist;
+  
+!     add_to_work_queue ((union op *)oprm);
+      
+      return (0);
+  }
+***************
+*** 699,704
+      return (0);
+  }
+  
+  /*
+   * make_remove - stick a single remove onto the queue
+   */
+
+--- 783,1307 -----
+      return (0);
+  }
+  
++ static XKBCompose ComposeTable;
++ #define DEF_MAX_SEQ_LEN 2
++ /* sequences must be at least two keycodes */
++ #define INIT_SEQ_SPACE 100
++ static int seq_space = INIT_SEQ_SPACE;
++ static int cancel_space;
++ int new_seq_count = 0;	/* count of new compose sequences specified */
++ Bool have_compose_chg = False;
++ static int max_compose_keycodes = DEF_MAX_SEQ_LEN;
++ 
++ #define KEYCODES_PER_HEX_CHAR 3 
++ void initialize_compose ()
++ {
++     int i, j, k;
++     KeyCode *temp_cancel_keycodes;
++     KeyCode Delete_key;
++     KeySym none;
++     static Bool cleared = False;
++ 
++     if (!cleared && (noCompose || resetCompose)) {
++ 	/* delete any existing Compose prop before initializing.  Make sure
++ 	   it happens as soon as option is executed.  XXX A -resetcompose
++ 	   after a -e "compose" -e "execute" will have no effect. */
++ 	XClearKBCompose(dpy);
++     /* the kludge - to make clients call XRefreshKeyboarMapping which will
++        reread compose property, call XChangeKeyboardMapping.  XXX Note that
++        this overhead makes it imperative that we process all real mapping
++        changes at once!  Eventually, we will call this once for both Compose
++        and the keyboard rearchitecture extension, which is why it is done here
++        and not in XSetKBCompose. */
++     	XChangeKeyboardMapping (dpy, dpy->min_keycode, 1, &none, 0);
++ 	cleared = True;
++     }
++ 
++     if (compose_initialized || (!resetCompose && (have_compose_chg == False)))
++ 	/* optimization - don't waste time reading/writing compose
++ 	   prop if we have nothing to do (yet).  */
++ 	return;
++ 
++     compose_initialized = True;
++ 
++     if (XGetKBCompose (dpy, DefaultRootWindow(dpy), &ComposeTable)) {
++ 	seq_space = ComposeTable.num_composes;
++ 	cancel_space = ComposeTable.num_cancel_keycodes;
++ 	return;
++     }
++     /* no property; initialize struct to default values */
++     ComposeTable.num_composes = 0;	/* no compose sequences initially */
++     ComposeTable.max_keycodes = DEF_MAX_SEQ_LEN;
++     for (i = 0; i < 10; i++) {
++ 	ComposeTable.numeric_keycodes[i * KEYCODES_PER_HEX_CHAR ] = 
++ 					    XKeysymToKeycode(dpy, XK_0 + i);
++ 	ComposeTable.numeric_keycodes[1 + (i * KEYCODES_PER_HEX_CHAR )] = 
++ 					    XKeysymToKeycode(dpy, XK_KP_0 + i);
++ 	ComposeTable.numeric_keycodes[2 + (i * KEYCODES_PER_HEX_CHAR )] = 0;
++ 
++     }
++     for (i = 0; i < 6; i++) {
++ 	ComposeTable.numeric_keycodes[(i + 10) * KEYCODES_PER_HEX_CHAR ] = 
++ 					    XKeysymToKeycode(dpy, XK_A + i);
++ 	ComposeTable.numeric_keycodes[1 + ((i + 10) * KEYCODES_PER_HEX_CHAR )]
++ 					    = 0;
++ 	ComposeTable.numeric_keycodes[2 + ((i + 10) * KEYCODES_PER_HEX_CHAR )]
++ 					    = 0;
++     }
++     ComposeTable.modifiers = (unsigned short *)
++ 	malloc(sizeof(unsigned short) * INIT_SEQ_SPACE * DEF_MAX_SEQ_LEN);
++     ComposeTable.sequences = (KeyCode *)
++ 	malloc(sizeof(KeyCode) * INIT_SEQ_SPACE * DEF_MAX_SEQ_LEN);
++     ComposeTable.output_modifiers = (unsigned int *)
++ 			    malloc(sizeof(unsigned int) * INIT_SEQ_SPACE);
++     ComposeTable.output_keycodes = (KeyCode *)
++ 			    malloc(sizeof(KeyCode) * INIT_SEQ_SPACE);
++ 	    /* really need to use Xmalloc, so XFreeKBCompose can XFree */
++ 
++     temp_cancel_keycodes = (KeyCode *) malloc(sizeof(KeyCode) * 
++ 				   (dpy->max_keycode - dpy->min_keycode + 1));
++     j = 0;
++     for (i = dpy->min_keycode; i <= dpy->max_keycode; i++) {
++ 	/* check for a keysym of 0xFFxx first in the list */
++ 	/* Note that this picks up XK_Delete */
++ 	k = (i - dpy->min_keycode) * dpy->keysyms_per_keycode;
++ 	if ((dpy->keysyms[k] & 0xff00) == 0xff00)
++ 	    temp_cancel_keycodes[j++] = i;
++         /* Note - we can get away with this because the call to
++ 	   XKeysymToKeycode() initializes the keysym table */
++     }
++     ComposeTable.cancel_keycodes = (KeyCode *)malloc(sizeof(KeyCode) * j);
++     bcopy (temp_cancel_keycodes, ComposeTable.cancel_keycodes, 
++ 	   sizeof(KeyCode) * j);
++     free(temp_cancel_keycodes);
++     cancel_space = j;
++     ComposeTable.num_cancel_keycodes = j;
++     /* Currently, Delete is hardwired to be silently discarded */
++     if (Delete_key = XKeysymToKeycode(dpy, XK_Delete)) {
++ 	/* in case there is no Delete key */
++ 	ComposeTable.abort_keycodes = (KeyCode *)malloc(sizeof(KeyCode));
++ 	ComposeTable.abort_keycodes[0] = Delete_key;
++ 	ComposeTable.num_abort_keycodes = 1;
++     }
++     else {
++ 	ComposeTable.abort_keycodes = (KeyCode *)NULL;
++ 	ComposeTable.num_abort_keycodes = 0;
++     }
++     return;
++ }
++ 
++ static int
++ parse_numeric(line, len, keycode)
++     char *line;
++     int len;
++     KeyCode *keycode;
++ {
++     if ((len >= 7) && !strncmp(line, "decimal", 7)) {
++ 	*keycode = DECIMAL_COMPOSE;
++     }
++     else if ((len >= 6) && !strncmp(line, "binary", 6)) {
++ 	*keycode = BINARY_COMPOSE;
++     }
++     else if ((len >= 5) && !strncmp(line, "octal", 5)) {
++ 	*keycode = OCTAL_COMPOSE;
++     }
++     else if ((len >= 3) && !strncmp(line, "hex", 3)) {
++ 	*keycode = HEX_COMPOSE;
++     }
++     else
++ 	return (-1);
++     return (0);
++ }
++ 
++ parse_compose_sequence(lineptr, lenptr, keycode_count, keycodelist_return, 
++ 		       modifierlist_return, isnumeric)
++     char **lineptr;
++     int *lenptr;
++     int *keycode_count;
++     KeyCode **keycodelist_return;
++     unsigned short **modifierlist_return;
++     Bool *isnumeric;
++ 
++ {
++     char *line;
++     int len;
++     int n = 0;
++     /* keep lint quiet */
++     KeyCode keycode;
++     KeySym keysym;
++     char temp[256];
++     char *tmpname;
++     int modifier = -3;
++     Bool ignore_keysym = False;
++     int havesofar = 0;
++     KeyCode *keycodelist;
++     unsigned short *modifierlist;
++     int column;
++ 
++     line = *lineptr; len = *lenptr;
++     keycodelist = (KeyCode *) malloc (max_compose_keycodes * sizeof (KeyCode));
++     if (!keycodelist) {
++ 	badmsg ("attempt to allocate %ld byte initial keycodelist",
++ 		(char *) (max_compose_keycodes * sizeof (KeyCode)));
++ 	return (-1);
++     }
++     modifierlist = (unsigned short *) malloc (max_compose_keycodes * 
++ 				       sizeof (unsigned short));
++     if (!modifierlist) {
++ 	badmsg ("attempt to allocate %ld byte initial modifierlist",
++ 		(char *) (max_compose_keycodes * sizeof (unsigned short)));
++ 	return (-1);
++     }
++ 
++     /* first collect initial modifiers, if any */
++     modifierlist[0] = 0;
++     do {
++ 	if (modifier >= 0) {
++ 	    n = n + skip_space (line+n, len-n);
++ 	    line += n, len -= n;
++ 	    modifierlist[0] |= 1 << modifier;
++ 	    /* convert to Mod1Mask, etc. */
++ 	}
++ 	else if (modifier == -1) {
++ 	    /* must be anymodifier */
++ 	    n = n + skip_space (line+n, len-n);
++ 	    line += n, len -= n;
++ 	    modifierlist[0] |= AnyModifier;
++ 	}
++ 	else if (modifier == -2) {
++ 	    /* "none" */
++ 	    n = n + skip_space (line+n, len-n);
++ 	    line += n, len -= n;
++ 	    /* wipes out any prior modifiers */
++ 	    modifierlist[0] = 0;
++ 	    /* don't take any modifiers from the keysym column */
++ 	    ignore_keysym = True;
++ 	}
++ 	/* else first time through */
++ 	n = skip_chars(line, len);
++ 	strncpy(temp, line, n);
++ 	temp[n] = 0;
++     } while (((modifier = parse_modifier_or_none(temp, n)) != -1) || 
++ 	     !strcmp("anymodifier", temp));
++     /* note - parse_modifier lowercases temp, so anymodifier is any case */
++ 
++     /* now, is this a keysym, keycode, or numeric specification? */
++     if ((len < 6) || strncmp(line, "keysym", 6)) {
++ 	/* failed, this is a keycode list or KEYCODE NUMERIC */
++ 	while ((len > 0) && strncmp(line, "=", 1)) {
++ 	    /* compose ends with '=', remove compose ends with newline */
++ 	    if (!(*isnumeric = !parse_numeric(line, len, &keycode))) {
++ 		/* not numeric, so go for keycode */
++ 	        /* this does not catch bogus syntaxes intermingling keycodes
++ 		   and NUMERICs */
++ 		if (parse_keycode (line, len, &keycode,
++ 		    "compose expression sequence keycode value"))
++ 		    return (-1);
++ 	    }
++ 	    /* stash keycode */
++ 	    /* grow the list bigger if necessary */
++ 	    if (havesofar >= max_compose_keycodes) {
++ 		max_compose_keycodes++;
++ 		/* track largest keycode count */
++ 		keycodelist = (KeyCode *) realloc (keycodelist,
++ 			       max_compose_keycodes * sizeof (KeyCode));
++ 		if (!keycodelist) {
++ 		    badmsg ("attempt to grow keycode list to %ld bytes",
++ 			    (char *) (max_compose_keycodes * sizeof (KeyCode)));
++ 		    return (-1);
++ 		}
++ 		modifierlist = (unsigned short *) realloc (modifierlist,
++ 			       max_compose_keycodes * sizeof (unsigned short));
++ 		if (!modifierlist) {
++ 		    badmsg ("attempt to grow modifier list to %ld bytes",
++ 		     (char *) (max_compose_keycodes * sizeof (unsigned short)));
++ 		    return (-1);
++ 		}
++ 	    }
++ 	    if (havesofar)
++ 		modifierlist[havesofar] = AnyModifier;
++ 	    /* first keycode's modifiers already specified explicitly */
++ 	    /* keycode spec on subsequent keys allows any modifier combo */
++ 	    keycodelist[havesofar++] = keycode;
++ 	    n = skip_word(line, len);
++ 	    line += n; len -= n;
++ 	}
++     }
++     else {
++ 	if ((len >= 7) && (line[6] == 's'))
++ 	    /* this is a plain keysyms list */
++ 	    *isnumeric = False;
++ 	else
++ 	    /* keysym KEYSYMNAME NUMERIC */
++ 	    *isnumeric = True;
++ 	/* skip "keysym[s]" keyword */
++ 	n = skip_word(line, len);
++ 	line += n; len -= n;
++ 	while ((len > 0) && strncmp(line, "=", 1)) {
++ 	    if (*isnumeric && (havesofar == 1)) {
++ 		/* must have exactly one KEYSYMNAME; second token should be
++ 		   NUMERIC */
++ 		if (parse_numeric(line, len, &keycode)) {
++ 		    badmsg ("compose expression sequence: bad NUMERIC token, should be \"binary\", \"octal\", \"decimal\", or \"hex\"", NULL);
++ 		    return (-1);
++ 		}
++ 	    }
++ 	    else if (*isnumeric && (havesofar == 2)) {
++ 		badmsg ("compose expression sequence: bogus extra token after NUMERIC", NULL);
++ 		return (-1);
++ 	    }
++ 	    else {
++ 		n = skip_chars(line, len);
++ 		if (!parse_keysym(line, n, &tmpname, &keysym)) {
++ 		    badmsg ("(invalid) compose expression sequence keysym '%s'", 
++ 			     tmpname);
++ 		    return (-1);
++ 		}
++ 		keycode = XKeysymToKeycodeAndColumn(dpy, keysym, &column);
++ 		if (verbose) {
++ 		    printf ("! Keysym %s (0x%lx) corresponds to keycode 0x%x, column %d\n", 
++ 			    tmpname, (long) keysym, keycode, column);
++ 		}
++ 		if (keycode < min_keycode || keycode > max_keycode) {
++ 		    badmsg ("(unassigned) compose expression sequence keysym '%s', not found in mapping table", 
++ 			    tmpname);
++ 		    return (-1);
++ 		}
++ 	    }
++ 	    /* stash keycode */
++ 	    /* grow the list bigger if necessary */
++ 		if (havesofar >= max_compose_keycodes) {
++ 		    max_compose_keycodes++;
++ 		    /* track largest keycode count */
++ 		    keycodelist = (KeyCode *) realloc (keycodelist,
++ 				   max_compose_keycodes * sizeof (KeyCode));
++ 		    if (!keycodelist) {
++ 			badmsg ("attempt to grow keycode list to %ld bytes",
++ 			    (char *) (max_compose_keycodes * sizeof (KeyCode)));
++ 			return (-1);
++ 		    }
++ 		    modifierlist = (unsigned short *) realloc (modifierlist,
++ 			       max_compose_keycodes * sizeof (unsigned short));
++ 		    if (!modifierlist) {
++ 			badmsg ("attempt to grow modifier list to %ld bytes",
++ 		      (char *) (max_compose_keycodes * sizeof (unsigned short)));
++ 			return (-1);
++ 		    }
++ 		}
++ 		if (havesofar) {
++ 		/* Set modifiers for subsequent keycodes to keysym column
++ 		   (currently just Shift).  Note that xmodmap currently does
++ 		   not support explicit modifiers on any but the first key in
++ 		   the sequence. */
++ 		    if (XColumnToModifier(dpy, column, &modifier))
++ 			modifierlist[havesofar] = modifier;
++ 		    else
++ 			modifierlist[havesofar] = 0;
++ 			/* if column > 1, behavior currently undefined.  If a
++ 			   language group protocol is adopted, we would need
++ 			   to include the language modifier. */
++ 		}
++ 		else
++ 		    /* first keycode's modifiers already specified
++ 		       explicitly, just or in Shift unless explicit modifier
++ 		       was "none" */
++ 		    if (!ignore_keysym && 
++ 			XColumnToModifier(dpy, column, &modifier))
++ 			modifierlist[havesofar] |= modifier;
++ 
++ 		keycodelist[havesofar++] = keycode;
++ 
++ 	    n = skip_word(line, len);
++ 	    line += n; len -= n;
++ 	}
++     }
++     *lineptr = line; *lenptr = len;
++     if (havesofar < 1) {
++ 	badmsg ("compose sequence must have at least one keycode\n", NULL);
++ 	return (-1);
++     }
++ 	
++     *keycode_count = havesofar;
++     *keycodelist_return = keycodelist;
++     *modifierlist_return = modifierlist;
++     return (0);
++ }
++ 
++ static int
++ parse_hex_char(lineptr, lenptr, hex_return, err_type)
++     char **lineptr;
++     int *lenptr;
++     int *hex_return;
++     char *err_type;
++ {
++     char msg[256];
++     char *tmp = "1";
++     int n;
++ 
++     tmp[0] = tolower(**lineptr);
++     n = skip_word(*lineptr, *lenptr);
++     strcpy (msg, err_type);
++ 
++     if (isdigit(tmp[0]) || (tmp[0] >= 'a' && tmp[0] <= 'f')) {
++ 	sscanf (tmp, "%x", hex_return);
++ 	*lineptr += n, *lenptr -= n;
++ 	return (0);
++     }
++     strcat (msg, " has bogus HEXCHAR %c");
++     badmsg (msg, (char *) **lineptr);
++     /* yes, we still have to fool lint! */
++     *lineptr += n, *lenptr -= n;
++     return (-1);
++ }
++ 
++ static int
++ parse_key(line, len, keycode_return, column_return, err_type)
++     char **line;
++     int *len;
++     KeyCode *keycode_return;
++     char *err_type;
++     int *column_return;
++ {
++     char msg[256];
++     KeySym keysym;
++     int n;
++     char *tmpname;
++ 
++     strcpy (msg, err_type);
++ 
++     if ((*len < 6) || strncmp(*line, "keysym", 6)) {
++ 	/* failed, this is a keycode */
++ 	strcat (msg, " keycode value");
++ 	if (parse_keycode (*line, *len, keycode_return, msg))
++ 	    return (-1);
++ 	*column_return = 0;
++ 	n = skip_word(*line, *len);
++     }
++     else {
++ 	/* this is a keysym */
++ 	/* skip "keysym" keyword */
++     	n = skip_word(*line, *len);
++ 	*line += n; *len -= n;
++ 	n = skip_chars (*line, *len);
++ 	if (!parse_keysym(*line, n, &tmpname, &keysym)) {
++ 	    strcat (msg, " keysym '%s'");
++ 	    badmsg (msg, tmpname);
++ 	    return (-1);
++ 	}
++ 	*keycode_return = XKeysymToKeycodeAndColumn(dpy, keysym, 
++ 						    column_return);
++ 	if (verbose) {
++ 	    printf ("! Keysym %s (0x%lx) corresponds to keycode 0x%x\n", 
++ 		    tmpname, (long) keysym, *keycode_return);
++ 	}
++ 	if (*keycode_return < min_keycode || *keycode_return > max_keycode) {
++ 	    strcat (msg, " keysym '%s', not found in mapping table");
++ 	    badmsg (msg, tmpname);
++ 	    return (-1);
++ 	}
++ 
++ 	n = n + skip_space(*line+n, *len-n);
++     }
++     if (*len != n)
++ 	badmsg ("%s has trailing garbage; ignored", err_type);
++     return (0);
++ }
++ 
++ static int do_remove_compose (line, len)
++     char *line;
++     int len;
++ {
++     int n;
++     int keycode_count;
++     KeyCode *keycodelist;
++     unsigned short *modifierlist;
++     int hexdigit;
++     KeyCode keycode;
++     struct op_remove_compose_sequence *oprmc;
++     struct op_remove_compose_numeric *oprmcn;
++     struct op_remove_compose_cancel *oprmcc;
++     Bool isnumeric;
++     int column;	    /* junk */
++ 
++     n = skip_space (line, len);
++     if (n < 1) {
++ 	badmsg ("no space after \"remove compose\" in line %s", line);
++ 	return (-1);
++     }
++     have_compose_chg = True;
++     line += n, len -= n;
++     /* now, is this a numeric, cancel, or sequence remove? */
++     if ((len >= 7) && !strncmp(line, "numeric", 7)) {
++ 	/* skip "numeric" keyword */
++ 	n = skip_word(line, len);
++ 	line += n; len -= n;
++ 	
++ 	if (parse_hex_char(&line, &len, &hexdigit,
++ 			   "remove compose numeric expression"))
++ 	    return (-1);
++ 
++ 	if (line[0] != '=') {
++ 	    badmsg ("remove compose numeric expression, missing equal sign", NULL);
++ 	    return (-1);
++         }
++ 	line++, len--;			/* skip '=' */
++ 	n = skip_space (line, len);
++ 	line += n, len -= n;
++ 
++ 	if (parse_key(&line, &len, &keycode, &column, 
++ 		      "remove compose numeric expression"))
++ 	    return (-1);
++ 
++         oprmcn = AllocStruct (struct op_remove_compose_numeric);
++         if (!oprmcn) {
++ 	    badmsg ("attempt to allocate a %ld byte remove compose numeric opcode",
++ 		    (char *) sizeof (struct op_remove_compose_numeric));
++ 	    return (-1);
++ 	}
++ 	oprmcn->type = doRemoveComposeNumeric;
++ 	oprmcn->hexdigit = hexdigit;
++ 	oprmcn->keycode = keycode;
++ 	add_to_work_queue ((union op *)oprmcn);
++     }
++     else if ((len >= 6) && !strncmp(line, "cancel", 6)) {
++ 	/* skip "cancel" keyword */
++ 	n = skip_word(line, len);
++ 	line += n; len -= n;
++ 	if (parse_keycode (line, len, &keycode,
++ 			   "remove compose cancel expression keycode value"))
++ 	    return (-1);
++         oprmcc = AllocStruct (struct op_remove_compose_cancel);
++         if (!oprmcc) {
++ 	    badmsg ("attempt to allocate a %ld byte remove compose cancel opcode",
++ 		    (char *) sizeof (struct op_remove_compose_cancel));
++ 	    return (-1);
++ 	}
++ 	oprmcc->type = doRemoveComposeCancel;
++ 	oprmcc->keycode = keycode;
++ 	add_to_work_queue ((union op *)oprmcc);
++     }
++     else {
++ 	if (parse_compose_sequence(&line, &len, &keycode_count, &keycodelist, 
++ 				&modifierlist, &isnumeric))
++ 	    return (-1);
++         oprmc = AllocStruct (struct op_remove_compose_sequence);
++         if (!oprmc) {
++ 	    badmsg ("attempt to allocate a %ld byte remove compose opcode",
++ 		    (char *) sizeof (struct op_remove_compose_sequence));
++ 	    return (-1);
++ 	}
++ 	oprmc->type = doRemoveComposeSequence;
++ 	oprmc->modifiers = modifierlist;
++ 	oprmc->count = keycode_count;
++ 	oprmc->keycodes = keycodelist;
++ 
++ 	add_to_work_queue ((union op *)oprmc);
++ /*	new_seq_count--; we currently don't reuse space */
++     }
++     return (0);
++ }
++ 
++ #ifdef later
+  /*
+   * make_remove - stick a single remove onto the queue
+   */
+***************
+*** 712,718
+      oprm = AllocStruct (struct op_removemodifier);
+      if (!oprm) {
+  	badmsg ("attempt to allocate %ld byte removemodifier opcode",
+! 		(long) sizeof (struct op_removemodifier));
+  	return;
+      }
+  
+
+--- 1315,1321 -----
+      oprm = AllocStruct (struct op_removemodifier);
+      if (!oprm) {
+  	badmsg ("attempt to allocate %ld byte removemodifier opcode",
+! 		(char *) sizeof (struct op_removemodifier));
+  	return;
+      }
+  
+***************
+*** 722,728
+      oprm->keycodes = (KeyCode *) malloc (sizeof (KeyCode));
+      if (!oprm->keycodes) {
+  	badmsg ("attempt to allocate %ld byte KeyCode",
+! 		(long) sizeof (KeyCode));
+  	free ((char *) oprm);
+  	return;
+      }
+
+--- 1325,1331 -----
+      oprm->keycodes = (KeyCode *) malloc (sizeof (KeyCode));
+      if (!oprm->keycodes) {
+  	badmsg ("attempt to allocate %ld byte KeyCode",
+! 		(char *) sizeof (KeyCode));
+  	free ((char *) oprm);
+  	return;
+      }
+***************
+*** 728,734
+      }
+      oprm->keycodes[0] = keycode;
+  
+!     add_to_work_queue (oprm);
+      return;
+  }
+  
+
+--- 1331,1337 -----
+      }
+      oprm->keycodes[0] = keycode;
+  
+!     add_to_work_queue ((union op *)oprm);
+      return;
+  }
+  #endif /* later */
+***************
+*** 731,736
+      add_to_work_queue (oprm);
+      return;
+  }
+  
+  
+  /*
+
+--- 1334,1340 -----
+      add_to_work_queue ((union op *)oprm);
+      return;
+  }
++ #endif /* later */
+  
+  /*
+   * do_clear - parse off lines of the form
+***************
+*** 732,738
+      return;
+  }
+  
+- 
+  /*
+   * do_clear - parse off lines of the form
+   *
+
+--- 1336,1341 -----
+  }
+  #endif /* later */
+  
+  /*
+   * do_clear - parse off lines of the form
+   *
+***************
+*** 737,742
+   * do_clear - parse off lines of the form
+   *
+   *                 clear MODIFIER
+   *                       ^
+   */
+  
+
+--- 1340,1346 -----
+   * do_clear - parse off lines of the form
+   *
+   *                 clear MODIFIER
++  *                 clear compose ...
+   *                       ^
+   */
+  
+***************
+*** 747,752
+      int n;
+      int modifier;
+      struct op_clearmodifier *opcm;
+  
+      if (len < 4 || !line || *line == '\0') {  /* Lock minimum */
+  	badmsg ("clear modifier input line", NULL);
+
+--- 1351,1357 -----
+      int n;
+      int modifier;
+      struct op_clearmodifier *opcm;
++     struct op_clear_compose *opcc;
+  
+      if (len < 4 || !line || *line == '\0') {  /* Lock minimum */
+  	badmsg ("clear modifier input line", NULL);
+***************
+*** 755,760
+  
+      n = skip_chars (line, len);
+  
+      modifier = parse_modifier (line, n);
+      if (modifier < 0) {
+  	badmsgn ("clear modifier name '%s'", line, n);
+
+--- 1360,1404 -----
+  
+      n = skip_chars (line, len);
+  
++     /* now, is this a modifier or a clear compose ? */
++     if ((n == 7) && !strncmp(line, "compose", 7)) {
++         have_compose_chg = True;
++ 	n += skip_space (line+n, len-n);
++ 	line += n, len -= n;
++ 	opcc = AllocStruct (struct op_clear_compose);
++ 	if (!opcc) {
++ 	    badmsg ("attempt to allocate a %ld byte clear compose opcode",
++ 		(char *) sizeof (struct op_clear_compose));
++ 	    return (-1);
++ 	}
++     /* now, is this a numeric, cancel, or sequence clear? */
++ 	if ((len >= 9) && !strncmp(line, "sequences", 9)) {
++ 	    opcc->type = doClearComposeSequence;
++ 	    add_to_work_queue ((union op *)opcc);
++ 	    new_seq_count = 0;
++ 	    /* we certainly won't have to enlarge the table! */
++ 	}
++         else if ((len >= 7) && !strncmp(line, "numeric", 7)) {
++ 	    opcc->type = doClearComposeNumeric;
++ 	    add_to_work_queue ((union op *)opcc);
++ 	}
++         else if ((len >= 6) && !strncmp(line, "cancel", 6)) {
++ 	    opcc->type = doClearComposeCancel;
++ 	    add_to_work_queue ((union op *)opcc);
++ 	}
++ 	else {
++ 	    /* bogus keyword */
++ 	    badmsg ("clear compose keyword \"%s\" is invalid ", line);
++ 	    return (-1);
++ 	}
++ 	/* skip keyword */
++ 	n = skip_word(line, len);
++ 	if (len != n)
++ 	    badmsg ("clear compose has trailing garbage; ignored", NULL);
++ 	return (0);
++     }
++     /* failed, this is a modifier */
++ 
+      modifier = parse_modifier (line, n);
+      if (modifier < 0) {
+  	badmsgn ("clear modifier name '%s'", line, n);
+***************
+*** 769,775
+      opcm = AllocStruct (struct op_clearmodifier);
+      if (!opcm) {
+  	badmsg ("attempt to allocate %d byte clearmodifier opcode",
+! 		(long) sizeof (struct op_clearmodifier));
+  	return (-1);
+      }
+  
+
+--- 1413,1419 -----
+      opcm = AllocStruct (struct op_clearmodifier);
+      if (!opcm) {
+  	badmsg ("attempt to allocate %d byte clearmodifier opcode",
+! 		(char *) sizeof (struct op_clearmodifier));
+  	return (-1);
+      }
+  
+***************
+*** 776,782
+      opcm->type = doClearModifier;
+      opcm->modifier = modifier;
+  
+!     add_to_work_queue (opcm);
+  
+      return (0);
+  }
+
+--- 1420,1426 -----
+      opcm->type = doClearModifier;
+      opcm->modifier = modifier;
+  
+!     add_to_work_queue ((union op *)opcm);
+  
+      return (0);
+  }
+***************
+*** 873,879
+      opp = AllocStruct (struct op_pointer);
+      if (!opp) {
+  	badmsg ("attempt to allocate a %ld byte pointer opcode",
+! 		(long) sizeof (struct op_pointer));
+  	return (-1);
+      }
+  
+
+--- 1517,1523 -----
+      opp = AllocStruct (struct op_pointer);
+      if (!opp) {
+  	badmsg ("attempt to allocate a %ld byte pointer opcode",
+! 		(char *) sizeof (struct op_pointer));
+  	return (-1);
+      }
+  
+***************
+*** 883,889
+  	opp->button_codes[i] = buttons[i];
+      }
+  
+!     add_to_work_queue (opp);
+  
+      return (0);
+  }
+
+--- 1527,1533 -----
+  	opp->button_codes[i] = buttons[i];
+      }
+  
+!     add_to_work_queue ((union op *)opp);
+  
+      return (0);
+  }
+***************
+*** 890,895
+  
+  
+  /*
+   * get_keysym_list - parses the rest of the line into a keysyms assumes
+   * that the = sign has been parsed off but there may be leading whitespace
+   *
+
+--- 1534,1754 -----
+  
+  
+  /*
++  * do_compose - parse off lines of the form
++  *
++  * compose ANYORALLMODNAMES KEYCODELIST "=" ANYMODNAMES KEYCODE
++  * compose ANYORALLMODNAMES keysyms KEYSYMNAMELIST "=" ANYMODNAMES KEYCODE
++  * compose ANYORALLMODNAMES KEYCODELIST "=" ANYMODNAMES keysym KEYSYMNAME
++  * compose ANYORALLMODNAMES keysyms KEYSYMNAMELIST "=" ANYMODNAMES keysym KEYSYMNAME
++  *
++  */
++ 
++ static int do_compose (line, len)
++     char *line;
++     int len;
++ {
++     int n;
++     char temp[256];
++     int modifier = -3;
++     Bool ignore_keysym = False;
++     unsigned short *modifierlist;
++     int output_modmask = 0;
++     KeyCode output_keycode;
++     int keycode_count;
++     KeyCode *keycodelist;
++     struct op_compose_sequence *opk;
++     struct op_remove_compose_sequence *oprmc;
++     int hexdigit;
++     KeyCode keycode;
++     Bool isnumeric;
++     int column;	    /* junk */
++     struct op_compose_numeric *opcn;
++     struct op_compose_cancel *opcc;
++ 
++     if (len < 3 || !line || *line == '\0') {  /* 3=a minimum */
++ 	badmsg ("compose input line", NULL);
++ 	return (-1);
++     }
++     
++     have_compose_chg = True;
++     if ((len >= 7) && !strncmp(line, "numeric", 7)) {
++ 	/* skip "numeric" keyword */
++ 	n = skip_word(line, len);
++ 	line += n; len -= n;
++ 	
++ 	if (parse_hex_char(&line, &len, &hexdigit,
++ 			   "compose numeric expression"))
++ 	    return (-1);
++ 
++ 	if (line[0] != '=') {
++ 	    badmsg ("compose numeric expression, missing equal sign", NULL);
++ 	    return (-1);
++         }
++ 	line++, len--;			/* skip '=' */
++ 	n = skip_space (line, len);
++ 	line += n, len -= n;
++ 
++ 	if (parse_key(&line, &len, &keycode, &column,
++ 		      "compose numeric expression"))
++ 	    return (-1);
++ 
++         opcn = AllocStruct (struct op_compose_numeric);
++         if (!opcn) {
++ 	    badmsg ("attempt to allocate a %ld byte compose opcode",
++ 		    (char *) sizeof (struct op_compose_numeric));
++ 	    return (-1);
++ 	}
++         opcn->type = doComposeNumeric;
++ 	opcn->hexdigit = hexdigit;
++ 	opcn->keycode = keycode;
++ 	add_to_work_queue ((union op *)opcn);
++ 	return (0);
++     }
++     else if ((len >= 6) && !strncmp(line, "cancel", 6)) {
++ 	/* skip "cancel" keyword */
++ 	n = skip_word(line, len);
++ 	line += n; len -= n;
++ 	if (parse_keycode (line, len, &keycode,
++ 			   "compose cancel expression keycode value"))
++ 	    return (-1);
++         opcc = AllocStruct (struct op_compose_cancel);
++         if (!opcc) {
++ 	    badmsg ("attempt to allocate a %ld byte compose cancel opcode",
++ 		    (char *) sizeof (struct op_compose_cancel));
++ 	    return (-1);
++ 	}
++ 	opcc->type = doComposeCancel;
++ 	opcc->keycode = keycode;
++ 	add_to_work_queue ((union op *)opcc);
++ 	return (0);
++     }
++ 
++     if (parse_compose_sequence(&line, &len, &keycode_count, &keycodelist, 
++ 			       &modifierlist, &isnumeric))
++ 	return (-1);
++ 
++     if (!isnumeric) {
++         if (len < 1) {
++ 	    badmsg ("compose expression equal sign missing", NULL);
++ 	    return (-1);
++ 	}
++         /* if no keycodes found, error */
++ 
++ 	n = skip_space (line+1, len-1);	/* skip over '=' */
++ 	line += n + 1; len -= n + 1;
++ 
++     	/* look for output modifiers, if any */
++ 	do {
++ 	    if (modifier >= 0) {
++ 		n = n + skip_space (line+n, len-n);
++ 		line += n; len -= n;
++ 		output_modmask |= 1 << modifier;
++ 	    }
++ 	    else if (modifier == -2) {
++ 		/* "none" */
++ 		ignore_keysym = True;
++ 		output_modmask = 0;
++ 	    }
++ 	    /* else first time through */
++ 	    n = skip_chars(line, len);
++ 	    strncpy(temp, line, n);
++ 	    temp[n] = 0;
++ 	} while ((modifier = parse_modifier_or_none(temp, n)) != -1);
++ 
++ 	/* look for output keycode or keysym */
++ 	if (parse_key(&line, &len, &output_keycode, &column,
++ 	    "compose expression output"))
++ 	    return (-1);
++ 	/* adjust modifiers for keysym column (currently just Shift) */
++ 	if (!ignore_keysym && XColumnToModifier(dpy, column, &modifier))
++ 	    output_modmask |= modifier;
++     }
++ 
++     oprmc = AllocStruct (struct op_remove_compose_sequence);
++     if (!oprmc) {
++ 	badmsg ("attempt to allocate a %ld byte compose opcode",
++ 		(char *) sizeof (struct op_remove_compose_sequence));
++ 	return (-1);
++     }
++     opk = AllocStruct (struct op_compose_sequence);
++     if (!opk) {
++ 	badmsg ("attempt to allocate a %ld byte compose opcode",
++ 		(char *) sizeof (struct op_compose_sequence));
++ 	return (-1);
++     }
++ 
++     /* First, delete any existing conflicting compose sequences.  Could
++ 	be a bit faster if we pre-pended new Compose sequences, but the 
++ 	property would grow */
++     if (!fast) {
++ 	/* goes much faster if we are sure there is none to delete */
++ 	oprmc->type = doRemoveComposeSequence;
++ 	oprmc->modifiers = modifierlist;
++ 	oprmc->count = keycode_count;
++ 	oprmc->keycodes = keycodelist;
++ 
++         add_to_work_queue ((union op *)oprmc);
++ /*	new_seq_count--; we currently don't reuse space */
++ 	
++     }
++ 
++     opk->type = doComposeSequence;
++     opk->modifiers = modifierlist;
++     opk->count = keycode_count;
++     opk->keycodes = keycodelist;
++     if (isnumeric) {
++ 	opk->output_modmask = opk->output_keycode = 0;
++ 	/* don't care */
++     }
++     else {
++ 	opk->output_modmask = output_modmask;
++ 	opk->output_keycode = output_keycode;
++     }
++ 
++     add_to_work_queue ((union op *)opk);
++     new_seq_count++;
++     return (0);
++ }
++ 
++ 
++ 
++ /*
++  * do_execute - parse off lines of the form
++  *
++  *           execute
++  *                  ^
++  *
++  */
++ 
++ static int do_execute (line, len)
++     /*ARGSUSED*/
++     char *line;
++     /*ARGSUSED*/
++     int len;
++ {
++     int status = False;
++ 
++     if (dontExecute) {
++ 	print_work_queue ();
++ 	/* print what we got so far */
++     }
++     else if (errors == 0) {
++ 	initialize_compose();
++ 	/* will initialize the first time we have a compose */
++ 	status = execute_work_queue ();
++ 	/* compose properties do not need to be updated until end */
++ 	refreshMapping();
++ 	/* but we must make sure that the keycode mapping gets updated.  This
++ 	   will cause an extra XSync if execute occurs after a non-keycode
++ 	   expression - tough. */
++     }
++     /* do nothing if errors; message will be printed at final execute */
++     work_queue.head = work_queue.tail = NULL;
++     return (status);
++ }
++ 
++ 
++ /*
+   * get_keysym_list - parses the rest of the line into a keysyms assumes
+   * that the = sign has been parsed off but there may be leading whitespace
+   *
+***************
+*** 917,923
+      keysymlist = (KeySym *) malloc (maxcanhave * sizeof (KeySym));
+      if (!keysymlist) {
+  	badmsg ("attempt to allocate %ld byte initial keysymlist",
+! 		(long) (maxcanhave * sizeof (KeySym)));
+  	return (-1);
+      }
+  
+
+--- 1776,1782 -----
+      keysymlist = (KeySym *) malloc (maxcanhave * sizeof (KeySym));
+      if (!keysymlist) {
+  	badmsg ("attempt to allocate %ld byte initial keysymlist",
+! 		(char *) (maxcanhave * sizeof (KeySym)));
+  	return (-1);
+      }
+  
+***************
+*** 928,934
+  	Bool ok;
+  
+  	n = skip_space (line, len);
+! 	line += n, len -= n;
+  
+  	n = skip_chars (line, len);
+  	if (n < 0) {
+
+--- 1787,1793 -----
+  	Bool ok;
+  
+  	n = skip_space (line, len);
+! 	line += n; len -= n;
+  
+  	n = skip_chars (line, len);
+  	if (n < 0) {
+***************
+*** 956,962
+  					     maxcanhave * sizeof (KeySym));
+  	    if (!keysymlist) {
+  		badmsg ("attempt to grow keysym list to %ld bytes",
+! 			(long) (maxcanhave * sizeof (KeySym)));
+  		return (-1);
+  	    }
+  	}
+
+--- 1815,1821 -----
+  					     maxcanhave * sizeof (KeySym));
+  	    if (!keysymlist) {
+  		badmsg ("attempt to grow keysym list to %ld bytes",
+! 			(char *) (maxcanhave * sizeof (KeySym)));
+  		return (-1);
+  	    }
+  	}
+***************
+*** 1084,1089
+        case doClearModifier:
+  	printf ("clear %s\n", modifier_table[op->clearmodifier.modifier].name);
+  	break;
+        default:
+  	printf ("! unknown opcode %d\n", op->generic.type);
+  	break;
+
+--- 1943,1992 -----
+        case doClearModifier:
+  	printf ("clear %s\n", modifier_table[op->clearmodifier.modifier].name);
+  	break;
++       case doComposeSequence:
++ 	printf ("compose sequence: keycodes/modifiers ");
++ 	for (i = 0; i < op->compose_sequence.count; i++) {
++ 	    printf ("0x%lx/", (long) op->compose_sequence.keycodes[i]);
++ 	    printf (print_modifiers(op->compose_sequence.modifiers[i]));
++ 	}
++ 	printf ("\n        output modifier %soutput keycode 0x%lx\n",
++ 		print_modifiers(op->compose_sequence.output_modmask),
++ 		(long) op->compose_sequence.output_keycode);
++ 	break;
++       case doRemoveComposeSequence:
++ 	printf ("remove compose sequence: keycodes/modifiers ");
++ 	for (i = 0; i < op->remove_compose_sequence.count; i++) {
++ 	    printf("0x%lx/", (long) op->remove_compose_sequence.keycodes[i]);
++ 	    printf(print_modifiers(op->remove_compose_sequence.modifiers[i]));
++ 	}
++ 	printf ("\n");
++ 	break;
++       case doComposeNumeric:
++ 	printf ("compose numeric: hex digit %x, keycode %d\n",
++ 		op->compose_numeric.hexdigit, op->compose_numeric.keycode);
++ 	break;
++       case doRemoveComposeNumeric:
++ 	printf ("remove compose numeric: hex digit %x, keycode %d\n",
++ 		op->remove_compose_numeric.hexdigit, 
++ 		op->remove_compose_numeric.keycode);
++ 	break;
++       case doComposeCancel:
++ 	printf ("compose cancel: keycode %d\n",
++ 		op->compose_cancel.keycode);
++ 	break;
++       case doRemoveComposeCancel:
++ 	printf ("remove compose cancel: keycode %d\n",
++ 		op->remove_compose_cancel.keycode);
++ 	break;
++       case doClearComposeSequence:
++ 	printf ("clear compose sequences\n");
++ 	break;
++       case doClearComposeNumeric:
++ 	printf ("clear compose numeric\n");
++ 	break;
++       case doClearComposeCancel:
++ 	printf ("clear compose cancel\n");
++ 	break;
+        default:
+  	printf ("! unknown opcode %d\n", op->generic.type);
+  	break;
+***************
+*** 1098,1103
+  
+  static int exec_keycode(), exec_add(), exec_remove(), exec_clear();
+  static int exec_pointer();
+  
+  int execute_work_queue ()
+  {
+
+--- 2001,2010 -----
+  
+  static int exec_keycode(), exec_add(), exec_remove(), exec_clear();
+  static int exec_pointer();
++ static int exec_compose(), exec_remove_compose_sequence();
++ static int exec_compose_numeric(), exec_remove_compose_numeric();
++ static int exec_compose_cancel(), exec_remove_compose_cancel();
++ static int exec_clear_compose();
+  
+  static int refreshMapping()
+  {
+***************
+*** 1099,1104
+  static int exec_keycode(), exec_add(), exec_remove(), exec_clear();
+  static int exec_pointer();
+  
+  int execute_work_queue ()
+  {
+      union op *op;
+
+--- 2006,2028 -----
+  static int exec_compose_cancel(), exec_remove_compose_cancel();
+  static int exec_clear_compose();
+  
++ static int refreshMapping()
++ {
++     XSync (dpy, 0);
++     while (XEventsQueued (dpy, QueuedAlready) > 0) {
++ 	XEvent event;
++ 	XNextEvent (dpy, &event);
++ 	if (event.type == MappingNotify) {
++ 	    /* read all MappingNotify events */
++ 	    while (XCheckTypedEvent (dpy, MappingNotify, &event)) ;
++ 	    XRefreshKeyboardMapping (&event);
++ 	} else {
++ 	    fprintf (stderr, "%s:  unknown event %ld\n", 
++ 	    	     ProgramName, (long) event.type);
++ 	}
++     }
++ }
++ 
+  int execute_work_queue ()
+  {
+      union op *op;
+***************
+*** 1104,1110
+      union op *op;
+      int errors;
+      Bool update_map = False;
+!     enum opcode lastop;
+  
+      if (verbose) {
+  	printf ("!\n");
+
+--- 2028,2036 -----
+      union op *op;
+      int errors;
+      Bool update_map = False;
+!     enum opcode lastop = doClearModifier;    /* fake it for op test */
+!     /* If we did a do_execute after a keycode event, this avoids an extra
+!        refreshMapping() here. */
+  
+      if (verbose) {
+  	printf ("!\n");
+***************
+*** 1113,1119
+      }
+  
+      errors = 0;
+-     lastop = doClearModifier;				/* fake it for op test */
+  
+      for (op = work_queue.head; op; op = op->generic.next) {
+  	if (verbose) print_opcode (op);
+
+--- 2039,2044 -----
+      }
+  
+      errors = 0;
+  
+      for (op = work_queue.head; op; op = op->generic.next) {
+  	if (verbose) print_opcode (op);
+***************
+*** 1120,1138
+  
+  	/* check to see if we have to update the keyboard mapping */
+  	if (lastop == doKeycode && op->generic.type != doKeycode) {
+! 	    XSync (dpy, 0);
+! 	    while (XEventsQueued (dpy, QueuedAlready) > 0) {
+! 		XEvent event;
+! 		XNextEvent (dpy, &event);
+! 		if (event.type == MappingNotify) {
+! 		    /* read all MappingNotify events */
+! 		    while (XCheckTypedEvent (dpy, MappingNotify, &event)) ;
+! 		    XRefreshKeyboardMapping (&event);
+! 		} else {
+! 		    fprintf (stderr, "%s:  unknown event %ld\n", 
+! 		    	     ProgramName, (long) event.type);
+! 		}
+! 	    }
+  	}
+  
+  	switch (op->generic.type) {
+
+--- 2045,2051 -----
+  
+  	/* check to see if we have to update the keyboard mapping */
+  	if (lastop == doKeycode && op->generic.type != doKeycode) {
+! 	    refreshMapping();
+  	}
+  
+  	switch (op->generic.type) {
+***************
+*** 1137,1143
+  
+  	switch (op->generic.type) {
+  	  case doKeycode:
+! 	    if (exec_keycode (op) < 0) errors++;
+  	    break;
+  	  case doAddModifier:
+  	    if (exec_add (op) < 0) errors++;
+
+--- 2050,2056 -----
+  
+  	switch (op->generic.type) {
+  	  case doKeycode:
+! 	    if (exec_keycode ((struct op_keycode *) op) < 0) errors++;
+  	    break;
+  	  case doAddModifier:
+  	    if (exec_add ((struct op_addmodifier *) op) < 0) errors++;
+***************
+*** 1140,1146
+  	    if (exec_keycode (op) < 0) errors++;
+  	    break;
+  	  case doAddModifier:
+! 	    if (exec_add (op) < 0) errors++;
+  	    else update_map = True;
+  	    break;
+  	  case doRemoveModifier:
+
+--- 2053,2059 -----
+  	    if (exec_keycode ((struct op_keycode *) op) < 0) errors++;
+  	    break;
+  	  case doAddModifier:
+! 	    if (exec_add ((struct op_addmodifier *) op) < 0) errors++;
+  	    else update_map = True;
+  	    break;
+  	  case doRemoveModifier:
+***************
+*** 1144,1150
+  	    else update_map = True;
+  	    break;
+  	  case doRemoveModifier:
+! 	    if (exec_remove (op) < 0) errors++;
+  	    else update_map = True;
+  	    break;
+  	  case doClearModifier:
+
+--- 2057,2063 -----
+  	    else update_map = True;
+  	    break;
+  	  case doRemoveModifier:
+! 	    if (exec_remove ((struct op_removemodifier *) op) < 0) errors++;
+  	    else update_map = True;
+  	    break;
+  	  case doClearModifier:
+***************
+*** 1148,1154
+  	    else update_map = True;
+  	    break;
+  	  case doClearModifier:
+! 	    if (exec_clear (op) < 0) errors++;
+  	    else update_map = True;
+  	    break;
+  	  case doPointer:
+
+--- 2061,2067 -----
+  	    else update_map = True;
+  	    break;
+  	  case doClearModifier:
+! 	    if (exec_clear ((struct op_clearmodifier *) op) < 0) errors++;
+  	    else update_map = True;
+  	    break;
+  	  case doPointer:
+***************
+*** 1152,1158
+  	    else update_map = True;
+  	    break;
+  	  case doPointer:
+! 	    if (exec_pointer (op) < 0) errors++;
+  	    break;
+  	  default:
+  	    fprintf (stderr, "%s:  unknown opcode %d\n", 
+
+--- 2065,2071 -----
+  	    else update_map = True;
+  	    break;
+  	  case doPointer:
+! 	    if (exec_pointer ((struct op_pointer *) op) < 0) errors++;
+  	    break;
+  	  case doComposeSequence:
+  	    if (exec_compose ((struct op_compose_sequence *) op) < 0) errors++;
+***************
+*** 1154,1159
+  	  case doPointer:
+  	    if (exec_pointer (op) < 0) errors++;
+  	    break;
+  	  default:
+  	    fprintf (stderr, "%s:  unknown opcode %d\n", 
+  		     ProgramName, op->generic.type);
+
+--- 2067,2101 -----
+  	  case doPointer:
+  	    if (exec_pointer ((struct op_pointer *) op) < 0) errors++;
+  	    break;
++ 	  case doComposeSequence:
++ 	    if (exec_compose ((struct op_compose_sequence *) op) < 0) errors++;
++ 	    break;
++ 	  case doRemoveComposeSequence:
++ 	    if (exec_remove_compose_sequence (
++ 		(struct op_remove_compose_sequence *) op) < 0) errors++;
++ 	    break;
++ 	  case doComposeNumeric:
++ 	    if (exec_compose_numeric (
++ 		(struct op_compose_numeric *) op) < 0) errors++;
++ 	    break;
++ 	  case doRemoveComposeNumeric:
++ 	    if (exec_remove_compose_numeric (
++ 		(struct op_remove_compose_numeric *) op) < 0) errors++;
++ 	    break;
++ 	  case doComposeCancel:
++ 	    if (exec_compose_cancel (
++ 		(struct op_compose_cancel *) op) < 0) errors++;
++ 	    break;
++ 	  case doRemoveComposeCancel:
++ 	    if (exec_remove_compose_cancel (
++ 		(struct op_remove_compose_cancel *) op) < 0) errors++;
++ 	    break;
++ 	  case doClearComposeSequence:
++ 	  case doClearComposeNumeric:
++ 	  case doClearComposeCancel:
++ 	    if (exec_clear_compose ((struct op_clear_compose *) op) < 0) 
++ 		errors++;
++ 	    break;
+  	  default:
+  	    fprintf (stderr, "%s:  unknown opcode %d\n", 
+  		     ProgramName, op->generic.type);
+***************
+*** 1221,1226
+      return (SetPointerMap (opp->button_codes, opp->count));
+  }
+  
+  void print_modifier_map ()
+  {
+      PrintModifierMapping (map, stdout);
+
+--- 2163,2385 -----
+      return (SetPointerMap (opp->button_codes, opp->count));
+  }
+  
++ void LengthenComposeTable(new_seq_space)
++     unsigned int new_seq_space;
++ {
++     if (seq_space) {
++ 	ComposeTable.modifiers = (unsigned short *)realloc(
++ 	ComposeTable.modifiers, 
++ 	  sizeof(unsigned short) * new_seq_space * ComposeTable.max_keycodes);
++ 	ComposeTable.sequences = (KeyCode *)realloc(
++ 	ComposeTable.sequences,
++ 	    sizeof(KeyCode) * new_seq_space * ComposeTable.max_keycodes);
++ 	ComposeTable.output_modifiers = (unsigned int *)realloc(
++ 	ComposeTable.output_modifiers, sizeof(unsigned int) * new_seq_space);
++ 	ComposeTable.output_keycodes = (KeyCode *)realloc(
++ 	ComposeTable.output_keycodes, sizeof(KeyCode) * new_seq_space);
++     }
++     else {
++ 	ComposeTable.modifiers = (unsigned short *)malloc(
++ 				    sizeof(unsigned short) * new_seq_space);
++ 	ComposeTable.sequences = (KeyCode *)malloc(
++ 				    sizeof(KeyCode) * new_seq_space);
++ 	ComposeTable.output_modifiers = (unsigned int *)malloc(
++ 				    sizeof(unsigned int) * new_seq_space);
++ 	ComposeTable.output_keycodes = (KeyCode *)malloc(
++ 				    sizeof(KeyCode) * new_seq_space);
++     }
++     seq_space = new_seq_space;    
++ }
++ 
++ void WidenComposeTable(added_keycodes)
++     unsigned int added_keycodes;
++ {
++     int i, j;
++     KeyCode *new_sequences;
++     unsigned short *new_modifiers;
++     int new_width = ComposeTable.max_keycodes + added_keycodes;
++ 
++     new_sequences = (KeyCode *)malloc(sizeof(KeyCode) *
++ 					     seq_space * new_width);
++     new_modifiers = (unsigned short *)malloc(sizeof(unsigned short) * 
++ 					     seq_space * new_width);
++ 	    /* really need to use Xmalloc, so XFreeKBCompose can XFree */
++     for (i = 0; i < ComposeTable.num_composes; i++)
++ 	for (j = 0; j < ComposeTable.max_keycodes; j++) {
++ 	    new_sequences[(i * new_width) + j] = 
++ 		ComposeTable.sequences[(i * ComposeTable.max_keycodes) + j];
++ 	    new_modifiers[(i * new_width) + j] = 
++ 		ComposeTable.modifiers[(i * ComposeTable.max_keycodes) + j];
++ 	}
++     for (i = 0; i < ComposeTable.num_composes; i++)
++ 	for (j = ComposeTable.max_keycodes; j < new_width; j++) {
++ 	    new_sequences[(i * new_width) + j] = (KeyCode)NULL;
++ 	    new_modifiers[(i * new_width) + j] = (unsigned int)NULL;
++ 	}
++     ComposeTable.max_keycodes += added_keycodes;
++ /*    XFree(ComposeTable.sequences); */
++     ComposeTable.sequences = new_sequences;
++     ComposeTable.modifiers = new_modifiers;
++ }
++ 
++ static int exec_compose (opk)
++     struct op_compose_sequence *opk;
++ {
++     int i, next_seq;
++ 
++     if ((new_seq_count + ComposeTable.num_composes) > seq_space)
++ 	LengthenComposeTable(new_seq_count + ComposeTable.num_composes);
++     if (max_compose_keycodes > ComposeTable.max_keycodes)
++ 	WidenComposeTable(max_compose_keycodes - ComposeTable.max_keycodes);
++ /* Note - above tests could be done once before calling execute_work_queue */
++ 
++     next_seq = ComposeTable.num_composes * ComposeTable.max_keycodes;
++     bcopy(opk->modifiers, &ComposeTable.modifiers[next_seq], 
++ 	  opk->count * sizeof (ComposeTable.modifiers[0]));
++     bcopy(opk->keycodes, &ComposeTable.sequences[next_seq], 
++ 	  opk->count * sizeof (KeyCode));
++     for (i = opk->count; i < ComposeTable.max_keycodes; i++)
++ 	ComposeTable.sequences[next_seq + i] = (KeyCode)NULL;
++     ComposeTable.output_modifiers[ComposeTable.num_composes] = 
++ 	    opk->output_modmask;
++     ComposeTable.output_keycodes[ComposeTable.num_composes] = 
++ 	    opk->output_keycode;
++     ComposeTable.num_composes++;
++         
++     return (0);
++ }
++ 
++ static int exec_remove_compose_sequence (opk)
++     struct op_remove_compose_sequence *opk;
++ {
++     int i, j;
++ 
++     /* eliminate any sequences that start with the specified sequence */
++     /* it would be nice to compress them out of the table, but why bother? */
++     for (i = 0; i < (ComposeTable.num_composes * ComposeTable.max_keycodes);
++ 	 i += ComposeTable.max_keycodes) {
++ 	/* check all entries */
++ 	for (j = 0; j < opk->count; j++) {
++ 	    if (((ComposeTable.modifiers[i + j] != opk->modifiers[j]) &&
++ 		 (ComposeTable.modifiers[i + j] != AnyModifier) &&
++ 		 (opk->modifiers[j] != AnyModifier)) ||
++ 		(ComposeTable.sequences[i + j] != opk->keycodes[j]))
++ 		break;
++ 	}
++ 	if (j == opk->count)
++ 	    /* all keys matched */
++ 	    ComposeTable.sequences[i] = 0;
++ 	    /* zero out first keycode; sufficient to kill it */
++     }	     
++ 
++     return (0);
++ }
++ 
++ static int exec_compose_numeric (opk)
++     struct op_compose_numeric *opk;
++ {
++     int i;
++     char msg[500];
++ 
++     for (i = 0; i < KEYCODES_PER_HEX_CHAR; i++) 
++ 	if (ComposeTable.numeric_keycodes[
++ 		(opk->hexdigit * KEYCODES_PER_HEX_CHAR) + i] == 0)
++ 	    break; 
++     if (i == KEYCODES_PER_HEX_CHAR) {
++ 	(void) sprintf (msg, "numeric compose expression;\nlimit of %d numeric keycodes exceeded;\nmust delete one of the keycodes %d, %d, or %d for numeric character '%x'\nbefore adding a new one\n",
++    KEYCODES_PER_HEX_CHAR,
++    ComposeTable.numeric_keycodes[(opk->hexdigit * KEYCODES_PER_HEX_CHAR)],
++    ComposeTable.numeric_keycodes[(opk->hexdigit * KEYCODES_PER_HEX_CHAR) + 1],
++    ComposeTable.numeric_keycodes[(opk->hexdigit * KEYCODES_PER_HEX_CHAR) + 2],
++    opk->hexdigit); 
++         badmsg (msg, NULL);
++ 	return (-1);
++     }
++     ComposeTable.numeric_keycodes[
++ 	    (opk->hexdigit * KEYCODES_PER_HEX_CHAR) + i] = opk->keycode;
++     return (0);
++ }
++ 
++ static int exec_remove_compose_numeric (opk)
++     struct op_remove_compose_numeric *opk;
++ {
++     int i;
++ 
++     for (i = 0; i < KEYCODES_PER_HEX_CHAR; i++) 
++ 	/* check all entries */
++ 	if (ComposeTable.numeric_keycodes[
++ 		(opk->hexdigit * KEYCODES_PER_HEX_CHAR) + i] == opk->keycode)
++ 	    ComposeTable.numeric_keycodes[
++ 		(opk->hexdigit * KEYCODES_PER_HEX_CHAR) + i] = 0;
++     /* silently ignore if it does not exist */
++     return (0);
++ }
++ 
++ static int exec_compose_cancel (opk)
++     struct op_compose_cancel *opk;
++ {
++     if (ComposeTable.num_cancel_keycodes >= cancel_space) { 
++ 	/* arbitrarily double space */ 
++ 	cancel_space = ComposeTable.num_cancel_keycodes << 1;
++ 	ComposeTable.cancel_keycodes = (KeyCode *) realloc(
++ 			    ComposeTable.cancel_keycodes,
++ 		       sizeof(KeyCode) * cancel_space); 
++ 	if (!ComposeTable.cancel_keycodes) {
++ 	    badmsg ("attempt to reallocate cancel keycode space to %ld", 
++ 		    (char *) (cancel_space * sizeof (KeyCode)));
++ 	    return (-1); 
++ 	}
++     }
++     ComposeTable.cancel_keycodes[ComposeTable.num_cancel_keycodes++] = 
++ 	    opk->keycode; 
++     return (0);
++ }
++ 
++ static int exec_remove_compose_cancel (opk)
++     struct op_remove_compose_cancel *opk;
++ {
++     int i;
++ 
++     for (i = 0; i < ComposeTable.num_composes; i++)
++ 	if (ComposeTable.cancel_keycodes[i] = opk->keycode)
++ 	    ComposeTable.cancel_keycodes[i] = 0; 
++ 	    /* non-keycode, no effect; eliminate any and all */
++     return (0);
++ }
++ 
++ static int exec_clear_compose (opk)
++     struct op_clear_compose *opk;
++ {
++ 
++     switch (opk->type) {
++       case doClearComposeSequence:
++ 	ComposeTable.num_composes = 0;
++ 	/* space remains, all composes processed to this point are eliminated */
++ 	break;
++       case doClearComposeNumeric:
++         bzero(ComposeTable.numeric_keycodes, 48);
++ 	break;
++       case doClearComposeCancel:
++ 	ComposeTable.num_cancel_keycodes = 0;
++ 	break;
++     }        
++     return (0);
++ }
++ 
++ UpdateComposeProperty ()
++ {
++     KeySym none;
++ 
++     /* the kludge - to make clients call XRefreshKeyboarMapping which will
++        reread compose property, call XChangeKeyboardMapping.  XXX Note that
++        this overhead makes it imperative that we process all real mapping
++        changes at once!  Eventually, we will call this once for both Compose
++        and the keyboard rearchitecture extension, which is why it is done here
++        and not in XSetKBCompose. */
++     XSetKBCompose(dpy, DefaultRootWindow(dpy), &ComposeTable);
++     XChangeKeyboardMapping (dpy, dpy->min_keycode, 1, &none, 0);
++ }
++ 
+  void print_modifier_map ()
+  {
+      PrintModifierMapping (map, stdout);
+***************
+*** 1238,1242
+      PrintPointerMap (stdout);
+      return;
+  }
+- 
+- 
+
+--- 2397,2399 -----
+      PrintPointerMap (stdout);
+      return;
+  }
+--- clients/xmodmap/wq.h
+***************
+*** 27,33
+   */
+  
+  enum opcode { doKeycode, doAddModifier, doRemoveModifier, doClearModifier,
+! 	      doPointer };
+  
+  struct op_generic {
+      enum opcode type;			/* oneof enum opcode */
+
+--- 27,36 -----
+   */
+  
+  enum opcode { doKeycode, doAddModifier, doRemoveModifier, doClearModifier,
+! 	      doPointer, doComposeSequence,
+! 	      doRemoveComposeSequence, doClearComposeSequence,
+! 	      doComposeNumeric, doRemoveComposeNumeric, doClearComposeNumeric,
+! 	      doComposeCancel, doRemoveComposeCancel, doClearComposeCancel };
+  
+  struct op_generic {
+      enum opcode type;			/* oneof enum opcode */
+***************
+*** 106,111
+      unsigned char button_codes[MAXBUTTONCODES];
+  };
+  
+  
+  /*
+   * all together now
+
+--- 109,123 -----
+      unsigned char button_codes[MAXBUTTONCODES];
+  };
+  
++ struct op_compose_sequence {
++     enum opcode type;			/* doComposeSequence */
++     union op *next;			/* next element in list or NULL */
++     int count;				/* number of keycodes in sequence */
++     KeyCode *keycodes;			/* keycodes in sequence */
++     unsigned short *modifiers;		/* modifiers for keycodes */
++     unsigned short output_modmask;	/* sequence output modifiers */
++     KeyCode output_keycode;		/* sequence output keycode */
++ };
+  
+  struct op_remove_compose_sequence {
+      enum opcode type;			/* doRemoveComposeSequence */
+***************
+*** 107,112
+  };
+  
+  
+  /*
+   * all together now
+   */
+
+--- 119,165 -----
+      KeyCode output_keycode;		/* sequence output keycode */
+  };
+  
++ struct op_remove_compose_sequence {
++     enum opcode type;			/* doRemoveComposeSequence */
++     union op *next;			/* next element in list or NULL */
++     int count;				/* number of keycodes in sequence */
++     KeyCode *keycodes;			/* keycodes in sequence */
++     unsigned short *modifiers;		/* modifiers for keycodes */
++ };
++ 
++ struct op_compose_numeric {
++     enum opcode type;			/* doComposeNumeric */
++     union op *next;			/* next element in list or NULL */
++     int hexdigit;			/* 0-9, A-F = 0-15 */
++     KeyCode keycode;			/* controlling keycodes */
++ };
++ 
++ struct op_remove_compose_numeric {
++     enum opcode type;			/* doRemoveComposeNumeric */
++     union op *next;			/* next element in list or NULL */
++     int hexdigit;			/* 0-9, A-F = 0-15 */
++     KeyCode keycode;			/* keycode to disable */
++ };
++ 
++ struct op_compose_cancel {
++     enum opcode type;			/* doComposeCancel */
++     union op *next;			/* next element in list or NULL */
++     KeyCode keycode;			/* cancel keycode to add */
++ };
++ 
++ struct op_remove_compose_cancel {
++     enum opcode type;			/* doRemoveComposeCancel */
++     union op *next;			/* next element in list or NULL */
++     KeyCode keycode;			/* cancel keycode to remove */
++ };
++ 
++ struct op_clear_compose {
++     enum opcode type;			/* doClearComposeSequence, 
++ 			    doClearComposeNumeric, or doClearComposeCancel */
++     union op *next;			/* next element in list or NULL */
++ };
++ 
++ 
+  /*
+   * all together now
+   */
+***************
+*** 117,122
+      struct op_removemodifier removemodifier;
+      struct op_clearmodifier clearmodifier;
+      struct op_pointer pointer;
+  };
+  
+  extern struct wq {
+
+--- 170,182 -----
+      struct op_removemodifier removemodifier;
+      struct op_clearmodifier clearmodifier;
+      struct op_pointer pointer;
++     struct op_compose_sequence compose_sequence;
++     struct op_remove_compose_sequence remove_compose_sequence;
++     struct op_compose_numeric compose_numeric;
++     struct op_remove_compose_numeric remove_compose_numeric;
++     struct op_compose_cancel compose_cancel;
++     struct op_remove_compose_cancel remove_compose_cancel;
++     struct op_clear_compose clear_compose;
+  };
+  
+  extern struct wq {
+--- clients/xmodmap/pf.c
+***************
+*** 32,37
+  #define NOTINFILEFILENAME "commandline"
+  char *inputFilename = NOTINFILEFILENAME;
+  int lineno = 0;
+  
+  int process_file (filename)
+      char *filename;			/* NULL means use stdin */
+
+--- 32,38 -----
+  #define NOTINFILEFILENAME "commandline"
+  char *inputFilename = NOTINFILEFILENAME;
+  int lineno = 0;
++ char *bindingFilename = NOTINFILEFILENAME;
+  
+  int process_file (filename)
+      char *filename;			/* NULL means use stdin */
+***************
+*** 115,119
+  
+      /* handle input */
+      return (handle_line (cp, len));
+  }
+  
+
+--- 116,193 -----
+  
+      /* handle input */
+      return (handle_line (cp, len));
++ }
++ 
++ int process_binding_file (filename)
++     char *filename;			/* NULL means use stdin */
++ {
++     FILE *fp;
++     char buffer[BUFSIZ];
++     int status;
++ 
++     fp = fopen (filename, "r");
++     if (!fp) {
++ 	fprintf (stderr, "%s:  unable to open binding file '%s' for reading\n",
++ 		     ProgramName, filename);
++ 	return (-1);
++     }
++     bindingFilename = filename;
++ 
++     /* read the input and filter */
++ 
++     if (verbose) {
++ 	printf ("reading binding file %s:\n", bindingFilename);
++     }
++ 
++     status = 0;
++     for (lineno = 0; ; lineno++) {
++ 	buffer[0] = '\0';
++ 	if (fgets (buffer, BUFSIZ, fp) == NULL)
++ 	  break;
++ 
++ 	if (process_binding_line (buffer) < 0) 
++ 	  status = -1;
++     }
++ 
++     bindingFilename = NOTINFILEFILENAME;
++     lineno = 0;
++     (void) fclose (fp);
++ 
++     return (status);
++ }
++ 
++ 
++ int process_binding_line (buffer)
++     char *buffer;
++ {
++     int len;
++     int i;
++     char *cp;
++ 
++     len = strlen (buffer);
++ 
++     for (i = 0; i < len; i++) {		/* look for blank lines */
++ 	register char c = buffer[i];
++ 	if (!(isspace(c) || c == '\n')) break;
++     }
++     if (i == len) return (0);
++ 
++     cp = &buffer[i];
++ 
++     if (*cp == '!') return (0);		/* look for comments */
++     len -= (cp - buffer);		/* adjust len by how much we skipped */
++ 					/* strip trailing space */
++     for (i = len-1; i >= 0; i--) {
++ 	register char c = cp[i];
++ 	if (!(isspace(c) || c == '\n')) break;
++     }
++     if (i >= 0) cp[len = (i+1)] = '\0';  /* nul terminate */
++ 
++     if (verbose) {
++ 	printf ("binding file line %d:  %s\n", lineno, cp);
++     }
++ 
++     /* handle input */
++     return (handle_binding_line (cp, len));
+  }
+  
+--- clients/xev/xev.c
+***************
+*** 29,34
+  #include <X11/Xutil.h>
+  #include <X11/Xproto.h>
+  #include <ctype.h>
+  
+  #define INNER_WINDOW_WIDTH 50
+  #define INNER_WINDOW_HEIGHT 50
+
+--- 29,35 -----
+  #include <X11/Xutil.h>
+  #include <X11/Xproto.h>
+  #include <ctype.h>
++ #include <X11/keysym.h>
+  
+  #define INNER_WINDOW_WIDTH 50
+  #define INNER_WINDOW_HEIGHT 50
+***************
+*** 54,59
+  char *ProgramName;
+  Display *dpy;
+  int screen;
+  
+  usage ()
+  {
+
+--- 55,61 -----
+  char *ProgramName;
+  Display *dpy;
+  int screen;
++ static XComposeStatus compose_status = {NULL, 0};
+  
+  usage ()
+  {
+***************
+*** 354,360
+      return;
+  }
+  
+- 
+  do_KeyPress (eventp)
+      XEvent *eventp;
+  {
+
+--- 356,361 -----
+      return;
+  }
+  
+  do_KeyPress (eventp)
+      XEvent *eventp;
+  {
+***************
+*** 358,364
+  do_KeyPress (eventp)
+      XEvent *eventp;
+  {
+-     XKeyEvent *e = (XKeyEvent *) eventp;
+      KeySym ks;
+      char *ksname;
+      int nbytes;
+
+--- 359,364 -----
+  do_KeyPress (eventp)
+      XEvent *eventp;
+  {
+      KeySym ks;
+      int nbytes;
+      char str[256+1];
+***************
+*** 360,366
+  {
+      XKeyEvent *e = (XKeyEvent *) eventp;
+      KeySym ks;
+-     char *ksname;
+      int nbytes;
+      int keycode;
+      char str[256+1];
+
+--- 360,365 -----
+      XEvent *eventp;
+  {
+      KeySym ks;
+      int nbytes;
+      char str[256+1];
+      XKeyEvent *e = (XKeyEvent *) eventp;
+***************
+*** 362,368
+      KeySym ks;
+      char *ksname;
+      int nbytes;
+-     int keycode;
+      char str[256+1];
+  
+      nbytes = XLookupString (eventp, str, 256, &ks, NULL);
+
+--- 361,366 -----
+  {
+      KeySym ks;
+      int nbytes;
+      char str[256+1];
+      XKeyEvent *e = (XKeyEvent *) eventp;
+  
+***************
+*** 364,369
+      int nbytes;
+      int keycode;
+      char str[256+1];
+  
+      nbytes = XLookupString (eventp, str, 256, &ks, NULL);
+      if (ks == NoSymbol)
+
+--- 362,368 -----
+      KeySym ks;
+      int nbytes;
+      char str[256+1];
++     XKeyEvent *e = (XKeyEvent *) eventp;
+  
+      nbytes = XLookupString (eventp, str, 256, &ks, &compose_status);
+      print_KeyEvent (e, ks);
+***************
+*** 365,371
+      int keycode;
+      char str[256+1];
+  
+!     nbytes = XLookupString (eventp, str, 256, &ks, NULL);
+      if (ks == NoSymbol)
+  	ksname = "NoSymbol";
+      else if (!(ksname = XKeysymToString (ks)))
+
+--- 364,388 -----
+      char str[256+1];
+      XKeyEvent *e = (XKeyEvent *) eventp;
+  
+!     nbytes = XLookupString (eventp, str, 256, &ks, &compose_status);
+!     print_KeyEvent (e, ks);
+!     if (nbytes < 0) nbytes = 0;
+!     if (nbytes > 256) nbytes = 256;
+!     str[nbytes] = '\0';
+!     if (nbytes == 1)
+! 	printf ("    XLookupString returns character 0x%x, '%s'\n", 
+! 		(unsigned char) *str, str);
+!     else
+! 	printf ("    XLookupString returns %d characters:  \"%s\"\n", nbytes, str);
+!     return;
+! }
+! 
+! print_KeyEvent (e, ks)
+!     XKeyEvent *e;
+!     KeySym ks;
+! {
+!     char *ksname;
+! 
+      if (ks == NoSymbol)
+  	ksname = "NoSymbol";
+      else if (!(ksname = XKeysymToString (ks)))
+***************
+*** 374,384
+  	    e->root, e->subwindow, e->time, e->x, e->y, e->x_root, e->y_root);
+      printf ("    state 0x%x, keycode %u (keysym 0x%x, %s), same_screen %s,\n",
+  	    e->state, e->keycode, ks, ksname, e->same_screen ? Yes : No);
+-     if (nbytes < 0) nbytes = 0;
+-     if (nbytes > 256) nbytes = 256;
+-     str[nbytes] = '\0';
+-     printf ("    XLookupString gives %d characters:  \"%s\"\n", nbytes, str);
+- 
+      return;
+  }
+  
+
+--- 391,396 -----
+  	    e->root, e->subwindow, e->time, e->x, e->y, e->x_root, e->y_root);
+      printf ("    state 0x%x, keycode %u (keysym 0x%x, %s), same_screen %s,\n",
+  	    e->state, e->keycode, ks, ksname, e->same_screen ? Yes : No);
+      return;
+  }
+  
+***************
+*** 385,391
+  do_KeyRelease (eventp)
+      XEvent *eventp;
+  {
+!     do_KeyPress (eventp);		/* since it has the same info */
+      return;
+  }
+  
+
+--- 397,428 -----
+  do_KeyRelease (eventp)
+      XEvent *eventp;
+  {
+!     KeySym ks;
+!     register KeySym usymbol;
+!     XKeyEvent *e = (XKeyEvent *) eventp;
+! 
+!     ks = XKeycodeToKeysym(dpy, e->keycode, 0);
+! 
+!     /* stolen from XLookupString */
+!      /* apply Shift first */
+!      if ((e->state & ShiftMask) ||
+! 	 ((e->state & LockMask) && (dpy->lock_meaning == XK_Shift_Lock))) {
+! 	     usymbol = XKeycodeToKeysym(dpy, e->keycode, 1);
+! 	     if (usymbol != NoSymbol)
+! 	          ks = usymbol;
+!      }
+!      /* then apply Caps, as protocol suggests*/
+!      /* XXX this should really work for all character sets */
+!      if ((e->state & LockMask) && (dpy->lock_meaning == XK_Caps_Lock)) {
+! 	    if (ks >= XK_a && ks <= XK_z)
+! 	          ks -= (XK_a - XK_A);
+! 	    else if (ks >= XK_agrave && ks <= XK_odiaeresis)
+! 	          ks -= (XK_agrave - XK_Agrave);
+! 	    else if (ks >= XK_oslash && ks <= XK_thorn)
+! 	          ks -= (XK_oslash - XK_Ooblique);
+!      }
+! 
+!     print_KeyEvent (e, ks);
+      return;
+  }
+  
+***************
+*** 848,853
+      char *r;
+      char rdummy[10];
+  
+      switch (e->request) {
+        case MappingModifier:  r = "MappingModifier"; break;
+        case MappingKeyboard:  r = "MappingKeyboard"; break;
+
+--- 885,891 -----
+      char *r;
+      char rdummy[10];
+  
++     /* Now, stupid, update your tables ! */
+      switch (e->request) {
+        case MappingModifier:  
+  	r = "MappingModifier"; 
+***************
+*** 849,857
+      char rdummy[10];
+  
+      switch (e->request) {
+!       case MappingModifier:  r = "MappingModifier"; break;
+!       case MappingKeyboard:  r = "MappingKeyboard"; break;
+!       case MappingPointer:  r = "MappingPointer"; break;
+        default:  r = rdummy; sprintf (rdummy, "%d", e->request); break;
+      }
+  
+
+--- 887,903 -----
+  
+      /* Now, stupid, update your tables ! */
+      switch (e->request) {
+!       case MappingModifier:  
+! 	r = "MappingModifier"; 
+! 	XRefreshKeyboardMapping(e);
+! 	break;
+!       case MappingKeyboard:  
+! 	r = "MappingKeyboard"; 
+! 	XRefreshKeyboardMapping(e);
+! 	break;
+!       case MappingPointer:  
+! 	r = "MappingPointer"; 
+! 	break;
+        default:  r = rdummy; sprintf (rdummy, "%d", e->request); break;
+      }
+  
+--- clients/xmodmap/xmodmap.man
+***************
+*** 19,26
+  [-options ...] [filename]
+  .SH DESCRIPTION
+  .PP
+! The \fIxmodmap\fP program is used to edit and display the 
+! keyboard \fImodifier map\fP and \fIkeymap table\fP that are used by client 
+  applications to convert event keycodes into keysyms.  It is usually run from 
+  the user's session startup script to configure the keyboard according to 
+  personal tastes.
+
+--- 19,27 -----
+  [-options ...] [filename]
+  .SH DESCRIPTION
+  .PP
+! The \fBxmodmap\fR program is used to edit and display the 
+! keyboard \fImodifier map\fR, \fIkeymap table\fR, and \fIcompose 
+! sequence tables\fR that are used by client 
+  applications to convert event keycodes into keysyms.  It is usually run from 
+  the user's session startup script to configure the keyboard according to 
+  personal tastes.
+***************
+*** 31,36
+  .B \-display \fIdisplay\fP
+  This option specifies the host and display to use.
+  .TP 8
+  .B \-help
+  This option indicates that a brief description of the command line arguments
+  should be printed on the standard error.  This will be done whenever an
+
+--- 32,42 -----
+  .B \-display \fIdisplay\fP
+  This option specifies the host and display to use.
+  .TP 8
++ .B \-f
++ This option is used when you initialize a large number of compose sequences.
++ By default, compose sequences already defined that conflict with a new
++ compose sequence are removed.  \fB-f\fR disables this checking.
++ .TP 8
+  .B \-help
+  This option indicates that a brief description of the command line arguments
+  should be printed on the standard error.  This will be done whenever an
+***************
+*** 55,60
+  should not change the mappings, but should display what it would do, like
+  \fImake(1)\fP does when given this option.
+  .TP 8
+  .B \-e \fIexpression\fB
+  This option specifies an expression to be executed.  Any number of expressions
+  may be specified from the command line.
+
+--- 61,73 -----
+  should not change the mappings, but should display what it would do, like
+  \fImake(1)\fP does when given this option.
+  .TP 8
++ .B \-noc
++ This option is used to disable all compose key processing, both sequences
++ and numberic compose.  If any compose expressions are given, \fBxmodmap\fR
++ reinitializes the compose sequence, then executes the expression.  If no 
++ compose changes are specified, and neither \fB-noc\fR nor \fB-resetc\fR is
++ given, the compose sequences are unchanged.
++ .TP 8
+  .B \-e \fIexpression\fB
+  This option specifies an expression to be executed.  Any number of expressions
+  may be specified from the command line.
+***************
+*** 71,76
+  This option indicates that the current pointer map should be printed on the
+  standard output.
+  .TP 8
+  .B \-
+  A lone dash means that the standard input should be used as the input file.
+  .PP
+
+--- 84,93 -----
+  This option indicates that the current pointer map should be printed on the
+  standard output.
+  .TP 8
++ .B \-resetc
++ This option is used to  clear all compose key sequences, and reset numeric
++ and cancel keycodes to the defaults. 
++ .TP 8
+  .B \-
+  A lone dash means that the standard input should be used as the input file.
+  .PP
+***************
+*** 76,83
+  .PP
+  The \fIfilename\fP specifies a file containing \fIxmodmap\fP expressions
+  to be executed.  This file is usually kept in the user's home directory with
+! a name like \fI.xmodmaprc\fP.
+! .SH EXPRESSION GRAMMAR
+  .PP
+  The
+  .I xmodmap
+
+--- 93,100 -----
+  .PP
+  The \fIfilename\fP specifies a file containing \fIxmodmap\fP expressions
+  to be executed.  This file is usually kept in the user's home directory with
+! a name like \fI.xmodmaprc\fR.
+! .SH Expression Grammar
+  .PP
+  The
+  .B xmodmap
+***************
+*** 80,87
+  .SH EXPRESSION GRAMMAR
+  .PP
+  The
+! .I xmodmap
+! program reads a list of expressions and parses them all before attempting
+  execute any of them.  This makes it possible to refer to keysyms that are
+  being redefined in a natural way without having to worry as much about name
+  conflicts.
+
+--- 97,104 -----
+  .SH Expression Grammar
+  .PP
+  The
+! .B xmodmap
+! program reads a list of expressions and parses them all before attempting to
+  execute any of them.  This makes it possible to refer to keysyms that are
+  being redefined in a natural way without having to worry as much about name
+  conflicts.
+***************
+*** 85,90
+  execute any of them.  This makes it possible to refer to keysyms that are
+  being redefined in a natural way without having to worry as much about name
+  conflicts.
+  .TP 8
+  .B keycode \fINUMBER\fP = \fIKEYSYMNAME ...\fP
+  The list of keysyms is assigned to the indicated keycode 
+
+--- 102,117 -----
+  execute any of them.  This makes it possible to refer to keysyms that are
+  being redefined in a natural way without having to worry as much about name
+  conflicts.
++ .PP
++ In order to have a KEYSYM refer to a keysym previously added to a keycode,
++ it is necessary to force processing of all previous expressions.  To do
++ this use the expression:
++ .EX
++ \fBexecute\fR
++ .EE
++ All expressions given to that point are executed immediately.
++ .PP
++ Lines that begin with an exclamation point (!) are taken as comments.
+  .TP 8
+  .B keycode \fIKEYCODE\fR = \fIKEYSYMNAME ...\fR
+  The list of keysyms is assigned to the indicated keycode 
+***************
+*** 86,92
+  being redefined in a natural way without having to worry as much about name
+  conflicts.
+  .TP 8
+! .B keycode \fINUMBER\fP = \fIKEYSYMNAME ...\fP
+  The list of keysyms is assigned to the indicated keycode 
+  (which may be specified in decimal, hex or octal and can be determined by 
+  running the 
+
+--- 113,119 -----
+  .PP
+  Lines that begin with an exclamation point (!) are taken as comments.
+  .TP 8
+! .B keycode \fIKEYCODE\fR = \fIKEYSYMNAME ...\fR
+  The list of keysyms is assigned to the indicated keycode 
+  (which may be specified in decimal, hex or octal and can be determined by 
+  running the 
+***************
+*** 105,111
+  valid name are:  Shift, Lock, Control, Mod1, Mod2, Mod3, Mod4 and Mod5 (case
+  does not matter in modifier names, although it does matter for all other
+  names).  For example, ``clear Lock'' will remove
+! all any keys that were bound to the shift lock modifier.
+  .TP 8
+  .B add \fIMODIFIERNAME\fP = \fIKEYSYMNAME ...\fP
+  This adds the given keysyms to the indicated modifier map.  The keysym names
+
+--- 132,138 -----
+  valid name are:  Shift, Lock, Control, Mod1, Mod2, Mod3, Mod4 and Mod5 (case
+  does not matter in modifier names, although it does matter for all other
+  names).  For example, ``clear Lock'' will remove
+! all keys that were bound to the shift lock modifier.
+  .TP 8
+  .B add \fIMODIFIERNAME\fP = \fIKEYSYMNAME ...\fP
+  This adds the given keysyms to the indicated modifier map.  The keysym names
+***************
+*** 123,131
+  This sets the pointer map back to its default settings (button 1 generates a 
+  code of 1, button 2 generates a 2, etc.).
+  .TP 8
+! .B pointer = \fINUMBER ...\fP
+! This sets to pointer map to contain the indicated button codes.  The list
+! always starts with the first physical button.
+  .PP
+  Lines that begin with an exclamation point (!) are taken as comments.
+  .PP
+
+--- 150,159 -----
+  This sets the pointer map back to its default settings (button 1 generates a 
+  code of 1, button 2 generates a 2, etc.).
+  .TP 8
+! .B pointer = \fINUMBER ...\fR
+! This sets the pointer map to contain the indicated button codes.  The list
+! always starts with the first physical button. \fINUMBER\fR may be specified
+! in decimal, hex, or octal notation.
+  .PP
+  If you want to change the binding of a modifier key, you must also remove it
+  from the appropriate modifier map.
+***************
+*** 127,134
+  This sets to pointer map to contain the indicated button codes.  The list
+  always starts with the first physical button.
+  .PP
+- Lines that begin with an exclamation point (!) are taken as comments.
+- .PP
+  If you want to change the binding of a modifier key, you must also remove it
+  from the appropriate modifier map.
+  .SH EXAMPLES
+
+--- 155,160 -----
+  always starts with the first physical button. \fINUMBER\fR may be specified
+  in decimal, hex, or octal notation.
+  .PP
+  If you want to change the binding of a modifier key, you must also remove it
+  from the appropriate modifier map.
+  .SH Compose Key Expression Grammar
+***************
+*** 131,136
+  .PP
+  If you want to change the binding of a modifier key, you must also remove it
+  from the appropriate modifier map.
+  .SH EXAMPLES
+  .PP
+  Many pointers are designed such the first button is pressed using the index
+
+--- 157,365 -----
+  .PP
+  If you want to change the binding of a modifier key, you must also remove it
+  from the appropriate modifier map.
++ .SH Compose Key Expression Grammar
++ .PP
++ \fBxmodmap\fR supports the definition of compose key
++ sequences.  Compose sequences are arbitrary KeyPress sequences, where the
++ first KeyPress can be qualified by a modifier.  Each compose sequence is
++ converted to a keycode/modifier pair, which is converted to a keysym and
++ string in the usual manner.
++ .PP
++ \fBxmodmap\fR allows the addition, deletion, and erasure of the set of compose
++ sequences.
++ .PP
++ In the compose expressions below, the modifiers given after the 
++ compose keyword are
++ applied to the first key in the sequence, and must be pressed when the
++ first key is pressed.
++ .PP
++ "AnyModifier" is equivalent to specifying all possible modifier
++ combinations of \fBShift, Lock, Control, Mod1,...,Mod5\fR, including no modifiers.  
++ If a subsequent key in the sequence
++ is specified as a keycode or NUMERIC, its modifiers are set to
++ AnyModifier.  
++ .PP
++ If a key in the sequence or the output key is specified as a
++ keysym, Shift is or'ed into its modifiers if the keysym is
++ in the second column of the keymap table or is an
++ upper case alphabetic keysym.  
++ .PP
++ The modifier "none" explicitly sets 
++ the modifiers to
++ none. If a modifier is "none" or "AnyModifier", no modifier bits are added 
++ based on the keysym.
++ .PP
++ Note that
++ \fBxmodmap\fR does not currently support use of the Lock modifier to input
++ compose sequences (other than with the first key).
++ .PP
++ Unless the \fB-f\fR (fast) option is given to \fBxmodmap\fR, any existing 
++ compose
++ sequences having an equivalent initiating key sequence are deleted to
++ insure that the new sequence takes effect.  This means that if AnyModifier
++ is specified, any compose sequence initiated by any specific modifier
++ having the same key sequence is deleted, or vice-versa.
++ .PP
++ Numeric compose sequences are enabled, and a radix selected, by a sequence
++ specifier containing one of the NUMERIC "pseudo keycodes" \- "hex", "octal",
++ "binary", or "decimal".  The actual compose sequence consists of the initial
++ key with the given modifier, followed by the required number of numeric keys
++ with "AnyModifier".
++ .PP
++ To add a compose key sequence, use one of the following expressions:
++ .TP 8
++ \fBcompose [\fIANYORALLMODNAMES\fB] \fIKEYCODE\fB ... = [\fIANYORNOMODNAMES\fB] 
++ .br
++ .in +2
++ \fIKEYCODE\fR
++ .in -2
++ The keycode sequence on the left, with or without a logical modifier 
++ key (shift, lock, control, mod1, etc.), is transformed to emit the key
++ event specified on the right side.  For example, in the expression
++ "compose control 118 119 = shift 120", if you press and hold the 
++ control key and press the key currently assigned to the keycode 118, the
++ compose light comes on.  Then if you press the key currently assigned to
++ keycode 119, the character for the keysym associated with "shift 120" 
++ appears on the screen in an xterm window.
++ .TP 8
++ \fBcompose [\fIANYORALLMODNAMES\fB] \fIkeysyms KEYSYMNAME\fB ... = 
++ .br
++ .in +2
++ [\fIANYORNOMODNAMES\fB] \fIKEYCODE\fR
++ .in -2
++ Here a sequence of keysyms specifies the compose sequence and is
++ transformed to the specified key event.
++ .TP 8
++ \fBcompose [\fIANYORALLMODNAMES\fB] \fIKEYCODE\fB ... = [\fIANYORNOMODNAMES\fB]
++ .br
++ .in +2
++  \fIkeysym KEYSYMNAME\fR
++ .in -2
++ In this variation, a sequence of keycodes is transformed to the key event
++ specified by the keysym.
++ .TP 8
++ \fBcompose [\fIANYORALLMODNAMES\fB] \fIkeysyms KEYSYMNAME\fB ... = 
++ .br
++ .in +2
++ [\fIANYORNOMODNAMES\fB] \fIkeysym KEYSYMNAME\fR
++ .in -2
++ Here a keysym sequence is transformed to the key event specified by the keysym.
++ .TP 8
++ \fBcompose [\fIANYORALLMODNAMES\fB] \fIKEYCODE NUMERIC\fR
++ Sometimes you may want to send to  client a specific 8-bit coded character 
++ whose meaning is determined by 
++ which national keyboard you are currently working with.  
++ "Numeric compose" allows you to enter an 8-bit character in hex, decimal,
++ octal, or binary.  For example,
++ in the expression, "compose AnyModifier 118 decimal", you would hold down
++ any modifier key (shift, lock, control, etc.), then type the key currently assigned 
++ to the keycode 118, release the modifiers and type any three of the digits 0 to 9.  Suppose you entered
++ the digits "032" and you were working with the USASCII keyboard mapping,
++ then "032" would be an ASCII space character.
++ .TP 8
++ \fBcompose [\fIANYORALLMODNAMES\fB] \fIkeysym KEYSYMNAME NUMERIC\fR
++ This expression does the same thing as the previous one except that you specify
++ a keysym name instead of a keycode.
++ .PP
++ To delete a compose key sequence, use one of the following expressions:
++ .PP  
++ \fBremove compose \fIANYORALLMODNAMES KEYCODE ...
++ .br
++ \fBremove compose \fIANYORALLMODNAMES keysyms KEYSYMNAME ...
++ .br
++ \fBremove compose \fIANYORALLMODNAMES KEYCODE NUMERIC
++ .br
++ \fBremove compose \fIANYORALLMODNAMES keysym KEYSYMNAME 
++ .RS 10 
++ .br
++ \fINUMERIC\fR
++ .br
++ .RE
++ .RS 8
++ All compose sequences that begin with the specified sequence will be
++ deleted.  Again, specifying "AllModifiers" will cause any equivalent
++ sequence to be deleted.
++ .PP
++ .RE    
++ To clear all compose key sequences, use the following expression:
++ .PP
++ \fBclear compose \fIsequences\fR
++ .RS 8
++ .br
++ Existing compose sequences, and new sequences specified prior to
++ the clear expression are deleted.  The compose properties are still
++ created, but all compose processing is disabled.
++ .PP
++ .RE
++ To add a keycode to the list of cancellation keycodes, that is, those 
++ that do not
++ ring the bell and are processed normally if they fail to match a compose
++ sequence, use the following expression:
++ .PP
++ \fBcompose cancel \fIKEYCODE\fR
++ .PP
++ To delete a compose cancellation keycode, use the following expression:
++ .PP
++ \fBremove compose cancel\fI KEYCODE\fR
++ .PP
++ To clear all compose cancellation keycodes, use the following expression:
++ .PP
++ \fBclear compose cancel\fR
++ .RS 8
++ Initially, the compose cancel keycodes are set to the keycodes whose first
++ keysyms listed have values of \fIxxxxFFxx hex\fR, i.e.  they are one of the control,
++ language shift cursor, miscellaneous, keypad, or function keys listed in
++ the first section of <\fIX11/keysymdef.h\fR>, or the keys listed in
++ <\fIX11/JUSkeysym.h\fR>, 
++ <\fIX11/DECkeysym.h\fR> or
++ <\fIX11/TEKkeysym.h\fR>.  
++ Initialization is done after processing all mapping
++ changes which are defined prior to the first compose change given.
++ .PP
++ Mouse buttons always cancel a compose sequence silently. 
++ The Delete key acts as a special "abort" key.  If it appears in
++ the cancel list, the Delete key silently cancels the compose sequence and
++ is discarded, otherwise, it cancels the compose sequence and is processed
++ normally after the bell is rung. 
++ .PP
++ .RE
++ To define a numeric compose digit keycode, use one of the following
++ expressions:
++ .PP
++ \fBcompose numeric \fIHEXDIGIT\fB = \fIKEYCODE
++ .br
++ \fBcompose numeric \fIHEXDIGIT\fB = \fIkeysym KEYSYMNAME
++ .br
++ \fIHEXDIGIT \fB:= \fB0-9, A-F\fR
++ .RS 8
++ .br
++ Modifiers are ignored when processing a hex compose numeric key; any
++ combination of modifiers is allowed, regardless of whether the specifying
++ keysym is shifted or not.  No more than three KEYCODES/KEYSYMS are allowed
++ in the list for a given HEXDIGIT.  Initially, the numeric digits are set
++ to the keycodes whose keysyms are 0-9, KP_0-KP_9, and A-F, before any
++ expressions are processed.
++ .PP
++ Note that defining the numeric keycodes is not sufficient to enable
++ numeric compose; the radix must be specified by a compose sequence.
++ Initially, hex compose is disabled.
++ .PP
++ .RE
++ To delete a numeric keycode, use the following expression:
++ .PP
++ \fBremove compose numeric \fIHEXDIGIT\fB = \fIKEYCODE
++ .br
++ \fBremove compose numeric \fIHEXDIGIT\fB = \fIkeysym KEYSYM\fR
++ .PP
++ To clear all numeric keycodes, use the following expression:
++ .PP
++ \fBclear compose numeric\fR
++ .RS 8
++ .br
++ All numeric keycodes are set to zero, effectively disabling numeric
++ compose, but any existing numeric compose sequence specifier is 
++ retained.
++ .RE
+  .SH EXAMPLES
+  .PP
+  Many pointers are designed such that the first button is pressed using the index
+***************
+*** 133,139
+  from the appropriate modifier map.
+  .SH EXAMPLES
+  .PP
+! Many pointers are designed such the first button is pressed using the index
+  finger of the right hand.  People who are left-handed frequently find that it
+  is more comfortable to reverse the button codes that get generated so that
+  the primary button is pressed using the index finger of the left hand.  This
+
+--- 362,368 -----
+  .RE
+  .SH EXAMPLES
+  .PP
+! Many pointers are designed such that the first button is pressed using the index
+  finger of the right hand.  People who are left-handed frequently find that it
+  is more comfortable to reverse the button codes that get generated so that
+  the primary button is pressed using the index finger of the left hand.  This
+***************
+*** 139,145
+  the primary button is pressed using the index finger of the left hand.  This
+  could be done on a 3 button pointer as follows:
+  .EX
+! %  xmodmap -e "pointer = 3 2 1"
+  .EE
+  .PP
+  Many editor applications support the notion of Meta keys (similar to Control 
+
+--- 368,374 -----
+  the primary button is pressed using the index finger of the left hand.  This
+  could be done on a 3 button pointer as follows:
+  .EX
+! xmodmap -e "pointer = 3 2 1"
+  .EE
+  Many editor applications support the notion of Meta keys (similar to Control 
+  keys except that Meta is held down instead of Control).  However,
+***************
+*** 141,147
+  .EX
+  %  xmodmap -e "pointer = 3 2 1"
+  .EE
+- .PP
+  Many editor applications support the notion of Meta keys (similar to Control 
+  keys except that Meta is held down instead of Control).  However,
+  some servers do not have a Meta keysym in the default keymap table, so one
+
+--- 370,375 -----
+  .EX
+  xmodmap -e "pointer = 3 2 1"
+  .EE
+  Many editor applications support the notion of Meta keys (similar to Control 
+  keys except that Meta is held down instead of Control).  However,
+  some servers do not have a Meta keysym in the default keymap table, so one
+***************
+*** 147,153
+  some servers do not have a Meta keysym in the default keymap table, so one
+  needs to be added by hand.
+  The following command will attach Meta to the Multi-language key (sometimes
+! label Compose Character).  It also takes advantage of the fact that 
+  applications that need a Meta key simply need to get the keycode and don't
+  require the keysym to be in the first column of the keymap table.  This
+  means that applications that are looking for a Multi_key (including the
+
+--- 375,381 -----
+  some servers do not have a Meta keysym in the default keymap table, so one
+  needs to be added by hand.
+  The following command will attach Meta to the Multi-language key (sometimes
+! labeled Compose Character).  It also takes advantage of the fact that 
+  applications that need a Meta key simply need to get the keycode and don't
+  require the keysym to be in the first column of the keymap table.  This
+  means that applications that are looking for a Multi_key (including the
+***************
+*** 153,159
+  means that applications that are looking for a Multi_key (including the
+  default modifier map) won't notice any change.
+  .EX
+! %  keysym Multi_key = Multi_key Meta_L
+  .EE
+  .PP
+  One of the more simple, yet convenient, uses of \fIxmodmap\fP is to set the
+
+--- 381,387 -----
+  means that applications that are looking for a Multi_key (including the
+  default modifier map) won't notice any change.
+  .EX
+! keysym Multi_key = Multi_key Meta_L
+  .EE
+  .PP
+  One of the more simple, yet convenient, uses of \fIxmodmap\fP is to set the
+***************
+*** 162,169
+  If the \fIttyModes\fP resource in \fIxterm\fP is set as well, all terminal 
+  emulator windows will use the same key for erasing characters:
+  .EX
+! %  xmodmap -e "keysym BackSpace = Delete"
+! %  echo "XTerm*ttyModes:  erase ^?" | xrdb -merge
+  .EE
+  .PP
+  Some keyboards do not automatically generate less than and greater than
+
+--- 390,397 -----
+  If the \fIttyModes\fP resource in \fIxterm\fP is set as well, all terminal 
+  emulator windows will use the same key for erasing characters:
+  .EX
+! xmodmap -e "keysym BackSpace = Delete"
+! echo "XTerm*ttyModes:  erase ^?" | xrdb -merge
+  .EE
+  .PP
+  Some keyboards do not automatically generate less than and greater than
+***************
+*** 192,199
+  add Lock = Caps_Lock
+  add Control = Control_L
+  .EE
+! .PP
+! The \fIkeycode\fP command is useful for assigning the same keysym to
+  multiple keycodes.  Although unportable, it also makes it possible to write
+  scripts that can reset the keyboard to a known state.  The following script
+  sets the backspace key to generate Delete (as shown above), flushes all 
+
+--- 420,426 -----
+  add Lock = Caps_Lock
+  add Control = Control_L
+  .EE
+! The \fIkeycode\fR command is useful for assigning the same keysym to
+  multiple keycodes.  Although unportable, it also makes it possible to write
+  scripts that can reset the keyboard to a known state.  The following script
+  sets the backspace key to generate Delete (as shown above), flushes all 
+***************
+*** 242,247
+  .I remove
+  expression accept keycodes as well as keysyms for those times when you really
+  mess up your mappings.
+  .SH COPYRIGHT
+  Copyright 1988, Massachusetts Institute of Technology.
+  .br
+
+--- 469,482 -----
+  .I remove
+  expression accept keycodes as well as keysyms for those times when you really
+  mess up your mappings.
++ .PP
++ KEYSYMNAMES are looked up before any mapping changes are made; use the
++ execute expression to force processing of prior keycode or keysym
++ expressions if you need to refer to them in compose expressions.
++ .PP
++ There is currently no way to change the list of "abort" keys.
++ .PP
++ There is a limit of three keys for a given numeric compose digit.
+  .SH COPYRIGHT
+  Copyright 1988, Massachusetts Institute of Technology.
+  .br
+
+***************
+*** 251,254
+  .SH AUTHOR
+  Jim Fulton, MIT X Consortium, rewritten from an original by 
+  David Rosenthal of Sun Microsystems.
+! 
+
+--- 486,491 -----
+  .SH AUTHOR
+  Jim Fulton, MIT X Consortium, rewritten from an original by 
+  David Rosenthal of Sun Microsystems.
+! .PP
+! Compose sequence support by Glenn Widener of Tektronix.
+! .Ee
+--- clients/xmodmap/Imakefile
+***************
+*** 1,7
+  LOCAL_LIBRARIES = $(XLIB)
+!            SRCS = xmodmap.c pf.c handle.c exec.c 
+!            OBJS = xmodmap.o pf.o handle.o exec.o 
+  
+  ComplexProgramTarget(xmodmap)
+  
+
+--- 1,7 -----
+  LOCAL_LIBRARIES = $(XLIB)
+!            SRCS = xmodmap.c pf.c handle.c exec.c binding.c
+!            OBJS = xmodmap.o pf.o handle.o exec.o binding.o
+  
+  ComplexProgramTarget(xmodmap)
+  

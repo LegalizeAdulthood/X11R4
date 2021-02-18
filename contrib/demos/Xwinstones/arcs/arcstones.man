@@ -1,0 +1,136 @@
+.TH ARCSTONES 1 "July 1989" "X Version 11"
+.SH NAME
+arcstones -- tests the performance of arcs
+.SH SYNOPSIS
+.B "arcstones"
+[-option ...]
+.SH DESCRIPTION
+.PP
+\fIArcstones\fP tests the performance of the XDrawArcs()
+and XFillArcs(). For simple arc drawing, the test can be varied according
+to the number of arcs, shape of the ellipse, width of the arcs,
+and pattern that the arc is drawn in.  In addition, for filled arcs, the
+test can be varied according to arc mode, PieSlice or Chord, and fill
+style.
+.SH OPTIONS
+.TP 8
+.B \-narcs \fInum\fP
+This option specifies the number of arcs to draw per call to
+XDrawArcs.  The default value is 190.
+.TP 8
+.B \-maxarcs
+This option specifies the use of the maximum number of arcs on
+each call to XDrawArcs.  This value is 5460.
+.TP 8
+.B \-x \fInum\fP
+This option specifies the left extent of the ellipse.  The default value
+is 2.
+.TP 8 
+.B \-y \fInum\fP
+This option specifies the top extent of the ellipse.  The default value
+is 2.
+.TP 8
+.B \-dx \fInum\fP
+This option specifies the change of the left extent of the ellipse.
+The default value is 2.
+.TP 8
+.B \-dy \fInum\fP
+This option specifies the change of the top extent of the ellipse.
+The default value is 2.
+.TP 8
+.B \-ellipse
+This option specifies the use of the XDrawArcs library function.
+This is the default value.
+.TP 8
+.B \-chord
+This option specifies the use of the XFillArcs library function with
+the mode set to ArcChord.  The default value is XDrawArcs().
+.TP 8
+.B \-pieslice
+This option specifies the use of the XFillArcs library function with
+the mode set to ArcPieSlice.  The default value is XDrawArcs().
+.TP 8
+.B \-rad1 \fInum\fP
+This option specifies the diameter of the x-axis.  The default value
+is 390.
+\fBNOTE:\fP
+The term
+\fBrad\fP
+is a misnomer.
+.TP 8
+.B \-rad2 \fInum\fP
+This option specifies the diameter of the y-axis.  The default value
+is 390.
+\fBNOTE:\fP
+The term
+\fBrad\fP
+is a misnomer.
+.TP 8
+.B \-drad1 \fInum\fP
+This option specifies the change of the diameter of the x-axis.
+The default value is 0.
+\fBNOTE:\fP
+The term
+\fBrad\fP
+is a misnomer.
+.TP 8
+.B \-drad2 \fInum\fP
+This option specifies the change of the diameter of the y-axis.
+The default value is 0.
+\fBNOTE:\fP
+The term
+\fBrad\fP
+is a misnomer.
+.TP 8
+.B \-ang1 \fInum\fP
+This option specifies the starting angle.  The default value is 0.
+.TP 8
+.B \-ang2 \fInum\fP
+This option specifies the ending angle.  The default value is 360.
+.TP 8
+.B \-dang1 \fInum\fP
+This option specifies the change in the starting angle.  The default
+value is 0.
+.TP 8
+.B \-dang2 \fInum\fP
+This option specifies the change in the ending angle.  The default
+value is 0.
+.TP 8
+.B \-wide \fInum\fP
+This option specifies the width of the arc.  The default value is 0.
+.TP 8
+.B \-dash \fI(1) (2) (3) .... (N)\fP
+This option specifies the use of patterned lines to draw the arcs.
+The (1) option specifies the number of parameters.  The (2) option is
+the number of pixels drawn on.  The (3) option is the number of pixels
+drawn off.
+.TP 8
+.B \-tile
+This option specifies the use of tile fill for chords and pieslices.
+The bitmap used for the tile is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-stip
+This option specifies the use of stipple fill for chords and pie slices.
+The bitmap used for the stipple is hard coded in the source directory as
+\fBbitmap.h\fP
+.TP 8
+.B \-opaqstip
+This option specifies the use of opaque stipple file for chords and pie slices.
+The bitmap used for the stipple is hard coded in the source directory as
+\fBbitmap.h\fP.
+.TP 8
+.B \-opaqstipbg \fIcolor\fP
+This option specifies the background color to use for the
+opaque stipple fill.
+.TP 8
+.B \-help
+This option displays the help menu for the common options to all
+stones programs.
+.TP 8
+.B \-h
+This option displays the help menu for the arcstones specific program.
+.SH "SEE ALSO"
+X(1)
+.SH "COPYRIGHT"
+International Business Machines--1989

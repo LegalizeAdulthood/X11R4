@@ -1,0 +1,13 @@
+\begindata{text,269028588}
+\textdsversion{12}
+\template{default}
+\chapter{ATK Datastream}
+
+
+This document is intended to contain information on the ATK datastream.  There 
+are no short-term plans for completing this document.  Some information on 
+datastream format may be found in the discussion of the class dataobject.
+
+
+
+\enddata{text,269028588}

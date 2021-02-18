@@ -1,0 +1,9 @@
+define verb fixatr
+	image disk$system:[fixatr]recformat
+	parameter	p1,label=filespec,prompt="File",value(required)
+	qualifier	rfm, label=rfm, value(default=variable)
+	qualifier	rat, label=rat, value(default=impliedcc)
+	qualifier	org, label=org, value(default=sequential)
+	qualifier	efblk, label=efblk, value
+	qualifier	ffbyte, label=ffbyte, value
+	qualifier	model, label=model, value

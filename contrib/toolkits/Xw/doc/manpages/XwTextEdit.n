@@ -1,0 +1,1254 @@
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+     NAME
+          XwtexteditWidgetClass - An X Widget for viewing and editing
+          text.
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/TextEdit.h>
+
+     CLASSES
+          TextEdit is a subclass of CoreClass and XwPrimitiveClass.
+
+          The widget class record to use when creating a text edit
+          widget is XwtexteditWidgetClass.
+
+          The class name for TextEdit is TextEdit.
+
+     OVERVIEW
+          TextEdit provides a single and multi-line text editor which
+          has both a customizable user interface and a programmatic
+          interface.  It can be used for single-line string entry,
+          forms entry with verification procedures, multiple-page
+          document viewing, and full-window editing.  It provides an
+          application with a consistent editing paradigm for entry of
+          textual data.
+
+          The display of the textual data on the screen can be
+          adjusted to the application writer's need based on four
+          class resources, XtNwrap, XtNwrapBreak, XtNscroll, and
+          XtNgrow.  XtNwrapP controls automatic line breaking for
+          lines that extend off the end of the screen.  XtNscroll
+          controls horizontal and vertical shifting of the text when
+          the insertion cursor moves off the screen.  XtNgrow controls
+          attempts by the widget to resize its window to make more
+          room for text that extends beyond the current screen size.
+          These resources are explained in detail below.
+
+          TextEdit provides separate callback lists to verify
+          insertion cursor movement, modification of the text, and
+          leaving the TextEdit widget.  Each of these callbacks
+          provides the verification function with the widget instance,
+          the event that caused the callback, and a data structure
+          specific to the verification type.  From this information
+          the function can verify if the application considers this to
+          be a legitimate state change and signal the widget whether
+          to continue with the action.  The verification function can
+          also manipulate the widget through the class methods defined
+          by the TextEdit class.  The verification callback lists are
+          explained in detail below.
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+          The user interface can be tailored by providing a new set of
+          translations.  The default translations provide commands for
+          movement, deletion, killing and selection with key bindings
+          similar to an EMACS style editor.
+
+          TextEdit allows the user to select regions of text.  By
+          using TextEdit's selection mechanism, application writers
+          can easily fit instances of TextEdit into X11's current
+          selection mechanism.
+
+          The TextEdit class controls the data structures for drawing
+          the text on the screen and defines the functions that
+          manipulate that data.  The storage of the text is provided
+          by a separate component called the Source.  The Source
+          provides the storage of the textual data and a set of
+          functions for querying and changing that data.  The
+          application writer can provide a new source for the TextEdit
+          widget.  The details are provided below.
+
+     NEW RESOURCES
+          TextEdit defines the following new resources:
+
+
+                              TextEdit Resource Set
+     Name                  Class             Type           Default
+     _______________________________________________________________________
+     XtNsourceType         XtCSourceType     String         "stringsrc"
+     XtNsource             XtCTextSource     Pointer        StringSrc
+     XtNdisplayPosition    XtCTextPosition   XtTextPosition 0
+     XtNinsertPosition     XtCTextPosition   XtTextPosition 0
+     XtNselectionLeft      XtCSelectionLeft  XtTextPosition 0
+     XtNselectionRight     XtCSelectionRight XtTextPosition 0
+     XtNwrap               XtCWrap           XwWrap         XwWrapOff
+     XtNwrapBreak          XtCWrapBreak      XwWrapBreak    XwWrapWhiteSpace
+     XtNscroll             XtCScroll         XwScroll       XwAutoScrollOff
+     XtNgrow               XtCGrow           XwGrow         XwGrowOff
+     XtNleftMargin         XtCMargin         Dimension      3 See Note Below
+     XtNrightMargin        XtCMargin         Dimension      3 See Note Below
+     XtNtopMargin          XtCMargin         Dimension      3 See Note Below
+     XtNbottomMargin       XtCMargin         Dimension      3 See Note Below
+     XtNmotionVerification XtCCallback       XtRCallback    NULL
+     XtNmodifyVerification XtCCallback       XtRCallback    NULL
+     XtNleaveVerification  XtCCallback       XtRCallback    NULL
+     XtNexecute            XtCallback        XtRCallback    NULL
+
+
+          XtNtranslations
+               The set of default translations are described below.
+
+          XtNdisplayPosition
+               The position in the text source that will be displayed
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+               at the top of the screen.  The default is 0, or the
+               start of the text source.
+
+          XtNinsertPosition
+               The position in the text source of the insert cursor.
+               The default is 0.
+
+          XtNselectionLeft
+               The starting position of the initial selection.  The
+               default is 0.
+
+          XtNselectionRight
+               The ending position of the initial selection.  The
+               default is 0.
+
+          XtNsourceType
+               This defines the type of the text source. It is one of
+               "stringsrc," "disksrc" or "progdefinedsource."
+
+          XtNsource
+               This specifies a new Source.  The default is StringSrc.
+
+          XtNwrap
+               This resource specifies how the widget displays lines
+               longer than the screen width.  When set to XwWrapOff,
+               the lines may extend off screen to the right.  When set
+               to XwSoftWrap, the lines will be wrapped at the right
+               margin with the actual position determined by the
+               resource XtNwrapBreak.
+
+          XtNwrapBreak
+               This resource specifies how the wrap position is
+               determined.  When set to XwWrapAny, the wrap will
+               happen at the character position closest to the right
+               margin.  When set to XwWrapWhiteSpace, the wrap will
+               happen at the  last whitespace before the right margin.
+               If the line does not have whitespace, it will be
+               wrapped as XwWrapAny.
+
+          XtNscroll
+               This resource controls the horizontal and vertical
+               scrolling of lines longer than the screen width.  When
+               set to XwAutoScrollOff the widget will not scroll.
+               When set to XwAutoScrollVertical, the widget will
+               scroll lines vertically.  When set to
+               XwAutoScrollHorizontal, the widget will scroll a
+               single-line display horizontally.  Horizontal scrolling
+               is not currently supported for multi-line displays.
+               Both horizontal and vertical scrolling can be set with
+               XwAutoScrollBoth (again, subject to the single-line
+               horizontal restriction).  The default is
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+               XwAutoScrollOff.  XtNscroll has lower priority than
+               XtNwrap, meaning if wrapping is enabled, the widget
+               will attempt to wrap to the next line before it will
+               attempt to scroll horizontally.
+
+          XtNgrow
+               This resource controls if the widget will try to resize
+               its window when it needs more height or width to
+               display the text.  When set to XwGrowOff it will not
+               resize itself.  When set to XwGrowHorizontal it will
+               attempt to change its width when lines are too long for
+               the current screen width.  When set to XwGrowVertical
+               it will attempt to resize its height when the number of
+               text lines is greater than can be displayed with the
+               current screen height.  When set to XwGrowBoth, the
+               widget will attempt resizes in both dimensions.  Growth
+               attempts have higher priority than either wrapping or
+               scrolling.  If enabled, the widget will always try to
+               grow to display text before trying to wrap or scroll.
+               The default is XwGrowOff.  The success of a resize
+               request is determined by the widget's parent.
+
+          XtNleftMargin
+               The number of pixels used for the left margin.
+
+               NOTE: if TextEdit is embedded in a manager with
+               keyboard traversal enabled, it will silently enforce
+               the constraint that all margins must be at least 3
+               pixels wider than the highlight border width.
+
+          XtNrightMargin
+               The number of pixels used for the right margin.
+
+          XtNtopMargin
+               The number of pixels used for the top margin.
+
+          XtNbottomMargin
+               The number of pixels used for the bottom margin.
+
+          XtNmotionVerification
+               This verification callback list is called before the
+               insertion cursor is moved to a new position.  The
+               default is NULL.  See the verification section below.
+
+          XtNmodifyVerification
+               This verification callback list is called before text
+               is deleted from or inserted to the text source.  The
+               default is NULL.  See the verification section below.
+
+          XtNleaveVerification
+               This verification callback list is called before the
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+               widget loses input focus.  The default is NULL.  See
+               the verification section below.
+
+          XtNexecute
+               This callback list is similar to a selection function
+               on a button.  When the user invokes an event that calls
+               the "execute" function (see the translation table
+               below), this callback list will be executed. In the
+               default translation table, this is bound to the "enter"
+               key.
+
+     SUBCOMPONENT RESOURCES
+          StringSrc defines the following new resources.  In a
+          resource file they can be specified by the name stringsrc
+          under the name of the TextEdit widget, or through the class
+          StringSrc.
+
+
+                          StringSrc Resource Set
+          Name             Class         Type         Default
+          ______________________________________________________
+          XtNstring        XtCString     char *       NULL
+          XtNmaximumSize   XtCLength     int          NULL
+          XtNeditType      XtCEditType   XtEditType   XwtextEdit
+
+
+          XtNstring
+               The initial string to be viewed and/or edited.  The
+               default is the empty string.  An XtGetValues call on
+               this resource will return a copy of the internal
+               buffer. The application program is responsible for
+               freeing the space allocated by the copy. An XtSetValues
+               call will copy the given string into the internal
+               buffer.
+
+          XtNmaximumSize
+               The maximum number of characters that can be entered
+               into the internal buffer.  If this value is not set
+               then the internal buffer will increase its size as
+               needed limited only by the space limitations of the
+               process.
+
+          XtNeditType
+               This resource controls the edit state of the source.
+               It can be XttextRead, a read only source, XttextAppend,
+               a source than can only be appended to, and XttextEdit,
+               a fully editable source.
+
+
+               DiskSrc defines the following new resources.  In a
+               resource file they can be specified by the name disksrc
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+               under the name of the TextEdit widget, or through the
+               class DiskSrc.
+
+
+                           DiskSrc Resource Set
+            Name          Class         Type         Default
+            ___________________________________________________
+            XtNfile       XtCFile       char *       NULL
+            XtNeditType   XtCEditType   XtEditType   XwtextEdit
+
+
+          XtNfile
+               The absolute pathname of a disk file to be viewed
+               and/or edited.  If no file is given, a temporary file
+               will be created.
+
+          XtNeditType
+               This resource controls the edit state of the source.
+               It can be XttextRead, a read only source, and
+               XttextAppend, a source than can only be appended to.
+
+
+               Display defines the following new resources.  In a
+               resource file they can be specified by the name display
+               under the name of the TextEdit widget, or through the
+               class Display.
+
+
+                           Display resource Set
+          Name            Class           Type            Default
+          _______________________________________________________
+          XtNfont         XtCFont         XFontStruct *   Fixed
+          XtNforeground   XtCForeground   XtRPixel        Black
+
+
+          XtNfont
+               The font used to display the text.  The default is
+               fixed.  There are currently several display bugs
+               associated with proportional fonts.
+
+          XtNforeground
+               The color for drawing the text.  The default is black.
+
+
+     INHERITED RESOURCES
+          The following resources are inherited from the indicated
+          superclasses:
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 6 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightColor       XtCForeground           Pixel     Black
+     XtNhighlightTile        XtCHighlightTile        int       50_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNrecomputeSize        XtCRecomputeSize        Boolean   TRUE
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalType resource is set to
+          highlight_traversal (XwHIGHLIGHT_TRAVERSAL in an argument
+          list) at either create time or during a call to XtSetValues,
+          the XwPrimitive superclass will automatically augment the
+          primitive widget's translations to support keyboard
+          traversal.  Refer to the XwPrimitive man page for a complete
+          description of these translations.  Refer to the
+          TRANSLATIONS section in this man page for a description of
+          the translations local to the scrolled window widget.
+
+
+
+
+     Hewlett-Packard Company       - 7 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+     TRANSLATIONS
+          Since TextEdit has full editing functionality, it supports
+          an elaborate set of translations.  The following table lists
+          TextEdit's default translations which are a subset of key
+          bindings from an EMACS editor.  (An EMACS editor refers to a
+          set of editors based on the original design of R.M. Stallman
+          at MIT for an extensible, customizable self-documenting
+          display editor.) TextEdit supports the concept of delete and
+          kill.  Both delete and kill remove a unit of text from the
+          text source, but text that has been removed with a kill can
+          be restored by an unkill action.  Kills are stored in the X
+          Cutbuffer 1, so that a kill in one instance of a TextEdit
+          widget can be inserted into another instance of a TextEdit
+          widget.  TextEdit does not support a history of kills in a
+          kill ring, nor the appending of kills made in sequence.
+          TextEdit highlights the current selection by reversing the
+          foreground and background color.  Text that has been copied
+          from TextEdit into the current selection storage can be
+          inserted into the buffer with a stuff action.
+
+          Each of these functions can be rebound to a different key in
+          the default translation file set in .Xdefaults.  The string
+          to identify the function is identical to the function name
+          used below.  An example line in that file to bind Control-I
+          to move the insertion point forward one word is:
+
+                               Ctrl<Key>I:    forward-word
+
+          See the Xt Intrinsics documention for more information on
+          the Xdefaults file and translations.
+
+
+          TextEdit works with keyboard traversal and defines the
+          required actions.
+
+
+     DEFAULT KEY BINDINGS FOR TEXTEDIT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 8 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+                                 Movement
+                    __________________________________
+                    Ctrl F        forward-character
+                    Right Arrow   forward-character
+                    Ctrl B        backward-character
+                    Left Arrow    backward-character
+                    Meta F        forward-word
+                    Meta B        backward-word
+                    Meta ]        forward-paragraph
+                    Ctrl [        backward-paragraph
+                    Ctrl A        beginning-of-line
+                    Ctrl E        end-of-line
+                    Ctrl N        next-line
+                    Down Arrow    next-line
+                    Ctrl P        previous-line
+                    Up Arrow      previous-line
+                    Ctrl V        next-page
+                    Next          next-page
+                    Meta V        previous-page
+                    Prev          previous-page
+                    Meta <        beginning-of-file
+                    Home          beginning-of-file
+                    Meta >        end-of-file
+                    Shift Home    end-of-file
+                    Ctrl Z        scroll-one-line-up
+                    Meta Z        scroll-one-line-down
+
+
+
+                          Delete Kill and Stuff
+                 ________________________________________
+                 Ctrl D         delete-next-character
+                 Ctrl H         delete-previous-character
+                 Meta D:        delete-next-word
+                 Meta H         delete-previous-word
+                 Shift Meta D   kill-word
+                 Shift Meta H   backward-kill-word
+                 Ctrl W         kill-selection
+                 Ctrl K         kill-to-end-of-line
+                 Meta K         kill-to-end-of-paragraph
+                 Ctrl Y         unkill
+                 Meta Y         stuff
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 9 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+                              Miscellaneous
+                  ______________________________________
+                  Ctrl J              newline-and-indent
+                  Ctrl O              newline-and-backup
+                  Ctrl M              newline
+                  <Btn1Down>          select-start
+                  Button1<PtrMoved>   extend-adjust
+                  <Btn1Up>            extend-end
+                  <Btn2Down>          stuff
+                  <Btn3Down>          extend-start
+                  Button3<PtrMoved>   extend-adjust
+                  <Btn3Up>            extend-end
+                  Ctrl L              redraw-display
+                  <Key>               insert-char
+
+
+     KEYBOARD TRAVERSAL
+          The following table summarizes the keystrokes which (when
+          keyboard traversal is active) will move the focus. The keys
+          used elsewhere in the X Widgets library for keyboard
+          traversal are used for other purposes in the text edit
+          widget.  Therefore, it was necessary to define other
+          keystokes to serve these functions.  To minimize the
+          incompatibility the decision was made to use the same keys
+          with the addition of the Ctl modifier to implement keyboard
+          traversal in this widget.
+
+
+                            Keyboard Traversal
+                      ______________________________
+                      Ctrl Up      traverse-up
+                      Ctrl Down    traverse-down
+                      Ctrl Left    traverse-left
+                      Ctrl Right   traverse-right
+                      Ctrl Next    traverse-next
+                      Ctrl Prev    traverse-prev
+                      Ctrl Home    traverse-home
+                      Enter        traverse-next-top
+
+
+
+          traverse-up:
+               Inform the parent of this widget that it should
+               transfer keyboard focus to the first widget above this
+               one.
+
+          traverse-down:
+               Inform the parent of this widget that it should
+               transfer keyboard focus to the first widget below this
+               one.
+
+
+
+
+     Hewlett-Packard Company      - 10 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+          traverse-left:
+               Inform the parent of this widget that it should
+               transfer keyboard focus to the first widget to the left
+               of this one.
+
+          traverse-right:
+               Inform the parent of this widget that it should
+               transfer keyboard focus to the first widget to the
+               right of this one.
+
+          traverse-next:
+               Inform the parent of this widget that it should
+               transfer keyboard focus to the next child in the
+               parent's list of children.
+
+          traverse-prev:
+               Inform the parent of this widget that it should
+               transfer keyboard focus to the previous child in the
+               parent's list of children.
+
+          traverse-home:
+               Inform the parent of this widget that it should
+               transfer keyboard focus to the child which is closest
+               to the uppper left hand corner of the parent.  If that
+               child already has the keyboard focus, then ask the
+               grandparent of this widget to give the keyboard focus
+               to whichever of its children which is closest to the
+               upper left hand corner.
+
+          traverse-next-top:
+               Find the topmost parent in this widget hierarch which
+               is a subclass of XwManager and tell it to issues any
+               XtNnextTop callbacks that have been registered with it.
+               The purpose of this callback is to allow applications
+               to move the keyboard focus between top level widget
+               hierarchies of the same application.
+
+     DISPLAYING TEXT, WORD WRAP AND ACTIONS
+          Text is considered to be hierarchically composed of white
+          space, words, lines and paragraphs.  These component
+          concepts are currently hard-coded, but we intend that future
+          versions will support a more general version of the text
+          composition hierarchy.  White space is defined as any non-
+          empty sequence of the ASCII characters space, tab, linefeed
+          or carriage return (decimal values of 32, 9, 10, 13,
+          respectively); a word is any non-empty sequence of
+          characters bounded on both sides by whitespace.  A source
+          line is any (possibly empty) sequence of characters bounded
+          by newline characters; a display line is any (possibly
+          empty) sequence of characters appearing on a single screen
+          display line.  A source paragraph is any sequence of
+
+
+
+     Hewlett-Packard Company      - 11 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+          characters bounded by sets of two or more adjacent newline
+          characters.  a display paragraph is any (possibly empty)
+          sequence of characters bounded by newline characters (NOTE:
+          this is identical to the definition of a source line).  In
+          all cases, the beginning or end of the edit text is an
+          acceptable bounding element in the previous definitions.
+
+          When making display decisions, TextEdit first determines
+          whether all the text will fit in the current display.  If it
+          does not, and growing is enabled, the widget will make
+          resize request of its parent.  If the request is denied or
+          only partially satisfied, no future growth requests will be
+          made unless there is an intervening resize operation
+          externally imposed.  If any source line is still too long to
+          fit in the display after growing is attempted, wrapping is
+          checked.  If wrap is off (XwWrapOff), one display line is
+          drawn for each source line.  If a source line is too long
+          for the display, it is truncated at the right margin after
+          the last full character which fits.  If wrapping is enabled
+          (XwSoftWrap), a new display line will be started with the
+          first word which doesn't fit on the current line.  If the
+          wrap break option is XwWrapAny, as many characters from that
+          word as will fit before the right margin are written to the
+          current display line, then the next character starts at the
+          left margin of the next display line.  If the wrap break
+          option is XwWrapWhiteSpace, the line break is instead made
+          after the first whitespace character which follows the last
+          full word which does fit on the current display line.  If,
+          however, under white space break, the first full word which
+          does not fit is also the first word on the line, the wrap
+          break is made as if XwWrapAny were selected.
+
+
+     VERIFICATION CALLBACKS
+          Three types of verification callbacks are supported by
+          TextEdit There is one for motion operations, to verify a new
+          insert position; there is one for modifying operations, to
+          verify insertion, deletion or replacement of text; there is
+          one for widget exit, to verify state consistency on loss of
+          focus by the widget.  Each verification callback procedure
+          is of type XtCallbackProc, which defines the three arguments
+          it will be invoked with.  These are the id of the widget
+          making the callback, the client data which was specified by
+          the client application when the callback was registered (see
+          XtAddCallback), and a pointer (type XwTextVerifyPtr) to the
+          verification call_data structure.  The C data types used
+          here are:
+
+          typedef enum {motionVerify, modVerify, leaveVerify} opType ;
+
+          typedef struct {
+
+
+
+     Hewlett-Packard Company      - 12 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+                XEvent         *xevent ;
+                opType          operation ;
+                boolean         doit ;
+                XtTextPosition  currInsert, newInsert ;
+                XtTextPosition  startPos, endPos ;
+                XtTextBlock    *text ;
+                } XwTextVerifyCD, *XwTextVerifyPtr ;
+
+          Before the chain of verification callbacks is activated for
+          any given operation, a structure of type XtTextVerifyCD is
+          initialized.  The initial values are:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company      - 13 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+             xevent:       for a leave operation, the current
+                           event pointer
+
+             operation:    element of opType signifying the
+                           type of verification operation
+
+             doit:         TRUE
+
+             currInsert:   current position of the insert
+                           point
+
+             newInsert:    for a motion operation, the
+                           position the user is attempting to
+                           move the insert point to,
+                           otherwise, the same value as
+                           currInsert
+
+             startPos:     for a modify operation, the
+                           beginning position in the current
+                           source of the text about to be
+                           deleted or replaced, or where new
+                           text will be inserted.  If not a
+                           modify operation, the same value as
+                           currInsert.
+
+             endPos:       for a modify operation, the ending
+                           position in the current source of
+                           the text about to be deleted or
+                           replaced.  If no text is being
+                           removed, it will have the same
+                           value as startPos.  If not a modify
+                           operation, the same value as
+                           currInsert.
+
+             text:         for a modify operation with new
+                           text to be inserted, a pointer to a
+                           structure of type XtTextBlock,
+                           which references the text to be
+                           inserted.  Otherwise, NULL.
+
+
+     It is possible for the client to register more than one callback
+     procedure for any of these callback types.  The order in which
+     the callbacks will be invoked is described in the toolkit
+     documentation.  Since there can be more than one callback, each
+     verification procedure should first check the doit field.  If it
+     is false, someone else has already rejected the operation, so
+     there is no need for further evaluation.  On return from invoking
+     the chain of callbacks, the TextEdit widget will look at the doit
+     member of the XtTextVerifyCD structure.  If it is still true,
+     TextEdit will proceed with operation, otherwise it will not.  Any
+
+
+
+     Hewlett-Packard Company      - 14 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+     user feedback for the rejected operation is the responsibility of
+     the verification procedure.  Verification callbacks are permitted
+     to modify some of the data in the XtTextVerifyCD structure.  The
+     TextEdit widget will only look at certain fields on return,
+     though, according to the operation type.  For a motion operation,
+     only the newInsert position will be looked at.  For a modify
+     operation, only startPos, endPos and text will be examined for
+     changes.  For leave operation, no fields will be examined.  There
+     is no mechanism for preventing a verification callback from
+     making other changes to the editing state through the documented
+     interface, but such behind-the-back actions are discouraged.
+
+
+     APPLICATION WRITER'S INTERFFACE
+          The state of TextEdit can be changed in through the normal
+          functional interface to widgets (XtSetValues and
+          XtGetValues) or by exported external functions.
+
+          TextEdit's resources can be queried and set through
+          XtSetValues and XtGetValues.  The widget will maintain its
+          display consistent with the new values.  In particular this
+          is the method for changing the display options.
+
+          The internal buffer should be manipulated through the
+          external functions that follow.
+
+          This set of external functions is designed to allow the
+          widget programmer to access the internal buffer that
+          TextEdit manages.  For example, if the widget is being used
+          to enter a string, the program can get a copy of the string
+          (i.e. the internal buffer) with the function
+          XwTextCopyBuffer or XwTextReadSubString.  All of the
+          following functions that change the contents of the buffer,
+          its selection, or insertion position, will update the
+          display after they are called.  If the programmer needs to
+          make a sequence of these calls, the widget's screen updating
+          function should be turned off with a call to
+          XwTextUpdate(Off) to prevent screen flash.  After the
+          sequence of calls the programmer must remember to call
+          XwTextUpdate(On) to update the window and resume normal
+          updating.  Note that it is not necessary to turn off the
+          update function for functions that only get values from the
+          widget.  Neither is it necessary to use these calls if the
+          programmer only makes one call that changes the widget.
+
+
+          Buffer Functions
+               void XwTextClearBuffer(w)
+                              XwTextEditWidget w;
+               Clear the internal buffer.  After this call all
+               characters in the buffer have been removed.
+
+
+
+     Hewlett-Packard Company      - 15 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+               unsigned char *XwTextCopyBuffer(w)
+                               XwTextEditWidget w;
+               This function uses XtMalloc to create space to make a
+               copy of the internal buffer and returns the pointer to
+               that copy.  The application writer is responsible for
+               freeing the space.
+
+
+          Read a Substring
+               int XwTextReadSubString( w, startpos, endpos, target, targetsize, targetused )
+                 XwTextEditWidget  w;
+                 XwTextPosition    startpos, endpos;
+                 unsigned char     *target;
+                 int               targetsize,
+                                   *targetused;
+               This function will move characters from the buffer into
+               the caller's space.  The caller must provide the space
+               to copy into and its size in bytes.  The routine will
+               return the number of positions moved.  The value of
+               targetused returns the number of bytes used in the
+               target string by the move.
+
+
+          Selection
+               unsigned char *XwTextCopySelection(w)
+                  XwTextEditWidget w;
+               This function uses XtMalloc to create space to make a
+               copy of the current selection and returns the pointer
+               to that copy.  The application writer is responsible
+               for freeing the space.
+
+               void XwTextUnsetSelection(w)
+                   XwTextEditWidget w;
+               This function will clear the current selection.
+
+               void XwTextSetSelection(w, left, right)
+                 XwTextEditWidget  w;
+                 XwTextPosition    left, right;
+               This function sets the current selection to be between
+               the character positions left to right.
+
+               void XwTextGetSelectionPos(w, left, right)
+                    XwTextEditWidget w;
+                    XwTextPosition *left, *right;
+               This function returns the character positions of the
+               current selection.
+
+          Insertion and Deletion
+               void XwTextInsert(w, string)
+                    XwTextEditWidget w;
+                    unsigned char *string;
+
+
+
+     Hewlett-Packard Company      - 16 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+               This function inserts the string at the current
+               insertion position and advances the insertion position
+               to the end of the string.
+
+               XwEditResult XwTextReplace(w, startPos, endPos, text)
+                 XwTextEditWidget         w;
+                 XwTextPosition startPos,
+                                endPos;
+                 unsigned char  *text;
+               Remove text in the source from startPos to endPos and
+               insert the string text starting at startPos.  If
+               startPos and endPos are the same the action is an
+               insertion.  If text is the empty string, the action is
+               a deletion.
+
+          Drawing and Updating
+               XwTextRedraw(w);
+                 XwTextEditWidget w;
+               Refresh the widget screen.
+
+               void XwTextUpdate( w, status )
+                   XwTextEditWidget w;
+                   Boolean status;
+               This function turns the widget's screen updating
+               function on and off. Wrapping these calls around a
+               sequence of calls that change the content of the
+               internal buffer will prevent screen flash.
+
+          End of Buffer
+               XwTextPosition XwTextGetLastPos (w, lastPos)
+                   XwTextEditWidget w;
+                   XwTextPosition lastPos;
+               This function returns the last character position in
+               the buffer.
+
+          Insertion Position
+               void XwTextSetInsertPos(w, position)
+                    XwTextEditWidget w;
+                    XwTextPosition position;
+
+               XwTextPosition XwTextGetInsertPos(w)
+                    XwTextEditWidget w;
+               These functions set and return the insertion position.
+
+          Setting the Source
+               void XwTextSetSource(w, source, startpos)
+                    XwTextEditWidget w;
+                    XwTextSourcePtr source;
+                    XwTextPosition startpos;
+
+
+
+
+
+     Hewlett-Packard Company      - 17 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+     SOURCE DEFINITION
+          The source provides textual data space and functions for
+          manipulating that data.  The functions are defined below.
+          An application can define its own source by reimplementing
+          these functions.
+
+
+          Read
+               XwTextPosition SourceRead(src, pos, text, maxread)
+                     XwTextsource    *src;
+                     XwTextPosition   pos;
+                     XwTextblock     *text;
+                     XwTextPosition   maxread;
+               This function returns a read-only text block in the src
+               with maxread number of characters starting from pos.
+               The return value is the next character position
+               following the block.
+
+          Replace
+               XwEditResult SourceReplace(src, startpos, endpos, textblk, delta)
+                     XwTextsource    *src;
+                     XwTextPosition  startpos,
+                                     endpos;
+                     XwTextBlock     *textblk;
+                     XwTextPosition             *delta;
+               This function removes existing text in src between
+               startpos and endpos and inserts new text from textblk
+               at startpos.  delta is change in the size of the text
+               source.  It returns XweditDone for a successful
+               operation, XweditPosError for positional errors when
+               source is in XttextAppend mode, and XweditError when
+               the operation could not be performed.
+
+          SetLastPosition
+               XwTextPosition SourceSetLastPos(src, lastpos)
+                 XwTextSource   *src;
+                 XwTextPosition lastpos;
+               This functions sets the last position in the source.
+
+          Scan
+               XwTextPosition SourceScan(src, pos, scantype, dir, count, include)
+                 XwTextsource    *src;
+                 XwTextPosition  pos;
+                 XwScanType        scantype;
+                 XwScanDirection   dir;
+                 int             count;
+                 Boolean         include;
+               SourceScan searches in dir direction (XwsdLeft
+               XwsdRight) for XwScantype (XwstPositions,
+               XwstWhiteSpace, XwstEOL, XwstParagraph, XwstLast).
+               count is the number of the given type it will scan over
+
+
+
+     Hewlett-Packard Company      - 18 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWTEXTEDIT(3X)                                     XWTEXTEDIT(3X)
+
+
+
+
+               and include indicates whether to count the item
+               currently pointing at.  It returns the starting
+               position of the item scanned for.
+
+          EditType
+               XtEdittype SourceEditType(src)
+                 XwTextsource  *src;
+               Returns the edit type of source.
+
+
+     CURRENT LIMITATIONS
+          The current default source is not optimized for large
+          amounts of data.  X11's current selection is not yet
+          supported.
+
+     ORIGIN
+          Digital Equipment Corporation.  Massachusetts Institute of
+          Technology.  Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWPRIMITIVE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company      - 19 -                   Aug 9, 1988
+
+
+

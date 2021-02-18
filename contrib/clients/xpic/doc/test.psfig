@@ -1,0 +1,90 @@
+.so header.new
+.de (e
+.(l
+.in +1i
+.ft C
+..
+.de )e
+.ft
+.in -1i
+.)l
+..
+.pp
+This is a sample document, formatted with the \fI-me\fP macros, and is
+meant to demonstrate the inclusion of \fIxpic\fP figures in
+\fItroff\fP. For the record, this document was printed using the commands
+.(e
+psfig test.psfig.me | psroff -me
+.)e
+.pp
+Without further ado, a simple, somewhat abstract figure, drawn
+with \fIxpic\fP,\**
+.(f
+\** by Victor Greenberg (\fIvg@dgp\fP)
+.)f
+then converted to PostScript\(rg\**
+.(f
+\** PostScript is a registered trade-mark of Adobe, Inc.
+.)f
+using \fIx2ps\fP 
+.(e
+x2ps victor.x > victor.ps
+.)e
+and included by the simple \fIpsfig\fP
+commands
+.(e
+\&.F+
+figure victor.ps
+\&.F-
+.)e
+.F+
+figure victor.ps
+.F-
+.pp
+As we can see, there's nothing to it, really!
+Some might argue that the previous picture was hardly a test of the
+capabilities of \fIxpic, x2ps, psfig,\fP and PostScript\(rg. True, but
+it is the thought that counts, wouldn't you say. Still, to quell any
+doubts, let's move on to a somewhat more intricate picture.
+.pp
+This picture was drawn using a larger than life drawing area\**, 
+.(f
+\** by Marcel Leblanc (\fIleblanc@godzilla.ele\fP)
+.)f
+and was
+scaled down for conversion using the command 
+.(e
+x2ps -s 0.5 marcel.x > marcel.ps
+.)e
+and included in this document by
+.bp
+.(e
+\&.F+
+figure marcel.ps
+\&.F-
+.)e
+to give:
+.F+
+figure marcel.ps
+.F-
+.pp
+Actually, the scale of 0.5 is a little cramped - this figure was
+actually meant to be seen in landscape mode, at a slightly larger 0.6! 
+That can be achieved by:
+.(e
+x2ps -s 0.6 -r marcel.x > marcel.ps.land
+.)e
+and included in the document by
+.(e
+\&.F+
+figure marcel.ps.land
+\&.F-
+.)e
+As can be seen, \fIx2ps\fP provides all the information that
+\fIpsfig\fP needs to correctly position the figure on the page, and
+leave enough space for it. Alas, not wise wnough to handle page breaks
+correctly, it seems!
+.bp
+.F+
+figure marcel.ps.land
+.F-

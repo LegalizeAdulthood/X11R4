@@ -1,0 +1,62 @@
+.TH VECTSTONES 1 "June 1989" "X Version 11"
+.SH NAME
+vectstones -- tests the performance of lines and segments
+.SH SYNOPSIS
+.B "vectstones"
+[-option ...]
+.SH DESCRIPTION
+.PP
+\fIVectstones\fP tests the performance of the XDrawLines()
+and XDrawSegments.() This test is different from the linestones and.
+segstones testcase because ????
+
+.SH OPTIONS
+.TP 8
+.B \-nvects \fInum\fP
+This option specifies the number of vectors for a window.
+The default value is 8190.
+.TP 8
+.B \-maxvects
+This option specifies the use of the maximum number of vectors if
+they fit in the window.  This value is 8190jeanne[!]: .
+.TP 8
+.B \-single
+This option specifies the use of XDrawLine instead of XDrawSegments.
+XDrawSegments is the default.
+.TP 8
+.B \-width \fInum\fP
+This option specifies the width of the segment/line.  If "0" is specified,
+the server will use a machine dependent algorithm for drawing the lines.
+"0" is the default value.
+.TP 8
+.B \-length \fInum\fP
+This option specifies the length of each line segment.
+The default value is 40.
+.TP 8
+.B \-degrees \fInum\fP
+This option specifies the angle of the vector.
+The default value is 45.
+.TP 8
+.B \-vspace \fInum\fP
+This option specifies the vertical space between vectors.
+The default value is 5.
+.TP 8
+.B \-hspace \fInum\fP
+This option specifies the horizontal space between vectors.
+The default value is 10.
+.TP 8
+.B \-dash \fI(1) (2) (3) .... (N)\fP
+This option specifies the use of patterned lines to draw the arcs.
+The (1) option specifies the number of parameters.  The (2) option is
+the number of pixels drawn on.  The (3) option is the number of pixels
+drawn off.
+.TP 8
+.B \-help
+This option displays the help menu.
+.TP 8
+.B \-h
+This option displays the help menu.
+.SH "SEE ALSO"
+X(1)
+.SH "COPYRIGHT"
+International Business Machines--1989

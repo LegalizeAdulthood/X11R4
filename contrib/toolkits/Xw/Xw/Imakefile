@@ -1,0 +1,174 @@
+    STD_DEFINES = LibraryDefines
+    CDEBUGFLAGS = LibraryCDebugFlags
+       INCLUDES = -I.. -I$(TOP)
+   INSTALLFLAGS = $(INSTINCFLAGS)
+       LINTLIBS = $(LINTXLIB) $(LINTXTOOL)
+# We have a link from /usr/include/Xw to $(LIBDIR)/Xw. You may prefer to 
+# just install it there.
+       XWINCDIR = $(LIBDIR)/Xw
+
+
+HEADERS = \
+	Arrow.h \
+	ArrowP.h \
+	BBoard.h \
+	BBoardP.h \
+	Cascade.h \
+	CascadeP.h \
+	DisplayP.h \
+	Form.h \
+	FormP.h \
+	ImageEdit.h \
+	ImageEditP.h \
+	List.h \
+	ListP.h \
+	ListRC.h \
+	ListRCP.h \
+	MenuBtn.h \
+	MenuBtnP.h \
+	MenuSep.h \
+	MenuSepP.h \
+	PButton.h \
+	PButtonP.h \
+	Panel.h \
+	PanelP.h \
+	PopupMgr.h \
+	PopupMgrP.h \
+	RCManager.h \
+	RCManagerP.h \
+	SRaster.h \
+	SRasterP.h \
+	SText.h \
+	STextP.h \
+	SWindow.h \
+	SWindowP.h \
+	Sash.h \
+	SashP.h \
+	ScrollBar.h \
+	ScrollBarP.h \
+	SourceP.h \
+	TextEdit.h \
+	TextEditP.h \
+	TitleBar.h \
+	TitleBarP.h \
+	Toggle.h \
+	ToggleP.h \
+	VPW.h \
+	VPWP.h \
+	Valuator.h \
+	ValuatorP.h \
+	WorkSpace.h \
+	WorkSpaceP.h \
+	Xw.h \
+	XwP.h
+
+SRCS = \
+	Arrow.c\
+	BBoard.c\
+	Button.c\
+	Cascade.c\
+	CreateTile.c\
+	Display.c\
+	Form.c\
+	ImageEdit.c\
+	List.c\
+	ListRC.c\
+	Manager.c\
+	MapEvents.c\
+	MenuBtn.c\
+	MenuMgr.c\
+	MenuPane.c\
+	MenuSep.c\
+	PButton.c\
+	Panel.c\
+	PopupMgr.c\
+	Primitive.c\
+	RCManager.c\
+	ResConvert.c\
+	SRaster.c\
+	SText.c\
+	SWindow.c\
+	Sash.c\
+	ScrollBar.c\
+	SourceDsk.c\
+	SourceStr.c\
+	TextEdit.c\
+	TitleBar.c\
+	Toggle.c\
+	Traversal.c\
+	VPW.c\
+	Valuator.c\
+	WorkSpace.c
+
+OBJS = \
+	Arrow.o\
+	BBoard.o\
+	Button.o\
+	Cascade.o\
+	CreateTile.o\
+	Display.o\
+	Form.o\
+	ImageEdit.o\
+	List.o\
+	ListRC.o\
+	Manager.o\
+	MapEvents.o\
+	MenuBtn.o\
+	MenuMgr.o\
+	MenuPane.o\
+	MenuSep.o\
+	PButton.o\
+	Panel.o\
+	PopupMgr.o\
+	Primitive.o\
+	RCManager.o\
+	ResConvert.o\
+	SRaster.o\
+	SText.o\
+	SWindow.o\
+	Sash.o\
+	ScrollBar.o\
+	SourceDsk.o\
+	SourceStr.o\
+	TextEdit.o\
+	TitleBar.o\
+	Toggle.o\
+	Traversal.o\
+	VPW.o\
+	Valuator.o\
+	WorkSpace.o
+
+#if DebugLibXw && ProfileLibXw
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugLibXw
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileLibXw
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+NormalLibraryTarget(Xw,$(OBJS))
+LintLibraryTarget(Xw,$(SRCS))
+InstallLibrary(Xw,$(USRLIBDIR))
+InstallLintLibrary(Xw,$(LINTLIBDIR))
+
+#if ProfileLibXw
+ProfiledLibraryTarget(Xw,$(OBJS))
+InstallLibrary(Xw_p,$(USRLIBDIR))
+#endif
+
+#if DebugLibXw
+DebuggedLibraryTarget(Xw,$(OBJS))
+#endif
+
+MakeDirectories(install,$(XWINCDIR))
+InstallMultiple($(HEADERS),$(XWINCDIR))
+
+DependTarget()
+
+NormalLintTarget($(SRCS))

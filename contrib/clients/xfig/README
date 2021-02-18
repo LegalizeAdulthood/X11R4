@@ -1,0 +1,50 @@
+FIG 1.4 Release 2
+
+Added features:
+===============
+
+1) Interpolated spline (open and close).
+2) Dotted line style.
+3) Blinking vertical bar cursor for entering character string in
+   canvas and message window.
+4) Character strings editing feature both in entering text objects
+   and file names in message window (by relocating the blinking cursor
+   within the string).
+5) F2ps (fig to postscript filter).  Although dashed and dotted line
+   style are not rendered as such on the screen for objects other than
+   polylines, the objects on hard copy produced with f2ps will be
+   rendered with the line style under which the objects are created
+   in fig.
+
+Changes:
+========
+
+1) Output format (ref: FORMAT1.4).  However fig 1.4 and its associated
+   filters (f2p and f2ps) can read fig 1.3 format but fig 1.4 will only
+   create output in the new format.
+
+2) Format of bitmap is now conform to the "iconedit" format (The first two
+   lines are comment lines indicating the width, height, etc.  Each short
+   word (16 bits) is followed by a comma except the last one.).  Here is
+   an example of the comment lines.
+
+   /* Format_version=1, Width=33, Height=6, Depth=1, Valid_bits_per_item=16
+    */
+
+   A row of bitmap is multiple of sixteen bits; however its actual width
+   (in "Width=..") may be not.
+
+   The only exception to the format is that text objects which are not part
+   of any compound are appended to the end of the file.  They provide a
+   way to locate point on the bitmap.
+
+Customizable characteristics:
+============================
+
+1) The fonts used in fig are expected to reside in the
+   directory /usr/lib/fonts/fixedwidthfonts. If the fonts in
+   your system are not under the name directory, appropriate
+   changes should be made in file font.c.
+
+2) The size of fig can be changed by modifying two constants
+   in file "const.h", namely CANVAS_WIDTH and CANVAS_HEIGHT.

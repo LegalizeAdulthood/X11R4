@@ -1,0 +1,48 @@
+/*
+ * SET VERSION NUMBERS BEFORE MAKING MAKEFILES
+ *
+ * If you change either of the following numbers, you will need to do a 
+ * full build (make World) at the top of the sources....
+ */
+#define OSName             UTek 4.0
+#define OSMajorVersion     4
+#define OSMinorVersion     0
+#define HasSaberC	   YES		/* a useful program to buy... */
+#define HasBsearch	   YES
+#define HasNdbm		   YES
+
+#define BuildServer YES
+
+/************************************************************
+ *                                                          *
+ * No compatability functions avaliable at all.             */
+
+#define InstallOldHeaderFiles   NO	/* Testing... */
+#define CompatibilityFlags
+
+/************************************************************/
+
+#define BootstrapCFlags    -DM4310 -DUTEK
+#define StandardDefines    -DM4310 -DUTEK -Dpegasus 
+#define StandardCppDefines -DM4310 -DUTEK -Dpegasus
+#define SystemV           NO
+/* GCC is good on this box */
+/* #define HasGcc         YES */
+
+#define XtekServer Xtek
+
+
+/**/# platform:  $XConsortium: pegasus.cf,v 1.12 89/12/22 15:51:09 rws Exp $
+/**/# operating system:  OSName
+
+/*
+ * platform-specific definitions 
+ */
+
+#define ExtensionDefines -DSHAPE -DMULTIBUFFER -DMITMISC
+
+#define ServerDefines   StandardDefines -DM4310 -DM4317 -DXDMCP ExtensionDefines
+#define FontDefines	-DFONT_SNF -DFONT_BDF
+
+.DIRECTORIES:		/* Turn off directory search for RCS */
+

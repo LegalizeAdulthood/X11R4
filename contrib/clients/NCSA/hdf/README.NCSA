@@ -1,0 +1,68 @@
+*********************************************************************
+
+                       NCSA HDF version 2.37
+                           June 7, 1989
+*********************************************************************
+
+
+***************************** 
+        Using HDF at NCSA
+*****************************
+
+ HDF is installed on various systems at NCSA.  The following is a list 
+of directories in which HDF is installed on different systems:
+
+
+       Cray-2:      /usr/local/apps/hdf
+       Cray-XMP:    /usr/local/apps/hdf
+       Suns:        /soft/hdf
+       Medusa:      /usr/hdf
+       Replicant:   /usr/hdf
+
+The current version of HDF will be in that directory and its 
+subdirectories.
+
+In the bin/ directory you will find several HDF utilities, such as:
+
+   hdfls - a utility to display information about the contents of an            
+HDF file.
+
+   hdfrseq - a utility to display a raster 8 bit image remotely using
+              the NCSA Interactive Color Raster protocol.
+
+   hdftor8 - a utility to convert an HDF raster 8 bit image into a raw
+              raster image.
+
+   r8tohdf - a utility to convert a raw raster image to an HDF raster 8
+              bit image.
+
+   hdftotek - a utility to convert an HDF vector image into a Tektronix
+              4014 image.
+
+   tektohdf - a utility to convert a Tektronix 4014 image into an HDF
+              vector image.
+
+   hdfcomp - a utility to change the compression scheme used for 8-bit
+             raster images in HDF files.
+
+If you execute any of these commands with no parameters, it will display 
+the list of acceptable parameters.
+
+In the doc/ directory you will find files containing the HDF 
+documentation.
+
+In the examples/ directory you will find example codes using HDF. The 
+example codes should be self explanatory.
+
+In the include/ directory you will find the necessary include files for 
+use in your own programs that link with the HDF library.
+
+In the lib/ directory you will find the HDF library which contains the 
+necessary subroutines for developing your own HDF applications.
+
+In the src/ directory you will find the source for all of the HDF 
+utilities and library.
+
+If you have any questions, please contact the NCSA Consulting Office.
+
+

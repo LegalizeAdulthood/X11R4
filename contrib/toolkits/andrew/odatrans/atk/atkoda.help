@@ -1,0 +1,93 @@
+\begindata{text,268962644}
+\textdsversion{12}
+\template{help}
+\chapter{atkoda
+
+}
+\section{What atkoda is
+
+}\leftindent{
+atkoda is a translator from Andrew Tool Kit format to ODA format. It works 
+only for text and rasters.
+
+}
+\section{Starting atkoda
+
+}\leftindent{
+The command is
+
+
+\typewriter{atkoda -o <output file specification> <inputfile specification>}
+
+
+}
+\section{Warnings
+
+}\leftindent{
+This is a prototype translator. It implements only a subset of
+formatting facilities for text and fonts. Raster are passed as
+unscaled bitmaps. The datastreams for tables and equations
+are as passed as if they were text.
+
+The translation scheme used by the translators built as part of
+the EXPRES project are documented in the ITC technical report
+"EXPRES Interchange Conventions for ODA." These conventions
+are based on the Document Application Profile defined by
+the NIST Implmentors Workshop Agreement, which
+corresponds to Q113 in Europe. A more detailed discussion
+of these conventions, and of ODA in general, is provided
+in the book "Multi-media Document Interchange: ODA and
+the EXPRES Experience" by Springer Verlag.
+
+Not all translators provide the same level of functionality.
+Both Andrew translators attempt to retain both formatting
+and style information. The translators from ODA to troff and
+ODA to Interleaf keep only formatting information.
+The style information is discarded. The translator from Interleaf
+to ODA keeps only style structure, not any of the formatting
+information within the style. As a practical matter, only four
+translators have any application beyond the study of their code:
+Andrew to ODA, ODA to Andrew, ODA to troff and ODA to Interleaf.
+Another set of translators built for the EXPRES project
+by the University of Michigan, between ODA and Diamond, are not
+part of the Andrew release.
+
+None of the translators have been validated for conformance
+with the ODA standard or the NIST document application profile.
+Therefore, it is likely that documents produced by these translators
+may not be interchangable with validated systems.
+
+}\leftindent{
+}
+\section{Related tools}  
+
+
+Select (highlight) one of the italicized names and choose "Show Help on 
+Selected Word" from the pop-up menu to see the help file for:
+
+
+\leftindent{\italic{ODA}
+
+\italic{ODA-Toolkit}
+
+\italic{Raster-Toolkit}
+
+\italic{Local-Toolkit}
+
+\italic{odaatk}
+
+\italic{odatroff}
+
+\italic{odaileaf}}
+
+\leftindent{\italic{ileafoda}}
+
+\leftindent{\italic{proda}}
+
+\leftindent{\italic{prodif}}
+
+\leftindent{\italic{prtext}}
+
+\leftindent{\italic{convert}
+
+}\enddata{text,268962644}

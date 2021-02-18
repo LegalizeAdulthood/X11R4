@@ -1,0 +1,119 @@
+.TH IPTEX 1
+.SH NAME
+iptex \- print DVI files on the Imagen
+.SH SYNOPSIS
+.B iptex
+[
+.B \-l
+] [
+.B \-m
+.I magnification
+] [
+.B \-p
+] [
+.B \-r
+.I resolution
+] [
+.B \-sm
+.I x-offset
+] [
+.B \-tm
+.I y-offset
+] [
+.B \-cwd
+] [
+.B \-cht
+] [
+.B \-v
+] [
+.B \-help
+]
+.I filename
+.SH DESCRIPTION
+.I Iptex
+takes a DVI file produced by TeX and converts it to a format suitable
+for the Imagen series printers.
+.I filename
+should be the name of a
+.B .dvi
+file.
+By default,
+.I iptex
+produces output for
+a 300 dpi printer (the 8/300) but this may be overridden with the
+.I \-r
+flag:
+.B "\-r 240"
+produces output suitable for the Imprint-10 (a.k.a. the 10/240).
+.PP
+To get landscape mode (rather than portrait mode) output, use the
+.B \-l
+flag. The entire document is rotated to print on the 11 by 8.5 paper.
+.PP
+The
+.I \-m
+flag applies a global magnification to the output.  If you have slides
+that are to be reduced, you can fiddle with the output size using \-m.
+(By the way, \-r is really \-m in disguise.)
+.PP
+Normally, iptex will print information about the document and
+the pages being printed. This information can be suppressed using
+the
+.I +v
+option to display Verboseness.
+.PP
+By default, pages are printed from last to first,
+leaving the output in the proper order on most Imagen printers.
+You can change this by specifying
+.I
+-p
+for Page reversal.
+.PP
+The default margins are one inch on the left and the top.
+You can set the side margin using
+.I -sm
+to specify a floating point value for margin in
+.I inches.
+Similarly,
+.I -tm
+specifies the margin for the top of the page.
+To center your document across the width of the paper, specify
+.I -cwd
+and to center it along the paper height, use
+.I -cht.
+.PP
+.I Iptex
+is actually a shell script that invokes the conversion program and
+feeds its output to Imagen's
+.I ipr
+command.  By default, this is done by creating a file in /tmp, so
+that missing fonts can be caught before ipr runs away with the
+output.  However, if desired, you can force the output to be piped
+directly to ipr with the
+.I \-force
+flag.
+This ignores all errors in imagen1 and iptex.
+.PP
+If you get confused, you can use the -help option to get a short
+list of all the available options.
+.SH DIAGNOSTICS
+Most of these should be self explanatory.
+.SH AUTHOR
+
+Chris Torek, University of Maryland, wrote the original version of imagen1 and iptex.
+.br
+Mike Urban (TRW) added the \-p, \-X, and \-Y options.
+.br
+Dirk Grunwald, Univ. of Illinois, rewrote imagen1 to provide more help
+and greater flexibility in placing the document on the paper.
+The current version of imagen1 uses the same DVI driver used in TeXx and
+TeXsun.
+.br
+Tim Morgan (UCI) added support for tpic specials.
+.SH FILES
+imagen1 - conversion program
+.br
+ipr - Imagen spooler
+.SH "SEE ALSO"
+dviselect(1), tex(1)
+.SH BUGS

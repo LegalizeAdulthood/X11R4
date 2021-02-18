@@ -1,0 +1,88 @@
+#  Copyright International Business Machines, 1989
+#
+#
+#
+#  IBM DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+#  ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR ANY
+#  PARTICULAR USE.  IN NO EVENT SHALL
+#  IBM BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+#  ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+#  WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+#  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+#  SOFTWARE
+#
+#
+#
+#
+    STD_DEFINES = LibraryDefines
+    CDEBUGFLAGS = LibraryCDebugFlags
+       INCLUDES = -I. -I$(TOP) -I$(TOP)/X11
+   INSTALLFLAGS = $(INSTINCFLAGS)
+       LINTLIBS = $(LINTXLIB)
+
+#ifdef OsNameDefines
+OS_NAME_DEFINES = OsNameDefines
+#endif
+
+HEADERS = \
+	stones.h\
+	bitmap.h
+
+SRCS = \
+       date.c \
+       events.c \
+       init.c \
+       main.c \
+       options.c \
+       seconds.c \
+       timer.c
+
+OBJS = \
+       date.o \
+       events.o \
+       init.o \
+       main.o \
+       options.o \
+       seconds.o \
+       timer.o
+
+all::
+
+#if DebugLibgen && ProfileLibgen
+DebuggedAndProfiledLibraryObjectRule()
+SpecialDebuggedAndProfiledObjectRule(CvtStdSel.o,$(ICONFIGFILES),$(OS_NAME_DEFINES))
+#else
+# if DebugLibgen
+DebuggedLibraryObjectRule()
+SpecialDebuggedObjectRule(CvtStdSel.o,$(ICONFIGFILES),$(OS_NAME_DEFINES))
+# else
+#  if ProfileLibgen
+ProfiledLibraryObjectRule()
+SpecialProfiledObjectRule(CvtStdSel.o,$(ICONFIGFILES),$(OS_NAME_DEFINES))
+#  else
+NormalLibraryObjectRule()
+SpecialObjectRule(CvtStdSel.o,$(ICONFIGFILES),$(OS_NAME_DEFINES))
+#  endif
+# endif
+#endif
+
+NormalLibraryTarget(gen,$(OBJS))
+LintLibraryTarget(gen,$(SRCS))
+InstallLibrary(gen,$(USRLIBDIR))
+InstallLintLibrary(gen,$(LINTLIBDIR))
+
+#if ProfileLibgen
+ProfiledLibraryTarget(gen,$(OBJS))
+InstallLibrary(gen_p,$(USRLIBDIR))
+#endif
+
+#if DebugLibgen
+DebuggedLibraryTarget(gen,$(OBJS))
+#endif
+
+InstallMultiple($(HEADERS),$(INCDIR))
+
+DependTarget()
+
+NormalLintTarget($(SRCS))
+

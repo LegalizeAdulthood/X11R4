@@ -1,0 +1,408 @@
+
+
+
+
+Chapter 2	File Formats in
+NCSA X DataSlice
+
+
+
+
+
+
+
+Chapter Overview
+
+File Formats
+
+Raw Raster Files
+
+Raw Palette/SEQ Files
+
+HDF Files
+
+How NCSA X DataSlice Reads and Displays Data Files
+
+Chapter Overview
+
+
+
+This chapter describes the basic file formats used in NCSA X DataSlice,
+how the program reads and displays data files, and how to specify the
+dimensions of raw files. Information is included for obtaining HDF
+software from NCSA.
+
+
+
+
+
+File Formats
+
+
+
+NCSA X DataSlice reads files containing image data, scientific data, or
+color palette information. This program can also read in
+datasetsQincluding user-defined palettes created in applications such as
+NCSA PalEditQfrom raw raster or Hierarchical Data Format (HDF) files.
+
+
+
+
+
+Raw Raster Files
+
+A raw raster file is a stream of raw, binary, 8-bit raster data in
+row-major order. Each 8-bit byte corresponds to a pixel in the image. The
+image is represented in row-major order; that is, the first raster line
+appears first in the file, succeeded by the next raster line, and so forth.
+Though raw raster files are easy to create, the raw raster file format is
+not very flexible and therefore, not highly recommended.
+
+
+
+
+
+Raw Palette/SEQ Files
+
+A raw palette or SEQ file is a stream of 768 bytes. Raw palette files can
+store 256 colors, which can be selected from a palette of over 16 million
+possible colors. Palette files are based on the red, green, and blue
+representation of color, the RGB color model. The files consist of, in order,
+256 bytes of red, 256 bytes of green, and 256 bytes of blue. The 256 color
+palette entries are calculated by combining the nth element (red), the
+(n+256)th element (green), and the (n+512)th element (blue) to create the
+nth RGB component.
+
+
+
+In other words, a palette file is a lookup table with 256 entries that tell
+which color to associate with each of the 256 possible pixel values. Each
+of the 256 palette entries in the palette is chosen from a master palette
+of 224 RGB colors. Each palette entry consists of three bytes, one each for
+red, green, and blue; the first red component, the first green component,
+and the first blue component, for example, comprise the first palette
+entry.
+
+
+
+When you load a palette file, the hardware color table entries are
+remapped according to the new palette; that is, each color in the palette
+file is assigned to its corresponding entry in the hardware color table.
+
+
+
+
+
+HDF Files
+
+Hierarchical Data Format, or HDF, is a flexible, standard file format
+designed at NCSA for sharing of graphical and floating-point data among
+different programs and machines. This general purpose and extensible file
+format allows you to store raster images, their dimensions, color tables,
+and annotations all in the same file. In addition, you may store
+floating-point data, scaling information, dimensions, annotations, and
+units of measurement in a single file. HDF files are accessible from NCSA
+software for the Sun Workstation such as NCSA X DataSlice as well as for
+the Macintosh such as NCSA DataScope, NCSA PalEdit, and NCSA Layout as
+well as user programs, other NCSA software, and HDF utilities. These files
+can be used used on such machines as the CRAY X-MP/48, CRAY-2, IBM PC,
+and Alliant. The portability and usefulness of HDF files is demonstrated in
+Figure 2.1.
+
+
+
+Figure  2.1	HDF Environment
+
+
+
+ 
+
+
+
+
+
+Why Should I Use HDF?
+
+HDF lets you store datasets with extra file information about your data,
+for example, the dimensions of your image. This makes the files easier to
+read and manage by programs such as NCSA X DataSlice, and saves you the
+trouble of tracking this information externally or waiting for delays in
+image processing.
+
+
+
+
+
+What Information Goes into an HDF File?
+
+Both raster images and scientific floating-point data can be stored in HDF
+files for use in NCSA X DataSlice.
+
+
+
+A raster image set contains a raster image, together with its dimensions.
+It may also contain a palette. You may specify that the raster image be
+stored in compressed or non-compressed form.
+
+
+
+NOTE:  Images saved by NCSA X DataSlice will be saved in HDF files in
+compressed form.
+
+
+
+A scientific dataset can store scientific data in an array of 32-bit
+floating-point numbers of any dimension, together with information
+regarding the rank and size of each dimension. When storing your datasets
+in HDF files, you have the option of storing other information such as
+labels for the data and the axes, scales for the axes, and the maximum and
+minimum values of the data.
+
+
+
+
+
+How Do I Create an HDF File?
+
+Public domain software is available from NCSA for creating HDF files.
+NCSA's HDF libraries support both Fortran and C calls on any of the
+following machines:  Cray (UNICOS), Sun (UNIX), Alliant (Concentrix),
+Macintosh, and IBM PC (MS-DOS).
+
+
+
+The best way to store your data in an HDF file is to incorporate calls to
+the appropriate HDF library in the program that produces your image or
+scientific data. These calls can store your raw image, palette, scientific
+data, and other information in an HDF file in proper format.
+
+
+
+If you have access to the HDF libraries, you can store floating-point data
+in your file, and use it directly. NCSA X DataSlice uses floating-point data
+rather than 8-bit binary data whenever the former is available.
+
+
+
+NOTE:  With a UNIX-based system, you can use the command line utility
+called r8tohdf to convert one or more raw raster images and palettes to
+HDF format.
+
+
+
+
+
+Where Can I Obtain More Information about HDF?
+
+The 1.0 release of NCSA X DataSlice comes with the source code for HDF
+Version 2.36. Also, if you are connected to Internet (NSFNET, ARPANET,
+MILNET, etc.) you can download HDF software and documentation at no
+charge from an anonymous file transfer protocol (FTP) server at NCSA. The
+steps you should follow to do so are enumerated below. If you have any
+questions regarding the connection or procedure, consult your local system
+administrator or network expert.
+
+
+
+1.	Log on to a host at
+your site that is connected to Internet and is running software supporting
+the FTP command.
+
+
+
+2.	Invoke FTP on most
+systems by entering the Internet address of the server:
+
+
+
+	%  ftp 
+ftp.ncsa.uiuc.edu
+
+
+
+	or
+
+
+
+	%  ftp 
+128.174.20.50
+
+
+
+3.	Log in by entering
+anonymous for the name.
+
+
+
+4.	Enter your local
+login name for the password.
+
+
+
+5.	Enter get
+README.FIRST to transfer the instructions file (ASCII) to your local host.
+
+
+
+6.	Enter quit to exit
+FTP and return to your local host.
+
+
+
+7.	Review the
+README.FIRST file for complete instructions concerning the organization
+of the FTP directories and the procedures you should follow to download
+the README files specific to the application you want.
+
+
+
+Your login session should resemble the following sample, where the
+remote user's local login name is smith and user entries are indicated in
+boldface type.
+
+
+
+harriet_51%  ftp ftp.ncsa.uiuc.edu
+
+Connected to zaphod.
+
+220 zaphod FTP server (Version 4.173 Tue Jan 31 08:29:00 CST 1989)
+ready.
+
+Name (ftp.ncsa.uiuc.edu: smith):  anonymous
+
+331 Guest login ok, send ident as password.
+
+Password:  smith
+
+230 Guest login ok, access restrictions apply.
+
+ftp>  get README.FIRST
+
+200 PORT command successful.
+
+150 Opening ASCII mode data connection for README.FIRST (10283 bytes).
+
+226 Transfer complete.
+
+local:  README.FIRST  remote:  README.FIRST
+
+11066 bytes received in .34 seconds (32 Kbytes/s)
+
+ftp>  quit
+
+221 Goodbye.
+
+harriet_52%
+
+
+
+The README.FIRST file instructs you to copy the HDF README file to your
+directory and read it before proceeding. Your FTP session should resemble
+the one listed below:
+
+
+
+ftp>	cd HDF
+
+250 CWD command successful.
+
+ftp>	get README
+
+200 PORT command successful.
+
+150 Opening ASCII mode data connection for README (10283 bytes)
+
+226 Transfer complete.
+
+local:  README	remote:  README
+
+2080 bytes received in .14 seconds (15 Kbytes/s)
+
+ftp>	quit
+
+221 Goodbye.
+
+harriet_52%
+
+
+
+The HDF README file explains how to copy the contents of the HDF
+directory to your home directory via remote login or anonymous ftp. The
+precise file transfer procedure varies according to the type of operating
+system under which you will use HDFQUNICOS or other.
+
+
+
+HDF software and manuals are available for purchaseQeither individually
+or as part of the anonymous FTP reel or cartridge tapesQthrough the NCSA
+Technical Resources Catalog. Orders can only be processed if accompanied
+by a check in U.S. dollars made out to the University of Illinois. To obtain a
+catalog, contact:
+
+
+
+NCSA Documentation Orders
+
+152 Computing Applications Building
+
+605 East Springfield Avenue
+
+Champaign, IL  61820
+
+(217) 244-0072
+
+
+
+
+
+You can save all raster plots in HDF single HDF files, i.e a set of animation
+images are stored in one HDF Raster8 file. You may then reuse the images
+and palettes in NCSA X DataSlice or any of the other NCSA visualization
+tools that support HDF such as NCSA X DataSlice or NCSA Layout.
+
+
+
+
+
+How NCSA X DataSlice Reads and Displays Data Files
+
+
+
+NCSA X DataSlice assumes that all data files are to be displayed as
+two-dimensional data, in 8-bit format, arranged in row-major order, with
+the origin in the upper-left corner. If the original data was created in
+column-major order, as in a Fortran program, it must be transposed prior
+to being read by NCSA X DataSlice.
+
+
+
+The term 8-bit format refers to a process whereby data is scaled onto the
+numerical values from 0 through 255 and is stored in single bytes, one
+data element per byte. When data is displayed on the screen, a byte is
+interpreted as a number from binary 0 through binary 255. The number
+represents a color from the current palette. For example, a byte that is
+equivalent to binary 8 is interpreted as the ninth color in the current color
+palette and is displayed accordingly.
+
+
+
+NCSA X DataSlice displays images that have been saved in raw raster,
+ASCII, or HDF files. To load images from raw files, which do not store
+information regarding the dimensions of the data, you must specify the
+dimensions of the data--see the following section.
+
+
+
+NOTE:  You can scale HDF floating-point data to 8-bit data using NCSA X
+DataSlice.
+
+
+
+
+
+
+
+
+
+

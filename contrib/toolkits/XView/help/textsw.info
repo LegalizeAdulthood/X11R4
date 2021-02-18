@@ -1,0 +1,350 @@
+#
+# @(#) textsw.info 1.1 88/02/22 SMI
+#
+
+
+
+:textsw
+	Text Window
+	
+This window is a text window.  It supports text
+editing keyboard and menu commands.  Characters
+that are typed are inserted at the caret. Click
+SELECT to set the caret.
+
+Point to the window and click right for the Text
+Editor menu.
+#
+:loadfile
+	Load File
+	
+Loads the specified file into the text window.
+#
+:includefile
+	Include File
+	
+Inserts the contents of the specified file into
+the text window beginning at the insertion
+point.
+#
+:storefile
+	Store as New File
+	
+Saves text, with changes, to the specified file.
+#
+:selectline
+	Select Line at Number 
+
+1. Selects the line of text at the indicated 
+   line number.
+
+2. If necessary, scrolls the window so that the
+   selected line is displayed.
+
+:linenumber
+	What Line Number?
+	
+Insert the desired line number and then click
+SELECT on the button.
+#
+:find
+	Find
+	
+The string to the right of this button is the
+target of the search.  Searches the textwindow
+for the next instance of this string, starting
+from the insertion point.  If the string is
+found, selects it and scrolls the window to make
+it visible, if necessary.  If not found, flashes
+the window.
+
+Click MENU to change the direction of the search.
+#
+:replace
+	Replace
+	
+Replaces the selected text with the string to the
+right of this button.
+#
+:findreplace
+	Find then Replace
+	
+Same as Find, followed by Replace:
+
+Searches for the string to the right of the Find
+button, and, if found, replaces it by the string
+to the right of the Replace button.
+#
+:replacefind
+	Replace then Find
+
+Same as Replace, followed by Find:
+
+Replaces the selected text with the string to the
+right of the Replace button, then searches for
+the string to the right of the Find button.
+#
+:replaceall
+	Replace All
+	
+Replaces every instance of the string to the
+right of the Find button with the string to the
+right of the Replace button.
+#
+:mfilecmds
+	File menu item
+
+Saves all text in the window to the current file
+and creates a backup of the old version.
+
+Clicking MENU provides a menu of File options.
+#
+:msavefile
+	Save Current File menu item
+
+1. Saves text, with changes, to the current file.
+
+2. Copies old version of file to filename%
+   (in the current directory).
+
+If there is no current file, use the Store as New
+File menu item instead.
+#
+:mstorefile
+	Store as New File menu item
+
+Saves text, with changes, to the selected file.
+
+Keyboard equivalent: Press the diamond and S keys.
+
+:mloadfile
+	Load File menu item
+
+Displays the selected file in the text window.
+
+Keyboard equivalent: Press the diamond and L keys.
+
+:mincludefile
+	Include File menu item
+
+Inserts the contents of the selected file into
+the text window beginning at the insertion
+point.
+#
+:memptydoc
+	Empty Document menu item
+
+1. Clears the text window.
+
+2. Discards the current file and sets it to None.
+
+Keyboard equivalent: Press the diamond and E keys.
+
+:meditcmds
+	Edit menu item
+
+Re-executes the most recent sequence of editing
+operations. Previous Undo operations are
+ignored.
+
+Pull right: provides a menu of Edit options.
+
+:meditagain
+	Again menu item
+
+Re-executes the most recent sequence of editing
+operations. Previous Undo operations are
+ignored.
+
+Keyboard equivalent: Press the Again key, or
+press the diamond and A keys.
+#
+:meditundo
+	Undo menu item
+
+Undoes the last editing operation.
+
+Clicking MENU provides a menu of Undo options.
+#
+:mundolast
+	Undo Last Edit menu item
+
+Undoes the last change to the text.
+
+Keyboard equivalent: Press the Undo key, or press
+the diamond and U keys.
+#
+:mundoall
+	Undo All Edits menu item
+
+Undoes all text changes made since the window was
+started or since the last saving or storing of
+the document.
+#
+:meditcopy
+	Copy menu item
+
+Copies the selected text onto the Clipboard,
+overwriting the Clipboard's previous contents.
+
+Keyboard equivalent: Press the Copy key, or press
+the diamond and C keys.
+#
+:meditpaste
+	Paste menu item
+
+Inserts the contents of the Clipboard into the
+text window beginning at the insertion point.
+
+Keyboard equivalent: Press the Paste key, or
+press the diamond and V keys.
+#
+:meditcut
+	Cut menu item
+
+1. Deletes the selected text.
+
+2. Copies the deleted text onto the Clipboard,
+   overwriting the Clipboard's previous contents. 
+
+Keyboard equivalent: Press the Cut key, or press
+the diamond and X keys.
+#
+:mdisplaycmds
+	View menu item
+
+If you have a number selected, scrolls the window
+so that the text at that line number is displayed
+and selected.
+
+Clicking MENU provides a menu of View options.
+#
+:mselectline
+	Select Line at Number menu item
+
+1. If a number is selected, selects the line of
+   text at that line number.
+
+2. If necessary, scrolls the window so that the 
+   selected line is displayed.
+#
+:mwhatline
+	What Line Number? menu item
+
+Pops up an Notice telling you which line contains
+the insertion point.
+#
+:mshowcaret
+	Show Caret at Top menu item
+
+Moves the line containing the insertion point to
+the top of the window.
+#
+:mchangelinewrap
+	Change Line Wrap menu item
+
+Causes line breaks to occur between words.
+
+Clicking MENU provides a menu of Line Wrap options
+(where line breaks occur).
+#
+:mwrapchars
+	Wrap at Character menu item
+
+Causes line breaks to occur between characters.
+#
+:mwrapwords
+	Wrap at Word menu item
+
+Causes line breaks to occur between words.
+
+:mcliplines
+	Clip Lines menu item
+
+Causes lines not to wrap. That is, no rightward
+limit to the extent of a line exists, but the
+display of the line is clipped by the right
+margin of the window.
+#
+:mfindcmds
+	Find menu item
+
+Opens a Find and Replace command window.
+
+Pressing MENU provides a menu of find options.
+#
+:mfindreplace
+   Find and Replace menu item
+
+Opens a Find and Replace panel.
+If you select a block of text before choosing
+this menu item, the Find and Replace panel opens
+with the selected text included as the Search
+String.
+
+Keyboard equivalent: Press the Control and Find
+keys.
+#
+:searchpanel
+	Find and Replace panel
+
+Enter the string you want to find to the right of
+the Find button, and the string you want to
+replace it with, if any, to the right of the
+Replace button. Then click SELECT on one of the
+Find and Replace buttons.
+#
+:findstring
+	Search String field
+#
+:replacestring
+	Replacement String field
+#
+:mdirforward
+	Find Forward menu item
+
+Search for the string to the right of the Find
+button in a forwards (towards the end) direction.
+#
+:mdirbackward
+	Find Backward menu item
+
+Search for the string to the right of the Find
+button in a backwards (towards the beginning) 
+direction.
+#
+:wrap
+	Search Wrap Option
+
+All Text will allow a search proceed to the 
+beginning of the document and begin searching 
+again if the end of the document is reached
+without finding the search string.
+
+Clicking MENU provides other search options.
+
+To End will cause the search to stop if the 
+end of the document is reached without finding
+the search string.
+#
+:mextras
+	Extras menu item
+
+The extas menu allows for users to easily
+customize their system by defining a set of menu
+items including other menus of items in a file
+set in their user preferences file (Xdefaults).
+
+The format for this file is:
+
+"item 1"	program1 -options
+"menu name"	MENU
+  "item 2"	  program2
+  "item 3"	  program3 -options
+"menu name"	END
+"item 4"	program4 -options
+
+The Xdefaults entry where this file should
+be specified is "Text.ExtrasMenuFilename:"
+#
+:bogus_key_to_mark_end

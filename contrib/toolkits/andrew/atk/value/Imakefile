@@ -1,0 +1,65 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+DOBJS = getrecv.do \
+	bargrphv.do \
+	buttonv.do \
+	controlv.do \
+	entrstrv.do \
+	entrtext.do \
+	etextv.do \
+	fourwayv.do \
+	mentstrv.do \
+	menttext.do \
+	metextv.do \
+	onoffv.do \
+	pianov.do \
+	sliderv.do \
+	slidstrv.do \
+	stringv.do \
+	thumbv.do \
+	thmbstrv.do \
+	updateq.do \
+	value.do \
+	valuev.do \
+	clklistv.do
+
+IHFILES = getrecv.ih \
+	bargrphv.ih \
+	buttonv.ih \
+	controlv.ih \
+	entrstrv.ih \
+	entrtext.ih \
+	etextv.ih \
+	fourwayv.ih \
+	mentstrv.ih \
+	menttext.ih \
+	metextv.ih \
+	onoffv.ih \
+	pianov.ih \
+	sliderv.ih \
+	slidstrv.ih \
+	stringv.ih \
+	thumbv.ih \
+	thmbstrv.ih \
+	updateq.ih \
+	value.ih \
+	valuev.ih \
+	clklistv.ih
+
+DependTarget()
+NormalObjectRule()
+NormalATKRule()
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+InstallFile(value.h, ${INSTINCFLAGS}, ${DESTDIR}/include/atk)
+
+FontRule()
+DeclareFont(values25)
+
+
+NormalHelpRule()
+InstallDocs(valproc.help, ${DESTDIR}/help)
+InstallHelpAlias(valproc, valueproc valueprocs)

@@ -1,0 +1,65 @@
+
+	Here is some explanation about the coordinates.
+
+
+	The picture widget supports two types of coordinates, the widget
+coordinates and the event ( window ) coordinates.
+
+
+	In the widget coodinates, the x-coordinate increases to the right and
+the y-coordinate to the upper direction.
+
+	By default, the view locates at the position shown below:
+
+                                    y
+                                    ^
+                                    |32767
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |               499
+ -----------------------------------+---------------------------------------->x
+ -32768                             |0               |                  32767
+                                    |                |
+                                    |                |
+                                    |                |
+                                    |                |
+                                    |                |
+                                    |                |
+                               -499 |-----------------
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |-32768
+
+	This means the graphic element you see in the picture window have
+negative y-coordinates.
+
+		Mmmmmh ....., pretty confusing .....
+
+	But if you don't like negative coordinates, you can change the view
+position by setting some resources ( StNviewY [ and StNviewX ] ) or scrolling
+the view ( with the scrollbar or 'Shift<Btn1>' operation with no selection ).
+
+
+	The event ( window ) coodinates are relative to the upper-left corner of
+the view, and here the x and y coordinates increase to the right and lower
+direction, respectively.
+
+	This coordinate can be specified as parameters to the picture widgets's
+public functions.

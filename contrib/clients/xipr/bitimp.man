@@ -1,0 +1,116 @@
+.TH BITIMP 1 LOCAL
+.SH NAME
+bitimp \- generic bitmap to imPress program
+.SH SYNOPSIS
+\fBbitimp\fR
+\%[options]
+\%[Ifile]
+.SH DESCRIPTION
+\fIbitimp\fR converts a bitmap \fIfile\fR
+to imPress format for printing on an IMAGEN printer.
+.PP
+The options are:
+.TP
+.BI \-a\0 mode
+Sets \fIbitimp's\fR mode of operation to \fImode\fR,
+which may be one of \fIgenimp\fR,
+\fIisimp\fR, \fImacimp\fR, \fIsunimp\fR or \fIxwdimp\fR,
+(default taken from the invocation line if possible,
+otherwise the default is \fIxwdimp\fR.)
+.TP
+.BI \-b\0 string
+Sets the banner string for the job.
+.TP
+.BI \-c\0 n
+Prints \fIn\fR copies.
+Since this is done via the Imagen DCL,
+this switch is meaningful even if the output is not to be immediately printed.
+.TP
+.B \-d
+Turns on debugging.
+.TP
+.BI \-f\0 string
+Identifies \fIstring\fR as the value of the variable \fBfile\fR in the DCL.
+.TP
+.BI \-gs\0 num
+For \fIgenimp\fR mode,
+indicates that \fInum\fR bitmaps are in the input stream.
+(default 8)
+.TP
+.BI \-gh\0 num
+For \fIgenimp\fR mode,
+indicates that each bitmap is \fInum\fR bits wide.
+(default 512)
+.TP
+.BI \-gv\0 num
+For \fIgenimp\fR mode,
+indicates that each bitmap is \fInum\fR bits tall.
+(default 512)
+.TP
+.BI \-g\0 num
+For \fIgenimp\fR mode,
+indicates that each bitmap is \fInum\fR bits wide and tall.
+(default 512)
+.TP
+.B \-h
+Prevents a banner page for being printed for this job.
+.TP
+.BI \-i\0 file
+Directs \fIbitimp\fR to send its output to the named file.
+This disables the \fI\-p\fR and \fI\-s\fR switches.
+.TP
+.B \-l
+Print in landscape mode.
+.TP
+.B \-p
+Directs \fIbitimp\fR to spool its output for printing.
+This disables the \fI\-s\fR switch.
+(default OFF unless stdout is a tty)
+.TP
+.B \-r
+Directs \fIbitimp\fR to remove its input file if everything goes well.
+.TP
+.B \-s
+Directs \fIbitimp\fR to send its output to the standard output.
+This diables the \fI\-i\fR and \fI\-p\fR switches.
+(default ON unless stdout is a tty)
+.TP
+.B \-t
+Toggles page reversal for the job.
+If the job is to be sent to an Imagen 12/300,
+pagereversal actually does the wrong thing.
+.TP
+.B \-v
+Turns on verbose output to the diagnostic output.
+.TP
+.BI \-D\0 string
+Identifies \fIstring\fR to be appended to the DCL for the job.
+.TP
+.BI \-H\0 host
+Identifies the \fIhost\fR of the user spooling the job.
+.TP
+.BI \-J\0 string
+Identifies \fIstring\fR as the name of this job.
+.TP
+.BI \-M\0 num
+Sets the bitmap magnification to two raised to the \fInum\fR.
+\fInum\fR may be 0, 1, or 2.
+(default 1)
+.TP
+.BI \-P\0 printer
+Sets the printer for this job.
+.TP
+.BI \-R\0 resolution
+Sets the resolution of the printer for this job.
+(default 300)
+.TP
+.BI \-U\0 user
+Identifies the \fIuser\fR spooling the job.
+.SH "SEE ALSO"
+iprint(1), catimp(1), dviimp(1)
+.SH DIAGNOSTICS
+Obvious.
+.SH BUGS
+For \fIxwdimp\fR,
+only XY pixmaps of a single plane are handled.
+

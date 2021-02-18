@@ -1,0 +1,198 @@
+
+
+
+     XWMENUPANE(3X)                                     XWMENUPANE(3X)
+
+
+
+
+     NAME
+          XwmenupaneWidgetClass - the X Widgets menupane meta widget.
+
+     SYNOPSIS
+          #include <X11/Intrinsic.h>
+          #include <X11/StringDefs.h>
+          #include <Xw/Xw.h>
+
+
+     CLASSES
+          The menupane widget class is built from the Core, Composite,
+          Constraint and XwManager classes.
+
+     DESCRIPTION
+          The menupane class is an X Widget meta class.  It is never
+          instantiated as a widget.  Its sole purpose is as a
+          supporting superclass for other menupane widget classes.  It
+          provides a collection of resources which will be needed by
+          most menupane subclasses.
+
+     NEW RESOURCES
+          The MenuPane defines a set of resource types used by the
+          programmer to specify the data for widgets which are
+          subclasses of MenuPane.  To specify any of these resources
+          within the .Xdefaults file, simply drop the XtN prefix from
+          the resource name.
+
+
+                            MenuPane Resource Set
+     Name                  Class              Type            Default
+     ____________________________________________________________________
+     XtNtitleShowing       XtCTitleShowing    Boolean         TRUE
+     XtNmgrTitleOverride   XtCTitleOverride   Boolean         FALSE
+     XtNtitleType          XtCTitleType       int              XwSTRING
+     XtNtitleString        XtCTitleString     String          widget name
+     XtNtitleImage         XtCTitleImage      XImage *        NULL
+     XtNfont               XtCFont            XFontStruct *   "fixed"
+     XtNattachTo           XtCAttachTo        String          NULL
+     XtNmnemonic           XtCMnemonic        String          NULL
+     XtNselect             XtCCallback        Pointer         NULL
+
+
+
+          XtNtitleShowing
+               This resource may be used by the application to control
+               the displaying of a title within the menupane.  This
+               may be overridden, however, by a menu manager using the
+               XtNmgrTitleOverride resource.
+
+          XtNmgrTitleOverride
+               This resource is not intended to be used by
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUPANE(3X)                                     XWMENUPANE(3X)
+
+
+
+
+               applications; it should only be used by a menu manager
+               widget, for overriding the application, and forcing off
+               the menupane title.  This is useful for those menu
+               managers whose style dictates that certain menupane
+               should not have a title displayed.
+
+          XtNtitleType
+               Two styles of titles are supported by the MenuPane
+               widget.  They include text string titles and image
+               titles.  To programmatically set this resource, use
+               either the XwSTRING define or the XwIMAGE define.  To
+               set this resource using the .Xdefaults file, use one of
+               the strings string or image.
+
+          XtNtitleString
+               If the title type resource indicates that a title
+               string should be displayed, then this resource will
+               contain the title string which is to be used.  In the
+               case where the application does not specify a title
+               string, the name of the menupane widget will be used.
+               The title is displayed using the foreground color.
+
+          XtNtitleImage
+               If the title type resource indicates that a title image
+               should be displayed, then this resource will contain a
+               pointer to an XImage structure; this structure
+               describes the title image data.
+
+          XtNfont
+               If the title type resource indicates that a title
+               string should be displayed, then this resource will
+               describe the font used to draw the title string.
+
+          XtNattachTo
+               When used in conjunction with a menu manager, this
+               resource provides the means by which the menupane may
+               be attached as a cascade to a menubutton.  The string
+               which is specified represents the name of the
+               menubutton to which the menupane is to be attached;
+               this provides the means by which the menu manager is
+               able to construct the menu tree.  To specify that this
+               menupane should be treated as the top level menupane
+               within the menu tree, this string should contain the
+               name of the menu manager widget, instead of a
+               menubutton widget.  Specifying a NULL string indicates
+               that the menupane will not be presently attached to
+               anything.  If the menupane does not have a menu manager
+               associated with it, then this resource is unused.
+
+          XtNmnemonic
+               Certain menu managers allow some of their menupanes to
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUPANE(3X)                                     XWMENUPANE(3X)
+
+
+
+
+               have a mnemonic.  Mnemonics may be used to post a
+               menupane using the keyboard, instead of using the
+               pointer device.  This resource is a NULL terminated
+               string, containing a single character.  Typically, the
+               character is the same as one present in the menupane
+               title.
+
+          XtNselect
+               This resource provides the means for registering
+               callback routines which will be invoked when the
+               menupane receives a select action.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), CONSTRAINT(3X), XWMANAGER(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+

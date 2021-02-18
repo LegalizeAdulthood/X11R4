@@ -1,0 +1,323 @@
+
+
+		color_mapped image sample	11-27-89
+		Paul Raveling		Raveling@isi.edu
+
+
+	This directory (Img/color_mapped) contains one sample image
+	in color-mapped format.  It's a rescaled copy of an image
+	available on venera.isi.edu, shrunken to limit file size.
+
+	After building and installing the Img Software Set,
+	you can display this image with the following command:
+
+		[cd <this directory>]
+		dispimg mapped_sample
+
+
+	This image is a digitized photo of a narrow-gauge steam-powered
+	train, climbing a grade between Durango and Silverton.  It
+	dates from my vacation to Colorado in 1988.
+
+
+	Other color-mapped images are available by anonymous FTP from:
+
+		Host:		venera.isi.edu
+		Directory:	[~ftp/] images/color_mapped
+
+	A copy of the corresponding README file from this directory,
+	current on this date, follows.
+
+
+
+Other README files in this directory:
+
+	README.unm	For University of New Mexico images
+	README.new.unm	.... ** See copyright notice in this one **
+	README.hires.unm	... and in this one
+
+
+Original sources of images:
+
+	[ISI has processed some in various ways other than color selection]
+
+	Abbrev		Source			Medium
+	------		------			------
+
+	Clem	? (Host hubcap.clemson.edu)	anonymous FTP
+	CMU	? (Host nl.cs.cmu.edu)		anonymous FTP
+	Cristy	Jon Cristy			email
+	HP	Hewlett Packard			(cartridge tape, Convovotron)
+	ISI	several				mostly video disks, live camera
+	ISI/HP	images by Paul Raveling	[ISI]	mostly personal photographs
+		with thanks to Nic Lyons [HP] for digitizing
+	Lyons	Nic Lyons [Hewlett Packard]	(cartridge tape)
+	MIT	? (Host m9-520-1.mit.edu)	anonymous FTP
+	Tex	? (Host ix1.cc.utexas.edu)	anonymous FTP
+	UNM	University of New Mexico	anonymous FTP
+	Utah	University of Utah		anonymous FTP
+	UXE	? (Host uxe.cso.uiuc.edu)	anonymous FTP
+
+
+Pixmap image files in this directory:
+(Filenames are image_name.p.Z)
+
+	Image	      Size, bytes    # Colors	Dimensions	Source
+	-----	      -----------    --------   ----------	------
+
+	20bill		152,850		220	 738 x 317	Lyons
+	63vette		258,440		220	1168 x 680	MIT
+	944gtp		279,347		220	1140 x 772	MIT
+	afterburner	 25,835		 16	 640 x 400	MIT
+	alf		 58,817		 16	 640 x 400	MIT
+	alien		 44,145		 16	 640 x 400	MIT
+	anulka		 85,337		220	 640 x 400	MIT
+	anyemtn		404,819		220	 972 x 813	Lyons
+	apollo10	150,073		219	 640 x 400	MIT
+	apollo9		121,917		219	 640 x 400	MIT
+	ariel		 29,942		 16	 640 x 400	UXE
+	aspens		217,335		220	 703 x 460	ISI/HP
+	b2		274,171		128	 960 x 450	CMU
+	balloon		140,606		217	 512 x 482	UNM
+	balloons	412,969		220	1082 x 912	MIT
+	banzai		 32,062		220	 640 x 400	UXE
+	batman		 44,342		220	 640 x 400	UXE
+	beach1		156,618		219	 512 x 482	UNM
+	beach1_hires	493,641		220	1136 x 785	UNM
+	beach2		140,848		219	 512 x 482	UNM
+	beach2_hires	517,795		220	1128 x 785	UNM
+	beatles		142,839		220	 528 x 539	Lyons
+	beatles2	 47,928		219	 640 x 400	MIT
+	beauty		120,135		218	 512 x 482	UNM
+	bigcat16	108,045		220	 640 x 400	UXE
+	bigkitty	388,518		219	1280 x 800	MIT
+	bigman		406,702		220	1024 x 1024	UNM
+	bigmolecule	 35,334		220	 514 x 514	Cristy
+	bigpitts	198,441		220	1024 x 964	UNM
+	bilbo		 59,549		 16	 640 x 400	MIT
+	bill		 62,729		220	 640 x 400	UXE
+	billtcat	 29,126		178	 640 x 400	MIT
+	bird		154,601		220	 512 x 482	UNM
+	birds		195,064		220	 512 x 482	UNM
+	blastoff	107,693		219	1280 x 700	MIT
+	blue_tigers	512,573		220	1060 x 838	ISI/HP
+	blueghibli	149,875		220	 598 x 460	MIT
+	boat1		138,590		220	 512 x 482	UNM
+	boat3		143,480		220	 512 x 482	UNM
+	boat3_hires	422,469		220	1144 x 777	UNM
+	boat4		 95,881		219	 315 x 482	UNM
+	boats		125,151		219	 512 x 482	UNM
+	boats_hires	485,379		220	1080 x 777	UNM
+	bones+kirk	 20,320		 16	 320 x 200	MIT
+	bud		146,875		220	 640 x 480	MIT
+	buggs		104,773		220	 640 x 400	MIT
+	calraisins	 95,083		220	1280 x 700	MIT
+	carmenberg	 97,991		219	 640 x 400	MIT
+	carol		112,579		220	 640 x 400	MIT
+	cat2		 42,060		 13	 640 x 400	MIT
+	challenger	126,237		220	 640 x 400	MIT
+	cheeta		141,809		220	 640 x 400	MIT
+	chipmunks	 43,434		 67	1280 x 700	MIT
+	clown		117,121		219	 640 x 400	MIT
+	cndrella	 95,183		218	1280 x 700	UXE
+	cobra		141,367		220	 640 x 400	MIT
+	condor1		 25,695		217	 204 x 143	ISI/HP
+	condor2		 14,836		218	 112 x 144	ISI/HP
+	condor3		 28,055		219	 175 x 168	ISI/HP
+	cop		 50,583		219	 512 x 400	MIT
+	coral		156,704		219	 500 x 470	UNM
+	cougar4		118,351		219	 640 x 400	UXE
+	coyote		 42,341		218	 640 x 400	MIT
+	crow		 18,194		 14	1280 x 700	MIT
+	daffy		 28,655		 16	 640 x 400	MIT
+	dali		 33,367		220	 252 x 350	Lyons
+	danielle	 96,847		218	 640 x 400	MIT
+	deer		160,407		220	 640 x 400	MIT
+	denisemcconnell	101,297		220	 640 x 400	MIT
+	desert		100,475		219	 640 x 400	UXE
+	dish		115,407		220	 512 x 512	ISI (JPL?)
+	don+daisy	 34,494		 45	1280 x 700	MIT
+	donaldduck	 17,242		219	 640 x 400	MIT
+	donuts		124,371		219	 532 x 732	Lyons
+	dragon		114,045		218	 370 x 465	UNM
+	dragon2		115,083		219	 640 x 219	MIT
+	ds_train	207,337		220	 704 x 464	ISI/HP
+	earth		 68,885		 81	 640 x 400	MIT
+	earth2		 93,379		220	 640 x 400	UXE
+	elk		226,517		220	 706 x 472	ISI/HP
+	everest		198,139		220	1128 x 685	Lyons
+	f16		130,433		106	 640 x 480	CMU
+	fantasia	 26,685		 16	1280 x 800	MIT
+	fashion		147,895		219	 640 x 400	UXE
+	fish		130,611		219	 512 x 464	ISI
+	flamingos	 92,933		219	 640 x 400	MIT
+	foggy		 15,919		 29	 512 x 512	UNM
+	futurecastle	 30,815		212	 640 x 400	MIT
+	galleon		 53,670		137	1206 x 600	MIT
+	garfield	 51,018		219	 640 x 400	UXE
+	garfield2	 47,722		220	1280 x 700	MIT
+	ghost_house	183,897		220	 698 x 466	ISI/HP
+	giftest		 33,525		 56	1280 x 960	MIT
+	girlorb		 27,650		213	 640 x 400	MIT
+	gizaa		127,287		220	 512 x 512	UNM
+	gloworm		117,737		218	 504 x 724	Lyons
+	goblinking	142,515		220	 640 x 400	MIT
+	goofy		 21,029		 66	1280 x 700	MIT
+	gorilla		194,855		220	 640 x 400	UXE
+	graycard	103,993		220	 592 x 480	ISI/HP
+	greenparrot	 35,199		 76	 640 x 400	MIT
+	gwtw		165,756		220	 640 x 400	UXE
+	halfdome	589,217		220	1176 x 930	ISI/HP
+	harvey		603,119		220	 836 x 1038	ISI/HP
+	hgttg		  3,623		 16	 320 x 200	Tex
+	high_line	232,115		220	 699 x 454	ISI/HP
+	icecream	  6,162		122	 640 x 400	MIT
+	iceworld	 94,929		146	1024 x 768	Clem
+	icface		183,597		 16	1280 x 700	MIT
+	imaginat	 35,390		201	1280 x 800	MIT
+	indian		 33,125		 32	 640 x 400	UXE
+	indocean	181,064		220	 512 x 464	ISI
+	infantry	202,661		111	 640 x 480	CMU
+	jetson		 19,046		 32	 640 x 400	UXE
+	jupiter		 20,971		 30	 640 x 400	MIT
+	kimdoughnuts	149,325		212	 968 x 654	MIT
+	kitty		129,787		217	 640 x 400	MIT
+	kitty2		147,455		220	 512 x 482	UNM
+	knight		 30,401		 32	 640 x 400	UXE
+	kristine	 99,873		219	 640 x 400	UNM
+	kymberlypaige	106,145		220	 640 x 400	MIT
+	landscape	337,341		220	1280 x 964	MIT
+	landsat		113,105		189	 512 x 512	UNM
+	lem		 46,213		220	 640 x 400	MIT
+	lenna		153,996		220	 512 x 480	Utah
+	leopard		258,547		219	 694 x 903	Lyons
+	lighthouse	 44,411		 32	 640 x 400	MIT
+	linespr		 21,600		218	 512 x 482	UNM
+	lovers		 39,840		 32	 640 x 400	MIT
+	lunarrover	122,213		220	 640 x 400	MIT
+	m109		 54,547		219	 480 x 480	UNM
+	madonna		131,787		128	 640 x 400	UXE
+	man		588,190		220	1024 x 1024	HP
+	mandril		141,020		220	 512 x 512	UNM
+	mandrill	211,039		220	 512 x 480	Utah
+	mars		 76,917		 81	 512 x 476	UNM
+	max		254,187		220	 712 x 692	HP
+	mbg		 23,511		210	 512 x 512	UNM
+	mendo		 17,632		 94	 640 x 400	MIT
+	miamimice	 29,135		216	 640 x 400	MIT
+	mickey		 36,418		 32	 640 x 400	UXE
+	mickey2		 49,359		 32	 640 x 400	UXE
+	mickeybrooms	 20,320		214	 640 x 400	MIT
+	mike		 92,397		220	 640 x 400	MIT
+	mikki		107,015		220	 640 x 400	MIT
+	model		443,923		220	 815 x 1021	ISI/HP
+	model_fullscale	589,079		220	 936 x 1173	ISI/HP
+	molecule	  8,882		216	 257 x 257	Cristy
+	monumentvalley	355,131		220	1280 x 800	MIT
+	moonflag	117,281		220	 640 x 400	MIT
+	mthood		 53,321		220	 640 x 400	MIT
+	mtv		 17,729		 16	 640 x 400	MIT
+	nagel11		  5,993		 15	 640 x 400	UXE
+	nagel23		 10,202		 16	 640 x 400	UXE
+	nasalogo	  9,235		 40	 640 x 400	MIT
+	ncc1701a	 51,697		 32	 640 x 400	UXE
+	ncc1701b	 27,918		 32	 640 x 400	UXE
+	neweng		 91,893		 82	1280 x 800	MIT
+	newyork		152,879		220	 512 x 464	ISI
+	nu-egypt	 28,494		 16	 640 x 350	UXE
+	oceanplanet	 73,671		 50	1024 x 768	Clem
+	odie		  7,230		 29	 640 x 400	MIT
+	old497		198,453		220	 703 x 466	ISI/HP
+	oldmic		  7,925		 25	 640 x 400	MIT
+	oliver		 33,011		 32	 640 x 400	UXE
+	oliver2		 25,297		 32	 640 x 400	UXE
+	opus		 39,810		219	 640 x 400	MIT
+	opus2		 32,765		 32	 640 x 400	UXE
+	opus3		 10,730		 16	 640 x 720	UXE
+	p2tutd		146,258		220	 640 x 400	Clem
+	paint		183,365		220	 640 x 480	Clem
+	palms		135,211		220	 512 x 482	UNM
+	palms_hires	564,815		220	1153 x 781	UNM
+	palmtree	 20,271		 16	 640 x 400	MIT
+	paradise	 81,053		219	 640 x 400	MIT
+	paradise2	113,305		220	 640 x 400	MIT
+	parrot		125,717		220	 640 x 400	MIT
+	peace		  7,269		  8	 640 x 480	UXE
+	phobo4		102,127		219	 640 x 400	MIT
+	pic1		 65,191		218	 640 x 400	UXE
+	picard+yar	 35,580		 32	 640 x 400	MIT
+	pine		616,227		220	 764 x 1024	Lyons
+	pitts		126,661		220	 512 x 482	UNM
+	plane		 82,993		220	 480 x 315	UNM
+	pluto1		 47,793		 32	 640 x 400	UXE
+	pooh		 26,288		101	1280 x 700	MIT
+	porcupine	181,663		220	 694 x 432	ISI/HP
+	potala		262,187		220	1174 x 220	Lyons
+	puff1		161,609		220	 468 x 704	ISI/HP
+	puff2		180,487		219	 686 x 461	ISI/HP	
+	rainbow		109,217		219	 512 x 482	UNM
+	rand		 29,165		220	 480 x 480	UNM
+	redarrow	110,489		220	 640 x 400	MIT
+	redrock		163,744		220	 640 x 400	MIT
+	riker		 26,793		 16	 640 x 400	MIT
+	roadrunner	143,571		218	 640 x 400	MIT
+	robot		 47,885		220	 640 x 400	MIT
+	roger		133,000		220	 640 x 400	MIT
+	sabre		 22,025		218	 640 x 400	MIT
+	sailboat	500,995		220	1016 x 960	MIT
+	san_juans	188,135		220	 706 x 459	ISI/HP
+	saturn		102,639		220	 512 x 512	ISI
+	saturn-v	 70,793		 32	 640 x 400	UXE
+	save100		 41,396		220	 480 x 480	UNM
+	scooby		 20,035		 34	1280 x 800	MIT
+	scs		188,116		219	 512 x 480	ISI
+	shuttle		162,314		 95	 640 x 480	CMU
+	skull		 86,501		218	 512 x 512	UNM
+	smash		 28,985		210	 640 x 400	MIT
+	smurf1		188,963		220	 692 x 476	ISI/HP
+	smurf2		 93,563		219	 393 x 398	ISI/HP
+	smurf3		147,802		220	 689 x 468	ISI/HP
+	smurf4		112,881		220	 480 x 319	ISI/HP
+	smurftan	 47,373		 85	1280 x 700	MIT
+	snake		476,909		220	 748 x 936	ISI/HP
+	snoopy		 46,310		216	 320 x 200	MIT
+	solings		753,395		220	1265 x 928	ISI/HP [ISA]
+	speedracer	 37,271		218	 640 x 400	MIT
+	sphere		 17,422		168	 512 x 512	UNM
+	spock1		 91,011		220	 640 x 400	MIT
+	spock2		 83,107		219	 640 x 400	MIT
+	spockirk	 83,023		 32	 640 x 400	UXE
+	spuds		179,836		220	 640 x 480	UXE
+	spy		 32,792		 15	 640 x 400	MIT
+	station		 17,877		136	 640 x 400	MIT
+	stevedallas	 15,777		 76	 640 x 400	MIT
+	stream		215,781		220	 700 x 464	ISI/HP
+	sunset2		120,493		219	 512 x 482	UNM
+	tallship	 28,953		 16	 640 x 350	UXE
+	tbirds		410,619		220	1005 x 642	ISI/HP
+	thumper		  9,794		 99	 640 x 400	MIT
+	tibetan		180,778		220	 476 x 513	Lyons
+	tiger		 71,657		220	 640 x 400	MIT
+	tiger2		 53,653		 42	 640 x 400	MIT
+	toucan		 66,771		128	 640 x 400	UXE
+	tm		236,309		220	 512 x 485	UNM
+	tree		104,717		220	 353 x 482	UNM
+	tree_hires	512,861		220	 736 x 1121	UNM
+	trekcolr	 69,407		 32	 640 x 400	UXE
+	trekview	 81,163		220	 640 x 400	MIT
+	trontank	 27,605		 32	 640 x 400	UXE
+	turbine		 48,853		217	 640 x 400	MIT
+	tweety+sylvester 34,530		 66	1280 x 700	MIT
+	uzbek		247,199		220	 626 x 921	Lyons
+	vermeer		 39,956		219	 640 x 400	MIT
+	viking		 55,640		 70	1280 x 700	MIT
+	wdw		 39,847		219	 512 x 512	UNM
+	whitedragon	295,715		220	1152 x 858	MIT
+	window_rock	178,187		220	 468 x 623	ISI/HP
+	wizard		 46,145		 32	1280 x 700	UXE
+	worf2		 27,228		 16	 640 x 400	MIT
+	world		 27,140		215	 480 x 480	UNM
+	x-1e		182,101		220	 693 x 456	ISI/HP
+	yogi		 31,683		 32	 640 x 400	UXE
+	zoe		124,145		220	 640 x 400	MIT
+

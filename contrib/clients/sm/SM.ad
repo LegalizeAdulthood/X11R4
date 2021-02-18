@@ -1,0 +1,47 @@
+# Default for all widgets
+*bitmapFilePath:				/usr/share/new/lib/X11/sm
+
+# Application specific information
+SM.print:					False
+SM.debug:					False
+SM.ignore:					False
+SM.stateFile:					sm/State
+SM.defaultState:				DefaultState
+SM.shell:					/bin/sh
+SM.defaultCommand:				xterm -C &
+SM.metaChars:					\ *
+SM.geometryString:				-geometry
+SM.iconicString:				-iconic
+
+# Defaults for various widgets
+SM.iconPixmap:					SM.xbm
+
+SM.homeform.background:				black
+SM.homeForm.borderWidth:			0
+
+SM.homeForm.quitButton.background:		White
+SM.homeForm.quitButton.foreground:		Red
+SM.homeForm.quitButton.resize:			True
+SM.homeForm.quitButton.borderWidth:		0
+SM.homeForm.quitButton.bitmap:			SM.xbm
+#SM.homeForm.quitButton.label:			Shutdown
+
+SM.homeForm.confirmPopup.geometry:				174x80+500+400
+
+SM.homeForm.confirmPopup.confirmForm.borderWidth:		0
+
+SM.homeForm.confirmPopup.confirmForm.confirmLabel.label:	Shutdown session
+SM.homeForm.confirmPopup.confirmForm.confirmLabel.borderWidth:	0
+
+SM.homeForm.confirmPopup.confirmForm.saveStateButton.fromVert:	confirmLabel
+SM.homeForm.confirmPopup.confirmForm.saveStateButton.label:	Save State
+
+SM.homeForm.confirmPopup.confirmForm.cancelButton.fromVert:	confirmLabel
+SM.homeForm.confirmPopup.confirmForm.cancelButton.fromHoriz:	saveStateButton
+SM.homeForm.confirmPopup.confirmForm.cancelButton.label:	cancel
+
+SM.homeForm.confirmPopup.confirmForm.dontSaveStateButton.fromVert: saveStateButton
+SM.homeForm.confirmPopup.confirmForm.dontSaveStateButton.label:	Don't Save State
+
+
+

@@ -1,0 +1,250 @@
+			   @@@@@@  @       @ @       @
+			  @      @ @       @ @@     @@
+			 @         @   @   @ @ @   @ @
+			 @    @@@@ @  @ @  @ @  @ @  @
+			 @       @ @ @   @ @ @   @   @
+			  @     @@ @@     @@ @       @
+			   @@@@@ @ @       @ @       @
+
+	            _/_     /) /)    _/_                            /
+	 o __   _   /  __. // // __. /  o ______       _,  . . o __/ _
+	(_/) )_/_)_(__(_(_(/_(/_(_(_(__(_(_) /) )_    (_)_(_/_(_(_(_(<_
+	                                               /|
+	                                              |/
+
+WHAT IS GWM?
+============
+
+The GWM (Generic Window Manager) is an extensible Window Manager for the X
+Window System Version 11. It is based upon a WOOL (Window Object Oriented
+Langage) kernel, which is an interpreted dialect of Lisp written in C
+featuring incremental garbage collection via reference counting, lists
+stored as arrays, and object-oriented internal structure with specific
+window management primitives. The user builds its own window manager by
+writing WOOL files to describe objects to be added as decorations around X
+applications windows, as pop-up menus or as independent windows, and by
+associating with each object a Finite State Machine triggering WOOL actions
+on response to X events. 
+
+GWM should be able to emulate efficiently other window managers, and play
+the same role for window managers as EMACS do for text editors.
+
+UNPACKING a new distribution:
+=============================
+
+First, you should make a directory (for instance "/usr/local/gwm/") which we
+will call GWMDIR in the following text, where you will build the gwm
+distribution. If you already have a GWMDIR with old gwm sources in it, just
+use it: new gwm files will overwrite the existing ones, but you local
+configuration files (in the Make/ subdirectory) will be preserved.
+
+Now, depending on how you got gwm:
+
+ A) Unpacking a Mailed distribution:
+    If you are reading this file as the first mail of the mailed GWM
+    distribution kit, 
+
+        Under the directory GWMDIR:
+
+	save the following messages (gwm.sh.Z.uu.aa, gwm.sh.Z.uu.ab, ...)
+
+	edit them to supress headers and trailers (marked by "-- CUT HERE --")
+
+	concatenate them into a "gwm.sh.Z.uu" file
+	
+	make the directory writable by all ("chmod a+w .")
+	uudecode this file ("uudecode < gwm.sh.Z.uu")
+	
+	uncompress the shell archive ("uncompress gwm.sh") to obtain a 
+	"gwm.sh" text file. (files are compressed by the Lempel-Ziv method)
+
+
+ B) Getting GWM from a FTP server (expo.lcs.mit.edu, avahi.inria.fr)
+    You should get the file named gwm-XXX.shar.Z, where XXX is the revision
+    number. (you may want to take the gwm-XXX.ps.Z file, which is the 
+    Postscript version of the documentation if you are not able to print the
+    LaTeX version included in the release). 
+
+	Copy this file in the GWMDIR directory, then "cd" to it
+
+	uncompress it by "uncompress gwm-XXX.shar"
+
+	rename it by "mv gwm-XXX.shar gwm.sh"
+
+
+ C) From a tape:
+    On this tape should be a gwm-XXX.shar or gwm.sh or gwm.shar file.
+    copy it under the name "gwm.sh" in the GWMDIR directory
+
+Then:
+	make a subdirectory "src" under GWMDIR:
+		mkdir src
+
+	now go in it and execute then the shell script "gwm.sh"
+		cd src
+		sh ../gwm.sh
+
+Now you should have the complete GWM distribution kit ready. Ask help from
+you local unix guru if you fail to unpack. You can then remove the temporary
+files (if any exist) by "rm -f ../gwm.sh*".
+
+The installation of gwm will look like:
+
+			GWMDIR |
+			  |    |	removable parts
+			  +----|--+-------+-------+
+			  |    |  |       |       |
+			 src   | sun3    dpx1000  other machines...
+			  |    |
+C source files  +----+----+    | these are links to the C source files
+   		|    |	  |
+	       doc Make	 data
+
+The files will be compiled in the brother directories in a stand-alone
+installation (using the Makefile.noXtree makefile), or directly in the
+src directory in case of an installation by imake.
+
+If you plan to update your sources by applying distributed patches, please
+do a copy of the sources just as you got them before doing any changes to
+the distributed files (except the Make.xxx local configuration files)
+
+UPDATING:
+=========
+
+To update, just get the good gwm-YourVersion-to-NewVersion.patch.Z by ftp,
+or mail, uncompress it, for instance in /tmp. then go in the gwm "GWMDIR/src" 
+directory (which holds the "YourVersion" gwm release) and type:
+
+	patch < /tmp/gwm-YourVersion-to-NewVersion.patch
+
+(the patch utility is part of the X11 distribution, under the "util"
+subdirectory there)
+
+You now have a "NewVersion" release of GWM.
+
+INSTALLATION:
+=============
+
+Old users might read the CHANGES file for a history of changes interesting
+the user (revision.c contains the implementation changes). 
+
+Read the docs in the "doc/" directory (gwm.tex is the manual in LaTeX form).
+In this directory, a KNOWN_BUGS file will contains the known bugs for this
+version, and a TO_BE_DONE file will list the planned enhancements. The
+documentation is in LaTeX format (IMPORTANT: see the Makefile in the "doc/"
+directory to know how to print it).  We can mail you a PostScript version of
+the documentation if you are not able to print it, or you can grab one on the
+ftp servers.
+
+On some postscript printers with low RAM, the printing of the documentation
+will abort after 30-40 pages. Just split the printing of the doc by batches
+of 30 pages (with -f and -t options of dvi2ps, for instance). Do not forget
+to include the Postscript prologue file "idraw.pro", with the "-i" option
+of dvi2ps for instance.
+
+The "data/" directory contains bitmaps, and wool (gwm built-in lisp) profiles.
+It also contains the "rxterm" shell script used to spawn remote xterms. If
+you do not have such a script already installed, you should install this script
+and also make "rx" and "rxload" commands as links to it. (it is NOT installed
+automatically to preserve existing ones)
+
+Then you can either compile gwm via "imake" or in a stand-alone way.
+
+WITH IMAKE:
+
+	The Imakefile is provided. You should know how to use imake to build 
+	the Gwm Makefile, by a:
+
+		ximake TOP
+	if your X source tree is in directory TOP, or:
+		xmkmf 
+	if your X source tree has been fully installed	
+
+	then do a "make" which will build the "gwm" binary, and then do 
+	a "make install" which will install the gwm binary and the data files
+	in the "data/" subdirectory.
+
+	If it fails, you may edit the Imakefile to add compilation flags to
+	suit your machine. (see make.TEMPLATE for the description of these
+	flags). If you have to modify the provided Imakefile to compile on
+	your machine, PLEASE mail me the changes!
+	
+
+WITHOUT IMAKE:
+
+	To compile or install gwm, you must, in the "src" directory you just
+	created, do a:
+
+		cp Makefile.noXtree Makefile
+
+	and for each type of machine on which you decide to install it:
+
+	decide which name you will give to this type of machine ("dpx1000", 
+	"sun", "vax"). Suppose it is "dpx" in the following. Don't try to name
+	it "src" however!
+
+	type: "make DIR=dpx dir".
+
+	This will build a directory "../dpx", link all source files in it,
+	copy the Make.TEMPLATE file to "Make.dpx" in the ../dpx
+	directory, and make a link to this newly created file in "Make"
+	subdirectory. If you want to create the target directory on another
+	filesystem, you can use symbolic links to do so, Just say "make
+	DIR=path sdir" where "path" is the complete pathname of the target
+	directory, for instance "/usr/maalea/local/src/GWM/dpx"
+
+	go into it ("cd ../dpx"), and edit the "Make.dpx" file to adapt it
+	to your local installation. Check that you have the "makedepend"
+	command available.
+
+	Then, type "make" and a "gwm" executable should be built. Do not
+	worry if you see some "includes EXTERN.h more than once!"
+	messages. In case of errors, a simple "make" should resume the
+	compilation process after the first "make" command has been issued.
+	If you have the message "Make:  Don't know how to make .dir.  Stop.",
+	that means that you have forgotten to do "cd ../dpx".
+
+	VERY IMPORTANT: if you encounter compilation problems, please mail me
+	the problems and the patches you had to apply to make it compile
+	on your system, so that I can include them in future releases!
+
+	If everything is OK, type "make install", it should copy the
+	executable and the whole ./data subdirectory.
+
+	Then, you can delete the working directory. The only thing you need
+	to keep is the "gwm.sh" file (or you can keep the whole directory)
+	AND any "Make.machine" you may have defined or adapted for your
+	configuration. A link to the "Make.machine" in the "Make"
+	subdirectory was automatically generated by the "make dir" command,
+	so that you do not have to worry about saving it before deleting
+	the "machine" directory.
+
+COPYRIGHT:
+==========
+
+  Copyright 1989 GROUPE BULL -- See licence conditions in file COPYRIGHT
+  Copyright 1989 Massachusetts Institute of Technology
+  See the COPYRIGHT file in the GWM distribution
+
+  For using a version other than the one distributed by the MIT, contact me
+
+Please mail any bug reports or modifications done (with RCS revision number
+and .gwmrc used), comments, suggestions, requests for updates or patches to
+port on another machine to:
+
+gwm@mirsa.inria.fr		(INTERNET)
+or colas@mirsa.inria.fr
+
+33 (FRANCE) 93.65.77.71		(VOICE PHONE)
+
+Colas Nahaboo			(SURFACE MAIL)
+INRIA
+2004, Route des lucioles
+Sophia Antipolis
+06565 VALBONNE
+FRANCE
+
+PS: I maintain mailing lists about gwm:
+	gwm-talk@mirsa.inria.fr		for discussion
+	gwm-bugs@mirsa.inria.fr         for bug reports
+mail requests to be added to gwm@mirsa.inria.fr.

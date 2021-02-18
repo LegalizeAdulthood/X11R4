@@ -1,0 +1,13 @@
+s/StCheckBoxSwitchI\.h/StCkBxSwI.h/
+s/StMaskedButtonI\.h/StMaskBnI.h/
+s/StMaskedSwitchI\.h/StMaskSwI.h/
+s/StMenuItemI\.h/StMenuItmI.h/
+s/StPictrialSwitchI\.h/StPictrSwI.h/
+s/StPopupSheetButtonI\.h/StPpStBnI.h/
+s/StPopupSheetViewI\.h/StPpStViwI.h/
+s/StPrimitiveI\.h/StPrimitiI.h/
+s/StRadioSwitchI\.h/StRadioSwI.h/
+s/StRepeatButtonI\.h/StRepetBnI.h/
+s/StSelectBoxSwitchI\.h/StSltBxSwI.h/
+s/StSimpleButtonI\.h/StSimplBnI.h/
+s/StSimpleSwitchI\.h/StSimplSwI.h/

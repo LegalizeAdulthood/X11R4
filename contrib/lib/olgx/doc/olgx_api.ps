@@ -1,0 +1,760 @@
+%! Sun SUNWRITE prolog Version 1.1
+%%
+/BLACK { 0.0 } bind def
+/CP {closepath} bind def
+/FI {eofill} bind def
+/E {exch} bind def
+/FF {findfont} bind def
+/GR {grestore} bind def
+/GS {gsave} bind def
+/MF {makefont} bind def
+/NP {newpath} bind def
+/RO {rotate} bind def
+/ST {stroke} bind def
+/SC {scale} bind def
+/SF {setfont} bind def
+/SG {setgray} bind def
+/SLC {setlinecap} bind def
+/SLJ {setlinejoin} bind def
+/SLW {setlinewidth} bind def
+/TR {translate} bind def
+/WHITE { 1.0 } bind def
+/m {moveto} bind def
+/r {rmoveto} bind def
+/l {lineto} bind def
+/sp {x 0 rmoveto} bind def
+/rl {rlineto} bind def
+/s {show} bind def
+/box { NP m l l l CP } bind def
+/pageboundary { NP m l l l CP } bind def
+/BS {   % black stroke
+GS SLJ SLW BLACK SG ST GR
+} bind def
+/WS {   % white stroke
+GS SLJ SLW WHITE SG ST GR
+} bind def
+/badfont null def
+/badfont_trap {
+badfont null ne {
+2 dict begin
+gsave
+.9 setgray
+clippath pathbbox /h exch def /w exch def
+0 h translate 1 -1 scale
+/Times-Roman findfont 17 50 mul scalefont setfont
+w 20 div h 3 mul 7 div moveto
+badfont show (:) show
+/Times-Roman findfont 25 50 mul scalefont setfont
+w 20 div h 2 mul 7 div moveto
+(Font not available) show
+w 20 div h 1 mul 7 div moveto
+(on this printer.) show
+grestore
+end
+/badfont null store
+} if
+} def
+/reencode_small_dict 12 dict def
+/ReencodeSmall {
+reencode_small_dict begin
+/new_codes_and_names E def
+/new_font_name E def
+/base_font_name E def
+/base_font_dict base_font_name FF def
+base_font_dict /FontName get base_font_name ne {
+/badfont base_font_name 30 string cvs store
+} if
+/newfont base_font_dict maxlength dict def
+base_font_dict {
+E dup /FID ne
+{ dup /Encoding eq
+{ E dup length array copy newfont 3 1 roll put }
+{ E newfont 3 1 roll put }
+ifelse
+}
+{ pop pop }
+ifelse
+} forall
+newfont /FontName new_font_name put
+new_codes_and_names aload pop
+new_codes_and_names length 2 idiv
+{ newfont /Encoding get 3 1 roll put }
+repeat
+new_font_name newfont definefont pop
+end     %reencode_small_dict
+} def
+/extended_Zapf [
+8#223 /a89
+8#224 /a90
+8#225 /a93
+8#226 /a94
+8#227 /a91
+8#230 /a92
+8#231 /a205
+8#232 /a85
+8#233 /a206
+8#234 /a86
+8#235 /a87
+8#236 /a88
+8#237 /a95
+8#240 /a96
+] def
+/extended_Standard [
+128 /Acircumflex
+129 /Adieresis
+130 /Agrave
+131 /Aring
+132 /Atilde
+133 /Ccedilla
+134 /Eacute
+135 /Ecircumflex
+136 /Edieresis
+137 /Egrave
+138 /Iacute
+139 /Icircumflex
+140 /Idieresis
+141 /Igrave
+142 /Ntilde
+143 /Oacute
+144 /Ocircumflex
+145 /Odieresis
+146 /Ograve
+147 /Otilde
+148 /Scaron
+149 /Uacute
+150 /Ucircumflex
+151 /Udieresis
+152 /Ugrave
+153 /Ydieresis
+154 /Zcaron
+155 /aacute
+156 /acircumflex
+157 /adieresis
+158 /agrave
+159 /aring
+160 /atilde
+209 /ccedilla
+210 /copyright
+211 /eacute
+212 /ecircumflex
+213 /edieresis
+214 /egrave
+215 /iacute
+216 /icircumflex
+217 /idieresis
+218 /igrave
+219 /logicalnot
+220 /minus
+221 /ntilde
+222 /oacute
+223 /ocircumflex
+224 /odieresis
+228 /ograve
+229 /otilde
+230 /registered
+231 /scaron
+236 /trademark
+237 /uacute
+238 /ucircumflex
+239 /udieresis
+240 /ugrave
+242 /ydieresis
+243 /zcaron
+244 /Aacute
+] def
+/extended_Symbol [
+] def
+/extend_font {  % stack: fontname newfontname
+E dup (ZapfDingbats) eq
+{ cvn E cvn extended_Zapf ReencodeSmall }
+{ dup (Symbol) eq
+{ cvn E cvn extended_Symbol ReencodeSmall }
+{ cvn E cvn extended_Standard ReencodeSmall }
+ifelse
+}
+ifelse
+} bind def
+/getfont {
+/f E def f cvn where
+{ begin f cvx cvn exec SF end }
+{ f 0 f length 8 sub getinterval (LocalFont) extend_font
+/LocalFont FF
+/xsz f f length 4 sub 4 getinterval cvi def
+/ysz f f length 8 sub 4 getinterval cvi def
+[ xsz 0 0 ysz neg 0 0 ] MF dup f cvn E def
+SF
+}
+ifelse
+} bind def
+/ul { % space drop thickness
+GS currentpoint currentlinewidth 
+currentpoint NP m 6 -3 roll 
+SLW 0 E r
+0 rl ST SLW m
+GR 
+} bind def
+/ss { currentpoint pop E m } bind def
+/image_raster { % sw sh dw dh xs ys
+TR SC /sh E def /sw E def
+/imagebuf sw 7 add 8 idiv string def
+sw sh 1 [sw 0 0 sh 0 0] { currentfile imagebuf readhexstring pop }
+image
+} bind def
+/nx { /x E def } bind def
+0. nx
+%%EndFixedProlog
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 4860 13013 m 260 ss
+(Times-Bold03600360) getfont 1491 260 m 720 ss ( OLGX- Application Programmer Interface) s
+(Times-Roman02800280) getfont 0 720 m 1080 ss (  ) s 0 1080 m 1440 ss (   ) s
+0 1440 m 1800 ss ( ) s 0 1800 m 2160 ss ( ) s (Times-Bold02400240) getfont (INITIALIZATION FUNCTIONS) s
+GS 3527 2183 3527 2204 70 2204 70 2183 box GS 0.00 SG FI GR
+GR
+(Times-Roman02800280) getfont 0 2160 m 2520 ss 0 2520 m 2880 ss ( ) s
+(Helvetica02000200) getfont 0 2880 m 3240 ss (Graphics_info ) s
+(Times-Roman02800280) getfont (*) s 0 3240 m 3600 ss ( ) s
+(Times-BoldItalic02400240) getfont (olgx_initialize\() s
+(Helvetica02000200) getfont (display, screen) s
+(Times-BoldItalic02400240) getfont (,) s (Helvetica02000200) getfont (three_d) s
+(Times-BoldItalic02400240) getfont (\)) s (Times-Roman02800280) getfont 0 3600 m
+3960 ss ( ) s (Helvetica02000200) getfont 650.000 nx sp (Display *display;) s
+0 3960 m 4240 ss ( ) s 665.000 nx sp (int screen;) s 0 4240 m 4520 ss 720.000 nx sp
+(int three_d;   ) s (Times-Roman02800280) getfont 0 4520 m 4880 ss ( ) s
+(Times-BoldItalic02400240) getfont 650.000 nx sp (olgx_initialize\(\)) s
+(Times-Roman02800280) getfont (  ) s (Times-Roman02400240) getfont (creates and initializes a graphics information structure.) s
+(Times-Roman02800280) getfont (  ) s (Helvetica02000200) getfont (display) s
+(Times-Roman02800280) getfont (  ) s (Times-Roman02400240) getfont (is a pointer ) s
+0 4880 m 5160 ss (to the display structure associated with an active server connection.) s
+(Times-Roman02800280) getfont (  ) s (Helvetica02000200) getfont (screen) s
+(Times-Roman02800280) getfont (  ) s (Times-Roman02400240) getfont (is the desired screen.) s
+(Helvetica02000200) getfont 0 5160 m 5480 ss (three_d ) s
+(Times-Roman02400240) getfont ( is set to 1 for 3D and 0 for 2D. The graphics information structure returned by) s
+(Times-Roman02800280) getfont (  ) s (Times-BoldItalic02400240) getfont 0 5480 m
+5760 ss (olgx_initialize\(\)) s (Times-Roman02800280) getfont (  ) s
+(Times-Roman02400240) getfont (cannot be used until its font and GC members are set to meaningful values by ) s
+(Times-Roman02800280) getfont (  ) s (Times-BoldItalic02400240) getfont 0 5760 m
+6040 ss (olgx_set_glyph_font\(\) ,  olgx_set_color\(\),) s
+(Times-Roman02800280) getfont (  ) s (Times-Roman02400240) getfont (and) s
+(Times-Roman02800280) getfont ( ) s (Times-BoldItalic02400240) getfont ( olgx_set_text_font\(\) .) s
+(Times-Roman02800280) getfont 0 6040 m 6400 ss (  ) s
+(Times-Roman02400240) getfont 0 6400 m 6720 ss (void) s 0 6720 m 7040 ss ( ) s
+(Times-BoldItalic02400240) getfont (olgx_destroy\() s
+(Helvetica02000200) getfont (info) s (Times-BoldItalic02400240) getfont (\)) s
+(Times-Roman02800280) getfont 0 7040 m 7400 ss 720.000 nx sp
+(Helvetica02000200) getfont (Graphics_info *info;) s
+(Times-Roman02800280) getfont 0 7400 m 7760 ss (   ) s
+(Times-BoldItalic02400240) getfont 0 7760 m 8120 ss sp (olgx_destroy\(\) ) s
+(Times-Roman02400240) getfont (destroys an existing Graphics_info structure ) s
+(Times-Roman02800280) getfont ( ) s (Helvetica02000200) getfont (info) s
+(Times-Roman02800280) getfont ( . ) s (Times-Roman02400240) getfont (In the process,) s
+(Times-Roman02800280) getfont (  ) s (Times-BoldItalic02400240) getfont 0 8120 m
+8440 ss (olgx_destroy\(\)) s (Times-Roman02800280) getfont (  ) s
+(Times-Roman02400240) getfont (will free up any server resources that OLGX has associated with ) s
+(Times-Roman02800280) getfont ( ) s (Helvetica02000200) getfont (info) s
+(Times-Roman02800280) getfont ( . ) s (Times-Roman02400240) getfont (This function ) s
+0 8440 m 8760 ss (does not free up any of the font structures associated with ) s
+(Times-Roman02800280) getfont ( ) s (Helvetica02000200) getfont (info) s
+(Times-Roman02800280) getfont ( ; ) s (Times-Roman02400240) getfont (since those were created by the ) s
+0 8760 m 9040 ss (application, it is up to the application to destroy them.) s
+(Times-Roman02800280) getfont 0 9040 m 9400 ss ( ) s 0 9400 m 9760 ss (   ) s
+(Times-Roman02400240) getfont 0 9760 m 10080 ss (void) s
+(Times-Roman02800280) getfont 0 10080 m 10440 ss ( ) s
+(Times-BoldItalic02400240) getfont (olgx_set_text_font\() s
+(Helvetica02000200) getfont (ginfo, font) s (Times-BoldItalic02400240) getfont (\)) s
+(Times-Roman02800280) getfont 0 10440 m 10800 ss ( ) s 650.000 nx sp
+(Helvetica02000200) getfont (Graphics_info *ginfo;) s 0 10800 m 11080 ss ( ) s
+665.000 nx sp (XFontStruct *font;) s 0 11080 m 11360 ss (  ) s
+(Times-Roman02800280) getfont ( ) s 0 11360 m 11720 ss ( ) s
+(Times-BoldItalic02400240) getfont 650.000 nx sp (olgx_set_text_font\(\) ) s
+(Times-Roman02800280) getfont ( s) s (Times-Roman02400240) getfont (ets the current text font.  The font must already be loaded; ) s
+(Helvetica02000200) getfont ( font  ) s (Times-Roman02400240) getfont (is a ) s
+0 11720 m 12000 ss (pointer to the X font structure associated with the desired font. Subsequent text operations using ) s
+(Times-Roman02800280) getfont ( ) s (Helvetica02000200) getfont 0 12000 m
+12280 ss (ginfo ) s (Times-Roman02800280) getfont ( ) s
+(Times-Roman02400240) getfont (will use this font. This function will create a text GC if one has not already been created.) s
+(Times-Roman02800280) getfont 0 12280 m 12640 ss ( ) s 0 12640 m 13000 ss (  ) s
+0 13000 m 13360 ss ( ) s (Times-Roman02400240) getfont 0 13360 m 14064 ss
+(Times-Roman02000200) getfont (December 5, 1989) s 7640.000 nx sp (Page1) s
+badfont_trap showpage vm_state restore
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 0 14064 m 173 ss
+(Times-Roman02400240) getfont 0 173 m 493 ss 0 493 m 813 ss (void) s
+(Times-Roman02800280) getfont 0 813 m 1173 ss ( ) s
+(Times-BoldItalic02400240) getfont (olgx_set_glyph_font\() s
+(Helvetica02000200) getfont (ginfo, font) s (Times-BoldItalic02400240) getfont (\)) s
+(Times-Roman02800280) getfont 0 1173 m 1533 ss ( ) s 650.000 nx sp
+(Helvetica02000200) getfont (Graphics_info *ginfo;) s 0 1533 m 1813 ss ( ) s
+665.000 nx sp (XFontStruct *font;) s (Times-Roman02800280) getfont 0 1813 m
+2173 ss (   ) s 0 2173 m 2533 ss ( ) s (Times-BoldItalic02400240) getfont
+650.000 nx sp (olgx_set_glyph_font\(\) ) s (Times-Roman02800280) getfont ( ) s
+(Times-Roman02400240) getfont (sets the current glyph font. The font must already be loaded;) s
+(Times-Roman02800280) getfont (  ) s (Helvetica02000200) getfont (font) s
+(Times-Roman02800280) getfont (  ) s (Times-Roman02400240) getfont (is ) s 0 2533 m
+2813 ss (a pointer to the X font structure associated with the desired font. Subsequent graphics operations ) s
+0 2813 m 3093 ss (using) s (Times-Roman02800280) getfont (  ) s
+(Helvetica02000200) getfont (ginfo) s (Times-Roman02800280) getfont (  ) s
+(Times-Roman02400240) getfont (will use this font. If the associated GC's have not been created, this function does so.) s
+(Times-Roman02800280) getfont 0 3093 m 3453 ss ( ) s 0 3453 m 3813 ss (  ) s
+(Times-Roman02400240) getfont (void) s (Times-Roman02800280) getfont 0 3813 m
+4173 ss (  ) s (Times-BoldItalic02400240) getfont (olgx_set_color\() s
+(Helvetica02000200) getfont (ginfo, pixvals) s
+(Times-BoldItalic02400240) getfont (\)) s (Times-Roman02800280) getfont 0 4173 m
+4533 ss ( ) s sp (Helvetica02000200) getfont (Graphics_info *ginfo;) s 0 4533 m
+4813 ss ( ) s 665.000 nx sp (unsigned long pixvals[5];) s
+(Times-Roman02800280) getfont 0 4813 m 5173 ss (   ) s 0 5173 m 5533 ss ( ) s
+(Times-BoldItalic02400240) getfont 712.000 nx sp (olgx_set_color\(\) ) s
+(Times-Roman02800280) getfont ( ) s (Times-Roman02400240) getfont (sets the colors associated with the specified graphics information structure) s
+(Times-Roman02800280) getfont (.  ) s (Helvetica02000200) getfont 0 5533 m
+5813 ss (pixvals) s (Times-Roman02800280) getfont ( ) s
+(Times-Roman02400240) getfont (is an array of five pixel values. The colors associated with each element of  pixvals  are ) s
+0 5813 m 6093 ss (OLGX_WHITE \(0\), OLGX_BLACK\(1\),OLGX_BG1 \(2\), OLGX_BG2 \(3\) and  OLGX_BG3 \(4\). In ) s
+0 6093 m 6373 ss (a monochrome environment, only white and black need be set. The application must maintain the ) s
+0 6373 m 6653 ss (colormap and allocate the colors properly. Please refer to the OPEN LOOK specifications for further ) s
+0 6653 m 6933 ss (details on these colors.) s (Times-Roman02800280) getfont
+0 6933 m 7293 ss ( ) s 0 7293 m 7653 ss ( ) s 0 7653 m 8013 ss 177.000 nx sp
+178.000 nx sp 365.000 nx sp (Times-Roman02400240) getfont (The three functions) s
+(Times-Roman02800280) getfont (  ) s (Times-BoldItalic02400240) getfont (olgx_set_color\(\)) s
+(Helvetica02000200) getfont ( ) s (Times-Roman02800280) getfont (, ) s
+(Times-BoldItalic02400240) getfont ( olgx_set_text_font\(\) ) s
+(Times-Roman02800280) getfont (,) s (Times-Roman02400240) getfont ( and) s
+(Times-Roman02800280) getfont (  ) s (Times-BoldItalic02400240) getfont (olgx_set_glyph_font\(\)) s
+(Times-Roman02800280) getfont (  ) s (Times-Roman02400240) getfont 0 8013 m
+8293 ss (may be called in any order. However, all three of them  must  be called before any drawing can be ) s
+0 8293 m 8573 ss (done with a given  Graphics_info  structure.) s
+(Times-Roman02800280) getfont 0 8573 m 8933 ss ( ) s 0 8933 m 9293 ss 0 9293 m
+9653 ss 0 9653 m 10013 ss 0 10013 m 10373 ss 0 10373 m 10733 ss 0 10733 m
+11093 ss 0 11093 m 11453 ss 0 11453 m 11813 ss 0 11813 m 12173 ss 0 12173 m
+12533 ss 0 12533 m 12893 ss (Times-Bold03600360) getfont 4860 12893 m
+13353 ss (Times-Bold02400240) getfont 0 13353 m 14064 ss
+(Times-Roman02000200) getfont (December 5, 1989) s 7640.000 nx sp (Page2) s
+badfont_trap showpage vm_state restore
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 0 14064 m 173 ss
+(Times-Bold02400240) getfont 0 173 m 493 ss (OLGX MACROS :) s GS
+1971 516 1971 537 0 537 0 516 box GS 0.00 SG FI GR
+GR
+0 493 m 813 ss (Times-BoldItalic02400240) getfont 0 813 m 1133 ss 0 1133 m
+1453 ss (   ) s 0 1453 m 1773 ss 720.000 nx sp (         ScrollbarElevator_Height\() s
+(Helvetica02000200) getfont ( info ) s (Times-BoldItalic02400240) getfont (\)  ) s
+(Times-Roman02400240) getfont (  returns the scrollbar elevator height from the ) s
+(Helvetica02000200) getfont 354.000 nx sp 0 1773 m 2053 ss 720.000 nx sp (specified info ) s
+(Times-Roman02400240) getfont (struct.) s (Times-Roman02800280) getfont 0 2053 m
+2413 ss 0 2413 m 2773 ss sp (       ) s (Times-BoldItalic02400240) getfont ( ScrollbarElevator_Width\() s
+(Times-Roman02400240) getfont ( ) s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont ( \)    returns the scrollbar elevator width from the) s
+(Helvetica02000200) getfont ( specified ) s 0 2773 m 3093 ss sp ( info) s
+(Times-Roman02400240) getfont ( struct) s (Times-Roman02800280) getfont (.) s
+0 3093 m 3453 ss 0 3453 m 3813 ss sp (       ) s
+(Times-BoldItalic02400240) getfont ( HorizSliderControl_Width\() s
+(Times-Roman02400240) getfont ( ) s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont (\)  returns the width of the Horizontal slider control ) s
+81.000 nx sp 0 3813 m 4093 ss 720.000 nx sp (section of the ) s
+(Helvetica02000200) getfont (info) s (Times-Roman02400240) getfont ( struct. This corresponds to the Vertical Slider Control Height.) s
+0 4093 m 4413 ss 0 4413 m 4733 ss sp (     ) s
+(Times-BoldItalic02400240) getfont (    HorizSliderControl_Hieght) s
+(Times-Roman02400240) getfont (\() s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont (\)   returns the height of the Horizontal slider control ) s
+0 4733 m 5013 ss sp (section of the specified ) s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont ( struct. This corresponds to the Vertical slider control Width.) s
+0 5013 m 5333 ss 0 5333 m 5653 ss sp (Times-BoldItalic02400240) getfont
+551.000 nx sp (SliderEndCap_Width\() s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont (\)   returns  the width of the slider endcap of the specified ) s
+(Helvetica02000200) getfont (info) s (Times-Roman02400240) getfont (  ) s 0 5653 m
+5933 ss (     ) s 420.000 nx sp (struct. Both vertical and horizontal sliders have the same endcap width.) s
+0 5933 m 6253 ss 0 6253 m 6573 ss 720.000 nx sp
+(Times-BoldItalic02400240) getfont 551.000 nx sp (SliderEndCap_Height) s
+(Times-Roman02400240) getfont (\() s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont (\)   returns the height of the slider endcap from the specified ) s
+(Helvetica02000200) getfont 0 6573 m 6853 ss 720.000 nx sp (info) s
+(Times-Roman02400240) getfont ( struct. Both vertical and horizontal sliders have the same endcap height.) s
+0 6853 m 7173 ss 0 7173 m 7493 ss sp (Times-BoldItalic02400240) getfont
+551.000 nx sp (CheckBox_Height) s (Times-Roman02400240) getfont (\() s
+(Helvetica02000200) getfont (info) s (Times-Roman02400240) getfont (\)   returns the height of the checkbox from the specified) s
+(Helvetica02000200) getfont ( info) s (Times-Roman02400240) getfont ( ) s
+83.000 nx sp 0 7493 m 7773 ss 720.000 nx sp (struct.) s 0 7773 m 8093 ss
+0 8093 m 8413 ss sp (Times-BoldItalic02400240) getfont 561.000 nx sp (CheckBox_Width) s
+(Times-Roman02400240) getfont (\() s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont (\)   returns the width  of the checkbox from the specified ) s
+(Helvetica02000200) getfont (info) s (Times-Roman02400240) getfont ( ) s
+142.000 nx sp 0 8413 m 8693 ss 720.000 nx sp (struct.) s 0 8693 m 9013 ss
+0 9013 m 9333 ss sp (Times-BoldItalic02400240) getfont 551.000 nx sp (PushPinOut_Width) s
+(Times-Roman02400240) getfont (\() s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont (\)  returns the width of the PushPin in its Out state from the ) s
+60.000 nx sp 0 9333 m 9613 ss 720.000 nx sp (specified ) s
+(Helvetica02000200) getfont (info ) s (Times-Roman02400240) getfont (struct.) s
+0 9613 m 9933 ss 0 9933 m 10253 ss (          ) s
+(Times-BoldItalic02400240) getfont 120.000 nx sp 561.000 nx sp (PushPinOut_Height) s
+(Times-Roman02400240) getfont (\() s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont (\)  returns the height  of the PushPin in its Out state from the ) s
+0 10253 m 10533 ss 720.000 nx sp (specified ) s (Helvetica02000200) getfont (info ) s
+(Times-Roman02400240) getfont (struct.) s 0 10533 m 10853 ss 0 10853 m 11173 ss
+sp (Times-BoldItalic02400240) getfont 551.000 nx sp (Button_Height) s
+(Times-Roman02400240) getfont (\() s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont (\) returns the height of the button from the specified) s
+(Helvetica02000200) getfont ( info ) s (Times-Roman02400240) getfont (struct.) s
+0 11173 m 11493 ss 0 11493 m 11813 ss 720.000 nx sp
+(Times-BoldItalic02400240) getfont 552.000 nx sp (ButtonEndcap_Width) s
+(Times-Roman02400240) getfont (\() s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont (\) returns the width of the button endcap from the specified ) s
+(Helvetica02000200) getfont 0 11813 m 12093 ss 720.000 nx sp (info) s
+(Times-Roman02400240) getfont ( struct.) s 0 12093 m 12413 ss 0 12413 m 12733 ss
+sp (Times-BoldItalic02400240) getfont 571.000 nx sp (MenuMark_Width) s
+(Times-Roman02400240) getfont (\() s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont (\) returns the width of the MenuMark used in MenuButtons from) s
+0 12733 m 13053 ss 720.000 nx sp ( the specified ) s (Helvetica02000200) getfont
+(info) s (Times-Roman02400240) getfont ( struct.) s 0 13053 m 13373 ss 0 13373 m
+14064 ss (Times-Roman02000200) getfont (December 5, 1989) s 7640.000 nx sp (Page3) s
+badfont_trap showpage vm_state restore
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 0 14064 m 173 ss
+(Times-Roman02400240) getfont 0 173 m 493 ss 0 493 m 813 ss 720.000 nx sp
+(Times-BoldItalic02400240) getfont 0 813 m 1133 ss sp 533.000 nx sp (MenuMark_Height) s
+(Times-Roman02400240) getfont (\() s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont (\) returns the height  of the MenuMark used in MenuButtons ) s
+0 1133 m 1413 ss 720.000 nx sp (from) s (Times-Roman02800280) getfont ( ) s
+(Times-Roman02400240) getfont (the specified ) s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont ( struct.) s 0 1413 m 1733 ss 0 1733 m 2053 ss sp
+(Times-BoldItalic02400240) getfont 590.000 nx sp (Abbrev_MenuButton_Height) s
+(Times-Roman02400240) getfont (\() s (Helvetica02000200) getfont (info\)) s
+(Times-Roman02400240) getfont ( returns the height of the abbreviated MenuButton ) s
+0 2053 m 2333 ss 720.000 nx sp (from the specified ) s
+(Helvetica02000200) getfont (info ) s (Times-Roman02400240) getfont (struct.) s
+0 2333 m 2653 ss 0 2653 m 2973 ss sp (Times-BoldItalic02400240) getfont
+552.000 nx sp (Abbrev_MenuButton_Width\() s (Helvetica02000200) getfont (info) s
+(Times-Roman02400240) getfont (\) returns the width of the abbreviated MenuButton ) s
+0 2973 m 3253 ss 720.000 nx sp (from the specified ) s
+(Helvetica02000200) getfont (info ) s (Times-Roman02400240) getfont (struct.) s
+(Times-Roman02800280) getfont 0 3253 m 3613 ss 0 3613 m 3973 ss 0 3973 m
+4333 ss 0 4333 m 4693 ss 0 4693 m 5053 ss 0 5053 m 5413 ss 0 5413 m 5773 ss
+0 5773 m 6133 ss 0 6133 m 6493 ss 0 6493 m 6853 ss 0 6853 m 7213 ss 0 7213 m
+7573 ss 0 7573 m 7933 ss 0 7933 m 8293 ss 0 8293 m 8653 ss 0 8653 m 9013 ss
+0 9013 m 9373 ss 0 9373 m 9733 ss 0 9733 m 10093 ss 0 10093 m 10453 ss
+0 10453 m 10813 ss 0 10813 m 11173 ss (Times-Bold02400240) getfont 0 11173 m
+11493 ss 0 11493 m 11813 ss 0 11813 m 12133 ss 0 12133 m 12453 ss 0 12453 m
+12773 ss 0 12773 m 13093 ss 0 13093 m 13413 ss 0 13413 m 14064 ss
+(Times-Roman02000200) getfont (December 5, 1989) s 7640.000 nx sp (Page4) s
+badfont_trap showpage vm_state restore
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 0 14064 m 173 ss
+(Times-Bold02400240) getfont 0 173 m 493 ss 0 493 m 813 ss 0 813 m 1133 ss
+0 1133 m 1453 ss 0 1453 m 1773 ss 0 1773 m 2093 ss 0 2093 m 2413 ss 0 2413 m
+2733 ss (RENDERING FUNCTIONS) s GS 2937 2756 2937 2777 0 2777 0 2756 box
+GS 0.00 SG FI GR
+GR
+(Times-Roman02800280) getfont 0 2733 m 3093 ss ( ) s 0 3093 m 3453 ss (  ) s
+0 3453 m 3813 ss ( ) s 0 3813 m 4173 ss (void) s 0 4173 m 4533 ss ( ) s
+(Times-BoldItalic02400240) getfont (olgx_draw_button\() s
+(Helvetica02000200) getfont (ginfo, win, x, y, width, label, state) s
+(Times-BoldItalic02400240) getfont (\)) s (Times-Roman02800280) getfont 0 4533 m
+4893 ss ( ) s 0 4893 m 5253 ss 720.000 nx sp (Helvetica02000200) getfont (Graphics_info *ginfo; ) s
+0 5253 m 5533 ss sp (Window win;) s 0 5533 m 5813 ss sp (int x, y, width;) s
+0 5813 m 6093 ss sp (long  label;) s 0 6093 m 6373 ss sp (int state;) s
+(Times-Roman02800280) getfont 0 6373 m 6733 ss (  ) s 0 6733 m 7093 ss
+23.000 nx sp sp sp 24.000 nx sp 627.000 nx sp (T) s
+(Times-Roman02400240) getfont (his function renders  panel buttons and menu items.  ) s
+(Helvetica02000200) getfont (win) s (Times-Roman02400240) getfont (  is the window in which the object ) s
+0 7093 m 7373 ss (is to be rendered.  ) s (Helvetica02000200) getfont (x) s
+(Times-Roman02400240) getfont (  and ) s (Helvetica02000200) getfont ( y) s
+(Times-Roman02400240) getfont (  are the coordinates of the upper left-hand corner of the object, relative to ) s
+0 7373 m 7653 ss (the upper left-hand corner of  ) s (Helvetica02000200) getfont
+(win) s (Times-Roman02400240) getfont ( . ) s (Helvetica02000200) getfont ( width) s
+(Times-Roman02400240) getfont (  is the width of the entire object, including the button ) s
+0 7653 m 7933 ss (endcaps if the object is a panel button.  ) s
+(Helvetica02000200) getfont (label) s (Times-Roman02400240) getfont (  may be either a character string or an X Pixmap. If the ) s
+0 7933 m 8213 ss (given ) s (Helvetica02000200) getfont (label) s
+(Times-Roman02400240) getfont ( is too large to fit in the button, it will be clipped appropriately. Finally,state  is the bitwise ) s
+0 8213 m 8493 ss (OR of a set of flags representing the current  state of the object. These flags are as follows:) s
+0 8493 m 8813 ss 0 8813 m 9133 ss 0 9133 m 9453 ss (  ) s 600.000 nx sp (OLGX_NORMAL ) s
+994.000 nx sp (The item is not invoked. This is the default.) s 0 9453 m 9773 ss
+(  ) s 600.000 nx sp (OLGX_INVOKED ) s 941.000 nx sp (The item is invoked. In 3D, it will be drawn as a recessed ) s
+3600 9773 m 10053 ss (button or menu item. In 2D, the item will appear in reverse ) s
+3600 10053 m 10333 ss (video.) s 0 10333 m 10653 ss ( ) s 660.000 nx sp ( OLGX_MENU_ITEM ) s
+561.000 nx sp (This object is a menu item, not a panel button. With this flag,  ) s
+3600 10653 m 10933 ss (no outline is drawn on non-invoked items.) s 0 10933 m
+11253 ss (  ) s 600.000 nx sp (OLGX_ERASE ) s 1274.000 nx sp (The background behind the item is to be cleared before the ) s
+3600 11253 m 11533 ss (item is drawn.This flag is only valid for transparent items such ) s
+3600 11533 m 11813 ss (as non-invoked menu items.) s 0 11813 m 12133 ss (  ) s
+600.000 nx sp (OLGX_BUSY ) s 1394.000 nx sp (The item is busy. In either 2D or 3D, this means that it) s
+(Times-Roman02800280) getfont ( ) s (Times-Roman02400240) getfont (will be ) s
+3600 12133 m 12413 ss (filled with a 15% grey stipple.) s
+(Times-Roman02800280) getfont 0 12413 m 12773 ss (  ) s
+(Times-Roman02400240) getfont 0 12773 m 13093 ss 0 13093 m 13413 ss
+720.000 nx sp (OLGX_DEFAULT ) s 941.000 nx sp (This item is a default item. OLGX will render it item with a ) s
+0 13413 m 14064 ss (Times-Roman02000200) getfont (December 5, 1989) s
+7640.000 nx sp (Page5) s badfont_trap showpage vm_state restore
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 3600 14064 m 173 ss
+(Times-Roman02400240) getfont (default ring.) s 0 173 m 493 ss (  ) s 600.000 nx sp
+(OLGX_INACTIVE ) s 901.000 nx sp (OLGX_INACTIVE designates the item as inactive. It will be ) s
+3600 493 m 773 ss (drawn with a 50% grey stipple.) s 0 773 m 1093 ss 0 1093 m
+1413 ss (  ) s 600.000 nx sp (OLGX_VERT_MENU_MARK ) s 1181.000 nx sp (The item contains a vertical menu mark.) s
+0 1413 m 1733 ss (  ) s 600.000 nx sp (OLGX_HORIZ_MENU_MARK ) s 1074.000 nx sp (The item contains a horizontal menu mark.) s
+0 1733 m 2053 ss (  ) s 600.000 nx sp (OLGX_LABEL_IS_PIXMAP ) s 1341.000 nx sp (By default, button and menu item labels are ) s
+5040 2053 m 2333 ss (strings. This flag must be presented if the label ) s
+5040 2333 m 2613 ss (is a pixmap or window ID. The geometry of the ) s
+5040 2613 m 2893 ss (pixmap is currently determined by querying the ) s
+5040 2893 m 3173 ss (X server. This is based upon the assumption that ) s
+5040 3173 m 3453 ss (p) s -1.760 nx sp (i) s -1.760 nx sp (x) s -1.760 nx sp (m) s
+-1.760 nx sp (a) s -1.760 nx sp (p ) s -12.000 nx sp (l) s -1.760 nx sp (a) s
+-1.780 nx sp (b) s -1.760 nx sp (e) s -1.760 nx sp (l) s -1.760 nx sp (s ) s
+-12.000 nx sp (w) s -1.760 nx sp (i) s -1.760 nx sp (l) s -1.780 nx sp (l ) s
+-12.000 nx sp (b) s -1.760 nx sp (e ) s -12.000 nx sp (u) s -1.760 nx sp (s) s
+-1.760 nx sp (e) s -1.760 nx sp (d ) s -12.000 nx sp (r) s -1.760 nx sp (e) s
+-1.780 nx sp (l) s -1.760 nx sp (a) s -1.760 nx sp (t) s -1.760 nx sp (i) s -1.760 nx sp
+(v) s -1.760 nx sp (e) s -1.760 nx sp (l) s -1.780 nx sp (y ) s -12.000 nx sp (i) s
+-1.760 nx sp (n) s -1.760 nx sp (f) s -1.760 nx sp (r) s -1.760 nx sp (e) s -1.760 nx sp
+(q) s -1.780 nx sp (u) s -1.760 nx sp (e) s -1.760 nx sp (n) s -1.760 nx sp (t) s
+-1.760 nx sp (l) s -1.760 nx sp (y) s -1.780 nx sp (.) s 0 3453 m 3773 ss ( ) s 0 3773 m
+4093 ss ( ) s 0 4093 m 4413 ss (  ) s 0 4413 m 4733 ss ( ) s 0 4733 m 5053 ss (void) s
+(Times-BoldItalic02400240) getfont 0 5053 m 5373 ss (olgx_draw_abbrev_button\() s
+(Helvetica02000200) getfont (ginfo, win, x, y, state) s
+(Times-BoldItalic02400240) getfont (\)) s (Times-Roman02400240) getfont 0 5373 m
+5693 ss 720.000 nx sp (Helvetica02000200) getfont (Graphics_info *ginfo; ) s
+0 5693 m 5973 ss sp (Window win; ) s 0 5973 m 6253 ss sp (int x, y, state;) s
+(Times-Roman02400240) getfont 0 6253 m 6573 ss ( ) s 0 6573 m 6893 ss
+821.000 nx sp (This function renders an abbreviated menu button at the position \( ) s
+(Helvetica02000200) getfont (x, y) s (Times-Roman02400240) getfont ( \) within window ) s
+(Helvetica02000200) getfont ( win) s (Times-Roman02400240) getfont ( . ) s
+(Helvetica02000200) getfont ( ) s 0 6893 m 7213 ss (state) s
+(Times-Roman02400240) getfont (  may be OLGX_NORMAL , OLGX_INVOKED ,OLGX_INACTIVE or OLGX_BUSY.Use ) s
+0 7213 m 7493 ss (OLGX_ERASE to clear the underlying previous state.  The MenuMark drawn inside the button ) s
+0 7493 m 7773 ss (points down.) s 0 7773 m 8093 ss 0 8093 m 8413 ss 0 8413 m
+8733 ss (  ) s 0 8733 m 9053 ss (  ) s 0 9053 m 9373 ss (void) s
+(Times-Roman02800280) getfont ( ) s (Times-Roman02400240) getfont
+(Times-BoldItalic02400240) getfont 0 9373 m 9693 ss (olgx_draw_slider\() s
+(Helvetica02000200) getfont (ginfo, win, x, y, width, old_value, new_value, state) s
+(Times-Roman02400240) getfont (\)) s (Helvetica02000200) getfont 0 9693 m
+9973 ss 720.000 nx sp (Graphics_info *ginfo; ) s 0 9973 m 10253 ss sp (Window win; ) s
+0 10253 m 10533 ss sp (int x, y, width, value, state;) s
+(Times-Roman02800280) getfont 0 10533 m 10893 ss (  ) s 0 10893 m 11253 ss ( ) s
+(Times-BoldItalic02400240) getfont ( ) s 590.000 nx sp (olgx_draw_slider\(\) ) s
+(Times-Roman02400240) getfont ( renders or updates a slider. The slider will be drawn within window  ) s
+(Helvetica02000200) getfont (win) s (Times-Roman02400240) getfont (  ) s 0 11253 m
+11533 ss (at location \( x, y \). ) s (Helvetica02000200) getfont ( width) s
+(Times-Roman02400240) getfont (  represents the width of the slider in pixels, including endcaps.  ) s
+(Helvetica02000200) getfont (Old_value) s (Times-Roman02400240) getfont ( ) s
+0 11533 m 11853 ss (and ) s (Helvetica02000200) getfont ( New_value) s
+(Times-Roman02400240) getfont (  give the old and new values of the slider in pixels with the origin at either the top  or ) s
+0 11853 m 12133 ss (the left of the slider.  Finally,) s
+(Helvetica02000200) getfont (  state) s (Times-Roman02400240) getfont (  gives information about the current state of the slider.) s
+0 12133 m 12453 ss (It consists of the bitwise-OR of any of the following flags:) s
+0 12453 m 12773 ss (  ) s 0 12773 m 13093 ss 720.000 nx sp (OLGX_VERTICAL ) s
+847.000 nx sp (The slider is a vertical slider.) s 0 13093 m 13413 ss (  ) s
+600.000 nx sp (OLGX_HORIZONTAL ) s 488.000 nx sp (The slider is a horizontal slider.) s
+0 13413 m 14064 ss (Times-Roman02000200) getfont (December 5, 1989) s
+7640.000 nx sp (Page6) s badfont_trap showpage vm_state restore
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 0 14064 m 173 ss
+(Times-Roman02400240) getfont (  ) s 600.000 nx sp 0 173 m 493 ss 0 493 m 813 ss
+720.000 nx sp (OLGX_UPDATE ) s 1087.000 nx sp (Update the slider instead of rendering the whole slider. If ) s
+3600 813 m 1093 ss (OLGX_UPDATE is not specified, the parameter  old_value  ) s
+3600 1093 m 1373 ss (will not be used.) s 0 1373 m 1693 ss (  ) s 600.000 nx sp
+(Times-Roman02800280) getfont 0 1693 m 2053 ss 0 2053 m 2413 ss ( ) s
+(Times-Roman02400240) getfont 0 2413 m 2733 ss (This function does not draw any of the text associated with certain types  of OPEN LOOK sliders. ) s
+0 2733 m 3013 ss (For example, some OPEN LOOK sliders provide,tick marks, end boxes,  labels on the tick marks ) s
+0 3013 m 3293 ss (and  numeric-entry fields beside the  slider. The handling of these is left to the application.) s
+(Times-Roman02800280) getfont 0 3293 m 3653 ss ( ) s 0 3653 m 4013 ss (  ) s
+(Times-Roman02400240) getfont 0 4013 m 4333 ss (void) s
+(Times-BoldItalic02400240) getfont 0 4333 m 4653 ss (olgx_draw_resize_corner\() s
+(Helvetica02000200) getfont (ginfo, win, x, y, type) s
+(Times-BoldItalic02400240) getfont (,) s (Helvetica02000200) getfont (state) s
+(Times-BoldItalic02400240) getfont (\)) s (Times-Roman02400240) getfont 0 4653 m
+4973 ss 720.000 nx sp (Helvetica02000200) getfont (Graphics_info *ginfo;) s
+0 4973 m 5253 ss sp (Window win;) s 0 5253 m 5533 ss sp (int x, y, type;) s
+(Times-Roman02800280) getfont 0 5533 m 5893 ss sp (Helvetica02000200) getfont
+(int  state;) s (Times-Roman02800280) getfont 0 5893 m 6253 ss
+(Times-Roman02400240) getfont 0 6253 m 6573 ss sp (This function places a resize corner of the requested type in a given location. \( ) s
+(Helvetica02000200) getfont (x, y ) s (Times-Roman02400240) getfont (\) and  win  ) s
+0 6573 m 6853 ss (specify the location and window of the resize corner, respectively. The shape of the resize corner is) s
+0 6853 m 7173 ss (determined by the  type  parameter.  Type  must be one of OLGX_UPPER_LEFT, ) s
+0 7173 m 7453 ss (OLGX_LOWER_LEFT, OLGX_UPPER_RIGHT, or OLGX_LOWER_RIGHT.) s
+(Helvetica02000200) getfont (state ) s (Times-Roman02400240) getfont (must be either ) s
+0 7453 m 7733 ss (OLGX_NORMAL or OLGX_INVOKED) s 0 7733 m 8053 ss ( ) s 0 8053 m
+8373 ss ( ) s 0 8373 m 8693 ss (void) s (Times-BoldItalic02400240) getfont 0 8693 m
+9013 ss (olgx_draw_pushpin\() s (Helvetica02000200) getfont (ginfo, win, x, y, state) s
+(Times-BoldItalic02400240) getfont (\)) s (Times-Roman02400240) getfont 0 9013 m
+9333 ss sp (Helvetica02000200) getfont (Graphics_info *ginfo;) s 0 9333 m
+9613 ss sp (Window win;) s 0 9613 m 9893 ss sp (int x, y, state;) s
+(Times-Roman02400240) getfont 0 9893 m 10213 ss 0 10213 m 10533 ss sp (This function renders a pushpin at the requested  location. \() s
+(Helvetica02000200) getfont ( x, y) s (Times-Roman02400240) getfont ( \) and  ) s
+(Helvetica02000200) getfont (win ) s (Times-Roman02400240) getfont ( specify the ) s
+0 10533 m 10813 ss (location and window of the resize corner, respectively. The state of the pushpin is determined by the  ) s
+(Helvetica02000200) getfont 0 10813 m 11093 ss (state) s
+(Times-Roman02400240) getfont (  parameter. ) s (Helvetica02000200) getfont ( state) s
+(Times-Roman02400240) getfont (  must be a bitwise-or combination of the following:) s
+0 11093 m 11413 ss (  ) s 0 11413 m 11733 ss sp (OLGX_PUSHPIN_OUT ) s 421.000 nx sp
+(The pushpin is out.) s 0 11733 m 12053 ss ( ) s 660.000 nx sp ( OLGX_PUSHPIN_IN ) s
+601.000 nx sp (The pushpin is in.) s 0 12053 m 12373 ss (  ) s 600.000 nx sp (OLGX_ERASE ) s
+1274.000 nx sp (The area behind the pushpin will be erased before the pushpin ) s
+3600 12373 m 12653 ss (is drawn. This flag allows the new pushpin to erase the ) s
+3600 12653 m 12933 ss (previous one when it changes states.) s 0 12933 m
+13253 ss 720.000 nx sp (OLGX_INACTIVE ) s 901.000 nx sp (The pushpin is inactive; it will be drawn with a 50% grey ) s
+3600 13253 m 13533 ss (stipple.) s 0 13533 m 14064 ss
+(Times-Roman02000200) getfont (December 5, 1989) s 7640.000 nx sp (Page7) s
+badfont_trap showpage vm_state restore
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 0 14064 m 173 ss
+(Times-Roman02400240) getfont (  ) s 600.000 nx sp 0 173 m 493 ss 720.000 nx sp
+(OLGX_DEFAULT ) s 941.000 nx sp (The pushpin is a default pushpin.) s 0 493 m
+813 ss 720.000 nx sp 1440.000 nx sp sp 0 813 m 1133 ss 720.000 nx sp
+1440.000 nx sp sp 0 1133 m 1453 ss (   ) s 0 1453 m 1773 ss (void) s
+(Times-BoldItalic02400240) getfont 0 1773 m 2093 ss (olgx_draw_box\() s
+(Helvetica02000200) getfont (ginfo, win, x, y, width, height, state, fill_in) s
+(Times-BoldItalic02400240) getfont (\)) s (Times-Roman02400240) getfont 0 2093 m
+2413 ss 720.000 nx sp (Helvetica02000200) getfont (Graphics_info *ginfo;) s
+0 2413 m 2693 ss sp (Window win;) s 0 2693 m 2973 ss (  ) s 609.000 nx sp (int x, y, width, height, state, fill_in;) s
+0 2973 m 3253 ss (  ) s (Times-Roman02400240) getfont 0 3253 m 3573 ss ( ) s
+0 3573 m 3893 ss ( ) s (Times-BoldItalic02400240) getfont 660.000 nx sp (olgx_draw_box\(\) ) s
+(Times-Roman02400240) getfont ( draws a beveled box of the given size at the specified location. ) s
+(Helvetica02000200) getfont ( state ) s (Times-Roman02400240) getfont ( ) s
+0 3893 m 4173 ss (describes the state of the box. It may be either OLGX_NORMAL or OLGX_INVOKED. In 3D ) s
+0 4173 m 4453 ss (mode, an invoked box is drawn as a recessed rectangle and a normal box is drawn as a raised ) s
+0 4453 m 4773 ss 0 4773 m 5093 ss (rectangle. If ) s (Helvetica02000200) getfont
+( fill_in ) s (Times-Roman02400240) getfont ( is nonzero, then the  box is filled in. The State flag can take OLGX_ERASE ) s
+0 5093 m 5413 ss (to erase the underlying box before drawing over it.) s
+0 5413 m 5733 ss ( ) s 0 5733 m 6053 ss ( ) s 0 6053 m 6373 ss (void) s
+(Times-BoldItalic02400240) getfont 0 6373 m 6693 ss (olgx_draw_chiseled_box\() s
+(Helvetica02000200) getfont (ginfo, win, x, y, width, height, fill_in, color) s
+(Times-BoldItalic02400240) getfont (\)) s (Times-Roman02400240) getfont 0 6693 m
+7013 ss 720.000 nx sp (Helvetica02000200) getfont (Graphics_info *ginfo;) s
+0 7013 m 7293 ss sp (Window win;) s 0 7293 m 7573 ss sp (int x, y, width, height, state, fill_in;) s
+(Times-Roman02400240) getfont 0 7573 m 7893 ss (  ) s 0 7893 m 8213 ss ( ) s
+(Times-BoldItalic02400240) getfont 660.000 nx sp (olgx_draw_chiseled_box\(\) ) s
+(Times-Roman02400240) getfont ( draws a ") s (Times-BoldItalic02400240) getfont
+(chiseled) s (Times-Roman02400240) getfont (" box of the given size at the specified location. ) s
+0 8213 m 8493 ss (If  ) s (Helvetica02000200) getfont (fill_in ) s
+(Times-Roman02400240) getfont ( is nonzero, the box will be filled in with the given  color. ) s
+0 8493 m 8813 ss (   ) s 0 8813 m 9133 ss (void ) s
+(Times-BoldItalic02400240) getfont 0 9133 m 9453 ss (olgx_draw_choice_item\() s
+(Helvetica02000200) getfont (ginfo, win, x, y, width, height, label, state) s
+(Times-BoldItalic02400240) getfont (\)) s (Times-Roman02400240) getfont ( ) s
+0 9453 m 9773 ss 720.000 nx sp (Helvetica02000200) getfont (Graphics_info *ginfo;) s
+0 9773 m 10053 ss sp (Window win;) s 0 10053 m 10333 ss sp (int x, y, width, height;) s
+0 10333 m 10613 ss sp (long  label;) s (Times-Roman02800280) getfont 0 10613 m
+10973 ss sp (Helvetica02000200) getfont (int state;) s
+(Times-Roman02800280) getfont 0 10973 m 11333 ss (  ) s 0 11333 m 11693 ss ( ) s
+(Times-BoldItalic02400240) getfont 650.000 nx sp (olgx_draw_choice_item\(\) ) s
+(Times-Roman02800280) getfont ( ) s (Times-Roman02400240) getfont (will render a choice item with either a  pixmap or character string ) s
+0 11693 m 11973 ss (label. ) s (Helvetica02000200) getfont ( win) s
+(Times-Roman02400240) getfont (  designates what window the item is to be drawn in. ) s
+(Helvetica02000200) getfont ( x ) s (Times-Roman02400240) getfont ( and ) s
+(Helvetica02000200) getfont ( y) s (Times-Roman02400240) getfont (  give the coordinates) s
+0 11973 m 12293 ss (of the upper-left corner of the choice item, and ) s
+(Helvetica02000200) getfont ( width) s (Times-Roman02400240) getfont (  and ) s
+(Helvetica02000200) getfont (height) s (Times-Roman02400240) getfont (  denote its outside width and height. ) s
+0 12293 m 12573 ss ( ) s (Helvetica02000200) getfont (label) s
+(Times-Roman02400240) getfont (  is either an X Pixmap ID or a pointer to a character string, depending upon the type of label ) s
+0 12573 m 12853 ss (desired. Finally,  ) s (Helvetica02000200) getfont (state) s
+(Times-Roman02400240) getfont (  gives the current state of the item. It consists of a bitwise-OR of any of the ) s
+0 12853 m 13133 ss (following flags:) s (Times-Roman02800280) getfont 0 13133 m
+13493 ss (  ) s (Times-Roman02400240) getfont 0 13493 m 14064 ss
+(Times-Roman02000200) getfont (December 5, 1989) s 7640.000 nx sp (Page8) s
+badfont_trap showpage vm_state restore
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 0 14064 m 173 ss
+(Times-Roman02400240) getfont 720.000 nx sp 0 173 m 493 ss 0 493 m 813 ss sp
+(OLGX_NORMAL ) s 994.000 nx sp (The item is not invoked. In a "3D" environment, it will be ) s
+3600 813 m 1093 ss (drawn as a raised rectangle.) s 0 1093 m 1413 ss ( ) s
+660.000 nx sp (OLGX_INVOKED ) s 941.000 nx sp (The item is invoked. In a "3D" environment, it will be drawn as ) s
+3600 1413 m 1693 ss (a recessed rectangle.) s 0 1693 m 2013 ss (  ) s 600.000 nx sp
+(OLGX_DEFAULT ) s 941.000 nx sp (This is a default choice item. An inner default rectangle will be ) s
+3600 2013 m 2293 ss (drawn to denote it as such.) s 0 2293 m 2613 ss (  ) s
+600.000 nx sp (OLGX_INACTIVE ) s 901.000 nx sp (This item is inactive. It will be drawn with a 50% grey stipple.) s
+0 2613 m 2933 ss (  ) s 600.000 nx sp (OLGX_LABEL_IS_PIXMAP ) s 1341.000 nx sp (The label specified is an X Pixmap ID. If this ) s
+5040 2933 m 3213 ss (flag is not given, olgx_draw_choice_item  will ) s
+5040 3213 m 3493 ss (assume that the label is a character string.) s 0 3493 m
+3813 ss (  ) s 0 3813 m 4133 ss ( ) s 0 4133 m 4453 ss 0 4453 m 4773 ss 0 4773 m
+5093 ss 0 5093 m 5413 ss (void) s (Times-BoldItalic02400240) getfont 0 5413 m
+5733 ss (olgx_draw_check_box\() s (Helvetica02000200) getfont (ginfo, win, x, y, state) s
+(Times-BoldItalic02400240) getfont (\)) s (Times-Roman02400240) getfont 0 5733 m
+6053 ss 720.000 nx sp (Helvetica02000200) getfont (Graphics_info *ginfo;) s
+0 6053 m 6333 ss sp (Window win;) s 0 6333 m 6613 ss sp (int x, y, state;) s
+0 6613 m 6893 ss (  ) s (Times-Roman02800280) getfont 0 6893 m 7253 ss ( ) s
+(Times-BoldItalic02400240) getfont 0 7253 m 7573 ss ( ) s 660.000 nx sp (olgx_draw_check_box\(\)  ) s
+(Times-Roman02400240) getfont (renders a check box in a specified state. The upper left-hand corner ) s
+0 7573 m 7853 ss (of the check box will be at location \() s
+(Helvetica02000200) getfont ( x, y) s (Times-Roman02400240) getfont ( \) within window  ) s
+(Helvetica02000200) getfont (win) s (Times-Roman02400240) getfont ( .  ) s
+(Helvetica02000200) getfont (state) s (Times-Roman02400240) getfont (  must be one of the) s
+0 7853 m 8173 ss (following:) s 0 8173 m 8493 ss 0 8493 m 8813 ss (  ) s
+600.000 nx sp (OLGX_NORMAL ) s 994.000 nx sp (The check box is unchecked.) s
+0 8813 m 9133 ss (  ) s 600.000 nx sp (OLGX_INVOKED ) s 941.000 nx sp (The check box is recessed. OPEN LOOK specifies that this is ) s
+3600 9133 m 9413 ss (the state of the check box while the mouse button is down over ) s
+3600 9413 m 9693 ss (the check box.) s 0 9693 m 10013 ss 720.000 nx sp (OLGX_INACTIVE) s
+961.000 nx sp (The checkbox is drawn in inactive state.) s 0 10013 m 10333 ss (  ) s
+600.000 nx sp (OLGX_CHECKED ) s 901.000 nx sp (The check box is checked.) s
+0 10333 m 10653 ss (  ) s 0 10653 m 10973 ss (void) s
+(Times-BoldItalic02400240) getfont 0 10973 m 11293 ss (olgx_draw_text_ledge\() s
+(Helvetica02000200) getfont (ginfo, win, x, y, width) s
+(Times-BoldItalic02400240) getfont (\)) s (Times-Roman02400240) getfont
+0 11293 m 11613 ss 720.000 nx sp (Helvetica02000200) getfont (Graphics_info *ginfo;) s
+0 11613 m 11893 ss sp (Window win;) s 0 11893 m 12173 ss sp (int x, y, width;) s
+(Times-Roman02400240) getfont 0 12173 m 12493 ss ( ) s 0 12493 m 12813 ss sp (This function draws a 2D or 3D ledge for text items. The ledge is drawn with its left edge at ) s
+0 12813 m 13133 ss ( \( ) s (Helvetica02000200) getfont (x, y) s
+(Times-Roman02400240) getfont ( \) within ) s (Helvetica02000200) getfont ( win) s
+(Times-Roman02400240) getfont ( , and   ) s (Helvetica02000200) getfont (width  ) s
+(Times-Roman02400240) getfont (pixels wide.) s 0 13133 m 13453 ss ( ) s 0 13453 m
+14064 ss (Times-Roman02000200) getfont (December 5, 1989) s 7640.000 nx sp (Page9) s
+badfont_trap showpage vm_state restore
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 0 14064 m 173 ss
+(Times-Roman02400240) getfont (Times-BoldItalic02400240) getfont 0 173 m
+493 ss (olgx_draw_elevator\(ginfo,win,x,y,oldx,oldy,state\)) s
+(Helvetica02000200) getfont 0 493 m 773 ss 720.000 nx sp (Graphics_info * ginfo;) s
+0 773 m 1053 ss sp (Window win;) s 0 1053 m 1333 ss sp (int  x,y;) s 0 1333 m
+1613 ss sp (int old_x,old_y;) s 0 1613 m 1893 ss sp (int state;) s 0 1893 m 2173 ss
+0 2173 m 2493 ss sp (Times-BoldItalic02400240) getfont (olgx_draw_elevator\(\)) s
+(Helvetica02000200) getfont ( ) s (Times-Roman02400240) getfont (renders or updates a scrollbar elevator. The elevator will be drawn ) s
+0 2493 m 2773 ss (within window ) s (Helvetica02000200) getfont (win ) s
+(Times-Roman02400240) getfont (at location ) s (Helvetica02000200) getfont (\(x,y\). oldx,oldy ) s
+(Times-Roman02400240) getfont (represent the previous location of the elevator which is ) s
+0 2773 m 3053 ss (which is used with the ) s (Helvetica02000200) getfont (state ) s
+(Times-Roman02400240) getfont (flag OLGX_UPDATE. Finally ) s
+(Helvetica02000200) getfont (state ) s (Times-Roman02400240) getfont (can have one of the following flags ) s
+0 3053 m 3333 ss (bitwise-ORed.) s (Helvetica02000200) getfont 0 3333 m 3613 ss
+0 3613 m 3893 ss 0 3893 m 4213 ss sp (Times-Roman02400240) getfont (OLGX_VERTICAL) s
+907.000 nx sp (The elevator is vertical.) s 0 4213 m 4533 ss 720.000 nx sp (OLGX_HORIZONTAL  ) s
+428.000 nx sp (The elevator is horizontal.) s 0 4533 m 4853 ss 720.000 nx sp (OLGX_NORMAL) s
+1054.000 nx sp (The elevator is normal.) s 0 4853 m 5173 ss 720.000 nx sp (OLGX_ABBREV) s
+1121.000 nx sp (Abbreviated scrollbar elevator) s 0 5173 m 5493 ss 720.000 nx sp
+(OLGX_SCROLL_ABSOLUTE  The scrollbar middle box is drawn in invoked fashion.) s
+0 5493 m 5813 ss sp (OLGX_SCROLL_BACKWARD  The elevator backward box is invoked to indicate that  the ) s
+0 5813 m 6093 ss sp 1440.000 nx sp sp (elevator is moving backwards.) s 0 6093 m
+6413 ss 720.000 nx sp (OLGX_SCROLL_FORWARD  The elevator forward box is invoked to indicate that the ) s
+95.000 nx sp 0 6413 m 6693 ss 720.000 nx sp 1440.000 nx sp sp (elevator is moving forwards.) s
+0 6693 m 7013 ss 720.000 nx sp (OLGX_SCROLL_NO_BACKWARD  The elevator backward box is dimmed , to indicate) s
+0 7013 m 7333 ss sp 1440.000 nx sp sp (that the elevator cannot move backward anymore.) s
+0 7333 m 7653 ss 720.000 nx sp (OLGX_SCROLL_NO_FORWARD The elevator forward box is dimmed, to indicate that the) s
+0 7653 m 7973 ss sp 1440.000 nx sp sp (elevator cannot move forward anymore.) s
+0 7973 m 8293 ss 720.000 nx sp (OLGX_INACTIVE) s 961.000 nx sp (The whole elevator is drawn dimmed, indicating that the ) s
+268.000 nx sp 0 8293 m 8573 ss 720.000 nx sp 1440.000 nx sp sp (elevator is inactive.) s
+0 8573 m 8893 ss 720.000 nx sp (OLGX_UPDATE) s 1147.000 nx sp (Update the scrollbar elevator to its new location.) s
+0 8893 m 9213 ss 720.000 nx sp 0 9213 m 9533 ss sp 1440.000 nx sp sp (If OLGX_UPDATE  is not specified the parameters  oldx,oldy ) s
+0 9533 m 9813 ss 720.000 nx sp 1440.000 nx sp sp (will not be used.) s 0 9813 m
+10133 ss 720.000 nx sp (OLGX_ERASE) s 1334.000 nx sp (Erases the underlyinh image before drawing the elevator) s
+0 10133 m 10453 ss 720.000 nx sp 1440.000 nx sp sp (at location x,y .) s
+0 10453 m 10773 ss 720.000 nx sp 0 10773 m 11093 ss sp (Use olgx_draw_box for drawing the end anchors.) s
+0 11093 m 11413 ss 0 11413 m 11733 ss 0 11733 m 12053 ss 0 12053 m 12373 ss
+0 12373 m 12693 ss 0 12693 m 13013 ss 0 13013 m 14064 ss
+(Times-Roman02000200) getfont (December 5, 1989) s 7640.000 nx sp (Page10) s
+badfont_trap showpage vm_state restore

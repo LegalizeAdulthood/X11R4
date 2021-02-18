@@ -1,0 +1,36 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES	=	-I${BASEDIR}/include/oda
+
+OBJS   = convert.o \
+	proda.o \
+	prodif.o \
+	prtext.o
+
+ODALIBS = \
+	$(DESTDIR)/lib/oda/libisode.a \
+	$(DESTDIR)/lib/oda/liboda.a \
+	$(DESTDIR)/lib/oda/libraster.a \
+	$(DESTDIR)/lib/oda/liblocal.a
+
+NormalObjectRule()
+
+ProgramTarget(convert, convert.o, $(ODALIBS), )
+
+ProgramTarget(proda, proda.o, $(ODALIBS), )
+
+ProgramTarget(prodif, prodif.o, $(ODALIBS), )
+
+ProgramTarget(prtext, prtext.o, $(ODALIBS), )
+
+InstallProgram(convert, $(DESTDIR)/bin)
+
+InstallProgram(proda, $(DESTDIR)/bin)
+
+InstallProgram(prodif, $(DESTDIR)/bin)
+
+InstallProgram(prtext, $(DESTDIR)/bin)
+
+DependTarget()

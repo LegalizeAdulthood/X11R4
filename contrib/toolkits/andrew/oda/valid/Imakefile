@@ -1,0 +1,45 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES	=	-I${BASEDIR}/include/oda
+
+OBJS   = valid.o \
+	vsupp.o \
+	vtest1.o \
+	vtest2.o \
+	vtest3.o \
+	vtest4.o \
+	vtest5.o \
+	vtest6.o \
+	vtest7.o
+
+HFILES = vstruc.h
+
+ODALIBS = \
+	$(DESTDIR)/lib/oda/libisode.a \
+	$(DESTDIR)/lib/oda/liboda.a \
+	$(DESTDIR)/lib/oda/libraster.a \
+	$(DESTDIR)/lib/oda/liblocal.a
+
+ODATEST = \
+	std1.out \
+	std2.out \
+	std3.out \
+	std4.out \
+	std5.out \
+	std6.out \
+	std7.out
+
+NormalObjectRule()
+
+ProgramTarget(valid, $(OBJS), $(ODALIBS), )
+
+DependTarget()
+
+install.time::	$(ODATEST) valid
+	- ./valid
+
+
+
+

@@ -1,0 +1,12 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#include "./../XJImake.defs"
+
+SUBDIRS= xjpterm xjpuwm
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+MakeDirectories(install, $(BINDIR))
+

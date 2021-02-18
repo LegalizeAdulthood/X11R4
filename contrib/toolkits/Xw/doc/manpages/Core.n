@@ -1,0 +1,198 @@
+
+
+
+     CORE(3X)                                                 CORE(3X)
+
+
+
+
+     NAME
+          CoreClass - the Xt Intrinsics core widget meta class
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+
+
+     CLASSES
+          All widgets are built from the Core class.
+
+     DESCRIPTION
+          The Core class is an Xt Intrinsics meta class.  It is never
+          instantiated as a widget.  Its sole purpose is as a
+          supporting superclass for other widget classes.  It provides
+          resources required by all widgets: x y location, width,
+          height, window border width, and so on.
+
+     NEW RESOURCES
+          Core defines a set of resource types used by the programmer
+          to specify the data for widgets which are subclasses of
+          Core.
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+          XtNancestorSensitive
+               This argument specifies whether the immediate parent of
+               the widget will receive input events.  Use the function
+               XtSetSensitive if you are changing the argument to
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     CORE(3X)                                                 CORE(3X)
+
+
+
+
+               preserve data integrity (see XtNsensitive below).
+
+          XtNx This argument contains the x-coordinate of the widget's
+               upper left hand corner (excluding the border) in
+               relation to its parent widget.  Programs should not
+               change this argument directly, but use geometry manager
+               requests instead in order to ensure proper
+               relationships with other widgets are maintained.
+
+          XtNy This argument contains the y-coordinate of the widget's
+               upper left hand corner (excluding the border) in
+               relation to its parent widget.  Programs should not
+               change this argument directly, but use geometry manager
+               requests instead in order to ensure proper
+               relationships with other widgets are maintained.
+
+          XtNwidth
+               This argument contains the width of the widget's window
+               in pixels, not including the border area. Programs
+               should not change this argument directly, but use
+               geometry manager requests instead in order to ensure
+               proper relationships with other widgets are maintained.
+
+          XtNheight
+               This argument contains the height of the widget's
+               window in pixels, not including the border area.
+               Programs should not change this argument directly, but
+               use geometry manager requests instead in order to
+               ensure proper relationships with other widgets are
+               maintained.
+
+          XtNdepth
+               Determines how many bits should be used for each pixel
+               in the widget's window.  Programs should not change or
+               set this, it will be set by the Xt Intrinsics when the
+               widget is created.
+
+          XtNbackground
+               This argument specifies the background color for the
+               widget.
+
+          XtNbackgroundPixmap
+               The application can specify a pixmap to be used for
+               tiling the background. The first tile is place at the
+               upper left hand corner of the widget's window.
+
+          XtNborderWidth
+               This argument sets the width of the border that
+               surrounds the widget's window on all four sides.  The
+               width is specified in pixels.  A width of zero means no
+               border will show.
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     CORE(3X)                                                 CORE(3X)
+
+
+
+
+          XtNborderColor
+               This argument specifies the color of the border.
+
+          XtNborderPixmap
+               The application can specify a pixmap to be used for
+               tiling the border. The first tile is place at the upper
+               left hand corner of the border.
+
+          XtNsensitive
+               This argument determines whether a widget will receive
+               input events.  If a widget is sensitive, the Xt
+               Intrinsic's Event Manager will dispatch to the widget
+               all keyboard, mouse button, motion, window enter/leave,
+               and focus events.  Insensitive widgets do not receive
+               these events.  Use the function XtSetSensitive if you
+               are changing the sensitivity argument.  That way you
+               ensure that if a parent widget has XtNsensitive set to
+               FALSE, the ancestor-sensitive flag of all its children
+               will be appropriately set.
+
+          XtNmappedWhenManaged
+               If set to TRUE, the widget will be mapped (made
+               visible) as soon as it is both realized and managed.
+               If set to FALSE, the client is responsible for mapping
+               and unmapping the widget.  If the value is changed from
+               TRUE to FALSE after the widget has been realized and
+               managed, the widget is unmapped.
+
+          XtNdestroyCallback
+               This is a pointer to a callback list containing
+               routines to be called when the widget is destroyed.
+
+          XtNtranslations
+               This is a pointer to a translations list.
+
+     INHERITED RESOURCES
+          The Core class is the root class.  It inherits no resources.
+
+     TRANSLATIONS
+          None
+
+     ACTIONS
+          None
+
+     ORIGIN
+          MIT.
+
+     SEE ALSO
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+

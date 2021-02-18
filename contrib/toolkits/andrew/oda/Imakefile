@@ -1,0 +1,33 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989		        *
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+
+#define	IHaveSubdirs
+
+/* ============================================================ */
+
+/* For now, assume that it works for both BSD and SYSV */
+#if SY_B4x
+ISODE = isode
+#endif
+#if (SY_U5x || SY_AIXx)
+ISODE = isode
+#endif
+
+SUBDIRS = site \
+	src \
+	isode \
+	raster \
+	valid \
+	prog \
+	doc
+
+DIRS = $(DESTDIR)/include \
+	$(DESTDIR)/include/oda \
+	$(DESTDIR)/lib \
+	$(DESTDIR)/lib/oda \
+	$(DESTDIR)/help
+
+MkdirTarget($(DIRS))
+

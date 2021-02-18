@@ -1,0 +1,147 @@
+
+
+Appendix  A	NCSA HDF Tags
+
+
+
+
+Overview
+
+This appendix includes a table of brief descriptions of most of the 
+tags that have been assigned at NCSA for general use. The list is 
+growing and will be added to in future editions of the 
+documentation. Fuller descriptions of the tags can be found in an 
+appendix of the NCSA HDF Specifications. To obtain a draft of this 
+document, contact the NCSA Software Development Group at the 
+address listed on the README page at the beginning of this 
+manual.
+
+
+Tag Types and Descriptions
+
+The following table has five columns. The Tag column gives the 
+abbreviated symbolic name of the tag that is often used in an 
+augmented form in HDF programs. The Name column gives a 
+name commonly used in human-readable media. The Data Type 
+column describes the type of data that is associated with the tag. 
+Where possible it also gives the amount of data. The Number 
+column gives the actual numeric value that is stored in the file to 
+represent the tag. The Use column describes the tag in brief and 
+general terms.
+
+
+Table A.1  HDF Tags
+
+Tag	Name	Data Type	Number	Use
+
+Utility Tags
+DFTAG_ND	No Data	none	000	For place holding and to fill up empty portions of the Data Descriptor Block.
+
+DFTAG_FID	File Identifier	string	100	Points to a string that the user wants to associate with this file. It is intended to be a user-supplied title for the file. 
+
+DFTAG_FD	File Descriptor	text	101	Points to a block of text describing the file contents overall. It is intended to be user-supplied comments about the file.
+
+DFTAG_TID	Tag Identifier	string	102	Provides a way for a human reader to tell the meaning of a tag stored in a file. 
+
+DFTAG_TD	Tag Descriptor	text	103	Similar to TID, but allows more extensive text to be included. 
+
+DFTAG_DIL	Data Identifier Label	string	104	Associates the string with the Data Identifier as a label for whatever that Data Identifier points to in turn. By including DILs, any piece of data can be given a label for future reference. For example, this is 
+often used to give titles to images.
+
+DFTAG_DIA	Data Identifier 	text	105	Associates the text block with the Data
+	Annotation			Identifier as annotation for whatever that Data Identifier points to in turn. With DIA, any Data Identifier can have a lengthy, user-written description of why that data is in the file.
+
+DFTAG_NT	Number Type	4 bytes	106	Used by any other element in the file to indicate specifically what a numeric value looks like.
+
+DFTAG_MT	Machine Type	0 bytes	107	Specifies that all unconstrained or partially constrained values in this HDF file are of the default type for that hardware.
+
+
+
+Table A.1 HDF Tags (Continued)
+
+Tag	Name	Data Type	Number	Use
+
+Raster-8 (8-Bit Only) Tags
+DFTAG_ID8	Image Dimension-8	4 bytes	200	Two 16-bit integers representing the width and height of an 8-bit raster image in bytes.
+
+DFTAG_IP8	Image Palette-8	768 bytes	201	A 256-by-3 byte array representing the red, green and blue elements of the 256-color palette respectively.
+
+DFTAG_RI8	Raster Image-8	x*y  bytes	202	A row-wise representation of the elementary 8-bit image data.
+
+DFTAG_CI8	Compressed Image-8	n bytes	203	A row-wise representation of the elementary 8-bit image data. Each row is compressed using a form of run-length encoding.
+
+DFTAG_II8	IMCOMP Image-8	n bytes	204	A 4:1 compressed 8-bit image, using the IMCOMP compression scheme.
+
+
+General Raster Image Tags
+DFTAG_ID	Image Dimension	20 bytes	300	Defines the dimensions of the 2D array that its corresponding RI tag refers to.
+
+DFTAG_LUT	Look Up Table	n bytes	301	Table to be used by hardware to assign RGB colors or HSV colors to data values. 
+
+DFTAG_RI	Raster Image	x*y bytes	302	Points to raster image data. 
+
+DFTAG_RIG	Raster Image Group	n*4 bytes	306	Lists the Data Identifiers (tag/ref) that describe a raster image set. 
+
+DFTAG_LD	LUT Dimension	20 bytes	307	Defines the dimensions of the 2D array that its corresponding LUT tag refers to.
+
+DFTAG_MD	Matte Dimension	20 bytes	308	Defines the dimensions of the 2D array that its corresponding MA tag refers to. 
+
+DFTAG_CCN	Color Correction	n bytes 	310	Specifies the Gamma correction for the image and color primaries for the generation of the image. 
+
+DFTAG_CFM	Color Format	string	311	Indicates what interpretation should be given to each element of each pixel in a raster image. 
+
+DFTAG_AR	Aspect Ratio	4 bytes	312	The visual aspect ratio for this image. 
+
+
+Composite Image Tag
+DFTAG_DRAW	Draw	n*4 bytes	400	Identifies a list of Data Identifiers (tag/ref) which define a composite image. 
+
+
+
+Table A.1 HDF Tags (Continued)
+
+Tag	Name	Data Type	Number	Use
+
+Tag for Composite or Raster Images
+DFTAG_XYP	XY Position	8 bytes	500	Indicates an XY position on the screen for composites and other groups.
+
+
+Vector Image Tags
+DFTAG_T14	Tektronix 4014	n bytes	602	Points to a Tek 4014 data stream. The bytes in the data field, when read and sent to a Tektronix 4014 terminal, will be displayed as a vector image. 
+
+DFTAG_T105	Tektronix 4105	n bytes	603	Points to a Tek 4105 data stream. The bytes in the data field, when read and sent to a Tektronix 4105 terminal, will be displayed as a vector image.
+
+
+Scientific Data Set Tags
+DFTAG_SDG	Scientific Data Group	n*4 bytes	700	Lists the Data Identifiers (tag/ref) that describe a scientific data set. 
+
+DFTAG_SDD	Scientific Data	n bytes	701	Defines the rank and dimensions of the
+	Dimension Record			array that the corresponding SD refers to.
+
+DFTAG_SD	Scientific Data	reals	702	Points to scientific data.
+
+DFTAG_SDS	Scales	reals	703	Scales to be used when interpreting and displaying data.
+
+DFTAG_SDL	Labels	strings	704	Labels for all dimensions and for the data.
+
+DFTAG_SDU	Units	strings	705	Units for all dimensions and for the data.
+
+DFTAG_SDF	Formats	strings	706	Formats for displaying axes and data.
+
+DFTAG_SDM	Max/min	2 reals	707	Maximum and minimum values for the data.
+
+DFTAG_SDC	Coordinate system	string	708	Coordinate system to be used to interpret data.
+
+A.1	NCSA HDF
+
+NCSA HDF Tags	A.1
+
+National Center for Supercomputing Applications
+
+February 1989
+
+                                                                
+
+February 1989
+
+

@@ -1,0 +1,20 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES = -I../lib
+
+LIBS	=	${BASEDIR}/lib/libmail.a \
+		${UTILLIB} \
+		${BASEDIR}/lib/liberrors.a \
+		${MALLOCLIB}
+
+NormalObjectRule()
+
+ProgramTarget(nntppoll, main.o, ../lib/libpoll.a ${LIBS},)
+ProgramTarget(nntpxmit, nntpxmit.o, ../lib/libxmit.a ${LIBS} ${RESOLVLIB},)
+InstallProgram(nntppoll, ${DESTDIR}/etc/)
+InstallProgram(nntpxmit, ${DESTDIR}/etc/)
+
+DependTarget()
+

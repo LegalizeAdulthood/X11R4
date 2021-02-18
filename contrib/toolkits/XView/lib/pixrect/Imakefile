@@ -1,0 +1,25 @@
+#
+#	@(#)Imakefile	1.1	89/07/26
+#
+# Pixrect directory Imakefile
+#
+
+#include "../../XView.config"
+
+SRCS=	memvar.h \
+	pixfont.h \
+	pixrect.h \
+	pixrect_hs.h \
+	pr_impl_make.h \
+	pr_line.h \
+	pr_planegroups.h \
+	pr_util.h \
+	rasterfile.h \
+	traprop.h
+
+all: $(SRCS)
+
+install_headers:: $(SRCS)
+	-mkdir $(HEADER_DEST)/pixrect
+	
+InstallMultipleDest(install_headers,$(SRCS),$(HEADER_DEST)/pixrect)

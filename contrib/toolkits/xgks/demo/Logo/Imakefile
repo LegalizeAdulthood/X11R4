@@ -1,0 +1,14 @@
+#
+# $XConsortium: Imakefile,v 1.1 89/09/19 11:32:29 jim Exp $
+#
+
+XGKS_TOP = ../..
+#include  "../../xgks.tmpl"
+
+LOCAL_LIBRARIES = $(XGKSLIB) $(XLIB)
+LOCAL_XGKSINCLUDES = -I..
+
+SRCS = demo.c printer.c ramtek.c ethernet.c s9000.c
+OBJS = demo.o printer.o ramtek.o ethernet.o s9000.o
+
+SingleProgramTarget(logo,$(OBJS),$(LOCAL_LIBRARIES),-lm)

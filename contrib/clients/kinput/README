@@ -1,0 +1,50 @@
+Kinput is a front-end for X11 applications that allows easy input of
+Japanese.
+
+A client that wants kana-kanji conversion service for Japanese text
+sends a request to kinput.  When kinput receives the request, it pops up
+a conversion window, does kana-kanji conversion, and sends the converted
+text back to the client.  All the communication between kinput and
+clients is done via the X11 inter-client communication mechanisms.
+
+*Installation
+Kinput uses Wnn version 4 as a conversion engine.  So you also need to
+install Wnn.
+
+Edit Imakefile (or Makefile if you can't use imake) to change WNNSRC
+(Wnn's source directory pathname) appropriately.
+
+Kinput's confirm.c includes some Athena widget header files, which are
+expected to be in their default R4 locations. E.g.:
+	#include <X11/Xaw/Label.h>
+So you should modify confirm.c if you are going to compile kinput in the
+X11R3 environment.
+
+*Directories
+The kinput directory has 3 sub-directories:
+	jclib/		kana-kanji conversion library
+	cconv/		input character conversion (such as romaji-kana
+			conversion) library and conversion rule files
+	xlocal/		library for handling wchar_t type and
+			COMPOUND_TEXT strings
+
+*Protocol
+The protocol for communication between kinput and clients is described
+in the file PROTOCOL.ms.  This protocol, which was inspired by
+discussion of X11 internationalization in the JUS (Japan Unix Society)
+XXI working group, is designed to be simple and language-independent.
+So it is easy to implement input systems for other languages (such as
+Chinese or Korean) using this protocol.
+
+*Client library for this protocol
+The file convlib.c is a sample implementation of a client-side library
+for the protocol.  It is the same as the one in kterm's source
+directory.
+
+*Thanks
+Thanks to the members of the JUS XXI working group for the discussion
+of the protocol and beta testing of kinput.
+
+					Makoto Ishisone
+					Software Research Associates, Inc.
+					ishisone@sra.co.jp

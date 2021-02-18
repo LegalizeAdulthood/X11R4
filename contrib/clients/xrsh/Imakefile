@@ -1,0 +1,10 @@
+PROGRAMS = xrsh
+
+all:: $(PROGRAMS)
+
+CppScriptTarget(xrsh, xrsh.cpp, /**/, /**/)
+InstallProgram(xrsh,$(BINDIR))
+InstallManPage(xrsh,$(MANDIR))
+
+clean::
+	$(RM) $(PROGRAMS)

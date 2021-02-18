@@ -1,0 +1,133 @@
+Return-Path: braun@thumper.bellcore.com
+Received: from eros.Berkeley.EDU by shambhala.Berkeley.EDU (5.61/1.28)
+	id AA14862; Mon, 23 Oct 89 07:01:47 -0700
+Received: by eros.berkeley.edu (5.57/1.28)
+	id AA13983; Mon, 23 Oct 89 07:01:41 PDT
+Received: by thumper.bellcore.com (5.54/4.7)
+	id AA12009; Mon, 23 Oct 89 10:00:12 EDT
+Received: by wrath.bellcore.com (4.12/4.7)
+	id AA02716; Mon, 23 Oct 89 09:59:28 edt
+Date: Mon, 23 Oct 89 09:59:28 edt
+From: braun@thumper.bellcore.com (David A. Braun)
+Message-Id: <8910231359.AA02716@wrath.bellcore.com>
+To: xrn@eros.berkeley.edu
+Subject: GRIPE about XRN 6.0
+Cc: braun@thumper.bellcore.com
+
+In reference to my previous gripe about invisible button captions.  It seems
+to be related to the color selections in the default default definitions
+(which are in ..../Xlib/app-defaults/XRn on my system).  If I change all the
+colors to Black or White in my personal defaults database (via xrdb) then
+everything but the box borders is fine.  I have to turn reverseVideo "off"
+for xrn to get the boxes to show.  I've attached the pertenent part of my
+database below.
+
+dave braun
+braun@thumper.bellcore.com
+
+!
+!	X11 defaults file -- used by X programs to set their
+!	defaults
+!
+!
+! --------------------------------------------------------
+!
+!	GLOBAL DEFAULTS
+!
+*Font:					9x15
+*BoldFont:				9x15
+*SaveUnder:				on
+*saveUnder:				on
+*saveunder:				on
+#ifdef REVERSEVIDEO
+!*Border:				white
+!*BorderColor:			white
+*ReverseVideo:			on
+*reverse:				on
+*Reverse:				on
+#endif REVERSEVIDEO
+#ifdef	COLOR
+*MenuMouse:					red
+*MenuBackground:			green
+*PaneForeground:			red
+*SelectionForeground:		blue
+#endif
+*MenuMode:					invert
+*MenuStyle:					right_hand
+*MenuInactivePattern:		dimple3
+*PaneFont:					helvetica12bi
+*SelectionFont:				helvetica12
+!
+!	XRN
+!
+#ifndef COLOR
+!
+! first my version of the defaults
+!
+Xrn*Geometry:					800x680
+Xrn*font:						8x13
+Xrn*Label.font:					8x13
+Xrn*Command.font:				9x15
+Xrn*Dialog.borderWidth:			1
+!
+xrn*background:					White
+xrn*foreground:					Black
+xrn*font:						9x15
+xrn*border:						Black
+!
+xrn*Text*background:			White
+xrn*Text*foreground:			Black
+xrn*Text*Background:			White
+xrn*Text*Foreground:			Black
+xrn*ScrollBarMgr.thickness:		22
+xrn*ScrollBar.background:	 	White
+xrn*ScrollBar.foreground:	 	Black
+xrn*ScrollBar.border:	 		Black
+
+xrn*Label.background:			White
+xrn*Label.foreground:			Black
+xrn*Label.font:					-adobe-times-bold-r-normal--14-140-75-75-p-77-iso8859-1
+
+xrn*Command.foreground:			Black
+xrn*Command.background:			White
+xrn*Command.font:				-adobe-itc avant garde gothic-book-r-normal--12-120-75-75-p-70-iso8859-1
+!
+xrn*Box.ngQuit.foreground:		Black
+xrn*Box.ngQuit.background:		White
+xrn*Box.ngExit.foreground:		Black
+xrn*Box.ngExit.background:		White
+xrn*Box.ngRescan.foreground:	Black
+xrn*Box.ngRescan.background:	White
+xrn*Box.ngUnsub.foreground:		Black
+xrn*Box.ngUnsub.background: 	White
+xrn*Box.ngSubscribe.foreground: Black
+xrn*Box.ngSubscribe.background:	White
+xrn*Box.artQuit.foreground:		Black
+xrn*Box.artQuit.background:		White
+xrn*Box.artSave.foreground:		Black
+xrn*Box.artSave.background:		White
+xrn*Box.artNextUnread.font:		9x15
+xrn*Box.addQuit.foreground:		Black
+xrn*Box.addQuit.background:		White
+!
+xrn*dialog*font:				-adobe-helvetica-bold-r-normal--12-120-75-75-p-70-iso8859-1
+xrn*dialog*background:			White
+xrn*dialog*foreground:			Black
+xrn*dialog*Label.foreground:	Black
+xrn*dialog*Command.foreground:	Black
+xrn*dialog*Command.background:	White
+xrn*dialog*Text.background:		White
+xrn*dialog*Text.foreground:		Black
+Xrn*dialog*borderWidth:			2
+#endif
+!
+! now my dung
+!
+xrn*font:			9x15
+xrn*nntpServer:		bellcore
+xrn*editorCommand:	xterm -e vi %s
+xrn*organization:	Multimedia Communications Systems Research Group (Bellcore)
+xrn*replyTo:		braun@thumper.bellcore.com
+xrn*leaveHeaders:	subject,from
+xrn*ReverseVideo:	off
+

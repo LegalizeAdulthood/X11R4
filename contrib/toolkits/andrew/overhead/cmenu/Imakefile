@@ -1,0 +1,17 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+NormalObjectRule()
+
+LibraryTarget(libcmenu.a, cmactiv.o cmcreate.o cmdraw.o cmerror.o cmmanip.o)
+
+InstallLibrary(libcmenu.a, $(DESTDIR)/lib)
+InstallMultiple(cmenu.h cmerror.h, $(INSTINCFLAGS), $(DESTDIR)/include)
+
+TestProgramTarget(testmenu, testmenu.o, libcmenu.a $(XLIBDIR)/libX11.a,)
+
+DependTarget()
+
+InstallDocs(cmenu.help, $(DESTDIR)/help)
+

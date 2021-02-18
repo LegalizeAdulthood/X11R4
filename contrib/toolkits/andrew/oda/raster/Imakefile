@@ -1,0 +1,70 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES	=	-I${BASEDIR}/include/oda
+
+OBJS   = flalfb.o \
+	flbyte.o \
+	flgifc.o \
+	flgife.o \
+	flgifr.o \
+	flgifw.o \
+	fliff.o \
+	flsun.o \
+	g3code.o \
+	ioandy.o \
+	ioetc.o \
+	iofbm.o \
+	iog3.o \
+	iog32.o \
+	iog33.o \
+	iog4.o \
+	iomacp.o \
+	ioobm.o \
+	iopbm.o \
+	iops.o \
+	iox.o \
+	pel.o \
+	rasio.o \
+	raster.o \
+	rgdbg.o \
+	rginit.o \
+	rglist.o \
+	rgmem.o
+
+HFILES	= fbm.h \
+	ioandy.h \
+	ioetc.h \
+	iofbm.h \
+	iog3.h \
+	iog32.h \
+	iog33.h \
+	iog4.h \
+	iomacp.h \
+	ioobm.h \
+	iopbm.h \
+	iops.h \
+	iox.h \
+	pel.h \
+	rasio.h \
+	raster.h \
+	rgdbg.h \
+	rgerr.h \
+	rginit.h \
+	rglist.h \
+	rgmem.h \
+	rgreal.h \
+	rgtk.h \
+	rgsite.h
+	
+
+NormalObjectRule()
+
+LibraryTarget(libraster.a, $(OBJS) )
+
+InstallLibrary(libraster.a, $(DESTDIR)/lib/oda)
+
+InstallMultiple( $(HFILES), $(INSTINCFLAGS), $(DESTDIR)/include/oda)
+
+DependTarget()

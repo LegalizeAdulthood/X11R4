@@ -1,0 +1,11 @@
+util.c:725:        title_width = XTextWidth(IconFont.font, twin->name, strlen(twin->name));
+util.c:726:        titlex =(twin->attr.width - title_width) /2; 
+util.c:730:        XDrawImageString(dpy, twin->title_w,
+util.c:731:                twin->title_gc,
+util.c:733:                twin->name, strlen(twin->name));
+util.c:751:	XUnmapWindow(dpy, twin->title_w);
+util.c:752:        XSetWindowBackground(dpy, twin->title_w, color);
+util.c:753:        XMapWindow(dpy, twin->title_w);
+util.c:755:        XUnmapWindow(dpy, twin->iconify_w);
+util.c:756:        XSetWindowBackground(dpy, twin->iconify_w, color);
+util.c:757:        XMapWindow(dpy, twin->iconify_w);

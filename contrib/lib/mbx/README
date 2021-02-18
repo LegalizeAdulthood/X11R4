@@ -1,0 +1,37 @@
+
+This directory contains all the code associated with the Multibyte X
+proposal.  The following explains how to build and run the mbtest.
+
+1) If your system does not support setlocale do the following:
+
+   mkdir locale
+   cp locale.h locale
+
+2) Build mbtest - built for the "a1 k14 kana14" font set.
+
+   make mbtest DEFINES='-DAIX -DKANA_GL' LOCALE_INC=-Ilocale LOCALE=locale.o
+   or
+   make mbtest
+
+3) Run mbtest in ASCII locale
+
+   mbtest fixed < mbX.h
+   ( Press any key to have it start scrolling - no back scrolling) 
+
+4) Run mbtest in SJIS locale
+
+   setenv LANG Jp_JP.pc932
+   mbtest "a1 k14 kana14"
+
+   ( Press any key to have it start scrolling - no back scrolling) 
+   ( Test will generate its own data - 7 columns of CS0 CS1 CS2 CS3 CS2 CS1 CS0)
+
+
+Special Notes:
+
+  The mbXsj.c will build the translation table to for from sjis to 
+  font index.  The indexes are based on the JISX0201 and JISX0208
+  definition.  The kana set is assumed to the the GR.  There is an
+  option KANA_GL to have it build the table to the GL set.
+
+

@@ -1,0 +1,16 @@
+In the XView.config file, the help files are put into $(LIBRARY_DEST)/help.
+To install these files, run imake to create the Makefile, then do 
+make install.
+
+To get help for an XView application, have the end users set the environment 
+varaible HELP_DIR to point to this location.
+
+All XView help files end in ".info".  They are found in the directory
+specified by the environment variable HELP_DIR.  Briefly, when the Help 
+key is depressed, an ACTION_HELP event is sent to the window under the pointer.
+The XView object underneath the pointer is determined, and its XV_HELP_DATA 
+string is used to identify the .info file and keyword.  The string has the 
+format "filename:key".  XView then parses that file for ":key" and extracts the 
+help text associated with the key.  The help package then displays a help 
+window with the help text.
+

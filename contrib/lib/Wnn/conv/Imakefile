@@ -1,0 +1,37 @@
+#include "./../WnnImake.def"
+
+       INCLUDES = -I$(WNNINCLUDESRC)
+        DEFINES = $(WNNDEFINES) -DWNNDEFAULT
+       LINTLIBS = 
+
+SRCS= cvt_key.c cvt_read.c
+OBJS= cvt_key.o cvt_read.o
+
+#if DebugLibConvkey && ProfileLibConvkey
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugLibConvkey
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileLibConvkey
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+NormalLibraryTarget(convkey,$(OBJS))
+LintLibraryTarget(convkey,$(SRCS))
+
+#if ProfileLibConvkey
+ProfiledLibraryTarget(convkey,$(OBJS))
+#endif
+
+#if DebugLibConvkey
+DebuggedLibraryTarget(convkey,$(OBJS))
+#endif
+
+DependTarget()
+
+NormalLintTarget($(SRCS))

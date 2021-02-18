@@ -1,0 +1,37 @@
+.TH X2TEX 1  "30 October 1988"
+.SH NAME
+x2tex \- convert an xpic file to TeX \\special format
+.SH SYNOPSIS
+.B x2tex
+[-s \fIscale\fP] [-f \fImaximum fonts\fP] [-d] [-n] [\fIfilename\fP] ....
+.SH DESCRIPTION
+.B x2tex
+converts the indicated files (output by the xpic picture-drawing program)
+into TeX format. The files will be given \fI.x\fP extensions if none
+are provided.
+The output is stored in file.tex. An intermediate file, file.pic, is
+also created. The picture is included into your LaTeX or TeX document with
+the sequence
+.br
+\\input{file}
+.br
+\\centerline{\\box\\graph}
+.br
+(Instead of \\centerline, any of the TeX primitives for manipulating
+objects may be used, if the picture is not to be centered).
+.PP
+.B Note: x2tex is a shell script which simply invokes x2tpic and tpic.
+Tpic produces \\special codes which are passed through TeX to be translated
+by the output driver. These codes are also interpreted by the
+.IR dvix " and " texx
+TeX previewers for the X Windows system. (Version 11)
+.PP
+The -d (debugging) and -n (no scale) options are passed to
+.I tpic.
+All the remaining options are passed to 
+.I x2tpic.
+.SH SEE ALSO
+xpic(x), x2tpic(x), x2pic(x), tpic(x), dvix(x), texx(x).
+.br
+B. W. Kernighan,
+.I "PIC \(em A Graphics Language for Typesetting"

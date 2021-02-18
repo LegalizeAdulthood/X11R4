@@ -1,0 +1,50 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+
+
+ATKLIBS = ${BASEDIR}/lib/atk/libtypescript.a \
+	${BASEDIR}/lib/atk/libez.a \
+	${BASEDIR}/lib/atk/libframe.a \
+	${BASEDIR}/lib/atk/libtext.a \
+	${BASEDIR}/lib/atk/libsupviews.a \
+	${BASEDIR}/lib/atk/libsupport.a \
+	${BASEDIR}/lib/atk/libbasics.a
+
+#ifdef  WM_ENV
+WMLIBS = ${BASEDIR}/lib/libwm.a
+#endif /* WM_ENV */
+
+#ifdef X11_ENV
+X11LIBS = ${BASEDIR}/lib/libcmenu.a  \
+	${XLIBDIR}/libX11.a
+#endif /* X11_ENV */
+
+OTHERLIBS = ${WMLIBS}  \
+	${BASEDIR}/lib/libclass.a  \
+	${BASEDIR}/lib/liberrors.a  \
+	${UTILLIB}  \
+	$(MALLOCLIB)  \
+	${X11LIBS}
+
+SYSLIBS = -lm
+
+NormalObjectRule()
+
+ProgramTarget(runapp, runapp.o statload.o, ${ATKLIBS} ${OTHERLIBS}, ${SYSLIBS})
+
+InstallProgram(runapp, ${DESTDIR}/bin)
+
+InstallLink(runapp, ${DESTDIR}/bin/ez)
+InstallLink(runapp, ${DESTDIR}/bin/typescript)
+InstallLink(runapp, ${DESTDIR}/bin/pipescript)
+InstallLink(runapp, ${DESTDIR}/bin/be1be2)
+
+DependTarget()
+
+MkdirTarget($(DESTDIR)/doc/atk/apps)
+
+InstallDocs(runapp.help, ${DESTDIR}/help)
+InstallDocs(runapp.doc statload.doc,${DESTDIR}/doc/atk/apps)
+

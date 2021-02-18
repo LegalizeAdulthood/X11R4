@@ -1,0 +1,14 @@
+.TH CH2RST 1 "84/04/07"
+.AT 3
+.SH NAME
+ch2rst \- convert character format fonts to Imagen-style fonts (RST format)
+.SH SYNOPSIS
+.B ch2rst  [ -i  -s ]  charfile  > rstfile
+.SH DESCRIPTION
+Takes input from charfile (which must be in the format written
+by rst2ch), converts to rst format and writes to stdout.  If charfile
+is missing, stdin is read.  The -i flag tells ch2rst to ignore the
+character codes at the start of each glyph definition, and pack the
+glyphs in consecutive code positions starting with 0.  The -s flag
+forces ch2rst to NOT trim off any white space in the glyph map.  This
+is usefull to make stipples of fixed size.

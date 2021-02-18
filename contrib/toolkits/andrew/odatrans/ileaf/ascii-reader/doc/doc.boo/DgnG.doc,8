@@ -1,0 +1,14 @@
+
+(Version Page\ Numbering 1)
+(Version Auto\ Numbering 1)
+(Page\ Numbering
+  (Starting 15)
+  (Begin Odd)
+  (Pages 25))
+(Auto\ Numbering
+  (Stream label
+    (Level 0
+      (Prefix Figure\ ))
+    (Deltas 4)
+    (Restart 1)
+    (FirstLevel 0)))

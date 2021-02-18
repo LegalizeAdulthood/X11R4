@@ -1,0 +1,19 @@
+#include <Server.tmpl>
+
+#ifdef hp9000s300
+OBJS = hp.300.o
+#else
+OBJS = hp.800.o
+#endif
+
+AllTarget($(OBJS))
+
+hp.300.o: hp.300.o.Z
+    $(RM) $@
+    UNCOMPRESSPATH -c $@.Z > $@
+
+hp.800.o: hp.800.o.Z
+    $(RM) $@
+    UNCOMPRESSPATH -c $@.Z > $@
+
+depend::

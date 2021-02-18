@@ -1,0 +1,33 @@
+################################################################################
+#
+# File:         Makefile
+# RCS:          $Header: Makefile.hpux,v 1.1 89/11/25 03:53:50 mayer Exp $
+# Description:  Makefile for beta winterp clients
+# Author:       Niels Mayer, HPLabs
+# Created:      Tue Aug 29 01:19:06 1989
+# Modified:     Sat Nov 25 02:48:38 1989 (Niels Mayer) mayer@hplnpm
+# Language:     N/A
+# Package:      N/A
+# Status:       X11r4 contrib tape release
+#
+# (c) Copyright 1989, Hewlett-Packard Company.
+#
+################################################################################
+
+DEFINES = -DSYSV -Dhpux -DWINTERP $(USER_DEFINES)
+CFLAGS = -Wc,-Nd7000,-Ns6000,-Np300,-Nw4000,-Nt100000 $(DEFINES)
+
+.c.o:
+	$(CC) -c $(OPTIMIZER) $*.c $(CFLAGS)
+
+CC = cc
+RM = rm -f
+
+all:: wl
+
+wl:	wl.c
+	$(CC) -o $@ $(CFLAGS) wl.c
+
+clean::
+	$(RM) *.o wl
+

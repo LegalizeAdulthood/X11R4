@@ -1,0 +1,100 @@
+XLOADIMAGE - X11 Image Loading Utility
+
+WHAT IS IT?
+
+This utility will view several types of images under X11, or load
+images onto the root window.  The current version supports X11 Bitmap,
+Portable Bitmap, Faces Project, and Sun Rasterfile images.  More are
+planned.
+
+A variety of options are available to modify images prior to viewing.
+These options include clipping, dithering, depth reduction, zoom
+(either X or Y axis independently or both at once),
+brightening/darkening, and image merging.  When applicable, these
+options are done automatically (eg a color image to be displayed on a
+monochrome screen will be dithered automatically).
+
+IMPLEMENTATION
+
+Most functions are not particularly fast, and some functions use
+simple-minded algorithms deliberately over more advanced ones.  I
+stressed portability over all and simplicity over performance.  I
+believe the result is a usable, portable tool which should serve the
+needs of most users.
+
+The source code is basically in two parts: image manipulation routines
+and everything else.  The image manipulation routines should be
+completely independent of X, thus allowing people to use them under
+other graphical systems.  No guarantees here, but I tried.
+
+Performance-oriented people will notice that when loading a color
+image, the colormap of the image is minimized (and all pixel values in
+the image changed), then the colormap is redone (and all pixel values
+in the image changed again) before sending to X.  This could be
+reduced to only one remapping of the image but I wanted to keep the
+image from X's grubby (greedy?) hands as long as possible, and the
+image merging function really wants the image to have a minimized
+colormap.
+
+COMPILING
+
+There are three ways to compile xloadimage, depending on what
+environment you have.
+
+If you are compiling under the X11R4 distribution, the apropriate
+Imakefile is included and you should compile as with any other client.
+I haven't personally tested this, but if it's broken it'll be easy to
+fix.
+
+If you have gcc on your system, compile via "make -f Makefile.gcc".
+Gcc should be used if it works because the strength-reduction and
+inline-functions directives dramatically improve performance of some
+operations.
+
+Normal compilations can be done via "make -f Makefile.std".  This
+invokes the standard cc using the -O flag.
+
+INSTALLATION
+
+After compiling and installing xloadimage, I recommend linking or
+symlinking to the executable with the names "xview" and "xsetbg".  The
+default behavior is slightly different when invoked with these
+commands (they're also easier to type).
+
+OWNERSHIP
+
+I used the MIT X Consortium copyright with all of these functions,
+thereby allowing full freedom with the code so long as the copyright
+notices remain intact.  Free code can be good code.
+
+SUGGESTIONS AND BUG REPORTS
+
+Suggestions and bug reports should go to:
+
+	Jim Frost
+	madd@std.com
+	..uunet!world!madd
+
+Please include the version number and sample image data if you are
+reporting a bug.
+
+Functions implementing new image types are welcomed; mail them to the
+same address and I'll do my best to distribute them.
+
+THANKS
+
+Special thanks to the crew at the Boston University Graphics Lab for
+their assistance and sample images, and to bzs@std.com for his simple
+dithering algorithm (or what's left of it).
+
+HISTORY
+
+Patch 01 contained a new Makefile.std, Makefile.gcc, and Imakefile.
+It contained a bug-fix to sendImageToX() which allowed bitmaps to be
+sent from little-endian machines (eg VAX, 80386) correctly, and a fix
+to xbitmapLoad() to allow correct loading of X10 bitmap images.  An
+enhancement to imageInWindow() which allowed exiting from image
+windows by typing 'q' was submitted by Chris Tengi
+(tengi@idunno.princeton.edu) and was included.  The previously missing
+file 'patchlevel' was included.
+

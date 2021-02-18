@@ -1,0 +1,37 @@
+From morenz Tue Jun 27 11:22:11 1989
+Received: by neat.ai.toronto.edu id 11727; Tue, 27 Jun 89 11:21:58 EDT
+From:   Robert Morenz <morenz@theory.toronto.edu>
+To:     bug
+Subject: xpic bug
+Message-Id: <89Jun27.112158edt.11727@neat.ai.toronto.edu>
+Date:   Tue, 27 Jun 89 11:21:43 EDT
+
+I was checking out xpic on the optimaX. The xpic screen is too big to fit
+and some of the commands don't appear even on resizing.
+
+[The wonders of resources. Turns out xpic can be convinced to fit on
+ the Optima screen. The command
+                xpic -ph 90 -gs 6 -xrm 'xpic*vSpace: 1'
+
+ should get it to just fit. For a more permanant setup, try adding
+ something like the following to your X11defaults file
+
+        #if defined(CONSOLETYPE_go200)
+        xpic.pageHeight:                90
+        xpic.gridSpacing:               6
+        xpic*vSpace:                    1
+        #endif
+
+ The pageHeight is in tenths of an inch (don't ask!), so it is cut
+ down from the default 105 (10.5 inches) to 90 (9 inches)
+ The gridSpacing is the number of pixels apart the grid points, so
+ it is reduced from the default 8 to 6.
+ The vSpace resource indicates that the vertical space between all the
+ buttons and labels in the menu should be 1 pixel (the default is 4)
+
+ For more information on X resources, see
+ /csri/doc/X11/tutorials/resources.txt, for more information on xpic
+ resource classes, see /csri/doc/X11/xpic/xpic.doc. For specific names
+ of resources used by xpic, see the manual pages for the widgets used
+ by xpic in /csri/src/X/contrib/widgets/Xhp/doc/manpages.n. (Sorry,
+ there isn't any other documentation on them) - moraes]

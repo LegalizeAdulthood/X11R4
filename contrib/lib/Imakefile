@@ -1,0 +1,14 @@
+/**/#########################################################
+/**/#
+/**/#   Imakefiles written by TOSHIBA Corp.
+/**/#
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+SUBDIRS =  Wnn XJ
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+InstallSubdirs($(SUBDIRS))
+CleanSubdirs($(SUBDIRS))

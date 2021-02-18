@@ -1,0 +1,130 @@
+#
+#
+#		Copyright IBM Corporation 1989
+#
+#                      All Rights Reserved
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted,
+# provided that the above copyright notice appear in all copies and that
+# both that copyright notice and this permission notice appear in
+# supporting documentation, and that the name of IBM not be
+# used in advertising or publicity pertaining to distribution of the
+# software without specific, written prior permission.
+#
+# IBM DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+# ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+# IBM BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+# ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+# WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+# ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+# SOFTWARE.
+#
+#
+This directory contains all source code and documentation associated with the
+Xgks library.  Xgks is an X11 window system based version of the ANSI Graphical
+Kernel System.  Xgks is a full GKS system (level 2C).  This library was
+developed at the University of Illinois, Urbana campus, department of
+Computer Science and was funded by IBM TCS.  The project was headed by Prof.
+Bill Kubitz and Prof. Roy Campbell.  Development of Xgks was done by Greg
+Rogers, Sung Hsien Ching, and Yu Pan.  Testing and improvements to Xgks were
+performed by IBM Technical Computing Systems in Cambridge, Mass.  The IBM
+developers were Todd Gill, Bruce Greer, David Owens, and Michael Wojcik, and
+Project Leader Amy Pitts.  Contact the Project Leader with any questions or
+comments:
+
+	Amy Pitts
+	IBM TCS Development
+	101 Main Street, 8th Floor
+	Cambridge, MA  02142
+	Tel.: (617) 576-9224
+		t/l 767-9224
+	e-mail:  cambmail@ibm.com (Put "For PITTS" as first line of message.)
+
+
+Documentation:
+
+	All on-line documentation is in the doc directory.  The library
+conforms to the proposed ANSI C binding for GKS (dated March 1986) and the
+ANSI standard GKS.  The C binding is found in doc/binding/Cbinding.src.
+The ANSI GKS specification may be obtained from ANSI.  There are two user
+documents.  The shorter is in the file doc/xgks.vdoc; it is Andrew Toolkit  
+form; a troff version is in doc/xgks.trf.  (To print, use "ptroff xgks.trf".)
+There is also a man page form of this document, xgks.man.
+
+	A more detailed user document is given in doc/userdoc.scr.  It is in
+script format and so can be formatted on VM and printed to a 6670 or 3812/20
+printer.
+
+Making:
+
+	Xgks can be installed on either a 4.3 system or an AIX system, for
+both RT and PS/2.  The make processes for these systems use imake files.
+Xgks makes just as a conventional X client does.  There are essentially three
+steps:  creating the Makefiles; creating the dependency lists; making the 
+libraries and fonts, and the demo programs.  The procedure is given for each 
+of the two systems.
+
+	Tar extract from tape into a directory that will contain all of
+Xgks.  (You will need write permission to this directory.)  For using imake,
+it is easiest if Xgks is placed in the config directory.
+
+4.3:
+
+	xmkmf				* to make the top-level Makefile
+	make Makefiles			* to make Makefiles in subdirs
+	make depend			* create dependency lists
+	make				* make libraries and fonts, and demos
+
+	You may choose to install the libraries, fonts, and include file 
+containing the GKS types (for use by application programs) in a separate   
+directory.  To do this, the command is:
+
+	make install INSTALLHOME=<install directory>
+
+	Then, applications may link the libraries in from this directory.  By
+default, this directory is /usr/lib/xgks.
+	
+
+
+AIX:
+
+	You may use the same set of commands as installing for 4.3 systems.
+If your installation does not have imake, there is a makefile for AIX in
+each subdir for doing a simple make.  These makefiles are called Makefile.AIX.
+This procedure includes installing the libraries, fonts, and include file in
+an installation directory.  You will need to have write access to this directory.
+By default, the installation directory is /usr/lib/xgks.  To make using 
+these makefiles:
+
+	make depend INSTALLHOME=<install path>       * make dependency lists
+	make INSTALLHOME=<install path>              * make xgks libraries
+        make install INSTALLHOME=<install path>      * install library, fonts
+        cd demo
+        make depend INSTALLHOME=<install path>       * make dependency lists
+        make INSTALLHOME=<install path>              * make demo programs
+
+On the IBM RT/PC it takes approximately 24 megabytes of disk space to compile
+Xgks and the demo programs.
+
+Note that fonts are dynamically loaded when first referenced.  Thus, the fonts
+must be installed on the machine where the Xgks application executes.
+
+The font path is compiled into the library.  However, it is possible to move
+the fonts without having to recompile the libraries.  In this case, set an 
+environment variable XGKSFontDir to the new path before executing an Xgks 
+application.  This variable setting will tell Xgks at runtime where to find the 
+fonts.
+
+
+Porting:
+
+	Xgks has been ported to the DEC VAXStation.  This port has been
+minimally tested, i.e., the demo programs compile and ran correctly at an early
+stage of our testing.  This port was not retested prior to making this code
+available.
+
+	Xgks has also been ported to the Encore Multimax and Sun Unix 3.4.  
+These ports have not been tested.  The library compiles, and based upon
+the changes to the demo programs made for the VAX port, the demos should also
+compile and run, but this has not been verified.

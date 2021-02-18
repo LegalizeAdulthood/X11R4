@@ -1,0 +1,73 @@
+.TH XTOXIM 1 "February 7,  1989"
+.UC 5
+.SH NAME
+xtoxim \-  convert a color X window dump to a "xim" file.
+.SH SYNOPSIS
+.B xtoxim
+[-in 
+.I file
+] [-out
+.I file
+] [-grey] [-plx]
+.SH DESCRIPTION
+.I Xtoxim
+is a program that translates color "xwd" window dumps to "xim" format files.
+It can also convert dumps of video windows on a Parallax server to the xim format.
+However, regular windows and video windows can not be dumped together.
+.SH OPTIONS
+.TP "\w'\f3\-m\f1name 'u"
+.B -in \fIfile\fP
+This option allows the user to explicitly specify the input file on the command line.  The default is to read input from standard in.
+.TP "\w'\f3\-m\f1name 'u"
+.B -out \fIfile\fP
+This option allows the user to explicitly specify the output file on the command line.
+The default is to write output to standard out.
+.TP "\w'\f3\-m\f1name 'u"
+.B -plx
+Dump a video window.
+Parallax boards don't put up pixel values but yuv values which must be decoded.
+Output is a 24 bit/pixel RG&B file.
+.TP
+.B -grey
+This is an extra command to -plx for creating an 8 bit grey scale image instead of 24 bits RG&B.
+This saves space when dumping large video windows.
+.PP
+.I Note:
+All of the command line options can be abbreviated to their shortest unique spelling.
+.br
+ex: %  xwd -nobdrs | xtoxim -out color.xim.Z -plx -gr
+
+.SH VIDEO
+It is not possible to decode yuv and regular pixel values simultaneously.
+.PP
+The -plx option presently works only with the video widget at Athena.
+That is, it cuts off the top 44 lines containing button boxes.
+This is easy to remove from the code.
+.PP
+The
+.Ix
+origin of the video image must start on a (modulo) 16 pixel boundary.
+Window borders and widths should also be modulo 4.
+.SH "SEE ALSO"
+X(1), xim(1), xwd(1)
+
+.SH BUGS
+.br
+Present -plx implementation removes the top 44 lines in order to dump Athena's xvideo widget.  This can easily be removed from the code.  If xwd could selectively dump subwindows, this would not be necessary.
+.br
+Xwd does not read the colormap associated with a window but rather the default map.
+.br
+Xwd does not like odd sized windows and may cause diagonally skewed images.
+Most other bugs are also are attributable to xwd.
+.SH COPYRIGHT
+Copyright 1989, Massachusetts Institute of Technology.
+.SH AUTHOR
+.br
+Philip R. Thompson  (phils@athena.mit.edu)
+.br
+Computer Resource Laboratory,  
+Dept. of Architecture and Planning,  
+.br
+Massachusetts Institute of Technology,  
+Cambridge, MA  02139
+

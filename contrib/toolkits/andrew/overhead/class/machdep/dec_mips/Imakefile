@@ -1,0 +1,49 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+DependTarget()
+
+NormalObjectRule()
+NormalAsmPPRule()
+
+all:: globals.o entry.o doload.o
+
+globals.o: globalrefs._h
+
+entry.o: entry.s
+	cc -c -I. entry.s
+
+globalrefs._h:	libc.eplist
+		$(AWK) '{printf "\tglobalref(%s)\n", $$2}' libc.eplist >,globalrefs._h
+		$(MV) ,globalrefs._h globalrefs._h
+
+libc.eplist:	$(MIPSLIBC_G0).a /lib/crt0.o getlist.awk
+		$(RM) /tmp/libhack.a
+		$(AR) /tmp/libhack.a /lib/crt0.o
+		$(NM) -go $(MIPSLIBC_G0).a /tmp/libhack.a | $(TR) ":" " " | \
+			$(AWK) -f getlist.awk >,libc.eplist
+		$(MV) ,libc.eplist libc.eplist
+		$(RM) /tmp/libhack.a
+
+InstallLibrary(libcx.a, $(DESTDIR)/lib)
+InstallFileToFile(makedo.csh,$(INSTPROGFLAGS),$(DESTDIR)/bin/makedo)
+
+all::		libcx.a
+
+DelList._:	libc.eplist
+		$(AWK) '{print $$1}' libc.eplist | $(SORT) -u > ,DelList._
+		$(MV) ,DelList._ DelList._
+
+libcx.a:	$(MIPSLIBC_G0).a DelList._
+		$(CP) $(MIPSLIBC_G0).a ,libcx.a
+		$(CHMODW) ,libcx.a
+		-ar d ,libcx.a `cat DelList._`
+		$(RANLIB) ,libcx.a
+		$(MV) ,libcx.a libcx.a
+
+ProgramTarget(dofix,dofix.o,,)
+InstallProgram(dofix,$(DESTDIR)/bin)
+
+clean::
+	$(RM) DelList._ libc.eplist globalrefs._h ,* libcx.a

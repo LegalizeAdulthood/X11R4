@@ -1,0 +1,28 @@
+with system;		use system;
+
+package C_to_ada_types is
+
+  type int is range -( 2**31 )..( 2**31 )-1 ;
+  for int'size use 32;
+
+  type int_ptr is access integer;
+
+  type short is range -( 2**15 )..( 2**15 )-1 ;
+  for short'size use 16;
+
+  type char is range -( 2**7 )..( 2**7 )-1 ;
+  for char'size use 8;
+
+  type bool is new boolean;
+  for bool'size use 8;
+
+  type c_handle is range -( 2**31 )..( 2**31 )-1 ;
+  for c_handle'size use 32;
+
+end C_to_ada_types;
+
+package body C_to_ada_types is
+
+-- No body needed, personality is all that counts.....
+
+end C_to_ada_types;

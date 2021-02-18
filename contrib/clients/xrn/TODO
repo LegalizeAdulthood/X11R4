@@ -1,0 +1,80 @@
+
+/*
+ * $Header: /users/ricks/xrn-11/R4/RCS/TODO,v 1.9 89/11/17 11:47:48 ricks Rel $
+ */
+
+
+BUGS
+
+- put in the cancel checking code...
+
+- detect file too big in "include file"...
+
+- if all the articles in a group get killed or cancelled when you
+  enter the group, then the point is reset to the top of the window,
+  not the next group.
+
+- Text widgets are being used when there is no source around....
+
+- double clicking will occassionaly leave you at the bottom of the 
+  top window, instead of at the top
+
+- bindings don't work in ADD/ALL modes
+
+- 'Go to Article' of an article already on the screen screws up 'read' markings
+
+- busy cursor in dialog boxes, message pane, when double-clicking
+
+- fold mail messages, allow header line to specify breaks (like xmh)
+
+
+Miscellaneous:
+
+- put in a wildcard for *ButtonList, so you get the order for the buttons
+  you care about with the rest coming at the end.  That way you don't miss
+  any new buttons.
+
+- reread the .newsrc file if it has been changed
+
+- highlight/different font for subject lines in the article text 
+  window (need a better text sink).
+
+- have a 'show all subjects' button that builds the list with all read 
+  and unread subject lines (this should be a toggle thing).
+
+- if you goto an unsubscribed group, ask if you want to resubscribe
+
+- option to flush keyboard/mouse events after getting into a new mode
+    - on slow machines, some people click ahead
+
+* make sure multiple selected items work on all commands (as in mark):
+  save, kill
+  - hook up 'saveRangeOfArticles'
+
+
+Searching:
+
+- buttons should not work during subject search
+    sort of works....  maybe do a popup grab of nothing 
+    for `continue' - need ^C back...
+
+- article body searching
+
+- case insensistive subject searching for `artSubSearch'
+
+KILL files:
+
+- pop up menus for kill options
+
+- make subject kill rebuild the subject text, not work on the string, 
+    but on the data structures
+
+- add edit kill file (need editable disk source text widget)
+
+- add kill author buttons (and don't default manage them, just local kill sub)
+
+- need a kill range of articles
+
+- cache kill information (especially global kill),
+  use much better matching routine
+

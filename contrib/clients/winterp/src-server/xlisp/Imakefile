@@ -1,0 +1,85 @@
+################################################################################
+#
+# File:         Imakefile
+# RCS:          $Header: Imakefile,v 1.1 89/11/25 04:04:45 mayer Exp $
+# Description:  IMAKEFILE FOR WINTERP-SERVER-XLISP DIRECTORY
+# Author:       Niels Mayer, HPLabs
+# Created:      Fri Nov 24 19:47:38 1989
+# Modified:     Fri Nov 24 23:07:26 1989 (Niels Mayer) mayer@hplnpm
+# Language:     N/A
+# Package:      N/A
+# Status:       X11r4 contrib tape release
+#
+# (c) Copyright 1989, Hewlett-Packard Company.
+#
+################################################################################
+
+ INCLUDES = -I/usr/include -I.
+
+#
+# Notes: 
+#	If you just want to make a standalone XLISP interpreter, see the rule
+#	"lisp::" in Makefile.hpux.
+#	
+#	This Imakefile just creates libXlisp.a, which is used by ../winterp
+#
+#	libXlisp.a requires math library libm.a.
+#
+#	All changes made to XLISP for using in libXlisp.a for WINTERP
+#       are within "#ifdef WINTERP" sections. Therefore, you MUST
+#       define the preprocessor symbol WINTERP in compiling these
+#	XLISP files.
+#
+
+ SRCS = unixstuff.c \
+	xlbfun.c \
+	xlcont.c \
+	xldbug.c \
+	xldmem.c \
+	xleval.c \
+	xlfio.c \
+	xlglob.c \
+	xlimage.c \
+	xlinit.c \
+	xlio.c \
+	xljump.c \
+	xllist.c \
+	xlmath.c \
+	xlobj.c \
+	xlpp.c \
+	xlprin.c \
+	xlread.c \
+	xlstr.c \
+	xlstruct.c \
+	xlsubr.c \
+	xlsym.c \
+	xlsys.c
+
+ OBJS = unixstuff.o \
+	xlbfun.o \
+	xlcont.o \
+	xldbug.o \
+	xldmem.o \
+	xleval.o \
+	xlfio.o \
+	xlglob.o \
+	xlimage.o \
+	xlinit.o \
+	xlio.o \
+	xljump.o \
+	xllist.o \
+	xlmath.o \
+	xlobj.o \
+	xlpp.o \
+	xlprin.o \
+	xlread.o \
+	xlstr.o \
+	xlstruct.o \
+	xlsubr.o \
+	xlsym.o \
+	xlsys.o
+
+ DEFINES = -DWINTERP
+
+NormalLibraryTarget(Xlisp,$(OBJS))
+DependTarget()

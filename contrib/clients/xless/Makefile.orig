@@ -1,0 +1,72 @@
+#      This is the Makefile for Xless, a file browsing utility
+#      built upon Xlib and the XToolkit.
+#
+#      $Header: makefile,v 1.1 89/06/04 20:06:50 carlo Exp $
+#
+
+# Directories to put the things into on install.
+
+DESTDIR= 
+
+#The directory for the executables.
+
+INSTDIR= /mit/carlo/vaxbin
+
+#The directory to put the help file into.	
+
+LIBDIR=/mit/tax/Xless
+
+#The directory to put the manual pages into
+
+MANDIR=/mit/carlo/man
+#The specific section to put xless's manual page into, can be one of:
+# 0 - 8, n or l (small L).
+MANSECT=n
+
+# CC: on IBM-RT use hc2
+# CC = cc
+CC = /mit/gnu/vaxbin/gcc
+CFLAGS= -O -DATHENA -DHELPFILE=\"${LIBDIR}/xless.help\" ${INCFLAGS}
+INCFLAGS= -I/mit/x11/include
+LDFLAGS= -L/mit/X11/vaxlib/Xt -L/mit/x11/vaxlib/Xmu -L/mit/x11/vaxlib/Xaw \
+	-L/mit/X11/vaxlib/X
+LIBES= -lXaw -lXmu -lXt -lX
+OBJS= help.o init.o popup.o util.o callbacks.o new.o \
+	main.o ${XTKOBJS}
+XTKOBJS= 
+XTKFILES= 
+INCLUDE= 
+CFILES= help.c init.c popup.c util.c callbacks.c \
+	new.c main.c ${XTKFILES}
+
+all:		xless
+xless:		${OBJS}
+		$(CC) ${CFLAGS} ${LDFLAGS} ${OBJS} -o xless ${LIBES}
+help.o:		help.c ${INCLUDE}
+init.o:		init.c ${INCLUDE}
+popup.o:	popup.c ${INCLUDE}
+util.o:		util.c ${INCLUDE}
+callbacks.o:	callbacks.c ${INCLUDE}
+new.o:		new.c ${INCLUDE}
+main.o:		main.c ${INCLUDE}
+
+install: ;
+	 strip xless
+	 cp xless ${DESTDIR}${INSTDIR}
+	 cp xless.help ${LIBDIR}
+	 cp xless.man ${MANDIR}/man${MANSECT}/xless.${MANSECT}
+	 cp xless.cat ${MANDIR}/cat${MANSECT}/xless.${MANSECT}	
+
+clean: 	;
+	rm *~ *.o xless xless.shar core xless.cat
+
+saber: ;
+	saber ${INCFLAGS} ${LDFLAGS} ${CFILES} ${LIBES}
+
+shar: 	;
+	shar README Makefile xless.help xless.man \
+	     ${CFILES} ${XTKFILES} > xless.shar
+
+manual:	;
+	nroff -man xless.man > xless.cat
+

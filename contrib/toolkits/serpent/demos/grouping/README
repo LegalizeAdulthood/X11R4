@@ -1,0 +1,41 @@
+This demo is intended to show how Serpent can be used to implement the
+grouping notion used in interactive editors.  The end user creates a
+collection of command widgets and wishes to have some of them move as a
+group.  In the demo, there can be as many groups as desired, but each
+instance can only belong to one group.  The various commands in this demo
+are:
+
+Create Instance.  Following the selection of this command, the desired
+position for the command widget is specified by clicking at that position on
+the background form.  This will create a command widget which belongs to no
+group.
+
+Create Group.  Following the selection of this command, a new group will be
+created.  No instances belong to this group upon creation.  A button for the
+new group will be created.
+
+Delete Instance.  Following the selection of this command and the selection
+of an existing command widget instance, the instance will be deleted.
+
+Delete Group.  Following the selection of this command and a group button,
+the group button will be dimmed and all of the instances which belong to
+this group will be removed from it.
+
+Add to Group.  This command adds an instance to a particular group.  Select,
+in order, the command, the group and the instance.
+
+Delete from group.  This command, followed by the selection of a command
+widget instance will remove that instance from the group.
+
+Toggle Group.  This command, followed by the selection of a group button
+will cause all elements of the group to turn black.  Selecting the command,
+group again will cause them all to return to their normal state.
+
+
+Once groups have been created, then moving an element of one of the groups
+will cause all of the elements in the group to be moved.  The left hand
+corners of all of the groups maintain the same spatial relationship.
+
+
+The slang code shows how the base of the group is maintained in
+dialogue memory shared data.

@@ -1,0 +1,15 @@
+#
+# example programs Imakefile
+#
+#
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+SRCS=	basecalc.c
+OBJS=	basecalc.o
+
+PROGRAMS = basecalc
+
+LOCAL_LIBRARIES = $(XLIB)
+
+ComplexProgramTarget(basecalc)

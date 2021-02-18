@@ -1,0 +1,19 @@
+
+	Here is some supplementary explanation for the text primitive.
+
+
+	If you click the left mouse button on the text primitive ( within the
+circumscribing rectangle ), the character cursor appears at the mouse pointer
+location, and you enter the editing mode.   In this mode, you can perform the
+usual string operation ( deletion, insertion, etc. ) to this text primitive.
+
+	To select the text primitive itself with the left mouse button for
+some graphics operation, you have to click it exactly on the circumscribing
+rectangle.   This requires much skill, so I recommend you to employ the other
+selection method.   Press the right mouse button, drag it so that the rectangle
+displayed completely encloses the text primitive, and release it.
+
+			Much easier, isn't it?
+
+Of course, you can apply this method both for other primitive types and for
+multiple primitives, too.

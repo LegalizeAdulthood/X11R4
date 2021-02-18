@@ -1,0 +1,450 @@
+===============================================================================
+=======                                                                 =======
+=======		    Module imgXlib  --  X11 image interface		=======
+=======				File imgXlib.c				=======
+=======                                                                 =======
+===============================================================================
+
+
+  Functions:
+
+	This module is the X11 interface for imglib functions.
+
+	Unlike other imglib functions, the routines in this module
+	have calling sequences which depend on an X11 environment.
+
+
+  X resources used:
+
+	ColorMap:	Private or Shared
+	ColorInstance:	Private or Shared
+
+	In both cases 'p', 'P', 's', or 'S' as the initial character
+	of the resource or XDefault value is sufficient.
+
+
+	ColorMap = Private forces allocation and installation
+			of a private colormap for the window
+			displaying an image.
+
+	ColorMap = Shared uses the default colormap for the
+			X11 environment's display.
+
+
+	ColorInstance = Private uses XAllocColorCells to allocate colormap
+			cells exclusively for the image being displayed.
+
+	ColorInstance = Shared uses XAllocColor to make the window
+			displaying an image share existing read-only
+			colors.
+
+
+  Public Routines:
+
+	ck_colorcap	Check read/write color capacity
+	create_sysres	Create system-dependent resources
+	delete_sysres	Delete system-dependent resources
+	display_img	Display image in new window
+	get_img		Get image	(Copy from drawable)
+	maint_img	Maintain Displayed Image
+	put_img		Put image	(Copy to drawable)
+	start_X11	Start X11 Interface
+	stop_X11	Stop X11 Interface
+	update_colors	Update X11 color map
+
+
+  Local Routines:
+
+	None
+
+
+  Module History:
+
+	11-21-89	Paul Raveling
+	Finalized version for contribution to X11R4.  Changes not
+	documented in this header have been made within the last
+	3 weeks.
+
+	3-21-89		Paul Raveling
+	Created module.
+
+===============================================================================
+=======                                                                 =======
+=======		ck_colorcap  --  Check Read/Write Color Capacity	=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	num_colors = ck_colorcap ( X11_env )
+
+
+  Functions:
+
+	Check the number of read/write colors available in the given
+	X11 display environment.  If the X11 environment includes
+	a smaller "maxcolors" override, use the override.
+
+	Since there's no X11 function to do this directly,  ck_colorcap
+	uses iterative attempts to allocate read/write cells.  It
+	uses a binary search to minimize the overhead involved.
+
+
+  Input:
+
+	X11_env		X11env *
+			Pointer to X11 interface environment
+			(e.g., as created by start_X11)
+
+
+  Output:
+
+	num_colors	int
+	<return value>	Number of read/write color cells available.
+
+===============================================================================
+=======                                                                 =======
+=======	     create_sysres  --  Create System-Dependent Resources	=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = create_sysres ( image, X11_env )
+
+
+  Functions:
+
+	Create system-dependent resources required to display or
+	otherwise manipulate an image.  This also binds the image
+	to a particular X11 environment.
+
+	Normally this would be called by a system-dependent function
+	which needs such resources but finds they don't exist yet
+	for this image.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image being initialized.
+
+	X11_env		X11env *
+			Pointer to X11 environment for image
+
+
+  Output:
+
+	status		int
+	<return value>	Success/fail status:
+			    0 => Couldn't create some resource
+			    1 => Resources were created
+
+===============================================================================
+=======                                                                 =======
+=======	      delete_sysres  --  Delete System-Dependent Resources	=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	delete_sysres ( image )
+
+
+  Functions:
+
+	Free whatever system-dependent resources are associated with
+	the given image.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image being cleaned up
+
+
+  Output:
+
+	None.  Any system resources (colors, pixmaps, windows,...)
+	associated with this image are freed, and associated
+	blocks of memory are released.
+
+===============================================================================
+=======                                                                 =======
+=======		   display_img --  Display Image in New Window		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = display_img ( image, display_name, event_mask )
+
+
+  Functions:
+
+	Create a new pixmap and window, and display an image in it.
+
+
+  Input:
+
+	image		Img *
+			Image to display
+
+
+	X11_env		X11env *
+			Pointer to X11 environment for image
+
+	event_mask	Word
+			X11 event mask for event for events of interest
+			on image's window.  This function forces
+			ExposureMask on in the event mask.
+
+
+  Output:
+
+	status		int
+	<return value>	Status:  0 => failed, 1 => succeeded
+
+===============================================================================
+=======                                                                 =======
+=======		     get_img --  Get Image from Drawable		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	image = get_img ( drawable, geometry, X11_env )
+
+
+  Functions:
+
+	Copy a region of a drawable to a new image.
+
+	Restrictions:
+
+	    1.  If the drawable is a pixmap rather than a window,
+		the color map could be wrong.  We assume that a
+		pixmap uses the default color map for the given
+		X11 environment.  If the caller knows for sure what
+		color map is appropriate, it can supply an X11_env
+		structure with the appropriate cmap setting.
+
+	    2.  This currently doesn't work if the default color map
+		uses more than 256 colors (i.e., is more than 8 bits
+		deep), or if XGetImage reports:
+
+		    --  Image depth > than 8
+		    --  Pixel size other than 8 bits
+		    --  RGB mask values other than 0
+
+
+  Input:
+
+	drawable	Drawable
+			Window or pixmap to get image from:
+			X11 Drawable (XID)
+
+	geometry	Geom *
+			Pointer to imglib Geom structure representing
+			geometry of region to get from drawable;
+			NULL => get entire contents of drawable
+
+	X11_env		X11env *
+			Pointer to X11 interface environment
+			(e.g., as created by start_X11)
+
+
+  Output:
+
+	image		Img *
+	<return value>	Pointer to new image;
+			NULL => couldn't get X11 image, or couldn't
+			create a new imglib Img (probably insufficent
+			memory)
+
+===============================================================================
+=======                                                                 =======
+=======		     maint_img  --  Maintain Displayed Image		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	X11_event = maint_img ( image, X11_env )
+
+
+  Functions:
+
+	Maintain a displayed image.
+
+	This means waiting for an X event and handling refreshing.
+	The caller is responsible for having selected event input
+	appropriately, and for including ExposreMask in the event
+	mask given to X.
+
+	Return to the caller to let him handle any X event other
+	than an XExposeEvent.  Handle exposures within this routine.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image being displayed.
+
+	X11_env		X11env *
+			Pointer to X11 interface environment
+			(e.g., as created by start_X11)
+
+  Output:
+
+	X11_event	XEvent *
+	<return value>	Pointer to last event reported by X11
+			that's of interest to the caller.
+
+===============================================================================
+=======                                                                 =======
+=======		       put_img --  Put Image to Drawable		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	put_img ( image, drawable, geometry, X11_env )
+
+
+  Functions:
+
+	Copy an image to a region of a drawable.
+
+
+	WARNING:  This may modify the original image:
+
+	If "force monochrome" or "force grayscale" is in effect,
+	or if the target display environment has a restrictive
+	visual (e.g., monochrome or grayscale display), or if
+	the image contains more colors than are available,...
+
+	The ORIGINAL image may be quantized, converted to grayscale,
+	dithered, or otherwise disturbed.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to put (i.e., image to draw)
+
+	drawable	Drawable
+			Window or pixmap to put image into:
+			X11 Drawable (XID)
+
+	geometry	Geom *
+			geometry of region to write in drawable;
+			NULL => image_width x image_height + 0 + 0
+
+	X11_env		X11env *
+			Pointer to X11 interface environment
+			(e.g., as created by start_X11)
+
+
+  Output:
+
+	status		int
+	<return value>	Status:  0 => Couldn't put image, 1 => did.
+
+===============================================================================
+=======                                                                 =======
+=======		     start_X11  --  Start up X Interface		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	X11_env = start_X11 ( argc, argv )
+
+
+  Function:
+
+	Start_X11 opens a connection to an X11 display server and
+	saves information for a default X11 interface environment.
+
+	The caller should terminate use of this environment by
+	calling stop_X11.
+
+
+  Input:
+
+	argc		int
+			Number of arguments on command line used
+			to invoke program.  Minimum argc = 1.
+
+	argv		char *[]
+			Array of pointers to command line arguments.
+			argv[0] must contain the program name.
+
+
+  Output:
+
+	X11_env		X11env *
+	<return value>	Pointer to X11 interface environment
+			(e.g., as created by start_X11)
+			NULL => Couldn't open named display
+
+
+===============================================================================
+=======                                                                 =======
+=======		    stop_X11  --  Stop (Terminate) X Interface		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	stop_X11 ( X11_env )
+
+
+  Function:
+
+	Start_X11 closes a connection to an X11 display server and
+	frees the default X11 interface environment information
+	that was saved by start_X11.
+
+
+  Input:
+
+
+	X11_env		X11env *
+	<return value>	Pointer to X11 interface environment
+			(e.g., as created by start_X11)
+
+
+  Output:	None
+
+
+===============================================================================
+=======                                                                 =======
+=======		  update_colors  --  Update X11 Color Map		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	update_colors ( image )
+
+
+  Functions:
+
+	Update X11 color map to match new contents of image color map.
+	At present this is implemented only for X11 environments
+	using private colors.
+
+	This does not allow changing the size of an existing color map.
+
+
+  Input:
+
+	image		Img *
+			Pointer to image to put (i.e., image to draw)
+
+
+  Output:
+
+	None to caller; X11 color map is updated,

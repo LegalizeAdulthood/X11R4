@@ -1,0 +1,211 @@
+
+-----------------------------------------------------------------------
+
+               The Syntax of the UNIX Startx Utility
+
+The syntax of the UNIX startx command and its options is
+
+startx [-d | -w] [-x startup | [-r resources | -m window_manager] ]
+
+which represents two sets of options.  The first set consists of
+the mutually exclusive options -d or -w which helps startx
+distinguish which type of terminal you are using.  These options
+will only be used in rare circumstances and you should consult the
+manual page for more details.
+
+The second set of options consists of a choice between setting up
+your X Window System environment with one shell script file using
+the -x option, or by specifying your X resources and window manager
+separately using the -r and -m options.  You should note that you
+can use one or both of the -m and -r options, or the -x option, but
+you cannot use the -x option in conjunction with the -m and -r
+options.
+
+-----------------------------------------------------------------------
+
+
+UNIX Startx Utility Makes the X Window System Easy
+
+The X Window System is a network-based graphics window
+system which was developed at the Massachusetts Institute of
+Technology in 1984.  PUCC hosts run the most recent version
+of the X Window System, X11.  The X Window System is
+available on all of our Sequent Symmetries, Sun
+workstations, and the VAX 8800.
+
+There are many ways to initiate an X Window System session
+which require you to go through several steps to create a
+working environment.  The UNIX startx utility is designed to
+ease your burden by allowing you to start your window
+manager, load your X resources, and initiate other X clients
+with one command.
+
+Window Managers, X Resources,
+X Servers and X Clients
+
+In order for you to understand how startx works, it is
+important that you know the meanings of the terms window
+manager, X resource, X server, and X client.
+
+o A window manager is a program which allows you to move and
+  resize windows on your display.  These windows act like
+  individual terminal screens which you can manipulate,
+  layer, and move around.
+
+o An X resource is a personalized attribute of your
+  environment such as color, cursor symbol, etc. You can
+  tailor your X Window session environment to make the
+  cursor symbol change when moved to other windows, make a
+  scroll bar, or make the windows change colors for easier
+  identification.  These are just a few examples of X
+  resources.
+
+o Your X server communicates and translates all input so
+  that your particular display can understand all the
+  information it receives.  The X server is a combination of
+  the graphics display, keyboard, mouse, hardware, and X
+  server software which accepts input from these devices and
+  provides display services for clients.  The X server
+  software must run locally in order to communicate with
+  these devices.
+
+o An X client is a program that performs a task such as
+  terminal emulation or window management to shape your X
+  Window System environment.
+
+Startx sets your DISPLAY environment variable to identify
+the X server to the X clients.  This enables your X clients
+to communicate with it and set up your X Window System
+session.
+
+You can find out more about your environment variables by
+checking the manual pages of the UNIX shell you are using
+(sh(1), ksh(1L), csh(1), or tcsh(1L)) or by asking a PUCC
+general consultant for assistance.
+
+Creating a Startup Shell Script File
+
+You can define and load your X resources and your window
+manager easily using a startup shell script file.  Startx
+reads this file if you use the -x option on the command
+line, if you name the file in your XINITRC environment
+variable, or if you name the file .Xinit, .xinit, .Xinitrc,
+.xinitrc, or .xsession in your home directory.  In this
+file, it is your responsibility to start a window manager,
+load X resources, and create X clients.  A working example
+of a startup shell script file follows:
+
+   #!/bin/csh
+   (twm &)
+   xrdb -load .xdefaults
+   (xclock -g 75x75+0+0 &)
+   (xbiff  -g 75x75+101-0 &)
+   if ("/dev/console" == "`tty`") then
+     xterm -g 80x24+0+0 +ut -C -T `hostname`
+   else
+     xterm -g 80x24+0+0 +ut -T `hostname`
+   endif
+
+For a workstation, it is important that the last line in
+your startup shell script file be an invocation of xterm(1L)
+running in the foreground with the -C option for console
+messages.
+
+For an X display station, the last line in the startup
+script should be an invocation of xterm(1L) running in the
+foreground without the -C option.  Be aware that some X
+display stations will not terminate the telnet(1C) session
+on closing, so you should remember to manually logoff the
+session after leaving the X Window session.
+
+Now that you know what a startup file looks like, you can
+tell startx to read this file in one of three ways.
+
+o You can use the -x option and a startup shell script file
+  to invoke startx by entering
+  
+     startx -x startup
+
+  In this example, startx will run the given shell script file,
+  startup.  Startx looks for a file specified with the -x
+  option before looking for any other initialization files.
+
+o You can set your XINITRC environment variable to the
+  startup shell script file name you want to use.  If you
+  don't give any startup shell script file name at the
+  command line using the -x option, then startx looks for a
+  startup shell script file named by your XINITRC
+  environment variable.
+
+  Again, you can find out more about setting your
+  environment variables by checking the manual pages of the
+  UNIX shell you are using (sh(1), ksh(IL), csh(1), or
+  tcsh(1L)) or by asking a PUCC general consultant for
+  assistance.
+
+o You can name your startup shell script file .Xinit,
+  .xinit, .Xinitrc, .xinitrc, or .xsession to begin the X
+  client programs.  If you haven't used the -x option or set
+  XINITRC, then startx looks in your home directory for any
+  file with the names in the order given above.  It looks
+  for these file names specifically because they are the
+  most common names for initialization files; however, we
+  recommend using the name .xsession for your startup shell
+  script file.
+
+Defining X Attributes Without a Startup File
+
+If startx doesn't find a startup shell script file, it loads
+an X resources file which you supply at the command line
+using the -r option. This is done by entering
+
+   startx -r resources
+   
+where resources is the name of the X resources configuration
+file you wish to use.  (See the xrdb(1L) and x(1L) manual pages
+for more information on X resources.)
+
+If you don't use the -r option, startx looks for a file in
+your home directory called .Xdefaults, .xdefaults,
+.Xresources, or .xresources, respectively.  If it doesn't
+find any of these X resource files, then your X Window
+System session will not have personalized attributes.
+
+Again, if you don't specify a startup shell script file
+using the -x option, startx looks for a window manager
+indicated at the command line using the -m option.  This is
+done by entering
+
+   startx -m window_manager
+   
+If you don't use the -m option, then startx invokes one of
+the window managers twm(1L), awm(1L), or uwm(1L) if it finds
+one of the associated configuration files in your home
+directory named .twmrc, .awmrc, or .uwmrc, respectively.  If
+startx can't find one of the window manager configuration
+files in your home directory, it starts an xterm(1L) client
+and the twm(1L) window manager by default.
+
+Tracing Errors
+
+Not only does startx start all your X clients for you, it
+also redirects error messages into a file for any errors
+encountered while trying to start your X Window System
+session.
+
+If you set your environment variable XERRORS to the name of
+an errors file, startx will redirect error messages to that
+file.  If you don't set your XERRORS environment variable,
+startx creates an errors file called .xerrors in your home
+directory and redirects any error messages to that file.
+
+Additional References
+
+For more information on the X Window System see the X Window
+System User's Guide, Volume Three, by O'Reilly & Associates,
+Inc.  This manual is available for loan at the PUCC
+Reference/Loan Library in MATH B6.  For a general overview
+of the X Window System consult the November 1989 issue of
+the PUCC Newsletter.
+
+               - George Kraft & Michael Melton

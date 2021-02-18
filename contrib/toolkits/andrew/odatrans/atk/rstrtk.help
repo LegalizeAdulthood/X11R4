@@ -1,0 +1,50 @@
+\begindata{text,268880620}
+\textdsversion{12}
+\template{help}
+\chapter{Raster Tool Kit
+
+}
+\section{What is the Raster Tool Kit
+
+}\leftindent{
+A software package for manipulating raster contents in ODA. It is
+designed to be usable independently of ODA.
+
+See the help for \italic{ODA-Toolkit} for information on documentation
+for the local, raster and ODA tool kits.
+
+}
+
+\section{Related tools  }\leftindent{
+
+
+Select (highlight) one of the italicized names and choose "Show Help on 
+Selected Word" from the pop-up menu to see the help file for:}\leftindent{
+
+
+\italic{ODA}
+
+\italic{ODA-Toolkit
+
+}\italic{Local-Toolkit
+
+}\italic{atkoda}
+
+\italic{odaatk}
+
+\italic{odatroff}
+
+\italic{odaileaf}}
+
+\leftindent{\italic{ileafoda}}
+
+\leftindent{\italic{proda}}
+
+\leftindent{\italic{prodif}}
+
+\leftindent{\italic{prtext}}
+
+\leftindent{\italic{convert}
+
+}
+\enddata{text,268880620}

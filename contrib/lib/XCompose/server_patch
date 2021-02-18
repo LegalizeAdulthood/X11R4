@@ -1,0 +1,765 @@
+--- server/dix/Imakefile
+***************
+*** 3,9
+  #if	defined(M4300Architecture) || defined(M4800Architecture)
+  
+  COMSRCS = atom.c colormap.c cursor.c dispatch.c dixutils.c events.c \
+! 	extension.c gc.c globals.c glyphcurs.c grabs.c \
+  	main.c property.c resource.c swaprep.c swapreq.c \
+  	tables.c initatoms.c dixfonts.c window.c
+  
+
+--- 3,9 -----
+  #if	defined(M4300Architecture) || defined(M4800Architecture)
+  
+  COMSRCS = atom.c colormap.c cursor.c dispatch.c dixutils.c events.c \
+! 	extension.c gc.c globals.c glyphcurs.c grabs.c kbd_ext.c \
+  	main.c property.c resource.c swaprep.c swapreq.c \
+  	tables.c initatoms.c dixfonts.c window.c
+  
+***************
+*** 9,15
+  
+  GDS_SRCS = $(COMSRCS)
+  GDS_OBJS = atom.gdso colormap.gdso cursor.gdso dispatch.gdso dixutils.gdso \
+! 	events.gdso \
+  	extension.gdso gc.gdso globals.gdso glyphcurs.gdso grabs.gdso \
+  	main.gdso property.gdso resource.gdso swaprep.gdso swapreq.gdso \
+  	tables.gdso initatoms.gdso dixfonts.gdso window.gdso
+
+--- 9,15 -----
+  
+  GDS_SRCS = $(COMSRCS)
+  GDS_OBJS = atom.gdso colormap.gdso cursor.gdso dispatch.gdso dixutils.gdso \
+! 	events.gdso kbd_ext.gdso \
+  	extension.gdso gc.gdso globals.gdso glyphcurs.gdso grabs.gdso \
+  	main.gdso property.gdso resource.gdso swaprep.gdso swapreq.gdso \
+  	tables.gdso initatoms.gdso dixfonts.gdso window.gdso
+***************
+*** 16,22
+  
+  BMW_SRCS = $(COMSRCS)
+  BMW_OBJS = atom.bmwo colormap.bmwo cursor.bmwo dispatch.bmwo dixutils.bmwo \
+! 	events.bmwo \
+  	extension.bmwo gc.bmwo globals.bmwo glyphcurs.bmwo grabs.bmwo \
+  	main.bmwo property.bmwo resource.bmwo swaprep.bmwo swapreq.bmwo \
+  	tables.bmwo initatoms.bmwo dixfonts.bmwo window.bmwo
+
+--- 16,22 -----
+  
+  BMW_SRCS = $(COMSRCS)
+  BMW_OBJS = atom.bmwo colormap.bmwo cursor.bmwo dispatch.bmwo dixutils.bmwo \
+! 	events.bmwo kbd_ext.bmwo \
+  	extension.bmwo gc.bmwo globals.bmwo glyphcurs.bmwo grabs.bmwo \
+  	main.bmwo property.bmwo resource.bmwo swaprep.bmwo swapreq.bmwo \
+  	tables.bmwo initatoms.bmwo dixfonts.bmwo window.bmwo
+***************
+*** 103,109
+  	main.c property.c resource.c swaprep.c swapreq.c \
+  	tables.c window.c initatoms.c dixfonts.c
+  OBJS = atom.o colormap.o cursor.o dispatch.o dixutils.o events.o \
+! 	extension.o gc.o globals.o glyphcurs.o grabs.o \
+  	main.o property.o resource.o swaprep.o swapreq.o \
+  	tables.o window.o initatoms.o dixfonts.o
+  
+
+--- 103,109 -----
+  	main.c property.c resource.c swaprep.c swapreq.c \
+  	tables.c window.c initatoms.c dixfonts.c
+  OBJS = atom.o colormap.o cursor.o dispatch.o dixutils.o events.o \
+! 	extension.o gc.o globals.o glyphcurs.o grabs.o kbd_ext.c \
+  	main.o property.o resource.o swaprep.o swapreq.o \
+  	tables.o window.o initatoms.o dixfonts.o
+  
+--- server/dix/atom.c
+***************
+*** 32,37
+  #include "X.h"
+  #include "Xatom.h"
+  #include "misc.h"
+  
+  #define InitialTableSize 100
+  
+
+--- 32,39 -----
+  #include "X.h"
+  #include "Xatom.h"
+  #include "misc.h"
++ #include "dispatch.h"
++ #include "kbd_ext.h"
+  
+  #define InitialTableSize 100
+  
+***************
+*** 42,47
+      char   *string;
+  } NodeRec, *NodePtr;
+  
+  static Atom lastAtom = None;
+  static NodePtr atomRoot = (NodePtr)NULL;
+  static unsigned long tableLength;
+
+--- 44,54 -----
+      char   *string;
+  } NodeRec, *NodePtr;
+  
++ Atom EncodingTableAtom;
++ Atom ComposeTableAtom;
++ Atom ComposeTableShortsAtom;
++ Atom ModifierIndexAtom;
++ 
+  static Atom lastAtom = None;
+  static NodePtr atomRoot = (NodePtr)NULL;
+  static unsigned long tableLength;
+***************
+*** 47,52
+  static unsigned long tableLength;
+  static NodePtr *nodeTable;
+  
+  Atom 
+  MakeAtom(string, len, makeit)
+      char *string;
+
+--- 54,60 -----
+  static unsigned long tableLength;
+  static NodePtr *nodeTable;
+  
++ /* #include <stdio.h> */
+  Atom 
+  MakeAtom(string, len, makeit)
+      char *string;
+***************
+*** 96,101
+  					     tableLength * sizeof(NodePtr));
+  	}
+  	*(nodeTable+lastAtom) = *np;
+  	return(*np)->a;
+      }
+      else
+
+--- 104,129 -----
+  					     tableLength * sizeof(NodePtr));
+  	}
+  	*(nodeTable+lastAtom) = *np;
++ 	/* cache atoms of interest to keyboard handling */
++ #ifdef SERVER_COMPOSE
++ 	if (!strncmp(string, "KB_COMPOSE_TABLE", len)) {
++ /* fprintf (stderr, "Got KB_COMPOSE_TABLE atom\n"); */
++ 	    ComposeTableAtom = (*np)->a;
++ 	}
++ 	if (!strncmp(string, "KB_COMPOSE_TABLE_SHORTS", len)) {
++ /* fprintf (stderr, "Got KB_COMPOSE_TABLE_SHORTS atom\n"); */
++ 	    ComposeTableShortsAtom = (*np)->a;
++ 	}
++ 	else
++ #endif /* SERVER_COMPOSE */
++ 	     if (!strncmp(string, "KB_ENCODING_TABLE", len)) {
++ /* fprintf (stderr, "Got KB_ENCODING_TABLE atom\n"); */
++     	    EncodingTableAtom = (*np)->a;
++ 	}
++ 	else if (!strncmp(string, "KB_MODIFIER_INDEX", len)) {
++ /* fprintf (stderr, "Got KB_MODIFIER_INDEX atom\n"); */
++     	    ModifierIndexAtom = (*np)->a;
++ 	}
+  	return(*np)->a;
+      }
+      else
+***************
+*** 136,141
+  
+  FreeAllAtoms()
+  {
+      if(atomRoot == (NodePtr)NULL)
+  	return;
+      FreeAtom(atomRoot);
+
+--- 164,175 -----
+  
+  FreeAllAtoms()
+  {
++     /* reset special keyboard atom globals at startup and closedown */
++     ModifierIndexAtom = EncodingTableAtom = ComposeTableAtom = 0;
++     /* hack - might as well initialize everything else here too */
++     InitComposeKeys = (pointer)NULL;
++     LanguageModifiers = 0;
++     LanguageModel = LangUndefined;
+      if(atomRoot == (NodePtr)NULL)
+  	return;
+      FreeAtom(atomRoot);
+--- server/dix/property.c
+***************
+*** 28,33
+  ******************************************************************/
+  /* $XConsortium: property.c,v 1.63 88/09/06 15:41:17 jim Exp $ */
+  
+  #include "X.h"
+  #define NEED_REPLIES
+  #define NEED_EVENTS
+
+--- 28,34 -----
+  ******************************************************************/
+  /* $XConsortium: property.c,v 1.63 88/09/06 15:41:17 jim Exp $ */
+  
++ /* #include <stdio.h> */
+  #include "X.h"
+  #define NEED_REPLIES
+  #define NEED_EVENTS
+***************
+*** 35,40
+  #include "windowstr.h"
+  #include "propertyst.h"
+  #include "dixstruct.h"
+  
+  extern void (*ReplySwapVector[]) ();
+  extern void CopySwap16Write(), CopySwap32Write(), Swap32Write();
+
+--- 36,44 -----
+  #include "windowstr.h"
+  #include "propertyst.h"
+  #include "dixstruct.h"
++ #include "dispatch.h"
++ #include "scrnintstr.h"
++ #include "kbd_ext.h"
+  
+  extern WindowRec WindowTable[];
+  extern void (*ReplySwapVector[]) ();
+***************
+*** 36,41
+  #include "propertyst.h"
+  #include "dixstruct.h"
+  
+  extern void (*ReplySwapVector[]) ();
+  extern void CopySwap16Write(), CopySwap32Write(), Swap32Write();
+  extern int WriteToClient();
+
+--- 40,46 -----
+  #include "scrnintstr.h"
+  #include "kbd_ext.h"
+  
++ extern WindowRec WindowTable[];
+  extern void (*ReplySwapVector[]) ();
+  extern void CopySwap16Write(), CopySwap32Write(), Swap32Write();
+  extern int WriteToClient();
+***************
+*** 40,45
+  extern void CopySwap16Write(), CopySwap32Write(), Swap32Write();
+  extern int WriteToClient();
+  
+  /*****************************************************************
+   * Property Stuff
+   *
+
+--- 45,59 -----
+  extern void CopySwap16Write(), CopySwap32Write(), Swap32Write();
+  extern int WriteToClient();
+  
++ static pointer ComposePropTable;
++ static unsigned short *ComposePropShortsTable;
++ static Bool HaveComposeShortsProp = FALSE;
++ XKBCompose Compose;
++ pointer InitComposeKeys;
++ unsigned short *InitComposeModifiers;
++ int LanguageModifiers;
++ int LanguageModel;
++ 
+  /*****************************************************************
+   * Property Stuff
+   *
+***************
+*** 146,151
+      return Success;
+  }
+  
+  int 
+  ProcChangeProperty(client)
+      ClientPtr client;
+
+--- 160,233 -----
+      return Success;
+  }
+  
++ void
++ InitCompose(len)
++     unsigned long len;
++ {
++     int i, j, last_key;
++ 
++     /* stash addresses of shorts here to insure consistency */
++     Compose.num_composes = ComposePropShortsTable[0];
++     Compose.modifiers = &ComposePropShortsTable[1];
++     /* stash addresses that require both props */
++     if (Compose.output_modifiers)
++ 	xfree(Compose.output_modifiers);
++     Compose.output_modifiers = (unsigned int *) xalloc(
++ 				sizeof(unsigned int) * Compose.num_composes);
++     for (i = 0; i < Compose.num_composes; i++) {
++ 	Compose.output_modifiers[i] =
++ 	ComposePropTable[49 + (Compose.num_composes * Compose.max_keycodes)
++ 			 + i];
++ 	/* convert from byte to unsigned int */
++     }
++     Compose.output_keycodes = &ComposePropTable[49 + ((Compose.max_keycodes
++ 						+ 1) * Compose.num_composes)];
++     Compose.cancel_keycodes = &ComposePropTable[49 + ((Compose.max_keycodes
++ 						+ 2) * Compose.num_composes)];
++     Compose.num_cancel_keycodes = len - 49 - ((Compose.max_keycodes + 2) *
++ 				       Compose.num_composes);
++ 
++     /* and compute the set of keycodes/modifiers that can
++        initiate a compose sequence */
++     if (InitComposeKeys)
++ 	xfree(InitComposeKeys);
++     InitComposeKeys = (pointer) xalloc(Compose.num_composes + 1);
++     if (InitComposeModifiers)
++ 	xfree(InitComposeModifiers);
++     InitComposeModifiers = (unsigned short *) 
++ 			    xalloc(sizeof(unsigned short) * 
++ 				   (Compose.num_composes + 1));
++     /* worst case: each sequence has a different initiator, plus terminator */
++     last_key = 0;
++     for (i = 0; i < Compose.num_composes * Compose.max_keycodes;
++ 	 i += Compose.max_keycodes) {
++ 	if (Compose.sequences[i] == (KeyCode) NULL)
++ 	    /* skip deleted sequences; Init list NULL terminated */
++ 	    continue;
++         for (j = last_key - 1; j >= 0; j--) {
++ 	    /* search from end, faster assuming localized defs */
++ 	    if ((InitComposeModifiers[j] == Compose.modifiers[i]) &&
++ 		(InitComposeKeys[j] == Compose.sequences[i])) {
++ 		break;
++ 	    }
++ 	}
++         if (j < 0) {
++ 	    InitComposeModifiers[last_key] = Compose.modifiers[i];
++ 	    InitComposeKeys[last_key++] = Compose.sequences[i];
++ /* fprintf(stderr, "init compose key = 0x%x, modifier = 0x%x\n",
++ 	Compose.sequences[i], Compose.modifiers[i]); */
++ 	}
++     }
++     InitComposeKeys[last_key] = 0;
++     InitComposeModifiers[last_key] = 0;	/* Null terminate */
++ #ifdef SERVER_COMPOSE
++     /* in case a compose sequence is in process, reset it */
++     ResetComposeSequence();
++ /* fprintf(stderr, "InitCompose: Compose.num_composes = %d, Compose.num_cancel_keycodes = %d, number of unique compose initiators = %d\n", Compose.num_composes, Compose.num_cancel_keycodes, last_key);
++ */
++ #endif /* SERVER_COMPOSE */
++ }
++ 
+  int 
+  ProcChangeProperty(client)
+      ClientPtr client;
+***************
+*** 157,162
+      xEvent event;
+      int sizeInBytes;
+      REQUEST(xChangePropertyReq);
+  
+      REQUEST_AT_LEAST_SIZE(xChangePropertyReq);
+      format = stuff->format;
+
+--- 239,245 -----
+      xEvent event;
+      int sizeInBytes;
+      REQUEST(xChangePropertyReq);
++     int i, j;
+  
+      REQUEST_AT_LEAST_SIZE(xChangePropertyReq);
+      format = stuff->format;
+***************
+*** 251,256
+  	    xfree(tstr);
+  	}
+      }
+      event.u.u.type = PropertyNotify;
+      event.u.property.window = pWin->wid;
+      event.u.property.state = PropertyNewValue;
+
+--- 334,399 -----
+  	    xfree(tstr);
+  	}
+      }
++     /* OK, property is valid.  Now look for special keyboard extension
++        properties on root window, screen 0 that are used to implement
++        Compose and language selection */
++ /* fprintf(stderr, "checking property %d, format %d for special props\n", pProp->propertyName, format);
++ */
++     if (pWin->wid == WindowTable[screenInfo.screen[0].myNum].wid) {
++ /* fprintf(stderr, "is a root window property...\n"); */
++         if (format == 8) {
++ 	    if (pProp->propertyName == ComposeTableAtom) {
++ /* fprintf(stderr, "property is a ComposeTable prop...\n"); */
++ 		/* OK, stash the addresses of compose table prop structs */
++ 		ComposePropTable = pProp->data;
++ 		Compose.max_keycodes = ComposePropTable[0];
++ 		bcopy(ComposePropTable + 1, Compose.numeric_keycodes, 48);
++ 		Compose.sequences = &ComposePropTable[49];
++ 		/* rest of addresses require Compose.num_composes to locate */
++ 		if (HaveComposeShortsProp)
++ 		    /* insurance; should always be true */
++ 		    InitCompose(len);
++ 	    }
++ 	    else if (pProp->propertyName == EncodingTableAtom) {
++ /* fprintf(stderr, "property is a EncodingTable prop...\n"); */
++ 		/* OK, stash the modifier control variables */
++ 		if (len >= 4) {
++ 		    /* we probably have a valid property */
++ 		    LanguageModel = pProp->data[3];
++ 		}
++ 	    }
++ 	    else if (pProp->propertyName == ModifierIndexAtom) {
++ /* fprintf(stderr, "property is a ModifierIndex prop...\n"); */
++ 		/* OK, compute the mask of unique language modifiers */
++ 		LanguageModifiers = 0;
++ 		/* a short prop is not allowed */
++ 		for (i = 0; i < len; i++) {
++ 		    for (j = 0; j < i; j++) /* all smaller values */
++ 			if (pProp->data[i] == pProp->data[j]) {
++ 			    break;
++ 			}
++ 		    if (j == i)
++ 			/* found no match, this one is unique */
++ 			LanguageModifiers |= i;
++ 			/* XXX optimization - once one of the 8 modifiers for
++ 			    a language modifier has been found to be unique,
++ 			    skip to the next language modifier */
++ /* Question - is a lang modifer unique simply by having ctl/shift/lock
++ point to a different combination of indices?  If so, this algorithm needs to
++ compare entire sets of 8 modifiers against each other */
++ 		}
++ 	    }
++ 	}
++         else if (format == 16) {
++ 	    if (pProp->propertyName == ComposeTableShortsAtom) {
++ /* fprintf(stderr, "property is a ComposeTableShorts prop...\n"); */
++ 		/* OK, stash the address of compose table shorts struct */
++ 		ComposePropShortsTable = (unsigned short *) pProp->data;
++ 		HaveComposeShortsProp = TRUE;
++ 	    }
++ 	}
++     }
++ 
+      event.u.u.type = PropertyNotify;
+      event.u.property.window = pWin->wid;
+      event.u.property.state = PropertyNewValue;
+***************
+*** 261,266
+      return(client->noClientException);
+  }
+  
+  DeleteProperty(pWin, propName)
+      WindowPtr pWin;
+      Atom propName;
+
+--- 404,420 -----
+      return(client->noClientException);
+  }
+  
++ void DisableCompose()
++ {
++     if (InitComposeKeys)
++ 	xfree(InitComposeKeys);
++     if (InitComposeModifiers)
++ 	xfree(InitComposeModifiers);
++     InitComposeKeys = (pointer)NULL;
++     InitComposeModifiers = (unsigned short *)NULL;
++     /* that should be enough */
++ }
++ 
+  DeleteProperty(pWin, propName)
+      WindowPtr pWin;
+      Atom propName;
+***************
+*** 280,285
+      }
+      if (pProp) 
+      {		    
+          if (prevProp == (PropertyPtr)NULL)      /* takes care of head */
+          {
+              pWin->userProps = pProp->next;
+
+--- 434,457 -----
+      }
+      if (pProp) 
+      {		    
++         /* OK, property exists.  Now clean up after special keyboard extension
++ 	   properties on root window, screen 0 that are used to implement
++ 	   Compose and language selection */
++ 	if (pWin->wid == WindowTable[screenInfo.screen[0].myNum].wid) {
++ 	    if (pProp->propertyName == ComposeTableAtom) {
++ 		DisableCompose();
++ 	    }
++ 	    if (pProp->propertyName == ComposeTableShortsAtom) {
++ 		DisableCompose();
++ 		HaveComposeShortsProp = FALSE;
++ 	    }
++ 	    else if (pProp->propertyName == EncodingTableAtom) {
++ 		LanguageModel = LangUndefined;
++ 	    }
++ 	    else if (pProp->propertyName == ModifierIndexAtom) {
++ 		LanguageModifiers = 0;
++ 	    }
++ 	}
+          if (prevProp == (PropertyPtr)NULL)      /* takes care of head */
+          {
+              pWin->userProps = pProp->next;
+--- server/dix/events.c
+***************
+*** 38,43
+  #include "Xproto.h"
+  #include "windowstr.h"
+  #include "inputstr.h"
+  #include "scrnintstr.h"
+  #include "cursorstr.h"
+  
+
+--- 38,44 -----
+  #include "Xproto.h"
+  #include "windowstr.h"
+  #include "inputstr.h"
++ #include "dispatch.h"
+  #include "scrnintstr.h"
+  #include "cursorstr.h"
+  
+***************
+*** 67,75
+  #define PropagateMask ( \
+  	KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask | \
+  	MotionMask )
+- #define AllModifiersMask ( \
+- 	ShiftMask | LockMask | ControlMask | Mod1Mask | Mod2Mask | \
+- 	Mod3Mask | Mod4Mask | Mod5Mask )
+  /*
+   * The following relies on the fact that the Button<n>MotionMasks are equal
+   * to the corresponding Button<n>Masks from the current modifier/button state.
+
+--- 68,73 -----
+  #define PropagateMask ( \
+  	KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask | \
+  	MotionMask )
+  /*
+   * The following relies on the fact that the Button<n>MotionMasks are equal
+   * to the corresponding Button<n>Masks from the current modifier/button state.
+***************
+*** 122,128
+  static int focusTraceSize = 0;
+  static int focusTraceGood;
+  
+! static CARD16 keyButtonState = 0;
+  /*
+   *	For each modifier,  we keep a count of the number of keys that
+   *	are currently setting it.
+
+--- 120,126 -----
+  static int focusTraceSize = 0;
+  static int focusTraceGood;
+  
+! CARD16 keyButtonState;
+  /*
+   *	For each modifier,  we keep a count of the number of keys that
+   *	are currently setting it.
+***************
+*** 1010,1016
+      if (filter != StructureAndSubMask)
+  	return DeliverEventsToWindow(pWin, xE, count, filter, NullGrab);
+      deliveries = DeliverEventsToWindow(
+! 	    pWin, xE, count, StructureNotifyMask, NullGrab);
+      if (pWin->parent)
+      {
+  	xE->u.destroyNotify.event = pWin->parent->wid;
+
+--- 1008,1014 -----
+      if (filter != StructureAndSubMask)
+  	return DeliverEventsToWindow(pWin, xE, count, filter, NullGrab);
+      deliveries = DeliverEventsToWindow(
+! 	    pWin, xE, count, (unsigned int)StructureNotifyMask, NullGrab);
+      if (pWin->parent)
+      {
+  	xE->u.destroyNotify.event = pWin->parent->wid;
+***************
+*** 1014,1021
+      if (pWin->parent)
+      {
+  	xE->u.destroyNotify.event = pWin->parent->wid;
+! 	deliveries += DeliverEventsToWindow(
+! 		pWin->parent, xE, count, SubstructureNotifyMask, NullGrab);
+  	if (xE->u.u.type == ReparentNotify)
+  	{
+  	    xE->u.destroyNotify.event = otherParent->wid;
+
+--- 1012,1019 -----
+      if (pWin->parent)
+      {
+  	xE->u.destroyNotify.event = pWin->parent->wid;
+! 	deliveries += DeliverEventsToWindow(pWin->parent,
+! 		xE, count, (unsigned int)SubstructureNotifyMask, NullGrab);
+  	if (xE->u.u.type == ReparentNotify)
+  	{
+  	    xE->u.destroyNotify.event = otherParent->wid;
+***************
+*** 1019,1026
+  	if (xE->u.u.type == ReparentNotify)
+  	{
+  	    xE->u.destroyNotify.event = otherParent->wid;
+! 	    deliveries += DeliverEventsToWindow(
+! 		    otherParent, xE, count, SubstructureNotifyMask, NullGrab);
+  	}
+      }
+      return deliveries;
+
+--- 1017,1024 -----
+  	if (xE->u.u.type == ReparentNotify)
+  	{
+  	    xE->u.destroyNotify.event = otherParent->wid;
+! 	    deliveries += DeliverEventsToWindow(otherParent, 
+! 		   xE, count, (unsigned int)SubstructureNotifyMask, NullGrab);
+  	}
+      }
+      return deliveries;
+***************
+*** 1569,1574
+  	    if (!grab)
+  		if (CheckDeviceGrabs(mouse, xE, 0, FALSE))
+  		    return;
+  	    break;
+  	case ButtonRelease: 
+  	    motionHintWindow = NullWindow;
+
+--- 1567,1576 -----
+  	    if (!grab)
+  		if (CheckDeviceGrabs(mouse, xE, 0, FALSE))
+  		    return;
++ #ifdef SERVER_COMPOSE
++ 	    /* always cancel any outstanding Compose sequence on a press */
++ 	    ResetComposeSequence();
++ #endif /* SERVER_COMPOSE */
+  	    break;
+  	case ButtonRelease: 
+  	    motionHintWindow = NullWindow;
+***************
+*** 1835,1841
+  	bcopy((char *)&keybd->down[1], (char *)&ke.map[0], 31);
+  	if (grab)
+  	    (void)TryClientEvents(grab->client, (xEvent *)&ke, 1, mask,
+! 				  KeymapStateMask, grab);
+  	else
+  	    (void)DeliverEventsToWindow(pWin, (xEvent *)&ke, 1,
+  					KeymapStateMask, NullGrab);
+
+--- 1837,1843 -----
+  	bcopy((char *)&keybd->down[1], (char *)&ke.map[0], 31);
+  	if (grab)
+  	    (void)TryClientEvents(grab->client, (xEvent *)&ke, 1, mask,
+! 				  (unsigned int)KeymapStateMask, grab);
+  	else
+  	    (void)DeliverEventsToWindow(pWin, (xEvent *)&ke, 1,
+  				     (unsigned int)KeymapStateMask, NullGrab);
+***************
+*** 1838,1844
+  				  KeymapStateMask, grab);
+  	else
+  	    (void)DeliverEventsToWindow(pWin, (xEvent *)&ke, 1,
+! 					KeymapStateMask, NullGrab);
+      }
+  }
+  
+
+--- 1840,1846 -----
+  				  (unsigned int)KeymapStateMask, grab);
+  	else
+  	    (void)DeliverEventsToWindow(pWin, (xEvent *)&ke, 1,
+! 				     (unsigned int)KeymapStateMask, NullGrab);
+      }
+  }
+  
+***************
+*** 1930,1936
+  	ke.type = KeymapNotify;
+  	bcopy((char *)keybd->down, (char *)&ke.map[0], 31);
+  	(void)DeliverEventsToWindow(pWin, (xEvent *)&ke, 1,
+! 				    KeymapStateMask, NullGrab);
+      }
+  }
+  
+
+--- 1932,1938 -----
+  	ke.type = KeymapNotify;
+  	bcopy((char *)keybd->down, (char *)&ke.map[0], 31);
+  	(void)DeliverEventsToWindow(pWin, (xEvent *)&ke, 1,
+! 				    (unsigned int)KeymapStateMask, NullGrab);
+      }
+  }
+  
+***************
+*** 2497,2502
+      curKeySyms.maxKeyCode = 0;
+      curKeySyms.mapWidth = 0;
+  
+      currentScreen = &screenInfo.screen[0];
+      inputInfo.numDevices = 0;
+      if (spriteTraceSize == 0)
+
+--- 2499,2505 -----
+      curKeySyms.maxKeyCode = 0;
+      curKeySyms.mapWidth = 0;
+  
++     keyButtonState = 0;
+      currentScreen = &screenInfo.screen[0];
+      inputInfo.numDevices = 0;
+      if (spriteTraceSize == 0)
+***************
+*** 3073,3079
+      keysyms.mapWidth = stuff->keySymsPerKeyCode;
+      keysyms.map = (KeySym *)&stuff[1];
+      SetKeySymsMap(&keysyms);
+!     SendMappingNotify(MappingKeyboard, stuff->firstKeyCode, stuff->keyCodes);
+      return client->noClientException;
+  
+  }
+
+--- 3076,3083 -----
+      keysyms.mapWidth = stuff->keySymsPerKeyCode;
+      keysyms.map = (KeySym *)&stuff[1];
+      SetKeySymsMap(&keysyms);
+!     SendMappingNotify((unsigned char)MappingKeyboard, stuff->firstKeyCode, 
+! 		      stuff->keyCodes);
+      return client->noClientException;
+  
+  }
+***************
+*** 3100,3106
+  	client->errorValue = stuff->nElts;
+  	return BadValue;
+      }
+!     if (BadDeviceMap(&map[0], (int)stuff->nElts, 1, 255, &client->errorValue))
+  	return BadValue;
+      for (i=0; i < stuff->nElts; i++)
+  	if ((inputInfo.pointer->u.ptr.map[i + 1] != map[i]) &&
+
+--- 3104,3111 -----
+  	client->errorValue = stuff->nElts;
+  	return BadValue;
+      }
+!     if (BadDeviceMap(&map[0], (int)stuff->nElts, (unsigned int)1,
+! 		     (unsigned int)255, &client->errorValue))
+  	return BadValue;
+      for (i=0; i < stuff->nElts; i++)
+  	if ((inputInfo.pointer->u.ptr.map[i + 1] != map[i]) &&
+***************
+*** 3113,3119
+      for (i = 0; i < stuff->nElts; i++)
+  	inputInfo.pointer->u.ptr.map[i + 1] = map[i];
+      WriteReplyToClient(client, sizeof(xSetPointerMappingReply), &rep);
+!     SendMappingNotify(MappingPointer, 0, 0);
+      return Success;
+  }
+  
+
+--- 3118,3124 -----
+      for (i = 0; i < stuff->nElts; i++)
+  	inputInfo.pointer->u.ptr.map[i + 1] = map[i];
+      WriteReplyToClient(client, sizeof(xSetPointerMappingReply), &rep);
+!     SendMappingNotify((unsigned int)MappingPointer, 0, 0);
+      return Success;
+  }
+  

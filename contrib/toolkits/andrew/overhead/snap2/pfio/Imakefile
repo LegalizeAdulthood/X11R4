@@ -1,0 +1,8 @@
+InstallFile(pfio.h, $(INSTINCFLAGS), $(DESTDIR)/include)
+InstallFile(pfiou.h, $(INSTINCFLAGS), $(DESTDIR)/include)
+
+DependTarget()
+
+NormalObjectRule()
+LibraryTarget(libpfio.a, pfpack.o pfunpack.o pfioutl.o)
+InstallLibrary(libpfio.a, $(DESTDIR)/lib)

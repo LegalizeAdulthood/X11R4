@@ -1,0 +1,79 @@
+This patch moves from patchlevel 6 to patchlevel 8. (patch 7 was an internal
+patch, only for beta-testers) (The version on the R3 tape was at patchlevel
+5, a fix posted to comp.sources.x, and available from archive sites as
+xpic.r3fix.sh.Z)
+
+This patch fixes the following things:
+
+	1. Xpic now works under R3, with the fixes to the HP widgets posted
+	by Martin Friedmann <martin@citi.umich.edu>. (Thanks Marty!)  (This
+	is available as Xhp.patch.works.tar.Z from various archive sites -
+	try expo.lcs.mit.edu in contrib/ and ai.toronto.edu in pub/X by
+	anonymous ftp)
+
+	2. Xpic selection is much improved - instead of the silly (but easy
+	to code:-) "bounding box with the closest centre", it now selects
+	the object with the closest drawn edge (some caveats for splines and
+	ellipses) More intuitive, much faster.
+
+	3. Dave Cahlander <dac@earth.cray.com> contributed code to draw
+	ellipses fast, using an approximate polygon, so that people with
+	Suns/Vaxen/anything-that-uses-R3-miarc.c can rubber-band
+	circles/ellipses without having to go for coffee in between each
+	iteration. I've generalized it into a substitute XDrawArc and
+	XFillArc - these run considerably faster than the R3 server arc
+	drawing code, which is unbearably slow on the measly little Sun3s
+	which some of us use. If you run your server on anything less than a
+	MIPS based workstation, you probably need these routines.
+
+	4. Dave also contributed a fix and fonts.aliases file which allows
+	xpic to use the spiffy R3 Adobe fonts. (If you apply the xtroff
+	fixes which install devpsc fonts derived from the 75dpi fonts, then
+	you don't need the fonts.aliases file.
+
+	5. TYPEOUT now works with the Minibuf, but there are still a couple
+	of minor glitches.
+
+	6. Xpic uses R3 XtSetKeyboardFocus inset of XSetInputFocus, so it is
+	much less anti-social when entering text, also much more reliable.
+
+	7. Rubber banding boxes don't leave droppings on the screen. Neither
+	do lines when aborted.
+
+	8. x2ps now has an option to make direct dumps to PostScript
+	printers, as well as being included in TeX/troff. This option is
+	used by a Print button in xpic. You can set the lprcommand and
+	printer you want to use.
+
+	9. Both xpic and xtroff now have font names that use
+	'devfoo.name.size.resolution' instead of the old 'devfoo.name.size',
+	so the resolution is no longer required in the fontdesc files.
+
+	10. Xpic now won't blithely ignore errors when writing to a full
+	filesystem. (CAN'THAPPEN, eh?)
+
+	11. Small splines and lines with multiple consecutive points on the
+	same coordinates work correctly again. (why the X server refuses to
+	draw a line beyond two consecutive identical points is beyond me)
+
+	12. x2ps does splines more accurately.
+
+	13. Block highlighting does less drawing, and is therefore
+	much faster.
+
+	14. The Cursor changes to indicate text input or a long operation in
+	progress.
+
+Have fun.
+
+                                        Mark Moraes
+                                        Computer Systems Research Institute,
+                                        University of Toronto,
+                                        Toronto, Canada M5S 1A4
+                                        
+                                        {your favourite backbone}!utcsri!moraes
+                                        moraes@utcsri.UUCP (new style)
+                                        moraes@csri.toronto.edu
+                                        moraes@csri.utoronto.ca
+                                        moraes@csri.utoronto (bitnet)
+                                        

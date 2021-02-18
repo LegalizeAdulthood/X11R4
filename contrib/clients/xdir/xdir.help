@@ -1,0 +1,44 @@
+This is Xdir, an X-based directory browser.  To remove this window, click
+on its "Close" button.
+
+Using the Menus
+
+The second row of the Xdir display consists of several labels.  When you
+select one of them with the mouse and push and hold the left mouse button,
+a menu appears.  While continuing to hold the button down, move the cursor
+to the desired item and release the button.  If you do not wish to select
+anything from the menu, move the cursor off the menu entirely.
+
+To view a file:
+	Click the left mouse button on the filename and select "View File"
+	from the "Actions" menu.
+
+To visit a subdirectory:
+	Click the left mouse button on the subdirectory name and select "Change
+	Directory" from the "Actions" menu.
+
+To visit the parent directory:
+	Select "Parent Directory" from the "Actions" menu.  Alternatively,
+	you can click on ".." if you have selected "Show Dot Files" from
+	the Configure menu.
+
+The name of the current directory is displayed above the file list.
+
+What the menus do:
+
+Actions Menu
+------------
+View File - views the selected file.
+Quit - exit Xdir.
+Change Directory - changes to the selected directory.
+Parent Directory - change to the parent directory.
+About Xdir- displays information about the program.
+
+Configure Menu
+--------------
+Show/Hide Dot Files - includes or excludes files beginning with '.' in
+	the file listing.
+Hide/Show Backup Files - excludes files ending in '~' (such as GNU Eemacs
+	backup files).
+
+The Help button displays this help message.

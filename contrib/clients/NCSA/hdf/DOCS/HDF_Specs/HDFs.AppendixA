@@ -1,0 +1,712 @@
+
+
+Appendix  A	NCSA HDF Tags
+
+
+
+
+Overview
+
+This appendix contains a complete description of HDF tags that 
+have been assigned at NCSA as of February, 1989. Most of these 
+tags are represented by two- or three-character uppercase names, 
+such as ND or FID. In the NCSA software, the identifiers that refer 
+to these names are preceded by DFTAG_ and are defined in the 
+files df.h and dfF.h, which are listed in Appendix B.
+
+These listings are grouped approximately according to the roles 
+that the tags play under the headings Utility Tags, Raster-8 Tags, 
+General Raster Image Tags, and so forth. These groupings imply 
+a general context for the use of each tag, but are not meant to restrict 
+the use of the tags to any particular context.
+
+
+Utility Tags
+
+ND
+No data
+0 bytes
+(xxx)
+
+This tag is used for place holding and to fill empty portions of the 
+data descriptor block. The length and offset fields of a ND DD must 
+be equal to zero.
+
+
+FID
+File identifier
+string
+(100)
+
+This tag points to a string which the user wants to associate with 
+this file. The string is intended to be a user-supplied title for the 
+file. 
+
+
+
+FD
+File descriptor
+text
+(101)
+
+This tag points to a block of text describing the overall file 
+contents. The text can be any length, in the standard text format for 
+HDF. Text is intended to be user-supplied comments about the file.
+
+
+TID
+Tag identifier
+string
+(102)
+
+The data for this tag is a string that identifies the functionality of 
+the tag indicated in the reference number. For example, the tag 
+identifer for tag identifier would point to data that reads "tag 
+identifier". The reference number for the tag identifier is another 
+tag number.
+
+Many tags are identified in the HDF specification, so it is usually 
+unnecessary to include their identifiers in the HDF file. But with 
+user-defined tags or special-purpose tags, the only way for a 
+human reader to diagnose what kind of data is stored in a file is to 
+read tag identifiers. Use tag descriptors to define even more detail 
+about your user-defined tags.
+
+Note that with this tag you may make use of the user-defined tags to 
+check for consistency. Although two persons may use the same 
+user-defined tag, they probably will not use the same tag identifier.
+
+
+TD
+Tag descriptor
+text
+(103)
+
+The data for this tag is a text block which describes in relative 
+detail the functionality and format of the tag which is indicated in 
+the reference number. This tag is mainly intended to be used with 
+user-defined tags and provides a medium for users to exchange 
+files that include human-readable descriptions of the data.
+
+It is important to provide everything that a programmer might 
+need to know to read the data from your user-defined tag. At the 
+minimum, you should specify everything you would need to know 
+in order to retrieve your data at a later date if the original program 
+were lost.
+
+
+
+DIL
+Data identifier label
+string
+(104)
+
+The data for this tag is a data identifier, made up of a tag and 
+reference number, followed by a string that the user wants to place 
+in the file. The purpose of this tag is to associate the string with the 
+data identifier as a label for whatever that data identifier points to 
+in turn.
+
+With DIL, any data identifier can be labeled. Each data identifier 
+points to some data in the file. By including DILs, you can give 
+any piece of data a label for future reference. For example, DIL is 
+often used to give titles to images.
+
+
+DIA
+Data identifier annotation
+text
+(105)
+
+The data for this tag is a data identifier, which is made up of a tag 
+and a reference number, followed by a text block that the user 
+wants to place in the file. Its purpose is to associate the text block 
+with the data identifier as annotation for whatever that data 
+identifier points to in turn.
+
+With DIA, any data identifier can have a lengthy, user-written 
+description of why that data is in the file. This will be used to 
+include user comments about images, data sets, source code, and so 
+forth.
+
+
+NT
+Number type
+4 bytes
+(106)
+
+NT consists of four fields of 1 byte each, as shown in Table A.1.
+
+Table A.1	Number Type Fields
+Field	Contents
+VERSION	version number of NT information, currently=1
+TYPE	unsigned int, signed int, unsigned char, char, float, 
+double
+WIDTH	number of bits (assumed all significant)
+CLASS	a generic value, with different interpretations 
+depending on type:  floating point, integer, or 
+character
+
+
+Some possible values that may be included for each of the three 
+types in the field CLASS are listed in Table A.2.
+
+Table A.2	Number Type 
+Values
+Type	Possible Values
+floats 	IEEE floating point, VAX floating point, CRAY 
+floating point
+ints	VAX byte order, Intel byte order, Motorola byte order
+chars	ASCII, EBCDIC
+
+
+The number type flag is used by any other element in the file to 
+indicate specifically what a numeric value looks like. Other tag 
+types should contain a reference number pointer to an NT tag 
+instead of containing their own number type definitions.
+
+If an MT element is present in the file, then all NTs can be 
+assumed to be of the appropriate default types for that machine, 
+unless required by definition.
+
+The definition of NT has brought up a unique situation where the 
+definition of a generic, always applicable, set of fields is 
+considered too difficult for implementation in the early versions. 
+Therefore, we are defining version 1 of the NT tag which contains 
+only four fields. We have a draft of the version 2 tag definition 
+which starts with the same four fields and adds fields that can 
+define types of numbers not currently listed.
+
+Version 1 NT implementations should check the version number 
+field only to confirm it, and must always write a 1 into this field. 
+Version 2 implementations will have to be backward compatible in 
+as many cases as possible.
+
+
+MT
+Machine type
+0 bytes
+(107)
+
+The MT tag specifies that all unconstrained or partially 
+constrained values in this HDF file are of the default type for that 
+hardware. When the MT tag is set to VAX, for example, all 
+integers will be assumed to be in VAX byte order unless 
+specifically defined otherwise with an NT tag. Note that all of the 
+headers and many tags, the whole raster-8 set for example, are 
+defined with bit-wise precision and will not be overidden by the 
+MT setting.
+
+For MT, the reference field itself is the encoding of the MT 
+information. The reference field is 16 bits, taken as four groups of 
+four bits, specifying the types for unsigned char, unsigned int, 
+float, and double respectively. This allows 16 generic 
+specifications for each type.
+
+To the user, these will be defined constants in df.h, specifying the 
+proper descriptive numbers for Sun, VAX, CRAY, Alliant, and 
+other computer systems. If there is no MT tag in a file, the 
+application may assume that the data in the file has been written on 
+the local machine—assuming any portability problems are taken 
+care of by the user. For this reason, we recommend that all HDF 
+files contain an MT tag for maximum portability.
+
+Possible machine types are shown in Table A.3.
+
+Table A.3	Possible Machine 
+Types
+Type	Possible Machines
+floats	IEEE32, VAX32, CRAY64
+ints	VAX32, Intel16, Intel32, Motorola32, CRAY64
+chars	ASCII, EBCDIC
+double	IEEE64, VAX64, CRAY128
+
+Obviously, each of these is extensible as we find a need for new 
+types.
+
+
+RLE
+Run length encoded data
+0 bytes
+(11)
+
+This tag is used in the ID compression field and other places to 
+indicate that an image or section of data is encoded with a run-
+length encoding scheme. The RLE method used is byte-wise. The 
+low seven bits of the count byte indicate the number of bytes (n). 
+The high bit of the count byte indicates whether the next byte should 
+be replicated n times (high bit=1), or whether the next n bytes should 
+be included as is (high bit=0).
+
+See also:  RIG (Raster Image Group)
+
+
+IMC
+IMCOMP compressed data
+0 bytes
+(12)
+
+This tag is used in the ID compression field and other places to 
+indicate that an image or section of data is encoded with an 
+IMCOMP encoding scheme. This scheme is a 4:1 aerial averaging 
+method which is easy to decompress. It counts color frequencies in 
+4x4 squares to optimize color sampling.
+
+See also:  RIG (Raster Image Group)
+
+
+
+Raster-8 (8-Bit Only) Tags
+
+ID8
+Image dimension-8
+4 bytes
+(200)
+
+The data for this tag consists of two 16-bit integers representing the 
+width and height of an 8-bit raster image in bytes. 
+
+
+IP8
+Image palette-8
+768 bytes
+(201)
+
+The data for this tag consists of 256 triples of three bytes. The bytes 
+are for the red, green, and blue elements of the 256-byte palette 
+respectively. The first triple is palette entry 0 and the last is palette 
+entry 255.
+
+
+RI8
+Raster image-8
+mxn bytes
+(202)
+
+The data for this tag is a row-wise representation of the elementary 
+8-bit image data. The data is stored width-first (hence row-wise) 
+and is 8-bits per pixel. The first byte of data represents the pixel in 
+the upper-left hand corner of the image.
+
+
+CI8
+Compressed image-8
+? bytes
+(203)
+
+The data for this tag is a row-wise representation of the elementary 
+8-bit image data. Each row is compressed using the following run-
+length encoding where n is the low seven bits of the byte. The high 
+bit represents whether the following n character will be reproduced 
+exactly (high bit=0) or whether the following character will be 
+reproduced n times (high bit=1). Since CI8 and RI8 are basically 
+interchangeable, it is suggested that you not have a CI8 and a RI8 
+that have the same reference number.
+
+
+II8
+IMCOMP image-8
+? bytes
+(xxx)
+
+The data for this tag is a 4:1 compressed 8-bit image, using the 
+IMCOMP compression scheme.
+
+
+General Raster Image Tags
+
+RIG
+Raster image group
+n*4 bytes
+(306)
+
+The raster image group (RIG) data is a list of data identifiers 
+(tag/ref) that describe a raster image. All of the members of the 
+group are required to display the image correctly. Application 
+programs that deal with RIGs should read all the elements of a RIG 
+and process those identifiers which it can display correctly. Even 
+if the application cannot process all of the tags, the tags that it can 
+process will be displayable.
+
+Tag types that may appear in a RIG are listed in Table A.4.
+
+Table A.4	Possible Tag Types 
+in an RIG
+Tag	Description
+ID	image dimension
+RI	raster image
+XYP	X-Y position
+LD	LUT dimension
+LUT	color lookup table
+MD	matte channel dimension
+MA	matte channel
+CCN	color correction
+CFM	color format
+AR	aspect ratio
+MTO	machine-type override
+
+
+Example
+ID,RI,LD,LUT
+An image dimension record, the raster image, an LUT dimension 
+and the LUT go together. The application reads the image 
+dimensions, then reads the image with those dimensions. It also 
+reads the lookup table according to its dimensions and displays the 
+corresponding image.
+
+
+ID, LD, MD
+Image dimension
+20 bytes
+(300)
+
+LUT dimension
+20 bytes
+(307)
+
+Matte dimension
+20 bytes
+(308)
+
+These three dimension records have exactly the same format. 
+They define the dimensions of the 2D array to which each refers. 
+ID specifies the dimensions of an RI tag, LD specifies the 
+dimensions of an LUT tag, and MD specifies the dimensions of a 
+MA tag. The fields are defined as shown in Table A.5.
+
+Table A.5	Dimension Record 
+Fields
+Field	Definition
+X-dimension (width)	32 bit integer
+Y-dimension (height)	32 bit integer
+NT/ref (element type)	tag and ref=32 bits
+Elements per node	16 bit integer
+Interlace scheme	16 bit integer (0,1 or 2)
+Compression tag	tag and ref=32 bits
+
+
+For example, a 512x256 row-wise 24-bit raster image with each 
+pixel stored as RGB bytes would have the following values:
+
+X:512, Y:256
+
+In this case, NT specifies an 8-bit integer. There are three 
+elements per node—one each for red, green, and blue.
+
+Interlace=0 indicates that the RGB values are not separated.
+Compression=0 means no compression scheme is used.
+
+
+RI
+Raster image
+x*y bytes
+(302)
+
+This tag points to raster image data. It must be stored as specified 
+in an ID tag.
+
+Interlace=0 means each pixel is contiguous
+Interlace=1 means each element is grouped by scan lines
+Interlace=2 means each element is grouped by planes
+
+
+LUT
+Lookup table
+? bytes
+(301)
+
+The LUT, sometimes called a palette, is used by many kinds of 
+hardware to assign RGB colors or HSV colors to data values. 
+When a raster image consists of data values which are going to be 
+interpreted through hardware with a LUT capability, the LUT 
+should be loaded along with the image.
+
+The most common lookup table will have X dimension=256 and Y 
+dimension=1 with three elements per entry, one each for red, 
+green, and blue. The interlace will be either 0, where the LUT 
+values are given RGB, RGB, RGB . . . , or 1, where the LUT values 
+are given as 256 reds, 256 greens, 256 blues.
+
+
+
+CCN
+Color correction
+52 bytes (usually)
+(310)
+
+Color correction specifies the Gamma correction for the image and 
+color primaries for the generation of the image. The fields, in 
+order, are shown in Table A.6.
+
+Table A.6	Color Correction 
+Field Types
+Correction	Field Type
+Gamma	float
+Red (X,Y,Z)	three floats
+Green (X,Y,Z)	three floats
+Blue (X,Y,Z)	three floats
+White (X,Y,Z)	three floats
+CFM
+Color format
+string
+(311)
+
+The color format is a clue to how each element of each pixel in a 
+raster image. It is defined to be a string which is in all caps, and is 
+one of the values shown in Table A.7.
+
+Table A.7	Color Format String 
+Values
+String	Description
+VALUE	psuedo-color, or just a value associated with the 
+pixel
+RGB	red, green, blue model
+XYZ	color-space model
+HSV	hue, saturation, value model
+HSI	hue, saturation, intensity
+SPECTRAL	spectral sampling method
+
+
+AR
+Aspect ratio
+4 bytes
+(312)
+
+The data for this tag is the visual aspect ratio for this image. The 
+image should be visually correct if displayed on a screen with this 
+aspect ratio. The data consists of one floating point number which 
+represents width divided by height. An aspect ratio of 1.0 indicates 
+a display with perfectly square pixels. 1.33 is a standard aspect 
+ratio used by many monitors. 
+
+
+
+Composite Image Tag
+
+DRAW
+Draw
+n*4 bytes
+(400)
+
+The data for this tag is a list of data identifiers (tag/ref) which 
+define a composite image. Each member of the DRAW data should 
+be displayed, in order, on the screen. This can be used to indicate 
+several RIGs which should be displayed simultaneously, or even 
+include vector overlays, like T14, which should be placed on top of a 
+RIG.
+
+Some of the elements in a DRAW list will be instructions about 
+how images are to be composited (XOR, source put, anti-aliasing, 
+etc.). These are defined as individual tags.
+
+See also:
+
+RIG	(Raster image display)
+T14	(Tektronix 4014 for overlay)
+
+
+Composite Raster Image Tag
+
+XYP
+XY position
+8 bytes
+(500)
+
+An XY position is used in composites and other groups to indicate 
+an XY position on the screen. For this, (0,0) is the lower left, X is the 
+number of pixels to the right along the horizontal axis and Y is the 
+number of pixels on the vertical axis. The X and Y pixel 
+dimensions are given as two 32-bit integers.
+
+For example, if XYP is present inside an RIG, the XYP refers to the 
+position of the lower left corner of the raster image on the screen.
+
+See also:  DRAW (Drawing from a list of elements)
+
+
+
+Vector Image Tags
+
+T14
+Tektronix 4014
+n bytes
+(602)
+
+This tag points to a Tektronix 4014 data stream. The bytes in the 
+data field, when read and sent to a Tektronix 4014 terminal, will 
+display a vector image. Only the low seven bits of each byte are 
+significant. There are no record markings or non-Tektronix 
+codes in the data.
+
+
+T105
+Tektronix 4105
+n bytes
+(603)
+
+This tag points to a Tektronix 4105 data stream. The bytes in the 
+data field, when read and sent to a Tektronix 4105 terminal, will 
+be displayed as a vector image. Only the low seven bits of each byte 
+are significant. Some terminal emulators will not correctly 
+interpret every feature of the Tektronix 4105 terminal, so you may 
+wish to use only a subset of the possible Tektronix 4105 vector 
+commands.
+
+
+Scientific Data Set Tags
+
+SDG
+Scientific data group
+n*4 bytes
+(700)
+
+The scientific data group (SDG) data is a list of data identifiers 
+(tag/ref) that describe a scientific data set. All of the members of 
+the group provide information for correctly interpreting and 
+displaying the data. Application programs that deal with SDGs 
+should read all of the elements of a SDG and process those 
+identifiers which it can use. Even if an application cannot process 
+all of the tags, the tags that it can use will be displayable.
+
+Tag types that may appear in a SDG are listed in Table A.8.
+
+Figure A.8	Possible Tag Types 
+in an SDG
+Tag	Description
+SDD	scientific data dimension record (rank and 
+dimensions)
+SD	scientific data
+SDS	scales
+SDL	labels
+SDU	units
+SDF	formats
+SDM	maximum and minimum values
+SDC	coordinate system
+SDT	transposition
+
+
+Example
+SDD, SD, SDM
+A dimension record, the scientific data, and the maximum and 
+minimum values of the data go together. The application reads the 
+rank and dimensions from the dimension record, then reads the 
+data array with those dimensions. If it needs maximum and 
+minimum, it also reads them.
+
+
+SDD
+Scientific data dimension record
+16 + 4*rank bytes 
+(701)
+
+This record defines the rank and dimensions of the array in the 
+scientific data set. The fields are defined as shown in Table A.9.
+
+Table A.9	Scientific Data 
+Dimension Record 
+Fields
+Field	Definition
+Rank	16 bit integer
+Dimension sizes	32 bit integers
+Data NT (number type)	4 bytes
+Scale NTs	rank*4 bytes
+
+For example, an SDD for a 500x600x3 array of floating point 
+numbers would have the following values and components.
+
+Rank:  3
+Dimensions:  500, 600, and 3.
+One data NT
+Three scale NTs
+
+
+SD
+Scientific data
+4*x*y*z*... bytes (x, y, z, etc. are the dimensions)
+(702)
+
+This tag points to an array of scientific data. The type of the data 
+may be specified by an NT tag included with the SDG. If there is no 
+NT tag, the type of the data is floating point in standard IEEE 32-bit 
+format. The rank and dimensions must be stored as specified in 
+the corresponding SDD tag.
+
+
+SDS
+Scientific data scales
+n+4*(x+1+y+1+z+1+...) bytes
+(703)
+
+This tag points to the scales for the data set. The first n bytes 
+indicate whether there is a scale for the corresponding dimension 
+(1=yes, 0=no). This is followed by the scale values for each 
+dimension.
+
+
+SDL
+Scientific data labels
+? bytes
+(704)
+
+This tag points to a list of labels for the data and each dimension of 
+the data set. Each label is a string terminated by a null byte.
+
+
+SDU
+Scientific data units
+? bytes
+(705)
+
+This tag points to a list of strings specifying the units for the data 
+and each dimension of the data set. Each unit's string is 
+terminated by a null byte.
+
+
+SDF
+Scientific data format
+? bytes
+(706)
+
+This tag points to a list of strings specifying an output format for 
+the data and each dimension of the data set. Each format string is 
+terminated by a null byte.
+
+
+SDM
+Scientific data max/min
+8 bytes
+(707)
+
+This record contains the maximum and minimum data values in 
+the data set. It consists of two floating point numbers. 
+
+
+SDC
+Scientific data coordinates
+? bytes
+(708)
+
+This tag points to a string specifying the coordinate system for the 
+data set. The string is terminated by a null byte.
+SDT
+Scientific data transpose
+0 bytes
+(709)
+
+The presence of this tag indicates that the data pointed to by the SD 
+tag is in column-major order, instead of the default row-major 
+order. No data is associated with this tag.
+
+A.1	NCSA HDF Specifications
+
+NCSA HDF Tags	A.1
+
+National Center for Supercomputing Applications
+
+March 1989
+
+                                                                
+
+February 1989
+
+

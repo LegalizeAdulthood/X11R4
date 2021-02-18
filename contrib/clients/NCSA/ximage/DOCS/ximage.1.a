@@ -1,0 +1,347 @@
+                                                                
+
+November l989
+
+1.1	NCSA X Image
+
+Getting Started	1.1
+
+National Center for Supercomputing Applications
+
+November 1989
+
+
+
+
+Chapter 1	Getting Started
+
+
+
+Chapter Overview
+Installing NCSA X Image
+Specifying a Display Host
+Identifying the Current Display Host
+Invoking the Program
+Image and Palette Manipulations
+Loading a Dataset
+Generating a Cartesian Image
+Generating a Contour Plot
+Loading a New Palette
+Rotating a Palette
+Saving a Modified Palette
+Exiting NCSA X Image
+
+Chapter Overview
+
+This chapter introduces NCSA X Image and provides a brief 
+tutorial to get you started using the program. The tutorial describes 
+the basic steps involved in using NCSA X Image:
+
+•	installing and invoking the program
+•	loading a dataset
+•	generating images
+•	manipulating the palette
+•	saving a palette
+•	exiting the program
+
+For more detailed information regarding palette manipulations, 
+imaging features, and scientific datasets, see Chapters 2, 3, and 4, 
+respectively.
+
+This chapter assumes that the X Window System (V11R3) and one 
+of the window managers listed in the Introduction to this manual 
+are installed and running on your display host—the server on 
+which NCSA X Image will be displayed. Moreover, the chapter 
+assumes that you are familiar with the particular characteristics 
+of your window manager, for example, how it draws, scrolls, and 
+moves windows.
+
+For information regarding installing and executing the X 
+Window System on your machine, refer to one of the guides listed 
+in the Introduction to this manual, in the section entitled 
+"Suggested Reading."
+
+
+Installing NCSA X Image
+
+Before using NCSA X Image, you must install the program 
+somewhere within your path on the client system (the machine on 
+which you want to run the application) and specify your display 
+host (the machine from which you wish to control and view the 
+application). Then define the path environment variable to 
+include the appropriate path, as shown below:
+
+For example, if you were to install NCSA X Image on a Unix 
+machine using C shell, you would set the path by entering a 
+command of the form:
+
+set path=($path /pathname)
+
+where /pathname is the path to NCSA X Image.
+
+
+Specifying a Display Host
+To specify your display host, enter a command of the following 
+form:
+
+setenv DISPLAY hostname:monitornumber
+
+where Hostname is the name assigned to the desired machine, and 
+Monitornumber is the number assigned to the monitor on which 
+you wish to view the program.
+
+For example, to specify a machine named babbage as the display 
+host and use the first of the monitors connected to babbage as the 
+display monitor, you would enter:
+
+setenv DISPLAY babbage:0
+
+
+Identifying the Current 
+Display Host
+To identify the current display host, enter:
+
+echo $DISPLAY
+
+The return specifies the server that is currently set as your display 
+host. For example, the return
+
+babbage:0
+
+informs you that NCSA X Image will be displayed on the machine 
+dubbed babbage, using monitor 0—the first of the monitors 
+connected to babbage.
+
+
+Invoking the Program
+
+To invoke NCSA X Image, enter:
+
+ximage
+
+The control window shown in Figure 1.1 appears. The control 
+window is comprised of four parts:  a title box, scroll bar, logbook, 
+and several control buttons. The buttons initiate the main 
+operations performed by NCSA X Image: loading and generating 
+an image, loading and manipulating a palette, and animating a 
+sequence of images. You want to keep the Control Window in 
+direct view: you may move it using mouse movements allowed by 
+the window manager you are currently running.
+
+Figure 1.1	Control Window
+
+                                           
+
+The title box contains the name and version number of the 
+application, making the control window easily identifiable. The 
+logbook records and displays every non-trivial action you make. 
+It provides feedback such as  instructions, explanations, or 
+warnings regarding your actions. You can use the scroll bar to 
+scroll through the contents of the logbook and review your session 
+with NCSA X Image.
+
+In NCSA X Image, you issue commands by clicking buttons. For 
+example, you can click the control buttons in the control window to 
+quit the application or access windows that allow you to load an 
+image, modify the palette, or animate an image.
+
+NOTE:  Throughout this manual, instructions to click the mouse 
+button refer to the leftmost button on your mouse device, unless 
+otherwise indicated.
+
+
+Image and Palette Manipulations
+
+NCSA X Image allows you to view actual data values; represent 
+them as full-color cartesian and polar raster images or black-and-
+white contour and shaded data plots; generate a histogram to 
+provide frequency distribution information regarding a dataset; 
+load and manipulate palettes to change the color mapping of your 
+raster images; and perform calculations to derive new datasets.
+
+In this tutorial, you will generate a color cartesian image and 
+contour plot from the sample dataset jet2.hdf. You will also load 
+and rotate a sample palette. For more detailed information 
+regarding display options and palette manipulations , see Chapters 
+2 and 3, respectively.
+
+Loading a Dataset
+To generate an image, you must first load a scientific dataset. For 
+example, to load a sample image dataset stored in an HDF file:
+
+1.	Click the Image button in the control window. The directory 
+window shown in Figure 1.2 appears, displaying the current 
+directory.
+
+2.	Enter in the text box labeled, Directory, the path to the directory 
+in which you stored the sample images provided with the NCSA 
+X Image package. Click Change or press RETURN to locate the 
+appropriate directory.
+
+	You may also locate a directory by entering a root path in the 
+Directory text box and allowing the system to build the path. 
+Click on the desired path that appears in the Filename text box, 
+and repeat until you reach the desired directory and filename.
+
+3.	Click the filename of the sample dataset jet2.hdf. The filename 
+becomes highlighted.
+
+4.	Click Open. The directory window disappears and an image 
+control window appears, showing the pathname of the dataset in 
+the title box (see Figure 1.3). You can use this window to 
+generate a color raster image, black-and-white plot, graph, or 
+spreadsheet window representing the data array jet2.hdf.
+
+Note that the logbook in the control window reports which file 
+has been selected, notes that the file being read is an HDF file, 
+and indicates that the dimensions of the image are 300x400. For 
+information regarding loading a non-HDF data array (for 
+which you must specify the dimensions before NCSA X Image 
+can load the dataset), see the section entitled "Loading Image 
+Data," in Chapter 2.
+
+Figure 1.2	Directory Window
+                                   
+
+Figure 1.3	Image Control 
+Window
+                                                 
+
+Generating a Cartesian 
+Image
+To generate a cartesian color raster image for the dataset jet2.hdf, 
+simply click Display Cartesian in the dataset's image control 
+window. The raster image is displayed in an image window (see 
+Figure 1.4). To link an image to the palette associated with the 
+palette window, enable the Lock Palette option in this window. 
+Click Done when finished viewing image.
+
+Figure 1.4	Image Window
+                                       
+
+NOTE:  When a palette is stored with a dataset in an HDF file, 
+NCSA X Image uses the first palette contained in the file to display 
+the image data. When no palette is contained in the HDF file, and 
+for all images stored in non-HDF files, NCSA X Image uses the X 
+server default palette.
+
+
+Generating a Contour Plot
+Suppose you wish to depict the differing levels of magnitude that 
+occur in your image data. You can do so by displaying the data as a 
+contour plot, which represents a matrix of data values by drawing 
+contour lines between areas of differing magnitude. Contour plots 
+are discussed in more detail in Chapter 2, "Display Options."
+
+To generate a contour plot for the cartesian image data jet2.hdf:
+
+1.	Click the Graph button in the dataset's image control window. A 
+plot window such as that shown in Figure 1.5 appears.
+
+2.	Specify whether you wish to generate a cartesian or polar plot by 
+clicking the diamond toggle button. The button label toggles 
+between Plot Cartesian and Plot Polar, accordingly. For this 
+example, specify Plot Cartesian.
+
+3.	Click the Contour button. The logbook requests that you "Please 
+specify contour levels to plot" and the contour specifications 
+window appears (see Figure 1.6).
+
+4.	Specify the number and spacing of contour levels and the range 
+of data values to be distinguished in the appropriate text boxes. 
+For this example, simply specify 10 evenly spaced contour levels 
+in the text box labeled Number of Levels.
+
+5.	Click OK. The logbook reports the number of levels you specify 
+and the resultant contour plot is drawn in a new image window 
+(see Figure 1.7).
+
+Figure 1.5	Plot Window
+                                          
+
+Figure 1.6	Contour Specifications 
+Window
+                                        
+
+Figure 1.7	Contour Plot 
+Window
+                           
+
+
+NOTE:  To dispose of a window, click the Done button in its upper-
+right corner. Clicking Quit or Done in a parent window will 
+automatically close all its children windows.
+
+
+Loading a New Palette
+You may wish to change the current palette to yield the best 
+perspective of your image data.
+
+To load a palette:
+
+1.	Click the Palette button in the control window. The logbook 
+reports "Opening Palette Box" and the palette window appears 
+(see Figure 1.8). 
+
+Figure 1.8	Palette Window
+                                   
+
+
+
+2.	Click the Load button in the palette window. The directory 
+window appears, displaying the current directory.
+
+3.	Enter in the text box labeled, Directory, the directory in which 
+you stored the sample palettes provided with the NCSA X Image 
+package, and click Change to locate the appropriate directory.
+
+4.	Select the filename hue.pal to load the sample palette contained 
+in that file.
+
+5.	Click Open.
+
+At any given time, only a single palette can control the hardware 
+color table on an 8 bit machine. To initialize the color table 
+according to your new palette and view the palette's effects on your 
+image, move the cursor into the palette window. When the cursor is 
+moved outside of the palette window, the default palette regains 
+control of the color table. The section entitled "Palettes in NCSA X 
+Image" in Chapter 2 discusses palettes and their effects on the color 
+table in greater detail.
+
+
+Rotating a Palette
+To rotate palette entries within the new palette, drag to the left or 
+right while the cursor is in the palette bar located at the top of the 
+window. The palette entries rotate a distance and direction 
+relative to the movement of the cursor. Note that the cursor becomes 
+a two-directional arrow tool within the palette.
+
+More detailed information about the palette window and palette 
+manipulation features is presented in Chapter 2, "Palette 
+Manipulations."
+
+
+Saving a Modified Palette
+To save a palette you have created:
+
+1.	Enter a unique file name for the palette in the text box next to the 
+Save button in the palette window. The palette will be saved in 
+the current directory, unless an absolute pathname is specified 
+with the filename.
+
+1.	Click Save. NCSA X Image saves the palette. The saved 
+palette is an 8 bit palette where the first 256 bytes specify the 256 
+entries of red, followed by 256 entries of green and then of blue.
+
+Exiting NCSA X Image
+
+If you have saved the palettes or new datasets you intend to use 
+again, you may safely exit NCSA X Image without losing your 
+work.
+
+To exit NCSA X Image, click the Quit button in the control window. 
+All other windows automatically close when you quit from the 
+control window.
+
+

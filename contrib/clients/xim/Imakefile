@@ -1,0 +1,69 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#ifdef BandAidCompiler
+#include BandAidCompiler
+#endif
+
+#ifndef HaveRleLib
+#define HaveRleLib NO
+#endif
+#ifndef HaveFbmLib
+#define HaveFbmLib NO
+#endif
+
+        SUBDIRS = lib
+         XIMLIB = lib/libXim.a
+LOCAL_LIBRARIES = $(XIMLIB) $(XLIB)
+        DEPLIBS = $(XIMLIB) $(DEPXLIB)
+
+           SRCS = averagim.c fbmtoxim.c quantizim.c rletoxim.c \
+		  smoothim.c ximsetroot.c ximtofbm.c ximtops.c ximtorle.c \
+		  xrainbow.c xtoxim.c xxim.c
+           OBJS = averagim.o fbmtoxim.o quantizim.o rletoxim.o \
+		  smoothim.o ximsetroot.o ximtofbm.o ximtops.o ximtorle.o \
+		  xrainbow.o xtoxim.o xxim.o
+#if HaveRleLib
+       RLEPROGS = rletoxim ximtorle
+         RLELIB = -lrle
+#endif
+#if HaveFbmLib
+       FBMPROGS = fbmtoxim ximtofbm 
+         FBMLIB = -lfbm
+#endif
+
+       PROGRAMS = averagim quantizim smoothim ximsetroot \
+		  ximtops xrainbow xtoxim xxim $(RLEPROGS) $(FBMPROGS)
+
+
+MakeSubdirs($(SUBDIRS))
+
+AllTarget($(PROGRAMS))
+
+SingleProgramTarget(averagim, averagim.o, $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(quantizim, quantizim.o, $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(smoothim, smoothim.o, $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(ximsetroot, ximsetroot.o, $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(ximtops, ximtops.o, $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(xrainbow, xrainbow.o, $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(xtoxim, xtoxim.o, $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(xxim, xxim.o, $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(fbmtoxim, fbmtoxim.o, $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(ximtofbm, ximtofbm.o, $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(rletoxim, rletoxim.o, $(RLELIB) $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(ximtorle, ximtorle.o, $(RLELIB) $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(fbmtoxim, fbmtoxim.o, $(FBMLIB) $(RLELIB) $(LOCAL_LIBRARIES), -lm)
+SingleProgramTarget(ximtofbm, ximtofbm.o, $(FBMLIB) $(RLELIB) $(LOCAL_LIBRARIES), -lm)
+
+InstallMultipleFlags($(PROGRAMS),$(BINDIR),$(INSTBINFLAGS))
+InstallManPage(quantizim,$(MANDIR))
+InstallManPage(smoothim,$(MANDIR))
+InstallManPage(xim,$(MANDIR))
+InstallManPage(ximtops,$(MANDIR))
+InstallManPage(ximtorle,$(MANDIR))
+InstallManPage(xtoxim,$(MANDIR))
+InstallManPage(xxim,$(MANDIR))
+
+DependTarget()
+LintTarget()
+DependSubdirs($(SUBDIRS))

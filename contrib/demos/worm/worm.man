@@ -1,0 +1,81 @@
+.\" @(#)worm.man 1.1 88/08/16; Copyright (c) 1988 - Sun Microsystems
+.TH worm 1 "15 Aug 1988"
+.SH NAME
+worm \- draw wiggly worms
+.SH SYNOPSIS
+.B worm
+[
+.BI \-l " length"
+]
+[
+.BI \-s " size"
+]
+[
+.BI \-n " number"
+]
+[
+.BI \-d " connection"
+]
+[
+.BI \-g " geometry"
+]
+[
+.BI \-R
+]
+[
+.BI \-C
+]
+[
+.BI \-S
+]
+.SH DESCRIPTION
+.I worm
+draws wiggly worms.  It is adapted from a concept in the December 1987
+issue of Scientific American.
+Playing with the various parameters can create strange effects.
+Pressing any key in the worm window will cause them to freeze;
+pressing again will thaw.
+.SH OPTIONS
+.TP 5
+.BI \-S
+Screensaver.  Takes over entire screen.
+.TP 5
+.BI \-C
+Chromocolor.  Worms change colors as they crawl.
+.TP 5
+.BI \-R
+Rotate colormap.  The colormap constantly changes.
+.TP 5
+.BI \-n " number"
+Make
+.IR number
+worms.  Default is 50.
+.TP 5
+.BI \-l " length"
+Worms are if length
+.IR length.
+A negative value means infinite length.
+.TP 5
+.BI \-size " size"
+Worms are
+.IR size
+pixels wide.
+.TP 5
+.BI \-display " connection"
+Connect to X server display,
+.IR connection.
+.TP 5
+.BI \-geometry " geomspec"
+Create window using
+.IR geomspec.
+.SH SEE ALSO
+    X(1)
+.SH COPYRIGHT
+ Copyright (c) 1988 by Sun Microsystems, Inc.
+ David Lemke (lemke@wirehead.sun.com)
+
+ Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation. 

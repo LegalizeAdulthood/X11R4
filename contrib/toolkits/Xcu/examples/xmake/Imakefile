@@ -1,0 +1,41 @@
+#ifdef RtArchitecture
+             CC = pcc
+#endif
+            CAT = /bin/cat
+           WLDL = wldl.wl
+          WLDLI = incl.wl
+         WLMBIN = ../../bin
+         XCUSRC = ../../src
+       INCLUDES = -I$(TOP) -I$(XCUSRC)
+           SRCS = xmake.c
+         XCULIB = $(XCUSRC)/libXcu.a
+LOCAL_LIBRARIES = $(XCULIB) $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+
+all:
+	@echo Usage: make xmake 
+
+xmake.o : xmake.wh
+
+SingleProgramTarget(xmake,xmake.o,$(LOCAL_LIBRARIES),)
+
+DependTarget()
+
+xmake.wh : xmake.wb
+	@echo making xmake.wh because of $?
+	$(WLMBIN)/wlmInclMake `$(CAT) xmake.wb` > $@
+
+xmake.nc : $(WLDL)
+	@echo making xmake.nc because of $?
+	$(WLMBIN)/wlmUpdateCls xmake $?
+
+xmake.wf : xmake.nc
+
+xmake.wb : xmake.wf
+	@echo making xmake.wb because of $?
+	$(WLMBIN)/wlmUpdate xmake
+
+$(WLDL) : $(WLDLI)
+	touch $@
+
+always :;
+

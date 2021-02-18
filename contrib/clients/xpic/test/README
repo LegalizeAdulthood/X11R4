@@ -1,0 +1,7 @@
+The .xpic files are xpic data files - the .pic and .ps are what they
+should look like when translated from .xpic to pic/PostScript 
+by x2pic/x2ps respectively. 
+
+Print out test.ps and compare it with what you see on your screen
+running xpic on test.xpic. 
+

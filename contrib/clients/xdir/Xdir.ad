@@ -1,0 +1,78 @@
+! Resources for Xdir
+!
+!	Win Treese
+!	Cambridge Research Lab/MIT Project Athena
+!	Digital Equipment Corp.
+!
+!	$Source$
+!	$Header$
+!	$Athena$
+!
+Xdir*TextShell.geometry: 500x400
+Xdir*TextShell*iconName: Xdir file
+Xdir*ErrorDialog*close.label: Oh, well
+Xdir*ErrorDialog*Foreground: White
+Xdir*ErrorDialog*Background: Black
+Xdir*ErrorDialog*BorderColor: White
+
+! Xdir Resources done right
+
+Xdir*cursor: top_left_arrow
+Xdir*showDotFiles: False
+Xdir*showBackupFiles: True
+Xdir.Xdir.geometry: 500x400
+Xdir*help*geometry: 500x400
+! Xdir*viewHelpFile: /usr/lib/X11/Xdir-view.help
+Xdir*viewHelpFile: /contrib/clients/xdir/xdir-view.help
+!Xdir*helpFile: /usr/lib/X11/Xdir.help
+Xdir*helpFile: /contrib/clients/xdir/xdir.help
+! Xdir*aboutFile: /usr/lib/X11/Xdir.about
+Xdir*aboutFile: /contrib/clients/xdir/xdir.about
+Xdir*showDotFilesMsg:	Show Dot Files
+Xdir*hideDotFilesMsg:	Hide Dot Files
+Xdir*showBackupFilesMsg:	Show Backup Files
+Xdir*hideBackupFilesMsg:	Hide Backup Files
+!
+! Translations for list widget
+!
+Xdir*List*translations:	#augment \
+	<Btn1Up>(2):	Set() Notify() ItemPicked()\n\
+	 <Btn3Up>:	ParentDir()
+
+!
+! Menus
+! (possibly) interesting resources for all menus
+!Xdir*SimpleMenu*font:
+!Xdir*SimpleMenu*labelFont:
+Xdir*SimpleMenu*labelSeparatorType:	none
+!
+! "Actions" Menu
+!
+Xdir*action.menuName:			actionMenu
+Xdir*action.label:			Actions
+Xdir*actionMenu.label:			Actions
+Xdir*actionMenu*view.label:		View File
+Xdir*actionMenu*chdir.label:		Change Directory
+Xdir*actionMenu*parentdir.label:	Parent Directory
+Xdir*actionMenu*about.label:		About Xdir
+Xdir*actionMenu*update.label:		Update List
+Xdir*actionMenu*quit.label:		Quit
+!
+! "Configure" Menu
+!
+Xdir*config.menuName:			configMenu
+Xdir*config.label:			Options
+Xdir*configMenu.label:			Options
+! Note: the labels for showing/hiding dot files and backup files
+! are specified above, since they may toggle back and forth
+!
+! "Commands" Menu
+!
+Xdir*command.menuName:			commandMenu
+Xdir*command.label:			Commands
+Xdir*commandMenu.label:			Commands
+Xdir*commandMenu*delete.label:		Delete
+Xdir*commandMenu*copy.label:		Copy
+Xdir*commandMenu*rename.label:		Rename
+Xdir*commandMenu*edit.label:		Edit
+

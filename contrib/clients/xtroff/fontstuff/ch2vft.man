@@ -1,0 +1,16 @@
+.TH CH2VFT 1 "84/04/07"
+.AT 3
+.SH NAME
+ch2vft \- Font translation to vfonts (RST format) from character format.
+.SH SYNOPSIS
+.B ch2vft
+[ -i  -s ]  charfile  > vfontfile
+.SH DESCRIPTION
+Takes input from charfile (which must be in the format written
+by xxx2ch), converts to rst format and writes to stdout.  If charfile
+is missing, stdin is read.  The -i flag tells ch2rst to ignore the
+character codes at the start of each glyph definition, and pack the
+glyphs in consecutive code positions starting with 0.  The -s flag
+forces ch2vft to include the whole bit-map that defines the glyph.
+Normally, it is trimmed of white space.  This is usefull for making
+stipple patterns of fixed size.

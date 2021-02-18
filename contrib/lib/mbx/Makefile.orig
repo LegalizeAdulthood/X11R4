@@ -1,0 +1,74 @@
+
+# BASE indicates the repository controlled by NN
+# MYBASE indicates my own work place
+BASE = /u/IM/src/mbX
+
+
+#
+# Stub to be used if system does not have setlocale
+#   - this had to be set up Manually
+#       mkdir locale
+#       cp locale.h locale
+#LOCALE = locale.o
+#LOCALE_INC = -Ilocale
+LOCALE = 
+LOCALE_INC = 
+
+#set options
+COMPOPT= -O  $(DEFINES)
+DEFINES = -DAIX
+INCLUDE = $(LOCALE_INC)
+INCLUDES = 
+CFLAGS = $(INCLUDE) $(COMPOPT) $(OPTIONS)
+LIBDIR = .
+LIBXMU = libXmu.a 
+
+SOURCES = mbX.c mbXDraw.c mbXText.c mbXLoad.c mbXibm.c
+OBJECTS = mbX.o mbXDraw.o mbXText.o mbXLoad.o mbXibm.o
+
+$(LIBXMU): $(OBJECTS) 
+	ar rv $(LIBXMU) $(OBJECTS)
+
+mbX.o:	   mbX.h
+mbXDraw.o: mbXCommon.c mbX.h
+mbXText.o: mbXCommon.c mbX.h
+mbXLoad.o: mbX.h
+mbXibm.o:  mbX.h mbXpc932.h	  	 
+
+#
+# Utility to build the S-JIS index table
+#	mbXcp932.h is included in mbXibm.c
+mbXpc932.h: mbXsj 
+	mbXsj > mbXpc932.h
+
+#
+# Make test case 
+#
+mbtest.o:
+
+mbtest:	$(LIBXMU) $(LOCALE) mbtest.o 
+	$(CC) mbtest.o -o mbtest $(LOCALE) $(LIBXMU) -lXt -lX11
+
+#
+# Make locale if system if system does not have setlocale
+#
+
+locale.o:  locale/locale.h
+
+locale:	locale.o
+	
+#
+# Make Backup 
+#
+tar:
+	rm -rf TARDIR
+	mkdir TARDIR
+	( cd TARDIR; get ../s.* ; cd .. )
+	cp Makefile README mbX.mm locale.c locale.h TARDIR
+	( cd TARDIR ; \
+		    find . -print > .tarlist ;\
+		    tar -cf../tar.mbX -i .tarlist ;\
+		    cd .. )
+
+clean:
+	rm mbXsj *.o  mbtest

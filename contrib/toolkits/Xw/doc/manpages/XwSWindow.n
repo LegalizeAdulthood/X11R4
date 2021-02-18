@@ -1,0 +1,330 @@
+
+
+
+     XWSCROLLEDWINDOW(3X)                         XWSCROLLEDWINDOW(3X)
+
+
+
+
+     NAME
+          XwswindowWidgetClass - the X Widget's scrolled window widget
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/Valuator.h>
+          #include <Xw/Arrow.h>
+          #include <Xw/ScrollBar.h>
+          #include <Xw/SWindow.h>
+
+
+     CLASSES
+          The ScrolledWindow is built from the Core, Composite, and
+          XwManager classes.
+
+          The widget class to use when creating a scrolled window is
+          XwswindowWidgetClass. The class name is ScrolledWindow.
+
+     DESCRIPTION
+          The ScrolledWindow widget combines the ScrollBar and
+          BulletinBoard widgets to implement a visible window onto
+          some other (usually larger) data display. The visible part
+          of the window can be scrolled through the larger display by
+          the use of scroll bars.
+
+          To use the scrolled window, an application first creates a
+          ScrolledWindow widget, and then creates a widget capable of
+          displaying the desired data as a child of the
+          ScrolledWindow. ScrolledWindow will position the child
+          widget within its BulletinBoard manager instance, and create
+          scroll bars for the horizontal and vertical dimensions. When
+          the user performs some action on the scroll bars, the child
+          widget will be repositioned accordingly within the bulletin
+          board.
+
+     NEW RESOURCES
+          The ScrolledWindow widget defines a unique set of resource
+          types which can be used by the programmer to control the
+          appearence and behavior of the scrolled window.  The
+          programmer can also set the values for the Core, Composite
+          and Manager widget classes to set attributes for this
+          widget.  To reference a resource in a .Xdefaults file, strip
+          off the XtN from the resource string.  The following table
+          contains the set of resources defined by ScrolledWindow.
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSCROLLEDWINDOW(3X)                         XWSCROLLEDWINDOW(3X)
+
+
+
+
+                        ScrolledWindow Resource Set
+      Name                   Class                  Type      Default
+      _______________________________________________________________
+      XtNvsbWidth            XtCVsbWidth            int       20
+      XtNhsbHeight           XtCHsbHeight           int       20
+      XtNforceHorizontalSB   XtCForceHorizontalSB   Boolean   FALSE
+      XtNforceVerticalSB     XtCForceVerticalSB     Boolean   FALSE
+      XtNvScrollEvent        XtCCallBack            Pointer   NULL
+      XtNhScrollEvent        XtCCallBack            Pointer   NULL
+      XtNinitialX            XtCInitialX            int       0
+      XtNinitialY            XtCInitialY            int       0
+
+
+
+          XtNvScrollBarWidth
+               This is the width in pixels of the vertical scroll bar.
+
+          XtNhScrollBarHeight
+               This is the height in pixels of the horizontal scroll
+               bar.
+
+          XtNforceHorizontalSB
+               When the child widget is created and positioned within
+               the scrolled window, its width and height are examined.
+               If the entire child widget will fit within the width of
+               the scrolled window, the horizontal scrollbar will not
+               be created, since there is no need to scroll in that
+               direction. Setting this resource to TRUE disables this
+               checking and will force a horizontal scrollbar to be
+               attached to the window regardless of the dimension of
+               the child widget.
+
+          XtNforceVerticalSB
+               This resource controls the existence of the vertical
+               scrollbar. As described above, if this is set to TRUE a
+               vertical scrollbar will always be created.
+
+          XtNvScrollEvent and XtNvScrollEvent
+               An application program may track the position of the
+               child within the scrolled window by linking into these
+               callbacks. Whenever the user moves the valuator in
+               either scroll bar, ScrolledWindow moves the child
+               accordingly and then calls the appropriate callback.
+               The call_data parameter is set to the new valuator
+               origin for the scrollbar.
+
+          XtNinitialX and XtNinitialY
+               The child widget is initially positioned at (0,0)
+               within the bulletin board.  This positioning can be
+               changed by specifying a new X and Y location. If a
+               non-zero value is given, that becomes the initial
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSCROLLEDWINDOW(3X)                         XWSCROLLEDWINDOW(3X)
+
+
+
+
+               location, and the valuators inside the scrollbars are
+               adjusted to give a visual indication of the new offset.
+               This value should be negative to assure proper
+               operation of the scrolled window. These resources are
+               only used at initialization time; they cannot be set
+               through a call to XtSetValues.
+
+     INCORPORATED RESOURCES
+          The ScrolledWindow  widget is built from two ScrollBar
+          widgets and a BulletinBoard widget.  As such, it uses a
+          large number of the resources defined by these widgets.
+          Many of the attributes for these widgets can be set through
+          the .Xdefaults file or by use of XtSetValues() when
+          communicating with the ScrolledWindow widget.
+
+          Only the resources within the following tables will have any
+          effect on the scroll bars.  The other resource types defined
+          by the ScrollBar widget are either overridden or unused by
+          ScrolledWindow.
+
+          The following tables list the resources incorporated by
+          ScrolledWindow.  For a complete description of these
+          resources, refer to the manual page listed in the table
+          heading.
+
+
+                   ScrollBar Resource Set -- XWSCROLLBAR(3X)
+     Name                    Class                   Type    Default
+     ______________________________________________________________________
+     XtNinitialDelay         XtCinitialDelay         int     500
+     XtNrepeatRate           XtCRepeatRate           int     100
+     XtNgranularity          XtCGranularity          int     10
+     XtNforeground           XtCForeground           Pixel   Black
+     XtNhighlightColor       XtCForeground           Pixel   Black
+     XtNhighlightStyle       XtCHighlightStyle       int     pattern_border
+     XtNhighlightTile        XtCHighlightTile        int     50%_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int     0
+     XtNtraversalType        XtCTraversalType        int     highlight_off
+
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSCROLLEDWINDOW(3X)                         XWSCROLLEDWINDOW(3X)
+
+
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+
+                             Manager Resource Set
+     Name                    Class                   Type      Default
+     ____________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNtraversalOn          XtCTraversalOn          Boolean   FALSE
+     XtNlayout               XtCLayout               int       minimize
+     XtNnextTop              XtCCallback             Pointer   NULL
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalType resource is set to
+          highlight_traversal (XwHIGHLIGHT_TRAVERSAL in an argument
+          list) at either create time or during a call to XtSetValues,
+          the XwPrimitive superclass will automatically augment the
+          primitive widget's translations to support keyboard
+          traversal.  Refer to the XwPrimitive man page for a complete
+          description of these translations.  Refer to the
+          TRANSLATIONS section in this man page for a description of
+          the translations local to the scrolled window widget.
+
+     TRANSLATIONS
+          Input to the ScrolledWindow widget is driven by the mouse
+          buttons.  However the translations driving the actions are
+          defined by the ScrollBar widgets.  The additional
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWSCROLLEDWINDOW(3X)                         XWSCROLLEDWINDOW(3X)
+
+
+
+
+          translations used for ScrolledWindow are as follows:
+
+               <EnterWindow>:        enter(),
+               <LeaveWindow>:        leave(),
+
+     ACTIONS
+          enter:  Enter window events occurring on the scrolled window
+          are handled by this action.
+
+          leave:  Leave window events occurring on the scrolled window
+          are handled by this action.
+
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWMANAGER(3X) XWPRIMITIVE(3X),
+          XWSCROLLBAR(3X),XWBULLETINBOARD(3X),XWVALUATOR(3X),
+          XWARROW(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+

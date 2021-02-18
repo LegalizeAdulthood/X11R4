@@ -1,0 +1,105 @@
+.TH EXCOLORS 1 "27 November 1989" "X Version 11"
+.SH NAME
+excolors \- Examine named colors
+.SH SYNOPSIS
+.PP
+.B excolors
+[
+.I file
+]
+[
+.I options
+]
+.PP
+The
+.I file
+argument, if supplied, should name a file in X11's "rgb.txt" format.
+If omitted, 
+.B excolors
+uses the standard installed RGB database
+file,
+.B /usr/lib/X11/rgb.txt.
+.br
+.SH DESCRIPTION
+.PP
+.B excolors
+displays color patches for colors defined in X11's RGB database.
+The window shows 14 lines at once with the following information
+formatted left-to-right:
+.IP ""
+Color patch showing the actual color
+.IP ""
+Name of the color
+.IP ""
+RGB value in X11-compatible hexadecimal form
+.IP ""
+RGB value as a decimal (R G B) triple
+.PP
+Interaction with
+.B excolors
+is limited but seems adequate for its basic purpose of allowing
+inspection of named colors.  Clicking any mouse button causes it to refresh
+its window contents.  Keyboard inputs are:
+.IP ""
+.I Control-C:
+Exit
+.IP ""
+.I ">"
+or
+.I down arrow:
+Scroll forward by 1 color
+.IP ""
+.I "<"
+or
+.I up arrow:
+Scroll backward by 1 color
+.IP ""
+.I "}"
+or
+.I Next
+Scroll forward by 8 colors
+.IP ""
+.I "{"
+or
+.I Prev
+Scroll backward by 8 colors
+.PP
+This program's keyboard inputs anticipate use of function keys
+on HP 9000 series workstations.  It hasn't been tested on other
+equipment.
+.SH OPTIONS
+This program accepts the standard options listed below.  They are
+listed as command line options, but can also be supplied as X
+resources; for example, "-force monochrome" on the command line
+has the same effect as
+"dispimg.force:  monochrome".
+.TP
+.B \-colorinstances scope
+.B \-colorinstances private
+selects use of privately allocated (read/write) colors,
+.B \-colorinstances \fIshared\f
+selects use of shared (read only) colors.
+Private colors cannot be shared with other clients using the
+same color map, but they allow better image quality than
+shared colors.
+.TP
+.B \-colormap scope
+.B \-colormap private
+selects use of a private color map.
+.B \-colormap \fIshared\f
+selects shared use of a default color map.
+A private color map allows the best possible color rendition
+for the image, but may cause annoying color changes on the screen
+as the cursor moves into or out of the image's window.
+.TP
+.B \-display \fIdisplayname\f
+Name of X server to use, including screen number.
+.TP
+.B \-geometry \fIgeometry\f
+Size and/or location to use for window.
+.SH RESTRICTION
+This program works with a PseudoColor visual at most 8 planes deep.
+It may work for various other cases, but is known to fail with
+24-deep TrueColor or DirectColor visuals.
+.SH AUTHOR
+Paul Raveling, USC Information Sciences Institute

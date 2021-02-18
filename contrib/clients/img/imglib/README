@@ -1,0 +1,74 @@
+
+
+		color_mapped image sample	11-27-89
+		Paul Raveling		Raveling@isi.edu
+
+
+	This directory (img/imglib) contains the imglib "toolbox".
+	Modules here generate imglib.a, which is used by programs
+	in the Img Software Set.  All documentation on imglib
+	functions is exctracted from their source and presently
+	is available only as plain text files.
+
+	imglib.ref	serves as a reference to all imglib
+			routines.  Information is collated
+			in alphabetic order by routine name.
+
+	*.doc		For each module there is a .doc file
+			containing the same information as in
+			imglib.ref, but only for the functionally
+			related routines in that module.
+
+	Modules and the public routines they contain are:
+
+	Module		Routines
+	------		--------
+
+	fileutil	expand_path	Expand file pathname
+			open_filter	Open filter
+			close_filter	Close filter
+			open_yafile	Open file
+			close_yafile	Close file
+
+	imagen		print_img	Print image
+
+	imgXlib		ck_colorcap	Check read/write color capacity
+			create_sysres	Create system-dependent resources
+			delete_sysres	Delete system-dependent resources
+			display_img	Display image in new window
+			get_img		Get image	(Copy from drawable)
+			maint_img	Maintain Displayed Image
+			put_img		Put image	(Copy to drawable)
+			start_X11	Start X11 Interface
+			stop_X11	Stop X11 Interface
+			update_colors	Update X11 color map
+
+	imgcolor	img_rep_node	Replenish free node supply
+			init_colman	Initialize image for color management
+			dither_rgb	Dither an RGB image
+
+	imgcredel	create_img	Create image
+			delete_img	Delete image
+			copy_img	Copy image
+			change_img	Change image type
+
+	imgcvt		color_to_gray	Convert color image to gray scale
+			color_to_mono	Convert color image to dithered monochrome
+			dither		Reduce color content by dithering
+			img_init_dither_tables
+					Initialize dithering tables
+
+	imgio		describe_img	Describe image
+			read_img	Read image from file
+			write_img	Write image to file
+
+	quantcmi	quant_cmi	Quantize color mapped image
+
+	quantrgb	quant_rgb	Quantize RGB image
+
+	xrand		**		Random number generation
+
+
+	Module xrand contains random number generation routines
+	from a comp.sources newsgroup contribution and does not
+	presently have a .doc file.

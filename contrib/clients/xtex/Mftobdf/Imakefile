@@ -1,0 +1,44 @@
+/*
+ *	TEXFONTS
+ *		This should point to the directory housing the .tfm files
+ *		for your fonts.
+ */
+
+  TEXFONTS=$(TeXFonts)
+
+/***************************************************************************/
+/*	You shouldn't have to change anything below this line		   */
+/***************************************************************************/
+
+      LIBTEXROOT= ../
+      LIBTEXSRC	= ../libtex
+         LIBTEX	= $(LIBTEXSRC)/libtex.a
+      DEPLIBTEX	= $(LIBTEX)
+        DEPLIBS = $(DEPLIBTEX) $(DEPXAWLIB) $(DEPXMULIB) $(DEPXTOOLLIB) $(DEPXLIB)
+        INCLUDES = -I$(LIBTEXROOT)
+LOCAL_LIBRARIES = $(LIBTEX)
+         SYSLIB = -lm
+
+SRCS = mftobdf.c
+OBJS = mftobdf.o
+
+PROGRAMS = mftobdf buildfonts
+
+FILES = Imakefile build-initial-fonts buildfonts.script \
+	mftobdf.man $(SRCS) dpi.c 
+
+all:	mftobdf
+
+SingleProgramTarget(mftobdf,$(OBJS),$(LOCAL_LIBRARIES),$(SYSLIBS))
+InstallProgram(mftobdf, $(BINDIR) )
+InstallScript(buildfonts, $(BINDIR))
+DependTarget()
+CleanTarget()
+TagsTarget()
+
+tar:
+	cd ../..;\
+	for file in $(FILES); \
+	do \
+	  tar rf $(TARFILE) $(PRODUCT)/Mftobdf/$$file; \
+	done

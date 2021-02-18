@@ -1,0 +1,14 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+
+DependTarget()
+
+NormalObjectRule()
+NormalLexRule()
+
+ProgramTarget(class, class.o classpp.o, , -ll)
+InstallProgram(class, $(DESTDIR)/bin)
+
+classpp.o::	classpp.h

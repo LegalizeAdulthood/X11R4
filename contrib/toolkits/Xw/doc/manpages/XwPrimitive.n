@@ -1,0 +1,330 @@
+
+
+
+     XWPRIMITIVE(3X)                                   XWPRIMITIVE(3X)
+
+
+
+
+     NAME
+          XwprimitiveWidgetClass - the X Widget's primitive widget
+          meta class
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+
+
+     CLASSES
+          The Primitive widget class is built out of the Core class.
+
+     DESCRIPTION
+          The Primitive class is an X Widget MetaClass.  It is never
+          instantiated as a widget.  Its sole purpose is as a
+          supporting superclass for other widget classes.  It handles
+          border drawing and highlighting, traversal activation and
+          deactivation and various callback lists needed by primitive
+          widgets.
+
+     NEW RESOURCES
+          Primitive defines a set of resource types used by the
+          programmer to specify the data for widgets which are
+          subclasses of Primitive.
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightColor       XtCForeground           Pixel     Black
+     XtNhighlightTile        XtCHighlightTile        int       50_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNrecomputeSize        XtCRecomputeSize        Boolean   TRUE
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+          XtNforeground
+               This resource defines the foreground color for the
+               widget.  Widgets built upon this class can use the
+               foreground for their drawing.
+
+          XtNbackgroundTile
+               This resource defines the tile to be used for the
+               background of the widget.  It defines a particular tile
+               to be combined with the foreground and background pixel
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPRIMITIVE(3X)                                   XWPRIMITIVE(3X)
+
+
+
+
+               colors.  The #defines for setting the tile value
+               through an arg list and the strings to be used in the
+               .Xdefaults files are described in XwCreateTile(3X).
+
+          XtNhighlightColor
+               This resource defines the color to be used in the
+               highlighting drawn by Primitive around the exterior of
+               the widget.
+
+          XtNhighlightStyle
+               Two styles of border highlighting are supported by
+               Primitive.  They include drawing the highlighting with
+               a pattern and widget specific border drawing.  To set
+               the highlight style through an arg list, use the
+               #define XwPATTERN_BORDER.  To set the highlight style
+               through the .Xdefaults file, use the string
+               pattern_border.
+
+               For Widget Writers:  The highlighting style of
+               XwWIDGET_DEFINED is used exclusively by widgets with
+               special highlighting requirements that need to override
+               the normal highlighting types.  To use, the widget
+               inserts a highlight and unhighlight procedure into its
+               primitive class and forces the highlightStyle field in
+               the primitive instance to the define XwWIDGET_DEFINED.
+               The primitive class will then make the appropriate
+               calls to the highlight and dehighlight functions.
+
+          XtNhighlightTile
+               When the highlight style is XwPATTERN_BORDER, one of
+               several tiles can be used for the drawing.  The
+               #defines for setting the values through an arg list and
+               the strings to be used in the .Xdefaults files are
+               described in XwCreateTile(3X).
+
+          XtNhighlightThickness
+               The width of the highlight can be set using this
+               resource.  It is specified as an integer value
+               representing the width, in pixels, of the highlight to
+               be drawn.  This value must be greater than or equal to
+               0.  Note that highlighting takes place within the
+               window created for a widget and is separate from the
+               window border.
+
+          XtNtraversalType
+               Three modes of border highlighting activation are
+               supported by Primitive.  They are, no highlighting,
+               highlight on the cursor entering the widgets window and
+               highlight for keyboard traversal.  The last mode is
+               used by the keyboard traversal mechanism to indicate
+               the widget that is to receive all input occurring
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPRIMITIVE(3X)                                   XWPRIMITIVE(3X)
+
+
+
+
+               within the widget hierarchy.  To set the traversal type
+               through an arg list, one of three defines can be used.
+               They are XwHIGHLIGHT_OFF, XwHIGHLIGHT_ENTER and
+               XwHIGHLIGHT_TRAVERSAL.  The strings that can be used to
+               set this resource through the .Xdefaults file are
+               highlight_off, highlight_enter, and
+               highlight_traversal.
+
+          XtNrecomputeSize
+               This boolean resource indicates to a primitive widget
+               whether it should recalculate its size when an
+               application makes a XtSetValues call to it.  If set to
+               TRUE, the widget will perform its normal size
+               calculations will may cause its geometry to change.  If
+               set to FALSE, the widget will not recalculate its size.
+
+          XtNselect
+               This is a reserved callback list used by widget
+               subclasses built upon Primitive to implement there
+               callback lists.
+
+          XtNrelease
+               This is a reserved callback list used by widget
+               subclasses built upon Primitive to implement there
+               callback lists.
+
+     KEYBOARD TRAVERSAL
+          If the traversalType resource is set to highlight_traversal
+          (either when the widget is created or during a call to
+          XtSetValues) the Primitive widget's translation table is
+          augmented with the following translations:
+
+
+         <FocusIn>:       focusIn()
+         <FocusOut>:      focusOut()
+         <Visible>:       visibility()
+         <Unmap>:         unmap()
+         <Key>Up:         traverseUp()        HP Up arrow key.
+         <Key>Down:       traverseDown()      HP Down arrow key.
+         <Key>Left:       traverseLeft()      HP Left arrow key.
+         <Key>Right:      traverseRight()     HP Right arrow key.
+         <Key>Next:       traverseNext()      HP "Next" key.
+         <Key>Prior:      traversePrev()      HP "Prev" key.
+         <Key>Home:       traverseHome()      HP Home arrow key.
+         <Key>KP_Enter:   traverseNextTop()   HP "Enter" key.
+
+
+     ACTIONS
+          focusIn:
+               If traversal is on for a widget of this class then
+               accept the keyboard focus and visually indicate it by
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPRIMITIVE(3X)                                   XWPRIMITIVE(3X)
+
+
+
+
+               highlighting the widget.
+
+          focusOut:
+               If traversal is on for a widget of this class then
+               indicate that the widget no longer has the focus by
+               unhighlighting the widget.
+
+          visibility:
+               If traversal is on for a widget of this class and the
+               widget that is focused becomes hidden (e.g. another
+               window obscures its visibility), then the focus moves
+               to another visible widget.
+
+          unmap:
+               If traversal is on for a widget of this class and the
+               widget that is focused becomes unmapped, then the focus
+               moves to another mapped widget.
+
+          traverseUp:
+               Inform the parent of a widget of this class that it
+               should transfer keyboard focus to the first widget
+               above this one.
+
+          traverseDown:
+               Inform the parent of a widget of this class that it
+               should transfer keyboard focus to the first widget
+               below this one.
+
+          traverseLeft:
+               Inform the parent of a widget of this class that it
+               should transfer keyboard focus to the first widget to
+               the left of this one.
+
+          traverseRight:
+               Inform the parent of a widget of this class that it
+               should transfer keyboard focus to the first widget to
+               the right of this one.
+
+          traverseNext:
+               Inform the parent of a widget of this class that it
+               should transfer keyboard focus to the next child in the
+               parent's list of children.
+
+          traversePrev:
+               Inform the parent of a widget of this class that it
+               should transfer keyboard focus to the previous child in
+               the parent's list of children.
+
+          traverseHome:
+               Inform the parent of a widget of this class that it
+               should transfer keyboard focus to the child which is
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWPRIMITIVE(3X)                                   XWPRIMITIVE(3X)
+
+
+
+
+               closest to the upper left hand corner of the parent.
+               If that child already has the keyboard focus, then ask
+               the grandparent of the widget to give the keyboard
+               focus to whichever of its children which is closest to
+               the upper left hand corner.
+
+          traverseNextTop:
+               Find the topmost parent in a widget of this class
+               hierarch which is a subclass of XwManager and tell it
+               to issues any XtNnextTop callbacks that have been
+               registered with it.  The purpose of this callback is to
+               allow applications to move the keyboard focus between
+               top level widget hierarchies of the same application.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWCREATETILE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 5 -                   Aug 9, 1988
+
+
+

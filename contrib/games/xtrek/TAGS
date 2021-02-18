@@ -1,0 +1,328 @@
+
+XTextExt.c,125
+XCharStruct *GetCS(35,1498
+XCharStruct *GetCS2d(60,2160
+GetGlyphs(89,3037
+XTextExtents 115,3835
+int XTextWidth 178,5482
+
+clock.c,100
+GLOBAL void destroyClock(97,4161
+GLOBAL void makeClock(78,3629
+GLOBAL void showTimeLeft(108,4380
+
+colors.c,193
+}               ASSOC;36,1510
+GLOBAL int arrayDefault 150,4561
+GLOBAL int booleanDefault 139,4294
+GLOBAL int getColorDefs 94,3020
+LOCAL int getMonoColors 58,2016
+#define iswhite(148,4499
+
+coup.c,26
+GLOBAL void coup 33,1383
+
+damage.c,102
+GLOBAL void break_ship 209,5832
+GLOBAL void damage_ship 152,4386
+GLOBAL void repair_damage 33,1357
+
+data.c,0
+
+death.c,27
+GLOBAL void death 38,1478
+
+dmessage.c,30
+GLOBAL void dmessage 32,1378
+
+enter.c,27
+GLOBAL void enter 40,1497
+
+getship.c,595
+LOCAL 37,1554
+LOCAL 39,1684
+LOCAL 42,1822
+LOCAL 44,1955
+LOCAL 46,2087
+LOCAL 48,2220
+LOCAL 50,2361
+LOCAL 52,2490
+LOCAL 54,2627
+LOCAL 56,2740
+LOCAL 59,2869
+LOCAL 62,2983
+LOCAL 64,3108
+LOCAL 66,3240
+LOCAL 68,3364
+LOCAL 70,3483
+LOCAL 72,3630
+LOCAL 74,3768
+LOCAL 77,3893
+LOCAL 79,4034
+LOCAL 81,4157
+LOCAL 84,4280
+LOCAL 86,4409
+LOCAL 88,4539
+LOCAL 90,4669
+LOCAL 94,4799
+GLOBAL void convertships(265,9097
+GLOBAL aShip *findship(182,7377
+GLOBAL void getship(167,7045
+GLOBAL void initdefaultship(161,6951
+LOCAL void initsliders(205,7815
+GLOBAL void standardships(154,6855
+
+help.c,121
+GLOBAL void CreateHelpWindow(158,5238
+} HelpLine;54,2061
+GLOBAL void fillhelp(108,3748
+GLOBAL void showMotd(125,4300
+
+icon.c,62
+GLOBAL void CreateIcon(49,1695
+GLOBAL void drawIcon(40,1468
+
+inform.c,90
+#define DRAWSTRING(46,1855
+GLOBAL void destroyInfo 169,5807
+GLOBAL void inform 50,2027
+
+input.c,515
+LOCAL int CheckSelectWindow(449,11345
+LOCAL int CountPlayers(433,11025
+#define	FD_CLR(47,1694
+#define	FD_ISSET(49,1802
+#define	FD_SET(46,1640
+#define	FD_ZERO(48,1749
+#define REMOVE_PLAYER(58,2056
+LOCAL void SetTimer(422,10803
+LOCAL void buttonaction 120,3230
+LOCAL void deadpeer 74,2357
+LOCAL int getcourse 110,2954
+GLOBAL void initinput 768,19464
+GLOBAL void input 469,11780
+LOCAL int inputIgnored 80,2434
+LOCAL void keyaction 157,4040
+LOCAL void setRedrawFlag 66,2254
+LOCAL void setwatch 96,2701
+
+interface.c,415
+GLOBAL void beam_down 120,2885
+GLOBAL void beam_up 96,2447
+GLOBAL void bomb_planet 81,2218
+GLOBAL void cloak_off 175,3761
+GLOBAL int cloak_on 163,3551
+GLOBAL void follow_ship 74,2124
+GLOBAL void repair 139,3204
+GLOBAL void repair_off 150,3362
+GLOBAL void repeat_message 156,3439
+GLOBAL void set_speed 35,1532
+GLOBAL void shield_down 59,1919
+GLOBAL void shield_tog 65,1997
+GLOBAL void shield_up 47,1728
+
+itoa.c,19
+void itoa 25,1262
+
+main.c,117
+#define	FD_CLR(35,1520
+#define	FD_ISSET(37,1628
+#define	FD_SET(34,1466
+#define	FD_ZERO(36,1575
+int main 46,1785
+
+minisubs.c,232
+GLOBAL void add_fuel 94,2657
+GLOBAL void adjust_alert 280,6562
+GLOBAL void check_overheat 71,2127
+GLOBAL void cool_systems 30,1340
+GLOBAL int dirdiff 272,6427
+GLOBAL void player_orbit 121,3171
+GLOBAL void space_move 137,3518
+
+newwin.c,263
+#define CANCHOOSE(126,4083
+LOCAL void CreateWarWindows(75,2518
+GLOBAL void del_entrywindow(163,5356
+GLOBAL void entrywindow(129,4156
+GLOBAL void mapAll(112,3720
+GLOBAL char * newwin(178,5651
+GLOBAL void redrawEmpire(44,1566
+GLOBAL void redrawQuit(63,2155
+
+orbit.c,27
+GLOBAL void orbit 36,1423
+
+parseutil.c,244
+GLOBAL void ConfigGlobals(180,4963
+GLOBAL FILE *OpenLibraryFile(39,1561
+GLOBAL void XTrekParse 55,1929
+GLOBAL int addempire 135,4005
+GLOBAL void addplanet 107,3201
+GLOBAL int findempire 165,4703
+GLOBAL struct planet  *findplanet 90,2746
+
+phaser.c,159
+LOCAL int check_phaser 33,1397
+LOCAL void do_phaser 78,2442
+LOCAL void do_phaser_damage 58,1877
+GLOBAL void phaser 183,4912
+GLOBAL void udphaser 160,4464
+
+planet.c,195
+GLOBAL void beam 204,5305
+GLOBAL void checkwin 267,6580
+GLOBAL void create_random_planets 40,1592
+GLOBAL void plfight 99,2642
+GLOBAL void save_planets 67,2095
+GLOBAL void udplanets 78,2264
+
+planetlist.c,32
+GLOBAL void planetlist 36,1503
+
+playerlist.c,32
+GLOBAL void playerlist 30,1340
+
+pstats.c,31
+GLOBAL void savestats(37,1505
+
+redraw.c,344
+#define CLEARLINE(42,1669
+#define CLEARZONE(38,1529
+LOCAL void DrawLocalWindow(417,12020
+LOCAL void DrawPlanets(143,3955
+LOCAL void DrawShips(260,7233
+LOCAL void DrawTorps(182,5176
+LOCAL void drawPartialPhaser 91,2747
+GLOBAL void intrupt 601,17333
+GLOBAL void map 479,13944
+LOCAL void phaserdist 76,2460
+GLOBAL void redraw 550,15827
+
+resource.c,134
+LOCAL void cond_addto_fontpath(48,1759
+GLOBAL int getFonts(82,2858
+GLOBAL void getResources(222,7443
+LOCAL void getTiles(169,5559
+
+rmove.c,335
+LOCAL void AvoidMinesAndPlanetsAndTorps(198,6496
+#define NORMALIZE(42,1561
+    calculate_hit(91,3500
+LOCAL void findenemy(380,11084
+LOCAL void go_home(173,5969
+int matherr 163,5774
+LOCAL void patrol(605,16957
+GLOBAL void rmove(642,17683
+LOCAL void runaway(579,16194
+LOCAL void shoot(335,9870
+GLOBAL void startrobot(296,8988
+
+rotate.c,444
+LOCAL void ArrayToBitmap(219,4416
+LOCAL void BMparse(143,2720
+GLOBAL void CreateShipBitMaps(292,5735
+#define D(19,350
+#define DST(287,5655
+LOCAL void DumpBitmap(246,4845
+GLOBAL void InitPixMaps(334,6692
+LOCAL void PrintArray(272,5420
+LOCAL void ReflectD(54,939
+LOCAL void ReflectH(32,574
+LOCAL void ReflectV(43,759
+LOCAL void Rotate90(21,387
+#define S(18,314
+typedef enum { Short, Char } aSize;130,2455
+LOCAL void rotate(64,1086
+
+scorelist.c,31
+GLOBAL void scorelist(35,1477
+
+scores.c,14
+main 35,1426
+
+sintab.c,0
+
+smessage.c,88
+LOCAL int getaddr 41,1646
+GLOBAL void pmessage 182,5780
+GLOBAL void smessage 76,2492
+
+statline.c,30
+GLOBAL void statline 35,1397
+
+stats.c,375
+#define	BX_OFF(36,1591
+#define	BY_OFF(37,1660
+#define	MAX(32,1433
+#define	MIN(31,1390
+#define NUM_ELS(52,2129
+#define	TX_OFF(38,1739
+#define	TY_OFF(39,1813
+LOCAL void box 59,2300
+#define cbox(54,2179
+GLOBAL void closeStats 219,6887
+GLOBAL void initStats 147,4457
+GLOBAL Window openStats 163,4939
+GLOBAL void redrawStats 198,6315
+GLOBAL void updateStats 77,2769
+
+subdaemon.c,271
+GLOBAL void dumpmessages 287,6647
+GLOBAL void empiretimers 263,6212
+exitgame 72,2255
+GLOBAL void killmess 277,6404
+GLOBAL void move 86,2518
+GLOBAL void robocount 155,3915
+GLOBAL void robostart 167,4152
+GLOBAL void subdaemon 45,1699
+GLOBAL void udplayer 178,4329
+
+teleport.c,57
+GLOBAL void teleport(28,1288
+GLOBAL void turbo(80,2385
+
+torp.c,277
+GLOBAL void detMine 243,6448
+GLOBAL void detTorp 232,6219
+GLOBAL void detothers 268,7218
+GLOBAL void do_explosion 183,5017
+LOCAL void explode(162,4509
+GLOBAL int nearest 134,3836
+GLOBAL void ntorp 35,1419
+GLOBAL void udtorp_tubes 219,6000
+GLOBAL void udtorps 311,8135
+
+trigtab.c,53
+unsigned char iatan2(619,6130
+normal_isin(679,7829
+
+util.c,275
+GLOBAL int angdist 35,1454
+GLOBAL void auto_features 167,4277
+GLOBAL void getrusage 139,3714
+GLOBAL struct obtype  * gettarget 58,1949
+GLOBAL int ismapped 123,3454
+GLOBAL unsigned char newcourse 289,7178
+GLOBAL int numShips 296,7334
+int             (*signal 149,3879
+
+war.c,156
+LOCAL  void fillwin(40,1591
+GLOBAL void sendwarn(120,3859
+GLOBAL void waraction(69,2654
+GLOBAL void warrefresh(161,4672
+GLOBAL void warwindow(152,4504
+
+warning.c,29
+GLOBAL void warning 34,1445
+
+xtrek.c,161
+#define	FD_CLR(31,1462
+#define	FD_ISSET(33,1570
+#define	FD_SET(30,1408
+#define	FD_ZERO(32,1517
+done(45,1803
+main(51,1867
+startup(123,3418
+usage(150,3975

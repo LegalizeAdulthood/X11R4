@@ -1,0 +1,433 @@
+\begindata{arbiter,268927708}
+\V 2
+\begindata{lset,268950120}
+\V 1
+\begindata{lset,268949860}
+\V 1
+\begindata{lset,268949600}
+\V 1
+\begindata{cel,268949432}
+\V 2
+\begindata{value,268949280}
+>7
+\enddata{value,268949280}
+10 268949280 1 0 0 0 
+>OBJ< value
+>VIEW< buttonV
+>REF< button-0
+\begindata{text, 268949100}
+\textdsversion{12}
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (Button)
+
+\enddata{text,268949100}
+\enddata{cel,268949432}
+0 0 0 268949432 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268949600}
+\begindata{lset,268948584}
+\V 1
+\begindata{lset,268948300}
+\V 1
+\begindata{cel,268948108}
+\V 2
+\begindata{value,268947956}
+>0
+\enddata{value,268947956}
+10 268947956 1 0 0 0 
+>OBJ< value
+>VIEW< bargraphV
+>REF< bargraph-0
+\begindata{text, 268947776}
+\textdsversion{12}
+[long] <min_value> (0)
+
+[long] <max_value> (100)
+
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andytype)
+
+[string] <label> (Bargraph)
+
+\enddata{text,268947776}
+\enddata{cel,268948108}
+0 0 0 268948108 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268948300}
+\begindata{lset,268987964}
+\V 1
+\begindata{lset,268987704}
+\V 1
+\begindata{cel,268987536}
+\V 2
+\begindata{value,268987384}
+>0
+\enddata{value,268987384}
+10 268987384 1 0 0 0 
+>OBJ< value
+>VIEW< thumbV
+>REF< thumb-0
+>LINK< r
+\begindata{text, 268987204}
+\textdsversion{12}
+[long] <increment> (1)
+
+[long] <min_value> (0)
+
+[long] <max_value> (100)
+
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (Thumbwheel)
+
+\enddata{text,268987204}
+\enddata{cel,268987536}
+0 0 0 268987536 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268987704}
+\begindata{lset,268986428}
+\V 1
+\begindata{cel,268986236}
+\V 2
+\begindata{value,268986084}
+>0
+\enddata{value,268986084}
+10 268986084 1 0 0 0 
+>OBJ< value
+>VIEW< menterstrV
+>REF< menterstr-0
+>LINK< r
+\begindata{text, 268985904}
+\textdsversion{12}
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (menterstrV)
+
+\enddata{text,268985904}
+\enddata{cel,268986236}
+0 0 0 268986236 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268986428}
+2 49 0 0 268987704 268986428 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268987964}
+2 68 0 0 268948300 268987964 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268948584}
+2 79 0 0 268949600 268948584 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268949860}
+\begindata{lset,268985388}
+\V 1
+\begindata{lset,268985104}
+\V 1
+\begindata{lset,268984820}
+\V 1
+\begindata{cel,268984628}
+\V 2
+\begindata{value,268984476}
+>9
+\enddata{value,268984476}
+10 268984476 1 0 0 0 
+>OBJ< value
+>VIEW< controlV
+>REF< controlV-0
+>LINK< 
+\begindata{text, 268984296}
+\textdsversion{12}
+[string] <Auto-Init> (TRUE)
+
+[string] <function> (go)
+
+[string] <class> ()
+
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (Control)
+
+\enddata{text,268984296}
+\enddata{cel,268984628}
+0 0 0 268984628 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268984820}
+\begindata{lset,268983592}
+\V 1
+\begindata{lset,268983332}
+\V 1
+\begindata{cel,268983164}
+\V 2
+\begindata{value,268983036}
+>2
+\enddata{value,268983036}
+10 268983036 1 0 0 0 
+>OBJ< value
+>VIEW< fourwayV
+>REF< fourway-0
+>LINK< h
+\begindata{text, 268982856}
+\textdsversion{12}
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andytype)
+
+[string] <':' separated labels> (Four:way::)
+
+\enddata{text,268982856}
+\enddata{cel,268983164}
+0 0 0 268983164 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268983332}
+\begindata{lset,268982080}
+\V 1
+\begindata{lset,268981796}
+\V 1
+\begindata{cel,268981604}
+\V 2
+\begindata{value,268981452}
+>0
+\enddata{value,268981452}
+10 268981452 1 0 0 0 
+>OBJ< value
+>VIEW< thumbstrV
+>REF< thumbstr-0
+>LINK< r
+\begindata{text, 268981272}
+\textdsversion{12}
+[long] <increment> (1)
+
+[long] <min_value> (0)
+
+[long] <max_value> (100)
+
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (string thumb)
+
+\enddata{text,268981272}
+\enddata{cel,268981604}
+0 0 0 268981604 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268981796}
+\begindata{lset,268980544}
+\V 1
+\begindata{cel,269232220}
+\V 2
+\begindata{value,269046808}
+>0
+\enddata{value,269046808}
+10 269046808 1 0 0 0 
+>OBJ< value
+>VIEW< stringV
+>REF< string-0
+\begindata{text, 269227608}
+\textdsversion{12}
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (String Output)
+
+\enddata{text,269227608}
+\enddata{cel,269232220}
+0 0 0 269232220 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268980544}
+2 49 0 0 268981796 268980544 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268982080}
+2 68 0 0 268983332 268982080 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268983592}
+2 79 0 0 268984820 268983592 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268985104}
+\begindata{lset,269000492}
+\V 1
+\begindata{lset,268975168}
+\V 1
+\begindata{cel,269000300}
+\V 2
+\begindata{value,268975016}
+>0
+\enddata{value,268975016}
+10 268975016 1 0 0 0 
+>OBJ< value
+>VIEW< enterstrV
+>REF< enterstr-0
+>LINK< LINK< 
+\begindata{text, 269000120}
+\textdsversion{12}
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (String Entry)
+
+\enddata{text,269000120}
+\enddata{cel,269000300}
+0 0 0 269000300 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268975168}
+\begindata{lset,268999716}
+\V 1
+\begindata{lset,268974476}
+\V 1
+\begindata{cel,268999524}
+\V 2
+\begindata{value,268974324}
+>0
+\enddata{value,268974324}
+10 268974324 1 0 0 0 
+>OBJ< value
+>VIEW< sliderV
+>REF< slider-0
+>LINK< y
+\begindata{text, 268974228}
+\textdsversion{12}
+[long] <min_value> (0)
+
+[long] <max_value> (100)
+
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andytype)
+
+[string] <label> (slider)
+
+\enddata{text,268974228}
+\enddata{cel,268999524}
+0 0 0 268999524 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268974476}
+\begindata{lset,268973956}
+\V 1
+\begindata{lset,268973756}
+\V 1
+\begindata{cel,268973648}
+\V 2
+\begindata{value,268973580}
+>0
+\enddata{value,268973580}
+10 268973580 1 0 0 0 
+>OBJ< value
+>VIEW< onoffV
+>REF< onoff-0
+>LINK< n
+\begindata{text, 268973484}
+\textdsversion{12}
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <top label> (on-off)
+
+[string] <bottom label> (switch)
+
+\enddata{text,268973484}
+\enddata{cel,268973648}
+0 0 0 268973648 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268973756}
+\begindata{lset,268973236}
+\V 1
+\begindata{cel,268973128}
+\V 2
+\begindata{value,268973060}
+>0
+\enddata{value,268973060}
+10 268973060 1 0 0 0 
+>OBJ< value
+>VIEW< clicklistV
+>REF< clicklist-0
+>LINK< 
+\begindata{text, 268972964}
+\textdsversion{12}
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (clicklist)
+
+\enddata{text,268972964}
+\enddata{cel,268973128}
+0 0 0 268973128 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268973236}
+2 49 0 0 268973756 268973236 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268973956}
+2 68 0 0 268974476 268973956 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268999716}
+2 79 0 0 268975168 268999716 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,269000492}
+1 49 0 0 268985104 269000492 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268985388}
+1 68 0 0 268949860 268985388 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268950120}
+1 268950120 0 0 0 0 
+>OBJ< lset
+>VIEW< lsetview
+>REF< 
+\enddata{arbiter,268927708}

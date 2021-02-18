@@ -1,0 +1,59 @@
+#===============================================================================
+#
+#	Makefile for IMCORE.
+#
+#	description :
+#		The Makefile invokes Makefiles for each module listed above,
+#		these are in the subdirectories, ./IMCORE.
+#
+#===============================================================================
+
+CC	= cc
+SHELL	= /bin/sh
+
+#-------------------------------------------------------------------------------
+#
+#	Specify Compile Option.
+#
+#-------------------------------------------------------------------------------
+
+COMPOPT	= -O
+
+#-------------------------------------------------------------------------------
+#
+#	Directory names for each module.
+#
+#-------------------------------------------------------------------------------
+
+SUBDIRS	= IMCORE
+
+#-------------------------------------------------------------------------------
+#
+#	$(MAKE) each module passing them necessary information.
+#
+#-------------------------------------------------------------------------------
+
+all :
+	@if [ ! -d ./usr ]; then mkdir ./usr ./usr/lib; fi
+	@for dir in $(SUBDIRS); \
+	do \
+		echo "making $$dir..."; \
+		(cd $$dir; \
+		$(MAKE) COMPOPT=$(COMPOPT) BUILD=$(BUILD) TARGET=$(TARGET)) ;\
+	done
+
+#-------------------------------------------------------------------------------
+#
+#	Utility commands.
+#
+#-------------------------------------------------------------------------------
+
+clean \
+cleanup \
+lint :
+	@for dir in $(SUBDIRS); \
+	do \
+		(cd $$dir; \
+		$(MAKE) COMPOPT=$(COMPOPT) BUILD=$(BUILD) TARGET=$(TARGET)) ;\
+	done
+

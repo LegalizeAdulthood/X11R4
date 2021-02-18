@@ -1,0 +1,4 @@
+This directory contains a completely new HP driver which should support
+most of the devices on both HP 300 series and HP 800 series machines.
+
+It no longer uses any MIT DDX code (except some small pieces of MI).

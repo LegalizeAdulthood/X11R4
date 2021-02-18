@@ -1,0 +1,11 @@
+
+         IMGINC = ../..
+         IMGLIB = ../../imglib/libimg.a
+
+LOCAL_LIBRARIES = $(IMGLIB) $(XLIB)
+           SRCS = dispimg.c
+           OBJS = dispimg.o
+
+       INCLUDES = -I$(IMGINC)
+
+ComplexProgramTarget(dispimg)

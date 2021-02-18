@@ -1,0 +1,264 @@
+
+
+
+     XWROWCOLUMN(3X)                                   XWROWCOLUMN(3X)
+
+
+
+
+     NAME
+          XwrowColWidgetClass - the X Widgets row/column manager
+          widget.
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/RCManager.h>
+
+
+     CLASSES
+          The row column manager widget is built from the Core,
+          Composite, Constraint and XwManager classes.  Note that the
+          Constraint fields are not used in this widget and so is not
+          listed in the resource tables below.  Also, since the
+          Composite class contains no user settable resources, there
+          is no table for Composite class resources.
+
+          The widget class to use when creating a row column manager
+          is XwrowColWidgetClass.  The class name is RowCol.
+
+     DESCRIPTION
+          The row/column widget is a composite widget which supports 3
+          types of row/column layouts for its children.  They are:
+          requested columns, maximum columns, and maximum unaligned.
+          With the first layout type, requested columns, the
+          application specifies the number of columns (the default is
+          one) to be used in laying out the data.  The children are
+          laid out rowwise.  Columns are as wide as the widest element
+          in the column and all elements are left justified.  Row
+          height is determined by the largest element in the row and
+          all elements are centered in the row.  The second layout
+          type, maximum columns, automatically calculates the maximum
+          number of columns that can fit within the manager and lays
+          the children out accordingly.  The last layout type, maximum
+          unaligned, does not force any columnar alignment.  A child
+          being positioned is placed to the immediately right of
+          previous child until a row is full, then a new row is
+          started at the left edge of the manager immediately below
+          the previous row.
+
+          In addition to the row/column ordering, this manager widget
+          supports 3 different layout policies: minimize (the
+          default), maximize and ignore. When the layout policy is set
+          to minimize, the manager will create a box which is just
+          large enough to contain all of its children, regardless of
+          any provided width and height values.  When the given width
+          and height values would create a box larger than needed, the
+          maximize setting will use this additional space as padding
+          between elements.  Note that, with the maximize setting, if
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWROWCOLUMN(3X)                                   XWROWCOLUMN(3X)
+
+
+
+
+          one or both of the height/width values are too small, the
+          box will grow the manager to honor the given width and
+          height, it will not grow or shrink in response to the
+          addition, deletion or altering of its children.
+
+          The row/column widget also implements two selection
+          policies.  The default is n_of_many, and the alternative is
+          one_of_many. The n_of_many policy does not require any
+          action on the part of the manager widget. It allows any or
+          all of its children to be selected and performs no action in
+          response to their selection. The one_of_many policy ONLY
+          applies to to children widgets which are subclasses of the
+          XwPrimitive class.  When one_of_many is the active policy, a
+          callback (of type XtNselect) is added to each child widget.
+          Then, when a child is selected the manager is informed.  The
+          manager keeps track of the previously active child and
+          directly invokes a release procedure in that child so that
+          it becomes unselected.  The one_of_many mode will not
+          activate a child if none are active and will not disallow
+          the selection of an active child causing it to become
+          deactive.  Thus, if a strict one of many mode is desired,
+          the application will have to enforce it.
+
+     NEW RESOURCES
+          The row/column manager defines a set of resource types used
+          by the programmer to specify data for the manager widget.
+          The programmer can also set the values for the Core,
+          Composite and XwManager widget classes to set attributes for
+          this widget.  The following table contains the settable
+          resources defined by the row/column manager. The string to
+          be used when setting any of these resources in an
+          application defaults file (like .Xdefaults) can be obtained
+          by stripping the preface "XtN" off of the resource name.
+          For instance, XtNvSpace becomes vSpace.
+
+
+                          Row Column Resource Set
+        Name            Class           Type      Default
+        ___________________________________________________________
+        XtNhSpace       XtCHSpace       int       4
+        XtNvSpace       XtCVSpace       int       4
+        XtNlayoutType   XtCLayoutType   int       requested_columns
+        XtNcolumns      XtCColumns      int       1
+        XtNforceSize    XtCForceSize    Boolean   FALSE
+        XtNsingleRow    XtCSingleRow    Boolean   FALSE
+        XtNmode         XtCMode         int       n_of_many
+
+
+
+          XtNhSpace
+               The application may determine the number of pixels of
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWROWCOLUMN(3X)                                   XWROWCOLUMN(3X)
+
+
+
+
+               space left between each element within a given row.
+               This defines a minimum spacing.
+
+          XtNvSpace
+               The application may determine the number of pixels of
+               space left between each column.  This defines a minimum
+               spacing.
+
+          XtNlayoutType
+               The application can specify the type of layout the row
+               column manager is to perform.  Allowable argument list
+               settings are XwREQUESTED_COLUMNS, XwMAXIMUM_COLUMNS and
+               XwMAXIMUM_UNALIGNED.  To set this value in .Xdefaults
+               or another resource file use the strings
+               requested_columns, maximum_columns and
+               maximum_unaligned.
+
+          XtNcolumns
+               The application can specify the number of columns to be
+               used when laying out the widgets children.
+
+          XtNforceSize
+               The application has the option of forcing the widths of
+               each widget in a column and the heights of each widget
+               in a row to be the same.  This can be used, for example
+               to enforce an orderly layout for a group of buttons.
+               For the layout type of maximum unaligned, only the
+               heights of the widgets in a row are forced to the same
+               size.
+
+          XtNsingleRow
+               For layout types of maximum columns and maximum
+               unaligned, the application has the option of having the
+               row column manager to try to lay itself out in a single
+               row whenever one of its children makes a geometry
+               request.
+
+          XtNmode
+               The application can specify whether the selection
+               policy is n_of_many or one_of_many. Allowable argument
+               list settings are XwONE_OF_MANY and XwN_OF_MANY.  To
+               set this value in .Xdefaults or another resource file
+               use the strings one_of_many and n_of_many.
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWROWCOLUMN(3X)                                   XWROWCOLUMN(3X)
+
+
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+                    Manager Resource Set -- XWMANAGER(3X)
+     Name                    Class                   Type      Default
+     ____________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNtraversalOn          XtCTraversalOn          Boolean   FALSE
+     XtNlayout               XtCLayout               int       minimize
+     XtNnextTop              XtCCallback             Pointer   NULL
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalOn resource is set to TRUE at either
+          create time or during a call to XtSetValues, the XwManager
+          superclass will automatically augment the manager widget's
+          translations to support keyboard traversal.  Refer to the
+          XwManager man page for a complete description of these
+          translations.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWMANAGER(3X), XWPRIMITIVE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+     Hewlett-Packard Company       - 4 -                   Aug 9, 1988
+
+
+

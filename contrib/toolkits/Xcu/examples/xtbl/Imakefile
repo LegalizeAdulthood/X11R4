@@ -1,0 +1,15 @@
+#ifdef RtArchitecture
+             CC = pcc
+#endif
+         XCUSRC = ../../src
+       INCLUDES = -I$(TOP) -I$(XCUSRC)
+           SRCS = xtbl.c
+         XCULIB = $(XCUSRC)/libXcu.a
+LOCAL_LIBRARIES = $(XCULIB) $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+
+all: 
+	@echo Usage: make xtbl
+
+SingleProgramTarget(xtbl,xtbl.o,$(LOCAL_LIBRARIES),)
+
+DependTarget()

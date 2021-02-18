@@ -1,0 +1,48 @@
+.TH pbmpat 1 "04 September 1989"
+.SH NAME
+pbmpat - make a pretty pixmap
+.SH SYNOPSIS
+pbmpat -gingham2|-g2|-gingham3|-g3|-madras|-tartan|-poles|-squig|camo|-anticamo <width> <height>
+.SH DESCRIPTION
+Produces a portable pixmap of the specified width and height,
+with a pattern in it.
+The different flags specify various different pattern types:
+.IP -gingham2 10
+A gingham check pattern.  Can be tiled.
+.IP -gingham3 10
+A slightly more complicated gingham.  Can be tiled.
+.IP -madras 10
+A madras plaid.  Can be tiled.
+.IP -tartan 10
+A tartan plaid.  Can be tiled.
+.IP -poles 10
+Color gradients centered on randomly-placed poles.
+May need to be run through ppmquant.
+.IP -squig 10
+Squiggley tubular pattern.  Can be tiled.
+May need to be run through ppmquant.
+.IP -camo 10
+Camouflage pattern.
+May need to be run through ppmquant.
+.IP -anticamo 10
+Anti-camouflage pattern -- like -camo, but ultra-bright colors.
+May need to be run through ppmquant.
+.PP
+This program is mainly to demonstrate use of the ppmdraw routines, a
+simple but powerful drawing library.
+See the ppmdraw.h include file for more info on using these routines.
+.PP
+All flags can be abbreviated to their shortest unique prefix.
+.SH REFERENCES
+Some of the patterns are from "Designer's Guide to Color 3" by Jeanne Allen.
+.SH "SEE ALSO"
+ppmtile(1), ppmquant(1), ppm(5)
+.SH AUTHOR
+Copyright (C) 1989 by Jef Poskanzer.
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided
+that the above copyright notice appear in all copies and that both that
+copyright notice and this permission notice appear in supporting
+documentation.  This software is provided "as is" without express or
+implied warranty.

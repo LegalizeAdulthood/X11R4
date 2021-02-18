@@ -1,0 +1,22 @@
+#
+# @(#)Imakefile 1.3 89/07/31 SMI
+#
+# Imakefile for help files.
+#
+# Just installs the files.
+# HELP_DEST is the desired destination for the help files.
+#	By default this is $(LIBRARY_DEST)/help
+#
+
+#include "../XView.config"
+
+HELP_FILES = textsw.info ttysw.info xview.info
+
+all::
+
+clean::
+
+install::
+	-mkdir $(HELP_DEST)
+
+InstallMultiple($(HELP_FILES), $(HELP_DEST))

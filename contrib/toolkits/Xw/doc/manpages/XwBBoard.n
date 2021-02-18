@@ -1,0 +1,198 @@
+
+
+
+     XWBULLETIN(3X)                                     XWBULLETIN(3X)
+
+
+
+
+     NAME
+          XwbulletinWidgetClass - the X Widgets bulletin board manager
+          widget.
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/BBoard.h>
+
+
+     CLASSES
+          The bulletin board manager widget is built from the Core,
+          Composite, Constraint and XwManager classes.  Note that the
+          Constraint fields are not used in this widget and so are not
+          listed in the resource tables below.  Also, since the
+          Composite class contains no resources that the user can set,
+          there is no table for Composite class resources.
+
+          The widget class to use when creating a bulletin board is
+          XwbulletinWidgetClass.  The class name is BulletinBoard.
+
+     DESCRIPTION
+          The bulletin board manager widget is a composite widget that
+          enforces no ordering on its children.  It is up to the
+          application to specify the x and y coordinates of the
+          children inserted into this widget, otherwise they will all
+          appear at (0,0).
+
+          This manager widget supports 3 different layout policies:
+          minimize (the default), maximize and ignore. When the layout
+          policy is set to minimize, the manager will create a box
+          that is just large enough to contain all of its children,
+          regardless of any provided width and height values.  The
+          ignore setting forces the manager to honor its given width
+          and height, it will not grow or shrink in response to the
+          addition, deletion or altering of its children.  When set to
+          the maximize setting, the BulletinBoard widget will ask for
+          additional space when it needs it, but will not give up
+          extra space.
+
+          The bulletin board manager also implements the X Widgets
+          keyboard interface.
+
+          No callbacks are defined for this manager.
+
+     NEW RESOURCES
+          The bulletin board manager widget class does not define any
+          additional resources; all necessary resources are present in
+          its superclasses. The programmer should refer to the man
+          pages for the bulletin board's superclasses to determine the
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWBULLETIN(3X)                                     XWBULLETIN(3X)
+
+
+
+
+          resources that can be set and the defaults settings for
+          these resources.
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              10
+     XtNheight              XtCHeight              int              10
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+                  Manager Resource Set -- XWMANAGER(3X)
+       Name                Class               Type      Default
+       ____________________________________________________________
+       XtNforeground       XtCForeground       Pixel     Black
+       XtNbackgroundTile   XtCBackgroundTile   int       background
+       XtNtraversalOn      XtCTraversalOn      Boolean   TRUE
+       XtNlayout           XtCLayout           int       minimize
+       XtNnextTop          XtCCallback         Pointer   NULL
+
+
+
+     KEYBOARD TRAVERSAL
+          If the XtNtraversalOn resource is set to TRUE at create time
+          or during a call to XtSetValues, the XwManager superclass
+          will automatically augment the bulletin board manager
+          widget's translations to support keyboard traversal.  Refer
+          to the XwManager man page for a complete description of
+          these translations.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWBULLETIN(3X)                                     XWBULLETIN(3X)
+
+
+
+
+     SEE ALSO
+          CORE(3X), XWMANAGER(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+

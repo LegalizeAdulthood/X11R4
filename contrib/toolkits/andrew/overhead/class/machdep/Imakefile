@@ -1,0 +1,9 @@
+#define	IHaveSubdirs
+
+SUBDIRS = $(SYS_OS_ARCH)
+
+all:: init
+
+init:
+	rm -f machine
+	$(LN) $(SYS_OS_ARCH) machine

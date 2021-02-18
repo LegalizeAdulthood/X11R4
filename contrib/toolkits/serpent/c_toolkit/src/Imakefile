@@ -1,0 +1,21 @@
+#include "../../Serpent.tmpl"
+
+DIR = c_toolkit
+
+INC = listPack.h alistPack.h hashPack.h treePack.h memoryPack.h listComp.h
+
+SRC = alistPack.c listPack.c treePack.c hashPack.c memoryPack.c mallocPack.c
+
+OBJ = alistPack.o listPack.o treePack.o hashPack.o memoryPack.o mallocPack.o
+
+LIB = liblist.a
+
+SerpentObjectRule()
+
+all:	$(LIB) install_lib
+
+SerpentLibrary()
+
+SerpentInstallIncLib()
+
+SerpentDepend()

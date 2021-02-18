@@ -1,0 +1,119 @@
+#################################
+#  XWLIB - Where is your 2D HP widgetset library?
+
+XWLIB =/sdg/lib/libXw.a
+
+################################
+# XWINCLUDES - Where is your 2D HP widgetset include files?
+
+XWINCLUDES = /sdg/includes
+
+##################################################################
+#
+#  HDFLIB - Where is your Hierarchical Data Format (HDF) libary?
+#           Must be version 2.8 or later.  Most current version
+#	    available on anon ftp server ftp.ncsa.uiuc.edu (128.174.20.50).
+
+HDFLIB = ../hdf/libdf.a
+
+##################################################################
+# DEFINES=  possible values listed below 
+# for compiling under SysV use: -DSYSV
+# for compiling on Cray (UNICOS) use:  -DSYSV -DUNICOS
+# for displaying client on servers that have a static color visual,
+#       use -DDEF_STAT_VISUAL   Sun's OpenWindows X/NeWS server and
+#       SGI's X/NeWS server set their default Visual to a static color.
+
+     DEFINES = 
+
+##################################################################
+############### Don't make any changes below here ################
+##################################################################
+
+    INCLUDES = -I$(TOOLKITSRC) -I$(TOP) -I$(XWINCLUDES) -I..
+        SRCS = a.c animate.c control.c contour.c ctlcontour.c \
+               data.c getfile.c glob.c gr_xwi.c gr_xwi1.c \
+               graph.c i.c image.c intensity.c main.c mem.c \
+               notebook.c palentry.c palette.c polar.c read.c shade.c \
+               sliceSDS.c write.c xstuff.c xstuff2.c xinit.c 
+
+        OBJS = a.o animate.o control.o contour.o ctlcontour.o \
+               data.o getfile.o glob.o gr_xwi.o gr_xwi1.o \
+               graph.o i.o image.o intensity.o main.o mem.o \
+               notebook.o palentry.o palette.o polar.o read.o shade.o \
+               sliceSDS.o write.o xstuff.o xstuff2.o xinit.o 
+
+     PROGRAM = ximage
+
+
+$(PROGRAM): $(OBJS) date.o $(HDFLIB) $(XWLIB)
+	$(CC) -o $@ $(OBJS) date.o $(XAWLIB) $(XWLIB) $(XMULIB) $(XTOOLLIB) \
+		$(XLIB) $(HDFLIB) $(LDFLAGS) $(SYSLAST_LIBRARIES) -lm 
+
+relink::
+	$(RM) $(PROGRAM)
+	$(MAKE) $(MFLAGS) $(PROGRAM)
+
+clean::
+	$(RM) $(PROGRAM)
+
+InstallProgram($(PROGRAM), $(BINDIR))
+InstallManPage($(PROGRAM), $(MANDIR))
+
+###########################################
+# CURDATE&VERSION used to log compilation date & version No. in module date.c
+#
+CURDATE = `date '+"%D@%T"'`
+VERSION = '"NCSA X Image Version 1.0.3"'
+##########################################
+
+$(HDFLIB):
+	cd ../hdf; make
+
+a.o:		a.c animate.h
+
+animate.o:	animate.c animate.h xstuff.h getfile.h
+
+control.o:	control.c xstuff.h buttons.h gr_def.h gr_var.h
+
+ctlcontour.o:	ctlcontour.c i.h xstuff.h
+
+data.o:		data.c i.h xstuff.h xstuff2.h
+
+getfile.o:	getfile.c xstuff.h getfile.h
+
+graph.o:	graph.c i.h xstuff.h
+
+gr_xwi.o:	gr_xwi.c gr_xwi.h
+
+gr_xwi1.o:	gr_xwi1.c gr_com.h
+
+i.o:		i.c i.h
+
+image.o: 	image.c i.h buttons.h xstuff.h getfile.h
+
+main.o:		main.c xstuff.h ximage.icon
+
+notebook.o:	notebook.c notebook.h xstuff.h
+
+palentry.o:	palentry.c xstuff.h palentry.h
+
+palette.o:	palette.c buttons.h xstuff.h paletteP.h getfile.h
+
+polar.o:	polar.c i.h xstuff.h
+
+read.o:		read.c i.h
+
+shade.o:	shade.c patterns.h
+
+sliceSDS.o:	sliceSDS.c buttons.h xstuff.h
+
+xstuff.o:	xstuff.c list.h
+
+xstuff2.o:	xstuff2.c xstuff.h xstuff2.h
+
+xinit.o:	xstuff.h
+
+date.o: 	$(OBJS)
+		$(CC) -c $(DEFINES) -DVERSIONDATE=$(CURDATE) \
+				-DVERSION=$(VERSION) date.c

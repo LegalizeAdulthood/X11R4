@@ -1,0 +1,57 @@
+.TH DXFC 1 "26 October 1988" "X Version 11"
+.SH NAME
+dxfc - BDF to PCF font compiler for DECwindows
+.SH SYNOPSIS
+.B "dxfc"
+[-p#] [-s#] [-m] [-l] [-M] [-L] [-w] [-W] [-t] [-i] [-o [pcf-file]] [bdf-file]
+.SH DESCRIPTION
+.PP
+.B dxfc
+reads a Bitmap Distribution Format (BDF) font from the
+specified file (or from standard input if no file is specified)
+and writes an X11 portable compiled font (PCF) to standard output or
+the specified output file.  Use
+.B dxmkfontdir
+to create the fonts.dir file in that directory.   
+.SH OPTIONS
+.TP 8
+.B \-o[file]
+Write output to the specified file.   If no file is specified, 
+use the name of the input file (or 'stdin' if no input file is specified).
+The file extension is '.bdf' truncated (if present) and '.pcf' appended.
+.B \-p#
+Force the glyph padding to a specific number.  The legal
+values are 1, 2, 4, and 8.
+.B \-s#
+Force the scanline unit padding to a specific number.  The legal
+values are 1, 2, and 4.
+.TP 8
+.B \-m
+Force the bit order to most significant bit first.
+.TP 8
+.B \-l
+Force the bit order to least significant bit first.
+.TP 8
+.B \-M
+Force the byte order to most significant bit first.
+.TP 8
+.B \-L
+Force the byte order to least significant bit first.
+.TP 8
+.B \-w
+Print warnings if the character bitmaps have bits set to
+one outside of their defined widths.
+.TP 8
+.B \-W
+Print warnings for characters with an encoding of -1; the default is
+to silently ignore such characters.
+.TP 8
+.B \-t
+Expand glyphs in "terminal-emulator" fonts to fill the bounding box.
+.TP 8
+.B \-i
+Don't compute correct ink metrics for "terminal-emulator" fonts.
+.SH "SEE ALSO"
+X(1), Xserver(1), dxmkfontdir(1)
+.br
+"Bitmap Distribution Format 2.1"

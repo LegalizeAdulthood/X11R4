@@ -1,0 +1,965 @@
+
+DRAFT HDF Version 3.0--New Features	6/26/89
+
+
+DRAFT
+NCSA HDF Version 3.0.
+New Features
+
+
+
+This is a very rough draft of the documentation for the new 
+features that have been added for version 3.0.  (The examples have 
+not been tested.)   The new features fall into four categories.  Each 
+category is described separately in the following text.  The 
+categories are:
+
+¥	24-bit raster images
+¥	More scientific data set routines
+¥	Annotating  HDF oojects and files
+¥	8-bit palette i/o routines
+
+
+Comments and questions are welcome and appreciated.
+
+Mike Folk
+217-244-9647
+mfolk@ncsa.uiuc.edu
+
+
+
+
+
+
+24-BIT RASTER IMAGES
+
+
+24-bit Raster Image Sets
+The phrase 24-bit raster image set (RIS24) refers to the set of 
+tags and associated information required to store a 24-bit 
+raster image in an HDF file.  A 24-bit raster image set 
+contains at least the following components:
+
+¥	The image is a two-dimensional array of 24-bit pixel 
+representations.  Each 24-bit pixel value has three 8-bit 
+components, one each for the red, green, and blue (RGB) 
+values of the pixel color.  These RGB values may be 
+arranged in the file in three different ways.  (See 
+"interlace scheme" below.)
+
+¥	The interlace scheme  describes the order in which the 
+pixel components are physically stored in the file.  See the 
+explanation of interlacing below.
+
+¥	The dimensions are two values representing the 
+horizontal and vertical dimensions of the image, 
+respectively.
+
+Interlace schemes.  The interlace describes the way the 
+image is stored in the file or in memory.  Different interlace 
+schemes are used because graphics applications and devices 
+vary in the way they organize graphics images.  By storing 
+an image in a file using a scheme that is consistent with the 
+expected application or device, substantial improvements in 
+performance can be achieved.
+
+By default, it is assumed that a 100 x 200 image with three 
+components (R, G and B) is stored as an array of size 
+3x100x200, and each element of this array is exactly one byte 
+in size, containing an R, G or B values.  This means that in 
+the file, or in memory, the bytes that describe the image are 
+stored in the following order:  R then G then B for first pixel 
+of first row, R then G then B for second pixel of first row, etc., 
+until the first row is completed.  Then come RGB for first 
+pixel of second row, and so forth. The code used in a RIS24 
+for this type of interlace is zero.  This interlace scheme is 
+called pixel interlace.
+
+An interlace of 1 corresponds an array of size 100x3x200, that 
+is a row of 100 R, then a row of 100 G, then a row of 100 B, this 
+100x3 structure being repeated 200 times. This interlace 
+scheme is called scan-line interlace.
+
+An interlace of 2 corresponds to an array of size  100x200x3, 
+that is a 100 x 200 plane of R, then a plane of G, then a plane of 
+B values.  This interlace scheme is called plane interlace.
+
+An illustration of how a 24-bit raster image set stored with 
+plane interlace looks in an HDF file is illustrated in Fig. ??
+
+("Fig. 24-bit set" goes here)
+
+RIS24 Routines in the HDF Library
+
+The HDF library contains routines for storing raw raster 
+images in RIS24 format, and for retrieving raster images 
+from files with raster image sets. These routines are 
+callable from C programs and FORTRAN programs that 
+have access to the library. They work on several computers, 
+including the Cray Systems (UNICOS), Alliant, Sun, and 
+Macintosh II. 
+
+All of the callable RIS24 routines in the library begin with 
+the letters DF24. The letters DF of DF24 are derived from 
+HDF, and the 24 indicates that the routine works with 24-bit 
+raster images.
+
+The next two sections contain descriptions and examples of 
+the routines. More exact specifications for FORTRAN and C 
+routines can be found in Chapter 4 and Chapter 5, 
+respectively.
+
+
+Reading Raster Images from a File
+
+To read a raster image from an RIS24, make calls to the 
+following two routines, in the order shown:
+
+¥	DF24getdims(filename, xdim, ydim, il) 
+
+retrieves the dimensions of the image and also the 
+interlace scheme that is used to store the image.  This 
+interlace will be used to store the image in memory when 
+the image is read from the file.  If a different interlace is 
+desired,  DF24reqil may be called.   (See below for 
+details.)
+
+	DF24getimage(filename,image,rows,cols),
+
+retrieves the image and stores it in array image.
+
+Successive additional calls to DF24getdims and 
+DF24getimage will retrieve all of the images in the file in 
+the sequence in which they were written.
+
+If you know the dimensions of the image beforehand there is 
+no need to call DF24getdims. Simply allocate arrays with 
+the proper dimensions for the image and let DF24getimage 
+read in the images.
+
+If, however, you do not know the values of rows and cols, 
+you must call DF24getdims to get them and then use them to 
+provide the right amount of space for the array image. 
+
+	DF24reqil(il)
+
+specifies that the next call to DF24getimage should load 
+the image into memory using the specified interlace, no 
+matter what interlace is used to store the image in the file.
+
+Since a call to DF24reqil may require substantial 
+reordering of the data, it could result in much slower i/o 
+performance than would be achieved if no change in 
+interlace were requested.
+
+
+
+Examples of C Calls 
+to Read in Images
+Below are some C calls that show the use of the functions 
+introduced above. A program that illustrates the same calls 
+in Fortran is provided at the end of the Chapter.
+
+Example 1
+In this example, the dimensions of the image and interlace 
+are already known.
+
+int	DF24getimage;
+char	image[3][256][512);
+
+DF24getimage("myfile.hdf",image,256,512);
+  .
+  .
+  .
+
+Remarks:
+
+¥	The RIS24 is stored in a file called 'myfile.hdf'.
+
+¥	The raster image stored in the file is known to be 256-by-
+512.
+
+¥	The array image is a 3-by-256-by-512 array of 8-bit 
+characters. 
+
+¥	If DF24getimage executes successfully, 0 is assigned to 
+ret. Otherwise, -1 is assigned.
+
+Example 2
+Here is a set of calls in which the size of the image is not 
+known ahead of time.
+
+int	DF24getdims, DF24getimage;
+int	xsize, ysize, ispal;
+char	*image;	/* pointer to space to return 
+image */
+
+DF24getdims("myfile.hdf",xsize,ysize,il);
+DF24reqil(2);
+image = (char *) malloc(3*xsize*ysize);
+DF24getimage("myfile.hdf",image,xsize,ysize);
+  .
+  .
+  .
+
+Remark: The data is stored in image as if the array were 
+three planes of size xsize-by-ysize.  Since no explicit 
+declaration is given for image, it is the responsibility of 
+the program to compute offets in the array that correspond 
+to particular elements.
+
+
+Writing Raster Images to a File
+
+Writing an image to an HDF file is also done with one or 
+two calls. Two routines are available:
+
+¥	 DF24setdims(rows,cols,il)
+
+sets the dimensions and interlace factor to be used when 
+writing out the RIS24 for the image
+
+¥	 DF24addimage(filename,image,rows,cols)
+
+appends to the file the RIS24 for the image.  If DF24setdims is 
+not called prior to calling this routine, then the interlace 
+code is assume to be zero.
+
+Examples of C Calls 
+to Write Out Images
+Below are several C calls to the output functions. Refer to 
+examples 1 and 2 above for information about data types, 
+array dimensions, and return values.
+
+Example 3
+Pixel interlace (the default) is used in storing the 400-by-600 
+array picture in a file in RIS24 format.
+
+int	DF24putimage;
+char	*picture[3][400][600];
+int	ret;
+
+ret = DF24addimage("herfile.hdf",picture,400,600);
+
+if (ret != 0)
+    printf("Error writing image to myfile.hdf.");
+  .
+  .
+  .
+
+Example 4
+Shown below is a series of calls in which four 800-by-1200 
+images are written to the same file. The first two use the 
+default interlace scheme;.the second two use scan-line 
+interlace.
+
+int	DF24addimage
+char	pic1[3][800][1200], pic2[3][800][1200]
+char	pic3[800][3][1200], pic4[800][3][1200]
+
+DF24addimage('myfile',pic1,800,1200)
+DF24addimage('myfile',pic2,800,1200)
+DF24setdims(800,1200,1)
+DF24addimage('myfile',pic3,800,1200,0)
+DF24addimage('myfile',pic4,800,1200,0)
+  .
+  .
+  .
+
+
+Specifications for 24-bit Raster Image Routines in C
+
+
+int DF24getdims(filename, pxdim, pydim, pil)
+char *filename;	/* name of HDF file */
+int32 *pxdim, *pydim;	/* pointers to locations for returning
+	x & y dimensions */
+int *pil;	/* location for returning interlace
+	of image in file */
+
+Purpose:  To get dimensions of next image RIG
+Returns:  0 on success, -1 on failure with DFerror set
+
+
+
+int DF24reqil(il)
+int il;	/* interlace to get next image with */
+
+Purpose:  To get next image with specified interlace
+Returns:  0 on success, -1 on failure with DFerror set
+
+
+
+int DF24getimage(filename, image, xdim, ydim)
+char *filename;	/* name of HDF file */
+char *image;	/* pointer to space to return image */
+int32 xdim, ydim;	/* dimensions of space to return lut */
+
+Purpose:  To get image from next RIG
+Returns:  0 on success, -1 on failure with DFerror set
+Remarks: space is assumed to be xdim * ydim * 3 bytes
+
+
+
+int DF24setdims(xdim, ydim, il)
+int32 xdim, ydim; 	/* dimensions of image */
+int il;	/* interlace of image */
+
+Purpose:  To set dimensions of image to write next
+Returns:  0 on success, -1 on failure with DFerror set
+
+
+
+int DF24addimage(filename, image, xdim, ydim)
+char *filename;	/* name of HDF file */
+char *image;	/* pointer to space to return image */
+int32 xdim, ydim;	/* dimensions of array image */
+
+Purpose:  To Write out image
+Returns:  0 on success, -1 on failure with DFerror set
+Remarks: array image is assumed to be xdim * ydim * 3 bytes
+
+
+
+
+MORE SCIENTIFIC DATA SET ROUTINES
+
+
+Several new routines have been added to the HDF scientific 
+data set (SDS).  There is now a set of routines that provide 
+partial access to SDS data. And there is a single routine that 
+gives a user some control over such characteristics as the 
+type, representation and storage format of SDS data.
+
+Reading Part of a Scientific Data Set
+
+
+int DFSDgetslice(filename, s1, s2, dest, ndims, dims)
+
+char *filename;	- name of file to get the slice from
+int32 s1[], s2[];	- start and end of slice
+float32 *dest;	- array for storing slice
+int ndims;		- number of dimensions of dest
+int32 dims[];		- sizes of dimensions of dest
+
+Short Fortran name: dsgslc
+
+DFSDgetslice gets a slice from a data set.  It accesses the 
+data set last accessed by DFSDgetdims.  If DFSDgetdims has 
+not been called for the named file DFSDgetslice gets a slice 
+from the next data set in the file.
+
+s1 and s2 are arrays that specify the start and end of the 
+slice.  The number of elements in s1 and s2 must be equal to 
+the rank of the data set.  Thus, if the file contains a three 
+dimensional data set, s1 may contain the values {2, 4, 3}, 
+while s2 contains the values {4, 4, 6}.  This will extract a 3 x 4 
+two-dimensional slice, containing the elements {2-4, 4, 3-6} 
+from the original data set.  
+
+dest is the array into which the slice is read.  It must be at 
+least as big as the desired slice. For instance, dest may a 
+four-dimensional array {5, 4, 6, 5}.  Then the 2-d slice will be 
+placed in the last two dimensions like this: {5, 4, 1-3, 1-4}. 
+
+ndims is the number of dimensions of the array dest, in this 
+case 4. 
+
+dims is an array containing the actual dimensions of the 
+array dest - in this case, it should contain {5, 4, 6, 5}. 
+
+
+NOTE: all the parameters on the call assume Fortran-style 
+1-based arrays.
+
+When calling DFSDgetslice, make sure that the arrays s1, 
+s2 and dims contain the right values, and that ndims is 
+specified correctly.  Note that a slice that is, say, 2 x 10 x 1 is 
+treated as a 2 x 10 slice, and will be placed in the last two 
+dimensions of the array dest.
+
+-----------------------------------------------------------------
+Writing Parts of a Scientific Data Set
+
+The counterpart to DFSDgetslice is a set of routines that let 
+you store an array in slices.  These routines are 
+DFSDstartslice, DFSDputslice, and DFSDendslice 
+
+DFSDstartslice must be called before either of the other 
+routines is called.  Thereafter, DFSDputslice may be called 
+many times to write several slices.  DFSDendslice must be 
+called to complete the write.  No other HDF routines may be 
+called between  the call to DFSDstartslice and 
+DFSDendslice.
+
+
+DFSDstartslice(filename)
+char *filename;
+
+short Fortran name: dssslc
+
+DFSDstartslice prepares the system to write a slice to a file.  
+Before this routine is called DFSDsetdims must be called to 
+specify the dimensions of the data set to be written out.  
+
+Note that DFSDstartslice will always append a new data set 
+to an existing file. 
+------------------------------------------------------------------
+
+DFSDputslice(s1, s2, source, ndims, dims)
+
+char *filename;	- name of file to put slice in
+int32 s1[], s2[];	- start and end of slice
+float32 *source;	- array for storing slice
+int ndims;		- number of dimensions of dest
+int32 dims[];	- sizes of dimensions of dest
+
+
+short Fortran name: dspslc
+
+DFSDputslice writes a slice to the file.  s1 and s2 specify the 
+start and end of the slice, as above.  source is an array 
+containing the slice.  Note that the actual data to be written 
+out is assumed to be contained in the last dimensions of the 
+array source, and is assumed to be at the beginning of each 
+dimension.  Thus, if source is an 8 x 5 x 6 array, and the 
+slice being written out is 2 x 5, it is assumed to be contained 
+in { 1, 1-2, 1-5 }.  ndims specifies the number of dimensions 
+of the array source, in this example 3.  dims is the array 
+containing the actual dimensions of source, in this case {8, 
+5, 6}.
+
+All parameters assume Fortran-style 1-based arrays.
+
+Writes MUST be contiguous.  If you wish to write a 10x12 
+array, you may make a series of calls to DFSDstartslice, 
+perhaps to write the following slices {1-2, 1-12}, {3-6, 1-12}, {7-
+7, 1-4}, {7-7, 5-12}, {8-10, 1-12}.  Note that there are no gaps.  A 
+slice such as {1-2, 1-10} is not allowed, because it leaves the 
+last two columns of the array unfilled.
+
+In the above example it is assumed that the array is stored in 
+row-major order--the default.  If you have called 
+DFSDsettype (see below) to write arrays to the file in  
+column-major order, then the writes must be column-major 
+contiguous.  For instance, to write a 5 x 6 x 9 array, an 
+acceptable order might be {1-5, 1-6, 1-4}, {1-5, 1-3, 5-5}, {1-3, 4-
+4, 5-5}, {4-5, 4-4, 5-5}, {1-5, 5-6, 5-5}, {1-5, 1-6, 6-9}.
+
+
+DFSDendslice()
+
+short Fortran name: dseslc
+
+DFSDendslice specifies that the entire data set has been 
+written.  It must be called after all the slices are written.  It 
+checks to ensure that the entire data set has been written and, 
+if not, returns an error message.
+
+Setting Scientific Data Set Attributes
+
+
+DFSDsettype(datatype, systemtype, 
+representation, arrayorder)
+
+short Fortran name: dsstype
+
+DFSDsettype specifies certain attributes of the data to be 
+stored in a SDS.  These attributes are to be assumed in 
+supsequent calls to the SD library.
+
+datatype describes the format of numbers to be assumed in 
+subsequent SD calls.  Currently, the only legal value for 
+datatype is theconstant DFNT_FLOAT (=5), which specifies 
+that floating point numbers are being written, or 0, which 
+specifies the default type (also floating point!).  In later 
+versions of HDF other data types will be permitted.
+
+systemtype specifies that the data set should be written so that 
+it can be read more efficiently on the specified system.  The 
+only value currently legal for systemtype is 0, specifying the 
+local system.  
+
+representation specifiesthe representation to be used for the 
+datatype.  The only legal values for representation currently 
+are 0, specifying the default representation, DFNTF_IEEE 
+(=1), which specifies that IEEE floating point is to be written 
+(the default!), and on UNICOS only, DFNTF_CRAY (=3), 
+specifying that 64-bit CRAY floating point is to be written.  
+
+arrayorder specifies whether the data should be stored in the 
+file in row-major or column major order. The legal values 
+are 0, indicating the default (row-major order), 
+DFO_FORTRAN (=1) indicating column-major (Fortran) 
+order, and DFO_C (=2) indicating row-major (C) order.
+
+Currently, the only real use of this call is on UNICOS, to 
+specify that Fortran-style arrays should be written, and/or 
+that 64-bit Cray floating point  should be written.  If a file is to 
+be written and read by Fortran programs on UNICOS, it 
+would probably be considerably quicker, and also preserve 
+precision, to write column-major, Cray floating point data 
+sets.  This can be done with the call dsstype(0, 0, 3, 1) on 
+UNICOS, before calling dssslc().  
+
+Note that numbers in Cray floating point format cannot be 
+read on most other machines right now. Column-major 
+order, however, can be read.  Hence if a file is produced by a 
+Fortran program on UNICOS, and is to be read often by a 
+Fortran program on an Alliant, you may want to set column 
+major order only.  This may speed up the read on the 
+Alliant.
+
+WARNING:  Cray floating point numbers cannot be read by 
+DataScope etc. also currently.  In addition,current versions 
+of DataScope, ImageTool etc cannot read arrays stored in 
+column-major order, so they will display such data 
+transposed.
+
+
+
+
+
+
+
+ANNOTATING 
+HDF DATA OBJECTS 
+AND FILES
+
+
+
+
+
+Annotation tags
+Several HDF tags have been defined to enable users of HDF 
+files to annotate data objects.  These tags make it possible for 
+users of HDF files to associate in human readable form 
+information about an HDF file and its contents, and to keep 
+that information in the same file that contains the data.  The 
+data that goes with an annotation tag is a sequence of ascii 
+characters.
+
+The HDF annotation tags can accomodate a wide variety of 
+types of information, including titles, comments, variable 
+names, parameters, formulas and source code.  Virtually 
+any information that a user might normally put into a 
+notebook concerning the collection, meaning or use of a file 
+or data can be put into a file's annotations.
+
+The data associated with these tags is optionally supplied by 
+a creator or user of an HDF file or data object.  The 
+annotation tags included in the HDF specification are listed 
+below. 
+
+FID 
+(file identifier) 	a title for an HDF file.
+
+FD 
+(file descriptor) 	a block of text describing the 
+file contents overall.  
+TID 
+(tag identifier) 	a string that identifies the 
+functionality ot the tag 
+indicated by the reference 
+number.
+TD 
+(tag descriptor)	a block of text that describes 
+in relative detail the 
+functionality and format of 
+the tag that is indicated in the 
+reference number
+DIL
+(data identifier label)	a label, or title, for a data 
+element
+DIA
+(data identifier annotation)	a block of text that associates 
+any information that the user 
+wishes to associate with the 
+corresponding data element
+
+The annotation interface
+The HDF library provides a number of routines for storing 
+and retrieving labels and descriptions of data items.  These 
+routines are callable from C programs and FORTRAN 
+programs that have access to the HDF library, version 3.0 
+and later.
+
+In the following explanations, the term label refers to a 
+string that identifies a data element such as an image or 
+floating point data set.  Labels can contain only printable 
+ascii characters, and are assumed to be strings in the formal 
+sense.   A description, on the other hand, can contain more 
+than one string, and therefore can contain NULL characters 
+(zero bytes), which are normally used to delimit strings in 
+C.  In those routines that read or write descriptions, it is 
+always necessary to specify explicitly the lengths of the 
+descriptions.
+
+All of the callable annotations routines begin with the letters 
+DFAN.  Since there are some FORTRAN compilers that 
+only accept identifiers with eight or fewer characters, an 
+alternate set of short names has been devised that can be 
+used when programming with one of these compilers.  The 
+following list contains the normal names of the annotation 
+routines, as well as the shorter names.  Both sets of names 
+are supported on all HDF-supported machines.
+
+Long name	Short name	Purpose
+
+DFANgetlablen 	dagllen 	get length of label of tag/ref
+DFANgetlabel 	daglab 	get label of tag/ref
+DFANgetdesclen 	dagdlen 	get length of description of tag/ref
+DFANgetdesc 	dagdesc 	get description of tag/ref
+DFANputlabel 	daplab 	put label of tag/ref
+DFANputdesc 	dapdesc 	put description of tag/ref
+DFANlastref* 		return ref of last annotation read or written
+DFANlablist 	dallist 	get list of labels for a particular tag
+
+
+Reading annotations from an HDF file
+
+
+¥	DFANgetlablen(filename, tag, ref)
+and
+¥	DFANgetdesclen(filename, tag, ref)
+
+get the length of a label or description of the data object 
+with the given tag and reference number.  These routines 
+allow you to insure that there is enough space allocated for 
+a label of description before actually loading it.
+
+
+¥	DFANgetlabel(filename, tag, ref, label, maxlen)
+and
+¥	DFANgetdesc(filename, tag, ref, descriptor, maxlen)
+
+read in the label or descriptor of the data object with the 
+given tag and reference number.  The parameter maxlen 
+gives the amount of space that is available for storing the 
+annotation.
+
+
+Listing all labels for a given tag
+
+¥	DFANlablist(filename, tag, reflist, labellist, listsize, 
+maxlen, startpos)
+
+returns a list of all reference numbers and labels for a 
+given tag in a file.  Input parameters are filename, tag, 
+listsize, maxlen and startpos.  The parameter listsize 
+gives the number of available entries in the ref and label 
+lists.  The parameter maxlen is the maximum length 
+allowed for a label.  The parameter startpos tells which 
+label for the given tag to start reading.  Beginning from 
+the startpos'th entry, up to listsize entries will be 
+returned.
+
+Taken together the reflist and labellist returned by 
+DFANlablist constitute a directory of all labels for a 
+given tag in a file. The list labellist can be displayed to 
+show all of the labels for a given tag.  Or, it can be 
+searched to find the ref of a data object with a certain 
+label.  Once the ref for a given label is found, the 
+corresponding data object can be accessed by invoking 
+the routine DFgetelement.  This provides you with a 
+mechanism for direct access to data objects in HDF files.
+
+
+Writing annotations to an HDF file
+
+¥	DFANputlabel(filename, tag, ref, label)
+and
+DFANputdesc(filename, tag, ref, descriptor, desclen)
+
+writes out a label or descriptor for the data object with the 
+given tag and reference number.  The parameter desclen 
+gives the amount of space that is available for storing the 
+annotation.
+
+DFANlastref
+¥	DFANlastref()
+
+Returns the last reference number written or read.  This 
+routine is useful when your program reads or writes a 
+data object, then needs to know the corresponding 
+reference number in or to read or write a corresponding 
+label or description.  
+
+
+
+Examples (to be completed later)
+Writing an image label and description
+Reading an image label and description
+Getting a list of labels for images in a file
+
+
+Specifications for Annotation Routines in C
+
+int32 DFANgetlablen(filename, tag, ref)
+char *filename;	/* name of HDF file label is stored in */
+uint16 tag, ref;	/* tag/ref of item whose label we want */
+
+Purpose:  to get length of label of tag/ref
+Return value:  length of label on success, -1 on failure with DFerror set
+
+
+int DFANgetlabel(filename, tag, ref, label, maxlen)
+char *filename;	/*  name of HDF file label is stored in */
+uint16 tag, ref;	/*tag/ref of item whose label we want */
+char *label;	/* space to return label in */
+int32 maxlen;	/* size of space to return label in */
+
+Purpose: to read in label of tag/ref
+Return value: 0 on success, -1 on failure with DFerror set
+
+
+int32 DFANgetdesclen(filename, tag, ref)
+char *filename;	/* name of HDF file description is stored in */
+uint16 tag, ref;	/*tag/ref of item whose description we want */
+
+Purpose: to get length of description of tag/ref
+Return value: length of description on success, -1 on failure with DFerror 
+set
+
+
+int DFANgetdesc(filename, tag, ref, desc, maxlen)
+char *filename;	/* name of HDF file description is stored in */
+uint16 tag, ref;	/*tag/ref of item whose description we want */
+char *desc;	/* space to return description in */
+int32 maxlen;	/*size of space to return description in */
+
+Purpose: to get description of tag/ref
+Return value: 0 on success, -1 on failure with DFerror set
+
+
+int DFANputlabel(filename, tag, ref, label)
+char *filename;	/* name of HDF file label is stored in */
+uint16 tag, ref;	/*tag/ref of item whose label we want  to store*/
+char *label;	/* space to return label in */
+
+Purpose:  to write label of tag/ref to a file.
+Return value: 0 on success, -1 on failure with DFerror set
+
+
+int DFANputdesc(filename, tag, ref, desc, desclen)
+char *filename;	/* name of HDF file descriptor is stored in */
+uint16 tag, ref;	/*tag/ref of item whose description we want  tp store */
+char *desc;	/* description to write to file */
+int32 desclen;	/*length of description */
+
+Purpose: to put description of tag/ref
+Return value: 0 on success, -1 on failure with DFerror set
+
+
+int DFANlastref()
+
+Purpose: Return last ref written or read.
+Returnvalue: ref on success, -1 on error with DFerror set
+
+
+int DFANlablist(filename, tag, reflist, labellist, listsize, maxlen, startpos)
+char *filename;	/* name of HDF file labels are stored in */
+uint16 tag, reflist[];	/* array to place refs in */
+char *labellist;	/* array of strings to place labels in */
+int listsize;	/* size of ref and label lists */
+int maxlen;	/* maximum length allowed for label */
+int startpos;	/* beginning from the startpos'th entry, up to 
+	listsize entries will be returned.*/
+
+Purpose: Return list of refs and labels for a given tag
+Return value: number of entries on success, -1 on error with DFerror set
+
+
+
+
+
+
+8-BIT PALETTE I/O ROUTINES
+
+
+HDF 8-Bit Palettes
+An 8-bit palette is a lookup table with 256 entries that tell the 
+color to associate with each of the 256 possible pixel values. 
+Each entry in the palette is chosen from a master palette of 
+224 RGB colors.  
+
+In HDF files, 8-bit palettes are assumed to be organized as 
+follows.  Each palette entry consists of 3 bytes, one each for 
+red, green, and blue. The first three bytes represent the R, G, 
+and B values of the first color in the palette; the next three the 
+R, G, and B values of the second color; and so forth. The total 
+size of a palette is 768 bytes. The phrase 24-bit raster image 
+set (RIS24) refers to the set of tags and associated 
+information required to store a 24-bit raster image in an 
+HDF file.  A 24-bit raster image set contains at least the 
+following components:
+
+
+
+Palette I/O Routines in the HDF Library
+
+The HDF library contains routines for storing and 
+retrieving palettes.   These routines are callable from C and 
+FORTRAN programs that have access to the library.  All of 
+the callable palette routines in the library begin with the 
+letters DFP.
+
+The next two sections contain descriptions and examples of 
+the routines. More exact specifications for FORTRAN and C 
+routines can be found in Chapter 4 and Chapter 5, 
+respectively.
+
+
+Reading Palettes from a File
+
+The simplest way to read a palette from an HDF file is to call 
+DFPgetpal:
+
+	DFPgetpal(filename, palette)
+
+retrieves the next palette stored in the HDF file named, 
+storing it in the array palette, which is assumed to be 
+allocated at least 768 bytes. Successive additional calls to 
+DFPgetpal will retrieve the palettes in the file in the 
+sequence in which they are stored.
+
+DFPgetpal is often sufficient for getting the palette that you 
+want from an HDF file.  Other palette routines, which 
+provide more refined access to palettes are described in the 
+section "Specifications for Palette I/O Routines."
+
+
+Example 1
+In this C code segment the first available palette is to be read 
+from an HDF file.  
+
+int	DFPgetpal();
+char	pal[768];
+
+DFgetpal("myfile.hdf",pal);
+...
+
+
+
+Writing Palettes to a File
+
+The simplest way to write a palette to an HDF file is to call 
+DFPaddpal:
+
+	DFPaddpal(filename, palette)
+
+appends the palette stored in the array palette to an HDF 
+file.  
+
+DFPaddpal is often sufficient for adding the palette that you 
+want to an HDF file.  Other palette routines, which provide 
+more refined access to palettes are described in the section 
+"Specifications for Palette I/O Routines."
+
+
+Example 2
+In this C code segment a palette is written to an HDF file.  
+int	DFPgetpal();
+char	pal[768];
+
+DFgetpal("myfile.hdf",pal);
+...
+Specifications for Palette I/O Routines in C
+
+The first two functions described in this section are the primary routines for palette i/o and 
+should be sufficient for most palette i/o operations.  The other functions provide greater 
+control of the i/o process and are available to you if more control is needed.  Here is a list of 
+the functions:
+
+DFPgetpal: retrieve next palette
+DFPputpal: write palette to file
+DFPnpals: number of palettes in HDF file
+DFPreadref: get palette with this reference number next
+DFPwriteref: put palette with this reference number next
+DFPrestart: forget info about last file accessed - restart from beginning
+DFPlastref: return reference number of last element read or written
+
+
+
+int DFPgetpal(filename, palette)
+char *filename;	/* name of HDF file */
+unsigned char *palette;	/* 768-byte space for palette */
+
+Purpose:  to get next palette from file.
+Returns: 0 on success, -1 on failure with DFerror set palette in pal.
+
+
+int DFPaddpal(filename, palette)
+char *filename;	/* name of HDF file */
+unsigned char *palette;	/* 768-byte space for palette */
+
+Purpose: to write palette to file.
+Returns: 0 on success, -1 on failure with DFerror set
+Remarks: If file does not exist, it is created.  If file exists, palette is 
+appended to file.
+
+
+int DFPputpal(filename, palette, overwrite, filemode)
+char *filename;	/* name of HDF file */
+unsigned char *palette;	/* 768-byte space for palette */
+int overwrite;	/* if 1, overwrite last palette read or written */
+	/* if 0, write it as a fresh palette */
+char *filemode;	/* if "a", append palette to file */
+	/* if "w", create new file */
+
+Purpose: to write palette to file.
+Returns: 0 on success, -1 on failure with DFerror set
+Remarks:  This routine provides more control than DFPaddpal.  Note that 
+the combination filemode="w" and overwrite=1 has no meaning and will 
+generate and error.
+
+
+
+int DFPnpals(filename)
+char *filename;	/* name of HDF file */
+
+Purpose:  to tell how many palettes are present in a file.
+Returns: number of palettes on success, -1 on failure with DFerror set
+
+
+
+int DFPreadref(filename, ref)
+char *filename;	/* name of HDF file */
+uint16 ref;	/* ref number to be used in next DFPgetpal */
+
+Purpose:  To set ref of palette that DFPgetpal will get next.
+Returns: 0 on success, -1 on failure
+Remarks:  DFPreadref checks if palette with this ref exists, returning -1 if 
+it does not.
+
+
+
+int DFPwriteref(filename, ref)
+char *filename;	/* name of HDF file */
+uint16 ref;	/* ref number to be used in next palette write */
+
+Purpose:	Set ref of palette to put next
+Returns: 0 on success, -1 on failure
+
+
+
+int DFPrestart()
+
+Purpose:  To cause the next call to DFPgetpal to read the first palette in the 
+file.
+Returns: 0 on success
+
+
+
+int DFPlastref()
+
+Purpose: To determine the value of the reference number most recently 
+read (or written) by a DFP call.
+Returns: ref on success, -1 on error with DFerror set
+
+
+
+
+* DFANlastref is callable only by C routines.  There is no equivalent FORTRAN routine 
+in the HDF library.
+

@@ -1,0 +1,23 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+CLASS=../pp/class
+MAKEDO=../machdep/machine/makedo.csh
+LOCALINCLUDES= -I../lib -I../machdep/machine -I.
+MAKEDOFLAGS=-b ../cmd -d ../globals -d ../machdep/machine/ -g
+IHFILES = testobj.ih testobj2.ih
+
+NormalObjectRule()
+NormalATKRule()
+DependTarget()
+
+DynamicObject(testobj,,)
+DynamicObject(testobj2,,)
+
+test:: testobj.do
+test:: testobj2.do
+
+TestProgramTarget(testmain,testmain.o,$(BASEDIR)/lib/libclass.a,)
+
+

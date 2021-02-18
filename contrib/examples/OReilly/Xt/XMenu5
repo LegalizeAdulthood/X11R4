@@ -1,0 +1,58 @@
+!
+! Appearance resources
+!
+*pshell.Box.hSpace: 0
+*pshell.Box.vSpace: 0
+*subshell.Box.hSpace: 0
+*subshell.Box.vSpace: 0
+*menubox*width:  80
+*subbox*width:  80
+*Command.justify: left
+*quit*label:	Quit
+*label.label:	This is a Pretend Main Window; Press in here.
+*label.font:    -*-helv*-medium-r-normal--14-*-100-100-*-*-iso8859-1
+*menulabel.label:  MAIN MENU
+*menupane0.label:  Good
+*menupane1.label:  Google
+*menupane2.label:  Goolash
+*menupane3.label:  Goop
+*menupane4.label:  Garp
+*menupane5.label:  Grunch -->
+*menupane6.label:  Garbage
+*menupane7.label:  Greek
+*menupane8.label:  Green
+*menupane9.label:  Gretsch
+*sublabel.label:  SUB MENU
+*subpane0.label:  Gordon
+*subpane1.label:  Google
+*subpane2.label:  Goolash
+*subpane3.label:  Goop
+*subpane4.label:  Garp
+*subpane5.label:  Grunch
+*subpane6.label:  Garbage
+*subpane7.label:  Greek
+*subpane8.label:  Green
+*subpane9.label:  Gretsch
+!
+!  Functional Resources
+!
+!  popping down both menus 
+*pshell.translations:\
+     <BtnUp>: MenuPopdown(subshell) MenuPopdown(pshell)  
+!  popping up main menu
+*label.translations:\
+        <BtnDown>: placeMenu() MenuPopup(pshell)
+! Main Menu translations
+*menubox.Command.translations:\
+   <EnterWindow>:     highlight()             \n\
+   <LeaveWindow>:     reset()                 \n\
+   <BtnUp>:          set() notify() unset()
+*menubox.menupane5.translations:\
+   <LeaveWindow>:     checkRightAndPopupSubmenu()
+! Sub Menu translations
+*subbox.translations:\
+   <LeaveWindow>:     checkLeftAndPopdownSubmenu(subbox) 
+*subbox.Command.translations:\
+   <EnterWindow>:     highlight()             \n\
+   <LeaveWindow>:     reset()                 \n\
+   <BtnUp>:          set() notify() unset()

@@ -1,0 +1,25 @@
+.TH pbmtogo 1 "12 December 1988"
+.SH NAME
+pbmtogo - convert a portable bitmap into GraphOn graphics
+.SH SYNOPSIS
+pbmtogo [-c] [ <pbmfile> ]
+.SH DESCRIPTION
+Reads a portable bitmap as input.
+Produces GraphOn graphics as output.
+Be sure to set up your GraphOn with the following modes: 8 bits / no parity;
+obeys no XON/XOFF; NULs are accepted.  These are all on the Comm menu.
+.PP
+The -c flag specifies compression, which is not implemented yet.
+.PP
+Note that there is no gotopbm tool.
+.SH "SEE ALSO"
+pbm(5)
+.SH AUTHOR
+Copyright (C) 1988 by Jef Poskanzer, Michael Haberler, and Bo Thide'.
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided
+that the above copyright notice appear in all copies and that both that
+copyright notice and this permission notice appear in supporting
+documentation.  This software is provided "as is" without express or
+implied warranty.

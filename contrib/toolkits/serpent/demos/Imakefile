@@ -1,0 +1,14 @@
+#include "../Serpent.tmpl"
+#define IHaveSubdirs
+
+DIR = demos
+
+SUBDIRS = calc color concent counter grouping icse icsec menubar proto se sigchi spider vis_prog visu
+
+SRCDIRS = $(SUBDIRS)
+
+all:	source
+
+SerpentSourceTop()
+
+SerpentDependTop()

@@ -1,0 +1,29 @@
+OBJS	=dviselect.o
+SRCS	=dviselect.c
+
+      LIBTEXROOT= ../
+      LIBTEXSRC	= ../libtex
+         LIBTEX	= $(LIBTEXSRC)/libtex.a
+      DEPLIBTEX	= $(LIBTEX)
+        DEPLIBS = $(DEPLIBTEX) $(DEPXAWLIB) $(DEPXMULIB) $(DEPXTOOLLIB) $(DEPXLIB)
+LOCAL_LIBRARIES = $(LIBTEX)
+
+        DEFINES = -I$(LIBTEXROOT)
+
+FILES	=Imakefile dviselect.man Makefile.raw $(SRCS)
+
+all: dviselect
+
+SingleProgramTarget(dviselect,$(OBJS),$(LOCAL_LIBRARIES),$(SYSLIBS))
+InstallProgram(dviselect, $(BINDIR))
+InstallManPage(dviselect,$(MANDIR))
+DependTarget()
+CleanTarget()
+TagsTarget()
+
+tar:
+	cd ../..;\
+	for file in $(FILES); \
+	do \
+	  tar rf $(TARFILE) $(PRODUCT)/Dviselect/$$file; \
+	done

@@ -1,0 +1,32 @@
+Xgks User Doc
+
+1.  Input Devices
+	Pet 1 for all devices
+	Describe supported pets for all devices
+	Device behavior by mode
+		REQUEST		 }
+		SAMPLE		 }   trigger }
+		EVENT		 }   measure } review in standard
+
+2.  X-based features
+	DC is pseudo-DC
+	Resizing
+	Initial window size
+	Window won't necessarily always be on top
+	Specifying ws conid:  for Fortran, C
+	Storage of non-segmented primitives
+	Aspect ratio retained on redraw
+	Vector fonts
+
+3.  Escapes
+	Doesn't follow standard
+
+4.  Workstation Types
+	Fortran
+	C
+	No output can be deferred
+
+5.  Open GKS error file
+	Fortran-- can run with more than 1 error file
+	C-- file must be created/opened first
+	State which Fortran compilers the implementation supports

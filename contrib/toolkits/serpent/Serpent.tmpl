@@ -1,0 +1,295 @@
+/********** may need to be changed ****************/
+
+SERPENTXINCDIR = /usr/include
+SERPENTXLIBDIR = /usr/lib
+
+CDEBUGFLAGS = -O -DNDEBUG
+
+#ifdef VaxArchitecture
+CPPFLAGS = -Em
+#else
+#ifdef SunArchitecture
+CPPFLAGS = -M
+#endif
+#endif
+
+AWK = /bin/awk
+EX = /usr/ucb/ex
+SED = /bin/sed
+YFLAGS = -d
+
+/********** end of may need to be changed *********/
+
+AR = ar r
+SDD = sdd
+
+SERPENTBASEDIR = ../..
+SERPENTINCDIR = $(SERPENTBASEDIR)/include
+SERPENTINCS = -I../include -I$(SERPENTINCDIR)
+SERPENTXINCS = -I$(SERPENTXINCDIR)
+SERPENTLIBDIR = $(SERPENTBASEDIR)/lib
+SERPENTBINDIR = $(SERPENTBASEDIR)/bin
+SERPENTXLIBS = $(SERPENTXLIBDIR)/libXaw.a $(SERPENTXLIBDIR)/libXt.a \
+        $(SERPENTXLIBDIR)/libXmu.a $(SERPENTXLIBDIR)/libX11.a
+SERPENTLIBS = $(SERPENTLIBDIR)/libint.a \
+	$(SERPENTLIBDIR)/libutl.a $(SERPENTLIBDIR)/liblist.a
+SLANGLIBS = $(SERPENTLIBDIR)/libsext.a $(SERPENTLIBDIR)/libdm.a $(SERPENTLIBS)
+
+#define SerpentSddRule()						@@\
+.SUFFIXES:	.sdd .ill .h						@@\
+									@@\
+.sdd.ill:								@@\
+	@- $(RM) $*.ill $*.h						@@\
+	$(SDD) $*							@@\
+	@chmod a+r $*.ill $*.h						@@\
+									@@\
+.sdd.h:									@@\
+	@- $(RM) $*.ill $*.h						@@\
+	$(SDD) $*							@@\
+	@chmod a+r $*.ill $*.h
+
+#define SerpentYaccRule()						@@\
+.y.c:									@@\
+	@- $(RM) y.tab.c $*.h $@					@@\
+	$(YACC) $(YFLAGS) $<						@@\
+	mv y.tab.h $*.h							@@\
+	mv y.tab.c $@							@@\
+	@chmod a+r $*.h $@
+
+#define SerpentLexRule()						@@\
+.l.c:									@@\
+	@- $(RM) lex.yy.c $@						@@\
+	$(LEX) $(LFLAGS) $<						@@\
+	mv lex.yy.c $@							@@\
+	@chmod a+r $@
+
+#define SerpentObjectRule()						@@\
+SerpentObjectRuleIncs()
+
+#define SerpentObjectRuleX()						@@\
+SerpentObjectRuleIncs($(SERPENTXINCS))
+
+#define SerpentObjectRuleIncs(incs)					@@\
+.c.o:									@@\
+	@- $(RM) $@							@@\
+	$(CC) $(CDEBUGFLAGS) $(SERPENTINCS) incs -c $<			@@\
+	@chmod a+r $@
+
+#define SerpentLibrary()						@@\
+$(LIB):	$(OBJ)								@@\
+	@- $(RM) $@							@@\
+	$(AR) $@ $(OBJ)							@@\
+	$(RANLIB) $@							@@\
+	@chmod a+r $@
+
+#define SerpentSimpleProgramGroupS(file)				@@\
+SerpentSimpleProgramSBit(file,g)
+
+#define SerpentSimpleProgramUserS(file)					@@\
+SerpentSimpleProgramSBit(file,u)
+
+#define SerpentSimpleProgramSBit(file,user)				@@\
+SerpentSimpleProgramLib(file,)						@@\
+	@chmod user+s $@
+
+#define	SerpentSimpleProgram(file)					@@\
+SerpentSimpleProgramLib(file,)
+
+#define	SerpentSimpleProgramLib(file,library)				@@\
+SerpentProgram(file,file.o,library)
+
+#define	SerpentSimpleProgramObjs(target,objs)				@@\
+SerpentProgram(target,objs,)
+
+#define SerpentDialogueProgram()					@@\
+SerpentProgram($(BIN),$(OBJ),$(LIB))
+
+#define SerpentProgram(target,objs,library)				@@\
+target:	objs library $(LIBS)						@@\
+	@- $(RM) $@							@@\
+	$(CC) objs library $(LIBS) -ll -lm -o $@			@@\
+	@chmod a+rx $@
+
+#define SerpentInstallLib()						@@\
+install::	install_lib						@@\
+									@@\
+SerpentInstallLib1()
+
+#define SerpentInstallBin()						@@\
+install::	install_bin						@@\
+									@@\
+SerpentInstallBin1()
+
+#define SerpentInstallIncLib()						@@\
+install::	install_inc install_lib					@@\
+									@@\
+SerpentInstallInc1()							@@\
+SerpentInstallLib1()
+
+#define SerpentInstallPermBin()						@@\
+install::	install_perm install_bin				@@\
+									@@\
+SerpentInstallPerm1()							@@\
+SerpentInstallBin1()
+
+#define SerpentInstallBinData()						@@\
+install::	install_bin install_data				@@\
+									@@\
+SerpentInstallBin1()							@@\
+SerpentInstallData1()
+
+#define SerpentInstallIncPermBin()					@@\
+install::	install_inc install_perm install_bin			@@\
+									@@\
+SerpentInstallInc1()							@@\
+SerpentInstallPerm1()							@@\
+SerpentInstallBin1()
+
+#define SerpentInstallIncLibBin()					@@\
+install::	install_inc install_lib install_bin			@@\
+									@@\
+SerpentInstallInc1()							@@\
+SerpentInstallLib1()							@@\
+SerpentInstallBin1()
+
+#define SerpentInstallInc1()						@@\
+install_inc:								@@\
+	@echo making install_inc in $(DIR)				@@\
+	@for i in $(INC); do \						@@\
+		(cd ../include; olddir=`pwd`; \				@@\
+		cd $(SERPENTBASEDIR)/include; \				@@\
+		$(RM) $$i; $(LN) $$olddir/$$i ) ; done
+
+#define SerpentInstallLib1()						@@\
+SerpentInstall(lib,lib,$(LIB))
+
+#define SerpentInstallPerm1()						@@\
+SerpentInstall(perm,bin,$(PERM))
+
+#define SerpentInstallBin1()						@@\
+SerpentInstall(bin,bin,$(BIN))
+
+#define SerpentInstallData1()						@@\
+SerpentInstall(data,data,$(DATA))
+
+#define SerpentInstall(type,dir,list)					@@\
+install_/**/type:							@@\
+	@echo making install_/**/type in $(DIR)				@@\
+	@for i in list; do \						@@\
+		(olddir=`pwd`; cd $(SERPENTBASEDIR)/dir; \		@@\
+		$(RM) $$i; $(LN) $$olddir/$$i ) ; done
+
+#define SerpentSerpent()						@@\
+SerpentDialogue()
+
+#define SerpentAppSerpent()						@@\
+SerpentDialogueProgram()						@@\
+									@@\
+SerpentDialogue()
+
+#define SerpentDialogue()						@@\
+SerpentDialogue1(,,)
+
+#define SerpentDialogue1(library,linkopts,compopts)			@@\
+$(DIALOGUE):	$(DIALOGUE).o $(SLANGLIBS) library			@@\
+	@- $(RM) $(DIALOGUE)						@@\
+	serpent -l linkopts $(DIALOGUE)					@@\
+									@@\
+$(DIALOGUE).o:	$(DIALOGUE).sl						@@\
+	@- $(RM) $@							@@\
+	serpent -c compopts $(DIALOGUE)					@@\
+	@touch $@
+
+#define SerpentManPage(prog)						@@\
+prog:	prog.1								@@\
+									@@\
+prog.1:	../man1/prog.1							@@\
+	nroff -man ../man1/$@ > $@
+
+#define SerpentDepend()							@@\
+SerpentDepend1($(SRC),$(CC))
+
+#define SerpentDependDialogue()						@@\
+SerpentDepend1($(DIALOGUE).sl,$(CPP))
+
+#define SerpentDepend1(thing,command)					@@\
+SD1()									@@\
+	SD2(command,thing)						@@\
+	SD3()								@@\
+	SD4()								@@\
+	SD5()								@@\
+SD6()
+
+#define SerpentDependDialogueApp()					@@\
+SD1()									@@\
+	SD2($(CPP),$(DIALOGUE).sl)					@@\
+	SD2($(CC),$(SRC))						@@\
+	SD3()								@@\
+	SD4()								@@\
+	SD5()								@@\
+SD6()
+
+#define SerpentDependTop()						@@\
+SD1()									@@\
+	SD3()								@@\
+	SD5()								@@\
+	@for i in $(SUBDIRS); do \					@@\
+		(cd $$i; $(MAKE) $(MFLAGS) depend ); done		@@\
+SD6()
+
+#define SerpentDependEmpty()						@@\
+SD1()									@@\
+	SD3()								@@\
+	SD5()								@@\
+SD6()
+
+#define SD1()								@@\
+depend:									@@\
+	@echo making depend in $(DIR)					@@\
+	@- $(RM) xtmp makedep
+
+#define SD2(command,thing)	@command $(CPPFLAGS) $(SERPENTINCS) \	@@\
+		$(DEPENDINCS) thing > xtmp; \				@@\
+		$(SED) -e ':loop' \					@@\
+		-e 's/\.\.\/[^ /]*\/\.\./../' \				@@\
+		-e '/^.*\.c:/d' \					@@\
+	    -e 't loop' -e 's/\.ol/\.o/' < xtmp | \			@@\
+	$(AWK) ' { if ($$1 != prev) \					@@\
+			{ print rec; rec = $$0; prev = $$1; } \		@@\
+		else { if (length(rec $$2) > 77) \			@@\
+			{ print rec; rec = $$0; } \			@@\
+			else rec = rec " " $$2 } } \			@@\
+		END { print rec } ' >> makedep
+
+#define SD3()	@/bin/echo '/^ # DO NOT DELETE THIS LINE/+1,$$d' > xtmp
+
+#define SD4()	@/bin/echo '$$r makedep' >> xtmp
+
+#define SD5()	@/bin/echo 'w' >> xtmp					@@\
+	@- $(RM) Makefile.bak						@@\
+	@/bin/cp Makefile Makefile.bak					@@\
+	@chmod g+w Makefile.bak						@@\
+	@/bin/cp Makefile Makefile.tmp					@@\
+	@$(RM) Makefile							@@\
+	@mv Makefile.tmp Makefile					@@\
+	@${EX} - Makefile < xtmp					@@\
+	@/bin/echo "" >> Makefile					@@\
+	@chmod a+r Makefile						@@\
+	@- $(RM) xtmp makedep
+
+#define SD6()								@@\
+ # DO NOT DELETE THIS LINE -- make depend uses it			@@\
+
+#define SerpentSourceTop()						@@\
+source:									@@\
+	@for i in $(SRCDIRS); do \					@@\
+		(cd $$i; echo making all in $$i; \			@@\
+		$(MAKE) $(MFLAGS) all); done
+
+#define SerpentInstallTop(type,dirs)					@@\
+SerpentDoSubs(install_/**/type,dirs)
+
+#define SerpentDoSubs(target,dirs)					@@\
+target:									@@\
+	@for i in dirs; do \						@@\
+		(cd $$i; $(MAKE) $(MFLAGS) target ); done

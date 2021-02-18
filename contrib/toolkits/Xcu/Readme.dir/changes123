@@ -1,0 +1,87 @@
+These are the changes from V1.0-2 to V1.3.  V1.1,2 were shortlived releases
+that didn't contain the toolkit nomenclature changes.
+
+A few bug fixes.
+
+  -- Wlm would not resize properly due to a precedence mistake.
+
+  -- Bmgr should have included BmgrR.h
+
+  -- On certain (slow) machines, Label widgets would "flicker" when
+     the cursor entered them.  This and other possibly buggy behaviors
+     have been fixed.
+
+  -- The ResizeParticipants resource converter didn't recognize certain
+     valid values.
+
+  -- several portions of the manuals and documents were upgraded
+
+  -- numerous small, obscure bugs
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+I thought it was a neat idea to have Label throw away the padding
+and 3D effects before throwing away the text when it had to be too
+small.  The first batch of users found that
+
+  1) It forgot to restore the frills when it got back to a good size
+  2) It was undocumented behavior
+  3) It was a terrible idea, anyway
+
+So, the default is now to just clip the label when too small, but the
+original behavior (now improved) can be accessed by changing the new
+XtNpreserveText resource to True.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+The examples directory has been improved.  A couple new subdirectories
+have been added (xwldl and xmake) and xwlm has been completely revamped
+to provide a better set of examples.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Nomenclature changes
+
+This toolkit has been revised to reflect the nomenclature conventions
+used by the OSF Motif toolkit.
+
+The following examples illustrate the changes that have been made:
+
+                         Old                      New
+
+widget classname         CuLabel                  XcuLabel
+public include files     "CuLabel.h"              <Xcu/Label.h>
+core_class.class_name    "CuLabel"                "Label"
+enumerated resources     CuRightJustify           XcuRIGHT_JUSTIFY
+public functions         CuBmgrSetAll()           XcuBmgrSetAll()
+
+If you are getting the Xcu toolkit for the first time, then you needn't
+be concerned with these modifications.
+
+For those of you with V1.0-2 applications, you will need to modify
+some of your files to take into account the above five changes.  To assist
+you, I have a shell script in the xcu/bin directory that will use sed
+to make the changes for you.  The syntax for usage is "v01_to_v3 filename"
+or "v2_to_v3 filename".  You should first copy the appropriate ".rep" file
+to /tmp.  (Warning: do not run the script on a file more than once!)
+
+In a directory, an sh script like the following works well for me...
+
+	for i in *.c *.wl *.h ; do
+	    v01_to_v3 $i
+	    echo done with $i
+	    done
+
+The files you need to modify are any source files that have any of the
+above five changes, and any WLDL files and files included by them.
+
+One potentially confusing change is that, e.g., the class name for the
+label widget is "XcuLabel", but the classname used for resource specification
+is just "Label".  This is the way Motif does it, and it does have the
+advantage that if you were to change from Xcu's Label to, say, Athena's
+Label, then you would not have to change the resource files to take into
+account the switch in widgets.
+
+Sorry about the nuisance, but it is important to get as many toolkits as
+possible to use identical conventions.
+

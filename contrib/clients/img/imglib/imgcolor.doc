@@ -1,0 +1,192 @@
+===============================================================================
+=======                                                                 =======
+=======		   Module Imgcolor  --  Manage Colors			=======
+=======			      File imgcolor.c				=======
+=======                                                                 =======
+===============================================================================
+
+
+  Functions:
+
+	Manage image colors.
+
+	This includes commonly used functions related for reducing the
+	chromatic content of an image.  It also includes less commonly
+	used functions for supporting multiple color maps with a
+	single set of pixel data.
+
+	Beware:  code for color dithering is in an intermediate
+	stage between something that worked and something that
+	was fast.  It's not currently used but some variant of it
+	will probably revive in the future.
+
+
+  Public Routines:
+
+	img_rep_node	Replenish free node supply (for color tree)
+	init_colman	Initialize image for color management
+	dither_rgb	Dither an RGB image
+
+
+  Local Routines:
+
+	expand_color	Expand a color definition
+	nearest_color	Find nearest mapped color
+
+
+  Module History:
+
+	11-21-89	Paul Raveling
+	Finalized version for contribution to X11R4.  Changes not
+	documented in this header have been made within the last
+	3 weeks.
+
+	8-21-89		Paul Raveling
+	Fixed bug in init_colman:  One reference was to the wrong
+	pixel pointer when scanning an RGB image.
+
+	3-24-89		Paul Raveling
+	Created module.
+
+******************************************************************************
+******									******
+******		   img_rep_node  --  Replenish Free Node Supply		******
+******									******
+******************************************************************************
+
+  Invocation:
+
+	new_node = img_rep_mode ()
+
+	[Invoked only from get_node macro]
+
+
+  Function:
+
+	Allocate memory for a new supply of node structures
+	and preset all fields to 0.
+
+
+
+  Input:
+
+	None from caller; img_rep_node uses shared data structures
+	img_block_queue, img_new_block, img_next_node, and img_num_free
+
+  Output:
+
+	new_node	Ctnode	*
+	<return value>	Pointer to a new color tree node
+
+	Data structures named as input are updated.
+
+
+   Notes:
+
+	Blocks are normally allocated by the get_node macro --
+	get_node(np) set node pointer np to addr of new node.
+	Before use, caller must initialize memory block data as follows:
+
+img_block_queue = BNULL;	\*  Init memory block queue as empty	*\
+img_num_free    = 0;		\*  Indicate no free blocks		*\
+
+	After the color tree is no longer needed, space should be freed
+	with this code fragment:
+
+while ( img_block_queue != BNULL )
+      {
+      img_new_block = img_block_queue -> next_block;
+      free ( img_block_queue );
+      img-block_queue = img_new_block;
+      }
+
+===============================================================================
+=======                                                                 =======
+=======	    init_colman  --  Initialize Image for Color Management	=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = init_colman ( image )
+
+
+  Functions:
+
+	Initialize color management data for a color-mapped image.
+	The image type can be either mapped_image or rgb_image,
+	but an RGB image must have a color map, which would otherwise
+	be optional.  RGB pixel values must have color map indices
+	in their tag fields.
+
+	This routine must be called after the image is created
+	and before most other color management routines are invoked
+	on it.
+
+	Specific data initialized are:
+
+	--  A color info queue entry for the current color map.
+	    If queue entries exist, init_colman updates the one
+	    at the head of the queue.  If none exist, it creates
+	    a new queue entry.
+
+	--  Pixel frequency statistics in the current color map
+	    are initialized by scanning the pixel data.  While
+	    doing this, pixels are checked for invalid color map
+	    indices.  If any exist, a summary message is sent to
+	    stderr and the faulty pixel values are replaced by 0.
+
+
+  Input:
+
+	image		Img	*
+			Pointer to Img structure for image to delete
+
+
+  Output:
+
+	status		int
+	<return value>	0 if initialization succeeded;
+			1 if init completed but invalid pixels were found
+			2 if init failed due to insufficient memory
+			  or incorrect image format
+
+===============================================================================
+=======                                                                 =======
+=======	    	     dither_rgb  --  Dither an RGB image		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	status = dither_rgb ( image, tree )
+
+
+  Functions:
+
+	Dither an RGB image, coercing assigned pixel values to match
+	colors in the image's color map.  Original RGB values remain
+	unchanged, but color index tags (if any) in each pixel are
+	set to an appropriate color index.
+
+	Specifying NULL as the color tree pointer requires generating
+	the tree, which may be time-consuming.  Quantization routines
+	call dither_rgb as their final pixel assignment phase when
+	dithering is desired.
+
+
+  Input:
+
+	image		Img	*
+			Pointer to Img structure for image to delete
+
+	tree		Ctnode	*
+			Pointer to root node of color tree
+
+
+  Output:
+
+	status		int
+	<return value>	Completion status:
+				0 => Failed
+				1 => Succeeded

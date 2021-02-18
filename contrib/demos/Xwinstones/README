@@ -1,0 +1,98 @@
+
+					Xwinstones
+			Graphics Evaluation and Measurement
+
+
+Running the automated suite:
+	Connect to the Xwinstones directory.
+	One must edit Make.sh to set:
+		MACHINE=the_name_of_your_machine_for_Results
+		MONITOR=the_name_of_the_display_for_Results
+		MONITORNAME=the_name_to_use_with_the_display-c_command;
+
+	Other Make.sh variables can be set:
+		RELEASE=for_the_record
+		BUILD=for_the_record
+
+	Edit ./Tools/config.txt
+		This is a free format summary of the hardware
+		configuration, for the record.
+		
+
+	Make.sh calls numerous shell scripts in ./Tools to
+	do its pre-test and post-test phases. Other scripts in ./bin
+	actually run the tests. The results of each individual test are
+	appended to the hidden log file, ./bin/.out , which is, eventually,
+	moved to the data file for the machine and monitor in the
+	./Results directory.
+
+
+Directory Hierarchy:
+	The Xwinstones directory consists of:
+
+		Make.sh Bourne Shell program;
+
+		Tools directory consisting of the other Bourne Shell programs;
+
+		Results directory structure for recording data from different
+			machines and their monitors;
+
+		bin directory containing all run*.sh programs, links to all
+			the executable *stones in their local directories,
+			and a Makefile that calls all the other Makefiles;
+
+		gen directory contains the generic source modules used by
+			all tests;
+
+		and arcs, blits, chars, colors, images, lines, points, polys,
+			rects, segs, strings, and vects directories,
+		 	which contain all the local source modules,
+			Makefile, and executable for each test.
+
+
+Getting help for the Xwinstones programs!
+	cd ./bin ; make -f Makefile ;
+	then execute Xrunhelp.sh which creates a file called helpstones,
+
+Another method for getting help with a program!
+	Change to one of the local directories.
+	Make the executable.
+	Startup an X server and run either:
+			*stones -h, or *stones -help
+			example)  arcstones -help
+
+
+	Two help listings are available,
+	one for the local arguments, and one for
+	the generic stones modules's arguments.
+		
+
+Porting to other operating systems:
+	Several of th etiming realted modules in the ./gen directory
+	might need to be modified if this code is to be transfered
+	between operating systems.
+	These modules are:
+
+		timer.c   - sets a time-out event
+		date.c    - returns a string containing a date
+		seconds.c - returns the current time in seconds
+
+	Remember to ifdef the operating system name to the
+	system specific code ,and to define the name
+	in the local Makefile.
+
+	Presently, the only other ifdef statement in this entire
+	package is located in ./images/setup.c and ./images/run.c.
+	This is IBM AIX/RT 2.2.1 PCAT-SIM specific X11 extension for the
+	IBM 6154 Advanced Color Monitor.
+
+Other forseen portability problems:
+	Some X structure arrays in */setup.c might need to be resized.
+	Since this package makes use of X11's batch interfaces, such as
+	XDrawPoints, most of the local setup.c files define an array size
+	for the batch of X structures used.  The design decision to use
+	static allocation for arrays instead of dynamic allocation was made
+	because the the server provided better error messages if the static
+	limits were exceeded. It is assumed that the largest request that the
+	Xlib or the server could handle was 65,536 bytes in size, even
+	though no documentation could be found to support this theory.

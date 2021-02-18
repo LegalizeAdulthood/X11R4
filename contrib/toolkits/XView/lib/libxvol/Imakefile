@@ -1,0 +1,55 @@
+#
+# %Z%%M% %I% %E% SMI
+#
+# Top-level Imakefile
+#
+# LIBRARY_DEST is the destination directory for libxvin.a and libxvol.a
+# HEADER_DEST is the destination directory for all the XView include files.
+#	These must be installed in HEADER_DEST/xview and 
+#	HEADER_DEST/xview_private BEFORE the libraries are built.
+# If you want to build debugged or profiled libraries, put definitions
+# for DebugLibXvol and/or ProfileLibXvol in your imake site.def file.
+# Such definitions can be found in ../libxvin/XView.tmpl.
+#
+
+#include "../../XView.config"
+
+#define IHaveSubdirs YES
+#define INCLUDES -I$(HEADER_DEST)
+
+SUBDIRS= canvas frame help icon menu misc notice openwin panel scrollbar \
+	 text ttysw wmgr
+
+#define PassCDebugFlags 'HEADER_DEST=$(HEADER_DEST)' \
+	'CDEBUGFLAGS=$(CDEBUGFLAGS)' \
+	'TOOLDIR=$(TOOLDIR)' 'AR=$(AR)'
+
+all:: libxview.a
+
+MakeAnythingSubdirs(libxvol.a, $(SUBDIRS))
+MakeAnythingSubdirs(libxview.a, $(SUBDIRS))
+
+DependSubdirs($(SUBDIRS))
+
+#
+# Additional install steps here
+#
+
+InstallLibraryNoBuild(xvol,$(LIBRARY_DEST))
+
+#if DebugLibXvol
+InstallLibrary(xvol_d,$(LIBRARY_DEST))
+#endif
+
+#if ProfileLibXvol
+InstallLibrary(xvol_p,$(LIBRARY_DEST))
+#endif
+
+install_headers::
+	@case '${MFLAGS}' in *[ik]*) set +e;; esac; \
+	for i in $(SUBDIRS) ; \
+	do \
+		(cd $$i ; echo "installing headers in $$i"; \
+			$(MAKE) $(MFLAGS) \
+			HEADER_DEST='$(HEADER_DEST)' install_headers ); \
+	done 

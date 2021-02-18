@@ -1,0 +1,18 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+
+DependTarget()
+
+DEFINES = -DWORD=$(MALLOCALIGNMENT) -DMSTATS
+
+#ifdef ANDREW_MALLOC_ENV
+NormalObjectRule()
+LibraryTarget(libmalloc.a, malloc.o plumber.o)
+InstallLibrary(libmalloc.a, $(DESTDIR)/lib)
+LibraryTarget(libplumber.a, pmalloc.o pplumber.o)
+InstallLibrary(libplumber.a, $(DESTDIR)/lib)
+InstallFile(malloc.h, $(INSTINCFLAGS), $(DESTDIR)/include)
+#endif
+InstallDocs(malloc.help, ${DESTDIR}/help)

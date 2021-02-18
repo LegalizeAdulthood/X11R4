@@ -1,0 +1,56 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+YFLAGS = -d -v
+CYFLAGS = -DYYDEBUG
+
+LOCALINCLUDES = -I../tokens
+
+DOBJS = type.do
+IHFILES = type.ih
+OBJS = type.o parse.o
+DOCFILES = type.doc
+
+ATKLIBS=	${BASEDIR}/lib/atk/libframe.a  \
+		${BASEDIR}/lib/atk/libtext.a  \
+		${BASEDIR}/lib/atk/libsupport.a  \
+		${BASEDIR}/lib/atk/libsupviews.a \
+		${BASEDIR}/lib/atk/libbasics.a
+LIBS =		${ATKLIBS}  \
+		${BASEDIR}/lib/libclass.a  \
+		${MALLOCLIB}  \
+		${BASEDIR}/lib/liberrors.a  \
+		${UTILLIB} 
+
+NormalObjectRule()
+NormalYaccRule()
+NormalATKRule()
+
+InstallClassFiles($(DOBJS), $(IHFILES))
+DynamicMultiObject(type.do, type.o parse.o err.o, ${BASEDIR}/lib/atk/libbasics.a, -lm)
+ProgramTarget(chtest, chtest.o, ${LIBS}, )
+InstallProgram(chtest, $(DESTDIR)/bin)
+TestProgramTarget(typetest, typetest.o, ${LIBS},)
+
+parse.y: ../tokens/buildy parse.gra
+	../tokens/buildy parse.gra parse.y
+
+parse.c: parse.y
+	$(YACC) ${YFLAGS} $*.y
+	-$(RM) $*.c
+	$(MV) y.tab.c $*.c	
+
+LibraryTarget(libtype.a, $(OBJS))
+InstallLibrary(libtype.a, ${DESTDIR}/lib/atk/)
+
+InstallDocs($(DOCFILES), $(DESTDIR)/doc/atk/)
+
+atktest::
+	./chtest ${DESTDIR}/include/atk/*.ch
+/*
+install.time::
+	$(DESTDIR)/bin/chtest ${DESTDIR}/include/atk/*.ch
+*/
+DependTarget()
+

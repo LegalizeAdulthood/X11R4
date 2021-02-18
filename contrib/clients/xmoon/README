@@ -1,0 +1,28 @@
+I have ported the program moon to X11 window system.
+
+The original AUTHOR said like below.
+[I'd appreciate receiving any bug fixes and/or
+enhancements, which I'll incorporate in future versions of the
+program.  Please leave the original attribution information intact so
+that credit and blame may be properly apportioned.]
+
+This has beed tested on Sun 3/60 under SunOS 4.0.1 with monochrome display,
+and Sun4/110 under SunOS 4.0.1 with monochrome and color display,
+and PC-9801's ( Japanese personal computer ) X server with color display.
+
+To port program, I Create new widget called image widget to display and arrange texts and pixmap. I think it is useful. So please use it to such aim.
+
+The moon.bm was created by Atsuo Ohki ( Shizuoka University ).
+It's the sight from Japan. So Please make your own bitmap which suits to your
+moon.
+
+	Nobuhiko Nakajima
+
+	Waseda University
+
+	61-505, Sci&Eng department, Waseda University
+	3-1-9 shinjyuku-ku ookubo, Tokyo, Japan	169
+
+	(03) 232-0551
+
+	Junet	hiko@ohara.waseda.ac.jp

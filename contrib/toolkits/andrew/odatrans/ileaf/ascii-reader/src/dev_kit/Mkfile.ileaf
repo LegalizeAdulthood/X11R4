@@ -1,0 +1,145 @@
+#	 Copyright 1989, Interleaf, Inc.	 
+#	 1100 Mass. Ave., Cambridge MA  02138
+# See andrew/odatrans/ileaf/ascii-reader/COPYRIGHT
+
+#
+#         What this directory and makefile are all about:
+# This directory is intended to contain only those files which are
+# necessary for an external developer to make use of the Asii Reader
+# Toolkit. When make is through, it should contain only the AR library,
+# some header files, a single 'C' file (the test program), and this makefile.
+# The object files should be automaticly removed after the library has been
+# created. In addition to knowing how to create the library and put
+# the necessary files into this directory, this makefile also knows
+# how to make the small test program. Outside of the Interleaf environment,
+# making the test program is the only useful function this makefile
+# can perform.
+#
+
+SRC_DIR = ../
+INCL    = -I${SRC_DIR}
+CFLAGS  = ${INCL} -O -UINTERLEAF_INCLUDE_FILES
+
+OBJECTS	= ar5printf.o ar5memory.o ar5shrutils.o ar5csave.o \
+	  ar5init.o ar5dump.o ar5error.o ar5lex.o ar5strings.o \
+	  ar5stubs.o ar5io.o ar5font.o ar5cvt.o ar5read.o \
+	  ar5frameread.o ar5cmpn.o ar5docread.o ar5buf.o ar5token.o \
+	  ar5autonum.o ar5index.o ar5ref.o ar5table.o ar5loadDg.o ar5dumpDg.o \
+	  ar5unknowns.o  ar5incharmap.o  ar5free.o ar5freeDg.o
+
+PUBLIC_SOURCE = ${SRC_DIR}ar5defs.h ${SRC_DIR}ar5csave.h ${SRC_DIR}ar5test.c
+
+all: kit
+
+FORCE:
+
+kit: FORCE
+	rm -f *.[coah]
+	rm -f ar5test
+	make libAR5_0${PORTLIB}.a
+	make ar5test
+
+libAR5_0.a : ${OBJECTS}
+	ar rcv $@ ${OBJECTS}
+	ranlib $@
+	rm -f *.o
+	cp ${PUBLIC_SOURCE} .
+
+libAR5_0RT.a: ${OBJECTS}
+	@echo "Creating tsort.tmp..."
+	@(lorder $? | tsort >tsort.tmp) >& /dev/null
+	ar cr libAR5_0.a `cat tsort.tmp`
+	rm -f *.o
+	cp ${PUBLIC_SOURCE}
+
+ar5printf.o: ${SRC_DIR}ar5printf.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5printf.c
+
+ar5memory.o: ${SRC_DIR}ar5memory.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5memory.c
+
+ar5shrutils.o: ${SRC_DIR}ar5shrutils.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5shrutils.c
+
+ar5csave.o: ${SRC_DIR}ar5csave.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5csave.c
+
+ar5init.o: ${SRC_DIR}ar5init.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5init.c
+
+ar5dump.o: ${SRC_DIR}ar5dump.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5dump.c
+
+ar5error.o: ${SRC_DIR}ar5error.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5error.c
+
+ar5lex.o: ${SRC_DIR}ar5lex.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5lex.c
+
+ar5strings.o: ${SRC_DIR}ar5strings.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5strings.c
+
+ar5stubs.o: ${SRC_DIR}ar5stubs.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5stubs.c
+
+ar5io.o: ${SRC_DIR}ar5io.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5io.c
+
+ar5font.o: ${SRC_DIR}ar5font.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5font.c
+
+ar5cvt.o: ${SRC_DIR}ar5cvt.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5cvt.c
+
+ar5read.o: ${SRC_DIR}ar5read.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5read.c
+
+ar5frameread.o: ${SRC_DIR}ar5frameread.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5frameread.c
+
+ar5cmpn.o: ${SRC_DIR}ar5cmpn.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5cmpn.c
+
+ar5docread.o: ${SRC_DIR}ar5docread.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5docread.c
+
+ar5buf.o: ${SRC_DIR}ar5buf.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5buf.c
+
+ar5token.o: ${SRC_DIR}ar5token.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5token.c
+
+ar5autonum.o: ${SRC_DIR}ar5autonum.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5autonum.c
+
+ar5index.o: ${SRC_DIR}ar5index.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5index.c
+
+ar5ref.o: ${SRC_DIR}ar5ref.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5ref.c
+
+ar5table.o: ${SRC_DIR}ar5table.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5table.c
+
+ar5loadDg.o: ${SRC_DIR}ar5loadDg.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5loadDg.c
+
+ar5dumpDg.o: ${SRC_DIR}ar5dumpDg.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5dumpDg.c
+
+ar5unknowns.o: ${SRC_DIR}ar5unknowns.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5unknowns.c
+
+ar5incharmap.o: ${SRC_DIR}ar5incharmap.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5incharmap.c
+
+ar5free.o: ${SRC_DIR}ar5free.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5free.c
+
+ar5freeDg.o: ${SRC_DIR}ar5freeDg.c
+	${CC} ${CFLAGS} -o ./$@ -c ${SRC_DIR}ar5freeDg.c
+
+#### make the test program
+
+ar5test: ar5test.o
+	${CC} -o $@ ar5test.o libAR5_0.a

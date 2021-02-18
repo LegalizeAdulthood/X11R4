@@ -1,0 +1,922 @@
+                               Known Bugs 
+
+                           Indexed by Program
+
+
+
+ATK Bugs 
+
+-
+ID: 1001
+Keyword: app
+Subject: apps not checking return from im_Create()
+Many ATK apps do not check the return code after they do an im_Create. 
+If WMHOST or DISPLAY is set to some bogus value, or DISPLAY is a remote
+host to which the local host is not allowed permission, etc, the app
+will dump core because it tries to do operations on a non-existent im
+structure.
+-
+ID: 1002
+Keyword: atk
+Subject: scrollbar
+when scrolling, drag thumb to the bottom of the scroll bar.  For long
+files, like atk/basics/xim.c, it doesn't scroll to the end of the file
+(happens on both x and wm).
+-
+ID: 1003
+Keyword: atk
+Subject: scroll.c
+Scroll.c doesn't pass all of the FullUpdates it gets down to it's
+children. This results in munged screens when you scroll text containing
+object with it's application layer.
+-
+ID: 1004
+Keyword: atk
+Subject: cmenu colors
+the cmenu package ignores foreground and background color requests
+*Foreground and *Background in the X resource database.
+-
+ID: 1005
+Keyword: atk
+Subject: More im/ams problems:
+Killing messages un-wedged my X server.  This may be a problem with the
+cmenu code waiting for an expose event from the messages window, which
+no longer will post the expose.  It could be that since the AMS window
+is active and working now for the first time that this race condition is
+testable. I have the option 'warp mouse to sendmessage window' enabled 
+but since using the new IM, clicking on a caption warps the mouse to the
+upper left corner of the messages window.  Could this be an enqueued
+event wich would have ordinarily been lost in the single event queue
+that the IM used to have?
+-
+ID: 1006
+Keyword: atk
+Subject: doesn't correctly erase bottom of window when text (with inset)
+is scrolled
+-
+ID: 1007
+Keyword: atk
+Subject: overwritten text
+when initially drawing a window, atk routines will display overwritten
+text if the window is covered with another window.  only tested under X
+with twm.
+-
+ID: 1008
+Keyword: basics
+Subject: Bug in init.c ?
+
+In init.c, the 'class' argument to addmenu and addkey is ignored.  It
+should  modify the proctable?
+-
+ID: 1009
+Keyword: buffer
+Subject: directory should not be replaced with file
+
+The editor should not allow replacing a directory with SaveAs or any
+other file writing operation.
+-
+ID: 1010
+Keyword: champ
+Subject: Need to refresh memory when data files change.
+-
+ID: 1011
+Keyword: champ
+Subject: Champpath ordering AND event ordering are reversed.
+-
+ID: 1012
+Keyword: class
+Subject: Bug in xxx_classinfo
+This bug is in class.c.  It should set the pointer from the
+xxx_methodtable to the xxx_classinfo table.  Instead this assignment is
+deferred until the first object of the class is created in
+xxx_Initialize.
+-
+ID: 1013
+Keyword: class
+Subject: Should class need index?
+
+The window system is dynamically loaded.  That is, neither wws.o nor
+xws.o is statically loaded (unless WM_ENV or X11_ENV is set). In order
+to get these, some dlib is needed.  Worse news, the name wws is the file
+name, but not the class name, so maybe the index is needed in this
+case!? (But the info is known at compile time and is in the .ih file, so
+why is an index needed at all?)
+-
+ID: 1014
+Keyword: class
+Subject: incorrect wording in class.chng
+
+Fifth paragraph says: "If you want to get the smallest .ih file include
+class.ih." Except that class.ih doesn't exist and programs which include
+no .ih files should still include class.h, not class.ih.
+-
+ID: 1015
+Keyword: class
+Subject: possible bug
+
+There is a bug in the class preprocessor when the word 'data' is used in
+macromethods.  The macro which gets created in the corresponding .ih
+file is incorrect.  
+-
+ID: 1016
+Keyword: class_init
+Subject: class_Init
+class_Init could have another default path: ${ANDREWDIR}/dlib/atk
+-
+ID: 1017
+Keyword: cmenu
+Subject: cmenu bug under X on VAX only
+
+The RT APA-16 X server allows the mouse cursor to move off the screen as
+far as the hot spot, but the VAX Xqvss X server stops the cursor at its
+edge. 
+-
+ID: 1018
+Keyword: cmenu
+Subject: cmenu loses mouse up events
+
+The server appears to have two bugs:  
+1) Sometimes key preses that ought to be treated as simultaneous are
+actually presented sequentially.  A delay of 50 milliseconds seeems to
+be enough. I suspect that the mouse up event is getting lost because it
+comes through as first a left up and then a right up, instead of a
+middle up.
+2) Sometimes duplicate down-up pairs arrive.  That is, the program will
+see left-down,left-up,right-down,right-up all for a single press of the
+left button.  This case is distinguished by having the same timestamp in
+both down events.
+-
+ID: 1019
+Keyword: cmenu
+Subject:  cmenu Hysteresis
+
+MIT people uniformly report that there is not enough hysteresis in
+cmenus.  While people seem to agree that going all the way to the far
+edge is too far, the current distance is not far enough.
+-
+ID: 1020
+Keyword: ctext
+Subject: ctext funniness
+
+Ctext indents code funny when it contains goto labels.  Ctext should
+usually enforce the indenting style contained the the defaults of
+indent(1). If a piece of code contains a goto label that is flush left,
+then subsequent lines of code will also be (incorrectly) flush left. If
+the label is not flush left, then ctext lines it up with the rest of the
+code and indents further statement by two spaces.  Indent(1) does the
+Right Thing. 
+-
+ID: 1021
+Keyword: ctext
+Subject: Ctext indent bug
+
+Ctext is apparently not checking 'C' keywords to see if they're embedded
+in identifiers before it makes its indentation decisions.
+-
+ID: 1022
+Keyword: echo 
+Subject: echo -n does not correctly  under AIX
+
+echo -n is not supported on AIX systems, and instead simply echos the
+string "-n".  
+
+May affect running a post office on such a machine. 
+-
+ID: 1023
+Keyword: eq
+Subject: eq bug with limits in definite integral
+
+Ez placed the limits of integration too far to the left so that they
+overlapped with the integral sign. 
+-
+ID: 1024
+Keyword: event
+Subject: error building atk/basics/common/event.do
+
+I have checked the gettimeofday call manually and it seems to work just
+fine. (I also compiled the program overhead/util/lib/times.c with the
+flag TESTINGONLYTESING and the calls to osi_ZoneName, osi_SecondsWest,
+osi_SetZone and osi_GetSecs seem to work. 
+
+atk/basics/common/event.c calls osi_GetTimes, which is always defined in
+libutil.a (in file overhead/util/lib/times.c).  In AIX-land, that
+procedure calls gettimeofday() to get its information, just as it does
+in BSD-land.  Do we have a clue as to why this build has been failing
+ever since osi_GetTimes came into existence? In BSD-land, the andrewos.h
+globals osi_SetZone, osi_SecondsWest, osi_IsEverDaylight, and
+osi_ZoneNames are defined in the times.c file, so maybe they'd be loaded
+in runapp or libcx, but in AIX-land, those globals are just macros that
+are defined in the AIX libc; therefore, it's in AIX-land that times.o
+(from libutil.a) might be needed for the first time (in event.do). 
+Might this be boggling makedo somehow?
+-
+ID: 1025
+Keyword: ez
+Subject: links are not resolved in file completion
+
+In the c-shell (or any shell), if file foo is a symbolic link to a
+directory, then the expression foo/.. refers to the parent of what foo
+points to.  Apparently, when the file-completion routine sees a ".." in
+the middle of a pathname, it simply cancels out the previous path
+element (or something to that effect). 
+-
+ID: 1026
+Keyword: ez
+Subject: completion package
+
+Calling completion_GetFilename with directoryP = TRUE and MustMatch =
+TRUE, a partially complete pathname that uniquely identifies a
+directory, ie  ~/sr wihich uniquely matches ~/src, will automatically
+complete the filename when return is hit.  This is incorrect.  In that
+case, it should prompt [Incomplete], as it does for an ambiguous name.
+-
+ID: 1027
+Keyword: ez
+Subject: CKP files
+
+If two ez processes are both editting the same file and one is Quit, the
+.CKP file is discarded.  The second process continues writing in the
+.CKP file, but it is no longer listed in the directory.  Somehow the
+.CKP file should not go away until the last ez process utilizing it
+exits.
+-
+ID: 1028
+Keyword: ez
+Subject: file name completion
+
+On startup, it ask you for a file, using the $cwd for it's starting
+point. If, however, the length of the path is long enough to not fit
+into the message line, then it displays nothing beyond the "Enter
+initial file". i.e. no cursor or anything...
+-
+ID: 1029
+Keyword: ez
+Subject: text_AddView
+
+The source code view's Write routine calls compressv_HideBoxes,
+super_Write, then compressv_UnhideBoxes.  The trouble is that
+environment_Remove doesn't work at all.  environment_Destroy works fine,
+but in compressv_UnhideBoxes, the first two [struct environment *]s
+returned by text_AddView have the same value as the last one Destroy'ed
+by compressv_HideBoxes.
+-
+ID: 1030
+Keyword: ez
+Subject: Another EZ kill-buffer bug
+
+If my EZ process has a buffer named "foo" and I type
+
+^X-k foobar
+
+it will kill buffer foo.  In this case, it would allow the killing of
+buffer "foo" even though: 1) I probably didn't mean "foo"; 2) "foo" may
+be modified
+-
+ID: 1031
+Keyword: ez
+Subject: EZ kill-buffer bug
+
+Starting just recently, if I use ^X-k to kill a buffer in EZ, and I name
+a buffer other than the one on display, I will get a "You have changes
+that would be lost" dialog box if and only if the displayed buffer has
+been modified (rather than the target buffer of my kill command).  This
+prevents easy killing of unmodified buffers, and allows easy killing of
+modified buffers.  
+-
+ID: 1032
+Keyword: ezapp
+Subject: ezapp doesn't pick up application name
+
+If I visit foo.c, I expect to get ctext if the file does not exist. The
+buffer code is behaving as it should. Three other possible fixes are as
+follows:
+
+    Move the default object code into filetype instead of buffer.
+
+    Modifiy buffer so that if a buffer_SetDefaultObject call is made,
+    then it will override filetype_Lookup's idea of what the file ought
+    to be if it does not exist yet. (This may have other problems, but I
+    can't think of any offhand.)
+
+    Nuke the "table foo" interface. Either one should type "ez
+    table.foo" or we ought to put in an interface so that one can visit
+    a file specifying a toplevel object. There are to many inconsistient
+    ideas of what the default object should be otherwise. (Incidentally,
+    the buffer_ReadFile method still has a hardcoded text default.)
+
+Finally, I suggest we punt fixing this before X.V11R4 as it is likely to
+break other things if done hastily. I am not planning on doing any
+further work on this.
+-
+ID: 1033
+Keyword: fcomp
+Subject: fcomp
+
+I just got the version 11.0 ATK tape and everything compiled fine.
+However the fcomp object makes typescript exit (no core) when I use the
+fcomp-possible-completions proc.  I have addkey
+fcomp-possible-completions ^[? typescript fcomp inherit in my
+.typescriptinit.
+-
+ID: 1034
+Keyword: frame
+Subject: Don't echo passwords.
+-
+ID: 1035
+Keyword: graphic
+Subject: Raster bug under X
+
+Shifting focus from one inset to another in a document may leave the
+prior inset invisible (unrefreshed).  This happens particularly with
+rasters, and particularly when raster insets are in pan mode (though
+there are more contingencies than that). 
+-
+ID: 1036
+Keyword: help
+Subject: Help and .filename files
+
+Help has a problem dealing with filenames that start with a dot.  It
+doesn't do any matching of what comes after the dot.  So, if someone
+asks for help on ".Outgoing" they are going to get help on anything that
+starts with a dot in the help file directory, even something like
+".emacs_pro574".
+-
+ID: 1037
+Keyword: help
+Subject: expanding programs list brings up duplicate entries
+
+When 'Expanding' the Help programs list, many duplicate entries show up.
+ Try Expanding the Programs list and then Filtering on 'bush'.  You'll
+see three(3) entries for bush. 
+-
+ID: 1038
+Keyword: help
+Subject: menu options don't update
+
+A few successive hidings and showings of Hide/Show Overviews/Programs
+can get the menus out of sync
+-
+ID: 1039
+Keyword: help
+Subject: Help forking messages -s
+
+Apparently, selecting "Send Comment On Help" from the Help window does
+not check for the existence of an already-running messages -s, forked by
+Help.  It should, however, check to see if an old messages -s is lying
+around; if so, it should re-map that window and use it.
+-
+ID: 1040
+Keyword: help
+Subject: version ID wrong under aix
+
+-
+ID: 1041
+Keyword: im
+Subject: program termination protocol - window mgr function to request
+applications to quit gracefully
+
+There has been a recently flurry of messages in the X world about having
+a window manager function that would request an application to "quit"
+where quit is is whatever the normal way for an application to end. Is
+there a rational way to do this in ATK?  
+-
+ID: 1042
+Keyword: im
+Subject: im requirements
+
+This message specifies a number of changes required to im to support
+extension language operations. DoMenu.  An operation is needed so an
+arbitrary menu item can be executed, as from an extension language
+program.  This facility is important in the Hypertalk interface to
+Hypercard.
+-
+ID: 1043
+Keyword: im
+Subject: ez geometry problem
+
+When xy-size geometry *is* supplied, but xy-position *is not* supplied,
+and two or more files are specified, e.g., 'ez -geometry =600x500 foo
+bar', ez positions all except the last window at the +0+0 position on
+the screen. The last window (which displays the first file) is presented
+as a ghost image and is allowed to be positioned by the user with the
+mouse. The bug is that *all* windows in this situation should be
+presented as ghost images and positionable by the user.
+-
+ID: 1044
+Keyword: im
+Subject: Title name not displayed while window is being positioned
+
+Under the X Window Manager, while a window is waiting to be positioned
+by the user, it used to display its title name in a window in the upper
+left-hand corner of the screen.  The current version no longer does
+that.  It appears that the title name is not being set early enough,
+since after the user positions it and presses a mouse button, the title
+name appears in the window, and it is properly included in the icon if
+and when it is iconified.
+-
+ID: 1045
+Keyword: im
+Subject: XSetInputFocus
+
+If a user under X and twm clicks a focus button on a window, the
+im_SetWMFocus function fails to change the focus.  The xim_SetWMFocus
+function ought to call XSetInputFocus. 
+-
+ID: 1046
+Keyword: im
+Subject: im_GetCharacter
+
+Formerly im_GetCharacter returned special values for the various
+function keys.  Now it returns ESC for each and seems to discard the
+following character. 
+-
+ID: 1047
+Keyword: im
+Subject: im refers to destroyed objects
+
+In the routines im__DoKey and im_HandleMenu, references are made to self
+after calling the proctable functions.  This will fail in case the
+proctable functions Destroy the im, as in trying to close a window. 
+Perhaps there ought to be a place in the interaction loop which
+processes all pending destroy operations.
+-
+ID: 1048
+Keyword: im
+Subject: im_FinalizeObject must check the input queue
+
+The routine im_FinalizeObject ought to check all operations queued up
+and delete those which refer to the im which is being destroyed. 
+Presumably you mean to Destroy the object;  FinalizeObject is called as
+part of the destroy operation, and should not be called directly.
+-
+ID: 1049
+Keyword: im
+Subject: multiple window servers
+
+At present if the local workstation is using a given window server (X or
+wm) applications can open windows remotely only on workstations running
+the same window server.  This is not an essential restriction and should
+be removed. The major work is that im_Create should check the host name
+to decide which server to try first and should then call the Create
+function for that server.  On failure it should try for the other
+server. As part of this, the bulk of HandleFiles should be moved from
+wim.c and xim.c and into im.c.  
+-
+ID: 1050
+Keyword: im
+Subject: ICCCM properties not set on im's windows
+
+The X11 ICCCM properties WM_COMMAND, WM_CLIENT_MACHINE, required for
+session management, are not set on im's windows.
+-
+ID: 1051
+Keyword: im
+Subject: ICCCM protocols suggested
+
+It would be advantageous for Andrew windows to be able to use the
+WM_SAVE_YOURSELF and WM_DELETE_WINDOW X11 ICCCM protocols.
+-
+ID: 1052
+Keyword: lookz
+Subject: lookz
+
+If a lookz inset is imbedded on the first line of a document the changes
+one makes are neither reflected in the lookz window nor in the rest of
+the document.
+-
+ID: 1053
+Keyword: lpair
+Subject: clicking near the boundaries of an lpair produces unpredictable
+results
+
+Apparently the click just below the top wraps to affect the portion just
+below the bottom.
+-
+ID: 1054
+Keyword: page
+Subject: Bug with frame/page menus
+
+Try going into sendmessage, typing ^S, and looking at the menus while it
+is asking for your search string.  All of the "Page" menus show up.  
+-
+ID: 1055
+Keyword: print
+Subject: print
+
+Print looks to the preference file for which printer to print and then
+forks off lpr. However, lpr has a little mind of it's own and looks in
+the environment to see whether PRINTER has been set. When somebody has
+PRINTER set in it's enviroment different from the one in preferences, it
+will win. It might be the case that print doesn't use the -P flag to
+lpr, since the -P flag will override the environment setting.
+-
+ID: 1056
+Keyword: printing
+Subject: inset positioning
+
+Even though the insets can be made to appear inside their respective
+boxes, their position and the amount of whitespace around the inset has
+little or no correspondence to what appears if the document is
+previewed, or printed. This is unacceptable for doing serious document
+preperation.
+-
+ID: 1057
+Keyword: printing
+Subject: Printing tables with insets
+
+Imbed some text objects in a table which itself is imbedded in an
+outermost text document.  When you print it the text objects will not be
+in the proper cells; rather they will be left adjusted overprinting each
+other and the rest of the table.
+-
+ID: 1058
+Keyword: pyramid
+Subject: modifications offered by user not yet tested
+
+Modifications submitted by pyramid user need tested to make 
+distribution run on pyramid.  
+
+-
+ID: 1059
+Keyword: raster
+Subject: raster bugs
+
+When editting a raster as the outermost object, normally there is a
+rectangle delimiting the image, but when you go into touch up mode, the
+rectangle vanishes.
+
+When the image has been cropped once, the Crop option is absent from the
+menu.  It should be present whenever the selection does not coincide
+with the current image boundary.
+
+If I scroll text containing a raster so the raster goes off the top of
+the screen and then scroll it back onto the screen, it does not have its
+cursor.
+-
+ID: 1060
+Keyword: raster
+Subject: raster bugs
+
+When a raster is embedded in text, two problems can occur: 
+1. When I have zoomed in twice, ExtendToMat does not appear in the menu.
+2. Dragging the DisplayBox behaves funny.  If one presses the button at
+the middle of the display box and moves, when the box reappears the
+cursor is not in the middle of the box.  (It would be better if the box
+rubber-banded while I moved it.)
+-
+ID: 1061
+Keyword: raster
+Subject: raster problem
+
+The RasterReplace option does not cause the raster to be redrawn if
+embedded in text. I believe this occurs because raster__Read does not
+set the ChangedRect value in the pixelimage. It is also bogus that
+raster__Read calls NotifyObservers before it finishes setting the
+paramters of the new image (with the last few lines of the procedure).
+-
+ID: 1062
+Keyword: styles
+Subject: default.template uses unit_Points for both ScriptMovement and
+FontSize.
+
+For the former, the value is correctly shifted left sixteen bits, but
+for FontSize the value is 15.  The best solution is probably to use
+RawDots for FontSize.
+
+In context.c, the default unit for context_ScriptMovement is sometimes
+Points and sometimes RawDots.  The latter has the sideeffect of causing
+the scriptmovement attribute to be written in the document, even if it
+is actually specifies no baseline adjustment.  One default should be
+chosen and used consistently.
+
+CVDots in context.c is neither static nor a classprocedure.  Should it
+be one or the other?  The current code is deficient in being unable to
+handle context_Ems or context_Lines.  In general, these conversions can
+only be evaluated with respect to a current formatting environment, so
+such an environement should be an argument to CVDots.  In the style
+editor, I also needed the inverse operation of CVPoints to convert from
+RawDots to Points. Such a routine should be in context.H as well.
+-
+ID: 1063
+Keyword: table
+Subject: printing tables
+
+In table, V-Bar and H-bar formats work properly in the window, but not
+in preview or when printed.  (You get the number instead of the bar.)
+-
+ID: 1064
+Keyword: table
+Subject: What would it take to change this behavior of table:
+
+The 'StartingTable' section of the on-line help says that the system
+messages such as "Checkpointing" can end up in the table cells from the
+message line. 
+-
+ID: 1065
+Keyword: table
+Subject: table
+
+Table core dumps if a child view contained under it is destroyed, (i.e.
+via a cut command from the Arbcon).
+-
+ID: 1066
+Keyword: text
+Subject: modified flag
+
+Adjusting the size of an inset embedded as text does not flag the text
+object as "modified", which it should.
+-
+ID: 1067
+Keyword: text
+Subject: replace fails
+
+Replace fails in the following case:
+	in window a, Paste some text
+	in window b, Copy some text
+	in window a, choose Replace (ESC-y)
+the text is not replaced with the new text, but instead with its former
+version.  This is because Replace rotates and then pastes in the case
+where nothing has been done in between.
+-
+ID: 1068
+Keyword: text
+Subject: simpletext: string
+
+The data item 'string' in the struct for smpltext is declared 'char'. 
+This is wrong because it gets treated as signed characters on some
+hardware and unsigned on others.  When treated as signed, sign extension
+occurs which causes some comparisons to fail.
+-
+ID: 1069
+Keyword: text
+Subject: textview__FullUpdate does too much
+
+textview__FullUpdate calls the FullRedraw of all child views even when
+the type is view_Remove. The observed error is that a control-L redraw
+will redraw an embedded raster twice: once at an offset 22 pixels to the
+left of where it should be and once later in the correct location.
+-
+ID: 1070
+Keyword: text
+Subject: scrolling
+
+scrolling a textview with a selection region sometimes repositions the
+selection.
+-
+ID: 1071
+Keyword: text
+Subject: tabs
+
+Tabs in ez documents continue to demonstrate the strange features of
+edittext tabs.  Actually the tabulations are different but still
+unexpected.  
+-
+ID: 1072
+Keyword: text
+Subject: scroll insets 
+
+Insets embedded within text cannot be scrolled 
+-
+ID: 1073
+Keyword: text
+Subject: textview bug double click action
+
+Double click actions in textview do not always select the correct region. 
+-
+ID: 1074
+Keyword: text
+Subject: selections by words are extended inconsistently
+
+When selecting a range of text by characters, one is able to extend the
+selection region by whole lines in either direction (up or down) from
+the dot by moving the cursor outside of the text margins (either to the
+left or right) and then moving the cursor up or down. When selecting by
+words, this works the same way if you've moved up from the dot position
+-- but if you extend the selection region downward, you're forced to
+select the first word of each line
+-
+ID: 1075
+Keyword: text
+Subject: be2templatepath
+
+The name be2templatepath in andrew/atk/text/tpllist.c line 125 is
+supposed to change to atktemplatepath.  Perhaps it would be more
+appropriate to change it to templatepath. In any case, it should not
+remain be2templatepath.
+-
+ID: 1076
+Keyword: text
+Subject: selection location
+
+The selection box is usually around the word that has been selected. 
+But if the word is the first word in the line, the selection extends all
+the way to the left margin, suggesting that it includes whitespace as
+well as the word.   At the same time, when a newline is at the end of
+the selection, there is no part of the selection box on the line
+following the newline.  
+-
+ID: 1077
+Keyword: text
+Subject: a mouse hit on an embedded inset causes a desired size
+negotiation to be done.
+
+Since no size information has changed, this is unnecessary.
+-
+ID: 1078
+Keyword: text
+Subject: persistence of text
+
+text.c should not delete a text object (despite a call to text_Destroy)
+until there are no marks on the text.
+-
+ID: 1079
+Keyword: text
+Subject: Bug in query replace fix
+
+Consider the case where the following text contains the string: 
+foofoofoofoo and the query replace string is to change foof to bar.  The
+start of the search will ask the user to replace the first foof.  Now
+assume the user says no.  Currently the code will now select the foof
+starting at position 6 instead of position 3.  The code should be fixed
+to just increment the searchPos by 1 instead of the matchLen.  This will
+cause the search to pick up properly.
+-
+ID: 1080
+Keyword: textview
+Subject: fixed width problems
+
+Text following tab characters on long lines in LEX files (using
+fixed.tpl) was invisible.
+-
+ID: 1081
+Keyword: typescript
+Subject: pasting rofftext
+
+I accidentally pasted a rofftext data object into the typescript; it
+cannot be removed without zapping the window.  It stands up to a Clear
+operation, and cannot be selected for cutting.
+-
+ID: 1082
+Keyword: typescript
+Subject: typescript bug report
+
+The code which typescript uses to grab a pty will only check the 16
+pty's /dev/ptyp0 - /dev/ptypf.  Even if more really exist, typescript
+doesn't try to grab one.
+-
+ID: 1083
+Keyword: typescript
+Subject: invisible text problem
+
+Typescript checks the echo bit in the pty and revises what it chooses to
+send to the screen.  Sometimes (especially with paging) the shell does
+not reset the echo bit before typescript gets more keys.
+-
+ID: 1084
+Keyword: x
+Subject: newLineHeight in font summary returns zero for andrew fonts
+
+The field newLineHeight of a returned fontsummary for an adobe font
+yields 0.  Two problems. 1) fdbbdf not calculating right value (see bug
+report on font ascent/descent bug). 2) The calculation of newLineHeight
+does not check so see if ascent and descent are meaningful. The former
+is fixed as per tpn's local modification to fdbbdf. The later is fixed
+via a change to the font summary calculation code in xfontdesc.c that
+checks for a 0 newLineHieght.
+-
+ID: 1085
+Keyword: x
+Subject: text caret gets lost or duplicated
+
+The text caret in textview-type things under X often gets lost or
+duplicated, especially when doing something like ^J in a typescript. 
+Typically in this case, the caret becomes invisible, and do an ESC-> to
+see if the caret comes back.  When it doesn't reappear, do a ^L and
+there'll be two carets, one at the end of the text and one at the end of
+the previous line.  Of course, the later one is the "right" one...
+-
+ID: 1086
+Keyword: xim
+Subject: X mouse buttons
+
+The current version of X mouse support deals well with two button mice,
+but not with three button mice.  With the latter it cannot send to the
+client the fact that the right (or left) button was pressed while the
+left (or right) button was already down.  What it does is to invent an
+upstroke on the first button when the second is pressed.  
+-
+ID: 1087
+Keyword: zip
+Subject: font size disappears
+In zip, in edit mode, the font size in the Sample section at the top
+right, disappears after it is clicked on with either the left or right
+mouse button, never to reappear again. 
+-
+ID: 1088
+Keyword: zip
+Subject: printing zip's w/ imbeded '\'s
+
+When Zip tries to print characters, it does not check if one of those
+characters is a '\' , which it must then quote to get it through
+postscript/troff. This can foul up the printing of both Zip and the text
+enclosing it.
+-
+ID: 1089
+Keyword: zip
+Subject: zip bug
+
+When one clicks on the polygon in the compose mode, it asks a question
+and will not abort the polygon mode until the question is answered. 
+Instead it ought to revert to select mode for a button click in the
+window body.
+-
+ID: 1090
+Keyword: zip
+Subject: zip bug
+
+A click in select mode on text can cause it to jump precipitously to a
+new position if the mouse moves the tiniest little bit.
+-
+ID: 1091
+Keyword: zip
+Subject: zip bug
+
+After dragging text, the entire window is redrawn although nothing has changed.
+-
+ID: 1092
+Keyword: zip
+Subject: zip
+
+Zip core dumps if a child view contained under it is destroyed, (i.e.
+via a cut command from the Arbcon).
+-
+ID: 1093
+Keyword: zip
+Subject:  zip core dumps when it cannot connect to an Xserver
+
+runapp shouldn't core dump if there's no window system running.
+
+
+AMS Bugs
+
+-
+ID: 1094
+Keyword: messages
+Subject: Plainest bug
+
+In messages-send (rt_r3-andy) Plainest seems to be behaving like
+Plainer. I had put two different styles around a selection, then chose
+Plainest.  I then needed to chose Plainest again to get where I wanted
+to go.
+-
+ID: 1095
+Keyword: messages
+Subject: Captions option initialized to 0cm.
+
+I noticed that the second time I ran messages 7.3, after diddling some
+options that no captions window came up.  I noticed as I scrolled
+through the options setting stuff that it was set to 0, but I didn't
+touch it. I could only get the window back by setting a size.  It seems
+as if every time I set options, I will have to set the size of the
+captions window unless this problem is fixed.
+-
+ID: 1096
+Keyword: messages
+Subject: Messages 7.6
+
+Messages sometimes places the quit-mark one message too late in my mail
+folder when I read in new messages from my Mailbox.
+-
+ID: 1097 
+Keyword: messages
+Subject: Insert file into sendmessage window is slightly wrong.
+
+When inserting a file into my messages window (which had no text in it
+at the time, if that matters) the screen came up blank. I believe this
+is because it is taking the # and \ characters to be ATK datastream
+commands. Generally fails when trying to mail a C program to someone. 
+-
+ID: 1098
+Keyword: messages
+Subject: messages -w
+
+When running messages with the -w option, the expand menu option on the
+'File Into' card does not work right. If one selects  expand menu in
+either the captions or the body window, the file into card gets expanded
+in the captions window. Nothing I do seems to be able to make it expand
+in the body window.
+-
+ID: 1099
+Keyword: messages
+Subject: Messages
+
+When you run messages -w, and all you have is a folders window, and you
+choose the "send/post message" menu, the captions window is needlessly
+created.
+-
+ID: 1100
+Keyword: messages
+Subject: wait cursor needed
+
+When you choose "compose bug report" in the sending window, it doesn't
+put up the wait cursor

@@ -1,0 +1,28 @@
+           SRCS = bull2.c \
+                  gen2.c \
+                  imageedit2.c \
+                  list9.c \
+                  menuTest1.c \
+                  menuTest5.c \
+                  swin1.c \
+                  tog11.c \
+                  vpw13.c \
+                  workspace1.c \
+                  xpanel2.c
+LOCAL_LIBRARIES = $(XAWLIB) ../Xw/libXw.a $(XMULIB) $(XTOOLLIB) $(XLIB)
+
+all: bull2 gen2 imageedit2 list9 menuTest1 menuTest5 swin1 tog11 vpw13 workspace1 xpanel2
+
+SingleProgramTarget(bull2,bull2.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(gen2,gen2.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(imageedit2,imageedit2.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(list9,list9.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(menuTest1,menuTest1.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(menuTest5,menuTest5.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(swin1,swin1.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(tog11,tog11.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(vpw13,vpw13.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(workspace1,workspace1.o,$(LOCAL_LIBRARIES),)
+SingleProgramTarget(xpanel2,xpanel2.o,$(LOCAL_LIBRARIES),)
+
+DependTarget()

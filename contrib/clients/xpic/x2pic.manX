@@ -1,0 +1,82 @@
+.TH X2PIC L
+.SH NAME
+x2pic - convert figures stored in \fIxpic\fP format to pic.
+.SH SYNOPSIS
+.B x2pic
+[-s \fIscale\fP] [-f \fImaximum fonts\fP] [\fIfilename\fP] ....
+.SH DESCRIPTION
+.I X2pic
+takes the given 
+.I xpic 
+file (default is the standard input) and
+produces corresponding pic on the standard output. This can
+then be printed by passing it through 
+the 
+.I pic
+preprocessor
+and then through 
+.I ditroff
+(or other variants of
+.I troff)
+to output devices like laser printers.
+.SH OPTIONS
+.IR -s " scale"
+scales the picture by 
+.I scale, 
+which is a floating point number. Text doesn't scale very well. (eg) 
+.I -s 0.5
+will scale the picture to half its size.
+.PP
+.IR -f " numfonts"
+sets the maximum number of fonts that can be stored. The default is enough
+unless the users 
+.I ~/.x2pic 
+has a lot of font mappings.
+.IR 
+.SH "SEE ALSO"
+.IR xpic (L)
+is what generates the files for 
+.I x2pic
+to convert.
+.br
+.IR x2ps (L)
+is another filter for converting 
+.I xpic 
+output to
+.I PostScript(tm)
+format.
+.br
+.IR x2tpic (L)
+generates pic for the
+.IR tpic (L)
+preprocessor for 
+.I TeX
+to permit inclusion of pic in 
+.I TeX
+documents. 
+.SH SEE ALSO
+B. W. Kernighan,
+.I "PIC \(em A Graphics Language for Typesetting"
+.SH TRADEMARKS
+PostScript is a registered trademark of Adobe Systems, Inc.
+.SH FILES
+.I x2pic
+looks at 
+.I XPICLIBDIR/fontdesc/x2pic
+and at 
+.I ~/.x2pic 
+to find font mappings.
+.SH CAVEATS
+Many versions of pic have a nasty bug in which the 
+.I scale
+variable is not reset between consecutive pictures. Since xpic uses
+.I scale 
+in its pictures, (eg)
+.I scale = 80,
+the next picture will start off at this scale, and will therefore be
+further shrunk if it is an xpic picture, or just shrunk if it is any
+other picture, like a graph. Get someone to fix pic, or x2pic (which
+has a BROKENPIC ifdef to deal with this).
+.PP
+Pic does NOT do patterned splines, ellipses or circles - xpic does.
+This is a pic 'feature', not an xpic bug.

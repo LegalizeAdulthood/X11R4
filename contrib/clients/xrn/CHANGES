@@ -1,0 +1,320 @@
+
+/*
+ * $Header: /users/ricks/xrn-11/R4/RCS/CHANGES,v 1.8 89/11/17 11:47:07 ricks Rel $
+ */
+
+XRN release (6.3):
+
+- bug fixes
+  - domain name handle incorrectly in some cases
+  - search dialog box buttons deactivated once a search
+    is started
+
+- alterndate mailer available - calls 'send' rather than 'sendmail', 
+  thus 'mh' aliases can be used (see ALT-MAILER)
+
+- for the MIT X11R4 release: programmatic scrolling of the text widget
+  is disabled.  It will be turned back on once I get a copy of R4 and
+  figure out how to do it.
+
+
+XRN release (6.2.1):
+
+- include config.h in cursor.c and utils.c
+- removed sys/file.h from source files (included via X11/Xos.h)
+- change #if SYSV_REGX to #ifdef SYSV_REGX in cursor.c
+- fixed app defaults installation
+- fixed width and height in app defaults
+- composition window name change to "Composition"
+- include file box would segv, fixed
+- moved getinfofromfile to internals.c so other
+  implementations of clientlib can be used
+- added v{f,s}printf for those that don't have it in libc.a
+- added strtok for those that don't have it in libc.a
+- documented the new confirm boxes
+- goto article screwed up for out of range article number, fixed
+- indef's added so file/org/domain defines can be done in the
+  Imakefile
+- char -> int in compose.c
+- added button for scrolling
+
+XRN release (6.2):
+
+bug fixes
+- print for VMS fixes (misinstalled patch)
+  [thanks to Kevin Herbert <herbert@gr8ful.enet.dec.com>]
+- popup dialogs work better with sticky focus window managers
+  [thanks to mikey@wsl.dec.com (Mike Yang)]
+- added ':' to the end of the Article %ld in %s line in saved articles
+  (allows various mail programs to work on saved articles)
+- installing add mode translations could occasionally core dump
+- next newsgroup should work better now (no core dumps or infinite loops)
+- fixed a few infinite loops
+- the articles that have been read are no longer lost when you unsubscribe
+  to a group
+
+key bindings are no longer lost after using pop up dialogs.
+
+information box geometry can now be specified:
+	xrn.Information.geometry: 
+
+articles can now be sorted by subjects.  See xrn.sortedSubjects.
+  sorting is case insensitive and based on the first 24 characters
+
+"include file" now does tilde expansion
+
+posting failures put you back in the composition window
+
+default action for confirm dialog boxes is now 'yes'.
+
+support for the macII running A/UX 1.1 (System V Rel 2 with BSD networking)
+  [thanks to glenn@mathcs.emory.edu (Glenn T. Barry)]
+
+support for HPUX
+  [thanks to jp@hplb.hpl.hp.com (Julian Perry)]
+
+even better kill file support
+- regular expressions are supported in the kill pattern
+  (still missing: all the various possible commands that can be used)
+- better kill file entries generated
+
+NN 'Re^#:' is understood and dealt with.
+
+confirm boxes are now available on a per-button basis.
+See xrn.confirm in the man page.
+
+subject next now uses a case insensitive/24 character comparision
+
+rn bindings are in the app-defaults file and are now the default bindings
+
+internals
+- better 'mesgPane' interface
+  [thanks to mtoy%there.esd.sgi.com@sgi.sgi.com (Michael Toy)]
+
+
+
+XRN release (6.1):
+
+bug fixes
+  - insertion point for compose windows now in the right place
+  - tabs and new lines can now be in *ButtonList: X resources
+  - occasionally xrn would die due to not being able to open
+    the newsrc temp file - this has been fixed
+  - garbage text in error label during subject next gotten rid of
+  - group names can now be longer than 32 characters
+	'hp-factory.software-eng.excalibur' can now be read
+  - busy cursor appears all of the times when XRN is busy
+  - top window redraws correctly - going from all/ng mode to
+    article mode, if the group was empty, you would pop back out
+    to all/ng mode, but without any text in the top window
+  - control C now aborts a subject search
+  - exiting out of All mode had some problems
+    (thanks to Rich Simoni <simoni@strat.stanford.edu>)
+
+popup mesg window
+  - no more output to stderr
+  - much of the error/warning output that went to the top info/help
+    label now goes to the mesg window
+
+defines to deal with various toolkit/window manger problems
+  - see config.h
+
+confirm box on XRN quit/exit
+
+key bindings now work in all widgets, not just the button box
+
+VMS support (thanks to Kevin Herbert <herbert@gr8ful.enet.dec.com>)
+
+xrn checks to see if another xrn is running - the .rnlock file
+  used by rn is not used.  XRN stores the host that XRN is running
+  on in addition to the process id.
+
+key bindings are now exported:
+  - four new resources/command line options:
+	addBindings, artBindings, allBindings, ngBindings
+  - see the man page for more information
+
+Set of RN-like keybindings for XRN
+  (thanks to Jeff Wallace <jeffw@scam.Berkeley.EDU>)
+
+New configuration parameter: SUBJECTS (config.h)
+  - the number of subject lines to prefetch when doing a backwards
+    subject search.  The default is 10
+
+turning off kill file support:
+  - for those of you that don't use kill files, the searching 
+    for kill files can be turned off.  The kill buttons remain
+    if you want to add something to a kill file, but they will
+    not be processed.  See the +/-killFiles option.
+
+ngLastGroup changed to ngPrevGroup
+  - last group confused some people who thought it meant go to
+    the last group displayed in the newsgroup index.
+
+new button in article specific pane: print
+  - print an article, uses the 'printCommand' resource/command line option
+    (defaults to 'enscript')
+
+new button in composition pane: include file
+  - includes a file in a posting - like Meta-I in the text
+    widget, but: (1) does not screw up your keyboard bindings,
+    and (2) has an accelerator.
+
+including an article now only includes the text (strips the header).
+  - this can be changed via the 'includeHeader' option.
+  (thanks to Paul Raveling <raveling@isi.edu>)
+
+the .newsrc file can now be automatically updated when leaving article
+  mode - see the `updateNewsrc' option.
+
+slightly better KILL file support
+  - killing based on author name supported
+  - more formats of kill file entries supported
+
+articles can be saved into newsgroup `folders', like 'xmh'.  see the
+  saveMode option (thanks to Paul Raveling <raveling@isi.edu>)
+
+More ways to specify the domain, hidden host, new hidden path, ...
+  (thanks to Frederick M. Avolio (avolio@decuac.dec.com)
+  - see config.h
+
+USC ISI app-defaults file for XRN included (isi.app-defaults)
+  (thanks to Paul Raveling <raveling@isi.edu>)
+
+'abort' option in the death notifier dialog now dumps core in
+the real stack rather than the signal stack (thanks to KJ Pires
+<kjpires@ic.Berkeley.EDU).
+
+Compiles with GCC.
+
+
+XRN release (6.0):
+
+Man page now even better reflects reality.
+
+Much faster startup and rescan.
+
+Can specify the order and number of buttons for each mode via
+X resources or the command line: ngButtonList, addButtonList,
+allButtonList, artButtonList, artSpecButtonList.
+
+Post button exported to Newsgroup mode so you can post to
+  newsgroups with no available articles.
+
+Next Newsgroup works. 
+
+Cleaned up included articles in composition windows
+
+Bug fixes
+  - fixed sending articles/messages with editorCommand
+     (always would be sent)
+  - loss of keybindings after dialog pop up attributed to
+    window manager problems (gwm, hpwm, and sometimes twm and mwm).
+    Key bindings are not lost when using dxwm, uwm.
+    [VERY STRANGE]
+
+Organization field can be defaulted in config.h
+
+Compose windows are now topLevelShells rather than transientShells
+
+
+
+New XRN release (5.7):
+
+Bug fixes
+
+
+
+New XRN release (5.6):
+
+Kill Files
+  - new commands (session kill, local kill, global kill)
+
+Bug fixes
+
+  - core dumps
+
+Organization and Reply-To fields in postings can now be specified
+via X resources or the command line.
+
+Man page now better reflects reality.
+
+Imakefile
+
+RCS ID's
+
+
+
+New XRN release (5.5):
+
+line eater bug fix
+
+
+New XRN release (5.4):
+
+Changes from the last release of XRN:
+
+- considerably less memory usage
+
+  XRN uses a very simple data structure for storing information
+  about newsgroups and articles.  For every newsgroup, an array
+  the size of the number of articles available in that group
+  is created.  This causes XRN to grow to 2.5 to 3Meg at most
+  sites (at UCB, we have 650 groups and 2 week expiration, and
+  XRN groups to 3Meg).  However there is no reason to keep article
+  arrays for groups that you are not subscribed to. 
+
+  Bill Webb (IBM AWD Palo Alto, ...!uunet!ibmsupt!webb) sent in a
+  set of patches to have XRN only create article arrays for subscribed
+  to groups.  This decreases the memory from 3Meg to 900k (for us).
+  The amount you save will depend on what percentage of the newsgroups
+  that you subscribe to.
+
+- better nntp server error messages (sq)
+
+  The messages XRN gives to the user for NNTP failures don't give
+  you much information.   Ian Darwin (ian@sq.sq.com) sent in a set
+  of patches to improve the error messages.
+
+- alternative newsrcfile location (uiuc)
+
+  Many people like to have xrn look for a newsrc file based on the
+  particular server being used.  Dirk Grunwald (grunwald@flute.cs.uiuc.edu)
+  sent in a set of patches to cause xrn to look for a newsrc file
+  of the form <newsrcFile>-<nntpServer> before looking for just
+  <newsrcFile>.
+
+- includeSep
+
+  A new Xdefault has been added to get rid of the "> " characters
+  put in front of included messages.  Xdefault:
+	
+	    includeSep: on/off
+
+  Command Line:
+
+	    +/-includeSep
+
+- header lines are no longer broken
+
+  The last release included code to break long lines in news postings
+  to reasonable values.  Unfortunately it would also break header
+  lines (which is not allowed).  This version does not break the lines.
+
+- updated man page
+
+  The man page has been updated to reflect the current state of XRN.
+
+- double click
+
+  [note: this feature has not been added to the man page - it still
+  has some problems]
+
+  Double clicking on a newgroup entry will send you to the group.
+  Double clicking on an article entry will display the article.
+
+
+
+		Rick Spickelmier (ricks@ic..berkeley.edu)
+		Ellen Sentovich (ellen@ic..berkeley.edu)
+

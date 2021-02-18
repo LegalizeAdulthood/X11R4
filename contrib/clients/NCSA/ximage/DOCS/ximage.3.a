@@ -1,0 +1,252 @@
+                                                                
+
+November l989
+
+3.1	NCSA X Image
+
+Display Options	3.1
+
+National Center for Supercomputing Applications
+
+November 1989
+
+
+
+
+Chapter 3	Display Options
+
+
+
+Chapter Overview
+Displaying Your Dataset
+Loading Image Data
+Specifying Dimensions for Data
+Generating a Cartesian or Polar Image
+Generating a Contour or Shaded Data Plot
+Generating Plots
+Specifying Contour Levels
+Creating a Histogram
+
+Chapter Overview
+
+This chapter explains the various data display options provided by 
+NCSA X Image, and the procedures for performing image 
+manipulation. The current version of NCSA X Image allows you to 
+display your actual data values; generate full color cartesian and 
+polar raster images, black-and-white contour and shaded data 
+plots, and histograms of frequency distribution; and animate 
+multiple raster images. 
+
+
+Displaying Your Dataset
+
+To display data in any form, you must first load the image data 
+into NCSA X Image.
+
+
+Loading Image Data
+To load a dataset:
+
+1.	Click the Image button in the control window. The directory 
+window appears, displaying the current working directory.
+
+2.	Enter the path to the directory in which your data file is stored in 
+the text box labeled, Directory, and click Change or press 
+RETURN to locate the appropriate directory. You may also 
+locate a directory by entering a root path in the Directory text box 
+and allowing the system to build the path. Click on the desired 
+path that appears in the Filename text box, and repeat until you 
+reach the desired directory and filename.
+
+3.	Select the filename of the dataset. The filename becomes 
+highlighted.
+
+4.	Click Open. If the dimensions of the data matrix are not found 
+in the file, several textboxes appear in the directory so that you 
+may specify the dimensions of the image data (see Figure 3.1).
+
+
+
+Figure 3.1	Specifying the 
+Dimensions of an 
+Image
+                                   
+
+To specify the dimensions for the data:
+
+1.	Enter the width of the data matrix in the text box labeled Width of 
+Image, and the height of the dataset in the text box labeled Height 
+of Image.
+
+2.	Click OK. The directory window disappears and an image 
+control window appears, showing the pathname of the dataset in 
+the title box (see Figure 3.2). This is the main control window 
+for the dataset. All operations performed from this window will 
+apply to this dataset.
+
+If the file includes the proper dimensions of the data matrix, the 
+image control window automatically appears (see  Figure 3.2).
+Figure 3.2	Image Control 
+Window
+                                           
+
+To display your data values in spreadsheet form, click the button 
+labeled Display Data Set in the image control window. The image 
+data is displayed as real data values in a text window, as shown in 
+Figure 3.3.  The generation time of this window depends on the size 
+of the dataset.
+Figure 3.3	Data Window
+                                   
+
+NOTE:  Selections between data and image windows for a 
+particular dataset are fully synchronized so that you may identify 
+the data values that correspond to points on an image. Regions of 
+data points cannot be selected.
+
+When data points are selected in the Image window,  the value and 
+location is also displayed in the Log Book. Thus, if you close the 
+Data Value window, points selected on the image will still be 
+identified in the Log Book.
+
+
+Generating a Cartesian or Polar Image
+
+To generate a cartesian or polar image from your dataset:
+
+1.	Load the desired dataset (if you have not already) as instructed 
+in the section entitled "Loading Image Data" above.
+
+2.	Click the Display Cartesian or Display Polar button, 
+respectively, in the image control window for that dataset (see 
+Figure 3.1). The color image is displayed in an image window 
+similar to that shown in Figure 3.4.
+
+The Display Polar command generates a simple color image for 
+datasets that have the array mapped in polar coordinates (r, theta), 
+where theta ranges from 0 to 2π.
+
+
+
+
+Figure 3.4	Cartesian Image
+                                        
+
+For information regarding altering the color representation of 
+your dataset, see Chapter 4, "Palette Manipulations."
+
+
+NOTE: The speed of image generation is dependent on the size of 
+the original data. A 300 x 400 polar image might take three to four 
+minutes to complete (this may vary in relation to the speed of your 
+system), whereas a cartesian image generally takes only a few 
+seconds.
+
+
+Generating a Contour or Shaded Data Plot
+
+You can display your image data using contour or shaded data 
+plots. A contour plot contains contour lines between areas of 
+differing contour levels. A contour level is a range of data values 
+that you want to distinguish from other ranges of values. A shaded 
+data plot represents data values as eight different intensities of 
+shading.
+
+To generate a contour or shaded data plot:
+
+1.	Load the desired dataset (if you have not already) as instructed 
+in the section entitled "Loading Image Data" above.
+
+2.	Click the Graph button in the dataset's image control window. A 
+plot window such as that shown in Figure 3.5 appears.
+
+Figure 3.5	Graph Control 
+Window
+                                     
+
+3.	Specify whether you wish to produce a plot of a polar or cartesian 
+image.
+
+To specify the former, click the button labeled Plot Cartesian. 
+This toggles the option to Plot Polar. Click the button again to 
+return the option to Plot Cartesian.
+
+	NOTE: Before plotting a contour or shaded data plot under the 
+Plot Cartesian option, a polar image must be generated.
+
+4.	Click the Contour, Shade or Histogram button to generate the 
+desired graph. Clicking Shade generates a shaded data plot, 
+similar to that shown in Figure 3.6.
+
+Figure 3.6	Shaded Data Plot 
+Window
+                              
+
+Specifying Contour Levels
+Clicking Contour calls up the contour specifications window. In 
+the contour specifications window, you can specify the number and 
+spacing of contour levels and the range of data values to be 
+distinguished (see Figure 3.7).
+
+Figure 3.7	Contour 
+Specifications 
+Window
+                                        
+
+
+To use the contour specifications window:
+
+1.	Click Evenly spaced or User defined levels to determine the 
+spacing between contour lines.
+
+If you select User defined levels, the window pictured in 
+Figure 3.8 appears. Type in each contour level in ascending 
+order, separating the values by a space.
+
+2.	 If using evenly spaced contour levels, specify a number of 
+contour levels and the minimum and maximum data value 
+ranges.
+
+Figure 3.8	User Defined 
+Spacing
+                                        
+
+3.	Click OK. A contour plot of your data is drawn according to your 
+specifications, either in a new window or over the appropriate 
+image. A sample contour plot is shown in its own window in 
+Figure 3.9.
+
+Figure 3.9	Contour Plot 
+Window
+                                 
+
+
+
+Creating a Histogram
+
+To generate a histogram that represents the values in an image:
+
+1.	Load the desired dataset (if you have not already) as instructed 
+in the section entitled "Loading Image Data" in this chapter.
+
+2.	Click the Histogram button in the graph control window for that 
+dataset. A histogram, such as that shown in Figure 3.10, is 
+plotted in a new window.
+
+3.	Click the button labeled Done in the histogram window to close 
+the histogram window.
+
+The histogram represents the frequency of data values in the 
+dataset. The y-axis denotes the number of instances of each 
+particular data value in the dataset, while the x axis denotes the 
+data values in ascending order from left to right.
+
+Figure 3.10	Histogram Window
+                                    
+
+The box labeled Data Value reports the data value at the point in the 
+histogram window on which your cursor currently rests. The box 
+labeled Frequency Percentage reflects the relative percentage of 
+occurrences of that data value within the dataset.
+
+Drag the mouse within the graph area to see specific numerical 
+values and percentages.

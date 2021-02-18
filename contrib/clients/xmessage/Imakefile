@@ -1,0 +1,7 @@
+        DEPLIBS = $(DEPXAWLIB) $(DEPXMULIB) $(DEPXTOOLLIB) $(DEPXLIB)
+LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+           SRCS = main.c makeform.c readfile.c
+           OBJS = main.o makeform.o readfile.o
+       INCLUDES = -I$(TOOLKITSRC) -I$(TOP)
+
+ComplexProgramTarget(xmessage)

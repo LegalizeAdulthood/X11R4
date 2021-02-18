@@ -1,0 +1,21 @@
+***************
+*** 51,56
+  	    a = e->radiuses.x;
+  	    b = e->radiuses.y;
+  	    dis = sqrt((double)(dx*dx + dy*dy));
+  	    r = a * b * dis / sqrt((double) (b*b*dx*dx + a*a*dy*dy));
+  	    if (fabs(dis - r) <= tol) {
+  		*px = (int)(r*dx/dis + ((dx < 0) ? -.5 : .5)) + e->center.x;
+
+--- 51,61 -----
+  	    a = e->radiuses.x;
+  	    b = e->radiuses.y;
+  	    dis = sqrt((double)(dx*dx + dy*dy));
++ 	    if (dis == 0) {
++ 		    *px = e->center.x;
++ 		    *py = e->center.y;
++ 		    return(e);
++ 	    }
+  	    r = a * b * dis / sqrt((double) (b*b*dx*dx + a*a*dy*dy));
+  	    if (fabs(dis - r) <= tol) {
+  		*px = (int)(r*dx/dis + ((dx < 0) ? -.5 : .5)) + e->center.x;

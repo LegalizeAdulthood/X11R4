@@ -1,0 +1,54 @@
+.TH XPIC L
+.SH NAME
+xpic - draw and edit diagrams, figures, pictures in X Windows
+.SH SYNOPSIS
+.B xpic
+[X Toolkit options] ... [xpic options] ...  file
+.SH DESCRIPTION
+.I Xpic
+is a program for drawing figures in X Windows. It has facilities for creating
+various graphic elements like lines, splines, circles, ellipses, and 
+text with a number of different attributes (line thickness, line
+style, text font, text point size). It also has various facilities for
+editing the diagrams, either on an individual 
+.I element 
+basis, or by grouping elements into 
+.I blocks.
+These editing facilities include copy, move, delete, paste, adjust,
+change attributes, get from disk, and put to disk. It also permits the
+saving and loading of pictures, and the adjustment of the grid to
+which picture elements are aligned.
+.PP
+The program is meant to be easy enough to use without a manual. (This
+is called a weak cop-out!)
+.SH "SEE ALSO"
+For a more complete description of the functions, and some advanced features,
+see 
+.br
+	DOCDIR/xpic.doc. 
+.br
+For examples, see 
+.br
+	DOCDIR/*.x.
+.PP
+.IR x2ps (L),
+and 
+.IR x2pic (L)
+are supporting programs that convert from xpic's internal saved format
+to PostScript(tm) and pic format respectively.
+.SH AUTHOR
+Mark Moraes, CSRI, University of Toronto. 
+.br
+<moraes@csri.toronto.edu>
+.SH BUGS
+(Bugs! In my program?!)
+Splines leave debris after rubberbanding or adjusting. This may be
+considered a feature since I'm not sure how to fix it. 
+.br
+Splines/lines leave old arrows around after an adjust of end segments.
+.br
+The Xsun server from the MIT X distribution lies blatantly about its screen
+resolution. xpic believes it, and this results in fonts with silly sizes
+like 11, 13, and 15 points.
+.SH TRADEMARKS
+PostScript is a registered trademark of Adobe Systems, Inc.

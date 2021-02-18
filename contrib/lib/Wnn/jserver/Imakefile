@@ -1,0 +1,86 @@
+#include "./../WnnImake.def"
+
+# If you change WNNWNNDIR, you should change "include/config.h"
+
+#FORKDEF = -DNOTFORK
+#      Jserver usually fork and remove association with controll
+#      terminal. -DNOTFORK is for DEBUG.
+
+       INCLUDES = -I$(WNNINCLUDESRC) -I$(TOP)
+        DEFINES = $(WNNDEFINES) -DJSERVER $(WNNTERM)
+   INSTALLFLAGS = $(INSTINCFLAGS)
+
+SRC1= de.c de_vars.c dispatch.c do_dic_env.c do_dic_no.c \
+      do_filecom.c error.c jbiki.c jishoop.c rd_jishoop.c readfile.c \
+      jishosub.c jmt0.c malloc.c kai_area.c \
+      mknode0.c mknode1.c mknode2.c renbn_kai.c bnsetu_kai.c \
+      daibn_kai.c jikouho.c jikouho_d.c fzk.c atojis.c \
+      get_kaiarea.c snd_rcv.c do_henkan.c do_henkan1.c \
+      do_env.c do_hindo_s.c initjserv.c hinsi_list.c
+OBJ1= de.o de_vars.o dispatch.o do_dic_env.o do_dic_no.o \
+      do_filecom.o error.o jbiki.o jishoop.o rd_jishoop.o readfile.o \
+      jishosub.o jmt0.o malloc.o kai_area.o \
+      mknode0.o mknode1.o mknode2.o renbn_kai.o bnsetu_kai.o \
+      daibn_kai.o jikouho.o jikouho_d.o fzk.o atojis.o \
+      get_kaiarea.o snd_rcv.o do_henkan.o do_henkan1.o \
+      do_env.o do_hindo_s.o initjserv.o hinsi_list.o
+SRC2= $(WNNJLIBSRC)/getopt.c
+OBJ2= getopt.o
+SRC3= $(WNNJLIBSRC)/wnnerrmsg.c
+OBJ3= wnnerrmsg.o 
+
+SRC4= $(WNNETCSRC)/strings.c
+OBJ4= strings.o
+SRC5= $(WNNETCSRC)/sstrings.c
+OBJ5= sstrings.o
+SRC6= $(WNNETCSRC)/bdic.c
+OBJ6= bdic.o
+SRC7= $(WNNETCSRC)/dic_atojis.c
+OBJ7= dic_atojis.o
+SRC8= $(WNNETCSRC)/gethinsi.c
+OBJ8= gethinsi.o
+SRC9= $(WNNETCSRC)/revdic.c
+OBJ9= revdic.o
+SRC10= $(WNNETCSRC)/hindo.c
+OBJ10= hindo.o
+SRC11= $(WNNETCSRC)/pwd.c
+OBJ11= pwd.o
+SRC12= $(WNNETCSRC)/bcopy.c
+OBJ12= bcopy.o
+SRCS= $(SRC1) $(SRC2) $(SRC3) $(SRC4) $(SRC5) $(SRC6) $(SRC7) \
+      $(SRC8) $(SRC9) $(SRC10) $(SRC11) $(SRC12)
+OBJS= $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6) $(OBJ7) \
+      $(OBJ8) $(OBJ9) $(OBJ10) $(OBJ11) $(OBJ12)
+
+AllTarget(jserver)
+SingleProgramTarget(jserver,$(OBJS),,)
+InstallProgramWithFlags(jserver,$(WNNBINDIR),$(INSTUIDFLAGS))
+DependTarget()
+
+install:: jserver
+	strip $(WNNBINDIR)/jserver
+	-@if test -f /etc/chown ; then \
+	    su $(WNNOWNER) -c '/etc/chown $(WNNOWNER) $(WNNBINDIR)/jserver' ; \
+	    /etc/chown $(WNNOWNER) $(WNNBINDIR)/jserver ; \
+	elif test -f /bin/chown ; then \
+	    su $(WNNOWNER) -c '/bin/chown $(WNNOWNER) $(WNNBINDIR)/jserver' ; \
+	else \
+	    su $(WNNOWNER) -c 'chown $(WNNOWNER) $(WNNBINDIR)/jserver' ; \
+	fi
+	@echo $(WNNOWNER) -c 'chmod u+s $(WNNBINDIR)/jserver'
+	-su $(WNNOWNER) -c 'chmod u+s $(WNNBINDIR)/jserver'
+	-cp $(WNNJDSRC)/jserverrc* $(WNNWNNDIR)
+	-cp $(WNNJDSRC)/hinsi.data $(WNNWNNDIR)
+
+
+WnnSpecialObjectRule($(OBJ2),$(SRC2),$(WNNJLIBSRC))
+WnnSpecialObjectRule($(OBJ3),$(SRC3),$(WNNJLIBSRC))
+WnnSpecialObjectRule($(OBJ4),$(SRC4),$(WNNETCSRC))
+WnnSpecialObjectRule($(OBJ5),$(SRC5),$(WNNETCSRC))
+WnnSpecialObjectRule($(OBJ6),$(SRC6),$(WNNETCSRC))
+WnnSpecialObjectRule($(OBJ7),$(SRC7),$(WNNETCSRC))
+WnnSpecialObjectRule($(OBJ8),$(SRC8),$(WNNETCSRC))
+WnnSpecialObjectRule($(OBJ9),$(SRC9),$(WNNETCSRC))
+WnnSpecialObjectRule($(OBJ10),$(SRC10),$(WNNETCSRC))
+WnnSpecialObjectRule($(OBJ11),$(SRC11),$(WNNETCSRC))
+WnnSpecialObjectRule($(OBJ12),$(SRC12),$(WNNETCSRC))

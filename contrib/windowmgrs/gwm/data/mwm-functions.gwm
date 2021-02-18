@@ -1,0 +1,157 @@
+
+;;File: mwm-functions.gwm --
+;;Author: colas@mirsa.inria.fr (Colas NAHABOO) -- Bull Research FRANCE
+;;Author: Frederic CHARTON
+;;Revision: 1.0 -- Sep 12 1989
+;;State: Exp
+;;GWM Version: 1.4
+
+
+; Description of mwm functions :
+; - 	f.function_name : the function
+; -	e.function_name : the validity field of the function
+;
+; e.function_name determines if an item is enable or not,
+; the function evaluation looks like : (if e.fctn (f.fctn))
+
+(df f.beep () (bell))
+(: e.beep t)
+
+(df f.circle_down () (circulate-windows-down))
+(: e.circle_down t)
+
+(df f.circle_up () (circulate-windows-up))
+(: e.circle_up t)
+
+(df f.focus_key ())
+(: e.focus_key t)
+
+(df f.kill () 
+ (progn
+  (send-user-event 'depop)
+  (kill-window)
+ )
+)
+(: e.kill t)
+
+(df f.lower () (lower-window))
+(: e.lower t)
+
+(df f.maximize () (zoom))
+(: e.maximize '(not (# 'zoom window-property)))
+
+(df f.menu args 
+ (eval (+ '(menu.pop) args))
+)
+(: e.menu t)
+
+(df f.minimize () 
+ (progn 
+  (mwm-iconify-window)
+  (if (and (= keyboardFocusPolicy 'explicit) autoKeyFocus)
+   (set-focus-kFL)
+  )
+ )
+)
+(: e.minimize '(not (= window-status 'icon)))
+
+(df f.move ()
+ (if action-by-menu (warp-pointer (/ window-width 2) (/ window-height 2) window))
+ (with (cursor cross-cursor) 
+  (if (= window-status 'icon)
+   (move-icon)
+   (move-window)
+  )
+ )
+)
+(: e.move t)
+
+(df f.nop () )
+(: e.nop t)
+
+(df f.normalize ()
+	(if (= window-status 'icon)
+          (progn 
+	   (mwm-de-iconify-window)
+           (if (and (= keyboardFocusPolicy 'explicit) deiconifyKeyFocus)
+	    (set-focus window-window)
+	   )
+	  )
+          (zoom) ) )
+(: e.normalize '(or (= window-status 'icon) (# 'zoom window-property)))
+
+
+
+(df f.post_wmenu (button) 
+ (menu.pop (window-menu) button)
+)
+(: e.post_wmenu t)
+
+(df f.quit_mwm () (end))
+(: e.quit_mwm '(= window-status 'root))
+
+(df f.raise () 
+	(if
+	(not (= window 
+	  (with (l (list-of-windows 'stacking-order))
+		(# (- (length l) 1) l)
+	  ) ) )
+	(raise-window))
+)
+(: e.raise t)
+
+(df f.raise_lower ())
+(: f.raise_lower t)
+
+(df f.refresh () (refresh))
+(: e.refresh t)
+
+(df f.refresh_win (process-exposes))
+(: e.refresh_win t)
+
+(df f.resize () (send-user-event 'resize-by-menu))
+(: e.resize '(= window-status 'window))
+
+(df f.restart () (restart))
+(: e.restart '(= window-status 'root))
+
+(df f.set_behavior ())
+(: e.set_behavior t)
+
+(df f.title ())
+(: e.title t)
+
+(df f.exec args  (eval (+ '(!) args)) )
+(: e.exec t)
+
+(df f.exec-cut () (execute-string (+ "(? " cut-buffer ")")) )
+(: e.exec-cut t)
+
+
+(de f.pack_icons ()
+ (with (theIconList (list-of-windows 'icon 'mapped)
+        i 0 l (length theIconList)
+       )
+  (: icon-array (list-make (* nb-icons.w nb-icons.h)))
+  (while (< i l)
+   (with (thePlace (auto-get-place)
+          X (# 0 thePlace)
+          Y (# 1 thePlace)
+          thePixelPlace (XY-to-xy X Y)
+          x (# 0 thePixelPlace)
+          y (# 1 thePixelPlace)
+          theIcon (# i theIconList)
+         )
+    (set-icon-of-array X Y theIcon)
+    (move-window theIcon x y)
+    (## 'X theIcon X)
+    (## 'Y theIcon Y)
+   )
+   (: i (+ i 1))
+  )
+ )
+)
+(: e.pack_icons iconAutoPlace)
+
+
+

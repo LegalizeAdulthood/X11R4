@@ -1,0 +1,141 @@
+#!/bin/sh
+#
+#	This file can be used to make all the reduced fonts needed
+#	by SunTroff.  The RSTFONTS variable points to the location of
+#	the RST fonts provided by Imagen.  Finally the SUNTROFF_FONTS
+#	variable points to the final location of the reduced fonts.
+#	The DEVICE variable is the name of the device used for Imagen
+#	typesetting.  The actual location of the reduced imagen fonts
+#	will be $SUNTROFF_FONTS/$DEVICE.
+#
+RSTFONTS=${1-/usr/local/lib/imagen/fonts/rst}
+SUNTROFF_FONTS=${2-/usr/local/lib/suntroff/devimp}
+DEVICE=imp
+
+#
+#	Reduce fonts by 120/300
+#
+#	Because of scalech this number must be a TWO digit percentage!!
+#
+PERCENT=${3-40}
+dpi=120
+
+XWIN=${4}
+if test x$XWIN != x ; then
+	if test $XWIN != suntroff ; then
+		XWIN=x
+		FC=${5-bdftosnf}
+		extension='.snf'
+	else
+		XWIN=
+		FC=
+		extension=
+	fi
+fi
+DEVICE=${6-sun}
+
+#	If you don't have the current directory in your path (.) then
+#	you will need to change the BIN_DIR variable to point to the
+#	location of this directory.  Many thanks to Len at Sentry for
+#	pointing this potential problem out.
+#
+BIN_DIR=.
+
+TEMP=/tmp/font
+TEMP2=/tmp/font2
+
+if [ ! -d $SUNTROFF_FONTS ]
+then
+	mkdir $SUNTROFF_FONTS
+else
+	echo Font Directory already in place.
+fi
+
+#
+#	Now create those fonts that we can make by renaming.....
+#
+
+for i in `cd $RSTFONTS;echo [a-zA-Z]/[0-9] [a-zA-Z]/[0-9][0-9] \
+			  [a-zA-Z][a-zA-Z]/[0-9] [a-zA-Z][a-zA-Z]/[0-9][0-9]`
+do
+	if [ -r $RSTFONTS/$i ]
+	then
+		Size=`echo $i | sed "s/.*\///"`
+		Font=`echo $i | sed "s/\/.*//"`
+		NewSize=`expr $Size \* 100 / $PERCENT`
+		if test x$XWIN != x ; then
+			fname=`echo $Font | tr A-Z a-z`
+			fontname=$DEVICE.$fname.$NewSize.$dpi
+			fname=$fname$NewSize.snf
+		else
+			fname=$Font.$NewSize
+		fi
+		if [ ! -r $SUNTROFF_FONTS/$fname ]
+		then
+			echo Converting $RSTFONTS/$i to \
+				$SUNTROFF_FONTS/$fname
+			$BIN_DIR/rst2ch $RSTFONTS/$i > $TEMP
+			if [ x$XWIN = x ] ; then 
+				$BIN_DIR/ch2vft $TEMP > \
+					$SUNTROFF_FONTS/$fname
+			else
+				$BIN_DIR/ch2vft $TEMP > $TEMP2
+				$BIN_DIR/vf2bdf $TEMP2 $NewSize | \
+				sed 's?^FONT .*$?FONT '$fontname'?' | \
+				$FC > $SUNTROFF_FONTS/$fname
+			fi
+
+		fi
+	fi
+done
+
+#
+#	Now create the fonts that we need to make by bit reduction.
+#	First check to see if we have a font "close enough".  Close
+#	enough is defined here to be within one point size.
+#
+for i in `cd $RSTFONTS;echo [a-zA-Z]/[0-9] [a-zA-Z]/[0-9][0-9] \
+			  [a-zA-Z][a-zA-Z]/[0-9] [a-zA-Z][a-zA-Z]/[0-9][0-9]`
+do
+	if [ -r $RSTFONTS/$i ]
+	then
+		Size=`echo $i | sed "s/.*\///"`
+		Font=`echo $i | sed "s/\/.*//"`
+
+		if [ x$XWIN = x ]
+		then
+			f1=$SUNTROFF_FONTS/$Font.`expr $Size - 1`
+			f2=$SUNTROFF_FONTS/$Font.`expr $Size`
+			f3=$SUNTROFF_FONTS/$Font.`expr $Size + 1`
+			fname=$Font.$Size
+		else
+			Font=`echo $Font | tr A-Z a-z`
+			f1=$SUNTROFF_FONTS/$Font`expr $Size - 1`$extension
+			f2=$SUNTROFF_FONTS/$Font`expr $Size`$extension
+			f3=$SUNTROFF_FONTS/$Font`expr $Size + 1`$extension
+			fontname=$DEVICE.$Font.$Size.$dpi
+			fname=$Font$Size$extension
+		fi
+
+		if [ -r $f1 -o -r $f2 -o -r $f3 ]
+		then
+			true
+		else
+			echo scaling and converting $RSTFONTS/$i to \
+				$SUNTROFF_FONTS/$fname
+			$BIN_DIR/rst2ch $RSTFONTS/$i > $TEMP
+			$BIN_DIR/scalech -s$PERCENT  $TEMP > $TEMP2
+			if test x$XWIN = x ; then
+				$BIN_DIR/ch2vft $TEMP2 > $SUNTROFF_FONTS/$i
+			else
+				$BIN_DIR/ch2vft $TEMP2 > $TEMP
+				$BIN_DIR/vf2bdf $TEMP $Size |
+				sed 's?^FONT .*$?FONT '$fontname'?' | \
+				$FC > $SUNTROFF_FONTS/$fname
+			fi
+		fi
+	fi
+done
+if [ x$XWIN != x ]; then
+	mkfontdir $SUNTROFF_FONTS
+fi

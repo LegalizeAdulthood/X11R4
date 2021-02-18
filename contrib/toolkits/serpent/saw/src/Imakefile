@@ -1,0 +1,27 @@
+#include "../../Serpent.tmpl"
+DIR = saw
+	 
+SRC = x22.c xbw.c xcm.c xcp.c xct.c xdb.c xdw.c xfw.c xht.c xlw.c xsb.c xtw.c xvp.c xvt.c sxt.c
+
+OBJ = x22.o xbw.o xcm.o xcp.o xct.o xdb.o xdw.o xfw.o xht.o xlw.o xsb.o xtw.o xvp.o xvt.o sxt.o
+
+BIN = saw
+
+DATA = saw.ill
+
+ILLFILES = saw.ill
+
+LIBS = $(SERPENTLIBS) $(SERPENTXLIBS)
+
+DEPENDINCS = $(SERPENTXINCS)
+
+SerpentSddRule()
+SerpentObjectRuleX()
+
+all:	$(ILLFILES) $(BIN) install_data install_bin
+
+SerpentSimpleProgramObjs(saw,$(OBJ))
+
+SerpentInstallBinData()
+
+SerpentDepend()

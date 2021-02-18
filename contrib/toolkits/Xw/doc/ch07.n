@@ -1,0 +1,2020 @@
+
+
+       Writing New Widgets
+                                                                  7
+       The previous chapters of this manual were concerned with
+       using the set of widgets contained in the X Widgets library.
+       The X Widgets library contains a base set of widgets, and it
+       was intended that these widgets, alone and in combination,
+       would solve a majority of an application writer's needs.
+       However, there may be occasions where new widgets are
+       needed.  This chapter will describe how to create a new
+       widget.
+
+
+       7.1  Widget Description
+
+
+       This chapter will describe the construction of a new
+       primitive widget, a multistate button.  The number of states
+       can be set by the application writer, thus allowing
+       different instantiations of the same class to have a
+       different number of states.  The button will display a
+       different label to indicate each state.  When selected, the
+       button will inform the application which state has been
+       selected and will then change state and display the
+       appropriate label. This new widget will be of class
+       XwmultiButtonWidgetClass.
+
+       One of the advantages of building new widgets on top of an
+       existing widget library such as the X Widgets library is
+       that many of super and meta classes are available upon which
+       to base the new widget.  For our purposes, the new widget
+       will be a subclass of XwbuttonWidgetClass, and it will
+       therefore inherit resources and procedures from that class.
+       These resources are:
+
+          o Core.  Includes basic resources (such as  x, y, width,
+            and height) needed by all widgets.
+
+          o Primitive.  Includes resources to accomplish
+            highlighting around the button, as well as resources
+            and procedures to handle keyboard focus manipulation.
+            It also defines the set of callbacks available to all
+            primitive widgets.
+
+          o Button.  Includes additional resources and procedures
+            that aid in the display and management of all types of
+            buttons.
+
+       Thus, many of the resources common to all widgets are
+       provided by these classes.
+
+
+       7.2  Constructing a Widget
+
+
+       The process of constructing a widget consists of the
+       creation of three separate files:
+
+          o A private header file that contains definitions for the
+            widget class and instance structures.  This file will
+            be used by other widgets that wish to become subclasses
+            of the new widget.  Its purpose is to hide the widget
+            structure from the application writer.  This forces the
+            programmer to use set values rather than the actual
+            fields.  For this widget, the private header file will
+            be named MButtonP.h, and it will reside in the
+            directory /usr/include/Xw.
+
+          o A public header file that contains the external
+            definitions needed for an application writer to make
+            use of the widget.  It will typically contain the name
+            of the widget class (in this case it will be
+            XwmultiButtonWidgetClass), as well as the definition of
+            any new resources needed to define the widget.  For
+            this widget, the public header file will be named
+            MButton.h, and it will also reside in the directory
+            /usr/include/Xw.
+
+          o A source code file that contains C source code for the
+            widget.
+
+       The following sections will describe each of these files in
+       detail.
+
+
+       7.2.1  The Private Header File
+
+       The Xt Intrinsics manual describes a widget as having both a
+       class record and an instance record.  There is always
+       exactly one class record for every widget class and, it is
+       from this class record that the data and procedures needed
+       to create instances of this widget are found.
+
+       The class record for a widget class is a collection of
+       structures (or class parts) contributed by each of the
+       superclasses of the widget, as well as a class part for the
+       widget being constructed.  Since it is not necessary to
+       create any new procedures for the new widget, the class part
+       for the multi-state button will be empty. The inclusion of
+       the "int" field in the code segment below is solely to
+       placate fussy C compilers.
+
+       typedef struct {int nada;} XwMultiButtonClassPart;
+
+       The entire class record for the new widget will then be:
+
+       typedef struct  XwMultiButtonClassRec {
+          CoreClassPart           core class;
+          XwPrimitiveClassPart    primitive class;
+          XwButtonClassPart       button class;
+          XwMultiButtonClassPart  multi button class;
+       } XwMultiButtonClassRec;
+
+       Once the class record for the new widget has been built, the
+       instance record template can be built.  Each time an
+       instance of the new widget is created, this template will be
+       used in conjunction with the procedures and data in the
+       class record to fill out the fields in the instance record.
+       Like the class record, the instance record is also composed
+       of structures contributed by the superclasses of the widget
+       and any special instance parts required for this widget.
+       The new multi-state button widget will need four additional
+       fields:
+
+          o A pointer to an array of strings.  Each of the strings
+            will be used to label the button depending on the state
+            of the button.
+
+          o A count of the labels provided by the application.
+
+          o A state field to allow the button to keep track of the
+            following data:
+
+               o The label to be displayed.
+
+               o The state information to be returned to the
+                 application when the button is selected.
+
+          o A flag telling the button to invert its foreground or
+            background.  It defaults to true (meaning invert on
+            selection) since all X Widgets resource defaults are
+            targeted to a black and white system.
+
+       Given this, the XwMultiButtonPart for each instance record
+       of the new widget will be:
+
+       typedef struct  XwMultiButtonPart{
+           String * labels;
+           int      num labels;
+           int      state;
+           Boolean invert on select;
+       } XwMultiButtonPart;
+
+       Note that String is defined to be a "char *" in Intrinsic.h.
+       When this is added to the instance record parts of the
+       superclasses of XwMultiButton, the full instance record
+       becomes:
+
+       typedef struct  XwMultiButtonRec{
+           CorePart             core;
+           XwPrimitivePart      primitive;
+           XwButtonPart         button;
+           XwMultiButtonPart    multi button;
+       } XwMultiButtonRec;
+
+       The above code segments represent the entire contents of the
+       private header file. Below is a complete description of the
+       contents of an instance record for the multi-state button.
+       It is interesting to note what each superclass contributes
+       to the widget, and this information should facilitate future
+       discussions of how size values are calculated.  A later
+       section of this chapter will detail the class record for the
+       multi-state button widget.
+
+       A pointer to a multi-state button widget actually points to
+       the following:
+       {
+         /* CORE PART */
+        {
+           Widget          self;               /* pointer to widget itself          */
+           WidgetClass     widget class;       /* pointer to Widget's ClassRec      */
+           Widget          parent;             /* parent widget                     */
+           String          name;               /* widget resource name              */
+           XrmName         xrm name;           /* widget resource name quarkified   */
+           Screen          *screen;            /* window's screen                   */
+           Colormap        colormap;           /* colormap                          */
+           Window          window;             /* window ID                         */
+           Position        x, y;               /* window position                   */
+           Dimension       width, height;      /* window dimensions                 */
+           Cardinal        depth;              /* number of planes in window        */
+           Dimension       border width;       /* window border width               */
+           Pixel           border pixel;       /* window border pixel               */
+           Pixmap          border pixmap;      /* window border pixmap or NULL      */
+           Pixel           background pixel;   /* window background pixel           */
+           Pixmap          background pixmap;  /* window background pixmap or NULL  */
+           struct  XtEventRec *event table;    /* private to event dispatcher       */
+           struct  TMRec   tm;                 /* translation management            */
+           caddr t         constraints;        /* constraint record                 */
+           Boolean         visible;            /* is window mapped and not occluded?*/
+           Boolean         sensitive;          /* is widget sensitive to user events*/
+           Boolean         ancestor sensitive; /* are all ancestors sensitive?      */
+           Boolean         managed;            /* is widget geometry managed?       */
+           Boolean         mapped when managed;/* map window if it's managed?       */
+           Boolean         being destroyed;    /* marked for destroy                */
+           XtCallbackList  destroy callbacks;  /* who to call when widget destroyed */
+           WidgetList      popup list;         /* list of popups                    */
+           Cardinal        num popups;         /* how many popups                   */
+         }
+
+
+         /* XWPRIMITIVE PART */
+        {
+          Pixel   foreground;
+          int     background tile;
+          int     traversal type;
+          Boolean I have traversal;
+          int     highlight thickness;
+          int     highlight style;
+          Pixel   highlight color;
+          int     highlight tile;
+          Boolean recompute size;
+          GC      highlight GC;
+          Boolean display sensitive;
+          Boolean highlighted;
+          Boolean display highlighted;
+          XtCallbackList select;
+          XtCallbackList release;
+          XtCallbackList toggle;
+        }
+        /* XWBUTTON PART */
+        {
+          XFontStruct * font;
+          char        * label;
+          int           label location;
+          Dimension     internal height;
+          Dimension     internal width;
+          int           sensitive tile;
+          GC            normal GC;
+          GC            inverse GC;
+          Position      label x;
+          Position      label y;
+          Dimension     label width;
+          Dimension     label height;
+          unsigned int  label len;
+          Boolean       set;
+          Boolean       display set;
+        }
+        /* XWMULTIBUTTON PART */
+        {
+         String * labels;
+         int      num labels;
+         int      state;
+         Boolean  invert on select;
+        }
+       }
+
+
+       7.2.2  The Public Header File
+
+       The public header file is included in applications that wish
+       to create instances of the multi-state button widget.  It
+       provides definitions for all new resources used by the
+       widget, as well as a pointer to the class record of the
+       widget.  This pointer is used as the widget class parameter
+       in the Xt Intrinsics functions XtCreateWidget and
+       XtCreateManagedWidget.  Thus, the public header file for the
+       multi-state button widget will contain the following:
+
+       #define XtNlabels             "labels"
+       #define XtCLabels             "Labels"
+       #define XtNinvertOnSelect     "invertOnSelect"
+       #define XtCInvertOnSelect     "InvertOnSelect"
+       #define XtNnumLabels          "numLabels"
+       #define XtCNumLabels          "NumLabels"
+       extern WidgetClass  XwmultiButtonWidgetClass;
+       typedef struct  XwMultiButtonClassRec * XwMultiButtonWidgetClass;
+       typedef struct  XwMultiButtonRec      * XwMultiButtonWidget;
+
+       For a full explanation of why the above resources (such as
+       XtNlabels) are defined, refer to chapter 11, ``Resource
+       Management,'' in the Xt Intrinsics manual.
+
+
+       7.2.3  The Source Code File
+
+       The source code for the widget is found in a C source file,
+       the ``.c'' file.  The following sections discuss each of the
+       procedures or declarations needed to produce the multi-state
+       button widget.  The C source code is listed at the end of
+       this section and can be found in the directory
+       /usr/contrib/Xw/examples/MultiButton.
+
+
+       The Header Files
+       The following header files must be included:
+
+         1.  <X11/Intrinsic.h>.  This file provides access to
+             definitions of toolkit structures and macros available
+             to both the widget writer and the application writer.
+
+         2.  <X11/IntrinsicP.h>.  This file provides access to the
+             private structures of the Xt Intrinsics meta classes
+             (core, composite, and constraint), as well as macros
+             and external references for functions intended for the
+             widget writer.
+
+         3.  <X11/StringDefs.h>.  This file provides access to all
+             of the string definitions used for base resource
+             (name, class and representation) used by the Xt
+             Intrinsics.
+
+         4.  <X11/Misc.h>.  This file provides access to macros
+             such as Max, Min, AssignMax, and AssignMin.
+
+         5.  <Xw/Xw.h>.  This file provides access to all of the
+             public resource definitions for meta classes (such as
+             primitive and manager) as well as definitions to be
+             used in argument lists to set these resources.
+
+         6.  <Xw/XwP.h>.  This file provides access to the private
+             structure of X Widgets meta classes (such as primitive
+             and manager), as well as external definitions of
+             procedures and macros for widget writers.
+
+         7.  <Xw/MButtonP.h>.  The private header for the multi-
+             state button widget.
+
+         8.  <Xw/MButton.h>. The public header for the multi-state
+             button  widget.
+
+
+       Translations and Action Lists
+       Translations are used by a widget to bind events occurring
+       in that widget to predefined actions.  The application or
+       the user can redefine which events get bound, but the list
+       of actions to handle these events are hard-coded into the
+       widget.
+
+       The translations are encoded as a string where a particular
+       character sequence maps into an X event.  For example, in
+       the language of the Xt Intrinsics, the term "<Btn1Down>"
+       corresponds to the X event generated when the left mouse
+       button is depressed.  In addition to the string specifying
+       the event, there is also a string specifying the action to
+       be taken when that event occurs.  For instance:
+
+       static char defaultTranslations[] =
+             "<Btn1Down>:          xyz()\n\
+              <Btn1Up>:            abc()";
+
+       There are two events in the above code segment,  button 1
+       down and button 1 up, bound to two actions that are
+       identified by the strings "xyz" and "abc" respectively.  An
+       action list corresponding to these translations contains the
+       identifying strings ("xyz" and "abc") and matches them to
+       procedures within the widget:
+
+       static XtActionsRec  actionList[]=
+        {
+         {"xyz", (XtActionProc) Select},
+         {"abc", (XtActionProc) Unselect},
+        };
+
+       The indirection between the translations and the actions is
+       necessitated by the fact that most systems do not support
+       dynamic linking or loading.  Thus, a user can specify new
+       translations for a widget in his .Xdefaults file, and this
+       allows the Xt Intrinsics to match the specified events with
+       procedures in the widget through the use of the identifying
+       strings.  For more detail on these issues, refer to chapter
+       12, ``Translation Management'' in the Xt Intrinsics manual.
+
+       The translations and actions for the multi-state button
+       widget are as follows:
+
+       static char defaultTranslations[] =
+           "<Btn1Down>:           select()\n\
+            <Btn1Up>:             rotate()\n\
+            <EnterWindow>:        enter()\n\
+            <LeaveWindow>:        leave()\n\
+            <KeyUp>Select:        rotate()\n\
+            <KeyDown>Select:      select()";
+
+       static XtActionsRec actionsList[] =
+       {
+         {"select", (XtActionProc) Select},
+         {"rotate", (XtActionProc) Rotate},
+         {"enter", (XtActionProc)  XwPrimitiveEnter},
+         {"leave", (XtActionProc)  XwPrimitiveLeave},
+       };
+
+       When a <Btn1Down> event occurs, the Select procedure is
+       invoked.  It visually indicates that the button has been
+       selected, and calls any callbacks that have been registered
+       for the XtNselect callback.  It passes the current state to
+       the callback procedure as call data, and it marks the button
+       as being set.  The same sequence of actions are initiated
+       when this widget has the keyboard focus and the key is
+       pressed.
+
+       When a <Btn1Up> occurs, the Rotate procedure is invoked.  It
+       will increment the internal state flag and display the next
+       label in the label sequence on the button face.  It marks
+       the button as being not set and calls any callbacks that
+       have been registered for the XtNrelease callback.  It passes
+       the new state to the callback procedure as call data.  The
+       same sequence of actions is initiated when this widget has
+       the keyboard focus and the key is released.
+
+       When an <EnterWindow> occurs, an X Widgets library routine
+       is called.  If the button is to be highlighted when the
+       cursor enters it, this routine will draw a highlight around
+       the edge of the button window.  This capability is handled
+       by the primitive meta class, and requires no effort on the
+       part of the multi-state button beyond including the
+       translations and actions in its code.
+
+       When a <LeaveWindow> occurs, an X Widgets library routine is
+       called.  If the button was highlighted when the cursor
+       entered it, it will be unhighlighted.
+
+       Notice that multiple events can be bound to the same action
+       in the translations.  Also, it is possible to have an event
+       invoke multiple actions.  The code segment below shows this
+       functionality.
+
+       <Btn1Down>:       select() notify()
+
+
+       Resources for the Multi-State Button
+       The public header file defines name and class strings to
+       identify three resources for the multi-state button widget
+       that can be set by applications.  There are many other such
+       resources provided by the widgets superclasses.  A default
+       setting must be provided for these resources to handle the
+       case where an application does not specify their setting.
+       The resource list for the multi-state button widget will be:
+
+       static XtResource resources[] =
+       {
+          {
+            XtNlabels, XtCLabels, XtRLabels, sizeof (caddr t),
+            XtOffset (XwMultiButtonWidget, multi button.labels),
+            XtRPointer, (caddr t) NULL
+          },
+          {
+            XtNnumLabels, XtCNumLabels, XtRInt, sizeof (int),
+            XtOffset (XwMultiButtonWidget, multi button.num labels),
+            XtRString, "0"
+          },
+         {
+            XtNinvertOnSelect, XtCInvertOnSelect, XtRBoolean, sizeof (Boolean),
+            XtOffset (XwMultiButtonWidget, multi button.invert on select),
+            XtRString, "True"
+         },
+       };
+
+       For more information on the resource list and its structure,
+       refer to chapter 11, ``Resource Management,'' in the Xt
+       Intrinsics manual.  Note that a special resource converter
+       to enable a user to specify a list of button labels will
+       have to be written and registered.  This procedure, called
+       CvtLabelsToPointer, is included in the source code listing
+       at the end of this chapter.
+
+
+       The Class Record
+       A class record structure for the multi-state button widget
+       is defined in the private header file.  Remember that there
+       is only one class record for each widget class, but there
+       may be many instances of a widget class.  This class record
+       is statically initialized and is part of the code file.  The
+       following code segment defines the class record for the
+       multi-state button widget.
+
+       XwMultiButtonClassRec XwmultButtonClassRec = {
+         {
+       /* core class fields */
+           /* superclass         */    (WidgetClass) &XwbuttonClassRec,
+           /* class name         */    "MultiButton",
+           /* widget size        */    sizeof(XwMultiButtonRec),
+           /* class initialize   */    ClassInitialize,
+           /* class part init    */    NULL,
+           /* class inited       */    FALSE,
+           /* initialize         */    Initialize,
+           /* initialize hook    */    NULL,
+           /* realize            */     XwRealize,
+           /* actions            */    actionsList,
+           /* num actions        */    XtNumber(actionsList),
+           /* resources          */    resources,
+           /* num resources      */    XtNumber(resources),
+           /* xrm class          */    NULLQUARK,
+           /* compress motion    */    TRUE,
+           /* compress exposure  */    TRUE,
+           /* compress enterlv   */    TRUE,
+           /* visible interest   */    FALSE,
+           /* destroy            */    NULL,
+           /* resize             */    Resize,
+           /* expose             */    Redisplay,
+           /* set values         */    SetValues,
+           /* set values hook    */    NULL,
+           /* set values almost  */    XtInheritSetValuesAlmost,
+           /* get values hook  */      NULL,
+           /* accept focus       */    NULL,
+           /* version          */      XtVersion,
+           /* callback private */      NULL,
+           /* tm table         */      defaultTranslations,
+           /* query geometry   */      NULL,
+         },
+       /* XwPrimitive Class Part */
+        {
+          /* border highlight proc */          NULL,
+          /* border unhighlight proc */        NULL,
+          /* selection proc */                 NULL,
+          /* release proc */                   NULL,
+          /* toggle proc */                    NULL,
+          /* keyboard focus translations */    NULL,
+        }
+       /*
+          NOTE that XwButton and XwMultiButton have no fields
+          of interest and thus are ignored.
+       */
+       };
+       WidgetClass XwmultiButtonWidgetClass = (WidgetClass)&XwmultiButtonClassRec;
+
+       Note that many of the fields are NULL, meaning that the
+       multi-state button widget does not use them.  Refer to
+       chapter 2, ``Widgets,'' in the Xt Intrinsics manual for
+       pointers to the sections that describe the above fields.
+
+
+       The Class Initialization Procedure
+       The first time an instance of a widget class (or an instance
+       of a subclass widget) is created, the class initialize
+       procedure for that widget is called.  It allows the widget
+       class to set up any fields or compute any values it will
+       need to make instances of itself.  It also provides the
+       means for widgets to register any special resource converter
+       routines.  For the multi-state button widget, a special
+       resource converter will be needed to handle lists of button
+       labels defined in resource files such as the .Xdefaults
+       file.  This procedure, CvtLabelsToPointer, is included in
+       the source code listing at the end of this chapter.
+
+
+       The Initialize Procedure
+       The invocation of the initialize procedure is usually the
+       first indication a widget class has that an instance of
+       itself is being created.  When this procedure is invoked,
+       the widget class can validate resources, compute size, and
+       set any other needed fields.  For the multi-state button
+       widget, the initialize procedure will do the following:
+
+          o If the number of labels (multi button.num labels) is
+            equal to or less than 0, it will be set to 1.
+
+          o If the pointer to the array of labels is NULL, the
+            button's name (found in core.name) will be used as the
+            single label.  If the name is NULL, there will still be
+            a pointer to a NULL label.  If the name is not NULL,
+            space will be allocated for the array of label pointers
+            as well as the labels.  The labels will then be copied
+            into this space.  This is standard widget programming
+            practice, to keep all data in the widget's data space
+            instead of allowing some of it to reside in the
+            application's data space.
+
+          o If the height and width have the default values of
+            zero, an ideal height and width will be calculated.
+            The height will be based on the settings of the
+            internal height (button.internal height), the highlight
+            thickness (primitive.highlight thickness), and the font
+            height (button.font).  The width will be based on the
+            settings of internal width, the highlight thickness,
+            and the width of the longest label for the button.
+
+          o The button label will be set to display the first
+            string in the sequence of labels provided by the
+            application.  The button state will be set to zero to
+            reflect the label sequence.
+
+
+       The Redisplay Procedure
+       The redisplay procedure is probably the most difficult
+       routine to write for this widget.  Like other X Widget
+       buttons, the multi-state button can be highlighted.  For
+       this reason, we distinguish between having to redraw only
+       the button face and the entire button, highlight and all.
+       Thus, the redisplay routine actually consists of two
+       procedures:
+
+          o RedisplayButtonFace.  The select and rotate procedures
+            call RedrawButtonFace with a flag set so that only the
+            button face will be redrawn.
+
+          o Redisplay.  Redisplay simply calls RedrawButtonFace
+            with the flag set to redraw the entire button face.
+
+       The rest of this section details the actions of the
+       RedrawButtonFace procedure.
+
+       To correctly design and implement this routine you must
+       remember a key feature of the Xt Intrinsics: a widget does
+       not control its height and width.  Thus, the multi-state
+       button widget can compute an optimum height and width, but
+       the actual height and width it receives is totally dependent
+       on its parent.  This leads to two possible cases:
+
+          o The button is too small to correctly display the entire
+            button label.
+
+          o The button is much larger than necessary to display the
+            label.
+
+       In the first case we will need to clip the label
+       (potentially in both its height and width) to prevent it
+       from overwriting the button border.  Thus, the first thing
+       the RedrawButtonFace procedure does is to see if it will
+       need to clip either the height or the width of the label.
+       The button is then displayed, and if the label needs to be
+       clipped it is done at this point.  Note that the clipping
+       could have been accomplished by setting clipping rectangles
+       in the graphic context (GC) that performed the label
+       drawing, but this would have introduced a potentially
+       unlimited number of new GC's to the server.  The Xt
+       Intrinsics always attempt to minimize the number of GC's by
+       caching them and allowing widgets to share them.  Setting
+       clipping rectangles would have necessitated unique GCs for
+       each button.
+
+       Finally, the button is highlighted (or unhighlighted) as
+       needed.
+
+
+       The SetValues Procedure
+       The SetValues procedure is invoked whenever an application
+       executes an XtSetValues to the multi-state button widget or
+       one of its subclasses.  XtSetValues works by invoking the
+       SetValues procedures of each of the multi-state button
+       widget's  superclasses (starting at core).  Each of these
+       SetValues procedures handles the resources created and
+       managed by that class.  Thus, the multi-state button
+       widget's SetValues procedure handles the following:
+
+          o Any changes that may have been made to resources it
+            created.
+
+          o If there have been changes, indicate to the intrinsics
+            code whether or not the widget should be redisplayed.
+
+       A general discussion of the SetValues procedure can be found
+       in chapter 11, ``Resource management'' in the Xt Intrinsics
+       manual.
+
+       The multi-state button widget's SetValues procedure first
+       checks to see if the number of labels has been changed.  If
+       so, the multi button.state flag will be reset to 0 and a
+       check made to insure that the new number of labels is at
+       least equal to 1.  If the pointer to the array of button
+       labels has changed, then the old set of labels will be
+       deleted, and space allocated for the new labels which will
+       then be stored.  The same subroutine (HandleLabelAllocation)
+       used in the initialize procedure is used to accomplish this.
+
+       Test to see if any fields have changed which would cause the
+       button to seek a new size.  Specifically these fields are:
+
+          o The button font.
+
+          o The button label.  Note that if the multi button.label
+            fields have changed, the HandleLabelAllocation
+            procedure will already have updated this field,
+            ensuring that the need for a resize is flagged).
+
+          o The highlight thickness.
+
+       However, even if one or more of these fields has changed,
+       all of the following must be true before the widget will
+       seek a new size:
+
+          o The recompute size flag in primitive must be set to
+            TRUE.
+
+          o The height in the new copy of the widget must be the
+            same as that in the current copy of the widget in order
+            to seek a new height.
+
+          o The width in the new copy of the widget must be the
+            same as that in the current copy of the widget in order
+            to seek a new width.
+
+       Finally, TRUE is returned as the value of the SetValues
+       procedure if any value that indicates that the button should
+       be redisplayed has changed.  Otherwise, FALSE is returned.
+
+
+       The Destroy Procedure
+       Whenever a widget class creates fields that allocate and
+       manage blocks of memory, it must provide a destroy procedure
+       to release that memory when the widget is destroyed.  In the
+       case of the multi-state button widget, an array of pointers
+       and some number of strings are allocated.  All of these must
+       be released when the widget is destroyed.
+
+
+       The Resize
+       Whenever a widget is resized by its parent or by an
+       application, its resize procedure will be invoked.  It is
+       the responsibility of this procedure to adjust the visible
+       contents of the widget to reflect the new size.  For the
+       multi-state button widget, the new height and width are used
+       to center the button label within the the new dimensions of
+       the button.
+
+
+       7.2.4  Source Code
+
+       All of the source code necessary to implement the
+       XwMultiButtonWidgetClassfP is listed on the following pages.
+       These files can also be found in the directory
+       /usr/contrib/Xw/examples/MultiButton.  There is also a
+       ``README'' file in this directory that contains up-to-date
+       information.  Be sure to read this file before proceeding.
+
+
+       /*************************************<+>*************************************
+        *****************************************************************************
+        **
+        **   File:        MButtonP.h
+        **
+        **   Project:     X Widgets
+        **
+        **   Description: Private include file for widgets which are
+        **                subclasses of multibutton or which need to
+        **                access directly the instance and class fields
+        **                of the multibutton widget.
+        **
+        **
+        **    Copyright (c) 1988 by Hewlett-Packard Company
+        **    All Rights Reserved.
+        **
+        *****************************************************************************
+        *************************************<+>*************************************/
+       /********************************************
+        *
+        *   No new fields need to be defined
+        *   for the MultiButton widget class record
+        *
+        ********************************************/
+       typedef struct {int nada;} XwMultiButtonClassPart;
+
+       /****************************************************
+        *
+        * Full class record declaration for MultiButton class
+        *
+        ****************************************************/
+       typedef struct  XwMultiButtonClassRec {
+           CoreClassPart         core class;
+           XwPrimitiveClassPart  primitive class;
+           XwButtonClassPart     button class;
+           XwMultiButtonClassPart multi button class;
+       } XwMultiButtonClassRec;
+
+       extern XwMultiButtonClassRec XwmultiButtonClassRec;
+
+       /********************************************
+        *
+        * New fields needed for instance record
+        *
+        ********************************************/
+       typedef struct  XwMultiButtonPart{
+            String  *labels;
+            int     num labels;
+            int     state;
+            Boolean invert on select;
+       } XwMultiButtonPart;
+
+       /****************************************************************
+        *
+        * Full instance record declaration
+        *
+        ****************************************************************/
+
+
+       typedef struct  XwMultiButtonRec {
+           CorePart         core;
+           XwPrimitivePart  primitive;
+           XwButtonPart     button;
+           XwMultiButtonPart multi button;
+       } XwMultiButtonRec;
+
+
+
+
+       /*************************************<+>*************************************
+        *****************************************************************************
+        **
+        **   File:        MButton.h
+        **
+        **   Project:     X Widgets
+        **
+        **   Description: Public include file for applications using the
+        **                multibutton widget.
+        **
+        **
+        **    Copyright (c) 1988 by Hewlett-Packard Company
+        **    All Rights Reserved.
+        **
+        **
+        *************************************<+>*************************************/
+       /***********************************************************************
+        *
+        * MultiButton Widget
+        *
+        ***********************************************************************/
+
+       /*  Resources for MultiButton  */
+       #define XtNlabels       "labels"
+       #define XtCLabels       "Labels"
+       #define XtRLabels       "Labels"
+       #define XtNinvertOnSelect "invertOnSelect"
+       #define XtCInvertOnSelect "InvertOnSelect"
+       #define XtNnumLabels    "numLabels"
+       #define XtCNumLabels    "NumLabels"
+       extern WidgetClass XwmultiButtonWidgetClass;
+       typedef struct  XwMultiButtonClassRec *XwMultiButtonWidgetClass;
+       typedef struct  XwMultiButtonRec      *XwMultiButtonWidget;
+
+
+
+
+       /*************************************<+>*************************************
+        *****************************************************************************
+        **
+        **   File:        MButton.c
+        **
+        **   Project:     X Widgets
+        **
+        **   Description: Contains code for primitive widget class: MultiButton
+        **
+        **
+        **    Copyright (c) 1988 by Hewlett-Packard Company
+        **    All Rights Reserved.
+        **
+        *****************************************************************************
+        *************************************<+>*************************************/
+       /*
+        * Include files & Static Routine Definitions
+        */
+       #include <stdio.h>
+       #include <X11/Intrinsic.h>
+       #include <X11/IntrinsicP.h>
+       #include <X11/StringDefs.h>
+       #include <X11/Misc.h>
+       #include <Xw/Xw.h>
+       #include <Xw/XwP.h>
+       #include <Xw/MButtonP.h>
+       #include <Xw/MButton.h>
+
+
+       static void Redisplay();
+       static void RedrawButtonFace();
+       static Boolean SetValues();
+       static void ClassInitialize();
+       static void Initialize();
+       static void Select();
+       static void Rotate();
+       static void Resize();
+       static Boolean RecomputeSize();
+       static void Destroy();
+       static int HandleLabelAllocation();
+       /*************************************<->*************************************
+        *
+        *
+        *   Description:  default translation table for class: MultiButton
+        *   -----------
+        *
+        *   Matches events with string descriptors for internal routines.
+        *
+        *************************************<->***********************************/
+       static char defaultTranslations[] =
+          "<Btn1Down>:             select() \n\
+           <Btn1Up>:               rotate() \n\
+           <EnterWindow>:          enter() \n\
+           <LeaveWindow>:          leave() \n\
+           <KeyUp>Select:          rotate() \n\
+           <KeyDown>Select:        select()";
+
+       /*************************************<->*************************************
+        *
+        *
+        *   Description:  action list for class: MultiButton
+        *   -----------
+        *
+        *   Matches string descriptors with internal routines.
+        *   Note that Primitive will register additional event handlers
+        *   for traversal.
+        *
+        *************************************<->***********************************/
+       static XtActionsRec actionsList[] =
+       {
+         {"select", (XtActionProc) Select},
+         {"rotate", (XtActionProc) Rotate},
+         {"enter", (XtActionProc)  XwPrimitiveEnter},
+         {"leave", (XtActionProc)  XwPrimitiveLeave},
+       };
+
+       /*  The resource list for MultiButton  */
+       static XtResource resources[] =
+       {
+          {
+            XtNlabels, XtCLabels, XtRLabels, sizeof (caddr t),
+            XtOffset (XwMultiButtonWidget, multi button.labels),
+            XtRString, (caddr t) NULL
+          },
+          {
+            XtNnumLabels, XtCNumLabels, XtRInt, sizeof (int),
+            XtOffset (XwMultiButtonWidget, multi button.num labels),
+            XtRString, "0"
+          },
+          {
+            XtNinvertOnSelect, XtCInvertOnSelect, XtRBoolean, sizeof (Boolean),
+            XtOffset (XwMultiButtonWidget, multi button.invert on select),
+            XtRString, "True"
+          },
+       };
+
+       /*************************************<->*************************************
+        *
+        *
+        *   Description:  global class record for instances of class: MultiButton
+        *   -----------
+        *
+        *   Defines default field settings for this class record.
+        *
+        *************************************<->***********************************/
+
+
+       XwMultiButtonClassRec XwmultiButtonClassRec = {
+         {
+       /* core class fields */
+           /* superclass         */    (WidgetClass) &XwbuttonClassRec,
+           /* class name         */    "MultiButton",
+           /* widget size        */    sizeof(XwMultiButtonRec),
+           /* class initialize   */    ClassInitialize,
+           /* class part init    */    NULL,
+           /* class inited       */    FALSE,
+           /* initialize         */    Initialize,
+           /* initialize hook    */    NULL,
+           /* realize            */     XwRealize,
+           /* actions            */    actionsList,
+           /* num actions        */    XtNumber(actionsList),
+           /* resources          */    resources,
+           /* num resources      */    XtNumber(resources),
+           /* xrm class          */    NULLQUARK,
+           /* compress motion    */    TRUE,
+           /* compress exposure  */    TRUE,
+           /* compress enterlv   */    TRUE,
+           /* visible interest   */    FALSE,
+           /* destroy            */    Destroy,
+           /* resize             */    Resize,
+           /* expose             */    Redisplay,
+           /* set values         */    SetValues,
+           /* set values hook    */    NULL,
+           /* set values almost  */    XtInheritSetValuesAlmost,
+           /* get values hook  */      NULL,
+           /* accept focus       */    NULL,
+           /* version          */      XtVersion,
+           /* callback private */      NULL,
+           /* tm table         */      defaultTranslations,
+           /* query geometry   */      NULL,
+         }
+       };
+       WidgetClass XwmultiButtonWidgetClass = (WidgetClass)&XwmultiButtonClassRec;
+
+       /*************************************<->*************************************
+        *
+        *  Select (w, event)
+        *
+        *   Description:
+        *   -----------
+        *     Issue any select callbacks and give them the current
+        *     state value.
+        *
+        *   Inputs:
+        *   ------
+        *     w           =   widget instance that was selected.
+        *     event       =   event record
+        *
+        *************************************<->***********************************/
+       static void Select (w,event)
+       Widget w;
+       XEvent *event;
+       {
+          XwMultiButtonWidget mb = (XwMultiButtonWidget) w;
+          mb->button.set = TRUE;
+          RedrawButtonFace (w, event, FALSE);
+          XFlush (XtDisplay(w));
+          XtCallCallbacks (w, XtNselect, (caddr t) mb->multi button.state);
+       }
+
+       /*************************************<->*************************************
+        *
+        *  Rotate (w, event)
+        *
+        *   Description:
+        *   -----------
+        *     Mark button as not set, rotate label (if there are any to
+        *     rotate) Generate unselect callbacks and give them the new
+        *     state.
+        *
+        *   Inputs:
+        *   ------
+        *     w           =   widget instance that was selected.
+        *     event       =   event record
+        *
+        *************************************<->***********************************/
+
+
+       static void Rotate(w,event)
+       Widget w;
+       XEvent *event;
+       {
+          XwMultiButtonWidget mb = (XwMultiButtonWidget) w;
+          int newState = (mb->multi button.state+1) % mb->multi button.num labels;
+          mb->button.set = FALSE;
+          mb->button.label= mb->multi button.labels[newState];
+          mb->multi button.state = newState;
+           XwSetTextWidthAndHeight(mb);
+          Resize(w);
+          RedrawButtonFace (w, event, FALSE);
+          XFlush(XtDisplay(w));
+          XtCallCallbacks (w, XtNrelease, (caddr t) newState);
+       }
+
+       /*************************************<->*************************************
+        *
+        *  Initialize
+        *
+        *   Description:
+        *   -----------
+        *    If the core height and width fields are set to 0, treat that as a flag
+        *    and compute the optimum size for this button.  Then using what ever
+        *    the core fields are set to, compute the text placement fields.
+        *    Make sure that the label location field is properly set for the
+        *    Resize call.
+        *
+        *
+        *   Inputs:
+        *   ------
+        *     request          =       request widget, old data.
+        *
+        *     new              =       new widget, new data; cumulative effect
+        *                              of initialize procedures.
+        *
+        *************************************<->***********************************/
+       static void Initialize (request, new)
+       Widget request, new;
+       {
+          XwMultiButtonWidget mb = (XwMultiButtonWidget) new;
+          int maxWidth = 0;
+          /********************************************************************
+              Needed width:
+               2 * highlight thickness +
+               2 * internal width (padding between label and button) +
+               Max(pixel width of labels)
+             Needed height:
+              2 * highlight thickness +
+              2 * internal height (padding) +
+              label height
+           ************************************************************************/
+
+           maxWidth = HandleLabelAllocation(mb);
+          if (request->core.width == 0)  mb->core.width =  maxWidth +
+                     2 * ( mb->button.internal width +    /* white space */
+                            mb->primitive.highlight thickness);
+          if (request->core.height == 0) mb->core.height = mb->button.label height +
+              2 * (mb->button.internal height + mb->primitive.highlight thickness);
+          Resize(new);
+       }
+
+
+       /*************************************<->*************************************
+        *
+        *  CvtLabelsToPointer
+        *
+        *   Description:
+        *   -----------
+        *     Convert a string containing button labels into an array of pointers
+        *     to a  sequence of  labels.  Labels appear in the input string
+        *     surrounded by double quotes.
+        *
+        *     NOTE that this routine will not handle more than 20 labels
+        *     or more than 400 characters.
+        *
+        *
+        *************************************<->***********************************/
+       #define MAXLABELS 20
+       #define MAXCHARS  400
+       static char storage[MAXCHARS];
+       static char * labels[MAXLABELS];
+       static char * labelsPtr = labels;
+
+       static void CvtLabelsToPointer(args, num args, fromVal, toVal)
+              XrmValuePtr args;
+              int * num args;
+              XrmValuePtr fromVal;
+              XrmValuePtr toVal;
+       {
+              char * instr = (char *) (fromVal->addr);
+              char * str pos = storage;
+              int i;
+          /* Fail Safe: in case we get garbage return NULL */
+              (*toVal).size = sizeof (caddr t);
+              (*toVal).addr = (caddr t) &labelsPtr;
+              for (i=0; i<MAXLABELS; i++) labels[i]=NULL;
+              i=0;
+             /* We'll only look for MAXLABELS */
+              while (i < MAXLABELS)
+                {
+                  /* Find beginning of label or end of input */
+                  while(*instr != '\0' && *instr != '"') instr++;
+                  if (*instr == '\0')    return;
+                  instr++;
+                  labels[i] = str pos;
+                  /* Move string into storage space*/
+                  while (*instr != '"' && *instr != '\0')
+                     *str pos++ = *instr++;
+                  if (*instr == '\0')
+                      XtError("Improper definition for MultiButton labels resource.");
+                 /* Append null to end of string, step beyond '"' marking end
+                  * of this label, increment "i" our label counter.
+                  */
+                  *str pos++ = '\0';
+                  instr++;
+                  i++;
+                }
+       }
+
+       /*************************************<->*************************************
+        *
+        *  ClassInitialize
+        *
+        *   Description:
+        *   -----------
+        *    Set fields in primitive class part of our class record so that
+        *    the traversal code can invoke our button select/unselect procedures.
+        *    Register specialized resource converter for this widget class.
+        *
+        *************************************<->***********************************/
+
+
+       static void ClassInitialize()
+       {
+          XwmultiButtonClassRec.primitive class.select proc = (XtWidgetProc) Select;
+          XwmultiButtonClassRec.primitive class.release proc = (XtWidgetProc) Rotate;
+          XtAddConverter(XtRString, XtRLabels, CvtLabelsToPointer, NULL, 0);
+       }
+
+       /*************************************<->*************************************
+        *
+        *  Redisplay (w, event)
+        *
+        *   Description:
+        *   -----------
+        *     Cause the widget, identified by w, to be redisplayed.
+        *
+        *
+        *   Inputs:
+        *   ------
+        *     w = widget to be redisplayed;
+        *     event = event structure identifying need for redisplay on this
+        *             widget.
+        *
+        *************************************<->***********************************/
+       static void Redisplay (w, event)
+       Widget w;
+       XEvent *event;
+       {
+           RedrawButtonFace (w, event, TRUE);
+       }
+
+       static void RedrawButtonFace (w, event, all)
+       XwMultiButtonWidget w;
+       XEvent *event;
+       Boolean all;
+       {
+          register XwMultiButtonWidget mb = (XwMultiButtonWidget) w;
+          int available height, available width;
+          Boolean clipHeight, clipWidth;
+          /* COMPUTE SPACE AVAILABLE FOR DRAWING LABEL */
+          available width = Max(0,mb->core.width - 2*(mb->button.internal width +
+                                       mb->primitive.highlight thickness));
+          available height = Max(0, mb->core.height - 2*(mb->button.internal height +
+                                       mb->primitive.highlight thickness));
+
+          /* SEE IF WE NEED TO CLIP THIS LABEL ON TOP AND/OR BOTTOM */
+          if (mb->button.label width > available width)
+              clipWidth = True;
+          else
+              clipWidth = False;
+
+          if (mb->button.label height > available height)
+              clipHeight = True;
+          else
+              clipHeight = False;
+
+          /* COMPUTE & DRAW MULTIBUTTON */
+
+          /* COMPUTE x LOCATION FOR STRING & DRAW STRING                    */
+          /* Draw only if all or the multibutton is set to invert the text  */
+          /* when it is selected and unselected.                            */
+
+
+          if (mb->button.label len > 0 &&
+              (all || mb -> multi button.invert on select))
+          {
+           XFillRectangle (XtDisplay(w), XtWindow(w),
+                                ((mb->button.set && mb->multi button.invert on select)
+                                            ? mb->button.normal GC
+                                            : mb->button.inverse GC),
+                             w -> primitive.highlight thickness + 1,
+                             w -> primitive.highlight thickness + 1,
+                             w->core.width-2 * w->primitive.highlight thickness-2,
+                             w->core.height-2 * w->primitive.highlight thickness-2);
+             XDrawString(XtDisplay(w), XtWindow(w),
+                          ((mb->button.set && mb->multi button.invert on select)
+                                            ? mb->button.inverse GC
+                                            : mb->button.normal GC),
+                          ((mb->core.width + 1 - mb->button.label width) / 2),
+                           mb->button.label y,  mb->button.label,
+                           mb->button.label len);
+
+            if (clipWidth)
+              {
+                XClearArea (XtDisplay(w), XtWindow(w), 0,0,
+                            (mb->primitive.highlight thickness +
+                              mb->button.internal width), mb->core.height, FALSE);
+                XClearArea (XtDisplay(w), XtWindow(w),
+                            (mb->core.width - mb->primitive.highlight thickness -
+                              mb->button.internal width),0,
+                            (mb->primitive.highlight thickness +
+                              mb->button.internal width), mb->core.height, FALSE);
+              }
+            if (clipHeight)
+              {
+                XClearArea (XtDisplay(w), XtWindow(w), 0,0, mb->core.width,
+                            (mb->primitive.highlight thickness +
+                              mb->button.internal height), FALSE);
+                XClearArea (XtDisplay(w), XtWindow(w), 0,
+                            (mb->core.height - mb->primitive.highlight thickness -
+                              mb->button.internal height), mb->core.width,
+                            (mb->primitive.highlight thickness +
+                              mb->button.internal height), FALSE);
+              }
+          }
+
+          /*
+           * Draw traversal/enter highlight if actual exposure or
+           * if we had to clip text area
+           */
+          if (all || clipWidth || clipHeight)
+          {
+             if (mb->primitive.highlighted)
+                 XwHighlightBorder(w);
+             else if (mb->primitive.display highlighted)
+                 XwUnhighlightBorder(w);
+          }
+       }
+
+       /*************************************<->*************************************
+        *
+        *  SetValues(current, request, new)
+        *
+        *   DESCRIPTION:
+        *   -----------
+        *     This is the set values procedure for the multi button class.  It is
+        *     called last (the set values rtnes for its superclasses are called
+        *     first).
+        *
+        *
+        *   Inputs:
+        *   ------
+        *    current = original widget;
+        *    request = copy of widget as requested by application;
+        *    new = copy of request which reflects changes made to it by
+        *          set values procedures of its superclasses;
+        *
+        *************************************<->***********************************/
+
+
+       static Boolean SetValues(current, request, new)
+       Widget current, request, new;
+       {
+           XwMultiButtonWidget curmb = (XwMultiButtonWidget) current;
+           XwMultiButtonWidget newmb = (XwMultiButtonWidget) new;
+           Boolean  flag = FALSE;    /* our return value */
+           int maxWidth = -1;
+           XFontStruct  *fs = newmb->button.font;
+           int i;
+
+          /* Validate fields unique to MultiButton */
+           if (curmb->multi button.num labels != newmb->multi button.num labels)
+             {
+               /* Reset state to 0 */
+               newmb->multi button.state = 0;
+              /* Don't allow new value to be illegal */
+               if (newmb->multi button.num labels < 1)
+                        newmb->multi button.num labels = 1;
+             }
+
+           if (curmb->multi button.labels != newmb->multi button.labels)
+             {
+              Destroy(curmb);   /* free up pointers and strings */
+              maxWidth = HandleLabelAllocation(newmb);
+              flag = TRUE;
+             }
+           /**********************************************************************
+            * Calculate the window size:  The assumption here is that if
+            * the width and height are the same in the new and current instance
+            * record that those fields were not changed with set values.  Therefore
+            * its okay to recompute the necessary width and height.  However, if
+            * the new and current do have different width/heights then leave them
+            * alone because that's what the user wants.  Also, use the
+            * RecomputeSize procedure (defined below) to test if we should
+            * recompute the size.
+            *********************************************************************/
+           if ((curmb->core.width == newmb->core.width) &&
+                (RecomputeSize(current, new)))
+            {
+              if (maxWidth < 0)
+                 for (i=0; i<newmb->multi button.num labels; i++)
+                     maxWidth = Max(maxWidth,
+                                    XTextWidth(fs, newmb->multi button.labels[i]));
+               newmb->core.width = maxWidth +  2*(newmb->button.internal width +
+                                                  newmb->primitive.highlight thickness);
+               flag = TRUE;
+            }
+           if ((curmb->core.height == newmb->core.height) &&
+                (RecomputeSize(current, new)))
+            {
+               newmb->core.height =
+                   newmb->button.label height + 2*(newmb->button.internal height +
+                           newmb->primitive.highlight thickness);
+               flag = TRUE;
+            }
+          return(flag);
+       }
+
+
+       /*************************************<->*************************************
+        *
+        *  Resize(w)
+        *
+        *   Description:
+        *   -----------
+        *     Recompute location of button text (center text in the button
+        *     face).
+        *
+        *   Inputs:
+        *   ------
+        *     w  = widget to be resized.
+        *
+        *
+        *************************************<->***********************************/
+
+
+       static void Resize(w)
+           Widget w;
+       {
+           XwMultiButtonWidget mb = (XwMultiButtonWidget) w;
+           mb->button.label x = (mb->core.width + 1 - mb->button.label width) / 2;
+           mb->button.label y =
+              (mb->core.height - mb->button.label height) / 2
+               + mb->button.font->max bounds.ascent;
+       }
+
+       /*************************************<->*************************************
+        *  Boolean
+        *  RecomputeSize(current, new)
+        *
+        *   Description:
+        *   -----------
+        *     Used during SetValues.
+        *
+        *     If the font has changed OR the label has changed OR
+        *     the internal spacing has changed OR the highlight
+        *     thickness has changed AND the recompute flag is TRUE
+        *     (in the new widget) return TRUE, else return FALSE.
+        *
+        *
+        *   Inputs:
+        *   ------
+        *    current = current version of widget
+        *    new = new version of widget
+        *
+        *   Outputs:
+        *   -------
+        *     TRUE if resize is needed and okay, FALSE otherwise.
+        *
+        *************************************<->***********************************/
+       static  Boolean RecomputeSize(current, new)
+         XwButtonWidget current, new;
+       {
+         if (((new->button.font != current->button.font) ||
+            (new->button.label != current->button.label) ||
+            (new->primitive.highlight thickness !=
+                current->primitive.highlight thickness) ||
+            (new->button.internal height != current->button.internal height) ||
+            (new->button.internal width != current->button.internal width)) &&
+            (new->primitive.recompute size == TRUE))
+                return(TRUE);
+         else
+                return(FALSE);
+       }
+
+       /*************************************<->*************************************
+        *
+        *  Destroy (mb)
+        *
+        *   Description:
+        *   -----------
+        *     Free up the memory allocated especially for the
+        *     multibutton part of the widget instance record.
+        *
+        *
+        *   Inputs:
+        *   ------
+        *     mb = multibutton widget.
+        *
+        *************************************<->***********************************/
+       static void Destroy(mb)
+         XwMultiButtonWidget mb;
+       {
+          int i;
+          /* Free each of the labels */
+          for (i=0; i < mb->multi button.num labels; i++)
+            XtFree(mb->multi button.labels[i]);
+         /* Free the array of pointers to the labels */
+          XtFree((char *)mb->multi button.labels);
+       }
+
+
+       /*************************************<->*************************************
+        *  int
+        *  HandleLabelAllocation(mb)
+        *
+        *   Description:
+        *   -----------
+        *     If no labels have been provided, use the button name as
+        *     the single label.  Allocate an array of pointers to strings
+        *     to hold pointer to button labels; then allocate space for
+        *     each button label and copy label to this space.  Compute
+        *     the widest (in pixels) label and return this to figure to
+        *     the caller (it will be used to compute the optimum width
+        *     for the button).  Set the multibutton state to 0 and put
+        *     a pointer to the corresponding label into button.label.
+        *
+        *
+        *   Inputs:
+        *   ------
+        *     mb = multibutton whose labels are to be allocated.
+        *
+        *   Outputs:
+        *   -------
+        *     returns width (in pixels) of widest label.
+        *
+        *************************************<->***********************************/
+       static int HandleLabelAllocation(mb)
+          XwMultiButtonWidget mb;
+       {
+          String * labels;
+          int i;
+          int maxWidth = 0;
+          XFontStruct  *fs = mb->button.font;
+          /* If user has not given us any labels then try to use
+           * widget's name as a label (of course this too could be NULL but
+           * it still shouldn't hurt us).
+           */
+          if (mb->multi button.labels == NULL)
+              mb->multi button.labels = &(mb->core.name);
+          /* There is ALWAYS one label, even if that label is NULL (i.e., the
+           * application provides no names and the button's name is NULL).
+           */
+          if (mb->multi button.num labels < 1)
+              mb->multi button.num labels = 1;
+          /* Allocate array of label pointers */
+          labels = (String *) XtMalloc(sizeof(char *)* mb->multi button.num labels);
+
+          /* Allocate space for each label and copy pointer to new string
+           * into array allocated above. Also compute, in pixels, width of
+           * widest label.
+           */
+          for (i=0; i< mb->multi button.num labels; i++)
+            {
+              labels[i]= (char *)strcpy(
+                                     XtMalloc((unsigned)mb->multi button.labels[i] + 1),
+                                      mb->multi button.labels[i]);
+              maxWidth = Max(maxWidth, XTextWidth(fs,labels[i], XwStrlen(labels[i])));
+            }
+
+          /* Now put correct label, set state and compute label location. */
+          mb->multi button.labels = labels;
+          mb->button.label = labels[0];
+          mb->multi button.state = 0;
+           XwSetTextWidthAndHeight(mb);
+         /* Return width (in pixels) of widest label */
+          return(maxWidth);
+        }
+
+
+       7.2.5  Putting It Together
+
+       Now that you have a new widget, you need a test program to
+       exercise its features.  Listed below is a simple program
+       that will place a static text label and multi-state button
+       into a bulletin board widget.  Turning on the multi-state
+       button will change the color used to draw the static text.
+       The source code for this program can be found in the
+       filemultiTest.c in the directory
+       /usr/contrib/Xw/examples/MultiButton
+       /**************************************************************
+         This is a simple program that creates a bulletin board manager
+         which contains a static text label and a multibutton.
+       ***************************************************************/
+       #include <stdio.h>
+       #include <X11/Xlib.h>
+       #include <X11/Intrinsic.h>
+       #include <X11/StringDefs.h>
+       #include <Xw/Xw.h>
+       #include <Xw/SText.h>
+       #include <Xw/BBoard.h>
+       #include <Xw/MButton.h>
+       #include <X11/Xresource.h>
+       Widget bbox, colorbox, mbutton;
+       Widget toplevel, outer box, pbutton;
+       Arg myArgs[10];
+       Pixel color;
+
+       Pixel CvtStringToPixel(src string)
+           char *  src string;
+       {
+           XColor aColor, bColor;
+           XAllocNamedColor(XtDisplay(toplevel),
+                         DefaultColormapOfScreen(XtScreen(toplevel)),
+                          src string, &aColor, &bColor);
+           return(aColor.pixel);
+       }
+
+
+       /*  Set up callbacks for buttons */
+
+       void ToggleColor(w, closure, call data)
+           Widget      w;
+           caddr t     closure;
+           caddr t     call data;
+       {
+           int state = (int) call data;
+           switch(state)
+             {
+             case 0 :  color = CvtStringToPixel("red");
+                       break;
+             case 1:   color = CvtStringToPixel("black");
+                       break;
+             case 2:   color = CvtStringToPixel("green");
+                      break;
+             default: color = CvtStringToPixel("orange");
+              }
+          XtSetArg(myArgs[0], XtNforeground, (XtArgVal) color);
+          XtSetValues(colorbox, (ArgList)myArgs, 1);
+       }
+
+
+       static XtCallbackRec colorCallback[] =
+       {
+          { ToggleColor, (caddr t) NULL },
+          { NULL,         (caddr t) NULL },
+       };
+
+
+       void main(argc, argv)
+           unsigned int argc;
+           char **argv;
+       {
+           static char * labels[] =
+             { "RED", "PAINT IT BLACK, YOU DEVIL", "GREEN", "ORANGE" };
+
+           toplevel = XtInitialize(
+               argv[0], "XTest1", NULL, 0, &argc, argv);
+           XtSetArg(myArgs[0],XtNlayout, XwIGNORE);
+           XtSetArg(myArgs[1],XtNwidth, 500);
+           XtSetArg(myArgs[2],XtNheight, 300);
+           outer box = XtCreateManagedWidget
+                       ("bb1", XwbulletinWidgetClass, toplevel,
+                                 (ArgList)myArgs, 3);
+
+           XtSetArg(myArgs[0],XtNwidth, 300);
+           XtSetArg(myArgs[1],XtNalignment, XwALIGN CENTER);
+           XtSetArg(myArgs[2],XtNstring,
+                       (XtArgVal) "One Of Many Button Box");
+           colorbox = XtCreateManagedWidget
+                      ("text",XwstatictextWidgetClass, outer box,
+                                 (ArgList)myArgs, 3);
+           XtSetArg(myArgs[0],XtNx, 10);
+           XtSetArg(myArgs[1],XtNy, 100);
+           XtSetArg(myArgs[2],XtNnumLabels, 4);
+           XtSetArg(myArgs[3],XtNselect, (XtArgVal) colorCallback);
+           XtSetArg(myArgs[4],XtNlabels, labels);
+           mbutton = XtCreateManagedWidget
+                      ("MultiButton!", XwmultiButtonWidgetClass, outer box,
+                                 (ArgList)myArgs, 5);
+
+           XtRealizeWidget(toplevel);
+           XtMainLoop();
+       }
+
+       You can compile this program on an HP 9000 Series 300
+       machine by using following
+        command:
+
+       cc test.c -o test -Wc,-Nd2000 -Wc,-Ns2000 -lXw -lXt -lX11
+
+
+       7.3  Widget Classing
+
+
+       Widget classes with similar functions and parallel
+       programmatic interface can be associated into groups known
+       as tasks, and each class within a task is called a view.
+       Each task group has a unique pointer associated with it.  If
+       widgets are created by referencing a task pointer instead of
+       a widget class pointer, the precise determination of which
+       view to be instantiated can be controlled through resource
+       settings.  This feature is called Widget Classing.  You
+       could use widget classing to allow the application user to
+       choose which type of button widget should be used by the
+       application.
+
+       To use widget classing, application programs must include
+       the file <Xw/WClassing.h>.  This file provides the ability
+       to associate widget classes into task groups and select
+       views through resource settings.  The following sections
+       will show you how to modify <XwWClassing.h>.  to add and
+       delete task groups and views within task groups.
+
+       7.3.1  Implementing Widget Classing
+
+       Widget classing is implemented by replacing XtCreateWidget
+       and XtCreateManagedWidget with routines that understand the
+       difference between a widget class pointer and a task
+       pointer.  The following code is found at the end of
+       <Xw/WClassing.h>.
+
+           /*
+            * This allows us to trap the XtCreateWidget call in the application
+            * code and preprocess the class pointer.  In this way we can get
+            * complete resource specification.  We also can pass task pointers
+            * in and magically turn them into widget class pointer.
+            */
+           extern Widget XwCreateWidget();
+           #define XtCreateWidget(name,class,parent,args,num)\
+                       XwCreateWidget(name,class,parent,args,num)
+           /*
+            * This is the trap for XtCreateManagedWidget.
+            */
+           extern Widget XwCreateManagedWidget();
+           #define XtCreateManagedWidget(name,class,parent,args,num)\
+                       XwCreateManagedWidget(name,class,parent,args,num)
+
+       Since XtCreateManagedWidget consists of calls to
+       XtCreateWidget and XtManageWidget, it follows that
+       XwCreateManagedWidget consis ts of calls to XwCreateWidget
+       and XtManageWidget.  The following discussion will therefore
+       only need to deal with XwCreateWidget.
+
+       XwCreateWidget examines the class argument to see if it is
+       the same value as any of the task pointers contained in
+       XwTasks (discussed below).  If the class parameter is equal
+       to one of the task pointers, XwCreateWidget will resolve the
+       task pointer to a specific view and call XtCreateWidget
+       using the widget class associated with the chosen view.  If
+       the class parameter is not equal to any task pointer
+       contained in the XwTasks structure, XwCreateWidget assumes
+       that the argument is a valid widget class and calls
+       XtCreateWidget directly.
+
+
+       7.3.2  XwTasks
+
+       Tables 7-1 and 7-2 show the structure of XwTasks.  The
+       ``View'' column of table 7-1 is simply a pointer to the view
+       structure that is shown in table 7-2.
+
+                          TABLE 7-1.  Task Table
+
+
+       
+
+       |     Task        |  Task Class   | View  | Number Of Views |
+       |                 |               |       |                 |
+
+       |XwButtonTask     | ButtonTask    |  .    |        2        |
+       |XwImageEditTask  | ImageEditTask |  .    |        1        |
+       |XwLayoutTask     | LayoutTask    |  .    |        4        |
+       | .               | .             |  .    |        .        |
+       | .               | .             |  .    |        .        |
+       |                 |               |       |                 |
+
+
+                          TABLE 7-2.  View Table
+
+       
+
+       |     View Name         |        Widget Class Pointer       |
+       |                       |                                   |
+
+       |    XwPushButton       |       XwPushButtonWidgetClass     |
+       |    XwToggle           |       XwToggleWidgetClass         |
+       |                       |                                   |
+
+
+       Each of the fields in the tables are defined below.
+
+          o Task - Task pointers are simply pointers to unique
+            areas in memory.  By pointing somewhere besides valid
+            widget class structures, task pointers are guaranteed
+            to never equal widget class pointers.  Currently
+            uniqueness of reference is guaranteed by declaring an
+            unused integer for each task group and then making the
+            task pointer point to this unused integer.  For the
+            task ``ButtonTask'', the code is:
+                static int XwButtonTsp;
+                static int *XwButtonTask = &XwButtonTsp;
+
+          o Task Class - The resource class for this task.
+
+          o Views - A pointer to the views for this task group.
+
+          o Number of Views - The number of views in this task
+            group.
+
+          o View Name - The resource name for view.
+
+          o Widget Class Pointer - The widget class pointer for the
+            view.
+
+
+            Because the addresses of widget class structures are
+            not known at compile-time the view tables cannot be
+            initialized then.  Runtime initialization is
+            accomplished as a three-part process.  First, the view
+            table is declared.  For ButtonTask, the declaration is:
+                static XwViewTableEntry XwButtonViews[2];
+
+            For each view table there is an initialization function
+            definition.  The initialization function defined for
+            ButtonTask is:
+            static XwWCViewLoadProc XwLoadButtonViews()
+            {
+              XwLoadViewTable(XwButtonViews,0,
+                             "XwPushButton",XwpushButtonWidgetClass);
+              XwLoadViewTable(XwButtonViews,1,
+                             "XwToggle",XwtoggleWidgetClass);
+              }
+
+            At this point XwtoggleWidgetClass is considered a
+            reference, and is resolved by the linker.  At runtime,
+            after linker resolution, the widget class pointers are
+            loaded into the structures.  The programmer must insure
+            that the needed include files have been included.  For
+            the above example, both <Xw/PButton.h> and
+            <Xw/Toggle.h> must be included before the definition of
+            XwLoadButtonViews().
+
+            All initialization functions are simply repeated calls
+            to XwLoadViewTable.  XwLoadViewTable is a very simple
+            function and is defined as follows:
+            void XwLoadViewTable(table,index,name,class)
+                XwViewTableEntry    table[];
+                int index;
+                char    *name;
+                WidgetClass class;
+                {
+                  table[index].name = name;
+                  table[index].wClass = class;
+                }
+
+            The last step in table initialization is to initialize
+            a list of procedures.  All procedures in this list are
+            executed during the first call to XwCreateWidget.  For
+            the distributed widget classing code, the
+            initialization table is:
+            XwWCViewLoadProc XwWCViewLoadProcs[] = {
+             (XwWCViewLoadProc) XwLoadButtonViews,
+             (XwWCViewLoadProc) XwLoadImageEditViews,
+             (XwWCViewLoadProc) XwLoadLayoutViews,
+             (XwWCViewLoadProc) XwLoadMenuViews,
+             (XwWCViewLoadProc) XwLoadScrollViews,
+             (XwWCViewLoadProc) XwLoadTextEditViews,
+             (XwWCViewLoadProc) XwLoadTitleViews,
+            };
+
+
+            In order modify the task groups modifications must be
+            made to the structures declared in <Xw/WClassing.h>.
+            Deletion of views is the simplest modification.
+            Perform the following steps to delete a view:
+
+              1.  Reduce the size of the view table.
+
+              2.  Remove the call to XwLoadViewTable that loads the
+                  undesired view.
+
+              3.  Realign the view indices.
+
+            For example, in order to remove the
+            XwpushButtonWidgetClass view from the XwButtonTask
+            group, you would change
+            static XwViewTableEntry XwButtonViews[2];
+
+            to
+            static XwViewTableEntry XwButtonViews[1];
+
+            The definition of XwLoadButtonViews() would be changed
+            from
+            static XwWCViewLoadProc XwLoadButtonViews()
+            {
+            XwLoadViewTable(XwButtonViews,0,
+              "XwPushButton",XwpushButtonWidgetClass);
+            XwLoadViewTable(XwButtonViews,1,
+              "XwToggle",XwtoggleWidgetClass);
+            }
+
+            to
+            static XwWCViewLoadProc XwLoadButtonViews()
+            {
+               XwLoadViewTable(XwButtonViews,0,
+               "XwToggle",XwtoggleWidgetClass);
+            }
+
+            Deleting task groups is a more complicated process.
+            Perform the following steps to delete a task group:
+
+               o Remove the declaration of the view table.
+
+               o Remove the view load function from the
+                 initialization function list.
+
+               o Remove the task table entry for the task.
+
+               o Remove the definition of the view table
+                 initialization function.
+
+               o Remove the declaration and initialization of the
+                 task pointer.
+
+            Perform the following steps to add a task group:
+
+              1.  Declare a task pointer.
+
+              2.  Initialize the task pointer to point to some
+                  known address that is not a widget class
+                  structure.
+
+              3.  Make sure that all public include files for all
+                  views are included.
+
+              4.  Declare a view table of an appropriate size.
+
+              5.  Define a view table initialization function.
+
+              6.  Add the view table initialization function to the
+                  initialization function list (XwWCViewLoadProcs).
+
+            The following sample code will add a task group called
+            "Jetsons." This task group consists of George, Jane,
+            Elroy, Judy, and Astro widget classes.
+            /* Steps one and two */
+            static int JetsonsTSP;
+            static int *JetsonsTask = &JetsonTSP;
+            /* Step three */
+            #include <Hana-Barbera/George.h>
+            #include <Hana-Barbera/Jane.h>
+            #include <Hana-Barbera/Elroy.h>
+            #include <Hana-Barbera/Judy.h>
+            #include <Hana-Barbera/Astro.h>
+            /* Step four */
+            static XwViewTableEntry Jetsons[5];
+            /* Step five */
+            static XwWCViewLoadProc LoadJetsons()
+            {
+            XwLoadViewTable(Jetsons,0,
+              "George",GeorgeWidgetClass);
+            XwLoadViewTable(Jetsons,0,
+              "Jane",JaneWidgetClass);
+            XwLoadViewTable(Jetsons,0,
+              "Elroy",ElroyWidgetClass);
+            XwLoadViewTable(Jetsons,0,
+              "Judy",JudyWidgetClass);
+            XwLoadViewTable(Jetsons,0,
+              "Astro",AstroWidgetClass);
+            }
+
+
+       7.3.3  Using Resources
+
+       When XwCreateWidget recognizes the class parameter to be a
+       task pointer, it assembles a class list and a name list in
+       preparation for resource data base query.  If the query is
+       successful, the view table for the task is searched for a
+       matching string and the widget class associated with that
+       string is instantiated.  If the query is unsuccessful, the
+       widget class of the first view in the view table is
+       instantiated by default.  The class list is of the form:
+       <Class list of Parents>.<task class>.View
+
+       Where:
+
+          o ``Class list of Parents'' is the list of classes of all
+            parents of this widget in the widget hierarchy.
+
+          o ``task class'' is the second field of the
+            TaskTableEntry associated with the task pointer used in
+            the call to XwCreateWidget.
+       The name list is of the form:
+       <Name list of Parents>.<name>.view
+
+       Where:
+
+          o ``Name list of Parents'' is the list of names of all
+            parents of this widget in the widget hierarchy.
+
+          o ``name'' is the name parameter sent in to
+            XwCreateWidget.
+
+       Consider the following program:
+       #include <stdio.h>
+       #include <X11/Intrinsic.h>
+       #include <X11/StringDefs.h>
+       #include <Xw/Xw.h>
+       #include <Xw/WClassing.h>
+       void main(argc,argv)
+         unsigned   intargc;
+         char  *argv[];
+         {
+         Widget         toplevel, button;
+         toplevel = XtInitialize(argv[0],"Xtest",NULL,0,&argc,argv);
+         XtCreateManagedWidget("button",XwButtonTask,
+                          toplevel,NULL,NULL);
+         XtRealizeWidget(toplevel);
+         XtMainLoop();
+       }
+
+       Because XwpushButtonWidgetClass is the widget class of the
+
+
+       first view in the view table, the default widget to be
+       instantiated will be XwpushButtonWidgetClass.  The default
+       is used when no resource has been set or when an invalid
+       resource has been set.
+
+       All of the following resource definitions will cause an
+       XwtoggleWidgetClass widget to be instantiated:
+       *ButtonTask.View:    XwToggle
+       *ButtonTask.view:    XwToggle
+       *button.view:    XwToggle
+       *button.View:    XwToggle
+
+       All of the following resource definitions will cause a
+       XwpushButtonWidgetClass widget to be instantiated:
+       *ButtonTask.View:    NonsensicalString
+       *ButtonTask.View:    XwPushButton
+       *ButtonTask.view:    XwPushButton
+       *button.view:    XwPushButton
+       *button.View:    XwPushButton
+
+
+       7.4  Summary
+
+
+       This chapter detailed the process of writing a new widget,
+       including the use of widget classing.  You can use the
+       methods shown here to create other new widgets that you may
+       need.
+
+
+       Reference Information
+
+
+       This section contains reference information about HP widgets included with
+       the X Window System.  The entries are arranged alphabetically, with each
+       entry beginning on its own ``page 1.''
+              
+
+              |                 MAN Pages                  |
+              |                                            |
+
+              |Constraint(3X)     XwPopupMgr(3X)           |
+              |Core(3X)           XwPrimitive(3X)          |
+              |XwArrow(3X)        XwPushButton(3X)         |
+              |XwBulletin(3X)     XwRegisterConverters(3X) |
+              |XwButton(3X)       XwRowColumn(3X)          |
+              |XwCascade(3X)      XwSash(3X)               |
+              |XwCreateTile(3X)   XwScrollBar(3X)          |
+              |XwForm(3X)         XwScrolledWindow(3X)     |
+              |XwImageEdit(3X)    XwStaticRaster(3X)       |
+              |XwList(3X)         XwStaticText(3X)         |
+              |XwManager(3X)      XwTextEdit(3X)           |
+              |XwMenuButton(3X)   XwTitleBar(3X)           |
+              |XwMenuMgr(3X)      XwToggle(3X)             |
+              |XwMenuPane(3X)     XwValuator(3X)           |
+              |XwMenuSep(3X)      XwVPaned(3X)             |
+              |XwMoveFocus(3X)    XwWorkSpace(3X)          |
+              |XwPanel(3X)                                 |
+              |                                            |
+
+
+
+

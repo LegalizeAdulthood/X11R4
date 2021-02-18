@@ -1,0 +1,20 @@
+jishoeditor {
+
+	open(fname:v_char)
+
+	save()
+
+	exit()
+
+	passwd_change(passwd:v_char)
+
+	hpasswd_change(passwd:v_char)
+
+	clear_passwd()
+
+	clear_hpasswd()
+
+	toroku_funou()
+
+	hindokousin_funou()
+}

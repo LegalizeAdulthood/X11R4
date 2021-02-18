@@ -1,0 +1,14 @@
+#include "../../Serpent.tmpl"
+DIR = man
+
+MAN = format sdd serpent
+
+MAN_1 = format.1 sdd.1 serpent.1
+
+all:	$(MAN_1)
+
+SerpentManPage(format)
+SerpentManPage(sdd)
+SerpentManPage(serpent)
+
+SerpentDependEmpty()

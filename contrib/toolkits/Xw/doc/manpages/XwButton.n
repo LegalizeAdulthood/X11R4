@@ -1,0 +1,132 @@
+
+
+
+     XWBUTTON(3X)                                         XWBUTTON(3X)
+
+
+
+
+     NAME
+          XwbuttonWidgetClass - X Widget Button MetaClass
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+
+
+     CLASSES
+          The XwButtonClass is built from the Core and XwPrimitive
+          classes.
+
+     DESCRIPTION
+          The XwButton class is an X Widget meta class.  It is never
+          instantiated as a widget.  It provides a set of resources
+          that are needed by a variety of other X Widgets (for
+          example: XwtoggleWidgetClass and XwpushButtonWidgetClass).
+
+     NEW RESOURCES
+          The XwButtonClass defines a set of resource types used by
+          the programmer to specify the data for widgets that are
+          subclasses of XwButtonClass.  To specify any of these
+          resources within the .Xdefaults file, drop the XtN prefix
+          from the resource name.  For example, XtNfont becomes font.
+
+
+                             Button Resource Set
+     Name               Class              Type            Default
+     ___________________________________________________________________
+     XtNfont            XtCFont            XFontStruct *   Fixed
+     XtNlabel           XtCLabel           caddr_t         NULL
+     XtNlabelLocation   XtCLabelLocation   int             right
+     XtNvSpace          XtCVSpace          int             2
+     XtNhSpace          XtCHSpace          int             2
+     XtNset             XtCSet             Boolean         FALSE
+     XtNsensitiveTile   XtCSensitiveTile   int             75_foreground
+     XtNborderWidth     XtCBorderWidth     int             0
+
+
+
+          XtNfont
+               The application may define the font to be used when
+               displaying the button string.  Any valid X11 font may
+               be used.
+
+          XtNlabel
+               The application may define the button label by
+               providing a pointer to a null terminated character
+               string.  If no label is provided the class name of the
+               widget will be used.
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWBUTTON(3X)                                         XWBUTTON(3X)
+
+
+
+
+          XtNlabelLocation
+               For those buttons that have a separate graphic, this
+               field specifies whether the label should appear to the
+               left or to the right of that graphic.  The acceptable
+               values are the defines XwRIGHT (the default) and
+               XwLEFT.
+
+          XtNvSpace
+               The application may determine the number of pixels of
+               space left between the top of the button and the top of
+               the button label, and between the bottom of the label
+               and the bottom of the button.
+
+          XtNhSpace
+               The application may determine the number of pixels of
+               space left between the left side of the button and the
+               leftmost part of the button label, and between the
+               rightmost part of the button label and the right side
+               of the button.
+
+          XtNset
+               If set to true the button will display itself in its
+               selected state.  This is useful for showing some
+               conditions as active when a set of buttons appear.
+
+          XtNsensitiveTile
+               The application can determine the mix of foreground and
+               background that will be used to draw text to show
+               insensitivity. The #defines for setting the values
+               through an arg list and the strings to be used in the
+               .Xdefault file are described in XwCreateTile(3X).  The
+               default is Xw75_FOREGROUND which is a 75/25 mix of
+               foreground and background colors.
+
+          XtNborderWidth
+               This redefines the core class default border width from
+               1 pixel to 0 pixels.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          XWPRIMITIVE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+

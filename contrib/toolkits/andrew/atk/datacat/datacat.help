@@ -1,0 +1,84 @@
+\begindata{text,268770020}
+\textdsversion{12}
+\template{help}
+\chapter{Datacat: Concatenate ATK Datastream Files
+
+}
+\section{What Datacat is
+
+}\leftindent{
+Datacat is a non-interactive application, similar to the Unix \italic{cat} 
+program, specially designed to concatenate ATK datastream files.  \italic{cat 
+}cannot be used to concatenate ATK files; you must use datacat.
+
+}
+\section{How Datacat works
+
+
+}\leftindent{Datacat takes a list of two or more files and concatenates them 
+by creating a text object and then inserting the contents of the named files 
+into it.  If the named files are text, then their contents are simply 
+concatenated, and if the files contain insets/objects other than text, then 
+those insets will be added into the text as subobjects.  Newlines are added 
+between files if they do not already exist.
+
+}
+
+\section{Quick reference
+
+}\leftindent{
+To concatenate two or more files, type the command "datacat" followed by the 
+names of the files you want to concatenate, using spaces to separate the 
+filenames:
+
+
+datacat\italic{ file1 file2 . . .}
+
+
+The output will go to the standard output. If not diverted, the raw datastream 
+will appear in the typescript.
+
+
+
+To concatenate two or more files into one file, type:
+
+
+datacat -o \italic{outputFile file1 file2} . . .
+
+
+where\italic{ outputFile} is the name of the file that will contain the 
+concatenated files.
+
+
+Datacat has a \bold{-q} flag, that tells it to run quietly without printing 
+the ATK version message. This should be useful to those who write shellscripts 
+that call datacat. There is also a \bold{-v} (verbose) flag that causes 
+datacat to report on the files as it concatenates them.
+
+}
+
+
+\section{Program Author}
+
+\leftindent{
+Tom Neuendorffer}
+
+
+\section{Related tools}  
+
+
+\leftindent{Select (highlight) one of the italicized names and choose "Show 
+Help on Selected Word" from the pop-up menu to see the help file for:
+
+
+\italic{cat
+
+text
+
+insets
+
+
+}For more information on ATK datastream, see the ATK Programmer's Manual 
+chapter on the class\italic{ dataobject.}
+
+}\enddata{text,268770020}

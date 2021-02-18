@@ -1,0 +1,7 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+SUBDIRS = src wlmCompiler examples bin
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

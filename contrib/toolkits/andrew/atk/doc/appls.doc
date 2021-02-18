@@ -1,0 +1,18 @@
+\begindata{text,269003148}
+\textdsversion{12}
+\template{default}
+\chapter{Writing application programs in ATK}
+
+
+
+This document is intended to contain documentation on writing application 
+programs in ATK.  There are no short-term plans for completing this document.
+
+
+Application programmers should read the overview document and the sequence of 
+example program descriptions in order to gain some understanding of how to 
+write application programs in ATK.  The textbook on ATK by Nathanial 
+Borenstein also provides instruction on creating application programs in ATK.
+
+
+\enddata{text,269003148}

@@ -1,0 +1,18 @@
+
+(Version Page\ Numbering 1)
+(Version Auto\ Numbering 1)
+(Page\ Numbering
+  (Starting 165)
+  (Begin Odd)
+  (Pages 17))
+(Auto\ Numbering
+  (Stream reference
+    (Level 0
+      (Show 0))
+    (Deltas 1)
+    (Restart 1)
+    (FirstLevel 0)
+    (Tag ssave
+      (Page 1)
+      (Deltas 1)
+      (Restart 1))))

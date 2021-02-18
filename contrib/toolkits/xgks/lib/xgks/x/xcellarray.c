@@ -1,0 +1,206 @@
+/*
+ *		Copyright IBM Corporation 1989
+ *
+ *                      All Rights Reserved
+ *
+ * Permission to use, copy, modify, and distribute this software and its
+ * documentation for any purpose and without fee is hereby granted,
+ * provided that the above copyright notice appear in all copies and that
+ * both that copyright notice and this permission notice appear in
+ * supporting documentation, and that the name of IBM not be
+ * used in advertising or publicity pertaining to distribution of the
+ * software without specific, written prior permission.
+ *
+ * IBM DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ * ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+ * IBM BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+ * ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+ * WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ * ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+ * SOFTWARE.
+ *
+ *
+ *
+ * University of Illinois at Urbana-Champaign
+ * Department of Computer Science
+ * 1304 W. Springfield Ave.
+ * Urbana, IL	61801
+ *
+ * (C) Copyright 1987, 1988 by The University of Illinois Board of Trustees.
+ * All rights reserved.
+ *
+ * Tool: X 11 Graphical Kernel System
+ * Author: Gregory Scott Rogers
+ * Author: Sung Hsien Ching Kelvin
+ * Author: Yu Pan
+ * 
+ * XGKS cellarray primitive output 
+ * ws : the pointer to current workstation list 
+ * cell_ptr: the pointer to the output cellarray
+ * primitive 
+ * 
+ * $Header: xcellarray.c,v 4.1 89/09/06 13:19:33 amy Exp $
+ *
+ * $Source: /andrew/Xgks/source/xgks.bld/src/x/RCS/xcellarray.c,v $
+ *
+ * $Log:	xcellarray.c,v $
+ * Revision 4.1  89/09/06  13:19:33  amy
+ * Replaced comment delimiter.
+ * 
+ * Revision 4.0  89/08/31  16:28:15  amy
+ * Changed IBM copyright for MIT distribution.
+ * 
+ * Revision 3.18  89/06/05  10:26:18  bruce
+ * DCR# d1:	Changed include file name from gks_implement.h to gks_implem.h
+ * 		for the AIX compiler.  Also added a display argument to all
+ * 		calls to SIGIO functions.
+ * 
+ * Revision 3.17  89/02/04  15:28:07  amy
+ * PTR c1147	Make global vars. and functions private, or static where possible.
+ * 
+ * Revision 3.16  88/12/08  13:51:00  amy
+ * Changed spelling of color to colour.
+ * 
+ * Revision 3.15  88/09/26  10:01:35  amy
+ * MIT	xCellarray:  always return with a value.
+ * 
+ * Revision 3.14  88/08/18  14:49:39  amy
+ * No additional changes in August tape version-- no changes made.
+ * 
+ * Revision 1.1  88/07/21  10:51:51  david
+ * Initial revision
+ *  
+ *
+ */
+
+static char rcsid[] = "$Header: xcellarray.c,v 4.1 89/09/06 13:19:33 amy Exp $";
+
+#include "gks_implem.h"		/* d1 */
+
+xXgksCellarray(ws, cell_ptr)					/*c1147*/
+	WS_STATE_PTR ws;
+	CELL_ARRAY_ST *cell_ptr;
+{
+	Display *dpy;
+	Window win;
+	GC gc;
+	XPoint ll, lr, ur, ul, pol2[4];
+
+        Gpoint pol[4];
+	Gfloat dx0, dy0, dx1, dy1;
+        Gint i, j, k, nx, clr, *cll, *clp, row;
+	Gfloat DX, DY;
+
+
+
+	if (ws->ewstype != X_WIN) return(OK);	/*MIT*/
+
+	/* Initialization  */
+
+	XgksSIGIO_OFF(ws->dpy);			/* d1 *//*c1147*/
+
+	dpy = ws->dpy;
+	win = ws->win;
+	gc = ws->gc;
+
+	/* display workstation transformation NDC to X_WIN */
+
+	NdcToX(ws, &(cell_ptr->ll), &ll);
+	NdcToX(ws, &(cell_ptr->lr), &lr);
+	NdcToX(ws, &(cell_ptr->ur), &ur);
+	NdcToX(ws, &(cell_ptr->ul), &ul);
+
+
+	dx0 = (( (Gfloat)(lr.x - ll.x))/cell_ptr->dim.x);
+	dy0 = (( (Gfloat)(lr.y - ll.y))/cell_ptr->dim.x);
+	dx1 = (( (Gfloat)(ul.x - ll.x))/cell_ptr->dim.y);
+	dy1 = (( (Gfloat)(ul.y - ll.y))/cell_ptr->dim.y);
+
+	nx  = cell_ptr->dim.x;
+
+	/* get the memory for subset of the colour index array */
+
+	cll = (Gint *)malloc((unsigned)(nx * cell_ptr->dim.y * sizeof(int)));
+	GKSERROR( (cll == NULL), 300, errgcellarray);		/*c1147*/
+
+	/* copy the values of the subset of colour index array */
+
+	clp = cll;
+	row = cell_ptr->rowsize;
+
+	for (i=0; i<cell_ptr->dim.y; i++)
+		for (j=0; j<row; j++)
+			if (j<nx) {
+				*clp = cell_ptr->colour[i*row+j];
+				clp++;
+			}
+
+
+	clp = cll;
+
+	/* set the clip area and fill area style */
+
+	XSetClipRectangles(dpy, gc, 0, 0, &(ws->xclip), 1, Unsorted);
+
+	XSetFillStyle(dpy, gc, FillSolid);
+
+	/* draw the cell array */
+
+	DX = cell_ptr->dim.x * dx0;
+	DY = cell_ptr->dim.x * dy0;
+
+	pol[0].x = ll.x + DX - dx0 - dx1;
+	pol[0].y = ll.y + DY - dy0 - dy1;
+
+	for (i=0; i<cell_ptr->dim.y; i++) {
+
+		pol[0].x -= DX;
+		pol[0].y -= DY;
+
+		pol[0].x += dx1;
+		pol[0].y += dy1;
+
+		for (j=0; j<cell_ptr->dim.x; j++) {
+
+			pol[0].x += dx0;
+			pol[0].y += dy0;
+
+			pol[1].x = pol[0].x + dx0;
+			pol[1].y = pol[0].y + dy0;
+
+			pol[2].x = pol[1].x + dx1;
+			pol[2].y = pol[1].y + dy1;
+
+			pol[3].x = pol[0].x + dx1;
+			pol[3].y = pol[0].y + dy1;
+
+			clr = *clp;
+			clp++;
+
+			if ( ! WS_AVAIL_COLOUR(ws, clr))
+				clr = 1;
+			if ( ws->wscolour == 2 )	{	/* monochrome ? */
+				if (clr == 0) clr = ws->wsbg;
+				else if (clr == 1) clr = ws->wsfg;
+			}
+
+			XSetForeground(dpy, gc, clr);
+
+                        for(k=0;k<4;k++){
+                                pol2[k].x=pol[k].x;
+                                pol2[k].y=pol[k].y;
+                        }
+
+			XFillPolygon(dpy, win, gc, &pol2[0], 4, Complex, CoordModeOrigin);
+		}
+	}
+
+	XFlush(dpy);
+
+	free(cll);
+
+	XgksSIGIO_ON(ws->dpy);			/* d1 *//*c1147*/
+
+	return(OK);
+}
+

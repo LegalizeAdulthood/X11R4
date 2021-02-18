@@ -1,0 +1,568 @@
+
+
+Chapter 2	Using NCSA HDF for 8-Bit Raster Images
+
+
+
+Chapter Overview
+Eight-Bit Raster Image Sets
+Reasons to Use Raster Image Sets
+RIS8 Routines in the HDF Library
+Reading Raster Images from a File
+Automatic Decompression of Compressed 
+Images
+Examples of FORTRAN Calls to Read in Images
+Writing Raster Images to a File
+Compression
+Examples of FORTRAN Calls to Write Out 
+Images
+Sample Programs
+A FORTRAN Program
+A C Program
+C Functions to Convert Floating-Point Data to
+8-Bit Raster Data
+
+.c2.Chapter Overview
+
+This chapter discusses the purposes and use of raster image sets. 
+Raster image sets allow you to store an image, together with its 
+dimensions and a palette, in an HDF file. The RIS8 interface, 
+which provides routines for storing and retrieving raster image 
+sets, is introduced.
+
+
+Eight-Bit Raster Image Sets
+
+The phrase 8-bit raster image set (RIS8) refers to the set of tags and 
+associated information required to store an 8-bit raster image in 
+an HDF file. An RIS8 contains at least the following three 
+components:  an image, the dimensions of the image, and a 
+palette.
+
+¥	The image is a two-dimensional array of 8-bit numbers, one for 
+each pixel in the raster image. Pixel values range from 0 to 255 
+and indicate the colors to be used when drawing the 
+corresponding pixels on the screen.
+
+¥	The dimensions are two values representing the x and y 
+dimensions of the image, respectively.
+
+¥	The palette is a lookup table with 256 entries that tell the color to 
+associate with each of the 256 possible pixel values. Each entry 
+in the palette is chosen from a master palette of 224 RGB colors. 
+Each palette entry consists of 3 bytes, one each for red, green, 
+and blue. The first three bytes represent the R, G, and B values of 
+the first color in the palette; the next three the R, G, and B values 
+of the second color; and so forth. The total size of a palette is 768 
+bytes.
+
+In addition to these three items, any raster image set that contains 
+a compressed image includes the name of the compression scheme 
+that is used.
+
+An example of an HDF file with two raster image sets is illustrated 
+in Figure 2.1.
+
+Figure 2.1  Two Raster Image Sets in an HDF File
+
+                                                 
+
+
+
+At this time, RIS8 is the only type of raster image set for which an 
+HDF library has been written. It is expected that in the future there 
+will be support for 24-bit raster image data. Throughout the 
+remainder of this document, the phrase raster image set means 
+8-bit raster image set.
+
+
+Reasons to Use Raster Image Sets
+
+When raster images are stored in the form of HDF raster image 
+sets, it becomes possible to use a variety of software tools for 
+displaying and manipulating them. NCSA Image, for instance, 
+can operate directly on images stored in HDF raster image 
+format. Other software can display raster images in HDF format 
+on a variety of different machines.
+
+By using HDF files with raster image sets, programmers are able 
+to write portable software for working with the images much more 
+easily than otherwise. When palette, dimension, or compression 
+information is stored in the same file as the actual images, the 
+software does not have to search elsewhere for this important 
+information. More importantly, you may be spared from having to 
+supply the information. This reduction in the need to coordinate 
+disparate pieces of information about a raster image can make the 
+job of creating and running image-processing programs 
+significantly easier.
+
+
+RIS8 Routines in the HDF Library
+
+The HDF library contains routines for storing raw raster images 
+in RIS8 format, and for retrieving raster images from files with 
+raster image sets. These routines are callable from C programs 
+and FORTRAN programs that have access to the library. They 
+work on several computers, including the Cray Systems 
+(UNICOS), Alliant, Sun, and Macintosh II. Command level utility 
+programs are also available for building, examining, and 
+displaying raster images from files with raster image sets.
+
+All of the callable RIS8 routines in the library begin with the letters 
+DFR8. The letters DF of DFR8 are derived from HDF, and the 
+sequence R8 indicates that the routine works with 8-bit raster 
+images.
+
+The next two sections contain descriptions and examples of the 
+routines. More exact specifications for FORTRAN and C routines 
+can be found in Chapter 4 and Chapter 5, respectively.
+
+
+Reading Raster Images from a File
+
+To read a raster image from an RIS8, make calls to the following 
+two routines, in the order shown:
+
+¥	DFR8getdims(filename,rows,cols,ispalette)
+
+retrieves the dimensions of the image and also specifies 
+whether there is a palette associated with the image.
+
+¥	DFR8getimage(filename,image,rows,cols,palette),
+
+retrieves the image, and the palette if it is present, and stores 
+them in arrays.
+
+Successive additional calls to DFR8getdims and DFR8getimage 
+will retrieve all of the images in the file in the sequence in which 
+they were written.
+
+If you know the dimensions of the image beforehand and whether a 
+palette is associated with the image, then there is no need to call 
+DFR8getdims. Simply allocate arrays with the proper dimensions 
+for the image and palette (if necessary) and let DFR8getimage 
+read in the images.
+
+If, however, you do not know the values of rows and cols, you must 
+call DFR8getdims to get them and then use them to provide the right 
+amount of space for the array image. Likewise, if you need to know 
+whether there is a palette, you need to call DFR8getdims.
+
+
+Automatic Decompression 
+of Compressed Images
+DFR8getimage automatically decompresses images that were 
+stored in a RIS8 in compressed form. This is possible because all of 
+the information required to perform decompression is stored in the 
+RIS8. The RIS8 interface supports compression by run length 
+encoding and the IMCOMP method.
+
+
+Examples of FORTRAN 
+Calls to Read in Images
+Below are some FORTRAN calls that show the use of the functions 
+introduced above. Examples of the same calls in C are given in 
+Chapter 5, "C Language Interface."
+
+Example 1
+In this example, the dimensions of the image are already known, 
+and it is known that there is a palette.
+
+integer	DFR8getimage
+character*1	image(256,512)
+character*1	palette(768)
+integer	ret
+
+ret = DFR8getimage('myfile.hdf',image,256,512,pal)
+  .
+  .
+  .
+
+Remarks:
+
+¥	The RIS8 is stored in a file called 'myfile.hdf'.
+
+¥	The raster image stored in the file is known to be 256-by-512 
+bytes.
+
+¥	The array image is a 256-by-512 array of 8-bit characters. It is 
+assumed that the array is dimensioned to be exactly this size.
+
+¥	The parameter pal is a 768-byte array, three bytes per color, 
+representing R, G, and B values, respectively, for each color.
+
+¥	If DFR8getimage executes successfully, 0 is assigned to ret. 
+Otherwise, -1 is assigned.
+
+
+Example 2
+Here is a pair of calls in which the size of the image is not known 
+ahead of time, nor is it known whether there is a palette.
+
+integer	DFR8getdims, DFR8getimage
+integer	xsize, ysize, ispal
+character*1	image(xsize,ysize)
+character*1	pal(768)
+
+ret = DFR8getdims('myfile.hdf',xsize,ysize,ispal)
+ret = DFR8getimage('myfile.hdf',image,xsize,ysize,pal)
+  .
+  .
+  .
+
+Remarks:
+
+¥	If, after calling DFR8getdims, ispal is 1, then the call to 
+DFR8getimage causes a palette to be loaded into the array pal. If 
+the value of ispal is not 1, then nothing is loaded into the array 
+pal when DFR8getimage is called. If a palette is needed, then 
+the program has to supply it.
+
+¥	The array image is an xsize-by-ysize array of 8-bit 
+characters. It is assumed that the array is dimensioned to be 
+exactly this size.
+
+
+Writing Raster Images to a File
+
+Writing an image to an HDF file is also done with one or two 
+calls. Three routines are available:
+
+¥	DFR8setpalette(palette)
+
+tells the system what palette will be used for subsequent images. 
+The palette that is set here remains the default palette until it is 
+changed by a new call to the routine.
+
+¥	 DFR8putimage(filename,image,rows,cols,compress)
+
+writes out the RIS8 for the image as the first image in the file. If 
+there was other information in the file before the call to 
+DFR8putimage,  the function overwrites that information.
+
+The integer argument compress identifies the scheme to be used 
+for compressing the data, if any.
+
+¥	 DFR8addimage(filename,image,rows,cols,compress)
+
+appends to the file the RIS8 for the image. The palette associated 
+with this image is the one that was most recently set by 
+DFR8setpalette. The argument compress identifies the scheme 
+to be used for compressing the data, if any.
+
+Compression
+Compression schemes currently implemented are run length 
+encoding and IMCOMP. The value of the integer argument 
+compress determines which scheme is to be used, as follows:
+
+	0:	no compression
+	11:	run length encoding
+	12:	IMCOMP
+
+To avoid using numbers for compression codes, include in the 
+program the file 'hdflags', as described in Chapters 4 and 5. 
+
+NOTE:  IMCOMP compression does not return the same palette 
+that was stored initially. The price of improved storage efficiency 
+is a loss of information.
+
+
+Examples of FORTRAN 
+Calls to Write Out Images
+Below are several FORTRAN calls to the output functions. Refer to 
+examples 1 and 2 above for information about data types, array 
+dimensions, and return values.
+
+Example 3
+A palette stored in the array colors and a raw image stored in the 
+400-by-600 array picture are written to a file in RIS8 format.
+
+integer	DFR8setpalette, DFR8putimage
+character*1	colors(768)
+character*1	picture(400,600)
+integer	ret
+
+ret = DFR8setpalette(colors)
+ret = DFR8putimage('herfile.hdf',picture,400,600,0)
+
+if (ret .ne. 0)
+write(*,*) 'Error writing image to myfile.hdf.'
+  .
+  .
+  .
+
+Remarks:
+
+¥	The RIS8 with this palette and image is stored as the first image 
+in 'herfile.hdf'. If there was already something in this file, it 
+is lost.
+
+¥	The image is not compressed in the file.
+
+¥	The palette is assumed to be organized in the manner described 
+earlier:  R, G, B (first color); R, G, B (second color); and so 
+forth.
+
+
+Example 4
+Shown below is a series of calls in which four 800-by-1200 images 
+are written to the same file. The first two use palette palA and are 
+compressed using the IMCOMP technique; the third and fourth use 
+palette palB and are not compressed.
+
+integer	DFR8setpalette, DFR8putimage, DFR8addimage
+character*1	palA(768), palB(768)
+character*1	pic1(800,1200), pic2(800,1200)
+character*1	pic3(800,1200), pic4(800,1200)
+integer	ret
+
+integer	DFTAG_IMCOMP
+DATA	DFTAG_IMCOMP/12/
+
+ret = DFR8setpalette(palA)
+ret = DFR8putimage('myfile',pic1,800,1200,DFTAG_IMCOMP)
+ret = DFR8addimage('myfile',pic2,800,1200,DFTAG_IMCOMP)
+ret = DFR8setpalette(palB)
+ret = DFR8addimage('myfile',pic3,800,1200,0)
+ret = DFR8addimage('myfile',pic4,800,1200,0)
+  .
+  .
+  .
+
+
+Sample Programs
+
+Two sample programs, the first in FORTRAN, the second in C and 
+C functions to convert floating point data to 8-bit raster data are 
+presented below.
+
+
+A FORTRAN Program
+This program copies an RIS8 image from one file to another.
+
+First, the program reads into image1 an 8-bit raster image from an 
+HDF file called 'testrig1.df'. The dimensions of the image are 
+read into rows and cols. It is assumed that the image is small 
+enough to fit into the 150,000-character arrays image1 and image2; 
+that is, the value rows*cols must be less than 150,000.
+
+Then, the program writes the palette and image out to file 
+'testrig2.df'. The output image is encoded using run length 
+encoding.
+
+Figure 2.2 	FORTRAN Program 
+Dealing with Raster 
+Image Sets
+program RISexample
+
+character*1	image1(150000), image2(150000)
+character*1	palette(768)
+integer rows, cols, ispal;
+integer 	ret;
+
+
+ret = DFR8getdim('testrig1.df', rows, cols, ispal);
+ret = DFR8getimage('testrig1.df', image1, rows, cols, palette);
+
+ret = DFR8setpalette(palette);
+ret = DFR8putimage('testrig2.df',image1,rows,cols,DFTAG_RLE);
+
+stop
+end
+
+
+A C Program
+This program does the following, in order:
+
+¥	Reads into image1 a 256-by-512 8-bit raster image from a non-
+HDF file called "denaa031".
+
+¥	Reads into red, green, and blue 256 values representing the 
+palette from a file called "ps.pal". The palette stored in 
+"ps.pal" is not in the proper format, so it is rearranged into a 
+new, 768-byte array called palette and is in the proper format.
+
+¥	Writes the palette and image as a raster image set to a file 
+called "testrig1.hdf".
+
+¥	Reads the palette and image back in, this time storing the image 
+in image2 and storing the palette back in palette.
+
+¥	Compares the contents of image2 to the contents of image1  to 
+determine whether they are identical. (They should be.)
+
+
+
+Figure 2.3  C Program Dealing with Raster Image Sets
+
+#include "df.h"
+
+main
+{
+	unsigned char 
+			image1[131072], 	/* raw image to be read in from denaa031,
+						   then put into an RIS8 in testrig.df */
+			image2[131072], 	/* image to be read in from testrig.df */
+			palette[768], 
+			reds[256], 		/* colors to be loaded into palette	*/
+			greens[256], 
+			blues[256],
+			*p;				/* pointer to palette	*/
+	int j;
+	int rows, cols, 
+		ispal;			/* boolean to tell if there is a palette	*/
+	FILE *fp;
+
+	fp = fopen("denaa031","r");  	/* read in raw 256x512 image */
+		fread(image1, 131072, 1, fp);	
+		fclose(fp);	
+	fp = fopen("ps.pal","r");	/* read RGB values from palette file */
+		fread(reds,1,256,fp);
+		fread(greens,1,256,fp);
+		fread(blues,1,256,fp);
+		fclose(fp);
+
+	p = palette;
+	for (j=0; j<256; j++) {	/* reorganize palette so that */
+		*p++ = reds[j];		/* RGB values are interleaved */
+		*p++ = greens[j];
+		*p++ = blues[j];
+	}
+
+	printf("Ready to write out image \n");
+	DFR8setpalette(palette);
+	DFR8putimage("testrig1.df",image1,256,512,DFTAG_RLE);
+	printf("Just wrote out image \n");
+
+	DFR8getdim("testrig1.df",&rows, &cols, &ispal);
+	printf("After getdim\n");
+	printf("\tdimensions:%d :%d\n\tispal: %d\n", rows,cols,ispal);
+	DFR8getimage("testrig1.df",image2,rows,cols,palette);
+	printf("After getimage ... ");
+	if (strncmp(image1, image2, 131072) ==0) printf("identical\n");
+	else printf("different\n");
+}
+
+
+
+C Functions to  Convert 
+Floating-Point Data to
+8-Bit Raster Data
+The two functions shown here convert a floating-point data array 
+into an 8-bit raster array. Once converted, this raw raster array is 
+ready to be stored in RIS8 format.
+
+/* floattor8.c
+ */
+#include "df.h"
+
+#define CHAR_MAX	255
+
+/*
+ * floattoR8
+ * Convert a data array into a raster array by dividing the
+ * range in the data into 256 regions, numbering  the regions 
+ * from zero to 255, and assigning to each position in the 
+ * raster array the number of the corresponding region.
+ *
+ * Assume that raster array allocated is big enough.
+ */
+floattoR8(data, raster, size, max, min)
+float32 data[];
+char raster[];
+int32 size;
+float32 max, min;
+{
+  int32 i;
+  float32 step;
+
+  if ((max == 0) && (min == 0))
+    findMaxMin(data, size, &max, &min);
+
+  step = (max - min) / CHAR_MAX;
+  if (step == 0)
+    return(-1);
+
+  for(i=0;i<size;i++)
+    raster[i] = (char) ((data[i] - min) / step);
+}
+
+/*
+ * findMaxMin
+ * Finds the maximum and minimum values in a data array.
+ */
+findMaxMin(data, size, max, min)
+float32 data[];
+int32 size;
+float32 *max, *min;
+{
+  int32 i;
+
+  *max = *min = data[0];
+  for(i=1;i<size;i++) {
+    if (*max < data[i])
+      *max = data[i];
+    else if (*min > data[i])
+      *min = data[i];
+  }
+}
+
+
+2.1
+	NCSA 
+HDF
+
+Usin
+g HDF for 
+8-Bit 
+Raster 
+Image
+s	2.1
+
+Nat
+iona
+l Center 
+for 
+Superco
+mput
+ing 
+Appl
+icat
+ions
+
+February 1989
+
+                                                                
+
+
+
+2.1
+	NCSA 
+HDF
+
+Usin
+g NCSA 
+HDF for 
+8-Bit 
+Raster 
+Image
+s	2.1
+
+Nat
+iona
+l Center 
+for 
+Superco
+mput
+ing 
+Appl
+icat
+ions
+
+February 1989
+
+                                                                
+
+
+
+

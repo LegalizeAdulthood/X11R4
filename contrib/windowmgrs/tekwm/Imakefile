@@ -1,0 +1,159 @@
+# $Header: Imakefile,v 5.34.1.1 89/11/22 15:30:00 glennw Exp $
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#if defined(M4800Architecture) && defined(UBEArchitecture)
+        SUBDIRS = bitmaps XD88-10 XD88-20 XD88-30
+#else
+        SUBDIRS = bitmaps
+#endif
+
+#ifndef	UBEArchitecture
+         FAMILY = 4300
+#endif	/* UBEArchitecture */
+
+       MENU_LIB = menus
+      MENU_ARCH = 
+     NEATEN_LIB = /grgr/neaten
+    NEATEN_ARCH = $(NEATEN_LIB)/neaten.a
+       INCLUDES = -I$(TOP) -I$(INCLUDESRC) -I$(XLIBSRC)
+  SYS_LIBRARIES = -ll
+    OTHERCCSRCS = gram.y lex.l $(HDRS)
+      OTHERSRCS = $(OTHERCCSRCS) tekwm.man Makefile.rtl Imakefile \
+		  CHANGES README BUGS ENHANCEMENTS COMPLIANCE \
+		  README.awm MENUS VERSION twm.Xdefaults twm.awmrc \
+		  Tek4406/$(NAME)rc Tek4315/$(NAME)rc Tek4316/$(NAME)rc \
+		  Tek4317/$(NAME)rc Tek4319/$(NAME)rc Tek4320/$(NAME)rc \
+		  Tek4330/$(NAME)rc XD88-20/$(NAME)rc XD88-30/$(NAME)rc \
+		  prog_version.c
+      CCSRCS = gram.c lex.c
+      
+# all C compiler input - list for depend
+           NAME = tekwm
+      DEF_CLASS = Tekwm
+          CLASS = Tekwm.Wm
+       LINTOPTS = -ahxz
+    CDEBUGFLAGS = -O
+#    CDEBUGFLAGS = -O -DTRACE
+#    CDEBUGFLAGS = -O -g
+#    CDEBUGFLAGS = -O -DXMALLOCDEBUG -DMALLOCDEBUG
+#           XLIB = $(XLIBSRC)/libX11_d.a
+         YFLAGS = -d
+         HDRS = awm.h neaten.def.h neaten.ext.h support.h XICCC.h
+
+# Add the line -DCONSOLE to the appropriate DEFINES macro (see below) if
+# you want output (stderr and stdout) to go to the system console.
+# Remove the line -DNO_ICON_TYPIN to the appropriate DEFINES macro (see 
+# below) if you want the ability to annotate icon names by hand.
+
+# Use these macros if you want the RTL Neaten package.
+# Also make sure that NEATEN_LIB points to the right place. See the README
+# file for instructions (though you can just define this and give it a shot).
+#       DEFINES = -DSYSFILE=\"$(AWMDIR)$(PATHSEP)$(NAME)rc\" -DNEATEN
+#       LOCAL_LIBRARIES = $(NEATEN_ARCH) $(MENU_ARCH) $(XMULIB) $(XLIB)
+
+
+# Use these macros if you don't want the RTL Neaten package.
+        DEFINES = -DNAME=\"$(DEF_CLASS)\" -DCLASS=\"$(CLASS)\" -DSYSFILE=\"$(LIBDIR)$(PATHSEP)$(NAME)$(PATHSEP)$(NAME)rc\" -DNO_ICON_TYPIN
+        LOCAL_LIBRARIES = $(MENU_ARCH) $(XMULIB) $(XLIB)
+
+#ifndef	UBEArchitecture
+SRCS=	globals.c Action.c Beep.c Bindings.c CircleDown.c CircleUp.c\
+	Cursors.c Focus.c GetButton.c  GridBox.c Iconify.c Icons.c Lower.c\
+	Menu.c Move.c MoveOpaque.c NewIconify.c Pause.c Push.c Error.c\
+	Raise.c Refresh.c Resize.c Restart.c RubberBand.c \
+	StoreZap.c awm.c FocusChng.c Titlebar.c errHndlr.c \
+	Grab.c Gadget.c support.c exp_path.c Neaten.c XRdBitFD.c XlibExt.c \
+	Xsdebug.c $(FAMILY)rcsid.c
+
+#else	/* UBEArchitecture */
+SRCS=	globals.c Action.c Beep.c Bindings.c CircleDown.c CircleUp.c\
+	Cursors.c Focus.c GetButton.c  GridBox.c Iconify.c Icons.c Lower.c\
+	Menu.c Move.c MoveOpaque.c NewIconify.c Pause.c Push.c Error.c\
+	Raise.c Refresh.c Resize.c Restart.c RubberBand.c \
+	StoreZap.c awm.c FocusChng.c Titlebar.c errHndlr.c \
+	Grab.c Gadget.c support.c exp_path.c Neaten.c XRdBitFD.c XlibExt.c \
+	Xsdebug.c
+
+#endif	/* UBEArchitecture */
+
+# objects are linked in an order that attempts to minimized core working set 
+# for non-gin operations, e.g. focus management.  Startup code first, actions
+# next, event handling last.
+
+#ifndef	UBEArchitecture
+OBJS=	gram.o lex.o $(FAMILY)rcsid.o Bindings.o Cursors.o \
+	Error.o Xsdebug.o errHndlr.o \
+	Action.o Beep.o CircleDown.o CircleUp.o Focus.o Iconify.o Icons.o \
+	Lower.o Move.o MoveOpaque.o NewIconify.o Pause.o Push.o Raise.o \
+	Refresh.o Resize.o Restart.o Menu.o RubberBand.o GridBox.o \
+	StoreZap.o Grab.o support.o exp_path.o Neaten.o XlibExt.o\
+	globals.o Gadget.o Titlebar.o FocusChng.o GetButton.o awm.o
+
+#else	/* UBEArchitecture */
+OBJS=	gram.o lex.o Bindings.o Cursors.o \
+	Error.o Xsdebug.o errHndlr.o \
+	Action.o Beep.o CircleDown.o CircleUp.o Focus.o Iconify.o Icons.o \
+	Lower.o Move.o MoveOpaque.o NewIconify.o Pause.o Push.o Raise.o \
+	Refresh.o Resize.o Restart.o Menu.o RubberBand.o GridBox.o \
+	StoreZap.o Grab.o support.o exp_path.o Neaten.o XlibExt.o\
+	globals.o Gadget.o Titlebar.o FocusChng.o GetButton.o awm.o
+
+#endif	/* UBEArchitecture */
+
+MakeSubdirs($(SUBDIRS))
+InstallSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+CleanSubdirs($(SUBDIRS))
+
+ComplexProgramTarget($(NAME))
+
+#ExampleMakefileTarget()
+
+# you will need to install a tekwmrc appropriate to your system.
+# This Tek rule allows system-specific installation, without
+# changing the file name, by installing from a subdir.
+#InstallNonExecNonDepend(`uname -m`/$(NAME)rc, $(LIBDIR)/$(NAME)/$(NAME)rc)
+
+InstallNonExec(bitmaps/bars.bm, $(LIBDIR)/$(NAME)/bars.bm)
+InstallNonExec(bitmaps/resize.bm, $(LIBDIR)/$(NAME)/resize.bm)
+InstallNonExec(bitmaps/rresize.bm, $(LIBDIR)/$(NAME)/rresize.bm)
+InstallNonExec(bitmaps/move.bm, $(LIBDIR)/$(NAME)/move.bm)
+InstallNonExec(bitmaps/rmove.bm, $(LIBDIR)/$(NAME)/rmove.bm)
+InstallNonExec(bitmaps/raisenlower.bm, $(LIBDIR)/$(NAME)/raisenlower.bm)
+InstallNonExec(bitmaps/close.bm, $(LIBDIR)/$(NAME)/close.bm)
+NormalLintTarget($(CCSRCS) $(SRCS))
+
+$(NEATEN_ARCH)::
+	cp Makefile.rtl $(NEATEN_LIB)/Makefile
+	@echo Making Neaten package
+	@(cd $(NEATEN_LIB); make -f Makefile)
+	@echo done.
+
+# to insure that yacc/lex CCSRCS can get built:
+y.tab.h gram.c:: gram.y
+lex.c:: lex.l
+
+clean::
+	rm -f y.tab.h gram.c lex.c
+
+srclist:
+	@echo $(SRCS) $(OTHERSRCS) > $@
+
+noident::
+	@echo Removing ident lines from tekwm...
+	@for i in $(SRCS) $(CCSRCS) $(HDRS); do \
+	sed -e '/#ident/D' < $$i > /tmp/x.$$i && \
+	mv /tmp/x.$$i $$i ; \
+	done
+
+saber_src: $(LOCAL_LIBRARIES)
+	#load -w $(CFLAGS) $(SRCS) $(CCSRCS) $(LOCAL_LIBRARIES) $(SYSLAST_LIBRARIES)
+
+saber_one: $(LOCAL_LIBRARIES)
+	#load $(CFLAGS) $(FILE)
+
+saber: $(OBJS) $(LOCAL_LIBRARIES)
+	#load -G $(OBJS) $(LOCAL_LIBRARIES) $(LDFLAGS) $(SYSLAST_LIBRARIES)
+

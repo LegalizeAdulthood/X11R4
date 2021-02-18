@@ -1,0 +1,41 @@
+.TH XMOON 1 "1 November 1989" "X Version 11"
+.SH NAME
+xmoon - display current moon phase on X-window
+.SH SYMOPSIS
+.B xmoon
+[-\fItoolkitoption\fP ...] [-option ...]
+.SH DESCRIPTION
+The
+.I xmoon
+program displays the current moon phase and other information. The data are
+continuously updated at a frequency which may be specified by the user.
+.SH OPTIONS
+.I Xmoon
+accespts all of the standard X Toolkit command line options along with the
+additional options listed below:
+.TP 8
+.B \-test
+This option indicates that sumilate to put the time forward. It's fun.
+.TP 8
+.B \-small
+This option indicates that the canvas should become small and
+reduce informations.
+.TP 8
+.B \-update \fIseconds\fP
+This option specifies the frequency in seconds at which \fIxmoon\fP
+should update its display.  If the clock is obscured and then exposed,
+it will be updated immediately.   The default is 5 seconds.
+.SH "SEE ALSO"
+X(1), xrdb(1), time(3C)
+.SH BUGS
+.I Xmoon
+believes the system clock.
+The default moon bitmap is the sight from Japan. So please make your own bitmap.
+.SH COPYRIGHT
+Copyright 1989, Waseda University.
+.SH AUTHORS
+Nobuhiko Nakajima	(Waseda University		: Japan)
+.br
+Atsuo Ohki		(Shizuoka University	: Japan)
+.br
+John Walker		(Autodesk, Inc.)

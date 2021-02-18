@@ -1,0 +1,522 @@
+
+#
+#		(c) Copyright Carnegie Mellon University
+#
+# See "The CMU ODA Tool Kit" (available as CMU/ITC tech report
+# CMU-ITC-071) for full text & permitted uses.
+#
+
+#
+# Makefile for site type 'pc-dos', directory 'src'
+# Generated on Tue Oct 17 13:40:46 1989
+#
+
+# Std definitions
+CC = cl
+INCLUDES = -I. -I../valid -I../prog -I../raster -I../isode -I../site/pcdos
+CFLAGS = -g -c -Gt16 -AL $(INCLUDES) -Fo$@
+LDFLAGS =
+RM = del
+AR1 = lib
+AR2 = lib
+RANLIB = ranlib
+
+# Default compilation rule
+.c.o:
+	   $(CC) $(CFLAGS) $*.c
+
+const1.o:  const1.c acd.h attr.h ../site/pcdos/lcsite.h  \
+	     errors.h apirt.h tkerr.h tkerr1.h  \
+	     aunion.h apityp.h const.h attrid.h  \
+	     const1.h const2.h const3.h attr1.h  \
+	     attr2.h attr3.h attr4.h attr5.h  \
+	     attr6.h attr7.h attr8.h attr9.h  \
+	     attr10.h attr11.h attr12.h attr13.h  \
+	     attr15.h attr14.h attr16.h attr17.h  \
+	     attr18.h attr19.h attr20.h attr21.h  \
+	     attr22.h attr23.h attr24.h attr25.h  \
+	     attr26.h doc.h doc1.h mm.h  \
+	     ../site/pcdos/local.h mm1.h attr0.h rnames.h  \
+	     values.h
+
+fmt1.o:   fmt1.c errors.h tkerr.h ../site/pcdos/lcsite.h  \
+	     tkerr1.h fmt.h apirt.h fmt1.h
+
+atts3.o:  atts3.c apirt.h atts.h ../site/pcdos/lcsite.h  \
+	     errors.h apityp.h const.h attrid.h  \
+	     tkerr.h tkerr1.h const1.h const2.h  \
+	     const3.h atts1.h atts2.h acd.h  \
+	     attr.h aunion.h attr1.h attr2.h  \
+	     attr3.h attr4.h attr5.h attr6.h  \
+	     attr7.h attr8.h attr9.h attr10.h  \
+	     attr11.h attr12.h attr13.h attr15.h  \
+	     attr14.h attr16.h attr17.h attr18.h  \
+	     attr19.h attr20.h attr21.h attr22.h  \
+	     attr23.h attr24.h attr25.h attr26.h  \
+	     doc.h doc1.h atts3.h atts4.h  \
+	     tags.h mm.h ../site/pcdos/local.h mm1.h  \
+	     seq.h seq1.h
+
+attr7.o:  attr7.c acd.h attr.h ../site/pcdos/lcsite.h  \
+	     errors.h apirt.h tkerr.h tkerr1.h  \
+	     aunion.h apityp.h const.h attrid.h  \
+	     const1.h const2.h const3.h attr1.h  \
+	     attr2.h attr3.h attr4.h attr5.h  \
+	     attr6.h attr7.h attr8.h attr9.h  \
+	     attr10.h attr11.h attr12.h attr13.h  \
+	     attr15.h attr14.h attr16.h attr17.h  \
+	     attr18.h attr19.h attr20.h attr21.h  \
+	     attr22.h attr23.h attr24.h attr25.h  \
+	     attr26.h doc.h doc1.h rnames.h  \
+	     attr0.h
+
+attr6.o:  attr6.c parms.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     rnames.h attr0.h
+
+attr5.o:  attr5.c rnames.h apityp.h ../site/pcdos/lcsite.h  \
+	     const.h errors.h apirt.h attrid.h  \
+	     tkerr.h tkerr1.h const1.h const2.h  \
+	     const3.h acd.h attr.h aunion.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     seq.h tags.h seq1.h mm.h  \
+	     ../site/pcdos/local.h mm1.h parms.h
+
+attr4.o:  attr4.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     seq.h tags.h seq1.h mm.h  \
+	     ../site/pcdos/local.h mm1.h parms.h attr0.h
+
+attr3.o:  attr3.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     seq.h tags.h seq1.h mm.h  \
+	     ../site/pcdos/local.h mm1.h parms.h values.h  \
+	     str.h str1.h init.h init1.h  \
+	     attr0.h
+
+atts2.o:  atts2.c atts.h ../site/pcdos/lcsite.h errors.h  \
+	     apirt.h apityp.h const.h attrid.h  \
+	     tkerr.h tkerr1.h const1.h const2.h  \
+	     const3.h atts1.h atts2.h acd.h  \
+	     attr.h aunion.h attr1.h attr2.h  \
+	     attr3.h attr4.h attr5.h attr6.h  \
+	     attr7.h attr8.h attr9.h attr10.h  \
+	     attr11.h attr12.h attr13.h attr15.h  \
+	     attr14.h attr16.h attr17.h attr18.h  \
+	     attr19.h attr20.h attr21.h attr22.h  \
+	     attr23.h attr24.h attr25.h attr26.h  \
+	     doc.h doc1.h atts3.h atts4.h  \
+	     parms.h
+
+atts1.o:  atts1.c atts.h ../site/pcdos/lcsite.h errors.h  \
+	     apirt.h apityp.h const.h attrid.h  \
+	     tkerr.h tkerr1.h const1.h const2.h  \
+	     const3.h atts1.h atts2.h acd.h  \
+	     attr.h aunion.h attr1.h attr2.h  \
+	     attr3.h attr4.h attr5.h attr6.h  \
+	     attr7.h attr8.h attr9.h attr10.h  \
+	     attr11.h attr12.h attr13.h attr15.h  \
+	     attr14.h attr16.h attr17.h attr18.h  \
+	     attr19.h attr20.h attr21.h attr22.h  \
+	     attr23.h attr24.h attr25.h attr26.h  \
+	     doc.h doc1.h atts3.h atts4.h  \
+	     values.h parms.h
+
+attr25.o:  attr25.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     seq.h tags.h seq1.h mm.h  \
+	     ../site/pcdos/local.h mm1.h parms.h attr0.h
+
+attr9.o:  attr9.c acd.h attr.h ../site/pcdos/lcsite.h  \
+	     errors.h apirt.h tkerr.h tkerr1.h  \
+	     aunion.h apityp.h const.h attrid.h  \
+	     const1.h const2.h const3.h attr1.h  \
+	     attr2.h attr3.h attr4.h attr5.h  \
+	     attr6.h attr7.h attr8.h attr9.h  \
+	     attr10.h attr11.h attr12.h attr13.h  \
+	     attr15.h attr14.h attr16.h attr17.h  \
+	     attr18.h attr19.h attr20.h attr21.h  \
+	     attr22.h attr23.h attr24.h attr25.h  \
+	     attr26.h doc.h doc1.h seq.h  \
+	     tags.h seq1.h
+
+attr8.o:  attr8.c acd.h attr.h ../site/pcdos/lcsite.h  \
+	     errors.h apirt.h tkerr.h tkerr1.h  \
+	     aunion.h apityp.h const.h attrid.h  \
+	     const1.h const2.h const3.h attr1.h  \
+	     attr2.h attr3.h attr4.h attr5.h  \
+	     attr6.h attr7.h attr8.h attr9.h  \
+	     attr10.h attr11.h attr12.h attr13.h  \
+	     attr15.h attr14.h attr16.h attr17.h  \
+	     attr18.h attr19.h attr20.h attr21.h  \
+	     attr22.h attr23.h attr24.h attr25.h  \
+	     attr26.h doc.h doc1.h values.h  \
+	     attr0.h rnames.h parms.h
+
+atts4.o:  atts4.c apirt.h atts.h ../site/pcdos/lcsite.h  \
+	     errors.h apityp.h const.h attrid.h  \
+	     tkerr.h tkerr1.h const1.h const2.h  \
+	     const3.h atts1.h atts2.h acd.h  \
+	     attr.h aunion.h attr1.h attr2.h  \
+	     attr3.h attr4.h attr5.h attr6.h  \
+	     attr7.h attr8.h attr9.h attr10.h  \
+	     attr11.h attr12.h attr13.h attr15.h  \
+	     attr14.h attr16.h attr17.h attr18.h  \
+	     attr19.h attr20.h attr21.h attr22.h  \
+	     attr23.h attr24.h attr25.h attr26.h  \
+	     doc.h doc1.h atts3.h atts4.h  \
+	     mm.h ../site/pcdos/local.h mm1.h parms.h  \
+	     tags.h seq.h seq1.h str.h  \
+	     str1.h
+
+attr24.o:  attr24.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     seq.h tags.h seq1.h str.h  \
+	     str1.h mm.h ../site/pcdos/local.h mm1.h  \
+	     attr0.h parms.h
+
+attr23.o:  attr23.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     mm.h ../site/pcdos/local.h mm1.h seq.h  \
+	     tags.h seq1.h attr0.h values.h
+
+attr26.o:  attr26.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     seq.h tags.h seq1.h mm.h  \
+	     ../site/pcdos/local.h mm1.h parms.h attr0.h
+
+attr21.o:  attr21.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     seq.h tags.h seq1.h str.h  \
+	     str1.h mm.h ../site/pcdos/local.h mm1.h  \
+	     parms.h attr0.h
+
+attr20.o:  attr20.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     seq.h tags.h seq1.h mm.h  \
+	     ../site/pcdos/local.h mm1.h values.h init.h  \
+	     str.h str1.h init1.h attr0.h  \
+	     parms.h
+
+attr2.o:  attr2.c acd.h attr.h ../site/pcdos/lcsite.h  \
+	     errors.h apirt.h tkerr.h tkerr1.h  \
+	     aunion.h apityp.h const.h attrid.h  \
+	     const1.h const2.h const3.h attr1.h  \
+	     attr2.h attr3.h attr4.h attr5.h  \
+	     attr6.h attr7.h attr8.h attr9.h  \
+	     attr10.h attr11.h attr12.h attr13.h  \
+	     attr15.h attr14.h attr16.h attr17.h  \
+	     attr18.h attr19.h attr20.h attr21.h  \
+	     attr22.h attr23.h attr24.h attr25.h  \
+	     attr26.h doc.h doc1.h attr0.h  \
+	     rnames.h str.h tags.h seq.h  \
+	     seq1.h str1.h mm.h ../site/pcdos/local.h  \
+	     mm1.h parms.h
+
+attr19.o:  attr19.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     init.h tags.h str.h seq.h  \
+	     seq1.h str1.h init1.h values.h
+
+attr18.o:  attr18.c parms.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     str.h tags.h seq.h seq1.h  \
+	     str1.h mm.h ../site/pcdos/local.h mm1.h  \
+	     attr0.h rnames.h
+
+attr15.o:  attr15.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     seq.h tags.h seq1.h font.h  \
+	     font1.h
+
+attr17.o:  attr17.c parms.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     str.h tags.h seq.h seq1.h  \
+	     str1.h mm.h ../site/pcdos/local.h mm1.h  \
+	     attr0.h rnames.h
+
+attr13.o:  attr13.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     mm.h ../site/pcdos/local.h mm1.h seq.h  \
+	     tags.h seq1.h
+
+attr14.o:  attr14.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     seq.h tags.h seq1.h
+
+attr12.o:  attr12.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     mm.h ../site/pcdos/local.h mm1.h parms.h  \
+	     tags.h attr0.h values.h
+
+attr11.o:  attr11.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     seq.h tags.h seq1.h mm.h  \
+	     ../site/pcdos/local.h mm1.h str.h str1.h  \
+	     parms.h values.h attr0.h
+
+attr10.o:  attr10.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     seq.h tags.h seq1.h mm.h  \
+	     ../site/pcdos/local.h mm1.h values.h str.h  \
+	     str1.h attr0.h
+
+attr1.o:  attr1.c parms.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     str.h tags.h seq.h seq1.h  \
+	     str1.h mm.h ../site/pcdos/local.h mm1.h  \
+	     attr0.h rnames.h
+
+rasn14.o:  rasn14.c font.h ../site/pcdos/lcsite.h errors.h  \
+	     apirt.h apityp.h const.h attrid.h  \
+	     tkerr.h tkerr1.h const1.h const2.h  \
+	     const3.h font1.h rasn1.h values.h  \
+	     io.h io1.h acd.h attr.h  \
+	     aunion.h attr1.h attr2.h attr3.h  \
+	     attr4.h attr5.h attr6.h attr7.h  \
+	     attr8.h attr9.h attr10.h attr11.h  \
+	     attr12.h attr13.h attr15.h attr14.h  \
+	     attr16.h attr17.h attr18.h attr19.h  \
+	     attr20.h attr21.h attr22.h attr23.h  \
+	     attr24.h attr25.h attr26.h doc.h  \
+	     doc1.h tags.h parms.h seq.h  \
+	     seq1.h asn1.h rasn11.h rasn12.h  \
+	     rasn13.h rasn14.h rodif.h mm.h  \
+	     ../site/pcdos/local.h mm1.h str.h str1.h  \
+	     rodif1.h rodif2.h rodif3.h rodif4.h
+
+attr22.o:  attr22.c rnames.h acd.h attr.h  \
+	     ../site/pcdos/lcsite.h errors.h apirt.h tkerr.h  \
+	     tkerr1.h aunion.h apityp.h const.h  \
+	     attrid.h const1.h const2.h const3.h  \
+	     attr1.h attr2.h attr3.h attr4.h  \
+	     attr5.h attr6.h attr7.h attr8.h  \
+	     attr9.h attr10.h attr11.h attr12.h  \
+	     attr13.h attr15.h attr14.h attr16.h  \
+	     attr17.h attr18.h attr19.h attr20.h  \
+	     attr21.h attr22.h attr23.h attr24.h  \
+	     attr25.h attr26.h doc.h doc1.h  \
+	     str.h tags.h seq.h seq1.h  \
+	     str1.h mm.h ../site/pcdos/local.h mm1.h  \
+	     parms.h values.h attr0.h
+
+tkerr1.o:  tkerr1.c ../site/pcdos/lcsite.h init.h apityp.h  \
+	     const.h errors.h apirt.h attrid.h  \
+	     tkerr.h tkerr1.h const1.h const2.h  \
+	     const3.h tags.h acd.h attr.h  \
+	     aunion.h attr1.h attr2.h attr3.h  \
+	     attr4.h attr5.h attr6.h attr7.h  \
+	     attr8.h attr9.h attr10.h attr11.h  \
+	     attr12.h attr13.h attr15.h attr14.h  \
+	     attr16.h attr17.h attr18.h attr19.h  \
+	     attr20.h attr21.h attr22.h attr23.h  \
+	     attr24.h attr25.h attr26.h doc.h  \
+	     doc1.h str.h seq.h seq1.h  \
+	     str1.h init1.h io.h io1.h  \
+	     fmt.h fmt1.h
+
+liboda.lib:    wasn14.o wodif3.o wodif2.o attr16.o wodif4.o wasn13.o  \
+	    wasn12.o mem1.o wasn15.o wasn11.o wodif1.o seq1.o  \
+	    rodif4.o rodif3.o stubs2.o stubs.o str1.o rodif2.o  \
+	    rodif1.o rasn13.o rasn12.o rasn11.o label1.o iter4.o  \
+	    iter3.o iter2.o prior1.o io1.o mm1.o doc1.o  \
+	    debug2.o iter1.o debug1.o const3.o const2.o init1.o  \
+	    font1.o expr1.o const1.o fmt1.o atts3.o attr7.o  \
+	    attr6.o attr5.o attr4.o attr3.o atts2.o atts1.o  \
+	    attr25.o attr9.o attr8.o atts4.o attr24.o attr23.o  \
+	    attr26.o attr21.o attr20.o attr2.o attr19.o attr18.o  \
+	    attr15.o attr17.o attr13.o attr14.o attr12.o attr11.o  \
+	    attr10.o attr1.o rasn14.o attr22.o tkerr1.o
+	   $(RM) liboda.lib
+	   $(AR1) liboda.lib +wasn14.o+wodif3.o+wodif2.o+attr16.o+wodif4.o ;
+	   $(AR2) liboda.lib +wasn13.o+wasn12.o+mem1.o+wasn15.o+wasn11.o ,,liboda.lib;
+	   $(AR2) liboda.lib +wodif1.o+seq1.o+rodif4.o+rodif3.o+stubs2.o ,,liboda.lib;
+	   $(AR2) liboda.lib +stubs.o+str1.o+rodif2.o+rodif1.o+rasn13.o ,,liboda.lib;
+	   $(AR2) liboda.lib +rasn12.o+rasn11.o+label1.o+iter4.o+iter3.o ,,liboda.lib;
+	   $(AR2) liboda.lib +iter2.o+prior1.o+io1.o+mm1.o+doc1.o ,,liboda.lib;
+	   $(AR2) liboda.lib +debug2.o+iter1.o+debug1.o+const3.o+const2.o ,,liboda.lib;
+	   $(AR2) liboda.lib +init1.o+font1.o+expr1.o+const1.o+fmt1.o ,,liboda.lib;
+	   $(AR2) liboda.lib +atts3.o+attr7.o+attr6.o+attr5.o+attr4.o ,,liboda.lib;
+	   $(AR2) liboda.lib +attr3.o+atts2.o+atts1.o+attr25.o+attr9.o ,,liboda.lib;
+	   $(AR2) liboda.lib +attr8.o+atts4.o+attr24.o+attr23.o+attr26.o ,,liboda.lib;
+	   $(AR2) liboda.lib +attr21.o+attr20.o+attr2.o+attr19.o+attr18.o ,,liboda.lib;
+	   $(AR2) liboda.lib +attr15.o+attr17.o+attr13.o+attr14.o+attr12.o ,,liboda.lib;
+	   $(AR2) liboda.lib +attr11.o+attr10.o+attr1.o+rasn14.o+attr22.o ,,liboda.lib;
+	   $(AR2) liboda.lib +tkerr1.o,,liboda.lib;

@@ -1,0 +1,159 @@
+.TH KTERM 1 "19 May 1989" "X Version 11"
+.SH NAME
+kterm \- terminal emulator for X
+.SH SYNOPSIS
+.B kterm
+[-\fItoolkitoption\fP ...] [-option ...]
+.SH DESCRIPTION
+The \fIkterm\fP program is a Kanji terminal emulator for the X Window System.
+It provides DEC VT102 and Tektronix 4014 
+compatible terminals for programs that can't
+use the window system directly.
+It comes from \fIxterm\fP in the core programs of the distribution of the
+X Window System.
+The most of the functions are the same as original \fIxterm\fP's, however,
+it has capabilities of displaying Kanji strings and handling of the status line,
+if compiled with -DKANJI or -DSTATUSLINE compile time options.
+.PP
+.SH OPTIONS
+The \fIkterm\fP terminal emulator 
+accepts all of the standard \fIxterm\fP command line options along with the 
+additional options listed below (if the option begins with a
+.RB ` + '
+instead of a
+.RB ` \- ',
+the option is restored to its default value):
+.TP 8
+.BI \-fk " kanji-font"
+This option specifies a Kanji font to be used when displaying Kanji text.  
+This font must be the same height and width as the ascii font.
+The default is ``a14''.
+.TP 8
+.BI \-fkb " kanji-bold-font"
+This option specifies a Kanji bold font to be used when displaying bold text.  
+This font must be the same height and width as the kanji font.
+If no Kanji bold font is specified, it will be used as the
+normal font and the bold font will be produced by overstriking this font.
+The default is not specified.
+.TP 8
+.BI \-fr " kana-font"
+This option specifies a Kana font, which may be used as GR in 8bit environment.
+This font is used if ``ESC ( I'' is appeared in JIS Kanji mode, SS2 (0x8e)
+is appeared in EUC Kanji mode, and not used so frequntly in normal Japanese
+text.
+The default is ``kana14''.
+.TP 8
+.BI \-frb " kana-bold-font"
+This option specifies a Kana bold font.
+.TP 8
+.BI \-ka
+This option indicates that \fIkterm\fP should connect to the X server
+with KEEPALIVE socket option. It is usefull when the server is a X terminal
+that is frequently powered off. This option is accepted only if \fIkterm\fP
+has been compiled with -DKEEPALIVE compile option.
+.TP 8
+.BI \+ka
+This option indicates that \fIkterm\fP should connect to the X server
+without KEEPALIVE socket option.
+.TP 8
+.BI \-km " kanji-mode"
+This option specifies the Kanji code from the pty output.
+If kanji-mode is ``jis'', then it assumes the input/output is coded by JIS code,
+i.e., each Kanji string is proceeded by ``ESC $ B'' or ``ESC $ @'' and each
+ascii string is proceeded by ``ESC ( B'' or ``ESC ( J''.
+This mode does not require 8 bit passing tty module because 7 bit encoding
+with appropriate escape sequences is used.
+If kanji-mode is ``euc'', then it assumes the input/output is coded by EUC.
+If kanji-mode is ``sjis'', then it assumes the input/output is coded by
+Shift-JIS code (which is the same as MicroSoft Kanji code).
+The default mode is ``jis''.
+.TP 8
+.B \-sn
+By default, the status line is in reverse-video (relative to the rest of the
+window).
+This option causes the status line to be in normal video (the status line
+is still enclosed in a box).
+.TP 8
+.B \-st
+This option causes the status line to be displayed on startup.
+.SH "X DEFAULTS"
+The program understands all of the core xterm resource names and
+classes as well as:
+.TP 8
+.B "kanjiFont (\fPclass\fB KanjiFont)"
+Specifies the name of the kanji font.  The default is ``a14.''
+.TP 8
+.B "kanjiboldFont (\fPclass\fB KanjiFont)"
+Specifies the name of the bold font.  The default is not specified.
+.TP 8
+.B "kanaFont (\fPclass\fB KanaFont)"
+Specifies the name of the kana font.  The default is ``kana14.''
+.TP 8
+.B "kanaboldFont (\fPclass\fB KanaFont)"
+Specifies the name of the bold font.  The default is not specified.
+.TP 8
+.B "kanjiMode (\fPclass\fB KanjiMode)"
+Specifies the Kanji code of pty output. The default is ``jis.''
+.TP 8
+.B "keepAlive (\fPclass\fB KeepAlive)"
+Specifies whether or not \fIkterm\fP should connection to the X server
+with KEEPALIVE socket option. The default is ``false.''
+.TP 8
+.B "statusLine (\fPclass\fB StatusLine)"
+Causes the status line to be displayed on startup. The default is ``false.''
+.TP 8
+.B "statusNormal (\fPclass\fB StatusNormal)"
+Specifies whether or not the status line should be in normal video.
+The default is ``false.''
+.SH EMULATIONS
+The VT102 emulation is fairly complete, but does not support the blinking
+character attribute nor the double-wide and double-size character sets.
+.IR Termcap (5)
+entries that work with
+.I xterm
+include ``kterm'', ``xterm'', ``vt102'', ``vt100'' and ``ansi'', and
+.I xterm
+automatically searches the termcap file in this order for these entries and then
+sets the ``TERM'' and the ``TERMCAP'' environment variables.
+.SH "SEE ALSO"
+xterm(1), resize(1), X(1), pty(4), tty(4)
+.br
+.I ``Xterm Control Sequences''
+.SH BUGS
+\fIKterm\fP assumes that the width of Kanji characters is as twice as
+that of ASCII characters. Of course variable-width fonts are not handled
+like \fIxterm\fP. 
+.PP
+This version of
+.I kterm
+uses ``ESC $ B'' to designate the Kanji character set in tty output when JIS
+mode is selected.
+There is no way to specify ``ESC $ ( B'' instead.
+.PP
+Because of a historical reason in Japan, the sequence to designate
+Swedish character set ``ESC ( H'' is treated as that of Japanese roman
+character set.
+.PP
+There is no distinction between ASCII and Japnese roman character sets,
+though the latter includes the ``Yen'' character, interrupted bar and
+upper score.
+.PP
+Currently available \fIxterm\fP
+nor previously released \fIkterm\fP can not paste a Kanji text from this
+\fIkterm\fP. Because we are not allowed to store the cutted Kanji text
+into the cut buffer or selection with STRING type, as defined in the ICCCM,
+.SH COPYRIGHT
+Copyright 1988 and 1989, XXI working group in Japan Unix Society Japan.
+.br
+See \fIX(1)\fP for a full statement of rights and permissions.
+.SH AUTHORS
+Far too many people, including:
+.sp
+Katsuya Sano (Tokyo Inst. of Tech.),
+Michael Irie (Sony Corp.),
+Akira Kato (Tokyo Inst. of Tech.),
+Michiharu Ariza (Software Research Associates),
+Makoto Ishisone (Software Research Associates),
+Hiroto Kagotani (Tokyo Inst. of Tech.)
+.sp
+Send bugs to kagotani@cs.titech.ac.jp, please.

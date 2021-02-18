@@ -1,0 +1,3 @@
+#define IHaveSubdirs
+SUBDIRS = compress hyplink wpedit ltext m3text \
+	mtext ptext rctext rmtext tm

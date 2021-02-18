@@ -1,0 +1,13 @@
+/**/###########################################################################
+/**/# definitions common to all SUIT Widget Makefiles  - do not  edit
+
+          SWTOP = $(CONTRIBSRC)/widgets/suit
+   SWINCLUDESRC = $(SWTOP)
+       SWLIBSRC = $(SWTOP)/lib
+
+          SWLIB = $(SWLIBSRC)/libsuit.a
+
+/**/###########################################################################
+/**/# start of SW's Imakefile
+
+     SWDEFINES  = $(SYSTEM)

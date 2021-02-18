@@ -1,0 +1,38 @@
+.TH XSHOWCMAP 1 "June 1987"
+.UC 4
+.SH NAME
+xshowcmap \- show colormap
+.SH SYNOPSIS
+.B xshowcmap
+[
+.B options
+]
+.SH DESCRIPTION
+\fIXshowcmap\fP displays the contents of the currently active colormap in
+a window. The created window shows a square for every color currently
+defined in the servers active colormap. 
+The number of squares is the number of colormap-cells the server supports.
+.PP
+\fIXshowcmap\fP has been specially written to aid server debugging/verification.
+.PP
+To leave \fIxshowcmap\fP type 'q'
+while the cursor is in its window.
+.PP
+The following options are valid:
+.PP
+.TP 8
+.B -bd color
+as usual - change border color
+.TP 8
+.B -bw number
+as usual - change border width
+.TP 8 
+.B host:display
+Name of the display.
+.SH BUGS
+.PP
+There might be some - it has been tested with Siemens servers running
+both monochrome and color, and with uVax Color-Workstations running color.
+.SH AUTHORS
+.PP
+Claus Gittinger (..!decvax!unido!sinix!claus) 

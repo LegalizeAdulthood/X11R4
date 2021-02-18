@@ -1,0 +1,6 @@
+XLogout*input: True
+XLogout*Command.Label: Logout
+XLogout*allowShellResize: True
+XLogout*shapeStyle: rectangle
+XLogout*Font: -adobe-new century schoolbook-bold-r-normal--*-240-*-*-*-*-iso8859-1
+

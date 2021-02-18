@@ -1,0 +1,32 @@
+Documentation on XView is located in the following places:
+
+    conversion:
+	A directory with various PostScript source code files of the
+	XView 1.0 Reference Manual: Converting SunView Applications
+	and an ASCII text file, corrections, which describes the changes
+	in this document from release 1.0 to 1.0.1.
+    pixwin_to_xlib:
+	An ASCII text file containing information on converting 
+	SunView pixwin graphics to Xlib graphics.
+    man:
+	A directory of manual page format files for the clients:
+	clock, cmdtool, dbxtool, shelltool, and textedit.
+
+In addition, a comprehensive programmer's reference manual for XView is 
+now available from O'Reilly & Associates, Inc. as Volume Seven of their 
+series of X Window System documentation.  Contact O'Reilly & Associates, Inc. 
+directly to order the
+
+	"XView Programming Manual"
+
+	O'Reilly & Associates, Inc.
+	  632 Petaluma Avenue
+	  Sebastopol, CA  95472
+	  (800)338-6887
+	EMAIL: uunet!ora!xview
+
+Note:  For those who have been using the 1.0 version of the XView library,
+there was a document that summerized the XView API (Application Programmer's
+Interface).  This work has been incoorporated into the "XView Programming
+Manual" by O'Reilly & Associates, Inc.  The previously distributed
+version of the API summery is now out of date.

@@ -1,0 +1,803 @@
+%! Sun SUNWRITE prolog Version 1.1
+%%
+/BLACK { 0.0 } bind def
+/CP {closepath} bind def
+/FI {eofill} bind def
+/E {exch} bind def
+/FF {findfont} bind def
+/GR {grestore} bind def
+/GS {gsave} bind def
+/MF {makefont} bind def
+/NP {newpath} bind def
+/RO {rotate} bind def
+/ST {stroke} bind def
+/SC {scale} bind def
+/SF {setfont} bind def
+/SG {setgray} bind def
+/SLC {setlinecap} bind def
+/SLJ {setlinejoin} bind def
+/SLW {setlinewidth} bind def
+/TR {translate} bind def
+/WHITE { 1.0 } bind def
+/m {moveto} bind def
+/r {rmoveto} bind def
+/l {lineto} bind def
+/sp {x 0 rmoveto} bind def
+/rl {rlineto} bind def
+/s {show} bind def
+/box { NP m l l l CP } bind def
+/pageboundary { NP m l l l CP } bind def
+/BS {   % black stroke
+GS SLJ SLW BLACK SG ST GR
+} bind def
+/WS {   % white stroke
+GS SLJ SLW WHITE SG ST GR
+} bind def
+/badfont null def
+/badfont_trap {
+badfont null ne {
+2 dict begin
+gsave
+.9 setgray
+clippath pathbbox /h exch def /w exch def
+0 h translate 1 -1 scale
+/Times-Roman findfont 17 50 mul scalefont setfont
+w 20 div h 3 mul 7 div moveto
+badfont show (:) show
+/Times-Roman findfont 25 50 mul scalefont setfont
+w 20 div h 2 mul 7 div moveto
+(Font not available) show
+w 20 div h 1 mul 7 div moveto
+(on this printer.) show
+grestore
+end
+/badfont null store
+} if
+} def
+/reencode_small_dict 12 dict def
+/ReencodeSmall {
+reencode_small_dict begin
+/new_codes_and_names E def
+/new_font_name E def
+/base_font_name E def
+/base_font_dict base_font_name FF def
+base_font_dict /FontName get base_font_name ne {
+/badfont base_font_name 30 string cvs store
+} if
+/newfont base_font_dict maxlength dict def
+base_font_dict {
+E dup /FID ne
+{ dup /Encoding eq
+{ E dup length array copy newfont 3 1 roll put }
+{ E newfont 3 1 roll put }
+ifelse
+}
+{ pop pop }
+ifelse
+} forall
+newfont /FontName new_font_name put
+new_codes_and_names aload pop
+new_codes_and_names length 2 idiv
+{ newfont /Encoding get 3 1 roll put }
+repeat
+new_font_name newfont definefont pop
+end     %reencode_small_dict
+} def
+/extended_Zapf [
+8#223 /a89
+8#224 /a90
+8#225 /a93
+8#226 /a94
+8#227 /a91
+8#230 /a92
+8#231 /a205
+8#232 /a85
+8#233 /a206
+8#234 /a86
+8#235 /a87
+8#236 /a88
+8#237 /a95
+8#240 /a96
+] def
+/extended_Standard [
+128 /Acircumflex
+129 /Adieresis
+130 /Agrave
+131 /Aring
+132 /Atilde
+133 /Ccedilla
+134 /Eacute
+135 /Ecircumflex
+136 /Edieresis
+137 /Egrave
+138 /Iacute
+139 /Icircumflex
+140 /Idieresis
+141 /Igrave
+142 /Ntilde
+143 /Oacute
+144 /Ocircumflex
+145 /Odieresis
+146 /Ograve
+147 /Otilde
+148 /Scaron
+149 /Uacute
+150 /Ucircumflex
+151 /Udieresis
+152 /Ugrave
+153 /Ydieresis
+154 /Zcaron
+155 /aacute
+156 /acircumflex
+157 /adieresis
+158 /agrave
+159 /aring
+160 /atilde
+209 /ccedilla
+210 /copyright
+211 /eacute
+212 /ecircumflex
+213 /edieresis
+214 /egrave
+215 /iacute
+216 /icircumflex
+217 /idieresis
+218 /igrave
+219 /logicalnot
+220 /minus
+221 /ntilde
+222 /oacute
+223 /ocircumflex
+224 /odieresis
+228 /ograve
+229 /otilde
+230 /registered
+231 /scaron
+236 /trademark
+237 /uacute
+238 /ucircumflex
+239 /udieresis
+240 /ugrave
+242 /ydieresis
+243 /zcaron
+244 /Aacute
+] def
+/extended_Symbol [
+] def
+/extend_font {  % stack: fontname newfontname
+E dup (ZapfDingbats) eq
+{ cvn E cvn extended_Zapf ReencodeSmall }
+{ dup (Symbol) eq
+{ cvn E cvn extended_Symbol ReencodeSmall }
+{ cvn E cvn extended_Standard ReencodeSmall }
+ifelse
+}
+ifelse
+} bind def
+/getfont {
+/f E def f cvn where
+{ begin f cvx cvn exec SF end }
+{ f 0 f length 8 sub getinterval (LocalFont) extend_font
+/LocalFont FF
+/xsz f f length 4 sub 4 getinterval cvi def
+/ysz f f length 8 sub 4 getinterval cvi def
+[ xsz 0 0 ysz neg 0 0 ] MF dup f cvn E def
+SF
+}
+ifelse
+} bind def
+/ul { % space drop thickness
+GS currentpoint currentlinewidth 
+currentpoint NP m 6 -3 roll 
+SLW 0 E r
+0 rl ST SLW m
+GR 
+} bind def
+/ss { currentpoint pop E m } bind def
+/image_raster { % sw sh dw dh xs ys
+TR SC /sh E def /sw E def
+/imagebuf sw 7 add 8 idiv string def
+sw sh 1 [sw 0 0 sh 0 0] { currentfile imagebuf readhexstring pop }
+image
+} bind def
+/nx { /x E def } bind def
+0. nx
+%%EndFixedProlog
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 0 5184 m 144 ss
+(Times-Roman02000200) getfont (Times-Bold02400240) getfont 2994 144 m 464 ss
+(An OPEN LOOK Graphics Package) s (Times-Roman02000200) getfont ( ) s 3915 464 m
+744 ss (Sun Microsystems, Inc.) s 4860 744 m 1024 ss 4860 1024 m 1304 ss
+4860 1304 m 1584 ss 0 1584 m 1864 ss 0 1864 m 2144 ss 0 2144 m 2424 ss
+0 2424 m 2704 ss 0 2704 m 2984 ss 0 2984 m 3264 ss (Courier02400240) getfont
+4860 3264 m 3584 ss (Times-BoldItalic02400240) getfont 4239 3584 m 3904 ss (ABSTRACT) s
+(Helvetica02400240) getfont 0 3904 m 4224 ss (Times-Roman02000200) getfont
+0 4224 m 4504 ss 0 4504 m 4784 ss 0 4784 m 5064 ss 0 5064 m 5344 ss 0 5344 m
+5624 ss 720.000 nx sp (                       OPEN LOOK Toolkits and applications  each tended to provide their own rendering ) s
+697.000 nx sp 0 5624 m 5904 ss 720.000 nx sp (of OPEN LOOK graphics objects. In addition,very few of them provided 3D objects. This resulted in much ) s
+0 5904 m 6144 ss sp (duplication of  effort.  It also  resulted in  discrepancies in  the  appearance of objects  between  applications.) s
+0 6144 m 6424 ss sp (OLGX is the Open Look Graphics layer which abstracts the rendering of OPEN LOOK objects from  ) s
+481.000 nx sp 0 6424 m 6664 ss 720.000 nx sp (Toolkits, WindowManagers and other  OPEN LOOK  clients. OLGX  is a  shared library encapsulating the ) s
+20.000 nx sp 0 6664 m 6904 ss 720.000 nx sp (rendering of all   OPEN LOOK  objects providing both  2D  and  3D  objects thus  saving duplication of ) s
+263.000 nx sp 0 6904 m 7144 ss 720.000 nx sp (resources and streamlining future OPEN LOOK development.) s
+0 7144 m 7424 ss 0 7424 m 7704 ss 0 7704 m 7984 ss 0 7984 m 8264 ss 0 8264 m
+8544 ss 0 8544 m 8824 ss 0 8824 m 9104 ss 0 9104 m 9384 ss 0 9384 m 9664 ss
+0 9664 m 9944 ss 0 9944 m 10224 ss 0 10224 m 10504 ss 0 10504 m 10784 ss
+0 10784 m 11064 ss 0 11064 m 11344 ss 0 11344 m 11624 ss 0 11624 m 11904 ss
+0 11904 m 12184 ss 0 12184 m 12464 ss 0 12464 m 12744 ss (    ) s 0 12744 m
+13104 ss 0 13104 m 13384 ss (Page 1) s 182.000 nx sp 1440.000 nx sp sp sp (    ) s
+1240.000 nx sp 1440.000 nx sp (December 6, 1989) s
+badfont_trap showpage vm_state restore
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 2874 13384 m 173 ss
+(Times-Roman02000200) getfont ( ) s (Times-Bold02000200) getfont (    ) s
+(Times-Bold02400240) getfont (An) s (Times-Roman02000200) getfont ( ) s
+(Times-Bold02400240) getfont (OPEN LOOK Graphics Package) s
+(Times-Roman02000200) getfont ( ) s 3890 173 m 453 ss ( Sun Microsystems, Inc.) s
+(Times-Roman02400240) getfont (    ) s (Times-Roman02800280) getfont (   ) s
+(Times-Bold02000200) getfont 4860 453 m 733 ss 4860 733 m 1013 ss 0 1013 m
+1293 ss (Design Goals) s (Times-Roman02000200) getfont (  ) s 0 1293 m 1573 ss
+0 1573 m 1853 ss 0 1853 m 2133 ss 720.000 nx sp ( In designing the package, OLGX, we have tried to meet four primary design  goals. Performance, flexibility,  ) s
+0 2133 m 2373 ss (minimum usage of resources along with ease  of  use  and maintenance. ) s
+0 2373 m 2653 ss 0 2653 m 2933 ss sp (OPEN LOOK objects are typically rendered in three colors. A 3D object may require three times as many ) s
+0 2933 m 3173 ss (graphics operations as a similar 2D object.  Therefore particular attention must be paid to the performance of the ) s
+0 3173 m 3413 ss (rendering method  used. It is clearly unacceptable for a new 3D package to be three times  as  slow as the existing 2D ) s
+0 3413 m 3653 ss (implementations.  ) s 0 3653 m 3933 ss 0 3933 m 4213 ss sp ( The second design criterion is flexibility. OLGX is easily accessible by various applications, especially the ) s
+0 4213 m 4453 ss (XView toolkit and the OPEN LOOK window manager \(OLWM\).  The graphics package  also provides  both 2D and 3D ) s
+0 4453 m 4693 ss (objects in a manner that is transparent to  the application. The application  can also direct the graphics package to switch ) s
+0 4693 m 4933 ss (between 2D and 3D rendering modes.   ) s 0 4933 m 5213 ss
+0 5213 m 5493 ss sp (OLGX  also conserves memory where possible. By encapsulating all of the rendering functions within one ) s
+0 5493 m 5733 ss (package,  usage of certain server resources, such  as GC's, can be carefully controlled.  The graphics package should use ) s
+0 5733 m 5973 ss (minimal  server resources, and share them  wherever possible.  ) s
+0 5973 m 6253 ss 0 6253 m 6533 ss sp (  The final design goal was  ease of use and maintenance.OLGX was designed to streamline future OPEN ) s
+0 6533 m 6773 ss (LOOK development. The interface that OLGX presents  must  be clean, consistent, and well-documented. Each of the ) s
+0 6773 m 7013 ss (graphics routines provided by OLGX attempts to present an  abstract graphics object, such as a slider,  menu button, or ) s
+0 7013 m 7253 ss (choice  item. The application simply asks for an object of a given type, and OLGX renders it, hiding the rendering details ) s
+0 7253 m 7493 ss (from the application as  much as possible.    Note that the focus of OLGX is very specific. It will merely  render  an ) s
+0 7493 m 7733 ss (OPEN LOOK object. It does not maintain any data  structures associated with an object, nor does it control the object's ) s
+0 7733 m 7973 ss (behavior. These  jobs are left to the toolkit or application.  OLGX is written entirely using Xlib. There are no ) s
+0 7973 m 8213 ss (dependencies upon XView  structures. This aspect is  crucial to meeting the second design goal.  Were there any XView ) s
+0 8213 m 8453 ss (dependencies,  it would be very difficult to use OLGX in  the OPEN LOOK window manager, or in  future toolkit ) s
+0 8453 m 8693 ss (developments.    ) s (Times-Roman02400240) getfont 0 8693 m
+9013 ss 0 9013 m 9333 ss 0 9333 m 9653 ss 0 9653 m 9973 ss 0 9973 m 10293 ss
+0 10293 m 10613 ss 0 10613 m 10933 ss 0 10933 m 11253 ss 0 11253 m 11573 ss
+0 11573 m 11893 ss (Times-Roman02000200) getfont 0 11893 m 12173 ss 0 12173 m
+12413 ss (The above diagram provides a clear picture of the ease of maintenance o f the OPEN LOOK "look".) s
+0 12413 m 12693 ss ( Since all the rendering of the OPEN LOOK objects are done at  the OLGX layer,  only this needs to be changed for any ) s
+0 12693 m 13104 ss 0 13104 m 13384 ss (Page 2) s 182.000 nx sp 1440.000 nx sp sp
+sp (    ) s 1240.000 nx sp 1440.000 nx sp (December 6, 1989) s NP 187 9000 m
+9547 9000 l 9547 12240 l 187 12240 l 187 9000 l CP GS 1.00 SG FI GR
+GS NP 187 9000 m 9547 9000 l 9547 12240 l 187 12240 l CP clip
+ save /save_obj E def  /showpage { } def   1628 11947 TR 
+ 12.726755 -12.754902 SC   0.0 0.0 TR 
+%!PS-Adobe-2.0 EPSF-1.0
+%%Title: /home/celebrity/nataraj/arch.ps
+%%Creator: nataraj
+%%CreationDate: Tue Dec  5 17:36:22 1989
+%%Pages: 1
+%%BoundingBox: 0 0 526.545 203.301
+%%EndComments
+/draw_initial_state save def
+/displaylistdict 80 dict def
+displaylistdict begin
+
+%% catch nocurrentpoint error for:
+%% pathbbox
+    /ncpoint errordict /nocurrentpoint get def
+    errordict begin
+    /nocurrentpoint
+    {
+	dup /pathbbox load eq
+	{ pop 0 0 1 1 }
+	{ ncpoint }
+	ifelse
+    } bind def
+    end
+
+    /m {moveto} bind def
+    /l {lineto} bind def
+
+%% pattern stuff
+    /BPSIDE 32 def	%% pixels per pattern side
+    /PATFREQ 3.0 def	%% pattern pixels per mm
+
+    /drawpat_mat [PATFREQ 0 0 PATFREQ 0 0] def
+    /drawpat_pw BPSIDE def	%% pattern pixel width
+    /drawpat_ph BPSIDE def	%% pattern pixel height
+    /drawpat_w drawpat_pw PATFREQ div def	%% pattern mm width
+    /drawpat_h drawpat_ph PATFREQ div def	%% pattern mm height
+    /drawpat_bs 1 def		%% pattern bits per pixel
+
+    /savemat matrix def
+    /topmat matrix def
+    /patmat matrix def
+
+    /start_display_list
+    {	
+	0	setlinecap
+	10	setmiterlimit
+    } bind def
+
+    /patpath {
+	topmat setmatrix
+	pathbbox	%% get lo - hi indecies
+	/hy exch drawpat_h div floor cvi def
+	/hx exch drawpat_w div floor cvi def
+	/ly exch drawpat_h div floor cvi def
+	/lx exch drawpat_w div floor cvi def
+	lx 1 hx {
+	    drawpat_w mul
+	    ly 1 hy {
+		drawpat_h mul
+		exch dup 3 1 roll exch
+		patmat currentmatrix pop
+		translate
+		drawpat_pw drawpat_ph drawpat_bs
+		drawpat_mat drawpat_proc image
+		patmat setmatrix
+	    } for
+	    pop
+	} for
+    } bind def
+
+    /image_raster { %% sw sh dw dh xs ys
+	translate scale /sh exch def /sw exch def
+	/imagebuf sw 7 add 8 idiv string def
+	sw sh 1 [sw 0 0 sh 0 0] { currentfile imagebuf readhexstring pop }
+	image
+    } bind def
+    /r {rmoveto} bind def
+    /sp {x 0 rmoveto} bind def
+    /rl {rlineto} bind def
+    /onelet 1 string def
+
+%% show a string
+    /s {
+	    complex_color
+	    {
+		{
+		    onelet exch 0 exch put
+		    gsave
+			onelet true charpath
+			clip patpath
+		    grestore
+		    onelet stringwidth rmoveto
+		} forall
+	    }
+	    { show }
+	    ifelse
+	} bind def
+
+    /box { newpath m l l l closepath } bind def
+    /pix_to_units { 144 300 div mul } bind def
+    /apix_to_units { 144 exch div mul } bind def
+
+    /badfont null def
+    /badfont_trap {
+	badfont null ne {
+	    2 dict begin
+	    gsave
+		.9 setgray
+		clippath pathbbox /h exch def /w exch def
+		0 h translate 1 -1 scale
+		/Times-Roman findfont 17 scalefont setfont
+		w 20 div h 3 mul 7 div moveto
+		badfont show (:) show
+		/Times-Roman findfont 25 scalefont setfont
+		w 20 div h 2 mul 7 div moveto
+		(Font not available) show
+		w 20 div h 1 mul 7 div moveto
+		(on this printer.) show
+	    grestore
+	    end
+	    /badfont null store
+	} if
+    } def
+
+    /reencode_small_dict 12 dict def
+    /ReencodeSmall {
+	reencode_small_dict begin
+	/new_codes_and_names exch def
+	/new_font_name exch def
+	/base_font_name exch def
+
+	/base_font_dict base_font_name findfont def
+	base_font_dict /FontName get base_font_name ne {
+		/badfont base_font_name 30 string cvs store
+	} if
+	/newfont base_font_dict maxlength dict def
+
+	base_font_dict {
+	    exch dup /FID ne
+		{ dup /Encoding eq
+		    { exch dup length array copy newfont 3 1 roll put }
+		    { exch newfont 3 1 roll put }
+		    ifelse
+		}
+		{ pop pop }
+		ifelse
+	} forall
+
+	newfont /FontName new_font_name put
+	new_codes_and_names aload pop
+
+	new_codes_and_names length 2 idiv
+	{ newfont /Encoding get 3 1 roll put }
+	repeat
+
+	new_font_name newfont definefont pop
+	end     %%reencode_small_dict
+    } def
+
+    /extended_Zapf [
+	8#223 /a89
+	8#224 /a90
+	8#225 /a93
+	8#226 /a94
+	8#227 /a91
+	8#230 /a92
+	8#231 /a205
+	8#232 /a85
+	8#233 /a206
+	8#234 /a86
+	8#235 /a87
+	8#236 /a88
+	8#237 /a95
+	8#240 /a96
+    ] def
+
+    /extended_Standard [
+	128 /Acircumflex
+	129 /Adieresis
+	130 /Agrave
+	131 /Aring
+	132 /Atilde
+	133 /Ccedilla
+	134 /Eacute
+	135 /Ecircumflex
+	136 /Edieresis
+	137 /Egrave
+	138 /Iacute
+	139 /Icircumflex
+	140 /Idieresis
+	141 /Igrave
+	142 /Ntilde
+	143 /Oacute
+	144 /Ocircumflex
+	145 /Odieresis
+	146 /Ograve
+	147 /Otilde
+	148 /Scaron
+	149 /Uacute
+	150 /Ucircumflex
+	151 /Udieresis
+	152 /Ugrave
+	153 /Ydieresis
+	154 /Zcaron
+	155 /aacute
+	156 /acircumflex
+	157 /adieresis
+	158 /agrave
+	159 /aring
+	160 /atilde
+	209 /ccedilla
+	210 /copyright
+	211 /eacute
+	212 /ecircumflex
+	213 /edieresis
+	214 /egrave
+	215 /iacute
+	216 /icircumflex
+	217 /idieresis
+	218 /igrave
+	219 /logicalnot
+	220 /minus
+	221 /ntilde
+	222 /oacute
+	223 /ocircumflex
+	224 /odieresis
+	228 /ograve
+	229 /otilde
+	230 /registered
+	231 /scaron
+	236 /trademark
+	237 /uacute
+	238 /ucircumflex
+	239 /udieresis
+	240 /ugrave
+	242 /ydieresis
+	243 /zcaron
+	244 /Aacute
+    ] def
+
+    /extended_Symbol [
+    ] def
+
+    /extend_font {  %% stack: fontname newfontname
+	exch dup (ZapfDingbats) eq
+	    { cvn exch cvn extended_Zapf ReencodeSmall }
+	    { dup (Symbol) eq
+		{ cvn exch cvn extended_Symbol ReencodeSmall }
+		{ cvn exch cvn extended_Standard ReencodeSmall }
+		ifelse
+	    }
+	ifelse
+    } bind def
+
+    /getfont {
+	/f exch def f cvn where
+	{ begin f cvx cvn exec setfont end }
+	{ f 0 f length 3 sub getinterval (LocalFont) extend_font
+	    /LocalFont findfont
+	    /sz f f length 3 sub 3 getinterval cvi def
+	    [ sz 0 0 sz neg 0 0 ] makefont dup f cvn exch def
+	    setfont
+	}
+	ifelse
+    } bind def
+
+    /ul { %% space drop thickness
+	gsave currentpoint currentlinewidth 
+	currentpoint newpath moveto 6 -3 roll 
+	setlinewidth 0 exch r
+	0 rl stroke setlinewidth m
+	grestore 
+    } bind def
+
+    /ss { currentpoint pop exch m } bind def
+
+    /leader_insert 
+    { 
+	/str exch def /sp1 exch def 
+	-1 0 { pop sp1 0 str ashow } for
+    } bind def
+
+    /nx { /x exch def } bind def
+    0. nx
+%%EndProlog
+
+%%Page: 1 1
+gsave 2.83465 -2.83465 scale
+-12.6667 -96.82 translate
+topmat currentmatrix pop
+start_display_list
+
+% irpoly2
+0 setlinejoin
+.6 setlinewidth
+0 setgray
+gsave
+newpath 71.12 71.12 m
+137.16 71.12 l
+137.16 50.8 l
+71.12 50.8 l
+closepath
+stroke
+grestore
+
+% polyline2
+.1 setlinewidth
+gsave
+grestore
+
+% polyline2
+gsave
+grestore
+
+% polyline2
+gsave
+grestore
+
+% polyline2
+gsave
+grestore
+
+% polyline2
+gsave
+grestore
+
+% polyline2
+gsave
+grestore
+
+% polyline2
+gsave
+grestore
+
+% polyline2
+gsave
+grestore
+
+% polyline2
+gsave
+grestore
+
+% polyline2
+.6 setlinewidth
+gsave
+grestore
+
+% text
+/complex_color false def
+savemat currentmatrix pop [1 0 0 1 90.36 55.2133] concat
+25.4 144 div dup scale 0 0 m
+18 ss 0.000 18.000 m 6.000 nx sp sp sp sp sp (Times-Bold024) getfont (OLGX) s sp
+sp sp sp sp 50 ss 0.000 50.000 m sp sp sp
+savemat setmatrix
+
+% text
+/complex_color false def
+savemat currentmatrix pop [1 0 0 1 74.5333 63.3733] concat
+25.4 144 div dup scale 0 0 m
+18 ss 0.000 18.000 m 6.000 nx sp sp sp sp sp sp sp sp sp
+(Times-Roman024) getfont (SHARED) s sp (LIBRARY) s
+savemat setmatrix
+
+% text
+/complex_color false def
+savemat currentmatrix pop [1 0 0 1 78.28 81.28] concat
+25.4 144 div dup scale 0 0 m
+19 ss 0.000 19.000 m 6.500 nx sp sp sp sp sp sp sp sp sp sp sp sp
+(Times-Bold026) getfont (XLIB) s
+savemat setmatrix
+
+% text
+/complex_color false def
+savemat currentmatrix pop [1.05845 0 0 1.05834 37.855 30.4601] concat
+25.4 144 div dup scale 0 0 m
+16 ss 0.000 16.000 m (Times-Bold022) getfont (OLWM) s
+savemat setmatrix
+
+% text
+/complex_color false def
+savemat currentmatrix pop [1 0 0 1 140.333 33] concat
+25.4 144 div dup scale 0 0 m
+18 ss 0.000 18.000 m (Times-Bold024) getfont (XView) s
+savemat setmatrix
+
+% polyline2
+gsave
+newpath 15.24 71.12 m
+15.24 25.4 l
+stroke
+grestore
+
+% polyline2
+gsave
+newpath 15.24 25.4 m
+91.44 25.4 l
+stroke
+grestore
+
+% polyline2
+gsave
+newpath 91.44 25.4 m
+91.44 50.8 l
+stroke
+grestore
+
+% irpoly2
+gsave
+newpath 15.24 71.12 m
+198.12 71.12 l
+198.12 96.52 l
+15.24 96.52 l
+closepath
+stroke
+grestore
+
+% text
+/complex_color false def
+savemat currentmatrix pop [1 0 0 1 19.3333 38] concat
+25.4 144 div dup scale 0 0 m
+18 ss 0.000 18.000 m (Times-Bold024) getfont (\(&) s 6.000 nx sp (Future) s sp (Open) s
+sp (Look) s 50 ss 0.000 50.000 m (Compliant) s sp (Window) s sp (Managers) s sp (\)) s
+savemat setmatrix
+
+% polyline2
+gsave
+newpath 114.3 50.8 m
+114.3 25.4 l
+stroke
+grestore
+
+% polyline2
+gsave
+newpath 114.3 25.4 m
+177.8 25.4 l
+stroke
+grestore
+
+% polyline2
+gsave
+newpath 177 25.3333 m
+177 70.3333 l
+stroke
+grestore
+badfont_trap grestore
+
+%%Trailer
+end
+draw_initial_state restore
+
+ save_obj restore 
+GR badfont_trap showpage vm_state restore
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 0 13384 m 144 ss
+(Times-Roman02000200) getfont (future changes  in the OPEN LOOK "look"  specification. Also,OLGX is a shared library used by  XView and OLWM \( ) s
+0 144 m 384 ss (and all other future OPEN LOOK Compliant Window managers\)  thus avoiding  unnecessary duplication of efforts and ) s
+0 384 m 624 ss (resources.) s (Times-Roman02400240) getfont 0 624 m 944 ss
+0 944 m 1264 ss ( ) s 660.000 nx sp (Times-Roman02000200) getfont (OLGX maintains all of the information it needs in a structure called a Graphics Information Structure. A ) s
+0 1264 m 1504 ss (Graphics Information Structure contains  the current parameters of the OPEN LOOK session: display, colors, GC's, ) s
+0 1504 m 1744 ss (fonts,  object sizes, and a 2D/3D flag. Each OLGX object rendering function takes a pointer to a graphics information ) s
+0 1744 m 1984 ss (structure as well as information specific to  an instance of the object. Thus an application may handle multiple displays, ) s
+0 1984 m 2224 ss (multiple text sizes, or flexible 2D/3D switching  by maintaining several Graphics Information Structures, or by changing ) s
+0 2224 m 2464 ss (one structure's contents.   The graphics  contexts \(GC's\) that OLGX needs to draw all objects are created when the ) s
+0 2464 m 2704 ss (application initializes a Graphics Information Structure. Pixmaps and the more specialized GC's, such as those used to ) s
+0 2704 m 2944 ss (render the pixmaps, aren't created until they are needed. This reduces the required initialization time, and may reduce ) s
+0 2944 m 3184 ss (memory  consumption for those applications that don't use the pixmaps. ) s
+(Times-Roman02400240) getfont 0 3184 m 3504 ss 0 3504 m 3824 ss
+(Times-Bold02000200) getfont 0 3824 m 4104 ss (The Rendering Scheme) s
+(Times-Roman02000200) getfont 0 4104 m 4384 ss 0 4384 m 4664 ss (Comparison of X Rendering Methods  ) s
+0 4664 m 4944 ss 0 4944 m 5224 ss 720.000 nx sp ( It is clear that the key to good performance in OLGX lies in choosing a fast scheme for rendering objects. We ) s
+0 5224 m 5464 ss (have considered several  different rendering methods: X images, pixmaps, X drawing, and fonts. ) s
+0 5464 m 5744 ss 0 5744 m 6024 ss sp (We ruled out X images   because the image resides on the client side; rendering numerous objects would require ) s
+0 6024 m 6264 ss (a  large amount of network overhead.   ) s 0 6264 m 6544 ss
+0 6544 m 6824 ss sp (Pixmaps turn out to be the most general of the methods; they easily support multicolored images of arbitrary ) s
+0 6824 m 7064 ss (complexity. However, they consume a relatively  large amount of server memory, and are not easily shared between ) s
+0 7064 m 7304 ss (applications.  The performance level was also clearly not  acceptable for   handling 3D menus. ) s
+0 7304 m 7584 ss 0 7584 m 7864 ss sp (The advantage of using X drawing routines,  such as XFillArc, XDrawArc,and XFillRectangle lies in the fact ) s
+0 7864 m 8104 ss (that objects may  be easily scaled. But again we encountered serious problems here.  First, it would be difficult, if not ) s
+0 8104 m 8344 ss (impossible, to get everything to be "pixel perfect" from server to server. Second, the performance of this method is much ) s
+0 8344 m 8584 ss (poorer than with pixmaps,  primarily due to the arc filling routines. Third, this approach is relatively inflexible and ) s
+0 8584 m 8824 ss (difficult to maintain.   ) s 0 8824 m 9104 ss 0 9104 m 9384 ss
+sp ( Finally, we ran a benchmark using font characters to render a simple menu  button. The performance of this ) s
+0 9384 m 9624 ss (method was surprisingly good, even on a Sun 3. ) s
+(Times-Roman02400240) getfont ( ) s (Times-Roman02000200) getfont (Fonts exhibit several advantages over the other  methods. They are ) s
+0 9624 m 9864 ss (relatively easy to modify, and they are a shared server resource. It is also  possible to optimize font-rendered  items by ) s
+0 9864 m 10104 ss (drawing a series of discrete, horizontally aligned items as one complex string, thus requiring only one server request.     ) s
+0 10104 m 10344 ss (But several interesting problems also arise from the use of fonts. First, there is the question of how variable-width items ) s
+0 10344 m 10584 ss (are handled. Consider the outline of a 2D panel button. The button consists of a   left endcap, a variable-length middle, ) s
+0 10584 m 10824 ss (and a right endcap. One approach  would be to render the endcaps using a font, then draw lines to connect them. This  ) s
+0 10824 m 11064 ss (resulted in four server requests. But we have constructed a series of font characters of varying widths which could be ) s
+0 11064 m 11304 ss (used  to draw the middle portion of the  button. Then a button would consist of a left-endcap character, a sequence of  ) s
+0 11304 m 11544 ss (middle characters, and a right-endcap character. Only one server request is required. If we make the font characters 1, 2, ) s
+0 11544 m 11784 ss (4, 8 or 16... pixels wide, then it is  relatively straightforward to construct the button string simply by looking at  the bits ) s
+0 11784 m 12024 ss (in the desired width.   ) s 0 12024 m 12304 ss 0 12304 m
+12584 ss sp (Another problem with fonts is that they are only 1 bit deep.  As   noted before, several colors are required to ) s
+0 12584 m 12824 ss (draw a 3D item. Therefore,  3D items are  broken up into pieces. These pieces are overlaid one on  another, each in a ) s
+0 12824 m 13104 ss 0 13104 m 13384 ss (Page 3) s 182.000 nx sp 1440.000 nx sp sp
+sp (    ) s 1240.000 nx sp 1440.000 nx sp (December 6, 1989) s
+badfont_trap showpage vm_state restore
+save /vm_state E def [1 0 0 -1 0 0] concat 0.050000 0.050000 SC .5 SLW
+1440 -14760 TR 0 RO
+-1440 -1080 -1440 14760 10800 14760 10800 -1080 pageboundary clip
+userdict /#copies 1 put statusdict /manualfeed false put 0 13384 m 144 ss
+(Times-Roman02000200) getfont (different color, to produce a finished image. This is similar to the color separation method commonly used in printing. ) s
+0 144 m 384 ss (We prototyped this method, and the performance was surprisingly good. Using it, arbitrarily-shaped multicolored opaque ) s
+0 384 m 624 ss (objects may be rendered using fonts.   ) s 0 624 m 904 ss
+0 904 m 1184 ss 720.000 nx sp (Ultimately  the font method was adopted for the bulk of the rendering in the  OLGX prototype. Not all objects ) s
+0 1184 m 1424 ss (are rendered using fonts, though.  Simple objects, such as lines and rectangles, are rendered faster and  more easily using ) s
+0 1424 m 1664 ss (X  drawing calls. Variable-height objects would perform  poorly  as well, so these are typically rendered using X ) s
+0 1664 m 1904 ss (drawing calls.   ) s 0 1904 m 2184 ss 0 2184 m 2464 ss ( ) s
+(Times-Bold02000200) getfont (Optimized Two-Dimensional Item Rendering) s
+(Times-Roman02000200) getfont (  ) s 0 2464 m 2744 ss 0 2744 m 3024 ss sp ( In order to optimize the rendering of two-dimensional OPEN LOOK objects,  separate font characters are used) s
+(Times-Roman02400240) getfont ( ) s (Times-Roman02000200) getfont 0 3024 m
+3264 ss (for two- and three-dimensional objects.  OPEN LOOK specifies that 3D items are shaded as though an imaginary light ) s
+0 3264 m 3504 ss (source were at a 45 degree  angle above and to the left of the object. Because of this, there are typically  three distinct ) s
+0 3504 m 3744 ss (parts to an arbitrary three-dimensional item.  There is the "upper-left" part, which is  highlighted for a raised object; there ) s
+0 3744 m 3984 ss (is the "lower- right" part, which  is shaded for a raised object; and there is the "fill" part , which typically  represents the ) s
+0 3984 m 4224 ss (natural color of the object. Rendering a 3D object consists of  overlaying these three parts in the proper colors.   ) s
+0 4224 m 4464 ss (However , 2D items do not fall into the same paradigm. They consist only of a foreground and background color. It ) s
+0 4464 m 4704 ss (would be wasteful to render the 2D items using the overlay technique just described. Instead, separate font characters are ) s
+0 4704 m 4944 ss (used which represent the whole outline of the object. The item is rendered  by drawing the outline character with the  ) s
+0 4944 m 5184 ss (appropriate foreground and background colors.      ) s
+0 5184 m 13104 ss 0 13104 m 13384 ss (Page 4) s 182.000 nx sp 1440.000 nx sp sp
+sp (    ) s 1240.000 nx sp 1440.000 nx sp (December 6, 1989) s
+badfont_trap showpage vm_state restore

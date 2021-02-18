@@ -1,0 +1,212 @@
+\begindata{arbiter,268623536}
+\V 2
+\begindata{lset,268600852}
+\V 1
+\begindata{lset,268669460}
+\V 1
+\begindata{lset,268600652}
+\V 1
+\begindata{cel,268621820}
+\V 2
+\begindata{value,268621752}
+>0
+\enddata{value,268621752}
+10 268621752 1 0 0 0 
+>OBJ< value
+>VIEW< onoffV
+>REF< ArbApplicationChoice
+\begindata{text, 268640924}
+\textdsversion{12}
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <top label> (Application)
+
+[string] <bottom label> (Normal)
+
+\enddata{text,268640924}
+\enddata{cel,268621820}
+0 0 0 268621820 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268600652}
+\begindata{lset,268640700}
+\V 1
+\begindata{lset,268607132}
+\V 1
+\begindata{cel,268666184}
+\V 2
+\begindata{value,268600512}
+>1
+\enddata{value,268600512}
+10 268600512 1 0 0 0 
+>OBJ< value
+>VIEW< clicklistV
+>REF< Arbobviewlist
+\begindata{text, 268619308}
+\textdsversion{12}
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (Object <View>)
+
+\enddata{text,268619308}
+\enddata{cel,268666184}
+0 0 0 268666184 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268607132}
+\begindata{lset,268637872}
+\V 1
+\begindata{cel,268627232}
+\V 2
+\begindata{value,268621504}
+>0
+\enddata{value,268621504}
+10 268621504 1 0 0 0 
+>OBJ< value
+>VIEW< onoffV
+>REF< ArbLinkCel
+>LINK< ionChoice
+\begindata{text, 268640472}
+\textdsversion{12}
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <top label> (Link)
+
+[string] <bottom label> (New)
+
+\enddata{text,268640472}
+\enddata{cel,268627232}
+0 0 0 268627232 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268637872}
+1 21 0 0 268607132 268637872 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268640700}
+1 83 0 0 268600652 268640700 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268669460}
+\begindata{lset,268621092}
+\V 1
+\begindata{lset,268637588}
+\V 1
+\begindata{lset,268626948}
+\V 1
+\begindata{cel,268665884}
+\V 2
+\begindata{value,268600252}
+>0
+\enddata{value,268600252}
+10 268600252 1 0 0 0 
+>OBJ< value
+>VIEW< buttonV
+>REF< ArbCutCel
+>LINK< ource
+\begindata{text, 268620936}
+\textdsversion{12}
+[long] <bodyfont-size> (12)
+
+[string] <bodyfont> (icon)
+
+[string] <label> (s)
+
+\enddata{text,268620936}
+\enddata{cel,268665884}
+0 0 0 268665884 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268626948}
+\begindata{lset,268626700}
+\V 1
+\begindata{cel,268665692}
+\V 2
+\begindata{value,268626632}
+>0
+\enddata{value,268626632}
+10 268626632 1 0 0 0 
+>OBJ< value
+>VIEW< controlV
+>REF< copycon
+>LINK< 
+\begindata{text, 268665596}
+\textdsversion{12}
+[string] <Auto-Init> (TRUE)
+
+[string] <function> (copycon)
+
+[string] <class> (arbcon)
+
+[long] <bodyfont-size> (12)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (Copy)
+
+\enddata{text,268665596}
+\enddata{cel,268665692}
+0 0 0 268665692 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268626700}
+2 51 0 0 268626948 268626700 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268637588}
+\begindata{lset,268637156}
+\V 1
+\begindata{cel,268618816}
+\V 2
+\begindata{value,268637088}
+>0
+\enddata{value,268637088}
+10 268637088 1 0 0 0 
+>OBJ< value
+>VIEW< menterstrV
+>REF< ArbTextEdit
+>LINK< t
+\begindata{text, 268618720}
+\textdsversion{12}
+[long] <bodyfont-size> (12)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (Save)
+
+\enddata{text,268618720}
+\enddata{cel,268618816}
+0 0 0 268618816 0 0 0
+>OBJ< cel
+>VIEW< celview
+>REF< 
+\enddata{lset,268637156}
+1 83 0 0 268637588 268637156 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268621092}
+2 47 0 0 268669460 268621092 0
+>OBJ< 
+>VIEW< 
+>REF< 
+\enddata{lset,268600852}
+1 268600852 0 0 0 0 
+>OBJ< lset
+>VIEW< lsetview
+>REF< 
+\enddata{arbiter,268623536}

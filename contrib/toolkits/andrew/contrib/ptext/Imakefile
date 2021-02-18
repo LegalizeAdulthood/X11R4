@@ -1,0 +1,13 @@
+DOBJS = ptext.do ptextv.do
+IHFILES = ptext.ih ptextv.ih
+
+NormalObjectRule()
+NormalATKRule()
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+InstallFile(ptext.tpl, ${INSTINCFLAGS}, ${DESTDIR}/lib/tpls)
+
+DependTarget()
+
+InstallDocs(ptext.help, ${DESTDIR}/help)

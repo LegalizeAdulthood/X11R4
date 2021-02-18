@@ -1,0 +1,13 @@
+#include "../XView.config"
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+SUBDIRS= TextFonts OpenLook
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+install::
+	-mkdir $(OPENLOOK_FONTINSTDIR) $(TEXTFONT_FONTINSTDIR)
+

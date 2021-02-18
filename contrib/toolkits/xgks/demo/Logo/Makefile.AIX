@@ -1,0 +1,54 @@
+#
+# XXXX-XXX (C) COPYRIGHT IBM CORPORATION 1988
+# LICENSED MATERIALS - PROPERTY OF IBM
+# REFER TO COPYRIGHT INSTRUCTIONS FORM NUMBER G120-2083
+#
+#	 GKS demos make script
+#
+# $Header: Makefile,v 1.9 89/05/02 12:47:19 bruce Exp $
+
+# The following line added for AIX PORT 
+SHELL=/bin/sh
+
+ILIBDIR = $(INSTALLHOME)/lib
+IHDIR   = $(INSTALLHOME)/include
+FONTDBDIR = $(ILIBDIR)/fontdb
+
+ALLIVARS = INSTALLHOME=$(INSTALLHOME) ILIBDIR=$(ILIBDIR) IHDIR=$(IHDIR) \
+	FONTDBDIR=$(FONTDBDIR)
+
+INCLUDES = -I$(IHDIR) -I..
+GKSLIB = $(ILIBDIR)/libxgks.a
+LIBS = $(GKSLIB) -lX11 -lm
+
+OBJS = demo.o printer.o ramtek.o ethernet.o s9000.o
+
+CFLAGS = $(INCLUDES)
+
+# The following lines are found in the Makefile for AIX
+# They should be uncommented for an AIX make.
+#INCLUDES = -I/usr/include/bsd -I$(H)
+#CFLAGS = $(INCLUDES)
+#LIBS = $(ILIBDIR)/libxgks.a -lX11 -lbsd -lsock -lm
+
+all: logo
+
+logo : $(OBJS) $(GKSLIB)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
+
+cleanbins: clean
+	-rm -f logo
+
+clean :
+	-rm -f *.o core logo
+
+depend:
+	../../utils/makedepend/makedepend $(INCLUDES) *.c
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+demo.o: /usr/include/stdio.h /u/amy/xgks/include/xgks.h ../demo.h
+ethernet.o: /usr/include/stdio.h /u/amy/xgks/include/xgks.h ../demo.h
+printer.o: /usr/include/stdio.h /u/amy/xgks/include/xgks.h ../demo.h
+ramtek.o: /usr/include/stdio.h /u/amy/xgks/include/xgks.h ../demo.h
+s9000.o: /usr/include/stdio.h /u/amy/xgks/include/xgks.h ../demo.h

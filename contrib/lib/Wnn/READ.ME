@@ -1,0 +1,267 @@
+
+	Wnn Version 4.0
+
+This distribution contains Version 4.0 of Wnn Japanese Input
+System.  Wnn is a network-extensible Kana-to-Kanji conversion system
+and was jointly developed and released by the Software Research Group
+of Kyoto University Research Institute for Mathematical Science, OMRON
+TATEISI ELECTRONICS CO., and Astec, Inc.  If you have Wnn up to
+Version 3.3, refer to "manual/intro" for revision information.
+
+This distribution has been tested on the following systems.
+	Sun-3 Sun-4,  SunOS3.4, SunOS4.0
+	OMRON SX9100, UniOS-B (4.3BSD) UniOS-U (SystemV R2.1) (DT DS M90)
+
+**Installation
+
+The source file contains literal strings and comments in "EUC" code.
+Be sure to have a compiler allowing 8-bit input data path.
+
+*Installation by "Makefile"
+
+Edit the top-level Makefile for compilation.
+
+ for Sun (Makefile.sun)
+ DEFS = DEFS='-O -SUB'
+ LIBS = LIB_TERM='-ltermcap'
+ GLIB = GETOPTLIB=
+
+ for LUNA BSD (Makefile.luna)
+ DEFS = DEFS='-O -20 -f -DSX9100BSD'
+ LIBS = LIB_TERM='-ltermcap'
+ GLIB = GETOPTLIB='../jlib/libgetopt.a'
+
+ for LUNA SYSV (Makefile.sx)
+ DEFS = DEFS='-O -Zs -DSX8870'
+ LIBS = LIB_TERM='-lcurses'
+ GLIB = GETOPTLIB=
+
+Add "-DWCHAR_T" to "DEFS" on some machines where "wchar_t" is
+"typedef"ed, e.g., on NEC's EWS4800 and Toshiba AS3000.
+            
+The top-level Makefile includes variables named BINDIR, LIBDIR,
+PUBDIC_DIR where commands on jserver, uum and dictionary utilities (in
+BINDIR), configuration files (in LIBDIR), and PUBDIC(PUBDIC_DIR) will
+be installed.  Default values are /usr/local/bin/Wnn4,
+/usr/local/lib/wnn, and /usr/local/lib/wnn/dic/pubdic respectively.
+You will also have to edit include/config.h when you want to change
+LIBDIR.
+
+"jserver/Makefile" includes variable JSERVER_OWNER that defines
+user-id of jserver.  We recommend that you create a new user-id for
+jserver, instead of staying at root.  A default user-id is wnn.
+
+The owner of jserver is JSERVER_OWNER with an s-bit.
+
+Type "make" and " make install" under JSERVER_OWNER.
+
+"jslib/Makefile" includes variables WNNLIBDIR and WNNINCDIR which will
+define "libwnn.a" and include files.  If you wish to change this
+configuration, you will have to check all Makefiles from top to
+bottom.
+
+"uum"'s owner is root with an s-bit.
+
+When "make install", you may receive a message "directories
+necessary for installation are missing."  Then, create required
+dictionary(ies).  To install "uum", you will need to give a password
+of root.  jserver needs to read/write files in /usr/local/lib/wnn/dic
+
+Confirm your installation by adding /usr/local/bin/Wnn4 to $PATH.
+Enjoy jserver and uum.
+
+*Installation by "Imakefile"
+
+When you wish to take advantage of Imake, use Imakefile in this
+distribution (Special thanks to Mr.Inaba @ Toshiba).
+
+Create a new directory named Wnn in contrib/lib.
+
+Edit the top-level WnnImake.defs.
+   for SUN
+   #defined WNNSUN 1
+
+   for LUNA BSD
+   #defined WNNSX9100BSD 1 (by default)
+
+   for LUNA SYSV 
+   #defined WNNSX8870 1
+   
+Type "make Makefile Makefiles" in the top-level.
+
+On LUNA (BSD or SystemV) before "imake":
+(1)  Edit the original "imake.c" with "imake.patch" in Wnn/imake.
+Type "Makefile.unU" on LUNA SYSV and "Makefile.unB" on LUNA BSD.
+
+
+  (2) Edit "imake.tmpl" with "tmpl.patch".
+
+  (3) Copy "OMRON.macros" in util/imake.includes.
+
+*uum
+
+The configuration of uum is in .uumrc and key bindings are in .uumkey.
+(.uumrc and .uumkey used to be .wnnrc and .wnnkey in Wnn up to Ver.3.3.)
+.uumrc defines the location where dictionary configuration files are
+located. (Refer to Manual.)
+
+**Changes
+The following changes have been made to Wnn key bindings since Ver.3.3:
+(written in Japanese.)
+
+デフォルトでは^W で変換(ここまでは同じ)の後(変換後モード)で、^W とする
+と、今までは次候補が出ましたが、V4 からは全候補となります。V3 の全候補
+は^G でしたが、^G にバインドされているのは解除だけとなります。
+
+追加された機能
+
+   大文節のサポート:
+   大文節は、小文節がいくつかつながったもので、小文節は今までと同様です。
+   例えば、接頭語+名詞+接尾語で一つの大文節になります。
+   大文節は、ボールド(ボールドをサポートしていない端末 gmw_shell, gmwterm
+   などではアンダーライン)で表示されます。
+   小文節は、今まで同様リバース表示です。
+   入力モードから^W とすると、入力された文字列を連文節変換します。
+   ^Z とすると、入力された文字列を1小文節とみなして変換します。
+   入力された文字列を1大文節とみなして変換するキーは、バインドしていません。
+
+   変換後モード:
+   大文節レベルの操作をサポートしているものは、連文節変換(^W)、
+   次候補(^N)/前候補(^P)/全候補(^W)、文節伸ばしちじみ後の変換(^W)です。
+   小文節レベルの変換は、全候補(^Z)、文節伸ばしちじみ後の変換(^Z)です。
+   次候補/前候補は、標準ではバインドしていません。
+   あとは、インスペクトがあります。変換後に^V とすると
+   変換結果の詳細な情報を出します。(品詞、辞書、頻度、評価値など)
+   この後(インスペクトモード)で、^N, ^P 小文節の次候補、前候補
+   ^U, ^D 候補の自立語を変換に使用しない/削除ができます。
+   ^U, ^D は,単語検索のモードからも使えます。
+
+   また、辞書一覧/辞書情報からも辞書の使用/不使用、削除ができます。
+
+   漢字仮名変換:
+   入力モードで^C とすると、入力された文字列を漢字仮名変換します。
+   漢字の入力は、カットアンドペースやuum のヒストリから持ってきます。
+   変換モードで、^C は今まで通り、入力モードへの移行です。
+
+   仮名ローマ字変換:
+   入力モードから^R とすると、入力された平仮名、カタカナをローマ字、
+   あるいは、半角カタカナに変換します。これは、文節伸ばしちじみの時
+   にも使えます。また、半角入力された、文字を、全角に変換、数字に関し
+   ては、漢数字にも変換します。たどえば、1234 の全候補をとると、
+   1234	1,234	一二三四
+   １２３４	１，２３４
+   一千二百三十四	壱阡弐陌参拾四   が候補として出てきます。
+   アルファベット,数字,記号の三種類毎に、直前にどれを選択したかを覚え
+   ていて,それを第一候補とします。詳しくは,マニュアルを見て下さい。
+
+**Directories
+This distribution contains the following directories.
+
+conv		to configure function keys.
+
+etc		source files to be shared by several directories.
+
+fuzokugo	"fuzokugo" definition program (atof).
+
+include	 	header files.
+
+jd		configuration files for uum, jserver, and
+		Romaji(alphabet)-to-Kana conversion table.  
+		These files will be installed in WNNLIBDIR
+		(/usr/local/lib/wnn by default).
+
+		jserverrc 	to define initialization of jserver
+		uumrc		to initialize uum 
+		uumkey		to define key binding of uum 
+		wnnenvrc	to define dictionaries
+
+		You may find many configuration files available
+		in addition to default files.
+
+jlib		libraries for application programmers.
+
+jlib.V3		compatible library from Wnn Ver.3
+
+jserver		Kana-to-Kanji conversion server.
+
+jutil		dictionary utilities.
+
+		atod	    to create new dictionary (from EUC to binary)
+		dtoa	    from binaries to EUC
+		oldatonewa  to convert EUC of Ver.3 to that of Ver.4
+		wnnstat	    to report jserver status (e.g., users,
+			    environment, files, dictionaries)
+		wnnkill	    to terminate jserver
+		wnntouch    to check and recover consistency of dictionary
+			    files
+		wddel	    to delete several words from a dictionary
+		wdreg	    to add new words to a dictionary
+
+manual		manuals.
+
+pubdic 		dictionaries of PUBDIC.
+
+romkan		Romaji(alphabet)-to-Kana conversion.
+
+uum		front end processor for Japanese character input.
+
+-----------------------------------------------------------------------
+/*
+	Copyright
+		Kyoto University Research Institute for Mathematical Sciences
+		1987, 1988, 1989
+	Copyright OMRON TATEISI Electronics, CO. 1987, 1988, 1989
+	Copyright ASTEC,Inc. 1987, 1988, 1989
+
+
+   Permission to use, copy, modify, and distribute this software
+   and its documentation for any purpose and without any fee is
+   hereby granted, subject to the following restrictions:
+
+   The above copyright notice and this premisson notice must appear
+   in all version of this software;
+
+   The name of "Wnn" may not be changed; 
+
+   All documentation of software based on "Wnn" must contain the wording
+   "This software is based on the original version of Wnn developed by
+   Kyoto University Research Institute for Mathematical Sciences (KURIMS),
+   OMRON TATEISI Electronics, CO. and
+   ASTEC,Inc.", followed by the above copyright notice;
+
+   The name of KURIMS, OMRON and ASTEC may not be used
+   for any purposes related to the marketing or advertising
+   of any product based on this software.
+
+   KURIMS, OMRON and ASTEC make no representations about
+   the suitability of this software for any purpose.
+   It is provided "as is" without express or implied warranty.
+
+   KURIMS, OMRON and ASTEC DISCLAIM ALL WARRANTIES WITH REGARD TO THIS
+   SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS,
+   IN NO EVENT SHALL OMRON, ASTEC and K.U.R.I.M.S BE LIABLE FOR ANY SPECIAL,
+   INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+   LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+   OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+   PERFORMANCE OF THIS SOFTWARE.
+
+   Author: Hideki Tsuiki	Kyoto University
+				tsuiki%kaba.or.jp@uunet.uu.net
+
+	    Hiroshi Kuribayashi	Omron Tateisi Electronics, Co.
+				kuri@frf.omron.co.jp
+				uunet!nff.ncl.omron.co.jp!kuri
+
+	    Naouki Nide		Kyoto University	
+				nide%kaba.or.jp@uunet.uu.net
+
+	    Shozo Takeoka	ASTEC, Inc
+				take%astec.co.jp@uunet.uu.net
+
+	    Takasi Suzuki	Advanced Software Technology & Mechatronics
+				Research Institute of KYOTO
+				suzuki%astem.or.jp@uunet.uu.net
+
+*/
+
+

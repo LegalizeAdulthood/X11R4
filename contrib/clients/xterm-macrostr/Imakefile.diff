@@ -1,0 +1,25 @@
+*** Imakefile.orig	Thu May 18 19:57:44 1989
+--- Imakefile	Fri Oct 27 13:44:02 1989
+***************
+*** 27,36 ****
+  /* add -DWTMP and -DLASTLOG if you want them */
+          DEFINES = -DMODEMENU -DUTMP -DBcopy=bcopy GettyProgram
+            SRCS1 = button.c charproc.c cursor.c data.c input.c \
+! 		  main.c menu.c misc.c screen.c scrollbar.c tabs.c \
+  		  TekPrsTbl.c Tekproc.c util.c VTPrsTbl.c
+            OBJS1 = main.o input.o charproc.o cursor.o util.o tabs.o \
+! 		  screen.o scrollbar.o button.o Tekproc.o misc.o \
+  		  VTPrsTbl.o TekPrsTbl.o data.o menu.o
+            SRCS2 = resize.c
+            OBJS2 = resize.o
+--- 27,36 ----
+  /* add -DWTMP and -DLASTLOG if you want them */
+          DEFINES = -DMODEMENU -DUTMP -DBcopy=bcopy GettyProgram
+            SRCS1 = button.c charproc.c cursor.c data.c input.c \
+! 		  macrostr.c main.c menu.c misc.c screen.c scrollbar.c tabs.c \
+  		  TekPrsTbl.c Tekproc.c util.c VTPrsTbl.c
+            OBJS1 = main.o input.o charproc.o cursor.o util.o tabs.o \
+! 		  screen.o scrollbar.o button.o Tekproc.o misc.o macrostr.o \
+  		  VTPrsTbl.o TekPrsTbl.o data.o menu.o
+            SRCS2 = resize.c
+            OBJS2 = resize.o

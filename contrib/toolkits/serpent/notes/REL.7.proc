@@ -1,0 +1,388 @@
+
+                          SERPENT ALPHA RELEASE 0.7
+
+                PROCEDURAL CHANGES (MIT Contrib Tape Version)
+
+                         BUILDING SERPENT FROM SOURCE
+
+To  build Serpent on your system, follow the steps enumerated below.  Note: If
+you got to this point, steps 3 - 4 should have been already carried out.
+
+   1. Set an environment variable to the name of the directory where  you
+      put  Serpent,  using  the  full  pathname  (relative  to  the  root
+      directory), e.g.,
+                % setenv SERPENT (full pathname of Serpent Alpha 0.7)
+      The environment variable SERPENT is used to denote  this  directory
+      throughout these notes.
+
+   2. Make  $SERPENT  the  current  working directory and ensure that the
+      compressed tar file  serpent.tar.Z  is  in  $SERPENT.    This  file
+      occupies about 1.6 MB.
+
+   3. To  uncompress  the  compressed tar file serpent.tar.Z and populate
+      the Serpent directory structure, type the following command:
+                % uncompress -c serpent.tar.Z | tar xvmf -
+      This command will create all of the  Serpent  source  files,  which
+      take up about 4.8 MB.  This should take just a few minutes.
+
+   4. Delete the compressed tar file serpent.tar.Z.
+
+   5. If  there  are  any  update  tar files in the ftp directory, repeat
+      steps 3 - 4 for these as well.  Update tar files will take the form
+      serpent.tar.XX.Z,  where XX = 00, 01, etc.  These should be applied
+      in order.
+
+   6. Execute the following commands to set up path information.
+                % setenv SERPENT_BASE_PATH $SERPENT
+                % setenv SERPENT_DATA_PATH ". $SERPENT_BASE_PATH/data \
+                                    $SERPENT_BASE_PATH/externs/include"
+                % setenv SERPENT_EXE_PATH  ". $SERPENT_BASE_PATH/bin"
+                % set path = ($SERPENT_EXE_PATH $path)
+      Note: You may wish to add these commands to your .login  or  .cshrc
+      file.
+
+   7. Execute  the  following  command  to cause the shell to build a new
+      command hash table based on the new path variable:
+                % rehash
+
+   8. If you are running on a Sun, you may have to  rebuild  the  kernel.
+      See "SUN SPECIFIC INFORMATION" at the end of this file.
+
+   9. You  must  run  imake  before  proceeding.  Reed the entire section
+      entitled "IMAKE" later in this document.  There are instructions in
+      that section which describe when you have to run imake.
+
+  10. Make  $SERPENT/dm/src the current working directory.  Edit the file
+      drc.c and go to line 567.  You will see a series of #ifdef clauses.
+      If  one  of  them matches your architecture, stop and go on to step
+      13.
+
+  11. Insert an  #ifdef  clause  and  C  if  statement  that  match  your
+      architecture and save the file.
+
+  12. Make $SERPENT/int/src the current working directory.  Edit the file
+      ism.c and go to line 120.  Again, you will see a series  of  #ifdef
+      clauses.    In this case, create an #ifdef clause that matches your
+      architecture, set both SHM_SIZE and SHM_START_ADDR,  and  save  the
+      file.    SHM_SIZE  will,  in all likelihood, not have to be changed
+      from the value in the other #ifdef clauses, but SHM_START_ADDR will
+      have  to  be  made  sufficiently large to be higher than the end of
+      program space.
+
+  13. To install Serpent, make  sure  $SERPENT  is  the  current  working
+      directory and execute the following command:
+                % make build
+      This  will  create the necessary linkages for you to run Serpent on
+      your machine and will also create all of the demos.  (*** Note: ***
+      This  procedure  may  take  up to 4 hours, depending on machine and
+      load.  It will also increase your disk usage  by  approximately  22
+      MB, most of which will be occupied by demos.  If you do not want to
+      build all of the demos, skip to step 14.)   Several  messages  will
+      print out, of the forms:
+                 making install_inc in (dir)
+                 making install_perm in (dir)
+                 making install_lib in (dir)
+                 making install_bin in (dir)
+                 making install_data in (dir)
+                 making demos
+                 making man pages
+                 making depend in (dir)
+      Part  of  the build procedure is to create some directories if they
+      don't already exist.  As a result, the following message may appear
+      at the beginning and is no cause for alarm:
+                 *** Error code 1 (message ignored)
+      There  will  be other messages listing Serpent commands, C compiler
+      commands, and library commands.  There are  a  couple  of  warnings
+      that  will  be  printed,  but  these are no problem.  Please do not
+      interrupt this procedure.  The following message should be the last
+      one printed:
+                % Serpent installed successfully
+      If  any  part  of  this  procedure fails, please send email to Erik
+      Hardy (erik@sei.cmu.edu).
+
+  14. You can also install only the executable portions of Serpent; to do
+      so, execute the following commands in order:
+                % make install_inc
+                % make install_perm
+                % make all (or just make)
+      The  commands  "make install_inc" and "make install_perm" need only
+      be done once.  The command "make all" may take up to  1-1/2  hours,
+      depending  on  machine and load.  You can then choose to build some
+      or all of the demos.  See "BUILDING/EXECUTING SERPENT DIALOGUES" in
+      this file for more information.
+
+  15. The  following  command (typed when $SERPENT is the current working
+      directory):
+                % make depend
+      will create a set of dependency lists for all Serpent source files;
+      it  need only be done once and is highly recommended; this may take
+      up to 1 hour, depending on machine and load.   ***  Note:  ***  The
+      "make  depend"  command  can  only be done after all of the Serpent
+      executables and all  of  the  demos  have  been  built.    It  will
+      terminate  abnormally  if  any of the executables or demos have not
+      been built.
+
+  16. If you change any Serpent source files in any of  the  directories,
+      all you have to do to rebuild Serpent is:
+                % cd $SERPENT
+                % make all
+      This will only rebuild those portions that were changed, along with
+      anything that was dependent on the changes.  Note:  This  procedure
+      will  NOT rebuild any demos.  See "BUILDING PORTIONS OF SERPENT" in
+      this file for more information.
+
+                                    IMAKE
+
+This version of Serpent uses the utility called imake, developed at MIT, which
+provides  for  the  automatic  building  of  Makefiles.    Imake  uses  the  C
+preprocessor  (cpp)  to  expand  rule  definitions,  which  are  described  in
+Imake.tmpl  and  Imake.rules.    Rule definitions are invoked in Imakefiles to
+generate Makefiles.
+
+As the rules provided by Imake.rules were not sufficient for Serpent, there is
+a file in $SERPENT called Serpent.tmpl which describes Serpent-specific rules,
+as well as some macro definitions (by the word "macro" is meant a make  macro,
+not  a cpp macro).  None of the rules in this file should be changed, but some
+of the macro definitions will probably need to be.
+
+Macro definitions take the form
+          NAME = value
+where NAME is always capitalized.  All Serpent macro definitions  are  at  the
+head of Serpent.tmpl.  You'll note that there is a section reserved for macros
+that may need to be changed.
+
+   1. Since X11 is not distributed with Serpent, you may need to set  the
+      macros  that  are  used  by  Serpent  to locate X11R3 files.  These
+      macros are called SERPENTXINCDIR  and  SERPENTXLIBDIR.    Currently
+      these  values  are  set to /usr/include and /usr/lib, respectively.
+      If these are not where your X11R3 files exist, change the macros to
+      reflect   the   correct   location  of  these  files.    Note:  The
+      MIT-mandated style for including X11 files is of the form
+                #include <X11/file.h>
+      This means that SERPENTXINCDIR must be set to the location of  your
+      X11R3  include files WITHOUT the last X11.  For example, assume the
+      actual location of X11R3 include files is /usr/include/X11; because
+      of  the include style, the trailing "/X11" is not part of the macro
+      value.
+
+   2. You may also want to change the CDEBUGFLAGS.  Currently this  macro
+      is set to -O -DNDEBUG; you may want to turn off optimization or use
+      -g.  The -DNDEBUG option turns off Serpent debug statements;  these
+      should  be  left  off unless you want to run Serpent in debug mode.
+      Note: Using -DNDEBUG also turns off the use of the  "assert"  macro
+      in cpp.  Turning Serpent debug statements on (by removing -DNDEBUG)
+      will increase the size of objects, libraries, and load  modules  by
+      as  much as 90% and will make Serpent run somewhat slower, although
+      not much slower.
+
+   3. You may also need to set CPPFLAGS.  This macro must be set  to  the
+      cpp  option  that  generates make dependencies.  Serpent.tmpl has a
+      set of #ifdef's used to set this macro.  If you are not building on
+      a Sun or a VAX, set CPPFLAGS to the appropriate cpp option.
+
+   4. Once  any changes have been made to Serpent.tmpl, make $SERPENT the
+      current working directory and type:
+                % xmkmf
+      This will create a new top level Makefile for all of Serpent.
+
+   5. To create all of the Serpent subdirectory Makefiles, type:
+                % make Makefiles
+      This will print about 100 lines on your display.   These  last  two
+      steps must be executed any time Serpent.tmpl is modified.
+
+   6. Go back to step 10 in "BUILDING SERPENT FROM SOURCE".
+
+                         BUILDING PORTIONS OF SERPENT
+
+The  Serpent  directory structure is a hierarchy.  At the top of the hierarchy
+($SERPENT), and where appropriate within the hierarchy, there is an Imakefile,
+used to generate a Makefile.
+
+There  are  several  Makefile  targets  that  are  fairly universal across all
+Makefiles, listed below:
+
+   - all: builds whatever that directory is supposed to make: it might be
+     a  library,  it  might be an executable, it might even be man pages;
+     for example, the compiler Makefile builds  the  compiler  executable
+     file
+
+   - install:  installs,  in  global  Serpent  directories,  whatever  is
+     appropriate   for   that   directory;   may   invoke    install_inc,
+     install_perm,  install_lib,  install_bin, or install_data, depending
+     on the directory; for example, the  $SERPENT/utilities/src  Makefile
+     identifies  some  global  include files and creates a library called
+     libutl.a:  install in this case invokes install_inc and install_lib
+
+   - install_inc: installs global include files in $SERPENT/include;  for
+     example, install_inc makes symbolic links from $SERPENT/include to a
+     specified set of include files for each directory
+
+   - install_perm: installs global shell scripts in $SERPENT/bin
+
+   - install_lib: installs global libraries in $SERPENT/lib
+
+   - install_bin: installs global executables in $SERPENT/bin
+
+   - install_data: installs global data files in $SERPENT/data
+
+   - depend: creates a dependency list  for  each  source  file  in  that
+     directory,  including  Slang files and C files; also removes several
+     targets created by imake that are extraneous to Serpent
+
+Any of these targets can be invoked, through make, anywhere in  the  directory
+structure  that  makes  sense.  Basically, this means any directory that has a
+Makefile (all src directories, man/cat1, demos, all demos subdirectories,  and
+the  top  level  ($SERPENT)), and for which that target has meaning.  The only
+targets that have meaning in all directories are "all" and "depend".    Typing
+"make" is equivalent to "make all" in all directories.
+
+Serpent  has  several  code  directories,  each for a different portion of the
+system.  Within each code directory are two subdirectories: include  and  src,
+holding  include  files and source files, respectively.  To rebuild a specific
+portion  of  the  system  (the  compiler  is  used  as   an   example),   make
+$SERPENT/compiler/src the current working directory and type:
+          % make all
+This  can also be accomplished from the top level directory: make $SERPENT the
+current working directory and type:
+          % make all
+This second alternative has the advantage that anything that is  dependent  on
+the rebuilding of the compiler will also get built.
+
+Once  you  have  built Serpent on your system, building and executing any demo
+should be sufficient to determine if the system was built successfully.
+
+                     BUILDING/EXECUTING SERPENT DIALOGUES
+
+The Serpent command has changed from Alpha Release 0.6 to be  more  consistent
+with  standard  UNIX  commands.    The  new  form  for the Serpent command for
+building dialogue programs is:
+          % serpent -cl <dialogue>
+This will perform the compile and link phases for that dialogue.
+
+Running a Serpent program without any options is still the same:
+          % serpent <dialogue>
+
+There are some new options, described in REL.7.func.  There is also a new  way
+to  specify  options; all options are described in the serpent man page, found
+in $SERPENT/man/cat1.
+
+                                    DEMOS
+
+A number of serpent demonstrations are included with this release.  These  can
+be  found  in  $SERPENT/demos.    Within some of the demos subdirectories is a
+README file which describes the demo and how to exercise it.  In  general,  to
+build the executable for a demo (including any application that runs with that
+demo), make $SERPENT/demos/<demoname> the current working directory and type:
+          % make all
+If you want to execute a  demo,  make  $SERPENT/demos/<demoname>  the  current
+working directory and execute the command:
+          % serpent <demoname>
+
+To  build  all  demos,  make  $SERPENT/demos the current working directory and
+type:
+          % make all
+This is especially useful after having rebuilt Serpent; this may take up to  2
+hours, depending on machine and load.
+
+                         BUILDING NEW USER INTERFACES
+
+If  you  want to build a new dialogue/application, the easiest procedure is to
+borrow another dialogue Imakefile or Makefile as a template.  To do this, make
+$SERPENT/demos  the  current  working  directory, create a new directory, make
+that new direcory the current working directory,  and  copy  an  Imakefile  or
+Makefile  from another demos directory.  Copying an Imakefile is preferred, as
+Imakefiles are much smaller than Makefiles, and  you  can  utilize  imake  and
+Serpent.tmpl to do most of the work for you.
+
+Edit  the  new  Imakefile to reflect the name of your directory, dialogue, and
+any application files and/or sdd files.  The Imakefile in  $SERPENT/demos/calc
+is  a  good  example  of  a  simple  Serpent demo.  A good example of a fairly
+complex demo can be found in the  Imakefile  in  $SERPENT/demos/concent;  this
+demo uses an application and external definitions, so it pretty well exercises
+Serpent capabilities.
+
+To create a Makefile from the Imakefile, type the following command:
+          % xmkmf
+Use make to construct your Serpent executable and  any  application  (see  the
+resultant Makefile), then type:
+          % make depend
+to make the dependency list(s).
+
+If   you  want  to  add  your  new  directory  to  the  make  structure,  make
+$SERPENT/demos the current working directory, edit the Imakefile, and add  the
+new  directory  to  the  list  described  by SRCDIRS.  Then type the following
+commands in order:
+          % xmkmf
+          % make Makefiles
+          % make depend
+
+If you want to do anything more complex than  using  an  existing  demo  as  a
+guide, or if you need further assistance about using imake, contact Erik Hardy
+(erik@sei.cmu.edu).
+
+                           SUN SPECIFIC INFORMATION
+
+We had some problems getting Sun kernels configured properly so Serpent  could
+execute.    The main problems were in the IPC area: shared memory, semaphores,
+and message ops.  A sample  kernel  config  file  follows,  with  the  options
+required  for  Serpent highlighted.  Also, due to the way that the Sun handles
+shared memory mapping into the address space, each  Serpent  process  requires
+approximately 5.5 MB of virtual memory to execute.  This means that a "normal"
+Serpent system execution requires approximately 16.6 MB of virtual memory (one
+process each for the application, the dialogue manager, and I/O toolkit).
+
+                          SAMPLE CONFIGURATION FILE
+
+    #
+    # #)SDST60 1.2 8/19/87 SMI
+    #
+    # Sun-3/60 with 1 or SCSI disks and 1 SCSI tape
+    #
+    machine         "sun3"
+    cpu             "SUN3_60"
+    ident           "SERPENT"
+    timezone        5 dst
+    maxusers        12
+    options         INET
+    options         SYSACCT
+    options         QUOTA
+    options         NFS
+    options         NIT
+    ###############################################################
+    #####   Serpent required options follow
+    ###############################################################
+    options         IPCMESSAGE      # SystemV IPC message facility
+    options         IPCSEMAPHORE    # SystemV IPC Semaphore facility
+    options         IPCSHMEM        # SystemV IPC Shared-Memory
+    options         SHMPOOL=2045    # max number of shared kbytes
+    options         SHMSEG=64       # max shared segments/process
+    ###############################################################
+    #####   Serpent required options precede
+    ###############################################################
+    config          vmunix          root on sd0
+
+    pseudo-device   pty
+    pseudo-device   ether
+    pseudo-device   loop
+    pseudo-device   nd
+    pseudo-device   win128
+    pseudo-device   dtop4
+    pseudo-device   ms3
+    pseudo-device   kb3
+    # connections for machine type 7 (SUN3_60)
+    controller      virtual 7 at nexus ?
+    controller      obmem 7 at nexus ?
+    controller      obio 7 at nexus ?
+    controller      si0 at obio ? csr 0x140000 priority 2
+    disk            sd0 at si0 drive 0 flags 0
+    disk            sd1 at si0 drive 1 flags 0
+    tape            st0 at si0 drive 32 flags 1
+    device          zs0 at obio ? csr 0x20000 flags 3 priority 3
+    device          zs1 at obio ? csr 0x00000 flags 0x103 priority 3
+    device          le0 at obio ? csr 0x120000 priority 3
+    device          cgfour0 at obmem 7 csr 0xff300000 priority 4
+    device          cgfour0 at obmem 7 csr 0xff400000 priority 4
+    device          bwtwo0 at obmem 7 csr 0xff000000 priority 4
+    device          bwtwo1 at obmem 7 csr 0xff300000 priority 4
+    device          bwtwo1 at obmem 7 csr 0xff400000
+    device          des0 at obio ? csr 0x1c0000

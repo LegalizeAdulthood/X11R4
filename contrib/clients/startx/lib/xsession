@@ -1,0 +1,35 @@
+#!/bin/csh -f
+#
+#	Purdue University Computing Center
+#	George Kraft IV (gk4), Unix Systems Staff
+#
+#	$HOME/.xsession file
+
+setenv HOST `hostname | sed -e 's/\.edu$//' -e 's/\.purdue$//' -e 's/\.cc$//'`
+
+(twm &)
+
+#
+#	Load defaults after the window manage is started.
+#
+
+xrdb -load .xdefaults
+(xsetroot -gray -cursorfont XC_iron_cross &)
+(xset -c r &)
+(dclock &)
+
+if ("$HOST" == "expert") then
+	(xbiff &)
+else
+	(rsh expert -n /usr/local/X11/xbiff -d $DISPLAY &)
+endif
+
+#
+#  The last line must be in the foreground, and should be an xterm(1L).
+#
+
+if ("`tty`" == "/dev/console") then
+	xterm  -g 80x24+0+0 +ut -C -T "CONSOLE $HOST"
+else
+	xterm  -g 80x24+0+0 +ut -T "$HOST"
+endif

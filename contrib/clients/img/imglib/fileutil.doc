@@ -1,0 +1,260 @@
+===============================================================================
+=======                                                                 =======
+=======		Module Fileutil  --  File-Related Utilities		=======
+=======			     File fileutil.c				=======
+=======                                                                 =======
+===============================================================================
+
+
+  Functions:
+
+	Module fileutil implements some basic functions
+	to help with finding and opening files on UNIX systems.
+
+
+
+  Public routines:
+
+	expand_path	Expand file pathname
+	open_filter	Open filter
+	close_filter	Close filter
+	open_yafile	Open file
+	close_yafile	Close file
+
+
+  Local routines:
+
+	none
+
+
+  Module history:
+
+	11-21-89	Paul Raveling
+	Finalized version for contribution to X11R4.  Changes not
+	documented in this header have been made within the last
+	3 weeks.
+
+	3-16-89		Paul Raveling
+	Created fileutil from a fragment of module utilmisc,
+	which dates back to 3-3-87.
+
+===============================================================================
+=======                                                                 =======
+=======		     expand_path  --  Expand file pathname		=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	full_path = expand_path ( csh_path )
+
+
+  Functions:
+
+	Expand a file's pathname from csh-acceptable form to
+	the fully qualified pathname.  Although this involves
+	the most common csh conventions, it does NOT include
+	globbing (substition for *, ?, [...], etc.).
+
+	Transformations applied to the pathname are:
+
+	    --	Environment variables ($name) are expanded before
+		all other substitutions.
+
+	    --	"~/" at the beginning of the pathname translates
+		to the current user's home directory.  This is
+		expanded from the $home environment variable.
+
+	    --	"~user/" at the beginning of the pathname translates
+		to the named user's home directory.
+
+	    --	"./" at the beginning of the pathname translates
+		to the current working directory.
+
+	    --  If the pathname does not begin with "/", "~", "~user",
+		or "./", the current working directory name is
+		prepended to it.
+
+	    --	".." translates to the parent directory of the
+		current point in the path.  If embedded within
+		the path, it deletes the preceding directory name.
+
+
+  Input:
+
+	csh_path	unsigned char	*
+			Pointer to pathname using csh conventions
+			noted above.
+			Format is a 0-terminated char string.
+
+
+  Output:
+
+	full_path	Byte  *
+	<return value>	Pointer to full pathname expanded from csh_path.
+			Format is a 0-terminated char string.
+			"\0" => An environment variable was undefined
+			or a user name in "~user" was invalid.
+
+			****  This path string is statically allocated
+			      within expand_path.  Therefore, any
+			      full_path value becomes invalid at the
+			      next call to this routine.
+
+===============================================================================
+=======                                                                 =======
+=======			open_filter --  Open a Filter			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	pid = open_filter (progargs, inpath, oupath, [&]instream, [&]oustream)
+
+
+  Functions:
+
+	Open an i/o filter.  The filter runs as a separate
+	process whose stdin and stdout streams can be redirected
+	at will.
+
+	This is something like popen, but its calling sequence
+	is slightly more versatile and it avoids the overhead
+	of invoking a shell to run the program.  Its main liability
+	is that the program's filename should be fully qualified:
+	open_filter does NOT search the directories name in
+	$path (for csh) or $PATH (for sh).
+
+	**  It's advisable to use a fully qualified pathname
+	**  in progargs[0] to identify the filter program.
+
+	****  Warning:  This hasn't been tested completely.
+
+
+  Input:
+
+	progargs	char  *[]
+			Pointer to array of command arguments.
+			1st argument is pathname of program to execute;
+			last argument is NULL.
+
+	inpath		char  *
+			String defining pathname of file to use as
+			input to the filter program;
+			NULL => open pipe to filter
+
+	oupath		char  *
+			String defining pathname of file to use as
+			output from the filter program;
+			NULL => open pipe from filter
+
+  Output:
+
+	pid		int
+	<return value>	Process id of filter process;
+			0 => Failed, couldn't load program or open pipe(s).
+
+	*instream	FILE  *
+			If inpath is given as NULL, open_filter
+			returns a FILE pointer to a pipe (open for output)
+			that connects to the filter's input.
+
+	*iostream	FILE  *
+			If oupath is given as NULL, open_filter
+			returns a FILE pointer to a pipe (open for input)
+			that connects to the filter's output.
+
+
+===============================================================================
+=======                                                                 =======
+=======			open_yafile --  Open a File			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	yafile = open_yafile ( filename, options, suffix )
+
+
+  Functions:
+
+	Open a file.  If the given filename can't be opened,
+	try it with default suffixes appended.  If any suffix
+	ending with ".Z" works, open the file by piping it
+	through either compress or uncompress.
+
+	Suffix defaulting attempts to open the following names
+	in this order until an open succeeds:
+
+		1.  filename
+		2.  filename.Z
+		3.  filename.default_suffix
+		4.  filename.default_suffix.Z
+
+	If the original filename already ends with ".Z",
+	only the caller's original filename is used.  Also, if
+	the options specify "w" to write a file, the given filename
+	will be the one used unless a file of that name exists and
+	its protection does not allow write access to the caller.
+
+	Information returned includes the actual filename opened
+	and a flag indicating whether the file is compressed.
+	In the case of compressed files, the file the caller sees
+	is actually a pipe to compress or from uncompress.
+
+	A file opened in this manner can be read or written as
+	if the "yafile" is a FILE, but it must be closed with
+	close_yafile.
+
+
+  Input:
+
+	filename	char *
+			Pointer to filename, or at least the root
+			of the filename.  Name can include csh'ish
+			things, such as ~[user] and $environment_var.
+
+	options		char *
+			Options for openf.  We expect "r" or "w";
+			anything else may or may not work.
+
+	suffix		char *
+			Default suffix to try if filename can't be opened.
+			NULL => no default suffix
+
+
+  Output:
+
+	yafile		Yafile *
+	<return value>	Pointer to Yafile info.  Caller can treat this
+			as a FILE * if he doesn't want to check the file's
+			actual name or its compressed/uncompressed status.
+
+===============================================================================
+=======                                                                 =======
+=======			close_yafile --  Close a File			=======
+=======                                                                 =======
+===============================================================================
+
+  Invocation:
+
+	close_yafile ( yafile )
+
+
+  Functions:
+
+	Close a file that was opened with open_yafile.
+
+	This closes either a file or a pipe, each of which of course
+	involves a different interface to UNIX, and releases memory
+	associated with the Yafile structure.
+
+
+  Input:
+
+	yafile		Yafile *
+			Pointer to Yafile info.  As with other stuff,
+			caller can treat this as a FILE *.
+
+
+  Output:	None

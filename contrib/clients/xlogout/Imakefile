@@ -1,0 +1,8 @@
+        DEPLIBS = XawClientDepLibs
+LOCAL_LIBRARIES = XawClientsLibs
+           SRCS = xlogout.c 
+           OBJS = xlogout.o 
+
+ComplexProgramTarget(xlogout)
+InstallAppDefaults(XLogout)
+

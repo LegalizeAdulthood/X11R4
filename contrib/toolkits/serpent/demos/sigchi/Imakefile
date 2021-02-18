@@ -1,0 +1,12 @@
+#include "../../Serpent.tmpl"
+DIR = sigchi
+
+DIALOGUE = sigchi
+
+DEPENDINCS = -I$(SERPENTBASEDIR)/data
+
+all:	$(DIALOGUE)
+
+SerpentSerpent()
+
+SerpentDependDialogue()

@@ -1,0 +1,198 @@
+
+
+
+     XWMENUSEP(3X)                                       XWMENUSEP(3X)
+
+
+
+
+     NAME
+          XwmenuSepWidgetClass - the X Widget's menu item separator
+          widget.
+
+     SYNOPSIS
+          #include <X11/StringDefs.h>
+          #include <X11/Intrinsic.h>
+          #include <Xw/Xw.h>
+          #include <Xw/MenuSep.h>
+
+
+     CLASSES
+          MenuSep is built from the Core, XwPrimitive, XwButton, and
+          XwMenuBtn classes.
+
+          The widget class to use when creating a menu separator
+          widget is XwmenuSepWidgetClass.
+
+          The class name for this widget is MenuSep.
+
+     DESCRIPTION
+          The MenuSep widget is a primitive widget to be used as an
+          item separator placed between items in a menu.  Several
+          different line drawing styles are provided.
+
+     NEW RESOURCES
+          The MenuSep widget defines a one additional resource type.
+          The programmer can also set the values for the Core and
+          Primitive resources to set attributes for this widget.  The
+          Button and MenuButton resources are unused for this widget.
+
+
+                           MenuSep Resource Set
+        Name               Class              Type   Default
+        __________________________________________________________
+        XtNseparatorType   XtCseparatorType   int    XwSINGLE_LINE
+
+
+
+          XtNseparatorType
+               This resource defines the type of line drawing to be
+               done in the menu separator widget.  Five different line
+               drawing styles are provided.  They are single, double,
+               single dashed, double dashed and no line.  The
+               separator type can be set through an argument list by
+               using one of the defines: XwSINGLE_LINE, XwDOUBLE_LINE,
+               XwSINGLE_DASHED_LINE, XwDOUBLE_DASHED_LINE, and
+               XwNO_LINE.  The separator type can be set through the
+               .Xdefaults file by using one of the following strings:
+               single_line, double_line single_dashed_line,
+               double_dashed_line and no_line.
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUSEP(3X)                                       XWMENUSEP(3X)
+
+
+
+
+          The line drawing done within the menu separator will be
+          automatically centered within the height of the widget.
+
+          The separator type of no_line is provided as an escape to
+          the application programmer who needs a different style of
+          drawing.  To create an alternate style, a pixmap the height
+          of the widget can be created.  After the separator widget
+          has been created, this pixmap can be used as the background
+          pixmap by building an argument list using the
+          XtNbackgroundPixmap argument type as defined by Core and
+          setting the widgets background through XtSetValues.
+          Whenever the widget is redrawn its background will be
+          displayed which contains the desired separator drawing.
+          Note that the pixmap can only be set after the widget is
+          created.  If set when created, it will be overridden by the
+          normal background pixmap created by the Primitive class.
+
+     INHERITED RESOURCES
+          The following resources are inherited from the named
+          superclasses:
+
+
+                           Core Resource Set -- CORE(3X)
+     Name                   Class                  Type             Default
+     __________________________________________________________________________
+     XtNancestorSensitive   XtCSenstitive          Boolean          TRUE
+     XtNx                   XtCPosition            int              0
+     XtNy                   XtCPosition            int              0
+     XtNwidth               XtCWidth               int              0
+     XtNheight              XtCHeight              int              0
+     XtNdepth               XtCDepth               int              0
+     XtNbackground          XtCBackground          Pixel            White
+     XtNbackgroundPixmap    XtCPixmap              Pixmap           Unspecified
+     XtNborderWidth         XtCBorderWidth         int              1
+     XtNborderColor         XtCBorderColor         Pixel            Black
+     XtNborderPixmap        XtCPixmap              Pixmap           Unspecified
+     XtNsensitive           XtCSensitive           Boolean          TRUE
+     XtNmappedWhenManaged   XtCMappedWhenManaged   Boolean          TRUE
+     XtNdestroyCallback     XtCCallback            Pointer          NULL
+     XtNtranslations        XtCTranslations        XtTranslations   NULL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUSEP(3X)                                       XWMENUSEP(3X)
+
+
+
+
+                    Primitive Resource Set -- XWPRIMITIVE(3X)
+     Name                    Class                   Type      Default
+     ________________________________________________________________________
+     XtNforeground           XtCForeground           Pixel     Black
+     XtNbackgroundTile       XtCBackgroundTile       int       background
+     XtNtraversalType        XtCTraversalType        int       highlight_off
+     XtNhighlightStyle       XtCHighlightStyle       int       pattern_border
+     XtNhighlightColor       XtCForeground           Pixel     Black
+     XtNhighlightTile        XtCHighlightTile        int       50_foreground
+     XtNhighlightThickness   XtCHighlightThickness   int       0
+     XtNrecomputeSize        XtCRecomputeSize        Boolean   TRUE
+     XtNselect               XtCCallback             Pointer   NULL
+     XtNrelease              XtCCallback             Pointer   NULL
+
+
+
+
+     TRANSLATIONS
+          The menu separator widget defines no translations.
+
+     ACTIONS
+          The menu separator widget defines no actions.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+     SEE ALSO
+          CORE(3X), XWPRIMITIVE(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+

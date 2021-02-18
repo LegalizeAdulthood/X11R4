@@ -1,0 +1,78 @@
+/* "@(#)Imakefile	3.1 88/09/22 09:30:13" */
+#include <Server.tmpl>
+
+SRCS =	 	apa16BBlt.c \
+		apa16Info.c \
+		apa16IO.c \
+		apa16Hdwr.c \
+		apa16OSD.c \
+		apa16Font.c \
+		apa16Save.c \
+		apa16Text.c \
+		apa16Curs.c \
+		apa16FlSp.c \
+		apa16GC.c \
+		apa16IGBlt.c \
+		apa16Line.c \
+		apa16PGBlt.c \
+		apa16PntA.c \
+		apa16PntW.c \
+		apa16RArea.c \
+		apa16Tile.c \
+		apa16Win.c \
+		mfbftile.c \
+		mfbwait.c \
+		apa16FillArc.c 
+
+OBJS =		apa16BBlt.o \
+		apa16Info.o \
+		apa16IO.o \
+		apa16Hdwr.o \
+		apa16OSD.o \
+		apa16Curs.o \
+		apa16FlSp.o \
+		apa16Font.o \
+		apa16GC.o \
+		apa16IGBlt.o \
+		apa16Line.o \
+		apa16PGBlt.o \
+		apa16PntA.o \
+		apa16PntW.o \
+		apa16RArea.o \
+		apa16Save.o \
+		apa16Text.o \
+		apa16Tile.o \
+		apa16Win.o \
+		mfbftile.o \
+		mfbwait.o \
+		apa16FillArc.o 
+
+INCLUDES = -I. -I../OPERATING_SYSTEM -I../../mfb -I../../mi -I../../../include -I$(INCLUDESRC) -I../common
+
+#if DebugServer && ProfileServer
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugServer
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileServer
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+NormalRelocatableTarget(apa16,$(OBJS))
+
+#if ProfileServer
+ProfiledRelocatableTarget(apa16,$(OBJS))
+#endif
+#if DebugServer
+DebuggedRelocatableTarget(apa16,$(OBJS))
+#endif
+
+DependTarget()
+
+LintLibraryTarget(apa16,$(SRCS))
+NormalLintTarget($(SRCS))

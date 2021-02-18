@@ -1,0 +1,178 @@
+* PERMISSION IS HEREBY GRANTED FOR THE USE AND STUDY OF
+* NCSA X DATASLICE.  THIS PROGRAM IS PUBLIC DOMAIN AND ABSOLUTELY FREE.
+* THE AUTHOR AND THE NATIONAL CENTER FOR SUPERCOMPUTING APPLICATIONS
+* DISCLAIMS ALL LIABILITIES THAT MAY DIRECTLY OR INDIRECTLY ARISE FROM
+* THE USE OF THIS PROGRAM.
+
+NCSA X DataSlice (V1.0) :
+------------------------
+Dated: 			9/1/89
+
+1. Display of 2D planes along any cartesian axis/any arbitrary axes.
+2. Changing of the orientation of the display of slices.
+3. Up to 15 frames of automatic incremental planes may be tiled on a window.
+4. The user may load in seq/hdf palette files for the raster display at
+   any time.  The program automatically switches to the correct loading mode.
+5. Fully synchronized selection between numeric and raster entries.
+   Fully synchronized selection between all tiled rasters.
+   Automatic scrolling of windows and scales to display highlighted entries.
+6. All raster images may be interpolated.     
+7. Multiple windows.
+   Up to 10 display/frame/animation/view windows may be displayed for
+   any SDS loaded into memory at any time.  Also, the user may load
+   up to 10 SDSs simultaneously, but this is, of course, very dependent
+   on the amount of memory the user have on hand.  When memory is no longer
+   available, the program informs the user and refuses to load in any more
+   data until some other windows are closed.
+8. Arbitrary plane selection and display of oblique slices.
+9. Saving of any of the generated raster images in HDF Raster8 format.
+10. Animation of frames from memory with the option of saving all the
+	frames generated in a single HDF Raster8 file format.
+11. Animation of frames from a single HDF Raster8 file.
+12. Dicing slices in the 3D data matrix.  Different palettes may be
+    applied and shading of the cube slices can be changed.  The cube can
+    be expanded by a cubic pixel expansion so that data points are seen
+    as cubes of data rather than points.  The resulting image can be saved
+    for redisplay or animation.
+13. Volumetric rendering of the 3D data.  The current routine is a quick
+	and dirty implementation of the V-Buffer that produces images between
+	4 to 10 minutes on normal workstations.  The user can define a number
+	of "substances" for displaying, and the resulting images are akin to
+	"X-ray" pictures of the 3D data.  Again, palettes may be changed and
+	images can be saved.
+
+
+NCSA X DataSlice (V1.0.1) :
+---------------------------
+Dated:			10/15/89
+
+Additional features:
+
+1. Sub-volume dicing.
+********************
+To specify a subvolume of data in the 3D Cartesian Dicer, first select a
+slab of data by clicking on one of the Axis Slicing Sliders (eg. the X-
+slider).  The starting position of the slider is where you position your
+pointer in the slider.  Now click on the slider handle and drag the handle
+to a suitable thickness.  A thick slab slicing the data in the X-direction
+should be outlined.  Then, then on the Dicer toggle.  Click somewhere on
+the Y-Slider.  You will notice that the box is moved up or down (and clipped
+when necessary).  To resize the thickness of the box in the Y-direction,
+click and drag the Y-slider as before.  Finally, to adjust the box in the
+Z-direction, do the same procedure as you did for the Y-Slider, this time
+using the Z-Slider.  When you are satisfied with the position and dimensions
+of the cube, click View to map the data.
+To summarize, clicking on any of the slicing sliders will position the start
+position of the box in the particular direction.  Clicking and dragging the
+slider will change the thickness of the box in the specified direction.
+If the Dicer toggle is off, then clicking on any slicing slider generates
+a full cross-sectional slice of 1 plane thickness.  This plane may be
+reshaped into a subvolume box by selecting the Dicer toggle.
+
+2. Iso-surface rendering
+************************
+This feature is still very much incomplete.  It gives a wire framed surface
+contouring of your dataset, corresponding to an iso-value that you input.
+Currently, only 3 faces of the cube can be mapped, but in later versions,
+the surfaces can be fully rotated and polygons colored with light sources
+that you might specify.
+The scale of the image is dependent on the Dicer Scale Dialog.
+
+3. Use Pixmap Option
+********************
+For all forms of animation now, the user may now choose to either use
+pixmaps or ximages for display.  Pixmaps are very fast, but are considered
+'precious' resources built on the X-server's internal memory, and so are
+limited to the amount of X-server memory you have on hand.  XImages are
+much slower than pixmaps, but do not use up the server memory.  The default
+is to use pixmaps.
+
+4. Save separate Option
+***********************
+This option appears when saving generated animation sequences.  If you select
+the option, the sequence will be saved in separate HDF raster8 files with a
+4 digit number appended to the end of the file name you gave to the sequence.
+This is used so that you may later transfer the HDF files over to a MacII and
+use NCSA Image on them.  The default is to save the sequence in a single HDF file.
+
+
+V1.0.1 bug fixes:
+================
+1. Sun's OpenWindows compatibility.
+The program has been ported over to Sun's OpenWindows (X11/NeWS merge).  Fixes
+have been made to the color visual calls and keyboard focus.
+
+2. Visuals with depths that are not 8-planes.
+The program has been fixed so that it runs on displays with less than or
+more than 8 planes.  It will always try to obtain a 8-bit visual first (256
+colors).  If it fails, it will use the default visual and scale the rasters
+it generates to the number of colors present in the display.  StaticColor
+displays may be used, but you will not be able to load in different colormaps.
+The same applies to TrueColor displays.  GrayScale displays may also be used.
+Monochrome displays will not allow proper image generation.
+
+3. Animation controls' response.
+The response time of the animation controls has been fixed so that it is
+now almost immediate.
+
+4. The ugly looking images generated on certain X-servers when the Cartesian
+Dicer is used have been fixed so that they are displayed properly on all
+servers.
+
+5. Specifying a negative number in the plane increment dialog in the Planes
+Along Axes tool will now cause animation sequences to be generated in the
+reverse direction from the current plane, instead of crashing the program.
+
+6. Animation speed control now works even for SysV machines.
+
+7. The arbitrary display mode window no longer crashes when View is clicked
+when a slice is not selected.
+
+8. You no longer need a Fortran compiler to compile the HDF sources released
+with XDataSlice.
+
+
+NCSA X DataSlice (V1.1) :
+------------------------
+Dated: 			11/30/89
+
+Additional features:
+
+1. Iso-surface rendering
+************************
+This feature is left incomplete due to lack of time.  
+It now gives a fully rendered surface contouring of a dataset,
+corresponding to an iso-value that the input.
+Currently, only 3 faces of the cube can be mapped, but in later versions,
+the surfaces can be fully rotated.  The single light source is fixed at
+position (1,1,1), but will be movable in later versions.
+The scale of the image is dependent on the Dicer/Isosurface Scale Dialog.
+
+2. Use Disk Option
+******************
+For all forms of animation now, the user may now choose to either use
+memory or disk storage.  Disk storage animation is very much slower,
+but is a better alternative when memory is premium or when generating
+a large number of huge images.  The default is to use memory or pixmaps.
+When generating images, to use the disk option, first turn on the Use
+Disk toggle in the image generation control window and click Animate.
+Now, a File Window will pop up in its usual position for you to select
+or specify a file to store the images to be generated.  Click on Save
+and the usual Animation window will appear as the animation images are
+created.
+
+3. Mouse control File Selection
+*******************************
+To change directories, the user now enter the directory name in the
+Directory dialog in the File Window and press <Return> or <Enter> to
+execute the change.  Alternatively, he or she may press the Up button
+beside the Directory dialog to go back up the directory tree structure.
+Or, the user can select a directory name in the File List and click on
+the Down button to move into that subdirectory.  Please note that now,
+file names of directories in the File List are postfixed by '/' and
+file names of HDF files are postfixed by '*'.  This is to give the
+user a visual feel of the contents of the working directory.
+
+4. Depth profiling
+
+5. Minimum and Maximum changes

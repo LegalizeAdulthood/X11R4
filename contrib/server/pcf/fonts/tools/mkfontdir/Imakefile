@@ -1,0 +1,26 @@
+       INCLUDES = -I. -I$(TOP) -I$(FONTSRC)/include
+           SRCS = mkfontdir.c 
+           OBJS = mkfontdir.o
+LOCAL_LIBRARIES = 	$(FONTSRC)/lib/os/libfontos.a \
+			$(FONTSRC)/lib/bdf/libbdf.a \
+			$(FONTSRC)/lib/pcf/libpcf.a \
+			$(FONTSRC)/lib/utils/libfontutils.a
+   FONT_DEFINES = FontDefines FontFilters
+
+
+#undef InstallManPage
+#define InstallManPage(file,dest)	/* as nothing */
+
+#ifdef UWSBuild
+ComplexProgramTarget(dxmkfontdir)
+#else
+ComplexProgramTarget(mkfontdir)
+#endif
+
+SpecialObjectRule(mkfontdir.o,$(ICONFIGFILES),$(FONT_DEFINES))
+
+#ifdef UWSBuild
+InstallManPageLong(dxmkfdir,$(MANDIR),dxmkfontdir)
+#else
+InstallManPageLong(mkfntdir,$(MANDIR),mkfontdir)
+#endif

@@ -1,0 +1,12 @@
+roids is an X11 game implementing the old Atari Asteroids video game.
+
+As far as I know, this should be easy to install on anything running
+X11R3.  However, I have only tried it on Ultrix 2.0.  It requires Xt,
+Xaw, and Xmu.
+
+I hereby grant permission for this game to be freely redistributed by
+anyone.  I merely ask that I am given credit, that this notice
+remains, that any changes made are also sent to me, and that nobody
+ever tries to sell it for any money.
+
+- Terry Weissman (weissman@wsl.dec.com)

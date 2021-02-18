@@ -1,0 +1,31 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'WNNSRC=$(WNNSRC)' 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+           WNNSRC = $(CONTRIBSRC)/lib/Wnn
+
+          SUBDIRS = cconv jclib xlocal
+
+     STD_INCLUDES = -I$(TOOLKITSRC) -I$(AWIDGETSRC) -I$(TOP)
+     WNN_INCLUDES = -I$(WNNSRC)/include
+   LOCAL_INCLUDES = -I. -I./jclib -I./cconv -I./xlocal
+         INCLUDES = $(LOCAL_INCLUDES) $(WNN_INCLUDES) $(STD_INCLUDES)
+
+           STDLIB = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
+            JCLIB = jclib/libjc.a
+            CCLIB = cconv/libcc.a
+        XLOCALLIB = xlocal/libXlocal.a
+           WNNLIB = $(WNNSRC)/jlib/libwnn.a
+  LOCAL_LIBRARIES = $(XLOCALLIB) $(JCLIB) $(CCLIB) $(WNNLIB) $(STDLIB)
+
+/* If your system has reliable alloca(), add -DHAVE_ALLOCA */
+          DEFINES = -DHEADER_IS_HERE
+
+             SRCS = KanjiInput.c KISub.c kinput.c confirm.c
+             OBJS = KanjiInput.o KISub.o kinput.o confirm.o
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+ComplexProgramTarget(kinput)
+
+InstallManPage(kinput,$(MANDIR))

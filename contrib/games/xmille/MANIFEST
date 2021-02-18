@@ -1,0 +1,30 @@
+   File Name		Archive #	Description
+-----------------------------------------------------------
+ MANIFEST                  1	This shipping list
+ Makefile                  2	
+ README                    1	
+ animate.c                 2	
+ background.h              2	
+ card.h                    2	
+ cards.Z.uu		   3	compressed shar file of bitmaps
+ color.h                   2	
+ comp.c                    1	
+ control                   1	
+ curses_ui.c               1	
+ drawcard.c                1	
+ end.c                     1	
+ extern.c                  2	
+ fill                      1	
+ init.c                    2	
+ mille.c                   2	
+ mille.h                   2	
+ misc.c                    2	
+ move.c                    2	
+ print.c                   2	
+ roll.c                    2	
+ save.c                    2	
+ table.c                   2	
+ types.c                   2	
+ ui.c                      1	
+ ui.h                      2	
+ varpush.c                 2	

@@ -1,0 +1,198 @@
+
+
+
+     XWMENUMGR(3X)                                       XWMENUMGR(3X)
+
+
+
+
+     NAME
+          XwmenumgrWidgetClass - the X Widgets menu manager meta
+          widget.
+
+     SYNOPSIS
+          #include <X11/Intrinsic.h>
+          #include <X11/StringDefs.h>
+          #include <Xw/Xw.h>
+
+
+     CLASSES
+          The menu manager class is built the Core, Composite,
+          Constraint and XwManager classes.
+
+     DESCRIPTION
+          The MenuMgr class is an X Widget meta class.  It is never
+          instantiated as a widget.  Its sole purpose is as a
+          supporting superclass for other menu manager widget classes.
+
+     NEW RESOURCES
+          The menu manager defines a set of resource types which may
+          be used by the programmer to specify the data for widgets
+          which are a subclass of MenuMgr.  To specify any of these
+          resources within the .Xdefaults file, simply drop the XtN
+          prefix from the resource name.  The following table contains
+          the set of resources defined by MenuMgr.
+
+
+                             MenuMgr Resource Set
+     Name                   Class                  Type      Default
+     _____________________________________________________________________
+     XtNassociateChildren   XtCAssociateChildren   Boolean   TRUE
+     XtNmenuPost            XtCMenuPost            String    "<Btn1Down>"
+     XtNmenuSelect          XtCMenuSelect          String    "<Btn1Up>"
+     XtNmenuUnpost          XtCMenuUnpost          String    NULL
+     XtNkbdSelect           XtCKBDSelect           String    "<Key>Select"
+
+
+
+          XtNassociateChildren
+               This resource indicates whether the menu hierarchy
+               controlled by the menu manager is accessible only from
+               within the associated widget, or from within the widget
+               and any of the widget's children.
+
+          XtNmenuPost
+               This string resource describes the button event and any
+               required modifiers needed to post one of the top level
+               menupanes controlled by the menu manager.  The string
+               is specified using the syntax supported by the Xt
+               Intrinsic's translation manager, with three exceptions.
+
+
+
+     Hewlett-Packard Company       - 1 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUMGR(3X)                                       XWMENUMGR(3X)
+
+
+
+
+               First, only a single event may be specified.  Secondly,
+               the event must be a ButtonPress or ButtonRelease event.
+               Thirdly, all modifiers specified are interpreted as
+               being exclusive; this means that only the specified
+               modifiers can be present when the button event occurs.
+
+          XtNmenuSelect
+               This string resource describes the button event and any
+               required modifiers needed to select a menu button
+               within any of the menupanes controlled by the menu
+               manager.  The string is specified using the syntax
+               supported by the Xt Intrinsic's translation manager,
+               with three exceptions. First, only a single event may
+               be specified.  Secondly, the event must be a
+               ButtonPress or ButtonRelease event.  Thirdly, all
+               modifiers specified are interpreted as being exclusive;
+               this means that only the specified modifiers can be
+               present when the button event occurs.
+
+          XtNmenuUnpost
+               This string resource describes the key event and any
+               required modifiers needed to unpost the currently
+               viewable set of menupanes controlled by the menu
+               manager.  This provides the user with the means for
+               unposting a menu hierarchy from the keyboard, without
+               selecting a menu button.  The string is specified using
+               the syntax supported by the Xt Intrinsic's translation
+               manager, with three exceptions. First, only a single
+               event may be specified.  Secondly, the event must be a
+               key event. Thirdly, all modifiers specified are
+               interpreted as being exclusive; this means that only
+               the specified modifiers can be present when the button
+               event occurs.
+
+          XtNkbdSelect
+               This string resource describes the key event and any
+               required modifiers needed to select the currently
+               highlighted menu button. This provides the user with
+               the means for selecting a menu item from the keyboard,
+               without being required to use the mouse.  The string is
+               specified using the syntax supported by the Xt
+               Intrinsic's translation manager, with three exceptions.
+               First, only a single event may be specified.  Secondly,
+               the event must be a key event. Thirdly, all modifiers
+               specified are interpreted as being exclusive; this
+               means that only the specified modifiers can be present
+               when the button event occurs.
+
+     ORIGIN
+          Hewlett-Packard Company.
+
+
+
+
+     Hewlett-Packard Company       - 2 -                   Aug 9, 1988
+
+
+
+
+
+
+     XWMENUMGR(3X)                                       XWMENUMGR(3X)
+
+
+
+
+     SEE ALSO
+          CORE(3X), XWMANAGER(3X),
+          Programming With The HP X Widgets,
+          Programming With Xt Intrinsics,
+          Programming With Xlib.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Hewlett-Packard Company       - 3 -                   Aug 9, 1988
+
+
+

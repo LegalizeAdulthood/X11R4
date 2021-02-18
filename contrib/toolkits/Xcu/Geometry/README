@@ -1,0 +1,18 @@
+There is a bug in the X11R3 Inrinsics routine XtMakeGeometryRequest(),
+which is found in Geometry.c.  The effect of this bug is to make
+my geometry managers look bad. :-)
+
+To duplicate on your system, try the "xtbl 6 -file tst6" demonstration
+found in examples/xtbl.  After hitting the "fill" button, you will see
+some widgets out of place.  For another demonstration of this effect,
+after the widgets appear, resize the window
+much larger with your window manager.  Then when you change the text in one
+of the widgets by clicking in the text box, the window will get small
+again, but some of the children will be in the wrong place.
+
+In this directory is a fixed version of Geometry.c.  Just in case you have
+a copy of Geometry.c that has been modified since it came off the original
+X11R3 distribution, "gdiff" contains the difference between the original
+Geometry.c and the one with my correction.
+
+I assume that X11R4 will have this patch included.

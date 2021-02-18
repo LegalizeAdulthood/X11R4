@@ -1,0 +1,5 @@
+cc -O -pipe  -I. -I../../lib/olgx -I../../../mit  -DOL101088 -DSHADOW  -c AdFooter.c
+cpp: error AdFooter.c:19: Can't find include file olgx/olgx.h
+*** Error code 1
+
+Stop.

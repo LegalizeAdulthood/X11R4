@@ -1,0 +1,278 @@
+\begindata{text,268662636}
+\textdsversion{12}
+\template{help}
+\define{index
+menu:[Title~3,Index~91]
+attr:[FontFace Italic Int Set]}
+\define{indexi
+menu:[Title~3,InvisibleIndex~92]
+attr:[Script PreviousScriptMovement Point -2]
+attr:[FontFace Italic Int Set]}
+
+
+\chapter{Summary of Office Document Architecture
+
+(ISO 8613, ODA)
+
+}
+
+\leftindent{This help file gives a brief description of the major components 
+and uses of the ISO 8613 standard, Office Document Architecture (ODA).
+
+}
+\section{Introduction}
+
+
+\leftindent{ODA provides a way to represent a structured, multimedia document. 
+A structured document is one that is organized around either a logical 
+partitioning of a document, such as chapters, sections, and figures, or a 
+layout partitioning of a document, such as pages, header areas and footnote 
+areas. A multimedia document is one that contains multi-font text, raster 
+images and geometric graphics.
+
+}
+\section{Some Definitions}
+
+
+\leftindent{The logical structure of a document in ODA is represented by the 
+specific logical structure, which is a tree. The internal nodes of the tree 
+are called composite logical objects, and correspond to high level 
+aggregations, such as a chapter or a titled figure. The leaves of the tree are 
+called basic logical objects, and contain content: text, raster images or 
+geometric graphics.
+
+
+The layout structure of a document in ODA is represented by the specific 
+layout structure, which is a tree. The internal nodes of the tree can be page 
+sets (collections of pages), pages and frames (of a page). These correspond to 
+formatting strategies, such as collecting pages into an index, specifying 
+multiple column layout or the position of page headers. The leaves of the tree 
+are called blocks and are used for positioning content.
+
+
+Detailed information about a document is placed into attributes that are 
+attached to the document's objects. For example, the attribute "indivisible" 
+with the value "object type page" can be placed on a composite logical object 
+and means that the entire subtree should be formatted on the same page.
+
+
+The specific structures in ODA refer to a particular document. ODA also 
+provides generic versions of logical and layout structures. The generic 
+structures serve as prototypes or examples of documents. For example, a 
+generic logical structure can define a "book" to be a table of contents, 
+followed by any number of chapters, followed by an index. A particular book 
+would have an actual table of contents, chapters containing the text of the 
+book and an index that refers to the text in the chapters. A generic layout 
+structure for a page could describe the amount of room to be left for headers 
+and footers, and the number of columns to be used. A specific layout structure 
+for a page resembles a page description language: the actual header, footer 
+and column texts would be formatted at particular places, ready to be printed.
+
+
+The formatting process in ODA take a specific logical structure, an optional 
+generic logical structure and a generic layout structure, to produce a 
+specific layout structure. The document that is given to the formatting 
+process is called a processable document, which means that it can be edited. 
+The document that is produced is called a formatted document. A document may 
+be both formatted and processable (which means that all four structures are 
+present).
+
+}
+\section{External Representation}
+
+
+\leftindent{ODA uses a binary encoding of a document for storage in a file or 
+transmission over a network. This encoding, called ODIF, is a compressed, 
+context-sensitive, low-level representation of document information. In 
+practice, it seems to be a difficult representation to work with.
+
+}
+\section{Key Features of ODA}
+
+
+\leftindent{There are three key features of ODA: separation of specific 
+structures from generic structures, separation of logical structures from 
+layout structures and separation of document architecture from content. Each 
+is described below.
+
+
+Generic structures provide a way to define a uniform collection of documents 
+for an organization. For example, a company may define a standard interoffice 
+memo, monthly report and request-for-proposal document structure. An editor 
+that understands the generic structure can ensure that all necessary parts of 
+the document are provided and that it has a uniform appearance.
+
+
+The separation of logical structures from layout structures allows one to 
+format the same logical document for several uses. For example, one can use 
+one layout structure for formatting a document for a computer terminal, 
+another structure for hardcopy.
+
+
+The separation of document architecture from content allows one to extend ODA 
+to handle new media types. Because the actual contents of a document are 
+limited to the leaves of various structures, one can replace those leaves with 
+new kinds of content while maintaining the rest of the structure of the 
+document. ODA partitions attributes by use, and only presentation attributes 
+apply to content. Each type of content has its own set of presentation 
+attributes. Thus one can use ODA's provision for adding new kinds of content, 
+such as equations and tables, by defining the representation of the 
+information for that content, e.g., TeX for equations and SYLK for tables, and 
+the presentation attributes that apply to that content.
+
+}
+\section{Restricting ODA}
+
+
+\leftindent{ODA is too general for easy use. For example, the standard 
+specifies that a document may consist of "composite logical objects". That 
+these objects correspond to chapters or subsections is only a supposition in 
+this memo.
+
+
+One way to limit the generality of ODA is through the use of document 
+application profiles (DAP). A DAP restricts the ways that objects can be used. 
+For example, one can define a DAP that specifies two superclasses "chapter" 
+and "section". A document that conforms to that DAP would require that all of 
+its composite logical objects be either chapters or sections.
+
+
+To promote the use of ODA, standards bodies are working on a collection of 
+DAPs for common use. The most common series is called the "Q" series, 
+initially done by the Standards Promotion Application Group (SPAG) ODA Expert 
+Group and recently transferred to the European Workshop for Open Systems 
+(EWOS) ODA Expert Group. Three of the DAPs, Q111, Q112 and Q113, are being 
+used in Europe. Q111 roughly corresponds to teletext. Q112 provides features 
+for writing business letters. Q113 defines structures for larger documents, 
+such as numbered sections, headers, footers and floating figures. Within the 
+United States, NIST (formerly NBS) is developing a DAP called the ODA 
+Implementors' Agreement, which is intended to be the same as Q113.
+
+
+Unfortunately, DAPs only limit the features of ODA. They do not explain 
+mappings or translations from non-ODA document models into ODA. For example, 
+many document systems have the concept of "left margin", but ODA does not. In 
+fact, there are at least eight different ways to represent the value of a left 
+margin in ODA. To assist the writers of ODA translators, the EXPRES project at 
+CMU defined conventions for how common document concepts should be represented 
+in ODA.
+
+}
+\section{ODA Projects}
+
+
+\leftindent{There are roughly three classes of ODA projects in the world. The 
+biggest class is the ESPRIT funded work being done at a collection of 
+companies in Europe (including, but not limited to, ICL, Bull, Olivetti, 
+Nixdorf, Siemens, Apple-International, IBM-Europe, OCE). These companies are 
+using a standard, proprietary support package called SODA to develop ODA 
+editors and database systems. One company, OCE, has developed an ODA printer 
+(given a processable ODA document, it will format and print it). Every March, 
+the ESPRIT groups demonstrate their systems at the Hanover Fair in Germany.
+
+
+Within the United States, the EXPRES project (Carnegie Mellon University and 
+the University of Michigan) and its collaborators (McDonnell-Douglas 
+Corporation and NIST) have build ODA support tools (called the ODA Tool Kit) 
+and several translators among ODA, Diamond, Interleaf, Andrew and troff 
+formats. These were demonstrated at the ACM Document Processing Systems 
+Conference in December 1988, and continue to be demonstrated at the monthly 
+Andrew demonstration at the Information Technology Center at CMU. A copy of 
+the toolkits and some of the translators are available as part of the X.V11R4 
+distribution.
+
+}
+\section{ODA vs SGML}
+
+
+\leftindent{Many view ODA and SGML as alternative ways to represent documents. 
+In fact, the two representations are incomparable. SGML provides a way to 
+markup a document. Thus, one could say that a chapter starts at some place in 
+the text and continues until another place in the text. Similarly, one could 
+markup where sections start and end. Each markedup piece of text is associated 
+with a tag. Just as ODA does not define any meaning for a composite logical 
+object, SGML does not provide definitions of any specific tags. A document 
+represented in SGML with an unspecified tag set is not processable except in 
+the most abstract way. By contrast, ODA has a complete set of semantics of how 
+a document should be formatted without need of a DAP.
+
+
+The closest correspondence to ODA's DAP is the tag set defined by the American 
+Association of Publishers (AAP). This tag set is geared towards the transfer 
+of manuscripts from authors to publishers. Thus, it can be used to denote 
+chapter titles or section headings. However, there is no way to describe how a 
+chapter should be formatted. In fact, the publishers do not want this 
+information to be present since different publishers use different styles for 
+their books.
+
+
+Further, SGML does not define any media representations besides text.
+
+
+Because SGML is so general, there does exist an encoding of ODA in SGML 
+(called ODL). The tag set used for ODL marks up a stream of characters into 
+composite logical objects, tags where attributes begin and end, and indicates 
+where generic structures begin and end. An ODA document encoded into SGML this 
+way would be useless to a system expecting to find an SGML document 
+represented using the AAP tag set.
+
+}
+\section{Caveats}
+
+
+\leftindent{This file is intended to provide the most useful information for 
+someone who knows little or nothing about ODA. ODA is a relatively large 
+standard. The main text of 8613 is about 600 pages. Each content architecture 
+refers to other standards for defining representations of the content 
+information and formatting algorithms (character code and font standards for 
+text, fax standards for rasters, and Computer Graphics Metafile - CGM - for 
+geometric graphics). The external representation of ODA as ODIF relies on the 
+ASN.1 standards.
+
+
+Not all ODA structures, features or their interactions have been discussed. 
+The discussion of the structures has been simplified and in some cases, common 
+computer science terminology (tree, internal node, leaf) has been substituted 
+for ODA's terminology.
+
+
+Much ODA work is being done within companies who do not report all the results 
+of their efforts. Thus the description of projects is based on the information 
+available to us at the time.
+
+
+}\section{Related tools  }\leftindent{
+
+
+Select (highlight) one of the italicized names and choose "Show Help on 
+Selected Word" from the pop-up menu to see the help file for:}\leftindent{
+
+
+\italic{ODA-Toolkit
+
+}\italic{Raster-Toolkit}
+
+\italic{Local-Toolkit
+
+}\italic{atkoda}
+
+\italic{odaatk}
+
+\italic{odatroff}
+
+\italic{odaileaf}}
+
+\leftindent{\italic{ileafoda}}
+
+\leftindent{\italic{proda}}
+
+\leftindent{\italic{prodif}}
+
+\leftindent{\italic{prtext}}
+
+\leftindent{\italic{convert}
+
+}
+updated January 25, 1989
+
+\enddata{text,268662636}

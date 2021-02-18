@@ -1,0 +1,22 @@
+
+<<>>
+
+!*****************************************************************************
+! This is the shared data definition for example4.  It defines
+! the communication between the dialogue and the application which
+! saves the values of the prototyping.  The attributes of the
+! created command widgets are passed to the prototyper.
+!*****************************************************************************
+
+app: shared data
+
+
+command: record
+      text:	 		string[32];	!included text
+      vert_distance:		integer;	!y position
+      horiz_distance:		integer;	!x position
+      width:			integer;	!width of widget
+      height:			integer;	!height of widget
+end record;
+end shared data;
+

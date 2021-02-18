@@ -1,0 +1,289 @@
+.\" $XConsortium: Xapollo.man,v 1.1 89/12/21 10:07:38 rws Exp $
+.TH XAPOLLO 1 "Release 4" "X Version 11"
+.SH NAME
+Xapollo \- Apollo server for X Version 11
+.SH SYNOPSIS
+.B Xapollo
+[ option ] ...
+.SH DESCRIPTION
+.I Xapollo
+is the server for Version 11 of the
+.I X
+window system on Apollo systems.
+It will normally be started by
+.I xdm (1),
+.I xinit (1),
+or by a shell script run from an interactive shell.
+.SH CONFIGURATIONS
+.I Xapollo
+operates under Domain/OS, with at least Apollo software release SR10.1.
+It operates on any Apollo display hardware.
+It requires a keyboard with a mouse.
+TCP/IP software must also be installed and running.
+.SH OPTIONS
+The
+.I Xapollo
+server program takes device dependent options as follows.
+In addition, the ``standard'' X11 server command line options can be used.
+These options are described under
+.I Xserver(1).
+.TP
+\fB-D\fP<unit> <string>
+This option gives the display unit number to which the following string
+giving per-display options should apply.
+Presently, only \fB-D1\fP, meaning display unit 1, is meaningful.
+The string following may be one of the following choices:
+.sp
+\fBmfb\fP
+.br
+\fBd\fP<depth>
+.br
+\fBgpr\fP<depth>
+.sp
+\fBmfb\fP means to use the \fImfb\fP portable monochrome driver on this screen.
+This option will work on any Apollo display, color displays included.
+(The \fIcfb\fP driver assumes a color frame buffer that is mappable ``by pixel''.
+Since most Apollo color hardware is mappable only ``by plane'', it will not support
+this driver.)
+.sp
+\fBd\fP<depth> and \fBgpr\fP<depth> are synonymous,
+and mean to use the Apollo GPR driver on this screen.
+<depth> must be an integer; the server will use that number as the depth of
+this screen.
+(\fBd\fP<depth> is for backward compatibility with prior releases.)
+The actual depth will be the minimum of the available number of planes, and
+the depth given.
+If the resulting number is not 1, 4 or 8, the next smallest number in that
+list will be used.
+.PP
+For example,
+.I Xapollo -D1 mfb
+and
+.I Xapollo -D1 gpr1
+both mean to treat display unit 1 as a monochrome display,
+regardless of how many planes it has.
+The former will use the \fImfb\fP driver,
+the latter will use the GPR driver.
+.I Xapollo -D1 d4
+means use only 4 planes of display unit 1, assuming that it
+has at least 4 planes.
+.PP
+In the absence of any \fB-D\fP options, the server will use the GPR driver
+on all available screens, at full depth.
+.SH KEYBOARDS
+There are four types of keyboards on Apollo systems.
+Keyboard 1 is the very old, thick one that has no mouse.
+Since it has no mouse, you cannot use it with the Apollo X server.
+Keyboard 2 has a mouse, but lacks a numeric keypad or lighted
+CapsLock key.
+The keyboard 2 hardware does not provide up-transitions on the
+white keys.
+Keyboard 3 has a mouse, numeric keypad and lighted CapsLock key;
+it can provide raw up/down transitions, but the software support
+to allow the X server to take advantage of this exists only as
+of SR10.2.
+Keyboard 3 comes in a North American version, and versions for
+Germany, France, Norway/Denmark, Sweden/Finland, the United Kingdom,
+and Switzerland.
+Keyboard 4 is a slight extension of keyboard 3; it comes on
+DN2500 systems.
+.SH "Keyboard operation on SR10.1 servers"
+On servers built for SR10.1 (even if running under a later OS),
+keyboards number 2 and 3 operate identically, as follows.
+.PP
+Only the white keys, the four basic arrow keys and F1-F8 are implemented.
+Up transitions for the white keys are faked.
+Positions of the real control and shift keys are inferred from the raw input
+character; their transitions are faked if necessary.
+.PP
+``Mouse'' Control, Shift and Meta keys are as follows:
+.PP
+.TP 8
+Control:
+.br
+KBD_$LD, Boxed up-arrow, Lower left corner of left-hand keypad
+.TP 8
+Shift:
+.br
+KBD_$LF, Boxed down-arrow, Lower right corner of left-hand keypad
+.TP 8
+Meta:
+.br
+KBD_$R1, ``POP'', Lower right corner of main keyboard
+.PP
+You can bail out of the server by hitting the ABORT/EXIT key
+(KBD_$R5, upper right corner of keyboard).
+.PP
+The only autorepeat support is the built-in support for keyboard 2,
+which cannot be disabled.
+That is, the following keys autorepeat:  the basic arrow keys,
+-/_, =/+, BackSpace, Delete, and the space bar.
+Other keys will repeat if the Repeat key is held down while
+they are depressed.
+.SH "Keyboard operation on SR10.2 (and later) servers"
+At SR10.2, all keys on all keyboard types are supported.
+(See the header file <X11/ap_keysym.h> for Apollo-private keysym
+definitions.)
+Therefore, no bail-out key is defined.
+.PP
+Keyboards 3 and 4 operate as one would expect.
+That is, all keys transmit down and up transitions at the proper time,
+so all keys are legal modifier keys and can be used to modify mouse buttons
+as well as other keys.
+Furthermore, complete autorepeat support is provided, including
+the ability to set the autorepeating behavior of individual keys.
+You can use the
+.I xset (1)
+program to control this.
+The key labeled Repeat has no special behavior;
+it is just another key on the keyboard.
+.PP
+(Since most MIT servers do not provide individual autorepeat key support,
+the fact that the default MIT autorepeat keyset is the null set does not
+cause trouble for them.
+However, for a server which does have individual autorepeat key support,
+this is a poor choice for the default value of this set.
+Please see the file
+.I server/ddx/apollo/README
+in the MIT distribution for directions on how to change this default
+when building the
+.I Xapollo
+server.)
+.PP
+Because of its hardware limitations, keyboard 2 will transmit faked
+modifier transitions for the white keys.
+Therefore, you may wish to use the
+.I xmodmap (1)
+client to set additional modifiers on some of the black keys,
+if you use clients that wish to detect modified mouse buttons.
+Also, keyboard 2's autorepeat behavior is just as described above
+for SR10.1 servers.
+.SH "STANDALONE OPERATION"
+.I Xapollo
+now can operate in place of the Apollo Display Manager,
+as well as from within the DM (as in the past).
+Standalone operation should be achieved via use of the
+.I xdm (1)
+client.
+The
+.I xdm (1)
+program has many configuration options,
+and the defaults may not work for your environment;
+please read its
+man page before trying this.
+.PP
+The following discussion explains how to set up a node for standalone X.
+Please note that Apollo does not officially support running systems
+without the Display Manager.
+You may have difficulties in following these instructions;
+if so, you're on your own.
+.PP
+Basically, you must edit
+.I /etc/ttys
+and
+.I /etc/rc
+to cause the system to not start up the DM,
+and to start up
+.I xdm
+instead.
+You probably will have to be root to do this.
+Obviously, you should keep copies of the original versions of these files
+if you need to go back to operation with the DM later.
+.PP
+First, in
+.I /etc/ttys,
+change the entry in the fourth column of the ``console'' line from ``on''
+to ``off''.
+This will prevent
+.I init (8)
+from running the DM.
+Note that in SR10.1, there is a bug in
+.I init (8)
+which will cause it to immediately exit if there is not at least one
+line in
+.I /etc/ttys
+which is turned ``on''.
+(This bug does not exist in SR10.2.)
+So on SR10.1 systems you should also add a
+.I getty (8)
+entry on at least (say)
+.I tty01
+and turn it on,
+even if you have nothing connected to the terminal line.
+.PP
+Next, in
+.I /etc/rc,
+add logic at the end of the script to run
+.I xdm (1)
+(probably only when a file called
+.I /etc/daemons/xdm
+exists).
+For SR10.1 systems, the logic might look something like this:
+.PP
+.DS
+  #
+  # Start X window system, using xdm to start the X server.
+  #
+  if [ -f /etc/daemons/xdm -a -f /usr/bin/X11/xdm ]; then
+          (echo "Starting the X window system via xdm." >/dev/console)
+          (/usr/bin/X11/xdm) &
+  fi
+.DE
+.PP
+For SR10.2 systems, some more complicated logic achieving a
+similar effect already exists at the end of
+.I /etc/rc,
+although you may find you have to change some pathnames in it.
+This change will start up
+.I xdm (1)
+at the end of the boot process;
+.B once properly configured,
+.I xdm (1)
+will take it from there.
+.PP
+The authentication widget in
+.I xdm (1)
+as presently distributed does not match passwords encrypted using
+the pre-SR10 encryption algorithm, so you will not be able to use
+.I xdm (1)
+to log in until your SR10 registry is writable and you have reset
+your password under SR10.
+.PP
+Finally, reboot and cross your fingers.
+.PP
+PLEASE USE EXTREME CARE in trying this on a system not networked
+to any others and not connected to a dumb terminal,
+since if your console becomes wedged you may have no way to
+recover except with a boot tape.
+On systems in a network, you can use
+.I rlogin (1C)
+or a similar facility (assuming you have started the proper daemons)
+to log in as root and fix the problem.
+If you have started a
+.I getty (8)
+and have a dumb terminal hooked up to the line,
+you can log in from the terminal.
+.SH "SEE ALSO"
+.PP
+Xserver(1),
+xdm(1),
+xinit(1),
+init(8),
+xset(1),
+and xmodmap(1).
+.SH LIMITATIONS
+The pointer motion buffer, threshhold and acceleration factors are not
+implemented.
+.PP
+The keyboard hardware does not allow for keyclick, bell pitch or volume
+control.
+.SH BUGS
+.SH COPYRIGHT
+Copyright 1987, 1988, Apollo Computer Inc.
+.br
+Copyright 1989, Hewlett-Packard Company.
+.SH AUTHORS
+.TP
+X development team
+.br
+Apollo Division, Hewlett-Packard

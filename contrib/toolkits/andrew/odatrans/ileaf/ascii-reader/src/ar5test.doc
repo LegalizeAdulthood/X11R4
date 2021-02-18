@@ -1,0 +1,479 @@
+<!OPS, Version = 6.4>
+
+<!Document,
+	Final Output Device =	"cx",
+	Default Printer =	"nearest-cx",
+	Measurement Unit =	Ciceros>
+
+<!Font Definitions,
+	F220 = Thames 10,
+	F228 = Thames 12,
+	F229 = Thames 12 Bold,
+	F233 = Thames 14 Bold,
+	F232 = Thames 14>
+
+<!Page,
+	Bottom Margin =		1 inches,
+	Left Margin =		1 inches,
+	Right Margin =		1 inches,
+	Starting Page # = 	Inherit,
+	Hyphenation =		on,
+	Consecutive Hyphens =	3,
+	Revision Bar Placement = Left,
+	Feathering =		off>
+
+<!Autonumber Stream, list, 1>
+
+<!Autonumber Stream, "bug-list", 1,
+	Level 1 Symbol Type =	Upper Roman,
+	Level 1 Prefix =	"  ",
+	Level 1 Suffix =	" - ">
+
+<!Autonumber Stream, footnote, 1,
+	Level 1 Suffix =	>
+
+<!Class, "|:para",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F228@i*,
+	Left Tab =		0/5.63*3 Ciceros,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+<!Class, lefty,
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F228,
+	Left Tab =		0/5.63*3 Ciceros,
+	Composition =		Optimum>
+
+<!Class, "|:prefix-para",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F228@i*,
+	Left Tab =		0/5.63*3 Ciceros,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+This is  a prefix cmpn with shared content
+
+<!Class, 3x3:cell,
+	Top Margin =		0.03 inches,
+	Bottom Margin =		0.03 inches,
+	Line Spacing =		1.114 lines,
+	Font =			F228,
+	Left Tab =		0/2.81*3 Ciceros,
+	Composition =		Optimum>
+
+<!Class, listhead,
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F229,
+	Left Tab =		0/5.63*3 Ciceros,
+	Composition =		Optimum>
+
+<Autonum, "bug-list", 1>
+
+<!Class, micro:caption,
+	Top Margin =		0.03 inches,
+	Bottom Margin =		0.03 inches,
+	Line Spacing =		1.114 lines,
+	Font =			F220,
+	Left Tab =		0/2.81*3 Ciceros,
+	Composition =		Optimum>
+
+<!Class, micro:ftnote,
+	Top Margin =		0.03 inches,
+	Bottom Margin =		0.03 inches,
+	Line Spacing =		1.114 lines,
+	Alignment =		Left,
+	Font =			F220,
+	Left Tab =		0/1.41 Ciceros,
+	Composition =		Optimum>
+
+<!Class, para,
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F228,
+	Left Tab =		0/5.63*3 Ciceros,
+	Composition =		Optimum>
+
+<!Class, "prefix-para",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F228,
+	Left Tab =		0/5.63*3 Ciceros,
+	Composition =		Optimum,
+	Contents =	Prefix>
+
+<"|:prefix-para",
+	Hidden =		yes,
+	Font =			@i*,
+	Subcomponent =	yes,
+	Contents =	Shared><F0>This is  a prefix cmpn with shared 
+content<End Sub><F0>
+
+<!Class, "shared-para",
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Font =			F228,
+	Left Tab =		0/5.63*3 Ciceros,
+	Composition =		Optimum,
+	Contents =	Shared>
+
+ This is the shared content
+
+<!Class, title,
+	Top Margin =		0.04 inches,
+	Bottom Margin =		0.04 inches,
+	Line Spacing =		1.162 lines,
+	Alignment =		Center,
+	Font =			F233,
+	Left Tab =		0/5.63*3 Ciceros,
+	Composition =		Optimum>
+
+<!Master Frame,
+	Name =			footnote:numbered,
+	Placement =		Bottom of Page,
+	Horizontal Alignment =	Left,
+	Same Page =		yes,
+	Width =			Column,
+	Size Contents To Width = yes,
+	Height =		Contents,
+	Auto Edit =		yes,
+	Numbered = 		'<Autonum, footnote, 1, Tagname = EiXYY2e4vr>',
+	Superscript =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0.04,0,5,127,5,7,127,8,0,3,
+<!Page, Width = 6.413 inches, Height = 0.197 inches,
+	Top Margin =		0.03 inches,
+	Bottom Margin =		0.03 inches,
+	Revision Bar Placement = Left>
+<micro:ftnote,
+	Hidden =		yes>
+
+<Ref, Auto #, Tag = EiXYY2e4vr>.<Tab>
+
+<End Text>)
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			footnote:unnumbered,
+	Placement =		Bottom of Page,
+	Horizontal Alignment =	Left,
+	Same Page =		yes,
+	Width =			Column,
+	Size Contents To Width = yes,
+	Height =		Contents,
+	Auto Edit =		yes,
+	Diagram =
+V6,
+(g9,1,0
+ (T12,1,12,0.066667,0.026667,5,127,5,7,127,8,0,3,
+<!Page, Width = 6.413 inches, Height = 0.137 inches,
+	Revision Bar Placement = Left>
+<micro:ftnote,
+	Hidden =		yes>
+
+<End Text>)
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,-0.026667,-0.026667,0,1,5,127,7,0,0,7,0,1,1,
+  0.066667,0.066667,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			fullpage,
+	Placement =		Overlay,
+	Horizontal Alignment =	Center,
+	Vertical Alignment =	Center,
+	Horizontal Reference =	Page With Both Margins,
+	Vertical Reference =	Page With Both Margins,
+	Width =			Page With Both Margins,
+	Height =		Page With Both Margins,
+	Diagram =
+V6,
+(g9,0,0
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			inline,
+	Placement =		At Anchor,
+	Width =			0.50 inches,
+	Height =		0.166 inches,
+	Diagram =
+V6,
+(g9,0,0
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			page,
+	Placement =		At Anchor,
+	Vertical Alignment =	Top,
+	Width =			Page Without Margins,
+	Height =		Page Without Margins,
+	Diagram =
+V6,
+(g9,0,0
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Frame,
+	Name =			floating,
+	Placement =		Following Anchor,
+	Horizontal Alignment =	Center,
+	Width =			Page Without Margins,
+	Height =		Page Without Margins * 0.33,
+	Diagram =
+V6,
+(g9,0,0
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<!Master Table, 3x3,
+	Columns =		3,
+	Column 1 Width =	2.131 inches,
+	Column 2 Width =	2.131 inches,
+	Column 3 Width =	2.131 inches,
+	Row =			"row",
+	Row =			"row",
+	Row =			"row">
+
+<Master Row, "row">
+
+<Cell><3x3:cell,
+	Hidden =		yes>
+
+<Cell><3x3:cell,
+	Hidden =		yes>
+
+<Cell><3x3:cell,
+	Hidden =		yes>
+
+<End Table>
+
+<Page Header, Frame =
+V6,
+(g9,1,0
+ (t14,1,4,6.493333,0.438782,2,7,0,0,,wst:dutch10,)
+ (t14,2,4,3.246667,0.438782,1,7,0,0,,wst:dutch10,)
+ (t14,3,4,0,0.438782,0,7,0,0,,wst:dutch10,)
+ (T12,4,12,1,0.34,5,127,5,7,127,8,0,6,
+<!Page, Width = 1.66 inches, Height = 0.167 inches>
+<micro:caption,
+	Alignment =		Left,
+	Font =			F228>
+
+This is a simple header
+
+<End Text>)
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<Page Footer, Frame =
+V6,
+(g9,1,0
+ (t14,1,4,6.493333,0.478772,2,7,0,0,,wst:dutch10,)
+ (t14,2,4,3.246667,0.478772,1,7,0,0,,wst:dutch10,\X80a0)
+ (t14,3,4,0,0.478772,0,7,0,0,,wst:dutch10,)
+ (T12,4,12,0.933333,0.406667,5,127,5,7,127,8,0,2,
+<!Page, Width = 1.607 inches, Height = 0.167 inches>
+<micro:caption,
+	Alignment =		Left,
+	Font =			F228>
+
+This is a simple footer
+
+<End Text>)
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<title>
+
+<|,1>This is a simple document<HR>
+
+<para>
+
+This is a simple component.
+
+<para>
+
+Here's a simple  diagram.
+<Frame,
+	Name =			floating,
+	Placement =		Following Anchor,
+	Horizontal Alignment =	Center,
+	Width =			Page Without Margins,
+	Height =		Page Without Margins * 0.33,
+	Page # =		1,
+	Diagram =
+V6,
+(g9,2,0
+ (p8,2,8,5,5,127
+   (g9,2,0
+     (g9,2,0
+       (v6,2,65536,1.8,1.333333,3,1.333333,7,0,8,0)
+       (v6,3,65536,3,1.333333,3,2.133333,7,0,8,0)
+       (v6,4,65536,3,2.133333,1.8,2.133333,7,0,8,0)
+       (v6,5,65536,1.8,2.133333,1.8,1.333333,7,0,8,0))))
+ (e8,6,0,1.066667,0.333333,4.533333,0.333333,1.066667,1.666667,5,127,5,7,0,8,0)
+ (a8,7,0,1,1.333333,1.733333,3.466667,1.466667,4.259967,1.684806,4.666667,2.4,4.
+  933333,4.533333,4.666667,2.4,5,5,127,7,0,8,0)
+ (a8,8,0,1,3.733333,-0.666667,4.466667,1.533333,5.048122,2.203757,5.933333,2.266
+  667,8.133333,1.533333,5.933333,2.266667,5,5,127,7,0,8,0)
+ (v6,9,0,1.4,2.133333,0.533333,0.866667,7,0,8,0)
+ (p8,11,8,4,5,0
+   (g9,11,0
+     (g9,11,0
+       (v6,11,65536,3,2.533333,3.533333,2.533333,7,0,8,0)
+       (v6,12,65536,3.533333,2.533333,3.533333,2.866667,7,0,8,0)
+       (v6,13,65536,3.533333,2.866667,3,2.866667,7,0,8,0)
+       (v6,14,65536,3,2.866667,3,2.533333,7,0,8,0))))
+ (t14,15,0,0.533333,2.666667,0,7,0,270,,wst:dutch12,This\ is\ OS\ text)
+ (T12,16,12,0.8,2.54,5,127,5,7,127,8,0,7,
+<!Page, Width = 1.37 inches, Height = 0.167 inches>
+<micro:caption,
+	Alignment =		Left,
+	Font =			F228@Lnl>
+
+This is micro teext.
+
+<End Text>)
+ (E15,0,0,5,8,1,0.053333,1,15,0,0,1,0,0,0,1,5,127,7,0,0,7,0,1,1,0.066667,0.06666
+  7,6,6,0,0.066667,6))>
+
+<para>
+
+This is a component with a subcomponent. <para, Subcomponent = yes><F0> 
+This is the subcomponent text<End Sub><F0> This is back to the original 
+component.
+
+<Table, 3x3,
+	Columns =		3,
+	Column 1 Width =	2.144 inches,
+	Column 2 Width =	2.144 inches,
+	Column 3 Width =	2.144 inches>
+
+<Master Row, "row">
+
+<Cell><3x3:cell,
+	Hidden =		yes>
+
+<Cell><3x3:cell,
+	Hidden =		yes>
+
+<Cell><3x3:cell,
+	Hidden =		yes>
+
+<Row, "row">
+<Cell><3x3:cell,
+	Alignment =		Center>
+
+This is centered
+
+<Cell><3x3:cell>
+
+ This is L justified
+
+<Cell><3x3:cell,
+	Alignment =		Right>
+
+This is R justified
+
+<Row, "row">
+<Cell><3x3:cell,
+	Alignment =		Left,
+	Decimal Tab =		0/2.81*3 Ciceros>
+
+<Tab><Tab>12.67
+
+<Cell><3x3:cell>
+
+This is just some text to make sure we have at least one cell with 
+a fairly long micro doc in it. I guess that'll do.
+
+<Cell><3x3:cell,
+	Decimal Comma Tab =	0/2.81*3 Ciceros>
+
+<Tab><Tab>1,456.56<HR>
+<Tab><Tab>12,008<HR>
+<Tab><Tab>9,000
+
+<Row, "row">
+<Cell><3x3:cell,
+	Alignment =		Left,
+	Decimal Tab =		0/2.81*3 Ciceros>
+
+<Tab><Tab>3.56
+
+<Cell><3x3:cell,
+	Alignment =		Center,
+	Font =			F229>
+
+SimpleTable
+
+<Cell><3x3:cell,
+	Decimal Comma Tab =	0/2.81*3 Ciceros>
+
+<Tab><Tab>234,678,89
+
+<End Table>
+
+<para>
+
+<F232>Here are some components illustrating more complex markup:
+
+<listhead>
+
+<Autonum, "bug-list", 1, First = Yes, Value = "  I - ">Prefix, inline, 
+and sub components, shared content, etc:
+
+<para>
+
+<para, Subcomponent = yes><F0>The first thing in this component is 
+a subcmpn<End Sub><F0>  Does this cause a problem?
+
+<para>
+
+<"prefix-para", Subcomponent = yes><F0><"|:prefix-para", Subcomponent = yes>
+<F0>This is  a prefix cmpn with shared content<End Sub><F0><End Sub><F0> 
+Now we're out of the prefix
+
+<para>
+
+<"prefix-para", Subcomponent = yes><F0><"|:prefix-para", Subcomponent = yes>
+<F0>This is  a prefix cmpn with shared content<End Sub><F0><End Sub><F0> 
+Here's another case of the same prefix
+
+<para>
+
+Here's a component with a shared content inline
+<"shared-para", Subcomponent = yes><F0> This is the shared content<End Sub>
+<F0> Back to the regulat component.
+
+<para>
+
+Here's another<"shared-para", Subcomponent = yes><F0> This is the 
+shared content<End Sub><F0> Now back.
+
+<listhead>
+
+<Autonum, "bug-list", 1, Value = "  II - ">Inheritance of font attributes:
+
+<para,
+	Font =			F228@U>
+
+This text is underlined<para,
+	Font =			F228@iL@iS@iU@iR@iT@iB@iP@iK@iC@iZ@iO,
+	Subcomponent =	yes><F0>   Here's an inline that should inherit 
+the font props.  <End Sub><F0> as a result of a cmpn prop setting
+

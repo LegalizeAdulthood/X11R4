@@ -1,0 +1,528 @@
+
+
+
+
+
+
+
+
+
+                    X11 Input Conversion
+
+
+                      Makoto Ishisone
+                     ishisone@sra.co.jp
+                   English translation by
+                    Erik M. van der Poel
+                       erik@sra.co.jp
+
+             Software Research Associates, Inc.
+                        Tokyo, Japan
+
+
+                          ABSTRACT
+
+          For languages  such as Japanese  which cannot
+     be typed directly at the keyboard, a method called
+     input  conversion  can  be used.    This  document
+     describes an approach for  input conversion in X11
+     applications, and defines a protocol to be used in
+     systems based on this approach.
+
+
+
+1.  Introduction
+
+     Asian  languages  such  as Japanese  and  Chinese  have
+several thousand characters that cannot be typed directly at
+the keyboard.  In these languages, it is common to type some
+text, and then to convert to the desired characters.
+
+     Japanese,  for   example,  is  written   using  several
+thousand complex  characters called  Kanji and  less than  a
+hundred  phonetic characters  called Kana.   Typically,  the
+user types a phrase  "phonetically" using Kana, and then the
+system parses the phrase and  looks up words in a dictionary
+to convert to a phrase containing both Kanji and Kana.
+
+     Once the phrase is  converted, it is often necessary to
+correct the system's initial guess at word boundaries within
+the phrase, or to choose the desired Kanji among a number of
+possibilities that  have the  same phonetic  reading.   This
+input method is complex and  completely different from Euro-
+pean input methods.
+
+2.  Approach
+
+     It  has been  decided  to take  an  approach where  the
+conversion is  separated from the  input itself  by carrying
+out the conversion in a separate server.
+
+
+
+
+                      October 31, 1989
+
+
+
+
+
+                           - 2 -
+
+
+     This  decision was  based on  the following  considera-
+tions.
+
+(1) Easy integration into an application
+     Rather than aiming for  a sophisticated user interface,
+     the method should  be generalized as much  as possible,
+     so that it can be  integrated into any kind of applica-
+     tion easily.  It is desirable to allow integration just
+     by  linking a simple  library.  As  a result,  the user
+     interface may be somewhat inferior,  but if a sophisti-
+     cated user interface is  required, a specialized widget
+     should be constructed.
+
+(2) Easy substitution of the conversion module
+     Putting the conversion in a  separate server allows the
+     user to substitute a preferred conversion server.
+
+(3) Easy extensibility to multiple languages
+     If   language-dependent  functionality   is   carefully
+     avoided,  the system  can easily  be  adapted to  other
+     languages by substituting the conversion server.
+
+(4) Crash resistance
+     Input conversion is a  complex process, particularly in
+     languages  such  as Japanese  which  require  syntactic
+     analysis.  Due to various reasons, the probability of a
+     crash in  the conversion part  is relatively high.   By
+     putting the conversion in a separate server, the client
+     will not be seriously affected by a crash.
+
+     In a system based on this approach, the client desiring
+input  sends requests  to  the  conversion server,  and  the
+server returns converted results.  If a protocol for commun-
+ication  between the  conversion server  and  the client  is
+fixed, then input conversion  should be possible in any com-
+pliant client and conversion server combination.  This docu-
+ment, then, will only lay  down the protocol, and will leave
+the rest to the implementors.
+
+3.  Protocol Definition
+
+     The input conversion  protocol is explained here.   The
+application and conversion server  communicate using the X11
+inter-client communication facilities.
+
+3.1.  Declaring a Conversion Service
+
+     Upon invocation, the conversion server declares that it
+will provide  a conversion service  by becoming  a selection
+owner using SetSelectionOwner.  As there may be a conversion
+server for each language, the selection atom is used to dis-
+tinguish   the   language.      As    a   rule,   the   name
+Language CONVERSION is used for this atom.  For example, for
+Japanese it would be JAPANESE CONVERSION, and for Chinese it
+
+
+
+                      October 31, 1989
+
+
+
+
+
+                           - 3 -
+
+
+would be CHINESE CONVERSION.
+
+        SetSelectionOwner
+                selection: "<Language> CONVERSION"
+                owner: conversion server's window ID
+                time: timestamp or CurrentTime
+
+
+Of course,  if the conversion server is  to support multiple
+language input it becomes a multiple selection owner.
+
+3.2.  Input Conversion Request
+
+     A client that wishes to use the input service looks for
+the conversion server using GetSelectionOwner.
+
+        GetSelectionOwner
+                selection: "<Language> CONVERSION"
+        =>
+                owner: owner's window ID or None
+
+
+If  the owner is  not None, a  ClientMessage is sent  to the
+owner using SendEvent.
+
+        SendEvent
+                destination: Selection Owner
+                propagate: False
+                event-mask: NoEventMask
+                event: ClientMessage event
+
+The event's contents are as follows.
+
+        ClientMessage
+                window: Selection Owner
+                type: Atom "CONVERSION REQUEST"
+                format: 32
+                data:
+                        l[0]: selection atom
+                        l[1]: requestor
+                                ID of the window requesting service
+                        l[2]: target
+                                conversion data type (e.g. COMPOUND TEXT)
+                        l[3]: property
+                                property name or None
+                        l[4]: option
+                                property name or None
+
+
+The  requestor is  the  ID of  the  window requesting  input
+conversion.   The result  of the conversion  is stored  in a
+property of this window.  Also, depending on the implementa-
+tion of  the conversion server, keyboard input  may be taken
+from this  window, so a window whose keyboard  events may be
+
+
+
+                      October 31, 1989
+
+
+
+
+
+                           - 4 -
+
+
+selected directly should be specified.
+
+     Target  specifies the  type  of  converted text  to  be
+returned by the conversion server.  If the conversion server
+supports this type, the requested type will be returned, but
+if this is not the case,  a different type will be returned.
+So this  should not be viewed as a  specification but rather
+as a hint to the conversion server.  Property is the name of
+the property  in which converted data is returned.   If this
+is specified as None,  the conversion server chooses a suit-
+able property name.
+
+     Option is  used to name  a property  containing various
+hints for the conversion  server.  However, this is intended
+for  future extension and  it can be  specified as  None for
+now.
+
+3.3.  The Reply to the Input Conversion Request
+
+     The    conversion    server     that    received    the
+CONVERSION REQUEST event  prepares for input  conversion for
+the client  (for example, by popping up  an input conversion
+window).  At the  same time, the server acknowledges receipt
+of  the request  by  sending a  ClientMessage  event to  the
+client.
+
+        SendEvent
+                destination: requestor window
+                propagate: False
+                event-mask: NoEventMask
+                event: ClientMessage event
+
+The contents of the event are as follows.
+
+        ClientMessage
+                window: Selection Owner
+                type: Atom "CONVERSION NOTIFY"
+                format: 32
+                data:
+                        l[0]: selection atom
+                        l[1]: target
+                                conversion data type
+                        l[2]: property
+                                property name or None
+                        l[3]: conversion window
+                                ID of window where actual conversion is done
+                        l[4]: unused
+
+Target  and property are  used to inform  the client  of the
+type of  conversion data and  the name of the  property that
+stores the data, respectively.   If the conversion server is
+busy, or for some other reason cannot honor the request, the
+property is set  to None.  In this case,  target and conver-
+sion window are undefined.
+
+
+
+                      October 31, 1989
+
+
+
+
+
+                           - 5 -
+
+
+     The conversion window is the ID of the window where the
+conversion  actually takes place.   This ID  is used  if the
+client wishes  to send events  that arrive at  the requestor
+window  to the  conversion  server.   (However,  this is  an
+implementation issue  and will be discussed later  in a sec-
+tion about event  handling.)  This window may or  may not be
+the same as the selection owner window.
+
+     The client  that receives this  CONVERSION NOTIFY event
+checks  the  property, and  if  it  is  not None,  it  waits
+thereafter for changes to the contents of the property.
+
+3.4.  Returning the Converted Data
+
+     Having accepted the conversion  request, the conversion
+server  begins converting  input.    The converted  data  is
+stored in the requestor's property using ChangeProperty.
+
+        ChangeProperty
+                window: requestor window
+                property: property name
+                type: data type
+                format: 8/16/32
+                mode: Append
+                data: converted data
+
+Property and type are as  specified in the CONVERSION NOTIFY
+event.
+
+     Upon  receiving  a  PropertyNotify  event,  the  client
+extracts the converted data from the specified property, and
+processes the input accordingly.
+
+     Data is  sent repeatedly in  this way until  either the
+user tells  the conversion server to end  the conversion, or
+the   client    terminates   the   conversion    through   a
+CONVERSION END REQUEST, which is described below.
+
+3.5.  Conversion Termination
+
+     When conversion ends, the server notifies the client by
+sending a ClientMessage event.
+
+        SendEvent
+                destination: requestor window
+                propagate: False
+                event-mask: NoEventMask
+                event: ClientMessage event
+
+The contents of the event are as follows.
+
+
+
+
+
+
+
+                      October 31, 1989
+
+
+
+
+
+                           - 6 -
+
+
+
+        ClientMessage
+                window: requestor window
+                type: Atom "CONVERSION END"
+                format: 32
+                data:
+                        l[0]: selection atom
+                        l[1]: owner
+                            selection owner's window
+                        l[2], l[3], l[4]: unused
+
+
+3.6.  Conversion Termination Request
+
+     The  client  can  end the  conversion  by  sending  the
+conversion server  a request.  This could be  used when, for
+example, the cancel button  of an input conversion dialog is
+pressed.
+
+     The client  requests conversion termination  by sending
+the conversion server a ClientMessage.
+
+        SendEvent
+                destination: selection owner
+                propagate: False
+                event-mask: NoEventMask
+                event: ClientMessage event
+
+The contents of the event are as follows.
+
+        ClientMessage
+                window: selection owner
+                type: Atom "CONVERSION END REQUEST"
+                format: 32
+                data:
+                        l[0]: selection atom
+                        l[1]: requestor
+                            requestor window
+                        l[2], l[3], l[4]: unused
+
+
+     Upon receiving this event, the  server sends the client
+any unsent data and then a CONVERSION END ClientMessage.
+
+4.  Implementation
+
+     A few comments  are given here about  probable problems
+in implementing  this protocol.   Note that what  follows is
+about implementation problems, and is not part of the proto-
+col definition.
+
+4.1.  User Feedback
+
+     When the  conversion server receives  a request  from a
+
+
+
+                      October 31, 1989
+
+
+
+
+
+                           - 7 -
+
+
+client, it should somehow let the user know about this.  For
+example, a conversion window  could be popped up beneath the
+requestor window.
+
+4.2.  Events
+
+     The protocol does not specify how to deal with keyboard
+events  that arrive  at  the  requestor window  while  input
+conversion is  taking place.  Some possible  ways of dealing
+with these events are given here.
+
+(1) Do nothing
+     The easiest  way is to do nothing in  particular.  How-
+     ever,  in this case,  the user will  have to  take some
+     special  action in  order to  have events  sent to  the
+     conversion server.   For example, the user  may have to
+     move the pointer to a conversion window.  This probably
+     is not a very good interface.
+
+(2) Client sends events to the conversion server
+     Another  way is  to have  the  client forward  keyboard
+     events that arrive at the requestor window during input
+     conversion.   The  client forwards  the  events to  the
+     conversion server using XSendEvent().   This way, there
+     is no  need to move  the pointer for  input conversion.
+     However, forwarding  keyboard events can  be difficult,
+     particularly if the toolkit's translation table mechan-
+     ism is used to  dispatch events.  Also, the performance
+     may worsen, as the events  must go to the client before
+     reaching  the conversion  server.   In  addition, if  a
+     suitable error  handler is not installed,  a conversion
+     server crash may kill the client as well.
+
+(3) The conversion server selects requestor window events
+     In this method, the  conversion server selects keyboard
+     events  from the requestor  window.   In this  case, in
+     order to  avoid processing  of the  keyboard events  by
+     both the client and the conversion server, a convention
+     will be needed whereby  the client does not select key-
+     board events  or ignores them during  input conversion.
+     However, changing  the event mask or  ignoring keyboard
+     events  can be  difficult particularly  when using  the
+     toolkit.   Also, if the  conversion server  crashes and
+     the client  does not  receive a  conversion termination
+     event,  the  client window  will  be  left in  a  state
+     unresponsive to further keyboard input.  So this method
+     should not be used.
+
+(4) The conversion server steals requestor window events
+     In this method, the conversion server intercepts events
+     that  would normally go  to the  requestor window.   In
+     order to  do this, the conversion server  can create an
+     InputOnly child window on top  of the requestor window,
+     and  select  keyboard events.    This  way, it  is  not
+
+
+
+                      October 31, 1989
+
+
+
+
+
+                           - 8 -
+
+
+     necessary to move  the pointer for every  input conver-
+     sion, and the client does  not need to take any special
+     action.  However, if the requestor window has the input
+     focus and the pointer is not in the window, events can-
+     not be intercepted.
+
+     Taking into  account the  above considerations  and the
+desire to  allow easy integration into  applications, method
+(4) would seem to be the best.   In fact, kinput adopts this
+method.
+
+5.  Sample Client Library
+
+     Although it was stated above that only a protocol would
+be  provided, if  there is  no  library to  support it,  its
+implementation  can be  troublesome.    Therefore, a  sample
+library that  implements this protocol  was built on  top of
+the X  Toolkit Intrinsics (Xt).  This library  makes it easy
+for  a toolkit-based program  to use a  system based  on the
+suggested approach.  For  more details, see convlib.c in the
+kterm source directory.
+
+     The  R4  kterm  includes   this  sample  library,  and,
+together with kinput, allows Japanese input.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      October 31, 1989
+
+

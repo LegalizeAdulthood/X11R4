@@ -1,0 +1,17 @@
+setfontascii		a14
+setfontkanji		k14
+setfontkana		kana14
+setfontutilascii	a14
+setfontutilkanji	k14
+setfontutilkana		kana14
+
+;setdefwidth		1240
+;setdefbwidth		1
+
+setcolorfore		black
+setcolorback		white
+setcolorborder		black
+set_xwnmo_title		£Ø£÷£é£î£ä£ï£÷ÂÐ±þ¤«¤Ê´Á»úÊÑ´¹
+setjumpkey
+
+setuumrc 	/usr/local/lib/wnn/uumrc

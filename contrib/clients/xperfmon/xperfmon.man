@@ -1,0 +1,185 @@
+./" .TH XPERFMON 1 "19 January 1988" "X Version 11"
+.TH XPERFMON 1 "" "X Version 11"
+.SH NAME
+xperfmon - X Window System-based performance monitor
+.SH SYNOPSIS
+.B xperfmon
+[\-\fItoolkitoption\fP ...] [\-\fIadditionaloption\fP ...]
+.SH DESCRIPTION
+.I xperfmon
+continuously displays several system statistics as a set of parallel
+line graphs.
+The name of the host is displayed in the upper left hand corner.
+The information is scaled so that it fills up the entire window.
+While 
+.I xperfmon
+is running, it is possible to perform certain tasks by pressing keys over
+the window:
+.PP
+.B Q/q:
+Quit
+.br
+.B R/r: 
+Reset graph and timer
+.br
+.B s: 
+Decrease update interval (slower) by a small amount
+.br
+.B S: 
+Decrease update interval (slower) by a large amount
+.br
+.B f: 
+Increase update interval (faster) by a small amount
+.br
+.B F: 
+Increase update interval (faster) by a large amount
+.br
+.B ?: 
+Help
+.SH OPTIONS
+.PP
+.I xperfmon
+accepts all of the standard X Toolkit command line options along with the
+following additional options:
+.PP
+.TP 8
+.B \-up | \-update \fIseconds\fP
+This options specifies the update interval for the graph in seconds.
+The default is 5.
+.PP
+.TP 8
+.B \-st | \-stepsize \fIpixels\fP
+This option specifies the stepsize of the graph.
+The default is one pixel.
+.PP
+.B \-user | \-usercpu
+.sp 0.2
+.B \-sys  | \-systemcpu
+.sp 0.2
+.B \-idle | \-idlecpu
+.TP 8
+.B \-free | \-freemem
+These options specify the list of statistics to be displayed.
+If none are listed, then all are displayed.
+If any are listed, only those listed are displayed.
+Possible statistics are
+.B user, 
+.B system, 
+.B idle, 
+and 
+.B free. 
+These refer to 
+.B User CPU percentage, 
+.B System CPU percentage, 
+.B Idle CPU percentage, 
+and
+.B Free memory.
+.PP
+.sp
+The following standard X Toolkit arguments are commonly used
+with \fIxperfmon\fP:
+.PP
+.TP 8
+.B \-d | \-display \fIdisplay\fP
+This option specifies the X server to contact.
+.PP
+.TP 8
+.B \-g | \-geometry \fIgeometry\fP
+The xperfmon window is created with the specified size and location
+determined by the supplied geometry specification.
+See \fIX(1)\fP for a full explanation.
+.PP
+.TP 8
+.B \-rv | \-reverse
+This option indicates that reverse video should be simulated by swapping the
+foreground and background colors.
+.PP
+.TP 8
+.B \-bd | \-bordercolor \fIcolor\fP
+This option specifies the border color.
+The default is \fIblack\fP.
+.PP
+.TP 8
+.B \-bg | \-background \fIcolor\fP
+This option specifies the background color.
+The default is \fIwhite\fP.
+.PP
+.TP 8
+.B \-bw | \-borderwidth \fIpixels\fP
+This option specifies the width in pixels of the border around the window.
+The default value is 2.
+.PP
+.TP 8
+.B \-fg | \-foreground \fIcolor\fP
+This option specifies the foreground color.
+The default color is \fIblack\fP.
+.PP
+.TP 8
+.B \-fn | \-font \fIfontname\fP
+This options specifies the font to be used in displaying the hostname and
+labels.
+The default is
+\fI6X10\fP.
+.PP
+.TP 8
+.B \-xrm \fIresourcestring\fP
+This option specifies a resource string to be used.
+This is especially useful for setting resources that do not have
+separate command line options.
+.SH "X DEFAULTS"
+.PP
+.I xperfmon
+understands all of the core resource names and
+classes as well as:
+.TP 8
+.B width (\fPclass\fB Width)
+Specifies the width of the load average graph.
+.TP 8
+.B height (\fPclass\fB Height)
+Specifies the height of the load average graph.
+.TP 8
+.B update (\fPclass\fB Interval)
+Specifies the frequency in seconds at which the performance statistics
+should be redisplayed.
+.B stepSize (\fPclass\fB StepSize)
+Specifies the number of pixels that should be drawn for each update of the
+performance statistics.
+.B foreground (\fPclass\fB Foreground)
+Specifies the color for the foreground.
+The default is \fIblack\fP since the core default for background
+is \fIwhite\fP.
+.TP 8
+.B font (\fPclass\fB Font)
+Specifies the font to be used for the label.  The default is \fIfixed\fP.
+.TP 8
+.B reverseVideo (\fPclass\fB ReverseVideo)
+Specifies that the foreground and background should be reversed.
+.SH ENVIRONMENT VARIABLES
+DISPLAY - specifies the default host and display number.
+.SH SEE ALSO
+X(1), uwm(1), xload(1), mem(4)
+.SH BUGS
+.I xperfmon
+requires the ability to open and read the special system file
+.I /dev/kmem. 
+On most systems, this requires the
+.I suid
+(set user id) bit to be set with root ownership, or the
+.I sgid
+(set group id) bit to be set and membership in the same group as 
+.I /dev/kmem. 
+.PP
+Reading /dev/kmem is inherently non-portable.  Therefore, the widget upon
+which this application is based must be ported to each new operating system.
+.PP
+Border color has to be explicitly specified when reverse video is used.
+.SH AUTHORS
+The X11 version of 
+.I xperfmon
+was written by Emanuel Jay Berkenbilt, Project Athena on
+1/21/1988.
+There is no record of previous authors.
+.I xperfmon
+was modified by Thomas Bagli, PCS Computer Systeme GmbH, West Germany, to
+be a toolkit-based client.
+

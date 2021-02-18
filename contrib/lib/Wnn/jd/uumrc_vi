@@ -1,0 +1,27 @@
+;;	uumrc For VI-mode
+;;
+;;	default uumrc
+;;	For uum (Wnn V4)
+;;	use pubdic
+
+setconvenv	@LIBDIR/wnnenvrc
+setkankanaenv	@LIBDIR/wnnenvrc_R
+;setkanaromenv	@LIBDIR/wnnenvrc_Roma
+
+setjishopath    @LIBDIR/dic/pubdic/
+sethindopath    @LIBDIR/dic/usr/@USR/
+
+setuumkey	@LIBDIR/rk.vi/uumkey
+setrkfile	@LIBDIR/rk.vi
+
+setconvkey      	@LIBDIR/cvt_key_tbl
+setconvkey      ST*	@LIBDIR/cvt_key_tbl.ST
+setconvkey      gmw*	@LIBDIR/cvt_key_tbl.gm
+setconvkey      gmw16*	@LIBDIR/cvt_key_tbl.gm
+setconvkey      gmw24*	@LIBDIR/cvt_key_tbl.gm
+setconvkey      kterm*	@LIBDIR/cvt_key_tbl.kt
+
+waking_up_in_henkan_mode
+flow_control_on
+send_ascii_char
+;convkey_always_on

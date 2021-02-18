@@ -1,0 +1,25 @@
+Xmandel*internalBorderWidth: 0
+Xmandel.Geometry: 200x200
+Xmandel*showGrip: false
+
+Xmandel*quit.Label: Quit
+Xmandel*clear.Label: Clear
+Xmandel*mandel.Label: Mandel
+Xmandel*zoom.Label: Zoom
+Xmandel*unzoom.Label: Unzoom
+Xmandel*julia.Label: Julia
+
+Xmandel*quit.Translations: #override \
+		<Btn1Up>: Quit() unset()
+Xmandel*clear.Translations: #override \
+		<Btn1Up>: Clear() unset()
+Xmandel*mandel.Translations: #override \
+		<Btn1Up>: Mandel() unset()
+Xmandel*zoom.Translations: #override \
+		<Btn1Up>: Zoom() unset()
+Xmandel*unzoom.Translations: #override \
+		<Btn1Up>: Unzoom() unset()
+Xmandel*julia.Translations: #override \
+		<Btn1Up>: Julia() unset()
+
+

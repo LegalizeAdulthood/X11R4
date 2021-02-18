@@ -1,0 +1,11 @@
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#if HasFortran
+FORTRANSUBDIRS = fortran
+#endif
+SUBDIRS = xgks $(FORTRANSUBDIRS)
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+

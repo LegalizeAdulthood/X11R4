@@ -1,0 +1,57 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+#ifdef SNAP_ENV
+
+/*  *WARNING*
+   This Imakefile parses the installed amsvers.h file to determine the name for the messageserver executable program.  BEWARE!
+ *WARNING* */
+
+LOCALINCLUDES	=	-I${BASEDIR}/include/ams
+
+PRODUCT	=	messageserver
+
+OBJS		=	errmsgs.o ms.o
+
+LIBS_PART_A= \
+	${BASEDIR}/lib/libmssrv.a \
+	${BASEDIR}/lib/libmsshr.a \
+	${BASEDIR}/lib/libeli.a \
+	${BASEDIR}/lib/librxp.a
+
+LIBS_PART_B= \
+	${BASEDIR}/lib/libmail.a \
+	${BASEDIR}/lib/liberrors.a \
+	${UTILLIB} ${PRSLIB} \
+	${BASEDIR}/lib/libplumber.a \
+	${BASEDIR}/lib/libgasp.a \
+	${RESOLVLIB}
+
+NSNAP_LIBS= \
+	${LIBS_PART_A} \
+	${BASEDIR}/lib/libsnap.a \
+	${LIBS_PART_B}
+
+TSNAP_LIBS= \
+	${LIBS_PART_A} \
+	${BASEDIR}/lib/libsnapt.a \
+	${LIBS_PART_B}
+
+
+NormalObjectRule()
+
+ProgramTarget(messageserver, ${OBJS}, ${NSNAP_LIBS} , )
+
+install.time::
+	$(INSTALL) $(INSTPROGRWFLAGS) messageserver ${DESTDIR}/etc/snap/services/`awk -f imkfile.awk  ${BASEDIR}/include/ams/amsvers.h`
+
+
+ProgramTarget(messageservert, ${OBJS}, ${TSNAP_LIBS}, )
+
+install.time::
+	$(INSTALL) $(INSTPROGRWFLAGS) messageservert ${DESTDIR}/etc/snap/servicest/`awk -f imkfile.awk  ${BASEDIR}/include/ams/amsvers.h`
+
+DependTarget()
+
+#endif /* SNAP_ENV */

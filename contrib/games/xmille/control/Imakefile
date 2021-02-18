@@ -1,0 +1,9 @@
+OBJS =	button.o scrollbar.o init.o affirm.o dispatch.o prompted.o
+
+SRCS =	button.c scrollbar.c init.c affirm.c dispatch.c prompted.c
+
+NormalLibraryTarget(control, $(OBJS))
+
+NormalLibraryObjectRule()
+
+DependTarget()

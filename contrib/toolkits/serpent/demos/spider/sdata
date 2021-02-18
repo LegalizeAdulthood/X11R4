@@ -1,0 +1,37 @@
+12
+GS1 0 Ground_Station_1	16/1245Z gs1rfo gs1etro 
+2 gs12cmc
+0 gs12oft
+GS2 2 Ground_Station_2	gs2ltmsg gs2rfo gs2etro 
+0 gs22cmc
+0 gs22oft
+GS3 0 Ground_Station_3	gs3ltmsg gs3rfo gs3etro 
+0 gs32cmc
+0 gs2toft
+CLR 0 Clear 		clrltmsg clrrfo clretro 
+0 clr2cmc
+0 clr2oft
+THL 0 Thule 		thlltmsg thlrfo thletro 
+0 thl2cmc
+0 thl2oft
+FYL 0 Fylingdales	fylltmsg fylrfo fyletro 
+0 fyl2cmc
+0 fyl2oft
+BLE 0 Beale 		bleltmsg blerfo bleetro 
+0 ble2cmc
+0 ble2oft
+OTS 0 Otis 		otsltmsg otsrfo otsetro 
+0 ots2cmc
+0 ots2oft
+ELD 0 El_Dorado 	eldltmsg eldrfo eldetro 
+0 eld2cmc
+0 eld2oft
+WRB 2 Warner-Robins 	wrbltmsg wrbrfo wrbetro 
+1 eld2wrb
+0 eld2oft
+SHY 0 Shemya 		shyltmsg shyrfo shyetro 
+0 eld2shy
+0 eld2oft
+CAV 0 Cavalier 		cavltmsg cavrfo cavetro 
+0 cav2shy
+2 cav2oft

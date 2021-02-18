@@ -1,0 +1,79 @@
+/* ********************************************************************** *\
+ *         Copyright Carnegie Mellon University 1989
+ *        For full copyright information see:'andrew/oda/doc/COPYRITE'     *
+\* ********************************************************************** */
+LOCALINCLUDES	=	-I${BASEDIR}/include/oda
+
+ODALIBS = $(DESTDIR)/lib/oda/libisode.a  \
+	$(DESTDIR)/lib/oda/liboda.a  \
+	$(DESTDIR)/lib/oda/liblocal.a 
+
+DOBJS = odaatkapp.do \
+	atkodaapp.do \
+	odalib.do \
+	atkoda.do \
+	textoda.do \
+	rasteroda.do \
+	spreadoda.do \
+	eqoda.do 
+
+IHFILES = odaatkapp.ih \
+	atkodaapp.ih \
+	odalib.ih \
+	atkoda.ih \
+	textoda.ih \
+	rasteroda.ih \
+	spreadoda.ih \
+	eqoda.ih 
+
+OBJS = odaatkapp.o \
+	atkodaapp.o \
+	odalib.o \
+	atkoda.o \
+	textoda.o \
+	rasteroda.o \
+	spreadoda.o \
+	eqoda.o 
+
+NormalObjectRule()
+NormalATKRule()
+
+DynamicMultiObject(odaatkapp.do, odaatkapp.o errormsg.o ckcontent.o \
+			getstyles.o getdefault.o attsup.o readtext.o \
+			readraster.o readtable.o readeq.o getcompsv.o, ,)
+DynamicMultiObject(atkodaapp.do, atkodaapp.o errormsg.o, ,)
+DynamicObject(odalib, $(ODALIBS), )
+DynamicMultiObject(atkoda.do, atkoda.o errormsg.o attsup.o, ,)
+DynamicMultiObject(textoda.do, textoda.o attsup.o breakup.o errormsg.o styles.o mkgeneric.o \
+			mkstylediff.o mkgenstyle.o mkdefault.o mkinsetcomp.o, ,)
+DynamicMultiObject(rasteroda.do, rasteroda.o errormsg.o attsup.o, ,)
+DynamicMultiObject(spreadoda.do, spreadoda.o errormsg.o attsup.o, ,)
+DynamicMultiObject(eqoda.do, eqoda.o errormsg.o attsup.o, ,)
+
+DependTarget()
+
+NormalHelpRule()
+InstallDocs(atkoda.help, $(DESTDIR)/help)
+InstallDocs(ilfoda.help, $(DESTDIR)/help)
+InstallHelpAlias(ilfoda, ileafoda)
+InstallDocs(localtk.help, $(DESTDIR)/help)
+InstallHelpAlias(localtk, Local-Tool-Kit)
+InstallDocs(oda.help, $(DESTDIR)/help)
+InstallHelpAlias(oda, ODA Office-Document-Architecture)
+InstallDocs(odaatk.help, $(DESTDIR)/help)
+InstallDocs(odailf.help, $(DESTDIR)/help)
+InstallHelpAlias(odailf, odaileaf)
+InstallDocs(odatk.help, $(DESTDIR)/help)
+InstallHelpAlias(odatk, ODA-Tool-Kit)
+InstallDocs(odatrff.help, $(DESTDIR)/help)
+InstallHelpAlias(odatrff, odatroff)
+InstallDocs(proda.help, $(DESTDIR)/help)
+InstallDocs(prodif.help, $(DESTDIR)/help)
+InstallDocs(prtext.help, $(DESTDIR)/help)
+InstallDocs(rstrtk.help, $(DESTDIR)/help)
+InstallHelpAlias(rstrtk, Raster-Tool-Kit)
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+InstallLink(runapp, $(DESTDIR)/bin/odaatk)
+InstallLink(runapp, $(DESTDIR)/bin/atkoda)

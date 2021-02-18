@@ -1,0 +1,3772 @@
+\begindata{text,269471316}
+\textdsversion{12}
+\template{default}
+
+
+\majorheading{Adew Reference Manual
+
+}
+\italic{\center{For Adew version 3.0
+
+Release of November, 1989}
+
+}
+\center{\italic{Thomas Neuendorffer
+
+Information Technology Center
+
+Carnegie Mellon University
+
+5000 Forbes Ave.
+
+Pittsburgh, Pa. 15213
+
+(412) 268-6108
+
+tpn@andrew.cmu.edu}}
+
+
+
+\heading{\center{Overview}}\heading{\center{
+
+}}
+Adew provides a way for programmers to write ATK applications without the 
+large learning curve involved in writing new insets.  It does this by 
+providing the \italic{Arbcon} to allow a programmer to create applications by 
+pasting together a number of existing insets into an application, and 
+Createcon to write a prototype controller in C which can then be modified to 
+'glue' the separate pieces into an application. The basic procedure involved 
+is described in two other documents ( \italic{ADEW,The Andrew Development 
+Environment Workbench,An Overview} and \italic{Tutorial on ADEW, The Andrew 
+Development Environment Workbench}). 
+
+
+	The purpose of this document is provide more details of the Adew system and 
+to outline some of the object methods that a programmer can call from a 
+createcon created controller, to aid in gluing together an application. A main 
+goal of Adew is to allow the casual programmer to piece together complex 
+applications out of some basic building blocks provided by the system. This 
+paper will discuss the use of these blocks.
+
+
+	This paper is an expansion to the Building Blocks document, distributed at 
+the\italic{ Creating Andrew Applications} Tutorial at Xhibition '89, San Jose, 
+California June 25-28.
+
+\begindata{bp,269071792}
+\enddata{bp,269071792}
+\view{bpv,269071792,27,0,0}
+\chapter{1	The Arbcon}
+
+\center{\
+\begindata{raster,269698612}
+2 0 106852 106852 0 0 552 379
+bits 269698612 552 379
+ZZZO |
+ZZZO |
+ZZZO |
+ZIfe7fHcfHe7G	2667f9Gfcfe7f	Hfe79GcfXfcGe7	f33fG |
+ZIfe7fHcfHe7G	2667f9Gfcfe67	Hfe79GcfXfcGe7	f33fG |
+ZIfe7fHcfHe7G	27e7f9GfcGe7H	fe70GcfXfcGe7	f3H |
+fc303fZfcce70	e49c391f04f266	60f387241e4187	261cf6f241Xe0
+ ce60f3323f |
+f89f3fZfcce62	6099988e44f266	627333044e6713	044ce67044Xc8
+ ce6273311f |
+f99e7fZfcce67	e79f99cce6!66	6733f33ce66733	3cfce673ce7fW
+ 9cce67!339f |
+f81cZGfcce70e7	9c19cce6!6667	33833ce667033e	1ccf33ce7fW9c
+ ce67!339f |
+f9fcZGf9ce7c67	3999cce76ce667	27333ce667!3f	89c033ce7fW9c
+ ce67!339f |
+!f9ZGf9ce7e67	3999cce70ce667	27333ce667!3f	c9cf33ce7fW9c
+ ce67!339f |
+f893ZGf9c46267	3819ce479ce662	67033c4e65133c	499f93c4Xc8c4
+ 6273339f |
+fc303fZf9e270	e73c49cf279ce6	64e7893c9e7387	3e199f93c9Xe4
+ e264f3339f |
+ZQ9fZW |
+ZQ3fZW |
+ZPfe3fZW |
+ZZZO |
+ZZZO |
+ZZZO |
+e0p0380zzi07q	07 |
+e0p0380zzi07q	07 |
+e0h40g32h80h03	80zzi07j0e080c	j07 |
+e0h40g10k0380	zzi07j04g04j07 |
+e0ha0g10g08i03	80zzi07j04g04	j07 |
+e0ha3cf16319f	8cb0g0380zzi07	j041ac480i07 |
+e0g011124924a	489248g0380wf1	82i38e8y07j04	0925j07 |
+e0g01f1249241	c89248g0380v01	9880i1040y07j	040926j07 |
+e0g0111249242	489248g0380v01	0880g08g0880y	07j040925j07 |
+e0g020924924a	489248g0380v02	04e630de018898	cedbw07j044924
+ 80i07 |
+e0g071dc73f31	a7ccecg0380v02	04924928060509	2490c0v07j0fdf
+ b4c0i07 |
+e0h0104l0380v	02049279081805	09e6b030v07q07 |
+e0h0104l0380v	01089241080607	0902a0c0v07q07 |
+e0h038el0380v	01989265280182	099343w07q07 |
+e0p0380wf0e238	c6g021ce240w07	q07 |
+e0p0380x02zj07	q07 |
+e0p0380x0azj07	q07 |
+e0p0380x0czj07	q07 |
+e0p0380zzi07q	07 |
+e0p0380zzi07q	07 |
+e0p0380zzi07q	07 |
+e0p0380zzi07q	07 |
+e0p0380zzi07q	07 |
+e0p03ZZKq07 |
+e0p03ZZKq07 |
+e0p03h10zzg03	q07 |
+e0p03!2230zzg	03q07 |
+e0p03h10zzg03	q07 |
+e0p03!8890zzg	03q07 |
+e0p03h10zzg03	q07 |
+e0p03!2230zzg	03q07 |
+e0p03h10zzg03	q07 |
+e0p03!8890zzg	03q07 |
+e0p03h10h40g10	zv03q07 |
+e0p03!2230hf3	9dfczv03q07 |
+e0p03h10h4448	90zv03q07 |
+e0p03!8890h47	c710zv03q07 |
+e0p03!8890h44	0210zv03q07 |
+e0p03!2230h44	0710zv03q07 |
+e0p03!8890h46	2890zv03q07 |
+e0p03!2230h33	ddcczv03q07 |
+e0p03Hf0zzg03	q07 |
+e0p0383f830zzg	03q07 |
+e0p0383f830zzg	03q07 |
+e0p0380g30zzg	03q07 |
+e0p0380g30zzg	03q07 |
+e0p0380g30h38	0180zv03q07 |
+e0p0380g30h60	g80zv03q07 |
+e0p0380g30h40	g80zv03q07 |
+e0p0380g30hfb	8780zv03q07 |
+e0p0380g30h46	4c80zv03q07 |
+e0p0380g30h40	c880zv03q07 |
+e0p0380g30h43	4880zv03q07 |
+e0p0380g30h44	4880zv03q07 |
+e0p0380g30h46	4d80zv03q07 |
+e0p0380g30hf3	a740zv03q07 |
+e0p0380g30zzg	03q07 |
+e0p0380g30zzg	03q07 |
+e0p0380g30zzg	03q07 |
+e0p0380g30zzg	03q07 |
+e0p0380g30zzg	03q07 |
+e0p0380g30i18	30zv03q07 |
+e0p0380g30i08	10zv03q07 |
+e0p0380g30h40	0810zv03q07 |
+e0p0380g30hf3	8b11c0zu03q07 |
+e0p0380g30h46	4d9220zu03q07 |
+e0p0380g30h40	c893e0zu03q07 |
+e0p03Hf0h4348	92zv03q07 |
+e0p03!2230h44	4892zv03q07 |
+e0p03!8890h46	499310zu03q07 |
+e0p03!2230h33	af39e0zu03q07 |
+e0p03!8890zzg	03q07 |
+e0i07He0i03!22	30zzg03j1fH80	i07 |
+e0i06h60i03!88	90zzg03j18g01	80i07 |
+e0i05Ha0i03!22	30zzg03j17Gfe	80i07 |
+e0i04d55520i03	!8890zzg03j13	555480i07 |
+e0i04aaab20i03	!2230zzg03j12	aaac80i07 |
+e0i04d55520i03	!8890zzg03j13	555480i07 |
+e0i04aaab20i03	!2230zzg03j12	aaac80i07 |
+e0i04d55520i03	!8890h3878zw03	j13555480i07 |
+e0i04aaab20i03	!2230h44c8zw03	j12aaac80i07 |
+e0i04d55520i03	!8890h7c88zw03	j13555480i07 |
+e0i04aaab20i03	!2230h4088zw03	j12aaac80i07 |
+e0i04d05520i03	!8890h4088zw03	j13415480i07 |
+e0i04a02b20i03	!2230h62d8zw03	j1280ac80i07 |
+e0i04c39520i03	!8890h3c78zw03	j130e5480i07 |
+e0i04a7eb20i03	!2230i08zw03j	129fac80i07 |
+e0i04c7d520i03	!8890i08zw03j	131f5480i07 |
+e0i0487eb20i03	!2230i1czw03j	121fac80i07 |
+e0i04c6d520i03	!8890zzg03j13	1b5480i07 |
+e0i0486eb20i03	!2230zzg03j12	1bac80i07 |
+e0i04c4d520i03	!8890zzg03j!13	5480i07 |
+e0i0484eb20i03	!2230zzg03j12	13ac80i07 |
+e0i04c4d520i03	!8890j10zv03j	!135480i07 |
+e0i0486eb20i03	!2230hb9c3bce5	c0zt03j121bac	80i07 |
+e0i04c6d520i03	!8890h63249113	zu03j131b5480	i07 |
+e0i04a7eb20i03	!2230h406611f2	zu03j129fac80	i07 |
+e0i04d7d520i03	!8890h41a31102	zu03j135f5480	i07 |
+e0i04a7eb20i03	!2230h42219102	zu03j129fac80	i07 |
+e0i04d7d520i03	!8890h4324918a	zu03j135f5480	i07 |
+e0i04afeb20i03	!2230he1d70cf7	zu03j12bfac80	i07 |
+e0i04H20i03!88	90zzg03j13Gfc	80i07 |
+e0i0507c0a0i03	!2230zzg03j14	1f0280i07 |
+e0i!07c0e0i03	!8890zzg03j1c	1f0380i07 |
+e0i060de060i03	!2230zzg03j18	378180i07 |
+e0i07fdGe0i03	!8890zzg03j1f	f7G80i07 |
+e0j19f0j03!22	30hc0g60zv03k	67c0j07 |
+e0j19b0j03!88	90h40g20zv03k	66c0j07 |
+e0j19b0j03!22	30h40g20zv03k	66c0j07 |
+e0j19f0j03!88	90h470e26fczu	03k67c0j07 |
+e0j1df0j03!22	30h4d9b2488zu	03k77c0j07 |
+e0j0fe0j03!88	90h48913818zu	03k3f80j07 |
+e0j07e0j03!22	30h48912830zu	03k1f80j07 |
+e0p03!8890h48	912460zu03q07 |
+e0p03!2230h4d	9b26c4zu03q07 |
+e0p03!8890he7	0e73fczu03q07 |
+e0p03!2230zzg	03q07 |
+e0p03!8890zzg	03q07 |
+e0p03!2230zzg	03q07 |
+e0p03!8890zzg	03q07 |
+e0p03!2230zzg	03q07 |
+e0p03!8890hc0	zx03q07 |
+e0p03!2230h40	zx03q07 |
+e0p03!8890h40	g40zv03q07 |
+e0p03!2230h47	1cf0zv03q07 |
+e0p03!8890h49	2240zv03q07 |
+e0p03!2230h4c	3e40zv03q07 |
+e0p03!8890h46	2040zv03q07 |
+e0p03!2230h43	2040zv03q07 |
+e0p03!8890h49	3140zv03q07 |
+e0p03!2230hee	1e30zv03q07 |
+e0p03!8890zzg	03q07 |
+e0p03!2230zzg	03q07 |
+e0p03!8890zzg	03q07 |
+e0p03!2230zzg	03q07 |
+e0p03!8890zzg	03q07 |
+e0p03!2230h01	zx03q07 |
+e0p03!8890h01	zx03q07 |
+e0p03!2230zzg	03q07 |
+e0p03!8890hG6c	zw03q07 |
+e0p03!2230h89	36zw03q07 |
+e0p03!8890h19	22zw03q07 |
+e0p03!2230h31	22zw03q07 |
+e0p03!8890h61	22zw03q07 |
+e0p03!2230hc5	36zw03q07 |
+e0p03!8890hGac	zw03q07 |
+e0p03!2230i20	zw03q07 |
+e0p03!8890i20	zw03q07 |
+e0p03!2230i70	zw03q07 |
+e0p03!8890zzg	03q07 |
+e0p03!2230zzg	03q07 |
+e0p03!8890i03	h18kc1c7zm03q	07 |
+e0p03!2230i01	h08k4082zm03q	07 |
+e0p03!8890i01	h08k40c6zm03q	07 |
+e0p03!2230hee	7166380b0e5cf5	ce6c5844zm03q	07 |
+e0p03!8890h44	c922440d9931a3	19366c44zm03q	07 |
+e0p03!2230h44	19227c08832112	0322446czm03q	07 |
+e0p03!8890h28	692240088d2192	0d224428zm03q	07 |
+e0p03!2230h28	892240089120e2	11224438zm03q	07 |
+e0p03!8890h10	c9366209992082	19364410zm03q	07 |
+e0p03!2230h10	779b3c0f0ef0f7	0eacee10zm03q	07 |
+e0p03!8890n01	08g20zo03q07 |
+e0p03!2230n01	98g20zo03q07 |
+e0p03!8890oe0	g70zo03q07 |
+e0h0738i70h03	!2230zzg03j1c	e0k07 |
+e0h0390i30h03	!8890zzg03j0e	40k07 |
+e0h0390i30h03	!2230zzg03j0e	40k07 |
+e0h02d1!ed8f30	h03h10zzg03j0b	47bbb0i07 |
+e0h02d376b6d9	b0h03!8890zzg	03j0b4ed9a0i07 |
+e0h0273!36c7b0	h03h10zzg03j09	cfcda0i07 |
+e0h0273!36ddb0	h03!2230zzg03	j09cc0dc0i07 |
+e0h0233b636dd	b0h03h10zzg03	j08ce46c0i07 |
+e0h0711ef76ee	f8h03!8890zzg	03j1c4786c0i07 |
+e0p03h10zzg03	q07 |
+e0p03!2230zzg	03q07 |
+e0p03h10zzg03	q07 |
+e0p03!8890zzg	03q07 |
+Rh10zzg03R |
+ZZZO |
+Rh10zzs03 |
+e2)2223!8890zzs	03 |
+e8)888bh10zzs	03 |
+e2)2223!2230zzs	03 |
+e8)888bh10zzs	03 |
+e2)2223!8890zzs	03 |
+e8)888bh10i01	c0h038c03838c	g3c7078je1c0i	01900c19h78zg
+ 03 |
+e2)2223!2230j	c0h018c01818c	01182030h04g70	80j900409hcczg
+ 03 |
+e8)888bh10jc0	h018001818003	186030h0cg7080	j800408g8084zg
+ 03 |
+e2)2223!8890h	f778ddc7g719c	71b99cf78c4033	b1e39eg589e76
+ 61c038b1c4cb1d	e084zg03 |
+e8)888bh10h62	!ccc980998c99	918d930cc031db	24ccg4cb33bb2
+ 60649324892480	84zg03 |
+e2)2223!2230h	620cccd981998d	99a18dc30c8031	9b8cccg4c8333
+ 36604092070930	8084zg03 |
+e8)888b!8890h	347cccdfbd818d	81e18ce3068031	99cfccg469f33
+ 37e04092050918	9e84zg03 |
+e2)2223!2230h	34!ccd801818d	81b18c73478031	98ec0dg43b333
+ 36g409204890c	8084zg03 |
+e8)888b!8890h	18!ccdc81c98d	c9998d3383g31	9a6e4e6043b333
+ 3720629314c924	80cczg03 |
+e2)2223!2230h	1877e76fgf3de	f39fdfe183g7b	9fc78660e19dfb
+ bbc03df9ee7fb8	6079zg03 |
+e8)888bHf0zq03	80z03 |
+e2)222380g30zq	07c0z03 |
+e8)888b80g30zq	0fe0z03 |
+e2)222380g30zq	0ee0z03 |
+e8)888b80g30zzs	03 |
+e2)222380g30h	e0h01c0g700380	i60h43c0zt03 |
+e8)888b80g30h	60ic0g300680g	20g60g01c660zt	03 |
+e2)222380g30h	60ic0g3006h60	j4420zt03 |
+e8!88bfJf8!88	8b80g30h63cec7	e0f8f1G7f3cec	f01eefc7g4420
+ zt03 |
+e2!2227Jea!22	2380g30h66676c	c0cd9b36266676	603269c9804420
+ zt03 |
+e8!88a2j"888b	80g30h!666cc0	cd9b3326!6660	386199804420zt
+ 03 |
+e2"22j8a!2223	80g30h!666cc0	cd9b3346!6667	9c631f804420zt
+ 03 |
+e8!88a2j"888b	80g30h!666780	cd9b31c6!6668	0e6658g4420zt
+ 03 |
+e2"22j8a!2223	80g30h!6664gcd	9b31c6!667026	6e5c804660zt03 |
+e8!88a2j"888b	80g30hf3ce77c0	b8f1d88f3ce730	3cGcf01f3c0zt
+ 03 |
+e2"22h01f08a!22	2380g30j0fe0i	80zzi03 |
+e8!88a21eg07c0	"888b80g30j08	20h0380zzi03 |
+e2"223fg1fg8a	!222380g30j07	c0h03zzj03 |
+e8!88a221c03c	g"888b80g30zzs	03 |
+e2"223f!f0g8a	!222380g30zzs	03 |
+e8!88a21e3fc0	g"888b80g30j30	he0g3801c0j0c	zv03 |
+e2"22g0fh8a!22	2380g30i8030h	60g180340g10h	04zv03 |
+e8!88a21e3fc0	g"888b80g30h01	80i60g1803h30	h04zv03 |
+e2"223f!f0g8a	!222380g30h7b	dbf763f07c78G	bf9e76780e6c3d
+ dczu03 |
+e8!88a221c03c	g"888b80g30hc9	8db3b66066cd9b	13333b30193664
+ 88zu03 |
+e2"223fg1fg8a	!222380g30he1	8c33366066cd99	93!3330032244
+ 88zu03 |
+e8!88a21eg07c0	"888b80g30h71	8c33366066cd99	a3!33300d2244
+ 50zu03 |
+e2"22h01f08a!22	2380g30h39ac!33	c066cd98e3!33	3411224450zu03 |
+e8!88a2j"888b	80g30h99cc3332	g66cd98e3!3338	19226c20zu03 |
+e2"22j8a!2223	80g30hf0de7f3b	e05c78ec479e73	980ef73a60zu03 |
+e8!88a3J"888b	80g30k07f0i40	l40zu03 |
+e2!2224j4a!22	2380g30k0410h	01c0k0140zu03 |
+e8!88a4j48!88	8b80g30k03e0h	0180k0180zu03 |
+e2!2228j2a!22	2380g30zzs03 |
+e8!88a8j28!88	8b80g30zzs03 |
+e2!2230j1a!22	2380g30j30he0	0eg1cg19gc190	zw03 |
+e8!88b0j18!88	8b80g30i8030h	6006g0cg09g40	90zw03 |
+e2!223fJfa!22	2383f830h0180	i6006g0cg08g40	8008zv03 |
+e8)888b83f830	h7bdbf763f063	c7c38c038b1c4c	b1dezv03 |
+e2)222383f830	hc98db3b660!66	64cc0649324892	48zv03 |
+e8)888b80g30h	e18c3336!6066	6ccc0409207093	08zv03 |
+e2)222380g30h	718c33366063e6	6fcc0409205091	88zv03 |
+e8)888b80g30h	39ac!33c0!666c	0c0409204890c8	zv03 |
+e2)222380g30h	99cc3332g!666e	4c0629314c9248	zv03 |
+e8)888b80g30h	f0de7f3be0f3b5	c79e03df9ee7fb	86zv03 |
+e2)222380g30k	07f0zzl03 |
+e8)888b80g30k	0410zzl03 |
+e2)222380g30k	03e0zzl03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+R80g30zzs03 |
+R80g30zzs03 |
+R80g30zzs03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2)222380g30zzs	03 |
+e8)888b80g30zzs	03 |
+e2!223fKa22223	80g30zzs03 |
+e8!88a7Jfe!88	8b80g30zzs03 |
+e2"22j08a22223	80g30zzs03 |
+e8!88a2j08!88	8b80g30zzs03 |
+e2"22j08a22223	80g30zzs03 |
+e8!88a20f40h08	!888b80g30zzs	03 |
+e2"2218c0h08a2	222380g30zzs03 |
+e8!88a21040h08	!888b80g30zzs	03 |
+e2"2220473677	08a2222380g30	zzs03 |
+e8!88a2200d9b	2208!888b80g30	zzs03 |
+e2"2220089122	08a22223Hf0zzs	03 |
+e8!88a2200891	1408!888b!8890	zzs03 |
+e2"2230489114	08a22223!2230	zzs03 |
+e8!88a2188d9b	!08!888b!8890	zzs03 |
+e2"220f071618	08a22223!2230	zzs03 |
+e8!88a2h!1008	!888bh10zzs03 |
+e2"22h105008a2	2223!8890zzs03 |
+e8!88a2h386008	!888bh10zzs03 |
+e2"22j08a22223	!2230zzs03 |
+e8!88a2j08!88	8bh10zzs03 |
+e2!2223Jf8a222	23!8890zzs03 |
+e8!88a4j04!88	8bh10zzs03 |
+e2!2224j04a222	23!2230zzs03 |
+e8!88a8j02!88	8bh10zzs03 |
+e2!2228j02a222	23!8890zzs03 |
+e8!88b0j01!88	8bh10zzs03 |
+e2!2230j01a222	23!2230zzs03 |
+e8!88bfK!888b	ZZW |
+e2)2223ZZW |
+e8)888b/88)88	80i0228/88'88	8f |
+e2)2223a2/22'22	2880i02/22(22	27 |
+e8)888b/88)88	80i0228/88'88	8f |
+e2)2223a2/22'22	2880f4h02/22(22	27 |
+e8)888b/88)88	818ch0228/88'88	8f |
+e2)2223a2/22'22	288184h02/22(22	27 |
+e8)888b/88)88	81c0f3dce228/88'88	8f |
+e2)2223a2/22'22	2880f1998932/22(22	27 |
+e8)888b/88)88	8038198b3228/88'88	8f |
+e2)2223a2/22'22	28801cf8d3f2/22(22	27 |
+e8)888b/88)88	810d98d30228/88'88	8f |
+e2)2223a2/22'22	28818d986392/22(22	27 |
+e8)888b/88)88	81f8ec61e228/88'88	8f |
+e2)2223a2/22'22	2880i02/22(22	27 |
+e8)888b/88)88	80i0228/88'88	8f |
+e2)2223a2/22'22	2880i02/22(22	27 |
+e8)888b/88)88	80i0228/88'88	8f |
+e2)2223a2/22'22	2880i02/22(22	27 |
+e8)888b/88)88	Jfe28/88'888f |
+e2)2223a2/22'22	29j02/22(2227 |
+e8)888b/88(88	89j0128/88'88	8f |
+e2)2223a2/22'22	2aj01/22(2227 |
+e8)888b/88(88	8aka8/88'888f |
+ZZZO |
+ZZZO |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+c0zzzm03 |
+ZZZO |
+ZZZO |
+\enddata{raster, 269698612}
+\view{rasterview,269698612,28,0,0}
+}
+As stated in the Overview document, the Arbcon serves several functions. 
+
+\indent{1. It is an inset generator that can place an instance of any type of 
+inset into the cut-buffer. 
+
+2. It is as an editor for inset attributes. 
+
+3. It can cut or copy insets from existing ADEW applications or templates.
+
+4. It can copy links to existing insets, allowing the user to paste in new 
+views on existing data objects.
+
+}
+\section{1.1	Creating the Arbcon}
+
+There are two basic ways to bring up Arbcon.  One is to run the arb program.
+
+
+\bold{arb filename}
+
+
+This will bring up an Arbcon and the named file (the filename is optional). 
+
+
+The second is to add the following lines in your .ezinit file.
+
+
+\bold{addmenu arbcon-Create "Arbcon,Arbcon" textview
+
+addmenu arbcon-Create "Arbcon,Arbcon" lsetview
+
+} 
+
+This would provide a menu option to add an Arbcon at any time when you are 
+editing text or lset files. 
+
+
+\section{1.2	Arbcon Functions 
+
+}
+The use of most of the following is outlined in the Tutorial document, which 
+should be referred to for examples.
+
+
+\subsection{1.2.1	Creating an application window}
+
+\paragraph{1.2.1.1	New Window}
+
+In addition to using the arb command described above, one can click on the 
+desired object or object view pair in the Object <View> list, and then chose 
+the\italic{ New Window} option on the Arbcon menu. One will then be prompted 
+for the file name to open. If the named file does not already exist, a new 
+file will be created of the type of the desired object. 
+
+
+\subsection{1.2.2	Adding a new child object to an application
+
+}A click on a desired object or object view pair in the Object <View> list 
+will place a cel initialized to that object into the cut-buffer. This object 
+may then be pasted into the desired application using the applications paste 
+command.
+
+
+\subsection{1.2.3	Adding a child object with it's application layer
+
+}After clicking on the desired object, a click on the Application/Normal 
+switch will add this information to the cel in the cut buffer. The application 
+layer refers to additional views that a view may deem useful when it is being 
+used as an application. Typically, it refers to the addition of one or more 
+scroll bars. 
+
+
+\subsection{1.2.4	Selecting a child object
+
+}When an object is pasted into an application, it also becomes the selected 
+object whose attributes are displayed in the editing window of the Arbcon. 
+Clicking on an existing object will also cause it to become the selected 
+object. Note however, this applies only to objects inserted with an arbcon in 
+the first place. This is because the arbcon inserts objects surrounded with a 
+cel/celview inset that allows the arbcon to function.
+
+
+\paragraph{1.2.4.1	Show Cels
+
+}Alternately, the \italic{Show Cels} menu option will display a list of all of 
+the cels in the same namespace as the current cel. Clicking on a cel name in 
+this list will cause it to become the current child object. 
+
+
+\subsection{1.2.5	Creating a new link to a child object
+
+}With a child selected, a click on the Link/New switch will place a link to 
+that object into the cut-buffer. This may then be pasted into the application. 
+Links can not span windows, however. 
+
+
+\subsection{1.2.6	Creating a new link with as different view type}
+
+After selecting a child and clicking on the Link/New switch, a click on a 
+Object <View> pair, with the same dataobject as the child, will modify the 
+viewtype of the link in the cut buffer.
+
+
+\subsection{1.2.7	Editing the child's attributes
+
+}The attributes of the current child may be edited in the arbcon edit window. 
+The attribute names are displayed in bold, while their values are in plain 
+type. One can move from on attribute to the next via the enter key. After the 
+last attribute, the enter key will prompt for confirmation of the changes. 
+Another enter will confirm the changes and modify the child. Alternately, 
+clicking on the \bold{Save} button at the bottom of the edit window will save 
+the current attributes. See Values below.
+
+
+\subsection{1.2.8	Removing a child object
+
+}The Cut button (displaying scissors) can be used to cut the selected child 
+from an application. Alternately, the Cut menu option on the Arbcon menu will 
+do the same thing.
+
+
+\bold{WARNING: not all ATK parent objects support this option. As of this 
+release, only text,lset and page are known to contain the necessary code. 
+ATTEMPTING TO CUT CELS FROM OTHER OBJECTS MAY RESULT IN CORE DUMPS! Creators 
+of parent views are advised to observe the child views they create and react 
+correctly when they are destroyed.
+
+}
+\subsection{1.2.9	Moving a child object
+
+}When a child object is cut, a copy of it is placed in the cut buffer. It can 
+then be moved by a cut, followed by a paste in the desired location. 
+
+
+\subsection{1.2.10	Copying a child object
+
+}The Copy button will place a copy of an object into the cut-buffer. At this 
+point it can then be pasted into another location.
+
+
+\subsection{1.2.11	Changing the current directory
+
+}The Adew menu card has a Change Directory menu option. It will prompt for a 
+new directory.
+
+
+\subsection{1.2.12	Creating a controller object
+
+}A dummy controller object may be created via the Create Controller option on 
+the Adew menu card. Alternately, the createcon program may be run. This 
+controller is a template from which new application may be easily created. For 
+details, see the next section on Createcon. 
+
+
+\subsection{1.2.13	Adding a new object to the view list
+
+}The Add Object menu on the Arbcon menu will prompt for a new object to add. 
+If an object/view pair is desired (where the view is not the default view for 
+that object), both the object and the view names should be specified, 
+separated be a space. 
+
+Also , see the preference options below. 
+
+
+\subsection{1.2.14	The Value Window
+
+}The \italic{Init Value Window} menu option will bring up a window containing 
+examples of the currently available valueview objects (switches, buttons, 
+etc.). These may then be copied into an application with the copy button. 
+
+Also , see the preference options below. 
+
+
+\subsection{1.2.15	Preference options
+
+}The following preferences may be set in the Arbcon users preference file.
+
+
+\paragraph{1.2.15.1	ValueFile:filename
+
+}Allows the specification of an alternate file to be displayed by the 
+\italic{Init Value Window} menu option. Any Arbcon created file may be used. 
+The default is $ANDREWDIR/lib/arbiters/vallist.
+
+
+\paragraph{1.2.15.2	ObViewList:filename
+
+}Allows the specification of an alternate list of objects and views for 
+inclusion in the Object <View> list, i.e. the list of objects that can be 
+created with the arbcon.
+
+
+\paragraph{1.2.15.3	IgnoreDefaultViewlist:<TRUE or FALSE>
+
+}If true, only the user specified ObViewList above will be used. If false, the 
+objects in the ObViewList will be added to those shown by default. The default 
+is FALSE.
+
+\begindata{bp,269885172}
+\enddata{bp,269885172}
+\view{bpv,269885172,29,0,0}
+\chapter{2	Createcon - Creating Controllers}
+
+
+	Once an application is prototyped by pasting together various insets, 
+Createcon can be used to generate a controller class that can tie the 
+different pieces into an application. Createcon generates C source code and a 
+.ch file for the Class preprocessor. The object that is created will have 
+pointers to all of the dataobjects and views in the application, call-back 
+procedures for all of the value objects, and observer links to all of the 
+other objects. The generated code takes responsibility for making sure that 
+these pointer and links are all established at run time. With this taken care 
+of , the application programmer can often easily add code to get the objects 
+to interact together as an application.  Refer to the Tutorial document for a 
+simple detailed example. 
+
+
+	An alternative to createcon is the use of the interactive Ness language, that 
+allows the controller information to be embedded in the document itself. Plese 
+refer to the NESS documentation for further information.
+
+
+	Createcon allow for changes to be made in the application. If the user 
+decides to add another button, or change a slider to a thumbwheel, another run 
+of createcon will update any existing controller source code and make it 
+compatible with the new collection of objects. The generated source code 
+contains many comments of the form.
+
+ 
+
+\example{/* user code begins here for outputCallBack */
+
+/* user code ends here for outputCallBack */
+
+}
+	The application programmer should insure that all of his/her code is placed 
+in the framework of these comments, as this allows Createcon to preserve this 
+code in future versions. 
+
+
+	In addition to the needed .c and .ch files, Createcon will also generate a 
+shell script called makefoo, where \bold{foo} is the name of the new 
+application class to be generated or modified, and an Imakefile for generating 
+the application. Running makefoo is usually all that needs to be done to 
+generate the makefile and compile and build the dynamic object. 
+
+
+	Normally, the name of the class to generate is learned from an embedded 
+controller button embedded in the application. Createcon can also take this 
+information on it's command line. Applications without controller buttons, 
+however,  can only be run as stand-alone applications using \bold{Runadew} 
+(see below).  Adew applications with control buttons can be included in other 
+objects, sent as mail message , etc. 
+
+
+\section{2.1	Eliminating control buttons
+
+}
+	Some early Adew users have complained about the necessity of including a 
+control button in their application. The reason for this restriction was that 
+the control button provides a link between the file containing the pieces of 
+an application, and the controller class. This was particularly important 
+where the application was included in a document that could contain numerous 
+other applications, each of which could contain objects with conflicting 
+names. In this case, the control button linked the controller in with the 
+proper namespace.
+
+	None the less, it was seen that in the common case of using Adew to create a 
+stand-alone application, something could be done to eliminate the control 
+button. This was accomplished by adding some new arguments to createcon, and 
+creating runadew, a new application class that could replace ez for running 
+Adew applications to provide the same facilities normally provided by the 
+control button. 
+
+
+\section{2.2	Arguments
+
+}	The current arguments to createcon are 
+
+
+\italic{-O file
+
+}\indent{When given this argument, createcon will also output a shell script 
+for running the application within runadew.
+
+}
+\italic{-T "title"
+
+}\indent{Only appropriate with the -O flag, this title will be added to the 
+created shellscript and passed on to runadew for display in the title bar of 
+the finished application. 
+
+}
+\italic{-C class
+
+-F function (defaults to 'go')
+
+}\indent{Specifies the class to create and name of the initialization function 
+to create in that class. This must be provided if no control button is 
+included in the source file, from which createcon normally gets this 
+information. If a -C argument is present with no -F, 'go' is used as the 
+default function name. 
+
+}
+\section{2.3	Example
+
+}	If one had a control-buttonless application file names \italic{switches}, 
+wanted to create a controller class named \italic{switchcon}, and wanted the 
+final application to be called \italic{doswitch}, with the title\italic{ 
+"switch controller"}. Createcon could be called as follows. 
+
+
+createcon -O doswitch -T "switch controller" -C switchcon switches
+
+
+The program would output the following
+
+
+
+\leftindent{Creating a controller for switches. Please wait...
+
+running cat /tmp/adew0.tmp switches | /usr/andy//lib/arbiters/conpros.awk
+
+Creating switchcon.ch
+
+Creating switchcon.c
+
+Creating Imakefile
+
+Creating makeswitchcon shellscript
+
+Creating doswitch shellscript
+
+Done
+
+}
+and the doswitch shellscript would look like 
+
+
+\leftindent{runadew -C"switchcon" -F"go" -T"switch controller" -S"switches" $*
+
+}
+
+This shellscript will pass it's arguments on to runadew, which can the pass 
+them on to the controller class. It is possible for the application programmer 
+to edit this shell script to pass additional arguments to runadew, either for 
+passing on, or to change the application colors. See the runadew documentation 
+below for details.
+
+
+\section{2.4	Notes}
+
+	It is possible to create two source files, one with a control button and one 
+without. The latter for use in stand alone mode, and the former for inclusion 
+in other files. If there are no other changes, a single controller class can 
+be used for either file. 
+
+
+\section{2.5	Running createcon from the arbcon menu
+
+}	Createcon can also be run from the Arbcon. When the \bold{Create Controller} 
+option is chosen from the ADEW menu, it is the same as running createcon on 
+the file containing the current object. The output from createcon will be 
+placed in one of the arbcon's windows. No other arguments can be sent to 
+createcon in this mode, so it will only work on files containing a controller 
+button. 
+
+
+\begindata{bp,269724788}
+\enddata{bp,269724788}
+\view{bpv,269724788,30,0,0}
+\chapter{3	Runadew
+
+}
+Runadew is an alternate environment for running Adew applications. Similar to 
+\bold{ez}, runadew provides some additional facilities, while at the same 
+time, limiting the user options to those provided by the application creator. 
+Any Adew application may be run in runadew; those without control buttons can 
+only be run in runadew. 
+
+
+\section{3.1	Arguments}
+
+	Runadew recognizes the following flags, that are normally set by a 
+shellscript created by createcon. See above for details. 
+
+
+\italic{-S file
+
+}\indent{This is the atk file that runadew displays in it's window. Runadew 
+must be given this argument.
+
+}
+\italic{-T "title"
+
+}\indent{Runadew will place the given string in the title bar of the 
+application (when running under window managers that provide title bars).
+
+}
+\italic{-C class
+
+-F function (defaults to 'go')}
+
+\indent{When given these arguments, runadew will load the given class, lookup 
+the given function in that classes' proctable, and execute that function, 
+passing it the frame as the argument. This is the mechanism that takes the 
+place of control buttons. 
+
+}
+\subsection{3.1.1	Argument passing
+
+}All of the other arguments to runadew (except for the standard ones handled 
+by runapp, ie -bg background-color and -fg foreground-color) are saved and may 
+be passed on the the controller class. \bold{runadewapp_GetArguments(argp) 
+}returns a char ** with the remaining arguments. Argp is pointer to an int, 
+whose contents will be set to the number of these arguments. If there are no 
+arguments, only argv[0] (usually 'runadew') is passed on. If the application 
+is not being run from runadew, NULL will be returned. 
+
+
+\section{3.2	Other features
+
+
+}	When users run applications in runadew, they are not presented with the 
+normal ez menus and keystroke commands for switching files, printing, creating 
+new windows, etc.. Runadew does not try to checkpoint the file, or make sure 
+that the file hasn't changed before exiting. This fits in better with the 
+normal user model of a stand alone application.
+
+
+\begindata{bp,269071748}
+\enddata{bp,269071748}
+\view{bpv,269071748,31,0,0}
+\chapter{4	Values}
+
+
+	Values are simple dataobjects designed to hold a long integer, a string 
+and/or string array, and support a variety of observers, each of which may 
+provide a routine to be called when the value's data changes. In general, 
+interaction with the valueviews are all done with the value methods.
+
+
+\section{4.1	Programmer interface}
+
+
+\subsection{4.1.1	Basic Routines }
+
+
+\bold{long value_GetValue}(self)
+
+\bold{value_SetValue}(self,long rock)
+
+\indent{Gets or sets the value primary value}
+
+
+\bold{char *value_GetString}(self) 
+
+\bold{value_SetString}(self,char *rock)
+
+\indent{Gets or sets a string pointer. Note, value does not copy this data, 
+rock must be a NULL terminated string in static memory.
+
+}
+\bold{char **value_GetStringArray}(self) 
+
+\bold{value_SetStringArray}(self,char **rock)
+
+\indent{Gets or sets an array or string pointer. Note, value does not copy 
+this data, rock must be a pointer to an array of NULL terminated strings in 
+static memory.}
+
+
+\bold{long value_GetArraySize}(self)
+
+\bold{value_SetArraySize}(self,long rock)
+
+\indent{Gets or sets the array size parameter to rock. Notes how many entries 
+are in the string array.}
+
+
+\bold{value_SetStrArrayAndSize}(self,char **rock,size)
+
+\leftindent{Sets both the string array and it's size w/ one call and producing 
+only one call back.}
+
+
+\subsection{4.1.2	Advanced Routines }
+
+
+\bold{value_AddCallBackObserver}(self, struct basicobject * observer, 
+procedure callBack, long rock );
+
+\indent{Sets up a call back procedure. When a value's contents changes, the 
+procedure \italic{callBack} will be called, with the following arguments 
+
+	callBack(observer,self (the value object), rock, flag)
+
+where flag is one of the values defined in value.h. 
+
+
+Controller objects created by createcon use this call to set up the call back 
+procedures automatically. 
+
+}
+\bold{value_RemoveCallBackObserver}(self, struct basicobject * observer );
+
+\indent{Removes the call back.
+
+}
+\bold{value_SetNotify}(self,boolean val)
+
+\indent{Sets a flag to indicate if observers will be notified when one of the 
+above set methods are called. Can be used to turn off notification temporarily 
+when changing several of the above parameters at once. Care should be taken, 
+however to make sure that val is reset to TRUE.
+
+}
+\begindata{bp,269698568}
+\enddata{bp,269698568}
+\view{bpv,269698568,32,0,0}
+\chapter{5	Valueviews
+
+}
+	Valueviews are a collection of views that may be associated with the value 
+object and will display them in a variety of ways. They prompt up the view 
+tree for a set of attributes for detailed information on how they should 
+display their values (i.e. the range of a bargraph or the label on a button). 
+Currently, the cel is responsible for maintaining this information, which may 
+be edited and saved via the Arbcon. Some valueviews allow the input of new 
+values, others are readonly. By convention, valueview names end in a capitol 
+V.  Valueviews that allow input are, in general, up-click sensitive. By 
+down-clicking and moving the slider switch, one will see its displayed value 
+change, but it is only on the up-click that this change is reflected in the 
+value object and observers are notified.
+
+
+	The currently provided valueviews are as follows.
+
+
+\section{5.1	The bargraph view - bargraphV}	
+
+	 
+
+\center{\
+\begindata{raster,269794716}
+2 0 136533 136533 0 0 79 77
+bits 269794716 79 77
+3fNf8 |
+20n08 |
+20n08 |
+20n08 |
+20i0380i08 |
+20i0440i08 |
+20i0440i08 |
+20i0440i08 |
+20i0440i08 |
+20i0440i08 |
+20i0440i08 |
+20i0380i08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+20hIfdh08 |
+20h6a!aaafh08 |
+20h35!555ah08 |
+20h1a!aaafh08 |
+20h0fI80g08 |
+20n08 |
+20n08 |
+20n08 |
+20n08 |
+201fk0cg08 |
+200880j04g08 |
+20089e2e3ab9e5	c58008 |
+200f0110444012	264008 |
+20088f104440f2	244008 |
+20089110444112	244008 |
+20089110444112	244008 |
+201f0ebc3cf0eb	cee008 |
+20i04g02h08 |
+20i04g02h08 |
+20i38g07h08 |
+20n08 |
+3fNf8 |
+p |
+p |
+\enddata{raster, 269794716}
+\view{rasterview,269794716,33,0,0}
+}
+A read-only view for displaying integers as a bargraph. Supports the following 
+attributes.
+
+[long] <min_value> ()
+
+[long] <max_value> ()
+
+[long] <bodyfont-size> ()
+
+[string] <bodyfont> ()
+
+[string] <label> (bargraph)
+
+
+It reads the values primary value.
+
+
+\section{5.2	The button view - buttonV		 
+
+}\center{\
+\begindata{raster,269873764}
+2 0 127667 127667 0 0 147 68
+bits 269873764 147 68
+Xe0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+%88Le8$88a0 |
+a2$224fKa2$22	20 |
+%88c4j0228$88	a0 |
+a2$2244j02%22	20 |
+%88c4j0228$88	a0 |
+a2$22443fi02%22	20 |
+%88c41180h0228	$88a0 |
+a2$2244108044	g02%2220 |
+%88c411b6G32c2	28$88a0 |
+a2$22441f1244	49&2220 |
+%88c410924449	2228$88a0 |
+a2$2244109244	49&2220 |
+%88c411924449	2228$88a0 |
+a2$22443f0d!33	b2%2220 |
+%88c4j0228$88	a0 |
+a2$2244j02%22	20 |
+%88c4j0228$88	a0 |
+a2$2244j02%22	20 |
+%88c7Jfe28$88	a0 |
+a2$2248j01%22	20 |
+%88c8j0128$88	a0 |
+a2$2250ka2$22	20 |
+%88d0ka8$88a0 |
+a2$2260k62$22	20 |
+%88e0k68$88a0 |
+a2$227fKe2$22	20 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+a2/222220 |
+/88!88a0 |
+Xe0 |
+\enddata{raster, 269873764}
+\view{rasterview,269873764,34,0,0}
+}
+An SPST switch, that increments the value's primary value by one.
+
+[long] <bodyfont-size> ()
+
+[string] <bodyfont> ()
+
+[string] <label> (Button)
+
+
+\begindata{bp,269725000}
+\enddata{bp,269725000}
+\view{bpv,269725000,35,0,0}
+\section{5.3	The control button view - controlV
+
+\center{\
+\begindata{raster,269794424}
+2 0 136232 136232 0 0 127 108
+bits 269794424 127 108
+Ufe |
+Ufe |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8"888bLe8"88	8e |
+e2#227fKa2"22	26 |
+c8"888a20j0228	"888e |
+e2#2220j02#22	26 |
+c8"888a20j0228	"888e |
+e2#222074i62#22	26 |
+c8"888a20cci22	28"888e |
+e2#222084g08g	$2226 |
+c8"888a21g659f	662228"888e |
+e2#2221g9248c9	$2226 |
+c8"888a21g9248	892228"888e |
+e2#2220849248	89$2226 |
+c8"888a20cc92	48892228"888e |
+e2#222078!67c6	72#2226 |
+c8"888a20j0228	"888e |
+e2#2220j02#22	26 |
+c8"888a20j0228	"888e |
+e2#2220j02#22	26 |
+c8"888a3fJfe28	"888e |
+e2#2240j01#22	26 |
+c8"888a40j0128	"888e |
+e2#2280ka2"22	26 |
+c8"888a80ka8"88	8e |
+e2"2223l62"22	26 |
+c8"888bl68"88	8e |
+e2"2223Le2"22	26 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+c8-888e |
+e2-2226 |
+Ufe |
+Ufe |
+\enddata{raster, 269794424}
+\view{rasterview,269794424,36,0,0}
+}}
+A subclass of buttonV, this valueview supports two special attributes 
+\italic{class} and \italic{function}. On receiving an up-click, this view will 
+attempt to load the specified class and call class-function from its 
+proctable. It is particularly useful when creating applications. Another 
+attribute (Auto-Init), if set to the string TRUE, will call the proctable 
+function automatically the first time that the controlV is displayed and there 
+is no Arbcon present. See the tutorial document for more details. Valid 
+attributes are
+
+[string] <Auto-Init> ()
+
+[string] <function> ()
+
+[string] <class> ()
+
+[long] <bodyfont-size> ()
+
+[string] <bodyfont> ()
+
+[string] <label> (Control)
+
+
+\section{5.4	The string entry view - enterstrV		 
+
+}\center{\
+\begindata{raster,269793344}
+2 0 136649 136649 0 0 141 111
+bits 269793344 141 111
+Wf8 |
+Wf8 |
+Wf8 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2"227fNfe"22	38 |
+c8"88cfNf4"88	98 |
+e2"2244n46"22	38 |
+c8"88c4n44"88	98 |
+e2"2244n46"22	38 |
+c8"88c41dg20g	1fc0h44"8898 |
+e2"224423i0840	h46"2238 |
+c8"88c42120h08	g20g44"8898 |
+e2"2244187deb	0f08967de646"22	38 |
+c8"88c40e2324	920f89232444"88	98 |
+e2"2244032224	920889222c46"22	38 |
+c8"88c4212224	9c0809222844"88	98 |
+e2"2244332224	880849221846"22	38 |
+c8"88c42e1f7e	ce1fdd9f1044"88	98 |
+e2"2244i11i10	46"2238 |
+c8"88c4i11i20	44"8898 |
+e2"2244i0ei60	46"2238 |
+c8"88c4n44"88	98 |
+e2"2247Nc6"22	38 |
+c8"88c8n24"88	98 |
+e2"2248n26"22	38 |
+c8"88d0n14"88	98 |
+e2"2250n16"22	38 |
+c8"88e0n0c"88	98 |
+e2"2260n0e"22	38 |
+c8"88Ofc"8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+e2/2238 |
+c8/8898 |
+Wf8 |
+Wf8 |
+80v08 |
+80v08 |
+80v08 |
+80v08 |
+80v08 |
+80v08 |
+80g01800660q08 |
+80h800220q08 |
+80h800440q08 |
+80g01618443q08 |
+80g01a6488d80	p08 |
+80g0324c88880	p08 |
+80g024f089080	p08 |
+80g0248!11q08 |
+80g04ac955bq08 |
+80g0447088cq08 |
+80v08 |
+80v08 |
+80v08 |
+80v08 |
+80v08 |
+80v08 |
+80v08 |
+80v08 |
+80v08 |
+Wf8 |
+\enddata{raster, 269793344}
+\view{rasterview,269793344,37,0,0}
+}
+This is a combination of a value objects and a special sub-class of text. It 
+is useful for allowing the user to input text on numbers. The 
+value_SetString() function may be used to set the contents of the text area 
+under the label. If the user wants to change the value, he may do so by 
+clicking in that area and typing, backspacing, cutting, or pasting. Any change 
+to the value string will cause it to be displayed in italic until the change 
+is entered and confirmed by the user hitting the return key. Only then will 
+the value's string value be set and observers notified. Other keystrokes that 
+may be used by the user are ^U to clear out (but not change) the current 
+contents, and ^G to redisplay the actual value. Valid attributes are 
+
+[long] <bodyfont-size> ()
+
+[string] <bodyfont> ()
+
+[string] <label> (String Entry)
+
+
+\begindata{bp,269873720}
+\enddata{bp,269873720}
+\view{bpv,269873720,38,0,0}
+
+\section{5.5	The fourway switch view - fourwayV		 
+
+}\center{\
+\begindata{raster,269702264}
+2 0 127667 127667 0 0 161 84
+bits 269702264 161 84
+Z80 |
+Z80 |
+Z80 |
+c0x0180 |
+df80w0180 |
+cc80w0180 |
+cc0f3b9b80r3b	bcef80 |
+cf19998e80r11	024580 |
+cd19998cs151e	4580 |
+cc19998cs1522	2980 |
+cc19998cs0a22	3980 |
+de0f0edfs0a1d	1180 |
+c0x1180 |
+c0x1180 |
+c0x6180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0k01Ll0180 |
+c0k013fJfdl01	80 |
+c0k0110j11l01	80 |
+c0k0110j11l01	80 |
+c0k0110j11l01	80 |
+c0k0110j11l01	80 |
+c0k011070i11l	0180 |
+c0k01107ei11l	0180 |
+c0k01107fc0h11	l0180 |
+c0k01103fe0h11	l0180 |
+c0k01103fGf8g	11l0180 |
+c0k01103ff80e	g11l0180 |
+c0k01101ffc03	g11l0180 |
+c0k01101ffe01	8011l0180 |
+c0k01101fGgc0	11l0180 |
+c0k01100fG8040	11l0180 |
+c0k011007Gc060	11l0180 |
+c0k011007Ge020	11l0180 |
+c0k011005Gf030	11l0180 |
+c0k011004Gf830	11l0180 |
+c0k0110047ffc	5011l0180 |
+c0k0110043ffe	b011l0180 |
+c0k0110041eG50	11l0180 |
+c0k0110040e7f	b011l0180 |
+c0k011004073f	f011l0180 |
+c0k011006039f	f011l0180 |
+c0k01100201cf	f011l0180 |
+c0k011003gGe0	11l0180 |
+c0k011001807f	e011l0180 |
+c0k0110gc0bfe0	11l0180 |
+c0k0110g715fc0	11l0180 |
+c0k0110g1ebf80	11l0180 |
+c0k0110g0ffcg	11l0180 |
+c0k0110j11l01	80 |
+c0k0110j11l01	80 |
+c0k0110j11l01	80 |
+c0k0110j11l01	80 |
+c0k0110j11l01	80 |
+c0k0110j11l01	80 |
+c0k0110j11l01	80 |
+c0k011fJf1l01	80 |
+c0k0120j09l01	80 |
+c0k0120j09l01	80 |
+c0k0140j05l01	80 |
+c0k0140j05l01	80 |
+c0k0180j03l01	80 |
+c0k0180j03l01	80 |
+c0k01Ll0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+c0x0180 |
+Z80 |
+Z80 |
+\enddata{raster, 269702264}
+\view{rasterview,269702264,39,0,0}
+}This is a fourway switch, that sets the value's primary value to 0,1,2, or 3, 
+starting with the upper left corner and going clockwise.  Its attributes are 
+
+[long] <bodyfont-size> ()
+
+[string] <bodyfont> ()
+
+[string] <':' separated labels> (Four:way)
+
+
+\section{5.6	The on-off switch view - onoffV		 
+
+}\center{\
+\begindata{raster,269470872}
+2 0 127667 127667 0 0 154 89
+bits 269470872 154 89
+Yc0 |
+Yc0 |
+c0xc0 |
+c0xc0 |
+c0pd8mc0 |
+c0o0120mc0 |
+c0o0120mc0 |
+c0mcbg33f0mc0 |
+c0l0124804920	mc0 |
+c0l01249e4920	mc0 |
+c0l0124804920	mc0 |
+c0l0124804920	mc0 |
+c0mcec03120mc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0m7fGfenc0 |
+c0m60g06nc0 |
+c0m5fGfanc0 |
+c0m4d5552nc0 |
+c0m4aaab2nc0 |
+c0m4d5552nc0 |
+c0m4aaab2nc0 |
+c0m4d5552nc0 |
+c0m4aaab2nc0 |
+c0m4d5552nc0 |
+c0m4aaab2nc0 |
+c0m4d0552nc0 |
+c0m4a02b2nc0 |
+c0m4c3952nc0 |
+c0m4a7eb2nc0 |
+c0m4c7d52nc0 |
+c0m487eb2nc0 |
+c0m4c6d52nc0 |
+c0m486eb2nc0 |
+c0m4c4d52nc0 |
+c0m484eb2nc0 |
+c0m4c4d52nc0 |
+c0m486eb2nc0 |
+c0m4c6d52nc0 |
+c0m4a7eb2nc0 |
+c0m4d7d52nc0 |
+c0m4a7eb2nc0 |
+c0m4d7d52nc0 |
+c0m4afeb2nc0 |
+c0m4fGf2nc0 |
+c0m507c0anc0 |
+c0m707c0enc0 |
+c0m60de06nc0 |
+c0m7fdffenc0 |
+c0m019foc0 |
+c0m019boc0 |
+c0m019boc0 |
+c0m019foc0 |
+c0m01dfoc0 |
+c0nfeoc0 |
+c0n7eoc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0n1801c0mc0 |
+c0n19gc0mc0 |
+c0n03gc0mc0 |
+c0l07f77f9ef0	mc0 |
+c0l0cb35b32d8	mc0 |
+c0l0f1b5b30d8	mc0 |
+c0l07!9b30d8m	c0 |
+c0l098d9b3ad8	mc0 |
+c0l0f0dbd9ddc	mc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+c0xc0 |
+Yc0 |
+Yc0 |
+\enddata{raster, 269470872}
+\view{rasterview,269470872,40,0,0}
+}A two-way switch, which sets a value's primary value to 0 for down and 1 for 
+up. its attributes are 
+
+[long] <bodyfont-size> ()
+
+[string] <bodyfont> ()
+
+[string] <top label> (on-off)
+
+[string] <bottom label> (switch)
+
+
+\section{5.7	The piano keyboard view - pianoV		 
+
+}\center{\
+\begindata{raster,269774384}
+2 0 136533 136533 0 0 81 82
+bits 269774384 81 82
+q |
+q |
+q |
+q |
+1fNfcg |
+1fNfcg |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+18204408102048	110204g |
+183fc7f8103fcf	f1fe04g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1802g801004g80	2004g |
+1fNfcg |
+q |
+q |
+q |
+\enddata{raster, 269774384}
+\view{rasterview,269774384,41,87,0}
+}This is a somewhat specialized valueview for displaying one octave on a piano 
+keyboard. Any number of keys may be depressed at a given time. The value is 
+used as a bitmap to indicated depressed keys.  Its attributes are 
+
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <':' separated labels> (:c:#:d:#:e:f:#:g:#:a:#:b)
+
+\begindata{bp,269666824}
+\enddata{bp,269666824}
+\view{bpv,269666824,42,0,0}
+
+\section{5.8	The slider switch view - sliderV		 
+
+}\center{\
+\begindata{raster,269668812}
+2 0 127667 127667 0 0 152 81
+bits 269668812 152 81
+Y |
+80w01 |
+80w01 |
+9fWfd |
+97Wf5 |
+92w25 |
+92w25 |
+92w25 |
+92n1cn25 |
+92n22n25 |
+92n22n25 |
+92n22n25 |
+92n22n25 |
+92n22n25 |
+92n22n25 |
+92n1cn25 |
+92w25 |
+92w25 |
+92w25 |
+92n3en25 |
+92n36n25 |
+92n2an25 |
+92n36n25 |
+92n2an25 |
+92n36n25 |
+92n2an25 |
+92n36n25 |
+92n2an25 |
+92n36n25 |
+92n2an25 |
+92n36n25 |
+92n2an25 |
+92n36n25 |
+92n2an25 |
+92n36n25 |
+92n2an25 |
+92n36n25 |
+92n2an25 |
+92n36n25 |
+92n2an25 |
+92n36n25 |
+92n2an25 |
+92n36n25 |
+92n2an25 |
+92m03Gn25 |
+92m07G80m25 |
+92m0fGc0m25 |
+92m19Gc0m25 |
+92m33Gc0m25 |
+92m67Gc0m25 |
+92mH80m25 |
+92l01Hn25 |
+92l03g7en25 |
+92l06aaben25 |
+92l06aab8n25 |
+92l065530n25 |
+92l03g60n25 |
+92l01Gc0n25 |
+92w25 |
+92w25 |
+93We5 |
+94w15 |
+98w15 |
+98w0d |
+9fWfd |
+80w01 |
+80w01 |
+80w01 |
+80l01c080c0m01 |
+80m40g40m01 |
+80l704383c717	l01 |
+80l8840844888	l01 |
+80l7040844f88	l01 |
+80l0840844808	l01 |
+80l8840844888	l01 |
+80l71fbe3a71e	l01 |
+80w01 |
+80w01 |
+80w01 |
+80w01 |
+Y |
+\enddata{raster, 269668812}
+\view{rasterview,269668812,43,0,0}
+}Used to set and display a value's primary value. Its attributes are 
+
+[long] <min_value> ()
+
+[long] <max_value> ()
+
+[long] <bodyfont-size> ()
+
+[string] <bodyfont> ()
+
+[string] <label> (slider)
+
+\section{5.9	The string display slider switch view - sliderstrV	}
+
+
+\center{\
+\begindata{raster,269925736}
+2 0 136221 136221 0 0 140 105
+bits 269925736 140 105
+Wf0 |
+80v30 |
+80v30 |
+9fVb0 |
+97Ufeb0 |
+92u04b0 |
+92u04b0 |
+92u04b0 |
+92k02g08g70k04	b0 |
+92k02g08g10k04	b0 |
+92k07c71f3c10	k04b0 |
+92k0208880210	k04b0 |
+92k0208881e10	k04b0 |
+92k0208882210	k04b0 |
+92k022888a210	k04b0 |
+92k01c7071d7e	k04b0 |
+92u04b0 |
+92u04b0 |
+92u04b0 |
+92m1fm04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92m1bm04b0 |
+92m15m04b0 |
+92l01G80l04b0 |
+92l03Gc0l04b0 |
+92l07Ge0l04b0 |
+92l0cGe0l04b0 |
+92l19Ge0l04b0 |
+92l33Ge0l04b0 |
+92l7fGc0l04b0 |
+92lH80l04b0 |
+92k01803fm04b0 |
+92k03555fm04b0 |
+92k03555fm04b0 |
+92k032a98m04b0 |
+92k018030m04b0 |
+92lGe0m04b0 |
+92u04b0 |
+92u04b0 |
+92u04b0 |
+93Ufcb0 |
+94u02b0 |
+98u02b0 |
+98u01b0 |
+9fVb0 |
+80v30 |
+80v30 |
+80v30 |
+80i40g80i7020	30j30 |
+80i40k10g10j30 |
+80h38f9738b87	401c10e0f1c5c0	h30 |
+80h4440808648	802210211222i	30 |
+80h3840808448	801c102113e2i	30 |
+80h0440808448	800210211202i	30 |
+80h!4480844880	2210211222i30 |
+80h3839e3ee67	801c7ef8e9c780	h30 |
+80m80n30 |
+80m80n30 |
+80l07o30 |
+80l1eo30 |
+Wf0 |
+Wf0 |
+\enddata{raster, 269925736}
+\view{rasterview,269925736,44,0,0}
+}	 
+
+A subclass of sliderV, this object will, by default, display in the same 
+manner. However, if an external object has provided a string array to the 
+value object., and the current value is between 0 and the array size, this 
+slider will display that string instead on an integer at the top. Attributes 
+are the same as sliderV.
+
+
+\section{5.10	The string display view - stringV		 
+
+}\center{\
+\begindata{raster,269925660}
+2 0 127667 127667 0 0 159 83
+bits 269925660 159 83
+Yfe |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80ke801h3cn02 |
+80j0118i66n02 |
+80j0109i42g80	g80j02 |
+80kc3ef587881	6dfe6de0j02 |
+80k7119249081	24892480j02 |
+80k1911249081	24892480j02 |
+80j01091124e0	4224892480j02 |
+80j0199112440	6624892480j02 |
+80j0170fbf670	3c1a6e1a60j02 |
+80n88h08l02 |
+80n88h08l02 |
+80n70h1cl02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+80x02 |
+Yfe |
+\enddata{raster, 269925660}
+\view{rasterview,269925660,45,0,0}
+}An output-only valueview for displaying an externally set string. If 
+value_GetString() returns NULL, but value_GetStringArray() does not, it will 
+index the array by value_GetValue() to find the string. If that also fails to 
+produce a string, it will display the label attribute string. attributes are 
+
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (label string)
+
+\begindata{bp,269685008}
+\enddata{bp,269685008}
+\view{bpv,269685008,46,0,0}
+
+\section{5.11	The thumbwheel view - thumbV		 
+
+}\center{\
+\begindata{raster,269698488}
+2 0 127667 127667 0 0 147 87
+bits 269698488 147 87
+Xe0 |
+80w20 |
+80w20 |
+80w20 |
+80n38n20 |
+80n6cn20 |
+80n44n20 |
+80n44n20 |
+80n44n20 |
+80n44n20 |
+80n44n20 |
+80n6cn20 |
+80n38n20 |
+80w20 |
+80w20 |
+80w20 |
+80w20 |
+80w20 |
+80w20 |
+80w20 |
+80w20 |
+80w20 |
+80w20 |
+80l1fIm20 |
+80l18h03m20 |
+80l17Hfdm20 |
+80l13!5559m20 |
+80l12!aaa9m20 |
+80l1350g59m20 |
+80l12a3Ga9m20 |
+80l13560359m20 |
+80l12a7Ga9m20 |
+80l134c0759m20 |
+80l128fGa9m20 |
+80l13580f59m20 |
+80l129fGa9m20 |
+80l133fG59m20 |
+80l12201fa9m20 |
+80l137fG59m20 |
+80l12401fa9m20 |
+80l137fG59m20 |
+80l12401fa9m20 |
+80l137fG59m20 |
+80l127fGa9m20 |
+80l13401f59m20 |
+80l127fGa9m20 |
+80l13401f59m20 |
+80l127fGa9m20 |
+80l13401f59m20 |
+80l127fGa9m20 |
+80l133fG59m20 |
+80l12a00fa9m20 |
+80l133fG59m20 |
+80l129007a9m20 |
+80l135fG59m20 |
+80l128c03a9m20 |
+80l1347G59m20 |
+80l12a7Ga9m20 |
+80l1353G59m20 |
+80l12a8ga9m20 |
+80l13!5559m20 |
+80l13Hf9m20 |
+80l14h05m20 |
+80l1ch07m20 |
+80l18h03m20 |
+80l1fIm20 |
+80w20 |
+80w20 |
+80w20 |
+80w20 |
+80w20 |
+80w20 |
+80w20 |
+80w20 |
+80j1ff0g018003	hc0j20 |
+80j1250h8001h	40j20 |
+80j0210h8001h	40j20 |
+80j021cdad8e7	6dc30c40j20 |
+80j0212492492	49249240j20 |
+80j0212492493	59279e40j20 |
+80j0212492491	51241040j20 |
+80j0212492491	a1265940j20 |
+80j073b37b6e1	23b38ee0j20 |
+80w20 |
+80w20 |
+80w20 |
+Xe0 |
+\enddata{raster, 269698488}
+\view{rasterview,269698488,47,0,0}
+}Similar to the sliderV, the thumbwheel differs in that, 1. when it gets to 
+the maximum value, it will cycle back to the minimum value and 2. It has an 
+additional attribute to indicate what increment should be added to the number 
+with each movement.
+
+[long] <increment> (10)
+
+[long] <min_value> (0)
+
+[long] <max_value> (100)
+
+[long] <bodyfont-size> (10)
+
+[string] <bodyfont> (andy)
+
+[string] <label> (Thumbwheel)
+
+
+\section{5.12	The string display thumbwheel view - thumbstrV	}
+
+
+\center{\
+\begindata{raster,269925536}
+2 0 136232 136232 0 0 127 107
+bits 269925536 127 107
+Ufe |
+c0t06 |
+c0t06 |
+c0t06 |
+c0k30!0180k06 |
+c0k10h80k06 |
+c0k10h82k06 |
+c0k1c331ee780	j06 |
+c0k12492492k06 |
+c0k12792492k06 |
+c0k12413892k06 |
+c0k12651092k06 |
+c0k!3b9dd980j	06 |
+c0m22l06 |
+c0m22l06 |
+c0m1cl06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0k7fHfck06 |
+c0k60h0ck06 |
+c0k5fHf4k06 |
+c0k4d!5564k06 |
+c0k4a!aaa4k06 |
+c0k4d400164k06 |
+c0k4a8ffea4k06 |
+c0k4d580d64k06 |
+c0k4a9ffea4k06 |
+c0k4d301d64k06 |
+c0k4a3ffea4k06 |
+c0k4d603d64k06 |
+c0k4a7ffea4k06 |
+c0k4cGfd64k06 |
+c0k48807ea4k06 |
+c0k4dGfd64k06 |
+c0k49g7ea4k06 |
+c0k4dGfd64k06 |
+c0k49g7ea4k06 |
+c0k4dGfd64k06 |
+c0k49Gfea4k06 |
+c0k4dg7d64k06 |
+c0k49Gfea4k06 |
+c0k4dg7d64k06 |
+c0k49Gfea4k06 |
+c0k4dg7d64k06 |
+c0k49Gfea4k06 |
+c0k4cGfd64k06 |
+c0k4a803ea4k06 |
+c0k4cGfd64k06 |
+c0k4a401ea4k06 |
+c0k4d7ffd64k06 |
+c0k4a300ea4k06 |
+c0k4d1ffd64k06 |
+c0k4a9ffea4k06 |
+c0k4d4ffd64k06 |
+c0k4aa002a4k06 |
+c0k4d!5564k06 |
+c0k4fHe4k06 |
+c0k50h14k06 |
+c0k70h1ck06 |
+c0k60h0ck06 |
+c0k7fHfck06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0t06 |
+c0k40g03h18i06 |
+c0m01h08i06 |
+c0j40h11h08i06 |
+c0i0efbd61e3d	cdad8ei06 |
+c0i1246492411	249249i06 |
+c0i1844492411	249249i06 |
+c0i0644493811	249249i06 |
+c0i1244491011	249249i06 |
+c0i1c3efd9c0f	b37b6ei06 |
+c0l22m06 |
+c0l22m06 |
+c0l1cm06 |
+Ufe |
+Ufe |
+\enddata{raster, 269925536}
+\view{rasterview,269925536,48,0,0}
+}	 
+
+Like sliderstrV above, can display string values instead of numbers. See 
+sliderstrV above for details. attributes are the the same as thumbV.
+
+\begindata{bp,269724732}
+\enddata{bp,269724732}
+\view{bpv,269724732,49,0,0}
+\section{5.13	The click to enter strings view - clicklistV
+
+}\center{\
+\begindata{raster,269911632}
+2 0 100824 100824 0 0 195 214
+bits 269911632 195 214
+ZJe0 |
+c0zie0 |
+c0zie0 |
+c0zie0 |
+c0zie0 |
+c0zie0 |
+c0zie0 |
+c0m0381g30g70	2001ne0 |
+c0n80g10g10g01	ne0 |
+c0me0870713g10	e0e3e0me0 |
+c0l0110810894	g102111ne0 |
+c0l01g810818g	1020e1ne0 |
+c0l01g810814g	102011ne0 |
+c0l0110810892	g10211110me0 |
+c0me3f7c73180	7ef8!e0me0 |
+c0zie0 |
+c0zie0 |
+c0zie0 |
+c0zie0 |
+c0zie0 |
+c0zie0 |
+c0zie0 |
+c0zie0 |
+c0zie0 |
+ZJe0 |
+ZJe0 |
+80g08zg60 |
+911118zg60 |
+80g08zg60 |
+c44448zg60 |
+80g08zg60 |
+911118zg60 |
+80g08h60g8060	u60 |
+c44448h20g8020	u60 |
+911118h20h2040	t60 |
+80g08h2c398f2c	f0t60 |
+c44448h36449a	3640t60 |
+80g08h227c9122	40t60 |
+c44448h224099	2240t60 |
+911118h22408e	2240t60 |
+c44448h226288	2240t60 |
+911118h373dcf	7730t60 |
+Hf8he0g1080u60 |
+c1fc18g01f0g19	80u60 |
+c1fc18g03f8g0e	v60 |
+c0g18g03b8x60 |
+c0g18zg60 |
+c0g18j0806u60 |
+c0g18j0802u60 |
+c0g18k0204t60 |
+c0g18h777398f2	cft60 |
+c0g18h222449a3	64t60 |
+c0g18h2227c912	24t60 |
+c0g18h12440992	24t60 |
+c0g18h1dc408e2	24t60 |
+c0g18h08862882	24t60 |
+c0g18h0883dcf7	73t60 |
+c0g18j0108u60 |
+c0g18j0198u60 |
+c0g18ke0u60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18h1c3c70v	60 |
+c0g18h326888v	60 |
+c0g18h0644f8v	60 |
+c0g18h1a6480v	60 |
+c0g18h223880v	60 |
+c0g18h3220c4v	60 |
+c0g18h1d3c78v	60 |
+c0g18i42w60 |
+c0g18i66w60 |
+c0g18i38w60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18j0180u60 |
+c0g18k80u60 |
+c0g18h2004g80	u60 |
+c0g18h79cf3880	u60 |
+c0g18h23!6480	u60 |
+c0g18h22240c80	u60 |
+c0g18h22243480	u60 |
+c0g18h22244480	u60 |
+c0g18h23!6480	u60 |
+c0g18h19c33bc0	u60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+c0g18zg60 |
+Hf8zg60 |
+911118zg60 |
+c44448zg60 |
+911118zg60 |
+c44448zg60 |
+c44448zg60 |
+80g08zg60 |
+911118zg60 |
+80g08zg60 |
+c44448zg60 |
+80g08zg60 |
+911118zg60 |
+80g08zg60 |
+c44448zg60 |
+80g08zg60 |
+911118zg60 |
+80g08zg60 |
+ZJe0 |
+\enddata{raster, 269911632}
+\view{rasterview,269911632,50,0,0}
+}
+
+This is a specialized valueview for presenting a list of strings to the user , 
+and getting a callback when the user clicks on one of them. 
+
+To use, set the string array of the value object to a string array of the 
+desired choices ( this array must be in permanent storage) . When the user 
+clicks on on of them, the string pointer will be set accordingly. 
+
+
+So to set :
+
+
+...
+
+static char vwlist[2];
+
+vwlist[0] = "first";
+
+vwlist[1] = "second";
+
+value_SetStringArrayAndSize(valueob,vwlist,2);
+
+...
+
+	This will place the strings 'first' and 'second' on separate lines in the 
+clicklist text area. When the user clicks on on of them , the string value of 
+the value object will be set to the clicked on item . So in the call back 
+routine, the code will be:
+
+
+result = value_GetString(valueob);
+
+
+Attributes are the same as stringV.
+
+\begindata{bp,269925432}
+\enddata{bp,269925432}
+\view{bpv,269925432,51,0,0}
+\section{5.14	The multiple string entry view - menterstrV
+
+}\center{\
+\begindata{raster,269863692}
+2 0 103206 103206 0 0 381 110
+bits 269863692 381 110
+ZZMf8 |
+"88zzj08 |
+80g08zzj08 |
+a22228zzj08 |
+80g08zzj08 |
+"88zzj08 |
+80g08zzj08 |
+a22228je0h038c	38i0f1c1ej3870	kc0v08 |
+80g08j60h018c	18h1006080ch01	g1c20k40v08 |
+"88j60h018018	h3006180ch03g	1c20k40v08 |
+80g08h7bbc6ee3	80799cf8e6ef7b	73100cec78e780	16279d98703b9c
+ 598eu08 |
+a22228h31!6664	c0c98d99337931	b3300c76c933g	132cceec981132
+ 4891u08 |
+"88h3106666cc0	e18d9b331c3183	200c66e333g13	20cccd98110648
+ 9fu08 |
+"88h1a3e666fde	718d9bf30e3181	a00c6673f3g11	a7cccdf80a1a48
+ 90u08 |
+a22228h1a!666c	g398d9b030735	81e00c663b0340	10eccccd800a22
+ 4890u08 |
+"88h0c!666e40	998d9b93133980	c00c669b939810	eccccdc804324d
+ 9880t08 |
+a22228h0c3bf3	b780f3deede79e	1b!c01ee7f1e1	9838677eeef004
+ 1de6cf40t08 |
+Hf8zoe0t08 |
+c0g18zn01f0t08 |
+c0g18zn03f8t08 |
+c0g18zn03b8t08 |
+c0g18zzj08 |
+c0g18h70j06i03	80zq08 |
+c0g18h30j06i01	80zq08 |
+c0g18h30n0180	zq08 |
+c0g18h31e763f0	ecceec01eef1bb	8ezp08 |
+c0g18h!33b660	776676gc5!9993	zp08 |
+c0g18h!333660	"66gc41999b3zp	08 |
+c0g18h!333660	"66g68f999bfzp	08 |
+c0g18h"33c0"66	g69!99b0zp08 |
+c1fc18h!3332g	"66g31!99b9zp	08 |
+c1fc18h79e73b	e0f77fe7g30ef	cedezp08 |
+c1fc18j07f0zx	08 |
+c0g18j0410zx08 |
+c0g18j03e0zx08 |
+c0g18ofezt08 |
+c0g18zzj08 |
+c0g18h70oe0zq	08 |
+c0g18h30o60zq	08 |
+c0g18h30o60zq	08 |
+c0g18h31e763f0	ecc79dc07bbc6e	e380zo08 |
+c0g18h!33b660	776ccd8031!66	64c0zo08 |
+c0g18h!333660	6660c7g310666	6cc0zo08 |
+c0g18h!333660	6667c7g1a3e66	6fc0zo08 |
+c0g18h"33c066	6cc7g1a!666czp	08 |
+c0g18h!3332g66	6ccd800c!666e	40zo08 |
+c0g18h79e73be0	f7777dc00c3bf3	b780zo08 |
+c0g18j07f0zx08 |
+c0g18j0410zx08 |
+c0g18j03e0zx08 |
+Hf8o3f80zs08 |
+"88zzj08 |
+a22228h70ie0g	3801c0i30zo08 |
+"88h30i60g1803	40g10g30zo08 |
+a22228h30i60g	1803h30zq08 |
+"88h31e763f07c	78Gbf9e76780f	77e380zm08 |
+a22228h!33b660	66cd9b13333b30	1934e4c0zm08 |
+"88h!33366066	cd9993!33301c	30ccc0zm08 |
+a22228h!333660	66cd99a3"33ce	318fc0zm08 |
+"88h"33c066cd	98e3!33340733	2czn08 |
+a22228h!3332g	66cd98e3!3338	13372e40zm08 |
+"88h79e73be05c	78ec479e73981e	7fe780zm08 |
+a22228j07f0i40	zt08 |
+"88j0410h01c0	zt08 |
+a22228j03e0h01	80zt08 |
+"88zzj08 |
+a22228zzj08 |
+"88zzj08 |
+a22228zzj08 |
+"88zzj08 |
+a22228zzj08 |
+"88zzj08 |
+"88zzj08 |
+80g08zzj08 |
+a22228zzj08 |
+80g08zzj08 |
+"88zzj08 |
+80g08zzj08 |
+a22228zzj08 |
+80g08zzj08 |
+"88zzj08 |
+80g08zzj08 |
+a22228zzj08 |
+80g08zzj08 |
+ZZMf8 |
+ZZMf8 |
+e2/22#2288j/22$22	38 |
+c8/88$88j22/88#88	98 |
+e2/22#2288j/22$22	38 |
+c8/88$881e80h	22/88#8898 |
+e2/22#22883180	h/22$2238 |
+c8/88$883080h	22/88#8898 |
+e2/22#2288381e	7b9c/22$2238 |
+c8/88$881e3331	2622/88#8898 |
+e2/22#22880703	3166/22$2238 |
+c8/88$88039f1a	7e22/88#8898 |
+e2/22#228821b3	1a60/22$2238 |
+c8/88$8831b30c	7222/88#8898 |
+e2/22#22883f1d	8c3c/22$2238 |
+c8/88$88j22/88#88	98 |
+e2/22#2288j/22$22	38 |
+c8/88$88j22/88#88	98 |
+e2/22#2288j/22$22	38 |
+c8/88$88j22/88#88	98 |
+e2/22#228fJe2	/22#2238 |
+c8/88#8890j22	/88#8898 |
+e2/22#2290j12	/22#2238 |
+c8/88#88a0j12	/88#8898 |
+e2/22#22a0j0a	/22#2238 |
+ZZMf8 |
+\enddata{raster, 269863692}
+\view{rasterview,269863692,52,0,0}
+}
+	The menterstrV (for multiple enter string view)  is a specialized object for 
+displaying a list of strings and allowing the user to enter a response to 
+each. When first displayed, this object will place the caret next to the end 
+of the first item in the list, where the user can enter their response. List 
+items will be in bold, user entries will not. Each time the user types 
+'return', the caret moves down to the end of the next item. After the last 
+item, the user will be prompted to confirm the entries. When confirmed, the 
+value callback routines will be called, with the string array set to the user 
+responses. The user can also confirm an entry by clicking on the button at the 
+bottom of the list.
+
+	To use, the client sets the value string to a string, with the elements 
+separated by newlines( '\\n' s). 
+
+
+So to set :
+
+    /* first clear the array, so the call back routine will know that nothing 
+has been entered yet */
+
+    value_SetArraySize(val,0); 
+
+    /* Now zero the string as a signal to the object to clear out any current 
+entries */
+
+    value_SetString(val,"");
+
+    /* set the string with the two prompts */
+
+    value_SetString(val,"question 1\\nquestion 2\\n");
+
+
+and in the callback
+
+
+char **foo,*resp1, *resp2;
+
+int size;
+
+
+size = value_GetArraySize(self->menterob);
+
+foo = value_GetStringArray(self->menterob) ;
+
+if(size == 2)\{
+
+	resp1 = foo[0];
+
+	resp2 = foo[1];
+
+\}
+
+
+	It is also possible to set default answers. This is done by inserting them in 
+the prompt string following an '@'.  So if one wanted to have default answers 
+'ans 1' and 'ans 2' in the above example, the value_SetString call would look 
+like 
+
+    value_SetString(val,"question 1@ans 1\\nquestion 2@ans 2\\n");
+
+these default answers will show up to the user in plain text and will be 
+editable.
+
+
+An example of the menterstrV can be seen in the arbcon itself , where it is 
+used for editing object resources. The illustration above was taken from an 
+Arbcon.
+
+
+Attributes are the same as buttonV.
+
+\begindata{bp,269703076}
+\enddata{bp,269703076}
+\view{bpv,269703076,53,0,0}
+\chapter{6	The Text inset
+
+}
+Adew makes it easy to create and get a handle on the basic objects of ATK 
+(text , table, etc.) . The text object can be particularly useful, for 
+presenting information to the user,  as a generalized storage object for data, 
+or as a substrate for containing other objects. Below I briefly list some 
+useful text and textview methods. For more details, see the Atk documentation.
+
+
+\section{6.1	Text}
+
+	The following deal with reading and writing  a text object. 
+
+    text_Read(struct text *self,FILE *file, long id)
+
+      returns long;
+
+    text_Write(struct text *self,File *file, long writeid, int level)
+
+      returns long;
+
+
+	The following deal with inserting and deleting characters in text.
+
+    text_Clear(struct text *self,);
+
+    text_InsertCharacters(struct text *self,long pos, char *str, long len)
+
+      returns boolean;  /* FALSE if read-only */
+
+    text_AlwaysInsertCharacters(struct text *self,long position, char *string, 
+long size);
+
+    text_AddInCharacter(struct text *self,long pos, char c);   /* Does not 
+modify marks */
+
+    text_DeleteCharacters(struct text *self,long pos, long len)
+
+      returns boolean;  /* FALSE if read-only */
+
+    text_AlwaysDeleteCharacters(struct text *self,long position, long size);
+
+    text_ReplaceCharacters(struct text *self,long pos, long len, char *repStr, 
+long repLen)
+
+      returns boolean;  /* FALSE if read-only */
+
+    text_AlwaysReplaceCharacters(struct text *self,long pos, long len, char 
+*repStr, long repLen);
+
+    text_GetLength(struct text *self,)
+
+      returns long;
+
+    text_GetChar(struct text *self,long pos)
+
+      returns long;
+
+
+	The following attempt to provide the functionality of the C strings package 
+for text 
+
+    text_CopyText(struct text *self,long pos, struct text *srctext, long 
+srcpos, long len)
+
+      returns boolean;  /* FALSE if read-only */
+
+    text_AlwaysCopyText(struct text *self,long pos, struct text *srctext, long 
+srcpos, len);
+
+    text_Index(struct text *self,long pos, char c, long len)
+
+      returns long; /* functions like the unix index() , but works on text in 
+a range and returns -1 on failure*/
+
+    text_Strncmp(struct text *self,long pos, char *str, long len)
+
+      returns int;
+
+    text_Textncmp(struct text *self,long pos, struct text *text, long pos2, 
+long len)
+
+      returns int;
+
+
+	The following functions deal with the read-only area of the text 
+
+    text_GetFence(struct text *self) mark_GetLength((self)->fence);
+
+    text_SetFence(struct text *self,pos) mark_SetLength((self)->fence, pos);
+
+    text_ClearFence(struct text *self) mark_SetLength((self)->fence, 0L);
+
+
+	The following will insert a file into a text object
+
+    text_AlwaysInsertFile(struct text *self,FILE * file,char *filename, long 
+position) returns long;
+
+    text_InsertFile(struct text *self,FILE * file,char *filename, long 
+position) returns long;
+
+
+	The following insert objects into text.
+
+    text_InsertObject(struct text *self,long pos, char *dataobject_name,char 
+*view_name) returns struct viewref *;
+
+    text_AddView(struct text *self,long pos, char *viewtype, struct dataobject 
+*dataobject) returns struct environment *;
+
+
+\section{6.2	Textview}
+
+	The following deal with the current text selection. 
+
+    textview_SetDotPosition(struct text *self,long newPosition);
+
+    textview_SetDotLength(struct text *self,long newLength);
+
+    textview_GetDotPosition(struct text *self,) returns long;
+
+    textview_GetDotLength(struct text *self,) returns long;
+
+
+	The following deal with the visibility of the current text selection.
+
+    textview_Visible(struct text *self,long pos) returns boolean;
+
+    textview_FrameDot(struct text *self,long pos);
+
+\begindata{bp,269863648}
+\enddata{bp,269863648}
+\view{bpv,269863648,54,0,0}
+\chapter{7	The Page Inset}
+
+
+	The page inset was recently added to provide a general mechanism for allowing 
+an application to switch between whole sections of switches, text, etc. under 
+program control. Loosely based on code from Nathanial Borenstein's book 
+\italic{The Andrew Toolkit, An Introduction}, the page object may contain any 
+number of pasted in insets, and can switch between them under either user or 
+program control. Since each inset can contain other insets, complex 
+applications can be built up.
+
+
+
+\section{7.1	Inserting pages
+
+}
+	Like other insets, pages may be inserted by pasting them in with the arbcon. 
+When inserted , a new page will display with the phrase <No Objects>. The page 
+menu (labeled \bold{Flip}, so as to not be confused with the text Page menus) 
+will contain a paste option, and other objects (lset, text, etc.) may be 
+copied from the arbcon and pasted in the page object. The \bold{Flip} menu is 
+persistent, so that even when a subobject is active on a page, the application 
+creator can paste in new objects, each of which will be added as a follow-on 
+to it's predecessor. 
+
+	As new objects are added, the page menu grows, to contain the logical names 
+of each of the subobjects that aren't currently being displayed. The user may 
+bring up any of the hidden objects choosing the object name on the menu. The 
+logical name of any object may set from the Arbcon, see the \italic{Tutorial 
+on ADEW} for details. The objects may also be visited in order by using the 
+\bold{Flip Page} menu option. 
+
+
+\section{7.2	Programmer interface to page
+
+
+}	The following methods and macromethods are defined by the page object. The 
+methods below that take a position parameter, may either be given a positive 
+long integer indicating which object (numbered 1 - n) , or one of the 
+following macros
+
+
+         \typewriter{macro			meaning
+
+page_CURRENT		The current object being displayed 
+
+page_AFTERCURRENT	The next object
+
+page_BEFORECURRENT	The previous object
+
+page_ATEND 		The last object in the list
+
+page_ATBEGINING	The first object in the list
+
+}
+
+\bold{page_GetPostMenus(self,) 
+
+page_SetPostMenus(self,val)
+
+}	The page object maintains a flag indicating whether or not it's view should 
+be posting the menus described above. For many applications, it may be 
+desirable to turn off the pages menus by calling 
+page_SetPostMenus(self,FALSE);
+
+ 
+
+\bold{page_AddObject(self,struct dataobject *d, char *label, char 
+*viewname,long position)  returns boolean;
+
+}\leftindent{Adds a new object to the list of pages. Arguments are
+
+struct dataobject *d 
+
+\leftindent{the dataobject itself;
+
+}char *label 
+
+\leftindent{A label to be associated with the object. If the object is a cel, 
+then this label should be an empty string as the page object will use the cel 
+reference name. This name may be set via the Arbcon, or with the 
+cel_SetRefName method. See below.}
+
+char *viewname
+
+\leftindent{Name of the type of view to be associated with the object. If 
+NULL, the objects default view will be used.
+
+}long position
+
+\leftindent{Indicates what page to insert the object as. Typically, this will 
+be one of the macros listed above. Future pages will Not be reserved. i.e. if 
+an object is inserted as the 100th page in an inset that currently has only 
+two pages, it will be inserted as the last (third) page.
+
+}}
+\bold{page_DeleteObject(self,struct dataobject *d) returns boolean;
+
+}	Removes the page containing the given dataobject.
+
+
+\bold{page GetNowPlaying() returns struct dataobject *;
+
+}	Gets a pointer to the current object.
+
+
+\bold{page_GetNowPlayingName(self) returns char *;
+
+}	Gets the name of the current object
+
+
+\bold{page_SetNowPlaying(self,struct dataobject *d) returns boolean;}
+
+	Given a dataobject, sets the current page.
+
+
+\bold{page_SetNowPlayingByName(self,char *name) returns boolean;
+
+}	Given a reference name (i.e. label), sets the current page.
+
+
+\bold{page_SetNowPlayingByPosition(self,long position) returns boolean;
+
+}	Given a position (or one of the macros above), sets the current page.
+
+
+\bold{page_GetPositionOfObject(self,struct dataobject *d) returns long;
+
+}	Returns the position of a given object. (0 if not found).
+
+
+\bold{page_GetNameOfObject(self,struct dataobject *d) returns char *;	
+
+}	Returns the name of a given object. (NULL if not found).
+
+
+\bold{page_GetObjectAtPosition(self,long position) returns struct dataobject 
+*;}
+
+	Given a position (or one of the macros above), returns the object at that 
+position.
+
+
+\bold{page_GetObjectByName(self,char *name) returns struct dataobject *;
+
+}	Given a reference name (i.e. label), returns the object. 
+
+
+\bold{page_GetObjectCount(self,) returns long;
+
+}	Returns the number of pages in the inset.
+
+\begindata{bp,269717612}
+\enddata{bp,269717612}
+\view{bpv,269717612,55,0,0}
+\chapter{8	Lset
+
+}
+Lset is a tool for building up a tree of views. It allows the user to start 
+with an empty window and split it, either horizontally or vertically into two 
+separate views, each of which may either be made to contain an inset , or 
+split again. It is particularly adapted for  use in creating applications with 
+the cel and Arbcon objects. (It is, in fact, the object used to create the 
+Arbcon. See the Arbcon documentation for details.)
+
+
+The lset indicates that it has the input focus by blacking out its rectangle. 
+At that time, the following menu options become active for that rectangle.
+
+
+\section{8.1	Menu options.
+
+}
+\subheading{split horizontal}
+
+\subheading{split vertical}
+
+
+\indent{Changes the cursor to horizontal bars (or vertical bars) and sets the 
+mode to split the lset into two lsets at the position of the next hit. It is 
+possible to change from vertical to horizontal mode before splitting the 
+window. Clicking outside of the black rectangle will cause it to lose the 
+input focus and exit this mode. Once split, the division between two lsets may 
+be moved by clicking and dragging the mouse when one of the bar cursors 
+appears. 
+
+}
+\subheading{Unsplit Lset}
+
+
+\indent{Undoes the split operation. Any object that may have been inserted in 
+the other half of the split will be maintained.
+
+
+}
+\subheading{Set cel}
+
+
+\indent{Inserts a cel inset in the lset, the cel is responsible for 
+determining its own child, usually via an Arbcon (see Arbcon 
+documentation).}\indent{
+
+
+}\subheading{Set Object}
+
+
+\indent{Can be used to set objects other than a cel in the lset, the name of 
+the object will be prompted for.}
+
+
+\subheading{Paste}
+
+
+\indent{Creates a child object and inserts the contents of the cut buffer.
+
+
+}
+\section{8.2	Notes.}
+
+
+It is not possible to split an lset that contains an inset. However, if one is 
+using cels and the Arbcon to create the child insets, this effect may be 
+achieved by selecting the child inset as the current celview, clicking on the 
+cut button in the Arbcon to cut the cel, splitting the now empty lset as 
+desired, and then using the paste operation to reinsert the cut cel in the 
+desired location.
+
+Similarly, when creating applications, it is often useful to have one or two 
+spare blank lsets that can be used as holding areas for previously created 
+cels. Thus, if one wishes to exchange the location of two cels, one can cut 
+out one of the cels, paste it in the holding area, cut the other and paste it 
+in the old location of the first one, and finally cut the first one from the 
+holding area to the old location of the second one.
+
+
+\section{8.3	Programmer interface 
+
+}
+	See the lpair documentation. 
+
+
+\begindata{bp,269925340}
+\enddata{bp,269925340}
+\view{bpv,269925340,56,0,0}
+\chapter{9	Advanced topics - Cels, Celviews and the Arbiterview.
+
+}
+	Cels and Celviews make up a wrapper inset that allow the Arbcon to do its 
+work. Since each parent view implements its own ways of inserting children, 
+the celview was created as an intermediary view that could be inserted in any 
+parent and would provide a consistent way for creating its child which the 
+Arbcon could control. When the arbcon is used to create a new object, it does 
+this by creating a cel, telling the cel what kind of inset it should contain, 
+and then writing the cel into the cut-buffer. The cel also provides the 
+conventions for naming it's child and storing the attributes for the value 
+objects.
+
+
+	The Arbiterview is a sub-class of the celview. In addition to working like a 
+celview, it also provides the namespace that all of the celviews interact with 
+to ensure that there is no name collision. It also provides classprocedures 
+for locating named cels within the namespace. 
+
+
+	The typical Adew programmer can ignore these objects, since the createcon 
+created C program does all of the necessary interfacing. However they can be 
+used to provide more flexibility for those doing more advanced applications. 
+The purpose of this section is to explain the methods and classprocedures 
+available. 
+
+
+\section{9.1	Accessing the cel and celview related to an inset.
+
+}
+The cels and celviews associated with a given view may be easily accessed. 
+Note that since cels contain view-specific information, that they can't be 
+accessed from a data-object alone. 
+
+
+\bold{struct celview *celview_GetCelviewFromView(view)}
+
+	This class procedure takes a pointer to any view and returns the celview 
+associated with it, or NULL if there is no celview associated with it . All 
+views created with the arbcon within an Adew application should have celviews. 
+
+
+
+
+
+\bold{struct cel *celview_GetCel(self)}
+
+\leftindent{This macro returns the cel associated with a celview.
+
+}   
+
+\bold{struct view *GetTrueChild(self) 
+
+}\leftindent{This macro returns the celview's main child view. 
+
+}
+\bold{struct view *GetApplication(self)
+
+}\leftindent{This macro returns the  celview's immediate child, which may be 
+the true child, as returned above, or it may be the application layer 
+associated with the child (usually it's scrollbar), if these is one. }
+
+
+\section{9.2	Dynamically changing valueview attributes 
+
+}	Normally, the attributes associated with a valueview are set interactively 
+from the arbcon, though sometimes it is desirable to change them dynamically 
+while the program is running. The follow methods provide this capability.
+
+
+\subsection{9.2.1	Cel Methods for dealing with attributes
+
+}
+\bold{long cel_GetLongAtt(self,attname)}
+
+struct cel *self;
+
+char *attname;
+
+
+	This method takes a cel and an attribute name and returns the current value 
+of that attribute. If the attribute value has never been defined, 
+cel_UNDEFINEDVALUE will be returned.
+
+
+
+\bold{void cel_SetLongAtt(self,attname,val)
+
+}	struct cel *self;
+
+	char *attname;
+
+	long val;
+
+
+	This method takes a cel and an attribute name and sets the current value of 
+that attribute. If val == cel_UNDEFINEDVALUE, the value will be unset. 
+
+
+\bold{char * cel_GetStringAtt(self,attname,buf,buflen)
+
+}	struct cel *self;
+
+	char *attname,*buf;
+
+	long buflen;
+
+	
+
+	This method takes a cel, an attribute name, a buffer , and the length of the 
+buffer. The value of the attribute is written into the buffer and the buffer 
+pointer is returned.  . If the attribute value has never been defined, NULL 
+will be returned.
+
+	
+
+\bold{void cel_SetStringAtt(self,attname,attval)
+
+}struct cel *self;
+
+char *attname,*attval;
+
+	
+
+
+	This method takes a cel, an attribute name and a string. It sets the current 
+value of that attribute to the value of the string. If attval == NULL, the 
+value will be unset.
+
+
+\subsection{9.2.2	Examples
+
+
+}example 1.
+
+
+	To change the maximum value of a slider switch named self->sliderview to 50:
+
+
+	struct cel *cl;
+
+	cl = celview_GetCel(celview_GetCelviewFromView(self->sliderview));
+
+	if(cel_GetLongAtt(cl,"max_value") != 50)
+
+		cel_SetLongAtt(cl,"max_value", 50);
+
+
+example 2.
+
+	
+
+	To change the label of a button named self->buttonview to "push me".
+
+
+	struct cel *cl;
+
+	char buf[256],*res;
+
+	cl = celview_GetCel(celview_GetCelviewFromView(self->buttonview));
+
+	res = cel_GetStringAtt(cl,"label",buf,buflen);
+
+	if(res == NULL || strcmp(buf,"push me") != 0)
+
+		cel_SetStringAtt(cl,"label","push me");
+
+
+
+\section{9.3	Dynamically creating new cel objects}
+
+	
+
+	It is sometimes useful for applications to create new objects on the fly. The 
+following cel methods can support this.
+
+
+\bold{boolean cel_SetChildObject(self,struct dataobject *newobject,char 
+*viewName);
+
+}	Places an object in the cel. viewName is the name of the type of view to 
+apply to the dataobject. If NULL, cel will use the default view for that 
+dataobject.
+
+
+\bold{char *cel_GetRefName(self);}\bold{
+
+}	Returns the cel's logical name.
+
+
+\bold{void cel_SetRefName(self,char *refname) returns char *;}
+
+	This method sets the cel's logical name.
+
+
+\bold{void cel_SetApplication(self,int app)
+
+}\leftindent{Can be set to cel_NORMAL, cel_APPLICATION to indicate if the 
+child should be displayed with it's application layer, (usually w/ one or more 
+scroll bars ).
+
+}
+\subsection{9.3.1	Example
+
+
+}\indent{	To place a buttonv with the label "mybutton" in the existing text 
+object, self->text, instead of placing it directly.
+
+
+    struct cel *cc;
+
+    struct value *val;
+
+    val = value_New();
+
+    cc = cel_New();
+
+    cel_SetChildObject(cc,val,"buttonv");
+
+    cel_SetRefName(cc,"NewButton");
+
+    cel_SetLongAtt(cc,"bodyfont-size",16);
+
+    cel_SetStringAtt(cc,"bodyfont","andy");
+
+    cel_SetStringAtt(cc,"label","mybutton");
+
+    text_AddView(self->text,0,"celv",cc);
+
+    text_NotifyObservers(self->text,0);
+
+}
+\section{9.4	Additional Cel Methods
+
+}
+	The following are some additional methods and macro methods provided by cels. 
+
+
+
+\bold{boolean cel_SetObjectByName(self,char *dataname)  
+
+}\leftindent{Sets the child of a cel by giving it the name of an object. The 
+cel will create the object.
+
+}
+\bold{struct dataobject * cel_GetObject(self) 
+
+}\leftindent{Gets a pointer to the object contained in the cel.
+
+}
+\bold{cel_SetViewName(self,char *viewname,boolean UseDefault)
+
+}\leftindent{Sets the name of the view that will be created. If UseDefault is 
+TRUE, the default name will be used if viewname is NULL, or can't be created. 
+
+}
+\bold{char *cel_SetRefName(self,char *refname) 
+
+}\leftindent{Sets the cel's logical name.
+
+}
+\bold{cel_UnsetRefName(self)
+
+}\leftindent{Unsets the cel's logical name.
+
+}
+\bold{cel_SetVisible(self) 
+
+cel_SetInvisible(self) 
+
+}\leftindent{Attempts to make the cel and it's child visible/invisible. When 
+invisible, a cel requests to be shrunk to 0 size, and won't send updates to 
+child.
+
+}
+\bold{boolean cel_Visible(self) 
+
+}\leftindent{returns TRUE if the cel is not currently invisible.
+
+}
+\bold{cel_SetLinkName(self,char *linkname)
+
+}\leftindent{Used to set the name of a related cel. When the celview goes to 
+create a new child view, It will attempt to find (self,via the arbiterview) 
+the related cel, and create a new view on the object contained in that cel.
+
+}
+\bold{long cel_WriteLink (self,FILE *file, long writeid, int level)
+
+}\leftindent{Used by the Arbcon to write a cel that will be a link to the 
+current cel onto the given file descriptor.
+
+}
+\bold{char * cel_GetViewName(self) 
+
+}\leftindent{returns the view type
+
+}
+\bold{char *cel_GetObjectName(self) 
+
+}\leftindent{returns the dataobject type.
+
+}
+\bold{char *cel_GetLinkName(self)
+
+}\leftindent{returns the name of the source cel that this cel is a link to.
+
+}
+\bold{int cel_GetApplication(self) 
+
+}\leftindent{returns cel_NORMAL, cel_APPLICATION or cel_VALUE
+
+}
+\bold{cel_SetNoSave(self,val) 
+
+}\leftindent{Sets a flag to indicate if the child's GetModified flag should be 
+passed on to the parent. If val is set to TRUE, any modification to the child 
+object will not be sent up to the parent, and therefor will not trigger the 
+writing of any checkpoint file. This flag does not effect the writing of the 
+child to any file (checkpoint or otherwise).
+
+}
+\section{9.5	Internal or Obsolete Cel Methods
+
+}
+The following cel methods are either internal or obsolete. They should not be 
+called by external objects.
+
+
+\bold{cel_InsertObject (self,struct dataobject *newobject,char *dataname,char 
+*viewname,int usedefaultview)
+
+}\bold{cel_GetRefAtom(self)
+
+cel_GetViewAtom(self) 
+
+cel_GetObjectAtom(self) 
+
+cel_GetLinkAtom(self)
+
+cel_GetScript(self) 
+
+cel_SetVisibilityBit(self,boolean mode)
+
+cel_SetObjectName(self,char *dataname) 
+
+}\bold{cel_SetObject(self,struct dataobject *newobject) 
+
+}
+
+\section{9.6	Adding menus and keystrokes
+
+}
+	The celview has support for external objects to post keymaps and menulists, 
+to be posted on addition to the child views menus and keymaps. This offers the 
+advanced programmer the opportunity to add new menu entry and keystroke 
+commands to any child of a celview. In the case of conflict, the childs menus 
+and keystrokes will be superseded by those posted to the celview. The calls to 
+do this are 
+
+
+   celview_SetKeymap(self,struct celview *celv,  struct keymap *km);
+
+   celview_SetMenulist(self,struct celview *celv,  struct menulist *ml);
+
+
+For more information on keymaps and menulists, see the ATK documentation.
+
+
+\section{9.7	Dealing with Mouse Hits
+
+}
+	The celview has support for external objects to intersect the mouse hits 
+being sent to a child view. The call to do this is.
+
+
+\bold{celview_SetHitfunc(self, procedure MouseProc, long rock);}
+
+
+Once this method is called,  the celview(self) will react to mouse hits by 
+calling the MouseProc procedure with itself as the first argument, all of the 
+standard hit arguments (see the view documentation) and lastly, the rock that 
+it was passed in the SetHitfunc method. The x and y arguments will have 
+already been scaled to the child objects coordinates. The MouseProc procedure 
+should return a pointer to a view. The controller program then has several 
+options for dealing with this hit.
+
+
+1. If, after dealing with the mouse hit, the controller wants the hit sent on 
+the child object, it can return NULL to signal the celview to continue 
+processing the hit normally, by passing it down to it's child.
+
+
+2. If the controller wants to block the passing of the hit, it should return 
+the celview pointer that it received as it's first argument.
+
+
+3. If the controller wants to pass the hit to the child itself, so it can 
+perform actions after the hit, it can have something like the following as 
+it's MouseProc.
+
+
+struct view *\bold{MouseProc}(cv, action, x, y, numberofclicks, rock)
+
+	struct celview *cv; 	/* the celview */
+
+	enum view_MouseAction action;
+
+	long x, y, numberofclicks;
+
+	long rock;
+
+\{
+
+	struct view *vw;
+
+	vw = view_Hit(celview_GetApplication(cv),action, x, y, numberofclicks)
+
+	/* code deal with the hit goes here */
+
+	...
+
+	return vw;
+
+\}
+
+
+This (or option 1) insures that the proper view (the one that took the hit) is 
+returned up the view tree. For additional information on dealing with mouse 
+hits, see the ATK documentation.
+
+
+
+\section{9.8	Experimental celview overlay code
+
+}
+	Most of the other celview methods are for internal use only. There is 
+currently some experimental code in celview for overlaying other views on top 
+of a celview. The adventurous may want to to experiment with the following, 
+though they should not be considered a supported part of the system. 
+
+
+\bold{void celview_PushOverlay(self,struct view *view,struct rectangle 
+*rect,long flags);
+
+}
+\leftindent{Takes a view, a pointer to a struct rectangle. and a flags 
+argument. The rectangle should give the top,left, width, and height in 
+reference to where the view should be in relation to the parent celview. If 
+the celview gets resized, the overlayed view will be resized in proportion. 
+The flags argument is not currently supported, and should be 0L.
+
+}
+\bold{struct view *PopOverlay(self,struct view *view) ;
+
+}\leftindent{Pops the view off of the overlay stack.
+
+}
+
+\section{9.9	The Arbiterview
+
+
+}	As mentioned above, the arbiterview provides a namespace for those objects 
+below it. Arbiterviews may be inserted at various levels in an application to 
+provide nested namespaces. If no explicit arbiterview is placed in an 
+application, a phantom one will be created, one per frame, to deal with the 
+namespace for that frame. This 'phantom' arbiterview becomes associated with 
+the frame, but is never actually placed in the view tree. By making the 
+default namespace equivalent to the views under a frame, we avoid name 
+collisions when the user brings up a second window on a view tree, since this 
+action creates a new frame. 
+
+
+	 The following class procedures are available for general use.
+
+
+\bold{struct dataobject *arbiterview_GetNamedObject(struct view *vw,char 
+*ObjectName)
+
+}\leftindent{Given any view (vw) and an objects reference name (as set by the 
+arbcon, or with celview_SetRefName()), this class procedure returns a pointer 
+to the object with that name that is within the same name space as the given 
+view. 
+
+}
+\bold{struct view *arbiterview_GetNamedView(struct view *vw,char *ViewName) 
+
+}\leftindent{Given any view (vw) and an objects reference name (as set by the 
+arbcon, or with celview_SetRefName()), this class procedure returns a pointer 
+to the view with that name that is within the same name space as the given 
+view. 
+
+}
+\bold{struct celview *arbiterview_GetNamedCelview(struct view *vw,char 
+*ViewName) 
+
+}\leftindent{Given any view (vw) and an objects reference name (as set by the 
+arbcon, or with celview_SetRefName()), this class procedure returns a pointer 
+to the celview with that name that is within the same name space as the given 
+view. 
+
+}
+Note that, given the celview, it is easy, given the methods above, the get the 
+related views and dataobjects. The GetNamedView and GetNamedObject procedures 
+are just provided as a convenience.
+
+
+In all of the above class procedures, the application programmer may 
+alternately pass a NULL view, and instead provide an explicit arbiterview name 
+prepended to the viewname string and separated from the viewname with ':'s. 
+ This allows the application programmer to get a handle on objects in other 
+namespaces in the same process. So to get the celview named "bar" under the 
+arbiterview named "foo", one would call 
+arbiterview_GetNamedCelview(NULL,"foo:bar"). Since arbiterviews may also be 
+nested, one might also want to get the celview named "bar" under the 
+arbiterview named "foo" under  the arbiterview "sis". For this, one would call 
+arbiterview_GetNamedCelview(NULL,"sis:foo:bar"). The phantom arbiterview that 
+gets associated with a buffer inherits the buffers name. 
+
+
+\bold{arbiterview_SetIgnoreUpdates(struct view *vw,boolean val);
+
+}\leftindent{Given any view (vw) , this procedure will inform the namespace, 
+and it's associated buffer, that changes to the state of the objects in the 
+namespace do not indicate that the application should be checkpointed or saved 
+before the user exits. This gets around the peculiarity of running 
+applications from within a generic editor. See the Adew tutorial for more 
+information. 
+
+}
+The other Arbiterview methods are for interaction with the cels and the 
+arbcon, and should not be called by other objects.
+
+
+\section{9.10	Some notes on nesting of arbiters.
+
+}
+	The current createcon code for generating applications in not designed for 
+dealing with nested arbiters. In general, in creating a single application, 
+there is no need for dealing with multiple namespaces. However, if one has say 
+three applications, each developed with Adew and createcon, that one desires 
+to combine into a single application, it would be reasonable to create a 
+window with Adew, inset arbiter objects within the application, and then read 
+each of the three applications into the arbiters. They can then each operate 
+without fear of a namespace collision. Alternately, one could just look at the 
+applications and insure that no names are common between them , and then even 
+this use of the arbiters would be unnecessary. 
+
+
+\section{9.11	Location of Sources
+
+}
+	The Adew sources are located on the X11-R4 tape in 
+contrib/toolkits/andrew/atk. Under this directory, the values and valueviews 
+are located in the value directory, and all of the remaining code is in the 
+lset directory. Example objects, (the calculator, the piano, etc), are in the 
+controllers directory.
+
+
+\enddata{text,269471316}

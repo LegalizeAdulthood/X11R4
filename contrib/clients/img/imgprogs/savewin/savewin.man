@@ -1,0 +1,55 @@
+.TH SAVEWIN 1 "17 November 1989" "X Version 11"
+.SH NAME
+savewin \- Save window image in file
+.SH SYNOPSIS
+.PP
+.B savewin
+.I file
+[
+.I options
+]
+.br
+.SH DESCRIPTION
+.PP
+.B savewin
+saves an X11 window image in an image file.  This is essentially
+the inverse of
+.B dispimg.
+.PP
+The
+.I file
+argument is normally  a "base" filename, to which
+.B savewin
+appends ".p.Z".  It always writes a color mapped image file, and
+by default it writes a compressed file.
+.PP
+.B savewin
+captures the mouse and asks for a click over the window to save.
+Clicking the mouse over the screen background (root window) saves
+the entire screen image.
+.SH OPTIONS
+This program accepts the standard options listed below.  They are
+listed as command line options, but can also be supplied as X
+resources; for example, "-force monochrome" on the command line
+has the same effect as
+"savewin.force:  monochrome".
+.TP
+.TP
+.B \-display \fIdisplayname\f
+Name of X server to use, including screen number.
+.TP
+.B \-force \fIrestriction\f
+.B \-force grayscale
+forces conversion of a color image to grayscale.
+.B \-force monochrome
+forces conversion of a color or grayscale image to monochrome
+(dithered black and white).
+.B \-force nothing
+retains as much of the image's original
+data as possible.
+.TP
+.B \-geometry \fIgeometry\f
+Size and/or location to use, to save only a portion of a window
+or of an image.
+.SH AUTHOR
+Paul Raveling, USC Information Sciences Institute (Raveling@isi.edu)

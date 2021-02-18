@@ -1,0 +1,37 @@
+# $XConsortium: Imakefile,v 1.1 89/09/18 18:24:57 jim Exp $
+#
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+XGKS_TOP = ..
+#include "../xgks.tmpl"		/* get XGKSLIB and INCLUDES */
+
+#if HasFortran
+FORTRANSUBDIRS = gksdemo xhib
+#endif
+SUBDIRS = Logo example sledsrc stratego $(FORTRANSUBDIRS)
+
+PROGRAMS = bsort defcolors font hanoi mi clock pline pmark usa wong
+LOCAL_LIBRARIES = $(XGKSLIB) $(XLIB)
+
+
+all:: $(PROGRAMS) subs
+
+programs:  $(PROGRAMS)
+
+NamedMakeSubdirs(subs,$(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+CleanSubdirs($(SUBDIRS))
+
+
+NormalProgramTarget(defcolors,defcolors.o,$(DEPXGKSLIB),$(LOCAL_LIBRARIES),-lm)
+NormalProgramTarget(font,font.o,$(DEPXGKSLIB),$(LOCAL_LIBRARIES),-lm)
+NormalProgramTarget(hanoi,hanoi.o,$(DEPXGKSLIB),$(LOCAL_LIBRARIES),-lm)
+NormalProgramTarget(mi,mi.o,$(DEPXGKSLIB),$(LOCAL_LIBRARIES),-lm)
+NormalProgramTarget(clock,clock.o,$(DEPXGKSLIB),$(LOCAL_LIBRARIES),-lm)
+NormalProgramTarget(pline,pline.o,$(DEPXGKSLIB),$(LOCAL_LIBRARIES),-lm)
+NormalProgramTarget(pmark,pmark.o,$(DEPXGKSLIB),$(LOCAL_LIBRARIES),-lm)
+NormalProgramTarget(usa,usa.o,$(DEPXGKSLIB),$(LOCAL_LIBRARIES),-lm)
+NormalProgramTarget(wong,wong.o,$(DEPXGKSLIB),$(LOCAL_LIBRARIES),-lm)
+NormalProgramTarget(bsort,bsort.o,$(DEPXGKSLIB),$(LOCAL_LIBRARIES),-lm)

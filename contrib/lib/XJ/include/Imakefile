@@ -1,0 +1,24 @@
+#include "./../XJImake.defs"
+
+        DEFINES = $(XJDEFINES)
+   INSTALLFLAGS = $(INSTINCFLAGS)
+
+HEADER1= $(XJPLIBSRC)/XJplib.h \
+         $(XJPLIBSRC)/XJp_errno.h
+HEADER2= $(XJEUCSRC)/XJEuc.h
+HEADERS= $(HEADER1) $(HEADER2)
+
+all:: $(HEADERS)
+	@-(list=`echo $(HEADER1) | sed -e 's/[^ ]*\///g'`; set -x; $(RM) $$list)
+	$(LN) $(HEADER1) .
+	@-(list=`echo $(HEADER2) | sed -e 's/[^ ]*\///g'`; set -x; $(RM) $$list)
+	$(LN) $(HEADER2) .
+
+MakeDirectories(install,$(INCDIR))
+InstallMultiple($(HEADERS),$(INCDIR))
+
+clean::
+	@-(list=`echo $(HEADERS) | sed -e 's/[^ ]*\///g'`; set -x; $(RM) $$list)
+
+depend::
+     @echo "skipping make depend in my dir"

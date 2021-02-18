@@ -1,0 +1,11 @@
+#!/bin/csh -f
+set dir=$0
+set dir=$dir:h
+if ($dir == $0) set dir=.
+echo $dir/expdeftab
+foreach i ($*)
+    echo Decoding binary options for $i...
+    $dir/dumpbin ~$i/preferences | join - $dir/expdeftab
+    echo ""
+end
+

@@ -1,0 +1,33 @@
+#include "../../Serpent.tmpl"
+DIR = saddle
+
+FIRSTSRC = aap.c aay.c aal.c acg.c
+
+FIRSTOBJ = aap.o aay.o aal.o acg.o
+
+LASTSRC = aca.c
+
+LASTOBJ = aca.o
+
+SRC = $(FIRSTSRC) $(LASTSRC)
+
+OBJ = $(FIRSTOBJ) $(LASTOBJ)
+
+PERM = sdd
+
+BIN = saddle1 saddle2
+
+LIBS = $(SERPENTLIBS)
+
+SerpentYaccRule()
+SerpentLexRule()
+SerpentObjectRule()
+
+all:	aay.c aal.c $(BIN) install_bin
+
+SerpentSimpleProgramObjs(saddle1,$(FIRSTOBJ))
+SerpentSimpleProgramObjs(saddle2,$(LASTOBJ))
+
+SerpentInstallPermBin()
+
+SerpentDepend()

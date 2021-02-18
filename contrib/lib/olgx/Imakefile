@@ -1,0 +1,72 @@
+#
+# Imakefile for olgx library.
+#
+# Before making the library, need to install the header files.
+#
+#   For example:
+#	imake -I../../../mit/config -DTOPDIR=../../../mit -s Makefile
+#	make install_headers
+#	make
+#	make install
+#
+# HEADER_DEST is the place where the headers should be installed.  For
+#	example, /usr/include
+# LIBRARY_DEST is the place where the finished library should be installed.
+#	For example, /usr/lib
+
+HEADER_DEST = .
+LIBRARY_DEST = .
+INCLUDES= -I$(HEADER_DEST) -I$(TOP)
+HDRSPUBLIC = olgx.h
+HDRSPRIVATE = busy.h grey.h olgx_impl.h
+
+HEADERS = ${HDRSPUBLIC} ${HDRSPRIVATE}
+
+SRCS = ol_button.c ol_draw.c ol_init.c ol_misc.c ol_sb.c ol_slider.c
+
+OBJS = ol_button.o ol_draw.o ol_init.o ol_misc.o ol_sb.o ol_slider.o 
+
+all::
+
+#if DebugLibOlgx && ProfileLibOlgx
+DebuggedAndProfiledLibraryObjectRule()
+#else
+# if DebugLibOlgx
+DebuggedLibraryObjectRule()
+# else
+#  if ProfileLibOlgx
+ProfiledLibraryObjectRule()
+#  else
+NormalLibraryObjectRule()
+#  endif
+# endif
+#endif
+
+NormalLibraryTarget(olgx,$(OBJS))
+LintLibraryTarget(olgx,$(SRCS))
+InstallLibrary(olgx,$(LIBRARY_DEST))
+InstallLintLibrary(olgx,$(LIBRARY_DEST))
+
+#if ProfileLibOlgx
+ProfiledLibraryTarget(olgx,$(OBJS))
+InstallLibrary(olgx_p,$(LIBRARY_DEST))
+#endif
+
+#if DebugLibOlgx
+DebuggedLibraryTarget(olgx,$(OBJS))
+#endif
+
+install_headers::
+	-mkdir $(HEADER_DEST)/olgx
+	-mkdir $(HEADER_DEST)/olgx_private
+
+# Note:
+# 	do not change "olgx" or "olgx_private" unless you also change the 
+#	source files for olgx and olwm.
+#
+InstallMultipleDest(install_headers,$(HDRSPUBLIC),$(HEADER_DEST)/olgx)
+InstallMultipleDest(install_headers,$(HDRSPRIVATE),$(HEADER_DEST)/olgx_private)
+
+DependTarget()
+
+NormalLintTarget($(SRCS))

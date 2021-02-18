@@ -1,0 +1,162 @@
+/* ********************************************************************** *\
+ *         Copyright IBM Corporation 1988,1989 - All Rights Reserved      *
+ *        For full copyright information see:'andrew/config/COPYRITE'     *
+\* ********************************************************************** */
+DOBJS = be1be2.do \
+	be1be2a.do \
+	readscr.do \
+	search.do \
+	smpltext.do \
+	text.do \
+	txttroff.do \
+	textv.do \
+	cltextv.do \
+	content.do \
+	fnote.do \
+	fnotev.do \
+	bp.do \
+	bpv.do \
+	tindex.do \
+	texttag.do \
+	textref.do \
+	texttagv.do \
+	textrefv.do
+
+IHFILES = be1be2.ih \
+	be1be2a.ih \
+	readscr.ih \
+	search.ih \
+	smpltext.ih \
+	text.ih \
+	txttroff.ih \
+	textv.ih \
+	cltextv.ih \
+	content.ih \
+	fnote.ih \
+	fnotev.ih \
+	bp.ih \
+	bpv.ih \
+	tindex.ih \
+	texttag.ih \
+	textref.ih \
+	texttagv.ih \
+	textrefv.ih
+
+OBJS = be1be2.o \
+	be1be2a.o \
+	drawtxtv.o \
+	readscr.o \
+	search.o \
+	smpltext.o \
+	tpllist.o \
+	text.o \
+	txttroff.o \
+	textv.o \
+	txtvcmds.o \
+	cltextv.o \
+	content.o \
+	fnote.o \
+	fnotev.o \
+	bp.o \
+	bpv.o \
+	tindex.o \
+	texttag.o \
+	textref.o \
+	texttagv.o \
+	textrefv.o
+
+
+NormalObjectRule()
+NormalATKRule()
+
+MkdirTarget(${DESTDIR}/lib/tmac)
+
+DynamicObject(smpltext, ${UTILLIB},)
+DynamicMultiObject(text.do, text.o tpllist.o,,)
+DynamicMultiObject(textv.do, textv.o drawtxtv.o txtvcmds.o ,,)
+
+InstallClassFiles($(DOBJS),$(IHFILES))
+
+LibraryTarget(libtext.a, $(OBJS))
+InstallLibrary(libtext.a, ${DESTDIR}/lib/atk)
+
+ProgramTarget(indexpro, indexpro.o, ${UTILLIB},)
+InstallProgram(indexpro, $(DESTDIR)/bin)
+
+InstallProgram(ezpostprocess, $(DESTDIR)/bin)
+
+InstallFile(tmac.atk, $(INSTINCFLAGS), $(DESTDIR)/lib/tmac)
+InstallFile(tmac.arf, $(INSTINCFLAGS), $(DESTDIR)/lib/tmac)
+
+InstallFile(txtstvec.h, ${INSTINCFLAGS}, ${DESTDIR}/include/atk)
+
+DependTarget()
+
+#define IHaveSubdirs
+
+SUBDIRS = tpls
+
+NormalHelpRule()
+MkdirTarget(${DESTDIR}/doc/atk/text)
+InstallDocs(content.help,${DESTDIR}/help)
+InstallHelpAlias(content,contents)
+InstallHelpAlias(content,ezcontents)
+InstallHelpAlias(content,ez-content)
+InstallHelpAlias(content,ez-contents)
+InstallDocs(tmplts.help,${DESTDIR}/help)
+InstallHelpAlias(tmplts,template)
+InstallHelpAlias(tmplts,templates)
+InstallDocs(text.help,${DESTDIR}/help)
+InstallHelpAlias(text,texts)
+InstallDocs(select.help,${DESTDIR}/help)
+InstallHelpAlias(select,selecting)
+InstallHelpAlias(select,selection)
+InstallHelpAlias(select,selection-tutorial)
+InstallDocs(qryrplc.help,${DESTDIR}/help)
+InstallHelpAlias(qryrplc, query-replace)
+InstallDocs(txtproc.help,${DESTDIR}/help)
+InstallHelpAlias(txtproc,textproc)
+InstallDocs(fnote.help,${DESTDIR}/help)
+InstallHelpAlias(fnote,endnote)
+InstallHelpAlias(fnote,endnotes)
+InstallHelpAlias(fnote,ez-footnotes)
+InstallHelpAlias(fnote,footnote)
+InstallHelpAlias(fnote,footnotes)
+InstallDocs(tindex.help,${DESTDIR}/help)
+InstallHelpAlias(tindex,ez-index)
+InstallHelpAlias(tindex,ez.index)
+InstallHelpAlias(tindex,index)
+InstallHelpAlias(tindex,indices)
+InstallDocs(crossrf.help,${DESTDIR}/help)
+InstallHelpAlias(crossrf,crossrefs)
+InstallHelpAlias(crossrf,crossreferences)
+InstallHelpAlias(crossrf,ez-cross)
+InstallHelpAlias(crossrf,ez-crossreferences)
+InstallHelpAlias(crossrf,ez-ref)
+InstallHelpAlias(crossrf,ez-refs)
+InstallDocs(be1be2.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(bp.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(bpv.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(cltextv.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(content.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(drawtxtv.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(fnote.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(fnotev.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(indexpro.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(readscr.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(search.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(smpltext.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(subdirs.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(textref.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(textrefv.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(texttag.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(texttagv.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(textv.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(tindex.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(tmac.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(tpllist.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(txtstvec.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(txttroff.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(txtvcmds.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(txtvinfo.doc,${DESTDIR}/doc/atk/text)
+InstallDocs(tpls.doc,${DESTDIR}/doc/atk/text)

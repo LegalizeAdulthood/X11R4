@@ -1,0 +1,20 @@
+#!/bin/csh -f
+#
+# ppmsmooth - smooth out an image by replacing each pixel with the
+#             average of its nine immediate neighbors
+
+set tmp=/tmp/ppmsm$$
+rm -f $tmp
+
+cat > $tmp << 'MOO'
+P2
+3 3
+18
+10 10 10
+10 10 10
+10 10 10
+'MOO'
+
+ppmconvol $tmp $*
+
+rm -f $tmp

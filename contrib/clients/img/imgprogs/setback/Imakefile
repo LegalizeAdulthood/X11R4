@@ -1,0 +1,11 @@
+
+         IMGINC = ../..
+         IMGLIB = ../../imglib/libimg.a
+
+LOCAL_LIBRARIES = $(IMGLIB) $(XLIB)
+           SRCS = setback.c
+           OBJS = setback.o
+
+       INCLUDES = -I$(IMGINC)
+
+ComplexProgramTarget(setback)

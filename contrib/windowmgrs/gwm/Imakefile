@@ -1,0 +1,71 @@
+/**/#
+/**/# Imakefile for gwm
+/**/# Use Makefile.noXtree if you do want to use imake
+/**/#
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+SUBDIRS = data
+
+OPTIONSDEFS = -DX11R4 -DSECURE -DSTATS -DUSER_DEBUG  -DWOOL_APP_NAME=\"GWM\" \
+	 -DWOOL_APP_name=\"gwm\"
+
+PATHDEFS = -DINSTALL_PATH=\"$(GWMDIR):$(CURRENT_DIR)/data\" \
+	-DINSTALL_DIR=\"$(GWMDIR)\" -DDEFAULT_DEFAULT_WLPATH=\"$(GWMDIR)\"
+
+#ifdef SYSV
+OSDEFS = -DSYSV
+#endif
+
+#ifdef VaxArchitecture
+CONFIGDEFS = -DSTUPID
+#endif
+#ifdef HPArchitecture
+CONFIGDEFS = +Ns2000 +Nd2000
+#endif
+#ifdef IBMArchitecture
+CONFIGDEFS = -DIBM_RT -Nn3000
+#endif
+#ifdef sm90
+CONFIGDEFS = -DSTUPID -DSYSV
+#endif
+#ifdef gould
+CONFIGDEFS = -DDOUBLE_ALIGN
+#endif
+
+LOCAL_LIBRARIES = $(EXTENSIONLIB) $(XLIB)
+DEFINES         = $(OPTIONSDEFS) $(PATHDEFS) $(OSDEFS) $(CONFIGDEFS)
+ 
+SRCS = 	bar.c client.c error.c gwm.c icccm.c machine.c malloc.c \
+	menu.c paxmap.c plug.c reference.c revision.c screen.c user.c \
+	wl_active.c wl_atom.c wl_bar.c wl_client.c wl_coll.c \ 
+	wl_cursor.c wl_event.c wl_fsm.c wl_func.c wl_label.c wl_list.c \
+	wl_menu.c wl_name.c wl_number.c wl_pixmap.c wl_plug.c \
+	wl_pointer.c wl_string.c wob.c wool-gwm.c wool.c wops.c 
+
+OTHERSRCS = wool.yac wool.lex
+
+OBJS = 	y.tab.o \
+ 	bar.o client.o error.o gwm.o icccm.o machine.o malloc.o \
+	menu.o paxmap.o plug.o reference.o revision.o screen.o user.o \
+	wl_active.o wl_atom.o wl_bar.o wl_client.o wl_coll.o \ 
+	wl_cursor.o wl_event.o wl_fsm.o wl_func.o wl_label.o wl_list.o \
+	wl_menu.o wl_name.o wl_number.o wl_pixmap.o wl_plug.o \
+	wl_pointer.o wl_string.o wob.o wool-gwm.o wool.o wops.o 
+
+ComplexProgramTarget(gwm)
+MakeSubdirs($(SUBDIRS))
+
+depend:: lex.yy.c y.tab.c
+
+lex.yy.c: wool.lex
+	lex wool.lex
+
+y.tab.c: wool.yac 
+	yacc wool.yac
+
+y.tab.o: lex.yy.c y.tab.c
+
+clean::
+	$(RM) lexx.yy.c y.tab.c
+

@@ -1,0 +1,32 @@
+.TH rasttopbm 1 "31 August 1988"
+.SH NAME
+rasttopbm - convert a Sun raster file into a portable bitmap
+.SH SYNOPSIS
+rasttopbm [rastfile]
+.SH DESCRIPTION
+Reads a Sun raster file as input.
+Produces a portable bitmap as output.
+NOTE: since it uses Sun-specific include files and libraries, pbmtorast
+will compile only on Suns.
+.PP
+Using this program you can convert anything you can see on a Sun screen
+into a pbm bitmap.
+Just display whatever you're interested in, do a screendump, run it through
+rasttopbm, and then use pnmcut to select the part you want.
+.PP
+The rasttoppm filter handles color images in addition to providing the same
+functionality as rasttopbm; but rasttopbm is worth keeping, since
+it is significantly faster.
+.SH "SEE ALSO"
+pbmtorast(1), pbm(5), rasttoppm(1), ppmtorast(1)
+.SH AUTHOR
+Barry Klawans
+
+Copyright (C) 1988 by Jef Poskanzer.
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided
+that the above copyright notice appear in all copies and that both that
+copyright notice and this permission notice appear in supporting
+documentation.  This software is provided "as is" without express or
+implied warranty.
