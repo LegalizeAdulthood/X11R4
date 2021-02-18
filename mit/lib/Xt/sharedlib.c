@@ -1,5 +1,5 @@
 /*
- * $XConsortium: sharedlib.c,v 1.7 89/10/09 14:31:16 jim Exp $
+ * $XConsortium: sharedlib.c,v 1.8 90/03/05 17:34:01 kit Exp $
  * 
  * Copyright 1989 Massachusetts Institute of Technology
  *
@@ -10,6 +10,7 @@
 
 #if defined(SUNSHLIB) && !defined(SHAREDCODE)
 #include "IntrinsicI.h"
+#include "VarargsI.h"
 
 /*
  * _XtInherit needs to be statically linked since it is compared against as
@@ -60,6 +61,35 @@ ArgList args_in;
     return _XtAppInitialize (app_context_return, application_class, options,
 			     num_options, argc_in_out, argv_in_out, 
 			     fallback_resources, args_in, num_args_in);
+}
+
+#if NeedFunctionPrototypes
+Widget
+XtVaAppInitialize(XtAppContext *app_context_return, String application_class,
+		  XrmOptionDescList options, Cardinal num_options,
+		  Cardinal *argc_in_out, String *argv_in_out,
+		  String *fallback_resources, ...)
+#else
+Widget XtVaAppInitialize(app_context_return, application_class, options,
+			 num_options, argc_in_out, argv_in_out,
+			 fallback_resources, va_alist)
+    XtAppContext *app_context_return;
+    String application_class;
+    XrmOptionDescList options;
+    Cardinal num_options;
+    Cardinal *argc_in_out;
+    String *argv_in_out;
+    String *fallback_resources;
+    va_dcl
+#endif
+{
+    va_list	var;
+    extern Widget _XtVaAppInitialize();
+
+    Va_start(var, fallback_resources);    
+    return _XtVaAppInitialize(app_context_return, application_class, options,
+			      num_options, argc_in_out, argv_in_out,
+			      fallback_resources, var);
 }
 
 #else

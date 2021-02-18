@@ -43,7 +43,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $Header: /afs/testers.athena.mit.edu/src/x11r4/src/mit/server/ddx/ibm/aed/RCS/aedGC.c,v 1.3 89/11/29 16:26:40 jfc Exp Locker: jfc $ */
+/* $XConsortium: aedGC.c,v 1.4 90/03/21 09:54:58 rws Exp $ */
 #include "X.h"
 #include "Xproto.h"
 #include "Xmd.h"
@@ -267,22 +267,7 @@ aedCopyGC (pGCSrc, changes, pGCDst)
     Mask 	changes;
     GCPtr	pGCDst;
 {
-    RegionPtr		pClip;
-
-    if(changes & GCClipMask)
-    {
-	if(pGCDst->clientClipType == CT_PIXMAP)
-	{
-	    ((PixmapPtr)pGCDst->clientClip)->refcnt++;
-	}
-	else if(pGCDst->clientClipType == CT_REGION)
-	{
-	    pClip = (RegionPtr) pGCDst->clientClip;
-	    pGCDst->clientClip =
-	        (pointer)(* pGCDst->pScreen->RegionCreate)(NULL, 1);
-	    (* pGCDst->pScreen->RegionCopy)(pGCDst->clientClip, pClip);
-	}
-    }
+    return;
 }
 
 struct commonOps {

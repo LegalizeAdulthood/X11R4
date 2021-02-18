@@ -23,7 +23,7 @@ SOFTWARE.
 ********************************************************/
 
 
-/* $XConsortium: events.c,v 5.21 90/01/20 11:45:34 rws Exp $ */
+/* $XConsortium: events.c,v 5.22 90/03/08 11:27:15 rws Exp $ */
 
 #include "X.h"
 #include "misc.h"
@@ -528,7 +528,7 @@ PlayReleasedEvents()
 	if (!qe->device->sync.frozen)
 	{
 	    *prev = qe->next;
-	    if (!qe->next)
+	    if (*syncEvents.pendtail == *prev)
 		syncEvents.pendtail = prev;
 	    if (qe->event->u.u.type == MotionNotify)
 		CheckVirtualMotion(qe, NullWindow);

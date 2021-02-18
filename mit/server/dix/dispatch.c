@@ -1,4 +1,4 @@
-/* $XConsortium: dispatch.c,v 5.17 89/12/20 20:55:09 rws Exp $ */
+/* $XConsortium: dispatch.c,v 5.18 90/03/20 11:56:53 keith Exp $ */
 /************************************************************
 Copyright 1987, 1989 by Digital Equipment Corporation, Maynard, Massachusetts,
 and the Massachusetts Institute of Technology, Cambridge, Massachusetts.
@@ -1244,9 +1244,10 @@ ProcListFontsWithInfo(client)
 		    + finfo.nProps * sizeof(xFontProp);
 	if (rlength > curlength)
 	{
-	    nreply = (xListFontsWithInfoReply *)xrealloc(reply, rlength);
+	    nreply = (xListFontsWithInfoReply *) xalloc(rlength);
 	    if (nreply)
 	    {
+		xfree (reply);
 		reply = nreply;
 		curlength = rlength;
 	    }
@@ -1262,7 +1263,6 @@ ProcListFontsWithInfo(client)
 		reply->nReplies = n;
 		WriteReplyToClient(client, rlength, reply);
 		(void)WriteToClient(client, *length, *path);
-		DEALLOCATE_LOCAL(reply);
 	}
 	xfree(font.pFP);
     }

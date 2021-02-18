@@ -21,7 +21,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $XConsortium: mfbgc.c,v 5.18 89/11/29 19:53:27 rws Exp $ */
+/* $XConsortium: mfbgc.c,v 5.19 90/03/20 14:48:59 rws Exp $ */
 #include "X.h"
 #include "Xmd.h"
 #include "Xproto.h"
@@ -420,22 +420,7 @@ mfbCopyGC (pGCSrc, changes, pGCDst)
     Mask 	changes;
     GCPtr	pGCDst;
 {
-    RegionPtr		pClip;
-
-    if(changes & GCClipMask)
-    {
-	if(pGCDst->clientClipType == CT_PIXMAP)
-	{
-	    ((PixmapPtr)pGCDst->clientClip)->refcnt++;
-	}
-	else if(pGCDst->clientClipType == CT_REGION)
-	{
-	    pClip = (RegionPtr) pGCDst->clientClip;
-	    pGCDst->clientClip =
-	        (pointer)(* pGCDst->pScreen->RegionCreate)(NULL, 1);
-	    (* pGCDst->pScreen->RegionCopy)(pGCDst->clientClip, pClip);
-	}
-    }
+    return;
 }
 
 void

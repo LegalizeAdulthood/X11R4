@@ -66,7 +66,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $XConsortium: apa16GC.c,v 1.2 90/03/05 13:53:33 swick Exp $ */
+/* $XConsortium: apa16GC.c,v 1.3 90/03/21 09:50:21 rws Exp $ */
 #include "X.h"
 #include "Xmd.h"
 #include "Xproto.h"
@@ -411,22 +411,7 @@ apa16CopyGC (pGCSrc, changes, pGCDst)
     Mask 	changes;
     GCPtr	pGCDst;
 {
-    RegionPtr		pClip;
-
-    if(changes & GCClipMask)
-    {
-	if(pGCDst->clientClipType == CT_PIXMAP)
-	{
-	    ((PixmapPtr)pGCDst->clientClip)->refcnt++;
-	}
-	else if(pGCDst->clientClipType == CT_REGION)
-	{
-	    pClip = (RegionPtr) pGCDst->clientClip;
-	    pGCDst->clientClip =
-	        (pointer)(* pGCDst->pScreen->RegionCreate)(NULL, 1);
-	    (* pGCDst->pScreen->RegionCopy)(pGCDst->clientClip, pClip);
-	}
-    }
+    return;
 }
 
 static void

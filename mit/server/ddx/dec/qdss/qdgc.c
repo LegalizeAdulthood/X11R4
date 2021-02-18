@@ -358,18 +358,7 @@ qdCopyGCDest( pgcDst, pQ, maskQ, pgcSrc)
     int                 maskQ;
     GCPtr		pgcSrc;
 {
-#ifdef X11R4
-    if (maskQ & GCClipMask) {
-	if (pgcDst->clientClipType == CT_PIXMAP)
-	    ((PixmapPtr)pgcDst->clientClip)->refcnt++;
-	else if (pgcDst->clientClipType == CT_REGION) {
-	    RegionPtr pClip = (RegionPtr) pgcDst->clientClip;
-	    pgcDst->clientClip =
-		(pointer)(* pgcDst->pScreen->RegionCreate)(NULL, 1);
-	    (* pgcDst->pScreen->RegionCopy)(pgcDst->clientClip, pClip);
-	}
-    }
-#else
+#ifndef X11R4
     RegionPtr		pregionsrc = (RegionPtr) pgcSrc->clientClip;
 
     if ( ! (maskQ & GCClipMask)

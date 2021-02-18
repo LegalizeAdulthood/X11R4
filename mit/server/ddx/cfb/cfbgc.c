@@ -22,7 +22,7 @@ SOFTWARE.
 
 ******************************************************************/
 
-/* $XConsortium: cfbgc.c,v 5.32 89/11/29 19:53:03 rws Exp $ */
+/* $XConsortium: cfbgc.c,v 5.32.1.1 90/03/21 10:16:47 rws Exp $ */
 
 #include "X.h"
 #include "Xmd.h"
@@ -798,27 +798,5 @@ cfbCopyGC (pGCSrc, changes, pGCDst)
     Mask 	changes;
     GCPtr	pGCDst;
 {
-    RegionPtr		pClip;
-
-    if(changes & GCClipMask)
-    {
-	if(pGCDst->clientClipType == CT_PIXMAP)
-	{
-	    ((PixmapPtr)pGCDst->clientClip)->refcnt++;
-	}
-	else if(pGCDst->clientClipType == CT_REGION)
-	{
-	    BoxRec pixbounds;
-
-	    pixbounds.x1 = 0;
-	    pixbounds.y1 = 0;
-	    pixbounds.x2 = 0;
-	    pixbounds.y2 = 0;
-
-	    pClip = (RegionPtr) pGCDst->clientClip;
-	    pGCDst->clientClip =
-	        (pointer)(* pGCDst->pScreen->RegionCreate)(&pixbounds, 1);
-	    (* pGCDst->pScreen->RegionCopy)(pGCDst->clientClip, pClip);
-	}
-    }
+    return;
 }

@@ -1,6 +1,6 @@
 #ifndef lint
 static char Xrcsid[] =
-    "$XConsortium: VarCreate.c,v 1.9 89/12/13 15:29:11 swick Exp $";
+    "$XConsortium: VarCreate.c,v 1.11 90/03/06 13:20:41 kit Exp $";
 #endif
 
 /*
@@ -255,15 +255,15 @@ void XtVaSetSubvalues(base, resources, num_resources, va_alist)
 
 #if NeedFunctionPrototypes
 Widget
-XtVaAppInitialize(XtAppContext *app_context_return, String application_class,
+_XtVaAppInitialize(XtAppContext *app_context_return, String application_class,
 		  XrmOptionDescList options, Cardinal num_options,
 		  Cardinal *argc_in_out, String *argv_in_out,
-		  String *fallback_resources, ...)
+		  String *fallback_resources, va_list var_args)
 #else
 /*VARARGS7*/
-Widget XtVaAppInitialize(app_context_return, application_class, options,
-			 num_options, argc_in_out, argv_in_out,
-			 fallback_resources, va_alist)
+Widget _XtVaAppInitialize(app_context_return, application_class, options,
+			  num_options, argc_in_out, argv_in_out,
+			  fallback_resources, var_args)
     XtAppContext *app_context_return;
     String application_class;
     XrmOptionDescList options;
@@ -271,15 +271,15 @@ Widget XtVaAppInitialize(app_context_return, application_class, options,
     Cardinal *argc_in_out;
     String *argv_in_out;
     String *fallback_resources;
-    va_dcl
+    va_list var_args;
 #endif
 {
+    va_list var;
     XtAppContext app_con;
     Display * dpy;
     String *saved_argv;
     register int i, saved_argc = *argc_in_out;
     Widget root;
-    va_list var;
     String attr;
     int count = 0;
     XtTypedArgList typed_args;
@@ -310,7 +310,7 @@ Widget XtVaAppInitialize(app_context_return, application_class, options,
 	XtErrorMsg("invalidDisplay","xtInitialize","XtToolkitError",
                    "Can't Open display", (String *) NULL, (Cardinal *)NULL);
 
-    Va_start(var, fallback_resources);
+    var = var_args;
     for(attr = va_arg(var,String); attr != NULL; attr = va_arg(var,String)) {
         ++count;
         if (strcmp(attr, XtVaTypedArg) == 0) {
@@ -324,10 +324,10 @@ Widget XtVaAppInitialize(app_context_return, application_class, options,
     }
     va_end(var);
 
-    Va_start(var, fallback_resources);
+    var = var_args;
     typed_args = _XtVaCreateTypedArgList(var, count);
     va_end(var);
-    
+
     root =
 	XtVaAppCreateShell( NULL, application_class, 
 			    applicationShellWidgetClass, dpy,
@@ -344,4 +344,41 @@ Widget XtVaAppInitialize(app_context_return, application_class, options,
     DEALLOCATE_LOCAL((XtPointer)saved_argv);
     return(root);
 }
+
+#if !(defined(SUNSHLIB) && defined(SHAREDCODE))
+
+/*
+ * If not used as a shared library, we still need a front end to 
+ * _XtVaAppInitialize.
+ */
+
+#if NeedFunctionPrototypes
+Widget
+XtVaAppInitialize(XtAppContext *app_context_return, String application_class,
+		  XrmOptionDescList options, Cardinal num_options,
+		  Cardinal *argc_in_out, String *argv_in_out,
+		  String *fallback_resources, ...)
+#else
+Widget XtVaAppInitialize(app_context_return, application_class, options,
+			 num_options, argc_in_out, argv_in_out,
+			 fallback_resources, va_alist)
+    XtAppContext *app_context_return;
+    String application_class;
+    XrmOptionDescList options;
+    Cardinal num_options;
+    Cardinal *argc_in_out;
+    String *argv_in_out;
+    String *fallback_resources;
+    va_dcl
+#endif
+{
+    va_list	var;
+
+    Va_start(var, fallback_resources);    
+    return _XtVaAppInitialize(app_context_return, application_class, options,
+			      num_options, argc_in_out, argv_in_out,
+			      fallback_resources, var);
+}
+
+#endif /* !(SUNSHLIB && SHAREDCODE) */
 

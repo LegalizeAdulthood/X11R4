@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Paned.c,v 1.12 89/10/09 16:20:50 jim Exp $";
+static char Xrcsid[] = "$XConsortium: Paned.c,v 1.13 90/03/01 10:48:51 jim Exp $";
 #endif /* lint */
 
 
@@ -298,7 +298,7 @@ Dimension * on_size_ret, * off_size_ret;
 	  *off_size_ret = off_size;
 	  return;
       }
-      if (*result_ret == XtGeometryAlmost) {
+      if (*result_ret != XtGeometryAlmost) {
 	  *on_size_ret = GetRequestInfo( &request, IsVert(pw) );
       	  *off_size_ret = GetRequestInfo( &request, !IsVert(pw) );
 	  return;

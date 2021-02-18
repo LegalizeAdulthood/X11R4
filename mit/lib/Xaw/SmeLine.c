@@ -1,5 +1,5 @@
 #if ( !defined(lint) && !defined(SABER) )
-static char Xrcsid[] = "$XConsortium: SmeLine.c,v 1.7 89/12/11 15:20:17 kit Exp $";
+static char Xrcsid[] = "$XConsortium: SmeLine.c,v 1.8 90/02/08 13:50:13 jim Exp $";
 #endif 
 
 /*
@@ -207,7 +207,7 @@ Widget w;
 {
     SmeLineObject entry = (SmeLineObject) w;
 
-    if (entry->sme_line.stipple == XtUnspecifiedPixmap) 
+    if (entry->sme_line.stipple != XtUnspecifiedPixmap) 
 	XFreeGC(XtDisplayOfObject(w), entry->sme_line.gc);
     else
 	XtReleaseGC(w, entry->sme_line.gc);

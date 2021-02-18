@@ -25,7 +25,7 @@ Telephone and Telegraph Company or of the Regents of the
 University of California.
 ******************************************************************/
 
-/* $XConsortium: apcgc.c,v 1.3 90/02/22 10:43:29 rws Exp $ */
+/* $XConsortium: apcgc.c,v 1.4 90/03/21 09:58:39 rws Exp $ */
 
 #include "apc.h"
 #include "Xmd.h"
@@ -132,7 +132,7 @@ apcChangeGC(pGC, mask)
 
 /*
  * apcCopyGC -- DDX interface (GC "funcs")
- *      Copy client clip info when copying a GC.
+ *	Nothing to do.
  */
 static void
 apcCopyGC (pGCSrc, changes, pGCDst)
@@ -140,21 +140,6 @@ apcCopyGC (pGCSrc, changes, pGCDst)
     Mask    changes;
     GCPtr   pGCDst;
 {
-    RegionPtr   pClip;
-
-    if (changes & GCClipMask)
-    {
-        if (pGCDst->clientClipType == CT_PIXMAP)
-        {
-            ((PixmapPtr)pGCDst->clientClip)->refcnt++;
-        }
-        else if (pGCDst->clientClipType == CT_REGION)
-        {
-            pClip = (RegionPtr) pGCDst->clientClip;
-            pGCDst->clientClip = (pointer)(* pGCDst->pScreen->RegionCreate)(NULL, 1);
-            (* pGCDst->pScreen->RegionCopy)(pGCDst->clientClip, pClip);
-        }
-    }
 }
 
 /*

@@ -1,5 +1,5 @@
 #if ( !defined(lint) && !defined(SABER) )
-static char Xrcsid[] = "$XConsortium: SmeBSB.c,v 1.9 89/12/13 15:42:48 kit Exp $";
+static char Xrcsid[] = "$XConsortium: SmeBSB.c,v 1.12 90/02/15 13:57:53 kit Exp $";
 #endif 
 
 /*
@@ -53,11 +53,11 @@ static XtResource resources[] = {
      offset(label), XtRString, NULL},
   {XtNvertSpace,  XtCVertSpace, XtRInt, sizeof(int),
      offset(vert_space), XtRImmediate, (caddr_t) 25},
-  {XtNleftBitmap, XtCLeftBitmap, XtRPixmap, sizeof(Pixmap),
+  {XtNleftBitmap, XtCLeftBitmap, XtRBitmap, sizeof(Pixmap),
      offset(left_bitmap), XtRImmediate, (caddr_t)None},
   {XtNjustify, XtCJustify, XtRJustify, sizeof(XtJustify),
      offset(justify), XtRImmediate, (caddr_t) XtJustifyLeft},
-  {XtNrightBitmap, XtCRightBitmap, XtRPixmap, sizeof(Pixmap),
+  {XtNrightBitmap, XtCRightBitmap, XtRBitmap, sizeof(Pixmap),
      offset(right_bitmap), XtRImmediate, (caddr_t)None},
   {XtNleftMargin,  XtCHorizontalMargins, XtRDimension, sizeof(Dimension),
      offset(left_margin), XtRImmediate, (caddr_t) 4},
@@ -178,6 +178,12 @@ Widget request, new;
 
     GetDefaultSize(new, &(entry->rectangle.width), &(entry->rectangle.height));
     CreateGCs(new);
+
+    entry->sme_bsb.left_bitmap_width = entry->sme_bsb.left_bitmap_height = 0;
+    entry->sme_bsb.right_bitmap_width = entry->sme_bsb.right_bitmap_height = 0;
+
+    GetBitmapInfo(new, TRUE);	/* Left Bitmap Info */
+    GetBitmapInfo(new, FALSE);	/* Right Bitmap Info */
 }
 
 /*      Function Name: Destroy
@@ -448,9 +454,6 @@ GC gc;
     if ( (entry->sme_bsb.left_bitmap == None) && 
 	 (entry->sme_bsb.right_bitmap == None) ) return;
 
-    y_loc = entry->rectangle.y + (entry->rectangle.height -
-				  entry->sme_bsb.left_bitmap_height) / 2;
-
 /*
  * Draw Left Bitmap.
  */
@@ -458,6 +461,10 @@ GC gc;
   if (entry->sme_bsb.left_bitmap != None) {
     x_loc = (entry->sme_bsb.left_margin - 
 	     entry->sme_bsb.left_bitmap_width) / 2;
+
+    y_loc = entry->rectangle.y + (entry->rectangle.height -
+				  entry->sme_bsb.left_bitmap_height) / 2;
+
     XCopyPlane(XtDisplayOfObject(w), entry->sme_bsb.left_bitmap,
 	       XtWindowOfObject(w), gc, 0, 0, 
 	       entry->sme_bsb.left_bitmap_width,
@@ -468,9 +475,14 @@ GC gc;
  * Draw Right Bitmap.
  */
 
+
   if (entry->sme_bsb.right_bitmap != None) {
-    x_loc = entry->rectangle.width - (entry->sme_bsb.right_margin - 
+    x_loc = entry->rectangle.width - (entry->sme_bsb.right_margin +
 				      entry->sme_bsb.right_bitmap_width) / 2;
+
+    y_loc = entry->rectangle.y + (entry->rectangle.height -
+				  entry->sme_bsb.right_bitmap_height) / 2;
+
     XCopyPlane(XtDisplayOfObject(w), entry->sme_bsb.right_bitmap,
 	       XtWindowOfObject(w), gc, 0, 0, 
 	       entry->sme_bsb.right_bitmap_width,
