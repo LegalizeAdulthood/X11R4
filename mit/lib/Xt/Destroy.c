@@ -1,6 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Destroy.c,v 1.24 90/03/27 11:07:16 swick Exp $";
-/* $oHeader: Destroy.c,v 1.3 88/09/01 11:27:27 asente Exp $ */
+static char Xrcsid[] = "$XConsortium: Destroy.c,v 1.27 90/06/25 12:10:55 swick Exp $";
 #endif /* lint */
 
 /***********************************************************
@@ -79,8 +78,9 @@ static void Phase2Destroy(widget)
     register ConstraintWidgetClass  cwClass;
 
     /* Call constraint destroy procedures */
-    if (widget->core.parent != NULL && widget->core.constraints != NULL) {
-	cwClass = (ConstraintWidgetClass)widget->core.parent->core.widget_class;
+    /* assert: !XtIsShell(w) => (XtParent(w) != NULL) */
+    if (!XtIsShell(widget) && XtIsConstraint(XtParent(widget))) {
+	cwClass = (ConstraintWidgetClass)XtParent(widget)->core.widget_class;
 	for (;;) {
 	    if (cwClass->constraint_class.destroy != NULL)
 		(*(cwClass->constraint_class.destroy)) (widget);
@@ -127,7 +127,7 @@ static void XtPhase2Destroy (widget, closure, call_data)
 	    String param = parent->core.widget_class->core_class.class_name;
 	    Cardinal num_params = 1;
 	    XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-		"invalidProcedure","deleteChild","XtToolkitError",
+		"invalidProcedure","deleteChild",XtCXtToolkitError,
 		"null delete_child procedure for class %s in XtDestroy",
 		&param, &num_params);
 	} else {
@@ -165,7 +165,11 @@ static void XtPhase2Destroy (widget, closure, call_data)
     Recursive(widget, Phase2Destroy);
     app->in_phase2_destroy = outerInPhase2Destroy;
 
-    if (window)
+    /* %%% the following parent test hides a more serious problem,
+       but it avoids breaking those who depended on the old bug
+       until we have time to fix it properly. */
+
+    if (window && (parent == NULL || !parent->core.being_destroyed))
 	XDestroyWindow(display, window);
 } /* XtPhase2Destroy */
 

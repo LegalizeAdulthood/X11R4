@@ -1,4 +1,4 @@
-/* $XConsortium: TranslateI.h,v 1.16 89/10/06 19:16:55 swick Exp $ */
+/* $XConsortium: TranslateI.h,v 1.17 90/04/13 20:12:37 swick Exp $ */
 /* $oHeader: TranslateI.h,v 1.2 88/08/18 15:56:37 asente Exp $ */
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -112,7 +112,7 @@ typedef struct _TranslationData {
     XrmQuark*		accQuarkTable;
     struct _XtBoundAccActionRec* accProcTbl;
     StatePtr		head;	/* head of list of all states */
-    
+    Boolean		mappingNotifyInterest;
 } TranslationData;
 
 #define _XtEventTimerEventType ((unsigned long)-1L)

@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Display.c,v 1.43 90/04/05 10:51:28 swick Exp $";
+static char Xrcsid[] = "$XConsortium: Display.c,v 1.45 90/06/22 17:09:28 swick Exp $";
 /* $oHeader: Display.c,v 1.9 88/09/01 11:28:47 asente Exp $ */
 #endif /*lint*/
 
@@ -128,7 +128,6 @@ Display *XtOpenDisplay(app, displayName, applName, className,
 {
 	char  displayCopy[256];
 	int i;
-	char *rindex(), *index(), *strncpy();
 	Display *d;
 #ifdef OLDCOLONDISPLAY
 	int squish = -1;
@@ -224,6 +223,7 @@ XtDisplayInitialize(app, dpy, name, classname, urlist, num_urs, argc, argv)
 	XtAddToAppContext(dpy, app);
 
 	pd = NewPerDisplay(dpy);
+	_XtHeapInit(&pd->heap);
 	pd->destroy_callbacks = NULL;
 	pd->region = XCreateRegion();
         pd->defaultCaseConverter = _XtConvertCase;
@@ -236,15 +236,24 @@ XtDisplayInitialize(app, dpy, name, classname, urlist, num_urs, argc, argv)
 	pd->class = XrmStringToClass(classname);
 	pd->being_destroyed = False;
 	pd->GClist = NULL;
-	pd->drawables = NULL;
-	pd->drawable_count = 0;
+	pd->drawable_tab = (ScreenDrawables)
+	    _XtHeapAlloc(&pd->heap,
+		       (unsigned)ScreenCount(dpy)*sizeof(ScreenDrawablesRec));
+	{
+	    int i;
+	    ScreenDrawables d;
+	    for (i=0, d=pd->drawable_tab; i<ScreenCount(dpy); i++, d++) {
+		d->screen = ScreenOfDisplay(dpy, i);
+		d->drawables = NULL;
+		d->drawable_count = 0;
+	    }
+	}
 	pd->rv = False;
 	pd->xa_wm_colormap_windows = None; /* Initialize this to None unless
 					      we need to use it.*/
 	pd->last_timestamp = 0;
 	pd->tm_context = NULL;
 	pd->mapping_callbacks = NULL;
-	_XtHeapInit(&pd->heap);
 
 	_XtDisplayInitialize(dpy, pd, name, classname, urlist, 
 			     num_urs, argc, argv);
@@ -518,7 +527,12 @@ static void CloseDisplay(dpy)
 	    _XtCacheFlushTag(xtpd->appContext, (XtPointer)&xtpd->heap);
 	    _XtHeapFree(&xtpd->heap);
 	    _XtGClistFree(xtpd->GClist);
-	    XtFree((char *) xtpd->drawables);
+	    {
+		int i;
+		ScreenDrawables d;
+		for (i=0, d=xtpd->drawable_tab; i<ScreenCount(dpy); i++, d++)
+		    XtFree((char*)d->drawables);
+	    }
         }
 	XtFree((char*)pd);
 	XrmDestroyDatabase(dpy->db);

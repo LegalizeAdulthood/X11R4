@@ -1,6 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: GCManager.c,v 1.36 89/09/14 15:19:31 swick Exp $";
-/* $oHeader: GCManager.c,v 1.4 88/08/19 14:19:51 asente Exp $ */
+static char Xrcsid[] = "$XConsortium: GCManager.c,v 1.38 90/06/25 09:32:19 swick Exp $";
 #endif /* lint */
 
 /***********************************************************
@@ -161,23 +160,32 @@ GC XtGetGC(widget, valueMask, values)
 
     if (drawable == NULL) {
 	/* Have to find a Drawable to identify the depth for the GC */
-	if (depth >= pd->drawable_count) {
-	    int i;
-	    pd->drawables =
-		(Drawable*)XtRealloc((char*)pd->drawables,
-				     (unsigned)(depth+1)*sizeof(Drawable));
-	    for (i = pd->drawable_count; i <= depth; i++)
-		pd->drawables[i] = 0;
-	    pd->drawable_count = depth+1;
+	ScreenDrawables sd;
+	for (sd = pd->drawable_tab; sd->screen != screen; sd++);
+	if (sd != pd->drawable_tab) {
+	    ScreenDrawablesRec dr;
+	    dr = *pd->drawable_tab;
+	    *pd->drawable_tab = *sd;
+	    *sd = dr;
+	    sd = pd->drawable_tab;
 	}
-	if (pd->drawables[depth] != 0)
-	    drawable = pd->drawables[depth];
+	if (depth >= sd->drawable_count) {
+	    int i;
+	    sd->drawables =
+		(Drawable*)XtRealloc((char*)sd->drawables,
+				     (unsigned)(depth+1)*sizeof(Drawable));
+	    for (i = sd->drawable_count; i <= depth; i++)
+		sd->drawables[i] = 0;
+	    sd->drawable_count = depth+1;
+	}
+	if (sd->drawables[depth] != 0)
+	    drawable = sd->drawables[depth];
         else {
 	    if (depth == DefaultDepthOfScreen(screen))
 		drawable = RootWindowOfScreen(screen);
 	    else 
 		drawable = XCreatePixmap(DisplayOfScreen(screen), screen->root, 1, 1, depth);
-	    pd->drawables[depth] = drawable;
+	    sd->drawables[depth] = drawable;
         }
     }
     cur->gc = XCreateGC(DisplayOfScreen(screen), drawable, valueMask, values);

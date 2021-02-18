@@ -1,6 +1,6 @@
 #ifndef lint
 static char Xrcsid[] =
-    "$XConsortium: Varargs.c,v 1.16 90/03/13 18:24:15 kit Exp $";
+    "$XConsortium: Varargs.c,v 1.20 90/06/25 12:26:15 swick Exp $";
 #endif
 /*
 
@@ -25,6 +25,7 @@ without express or implied warranty.
 #include "IntrinsicI.h"
 #include "VarargsI.h"
 
+static String XtNxtConvertVarToArgList = "xtConvertVarToArgList";
 
 /*
  *    Given a nested list, _XtCountNestedList() returns counts of the
@@ -196,7 +197,7 @@ _XtTypedArgToArg(widget, typed_arg, arg_return, resources, num_resources)
 
     if (widget == NULL) {
         XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-            "nullWidget", "xtConvertVarTArgList", "XtToolkitError",
+            "nullWidget", XtNxtConvertVarToArgList, XtCXtToolkitError,
 	    "XtVaTypedArg conversion needs non-NULL widget handle",
             (String *)NULL, (Cardinal *)NULL);
         return(0);
@@ -214,7 +215,7 @@ _XtTypedArgToArg(widget, typed_arg, arg_return, resources, num_resources)
 
     if (to_type == NULL) {
         XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-            "unknownType", "xtConvertVarTArgList", "XtToolkitError",
+            "unknownType", XtNxtConvertVarToArgList, XtCXtToolkitError,
             "Unable to find type of resource for conversion",
             (String *)NULL, (Cardinal *)NULL);
         return(0);
@@ -233,7 +234,7 @@ _XtTypedArgToArg(widget, typed_arg, arg_return, resources, num_resources)
  
     if (to_val.addr == NULL) {
         XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-            "conversionFailed", "xtConvertVarToArgList", "XtToolkitError",
+            "conversionFailed", XtNxtConvertVarToArgList, XtCXtToolkitError,
             "Type conversion failed", (String *)NULL, (Cardinal *)NULL);
         return(0);
     }
@@ -393,19 +394,20 @@ Cardinal * number;
     XtInitializeWidgetClass(XtClass(widget));
     XtGetResourceList(XtClass(widget), res_list, number);
     
-    if ((parent != NULL) && (XtIsConstraint(parent))) {
+    /* assert: !XtIsShell(w) => (XtParent(w) != NULL) */
+    if (!XtIsShell(widget) && XtIsConstraint(parent)) {
 	XtResourceList res, constraint, cons_top;
-	Cardinal num_constraint;
+	Cardinal num_constraint, temp;
 
 	XtGetConstraintResourceList(XtClass(parent), &constraint, 
 				    &num_constraint);
 
 	cons_top = constraint;
-	*res_list = (XtResourceList) XtRealloc(*res_list, 
+	*res_list = (XtResourceList) XtRealloc((char*)*res_list, 
 					       ((*number + num_constraint) * 
 						sizeof(XtResource)));
 
-	for (res = *res_list + *number ; num_constraint; num_constraint--)
+	for (temp= num_constraint, res= *res_list + *number; temp != 0; temp--)
 	    *res++ = *constraint++;
 
 	*number += num_constraint;

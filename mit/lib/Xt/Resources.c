@@ -1,6 +1,6 @@
 #ifndef lint
 static char Xrcsid[] =
-    "$XConsortium: Resources.c,v 1.82 89/12/15 09:59:55 swick Exp $";
+    "$XConsortium: Resources.c,v 1.83 90/03/19 13:03:13 swick Exp $";
 /* $oHeader: Resources.c,v 1.6 88/09/01 13:39:14 asente Exp $ */
 #endif /*lint*/
 /*LINTLIBRARY*/
@@ -681,11 +681,12 @@ static XtCacheRef *GetResources(widget, base, names, classes,
 		    if (xrm_default_type == QCallProc) {
 #ifdef CRAY
  			if ( (int) Cjumpp != (int) Cjump)
- 			    (*(XtProc)(((int)(rx->xrm_default_addr))<<2))(
+ 			    (*(XtResourceDefaultProc)
+			      (((int)(rx->xrm_default_addr))<<2))(
  				 widget,-(rx->xrm_offset+1), pv);
 			else
 #endif
-			(*(XtProc)(rx->xrm_default_addr))(
+			(*(XtResourceDefaultProc)(rx->xrm_default_addr))(
 			      widget,-(rx->xrm_offset+1), pv);
 
 		    } else if (xrm_default_type == QImmediate) {

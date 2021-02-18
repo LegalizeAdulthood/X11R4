@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: TMstate.c,v 1.98 90/04/10 15:58:55 swick Exp $";
+static char Xrcsid[] = "$XConsortium: TMstate.c,v 1.99 90/04/13 20:20:34 swick Exp $";
 /* $oHeader: TMstate.c,v 1.5 88/09/01 17:17:29 asente Exp $ */
 #endif /* lint */
 /*LINTLIBRARY*/
@@ -759,7 +759,7 @@ static unsigned long GetTime(tm, event)
 
 
 /* ARGSUSED */
-void _XtTranslateEvent (w, closure, event, continue_to_dispatch)
+static void _XtTranslateEvent (w, closure, event, continue_to_dispatch)
     Widget w;
     XtPointer closure;		/* XtTM */
     register    XEvent * event;
@@ -1139,7 +1139,19 @@ static void DispatchMappingNotify(widget, closure, call_data)
 }
 
 
-/*** Public procedures ***/
+static void RemoveFromMappingCallbacks(widget, closure, call_data)
+    Widget widget;
+    XtPointer closure;		/* XtTM */
+    XtPointer call_data;
+{
+    _XtRemoveCallback( widget,
+		       &_XtGetPerDisplay(XtDisplay(widget))
+		          ->mapping_callbacks,
+		       DispatchMappingNotify,
+		       closure
+		      );
+}
+
 
 void _XtInstallTranslations(widget, stateTable)
     Widget widget;
@@ -1157,17 +1169,8 @@ void _XtInstallTranslations(widget, stateTable)
 
 	if (mask != 0)
 	    eventMask |= mask;
-	else {
+	else
 	    nonMaskable = True;
-	    if (stateTable->eventObjTbl[i].event.eventType == MappingNotify) {
-		_XtAddCallback( widget,
-			        &_XtGetPerDisplay(XtDisplay(widget))
-			            ->mapping_callbacks,
-			        DispatchMappingNotify,
-			        (XtPointer)&widget->core.tm
-			      );
-	    }
-	}
     }
 
     /* double click needs to make sure that you have selected on both
@@ -1180,13 +1183,49 @@ void _XtInstallTranslations(widget, stateTable)
         widget, eventMask, nonMaskable,
              _XtTranslateEvent, (XtPointer)&widget->core.tm);
 
+    if (stateTable->mappingNotifyInterest) {
+	_XtAddCallbackOnce( widget,
+			    &_XtGetPerDisplay(XtDisplay(widget))
+			       ->mapping_callbacks,
+			    DispatchMappingNotify,
+			    (XtPointer)&widget->core.tm
+			   );
+	if (widget->core.destroy_callbacks != NULL)
+	    _XtAddCallbackOnce( widget,
+				_XtCallbackList((CallbackStruct*)
+					widget->core.destroy_callbacks
+				       ),
+				RemoveFromMappingCallbacks,
+				(XtPointer)&widget->core.tm
+			       );
+	else
+	    XtAddCallback( widget, XtNdestroyCallback,
+			   RemoveFromMappingCallbacks,
+			   (XtPointer)&widget->core.tm
+			  );
+    }
+
 }
+
+void _XtRemoveTranslations(widget)
+    Widget widget;
+{
+    XtRemoveEventHandler(widget, XtAllEvents, TRUE, _XtTranslateEvent,
+			 (XtPointer)&widget->core.tm);
+
+    if ( widget->core.tm.translations &&
+	 widget->core.tm.translations->mappingNotifyInterest)
+	RemoveFromMappingCallbacks(widget, (XtPointer)&widget->core.tm, NULL);
+}
+
+
+
+/*** Public procedures ***/
 
 void XtUninstallTranslations(widget)
     Widget widget;
 {
-    XtRemoveEventHandler(widget, XtAllEvents, TRUE, _XtTranslateEvent,
-                     (XtPointer)&widget->core.tm);
+    _XtRemoveTranslations(widget);
     widget->core.tm.translations = NULL;
     if (widget->core.tm.proc_table != NULL)
         XtFree((char *)widget->core.tm.proc_table);
@@ -1437,6 +1476,7 @@ void _XtInitializeStateTable(pStateTable)
     stateTable->accQuarkTable = NULL;
     stateTable->accProcTbl= NULL;
     stateTable->accQuarkTblSize = 0;
+    stateTable->mappingNotifyInterest = False;
 }
 
 void _XtAddEventSeqToStateTable(eventSeq, stateTable)
@@ -1459,6 +1499,9 @@ void _XtAddEventSeqToStateTable(eventSeq, stateTable)
     for (;;) {
     /* index is eventIndex for event */
     /* *state is head of state chain for current state */
+
+	if (eventSeq->event.eventType == MappingNotify)
+	    stateTable->mappingNotifyInterest = True;
 
 	while (*state != NULL && (*state)->index != index)
 	    state = &(*state)->next;
@@ -1752,6 +1795,9 @@ static void MergeTables(old, new, override,accProcTbl)
 	    indexMap,quarkIndexMap,accQuarkIndexMap,
 	    old,
 	    (StateMap) NULL);
+
+    if (new->mappingNotifyInterest) old->mappingNotifyInterest = True;
+
    XtFree((char *)indexMap);
    XtFree((char *)quarkIndexMap);
    XtFree((char *)accQuarkIndexMap);
@@ -1840,7 +1886,7 @@ void XtOverrideTranslations(widget, new)
 	return;
 
     if (XtIsRealized(widget)) {
-            XtUninstallTranslations((Widget)widget);
+	   XtUninstallTranslations(widget);
            widget->core.tm.translations = newTable;
            _XtBindActions(widget, &widget->core.tm);
            _XtInstallTranslations(widget,newTable);

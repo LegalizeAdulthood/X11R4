@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: TMparse.c,v 1.88 89/12/19 16:06:15 swick Exp $";
+static char Xrcsid[] = "$XConsortium: TMparse.c,v 1.89 90/01/22 17:08:54 swick Exp $";
 /* $oHeader: TMparse.c,v 1.4 88/09/01 17:30:39 asente Exp $ */
 #endif /*lint*/
 
@@ -578,7 +578,7 @@ static String FetchModifierToken(str,modStr)
     String str,modStr;
 {
     String start = str;
-    String metaString = "Alt";
+    String metaString = "Meta";
     String ctrlString = "Ctrl";
     if (*str == '$') {
         strcpy(modStr,metaString);

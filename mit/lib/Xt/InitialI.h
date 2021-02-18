@@ -1,5 +1,5 @@
-/* $XConsortium: InitialI.h,v 1.30 89/12/12 14:32:48 swick Exp $ */
-/* $oHeader: InitializeI.h,v 1.8 88/09/01 11:25:04 asente Exp $ */
+/* $XConsortium: InitialI.h,v 1.31 90/06/22 16:47:34 swick Exp $ */
+
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
 and the Massachusetts Institute of Technology, Cambridge, Massachusetts.
@@ -146,6 +146,12 @@ extern int _XtwaitForSomething(); /* ignoreTimers, ignoreInputs, ignoreEvents,
     /* unsigned long *howlong; */
     /* XtAppContext app */
 
+typedef struct {		/* support for XtGetGC */
+    Screen* screen;		/* root to which drawables apply */
+    Drawable* drawables;	/* list of drawables, indexed by depth */
+    Cardinal drawable_count;	/* num entries in above list */
+} ScreenDrawablesRec, *ScreenDrawables;
+
 typedef struct _XtPerDisplayStruct {
     CallbackList destroy_callbacks;
     Region region;
@@ -153,7 +159,7 @@ typedef struct _XtPerDisplayStruct {
     XtKeyProc defaultKeycodeTranslator;
     XtAppContext appContext;
     KeySym *keysyms;                   /* keycode to keysym table */
-    int keysyms_per_keycode;           /* number of keysyms for each keycode */
+    int keysyms_per_keycode;           /* number of keysyms for each keycode*/
     int min_keycode, max_keycode;      /* range of keycodes */
     KeySym *modKeysyms;                /* keysym values for modToKeysysm */
     ModToKeysymTable *modsToKeysyms;   /* modifiers to Keysysms index table*/
@@ -165,9 +171,8 @@ typedef struct _XtPerDisplayStruct {
     XrmName name;		       /* resolved app name */
     XrmClass class;		       /* application class */
     Heap heap;
-    struct _GCrec *GClist;	       /* for XtGetGC */
-    Drawable* drawables;	       /* support for XtGetGC */
-    Cardinal drawable_count;	       /* num entries in above list */
+    struct _GCrec *GClist;	       /* support for XtGetGC */
+    ScreenDrawables drawable_tab;      /* ditto for XtGetGC */
     String language;		       /* XPG language string */
     Atom xa_wm_colormap_windows;       /* the WM_COLORMAP_WINDOWS atom.
 					  this is currently only used in 
