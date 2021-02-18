@@ -28,7 +28,7 @@
 
 /***********************************************************************
  *
- * $XConsortium: twm.h,v 1.57 89/12/14 14:51:27 jim Exp $
+ * $XConsortium: twm.h,v 1.62 90/03/22 09:39:08 jim Exp $
  *
  * twm include file
  *
@@ -61,11 +61,6 @@ typedef void (*SigProc)();	/* type of function returned by signal() */
 
 #define BW 2			/* border width */
 #define BW2 4			/* border width  * 2 */
-
-/* directory to look for bitmaps if the file is not found in the current
- * directory 
- */
-#define BITMAPS "/usr/include/X11/bitmaps"
 
 #ifndef TRUE
 #define TRUE	1
@@ -195,6 +190,9 @@ typedef struct Colormaps
     char *scoreboard;		/* conflicts between installable colortables */
 } Colormaps;
 
+#define ColormapsScoreboardLength(cm) ((cm)->number_cwins * \
+				       ((cm)->number_cwins - 1) / 2)
+
 /* for each window that is on the display, one of these structures
  * is allocated and linked into a list 
  */
@@ -251,7 +249,10 @@ typedef struct TwmWindow
     short mapped;		/* is the window mapped ? */
     short auto_raise;		/* should we auto-raise this window ? */
     short forced;		/* has had an icon forced upon it */
+    short icon_not_ours;	/* icon pixmap or window supplied to us */
+    short icon_moved;		/* user explicitly moved the icon */
     short highlight;		/* should highlight this window */
+    short stackmode;		/* honor stackmode requests */
     short iconify_by_unmapping;	/* unmap window to iconify it */
     short iconmgr;		/* this is an icon manager window */
     short transient;		/* this is a transient window */

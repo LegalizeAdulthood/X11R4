@@ -28,7 +28,7 @@
 
 /***********************************************************************
  *
- * $XConsortium: parse.c,v 1.39 89/12/14 14:51:30 jim Exp $
+ * $XConsortium: parse.c,v 1.45 90/03/15 14:23:02 jim Exp $
  *
  * parse the .twmrc file
  *
@@ -36,9 +36,9 @@
  *
  ***********************************************************************/
 
-#ifndef lint
+#if !defined(lint) && !defined(SABER)
 static char RCSinfo[]=
-"$XConsortium: parse.c,v 1.39 89/12/14 14:51:30 jim Exp $";
+"$XConsortium: parse.c,v 1.45 90/03/15 14:23:02 jim Exp $";
 #endif
 
 #include <stdio.h>
@@ -51,7 +51,9 @@ static char RCSinfo[]=
 #include "gram.h"
 #include "parse.h"
 
+#ifndef SYSTEM_INIT_FILE
 #define SYSTEM_INIT_FILE "/usr/lib/X11/twm/system.twmrc"
+#endif
 #define BUF_LEN 300
 
 static FILE *twmrc;
@@ -473,8 +475,10 @@ static TwmKeyword keytable[] = {
     { "iconregion",		ICON_REGION, 0 },
     { "icons",			ICONS, 0 },
     { "interpolatemenucolors",	KEYWORD, kw0_InterpolateMenuColors },
+    { "l",			LOCK, 0 },
     { "left",			JKEYWORD, J_LEFT },
     { "lefttitlebutton",	LEFT_TITLEBUTTON, 0 },
+    { "lock",			LOCK, 0 },
     { "m",			META, 0 },
     { "maketitle",		MAKE_TITLE, 0 },
     { "maxwindowsize",		SKEYWORD, kws_MaxWindowSize },
@@ -485,6 +489,8 @@ static TwmKeyword keytable[] = {
     { "menushadowcolor",	CKEYWORD, kwc_MenuShadowColor },
     { "menutitlebackground",	CKEYWORD, kwc_MenuTitleBackground },
     { "menutitleforeground",	CKEYWORD, kwc_MenuTitleForeground },
+    { "meta",			META, 0 },
+    { "mod",			META, 0 },  /* fake it */
     { "monochrome",		MONOCHROME, 0 },
     { "move",			MOVE, 0 },
     { "movedelta",		NKEYWORD, kwn_MoveDelta },
@@ -501,6 +507,7 @@ static TwmKeyword keytable[] = {
     { "noraiseonwarp",		KEYWORD, kw0_NoRaiseOnWarp },
     { "north",			DKEYWORD, D_NORTH },
     { "nosaveunders",		KEYWORD, kw0_NoSaveUnders },
+    { "nostackmode",		NO_STACKMODE, 0 },
     { "notitle",		NO_TITLE, 0 },
     { "notitlefocus",		KEYWORD, kw0_NoTitleFocus },
     { "notitlehighlight",	NO_TITLE_HILITE, 0 },

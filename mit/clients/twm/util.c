@@ -28,7 +28,7 @@
 
 /***********************************************************************
  *
- * $XConsortium: util.c,v 1.36 89/12/14 14:52:06 jim Exp $
+ * $XConsortium: util.c,v 1.39 90/03/16 12:06:46 jim Exp $
  *
  * utility routines for twm
  *
@@ -36,9 +36,9 @@
  *
  ***********************************************************************/
 
-#ifndef lint
+#if !defined(lint) && !defined(SABER)
 static char RCSinfo[]=
-"$XConsortium: util.c,v 1.36 89/12/14 14:52:06 jim Exp $";
+"$XConsortium: util.c,v 1.39 90/03/16 12:06:46 jim Exp $";
 #endif
 
 #include <stdio.h>
@@ -46,6 +46,7 @@ static char RCSinfo[]=
 #include "util.h"
 #include "gram.h"
 #include "screen.h"
+#include <X11/Xos.h>
 #include <X11/Xatom.h>
 #include <X11/Xmu/Drawing.h>
 #include <X11/Xmu/CharSet.h>
@@ -202,102 +203,39 @@ void
 Zoom(wf, wt)
     Window wf, wt;
 {
-    int fx, fy, tx, ty;
-    unsigned int fw, fh, tw, th;
-    int xl, yt, xr, yb;
-    int dx, dy, dw, dh;
-    int w, h, i;
-    XSegment	outline[4];
+    int fx, fy, tx, ty;			/* from, to */
+    unsigned int fw, fh, tw, th;	/* from, to */
+    long dx, dy, dw, dh;
+    long z;
+    int j;
 
-    if (!Scr->DoZoom)
-	return;
+    if (!Scr->DoZoom || Scr->ZoomCount < 1) return;
 
     if (wf == None || wt == None) return;
 
-    XGetGeometry(dpy, wf, &JunkRoot, &fx, &fy, &fw, &fh, &JunkBW, &JunkDepth);
-    XGetGeometry(dpy, wt, &JunkRoot, &tx, &ty, &tw, &th, &JunkBW, &JunkDepth);
+    XGetGeometry (dpy, wf, &JunkRoot, &fx, &fy, &fw, &fh, &JunkBW, &JunkDepth);
+    XGetGeometry (dpy, wt, &JunkRoot, &tx, &ty, &tw, &th, &JunkBW, &JunkDepth);
 
-    dx = (tx - fx) / Scr->ZoomCount;
-    dy = (ty - fy) / Scr->ZoomCount;
-    dw = (tw - fw) / Scr->ZoomCount;
-    dh = (th - fh) / Scr->ZoomCount;
+    dx = ((long) (tx - fx));	/* going from -> to */
+    dy = ((long) (ty - fy));	/* going from -> to */
+    dw = ((long) (tw - fw));	/* going from -> to */
+    dh = ((long) (th - fh));	/* going from -> to */
+    z = (long) (Scr->ZoomCount + 1);
 
-    xl = fx;
-    yt = fy;
-    xr = fx + fw;
-    yb = fy + fh;
-    w = fw;
-    h = fh;
+    for (j = 0; j < 2; j++) {
+	long i;
 
-    for (i = 0; i < Scr->ZoomCount; i++)
-    {
-	outline[0].x1 = xl;
-	outline[0].y1 = yt;
-	outline[0].x2 = xr;
-	outline[0].y2 = yt;
-
-	outline[1].x1 = xr;
-	outline[1].y1 = yt;
-	outline[1].x2 = xr;
-	outline[1].y2 = yb;
-
-	outline[2].x1 = xr;
-	outline[2].y1 = yb;
-	outline[2].x2 = xl;
-	outline[2].y2 = yb;
-
-	outline[3].x1 = xl;
-	outline[3].y1 = yb;
-	outline[3].x2 = xl;
-	outline[3].y2 = yt;
-
-	XDrawSegments(dpy, Scr->Root, Scr->DrawGC, outline, 4);
-
-	w += dw;
-	h += dh;
-	xl += dx;
-	yt += dy;
-	xr = xl + w;
-	yb = yt + h;
-    }
-
-    xl = fx;
-    yt = fy;
-    xr = fx + fw;
-    yb = fy + fh;
-    w = fw;
-    h = fh;
-
-    for (i = 0; i < Scr->ZoomCount; i++)
-    {
-	outline[0].x1 = xl;
-	outline[0].y1 = yt;
-	outline[0].x2 = xr;
-	outline[0].y2 = yt;
-
-	outline[1].x1 = xr;
-	outline[1].y1 = yt;
-	outline[1].x2 = xr;
-	outline[1].y2 = yb;
-
-	outline[2].x1 = xr;
-	outline[2].y1 = yb;
-	outline[2].x2 = xl;
-	outline[2].y2 = yb;
-
-	outline[3].x1 = xl;
-	outline[3].y1 = yb;
-	outline[3].x2 = xl;
-	outline[3].y2 = yt;
-
-	XDrawSegments(dpy, Scr->Root, Scr->DrawGC, outline, 4);
-
-	w += dw;
-	h += dh;
-	xl += dx;
-	yt += dy;
-	xr = xl + w;
-	yb = yt + h;
+	XDrawRectangle (dpy, Scr->Root, Scr->DrawGC, fx, fy, fw, fh);
+	for (i = 1; i < z; i++) {
+	    int x = fx + (int) ((dx * i) / z);
+	    int y = fy + (int) ((dy * i) / z);
+	    unsigned width = (unsigned) (((long) fw) + (dw * i) / z);
+	    unsigned height = (unsigned) (((long) fh) + (dh * i) / z);
+	
+	    XDrawRectangle (dpy, Scr->Root, Scr->DrawGC,
+			    x, y, width, height);
+	}
+	XDrawRectangle (dpy, Scr->Root, Scr->DrawGC, tx, ty, tw, th);
     }
 }
 

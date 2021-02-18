@@ -28,7 +28,7 @@
 
 /***********************************************************************
  *
- * $XConsortium: twm.c,v 1.104 89/12/14 14:52:20 jim Exp $
+ * $XConsortium: twm.c,v 1.111 90/03/23 13:23:34 jim Exp $
  *
  * twm - "Tom's Window Manager"
  *
@@ -36,9 +36,9 @@
  *
  ***********************************************************************/
 
-#ifndef lint
+#if !defined(lint) && !defined(SABER)
 static char RCSinfo[] =
-"$XConsortium: twm.c,v 1.104 89/12/14 14:52:20 jim Exp $";
+"$XConsortium: twm.c,v 1.111 90/03/23 13:23:34 jim Exp $";
 #endif
 
 #include <stdio.h>
@@ -244,7 +244,7 @@ main(argc, argv, environ)
 	XSelectInput(dpy, RootWindow (dpy, scrnum),
 	    ColormapChangeMask | EnterWindowMask | PropertyChangeMask | 
 	    SubstructureRedirectMask | KeyPressMask |
-	    ButtonPressMask | ButtonReleaseMask | ExposureMask);
+	    ButtonPressMask | ButtonReleaseMask);
 	XSync(dpy, 0);
 	XSetErrorHandler(TwmErrorHandler);
 
@@ -281,6 +281,7 @@ main(argc, argv, environ)
 	Scr->AutoRaise = NULL;
 	Scr->IconNames = NULL;
 	Scr->NoHighlight = NULL;
+	Scr->NoStackModeL = NULL;
 	Scr->NoTitleHighlight = NULL;
 	Scr->DontIconify = NULL;
 	Scr->IconMgrNoShow = NULL;
@@ -466,8 +467,11 @@ main(argc, argv, environ)
 	attributes.cursor = XCreateFontCursor (dpy, XC_hand2);
 	valuemask = (CWBorderPixel | CWBackPixel | CWEventMask | 
 		     CWBackingStore | CWCursor);
-	Scr->InfoWindow = XCreateWindow (dpy, Scr->Root, 0, 0, 5, 5, BW, 0,
-					 CopyFromParent, CopyFromParent,
+	Scr->InfoWindow = XCreateWindow (dpy, Scr->Root, 0, 0, 
+					 (unsigned int) 5, (unsigned int) 5,
+					 (unsigned int) BW, 0,
+					 (unsigned int) CopyFromParent,
+					 (Visual *) CopyFromParent,
 					 valuemask, &attributes);
 
 	Scr->SizeStringWidth = XTextWidth (Scr->SizeFont.font,
@@ -475,9 +479,12 @@ main(argc, argv, environ)
 	valuemask = (CWBorderPixel | CWBackPixel | CWBitGravity);
 	attributes.bit_gravity = NorthWestGravity;
 	Scr->SizeWindow = XCreateWindow (dpy, Scr->Root, 0, 0, 
-					 Scr->SizeStringWidth,
-					 Scr->SizeFont.height + SIZE_VINDENT*2,
-					 BW, 0, CopyFromParent, CopyFromParent,
+					 (unsigned int) Scr->SizeStringWidth,
+					 (unsigned int) (Scr->SizeFont.height +
+							 SIZE_VINDENT*2),
+					 (unsigned int) BW, 0,
+					 (unsigned int) CopyFromParent,
+					 (Visual *) CopyFromParent,
 					 valuemask, &attributes);
 
 	XUngrabServer(dpy);
@@ -525,6 +532,7 @@ InitVariables()
     FreeList(&Scr->AutoRaise);
     FreeList(&Scr->IconNames);
     FreeList(&Scr->NoHighlight);
+    FreeList(&Scr->NoStackModeL);
     FreeList(&Scr->NoTitleHighlight);
     FreeList(&Scr->DontIconify);
     FreeList(&Scr->IconMgrNoShow);
@@ -604,6 +612,7 @@ InitVariables()
     Scr->RandomPlacement = FALSE;
     Scr->OpaqueMove = FALSE;
     Scr->Highlight = TRUE;
+    Scr->StackMode = TRUE;
     Scr->TitleHighlight = TRUE;
     Scr->MoveDelta = 0;
     Scr->ZoomCount = 8;
@@ -733,6 +742,7 @@ void Reborder ()
 	if ((Scr = ScreenList[scrnum]) == NULL)
 	    continue;
 
+	InstallWindowColormaps (0, &Scr->TwmRoot);	/* force reinstall */
 	for (tmp = Scr->TwmRoot.next; tmp != NULL; tmp = tmp->next)
 	{
 	    RestoreWithdrawnLocation (tmp);

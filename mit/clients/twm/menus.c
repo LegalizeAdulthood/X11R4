@@ -28,7 +28,7 @@
 
 /***********************************************************************
  *
- * $XConsortium: menus.c,v 1.139 89/12/14 17:14:58 jim Exp $
+ * $XConsortium: menus.c,v 1.156 90/03/23 13:30:49 jim Exp $
  *
  * twm menu code
  *
@@ -36,9 +36,9 @@
  *
  ***********************************************************************/
 
-#ifndef lint
+#if !defined(lint) && !defined(SABER)
 static char RCSinfo[] =
-"$XConsortium: menus.c,v 1.139 89/12/14 17:14:58 jim Exp $";
+"$XConsortium: menus.c,v 1.156 90/03/23 13:30:49 jim Exp $";
 #endif
 
 #include <stdio.h>
@@ -57,10 +57,6 @@ static char RCSinfo[] =
 #include "version.h"
 
 extern XEvent Event;
-
-#if defined(SYSV) && !defined(hpux)
-#define vfork fork
-#endif
 
 int RootFunction = NULL;
 MenuRoot *ActiveMenu = NULL;		/* the active menu */
@@ -781,9 +777,12 @@ MenuRoot *mr;
 		attributes.save_under = True;
 	    }
 	    mr->shadow = XCreateWindow (dpy, Scr->Root, 0, 0,
-					mr->width, mr->height, 0,
-					CopyFromParent, CopyFromParent,
-					CopyFromParent,
+					(unsigned int) mr->width, 
+					(unsigned int) mr->height,
+					(unsigned int)0,
+					CopyFromParent, 
+					(unsigned int) CopyFromParent,
+					(Visual *) CopyFromParent,
 					valuemask, &attributes);
 	}
 
@@ -799,8 +798,10 @@ MenuRoot *mr;
 	    valuemask |= CWBackingStore;
 	    attributes.backing_store = Always;
 	}
-	mr->w = XCreateWindow (dpy, Scr->Root, 0, 0, mr->width, mr->height, 1,
-			       CopyFromParent, CopyFromParent, CopyFromParent,
+	mr->w = XCreateWindow (dpy, Scr->Root, 0, 0, (unsigned int) mr->width,
+			       (unsigned int) mr->height, (unsigned int) 1,
+			       CopyFromParent, (unsigned int) CopyFromParent,
+			       (Visual *) CopyFromParent,
 			       valuemask, &attributes);
 
 
@@ -813,18 +814,14 @@ MenuRoot *mr;
     /* get the default colors into the menus */
     for (tmp = mr->first; tmp != NULL; tmp = tmp->next)
     {
-	if (tmp->user_colors)
-	    continue;
-
-	if (tmp->func != F_TITLE)
-	{
-	    tmp->fore = Scr->MenuC.fore;
-	    tmp->back = Scr->MenuC.back;
-	}
-	else
-	{
-	    tmp->fore = Scr->MenuTitleC.fore;
-	    tmp->back = Scr->MenuTitleC.back;
+	if (!tmp->user_colors) {
+	    if (tmp->func != F_TITLE) {
+		tmp->fore = Scr->MenuC.fore;
+		tmp->back = Scr->MenuC.back;
+	    } else {
+		tmp->fore = Scr->MenuTitleC.fore;
+		tmp->back = Scr->MenuTitleC.back;
+	    }
 	}
 
 	if (mr->hi_fore != -1)
@@ -911,22 +908,6 @@ MenuRoot *mr;
 	    b3 = save_back;
 	}
 	start = end;
-    }
-
-    /* now redo the highlight colors
-     */
-    for (cur = mr->first; cur != NULL; cur = cur->next)
-    {
-	if (mr->hi_fore != -1)
-	{
-	    cur->hi_fore = mr->hi_fore;
-	    cur->hi_back = mr->hi_back;
-	}
-	else
-	{
-	    cur->hi_fore = cur->back;
-	    cur->hi_back = cur->fore;
-	}
     }
 }
 
@@ -1062,9 +1043,8 @@ PopDownMenu()
 	}
 	XUnmapWindow(dpy, tmp->w);
 	tmp->mapped = UNMAPPED;
+	UninstallRootColormap();
     }
-
-    UninstallRootColormap();
 
     XFlush(dpy);
     ActiveMenu = NULL;
@@ -1189,7 +1169,7 @@ ExecuteFunction(func, action, w, tmp_win, eventp, context, pulldown)
 	XSync (dpy, 0);
 	Reborder ();
 	XSync (dpy, 0);
-	execvp(*Argv, Argv, Environ);
+	execvp(*Argv, Argv);
 	fprintf (stderr, "%s:  unable to restart:  %s\n", ProgramName, *Argv);
 	break;
 
@@ -1374,6 +1354,8 @@ ExecuteFunction(func, action, w, tmp_win, eventp, context, pulldown)
 
 	origX = eventp->xbutton.x_root;
 	origY = eventp->xbutton.y_root;
+	CurrentDragX = origDragX;
+	CurrentDragY = origDragY;
 
 	/*
 	 * only do the constrained move if timer is set; need to check it
@@ -1432,6 +1414,10 @@ ExecuteFunction(func, action, w, tmp_win, eventp, context, pulldown)
 		{
 		    MoveOutline(rootw, 0, 0, 0, 0, 0, 0);
 		    done = TRUE;
+		    if (moving_icon &&
+			((CurrentDragX != origDragX ||
+			  CurrentDragY != origDragY)))
+		      tmp_win->icon_moved = TRUE;
 		    break;
 		}
 	    }
@@ -1453,6 +1439,9 @@ ExecuteFunction(func, action, w, tmp_win, eventp, context, pulldown)
 
 	    WindowMoved = TRUE;
 	    DragWindow = w;
+
+	    if (!Scr->NoRaiseMove && Scr->OpaqueMove)	/* can't restore... */
+	      XRaiseWindow(dpy, DragWindow);
 
 	    if (ConstMove)
 	    {
@@ -1504,6 +1493,8 @@ ExecuteFunction(func, action, w, tmp_win, eventp, context, pulldown)
 			if (yb > Scr->MyDisplayHeight)
 			    yt = Scr->MyDisplayHeight - h;
 		    }
+		    CurrentDragX = xl;
+		    CurrentDragY = yt;
 		    if (Scr->OpaqueMove)
 			XMoveWindow(dpy, DragWindow, xl, yt);
 		    else
@@ -1537,6 +1528,8 @@ ExecuteFunction(func, action, w, tmp_win, eventp, context, pulldown)
 			yt = Scr->MyDisplayHeight - h;
 		}
 
+		CurrentDragX = xl;
+		CurrentDragY = yt;
 		if (Scr->OpaqueMove)
 		    XMoveWindow(dpy, DragWindow, xl, yt);
 		else
@@ -1699,6 +1692,11 @@ ExecuteFunction(func, action, w, tmp_win, eventp, context, pulldown)
 	break;
 
     case F_EXEC:
+	PopDownMenu();
+	if (!Scr->NoGrabServer) {
+	    XUngrabServer (dpy);
+	    XSync (dpy, 0);
+	}
 	Execute(action);
 	break;
 
@@ -1773,17 +1771,28 @@ ExecuteFunction(func, action, w, tmp_win, eventp, context, pulldown)
 	    len = strlen(action);
 
 	    for (t = Scr->TwmRoot.next; t != NULL; t = t->next) {
-		/* match only the first portion of WINDOW the name */
-		if (!strncmp(action, t->name, len)) {
-		    if (Scr->WarpUnmapped || t->mapped) {
-			if (!t->mapped) DeIconify (t);
-			XRaiseWindow (dpy, t->frame);
-			WarpToWindow (t);
-			break;
+		if (!strncmp(action, t->name, len)) break;
+	    }
+	    if (!t) {
+		for (t = Scr->TwmRoot.next; t != NULL; t = t->next) {
+		    if (!strncmp(action, t->class.res_name, len)) break;
+		}
+		if (!t) {
+		    for (t = Scr->TwmRoot.next; t != NULL; t = t->next) {
+			if (!strncmp(action, t->class.res_class, len)) break;
 		    }
 		}
 	    }
-	    if (!t) XBell (dpy, 0);
+
+	    if (t) {
+		if (Scr->WarpUnmapped || t->mapped) {
+		    if (!t->mapped) DeIconify (t);
+		    XRaiseWindow (dpy, t->frame);
+		    WarpToWindow (t);
+		}
+	    } else {
+		XBell (dpy, 0);
+	    }
 	}
 	break;
 
@@ -1864,9 +1873,12 @@ ExecuteFunction(func, action, w, tmp_win, eventp, context, pulldown)
 	    attributes.background_pixel = Scr->Black;
 	    attributes.backing_store = NotUseful;
 	    attributes.save_under = False;
-	    w = XCreateWindow (dpy, Scr->Root, 0, 0, Scr->MyDisplayWidth,
-			       Scr->MyDisplayHeight, 0, CopyFromParent,
-			       CopyFromParent, CopyFromParent, valuemask,
+	    w = XCreateWindow (dpy, Scr->Root, 0, 0,
+			       (unsigned int) Scr->MyDisplayWidth,
+			       (unsigned int) Scr->MyDisplayHeight,
+			       (unsigned int) 0,
+			       CopyFromParent, (unsigned int) CopyFromParent,
+			       (Visual *) CopyFromParent, valuemask,
 			       &attributes);
 	    XMapWindow (dpy, w);
 	    XDestroyWindow (dpy, w);
@@ -2013,13 +2025,12 @@ void
 Execute(s)
     char *s;
 {
-    int status, pid, w;
-    SigProc istat, qstat;
     static char buf[256];
     char *ds = DisplayString (dpy);
     char *colon, *dot1;
     char oldDisplay[256];
     char *doisplay;
+    int restorevar = 0;
 
     oldDisplay[0] = '\0';
     doisplay=getenv("DISPLAY");
@@ -2041,29 +2052,15 @@ Execute(s)
 	if (!dot1) dot1 = colon + strlen (colon);  /* if not there, append */
 	(void) sprintf (dot1, ".%d", Scr->screen);
 	putenv (buf);
+	restorevar = 1;
     }
 
-    if ((pid = vfork()) == 0)
-    {
-	(void) signal(SIGINT, SIG_DFL);
-	(void) signal(SIGQUIT, SIG_DFL);
-	(void) signal(SIGHUP, SIG_DFL);
-#ifdef macII
-	setpgrp();
-#endif
-	execl("/bin/sh", "sh", "-c", s, 0);
-	_exit(127);
-    }
-    istat = signal(SIGINT, SIG_IGN);
-    qstat = signal(SIGQUIT, SIG_IGN);
-    while ((w = wait(&status)) != pid && w != -1);
-    if (w == -1)
-	status = -1;
-    signal(SIGINT, istat);
-    signal(SIGQUIT, qstat);
+    (void) system (s);
 
-    (void) sprintf (buf, "DISPLAY=%s", oldDisplay);
-    putenv (buf);
+    if (restorevar) {		/* why bother? */
+	(void) sprintf (buf, "DISPLAY=%s", oldDisplay);
+	putenv (buf);
+    }
 }
 
 /***********************************************************************
@@ -2118,7 +2115,7 @@ TwmWindow *tmp_win;
 		    XUnmapWindow(dpy, t->icon_w);
 		    IconDown (t);
 		}
-		XUnmapWindow(dpy, t->list->icon);
+		if (t->list) XUnmapWindow(dpy, t->list->icon);
 		t->icon = FALSE;
 		t->icon_on = FALSE;
 	    }
@@ -2164,6 +2161,7 @@ TwmWindow *tmp_win;
       WarpToWindow (tmp_win);
     tmp_win->icon = FALSE;
     tmp_win->icon_on = FALSE;
+    XSync (dpy, 0);
 }
 
 Iconify(tmp_win, def_x, def_y)
@@ -2224,7 +2222,7 @@ int def_x, def_y;
 		    Scr->Focus = NULL;
 		    Scr->FocusRoot = TRUE;
 		}
-		XMapWindow(dpy, t->list->icon);
+		if (t->list) XMapWindow(dpy, t->list->icon);
 		t->icon = TRUE;
 		t->icon_on = FALSE;
 	    }
@@ -2257,6 +2255,7 @@ int def_x, def_y;
 	tmp_win->icon_on = TRUE;
     else
 	tmp_win->icon_on = FALSE;
+    XSync (dpy, 0);
 }
 
 static void Identify (t)
@@ -2439,8 +2438,8 @@ BumpWindowColormap (tmp, inc)
 	    tmp->cmaps.cwins = cwins;
 
 	    if (tmp->cmaps.number_cwins > 1)
-		bzero(tmp->cmaps.scoreboard,
-		      tmp->cmaps.number_cwins*(tmp->cmaps.number_cwins-1)/2);
+		bzero (tmp->cmaps.scoreboard, 
+		       ColormapsScoreboardLength(&tmp->cmaps));
 
 	    if (previously_installed)
 		InstallWindowColormaps(PropertyNotify, (TwmWindow *) NULL);
@@ -2465,10 +2464,15 @@ SetBorder (tmp, onoroff)
     Bool onoroff;
 {
     if (tmp->highlight) {
-	Pixmap pix = onoroff ? tmp->border : tmp->gray;
-
-	XSetWindowBorderPixmap (dpy, tmp->frame, pix);
-	if (tmp->title_w) XSetWindowBorderPixmap (dpy, tmp->title_w, pix);
+	if (onoroff) {
+	    XSetWindowBorder (dpy, tmp->frame, tmp->border);
+	    if (tmp->title_w) 
+	      XSetWindowBorder (dpy, tmp->title_w, tmp->border);
+	} else {
+	    XSetWindowBorderPixmap (dpy, tmp->frame, tmp->gray);
+	    if (tmp->title_w) 
+	      XSetWindowBorderPixmap (dpy, tmp->title_w, tmp->gray);
+	}
     }
 }
 

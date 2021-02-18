@@ -14,9 +14,7 @@
 .ta .3i .6i .9i 1.2i 1.5i 1.8i
 .TH TWM 1 "Release 4" "X Version 11"
 .SH NAME
-.PP
 twm - Tab Window Manager for the X Window System
-.PP
 .SH SYNTAX
 .PP
 \fBtwm \fP[-display \fIdpy\fP] [-s] [-f \fIinitfile\fP] [-v]
@@ -88,8 +86,8 @@ all screens on the display.
 .TP 8
 .B \-f \fIfilename\fP
 This option specifies the name of the startup file to use.  By default,
-\fItwm\fP will look in the user's home directory for files named 
-\fI.twmrc.num\fP (where \fInum\fP is a screen number) or \fI.twmrc\fP.
+\fItwm\fP will look in the user's home directory for files 
+named \fI.twmrc.num\fP (where \fInum\fP is a screen number) or \fI.twmrc\fP.
 .TP 8
 .B \-v
 This option indicates that \fItwm\fP should print error messages whenever
@@ -599,6 +597,11 @@ with \fBf.warpring\fP).
 This variable indicates that menus should not request save-unders to minimize
 window repainting following menu selection.  It is typically used with displays
 that can repaint faster than they can handle save-unders.
+.IP "\fBNoStackMode\fP [{ \fIwin-list\fP }]" 8
+This variable indicates that client window requests to change stacking order 
+should be ignored.  If the optional \fIwin-list\fP is given, only requests on 
+those windows will be ignored.  This is typically used to prevent applications
+from relentlessly popping themselves to the front of the window stack.
 .IP "\fBNoTitle\fP [{ \fIwin-list\fP }] " 8
 This variable indicates that windows should not have titlebars.  If the 
 optional \fIwin-list\fP is given, only those windows will not have titlebars.
@@ -808,8 +811,10 @@ keysym name; buttons are given as the keywords \fBButton1\fP-\fBButton5\fP:
 \fBButton1\fP	= \fImodlist\fP : \fIcontext\fP : \fIfunction\fP
 .EE
 The \fImodlist\fP is any combination of the modifier names \fBshift\fP,
-\fBcontrol\fP, and \fBmeta\fP (which may be abbreviated as 
-\fBs\fP, \fBc\fP, and \fBm\fP respectively) separated by a vertical bar (\(or).
+\fBcontrol\fP, \fBlock\fP, \fBmeta\fP, \fBmod1\fP, \fBmod2\fP, \fBmod3\fP,
+\fBmod4\fP, or \fBmod1\fP (which may be abbreviated as 
+\fBs\fP, \fBc\fP, \fBl\fP, \fBm\fP, \fBm1\fP, \fBm2\fP, \fBm3\fP, \fBm4\fP, 
+\fBm5\fP, respectively) separated by a vertical bar (\(or).
 Similarly, the \fIcontext\fP is any combination of 
 \fBwindow\fP,
 \fBtitle\fP,
@@ -1141,9 +1146,6 @@ terse grid of icon names, called an icon manager, provides a more efficient
 use of screen space as well as the ability to navigate among windows from
 the keyboard.
 .PP
-Neither client-supplied icon windows nor dynamic setting of the
-icon pixmap are supported (icon name changes will be updated automatically).
-.PP
 An icon manager is a window that contains names of selected or all
 windows currently on the display.  In addition to the window name,
 a small button using the default iconify symbol will be displayed to the 
@@ -1160,10 +1162,6 @@ Using the \fBf.upiconmgr\fP, \fBf.downiconmgr\fP
 \fBf.righticonmgr\fP functions,
 the input focus can be changed between windows directly from the keyboard.
 .SH BUGS
-Lock and Mod2-5 cannot be specified as modifier contexts.  The right fix is to
-add lock, l, mod1 (for completeness), mod2, mod3, mod4, mod5 to the parse and 
-grammar tables, and add a number as a valid key type (so long as it is 1-5).
-.PP
 The resource manager should have been used instead of all of the window
 lists.
 .PP

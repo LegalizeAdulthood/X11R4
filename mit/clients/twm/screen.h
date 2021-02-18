@@ -21,7 +21,7 @@
 
 /***********************************************************************
  *
- * $XConsortium: screen.h,v 1.60 89/12/14 14:52:26 jim Exp $
+ * $XConsortium: screen.h,v 1.61 90/03/15 14:23:04 jim Exp $
  *
  * twm per-screen data include file
  *
@@ -159,6 +159,7 @@ typedef struct ScreenInfo
     name_list *AutoRaise;	/* list of window names to auto-raise */
     name_list *IconNames;	/* list of window names and icon names */
     name_list *NoHighlight;	/* list of windows to not highlight */
+    name_list *NoStackModeL;	/* windows to ignore stack mode requests */
     name_list *NoTitleHighlight;/* list of windows to not highlight the TB*/
     name_list *DontIconify;	/* don't iconify by unmapping */
     name_list *IconMgrNoShow;	/* don't show in the icon manager */
@@ -225,6 +226,7 @@ typedef struct ScreenInfo
     short RandomPlacement;	/* randomly place windows that no give hints */
     short OpaqueMove;		/* move the window rather than outline */
     short Highlight;		/* should we highlight the window borders */
+    short StackMode;		/* should we honor stack mode requests */
     short TitleHighlight;	/* should we highlight the titlebar */
     short MoveDelta;		/* number of pixels before f.move starts */
     short ZoomCount;		/* zoom outline count */
