@@ -1,5 +1,5 @@
-/* $XConsortium: TranslateI.h,v 1.17 90/04/13 20:12:37 swick Exp $ */
-/* $oHeader: TranslateI.h,v 1.2 88/08/18 15:56:37 asente Exp $ */
+/* $XConsortium: TranslateI.h,v 1.23 90/07/13 07:35:51 swick Exp $ */
+
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
 and the Massachusetts Institute of Technology, Cambridge, Massachusetts.
@@ -36,6 +36,8 @@ SOFTWARE.
 /*#define REFCNT_TRANSLATIONS*/
 #define CACHE_TRANSLATIONS
 
+#define _XtRStateTablePair "_XtStateTablePair"
+
 typedef Boolean (*MatchProc)();
   /* Event parsed;
      XEvent incoming;
@@ -68,12 +70,6 @@ typedef struct _EventRec {
 
 typedef enum _TMkind {override,augment} TMkind;
 
-typedef struct _TMConvertRec {
-   XtTranslations old; /* table to merge into */
-   XtTranslations new; /* table to merge from */
-   TMkind  operation; /* merge or augment     */
-} TMConvertRec;
-
 typedef struct _EventObjRec {
     Event event;	/* X event description */
     StatePtr state;	/* pointer to linked lists of state info */
@@ -98,22 +94,36 @@ typedef struct _StateRec {
 }  StateRec;
 typedef enum {XtTableReplace,XtTableAugment,XtTableOverride} _XtTranslateOp;
 
-typedef struct _TranslationData {
+typedef struct _StateTableData {
     _XtTranslateOp	operation; /*replace,augment,override*/
     unsigned int	numEvents;
     unsigned int	eventTblSize;
     EventObjPtr		eventObjTbl;
-    unsigned long	lastEventTime;
     unsigned int	numQuarks;   /* # of entries in quarkTable */
     unsigned int	quarkTblSize; /*total size of quarkTable */
     XrmQuark*		quarkTable;  /* table of quarkified rhs*/
     unsigned int	accNumQuarks;
     unsigned int	accQuarkTblSize;
     XrmQuark*		accQuarkTable;
-    struct _XtBoundAccActionRec* accProcTbl;
     StatePtr		head;	/* head of list of all states */
     Boolean		mappingNotifyInterest;
+} StateTableData, *StateTablePtr;
+
+typedef struct _XtBoundAccActionRec {
+    Widget widget;    /*widgetID to pass to action Proc*/
+    XtActionProc proc; /*action procedure */
+} XtBoundAccActionRec;
+
+typedef struct _TranslationData {
+    StateTablePtr	 stateTable;
+    XtBoundAccActionRec* accProcTbl;
 } TranslationData;
+
+typedef struct _TMConvertRec {
+   StateTablePtr old; /* table to merge into */
+   StateTablePtr new; /* table to merge from */
+   TMkind  operation; /* merge or augment     */
+} TMConvertRec;
 
 #define _XtEventTimerEventType ((unsigned long)-1L)
 #define KeysymModMask		(1<<27) /* private to TM */
@@ -134,24 +144,9 @@ typedef struct _TMEventRec {
     Event event;
 }TMEventRec,*TMEventPtr;
 
-typedef struct _XtBoundAccActionRec {
-    Widget widget;    /*widgetID to pass to action Proc*/
-    XtActionProc proc; /*action procedure */
-} XtBoundAccActionRec;
-
-
 extern void _XtAddEventSeqToStateTable();
 extern void _XtInitializeStateTable(); /* stateTable */
     /* _XtTranslations *stateTable; */
-
-typedef XrmQuark XtAction;
-
-typedef unsigned int	Value;
-typedef struct {
-    char	*name;
-    XrmQuark	signature;
-    Value	value;
-} NameValueRec, *NameValueTable;
 
 typedef struct _ActionHookRec {
     struct _ActionHookRec* next; /* must remain first */
@@ -189,10 +184,24 @@ extern void _XtTranslateInitialize();
 extern XtTranslations _XtParseTranslationTable(); /* source */
     /* String source; */
 
-extern void _XtRegisterGrabs(); /* widget */
-    /* Widget widget; */
+extern void _XtRegisterGrabs(
+#if NeedFunctionPrototypes
+    Widget /* widget */,
+#if NeedWidePrototypes
+    int /* acceleratorsOnly */
+#else
+    Boolean /* acceleratorsOnly */
+#endif
+#endif
+);
 
 extern void _XtPopup(); /* widget, grab_kind, spring_loaded */
     /* Widget      widget; */
     /* XtGrabKind  grab_kind; */
     /* Boolean     spring_loaded; */
+
+extern XtTranslations _XtCondCopyTranslations(
+#if NeedFunctionPrototypes
+    XtTranslations	translations
+#endif
+);
