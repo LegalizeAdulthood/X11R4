@@ -1,6 +1,6 @@
 #ifndef lint
 static char Xrcsid[] =
-    "$XConsortium: Selection.c,v 1.43 89/12/15 15:28:52 swick Exp $";
+    "$XConsortium: Selection.c,v 1.45 90/02/16 11:45:54 kit Exp $";
 #endif
 
 /***********************************************************
@@ -216,7 +216,6 @@ Atom selection;
 	ctx->dpy = dpy;
 	ctx->selection = selection;
 	ctx->widget = NULL;
- 	ctx->refcount = 0;
 	ctx->prop_list = sarray;
 	(void)XSaveContext(dpy, (Window)selection, selectContext, (caddr_t)ctx);
     }
@@ -243,25 +242,24 @@ Time time;
 {
     static void HandleSelectionEvents();
 
-    if ((ctx->widget == widget)
-       && (ctx->selection == selection) /* paranoia */
-       && ((time == CurrentTime) || (time >= ctx->time))) {
-	    if (--ctx->refcount) {
-		XtRemoveEventHandler(widget, (EventMask) NULL, TRUE,
-			HandleSelectionEvents, (XtPointer)ctx); 
-	        XtRemoveCallback(widget, XtNdestroyCallback, 
-			WidgetDestroyed, (XtPointer)ctx); 
-	    };
-	    ctx->widget = NULL; /* widget officially loses ownership */
-	    /* now inform widget */
-	    if (ctx->loses) { 
-		if (ctx->incremental)  
-		   (*ctx->loses)(widget, &ctx->selection, ctx->owner_closure);
-		else  (*ctx->loses)(widget, &ctx->selection);
-	    }
-	    return(TRUE);
+    if ((ctx->widget == widget) &&
+	(ctx->selection == selection) && /* paranoia */
+	((time == CurrentTime) || (time >= ctx->time)))
+    {
+	XtRemoveEventHandler(widget, (EventMask) NULL, TRUE,
+			     HandleSelectionEvents, (XtPointer)ctx); 
+	XtRemoveCallback(widget, XtNdestroyCallback, 
+			 WidgetDestroyed, (XtPointer)ctx); 
+	ctx->widget = NULL; /* widget officially loses ownership */
+	/* now inform widget */
+	if (ctx->loses) { 
+	    if (ctx->incremental)  
+	       (*ctx->loses)(widget, &ctx->selection, ctx->owner_closure);
+	    else  (*ctx->loses)(widget, &ctx->selection);
 	}
-   else return(FALSE);
+	return(TRUE);
+    }
+    else return(FALSE);
 }
 
 static XContext selectWindowContext = 0;
@@ -580,23 +578,32 @@ Widget widget;
 XtPointer closure;
 XEvent *event;
 {
-    Select ctx;
+    Select eventCtx, ctx;
     XSelectionEvent ev;
     Boolean incremental;
     Atom target;
     int count;
     Boolean writeback = FALSE;
 
+    ctx = (Select) closure;
     switch (event->type) {
       case SelectionClear:
-	ctx = FindCtx(event->xselectionclear.display,
-		      event->xselectionclear.selection);
+	eventCtx = FindCtx(event->xselectionclear.display,
+			   event->xselectionclear.selection);
+	/* if this event is not for the selection we registered for,
+	 * don't do anything */
+	if (eventCtx != ctx)
+	    break;
 	(void) LoseSelection(ctx, widget, event->xselectionclear.selection,
 			event->xselectionclear.time);
 	break;
       case SelectionRequest:
-	ctx = FindCtx(event->xselectionrequest.display,
-		      event->xselectionrequest.selection);
+	eventCtx = FindCtx(event->xselectionrequest.display,
+			   event->xselectionrequest.selection);
+	/* if this event is not for the selection we registered for,
+	 * don't do anything */
+	if (eventCtx != ctx)
+	    break;
 	ev.type = SelectionNotify;
 	ev.display = event->xselectionrequest.display;
 	ev.requestor = event->xselectionrequest.requestor;
@@ -664,28 +671,42 @@ XtPointer closure;
 Boolean incremental;
 {
     Select ctx;
+    SelectRec oldctx;
     Window window;
+    Boolean old_context = FALSE;
+
     ctx = FindCtx(XtDisplay(widget), selection);
-    if (ctx->widget != widget) {
-        XSetSelectionOwner(ctx->dpy, selection, window = XtWindow(widget),
-		 time);
+    if (ctx->widget != widget || ctx->time != time)
+    {
+	window = XtWindow(widget);
+        XSetSelectionOwner(ctx->dpy, selection, window, time);
         if (XGetSelectionOwner(ctx->dpy, selection) != window)
-		return(FALSE);
-	if (ctx->widget)
-	    (void) LoseSelection(ctx, ctx->widget, selection, ctx->time);
+	    return FALSE;
+    	if (ctx->widget != widget)
+ 	{
+	    XtAddEventHandler(widget, (EventMask)NULL, TRUE,
+			      HandleSelectionEvents, (XtPointer)ctx);
+	    XtAddCallback(widget, XtNdestroyCallback,
+			  WidgetDestroyed, (XtPointer)ctx);
+
+	    if (ctx->widget) {
+		oldctx = *ctx;
+		old_context = TRUE;
+	    }
+	}
+	ctx->widget = widget;	/* Selection offically changes hands. */
+	ctx->time = time;
     }
-    ctx->widget = widget;
-    ctx->time = time;
     ctx->convert = convert;
     ctx->loses = lose;
     ctx->notify = notify;
     ctx->owner_cancel = cancel;
     ctx->incremental = incremental;
     ctx->owner_closure = closure;
-    ctx->refcount++;
-    XtAddEventHandler(widget, (EventMask)NULL, TRUE,
-		      HandleSelectionEvents, (XtPointer)ctx);
-    XtAddCallback(widget, XtNdestroyCallback, WidgetDestroyed, (XtPointer)ctx);
+
+    if (old_context)
+	(void) LoseSelection(&oldctx, oldctx.widget, selection, oldctx.time);
+
     return TRUE;
 }
 

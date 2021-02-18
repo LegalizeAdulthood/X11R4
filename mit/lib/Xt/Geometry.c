@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Geometry.c,v 1.41 89/12/16 16:59:52 rws Exp $";
+static char Xrcsid[] = "$XConsortium: Geometry.c,v 1.42 90/02/26 16:25:01 kit Exp $";
 /* $oHeader: Geometry.c,v 1.3 88/08/23 11:37:50 asente Exp $ */
 #endif /* lint */
 
@@ -50,11 +50,19 @@ static void ClearRectObjAreas(r, old)
 		TRUE );
 }
 
-/* Public routines */
+/*
+ * This function is exactly like XtMakeGeometryRequest except that
+ * it will return an extra variable.
+ *
+ * clear_rect_obj - *** RETURNED ***  
+ *		    TRUE if the rect obj has been cleared, false otherwise.
+ */
 
-XtGeometryResult XtMakeGeometryRequest (widget, request, reply)
-    Widget         widget;
+XtGeometryResult 
+_XtMakeGeometryRequest (widget, request, reply, clear_rect_obj)
+    Widget widget;
     XtWidgetGeometry *request, *reply;
+    Boolean * clear_rect_obj;
 {
     XtWidgetGeometry    junk;
     XtGeometryHandler manager;
@@ -63,6 +71,8 @@ XtGeometryResult XtMakeGeometryRequest (widget, request, reply)
     XtGeometryMask	changeMask;
     Boolean managed, parentRealized;
     XWindowChanges changes;
+
+    *clear_rect_obj = FALSE;
 
     if (XtIsShell(widget)) {
 	ShellClassExtension ext;
@@ -195,15 +205,20 @@ XtGeometryResult XtMakeGeometryRequest (widget, request, reply)
 	}
     }
 
-    if (changeMask & XtCWQueryOnly) {
-	/* Just asking about it, don't change any geometry fields */
+    /*
+     * If Unrealized, not a XtGeometryYes, or a query-only then we are done.
+     */
+
+    if ((returnCode != XtGeometryYes) || 
+	(changeMask & XtCWQueryOnly) || !XtIsRealized(widget)) {
+
+	if (returnCode == XtGeometryDone)
+	    returnCode = XtGeometryYes;
+
 	return returnCode;
     }
 
-    if (returnCode == XtGeometryYes
-	&& XtIsWidget(widget) && XtIsRealized(widget)) {
-	/* reconfigure the window (if needed) */
-
+    if (XtIsWidget(widget)) {	/* reconfigure the window (if needed) */
 	if (changes.x != widget->core.x) {
  	    changeMask |= CWX;
  	    changes.x = widget->core.x;
@@ -231,16 +246,27 @@ XtGeometryResult XtMakeGeometryRequest (widget, request, reply)
 	}
 
 	XConfigureWindow(XtDisplay(widget), XtWindow(widget),
-		changeMask, &changes);
+			 changeMask, &changes);
     }
-    else if (returnCode == XtGeometryYes && XtIsRealized(widget)) {
-	/* RectObj child of realized Widget */
+    else {			/* RectObj child of realized Widget */
+	*clear_rect_obj = TRUE;
 	ClearRectObjAreas((RectObj)widget, &changes);
     }
-    else if (returnCode == XtGeometryDone) returnCode = XtGeometryYes;
 
     return returnCode;
-} /* XtMakeGeometryRequest */
+} /* _XtMakeGeometryRequest */
+
+
+/* Public routines */
+
+XtGeometryResult XtMakeGeometryRequest (widget, request, reply)
+    Widget         widget;
+    XtWidgetGeometry *request, *reply;
+{
+    Boolean junk;
+
+    return(_XtMakeGeometryRequest(widget, request, reply, &junk));
+}
 
 XtGeometryResult XtMakeResizeRequest
 	(widget, width, height, replyWidth, replyHeight)

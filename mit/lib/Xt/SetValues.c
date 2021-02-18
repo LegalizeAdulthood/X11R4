@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: SetValues.c,v 1.3 90/01/24 16:05:41 swick Exp $";
+static char Xrcsid[] = "$XConsortium: SetValues.c,v 1.4 90/02/26 16:25:04 kit Exp $";
 #endif /* lint */
 
 /***********************************************************
@@ -133,7 +133,7 @@ void XtSetValues(w, args, num_args)
     double	    oldwCache[100], reqwCache[100];
     double	    oldcCache[20], reqcCache[20];
     Cardinal	    widgetSize, constraintSize;
-    Boolean	    redisplay, reconfigured = False;
+    Boolean	    redisplay, cleared_rect_obj, reconfigured = False;
     XtGeometryResult result;
     XtWidgetGeometry geoReq, geoReply;
     WidgetClass     wc = XtClass(w);
@@ -214,11 +214,13 @@ void XtSetValues(w, args, num_args)
     
 	if (geoReq.request_mode != 0) {
 	    do {
-		result = XtMakeGeometryRequest(w, &geoReq, &geoReply);
+		result = _XtMakeGeometryRequest(w, &geoReq, &geoReply, 
+						&cleared_rect_obj);
 		if (result == XtGeometryYes) {
-		    reconfigured = True;
+		    reconfigured = TRUE;
 		    break;
 		}
+
 		/* An Almost or No reply.  Call widget and let it munge
 		   request, reply */
 		if (wc->core_class.set_values_almost == NULL) {
@@ -247,7 +249,7 @@ void XtSetValues(w, args, num_args)
             if (redisplay && XtIsRealized(w))
                 XClearArea (XtDisplay(w), XtWindow(w), 0, 0, 0, 0, TRUE);
         } else { /*non-window object */
-	  if (redisplay && ! reconfigured) {
+	  if (redisplay && ! cleared_rect_obj ) {
 	      Widget pw = _XtWindowedAncestor(w);
 	      if (XtIsRealized(pw)) {
 		  RectObj r = (RectObj)w;

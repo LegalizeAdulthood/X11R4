@@ -1,6 +1,6 @@
 #ifndef lint
 static char Xrcsid[] =
-    "$XConsortium: Varargs.c,v 1.10 89/12/12 15:07:31 jim Exp $";
+    "$XConsortium: Varargs.c,v 1.14 90/02/13 13:32:54 kit Exp $";
 #endif
 /*
 
@@ -193,8 +193,12 @@ _XtTypedArgToArg(widget, typed_arg, arg_return, resources, num_resources)
     XrmValue            from_val, to_val;
     register int        i;
       
+
     if (widget == NULL) {
-        XtWarning("XtVaTypedArg conversion needs non-NULL widget handle\n");
+        XtAppWarningMsg(XtWidgetToApplicationContext(widget),
+            "nullWidget", "xtConvertVarTArgList", "XtToolkitError",
+	    "XtVaTypedArg conversion needs non-NULL widget handle",
+            (String *)NULL, (Cardinal *)NULL);
         return(0);
     }
        
@@ -209,8 +213,8 @@ _XtTypedArgToArg(widget, typed_arg, arg_return, resources, num_resources)
     }
 
     if (to_type == NULL) {
-        XtAppWarningMsg(XtDisplayToApplicationContext(XtDisplay(widget)),
-            "unknownType", "xtConvertVarToArgList", "XtToolkitError",
+        XtAppWarningMsg(XtWidgetToApplicationContext(widget),
+            "unknownType", "xtConvertVarTArgList", "XtToolkitError",
             "Unable to find type of resource for conversion",
             (String *)NULL, (Cardinal *)NULL);
         return(0);
@@ -228,21 +232,27 @@ _XtTypedArgToArg(widget, typed_arg, arg_return, resources, num_resources)
     XtConvert(widget, typed_arg->type, &from_val, to_type, &to_val);
  
     if (to_val.addr == NULL) {
-        XtAppWarningMsg(XtDisplayToApplicationContext(XtDisplay(widget)),
+        XtAppWarningMsg(XtWidgetToApplicationContext(widget),
             "conversionFailed", "xtConvertVarToArgList", "XtToolkitError",
             "Type conversion failed", (String *)NULL, (Cardinal *)NULL);
         return(0);
     }
 
     arg_return->name = typed_arg->name;
-    if (to_val.size == sizeof(long))
-        arg_return->value = (XtArgVal) *(long *)to_val.addr;
-    else if (to_val.size == sizeof(short))
-        arg_return->value = (XtArgVal) *(short *)to_val.addr;
-    else if (to_val.size == sizeof(char))
-        arg_return->value = (XtArgVal) *(char *)to_val.addr;
-    else if (to_val.size == sizeof(XtArgVal))
-        arg_return->value = *(XtArgVal *)to_val.addr;
+
+    if (strcmp(to_type, XtRString) == 0) {
+	arg_return->value = (XtArgVal) to_val.addr;
+    }
+    else {
+	if (to_val.size == sizeof(long))
+	    arg_return->value = (XtArgVal) *(long *)to_val.addr;
+	else if (to_val.size == sizeof(short))
+	    arg_return->value = (XtArgVal) *(short *)to_val.addr;
+	else if (to_val.size == sizeof(char))
+	    arg_return->value = (XtArgVal) *(char *)to_val.addr;
+	else if (to_val.size == sizeof(XtArgVal))
+	    arg_return->value = *(XtArgVal *)to_val.addr;
+    }
        
     return(1);
 }
@@ -312,8 +322,9 @@ _XtVaToArgList(widget, var, max_count, args_return, num_args_return)
     ArgList		args = (ArgList)NULL;
     XtTypedArg		typed_arg;
     XtResourceList	resources = (XtResourceList)NULL;
-    Cardinal		num_resources = 0;
+    Cardinal		num_resources;
     Boolean		fetched_resource_list = False;
+    static void		GetResources();
 
     if (max_count  == 0) {
 	*num_args_return = 0;
@@ -335,7 +346,7 @@ _XtVaToArgList(widget, var, max_count, args_return, num_args_return)
 	    /* if widget is NULL, typed args are ignored */
 	    if (widget != NULL) {
 		if (!fetched_resource_list) {
-		    XtGetResourceList(XtClass(widget), &resources, &num_resources);
+		    GetResources(widget, &resources, &num_resources);
 		    fetched_resource_list = True;
 		}
 		count += _XtTypedArgToArg(widget, &typed_arg, &args[count],
@@ -343,7 +354,7 @@ _XtVaToArgList(widget, var, max_count, args_return, num_args_return)
 	    }
 	} else if (strcmp(attr, XtVaNestedList) == 0) {
 	    if (widget != NULL || !fetched_resource_list) {
-		XtGetResourceList(XtClass(widget), &resources, &num_resources);
+		GetResources(widget, &resources, &num_resources);
 		fetched_resource_list = True;
 	    }
 
@@ -356,14 +367,52 @@ _XtVaToArgList(widget, var, max_count, args_return, num_args_return)
 	}
     }
 
-    if (resources != (XtResourceList)NULL) {
-	XtFree((XtPointer)resources);
-    }
+    XtFree((XtPointer)resources);
 
     *num_args_return = (Cardinal)count;
     *args_return = (ArgList)args;
 }
 
+/*	Function Name: GetResources
+ *	Description: Retreives the normal and constraint resources
+ *                   for this widget.
+ *	Arguments: widget - the widget.
+ * RETURNED        res_list - the list of resource for this widget
+ * RETURNED        number - the number of resources in the above list.
+ *	Returns: none
+ */
+
+static void
+GetResources(widget, res_list, number)
+Widget widget;
+XtResourceList * res_list;
+Cardinal * number;
+{
+    Widget parent = XtParent(widget);
+
+    XtInitializeWidgetClass(XtClass(widget));
+    XtGetResourceList(XtClass(widget), res_list, number);
+    
+    if ((parent != NULL) && (XtIsConstraint(parent))) {
+	int i;
+	XtResourceList constraint;
+	Cardinal num_constraint;
+
+	XtInitializeWidgetClass(XtClass(parent));
+	
+	XtGetConstraintResourceList(XtClass(parent), &constraint, 
+				    &num_constraint);
+
+	*res_list = (XtResourceList) XtRealloc(*res_list, sizeof(XtResource) * 
+					       (*number + num_constraint));
+
+	for (i = 0; i < num_constraint; i++)
+	    (*res_list)[*number + i] = constraint[i];
+
+	*number += num_constraint;
+	XtFree( (XtPointer) constraint);
+    }
+}
 
 static int _XtNestedArgtoTypedArg(args, avlist) 
     XtTypedArgList      args;

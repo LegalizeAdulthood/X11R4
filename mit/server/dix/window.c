@@ -22,7 +22,7 @@ SOFTWARE.
 
 ******************************************************************/
 
-/* $XConsortium: window.c,v 5.47 89/12/14 14:59:32 keith Exp $ */
+/* $XConsortium: window.c,v 5.50 90/02/28 16:09:42 keith Exp $ */
 
 #include "X.h"
 #define NEED_REPLIES
@@ -365,8 +365,8 @@ PrintChildren(p1, indent)
     {
         p2 = p1->firstChild;
         for (i=0; i<indent; i++) ErrorF( " ");
-	ErrorF( "%x\n", p1->wid);
-        miprintRegion(&p1->clipList);
+	ErrorF( "%x\n", p1->drawable.id);
+        miPrintRegion(&p1->clipList);
 	PrintChildren(p2, indent+4);
 	p1 = p1->nextSib;
     }
@@ -381,7 +381,7 @@ PrintWindowTree()
     {
 	ErrorF( "WINDOW %d\n", i);
 	pWin = WindowTable[i];
-        miprintRegion(&pWin->clipList);
+        miPrintRegion(&pWin->clipList);
 	p1 = pWin->firstChild;
 	PrintChildren(p1, 4);
     }
@@ -521,6 +521,7 @@ SetWindowToDefaults(pWin)
     pWin->cursorIsNone = TRUE;
 
     pWin->backingStore = NotUseful;
+    pWin->DIXsaveUnder = FALSE;
     pWin->backStorage = (pointer) NULL;
 
     pWin->mapped = FALSE;           /* off */

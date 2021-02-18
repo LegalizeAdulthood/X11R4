@@ -1,6 +1,6 @@
 #ifndef lint
 static char Xrcsid[] =
-    "$XConsortium: VarGet.c,v 1.10 89/11/14 14:24:35 swick Exp $";
+    "$XConsortium: VarGet.c,v 1.11 90/02/09 16:38:49 kit Exp $";
 #endif
 /*
 
@@ -126,7 +126,7 @@ _XtGetTypedArg(widget, typed_arg, resources, num_resources)
     }    
 
     if (i == num_resources) {
-	XtAppWarningMsg(XtDisplayToApplicationContext(XtDisplay(widget)),
+	XtAppWarningMsg(XtWidgetToApplicationContext(widget),
             "unknownType", "xtGetTypedArg", "XtToolkitError",
             "Unable to find type of resource for conversion",
             (String *)NULL, (Cardinal *)NULL);
@@ -150,7 +150,7 @@ _XtGetTypedArg(widget, typed_arg, resources, num_resources)
 	    Cardinal num_params = 2;
 	    params[0] = typed_arg->type;
 	    params[1] = XtName(widget);
-	    XtAppWarningMsg(XtDisplayToApplicationContext(XtDisplay(widget)), 
+	    XtAppWarningMsg(XtWidgetToApplicationContext(widget),
 		"conversionFailed", "xtGetTypedArg", "XtToolkitError",
 		"Insufficient space for converted type '%s' in widget '%s'",
 		params, &num_params);
@@ -161,7 +161,7 @@ _XtGetTypedArg(widget, typed_arg, resources, num_resources)
 	    params[0] = from_type;
 	    params[1] = typed_arg->type;
 	    params[2] = XtName(widget);
-	    XtAppWarningMsg(XtDisplayToApplicationContext(XtDisplay(widget)),
+	    XtAppWarningMsg(XtWidgetToApplicationContext(widget),
 		"conversionFailed", "xtGetTypedArg", "XtToolkitError",
 		"Type conversion (%s to %s) failed for widget '%s'",
 		params, &num_params);

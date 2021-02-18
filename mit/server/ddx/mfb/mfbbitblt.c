@@ -22,7 +22,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $XConsortium: mfbbitblt.c,v 5.13 89/11/30 15:32:17 keith Exp $ */
+/* $XConsortium: mfbbitblt.c,v 5.14 90/02/08 13:29:24 rws Exp $ */
 #include "X.h"
 #include "Xprotostr.h"
 
@@ -81,7 +81,6 @@ int width, height;
 int dstx, dsty;
 {
     RegionPtr prgnSrcClip;	/* may be a new region, or just a copy */
-    RegionRec rgnSrcRec;
     Bool freeSrcClip = FALSE;
 
     RegionPtr prgnExposed;
@@ -187,9 +186,7 @@ int dstx, dsty;
 	{
 	    if (!fastClip)
 		(*pGC->pScreen->RegionUninit)(&rgnDst);
-	    if (prgnSrcClip == &rgnSrcRec)
-		(*pGC->pScreen->RegionUninit)(prgnSrcClip);
-	    else if (freeSrcClip)
+	    if (freeSrcClip)
 		(*pGC->pScreen->RegionDestroy)(prgnSrcClip);
 	    return NULL;
 	}
@@ -257,9 +254,7 @@ int dstx, dsty;
 						  sizeof(DDXPointRec))))
 	{
 	    (*pGC->pScreen->RegionUninit)(&rgnDst);
-	    if (prgnSrcClip == &rgnSrcRec)
-		(*pGC->pScreen->RegionUninit)(prgnSrcClip);
-	    else if (freeSrcClip)
+	    if (freeSrcClip)
 		(*pGC->pScreen->RegionDestroy)(prgnSrcClip);
 	    return NULL;
 	}
@@ -288,9 +283,7 @@ int dstx, dsty;
 				  origDest.x, origDest.y, (unsigned long)0);
 	}
     (*pGC->pScreen->RegionUninit)(&rgnDst);
-    if (prgnSrcClip == &rgnSrcRec)
-	(*pGC->pScreen->RegionUninit)(prgnSrcClip);
-    else if (freeSrcClip)
+    if (freeSrcClip)
 	(*pGC->pScreen->RegionDestroy)(prgnSrcClip);
     return prgnExposed;
 }
