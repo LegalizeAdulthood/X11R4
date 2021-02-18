@@ -1,7 +1,5 @@
-#ifndef lint
-static char Xrcsid[] = "$XConsortium: Convert.c,v 1.40 90/06/04 15:06:37 kit Exp $";
-/* $oHeader: Convert.c,v 1.4 88/09/01 11:10:44 asente Exp $ */
-#endif /*lint*/
+/* $XConsortium: Convert.c,v 1.43 90/09/04 10:45:55 swick Exp $ */
+
 /*LINTLIBRARY*/
 
 /***********************************************************
@@ -84,6 +82,7 @@ void _XtFreeConverterTable(table)
 	for (i = 0; i < CONVERTHASHSIZE; i++) {
 	    for (p = table[i]; p != NULL;) {
 		register ConverterPtr next = p->next;
+		if (p->num_args) XtFree((char*)p->convert_args);
 		XtFree((char*)p);
 		p = next;
 	    }
@@ -307,7 +306,7 @@ CacheEnter(heap, converter, args, num_args, from, to, succeeded, hash,
     p->hash	    = hash;
     p->converter    = converter;
     p->from.size    = from->size;
-    p->from.addr = (XtPointer) _XtHeapAlloc(heap, from->size);
+    p->from.addr = (caddr_t)_XtHeapAlloc(heap, from->size);
     XtBCopy(from->addr, p->from.addr, from->size);
     p->num_args = num_args;
     if (num_args == 0) {
@@ -316,13 +315,13 @@ CacheEnter(heap, converter, args, num_args, from, to, succeeded, hash,
 	p->args = (XrmValuePtr) _XtHeapAlloc(heap, num_args * sizeof(XrmValue));
 	for (i = 0; i < num_args; i++) {
 	    p->args[i].size = args[i].size;
-	    p->args[i].addr = (XtPointer) _XtHeapAlloc(heap, args[i].size);
+	    p->args[i].addr = (caddr_t)_XtHeapAlloc(heap, args[i].size);
 	    XtBCopy(args[i].addr, p->args[i].addr, args[i].size);
 	}
     }
     p->to.size  = to->size;
     if (succeeded && to->addr != NULL) {
-	p->to.addr  = (XtPointer) _XtHeapAlloc(heap, to->size);
+	p->to.addr  = (caddr_t)_XtHeapAlloc(heap, to->size);
 	XtBCopy(to->addr, p->to.addr, to->size);
     }
     else {
@@ -433,9 +432,9 @@ static void ComputeArgs(widget, convert_args, num_args, args)
 	case XtBaseOffset:
 #ifdef CRAY1
 	    args[i].addr =
-		(XtPointer)((int)widget + (int)convert_args[i].address_id);
+		(caddr_t)((int)widget + (int)convert_args[i].address_id);
 #else
-	    args[i].addr = (XtPointer)widget + (int)convert_args[i].address_id;
+	    args[i].addr = (caddr_t)((char *)widget + (int)convert_args[i].address_id);
 #endif
 	    break;
 
@@ -449,15 +448,15 @@ static void ComputeArgs(widget, convert_args, num_args, args)
 
 #ifdef CRAY1
 	    args[i].addr =
-		(XtPointer)((int)ancestor + (int)convert_args[i].address_id);
+		(caddr_t)((int)ancestor + (int)convert_args[i].address_id);
 #else
 	    args[i].addr =
-		(XtPointer)ancestor + (int)convert_args[i].address_id;
+		(caddr_t)((char *)ancestor + (int)convert_args[i].address_id);
 #endif
 	    break;
 
 	case XtImmediate:
-	    args[i].addr = (XtPointer) &(convert_args[i].address_id);
+	    args[i].addr = (caddr_t) &(convert_args[i].address_id);
 	    break;
 
 	case XtProcedureArg:
@@ -484,9 +483,9 @@ static void ComputeArgs(widget, convert_args, num_args, args)
 		offset = 0;
 	    }
 #ifdef CRAY1
-	    args[i].addr = (XtPointer)((int)widget + offset);
+	    args[i].addr = (caddr_t)((int)widget + offset);
 #else
-	    args[i].addr = (XtPointer)widget + offset;
+	    args[i].addr = (caddr_t)((char *)widget + offset);
 #endif
 	    break;
 	default:
@@ -605,7 +604,7 @@ _XtCallConverter(dpy, converter,
 
     if (cP == NULL
      || ((cP->cache_type == XtCacheNone) && (cP->destructor == nullProc))) {
-	char* closure;
+	XtPointer closure;
 	if (cache_ref_return != NULL) *cache_ref_return = NULL;
 	return (*(XtTypeConverter)converter)
 	    (dpy, args, &num_args, from, to, &closure);
@@ -658,7 +657,7 @@ _XtCallConverter(dpy, converter,
     /* No cache entry, call converter procedure and enter result in cache */
     {
 	Heap *heap;
-	char* closure;
+	XtPointer closure;
 	XtCacheType cache_type = cP->cache_type & 0xff;
 	int ref_flags =
 	    ((cP->cache_type & XtCacheRefCount) && (cache_ref_return != NULL))

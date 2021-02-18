@@ -1,7 +1,4 @@
-#ifndef lint
-static char Xrcsid[] = "$XConsortium: Error.c,v 1.24 90/03/19 12:58:53 swick Exp $";
-/* $oHeader: Error.c,v 1.6 88/08/31 17:46:14 asente Exp $ */
-#endif /* lint */
+/* $XConsortium: Error.c,v 1.28 90/09/26 13:10:33 swick Exp $ */
 
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -42,7 +39,7 @@ SOFTWARE.
 #if GLOBALERRORS
 static XrmDatabase errorDB = NULL;
 static Boolean error_inited = FALSE;
-static void _XtDefaultErrorMsg(), _XtDefaultWarningMsg(), 
+void _XtDefaultErrorMsg(), _XtDefaultWarningMsg(), 
 	_XtDefaultError(), _XtDefaultWarning();
 static XtErrorMsgHandler errorMsgHandler = _XtDefaultErrorMsg;
 static XtErrorMsgHandler warningMsgHandler = _XtDefaultWarningMsg;
@@ -118,8 +115,13 @@ void XtAppGetErrorDatabaseText(app, name,type,class,defaultp,
     } else (void) XrmGetResource(db, temp, class, &type_str, &result);
     if (result.addr) {
         (void) strncpy (buffer, result.addr, nbytes);
-        if (result.size < nbytes) buffer[result.size] = 0;
-    } else (void) strncpy(buffer, defaultp, nbytes);
+        if (result.size > nbytes) buffer[nbytes-1] = 0;
+    } else {
+	int len = strlen(defaultp);
+	if (len >= nbytes) len = nbytes-1;
+	bcopy(defaultp, buffer, len);
+	buffer[len] = '\0';
+    }
 }
 
 _XtInitErrorHandling (db)
@@ -131,7 +133,7 @@ _XtInitErrorHandling (db)
     XrmMergeDatabases(errordb, db);
 }
 
-static void _XtDefaultErrorMsg (name,type,class,defaultp,params,num_params)
+void _XtDefaultErrorMsg (name,type,class,defaultp,params,num_params)
     String name,type,class,defaultp;
     String* params;
     Cardinal* num_params;
@@ -155,7 +157,7 @@ static void _XtDefaultErrorMsg (name,type,class,defaultp,params,num_params)
     }
 }
 
-static void _XtDefaultWarningMsg (name,type,class,defaultp,params,num_params)
+void _XtDefaultWarningMsg (name,type,class,defaultp,params,num_params)
     String name,type,class,defaultp;
     String* params;
     Cardinal* num_params;
@@ -288,7 +290,7 @@ XtErrorMsgHandler XtAppSetWarningMsgHandler(app,handler)
     return old;
 }
 
-static void _XtDefaultError(message)
+void _XtDefaultError(message)
     String message;
 {
     extern void exit();
@@ -297,9 +299,10 @@ static void _XtDefaultError(message)
     exit(1);
 }
 
-static void _XtDefaultWarning(message)
+void _XtDefaultWarning(message)
     String message;
 {
+    if (message && *message)
        (void)fprintf(stderr, "%sWarning: %s\n", XTWARNING_PREFIX, message); 
     return;
 }

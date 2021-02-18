@@ -1,7 +1,4 @@
-#ifndef lint
-static char Xrcsid[] = "$XConsortium: Display.c,v 1.46 90/07/15 21:39:36 swick Exp $";
-/* $oHeader: Display.c,v 1.9 88/09/01 11:28:47 asente Exp $ */
-#endif /*lint*/
+/* $XConsortium: Display.c,v 1.50 90/08/31 08:15:10 swick Exp $ */
 
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -255,6 +252,15 @@ XtDisplayInitialize(app, dpy, name, classname, urlist, num_urs, argc, argv)
 	pd->tm_context = NULL;
 	pd->mapping_callbacks = NULL;
 
+	pd->pdi.grabList = NULL;
+	pd->pdi.trace = NULL;
+	pd->pdi.traceDepth = 0;
+	pd->pdi.traceMax = 0;
+	pd->pdi.focusWidget = NULL;
+	pd->pdi.activatingKey = 0;
+	pd->pdi.keyboard.grabType = XtNoServerGrab;
+	pd->pdi.pointer.grabType  = XtNoServerGrab;
+
 	_XtDisplayInitialize(dpy, pd, name, classname, urlist, 
 			     num_urs, argc, argv);
 }
@@ -281,7 +287,7 @@ XtAppContext XtCreateApplicationContext()
 	_XtSetDefaultSelectionTimeout(&app->selectionTimeout);
 	_XtSetDefaultConverterTable(&app->converterTable);
 	app->sync = app->being_destroyed = app->error_inited = FALSE;
-	app->in_phase2_destroy = FALSE;
+	app->in_phase2_destroy = NULL;
 	app->fds.nfds = app->fds.count = 0;
 	FD_ZERO(&app->fds.rmask);
 	FD_ZERO(&app->fds.wmask);
@@ -290,6 +296,8 @@ XtAppContext XtCreateApplicationContext()
 	app->fallback_resources = NULL;
 	_XtPopupInitialize(app);
 	app->action_hook_list = NULL;
+	app->destroy_list_size = app->destroy_count = app->dispatch_level = 0;
+	app->destroy_list = NULL;
 #ifndef NO_IDENTIFY_WINDOWS
 	app->identify_windows = False;
 #endif
@@ -307,11 +315,16 @@ static void DestroyAppContext(app)
 	if (app->list != NULL) XtFree((char *)app->list);
 	_XtFreeConverterTable(app->converterTable);
 	_XtCacheFlushTag(app, (XtPointer)&app->heap);
-	_XtHeapFree(&app->heap);
+	_XtFreeActions(app->action_table);
 	if (app->destroy_callbacks != NULL) {
 	    _XtCallCallbacks(&app->destroy_callbacks, (XtPointer)app);
 	    _XtRemoveAllCallbacks(&app->destroy_callbacks);
 	}
+	while (app->timerQueue) XtRemoveTimeOut((XtIntervalId)app->timerQueue);
+	while (app->workQueue) XtRemoveWorkProc((XtWorkProcId)app->workQueue);
+	if (app->input_list) _XtRemoveAllInputs(app);
+	XtFree((char*)app->destroy_list);
+	_XtHeapFree(&app->heap);
 	while (*prev_app != app) prev_app = &(*prev_app)->next;
 	*prev_app = app->next;
 	if (app->process->defaultAppContext == app)
@@ -324,7 +337,7 @@ void XtDestroyApplicationContext(app)
 {
 	if (app->being_destroyed) return;
 
-	if (_XtSafeToDestroy) DestroyAppContext(app);
+	if (_XtSafeToDestroy(app)) DestroyAppContext(app);
 	else {
 	    app->being_destroyed = TRUE;
 	    _XtAppDestroyCount++;
@@ -523,7 +536,6 @@ static void CloseDisplay(dpy)
             xtpd->modsToKeysyms = NULL;
 	    XDestroyRegion(xtpd->region);
 	    _XtCacheFlushTag(xtpd->appContext, (XtPointer)&xtpd->heap);
-	    _XtHeapFree(&xtpd->heap);
 	    _XtGClistFree(xtpd->GClist);
 	    {
 		int i;
@@ -531,6 +543,8 @@ static void CloseDisplay(dpy)
 		for (i=0, d=xtpd->drawable_tab; i<ScreenCount(dpy); i++, d++)
 		    XtFree((char*)d->drawables);
 	    }
+	    XtFree((char*)xtpd->pdi.trace);
+	    _XtHeapFree(&xtpd->heap);
         }
 	XtFree((char*)pd);
 	XrmDestroyDatabase(dpy->db);
@@ -545,7 +559,7 @@ void XtCloseDisplay(dpy)
 	
 	if (pd->being_destroyed) return;
 
-	if (_XtSafeToDestroy) CloseDisplay(dpy);
+	if (_XtSafeToDestroy(pd->appContext)) CloseDisplay(dpy);
 	else {
 	    pd->being_destroyed = TRUE;
 	    _XtDpyDestroyCount++;

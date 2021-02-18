@@ -1,7 +1,5 @@
-#ifndef lint
-static char Xrcsid[] = "$XConsortium: Event.c,v 1.112 89/12/15 23:51:06 swick Exp $";
+/* $XConsortium: Event.c,v 1.118 90/08/23 14:43:42 swick Exp $ */
 /* $oHeader: Event.c,v 1.9 88/09/01 11:33:51 asente Exp $ */
-#endif /* lint */
 
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -31,6 +29,12 @@ SOFTWARE.
 #include "Shell.h"
 #include "StringDefs.h"
 
+#ifdef __STDC__
+#define Const const
+#else
+#define Const /**/
+#endif
+
 /*
  * These are definitions to make the code that handles exposure compresssion
  * easier to read.
@@ -48,16 +52,7 @@ SOFTWARE.
 			  (XtExposeGraphicsExposeMerged & COMP_EXPOSE))
 #define NO_EXPOSE        (XtExposeNoExpose & COMP_EXPOSE)
 
-
-
 extern void 			bzero();
-typedef struct XtPerDisplayInputRec *XtPerDisplayInput;
-extern XtPerDisplayInput 	_XtGetPerDisplayInput();
-extern XtGrabList *		_XtGetGrabList();
-
-
-
-CallbackList *_XtDestroyList;
 
 EventMask XtBuildEventMask(widget)
     Widget widget;
@@ -76,14 +71,13 @@ EventMask XtBuildEventMask(widget)
 }
 
 static void
-RemoveEventHandler(widget, eventMask, other, proc, closure, raw, check_closure)
+RemoveEventHandler(widget, eventMask, other, proc, closure, raw)
 Widget	        widget;
 EventMask       eventMask;
 Boolean	        other;
 XtEventHandler  proc;
 XtPointer	closure;
 Boolean	        raw;
-Boolean	        check_closure;
 {
     XtEventRec *p, **pp;
     EventMask oldMask = XtBuildEventMask(widget);
@@ -94,7 +88,7 @@ Boolean	        check_closure;
     if (p == NULL) return;	                    /* No Event Handlers. */
 
     /* find it */
-    while (p->proc != proc || (check_closure && p->closure != closure)) {
+    while (p->proc != proc || p->closure != closure) {
         pp = &p->next;
         p = *pp;
 	if (p == NULL) return;	                     /* Didn't find it */
@@ -138,17 +132,15 @@ Boolean	        check_closure;
  *                                      list, this will force it to the 
  *                                      beginning or end depending on position.
  *                 raw - If FALSE call XSelectInput for events in mask.
- *                 check_closure - check to see if closures match as
- *                                 as well as proceedure.
  *	Returns: none
  */
 
 static void 
 AddEventHandler(widget, eventMask, other, proc, 
-		closure, position, force_new_position, raw, check_closure)
+		closure, position, force_new_position, raw)
 Widget	        widget;
 EventMask       eventMask;
-Boolean         other, force_new_position, raw, check_closure;
+Boolean         other, force_new_position, raw;
 XtEventHandler  proc;
 XtPointer	closure;
 XtListPosition  position;
@@ -164,7 +156,7 @@ XtListPosition  position;
     prev = NULL;
 
     while ((p != NULL) &&
-	   (p->proc != proc || (check_closure && (p->closure != closure)))) {
+	   (p->proc != proc || p->closure != closure)) {
 	prev = p;
 	p = p->next;
     }
@@ -213,7 +205,6 @@ XtListPosition  position;
 	p->non_filter = p->non_filter || other;
 	p->select |= ! raw;
 	p->raw |= raw;
-	if (!check_closure) p->closure = closure;
     }
 
     if (XtIsRealized(widget) && !raw) {
@@ -232,7 +223,7 @@ void XtRemoveEventHandler(widget, eventMask, other, proc, closure)
     XtEventHandler  proc;
     XtPointer	    closure;
 {
-    RemoveEventHandler(widget, eventMask, other, proc, closure, FALSE, TRUE);
+    RemoveEventHandler(widget, eventMask, other, proc, closure, FALSE);
 }
 
 void XtAddEventHandler(widget, eventMask, other, proc, closure)
@@ -243,7 +234,7 @@ void XtAddEventHandler(widget, eventMask, other, proc, closure)
     XtPointer	    closure;
 {
     AddEventHandler(widget, eventMask, other, 
-		    proc, closure, XtListTail, FALSE, FALSE, TRUE);
+		    proc, closure, XtListTail, FALSE, FALSE);
 }
 
 void XtInsertEventHandler(widget, eventMask, other, proc, closure, position)
@@ -255,7 +246,7 @@ void XtInsertEventHandler(widget, eventMask, other, proc, closure, position)
     XtListPosition  position;
 {
     AddEventHandler(widget, eventMask, other, 
-		    proc, closure, position, TRUE, FALSE, TRUE);
+		    proc, closure, position, TRUE, FALSE);
 }
 
 void XtRemoveRawEventHandler(widget, eventMask, other, proc, closure)
@@ -265,7 +256,7 @@ void XtRemoveRawEventHandler(widget, eventMask, other, proc, closure)
     XtEventHandler  proc;
     XtPointer	    closure;
 {
-    RemoveEventHandler(widget, eventMask, other, proc, closure, TRUE, TRUE);
+    RemoveEventHandler(widget, eventMask, other, proc, closure, TRUE);
 }
 
 void XtInsertRawEventHandler(widget, eventMask, other, proc, closure, position)
@@ -277,7 +268,7 @@ void XtInsertRawEventHandler(widget, eventMask, other, proc, closure, position)
     XtListPosition  position;
 {
     AddEventHandler(widget, eventMask, other, 
-		    proc, closure, position, TRUE, TRUE, TRUE);
+		    proc, closure, position, TRUE, TRUE);
 }
 
 void XtAddRawEventHandler(widget, eventMask, other, proc, closure)
@@ -288,7 +279,7 @@ void XtAddRawEventHandler(widget, eventMask, other, proc, closure)
     XtPointer	    closure;
 {
     AddEventHandler(widget, eventMask, other, 
-		    proc, closure, XtListTail, FALSE, TRUE, TRUE);
+		    proc, closure, XtListTail, FALSE, TRUE);
 }
 
 typedef struct _HashRec *HashPtr;
@@ -326,7 +317,7 @@ void _XtRegisterWindow(window, widget)
 	    if (hp->widget != widget)
 		XtAppWarningMsg(XtWidgetToApplicationContext(widget),
 			"registerWindowError","xtRegisterWindow",
-                         "XtToolkitError",
+                         XtCXtToolkitError,
                         "Attempt to change already registered window.",
                           (String *)NULL, (Cardinal *)NULL);
 	    return;
@@ -358,7 +349,7 @@ void _XtUnregisterWindow(window, widget)
 	    if (hp->widget != widget) {
                 XtAppWarningMsg(XtWidgetToApplicationContext(widget),
 			"registerWindowError","xtUnregisterWindow",
-                         "XtToolkitError",
+                         XtCXtToolkitError,
                         "Attempt to unregister invalid window.",
                           (String *)NULL, (Cardinal *)NULL);
 
@@ -428,6 +419,7 @@ static void InitializeHash()
 }
 
 static Region nullRegion;
+static void CompressExposures();
 
 static Boolean DispatchEvent(event, widget, mask, pd)
     register XEvent    *event;
@@ -457,7 +449,6 @@ static Boolean DispatchEvent(event, widget, mask, pd)
 		(*widget->core.widget_class->core_class.expose)
 		    (widget, event, (Region)NULL);
 	    else {
-		static void CompressExposures();
 		CompressExposures(event, widget, pd);
 	    }
 	    was_dispatched = True;
@@ -557,6 +548,9 @@ typedef struct _CheckExposeInfo {
  *      NOTE: Event must be of type Expose or GraphicsExpose.
  */
 
+static void SendExposureEvent();
+static Bool CheckExposureEvent();
+
 static void
 CompressExposures(event, widget, pd)
 Widget widget;
@@ -564,7 +558,6 @@ XEvent * event;
 XtPerDisplay pd;
 {
     CheckExposeInfo info;
-    static void SendExposureEvent();
     int count;
 
     XtAddExposureToRegion(event, pd->region);
@@ -612,7 +605,6 @@ XtPerDisplay pd;
     count = 0;
     while (TRUE) {
 	XEvent event_return;
-	static Bool CheckExposureEvent();
 
 	if (XCheckIfEvent(XtDisplay(widget), &event_return, 
 			  CheckExposureEvent, (char *) &info)) {
@@ -707,7 +699,7 @@ static void ConvertTypeToMask (eventType, mask, grabType)
     GrabType    *grabType;
 {
 
-static struct {
+static Const struct {
     EventMask   mask;
     GrabType    grabType;
 } masks[] = {
@@ -807,12 +799,10 @@ static Boolean DecideToDispatch(event)
     XtPerDisplayInput pdi;
     XtGrabList  grabList;
 
-    extern XtPerDisplayInput _XtGetPerDisplayInput();
-    
     widget = XtWindowToWidget (event->xany.display, event->xany.window);
     pd = _XtGetPerDisplay(event->xany.display);
     pdi = _XtGetPerDisplayInput(event->xany.display);
-    grabList = *(XtGrabList *)_XtGetGrabList(pdi);
+    grabList = *_XtGetGrabList(pdi);
     
     
     /* Lint complains about &grabType not matching the declaration.
@@ -878,7 +868,7 @@ static Boolean DecideToDispatch(event)
 		
 		/* Also dispatch to nearest accessible spring_loaded. */
 		/* Fetch this afterward to reflect modal list changes */
-		grabList = *(XtGrabList *)_XtGetGrabList(pdi);
+		grabList = *_XtGetGrabList(pdi);
 		widget = LookupSpringLoaded(grabList);
 		if (widget != NULL && widget != dspWidget) {
 		    was_dispatched |= DispatchEvent(event, widget,
@@ -895,42 +885,25 @@ static Boolean DecideToDispatch(event)
 Boolean XtDispatchEvent (event)
     XEvent  *event;
 {
-    CallbackList *oldDestroyList, destroyList;
     Boolean was_dispatched;
+    XtAppContext app = XtDisplayToApplicationContext(event->xany.display);
+    int dispatch_level = ++app->dispatch_level;
+    int starting_count = app->destroy_count;
 
     /*
      * To make recursive XtDispatchEvent work, we need to do phase 2 destroys
      * only on those widgets destroyed by this particular dispatch.
-     * The "right" way to do this is by passing a local variable through to
-     * each recursive instance, and passing the list to XtDestroy, but that
-     * causes unwieldy proliferation of arguments. We could do all this stuff
-     * with signals (if we had them), but instead we have a global pointer
-     * to the "current" destroy list, and XtDispatchEvent and XtDestroy
-     * conspire to keep it up to date, and use the right one.
      *
-     * This is pretty gross.
      */
-
-    oldDestroyList = _XtDestroyList;
-    _XtDestroyList = &destroyList;
-    destroyList = NULL;
 
     was_dispatched = DecideToDispatch(event);
 
-    /* To accomodate widgets destroying other widgets in their destroy
-     * callbacks, we have to make this a loop */
+    if (app->destroy_count > starting_count)
+	_XtDoPhase2Destroy(app, dispatch_level);
 
-    while (destroyList != NULL) {
-	CallbackList newList = NULL;
-	_XtDestroyList = &newList;
-	_XtCallCallbacks (&destroyList, (XtPointer) NULL);
-	_XtRemoveAllCallbacks (&destroyList);
-	destroyList = newList;
-    }
+    app->dispatch_level = dispatch_level - 1;
 
-    _XtDestroyList = oldDestroyList;
-
-    if (_XtSafeToDestroy) {
+    if (_XtSafeToDestroy(app)) {
 	if (_XtAppDestroyCount != 0) _XtDestroyAppContexts();
 	if (_XtDpyDestroyCount != 0) _XtCloseDisplays();
     }
@@ -980,7 +953,7 @@ void XtAddGrab(widget, exclusive, spring_loaded)
 
     if (spring_loaded && !exclusive) {
 	XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-		"grabError", "grabDestroyCallback", "XtToolkitError",
+		"grabError", "grabDestroyCallback", XtCXtToolkitError,
 		"XtAddGrab requires exclusive grab if spring_loaded is TRUE",
 		(String *) NULL, (Cardinal *) NULL);
 	exclusive = TRUE;
@@ -1011,7 +984,7 @@ static Boolean RemoveGrab(widget)
 
     if (gl == NULL) {
 	    XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-		       "grabError","xtRemoveGrab","XtToolkitError",
+		       "grabError","xtRemoveGrab",XtCXtToolkitError,
 		       "XtRemoveGrab asked to remove a widget not on the list",
 		       (String *)NULL, (Cardinal *)NULL);
 	    return False;
@@ -1057,7 +1030,6 @@ void _XtEventInitialize()
     if (initialized) return;
     initialized = TRUE;
 
-    _XtDestroyList = NULL;
     nullRegion = XCreateRegion();
     InitializeHash();
 }

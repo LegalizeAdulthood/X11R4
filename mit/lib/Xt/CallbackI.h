@@ -1,5 +1,4 @@
-/* $XConsortium: CallbackI.h,v 1.9 90/04/13 20:10:52 swick Exp $ */
-/* $oHeader: CallbackI.h,v 1.2 88/08/18 15:53:53 asente Exp $ */
+/* $XConsortium: CallbackI.h,v 1.11 90/08/29 13:09:40 swick Exp $ */
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
 and the Massachusetts Institute of Technology, Cambridge, Massachusetts.
@@ -38,10 +37,6 @@ typedef struct _XtOffsetRec {
 
 typedef struct _CallbackRec *CallbackList;
 typedef struct _CallbackStruct CallbackStruct;
-
-extern CallbackList *_XtDestroyList;
-
-#define _XtSafeToDestroy (_XtDestroyList == NULL)
 
 extern void _XtRemoveAllCallbacks(
 #if NeedFunctionPrototypes
