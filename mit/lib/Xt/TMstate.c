@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: TMstate.c,v 1.95 89/12/09 23:02:46 rws Exp $";
+static char Xrcsid[] = "$XConsortium: TMstate.c,v 1.98 90/04/10 15:58:55 swick Exp $";
 /* $oHeader: TMstate.c,v 1.5 88/09/01 17:17:29 asente Exp $ */
 #endif /* lint */
 /*LINTLIBRARY*/
@@ -38,6 +38,8 @@ SOFTWARE.
 #include "StringDefs.h"
 #include <stdio.h>
 #include "IntrinsicI.h"
+
+static String XtNtranslationError = "translationError";
 
 /* usual number of expected keycodes in XtKeysymToKeycodeList */
 #define KEYCODE_ARRAY_SIZE 10
@@ -406,7 +408,7 @@ static Boolean ComputeLateBindings(event,eventSeq,computed,computedMask)
     perDisplay = _XtGetPerDisplay(dpy);
     if (perDisplay == NULL) {
         XtAppWarningMsg(XtDisplayToApplicationContext(dpy),
-		"displayError","invalidDisplay","XtToolkitError",
+		"displayError","invalidDisplay",XtCXtToolkitError,
             "Can't find display structure",
             (String *)NULL, (Cardinal *)NULL);
          return FALSE;
@@ -757,7 +759,7 @@ static unsigned long GetTime(tm, event)
 
 
 /* ARGSUSED */
-static void _XtTranslateEvent (w, closure, event, continue_to_dispatch)
+void _XtTranslateEvent (w, closure, event, continue_to_dispatch)
     Widget w;
     XtPointer closure;		/* XtTM */
     register    XEvent * event;
@@ -787,7 +789,7 @@ static void _XtTranslateEvent (w, closure, event, continue_to_dispatch)
 
     if (stateTable == NULL) {
         XtAppWarningMsg(XtWidgetToApplicationContext(w),
-		"translationError","nullTable","XtToolkitError",
+		XtNtranslationError,"nullTable",XtCXtToolkitError,
             "Can't translate event through NULL table",
             (String *)NULL, (Cardinal *)NULL);
        return ;
@@ -1183,7 +1185,7 @@ void _XtInstallTranslations(widget, stateTable)
 void XtUninstallTranslations(widget)
     Widget widget;
 {
-    XtRemoveEventHandler(widget,(EventMask)~0L,TRUE,_XtTranslateEvent,
+    XtRemoveEventHandler(widget, XtAllEvents, TRUE, _XtTranslateEvent,
                      (XtPointer)&widget->core.tm);
     widget->core.tm.translations = NULL;
     if (widget->core.tm.proc_table != NULL)
@@ -1226,7 +1228,7 @@ static void ReportUnboundActions(tm, stateTable)
     }
     message[num_chars] = '\0';
     if (num_unbound != 0)
-        XtWarningMsg("translationError","unboundActions","XtToolkitError",
+        XtWarningMsg(XtNtranslationError,"unboundActions",XtCXtToolkitError,
                   message, (String *)NULL, (Cardinal *)NULL);
 }
 
@@ -1471,8 +1473,8 @@ void _XtAddEventSeqToStateTable(eventSeq, stateTable)
 		int len = 100;
 		String params[1];
 		Cardinal num_params = 1;
-		XtWarningMsg ("translationError","ambigiousActions", 
-                           "XtToolkitError",
+		XtWarningMsg (XtNtranslationError,"ambiguousActions", 
+                           XtCXtToolkitError,
                            "Overriding earlier translation manager actions.",
                             (String *)NULL, (Cardinal *)NULL);
 		str = PrintEventSeq( &buf, &len, buf, initialEvent, NULL );
@@ -1485,11 +1487,11 @@ void _XtAddEventSeqToStateTable(eventSeq, stateTable)
 		*str++ = ':';
 		(void)PrintActions( &buf, &len, str, (*state)->actions, stateTable );
 		params[0] = buf;
-		XtWarningMsg ("translationError","oldActions","XtToolkitError",
+		XtWarningMsg (XtNtranslationError,"oldActions",XtCXtToolkitError,
 			      "Previous entry was: %s", params, &num_params);
 		(void)PrintActions( &buf, &len, buf, eventSeq->actions, stateTable );
 		params[0] = buf;
-		XtWarningMsg ("translationError","newActions","XtToolkitError",
+		XtWarningMsg (XtNtranslationError,"newActions",XtCXtToolkitError,
 			      "New actions are:%s", params, &num_params);
 		XtFree((XtPointer)buf);
 		FreeActions((*state)->actions);
@@ -1607,8 +1609,8 @@ static void MergeStates(old, new, override, indexMap,
 		temp->new != new->nextLevel;
 		temp=temp->next)
 	        if (temp == NULL)
-                     XtErrorMsg("translationError","mergingTablesWithCycles",
-                             "XtToolkitError",
+                     XtErrorMsg(XtNtranslationError,"mergingTablesWithCycles",
+                             XtCXtToolkitError,
 "Trying to merge translation tables with cycles, and can't resolve this cycle."
 			     , (String *)NULL, (Cardinal *)NULL);
 	    (*old)->nextLevel = temp->old;
@@ -1647,7 +1649,7 @@ static void MergeTables(old, new, override,accProcTbl)
 
     if (new == NULL) return;
     if (old == NULL) {
-	XtWarningMsg("translationError","mergingNullTable","XtToolkitError",
+	XtWarningMsg(XtNtranslationError,"mergingNullTable",XtCXtToolkitError,
             "Old translation table was null, cannot modify.",
 	    (String *)NULL, (Cardinal *)NULL);
 	return;
@@ -1768,7 +1770,7 @@ Boolean _XtCvtMergeTranslations(dpy, args, num_args, from, to, closure_ret)
     TMkind operation;
 
     if (*num_args != 0)
-	XtWarningMsg("invalidParameters","mergeTranslations","XtToolkitError",
+	XtWarningMsg("invalidParameters","mergeTranslations",XtCXtToolkitError,
              "MergeTM to TranslationTable needs no extra arguments",
                (String *)NULL, (Cardinal *)NULL);
 
@@ -1867,7 +1869,7 @@ void _XtFreeTranslations(app, toVal, closure, args, num_args)
 
     if (*num_args != 0)
 	XtAppWarningMsg(app,
-	  "invalidParameters","freeTranslations","XtToolkitError",
+	  "invalidParameters","freeTranslations",XtCXtToolkitError,
           "Freeing XtTranslations requires no extra arguments",
 	  (String *)NULL, (Cardinal *)NULL);
 
@@ -1904,14 +1906,14 @@ static void RemoveAccelerators(widget,closure,data)
     XtTranslations table = (XtTranslations)closure;
     if (table == NULL) {
         XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-		"translation error","nullTable","XtToolkitError",
+		XtNtranslationError,"nullTable",XtCXtToolkitError,
             "Can't remove accelerators from NULL table",
             (String *)NULL, (Cardinal *)NULL);
         return;
     }
     if (table->accProcTbl == NULL) {
         XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-		"translation error","nullTable","XtToolkitError",
+		XtNtranslationError,"nullTable",XtCXtToolkitError,
             "Tried to remove non-existant accelerators",
             (String *)NULL, (Cardinal *)NULL);
         return;
@@ -2295,7 +2297,7 @@ void XtMenuPopupAction(widget, event, params, num_params)
 
     if (*num_params != 1) {
 	XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-		      "invalidParameters","xtMenuPopupAction","XtToolkitError",
+		      "invalidParameters","xtMenuPopupAction",XtCXtToolkitError,
 			"MenuPopup wants exactly one argument",
 			(String *)NULL, (Cardinal *)NULL);
 	return;
@@ -2307,7 +2309,7 @@ void XtMenuPopupAction(widget, event, params, num_params)
 	spring_loaded = False;
     else {
 	XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-		"invalidPopup","unsupportedOperation","XtToolkitError",
+		"invalidPopup","unsupportedOperation",XtCXtToolkitError,
 "Pop-up menu creation is only supported on ButtonPress, KeyPress or EnterNotify events.",
                   (String *)NULL, (Cardinal *)NULL);
 	spring_loaded = False;
@@ -2316,7 +2318,7 @@ void XtMenuPopupAction(widget, event, params, num_params)
     popup_shell = _XtFindPopup(widget, params[0]);
     if (popup_shell == NULL) {
 	XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-			"invalidPopup","xtMenuPopup","XtToolkitError",
+			"invalidPopup","xtMenuPopup",XtCXtToolkitError,
 			"Can't find popup widget \"%s\" in XtMenuPopup",
 			params, num_params);
 	return;
@@ -2342,7 +2344,7 @@ static void _XtMenuPopdownAction(widget, event, params, num_params)
 	popup_shell = _XtFindPopup(widget, params[0]);
 	if (popup_shell == NULL) {
             XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-			    "invalidPopup","xtMenuPopup","XtToolkitError",
+			    "invalidPopup","xtMenuPopup",XtCXtToolkitError,
 			    "Can't find popup widget \"%s\" in XtMenuPopdown",
 			    params, num_params);
 	    return;
@@ -2350,7 +2352,7 @@ static void _XtMenuPopdownAction(widget, event, params, num_params)
 	XtPopdown(popup_shell);
     } else {
 	XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-			"invalidParameters","xtmenuPopdown","XtToolkitError",
+			"invalidParameters","xtmenuPopdown",XtCXtToolkitError,
 			"XtMenuPopdown called with num_params != 0 or 1",
 			(String *)NULL, (Cardinal *)NULL);
     }
@@ -2380,9 +2382,8 @@ static void GrabAllCorrectKeys(widget, event, grabP)
 	    XtTranslateKeycode( dpy, *keycodeP, (Modifiers)0,
 			        &modifiers_return, &keysym );
 	    if (keysym == event->eventCode) {
-		XGrabKey( dpy, *keycodeP,
+		XtGrabKey(widget, *keycodeP,
 			  (unsigned)event->modifiers,
-			  XtWindow(widget),
 			  grabP->owner_events,
 			  grabP->pointer_mode,
 			  grabP->keyboard_mode
@@ -2398,9 +2399,8 @@ static void GrabAllCorrectKeys(widget, event, grabP)
 					(Modifiers)std_mods,
 					&modifiers_return, &keysym );
 		    if (keysym == event->eventCode) {
-			XGrabKey( dpy, *keycodeP,
+			XtGrabKey(widget, *keycodeP,
 				  (unsigned)event->modifiers | std_mods,
-				  XtWindow(widget),
 				  grabP->owner_events,
 				  grabP->pointer_mode,
 				  grabP->keyboard_mode
@@ -2410,9 +2410,8 @@ static void GrabAllCorrectKeys(widget, event, grabP)
 		}
 	    }
 	} else /* !event->standard */ {
-	    XGrabKey( dpy, *keycodeP,
+	    XtGrabKey(widget, *keycodeP,
 		      (unsigned)event->modifiers,
-		      XtWindow(widget),
 		      grabP->owner_events,
 		      grabP->pointer_mode,
 		      grabP->keyboard_mode
@@ -2458,11 +2457,10 @@ void _XtRegisterGrabs(widget,tm)
 			switch (event->eventType) {
 			    case ButtonPress:
 			    case ButtonRelease:
-				XGrabButton(
-				    XtDisplay(widget),
+				XtGrabButton(
+				    widget,
 				    (unsigned) event->eventCode,
 				    (unsigned) event->modifiers,
-				    XtWindow(widget),
 				    grabP->owner_events,
 				    grabP->event_mask,
 				    grabP->pointer_mode,
@@ -2482,7 +2480,7 @@ void _XtRegisterGrabs(widget,tm)
 
 			    default:
               XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-		    "invalidPopup","unsupportedOperation","XtToolkitError",
+		    "invalidPopup","unsupportedOperation",XtCXtToolkitError,
 "Pop-up menu creation is only supported on Button, Key or EnterNotify events.",
                   (String *)NULL, (Cardinal *)NULL);
 			    break;
@@ -2750,7 +2748,7 @@ void XtRegisterGrabAction(action_proc, owner_events, event_mask,
 	    || actionP->pointer_mode != pointer_mode
 	    || actionP->keyboard_mode != keyboard_mode) {
 	    XtWarningMsg(
-		"argsReplaced", "xtRegisterGrabAction", "XtToolkitError",
+		"argsReplaced", "xtRegisterGrabAction", XtCXtToolkitError,
 		"XtRegisterGrabAction called on same proc with different args"
 			);
 	}
@@ -2908,7 +2906,7 @@ void XtCallActionProc(widget, action, event, params, num_params)
 	params[0] = action;
 	params[1] = XtName(widget);
 	XtAppWarningMsg(app,
-	    "noActionProc", "xtCallActionProc", "XtToolkitError",
+	    "noActionProc", "xtCallActionProc", XtCXtToolkitError,
 	    "No action proc named \"%s\" is registered for widget \"%s\"",
 	    params, &num_params
 			);

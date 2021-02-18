@@ -1,4 +1,4 @@
-/* $XConsortium: RectObjP.h,v 1.10 89/10/04 12:22:46 swick Exp $ */
+/* $XConsortium: RectObjP.h,v 1.11 90/03/19 12:52:48 swick Exp $ */
 /* $oHeader: RectObjP.h,v 1.2 88/08/18 15:55:52 asente Exp $ */
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -72,7 +72,7 @@ typedef struct _RectObjClassPart {
     XtInitProc      initialize;         /* initialize subclass fields       */
     XtArgsProc      initialize_hook;    /* notify that initialize called    */
     XtProc          rect1;		/* NULL                             */
-    XtProc          rect2;              /* NULL                             */
+    XtPointer       rect2;              /* NULL                             */
     Cardinal        rect3;              /* NULL                             */
     XtResourceList  resources;          /* resources for subclass fields    */
     Cardinal        num_resources;      /* number of entries in resources   */

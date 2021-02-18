@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: SetValues.c,v 1.4 90/02/26 16:25:04 kit Exp $";
+static char Xrcsid[] = "$XConsortium: SetValues.c,v 1.6 90/04/03 17:11:55 swick Exp $";
 #endif /* lint */
 
 /***********************************************************
@@ -133,7 +133,7 @@ void XtSetValues(w, args, num_args)
     double	    oldwCache[100], reqwCache[100];
     double	    oldcCache[20], reqcCache[20];
     Cardinal	    widgetSize, constraintSize;
-    Boolean	    redisplay, cleared_rect_obj, reconfigured = False;
+    Boolean	    redisplay, cleared_rect_obj = False, reconfigured = False;
     XtGeometryResult result;
     XtWidgetGeometry geoReq, geoReply;
     WidgetClass     wc = XtClass(w);
@@ -242,16 +242,18 @@ void XtSetValues(w, args, num_args)
 		(*(wc->core_class.resize))(w);
 	    }
 	}
-	/* Redisplay if needed */
+	/* Redisplay if needed.  No point in clearing if the window is
+	 * about to disappear, as the Expose event will just go straight
+	 * to the bit bucket. */
         if (XtIsWidget(w)) {
             /* widgets can distinguish between redisplay and resize, since
              the server will cause an expose on resize */
-            if (redisplay && XtIsRealized(w))
+            if (redisplay && XtIsRealized(w) && !w->core.being_destroyed)
                 XClearArea (XtDisplay(w), XtWindow(w), 0, 0, 0, 0, TRUE);
         } else { /*non-window object */
 	  if (redisplay && ! cleared_rect_obj ) {
 	      Widget pw = _XtWindowedAncestor(w);
-	      if (XtIsRealized(pw)) {
+	      if (XtIsRealized(pw) && !pw->core.being_destroyed) {
 		  RectObj r = (RectObj)w;
 		  int bw2 = r->rectangle.border_width << 1;
 		  XClearArea (XtDisplay (pw), XtWindow (pw),

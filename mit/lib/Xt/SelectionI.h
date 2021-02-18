@@ -1,4 +1,4 @@
-/* $XConsortium: SelectionI.h,v 1.22 90/02/01 15:08:04 keith Exp $ */
+/* $XConsortium: SelectionI.h,v 1.24 90/04/03 16:17:53 swick Exp $ */
 /* $oHeader: SelectionI.h,v 1.3 88/08/19 14:02:44 asente Exp $ */
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -44,7 +44,7 @@ typedef struct _RequestRec {
    Atom type;
    int format;
    char *value;
-   int bytelength;
+   unsigned long bytelength;
    int offset;
    XtIntervalId timeout;
    XSelectionRequestEvent event; /* for XtGetSelectionRequest */
@@ -112,6 +112,7 @@ typedef struct {
 
 #define MATCH_SELECT(event, info) ((event->time == info->time) && \
 	    (event->requestor == XtWindow(info->widget)) && \
+	    (event->selection == info->ctx->selection) && \
 	    ((event->target == *info->target) || \
 	     ((event->target == info->ctx->prop_list->incremental_atom) && \
 	      (event->property == info->property))))

@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Shell.c,v 1.83 89/12/15 19:11:16 swick Exp $";
+static char Xrcsid[] = "$XConsortium: Shell.c,v 1.87 90/04/05 17:07:10 swick Exp $";
 /* $oHeader: Shell.c,v 1.7 88/09/01 11:57:00 asente Exp $ */
 #endif /* lint */
 
@@ -118,6 +118,7 @@ static void Resize();
 static Boolean SetValues();
 static void ChangeManaged(); /* XXX */
 static XtGeometryResult GeometryManager(), RootGeometryManager();
+static void Destroy();
 
 static ShellClassExtensionRec shellClassExtRec = {
     NULL,
@@ -147,7 +148,7 @@ externaldef(shellclassrec) ShellClassRec shellClassRec = {
     /* compress_exposure  */	TRUE,
     /* compress_enterleave*/	FALSE,
     /* visible_interest	  */	FALSE,
-    /* destroy		  */	NULL,
+    /* destroy		  */	Destroy,
     /* resize		  */	Resize,
     /* expose		  */	NULL,
     /* set_values	  */	SetValues,
@@ -697,7 +698,7 @@ static ShellClassExtension _FindClassExtension(widget_class)
 	    Cardinal num_params = 1;
 	    params[0] = widget_class->core_class.class_name;
 	    XtErrorMsg( "invalidExtension", "shellClassPartInitialize",
-		        "XtToolkitError",
+		        XtCXtToolkitError,
 		 "widget class %s has invalid ShellClassExtension record",
 		 params, &num_params);
 	}
@@ -943,7 +944,7 @@ static void Realize(wid, vmask, attr)
 	}
 	if (wid->core.width == 0 || wid->core.height == 0) {
 	    Cardinal count = 1;
-	    XtErrorMsg("invalidDimension", "shellRealize", "XtToolkitError",
+	    XtErrorMsg("invalidDimension", "shellRealize", XtCXtToolkitError,
 		       "Shell widget %s has zero width and/or height",
 		       &wid->core.name, &count);
 	}
@@ -1184,7 +1185,7 @@ static void EventHandler(wid, closure, event, continue_to_dispatch)
 
 	if(w->core.window != event->xany.window) {
 		XtAppErrorMsg(XtWidgetToApplicationContext(wid),
-			"invalidWindow","eventHandler","XtToolkitError",
+			"invalidWindow","eventHandler",XtCXtToolkitError,
                         "Event with wrong window",
 			(String *)NULL, (Cardinal *)NULL);
 		return;
@@ -1236,7 +1237,7 @@ static void EventHandler(wid, closure, event, continue_to_dispatch)
 		    if(wmshell->wm.wait_for_wm) {
 			XtAppWarningMsg(XtWidgetToApplicationContext(wid),
 				"communicationError","windowManager",
-                                  "XtToolkitError",
+                                  XtCXtToolkitError,
                                   "Window Manager is confused",
 				  (String *)NULL, (Cardinal *)NULL);
 		    }
@@ -1286,9 +1287,16 @@ static void EventHandler(wid, closure, event, continue_to_dispatch)
 	 } 
 
 	 if (sizechanged && 
-                 XtClass(w)->core_class.resize != (XtWidgetProc) NULL)
-                    (*(XtClass(w)->core_class.resize))(w);
+                 XtClass(wid)->core_class.resize != (XtWidgetProc) NULL)
+                    (*(XtClass(wid)->core_class.resize))(wid);
 
+}
+
+static void Destroy(wid)
+	Widget wid;
+{
+	if (XtIsRealized(wid))
+	    XDestroyWindow( XtDisplay(wid), XtWindow(wid) );
 }
 
 static void WMDestroy(wid)
@@ -1386,7 +1394,7 @@ static void GetGeometry(W, child)
 	    params[0] = XtName(W);
 	    params[1] = w->shell.geometry;
 	    XtAppWarningMsg(XtWidgetToApplicationContext(W),
-       "badGeometry", "shellRealize", "XtToolkitError",
+       "badGeometry", "shellRealize", XtCXtToolkitError,
        "Shell widget \"%s\" has an invalid geometry specification: \"%s\"",
 			    params, &num_params);
 	}
@@ -1585,26 +1593,30 @@ static _wait_for_response(w, event, request_num)
 }
 
 /*ARGSUSED*/
-static XtGeometryResult RootGeometryManager(w, request, reply)
-    Widget w;
+static XtGeometryResult RootGeometryManager(gw, request, reply)
+    Widget gw;
     XtWidgetGeometry *request, *reply;
 {
+    register ShellWidget w = (ShellWidget)gw;
     XWindowChanges values;
     unsigned int mask = request->request_mode;
-    WMShellWidget wmshell = (WMShellWidget)w;
     XEvent event;
-    Boolean wm = XtIsWMShell(w);
+    Boolean wm;
     register struct _OldXSizeHints *hintp;
     int oldx, oldy, oldwidth, oldheight, oldborder_width, request_num;
 
-    if (wm) {
-	hintp = &wmshell->wm.size_hints;
-	oldx = w->core.x;
-	oldy = w->core.y;
-	oldwidth = w->core.width;
-	oldheight = w->core.height;
-	oldborder_width = w->core.border_width;
-    }
+    if (XtIsWMShell(gw)) {
+	wm = True;
+	hintp = &((WMShellWidget)w)->wm.size_hints;
+    } else
+	wm = False;
+    
+
+    oldx = w->core.x;
+    oldy = w->core.y;
+    oldwidth = w->core.width;
+    oldheight = w->core.height;
+    oldborder_width = w->core.border_width;
 
 #define PutBackGeometry() \
 	{ w->core.x = oldx; \
@@ -1671,24 +1683,24 @@ static XtGeometryResult RootGeometryManager(w, request, reply)
 	    values.sibling = XtWindow(request->sibling);
     }
 
-    if (!XtIsRealized(w)) return XtGeometryYes;
+    if (!XtIsRealized((Widget)w)) return XtGeometryYes;
 
-    if (wm && !wmshell->shell.override_redirect
+    if (wm && !w->shell.override_redirect
 	&& mask & (CWX | CWY | CWWidth | CWHeight | CWBorderWidth)) {
-	_SetWMSizeHints(wmshell);
+	_SetWMSizeHints((WMShellWidget)w);
     }
 
     request_num = NextRequest(XtDisplay(w));
-    XConfigureWindow(XtDisplay(w), XtWindow(w), mask, &values);
+    XConfigureWindow(XtDisplay((Widget)w), XtWindow((Widget)w), mask, &values);
 
-    if (wmshell->shell.override_redirect) return XtGeometryDone;
+    if (w->shell.override_redirect) return XtGeometryDone;
 
     /* If no non-stacking bits are set, there's no way to tell whether
        or not this worked, so assume it did */
 
     if (!(mask & ~(CWStackMode | CWSibling))) return XtGeometryDone;
 
-    if (wmshell->wm.wait_for_wm == FALSE) {
+    if (wm && ((WMShellWidget)w)->wm.wait_for_wm == FALSE) {
 	    /* the window manager is sick
 	     * so I will do the work and 
 	     * say no so if a new WM starts up,
@@ -1698,7 +1710,7 @@ static XtGeometryResult RootGeometryManager(w, request, reply)
 	    return XtGeometryNo;
     }
 
-    if (_wait_for_response((ShellWidget)w, &event, request_num)) {
+    if (_wait_for_response(w, &event, request_num)) {
 	/* got an event */
 	if (event.type == ConfigureNotify) {
 
@@ -1725,13 +1737,13 @@ static XtGeometryResult RootGeometryManager(w, request, reply)
 		w->core.height = event.xconfigure.height;
 		w->core.border_width = event.xconfigure.border_width;
 		if (event.xany.send_event || /* ICCCM compliant synth */
-		    wmshell->shell.client_specified & _XtShellNotReparented) {
+		    w->shell.client_specified & _XtShellNotReparented) {
 
 		    w->core.x = event.xconfigure.x;
 		    w->core.y = event.xconfigure.y;
-		    wmshell->shell.client_specified |= _XtShellPositionValid;
+		    w->shell.client_specified |= _XtShellPositionValid;
 		}
-		else wmshell->shell.client_specified &= ~_XtShellPositionValid;
+		else w->shell.client_specified &= ~_XtShellPositionValid;
 		return XtGeometryDone;
 	    }
 	} else if (!wm ||
@@ -1743,14 +1755,14 @@ static XtGeometryResult RootGeometryManager(w, request, reply)
 		    event.xclient.message_type == WM_MOVED(w)) {
 	    w->core.x = event.xclient.data.s[0];
 	    w->core.y = event.xclient.data.s[1];
-	    wmshell->shell.client_specified |= _XtShellPositionValid;
+	    w->shell.client_specified |= _XtShellPositionValid;
 	    return XtGeometryDone;
 	} else XtAppWarningMsg(XtWidgetToApplicationContext((Widget)w),
-			       "internalError", "shell", "XtToolkitError",
+			       "internalError", "shell", XtCXtToolkitError,
 			       "Shell's window manager interaction is broken",
 			       (String *)NULL, (Cardinal *)NULL);
-    } else /* no event */ {
-	wmshell->wm.wait_for_wm = FALSE; /* timed out; must be broken */
+    } else if (wm) { /* no event */ 
+	((WMShellWidget)w)->wm.wait_for_wm = FALSE; /* timed out; must be broken */
     }
 #undef PutBackGeometry
     return XtGeometryNo;
@@ -1944,7 +1956,7 @@ static void ApplicationShellInsertChild(widget)
 {
     if (! XtIsWidget(widget) && XtIsRectObj(widget)) {
 	XtAppWarningMsg(XtWidgetToApplicationContext(widget),
-	       "invalidClass", "applicationShellInsertChild", "XtToolkitError",
+	       "invalidClass", "applicationShellInsertChild", XtCXtToolkitError,
 	       "ApplicationShell does not accept RectObj children; ignored",
 	       (String*)NULL, (Cardinal*)NULL);
     }
