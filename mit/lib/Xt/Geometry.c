@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Geometry.c,v 1.42 90/02/26 16:25:01 kit Exp $";
+static char Xrcsid[] = "$XConsortium: Geometry.c,v 1.46 90/04/10 17:07:18 swick Exp $";
 /* $oHeader: Geometry.c,v 1.3 88/08/23 11:37:50 asente Exp $ */
 #endif /* lint */
 
@@ -45,8 +45,9 @@ static void ClearRectObjAreas(r, old)
 
     bw2 = r->rectangle.border_width << 1;
     XClearArea( XtDisplay(pw), XtWindow(pw),
-		r->rectangle.x, r->rectangle.y,
-		r->rectangle.width + bw2, r->rectangle.height + bw2,
+		(int)r->rectangle.x, (int)r->rectangle.y,
+		(unsigned int)(r->rectangle.width + bw2),
+	        (unsigned int)(r->rectangle.height + bw2),
 		TRUE );
 }
 
@@ -91,14 +92,14 @@ _XtMakeGeometryRequest (widget, request, reply, clear_rect_obj)
 		params[0] = XtClass(widget)->core_class.class_name;
 		XtAppErrorMsg(XtWidgetToApplicationContext(widget),
 		     "invalidExtension", "xtMakeGeometryRequest",
-		     "XtToolkitError",
+		     XtCXtToolkitError,
 		     "widget class %s has invalid ShellClassExtension record",
 		     params, &num_params);
 	    }
 	} else {
 	    XtAppErrorMsg(XtWidgetToApplicationContext(widget),
 			  "internalError", "xtMakeGeometryRequest",
-			  "XtToolkitError",
+			  XtCXtToolkitError,
 			  "internal error; ShellClassExtension is NULL",
 			  NULL, NULL);
 	}
@@ -106,7 +107,7 @@ _XtMakeGeometryRequest (widget, request, reply, clear_rect_obj)
 	parentRealized = TRUE;
     } else if (parent == NULL) {
 	XtAppErrorMsg(XtWidgetToApplicationContext(widget),
-		      "invalidParent","xtMakeGeometryRequest","XtToolkitError",
+		      "invalidParent","xtMakeGeometryRequest",XtCXtToolkitError,
 		      "non-shell has no parent in XtMakeGeometryRequest",
 		      (String *)NULL, (Cardinal *)NULL);
     } else /* not shell */ {
@@ -120,7 +121,7 @@ _XtMakeGeometryRequest (widget, request, reply, clear_rect_obj)
 	    /* Should never happen - XtManageChildren should have checked */
 	    XtAppErrorMsg(XtWidgetToApplicationContext(widget),
 			  "invalidParent", "xtMakeGeometryRequest",
-			  "XtToolkitError",
+			  XtCXtToolkitError,
 			  "XtMakeGeometryRequest - parent not composite",
 			  (String *)NULL, (Cardinal *)NULL);
 	} else {
@@ -135,7 +136,7 @@ _XtMakeGeometryRequest (widget, request, reply, clear_rect_obj)
 
     if (managed && manager == (XtGeometryHandler) NULL) {
 	XtErrorMsg("invalidGeometryManager","xtMakeGeometryRequest",
-                 "XtToolkitError",
+                 XtCXtToolkitError,
                  "XtMakeGeometryRequest - parent has no geometry manager",
                   (String *)NULL, (Cardinal *)NULL);
     }
@@ -310,26 +311,23 @@ void XtResizeWindow(w)
 
 void XtResizeWidget(w, width, height, borderWidth)
     Widget w;
-    Dimension height, width, borderWidth;
+    Dimension width, height, borderWidth;
 {
     XWindowChanges changes;
     Dimension old_width, old_height, old_borderWidth;
     Cardinal mask = 0;
 
-    if (w->core.width != width) {
-	old_width = w->core.width;
+    if ((old_width = w->core.width) != width) {
 	changes.width = w->core.width = width;
 	mask |= CWWidth;
     }
 
-    if (w->core.height != height) {
-	old_height = w->core.height;
+    if ((old_height = w->core.height) != height) {
 	changes.height = w->core.height = height;
 	mask |= CWHeight;
     }
 
-    if (w->core.border_width != borderWidth) {
-	old_borderWidth = w->core.border_width;
+    if ((old_borderWidth = w->core.border_width) != borderWidth) {
 	changes.border_width = w->core.border_width = borderWidth;
 	mask |= CWBorderWidth;
     }
@@ -340,14 +338,15 @@ void XtResizeWidget(w, width, height, borderWidth)
 		XConfigureWindow(XtDisplay(w), XtWindow(w), mask, &changes);
 	    else {
 		Widget pw = _XtWindowedAncestor(w);
-		Dimension big_width = old_width + (old_borderWidth << 1);
-		Dimension big_height = old_height + (old_borderWidth << 1);
-		if ((width + (borderWidth << 1)) > big_width)
-		    big_width = width + (borderWidth << 1);
-		if ((height + (borderWidth << 1)) > big_height)
-		    big_height = height + (borderWidth << 1);
+		old_width += (old_borderWidth << 1);
+		old_height += (old_borderWidth << 1);
+		if ((width + (borderWidth << 1)) > old_width)
+		    old_width = width + (borderWidth << 1);
+		if ((height + (borderWidth << 1)) > old_height)
+		    old_height = height + (borderWidth << 1);
 		XClearArea( XtDisplay(pw), XtWindow(pw),
-			    w->core.x, w->core.y, big_width, big_height,
+			    (int)w->core.x, (int)w->core.y,
+			    (unsigned int)old_width, (unsigned int)old_height,
 			    TRUE );
 	    }
 	}
@@ -360,7 +359,7 @@ void XtResizeWidget(w, width, height, borderWidth)
 void XtConfigureWidget(w, x, y, width, height, borderWidth)
     Widget w;
     Position x, y;
-    Dimension height, width, borderWidth;
+    Dimension width, height, borderWidth;
 {
     XWindowChanges changes, old;
     Cardinal mask = 0;
@@ -450,7 +449,7 @@ void XtTranslateCoords(w, x, y, rootx, rooty)
     }
 
     if (w == NULL)
-        XtWarningMsg("invalidShell","xtTranslateCoords","XtToolkitError",
+        XtWarningMsg("invalidShell","xtTranslateCoords",XtCXtToolkitError,
                 "Widget has no shell ancestor",
 		(String *)NULL, (Cardinal *)NULL);
     else {

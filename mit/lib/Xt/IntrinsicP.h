@@ -1,5 +1,5 @@
 /*
-* $XConsortium: IntrinsicP.h,v 1.46 89/12/12 20:07:10 swick Exp $
+* $XConsortium: IntrinsicP.h,v 1.49 90/04/03 09:58:50 swick Exp $
 * $oHeader: IntrinsicP.h,v 1.4 88/08/26 14:49:52 asente Exp $
 */
 
@@ -45,56 +45,88 @@ typedef struct {
 typedef unsigned long XtVersionType;
 
 #define XT_VERSION 11
-#define XT_REVISION 3
+#ifndef XT_REVISION
+#define XT_REVISION 4
+#endif
 #define XtVersion (XT_VERSION * 1000 + XT_REVISION)
 #define XtVersionDontCheck 0
 
-typedef void (*XtProc)();
-    /* takes no arguments */
+typedef void (*XtProc)(
+#if NeedFunctionPrototypes
+    void
+#endif
+);
 
-typedef void (*XtWidgetClassProc)();
-    /* WidgetClass class */
+typedef void (*XtWidgetClassProc)(
+#if NeedFunctionPrototypes
+    WidgetClass /* class */
+#endif
+);
 
-typedef void (*XtWidgetProc)();
-    /* Widget widget */
+typedef void (*XtWidgetProc)(
+#if NeedFunctionPrototypes
+    Widget	/* widget */
+#endif
+);
 
-typedef Boolean (*XtAcceptFocusProc)();
-    /* Widget widget; */
-    /* Time *time; */ /* X time */
+typedef Boolean (*XtAcceptFocusProc)(
+#if NeedFunctionPrototypes
+    Widget	/* widget */,
+    Time*	/* time */
+#endif
+);
 
-typedef void (*XtArgsProc)();
-    /* Widget   widget */
-    /* ArgList  args */
-    /* Cardinal *num_args */
+typedef void (*XtArgsProc)(
+#if NeedFunctionPrototypes
+    Widget	/* widget */,
+    ArgList	/* args */,
+    Cardinal*	/* num_args */
+#endif
+);
 
-typedef void (*XtInitProc)();
-    /* Widget request_widget; */
-    /* Widget new_widget; */
-    /* ArgList args;	  */
-    /* Cardinal *num_args; */
+typedef void (*XtInitProc)(
+#if NeedFunctionPrototypes
+    Widget	/* request */,
+    Widget	/* new */,
+    ArgList	/* args */,
+    Cardinal*	/* num_args */
+#endif
+);
 
-typedef Boolean (*XtSetValuesFunc)();  /* returns TRUE if redisplay needed */
-    /* Widget widget;       */
-    /* Widget request;      */
-    /* Widget new;	    */
-    /* ArgList args;	    */
-    /* Cardinal *num_args;  */
+typedef Boolean (*XtSetValuesFunc)(
+#if NeedFunctionPrototypes
+    Widget 	/* old */,
+    Widget 	/* request */,
+    Widget 	/* new */,
+    ArgList 	/* args */,
+    Cardinal*	/* num_args */
+#endif
+);
 
-typedef Boolean (*XtArgsFunc)();
-    /* Widget   widget      */
-    /* ArgList  args	    */
-    /* Cardinal *num_args   */
+typedef Boolean (*XtArgsFunc)(
+#if NeedFunctionPrototypes
+    Widget	/* widget */,
+    ArgList	/* args */,
+    Cardinal*	/* num_args */
+#endif
+);
 
-typedef void (*XtAlmostProc)();
-    /* Widget		widget;     */
-    /* Widget		new_widget; */
-    /* XtWidgetGeometry *request;   */
-    /* XtWidgetGeometry *reply;     */
+typedef void (*XtAlmostProc)(
+#if NeedFunctionPrototypes
+    Widget		/* old */,
+    Widget		/* new */,
+    XtWidgetGeometry*	/* request */,
+    XtWidgetGeometry*	/* reply */
+#endif
+);
 
-typedef void (*XtExposeProc)();
-    /* Widget    widget; */
-    /* XEvent    *event; */
-    /* Region	 region; */
+typedef void (*XtExposeProc)(
+#if NeedFunctionPrototypes
+    Widget	/* widget */,
+    XEvent*	/* event */,
+    Region	/* region */
+#endif
+);
 
 /* compress_exposure options*/
 #define XtExposeNoCompress		((XtEnum)False)
@@ -108,21 +140,34 @@ typedef void (*XtExposeProc)();
 #define XtExposeNoExpose	  	0x40
 
 
-typedef void (*XtRealizeProc) ();
-    /* Widget	widget;			    */
-    /* XtValueMask mask;		    */
-    /* XSetWindowAttributes *attributes;    */
+typedef void (*XtRealizeProc)(
+#if NeedFunctionPrototypes
+    Widget 		  /* widget */,
+    XtValueMask* 	  /* mask */,
+    XSetWindowAttributes* /* attributes */
+#endif
+);
 
-typedef void (*XtCreatePopupChildProc)();
+typedef void (*XtCreatePopupChildProc)(
+#if NeedFunctionPrototypes
+    Widget	/* shell */
+#endif
+);
 
-typedef XtGeometryResult (*XtGeometryHandler)();
-    /* Widget		widget      */
-    /* XtWidgetGeometry *request    */
-    /* XtWidgetGeometry *reply      */
+typedef XtGeometryResult (*XtGeometryHandler)(
+#if NeedFunctionPrototypes
+    Widget		/* widget */,
+    XtWidgetGeometry*	/* request */,
+    XtWidgetGeometry*	/* reply */
+#endif
+);
 
-typedef void (*XtStringProc)();
-    /* Widget		widget	    */
-    /* String		str	    */
+typedef void (*XtStringProc)(
+#if NeedFunctionPrototypes
+    Widget	/* widget */,
+    String	/* str */
+#endif
+);
 
 typedef struct _StateRec *StatePtr;
 
@@ -136,6 +181,8 @@ typedef struct _XtTMRec {
 #include <X11/CoreP.h>
 #include <X11/CompositeP.h>
 #include <X11/ConstrainP.h>
+#include <X11/ObjectP.h>
+#include <X11/RectObjP.h>
 
 #define XtDisplay(widget)	DisplayOfScreen((widget)->core.screen)
 #define XtScreen(widget)	((widget)->core.screen)
@@ -197,9 +244,10 @@ extern "C" {				/* for C++ V2.0 */
 
 #if NeedWidePrototypes
 #define Boolean		int
-#define Dimension	unsigned int
+#define Dimension	int
+#define KeyCode		int
 #define Position	int
-#define XtEnum		unsigned int
+#define XtEnum		int
 #endif /* NeedWidePrototypes */
 
 extern Widget _XtWindowedAncestor( /* internal; implementation-dependent */
@@ -259,6 +307,7 @@ extern void XtConfigureWidget(
 #if NeedWidePrototypes
 #undef Boolean
 #undef Dimension
+#undef KeyCode
 #undef Position
 #undef XtEnum
 #endif /* NeedWidePrototypes */

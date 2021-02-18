@@ -1,5 +1,5 @@
 /*
-* $XConsortium: Intrinsic.h,v 1.131 90/02/06 17:41:27 converse Exp $
+* $XConsortium: Intrinsic.h,v 1.136 90/04/03 11:37:20 swick Exp $
 * $oHeader: Intrinsic.h,v 1.10 88/09/01 10:33:34 asente Exp $
 */
 
@@ -64,10 +64,12 @@ SOFTWARE.
 #endif /* __STDC__ */
 #endif /* NeedVarargsPrototypes */
 
+typedef char *String;
+
 #if defined(__cplusplus) || defined(c_plusplus)
 #define CONST const
 /* make const String do the right thing */
-#define String		char*
+#define String char*
 #else
 #define CONST
 #endif /* __cplusplus */
@@ -99,7 +101,6 @@ SOFTWARE.
 
 #define XtNumber(arr)		((Cardinal) (sizeof(arr) / sizeof(arr[0])))
 
-typedef char *String;
 typedef struct _WidgetRec *Widget;
 typedef Widget *WidgetList;
 typedef struct _WidgetClassRec *WidgetClass;
@@ -231,7 +232,7 @@ typedef void (*XtConverter)(
     XrmValue*		/* args */,
     Cardinal*		/* num_args */,
     XrmValue*		/* from */,
-    Xrmvalue*		/* to */
+    XrmValue*		/* to */
 #endif
 );
 
@@ -242,7 +243,7 @@ typedef Boolean (*XtTypeConverter)(
     Cardinal*		/* num_args */,
     XrmValue*		/* from */,
     XrmValue*		/* to */,
-    XtPointer*		/* converter_data */,
+    XtPointer*		/* converter_data */
 #endif
 );
 
@@ -274,8 +275,12 @@ typedef void (*XtActionHookProc)(
 typedef void (*XtKeyProc)(
 #if NeedFunctionPrototypes
     Display*		/* dpy */,
-    KeyCode* 		/* keycode */,
-    Modifiers*		/* modifiers */,
+#if NeedWidePrototypes
+    /* KeyCode */ int	/* keycode */,
+#else
+    KeyCode 		/* keycode */,
+#endif /* NeedWidePrototypes */
+    Modifiers		/* modifiers */,
     Modifiers*		/* modifiers_return */,
     KeySym*		/* keysym_return */
 #endif
@@ -283,7 +288,8 @@ typedef void (*XtKeyProc)(
 
 typedef void (*XtCaseProc)(
 #if NeedFunctionPrototypes
-    KeySym*		/* keysym */,
+    Display*		/* display */,
+    KeySym		/* keysym */,
     KeySym*		/* lower_return */,
     KeySym*		/* upper_return */
 #endif
@@ -371,6 +377,14 @@ typedef struct _XtResource {
     String	default_type;	/* representation type of specified default */
     XtPointer	default_addr;	/* Address of default resource		    */
 } XtResource, *XtResourceList;
+
+typedef void (*XtResourceDefaultProc)(
+#if NeedFunctionPrototypes
+    Widget	/* widget */,
+    int		/* offset */,
+    XrmValue*	/* value */
+#endif
+);
 
 typedef void (*XtErrorMsgHandler)(
 #if NeedFunctionPrototypes
@@ -589,7 +603,7 @@ extern Boolean _XtCheckSubclassFlag( /* implementation-private */
 #if NeedFunctionPrototypes
     Widget		/* object */,
 #if NeedWidePrototypes
-    /* XtEnum */ unsigned /* type_flag */
+    /* XtEnum */ int	/* type_flag */
 #else
     XtEnum		/* type_flag */
 #endif /* NeedWidePrototypes */
@@ -601,7 +615,11 @@ extern Boolean _XtIsSubclassOf( /* implementation-private */
     Widget		/* object */,
     WidgetClass		/* widget_class */,
     WidgetClass		/* flag_class */,
+#if NeedWidePrototypes
+    /* XtEnum */ int	/* type_flag */
+#else
     XtEnum		/* type_flag */
+#endif /* NeedWidePrototypes */
 #endif
 );
 
@@ -652,10 +670,10 @@ extern Boolean XtOwnSelectionIncremental(
     Widget 		/* widget */,
     Atom 		/* selection */,
     Time 		/* time */,
-    XtConvertSelectionIncrProc /* convert_callback */,
-    XtLoseSelectionIncrProc /* lose_callback */,
-    XtSelectionDoneIncrProc /* done_callback */,
-    XtCancelSelectionCallbackProc /* cancel_callback */,
+    XtConvertSelectionIncrProc	/* convert_callback */,
+    XtLoseSelectionIncrProc	/* lose_callback */,
+    XtSelectionDoneIncrProc	/* done_callback */,
+    XtCancelConvertSelectionProc /* cancel_callback */,
     XtPointer 		/* client_data */
 #endif
 );
@@ -664,8 +682,8 @@ extern XtGeometryResult XtMakeResizeRequest(
 #if NeedFunctionPrototypes
     Widget 		/* widget */,
 #if NeedWidePrototypes
-    /* Dimension */ unsigned /* width */,
-    /* Dimension */ unsigned /* height */,
+    /* Dimension */ int /* width */,
+    /* Dimension */ int /* height */,
 #else
     Dimension		/* width */,
     Dimension 		/* height */,
@@ -690,6 +708,23 @@ extern void XtTransformCoords(
 #endif
 );
 
+extern KeySym* XtGetKeysymTable(
+#if NeedFunctionPrototypes
+    Display*		/* dpy */,
+    KeyCode*		/* min_keycode_return */,
+    int*		/* keysyms_per_keycode_return */
+#endif
+);
+
+extern void XtKeysymToKeycodeList(
+#if NeedFunctionPrototypes
+    Display*		/* dpy */,
+    KeySym 		/* keysym */,
+    KeyCode**		/* keycodes_return */,
+    Cardinal*		/* keycount_return */
+#endif
+);
+
 /* %%% Caution: don't declare any functions past this point that
  * return one of the following types or take a pointer to one of
  * the following types.
@@ -697,9 +732,10 @@ extern void XtTransformCoords(
 
 #if NeedWidePrototypes
 #define Boolean		int
-#define Dimension	unsigned int
+#define Dimension	int
+#define KeyCode		int
 #define Position	int
-#define XtEnum		unsigned int
+#define XtEnum		int
 #endif /* NeedWidePrototypes */
 
 extern void XtStringConversionWarning(
@@ -926,8 +962,8 @@ extern void XtTranslateKeycode(
 extern void XtTranslateKey(
 #if NeedFunctionPrototypes
     Display*		/* dpy */,
-    KeyCode*		/* keycode */,
-    Modifiers*		/* modifiers */,
+    KeyCode		/* keycode */,
+    Modifiers		/* modifiers */,
     Modifiers*		/* modifiers_return */,
     KeySym*		/* keysym_return */
 #endif
@@ -958,29 +994,15 @@ extern void XtConvertCase(
 #endif
 );
 
-extern KeySym* XtGetKeysymTable(
-#if NeedFunctionPrototypes
-    Display*		/* dpy */,
-    KeyCode*		/* min_keycode_return */,
-    int*		/* keysyms_per_keycode_return */
-#endif
-);
-
-extern void XtKeysymToKeycodeList(
-#if NeedFunctionPrototypes
-    Display*		/* dpy */,
-    KeySym 		/* keysym */,
-    KeyCode**		/* keycodes_return */,
-    Cardinal*		/* keycount_return */
-#endif
-);
-
 /****************************************************************
  *
  * Event Management
  *
  ****************************************************************/
 
+/* XtAllEvents is valid only for XtRemoveEventHandler and
+ * XtRemoveRawEventHandler; don't use it to select events!
+ */
 #define XtAllEvents ((EventMask) -1L)
 
 extern void XtInsertEventHandler(
@@ -1691,7 +1713,7 @@ extern Widget XtInitialize(
 #if NeedFunctionPrototypes
     CONST String 	/* name */,
     CONST String 	/* class */,
-    XrmOptionDescRec 	/* options */,
+    XrmOptionDescRec* 	/* options */,
     Cardinal 		/* num_options */,
     Cardinal*		/* argc */,
     char**		/* argv */
@@ -1945,7 +1967,7 @@ extern void XtGetConstraintResourceList(
 #define XtDefaultBackground	"XtDefaultBackground"
 #define XtDefaultFont		"XtDefaultFont"
 
-#ifdef CRAY
+#if defined(CRAY) || defined(__arm)
 #ifdef CRAY2
 
 #define XtOffset(p_type,field) \
@@ -1956,7 +1978,7 @@ extern void XtGetConstraintResourceList(
 #define XtOffset(p_type,field) ((unsigned int)&(((p_type)NULL)->field))
 
 #endif	/* !CRAY2 */
-#else	/* !CRAY */
+#else	/* ! (CRAY || __arm) */
 
 #define XtOffset(p_type,field) \
 	((Cardinal) (((char *) (&(((p_type)NULL)->field))) - ((char *) NULL)))
@@ -2275,6 +2297,8 @@ extern String XtResolvePathname(
     CONST String	/* filename */,
     CONST String	/* suffix */,
     CONST String	/* path */,
+    Substitution	/* substitutions */,
+    Cardinal		/* num_substitutions */,
     XtFilePredicate 	/* predicate */
 #endif
 );
@@ -2392,7 +2416,7 @@ extern void XtGetSelectionValuesIncremental(
 extern void XtGrabKey(
 #if NeedFunctionPrototypes
     Widget 		/* widget */,
-    KeySym 		/* keysym */,
+    KeyCode 		/* keycode */,
     Modifiers	 	/* modifiers */,
     Boolean 		/* owner_events */,
     int 		/* pointer_mode */,
@@ -2403,7 +2427,7 @@ extern void XtGrabKey(
 extern void XtUngrabKey(
 #if NeedFunctionPrototypes
     Widget 		/* widget */,
-    KeySym 		/* keysym */,
+    KeyCode 		/* keycode */,
     Modifiers	 	/* modifiers */
 #endif
 );
@@ -2482,6 +2506,7 @@ extern void XtGetApplicationNameAndClass(
 #if NeedWidePrototypes
 #undef Boolean
 #undef Dimension
+#undef KeyCode
 #undef Position
 #undef XtEnum
 #endif /* NeedWidePrototypes */

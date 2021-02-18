@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Intrinsic.c,v 1.144 89/12/12 19:19:41 swick Exp $";
+static char Xrcsid[] = "$XConsortium: Intrinsic.c,v 1.147 90/04/10 15:57:53 swick Exp $";
 /* $oHeader: Intrinsic.c,v 1.4 88/08/18 15:40:35 asente Exp $ */
 #endif /* lint */
 
@@ -34,6 +34,8 @@ SOFTWARE.
 #ifndef VMS
 #include <sys/stat.h>
 #endif /* VMS */
+
+String XtCXtToolkitError = "XtToolkitError";
 
 Boolean XtIsSubclass(widget, widgetClass)
     Widget    widget;
@@ -199,7 +201,7 @@ static void RealizeWidget(widget)
     realize = widget->core.widget_class->core_class.realize;
     if (realize == NULL)
 	XtAppErrorMsg(XtWidgetToApplicationContext(widget),
-		      "invalidProcedure","realizeProc","XtToolkitError",
+		      "invalidProcedure","realizeProc",XtCXtToolkitError,
 		      "No realize class procedure defined",
 		      (String *)NULL, (Cardinal *)NULL);
     else (*realize) (widget, &value_mask, &values);
@@ -260,6 +262,7 @@ static void UnrealizeWidget(widget)
     register CompositeWidget	cw;
     register Cardinal		i;
     register WidgetList		children;
+    extern void _XtTranslateEvent();
 
     if (!XtIsWidget(widget) || !XtIsRealized(widget)) return;
 
@@ -287,15 +290,16 @@ static void UnrealizeWidget(widget)
     _XtUnregisterWindow(XtWindow(widget), widget);
 
     /* Remove Event Handlers */
-    /* remove async handlers, how? */
     /* remove grabs. Happens automatically when window is destroyed. */
 
     /* Destroy X Window, done at outer level with one request */
     widget->core.window = NULL;
 
-    /* Unbind actions? Nope, we check in realize to see if done. */
-    /* Uninstall Translations? */
-    XtUninstallTranslations(widget);
+    /* Removing the event handler here saves having to keep track if
+     * the translation table is changed while the widget is unrealized.
+     */
+    XtRemoveEventHandler(widget, XtAllEvents, TRUE, _XtTranslateEvent,
+			 (XtPointer)&widget->core.tm);
 
 } /* UnrealizeWidget */
 
@@ -326,7 +330,7 @@ void XtCreateWindow(widget, window_class, visual, value_mask, attributes)
 	if (widget->core.width == 0 || widget->core.height == 0) {
 	    Cardinal count = 1;
 	    XtAppErrorMsg(XtWidgetToApplicationContext(widget),
-		       "invalidDimension", "xtCreateWindow", "XtToolkitError",
+		       "invalidDimension", "xtCreateWindow", XtCXtToolkitError,
 		       "Widget %s has zero width and/or height",
 		       &widget->core.name, &count);
 	}
@@ -582,7 +586,7 @@ Widget _XtWindowedAncestor(object)
 	String params = XtName(object);
 	Cardinal num_params = 1;
 	XtAppErrorMsg(XtWidgetToApplicationContext(object),
-		   "noWidgetAncestor", "windowedAncestor", "XtToolkitError",
+		   "noWidgetAncestor", "windowedAncestor", XtCXtToolkitError,
 		   "Object \"%s\" does not have windowed ancestor",
 		   &params, &num_params);
     }

@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Destroy.c,v 1.22 89/10/09 13:36:37 swick Exp $";
+static char Xrcsid[] = "$XConsortium: Destroy.c,v 1.24 90/03/27 11:07:16 swick Exp $";
 /* $oHeader: Destroy.c,v 1.3 88/09/01 11:27:27 asente Exp $ */
 #endif /* lint */
 
@@ -115,7 +115,6 @@ static void XtPhase2Destroy (widget, closure, call_data)
     _XtDestroyList = &newDestroyList;
 
     parent = widget->core.parent;
-    window = 0;
 
     if (parent != NULL && XtIsComposite(parent)) {
 	XtWidgetProc delete_child =
@@ -135,9 +134,20 @@ static void XtPhase2Destroy (widget, closure, call_data)
 	    (*delete_child) (widget);
 	}
     }
-    if (XtIsWidget(widget)) {
-	display = XtDisplay(widget); /* widget is freed in Phase2Destroy */
-        window = widget->core.window;
+
+    /* widget is freed in Phase2Destroy, so retrieve window now.
+     * Shells destroy their own windows, to prevent window leaks in
+     * popups; this test is practical only when XtIsShell() is cheap.
+     */
+    if (XtIsShell(widget) || !XtIsWidget(widget)) {
+	window = 0;
+#ifdef lint
+	display = 0;
+#endif
+    }
+    else {
+	display = XtDisplay(widget);
+	window = widget->core.window;
     }
 
     Recursive(widget, Phase2Callbacks);
@@ -155,8 +165,7 @@ static void XtPhase2Destroy (widget, closure, call_data)
     Recursive(widget, Phase2Destroy);
     app->in_phase2_destroy = outerInPhase2Destroy;
 
-    /* popups destroy their own window if parent->being_destroyed */
-    if (window != NULL && (parent == NULL || !parent->core.being_destroyed))
+    if (window)
 	XDestroyWindow(display, window);
 } /* XtPhase2Destroy */
 

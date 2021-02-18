@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Create.c,v 1.68 90/01/24 16:04:57 swick Exp $";
+static char Xrcsid[] = "$XConsortium: Create.c,v 1.71 90/03/27 12:56:32 swick Exp $";
 /* $oHeader: Create.c,v 1.5 88/09/01 11:26:22 asente Exp $ */
 #endif /*lint*/
 
@@ -50,35 +50,11 @@ static void CallClassPartInit(ancestor, wc)
 void XtInitializeWidgetClass(wc)
     WidgetClass wc;
 {
-    String param[3];
-    Cardinal num_params=3;
+    XtEnum inited;
     if (wc->core_class.class_inited) return;
-    if (wc->core_class.version != XtVersion &&
-	    wc->core_class.version != XtVersionDontCheck) {
-        param[0] =  wc->core_class.class_name;
-	param[1] =  (String)wc->core_class.version;
-        param[2] = (String)XtVersion;
-	XtWarningMsg("versionMismatch","widget","XtToolkitError",
-          "Widget class %s version mismatch:\n  widget %d vs. intrinsics %d.",
-          param,&num_params);
-	if (wc->core_class.version == (2 * 1000 + 2)) /* MIT R2 */ {
-	    Cardinal num_params=1;
-	    XtErrorMsg("versionMismatch","widget","XtToolkitError",
-		       "Widget class %s must be re-compiled.",
-		       param, &num_params);
-	}
-    }
-
-    if ((wc->core_class.superclass != NULL) 
-	    && (!(wc->core_class.superclass->core_class.class_inited)))
- 	XtInitializeWidgetClass(wc->core_class.superclass);
- 
-    if (wc->core_class.class_initialize != NULL)
-	(*(wc->core_class.class_initialize))();
-    CallClassPartInit(wc, wc);
+    inited = 0x01;
     {
 	WidgetClass pc;
-	XtEnum inited = 0x01;
 #define LeaveIfClass(c, d) if (pc == c) { inited = d; break; }
 	for (pc = wc; pc; pc = pc->core_class.superclass) {
 	    LeaveIfClass(rectObjClass, 0x01 |
@@ -115,8 +91,43 @@ void XtInitializeWidgetClass(wc)
 			 TopLevelClassFlag);
 	}
 #undef LeaveIfClass
-	wc->core_class.class_inited = inited;
     }
+    if (wc->core_class.version != XtVersion &&
+	wc->core_class.version != XtVersionDontCheck) {
+	String param[3];
+        param[0] = wc->core_class.class_name;
+	if (wc->core_class.version == (11 * 1000 + 3)) { /* MIT X11R3 */
+	    if (inited & ShellClassFlag) {
+		Cardinal num_params=1;
+		XtWarningMsg("r3versionMismatch","widget","XtToolkitError",
+			     "Shell Widget class %s binary compiled for R3",
+			     param,&num_params);
+	    }
+	}
+	else {
+	    Cardinal num_params=3;
+	    param[1] = (String)wc->core_class.version;
+	    param[2] = (String)XtVersion;
+	    XtWarningMsg("versionMismatch","widget","XtToolkitError",
+			 "Widget class %s version mismatch (recompilation needed):\n  widget %d vs. intrinsics %d.",
+			 param,&num_params);
+	    if (wc->core_class.version == (2 * 1000 + 2)) /* MIT X11R2 */ {
+		Cardinal num_params=1;
+		XtErrorMsg("r2versionMismatch","widget","XtToolkitError",
+			   "Widget class %s must be re-compiled.",
+			   param, &num_params);
+	    }
+	}
+    }
+
+    if ((wc->core_class.superclass != NULL) 
+	    && (!(wc->core_class.superclass->core_class.class_inited)))
+ 	XtInitializeWidgetClass(wc->core_class.superclass);
+ 
+    if (wc->core_class.class_initialize != NULL)
+	(*(wc->core_class.class_initialize))();
+    CallClassPartInit(wc, wc);
+    wc->core_class.class_inited = inited;
 }
 
 static void CallInitialize (class, req_widget, new_widget, args, num_args)
@@ -416,13 +427,6 @@ static void RemovePopupFromParent(widget,closure,call_data)
         return;
     }
     if (parent->core.being_destroyed) {
-	/* then we're (probably) not the target of the XtDestroyWidget,
-	 * so our window won't get destroyed automatically...
-	 */
-	Window win;
-        if ((win = XtWindow(widget)) != NULL)
-	    XDestroyWindow( XtDisplay(widget), win );
-
 	return;
 	/* don't update parent's popup_list, as we won't then be able to find
 	 * this child for Phase2Destroy.  This also allows for the possibility

@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Error.c,v 1.23 89/12/15 17:33:30 swick Exp $";
+static char Xrcsid[] = "$XConsortium: Error.c,v 1.24 90/03/19 12:58:53 swick Exp $";
 /* $oHeader: Error.c,v 1.6 88/08/31 17:46:14 asente Exp $ */
 #endif /* lint */
 
@@ -47,7 +47,7 @@ static void _XtDefaultErrorMsg(), _XtDefaultWarningMsg(),
 static XtErrorMsgHandler errorMsgHandler = _XtDefaultErrorMsg;
 static XtErrorMsgHandler warningMsgHandler = _XtDefaultWarningMsg;
 static XtErrorHandler errorHandler = _XtDefaultError;
-static XtErrorMsgHandler warningHandler = _XtDefaultWarning;
+static XtErrorHandler warningHandler = _XtDefaultWarning;
 #endif /* GLOBALERRORS */
 
 XrmDatabase *XtGetErrorDatabase()

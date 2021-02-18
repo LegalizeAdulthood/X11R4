@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Display.c,v 1.40 89/12/15 21:58:31 swick Exp $";
+static char Xrcsid[] = "$XConsortium: Display.c,v 1.43 90/04/05 10:51:28 swick Exp $";
 /* $oHeader: Display.c,v 1.9 88/09/01 11:28:47 asente Exp $ */
 #endif /*lint*/
 
@@ -39,6 +39,8 @@ SOFTWARE.
 #ifndef HEAP_SEGMENT_SIZE
 #define HEAP_SEGMENT_SIZE 1492
 #endif
+
+static String XtNnoPerDisplay = "noPerDisplay";
 
 static void _XtHeapInit();
 static void _XtHeapFree();
@@ -122,7 +124,7 @@ Display *XtOpenDisplay(app, displayName, applName, className,
 	XrmOptionDescRec *urlist;
 	Cardinal num_urs;
 	Cardinal *argc;
-	char *argv[];
+	String *argv;
 {
 	char  displayCopy[256];
 	int i;
@@ -214,7 +216,7 @@ XtDisplayInitialize(app, dpy, name, classname, urlist, num_urs, argc, argv)
 	XrmOptionDescRec *urlist;
 	Cardinal num_urs;
 	Cardinal *argc;
-	char *argv[];
+	String *argv;
 {
 	XtPerDisplay pd;
 	static XtPerDisplay NewPerDisplay();
@@ -351,6 +353,10 @@ XtPerDisplay _XtSortPerDisplayList(dpy)
 {
 	register PerDisplayTablePtr pd, opd;
 
+#ifdef lint
+	opd = NULL;
+#endif
+
 	for (pd = _XtperDisplayList;
 	     pd != NULL && pd->dpy != dpy;
 	     pd = pd->next) {
@@ -358,7 +364,7 @@ XtPerDisplay _XtSortPerDisplayList(dpy)
 	}
 
 	if (pd == NULL) {
-	    XtErrorMsg("noPerDisplay", "getPerDisplay", "XtToolkitError",
+	    XtErrorMsg(XtNnoPerDisplay, "getPerDisplay", XtCXtToolkitError,
 		    "Couldn't find per display information",
 		    (String *) NULL, (Cardinal *)NULL);
 	}
@@ -409,7 +415,7 @@ char* _XtHeapAlloc(heap, bytes)
 		*(char**)heap_loc = NULL;
 		heap->start = heap_loc;
 	    }
-	    return heap_loc;
+	    return heap_loc + sizeof(char*);
 	}
 	/* else discard remainder of this segment */
 #ifdef _TRACE_HEAP
@@ -470,6 +476,10 @@ static void CloseDisplay(dpy)
         register XtPerDisplay xtpd;
 	register PerDisplayTablePtr pd, opd;
 	
+#ifdef lint
+	opd = NULL;
+#endif
+
 	for (pd = _XtperDisplayList;
 	     pd != NULL && pd->dpy != dpy;
 	     pd = pd->next){
@@ -477,7 +487,7 @@ static void CloseDisplay(dpy)
 	}
 
 	if (pd == NULL) {
-	    XtErrorMsg("noPerDisplay", "closeDisplay", "XtToolkitError",
+	    XtErrorMsg(XtNnoPerDisplay, "closeDisplay", XtCXtToolkitError,
 		    "Couldn't find per display information",
 		    (String *) NULL, (Cardinal *)NULL);
 	}
