@@ -1,5 +1,5 @@
 /*
- * $XConsortium: charproc.c,v 1.121 89/12/15 19:07:43 jim Exp $
+ * $XConsortium: charproc.c,v 1.123 90/03/12 10:30:21 jim Exp $
  */
 
 
@@ -149,7 +149,7 @@ static void VTallocbuf();
 #define	doinput()		(bcnt-- > 0 ? *bptr++ : in_put())
 
 #ifndef lint
-static char rcs_id[] = "$XConsortium: charproc.c,v 1.121 89/12/15 19:07:43 jim Exp $";
+static char rcs_id[] = "$XConsortium: charproc.c,v 1.123 90/03/12 10:30:21 jim Exp $";
 #endif	/* lint */
 
 static int nparam;
@@ -180,7 +180,7 @@ extern void HandleFocusChange();
 static void HandleKeymapChange();
 extern void HandleInsertSelection();
 extern void HandleSelectStart(), HandleKeyboardSelectStart();
-extern void HandleSelectExtend();
+extern void HandleSelectExtend(), HandleSelectSet();
 extern void HandleSelectEnd(), HandleKeyboardSelectEnd();
 extern void HandleStartExtend(), HandleKeyboardStartExtend();
 static void HandleBell();
@@ -250,6 +250,7 @@ static XtActionsRec actionsList[] = {
     { "select-start",	  HandleSelectStart },
     { "select-extend",	  HandleSelectExtend },
     { "select-end",	  HandleSelectEnd },
+    { "select-set",	  HandleSelectSet },
     { "select-cursor-start",	  HandleKeyboardSelectStart },
     { "select-cursor-end",	  HandleKeyboardSelectEnd },
     { "set-vt-font",	  HandleSetFont },
@@ -1489,10 +1490,19 @@ int		(*func)();
 			update_reversewrap();
 			break;
 		case 46:		/* logging		*/
+#ifdef ALLOWLOGFILEONOFF
+			/*
+			 * if this feature is enabled, logging may be 
+			 * enabled and disabled via escape sequences.
+			 */
 			if(func == bitset)
 				StartLog(screen);
 			else
 				CloseLog(screen);
+#else
+			Bell();
+			Bell();
+#endif /* ALLOWLOGFILEONOFF */
 			break;
 		case 47:		/* alternate buffer		*/
 			if(func == bitset)
@@ -1687,10 +1697,12 @@ XtermWidget term;
 			update_reversewrap();
 			break;
 		case 46:		/* logging		*/
+#ifdef ALLOWLOGFILEONOFF
 			if(screen->save_modes[14])
 				StartLog(screen);
 			else
 				CloseLog(screen);
+#endif /* ALLOWLOGFILEONOFF */
 			/* update_logging done by StartLog and CloseLog */
 			break;
 		case 47:		/* alternate buffer		*/

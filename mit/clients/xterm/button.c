@@ -1,5 +1,5 @@
 /*
- *	$XConsortium: button.c,v 1.49 89/12/10 20:45:17 jim Exp $
+ *	$XConsortium: button.c,v 1.50 90/03/05 11:46:57 keith Exp $
  */
 
 
@@ -35,7 +35,7 @@ button.c	Handles button events in the terminal emulator.
 				J. Gettys.
 */
 #ifndef lint
-static char rcs_id[] = "$XConsortium: button.c,v 1.49 89/12/10 20:45:17 jim Exp $";
+static char rcs_id[] = "$XConsortium: button.c,v 1.50 90/03/05 11:46:57 keith Exp $";
 #endif	/* lint */
 
 #include "ptyx.h"		/* Xlib headers included here. */
@@ -489,9 +489,7 @@ Bool use_cursor_loc;
 	    PointToRowCol(event->xbutton.y, event->xbutton.x, &row, &col);
 	}
 	ExtendExtend (row, col);
-
 	lastButtonUpTime = event->xbutton.time;
-	/* Only do select stuff if non-null select */
 	if (startSRow != endSRow || startSCol != endSCol) {
 		if (replyToEmacs) {
 			if (rawRow == startSRow && rawCol == startSCol 
@@ -514,12 +512,31 @@ Bool use_cursor_loc;
 			}
 			TrackText(0, 0, 0, 0);
 		}
+	}
+	SelectSet(event, params, num_params);
+	eventMode = NORMAL;
+}
+
+HandleSelectSet(w, event, params, num_params)
+Widget w;
+XEvent *event;
+String *params;
+Cardinal *num_params;
+{
+	SelectSet (event, params, *num_params);
+}
+
+SelectSet (event, params, num_params)
+XEvent	*event;
+String	*params;
+Cardinal    num_params;
+{
+	/* Only do select stuff if non-null select */
+	if (startSRow != endSRow || startSCol != endSCol) {
 		SaltTextAway(startSRow, startSCol, endSRow, endSCol,
 			     params, num_params);
-	} else DisownSelection(term);
-
-	/* TrackText(0, 0, 0, 0); */
-	eventMode = NORMAL;
+	} else
+		DisownSelection(term);
 }
 
 #define Abs(x)		((x) < 0 ? -(x) : (x))

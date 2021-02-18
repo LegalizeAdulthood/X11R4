@@ -1,5 +1,5 @@
 /*
- *	$XConsortium: misc.c,v 1.62 89/12/10 20:44:41 jim Exp $
+ *	$XConsortium: misc.c,v 1.65 90/03/12 10:30:17 jim Exp $
  */
 
 
@@ -58,7 +58,7 @@ static void DoSpecialEnterNotify();
 static void DoSpecialLeaveNotify();
 
 #ifndef lint
-static char rcs_id[] = "$XConsortium: misc.c,v 1.62 89/12/10 20:44:41 jim Exp $";
+static char rcs_id[] = "$XConsortium: misc.c,v 1.65 90/03/12 10:30:17 jim Exp $";
 #endif	/* lint */
 
 xevents()
@@ -388,6 +388,7 @@ register TScreen *screen;
 	register int i;
 	static char *log_default;
 	char *malloc(), *rindex();
+#ifdef ALLOWLOGFILEEXEC
 	void logpipe();
 #ifdef SYSV
 	/* SYSV has another pointer which should be part of the
@@ -395,6 +396,7 @@ register TScreen *screen;
 	*/
 	unsigned char *old_bufend;
 #endif	/* SYSV */
+#endif /* ALLOWLOGFILEEXEC */
 
 	if(screen->logging || (screen->inhibit & I_LOG))
 		return;
@@ -408,6 +410,12 @@ register TScreen *screen;
 		strcpy(screen->logfile, log_default);
 	}
 	if(*screen->logfile == '|') {	/* exec command */
+#ifdef ALLOWLOGFILEEXEC
+		/*
+		 * Warning, enabling this "feature" allows arbitrary programs
+		 * to be run.  If ALLOWLOGFILECHANGES is enabled, this can be
+		 * done through escape sequences....  You have been warned.
+		 */
 		int p[2];
 		static char *shell;
 
@@ -454,6 +462,11 @@ register TScreen *screen;
 		close(p[0]);
 		screen->logfd = p[1];
 		signal(SIGPIPE, logpipe);
+#else
+		Bell();
+		Bell();
+		return;
+#endif
 	} else {
 		if(access(screen->logfile, F_OK) == 0) {
 			if(access(screen->logfile, W_OK) < 0)
@@ -500,6 +513,7 @@ register TScreen *screen;
 	screen->logstart = screen->TekEmu ? Tbuffer : buffer;
 }
 
+#ifdef ALLOWLOGFILEEXEC
 void logpipe()
 {
 	register TScreen *screen = &term->screen;
@@ -510,6 +524,8 @@ void logpipe()
 	if(screen->logging)
 		CloseLog(screen);
 }
+#endif /* ALLOWLOGFILEEXEC */
+
 
 do_osc(func)
 int (*func)();
@@ -518,6 +534,7 @@ int (*func)();
 	register int mode, c;
 	register char *cp;
 	char buf[512];
+	char *bufend = &buf[(sizeof buf) - 1];	/* leave room for null */
 	extern char *malloc();
 	Bool okay = True;
 
@@ -531,7 +548,7 @@ int (*func)();
 		mode = 10 * mode + (c - '0');
 	if (c != ';') okay = False;
 	cp = buf;
-	while(isprint((c = (*func)()) & 0x7f))
+	while(isprint((c = (*func)()) & 0x7f) && cp < bufend)
 		*cp++ = c;
 	if (c != 7) okay = False;
 	*cp = 0;
@@ -550,12 +567,21 @@ int (*func)();
 		break;
 
 	 case 46:	/* new log file */
+#ifdef ALLOWLOGFILECHANGES
+		/*
+		 * Warning, enabling this feature allows people to overwrite
+		 * arbitrary files accessible to the person running xterm.
+		 */
 		if((cp = malloc((unsigned)strlen(buf) + 1)) == NULL)
 			break;
 		strcpy(cp, buf);
 		if(screen->logfile)
 			free(screen->logfile);
 		screen->logfile = cp;
+#else
+		Bell();
+		Bell();
+#endif
 		break;
 
 	case 50:
