@@ -1,3 +1,5 @@
+/* $XConsortium: Berklib.c,v 1.4 90/08/27 15:29:40 swick Exp $ */
+
 /*
  * This file is used by System V based systems.
  */
@@ -5,7 +7,7 @@
 #include <sys/types.h>
 
 /*
- * These are routines fould in BDS and not found in HP-UX.  They are
+ * These are routines found in BSD and not found in many SysV's.  They are
  * included so that some clients can compile.
  */
 
@@ -197,3 +199,26 @@ register int iovcnt;
 }
 
 #endif /* hpux */
+
+/*
+ * gettimeofday emulation
+ * Caution -- emulation is incomplete
+ *  - has only second, not microsecond, resolution.
+ *  - does not return timezone info.
+ */
+
+#if defined(USG) && !defined(CRAY)
+int gettimeofday (tvp, tzp)
+    struct timeval *tvp;
+    struct timezone *tzp;
+{
+    time (&tvp->tv_sec);
+    tvp->tv_usec = 0L;
+
+    if (tzp) {
+	fprintf( stderr,
+		 "Warning: gettimeofday() emulation does not return timezone\n"
+		);
+    }
+}
+#endif

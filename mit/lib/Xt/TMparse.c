@@ -1,4 +1,4 @@
-/* $XConsortium: TMparse.c,v 1.95 90/07/12 17:47:39 swick Exp $ */
+/* $XConsortium: TMparse.c,v 1.99 90/08/24 11:11:31 swick Exp $ */
 
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -894,7 +894,11 @@ static String ParseKeySym(str, closure, event,error)
 	keySymName[1] = '\0';
 	event->event.eventCode = StringToKeySym(keySymName, error);
 	event->event.eventCodeMask = ~0L;
-    } else if (*str == ',' || *str == ':') {
+    } else if (*str == ',' || *str == ':' ||
+	       /* allow leftparen to be single char symbol,
+		* for backwards compatibility
+		*/
+	       (*str == '(' && *(str+1) >= '0' && *(str+1) <= '9')) {
 	/* no detail */
 	event->event.eventCode = 0L;
         event->event.eventCodeMask = 0L;
@@ -906,6 +910,7 @@ static String ParseKeySym(str, closure, event,error)
 		&& *str != ' '
 		&& *str != '\t'
                 && *str != '\n'
+	        && (*str != '(' || *(str+1) <= '0' || *(str+1) >= '9')
 		&& *str != '\0') str++;
 	(void) strncpy(keySymName, start, str-start);
 	keySymName[str-start] = '\0';
@@ -1069,7 +1074,6 @@ static String ParseQuotedStringEvent(str, event,error)
     Value shiftMask;
     register char	c;
     char	s[2];
-    Cardinal	tmEvent;
     (void) _XtLookupModifier("Ctrl",(LateBindingsPtr*)NULL,
                  FALSE,(Value *) &ctrlMask,TRUE);
     (void) _XtLookupModifier("Alt",(LateBindingsPtr*)NULL,
@@ -1093,18 +1097,14 @@ static String ParseQuotedStringEvent(str, event,error)
 	    if (*str != '\0' && *str != '\n') str++;
 	    break;
 	}
-    tmEvent = (EventType) LookupTMEventType("Key",error);
-    if (*error)
-        return PanicModeRecovery(str);
-
-    event->event.eventType = events[tmEvent].eventType;
-    if ('A' <= c && c <= 'Z') {
-	event->event.modifiers |=  shiftMask;
-	c += 'a' - 'A';
-    }
+    event->event.eventType = KeyPress;
     s[0] = c;
     s[1] = '\0';
     event->event.eventCode = StringToKeySym(s, error);
+    if (*error) return PanicModeRecovery(str);
+    event->event.eventCodeMask = ~0L;
+    event->event.matchEvent = _XtMatchUsingStandardMods;
+    event->event.standard = True;
 
     return str;
 }
@@ -1953,8 +1953,6 @@ _XtAddTMConverters(table)
     ConverterTable table;
 {
     XrmQuark q;
-    extern void _XtFreeTranslations();
-    extern Boolean _XtCvtMergeTranslations();
      _XtTableAddConverter(table,
 	     q = XrmStringToRepresentation(XtRString), 
 	     XrmStringToRepresentation(XtRTranslationTable), 
