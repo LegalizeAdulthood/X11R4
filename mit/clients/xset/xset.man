@@ -5,6 +5,7 @@ xset - user preference utility for X
 .B xset
 [-display \fIdisplay\fP]
 [-b] [b on/off] [b [\fIvolume\fP [\fIpitch\fP [\fIduration\fP]]]
+[[-]bc]
 [-c] [c on/off] [c [\fIvolume\fP]]
 [[-+]fp[-+=] \fIpath\fP[,\fIpath\fP[,...]]] [fp default] [fp rehash]
 [[-]led [\fIinteger\fP]] [led on/off]
@@ -24,7 +25,7 @@ This option specifies the server to use; see \fIX(1)\fP.
 .PP
 .TP 8
 .B b
-the \fBb\fP option controls bell volume, pitch and duration.
+The \fBb\fP option controls bell volume, pitch and duration.
 This option accepts up to three numerical parameters, a preceding
 dash(-), or a 'on/off' flag.  If no parameters are
 given, or the 'on' flag is used, the system defaults will be used.
@@ -40,6 +41,19 @@ all hardware can vary the bell characteristics.  The X server will set
 the characteristics of the bell as closely as it can to the user's
 specifications.
 .PP
+.TP 8
+.B bc
+The \fBbc\fP option controls \fIbug compatibility\fP mode in the server,
+if possible; a preceding dash(-) disables the mode, otherwise the mode
+is enabled.  Various pre-R4 clients pass illegal values in some
+protocol requests, and pre-R4 servers did not correctly generate
+errors in these cases.  Such clients, when run against an R4 server,
+will terminate abnormally or otherwise fail operate correctly.
+Bug compatibility mode explicitly reintroduces certain bugs into the
+X server, so that many such clients can still be run.  This mode should be
+used with care; new application development should be done with this mode
+disabled.  The server must support the MIT-SUNDRY-NONSTANDARD
+protocol extension in order for this option to work.
 .TP 8
 .B c
 The \fBc\fP option controls key click.

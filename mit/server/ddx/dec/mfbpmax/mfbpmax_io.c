@@ -22,7 +22,7 @@ SOFTWARE.
 
 ******************************************************************/
 
-/* $XConsortium: mfbpmax_io.c,v 1.12 89/11/30 15:35:34 keith Exp $ */
+/* $XConsortium: mfbpmax_io.c,v 1.13 90/01/19 14:56:36 keith Exp $ */
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -627,7 +627,7 @@ pmSetCursorPosition( pScr, newx, newy, generateEvent)
 	motion.u.keyButtonPointer.rootY = newy;
 	motion.u.keyButtonPointer.time = currentTime.milliseconds;
 	motion.u.u.type = MotionNotify;
-	(*pmPointer->processInputProc) (&motion, pmPointer);
+	(*pmPointer->processInputProc) (&motion, pmPointer, 1);
     }
 
     return TRUE;

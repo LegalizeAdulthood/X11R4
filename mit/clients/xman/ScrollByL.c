@@ -1,8 +1,8 @@
 /*
  * xman - X window system manual page display program.
  *
- * $XConsortium: ScrollByL.c,v 1.12 89/12/18 15:29:50 rws Exp $
- * $Header: ScrollByL.c,v 1.12 89/12/18 15:29:50 rws Exp $
+ * $XConsortium: ScrollByL.c,v 1.13 90/01/11 20:09:00 keith Exp $
+ * $Header: ScrollByL.c,v 1.13 90/01/11 20:09:00 keith Exp $
  *
  * Copyright 1987, 1988 Massachusetts Institute of Technology
  *
@@ -260,22 +260,38 @@ Widget w;
 int y_loc, height;
 {
   ScrollByLineWidget sblw = (ScrollByLineWidget) w;
-  int start_line, num_lines, location;
+  int start_line, end_line, num_lines, location;
 
-  start_line = y_loc / sblw->scroll.font_height + sblw->scroll.line_pointer;
+  start_line = y_loc / sblw->scroll.font_height;
+  /*
+   * check overlap of previous line descenders
+   */
+  if (start_line &&
+      start_line * sblw->scroll.font_height +
+	sblw->scroll.normal_font->max_bounds.descent -
+	sblw->scroll.normal_font->descent > y_loc)
+  {
+    start_line--;
+  }
 
   if (start_line >= sblw->scroll.lines)
     return;
   
-  num_lines = height / sblw->scroll.font_height + 1;
+  end_line = (y_loc + height) / sblw->scroll.font_height;
+  /*
+   * check overlap of next line ascenders
+   */
+  if (end_line * sblw->scroll.font_height +
+	sblw->scroll.normal_font->ascent -
+	sblw->scroll.normal_font->max_bounds.ascent < y_loc + height)
+  {
+    end_line++;
+  }
+  num_lines = end_line - start_line + 1;
 
-/*
- * Only integer arithmetic makes this possible. 
- */
+  location = start_line * sblw->scroll.font_height;
 
-  location =  y_loc / sblw->scroll.font_height * sblw->scroll.font_height;
-
-  PrintText(w, start_line, num_lines, location);
+  PrintText(w, start_line + sblw->scroll.line_pointer, num_lines, location);
 } 
 
 /*	Function Name: Page
@@ -372,7 +388,7 @@ int new_line;
 Boolean force_redisp;
 {
   ScrollByLineWidget sblw = (ScrollByLineWidget) w;
-  int num_lines = w->core.height / sblw->scroll.font_height + 1;
+  int num_lines = w->core.height / sblw->scroll.font_height;
   int max_lines, old_line;
   Boolean move_thumb = FALSE;
 
@@ -444,7 +460,8 @@ Widget w;
 int old_y, new_y, height;
 {
   ScrollByLineWidget sblw = (ScrollByLineWidget) w;
-  int from_left = sblw->scroll.indent + sblw->scroll.offset;
+  int from_left = sblw->scroll.indent + sblw->scroll.offset +
+		  sblw->scroll.normal_font->min_bounds.lbearing;
   int y_clear;
 
   old_y *= sblw->scroll.font_height;
@@ -474,9 +491,6 @@ int old_y, new_y, height;
 	    (unsigned int) w->core.width - from_left, (unsigned int) height,
 	    from_left, new_y);
 
-  height -= sblw->scroll.font_height/2;	/* clear 1/2 font of extra space,
-					   to make sure we don't lose or
-					   gain decenders. */
   if (old_y > new_y)
     y_clear = height;
   else
@@ -601,8 +615,8 @@ Widget req, new;
   LoadFile(new);
   sblw->scroll.bar = (Widget) NULL;
 
-  sblw->scroll.font_height = (sblw->scroll.normal_font->max_bounds.ascent + 
-			      sblw->scroll.normal_font->max_bounds.descent); 
+  sblw->scroll.font_height = (sblw->scroll.normal_font->ascent + 
+			      sblw->scroll.normal_font->descent); 
 } /* Initialize. */
 
 /*	Function Name: CreateGCs
@@ -907,7 +921,7 @@ int  start_line, num_lines, location;
  * to the ScollByLine position reference.
  */
 
-  y_loc = location + sblw->scroll.normal_font->max_bounds.ascent;
+  y_loc = location + sblw->scroll.normal_font->ascent;
 
 /*
  * Ok, here's the more than mildly heuristic man page formatter.

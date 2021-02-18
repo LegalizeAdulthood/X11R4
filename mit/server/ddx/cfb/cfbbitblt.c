@@ -18,7 +18,7 @@ purpose.  It is provided "as is" without express or implied warranty.
 Author: Keith Packard
 
 */
-/* $XConsortium: cfbbitblt.c,v 5.24 89/12/07 20:35:26 keith Exp $ */
+/* $XConsortium: cfbbitblt.c,v 5.26 90/01/10 19:51:35 keith Exp $ */
 
 #include	"X.h"
 #include	"Xmd.h"
@@ -891,7 +891,7 @@ cfbCopyArea(pSrcDrawable, pDstDrawable,
 
     /* Do bit blitting */
     numRects = REGION_NUM_RECTS(&rgnDst);
-    if (numRects)
+    if (numRects && width && height)
     {
 	if(!(pptSrc = (DDXPointPtr)ALLOCATE_LOCAL(numRects *
 						  sizeof(DDXPointRec))))
@@ -1054,10 +1054,11 @@ cfbCopyPlane1to8 (pSrcDrawable, pDstDrawable, rop, prgnDst, pptSrc, planemask)
 			 * need a more cautious test for partialmask
 			 * case...
 			 */
-		    	if (firstoff > 28)
+		    	if (firstoff >= 28)
 		    	{
 			    bits = *psrc++;
-			    tmp |= BitRight (bits, secondoff);
+			    if (firstoff != 28)
+				tmp |= BitRight (bits, secondoff);
 		    	}
 		    }
 		    *pdst = *pdst & ~startmask | GetFourPixels(tmp) & startmask;

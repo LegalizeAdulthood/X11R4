@@ -21,7 +21,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 */
-/* $XConsortium: colormap.h,v 1.21 89/03/12 16:32:08 rws Exp $ */
+/* $XConsortium: colormap.h,v 1.22 90/01/13 17:30:13 rws Exp $ */
 #ifndef CMAP_H
 #define CMAP_H 1
 
@@ -34,6 +34,7 @@ SOFTWARE.
 #define BLUEMAP 2
 #define PSEUDOMAP 3
 #define AllocPrivate (-1)
+#define AllocTemporary (-2)
 #define DynamicClass  1
 
 #ifdef notdef

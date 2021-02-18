@@ -1,5 +1,5 @@
 static char rcsid[] =
-	"$XConsortium: ShapeWidg.c,v 1.2 89/10/08 13:42:38 rws Exp $";
+	"$XConsortium: ShapeWidg.c,v 1.3 90/01/20 15:16:56 rws Exp $";
 
 /* 
  * Copyright 1988 by the Massachusetts Institute of Technology
@@ -87,46 +87,47 @@ static ShapeOval(w)
     Pixmap p = XCreatePixmap( dpy, XtWindow(w), width, height, 1 );
     XGCValues values;
     GC gc;
-    unsigned int diam, x2, y2;
+    int rad;
 
     values.foreground = 0;
     values.background = 1;
     values.cap_style = CapRound;
-    if (width < height) {
-	diam = width;
-	x2 = diam>>1;
-	y2 = height - x2 - 1;	/* can't explain the off-by-one */
-    } else {
-	diam = height;
-	y2 = diam>>1;
-	x2 = width - y2 - 1;
-    }
-    values.line_width = diam;
+    values.line_width = height;
     gc = XCreateGC (dpy, p,
 		    GCForeground | GCBackground | GCLineWidth | GCCapStyle,
 		    &values);
     XFillRectangle( dpy, p, gc, 0, 0, width, height );
     XSetForeground( dpy, gc, 1 );
-    XDrawLine( dpy, p, gc, diam>>1, diam>>1, x2, y2 );
+    if (width <= height) {
+	/* cannot be oval, fall back to ellipse */
+	XFillArc( dpy, p, gc, 0, 0, width, height, 0, 360*64 );
+    } else {
+	rad = height >> 1;
+	XDrawLine( dpy, p, gc, rad, rad, (int)width - rad - 1, rad );
+    }
     XShapeCombineMask( dpy, XtWindow(w), ShapeBounding, 
 		       -(w->core.border_width), -(w->core.border_width),
 		       p, ShapeSet );
-    XSetForeground( dpy, gc, 0 );
-    XFillRectangle( dpy, p, gc, 0, 0, width, height );
-    if (w->core.width < w->core.height) {
-	diam = w->core.width;
-	x2 = diam>>1;
-	y2 = w->core.height - x2 - 1;
+    if (w->core.border_width) {
+	XSetForeground( dpy, gc, 0 );
+	XFillRectangle( dpy, p, gc, 0, 0, width, height );
+	values.line_width = w->core.height;
+	values.foreground = 1;
+	XChangeGC (dpy, gc, GCLineWidth|GCForeground, &values);
+	if (w->core.width <= w->core.height) {
+	    /* cannot be oval, fall back to ellipse */
+	    XFillArc( dpy, p, gc, 0, 0, w->core.width, w->core.height,
+		      0, 360*64 );
+	} else {
+	    rad = w->core.height >> 1;
+	    XDrawLine( dpy, p, gc, rad, rad,
+		       (int)w->core.width - rad - 1, rad );
+	}
+	XShapeCombineMask( dpy, XtWindow(w), ShapeClip, 0, 0, p, ShapeSet );
     } else {
-	diam = w->core.height;
-	y2 = diam>>1;
-	x2 = w->core.width - y2 - 1;
+	XShapeCombineMask( XtDisplay(w), XtWindow(w),
+			  ShapeClip, 0, 0, None, ShapeSet );
     }
-    values.line_width = diam;
-    values.foreground = 1;
-    XChangeGC (dpy, gc, GCLineWidth|GCForeground, &values);
-    XDrawLine( dpy, p, gc, diam>>1, diam>>1, x2, y2 );
-    XShapeCombineMask( dpy, XtWindow(w), ShapeClip, 0, 0, p, ShapeSet );
     XFreePixmap( dpy, p );
     XFreeGC (dpy, gc );
 }
@@ -149,22 +150,29 @@ static ShapeEllipseOrRoundedRectangle(w, ellipse, ew, eh)
     XFillRectangle( dpy, p, gc, 0, 0, width, height );
     XSetForeground (dpy, gc, 1);
     if (!ellipse)
-	XmuFillRoundedRectangle( dpy, p, gc, 0, 0, width, height, ew, eh );
+	XmuFillRoundedRectangle( dpy, p, gc, 0, 0, (int)width, (int)height,
+				 ew, eh );
     else
 	XFillArc( dpy, p, gc, 0, 0, width, height, 0, 360*64 );
     XShapeCombineMask( dpy, XtWindow(w), ShapeBounding, 
 		       -(w->core.border_width), -(w->core.border_width),
 		       p, ShapeSet );
-    XSetForeground (dpy, gc, 0);
-    XFillRectangle( dpy, p, gc, 0, 0, width, height );
-    XSetForeground (dpy, gc, 1);
-    if (!ellipse)
-	XmuFillRoundedRectangle( dpy, p, gc, 0, 0,
-				 w->core.width, w->core.height,
-				 ew, eh );
-    else
-	XFillArc( dpy, p, gc, 0, 0, w->core.width, w->core.height, 0, 360*64 );
-    XShapeCombineMask( dpy, XtWindow(w), ShapeClip, 0, 0, p, ShapeSet );
+    if (w->core.border_width) {
+	XSetForeground (dpy, gc, 0);
+	XFillRectangle( dpy, p, gc, 0, 0, width, height );
+	XSetForeground (dpy, gc, 1);
+	if (!ellipse)
+	    XmuFillRoundedRectangle( dpy, p, gc, 0, 0,
+				     (int)w->core.width, (int)w->core.height,
+				     ew, eh );
+	else
+	    XFillArc( dpy, p, gc, 0, 0, w->core.width, w->core.height,
+		      0, 360*64 );
+	XShapeCombineMask( dpy, XtWindow(w), ShapeClip, 0, 0, p, ShapeSet );
+    } else {
+	XShapeCombineMask( XtDisplay(w), XtWindow(w),
+			   ShapeClip, 0, 0, None, ShapeSet );
+    }
     XFreePixmap( dpy, p );
     XFreeGC (dpy, gc);
 }

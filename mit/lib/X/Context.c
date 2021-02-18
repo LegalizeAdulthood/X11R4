@@ -1,4 +1,4 @@
-/* $XConsortium: Context.c,v 1.7 89/12/11 19:08:22 rws Exp $ */
+/* $XConsortium: Context.c,v 1.8 90/01/10 19:54:30 converse Exp $ */
 /* static char *sccsid = "@(#)Context.c	1.5	2/24/87"; */
 
 
@@ -136,9 +136,10 @@ Display *display;
     for (i=0 ; i<numDsp ; i++)
 	if (DspArray[i]->display == display) return DspArray[i];
 
-    if (DspArray == NULL)
+    if (DspArray == NULL) {
 	if (! (DspArray = (Dsp *) Xmalloc(sizeof(Dsp))))
 	    return (Dsp) NULL;
+    }
     else {
 	Dsp *tmp;
 	if (! (tmp = (Dsp *) Xrealloc((char *) DspArray,

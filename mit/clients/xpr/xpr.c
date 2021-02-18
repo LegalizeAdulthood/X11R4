@@ -45,7 +45,7 @@
  */
 
 #ifndef lint
-static char *rcsid_xpr_c = "$XConsortium: xpr.c,v 1.45 89/12/07 20:07:58 kit Exp $";
+static char *rcsid_xpr_c = "$XConsortium: xpr.c,v 1.46 90/01/11 10:48:34 rws Exp $";
 #endif
 
 #include <X11/Xos.h>
@@ -531,7 +531,7 @@ int *render;
 		*flags |= F_INVERT;
 	    } else if (len <= 3) {
 		usage();
-	    } if (!bcmp(*argv, "-render", len)) {
+	    } else if (!bcmp(*argv, "-render", len)) {
 		argc--; argv++;
 		if (argc == 0) usage();
 		*render = atoi(*argv);

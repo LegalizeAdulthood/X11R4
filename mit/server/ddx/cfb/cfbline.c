@@ -21,7 +21,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $XConsortium: cfbline.c,v 1.12 89/11/19 16:16:05 rws Exp $ */
+/* $XConsortium: cfbline.c,v 1.13 90/01/23 15:14:21 keith Exp $ */
 #include "X.h"
 
 #include "gcstruct.h"
@@ -212,9 +212,13 @@ cfbLineSS (pDrawable, pGC, mode, npt, pptInit)
 		tmp = y2;
 		y2 = y1 + 1;
 		y1 = tmp + 1;
+#ifdef POLYSEGMENT
+		if (pGC->capStyle != CapNotLast)
+		    y1--;
+#endif
 	    }
 #ifdef POLYSEGMENT
-	    if (pGC->capStyle != CapNotLast)
+	    else if (pGC->capStyle != CapNotLast)
 		y2++;
 #endif
 	    /* get to first band that might contain part of line */
@@ -262,9 +266,13 @@ cfbLineSS (pDrawable, pGC, mode, npt, pptInit)
 		tmp = x2;
 		x2 = x1 + 1;
 		x1 = tmp + 1;
+#ifdef POLYSEGMENT
+		if (pGC->capStyle != CapNotLast)
+		    x1--;
+#endif
 	    }
 #ifdef POLYSEGMENT
-	    if (pGC->capStyle != CapNotLast)
+	    else if (pGC->capStyle != CapNotLast)
 		x2++;
 #endif
 

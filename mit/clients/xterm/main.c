@@ -1,5 +1,5 @@
 #ifndef lint
-static char rcs_id[] = "$XConsortium: main.c,v 1.144 89/12/20 21:39:07 jim Exp $";
+static char rcs_id[] = "$XConsortium: main.c,v 1.145 90/01/11 14:22:31 jim Exp $";
 #endif	/* lint */
 
 /*
@@ -1781,8 +1781,8 @@ spawn ()
 		tslot = ttyslot();
 		added_utmp_entry = False;
 		{
-			if (!resource.utmpInhibit &&
-			    (pw = getpwuid(screen->uid)) &&
+			if ((pw = getpwuid(screen->uid)) &&
+			    !resource.utmpInhibit &&
 			    (i = open(etc_utmp, O_WRONLY)) >= 0) {
 				bzero((char *)&utmp, sizeof(struct utmp));
 				(void) strncpy(utmp.ut_line,
@@ -1852,7 +1852,7 @@ spawn ()
 
 		(void) setgid (screen->gid);
 #ifdef HAS_BSD_GROUPS
-		if (geteuid() == 0)
+		if (geteuid() == 0 && pw)
 		  initgroups (pw->pw_name, pw->pw_gid);
 #endif
 		(void) setuid (screen->uid);

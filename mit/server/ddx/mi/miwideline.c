@@ -1,5 +1,5 @@
 /*
- * $XConsortium: miwideline.c,v 1.25 89/11/25 12:11:01 rws Exp $
+ * $XConsortium: miwideline.c,v 1.27 90/01/23 15:36:25 keith Exp $
  *
  * Copyright 1988 Massachusetts Institute of Technology
  *
@@ -1266,10 +1266,12 @@ miWideLine (pDrawable, pGC, mode, npt, pPts)
     unsigned long   pixel;
     Bool	    projectLeft, projectRight;
     LineFaceRec	    leftFace, rightFace, prevRightFace;
+    LineFaceRec	    firstFace;
     register int    first;
     Bool	    somethingDrawn = FALSE;
+    Bool	    selfJoin;
 
-    if (npt == 0)
+    if (npt <= 1)
 	return;
 
     spanData = miSetupSpanData (pGC, &spanDataRec, npt);
@@ -1277,7 +1279,12 @@ miWideLine (pDrawable, pGC, mode, npt, pPts)
     x2 = pPts->x;
     y2 = pPts->y;
     first = TRUE;
-    projectLeft = pGC->capStyle == CapProjecting;
+    selfJoin = FALSE;
+    if (x2 == pPts[npt-1].x && y2 == pPts[npt-1].y)
+    {
+	selfJoin = TRUE;
+    }
+    projectLeft = pGC->capStyle == CapProjecting && !selfJoin;
     projectRight = FALSE;
     while (--npt)
     {
@@ -1294,13 +1301,15 @@ miWideLine (pDrawable, pGC, mode, npt, pPts)
 	if (x1 == x2 && y1 == y2)
 	    continue;
 	somethingDrawn = TRUE;
-	if (npt == 1 && pGC->capStyle == CapProjecting)
+	if (npt == 1 && pGC->capStyle == CapProjecting && !selfJoin)
 	    projectRight = TRUE;
 	miWideSegment (pDrawable, pGC, pixel, spanData, x1, y1, x2, y2,
 		       projectLeft, projectRight, &leftFace, &rightFace);
 	if (first)
 	{
-	    if (pGC->capStyle == CapRound)
+	    if (selfJoin)
+		firstFace = leftFace;
+	    else if (pGC->capStyle == CapRound)
 		miLineArc (pDrawable, pGC, pixel, spanData,
 			   &leftFace, (LineFacePtr) NULL,
  			   (double)0.0, (double)0.0,
@@ -1311,11 +1320,17 @@ miWideLine (pDrawable, pGC, mode, npt, pPts)
 	    miLineJoin (pDrawable, pGC, pixel, spanData, &leftFace,
 		        &prevRightFace);
 	}
-	if (npt == 1 && pGC->capStyle == CapRound)
-	    miLineArc (pDrawable, pGC, pixel, spanData,
-		       (LineFacePtr) NULL, &rightFace,
- 		       (double)0.0, (double)0.0,
-		       TRUE);
+	if (npt == 1)
+ 	{
+	    if (selfJoin)
+		miLineJoin (pDrawable, pGC, pixel, spanData, &firstFace,
+			    &rightFace);
+	    else if (pGC->capStyle == CapRound)
+		miLineArc (pDrawable, pGC, pixel, spanData,
+			   (LineFacePtr) NULL, &rightFace,
+			   (double)0.0, (double)0.0,
+			   TRUE);
+	}
 	prevRightFace = rightFace;
 	first = FALSE;
 	projectLeft = FALSE;
@@ -1333,6 +1348,7 @@ miWideLine (pDrawable, pGC, mode, npt, pPts)
 		       &leftFace, (LineFacePtr) NULL,
 		       (double)0.0, (double)0.0,
 		       TRUE);
+	    rightFace.dx = -1;	/* sleezy hack to make it work */
 	    miLineArc (pDrawable, pGC, pixel, spanData,
 		       (LineFacePtr) NULL, &rightFace,
  		       (double)0.0, (double)0.0,

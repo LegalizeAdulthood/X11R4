@@ -1,5 +1,5 @@
 /*
- * $XConsortium: AsciiSink.h,v 1.3 89/11/01 17:33:17 kit Exp $
+ * $XConsortium: AsciiSink.h,v 1.4 90/01/10 16:48:48 kit Exp $
  */
 
 /***********************************************************
@@ -66,7 +66,7 @@ typedef struct _AsciiSinkRec      *AsciiSinkObject;
 
 #ifdef XAW_BC
 /************************************************************
- *  For Compatability Only.
+ *  For Compatability Only.                                 */
 
 #define XtAsciiSinkCreate          XawAsciiSinkCreate
 #define XtAsciiSinkDestroy         XawAsciiSinkDestroy

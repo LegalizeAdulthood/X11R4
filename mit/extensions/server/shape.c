@@ -24,7 +24,7 @@ THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ********************************************************/
 
-/* $XConsortium: shape.c,v 5.10 89/12/13 15:26:57 keith Exp $ */
+/* $XConsortium: shape.c,v 5.11 90/01/23 10:49:17 rws Exp $ */
 #define NEED_REPLIES
 #define NEED_EVENTS
 #include <stdio.h>
@@ -115,7 +115,7 @@ RegionOperate (client, pWin, kind, destRgnp, srcRgn, op, xoff, yoff, create)
 {
     ScreenPtr	pScreen = pWin->drawable.pScreen;
 
-    if (xoff || yoff)
+    if (srcRgn && (xoff || yoff))
 	(*pScreen->TranslateRegion) (srcRgn, xoff, yoff);
     if (!pWin->parent)
     {

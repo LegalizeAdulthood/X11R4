@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Create.c,v 1.66 89/11/14 14:18:56 swick Exp $";
+static char Xrcsid[] = "$XConsortium: Create.c,v 1.67 90/01/23 11:29:41 swick Exp $";
 /* $oHeader: Create.c,v 1.5 88/09/01 11:26:22 asente Exp $ */
 #endif /*lint*/
 
@@ -241,22 +241,23 @@ static Widget _XtCreate(
     bcopy ((char *) widget, (char *) req_widget, (int) size);
     CallInitialize (XtClass(widget), req_widget, widget, args, num_args);
 
-    if (typed_args != NULL && num_typed_args > 0) {
+    if (typed_args != NULL) {
+	while (num_typed_args-- > 0) {
 	
-	/* in GetResources we may have dynamically alloc'ed store to hold a */
-	/* copy of a resource which was larger then sizeof(XtARrgVal) .... */
-	/* we must free this store now in order to prevent a memory leak... */
-	/* a typed arg that has a converted value in dynamic store has a */
-	/* negated size field */
+	    /* In GetResources we may have dynamically alloc'd store to hold */
+	    /* a copy of a resource which was larger then sizeof(XtArgVal). */
+	    /* We must free this store now in order to prevent a memory leak */
+	    /* A typed arg that has a converted value in dynamic store has a */
+	    /* negated size field. */
 
-	for (i = 0; i < num_typed_args; i++) {
-		if (typed_args[i].size < 0) { /* we alloc`ed store dynamically */
-			XtFree((XtPointer)typed_args[i].value);
-			typed_args[i].size = -(typed_args[i].size);
+	    if (typed_args->type != NULL && typed_args->size < 0) {
+		XtFree((char*)typed_args->value);
+		typed_args->size = -(typed_args->size);
 		}
+	    typed_args++;
 	}
 
-	DEALLOCATE_LOCAL((XtPointer)args);
+	DEALLOCATE_LOCAL((char*)args);
     }
 
     if (parent_constraint_class != NULL) {
@@ -464,7 +465,7 @@ Widget _XtCreatePopupShell(name, widget_class, parent, args, num_args,
 		       num_typed_args, (ConstraintWidgetClass)NULL);
 
     parent->core.popup_list =
-	(WidgetList) XtRealloc((XtPointer) parent->core.popup_list,
+	(WidgetList) XtRealloc((char*) parent->core.popup_list,
                (unsigned) (parent->core.num_popups+1) * sizeof(Widget));
     parent->core.popup_list[parent->core.num_popups++] = widget;
     XtAddCallback(

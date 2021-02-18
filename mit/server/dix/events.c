@@ -23,7 +23,7 @@ SOFTWARE.
 ********************************************************/
 
 
-/* $XConsortium: events.c,v 5.20 89/12/18 18:53:37 rws Exp $ */
+/* $XConsortium: events.c,v 5.21 90/01/20 11:45:34 rws Exp $ */
 
 #include "X.h"
 #include "misc.h"
@@ -2648,7 +2648,7 @@ ProcChangeActivePointerGrab(client)
     TimeStamp time;
 
     REQUEST_SIZE_MATCH(xChangeActivePointerGrabReq);
-    if (stuff->eventMask & ~PointerGrabMask)
+    if ((stuff->eventMask & ~PointerGrabMask) && !permitOldBugs)
     {
 	client->errorValue = stuff->eventMask;
         return BadValue;

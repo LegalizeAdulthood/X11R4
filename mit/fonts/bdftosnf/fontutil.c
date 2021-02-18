@@ -407,7 +407,8 @@ padGlyph (pCI, oldglyphs, newglyph, width, ascent, descent, glyphPad)
 	bzero (newglyph, width * (ascent + descent));
 	in_line = oldglyphs + pCI->byteOffset;
 	out_line = newglyph + dy * width;
-	inwidth = GLWIDTHBYTESPADDED (pCI->metrics.characterWidth, glyphPad);
+	inwidth = GLWIDTHBYTESPADDED (pCI->metrics.rightSideBearing -
+				      pCI->metrics.leftSideBearing, glyphPad);
 	for (y = 0; y < pCI->metrics.ascent + pCI->metrics.descent; y++) {
 		for (x = 0;
 		     x < pCI->metrics.rightSideBearing - pCI->metrics.leftSideBearing;

@@ -1,5 +1,5 @@
 #if ( !defined(lint) && !defined(SABER) )
-static char Xrcsid[] = "$XConsortium: AsciiSrc.c,v 1.26 89/12/07 18:35:14 kit Exp $";
+static char Xrcsid[] = "$XConsortium: AsciiSrc.c,v 1.28 90/01/10 14:25:21 kit Exp $";
 #endif 
 
 /*
@@ -1299,14 +1299,14 @@ Cardinal num_args;
   register int i;
 
   XtSetArg(temp[0], XtNtype, XawAsciiFile);
-  ascii_args = XtMergeArgLists(temp, ONE, args, num_args);
 
   for (i = 0; i < num_args; i++) 
     if (streq(args[i].name, XtNfile) || streq(args[i].name, XtCFile)) 
       args[i].name = XtNstring;
 
+  ascii_args = XtMergeArgLists(temp, ONE, args, num_args);
   src = XtCreateWidget("genericAsciiDisk", asciiSrcObjectClass, parent,
-		       ascii_args, num_args + TWO);
+		       ascii_args, num_args + ONE);
   XtFree(ascii_args);
   return(src);
 }
