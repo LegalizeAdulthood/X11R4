@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Create.c,v 1.73 90/06/25 12:05:51 swick Exp $";
+static char Xrcsid[] = "$XConsortium: Create.c,v 1.74 90/07/02 16:47:25 swick Exp $";
 #endif /*lint*/
 
 /***********************************************************
@@ -208,7 +208,7 @@ static Widget _XtCreate(
     else
 	widget->core.constraints = NULL;
     if (XtIsWidget(widget)) {
-	widget->core.name = XtNewString((name != NULL) ? name : "");
+	widget->core.name = XrmNameToString(widget->core.xrm_name);
         widget->core.screen = default_screen;
         widget->core.tm.translations = NULL;
     };

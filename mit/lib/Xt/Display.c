@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Display.c,v 1.45 90/06/22 17:09:28 swick Exp $";
+static char Xrcsid[] = "$XConsortium: Display.c,v 1.46 90/07/15 21:39:36 swick Exp $";
 /* $oHeader: Display.c,v 1.9 88/09/01 11:28:47 asente Exp $ */
 #endif /*lint*/
 
@@ -271,9 +271,7 @@ XtAppContext XtCreateApplicationContext()
 	app->count = app->max = app->last = 0;
 	app->timerQueue = NULL;
 	app->workQueue = NULL;
-	app->selectRqueue = NULL;
-	app->selectWqueue = NULL;
-	app->selectEqueue = NULL;
+	app->input_list = NULL;
 	app->outstandingQueue = NULL;
 	app->errorDB = NULL;
 	_XtSetDefaultErrorHandlers(&app->errorMsgHandler, 

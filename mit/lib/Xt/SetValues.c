@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: SetValues.c,v 1.8 90/06/25 12:15:52 swick Exp $";
+static char Xrcsid[] = "$XConsortium: SetValues.c,v 1.10 90/07/19 10:48:55 swick Exp $";
 #endif /* lint */
 
 /***********************************************************
@@ -163,9 +163,14 @@ void XtSetValues(w, args, num_args)
 
     /* assert: !XtIsShell(w) => (XtParent(w) != NULL) */
     hasConstraints = (!XtIsShell(w) && XtIsConstraint(XtParent(w)));
+
+    /* Some widget sets apparently do ugly things by freeing the
+     * constraints on some children, thus the extra test here */
     if (hasConstraints) {
 	cwc = (ConstraintWidgetClass) XtClass(w->core.parent);
-	constraintSize = cwc->constraint_class.constraint_size;
+	if (w->core.constraints)
+	    constraintSize = cwc->constraint_class.constraint_size;
+	else constraintSize = 0;
     } else constraintSize = 0;
 	
     if (constraintSize) {

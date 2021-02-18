@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Shell.c,v 1.87 90/04/05 17:07:10 swick Exp $";
+static char Xrcsid[] = "$XConsortium: Shell.c,v 1.91 90/06/26 11:36:17 swick Exp $";
 /* $oHeader: Shell.c,v 1.7 88/09/01 11:57:00 asente Exp $ */
 #endif /* lint */
 
@@ -1534,14 +1534,13 @@ static Bool isMine(dpy, event, arg)
 		    q->done = TRUE;
 		    return TRUE;
 		}
-	    return FALSE;
 	}
 	else if (event->type == ConfigureNotify ||
 		 (event->type == ClientMessage &&
 		  (event->xclient.message_type == WM_CONFIGURE_DENIED(w) ||
 		   event->xclient.message_type == WM_MOVED(w))))
 	    return TRUE;	/* flush old events */
-	else if (event->type == ReparentNotify
+	if (event->type == ReparentNotify
 		 && event->xreparent.window == XtWindow(w)) {
 	    /* we might get ahead of this event, so just in case someone
 	     * asks for coordinates before this event is dispatched...
@@ -1608,10 +1607,15 @@ static XtGeometryResult RootGeometryManager(gw, request, reply)
     if (XtIsWMShell(gw)) {
 	wm = True;
 	hintp = &((WMShellWidget)w)->wm.size_hints;
+	/* for draft-ICCCM wm's, need to make sure hints reflect
+	   (current) reality so client can move and size separately. */
+  	hintp->x = w->core.x;
+  	hintp->y = w->core.y;
+  	hintp->width = w->core.width;
+   	hintp->height = w->core.height;
     } else
 	wm = False;
     
-
     oldx = w->core.x;
     oldy = w->core.y;
     oldwidth = w->core.width;
@@ -1685,13 +1689,13 @@ static XtGeometryResult RootGeometryManager(gw, request, reply)
 
     if (!XtIsRealized((Widget)w)) return XtGeometryYes;
 
+    request_num = NextRequest(XtDisplay(w));
+    XConfigureWindow(XtDisplay((Widget)w), XtWindow((Widget)w), mask,&values);
+
     if (wm && !w->shell.override_redirect
 	&& mask & (CWX | CWY | CWWidth | CWHeight | CWBorderWidth)) {
 	_SetWMSizeHints((WMShellWidget)w);
     }
-
-    request_num = NextRequest(XtDisplay(w));
-    XConfigureWindow(XtDisplay((Widget)w), XtWindow((Widget)w), mask, &values);
 
     if (w->shell.override_redirect) return XtGeometryDone;
 
@@ -1901,7 +1905,7 @@ static Boolean TopLevelSetValues(oldW, refW, newW, args, num_args)
     } else
 	name_changed = False;
 
-    if (XtIsRealized(newW) && !new->shell.override_redirect) {
+    if (XtIsRealized(newW)) {
 	if (new->topLevel.iconic != old->topLevel.iconic) {
 	    if (new->topLevel.iconic)
 		XIconifyWindow(XtDisplay(newW),
@@ -1912,9 +1916,10 @@ static Boolean TopLevelSetValues(oldW, refW, newW, args, num_args)
 		XtPopup(newW, XtGrabNone);
 	}
 
-	if (name_changed ||
-	    (old->topLevel.icon_name_encoding
-	     != new->topLevel.icon_name_encoding)) {
+	if (!new->shell.override_redirect &&
+	    (name_changed ||
+	     (old->topLevel.icon_name_encoding
+	      != new->topLevel.icon_name_encoding))) {
 
 	    XTextProperty icon_name;
 	    icon_name.value = (unsigned char *)new->topLevel.icon_name;

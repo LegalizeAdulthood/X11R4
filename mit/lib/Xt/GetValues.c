@@ -1,7 +1,4 @@
-#ifndef lint
-static char Xrcsid[] =
-    "$XConsortium: GetValues.c,v 1.3 90/06/25 12:23:55 swick Exp $";
-#endif /*lint*/
+/* $XConsortium: GetValues.c,v 1.4 90/07/03 17:27:06 swick Exp $ */
 /*LINTLIBRARY*/
 
 /***********************************************************
@@ -45,8 +42,13 @@ static void GetValues(base, res, num_resources, args, num_args)
     register int 		i;
     register XrmName		argName;
     register XrmResourceList*   xrmres;
-    register XrmQuark		QCallback = XrmStringToQuark(XtRCallback);
+    static XrmQuark QCallback = NULLQUARK, QTranslations;
     extern XtCallbackList	_XtGetCallbackList();
+
+    if (QCallback == NULLQUARK) {
+	QCallback = XrmStringToQuark(XtRCallback);
+	QTranslations = XrmStringToRepresentation(XtRTranslationTable);
+    }
 
     /* Resource lists should be in compiled form already  */
 
@@ -54,16 +56,24 @@ static void GetValues(base, res, num_resources, args, num_args)
 	argName = StringToName(arg->name);
 	for (xrmres = res, i = 0; i < num_resources; i++, xrmres++) {
 	    if (argName == (*xrmres)->xrm_name) {
+		/* hack; do special cases here instead of a get_values_hook
+		 * because get_values_hook looses info as to
+		 * whether arg->value == NULL for ancient compatibility
+		 * mode in _XtCopyToArg.  It helps performance, too...
+		 */
 		if ((*xrmres)->xrm_type == QCallback) {
-		    /* hack; do this here instead of a get_values_hook
-		     * because get_values_hook looses info as to
-		     * whether arg->value == NULL for _XtCopyToArg.
-		     * It helps performance, too...
-		     */
 		    XtCallbackList callback = _XtGetCallbackList(
 			      base - (*xrmres)->xrm_offset - 1);
 		    _XtCopyToArg(
 			      (char*)&callback, &arg->value,
+			      (*xrmres)->xrm_size);
+		}
+		else if ((*xrmres)->xrm_type == QTranslations) {
+		    XtTranslations translations =
+			_XtCondCopyTranslations(
+			     *(XtTranslations*)(base-(*xrmres)->xrm_offset-1));
+		    _XtCopyToArg(
+			      (char*)&translations, &arg->value,
 			      (*xrmres)->xrm_size);
 		}
 		else {

@@ -1,7 +1,4 @@
-#ifndef lint
-static char Xrcsid[] = "$XConsortium: NextEvent.c,v 1.83 90/04/05 11:43:46 swick Exp $";
-/* $oHeader: NextEvent.c,v 1.4 88/09/01 11:43:27 asente Exp $ */
-#endif /* lint */
+/* $XConsortium: NextEvent.c,v 1.84 90/07/15 21:44:05 swick Exp $ */
 
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -315,6 +312,7 @@ int _XtwaitForSomething(ignoreTimers, ignoreInputs, ignoreEvents,
 	Boolean found_input = False;
 
 	for (i = 0; i < app->fds.nfds && nfound > 0; i++) {
+	    XtInputMask condition = 0;
 	    if (FD_ISSET (i, &rmaskfd)) {
 		nfound--;
 		if (!ignoreEvents) {
@@ -337,21 +335,24 @@ int _XtwaitForSomething(ignoreTimers, ignoreInputs, ignoreEvents,
 			}
 		    }
 		}
-
-		app->selectRqueue[i]->ie_oq = app->outstandingQueue;
-		app->outstandingQueue = app->selectRqueue[i];
-		found_input = True;
+		condition = XtInputReadMask;
 	    }
 	    if (FD_ISSET (i, &wmaskfd)) {
-		app->selectWqueue[i]->ie_oq = app->outstandingQueue;
-		app->outstandingQueue = app->selectWqueue[i];
+		condition |= XtInputWriteMask;
 		nfound--;
-		found_input = True;
 	    }
 	    if (FD_ISSET (i, &emaskfd)) {
-		app->selectEqueue[i]->ie_oq = app->outstandingQueue;
-		app->outstandingQueue = app->selectEqueue[i];
+		condition |= XtInputExceptMask;
 		nfound--;
+	    }
+	    if (condition) {
+		InputEvent *ep;
+		for (ep = app->input_list[i]; ep; ep = ep->ie_next) {
+		    if (condition & ep->ie_condition) {
+			ep->ie_oq = app->outstandingQueue;
+			app->outstandingQueue = ep;
+		    }
+		}
 		found_input = True;
 	    }
 ENDILOOP:   ;
@@ -362,21 +363,11 @@ ENDILOOP:   ;
 	}
 }
 
-static void IeCallProc(ptr)
-	InputEvent *ptr;
-{
-    while (ptr != NULL) {
-	InputEvent *next = ptr->ie_next;
-	(*ptr->ie_proc)(ptr->ie_closure, &ptr->ie_source, (XtInputId*)&ptr);
-	ptr = next;
-    }
-}
+#define IeCallProc(ptr) \
+    (*ptr->ie_proc) (ptr->ie_closure, &ptr->ie_source, (XtInputId*)&ptr);
 
-static void TeCallProc(ptr)
-	TimerEventRec *ptr;
-{
-	(* (ptr->te_proc))( ptr->te_closure, (XtIntervalId*)&ptr);
-}
+#define TeCallProc(ptr) \
+    (*ptr->te_proc) (ptr->te_closure, (XtIntervalId*)&ptr);
 
 /*
  * Public Routines
@@ -504,42 +495,34 @@ XtInputId XtAppAddInput(app, source, Condition, proc, closure)
 	XtInputCallbackProc proc;
 	XtPointer closure;
 {
-	InputEvent *sptr;
+	InputEvent* sptr;
 	XtInputMask condition = (XtInputMask) Condition;
 	
-#define CondAllocateQueue(queue) \
-	if (queue == NULL) { \
-	    queue = (InputEvent**) \
-		_XtHeapAlloc(&app->heap,(Cardinal)NOFILE*sizeof(InputEvent*));\
-	    bzero( (char*)queue, (unsigned)NOFILE*sizeof(InputEvent*) ); \
-	}
+	if (!condition ||
+	    condition & ~(XtInputReadMask|XtInputWriteMask|XtInputExceptMask))
+	    XtAppErrorMsg(app,"invalidParameter","xtAddInput",XtCXtToolkitError,
+			  "invalid condition passed to XtAppAddInput",
+			  (String *)NULL, (Cardinal *)NULL);
 
+	if (app->input_list == NULL) {
+	    app->input_list = (InputEvent**)
+		_XtHeapAlloc(&app->heap,(Cardinal)NOFILE*sizeof(InputEvent*));
+	    bzero((char*)app->input_list,(unsigned)NOFILE*sizeof(InputEvent*));
+	}
 	sptr = XtNew(InputEvent);
-	if(condition == XtInputReadMask){
-	    CondAllocateQueue(app->selectRqueue);
-	    sptr->ie_next = app->selectRqueue[source];
-	    app->selectRqueue[source] = sptr;
-	    FD_SET(source, &app->fds.rmask);
-	} else if(condition == XtInputWriteMask) {
-	    CondAllocateQueue(app->selectWqueue);
-	    sptr->ie_next = app->selectWqueue[source];
-	    app->selectWqueue[source] = sptr;
-	    FD_SET(source, &app->fds.wmask);
-	} else if(condition == XtInputExceptMask) {
-	    CondAllocateQueue(app->selectEqueue);
-	    sptr->ie_next = app->selectEqueue[source];
-	    app->selectEqueue[source] = sptr;
-	    FD_SET(source, &app->fds.emask);
-	} else
-	  XtAppErrorMsg(app, "invalidParameter","xtAddInput",XtCXtToolkitError,
-                  "invalid condition passed to XtAddInput",
-                   (String *)NULL, (Cardinal *)NULL);
 	sptr->ie_proc = proc;
-	sptr->ie_closure =closure;
+	sptr->ie_closure = closure;
 	sptr->app = app;
 	sptr->ie_oq = NULL;
 	sptr->ie_source = source;
-	
+	sptr->ie_condition = condition;
+	sptr->ie_next = app->input_list[source];
+	app->input_list[source] = sptr;
+
+	if (condition & XtInputReadMask)   FD_SET(source, &app->fds.rmask);
+	if (condition & XtInputWriteMask)  FD_SET(source, &app->fds.wmask);
+	if (condition & XtInputExceptMask) FD_SET(source, &app->fds.emask);
+
 	if (app->fds.nfds < (source+1)) app->fds.nfds = source+1;
 	app->fds.count++;
 	return((XtInputId)sptr);
@@ -552,7 +535,7 @@ void XtRemoveInput( id )
   	register InputEvent *sptr, *lptr;
 	XtAppContext app = ((InputEvent *)id)->app;
 	register int source = ((InputEvent *)id)->ie_source;
-	app->fds.count--;
+	Boolean found = False;
 
 	sptr = app->outstandingQueue;
 	lptr = NULL;
@@ -564,57 +547,29 @@ void XtRemoveInput( id )
 	    lptr = sptr;
 	}
 
-	if(app->selectRqueue && (sptr = app->selectRqueue[source]) != NULL) {
+	if(app->input_list && (sptr = app->input_list[source]) != NULL) {
 		for( lptr = NULL ; sptr; sptr = sptr->ie_next ){
 			if(sptr == (InputEvent *) id) {
 				if(lptr == NULL) {
-					app->selectRqueue[source] = sptr->ie_next;
+					app->input_list[source] = sptr->ie_next;
 					FD_CLR(source, &app->fds.rmask);
 				} else {
 					lptr->ie_next = sptr->ie_next;
 				}
 				XtFree((char *) sptr);
-				return;
+				found = True;
+				break;
 			}
 			lptr = sptr;	      
 		}
 	}
-	if(app->selectWqueue && (sptr = app->selectWqueue[source]) != NULL) {
-		for(lptr = NULL;sptr; sptr = sptr->ie_next){
-			if ( sptr ==  (InputEvent *) id) {
-				if(lptr == NULL){
-					app->selectWqueue[source] = sptr->ie_next;
-					FD_CLR(source, &app->fds.wmask);
-				}else {
-					lptr->ie_next = sptr->ie_next;
-				}
-				XtFree((char *) sptr);
-				return;
-			}
-			lptr = sptr;
-		}
-	    
-	}
-	if(app->selectEqueue && (sptr = app->selectEqueue[source]) != NULL) {
-		for(lptr = NULL;sptr; sptr = sptr->ie_next){
-			if ( sptr ==  (InputEvent *) id) {
-				if(lptr == NULL){
-					app->selectEqueue[source] = sptr->ie_next;
-					FD_CLR(source, &app->fds.emask);
-				}else {
-					lptr->ie_next = sptr->ie_next;
-				}
-				XtFree((char *) sptr);
-				return;
-			}
-			lptr = sptr;
-		}
-	    
-	}
+
+    if (found)
+	app->fds.count--;
+    else
 	XtAppWarningMsg(app, "invalidProcedure","inputHandler",XtCXtToolkitError,
                    "XtRemoveInput: Input handler not found",
 		   (String *)NULL, (Cardinal *)NULL);
-	app->fds.count++;	/* Didn't remove it after all */
 }
 
 /* Do alternate input and timer callbacks if there are any */
@@ -622,8 +577,8 @@ void XtRemoveInput( id )
 static void DoOtherSources(app)
 	XtAppContext app;
 {
-	register TimerEventRec *te_ptr;
-	register InputEvent *ie_ptr;
+	TimerEventRec *te_ptr;
+	InputEvent *ie_ptr;
 	struct timeval  cur_time;
 	struct timezone cur_timezone;
 
@@ -760,8 +715,6 @@ void XtAppProcessEvent(app, mask)
 	XtAppContext app;
 	XtInputMask mask;
 {
-	InputEvent *ie_ptr;
-	TimerEventRec *te_ptr;
 	int i, d;
 	XEvent event;
 	struct timeval cur_time;
@@ -774,7 +727,7 @@ void XtAppProcessEvent(app, mask)
 		(void) gettimeofday (&cur_time, &curzone);
 		FIXUP_TIMEVAL(cur_time);
 		if (IS_AFTER(app->timerQueue->te_timer_value, cur_time)) {
-		    te_ptr = app->timerQueue;
+		    TimerEventRec *te_ptr = app->timerQueue;
 		    app->timerQueue = app->timerQueue->te_next;
 		    te_ptr->te_next = NULL;
                     if (te_ptr->te_proc != 0)
@@ -792,7 +745,7 @@ void XtAppProcessEvent(app, mask)
 			    (unsigned long *)NULL, app);
 		}
 		if (app->outstandingQueue != NULL) {
-		    ie_ptr = app->outstandingQueue;
+		    InputEvent *ie_ptr = app->outstandingQueue;
 		    app->outstandingQueue = ie_ptr->ie_oq;
 		    ie_ptr->ie_oq = NULL;
 		    IeCallProc(ie_ptr);

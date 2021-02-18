@@ -1,4 +1,4 @@
-/* $XConsortium: ConvertI.h,v 1.8 89/07/21 12:06:41 swick Exp $ */
+/* $XConsortium: ConvertI.h,v 1.9 90/06/04 15:06:49 kit Exp $ */
 /* $oHeader: ConvertI.h,v 1.3 88/08/31 16:11:04 asente Exp $ */
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -49,3 +49,10 @@ extern Boolean _XtConvert();
     /* XrmValue             *from;          */
     /* XrmRepresentation    to_type;        */
     /* XrmValue             *to;            */  /* RETURN */
+
+typedef struct _ConverterRec *ConverterPtr;
+
+#define CONVERTHASHSIZE	((unsigned)512)
+#define CONVERTHASHMASK	511
+
+#define ProcHash(from_type, to_type) (2 * (from_type) + to_type)

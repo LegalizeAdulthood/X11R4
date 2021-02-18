@@ -1,7 +1,4 @@
-#ifndef lint
-static char Xrcsid[] = "$XConsortium: Core.c,v 1.37 90/04/13 20:14:01 swick Exp $";
-/* $oHeader: Core.c,v 1.2 88/08/18 15:37:59 asente Exp $ */
-#endif /* lint */
+/* $XConsortium: Core.c,v 1.41 90/07/12 17:49:14 swick Exp $ */
 
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -28,6 +25,7 @@ SOFTWARE.
 ******************************************************************/
 
 #define _XT_CORE_C
+
 #include "IntrinsicP.h"
 #include "EventI.h"
 #include "TranslateI.h"
@@ -166,7 +164,6 @@ externaldef (WidgetClass) WidgetClass coreWidgetClass = &widgetClassRec;
  * Start of Core methods
  */
 
-
 static void CoreClassPartInitialize(wc)
     register WidgetClass wc;
 {
@@ -189,6 +186,7 @@ static void CoreClassPartInitialize(wc)
 	wc->core_class.display_accelerator = 
 		super->core_class.display_accelerator;
     }
+
     if (wc->core_class.tm_table == (char *) XtInheritTranslations) {
 	wc->core_class.tm_table =
 		wc->core_class.superclass->core_class.tm_table;
@@ -196,6 +194,7 @@ static void CoreClassPartInitialize(wc)
 	wc->core_class.tm_table =
 	      (String)XtParseTranslationTable(wc->core_class.tm_table);
     }
+
     if (wc->core_class.actions != NULL) {
 	/* Compile the action table into a more efficient form */
         wc->core_class.actions = (XtActionList) _CompileActionTable(
@@ -220,7 +219,7 @@ static void CoreInitialize(requested_widget, new_widget)
     new_widget->core.tm.translations =
 	(XtTranslations)new_widget->core.widget_class->core_class.tm_table;
     if (save!= NULL) {
-        switch ((int)(save->operation)) {
+        switch ((int)(save->stateTable->operation)) {
                case XtTableReplace:
                   new_widget->core.tm.translations = save;
                   break;
@@ -247,9 +246,12 @@ static void CoreRealize(widget, value_mask, attributes)
 static void CoreDestroy (widget)
      Widget    widget;
 {
-    XtFree((char *) (widget->core.name));
     _XtFreeEventTable(&widget->core.event_table);
     XtFree((char *) widget->core.tm.proc_table);
+    if (widget->core.tm.translations &&
+        widget->core.tm.translations->accProcTbl) {
+	  XtFree( (char*)widget->core.tm.translations );
+    }
     _XtUnregisterWindow(widget->core.window, widget);
 
     if (widget->core.popup_list != NULL)
@@ -268,7 +270,7 @@ static Boolean CoreSetValues(old, reference, new)
 
     redisplay = FALSE;
     if  (old->core.tm.translations != new->core.tm.translations) {
-        switch (new->core.tm.translations->operation) {
+        switch (new->core.tm.translations->stateTable->operation) {
             case XtTableAugment:
                 save = new->core.tm.translations;
                 new->core.tm.translations = old->core.tm.translations;
@@ -350,6 +352,7 @@ static Boolean CoreSetValues(old, reference, new)
 	    new->core.tm.translations = translations;
 	    _XtBindActions(new, &new->core.tm);
 	    _XtInstallTranslations((Widget) new, new->core.tm.translations);
+	    _XtRegisterGrabs(new, False);
 	}
     } /* if realized */
 

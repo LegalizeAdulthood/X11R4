@@ -1,7 +1,4 @@
-#ifndef lint
-static char Xrcsid[] = "$XConsortium: Intrinsic.c,v 1.149 90/04/13 20:17:34 swick Exp $";
-/* $oHeader: Intrinsic.c,v 1.4 88/08/18 15:40:35 asente Exp $ */
-#endif /* lint */
+/* $XConsortium: Intrinsic.c,v 1.150 90/07/12 17:50:41 swick Exp $ */
 
 /***********************************************************
 Copyright 1987, 1988 by Digital Equipment Corporation, Maynard, Massachusetts,
@@ -218,7 +215,7 @@ static void RealizeWidget(widget)
 #ifdef notdef
     _XtRegisterAsyncHandlers(widget);
 #endif
-    _XtRegisterGrabs(widget,&widget->core.tm);
+    _XtRegisterGrabs(widget, False);
     _XtRegisterWindow (window, widget);
 
     if (XtIsComposite (widget)) {

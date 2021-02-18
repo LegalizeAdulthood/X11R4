@@ -10,6 +10,9 @@
         DEFINES = AllocateLocalDefines $(ALIGN_DEFINES)
     APP_DEFINES = -DXAPPLOADDIR=\"$(XAPPLOADDIR)$(PATHSEP)\"
      DB_DEFINES = -DERRORDB=\"$(LIBDIR)/XtErrorDB\"
+   SRCH_DEFINES = \
+-DXFILESEARCHPATHDEFAULT=\"$(LIBDIR)/%L/%T/%N%S:$(LIBDIR)/%l/%T/%N%S:$(LIBDIR)/%T/%N%S\"
+
    INSTALLFLAGS = $(INSTINCFLAGS)
        LINTLIBS = $(LINTXLIB)
 
@@ -136,30 +139,36 @@ all::
 # if DebugLibXt
 SharedAndDebuggedLibraryObjectRule()
 SpecialSharedAndDebuggedObjectRule(Initialize.o,$(ICONFIGFILES),$(APP_DEFINES))
-SpecialSharedDebuggedObjectRule(Error.o,$(ICONFIGFILES),$(DB_DEFINES))
+SpecialSharedAndDebuggedObjectRule(Intrinsic.o,$(ICONFIGFILES),$(SRCH_DEFINES))
+SpecialSharedAndDebuggedObjectRule(Error.o,$(ICONFIGFILES),$(DB_DEFINES))
 # else
 SharedLibraryObjectRule()
 SpecialSharedObjectRule(Initialize.o,$(ICONFIGFILES),$(APP_DEFINES))
+SpecialSharedObjectRule(Intrinsic.o,$(ICONFIGFILES),$(SRCH_DEFINES))
 SpecialSharedObjectRule(Error.o,$(ICONFIGFILES),$(DB_DEFINES))
 # endif
 #else
 # if DebugLibXt && ProfileLibXt
 DebuggedAndProfiledLibraryObjectRule()
 SpecialDebuggedAndProfiledObjectRule(Initialize.o,$(ICONFIGFILES),$(APP_DEFINES))
+SpecialDebuggedAndProfiledObjectRule(Intrinsic.o,$(ICONFIGFILES),$(SRCH_DEFINES))
 SpecialDebuggedAndProfiledObjectRule(Error.o,$(ICONFIGFILES),$(DB_DEFINES))
 # else
 #  if DebugLibXt
 DebuggedLibraryObjectRule()
 SpecialDebuggedObjectRule(Initialize.o,$(ICONFIGFILES),$(APP_DEFINES))
+SpecialDebuggedObjectRule(Intrinsic.o,$(ICONFIGFILES),$(SRCH_DEFINES))
 SpecialDebuggedObjectRule(Error.o,$(ICONFIGFILES),$(DB_DEFINES))
 #  else
 #   if ProfileLibXt
 ProfiledLibraryObjectRule()
 SpecialProfiledObjectRule(Initialize.o,$(ICONFIGFILES),$(APP_DEFINES))
+SpecialProfiledObjectRule(Intrinsic.o,$(ICONFIGFILES),$(SRCH_DEFINES))
 SpecialProfiledObjectRule(Error.o,$(ICONFIGFILES),$(DB_DEFINES))
 #   else
 NormalLibraryObjectRule()
 SpecialObjectRule(Initialize.o,$(ICONFIGFILES),$(APP_DEFINES))
+SpecialObjectRule(Intrinsic.o,$(ICONFIGFILES),$(SRCH_DEFINES))
 SpecialObjectRule(Error.o,$(ICONFIGFILES),$(DB_DEFINES))
 #   endif
 #  endif
