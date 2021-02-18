@@ -25,6 +25,8 @@ Telephone and Telegraph Company or of the Regents of the
 University of California.
 ******************************************************************/
 
+/* $XConsortium: apcgc.c,v 1.3 90/02/22 10:43:29 rws Exp $ */
+
 #include "apc.h"
 #include "Xmd.h"
 #include "dixfontstr.h"
@@ -1033,15 +1035,15 @@ apcValidateGC(pGC, changes, pDraw)
 
                 if (pGC->fillStyle == FillTiled)
                 {
-                    if (pPrivGC->gprTile == gpr_$nil_bitmap_desc)
-                    {
-                        int             totalsize;
-                        unsigned char  *pdata;
-
                         bitm_depth = pGC->depth;
                         if (bitm_depth == 1)
                             /* no single-plane tiles, lest GPR stipple */
                             bitm_depth = 2;
+
+                    if (pPrivGC->gprTile == gpr_$nil_bitmap_desc)
+                    {
+                        int             totalsize;
+                        unsigned char  *pdata;
 
                         totalsize = PixmapBytePad(TILE_SIZE, 1) * TILE_SIZE * bitm_depth;
                         pPrivGC->pdataTile = (unsigned char *) xalloc (totalsize);
@@ -1057,12 +1059,12 @@ apcValidateGC(pGC, changes, pDraw)
                 }
                 else /* stipple */
                 {
+                    bitm_depth = 1;
+
                     if (pPrivGC->gprOpaqueStipple == gpr_$nil_bitmap_desc)
                     {
                         int             totalsize;
                         unsigned char  *pdata;
-
-                        bitm_depth = 1;
 
                         totalsize = PixmapBytePad(TILE_SIZE, 1) * TILE_SIZE;
                         pPrivGC->pdataOpaqueStipple = (unsigned char *) xalloc (totalsize);
@@ -1083,9 +1085,9 @@ apcValidateGC(pGC, changes, pDraw)
                 yalign = (-yorg) % pPM->height;
                 /* HACK ALERT require sign of remainder is sign of divisor */
                 if (xalign < 0)
-                    xalign += pPM->height;
+                    xalign += pPM->width;
                 if (yalign < 0)
-                    yalign += pPM->width;
+                    yalign += pPM->height;
 
                 SET_BITMAP (gprTileStip, pPrivScreen);
                 SET_CLIPPING_ACTIVE (false, pPrivScreen);
@@ -1100,7 +1102,8 @@ apcValidateGC(pGC, changes, pDraw)
 
                 pPrivGC->reqContext.fill_pattern = gprTileStip;
 
-                /* force a reload, since we have changed contents but not necessarily the
+                if (pPrivScreen->curContext.fill_pattern == gprTileStip)
+                    /* force a reload, since we have changed the contents but not the
                    identity of the tile/stipple bitmap */
                 pPrivScreen->curContext.fill_pattern = gpr_$nil_bitmap_desc;
 

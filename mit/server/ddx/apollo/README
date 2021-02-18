@@ -46,21 +46,3 @@ CHANGES SINCE R3:
 NOTES ON BUILDING X11 SOFTWARE:
 
     --  Please note that the X software must be built in a "bsd4.3" environment.
-
-    --  Since most MIT servers do not provide the capability of individual
-        control over autorepeat on each key, and provide only control of the
-        autorepeat state of the keyboard as a whole, they ignore the default
-        autorepeat key set (whose value as distributed from MIT is the null
-        set).  This default value is probably not what you want.  We suggest
-        that you change the definition of DEFAULT_AUTOREPEATS in the file
-        server/include/site.h to be as follows:
-
-#define DEFAULT_AUTOREPEATS	{\
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,\
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,\
-	0x00, 0xA8, 0x02, 0x00, 0xF8, 0xFF, 0x1D, 0xC0,\
-	0xFF, 0x27, 0xFE, 0x5F, 0xFE, 0x1F, 0xFF, 0x7F }
-
-        This will put all the "printing" white keys and keypad keys, plus
-        Backspace, Delete, and the four plain arrow keys, into the default
-        autorepeat set.

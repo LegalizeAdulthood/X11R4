@@ -1,4 +1,4 @@
-.\" $XConsortium: Xapollo.man,v 1.1 89/12/21 10:07:38 rws Exp $
+.\" $XConsortium: Xapollo.man,v 1.2 90/02/22 10:58:19 rws Exp $
 .TH XAPOLLO 1 "Release 4" "X Version 11"
 .SH NAME
 Xapollo \- Apollo server for X Version 11
@@ -70,6 +70,26 @@ has at least 4 planes.
 .PP
 In the absence of any \fB-D\fP options, the server will use the GPR driver
 on all available screens, at full depth.
+.SH CONNECTION TYPES SUPPORTED
+By default, Xapollo and the Apollo Xlib are built to use TCP/IP
+as the only IPC transport for client/server communication.
+This means that the standard display string for local connections,
+``:0'', will use TCP/IP.
+This is done because there are bugs in the UDS (Unix Domain Sockets)
+implementation for SR10.1,
+and also because the local case of TCP/IP has been extensively optimized
+to substantially outperform UDS.
+.PP
+If you should really want to use UDS for some reason,
+you can build the X distribution to include UDS support
+by redefining the symbol ConnectionFlags, in
+.I config/site.def,
+to add the option ``-DUNIXCONN''.
+You should then do a full build, or rebuild, of the X software.
+See
+.I config/apollo.cf
+for the original definition of ConnectionFlags,
+which depends on what release of Domain/OS you are building on.
 .SH KEYBOARDS
 There are four types of keyboards on Apollo systems.
 Keyboard 1 is the very old, thick one that has no mouse.
@@ -135,20 +155,11 @@ the ability to set the autorepeating behavior of individual keys.
 You can use the
 .I xset (1)
 program to control this.
+The default autorepeat key set includes all the "printing" white keys
+and numeric keypad keys,
+plus Backspace, Delete, and the four plain arrow keys.
 The key labeled Repeat has no special behavior;
 it is just another key on the keyboard.
-.PP
-(Since most MIT servers do not provide individual autorepeat key support,
-the fact that the default MIT autorepeat keyset is the null set does not
-cause trouble for them.
-However, for a server which does have individual autorepeat key support,
-this is a poor choice for the default value of this set.
-Please see the file
-.I server/ddx/apollo/README
-in the MIT distribution for directions on how to change this default
-when building the
-.I Xapollo
-server.)
 .PP
 Because of its hardware limitations, keyboard 2 will transmit faked
 modifier transitions for the white keys.

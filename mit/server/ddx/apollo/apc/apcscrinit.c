@@ -25,6 +25,8 @@ Telephone and Telegraph Company or of the Regents of the
 University of California.
 ******************************************************************/
 
+/* $XConsortium: apcscrinit.c,v 1.3 90/02/22 10:38:44 rws Exp $ */
+
 #include "apc.h"
 #include "Xmd.h"
 #include "servermd.h"
@@ -195,8 +197,8 @@ apcScreenInit(pScreen, pDisp, pClrPrivScreen)
 
     pScreen->width = pDisp->display_char.x_visible_size;
     pScreen->height = pDisp->display_char.y_visible_size;
-    pScreen->mmWidth = (pScreen->width * 10) / pDisp->x_pixels_per_cm;
-    pScreen->mmHeight = (pScreen->height * 10) / pDisp->y_pixels_per_cm;
+    pScreen->mmWidth = (pScreen->width * 10) / pDisp->display_char.x_pixels_per_cm;
+    pScreen->mmHeight = (pScreen->height * 10) / pDisp->display_char.y_pixels_per_cm;
 
     pScreen->backingStoreSupport = Always;
     pScreen->saveUnderSupport = NotUseful;

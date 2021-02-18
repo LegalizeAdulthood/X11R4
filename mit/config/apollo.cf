@@ -6,9 +6,9 @@
  * Note that pre-SR10.1 releases are not supported.
  */
 
-#define OSName            Domain/OS SR10.1
+#define OSName            Domain/OS SR10.2
 #define OSMajorVersion    10
-#define OSMinorVersion    1
+#define OSMinorVersion    2
 
 #define CCompilerMajorVersion   6
 #define CCompilerMinorVersion   0
@@ -18,14 +18,10 @@
 
 #define XapolloServer     Xapollo
 
-            PAS = /com/pas
-
-#define HasNdbm YES
-
 #define HasVoidSignalReturn NO
 
 
-/**/# platform:  $XConsortium: apollo.cf,v 1.19 89/12/18 14:24:55 rws Exp $
+/**/# platform:  $XConsortium: apollo.cf,v 1.20 90/02/22 11:00:53 keith Exp $
 /**/# operating system:  OSName
 
 /*****************************************************************************
@@ -41,7 +37,7 @@
 #define ConnectionFlags -DTCPCONN -DNO_TCP_H
 #define OSReleaseDefines -DPRE_SR10_2
 #else
-#define ConnectionFlags -DTCPCONN -DUNIXCONN
+#define ConnectionFlags -DTCPCONN
 #define OSReleaseDefines /* as nothing */
 #endif
 
@@ -50,5 +46,7 @@
 #define ExtensionDefines -DSHAPE -DMULTIBUFFER -DMITMISC
 
 #define ServerDefines StandardDefines ExtensionDefines -DXDMCP miOptChoices OSReleaseDefines
+
 #define FontDefines	-DFONT_SNF -DFONT_BDF
+#define FontFilters BDFTOSNFFILT SHELLPATH
 

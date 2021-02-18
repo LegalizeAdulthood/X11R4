@@ -25,6 +25,8 @@ Telephone and Telegraph Company or of the Regents of the
 University of California.
 ******************************************************************/
 
+/* $XConsortium: apcclip.c,v 1.1 90/02/22 10:46:11 rws Exp $ */
+
 #include "apc.h"
 #include "apcmskbits.h"
 
@@ -70,7 +72,7 @@ apcPixmapToRegion(pPix)
     unsigned       *pw, w;
     int             ib;
     int             width, h, base, rx1, crects;
-    unsigned int   *pwLineStart;
+    unsigned int   *pwLineEnd;
     int             irectPrevStart, irectLineStart;
     BoxPtr          prectO, prectN;
     BoxPtr          FirstRect, rects, prectLineStart;
@@ -90,7 +92,6 @@ apcPixmapToRegion(pPix)
     for(h = 0; h < ((int)pPix->drawable.height); h++)
     {
         irectLineStart = rects - FirstRect;
-        pwLineStart = pw;
         /* If the Screen left most bit of the word is set, we're starting in
          * a box */
         if(*pw & mask0)
@@ -101,18 +102,18 @@ apcPixmapToRegion(pPix)
         else
             fInBox = FALSE;
         /* Process all words which are fully in the pixmap */
-        while(pw  < pwLineStart + width/32)
+        pwLineEnd = pw + (width >> 5);
+        for (base = 0; pw < pwLineEnd; base += 32)
         {
-            base = (pw - pwLineStart) * 32;
             w = *pw++;
             if (fInBox)
             {
-                if (w == 0xFFFFFFFF)
+                if (!~w)
                     continue;
             }
             else
             {
-                if (w == 0)
+                if (!w)
                     continue;
             }
             for(ib = 0; ib < 32; ib++)
@@ -145,7 +146,6 @@ apcPixmapToRegion(pPix)
         if(width & 0x1F)
         {
             /* Process final partial word on line */
-            base = (pw - pwLineStart) * 32;
             w = *pw++;
             for(ib = 0; ib < (width & 0x1F); ib++)
             {
@@ -177,7 +177,8 @@ apcPixmapToRegion(pPix)
         /* If scanline ended with last bit set, end the box */
         if(fInBox)
         {
-            ADDRECT(pReg, rects, FirstRect, rx1, h, base + ib, h + 1);
+            ADDRECT(pReg, rects, FirstRect,
+                    rx1, h, base + (width & 0x1f), h + 1);
         }
         /* if all rectangles on this line have the same x-coords as
          * those on the previous line, then add 1 to all the previous  y2s and

@@ -25,6 +25,8 @@ Telephone and Telegraph Company or of the Regents of the
 University of California.
 ******************************************************************/
 
+/* $XConsortium: ap_input.c,v 1.2 90/02/22 10:36:19 rws Exp $ */
+
 /*
  * Functions implementing Apollo-device-independent parts of the driver
  * having to do with input handling.
@@ -234,9 +236,13 @@ HWInitPointr()
     lib_$add_to_set (keyset, 256, 'A');
     lib_$add_to_set (keyset, 256, 'B');
     lib_$add_to_set (keyset, 256, 'C');
+    lib_$add_to_set (keyset, 256, 'D');
+    lib_$add_to_set (keyset, 256, 'E');
     lib_$add_to_set (keyset, 256, 'a');
     lib_$add_to_set (keyset, 256, 'b');
     lib_$add_to_set (keyset, 256, 'c');
+    lib_$add_to_set (keyset, 256, 'd');
+    lib_$add_to_set (keyset, 256, 'e');
     gpr_$enable_input (gpr_$buttons, keyset, &status);
     gpr_$enable_input (gpr_$locator_stop, keyset, &status);
     gpr_$enable_input (gpr_$locator_update, keyset, &status);
@@ -253,7 +259,7 @@ apMouseProc(pDev, onoff, argc, argv)
     int         argc;
     char       *argv[];
 {
-    BYTE            map[4];
+    BYTE            map[6];
     apPrivPointrPtr pPrivP;
     status_$t       status;
     Bool            retval;
@@ -274,8 +280,10 @@ apMouseProc(pDev, onoff, argc, argv)
             map[1] = 1;
             map[2] = 2;
             map[3] = 3;
+            map[4] = 4;
+            map[5] = 5;
 
-            retval = InitPointerDeviceStruct (apPointer, map, 3,
+            retval = InitPointerDeviceStruct (apPointer, map, 5,
                          apGetMotionEvents, apChangePointerControl, 0);
             if (!retval)
             {
@@ -538,6 +546,12 @@ ProcessInputEvents()
                 cursory = pPrivP->y;
                 break;
             case gpr_$buttons:
+                if (cursorMoved)
+                {
+                    miPointerMoveCursor (screenInfo.screens[pPrivP->numCurScreen],
+                                         cursorx, cursory, TRUE);
+                    cursorMoved = FALSE;
+                }
                 xE.u.keyButtonPointer.time = lastEventTime;
                 xE.u.keyButtonPointer.rootX = apEventPosition.x_coord;
                 xE.u.keyButtonPointer.rootY = apEventPosition.y_coord;
@@ -548,6 +562,12 @@ ProcessInputEvents()
 #else
             case gpr_$physical_keys:
 #endif
+                if (cursorMoved)
+                {
+                    miPointerMoveCursor (screenInfo.screens[pPrivP->numCurScreen],
+                                         cursorx, cursory, TRUE);
+                    cursorMoved = FALSE;
+                }
                 xE.u.keyButtonPointer.time = lastEventTime;
                 xE.u.keyButtonPointer.rootX = apEventPosition.x_coord;
                 xE.u.keyButtonPointer.rootY = apEventPosition.y_coord;
