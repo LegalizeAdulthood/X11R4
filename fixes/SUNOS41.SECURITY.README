@@ -1,0 +1,51 @@
+There is a security problem with certain X clients running under SunOS 4.1.
+The problem only affects setuid programs that have been linked with relative -L
+shared library paths.  xterm and xload are possible candidates, from the core
+MIT X distribution.  IF you are using shared X libraries, AND you have installed
+xterm and/or xload as setuid programs, then please do one of the following:
+
+
+Option 1. Relink the program statically (using -Bstatic).  For example, in
+	  the R4 xterm Imakefile, change the line
+
+NormalProgramTarget(xterm,$(OBJS1),$(DEPLIBS1),XawClientLibs,$(TERMCAPLIB) $(PTYLIB))
+
+	  to
+
+NormalProgramTarget(xterm,$(OBJS1),$(DEPLIBS1),-Bstatic XawClientLibs -Bdynamic,$(TERMCAPLIB) $(PTYLIB))
+
+	  and in the R4 xload Imakefile, change the line
+
+LOCAL_LIBRARIES = XawClientLibs
+
+	  to
+
+LOCAL_LIBRARIES = -Bstatic XawClientLibs -Bdynamic
+
+
+Option 2. Make the program non-setuid.  You should consult your system
+	  administrator concerning protection of resources (e.g. ptys and
+	  /dev/kmem) used by these programs, to make sure that you do not
+	  create additional security problems at your site.
+
+
+There is a third option, which is to link the programs only with absolute
+library paths.  This only works if reasonable versions of the libraries are
+already installed at the time that you link the program.  Since this option
+introduces possibilities of link errors (depending on your environment), and
+it is poor build practice to forcibly install libraries except during an
+install phase, I am not providing Imakefiles details for this option, but
+you may want to consider this option (given that Option 1 has a performance
+penalty) if you do not feel comfortable with the consequences of Option 2.
+
+
+If you have questions about how to correct this problem at your site, please
+feel free to send me mail about it, and I will try to answer as best I can.
+We will try to correct this problem in the R5 build procedures (although
+personally, I think Sun made a big mistake in creating this hole, and the
+correct fix is to patch SunOS 4.1).
+
+
+				Bob Scheifler
+				Director, MIT X Consortium
+				rws@expo.lcs.mit.edu
