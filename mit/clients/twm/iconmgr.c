@@ -21,7 +21,7 @@
 
 /***********************************************************************
  *
- * $XConsortium: iconmgr.c,v 1.39 89/12/14 16:22:57 rws Exp $
+ * $XConsortium: iconmgr.c,v 1.43 90/03/20 11:20:17 jim Exp $
  *
  * Icon Manager routines
  *
@@ -318,117 +318,53 @@ void MoveIconManager(dir)
  */
 
 void JumpIconManager(dir)
-    int dir;
+    register int dir;
 {
     IconMgr *ip, *tmp_ip = NULL;
-    int got_it;
+    int got_it = FALSE;
     ScreenInfo *sp;
     int screen;
 
+    if (!Active) return;
+
+
+#define ITER(i) (dir == F_NEXTICONMGR ? (i)->next : (i)->prev)
+#define IPOFSP(sp) (dir == F_NEXTICONMGR ? &(sp->iconmgr) : sp->iconmgr.lasti)
+#define TEST(ip) if ((ip)->count != 0 && (ip)->twm_win->mapped) \
+		 { got_it = TRUE; break; }
+
     ip = Active->iconmgr;
-    got_it = FALSE;
-    switch (dir)
-    {
-	case F_NEXTICONMGR:
-	    for (tmp_ip = ip->next; tmp_ip != NULL; tmp_ip = tmp_ip->next)
-	    {
-		if (tmp_ip->count != 0 && tmp_ip->twm_win->mapped)
-		{
-		    /* we've got one on our own screen! */
-		    got_it = TRUE;
-		    break;
-		}
-	    }
-	    if (!got_it && !MultiScreen)
-	    {
-		/* let's start from the begining of this screen's list */
-		for (tmp_ip = &(ip->scr->iconmgr); tmp_ip != NULL;
-		    tmp_ip = tmp_ip->next)
-		{
-		    if (tmp_ip->count != 0 && tmp_ip->twm_win->mapped)
-		    {
-			/* we've got one on our own screen! */
-			got_it = TRUE;
-			break;
-		    }
-		}
-	    }
-	    while (!got_it)
-	    {
-		/* we have to go looking for one on another screen or
-		* wrap around on this screen
-		*/
-		for (screen = (ip->scr->screen+1); ; screen++)
-		{
-		    if (screen >= NumScreens)
-			screen = 0;
+    for (tmp_ip = ITER(ip); tmp_ip; tmp_ip = ITER(tmp_ip)) {
+	TEST (tmp_ip);
+    }
 
-		    sp = ScreenList[screen];
-		    for (tmp_ip = &(sp->iconmgr); tmp_ip != NULL;
-			tmp_ip = tmp_ip->next)
-		    {
-			if (tmp_ip->count != 0 && tmp_ip->twm_win->mapped)
-			{
-			    /* we've got one */
-			    got_it = TRUE;
-			    break;
-			}
-		    }
-		    if (got_it)
-			break;
-		}
-	    }
-	    break;
-	case F_PREVICONMGR:
-	    for (tmp_ip = ip->prev; tmp_ip != NULL; tmp_ip = tmp_ip->prev)
-	    {
-		if (tmp_ip->count != 0 && tmp_ip->twm_win->mapped)
-		{
-		    /* we've got one on our own screen! */
-		    got_it = TRUE;
-		    break;
-		}
-	    }
-	    if (!got_it && !MultiScreen)
-	    {
-		/* let's start from the end of this screen's list */
-		for (tmp_ip = ip->scr->iconmgr.lasti; tmp_ip != NULL;
-		    tmp_ip = tmp_ip->prev)
-		{
-		    if (tmp_ip->count != 0 && tmp_ip->twm_win->mapped)
-		    {
-			/* we've got one on our own screen! */
-			got_it = TRUE;
-			break;
-		    }
-		}
-	    }
-	    while (!got_it)
-	    {
-		/* we have to go looking for one on another screen or
-		* wrap around on this screen
-		*/
-		for (screen = (ip->scr->screen-1); ; screen--)
-		{
-		    if (screen < 0)
-			screen = NumScreens-1;
+    if (!got_it) {
+	int origscreen = ip->scr->screen;
+	int inc = (dir == F_NEXTICONMGR ? 1 : -1);
 
-		    sp = ScreenList[screen];
-		    for (tmp_ip = sp->iconmgr.lasti; tmp_ip != NULL;
-			tmp_ip = tmp_ip->prev)
-		    {
-			if (tmp_ip->count != 0 && tmp_ip->twm_win->mapped)
-			{
-			    /* we've got one */
-			    got_it = TRUE;
-			    break;
-			}
-		    }
-		    if (got_it)
-			break;
+	for (screen = origscreen + inc; ; screen += inc) {
+	    if (screen >= NumScreens)
+	      screen = 0;
+	    else if (screen < 0)
+	      screen = NumScreens - 1;
+
+	    sp = ScreenList[screen];
+	    if (sp) {
+		for (tmp_ip = IPOFSP (sp); tmp_ip; tmp_ip = ITER(tmp_ip)) {
+		    TEST (tmp_ip);
 		}
 	    }
-	    break;
+	    if (got_it || screen == origscreen) break;
+	}
+    }
+
+#undef ITER
+#undef IPOFSP
+#undef TEST
+
+    if (!got_it) {
+	XBell (dpy, 0);
+	return;
     }
 
     /* raise the frame so it is visible */
@@ -510,9 +446,10 @@ WList *AddIconManager(tmp_win)
 			     ButtonReleaseMask | ExposureMask |
 			     EnterWindowMask | LeaveWindowMask);
     attributes.cursor = Scr->IconMgrCursor;
-    tmp->w = XCreateWindow (dpy, ip->w, 0, 0, 1, h, 0, 
-			    CopyFromParent, CopyFromParent, CopyFromParent,
-			    valuemask, &attributes);
+    tmp->w = XCreateWindow (dpy, ip->w, 0, 0, (unsigned int) 1, 
+			    (unsigned int) h, (unsigned int) 0, 
+			    CopyFromParent, (unsigned int) CopyFromParent,
+			    (Visual *) CopyFromParent, valuemask, &attributes);
 
 
     valuemask = (CWBackPixel | CWBorderPixel | CWEventMask | CWCursor);
@@ -521,9 +458,12 @@ WList *AddIconManager(tmp_win)
     attributes.event_mask = (ButtonReleaseMask| ButtonPressMask |
 			     ExposureMask);
     attributes.cursor = Scr->ButtonCursor;
-    tmp->icon = XCreateWindow (dpy, tmp->w, 5, (h - siconify_height)/2,
-			       siconify_width, siconify_height, 0,
-			       CopyFromParent, CopyFromParent, CopyFromParent,
+    tmp->icon = XCreateWindow (dpy, tmp->w, 5, (int) (h - siconify_height)/2,
+			       (unsigned int) siconify_width,
+			       (unsigned int) siconify_height,
+			       (unsigned int) 0, CopyFromParent,
+			       (unsigned int) CopyFromParent,
+			       (Visual *) CopyFromParent,
 			       valuemask, &attributes);
 
     ip->count += 1;

@@ -5,16 +5,11 @@
 /**/#distribute this one.
 /**/#
 
-
-#if !HasPutenv
-      PUTENVDEF = -DNOPUTENV
-#endif
-
          YFLAGS = -d
         DEPLIBS = $(DEPXMULIB) $(DEPEXTENSIONLIB) $(DEPXLIB)
 LOCAL_LIBRARIES = $(XMULIB) $(EXTENSIONLIB) $(XLIB)
        LINTLIBS = $(LINTXMU) $(LINTEXTENSIONLIB) $(LINTXLIB)
-        DEFINES = ExtensionDefines $(SIGNAL_DEFINES) $(PUTENVDEF)
+        DEFINES = ExtensionDefines $(SIGNAL_DEFINES)
 
            SRCS = gram.c lex.c deftwmrc.c add_window.c gc.c list.c twm.c \
 		parse.c menus.c events.c resize.c util.c version.c iconmgr.c \
@@ -26,9 +21,16 @@ LOCAL_LIBRARIES = $(XMULIB) $(EXTENSIONLIB) $(XLIB)
 
 AllTarget(twm)
 
+SpecialObjectRule(parse.o, ,'-DSYSTEM_INIT_FILE="'$(TWMDIR)'/system.twmrc"')
+#if !HasPutenv
+SpecialObjectRule(util.o, ,-DNOPUTENV)
+#endif
+
 depend:: lex.c gram.c deftwmrc.c 
 
 ComplexProgramTarget(twm)
+MakeDirectories(install,$(TWMDIR))
+InstallNonExec(system.twmrc, $(TWMDIR))
 
 gram.h gram.c: gram.y
 	yacc $(YFLAGS) gram.y

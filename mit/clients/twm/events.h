@@ -28,7 +28,7 @@
 
 /***********************************************************************
  *
- * $XConsortium: events.h,v 1.12 89/12/10 17:46:19 jim Exp $
+ * $XConsortium: events.h,v 1.13 90/03/13 15:47:17 jim Exp $
  *
  * twm event handler include file
  *
@@ -75,6 +75,8 @@ extern int DragX;
 extern int DragY;
 extern int DragWidth;
 extern int DragHeight;
+extern int CurrentDragX;
+extern int CurrentDragY;
 
 extern int ButtonPressed;
 extern int Cancel;

@@ -28,7 +28,7 @@
 
 /***********************************************************************
  *
- * $XConsortium: gram.y,v 1.84 89/12/14 14:52:03 jim Exp $
+ * $XConsortium: gram.y,v 1.88 90/03/16 12:12:06 jim Exp $
  *
  * .twmrc command grammer
  *
@@ -62,6 +62,7 @@ static name_list **list;
 static int cont = 0;
 static int color;
 int mods = 0;
+unsigned int mods_used = (ShiftMask | ControlMask | Mod1Mask);
 
 extern int do_single_keyword(), do_string_keyword(), do_number_keyword();
 extern name_list **do_colorlist_keyword();
@@ -81,12 +82,13 @@ extern int yylineno;
 %token <num> ICONMGR_GEOMETRY ICONMGR_NOSHOW MAKE_TITLE
 %token <num> ICONIFY_BY_UNMAPPING DONT_ICONIFY_BY_UNMAPPING 
 %token <num> NO_TITLE AUTO_RAISE NO_HILITE ICON_REGION 
-%token <num> META SHIFT CONTROL WINDOW TITLE ICON ROOT FRAME 
+%token <num> META SHIFT LOCK CONTROL WINDOW TITLE ICON ROOT FRAME 
 %token <num> COLON EQUALS SQUEEZE_TITLE DONT_SQUEEZE_TITLE
 %token <num> START_ICONIFIED NO_TITLE_HILITE TITLE_HILITE
 %token <num> MOVE RESIZE WAIT SELECT KILL LEFT_TITLEBUTTON RIGHT_TITLEBUTTON 
 %token <num> NUMBER KEYWORD NKEYWORD CKEYWORD CLKEYWORD FKEYWORD FSKEYWORD 
 %token <num> SKEYWORD DKEYWORD JKEYWORD WINDOW_RING WARP_CURSOR ERRORTOKEN
+%token <num> NO_STACKMODE
 %token <ptr> STRING 
 
 %type <ptr> string
@@ -177,6 +179,10 @@ stmt		: error
 		  win_list
 		| NO_HILITE		{ if (Scr->FirstTime)
 						Scr->Highlight = FALSE; }
+		| NO_STACKMODE		{ list = &Scr->NoStackModeL; }
+		  win_list
+		| NO_STACKMODE		{ if (Scr->FirstTime)
+						Scr->StackMode = FALSE; }
 		| NO_TITLE		{ list = &Scr->NoTitle; }
 		  win_list
 		| NO_TITLE		{ if (Scr->FirstTime)
@@ -277,7 +283,18 @@ keys		: /* Empty */
 
 key		: META			{ mods |= Mod1Mask; }
 		| SHIFT			{ mods |= ShiftMask; }
+		| LOCK			{ mods |= LockMask; }
 		| CONTROL		{ mods |= ControlMask; }
+		| META number		{ if ($2 < 1 || $2 > 5) {
+					     twmrc_error_prefix();
+					     fprintf (stderr, 
+				"bad modifier number (%d), must be 1-5\n",
+						      $2);
+					     ParseError = 1;
+					  } else {
+					     mods |= (Mod1Mask << ($2 - 1));
+					  }
+					}
 		| OR			{ }
 		;
 
@@ -669,6 +686,10 @@ char *str;
 		}
 		*o = n;
 		break;
+	    case '\n':
+		i++;	/* punt */
+		o--;	/* to account for o++ at end of loop */
+		break;
 	    case '\"':
 	    case '\'':
 	    case '\\':
@@ -733,6 +754,7 @@ int butt, func;
     Action = "";
     pull = NULL;
     cont = 0;
+    mods_used |= mods;
     mods = 0;
 }
 
@@ -753,6 +775,7 @@ int func;
     Action = "";
     pull = NULL;
     cont = 0;
+    mods_used |= mods;
     mods = 0;
 }
 

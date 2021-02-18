@@ -28,7 +28,7 @@
 
 /**********************************************************************
  *
- * $XConsortium: add_window.c,v 1.130 89/12/15 19:41:12 jim Exp $
+ * $XConsortium: add_window.c,v 1.140 90/03/23 11:42:33 jim Exp $
  *
  * Add a new window, put the titlbar and other stuff around
  * the window
@@ -37,10 +37,10 @@
  *
  **********************************************************************/
 
-#ifndef lint
+#if !defined(lint) && !defined(SABER)
 static char RCSinfo[]=
-"$XConsortium: add_window.c,v 1.130 89/12/15 19:41:12 jim Exp $";
-#endif /* lint */
+"$XConsortium: add_window.c,v 1.140 90/03/23 11:42:33 jim Exp $";
+#endif
 
 #include <stdio.h>
 #include "twm.h"
@@ -145,12 +145,11 @@ IconMgr *iconp;
     Atom actual_type;
     int actual_format;
     unsigned long nitems, bytesafter;
-    XWindowChanges xwc;		/* change window structure */
-    unsigned int xwcm;		/* change window mask */
     int ask_user;		/* don't know where to put the window */
-    long supplied;
+    long supplied = 0;
     int gravx, gravy;			/* gravity signs for positioning */
     int namelen;
+    int bw2;
 
 #ifdef DEBUG
     fprintf(stderr, "AddWindow: w = 0x%x\n", w);
@@ -227,6 +226,10 @@ IconMgr *iconp;
 	(!(short)LookInList(Scr->NoHighlight, tmp_win->full_name, 
 	    &tmp_win->class));
 
+    tmp_win->stackmode = Scr->StackMode &&
+	(!(short)LookInList(Scr->NoStackModeL, tmp_win->full_name, 
+	    &tmp_win->class));
+
     tmp_win->titlehighlight = Scr->TitleHighlight && 
 	(!(short)LookInList(Scr->NoTitleHighlight, tmp_win->full_name, 
 	    &tmp_win->class));
@@ -248,7 +251,8 @@ IconMgr *iconp;
     if (LookInList(Scr->WindowRingL, tmp_win->full_name, &tmp_win->class)) {
 	if (Scr->Ring) {
 	    tmp_win->ring.next = Scr->Ring->ring.next;
-	    Scr->Ring->ring.next->ring.prev = tmp_win;
+	    if (Scr->Ring->ring.next->ring.prev)
+	      Scr->Ring->ring.next->ring.prev = tmp_win;
 	    Scr->Ring->ring.next = tmp_win;
 	    tmp_win->ring.prev = Scr->Ring;
 	} else {
@@ -286,6 +290,7 @@ IconMgr *iconp;
     } else {
     	tmp_win->frame_bw = Scr->BorderWidth;
     }
+    bw2 = tmp_win->frame_bw * 2;
 
     tmp_win->title_height = Scr->TitleHeight + tmp_win->frame_bw;
     if (Scr->NoTitlebar)
@@ -400,12 +405,8 @@ IconMgr *iconp;
 			      SIZE_VINDENT + Scr->SizeFont.font->ascent,
 			      tmp_win->name, namelen);
 
-	    AddingW = tmp_win->attr.width;
-	    AddingH = tmp_win->attr.height;
-
-	    AddingW = tmp_win->attr.width + 2* tmp_win->frame_bw;
-	    AddingH = tmp_win->attr.height + tmp_win->title_height +
-	      2 * tmp_win->frame_bw;
+	    AddingW = tmp_win->attr.width + bw2;
+	    AddingH = tmp_win->attr.height + tmp_win->title_height + bw2;
 
 	    while (TRUE)
 	    {
@@ -442,7 +443,7 @@ IconMgr *iconp;
 		    if (dy < HALF_AVE_CURSOR_SIZE) dy = HALF_AVE_CURSOR_SIZE;
 #undef HALF_AVE_CURSOR_SIZE
 		    dx += (tmp_win->frame_bw + 1);
-		    dy += (tmp_win->frame_bw * 2 + tmp_win->title_height + 1);
+		    dy += (bw2 + tmp_win->title_height + 1);
 		    if (AddingX + dx >= Scr->MyDisplayWidth)
 		      dx = Scr->MyDisplayWidth - AddingX - 1;
 		    if (AddingY + dy >= Scr->MyDisplayHeight)
@@ -484,8 +485,8 @@ IconMgr *iconp;
 	    } 
 	    else if (event.xbutton.button == Button3)
 	    {
-		int maxw = Scr->MyDisplayWidth - AddingX;
-		int maxh = Scr->MyDisplayHeight - AddingY;
+		int maxw = Scr->MyDisplayWidth - AddingX - bw2;
+		int maxh = Scr->MyDisplayHeight - AddingY - bw2;
 
 		/*
 		 * Make window go to bottom of screen, and clip to right edge.
@@ -495,8 +496,9 @@ IconMgr *iconp;
 		if (AddingW > maxw) AddingW = maxw;
 		AddingH = maxh;
 
-		/* includes any border */
-		ConstrainSize (tmp_win, &AddingW, &AddingH);
+		ConstrainSize (tmp_win, &AddingW, &AddingH);  /* w/o borders */
+		AddingW += bw2;
+		AddingH += bw2;
 	    }
 	    else
 	    {
@@ -510,9 +512,8 @@ IconMgr *iconp;
 
 	    tmp_win->attr.x = AddingX;
 	    tmp_win->attr.y = AddingY + tmp_win->title_height;
-	    tmp_win->attr.width = AddingW - 2 * tmp_win->frame_bw;
-	    tmp_win->attr.height = AddingH - tmp_win->title_height -
-	      2 * tmp_win->frame_bw;
+	    tmp_win->attr.width = AddingW - bw2;
+	    tmp_win->attr.height = AddingH - tmp_win->title_height - bw2;
 
 	    XUngrabServer(dpy);
 	}
@@ -522,8 +523,6 @@ IconMgr *iconp;
 	if (gravy < 0) tmp_win->attr.y -= gravy * tmp_win->title_height;
     }
 
-
-    xwcm = CWX | CWY | CWWidth | CWHeight;
 
 #ifdef DEBUG
 	fprintf(stderr, "  position window  %d, %d  %dx%d\n", 
@@ -539,20 +538,9 @@ IconMgr *iconp;
 	tmp_win->attr.y += gravy * delta;
     }
 
-					/* set up the configure */
-    xwc.x = tmp_win->attr.x + tmp_win->attr.border_width;
-    xwc.y = tmp_win->attr.y + tmp_win->attr.border_width;
-    xwc.width = tmp_win->attr.width;
-    xwc.height = tmp_win->attr.height;
     tmp_win->title_width = tmp_win->attr.width;
 
-    if (tmp_win->frame_bw)
-    {
-	xwc.border_width = 0;
-        xwcm |= CWBorderWidth;
-    }
-
-    XConfigureWindow(dpy, tmp_win->w, xwcm, &xwc);
+    if (tmp_win->old_bw) XSetWindowBorderWidth (dpy, tmp_win->w, 0);
 
     tmp_win->name_width = XTextWidth(Scr->TitleBarFont.font, tmp_win->name,
 				     namelen);
@@ -637,15 +625,18 @@ IconMgr *iconp;
     attributes.event_mask = (SubstructureRedirectMask | 
 			     ButtonPressMask | ButtonReleaseMask |
 			     EnterWindowMask | LeaveWindowMask);
-    if (tmp_win->transient && tmp_win->attr.save_under && Scr->SaveUnder) {
+    if (tmp_win->attr.save_under) {
 	attributes.save_under = True;
 	valuemask |= CWSaveUnder;
     }
 
     tmp_win->frame = XCreateWindow (dpy, Scr->Root, tmp_win->frame_x,
-				    tmp_win->frame_y, tmp_win->frame_width,
-				    tmp_win->frame_height, tmp_win->frame_bw,
-				    Scr->d_depth, CopyFromParent,
+				    tmp_win->frame_y, 
+				    (unsigned int) tmp_win->frame_width,
+				    (unsigned int) tmp_win->frame_height,
+				    (unsigned int) tmp_win->frame_bw,
+				    Scr->d_depth,
+				    (unsigned int) CopyFromParent,
 				    Scr->d_visual, valuemask, &attributes);
     
     if (tmp_win->title_height)
@@ -658,9 +649,11 @@ IconMgr *iconp;
 	tmp_win->title_w = XCreateWindow (dpy, tmp_win->frame, 
 					  -tmp_win->frame_bw,
 					  -tmp_win->frame_bw,
-					  tmp_win->attr.width, 
-					  Scr->TitleHeight, tmp_win->frame_bw,
-					  Scr->d_depth, CopyFromParent,
+					  (unsigned int) tmp_win->attr.width, 
+					  (unsigned int) Scr->TitleHeight,
+					  (unsigned int) tmp_win->frame_bw,
+					  Scr->d_depth,
+					  (unsigned int) CopyFromParent,
 					  Scr->d_visual, valuemask,
 					  &attributes);
     }
@@ -732,9 +725,8 @@ IconMgr *iconp;
      */
     tmp_win->mapped = FALSE;
 
-    SetupWindow (tmp_win,
-		 tmp_win->frame_x, tmp_win->frame_y,
-		 tmp_win->frame_width, tmp_win->frame_height, -1);
+    SetupFrame (tmp_win, tmp_win->frame_x, tmp_win->frame_y,
+		tmp_win->frame_width, tmp_win->frame_height, -1, True);
 
     /* wait until the window is iconified and the icon window is mapped
      * before creating the icon window 
@@ -1012,7 +1004,9 @@ static Window CreateHighlightWindow (tmp_win)
     }
 
     w = XCreateWindow (dpy, tmp_win->title_w, 0, Scr->FramePadding,
-		       Scr->TBInfo.width, h, 0, Scr->d_depth, CopyFromParent,
+		       (unsigned int) Scr->TBInfo.width, (unsigned int) h,
+		       (unsigned int) 0,
+		       Scr->d_depth, (unsigned int) CopyFromParent,
 		       Scr->d_visual, valuemask, &attributes);
     if (pm) XFreePixmap (dpy, pm);
     return w;
@@ -1043,7 +1037,7 @@ void ComputeWindowTitleOffsets (tmp_win, width, squeeze)
     tmp_win->highlightx = (Scr->TBInfo.titlex + tmp_win->name_width);
     if (tmp_win->hilite_w || Scr->TBInfo.nright > 0) 
       tmp_win->highlightx += Scr->TitlePadding;
-    tmp_win->rightx = width - 1 - Scr->TBInfo.rightoff;
+    tmp_win->rightx = width - Scr->TBInfo.rightoff;
     if (squeeze && tmp_win->squeeze_info) {
 	int rx = (tmp_win->highlightx + 
 		  (tmp_win->hilite_w
@@ -1158,7 +1152,7 @@ static void CreateWindowTitlebarButtons (tmp_win)
 	} else {
 	    TBWindow *tbw;
 	    int boxwidth = (Scr->TBInfo.width + Scr->TBInfo.pad);
-	    int h = (Scr->TBInfo.width - Scr->TBInfo.border * 2);
+	    unsigned int h = (Scr->TBInfo.width - Scr->TBInfo.border * 2);
 
 	    for (tb = Scr->TBInfo.head, tbw = tmp_win->titlebuttons; tb;
 		 tb = tb->next, tbw++) {
@@ -1172,9 +1166,10 @@ static void CreateWindowTitlebarButtons (tmp_win)
 		    leftx += boxwidth;
 		    attributes.win_gravity = NorthWestGravity;
 		}
-		tbw->window = XCreateWindow (dpy, tmp_win->title_w, x, y,
-					     h, h, Scr->TBInfo.border, 0, 
-					     CopyFromParent, CopyFromParent,
+		tbw->window = XCreateWindow (dpy, tmp_win->title_w, x, y, h, h,
+					     (unsigned int) Scr->TBInfo.border,
+					     0, (unsigned int) CopyFromParent,
+					     (Visual *) CopyFromParent,
 					     valuemask, &attributes);
 		tbw->info = tb;
 	    }
@@ -1241,6 +1236,8 @@ CreateTwmColormap(c)
     }
     cmap->c = c;
     cmap->state = 0;
+    cmap->install_req = 0;
+    cmap->w = None;
     cmap->refcnt = 1;
     return (cmap);
 }
@@ -1414,7 +1411,8 @@ FetchWmColormapWindows (tmp)
     tmp->cmaps.cwins = cwins;
     tmp->cmaps.number_cwins = number_cmap_windows;
     if (number_cmap_windows > 1)
-	tmp->cmaps.scoreboard = (char *) calloc(1, number_cmap_windows);
+	tmp->cmaps.scoreboard = 
+	  (char *) calloc(1, ColormapsScoreboardLength(&tmp->cmaps));
 		
     if (previously_installed)
 	InstallWindowColormaps(PropertyNotify, (TwmWindow *) NULL);

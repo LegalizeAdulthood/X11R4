@@ -21,7 +21,7 @@
 
 /**********************************************************************
  *
- * $XConsortium: icons.c,v 1.14 89/12/10 19:20:04 jim Exp $
+ * $XConsortium: icons.c,v 1.20 90/03/27 13:51:34 jim Exp $
  *
  * Icon releated routines
  *
@@ -158,12 +158,39 @@ IconUp (tmp_win)
 {
     int		x, y;
     int		defx, defy;
+    struct IconRegion *ir;
+
+    /*
+     * If the client specified a particular location, let's use it (this might
+     * want to be an option at some point).  Otherwise, try to fit within the
+     * icon region.
+     */
+    if (tmp_win->wmhints && (tmp_win->wmhints->flags & IconPositionHint))
+      return;
+
+    if (tmp_win->icon_moved) {
+	if (!XGetGeometry (dpy, tmp_win->icon_w, &JunkRoot, &defx, &defy,
+			   &JunkWidth, &JunkHeight, &JunkBW, &JunkDepth))
+	  return;
+
+	x = defx + ((int) JunkWidth) / 2;
+	y = defy + ((int) JunkHeight) / 2;
+
+	for (ir = Scr->FirstRegion; ir; ir = ir->next) {
+	    if (x >= ir->x && x < (ir->x + ir->w) &&
+		y >= ir->y && y < (ir->y + ir->h))
+	      break;
+	}
+	if (!ir) return;		/* outside icon regions, leave alone */
+    }
 
     defx = -100;
     defy = -100;
     PlaceIcon(tmp_win, defx, defy, &x, &y);
-    if (x != defx || y != defy)
+    if (x != defx || y != defy) {
 	XMoveWindow (dpy, tmp_win->icon_w, x, y);
+	tmp_win->icon_moved = FALSE;	/* since we've restored it */
+    }
 }
 
 static IconEntry *
@@ -321,6 +348,7 @@ int def_x, def_y;
     FB(tmp_win->iconc.fore, tmp_win->iconc.back);
 
     tmp_win->forced = FALSE;
+    tmp_win->icon_not_ours = FALSE;
 
     /* now go through the steps to get an icon window,  if ForceIcon is 
      * set, then no matter what else is defined, the bitmap from the
@@ -477,6 +505,10 @@ int def_x, def_y;
 	    tmp_win->icon_w = NULL;
 	    tmp_win->wmhints->flags &= ~IconWindowHint;
 	}
+	else
+	{
+	    tmp_win->icon_not_ours = TRUE;
+	}
     }
     else
     {
@@ -508,10 +540,13 @@ int def_x, def_y;
 	else
 	    x = (tmp_win->icon_w_width - tmp_win->icon_width)/2;
 
-	tmp_win->icon_bm_w = XCreateWindow(dpy, tmp_win->icon_w,
-	    x, y, tmp_win->icon_width, tmp_win->icon_height,
-	    0, Scr->d_depth, CopyFromParent,
-	    Scr->d_visual, valuemask, &attributes);
+	tmp_win->icon_bm_w = XCreateWindow (dpy, tmp_win->icon_w, x, y,
+					    (unsigned int)tmp_win->icon_width,
+					    (unsigned int)tmp_win->icon_height,
+					    (unsigned int) 0, Scr->d_depth,
+					    (unsigned int) CopyFromParent,
+					    Scr->d_visual, valuemask,
+					    &attributes);
     }
 
     /* I need to figure out where to put the icon window now, because 
@@ -543,6 +578,6 @@ int def_x, def_y;
     XSaveContext(dpy, tmp_win->icon_w, TwmContext, (caddr_t)tmp_win);
     XSaveContext(dpy, tmp_win->icon_w, ScreenContext, (caddr_t)Scr);
     XDefineCursor(dpy, tmp_win->icon_w, Scr->IconCursor);
-    XFreePixmap (dpy, pm);
+    if (pm) XFreePixmap (dpy, pm);
     return;
 }

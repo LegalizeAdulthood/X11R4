@@ -28,7 +28,7 @@
 
 /***********************************************************************
  *
- * $XConsortium: events.c,v 1.125 89/12/14 14:52:09 jim Exp $
+ * $XConsortium: events.c,v 1.148 90/03/22 18:52:48 jim Exp $
  *
  * twm event handling
  *
@@ -36,9 +36,9 @@
  *
  ***********************************************************************/
 
-#ifndef lint
+#if !defined(lint) && !defined(SABER)
 static char RCSinfo[]=
-"$XConsortium: events.c,v 1.125 89/12/14 14:52:09 jim Exp $";
+"$XConsortium: events.c,v 1.148 90/03/22 18:52:48 jim Exp $";
 #endif
 
 #include <stdio.h>
@@ -56,6 +56,7 @@ static char RCSinfo[]=
 #include "version.h"
 
 extern int iconifybox_width, iconifybox_height;
+extern unsigned int mods_used;
 
 #define MAX_X_EVENT 256
 event_proc EventHandler[MAX_X_EVENT]; /* event handler jump table */
@@ -73,6 +74,8 @@ int DragX;
 int DragY;
 int DragWidth;
 int DragHeight;
+int CurrentDragX;
+int CurrentDragY;
 
 static int enter_flag;
 static int ColortableThrashing;
@@ -307,7 +310,7 @@ HandleEvents()
 		    enter_flag = FALSE;
 		}
 	    }
-	    if (ColortableThrashing && !QLength(dpy)) {
+	    if (ColortableThrashing && !QLength(dpy) && Scr) {
 		InstallWindowColormaps(ColormapNotify, (TwmWindow *) NULL);
 	    }
 	    WindowMoved = FALSE;
@@ -422,9 +425,6 @@ HandleColormapNotify()
 		    n = j*(j-1)/2 + i;
 		Scr->cmapInfo.cmaps->scoreboard[n] = 1;
 	    } else {
-		fprintf (stderr, 
-	 "%s:  client illegally changed colormap (i = %d, j = %d\n", 
-			 ProgramName, i, j);
 		InstallWindowColormaps(ColormapNotify, (TwmWindow *) NULL);
 	    }
 	}
@@ -459,6 +459,10 @@ HandleVisibilityNotify()
     if (XFindContext(dpy, vevent->window, ColormapContext, (caddr_t *)&cwin) == XCNOENT)
 	return;
     
+    /*
+     * when Saber complains about retreiving an <int> from an <unsigned int>
+     * just type "touch vevent->state" and "cont"
+     */
     cmap = cwin->colormap;
     if ((cmap->state & CM_INSTALLABLE) &&
 	vevent->state != cwin->visibility &&
@@ -484,6 +488,7 @@ HandleKeyPress()
 {
     FuncKey *key;
     int len;
+    unsigned int modifier;
 
     if (InfoLines) XUnmapWindow(dpy, Scr->InfoWindow);
     Context = C_NO_CONTEXT;
@@ -506,10 +511,11 @@ HandleKeyPress()
 	    Context = C_ICONMGR;
     }
 
+    modifier = (Event.xkey.state & mods_used);
     for (key = Scr->FuncKeyRoot.next; key != NULL; key = key->next)
     {
 	if (key->keycode == Event.xkey.keycode &&
-	    key->mods == Event.xkey.state &&
+	    key->mods == modifier &&
 	    (key->cont == Context || key->cont == C_NAME))
 	{
 	    /* weed out the functions that don't make sense to execute
@@ -631,8 +637,10 @@ void free_cwins (tmp)
 	    }
 	}
 	free((char *) tmp->cmaps.cwins);
-	if (tmp->cmaps.number_cwins > 1)
+	if (tmp->cmaps.number_cwins > 1) {
 	    free(tmp->cmaps.scoreboard);
+	    tmp->cmaps.scoreboard = NULL;
+	}
 	tmp->cmaps.number_cwins = 0;
     }
 }
@@ -737,8 +745,59 @@ HandlePropertyNotify()
 	  Tmp_win->group = Tmp_win->wmhints->window_group;
 
 	if (!Tmp_win->forced && Tmp_win->wmhints &&
-	    Tmp_win->wmhints->flags & IconWindowHint)
-	  Tmp_win->icon_w = Tmp_win->wmhints->icon_window;
+	    Tmp_win->wmhints->flags & IconWindowHint) {
+	    if (Tmp_win->icon_w) {
+	    	int icon_x, icon_y;
+
+		/*
+		 * There's already an icon window.
+		 * Try to find out where it is; if we succeed, move the new
+		 * window to where the old one is.
+		 */
+		if (XGetGeometry (dpy, Tmp_win->icon_w, &JunkRoot, &icon_x,
+		  &icon_y, &JunkWidth, &JunkHeight, &JunkBW, &JunkDepth)) {
+		    /*
+		     * Move the new icon window to where the old one was.
+		     */
+		    XMoveWindow(dpy, Tmp_win->wmhints->icon_window, icon_x,
+		      icon_y);
+		}
+
+		/*
+		 * If the window is iconic, map the new icon window.
+		 */
+		if (Tmp_win->icon)
+		    XMapWindow(dpy, Tmp_win->wmhints->icon_window);
+
+		/*
+		 * Now, if the old window isn't ours, unmap it, otherwise
+		 * just get rid of it completely.
+		 */
+		if (Tmp_win->icon_not_ours)
+		    XUnmapWindow(dpy, Tmp_win->icon_w);
+		else
+		    XDestroyWindow(dpy, Tmp_win->icon_w);
+
+		/*
+		 * The new icon window isn't our window, so note that fact
+		 * so that we don't treat it as ours.
+		 */
+		Tmp_win->icon_not_ours = TRUE;
+
+		/*
+		 * Now make the new window the icon window for this window,
+		 * and set it up to work as such (select for key presses
+		 * and button presses/releases, set up the contexts for it,
+		 * and define the cursor for it).
+		 */
+		Tmp_win->icon_w = Tmp_win->wmhints->icon_window;
+		XSelectInput (dpy, Tmp_win->icon_w,
+		  KeyPressMask | ButtonPressMask | ButtonReleaseMask);
+		XSaveContext(dpy, Tmp_win->icon_w, TwmContext, (caddr_t)Tmp_win);
+		XSaveContext(dpy, Tmp_win->icon_w, ScreenContext, (caddr_t)Scr);
+		XDefineCursor(dpy, Tmp_win->icon_w, Scr->IconCursor);
+	    }
+	}
 
 	if (Tmp_win->icon_w && !Tmp_win->forced && Tmp_win->wmhints &&
 	    (Tmp_win->wmhints->flags & IconPixmapHint)) {
@@ -762,10 +821,13 @@ HandlePropertyNotify()
 	    if (Tmp_win->icon_bm_w)
 		XDestroyWindow(dpy, Tmp_win->icon_bm_w);
 
-	    Tmp_win->icon_bm_w = XCreateWindow(dpy, Tmp_win->icon_w,
-		0, 0, Tmp_win->icon_width, Tmp_win->icon_height,
-		0, Scr->d_depth, CopyFromParent, Scr->d_visual,
-		valuemask, &attributes);
+	    Tmp_win->icon_bm_w =
+	      XCreateWindow (dpy, Tmp_win->icon_w, 0, 0,
+			     (unsigned int) Tmp_win->icon_width,
+			     (unsigned int) Tmp_win->icon_height,
+			     (unsigned int) 0, Scr->d_depth,
+			     (unsigned int) CopyFromParent, Scr->d_visual,
+			     valuemask, &attributes);
 
 	    XFreePixmap (dpy, pm);
 	    RedoIconName();
@@ -812,6 +874,9 @@ RedoIconName()
     }
 
     if (Tmp_win->icon_w == NULL)
+	return;
+
+    if (Tmp_win->icon_not_ours)
 	return;
 
     Tmp_win->icon_w_width = XTextWidth(Scr->IconFont.font,
@@ -991,6 +1056,30 @@ HandleExpose()
     }
 }
 
+static void remove_window_from_ring (tmp)
+    TwmWindow *tmp;
+{
+    TwmWindow *prev = tmp->ring.prev, *next = tmp->ring.next;
+
+    if (enter_win == tmp) {
+	enter_flag = FALSE;
+	enter_win = NULL;
+    }
+    if (raise_win == Tmp_win) raise_win = NULL;
+
+    /*
+     * 1. Unlink window
+     * 2. If window was only thing in ring, null out ring
+     * 3. If window was ring leader, set to next (or null)
+     */
+    if (prev) prev->ring.next = next;
+    if (next) next->ring.prev = prev;
+    if (Scr->Ring == tmp) 
+      Scr->Ring = (next != tmp ? next : (TwmWindow *) NULL);
+
+    if (!Scr->Ring || Scr->RingLeader == tmp) Scr->RingLeader = Scr->Ring;
+}
+
 /***********************************************************************
  *
  *  Procedure:
@@ -1062,6 +1151,7 @@ HandleDestroyNotify()
      *     8.  iconmgrp
      *     9.  cwins
      *     10. titlebuttons
+     *     11. window ring
      */
     if (Tmp_win->gray) XFreePixmap (dpy, Tmp_win->gray);
 
@@ -1086,6 +1176,8 @@ HandleDestroyNotify()
     free_cwins (Tmp_win);				/* 9 */
     if (Tmp_win->titlebuttons)					/* 10 */
       free ((char *) Tmp_win->titlebuttons);
+    remove_window_from_ring (Tmp_win);				/* 11 */
+
     free((char *)Tmp_win);
 }
 
@@ -1223,6 +1315,8 @@ HandleMapNotify()
     Tmp_win->icon_on = FALSE;
 }
 
+
+
 /***********************************************************************
  *
  *  Procedure:
@@ -1256,20 +1350,6 @@ HandleUnmapNotify()
     if (Tmp_win == NULL || (!Tmp_win->mapped && !Tmp_win->icon))
 	return;
 
-    if (enter_win == Tmp_win) enter_win = NULL;
-
-    if (Scr->RingLeader && Scr->RingLeader == Tmp_win)
-      Scr->RingLeader = (TwmWindow *) NULL;
-    if (Tmp_win->ring.next) {
-	if (Tmp_win->ring.next != Tmp_win) {
-	    Tmp_win->ring.next->ring.prev = Tmp_win->ring.prev;
-	    Tmp_win->ring.prev->ring.next = Tmp_win->ring.next;
-	    Scr->Ring = Tmp_win->ring.next;
-	} else {
-	    Scr->Ring = (TwmWindow *) NULL;
-	}
-    }
-
     /*
      * The program may have unmapped the client window, from either
      * NormalState or IconicState.  Handle the transition to WithdrawnState.
@@ -1288,7 +1368,7 @@ HandleUnmapNotify()
 	RestoreWithdrawnLocation (Tmp_win);
 	XRemoveFromSaveSet (dpy, Event.xunmap.window);
 	HandleDestroyNotify ();		/* do not need to mash event before */
-    }
+    } /* else window no longer exists and we'll get a destroy notify */
     XUngrabServer (dpy);
     XFlush (dpy);
 }
@@ -1376,13 +1456,15 @@ HandleButtonRelease()
 		yt = Scr->MyDisplayHeight - h;
 	}
 
+	CurrentDragX = xl;
+	CurrentDragY = yt;
 	if (DragWindow == Tmp_win->frame)
 	    SetupWindow (Tmp_win, xl, yt,
 			 Tmp_win->frame_width, Tmp_win->frame_height, -1);
 	else
 	    XMoveWindow (dpy, DragWindow, xl, yt);
 
-	if (!Scr->NoRaiseMove)
+	if (!Scr->NoRaiseMove && !Scr->OpaqueMove)    /* opaque already did */
 	    XRaiseWindow(dpy, DragWindow);
 
 	if (!Scr->OpaqueMove)
@@ -1454,6 +1536,7 @@ HandleButtonRelease()
     {
 	XUngrabPointer(dpy, CurrentTime);
 	XUngrabServer(dpy);
+	XFlush(dpy);
 	EventHandler[EnterNotify] = HandleEnterNotify;
 	EventHandler[LeaveNotify] = HandleLeaveNotify;
 	ButtonPressed = -1;
@@ -1505,7 +1588,7 @@ static do_menu (menu, w)
 void
 HandleButtonPress()
 {
-    int modifier;
+    unsigned int modifier;
     Cursor cur;
 
     /* pop down the menu, if any */
@@ -1524,6 +1607,8 @@ HandleButtonPress()
 	 * down, we need to cancel the operation we were doing
 	 */
 	Cancel = TRUE;
+	CurrentDragX = origDragX;
+	CurrentDragY = origDragY;
 	if (Scr->OpaqueMove && DragWindow != None) {
 	    XMoveWindow (dpy, DragWindow, origDragX, origDragY);
 	} else {
@@ -1669,7 +1754,7 @@ HandleButtonPress()
     /* if we get to here, we have to execute a function or pop up a 
      * menu
      */
-    modifier = Event.xbutton.state & (ShiftMask | ControlMask | Mod1Mask);
+    modifier = (Event.xbutton.state & mods_used);
 
     if (Context == C_NO_CONTEXT)
 	return;
@@ -1678,7 +1763,7 @@ HandleButtonPress()
     if (Scr->Mouse[Event.xbutton.button][Context][modifier].func == F_MENU)
     {
 	do_menu (Scr->Mouse[Event.xbutton.button][Context][modifier].menu,
-		 None);
+		 (Window) None);
     }
     else if (Scr->Mouse[Event.xbutton.button][Context][modifier].func != NULL)
     {
@@ -1691,7 +1776,7 @@ HandleButtonPress()
     {
 	if (Scr->DefaultFunction.func == F_MENU)
 	{
-	    do_menu (Scr->DefaultFunction.menu, None);
+	    do_menu (Scr->DefaultFunction.menu, (Window) None);
 	}
 	else
 	{
@@ -1858,6 +1943,7 @@ HandleEnterNotify()
 	     */
 	    if (Tmp_win->ring.next && (!enter_flag || raise_win == enter_win))
 	      Scr->RingLeader = Tmp_win;
+	    XSync (dpy, 0);
 	    return;
 	}				/* end if Tmp_win */
     }					/* end if !ActiveMenu */
@@ -1872,6 +1958,7 @@ HandleEnterNotify()
 	if (Scr->Shadow) XUnmapWindow (dpy, ActiveMenu->shadow);
 	XUnmapWindow (dpy, ActiveMenu->w);
 	ActiveMenu->mapped = UNMAPPED;
+	UninstallRootColormap ();
 	if (ActiveItem) ActiveItem->state = 0;
 	ActiveItem = NULL;
 	ActiveMenu = mr;
@@ -1988,6 +2075,7 @@ HandleLeaveNotify()
 		}
 	    }
 	}
+	XSync (dpy, 0);
 	return;
     }
 }
@@ -2026,7 +2114,15 @@ HandleConfigureRequest()
 	fprintf(stderr, "  stack = %d\n", cre->detail);
 #endif
 
-    Event.xany.window = cre->window;	/* effectively mashing parent field */
+    /*
+     * Event.xany.window is Event.xconfigurerequest.parent, so Tmp_win will
+     * be wrong
+     */
+    Event.xany.window = cre->window;	/* mash parent field */
+    if (XFindContext (dpy, cre->window, TwmContext, (caddr_t *) &Tmp_win) ==
+	XCNOENT)
+      Tmp_win = NULL;
+
 
     /*
      * According to the July 27, 1988 ICCCM draft, we should ignore size and
@@ -2046,15 +2142,18 @@ HandleConfigureRequest()
 	return;
     }
 
-    if (cre->value_mask & CWStackMode)
-    {
-	if (cre->detail == Above)
-	    XRaiseWindow(dpy, Tmp_win->frame);
-	else if (cre->detail == Below)
-	    XLowerWindow(dpy, Tmp_win->frame);
+    if ((cre->value_mask & CWStackMode) && Tmp_win->stackmode) {
+	TwmWindow *otherwin;
 
-	return;
+	xwc.sibling = (((cre->value_mask & CWSibling) &&
+			(XFindContext (dpy, cre->above, TwmContext,
+				       (caddr_t *) &otherwin) == XCSUCCESS))
+		       ? otherwin->frame : cre->above);
+	xwc.stack_mode = cre->detail;
+	XConfigureWindow (dpy, Tmp_win->frame, 
+			  cre->value_mask & (CWSibling | CWStackMode), &xwc);
     }
+
 
     /* Don't modify frame_XXX fields before calling SetupWindow! */
     x = Tmp_win->frame_x;
@@ -2076,26 +2175,30 @@ HandleConfigureRequest()
     GetGravityOffsets (Tmp_win, &gravx, &gravy);
 
     if (cre->value_mask & CWBorderWidth) {
-	int bwdelta = cre->border_width - Tmp_win->old_bw;
+	int bwdelta = cre->border_width - Tmp_win->old_bw;  /* posit growth */
 	if (bwdelta && Scr->ClientBorderWidth) {  /* if change allowed */
 	    x += gravx * bwdelta;	/* change default values only */
 	    y += gravy * bwdelta;	/* ditto */
 	    bw = cre->border_width;
+	    if (Tmp_win->title_height) height += bwdelta;
+	    x += (gravx < 0) ? bwdelta : -bwdelta;
+	    y += (gravy < 0) ? bwdelta : -bwdelta;
 	}
 	Tmp_win->old_bw = cre->border_width;  /* for restoring */
     }
-    if (cre->value_mask & CWX) {
-	x = cre->x;			/* override even if border change */
+
+    if (cre->value_mask & CWX) {	/* override even if border change */
+	x = cre->x - bw;
     }
     if (cre->value_mask & CWY) {
-	y = cre->y - ((gravy >= 0) ? Tmp_win->title_height : 0);
+	y = cre->y - ((gravy < 0) ? 0 : Tmp_win->title_height) - bw;
     }
 
     if (cre->value_mask & CWWidth) {
 	width = cre->width;
     }
     if (cre->value_mask & CWHeight) {
-	height = cre->height + Tmp_win->title_height;
+	height = cre->height + Scr->TitleHeight + bw;
     }
 
     if (width != Tmp_win->frame_width || height != Tmp_win->frame_height)
@@ -2103,7 +2206,10 @@ HandleConfigureRequest()
 
     /*
      * SetupWindow (x,y) are the location of the upper-left outer corner and
-     * are passed directly to XMoveResizeWindow (frame).
+     * are passed directly to XMoveResizeWindow (frame).  The (width,height)
+     * are the inner size of the frame.  The inner width is the same as the 
+     * requested client window width; the inner height is the same as the
+     * requested client window height plus any title bar slop.
      */
     SetupWindow (Tmp_win, x, y, width, height, bw);
 }
@@ -2439,3 +2545,4 @@ dumpevent (e)
     }
 }
 #endif /* TRACE */
+
