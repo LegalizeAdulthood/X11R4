@@ -1,7 +1,7 @@
 /*
  * xdm - display manager daemon
  *
- * $XConsortium: cryptokey.c,v 1.1 89/12/13 15:22:52 keith Exp $
+ * $XConsortium: cryptokey.c,v 1.2 90/02/07 18:47:29 keith Exp $
  *
  * Copyright 1988 Massachusetts Institute of Technology
  *
@@ -40,8 +40,10 @@ static long	key[2];
 #  endif
 #  ifdef sun
 #   define USE_CRYPT
-    /* avoid strange sun crypt hackery */
-#   define crypt _crypt
+#   if (OSMAJORVERSION >= 4)
+     /* avoid strange sun crypt hackery */
+#    define crypt _crypt
+#   endif
 #  endif
 # endif
 #endif

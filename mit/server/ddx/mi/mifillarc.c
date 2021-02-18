@@ -17,7 +17,7 @@ Author:  Bob Scheifler, MIT X Consortium
 
 ********************************************************/
 
-/* $XConsortium: mifillarc.c,v 5.9 89/11/05 13:03:44 rws Exp $ */
+/* $XConsortium: mifillarc.c,v 5.10 90/02/09 10:12:04 rws Exp $ */
 
 #include <math.h>
 #include "X.h"
@@ -203,6 +203,7 @@ miGetPieEdge(arc, angle, edge, top, left)
 
     if ((angle == 0) || (angle == HALFCIRCLE))
     {
+    horz:
 	edge->x = left ? -65536 : 65536;
 	edge->stepx = 0;
 	edge->e = 0;
@@ -211,6 +212,7 @@ miGetPieEdge(arc, angle, edge, top, left)
     }
     if ((angle == QUADRANT) || (angle == QUADRANT3))
     {
+    vert:
 	edge->x = arc->x + (arc->width >> 1);
 	if (left && (arc->width & 1))
 	    edge->x++;
@@ -239,7 +241,9 @@ miGetPieEdge(arc, angle, edge, top, left)
 	signdx = 1;
     scale = (dx > dy) ? dx : dy;
     edge->dx = floor((dx * 32768) / scale + .5);
+    if (!edge->dx) goto vert; /* gross */
     edge->dy = floor((dy * 32768) / scale + .5);
+    if (!edge->dy) goto horz; /* gross */
     if (signdx < 0)
 	edge->dx = -edge->dx;
     if (signdy < 0)

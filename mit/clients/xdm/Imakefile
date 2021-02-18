@@ -39,9 +39,14 @@ LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) \
        PROGRAMS = xdm xdmshell sessreg
 
 #if !HasVoidSignalReturn
-     SIGDEFS = -DSIGNALRETURNSINT
+        SIGDEFS = -DSIGNALRETURNSINT
 #endif
-        DEFINES = -DBINDIR=\"$(BINDIR)\" -DXDMDIR=\"$(XDMDIR)\" $(SIGDEFS) $(DESDEFS) ConnectionFlags
+ OSMAJORVERSION = OSMajorVersion
+ OSMINORVERSION = OSMinorVersion
+        DEFINES = -DBINDIR=\"$(BINDIR)\" -DXDMDIR=\"$(XDMDIR)\" $(SIGDEFS) \
+		$(DESDEFS) ConnectionFlags \
+		-DOSMAJORVERSION=$(OSMAJORVERSION) \
+		-DOSMINORVERSION=$(OSMINORVERSION)
 
 /**/#
 /**/# Special definitions for compiling default resources; these parameters

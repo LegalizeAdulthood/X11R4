@@ -1,5 +1,5 @@
 #if (!defined(lint) && !defined(SABER))
-static char Xrcsid[] = "$XConsortium: TextPop.c,v 1.9 89/11/08 13:44:39 kit Exp $";
+static char Xrcsid[] = "$XConsortium: TextPop.c,v 1.10 90/02/01 16:21:22 kit Exp $";
 #endif /* lint && SABER */
 
 /***********************************************************
@@ -949,6 +949,11 @@ Boolean once_only, show_current;
       return(FALSE);
     }      
 
+    if (dir == XawsdRight)
+      XawTextSetInsertionPoint( tw, pos + replace.length);
+    else
+      XawTextSetInsertionPoint( tw, pos);
+
     if (once_only) 
       if (show_current)
 	break;
@@ -958,11 +963,6 @@ Boolean once_only, show_current;
       }
     count++;
   }
-
-  if (dir == XawsdRight)
-    XawTextSetInsertionPoint( tw, pos + replace.length);
-  else
-    XawTextSetInsertionPoint( tw, pos);
 
   if (replace.length == 0)
     XawTextUnsetSelection(tw);

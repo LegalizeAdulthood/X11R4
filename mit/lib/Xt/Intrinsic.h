@@ -1,5 +1,5 @@
 /*
-* $XConsortium: Intrinsic.h,v 1.130 89/12/15 17:20:05 swick Exp $
+* $XConsortium: Intrinsic.h,v 1.131 90/02/06 17:41:27 converse Exp $
 * $oHeader: Intrinsic.h,v 1.10 88/09/01 10:33:34 asente Exp $
 */
 
@@ -2144,7 +2144,7 @@ extern void XtGetErrorDatabaseText(
 
 #define XtNew(type) ((type *) XtMalloc((unsigned) sizeof(type)))
 #define XtNewString(str) \
-    ((str) == NULL ? NULL : (strcpy(XtMalloc((unsigned)strlen(str) + 1), str)))
+    ((str) != NULL ? (strcpy(XtMalloc((unsigned)strlen(str) + 1), str)) : NULL)
 
 extern char *XtMalloc(
 #if NeedFunctionPrototypes

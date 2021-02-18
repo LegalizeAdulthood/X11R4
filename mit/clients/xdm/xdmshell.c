@@ -67,9 +67,9 @@ static char *SysErrorMsg (n)
 }
 
 
-static int exec_one_arg (filename, arg)
+static int exec_args (filename, args)
     char *filename;
-    char *arg;
+    char **args;
 {
     int pid;
     waitType status;
@@ -94,7 +94,7 @@ static int exec_one_arg (filename, arg)
       case -1:						/* error */
 	return -1;
       case 0:    					/* child */
-	execl (filename, filename, arg, 0);
+	execv (filename, args);
 	_exit (1);
 	/* NOTREACHED */
       default:						/* parent */
@@ -103,6 +103,17 @@ static int exec_one_arg (filename, arg)
     return waitCode (status);
 }
 
+static int exec_one_arg (filename, arg)
+    char    *filename;
+    char    *arg;
+{
+    char    *argv[3];
+
+    argv[0] = filename;
+    argv[1] = arg;
+    argv[2] = NULL;
+    return exec_args (filename, argv);
+}
 
 main (argc, argv)
     int argc;
@@ -110,6 +121,7 @@ main (argc, argv)
 {
     int ttyfd;
     char cmdbuf[256];
+    char *args[10];
 #ifdef ON_CONSOLE_ONLY
     int consfd;
     int ttypgrp, conspgrp;
@@ -172,13 +184,20 @@ main (argc, argv)
     }
 #endif
 
+    /* make xdm run in a non-setuid environment */
+    setuid (geteuid());
 
     /*
-     * exec /usr/bin/X11/xdm -nodaemon
+     * exec /usr/bin/X11/xdm -nodaemon -udpPort 0
      */
     strcpy (cmdbuf, BINDIR);
     strcat (cmdbuf, "/xdm");
-    if (exec_one_arg (cmdbuf, "-nodaemon") == -1) {
+    args[0] = cmdbuf;
+    args[1] = "-nodaemon";
+    args[2] = "-udpPort";
+    args[3] = "0";
+    args[4] = NULL;
+    if (exec_args (cmdbuf, args) == -1) {
 	fprintf (stderr, "%s:  unable to execute %s (error %d, %s)\r\n",
 		 ProgramName, cmdbuf, errno, SysErrorMsg(errno));
 	exit (1);

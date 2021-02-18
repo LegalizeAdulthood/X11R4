@@ -21,7 +21,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $XConsortium: qvss_io.c,v 1.101 89/12/16 20:35:19 rws Exp $ */
+/* $XConsortium: qvss_io.c,v 1.102 90/02/09 10:23:37 rws Exp $ */
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -273,8 +273,6 @@ qvssScreenInit(index, pScreen, argc, argv)
     }
     qLimit = queue->size - 1;
 
-    i = monitorResolution ? monitorResolution : 80;
-
     blackValue = NULL;
     SpecificB = FALSE;
     whiteValue = NULL;
@@ -353,6 +351,8 @@ qvssScreenInit(index, pScreen, argc, argv)
     pScreen->PointerNonInterestBox = qvPointerNonInterestBox;
     pScreen->ConstrainCursor = qvConstrainCursor;
     pScreen->RecolorCursor = miRecolorCursor;
+
+    i = monitorResolution ? monitorResolution : 80;
 
 #ifdef ULTRIX3_0
     if (isSMdevice)

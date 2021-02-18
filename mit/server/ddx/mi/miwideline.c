@@ -1,5 +1,5 @@
 /*
- * $XConsortium: miwideline.c,v 1.27 90/01/23 15:36:25 keith Exp $
+ * $XConsortium: miwideline.c,v 1.28 90/02/09 14:17:14 keith Exp $
  *
  * Copyright 1988 Massachusetts Institute of Technology
  *
@@ -1666,11 +1666,13 @@ miWideDashSegment (pDrawable, pGC, spanData, pDashOffset, pDashIndex,
 	    {
 		lcapFace.xa = -vertices[V_LEFT].x;
 		lcapFace.ya = -vertices[V_LEFT].y;
+		lcapFace.k = slopes[V_LEFT].k;
 	    }
 	    else
 	    {
 		lcapFace.xa = vertices[V_TOP].x;
 		lcapFace.ya = vertices[V_TOP].y;
+		lcapFace.k = -slopes[V_LEFT].k;
 	    }
 	    miLineArc (pDrawable, pGC, pixel, spanData,
 		       &lcapFace, (LineFacePtr) NULL,

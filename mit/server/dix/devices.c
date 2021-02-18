@@ -23,7 +23,7 @@ SOFTWARE.
 ********************************************************/
 
 
-/* $XConsortium: devices.c,v 5.5 89/11/07 10:45:09 rws Exp $ */
+/* $XConsortium: devices.c,v 5.6 90/01/25 14:22:44 rws Exp $ */
 
 #include "X.h"
 #include "misc.h"
@@ -38,6 +38,7 @@ SOFTWARE.
 #include "dixstruct.h"
 
 extern InputInfo inputInfo;
+extern int (* InitialVector[3]) ();
 extern void (* ReplySwapVector[256]) ();
 extern void CopySwap32Write(), SwapTimeCoordWrite();
 extern void ActivatePointerGrab(), DeactivatePointerGrab();
@@ -531,7 +532,8 @@ SendMappingNotify(request, firstKeyCode, count)
     }
     /* 0 is the server client */
     for (i=1; i<currentMaxClients; i++)
-        if (clients[i] && ! clients[i]->clientGone)
+        if (clients[i] && ! clients[i]->clientGone &&
+	    (clients[i]->requestVector != InitialVector))
 	{
 	    event.u.u.sequenceNumber = clients[i]->sequence;
             WriteEventsToClient(clients[i], 1, &event);

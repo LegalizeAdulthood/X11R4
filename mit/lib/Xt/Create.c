@@ -1,5 +1,5 @@
 #ifndef lint
-static char Xrcsid[] = "$XConsortium: Create.c,v 1.67 90/01/23 11:29:41 swick Exp $";
+static char Xrcsid[] = "$XConsortium: Create.c,v 1.68 90/01/24 16:04:57 swick Exp $";
 /* $oHeader: Create.c,v 1.5 88/09/01 11:26:22 asente Exp $ */
 #endif /*lint*/
 
@@ -167,9 +167,10 @@ static Widget _XtCreate(
 {
     register _XtOffsetList  offsetList;
     XtCallbackList          *pCallbacks;
-    char                    widget_cache[600];
+    /* need to use strictest alignment rules possible in next two decls. */
+    double                  widget_cache[100];
+    double                  constraint_cache[20];
     Widget                  req_widget;
-    char                    constraint_cache[100];
     XtPointer               req_constraints;
     Cardinal                size;
     register Widget	    widget;

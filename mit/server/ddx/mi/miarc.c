@@ -21,7 +21,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $XConsortium: miarc.c,v 5.13 89/12/06 18:20:00 keith Exp $ */
+/* $XConsortium: miarc.c,v 5.14 90/01/29 20:35:51 keith Exp $ */
 /* Author: Keith Packard */
 
 #include <math.h>
@@ -479,7 +479,7 @@ angleBetween (center, point1, point2)
 	a1 = miDatan2 (- (point1.y - center.y), point1.x - center.x);
 	a2 = miDatan2 (- (point2.y - center.y), point2.x - center.x);
 	a = a2 - a1;
-	if (a < -180.0)
+	if (a <= -180.0)
 		a += 360.0;
 	else if (a > 180.0)
 		a -= 360.0;
@@ -1642,7 +1642,7 @@ drawZeroArc (pDraw, pGC, tarc, left, right)
 	double	xmax, ymax, xmin, ymin;
 	int	a0, a1;
 	double	a, startAngle, endAngle;
-	double	l;
+	double	l, lx, ly;
 
 	l = pGC->lineWidth;
 	if (l == 0)
@@ -1706,6 +1706,32 @@ drawZeroArc (pDraw, pGC, tarc, left, right)
 				a = 90 * (ceil (a/90.0) - 1);
 		}
 	}
+	lx = ly = l;
+	if ((x1 - x0) + (y1 - y0) < 0)
+	    lx = ly = -l;
+	if (h)
+	    ly = 0.0;
+	else
+	    lx = 0.0;
+	if (right)
+	{
+	    right->center.x = x0;
+	    right->center.y = y0;
+	    right->clock.x = x0 - lx;
+	    right->clock.y = y0 - ly;
+	    right->counterClock.x = x0 + lx;
+	    right->counterClock.y = y0 + ly;
+	}
+	if (left)
+ 	{
+	    left->center.x = x1;
+	    left->center.y = y1;
+	    left->clock.x = x1 + lx;
+	    left->clock.y = y1 + ly;
+	    left->counterClock.x = x1 - lx;
+	    left->counterClock.y = y1 - ly;
+	}
+	
 	x0 = xmin;
 	x1 = xmax;
 	y0 = ymin;
@@ -1730,40 +1756,6 @@ drawZeroArc (pDraw, pGC, tarc, left, right)
 		rect.width = maxx - minx;
 		rect.height = maxy - miny;
 		(*pGC->ops->PolyFillRect) (pDraw, pGC, 1, &rect);
-	}
-	if (right) {
-		if (h != 0) {
-			right->clock.x = x1;
-			right->clock.y = y0;
-			right->center.x = 0;
-			right->center.y = y0;
-			right->counterClock.x = x0;
-			right->counterClock.y = y0;
-		} else {
-			right->clock.x = x0;
-			right->clock.y = y0;
-			right->center.x = x0;
-			right->center.y = 0;
-			right->counterClock.x = x0;
-			right->counterClock.y = y1;
-		}
-	}
-	if (left) {
-		if (h != 0) {
-			left->clock.x = x0;
-			left->clock.y = y1;
-			left->center.x = 0;
-			left->center.y = y1;
-			left->counterClock.x = x1;
-			left->counterClock.y = y1;
-		} else {
-			left->clock.x = x1;
-			left->clock.y = y1;
-			left->center.x = x1;
-			left->center.y = 0;
-			left->counterClock.x = x1;
-			left->counterClock.y = y0;
-		}
 	}
 }
 

@@ -119,9 +119,6 @@ cfbScreenInit(pScreen, pbits, xsize, ysize, dpix, dpiy, width)
 
     if (cfbGeneration != serverGeneration)
     {
-	if (!mfbAllocatePrivates(pScreen,
-				 &cfbWindowPrivateIndex, &cfbGCPrivateIndex))
-	    return FALSE;
 	/*  Set up the visual IDs */
 	for (i = 0; i < NUMVISUALS; i++) {
 	    visuals[i].vid = FakeClientID(0);
@@ -129,7 +126,9 @@ cfbScreenInit(pScreen, pbits, xsize, ysize, dpix, dpiy, width)
 	}
 	cfbGeneration = serverGeneration;
     }
-
+    if (!mfbAllocatePrivates(pScreen,
+			     &cfbWindowPrivateIndex, &cfbGCPrivateIndex))
+	return FALSE;
     if (!AllocateWindowPrivate(pScreen, cfbWindowPrivateIndex,
 			       sizeof(cfbPrivWin)) ||
 	!AllocateGCPrivate(pScreen, cfbGCPrivateIndex, sizeof(cfbPrivGC)))

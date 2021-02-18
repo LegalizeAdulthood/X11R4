@@ -1,7 +1,7 @@
 /*
  * xdm - display manager daemon
  *
- * $XConsortium: session.c,v 1.28 89/12/19 19:50:18 rws Exp $
+ * $XConsortium: session.c,v 1.29 90/02/07 18:47:19 keith Exp $
  *
  * Copyright 1988 Massachusetts Institute of Technology
  *
@@ -329,7 +329,7 @@ int			*pidp;
 		}
 	if (verify->argv) {
 		Debug ("executing session %s\n", verify->argv[0]);
-		execve (verify->argv[0], verify->argv, verify->userEnviron);
+		execute (verify->argv, verify->userEnviron);
 		LogError ("Session execution failed %s\n", verify->argv[0]);
 		Debug ("exec failed\n");
 	} else {
@@ -337,7 +337,7 @@ int			*pidp;
 	}
 	failsafeArgv[0] = d->failsafeClient;
 	failsafeArgv[1] = 0;
-	execve (failsafeArgv[0], failsafeArgv, verify->userEnviron);
+	execute (failsafeArgv, verify->userEnviron);
 	exit (1);
     case -1:
 	Debug ("StartSession, fork failed\n");

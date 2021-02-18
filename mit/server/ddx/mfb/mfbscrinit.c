@@ -21,7 +21,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $XConsortium: mfbscrinit.c,v 5.9 89/09/12 14:25:48 keith Exp $ */
+/* $XConsortium: mfbscrinit.c,v 5.10 90/01/23 15:39:27 rws Exp $ */
 
 #include "X.h"
 #include "Xproto.h"	/* for xColorItem */
@@ -75,11 +75,11 @@ mfbAllocatePrivates(pScreen, pWinIndex, pGCIndex)
 	visual.vid = FakeClientID(0);
 	VID = visual.vid;
 	mfbGeneration = serverGeneration;
-	if (pWinIndex)
-	    *pWinIndex = mfbWindowPrivateIndex;
-	if (pGCIndex)
-	    *pGCIndex = mfbGCPrivateIndex;
     }
+    if (pWinIndex)
+	*pWinIndex = mfbWindowPrivateIndex;
+    if (pGCIndex)
+	*pGCIndex = mfbGCPrivateIndex;
     return (AllocateWindowPrivate(pScreen, mfbWindowPrivateIndex,
 				  sizeof(mfbPrivWin)) &&
 	    AllocateGCPrivate(pScreen, mfbGCPrivateIndex, sizeof(mfbPrivGC)));
