@@ -1,3 +1,12 @@
+find_package(X11 REQUIRED)
+
+include(CheckLibraryExists)
+check_library_exists(m sin "" HAVE_LIB_M)
+set(LIBM)
+if(HAVE_LIB_M)
+    set(LIBM m)
+endif()
+
 add_library(xgks
     act_ws.c
     aspect_flags.c
@@ -69,7 +78,8 @@ add_library(xgks
     ../../include/x/colours.h
     ../../include/x/xevent.h
     )
-target_include_directories(xgks PUBLIC ../../include)
 target_compile_definitions(xgks PRIVATE "FONTDBDIR=\"${CMAKE_CURRENT_SOURCE_DIR}/../../fontdb\"")
+target_include_directories(xgks PUBLIC ../../include ${X11_INCLUDE_DIR})
+target_link_libraries(xgks PUBLIC ${X11_LIBRARIES} ${LIBM})
 
 add_executable(mkerrmsg mkerrmsg.c)

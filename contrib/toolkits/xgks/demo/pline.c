@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -22,10 +22,10 @@
  * University of Illinois at Urbana-Champaign
  * Department of Computer Science
  * 1304 W. Springfield Ave.
- * Urbana, IL	61801
+ * Urbana, IL   61801
  *
  * (C) Copyright 1987, 1988 by The University of Illinois Board of Trustees.
- *	All rights reserved.
+ *      All rights reserved.
  *
  * Tool: X 11 Graphical Kernel System
  * Author: Gregory Scott Rogers
@@ -38,27 +38,27 @@ static char rcsid[] = "$Header: pline.c,v 4.0 89/09/01 14:23:49 amy Exp $";
 
 static
 WaitForBreak( ws_id )
-	Gint ws_id;
+        Gint ws_id;
 {
-	Gchoice init;
-	Gchoicerec record;
-	Glimit earea;		/*MIT*/
+        Gchoice init;
+        Gchoicerec record;
+        Glimit earea;           /*MIT*/
 
-	earea.xmin = 0.0;	/*MIT*/
-	earea.xmax = 1279.0;	/*MIT*/
-	earea.ymin = 0.0;	/*MIT*/
-	earea.ymax = 1023.0;	/*MIT*/
+        earea.xmin = 0.0;       /*MIT*/
+        earea.xmax = 1279.0;    /*MIT*/
+        earea.ymin = 0.0;       /*MIT*/
+        earea.ymax = 1023.0;    /*MIT*/
 
-	init.status = GC_NOCHOICE;
-	init.choice = 0;
-	record.pet1.data = NULL;
-	ginitchoice( ws_id, 1, &init, 1, &earea, &record );
-	gsetchoicemode( ws_id, 1, GREQUEST, GECHO );
-	for( ; init.status != GC_NONE ; )
-		greqchoice( ws_id, 1, &init );
+        init.status = GC_NOCHOICE;
+        init.choice = 0;
+        record.pet1.data = NULL;
+        ginitchoice( ws_id, 1, &init, 1, &earea, &record );
+        gsetchoicemode( ws_id, 1, GREQUEST, GECHO );
+        for( ; init.status != GC_NONE ; )
+                greqchoice( ws_id, 1, &init );
 }
 
-Gint	ws_id = 1;
+Gint    ws_id = 1;
 
 Gint result;
 
@@ -66,121 +66,121 @@ main(argc,argv)
 int argc;
 char *argv[];
 {
-	if ((result = gopengks(stdout,0)) != 0) 
-		perr(result,"...open_gks");
+        if ((result = gopengks(stdout,0)) != 0)
+                perr(result,"...open_gks");
 
-	if ((result = gopenws(ws_id,argv[1],argv[1])) != 0)
-		perr(result, "...open_ws");
+        if ((result = gopenws(ws_id,argv[1],argv[1])) != 0)
+                perr(result, "...open_ws");
 
-	if ((result = gactivatews(ws_id)) != 0)
-		perr(result, "...activate_ws");
+        if ((result = gactivatews(ws_id)) != 0)
+                perr(result, "...activate_ws");
 
-	test_pline();
+        test_pline();
 
-	fprintf(stderr,"Done, press break...\n"); 
-	
-	WaitForBreak (1);
+        fprintf(stderr,"Done, press break...\n");
 
-	if ((result = gdeactivatews(ws_id)) != 0)
-		perr(result, "...deactivate_ws");
+        WaitForBreak (1);
 
-	if ((result = gclosews(ws_id)) != 0)
-		perr(result, "...close_ws");
+        if ((result = gdeactivatews(ws_id)) != 0)
+                perr(result, "...deactivate_ws");
 
-	if ((result = gclosegks()) != 0)
-		perr(result,"...close_gks");
-	exit(0);
+        if ((result = gclosews(ws_id)) != 0)
+                perr(result, "...close_ws");
+
+        if ((result = gclosegks()) != 0)
+                perr(result,"...close_gks");
+        exit(0);
 }
 
 perr(i,s)
 int i;
 char *s;
 {
-	fprintf(stdout,"%s %d\n",s,i);
-	exit(1);
+        fprintf(stdout,"%s %d\n",s,i);
+        exit(1);
 }
 
-#define BLACK	0
-#define BLUE	1
-#define GREEN	2
-#define CYAN	3
-#define RED	4
-#define MAGENTA	5
-#define YELLOW	6
-#define WHITE	7
+#define BLACK   0
+#define BLUE    1
+#define GREEN   2
+#define CYAN    3
+#define RED     4
+#define MAGENTA 5
+#define YELLOW  6
+#define WHITE   7
 
 Gcobundl Colors[] = {
-	{ 0.0, 0.0, 0.0 },
-	{ 0.0, 0.0, 1.0 },
-	{ 0.0, 1.0, 0.0 },
-	{ 0.0, 1.0, 1.0 },
-	{ 1.0, 0.0, 0.0 },
-	{ 1.0, 0.0, 1.0 },
-	{ 1.0, 1.0, 0.0 },
-	{ 1.0, 1.0, 1.0 }
+        { 0.0, 0.0, 0.0 },
+        { 0.0, 0.0, 1.0 },
+        { 0.0, 1.0, 0.0 },
+        { 0.0, 1.0, 1.0 },
+        { 1.0, 0.0, 0.0 },
+        { 1.0, 0.0, 1.0 },
+        { 1.0, 1.0, 0.0 },
+        { 1.0, 1.0, 1.0 }
 };
 
 LoadColors(ws_id)
-	Gint ws_id;
+        Gint ws_id;
 {
-	int i;
+        int i;
 
-	for(i=BLACK; i<=WHITE; i++)
-		gsetcolorrep( ws_id, i, &Colors[i]);
+        for(i=BLACK; i<=WHITE; i++)
+                gsetcolorrep( ws_id, i, &Colors[i]);
 }
 
 int lntbl[] = { GLN_LDASH, GLN_DDOTDASH, GLN_SDASH, GLN_SOLID,
-	GLN_DASH, GLN_DOT, GLN_DOTDASH };
+        GLN_DASH, GLN_DOT, GLN_DOTDASH };
 test_pline ()
 {
-	Gpoint lpts[2], tpt;
-	Gint i;
-	char s[20];
-	Gpoint up;
-	Gtxfp txfp;
-	Gtxalign align;
-	
-	LoadColors(ws_id);
-	gsetdeferst(ws_id, GASAP, GALLOWED);
+        Gpoint lpts[2], tpt;
+        Gint i;
+        char s[20];
+        Gpoint up;
+        Gtxfp txfp;
+        Gtxalign align;
 
-	txfp.font = 4;
-	txfp.prec = GSTROKE;
-	gsettextfontprec (&txfp);
-	gsetcharexpan(0.5);
-	gsetcharspace(0.2);
-	gsettextcolorind(WHITE);
+        LoadColors(ws_id);
+        gsetdeferst(ws_id, GASAP, GALLOWED);
 
-	gsetcharheight(0.05);
-	up.x = 0.0; up.y = 1.0;
-	gsetcharup(&up);
-	align.hor = GTH_CENTER;
-	align.ver = GTV_BASE;
-	gsettextalign(&align);
-	gsettextpath(GTP_RIGHT);
+        txfp.font = 4;
+        txfp.prec = GSTROKE;
+        gsettextfontprec (&txfp);
+        gsetcharexpan(0.5);
+        gsetcharspace(0.2);
+        gsettextcolorind(WHITE);
 
-	tpt.x = 0.5; tpt.y = 0.9;
-	gtext(&tpt,"GKS POLYLINES");
+        gsetcharheight(0.05);
+        up.x = 0.0; up.y = 1.0;
+        gsetcharup(&up);
+        align.hor = GTH_CENTER;
+        align.ver = GTV_BASE;
+        gsettextalign(&align);
+        gsettextpath(GTP_RIGHT);
 
-	txfp.font = 1;
-	txfp.prec = GSTROKE;
-	gsettextfontprec(&txfp);
-	gsetcharheight(0.03);
-	align.hor = GTH_RIGHT;
-	align.ver = GTV_HALF;
-	gsettextalign(&align);
+        tpt.x = 0.5; tpt.y = 0.9;
+        gtext(&tpt,"GKS POLYLINES");
 
-	tpt.x = 0.15; tpt.y = 0.9;
-	lpts[0].x = 0.2; lpts[0].y = 0.9;
-	lpts[1].x = 0.9; lpts[1].y = 0.9;
-	for(i=1; i<9; i++) {
-		tpt.y -= 0.1;
-		sprintf(s,"width %5.2f",(float)(2.0*i));
-		gtext(&tpt, s);
-		gsetlinetype( lntbl[(i%7)] );
-		gsetlinewidth( (float) (2.0*i));
-		gsetlinecolorind( (i%7)+1 ); 
-		lpts[0].y -= 0.1;
-		lpts[1].y -= 0.1;
-		gpolyline(2, lpts);
-	}
+        txfp.font = 1;
+        txfp.prec = GSTROKE;
+        gsettextfontprec(&txfp);
+        gsetcharheight(0.03);
+        align.hor = GTH_RIGHT;
+        align.ver = GTV_HALF;
+        gsettextalign(&align);
+
+        tpt.x = 0.15; tpt.y = 0.9;
+        lpts[0].x = 0.2; lpts[0].y = 0.9;
+        lpts[1].x = 0.9; lpts[1].y = 0.9;
+        for(i=1; i<9; i++) {
+                tpt.y -= 0.1;
+                sprintf(s,"width %5.2f",(float)(2.0*i));
+                gtext(&tpt, s);
+                gsetlinetype( lntbl[(i%7)] );
+                gsetlinewidth( (float) (2.0*i));
+                gsetlinecolorind( (i%7)+1 );
+                lpts[0].y -= 0.1;
+                lpts[1].y -= 0.1;
+                gpolyline(2, lpts);
+        }
 }

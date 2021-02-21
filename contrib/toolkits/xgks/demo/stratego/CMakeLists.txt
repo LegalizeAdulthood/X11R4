@@ -1,0 +1,2 @@
+gksDemo(red)
+gksDemo(blue)

@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -22,10 +22,10 @@
  * University of Illinois at Urbana-Champaign
  * Department of Computer Science
  * 1304 W. Springfield Ave.
- * Urbana, IL	61801
+ * Urbana, IL   61801
  *
  * (C) Copyright 1987, 1988 by The University of Illinois Board of Trustees.
- *	All rights reserved.
+ *      All rights reserved.
  *
  * Tool: X 11 Graphical Kernel System
  * Author: Gregory Scott Rogers
@@ -35,48 +35,51 @@
 static char rcsid[] = "$Header: mi.c,v 4.0 89/09/01 14:23:45 amy Exp $";
 
 #include <stdio.h>
+#include <stdlib.h>
+
 #include <xgks.h>
+
 #include "demo.h"
 
-main(argc,argv)
+int main(argc,argv)
 int argc;
 char *argv[];
 {
 
-	Gint  error;
-	Gchar *record, *malloc();
-	Ggksmit gksmit;
+        Gint  error;
+        Gchar *record;
+        Ggksmit gksmit;
 
-	if (argc < 3) {
-		fprintf(stderr,"usage: %s host:display.server# MI-FileName\n", argv[0]);
-		exit(0);
-	}
+        if (argc < 3) {
+                fprintf(stderr,"usage: %s host:display.server# MI-FileName\n", argv[0]);
+                exit(0);
+        }
 
-	gopengks (stderr, 0);
+        gopengks (stderr, 0);
 
-	gopenws (1,argv[1],argv[1]); 
-	gactivatews(1);
+        gopenws (1,argv[1],argv[1]);
+        gactivatews(1);
 
-	gopenws (5,argv[2],"MI"); 
+        gopenws (5,argv[2],"MI");
 
-	
-	error = 0;
-	while (error == 0) {
-		error = ggetgksm (5, &gksmit);
-		record = malloc (gksmit.length);
-		error = greadgksm (5, gksmit.length, record);
-		ginterpret (&gksmit, record);
-	}
 
-	fprintf(stderr, " ... done press break....");
+        error = 0;
+        while (error == 0) {
+                error = ggetgksm (5, &gksmit);
+                record = malloc (gksmit.length);
+                error = greadgksm (5, gksmit.length, record);
+                ginterpret (&gksmit, record);
+        }
 
-	WaitForBreak (1);
+        fprintf(stderr, " ... done press break....");
 
-	gdeactivatews(1);
-	gclosews (1);
-	fprintf(stderr, "workstation 1 is closed\n\n");
-	gclosews (5);
-	fprintf(stderr, "workstation 5 is closed\n\n");
-	gclosegks();
-	fprintf(stderr, "GKS is closed\n\n");
+        WaitForBreak (1);
+
+        gdeactivatews(1);
+        gclosews (1);
+        fprintf(stderr, "workstation 1 is closed\n\n");
+        gclosews (5);
+        fprintf(stderr, "workstation 5 is closed\n\n");
+        gclosegks();
+        fprintf(stderr, "GKS is closed\n\n");
 }

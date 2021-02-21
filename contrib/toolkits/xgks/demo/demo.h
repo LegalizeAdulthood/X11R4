@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -22,17 +22,16 @@
  * University of Illinois at Urbana-Champaign
  * Department of Computer Science
  * 1304 W. Springfield Ave.
- * Urbana, IL	61801
+ * Urbana, IL   61801
  *
  * (C) Copyright 1987, 1988 by The University of Illinois Board of Trustees.
- *	All rights reserved.
+ *      All rights reserved.
  *
  * Tool: X 11 Graphical Kernel System
  * Author: Gregory Scott Rogers
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
  *
- * $Header: demo.h,v 4.0 89/09/01 14:32:05 amy Exp $
  */
 #define BLACK 0
 #define WHITE 1
@@ -49,23 +48,21 @@
 #define DARKGRAY BEIGE
 #define MEDIUMGRAY BEIGE
 
-static
-WaitForBreak( ws_id )
-	Gint ws_id;
+static void WaitForBreak(Gint ws_id)
 {
-	Gchoice init;
-	Gchoicerec record;
-	Glimit earea;
-	earea.xmin = 0.0;
-	earea.xmax = 1279;
-	earea.ymin = 0.0;
-	earea.xmax = 1023;
+        Gchoice init;
+        Gchoicerec record;
+        Glimit earea;
+        earea.xmin = 0.0;
+        earea.xmax = 1279;
+        earea.ymin = 0.0;
+        earea.xmax = 1023;
 
-	init.status = GC_NOCHOICE;
-	init.choice = 0;
-	record.pet1.data = NULL;
-	ginitchoice( ws_id, 1, &init, 1, &earea, &record );
-	gsetchoicemode( ws_id, 1, GREQUEST, GECHO );
-	for( ; init.status != GC_NONE ; )
-		greqchoice( ws_id, 1, &init );
+        init.status = GC_NOCHOICE;
+        init.choice = 0;
+        record.pet1.data = NULL;
+        ginitchoice( ws_id, 1, &init, 1, &earea, &record );
+        gsetchoicemode( ws_id, 1, GREQUEST, GECHO );
+        for( ; init.status != GC_NONE ; )
+                greqchoice( ws_id, 1, &init );
 }

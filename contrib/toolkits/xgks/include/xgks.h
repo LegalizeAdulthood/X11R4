@@ -1138,12 +1138,15 @@ Gint gsetwsviewport(Gint ws_id, Glimit *viewport);
 Gint gsetwswindow(Gint ws_id, Glimit *window);
 
 /* GKS control function prototypes */
+Gint gactivatews(Gint ws_id);
 Gint gclearws(Gint ws_id, Gclrflag control_flag);
 Gint gclosegks(void);
+Gint gclosews(Gint ws_id);
 Gint gdeactivatews(Gint ws_id);
 Gint gflushevents(Gint ws_id, Giclass class, Gint dev);
 Gint gmessage(Gint ws_id, Gchar *string);
 Gint gopengks(Gfile *err_file, Glong memory);
+Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type);
 Gint gredrawsegws(Gint ws_id);
 Gint gupdatews(Gint ws_id, Gregen regenflag);
 
@@ -1196,6 +1199,12 @@ Gint ginqstrokest(Gint ws_id, Gint dev, Gqtype type, Gstrokest *state);
 Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response);
 Gint gsamplestroke(Gint ws_id, Gint dev, Gstroke *response);
 Gint gsetstrokemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo);
+
+/* metafile function prototypes */
+Gint ggetgksm(Gint ws_id, Ggksmit *result);
+Gint ginterpret(Ggksmit *recInfo, Gchar *data);
+Gint greadgksm(Gint ws_id, Gint length, Gchar *record);
+Gint gwritegksm(Gint ws_id, Gint type, Gint length, Gchar *data);
 
 /* segment function prototypes */
 Gint gassocsegws(Gint ws_id, Gint seg_id);
