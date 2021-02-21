@@ -363,7 +363,6 @@ Gint grenameseg(Gint old, Gint new)
 
 /* Now do the renaming in all associated ws->seglist */
         for (i=0; seg->assoc_ws[i] != INVALID; i++)
-/* DWO 7/26/88  changed macro name from VALID_WSID */
                 XgksRenameWsSeg(OPEN_WSID(seg->assoc_ws[i]), old, new);  /* c1012 */
 
         return(0);
@@ -402,7 +401,6 @@ Gint gdelseg(Gint name)
 
 /* Now delete the segment from ws segment list and redraw all associated workstations */
         for (wscnt=0; seg->assoc_ws[wscnt] != INVALID; wscnt++) {
-/* DWO 7/26/88  changed macro name from VALID_WSID */
                 ws = OPEN_WSID(seg->assoc_ws[wscnt]);  /* c1012 */
                 if (ws->ewstype != MO) {                        /* c1139 */
                         XgksDeleteWsSeg (ws, name);
@@ -435,12 +433,9 @@ Gint gdelsegws(Gint ws_id, Gint name)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgdelsegws) /* c1147 */
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgdelsegws)   /* c1012 */
 
 /* check for invalid workstation identifier */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR (((ws = OPEN_WSID(ws_id)) == NULL) ,25, errgdelsegws)  /* c1012 */
 
 /* check workstation category */
@@ -518,7 +513,6 @@ Gint gsetsegattr(Gint name, Gsegattr *segattr)
         if (old.pri != seg->segattr.pri) {
                 wscnt = 0;
                 while (wscnt<MAX_ASSOC_WS && seg->assoc_ws[wscnt] != INVALID) {
-/* DWO 7/26/88  changed macro name from VALID_WSID */
                         ws = OPEN_WSID(seg->assoc_ws[wscnt]);  /* c1012 */
                         ws->seg_list_dirty = TRUE;
                         wscnt++;
@@ -539,7 +533,6 @@ Gint gsetsegattr(Gint name, Gsegattr *segattr)
                 wscnt = 0;
                 while (wscnt<MAX_ASSOC_WS && seg->assoc_ws[wscnt]!=INVALID) {
                         if (NOT_WISS(seg->assoc_ws[wscnt])) {
-/* DWO 7/26/88  changed macro name from VALID_WSID */
                                 ws = OPEN_WSID(seg->assoc_ws[wscnt]);  /* c1012 */
                                 if (ws->wsdus.irgmode != GALLOWED) {
                                         XgksOutputSeg (ws, seg);
@@ -553,7 +546,6 @@ Gint gsetsegattr(Gint name, Gsegattr *segattr)
                         wscnt = 0;
                         while (wscnt<MAX_ASSOC_WS && seg->assoc_ws[wscnt]!=INVALID) {
                              if (NOT_WISS(seg->assoc_ws[wscnt])) {
-/* DWO 7/26/88  changed macro name from VALID_WSID */
                                 ws = OPEN_WSID(seg->assoc_ws[wscnt]);  /* c1012 */
                                 if ( (Redraw == FALSE) || (Redraw == TRUE && ws->wsdus.irgmode != GALLOWED) )
                                         XgksSetHighLight(ws, seg);
@@ -611,16 +603,12 @@ Gint gassocsegws(Gint ws_id, Gint seg_id)
         GKSERROR ( (xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC), 6, errgassocsegws) /* c1147 */
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgassocsegws)   /* c1012 */
 
 /* Check if ws_id is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR ( ((ws=OPEN_WSID(ws_id))==NULL), 25, errgassocsegws)  /* c1012 */
 
 /* Check if WISS ws is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errgassocsegws); /* c1012 *//* c1147 */
 
 /* check for valid ws category */
@@ -704,16 +692,12 @@ Gint gcopysegws(Gint ws_id, Gint seg_id)
         GKSERROR ( (xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC), 6, errgcopysegws) /* c1147 */
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgcopysegws)   /* c1012 */
 
 /* Check if ws_id is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR ( ((ws=OPEN_WSID(ws_id))==NULL), 25, errgcopysegws)  /* c1012 */
 
 /* Check if WISS ws is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errgcopysegws); /* c1012 *//* c1147 */
 
 /* check for valid ws category */
@@ -790,7 +774,6 @@ Gint ginsertseg(Gint seg_id, Gfloat segtran[2][3])
         GKSERROR ( (xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errginsertseg) /* c1147 */
 
 /* Check if WISS ws is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errginsertseg); /* c1012 *//* c1147 */
 
 /* check for valid seg_id */
@@ -857,12 +840,9 @@ Gint gredrawsegws(Gint ws_id)
         GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) ,7, errgredrawsegws) /* c1147 */
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgredrawsegws)   /* c1012 */
 
 /* check valid ws_id */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) ,25, errgredrawsegws)  /* c1012 */
 
 /* check for valid workstation category */
@@ -1168,7 +1148,6 @@ static void XgksReDrawAssocWs(SEG_STATE_PTR seg)
 
         for (i=0; seg->assoc_ws[i]!=INVALID && i<MAX_ASSOC_WS; i++) {
                 if (NOT_WISS(seg->assoc_ws[i])) {
-/* DWO 7/26/88  changed macro name from VALID_WSID */
                         ws = OPEN_WSID(seg->assoc_ws[i]);  /* c1012 */
                         REDRAWWS(ws);
                 }
@@ -2087,7 +2066,7 @@ void XgksCleanUpWsSegList(WS_STATE_PTR ws)
                                 /* if we just deleted the segment */ /* c1165 */
                                 /* pointed to by seg_insertpt,    */ /* c1165 */
                                 /* then, we better reset the      */ /* c1165 */
-                                /* insert point.     (DWO)        */ /* c1165 */
+                                /* insert point. */ /* c1165 */
                                 if (pre == ws->seg_insertpt)         /* c1165 */
                                         ws->seg_insertpt = cnt;      /* c1165 */
 
@@ -2099,7 +2078,7 @@ void XgksCleanUpWsSegList(WS_STATE_PTR ws)
                                 /* if we just deleted the segment */ /* c1165 */
                                 /* pointed to by seg_insertpt,    */ /* c1165 */
                                 /* then, we better reset the      */ /* c1165 */
-                                /* insert point.     (DWO)        */ /* c1165 */
+                                /* insert point. */ /* c1165 */
                                 if (cnt == ws->seg_insertpt)         /* c1165 */
                                         ws->seg_insertpt = pre;      /* c1165 */
 
@@ -2473,12 +2452,9 @@ Gint ginqsegnamesws(Gint ws_id, Gintlist *segs)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqsegnamesws); /* c1147 */
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqsegnamesws)   /* c1012 */
 
 /* workstation open? */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqsegnamesws);  /* c1012 */
 
 /* check the workstation category */

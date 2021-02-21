@@ -161,7 +161,7 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
 
         /* init pointer to table of set values to NULL */     /* c1152 */
         /* The table will be alloc'ed and init'ed in   */     /* c1152 */
-        /* gsetcolourrep on the 1st call (DWO)         */     /* c1152 */
+        /* gsetcolourrep on the 1st call */     /* c1152 */
         wk->set_colour_rep = (Gcobundl *)NULL;                /* c1152 */
 
         winW = 640;
@@ -200,7 +200,7 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
 
         /* we need Enter & Focus even as the window comes up */  /* c1145 */
         /* in case the cursor starts in the window (so set   */  /* c1145 */
-        /* the color map to ours)  (DWO)                     */  /* c1145 */
+        /* the color map to ours) */  /* c1145 */
         xswa.event_mask = FocusChangeMask | StructureNotifyMask  /* c1145 */
               | ExposureMask | EnterWindowMask;                  /* c1145 */
         xswa.background_pixel = wk->wsbg;

@@ -177,12 +177,9 @@ Gint gflushevents(Gint ws_id, Giclass class, Gint dev)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgflushevents) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgflushevents)   /* c1012 */
 
 /* open workstation */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgflushevents)  /* c1012 */
 
 /* valid workstation category */

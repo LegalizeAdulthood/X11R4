@@ -72,12 +72,9 @@ Gint gactivatews(Gint ws_id)
         GKSERROR ( ((xgks_state.gks_state != GWSOP) && (xgks_state.gks_state != GWSAC)), 6, errgactivatews) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgactivatews)   /* c1012 */
 
 /* check for workstation opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errgactivatews)  /* c1012 */
 
 /* check for workstation active */
@@ -122,11 +119,8 @@ Gint gdeactivatews(Gint ws_id)
         GKSERROR ((xgks_state.gks_state != GWSAC), 3, errgdeactivatews) /*c1147*/
 
 /* check for ws invalid */
-/* DWO 7/26/88  added check for ws_id validity in the name of PTR c1012 */
         GKSERROR ((!VALID_WSID(ws_id)), 20, errgdeactivatews);  /* c1012 */
 
-/* DWO 7/26/88  used to return 20, now returns 30 in the name of PTR c1012 */
-/*              (if it isn't open, it can't be active)                     */
 /* check for  ws active (open) */
         GKSERROR(((ws=OPEN_WSID(ws_id))==NULL), 30, errgdeactivatews);  /* c1012 */
 

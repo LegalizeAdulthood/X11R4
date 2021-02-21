@@ -146,12 +146,9 @@ Gint ginqfillindices(ws_id, idxlist)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqfillindices); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqfillindices)   /* c1012 */
 
 /* check if this ws_id is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws=OPEN_WSID(ws_id))==NULL), 25, errginqfillindices);  /* c1012 */
 
 /* check workstation type */
@@ -189,12 +186,9 @@ Gint ginqfillrep(ws_id, idx, type, rep)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqfillrep); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqfillrep)   /* c1012 */
 
 /* check if this ws_id is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws=OPEN_WSID(ws_id))==NULL), 25, errginqfillrep);  /* c1012 */
 
 /* check workstation type */
@@ -298,12 +292,9 @@ Gint ginqpatindices(ws_id, idxlist)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpatindices); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpatindices)   /* c1012 */
 
 /* check if this ws_id is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws=OPEN_WSID(ws_id))==NULL), 25, errginqpatindices);  /* c1012 */
 
 /* check workstation type */
@@ -342,12 +333,9 @@ Gint ginqpatrep(ws_id, idx, type, rep)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpatrep); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpatrep)   /* c1012 */
 
 /* check if this ws_id is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws=OPEN_WSID(ws_id))==NULL), 25, errginqpatrep);  /* c1012 */
 
 /* check workstation type */

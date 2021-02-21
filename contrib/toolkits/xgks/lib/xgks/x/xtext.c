@@ -529,7 +529,7 @@ static int xReadFont(int f)
 
         /* xgks_state.fontdbdir is set in text.c to either */ /* c1159 */
         /*    FONTDBDIR set by Makefile or the environment */ /* c1159 */
-        /*    variable XGKSFontDir      (DWO)              */ /* c1159 */
+        /*    variable XGKSFontDir */ /* c1159 */
         sprintf(fontpath, "%s/%d", xgks_state.fontdbdir, f);  /* c1159 */
         if ( (fd = open(fontpath, O_RDONLY, 0644)) < 0) {
                 close(fd);

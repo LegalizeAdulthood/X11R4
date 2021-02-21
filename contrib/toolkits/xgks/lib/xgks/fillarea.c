@@ -463,12 +463,9 @@ Gint gsetfillrep(Gint ws_id, Gint idx, Gflbundl *rep)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetfillrep) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetfillrep)   /* c1012 */
 
 /* check for open workstation identifier */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) , 25, errgsetfillrep)  /* c1012 */
 
 /* Check for valid workstation category */
@@ -607,12 +604,9 @@ Gint gsetpatrep(Gint ws_id, Gint idx, Gptbundl *rep)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetpatrep) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetpatrep)   /* c1012 */
 
 /* check for open workstation */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetpatrep)  /* c1012 */
 
 /* check proper workstation category */

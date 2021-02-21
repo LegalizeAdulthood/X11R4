@@ -129,10 +129,8 @@ Gint gwritegksm (Gint ws_id, Gint type, Gint length, Gchar *data)
 
         GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgwritegksm)
 
-/* DWO 7/26/88  added new check for validity in the name of PTR c1012 */
         GKSERROR ((!VALID_WSID(ws_id)), 20, errgwritegksm)   /* c1012 */
 
-/* DWO 7/26/88  used to return error 20, now returns 30 in the name of PTR c1012 */
 /*              if it isn't open, it can't be active...                          */
         GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 30, errgwritegksm)  /* c1012 */
 
@@ -170,11 +168,8 @@ Gint ggetgksm (Gint ws_id, Ggksmit *result)
         GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errggetgksm) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errggetgksm)   /* c1012 */
 
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 25, errggetgksm)  /* c1012 */
 
         GKSERROR ((WS_CAT(ws) != GMI), 34, errggetgksm)
@@ -242,11 +237,8 @@ Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
         GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errgreadgksm) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreadgksm)   /* c1012 */
 
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 25, errgreadgksm) /* c1012 */
 
         GKSERROR ((WS_CAT(ws) != GMI), 34, errgreadgksm)

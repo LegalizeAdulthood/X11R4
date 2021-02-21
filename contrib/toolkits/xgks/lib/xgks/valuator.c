@@ -92,12 +92,9 @@ Gint ginitval(Gint ws_id, Gint dev, Gfloat init, Gint pet, Glimit *area, Gvalrec
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errginitval) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitval)   /* c1012 */
 
 /* open workstation */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errginitval)  /* c1012 */
 
 /* check category */
@@ -185,12 +182,9 @@ Gint gsetvalmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetvalmode) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetvalmode)   /* c1012 */
 
 /* workstation id open */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetvalmode)  /* c1012 */
 
 /* check category */
@@ -281,12 +275,9 @@ Gint greqval(Gint ws_id, Gint dev, Gqval *response)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgreqval) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqval)   /* c1012 */
 
 /* workstation id open */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgreqval)  /* c1012 */
 
 /* check category */
@@ -394,12 +385,9 @@ Gint gsampleval(Gint ws_id, Gint dev, Gfloat *response)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsampleval) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsampleval)   /* c1012 */
 
 /* workstation id open */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsampleval)  /* c1012 */
 
 /* check category */
@@ -444,12 +432,9 @@ Gint ginqvalst(Gint ws_id, Gint dev, Gvalst *state)
     GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqvalst ) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqvalst)   /* c1012 */
 
 /* check for ws_id, if correspond to opened ws */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqvalst )  /* c1012 */
 
 /* valid workstation type */

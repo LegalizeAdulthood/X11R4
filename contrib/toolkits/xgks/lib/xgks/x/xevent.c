@@ -78,7 +78,7 @@ static void xProcessEvents(int signum)
    /* window is closing)  Now ws_is_closing is set to true early */ /* c1164 */
    /* in the window closing process.  This blocks events from    */ /* c1164 */
    /* getting past this "if" once the window has started to      */ /* c1164 */
-   /* close.                                   DWO               */ /* c1164 */
+   /* close. */
 
         for (i=0; i<MAX_OPEN_WS; i++)
            {
@@ -97,7 +97,7 @@ static void xProcessEvents(int signum)
                    /*       indicated that the event had been sent*/ /* c1145 */
                    /*       with XSendEvent.  This is obsolete now*/ /* c1145 */
                    /*       Now there is a field called send_event*/ /* c1145 */
-                   /*       that indicates the same.  (DWO)       */ /* c1145 */
+                   /*       that indicates the same. */ /* c1145 */
                    switch( xev.type )                                /* c1145 */
                         {
 
@@ -239,7 +239,7 @@ static int XgksExposeEvent(XEvent *xev, Display *dpy)
    for (ii=0; ii < MAX_OPEN_WS; ii++)
       if ((xgks_state.openedws[ii].win == xev->xexpose.window) &&
               (xgks_state.openedws[ii].ws->dpy == dpy)) /*c1147*/
-         break;                                                 /* DWO */
+         break;
 
    if (ii >= MAX_OPEN_WS)
       return(0);
@@ -297,7 +297,7 @@ static int XgksFocusInEvent(XEvent *xev, Display *dpy)
       for (ii=0; ii < MAX_OPEN_WS; ii++)
       if ((xgks_state.openedws[ii].win == xev->xfocus.window)
            && (xgks_state.openedws[ii].ws->dpy == dpy)) /*c1147*/
-         break;                                                 /* DWO */
+         break;
 
       if (ii >= MAX_OPEN_WS)
          return(0);
@@ -317,7 +317,6 @@ static int XgksFocusInEvent(XEvent *xev, Display *dpy)
          /* NOTE: If we don't flush, switching quickly */ /* c1145 */
          /*       in and out of the window could cause */ /* c1145 */
          /*       the wrong color map to be displayed. */ /* c1145 */
-         /*                                (DWO)       */ /* c1145 */
          }                                                /* c1145 */
 
       }
@@ -330,13 +329,12 @@ static int XgksFocusInEvent(XEvent *xev, Display *dpy)
          /* NOTE: If we don't flush, switching quickly */ /* c1145 */
          /*       in and out of the window could cause */ /* c1145 */
          /*       the wrong color map to be displayed. */ /* c1145 */
-         /*                                (DWO)       */ /* c1145 */
          }
       /* NOTE: Someday (when they finish defining standards for window  */
       /*       managers) all the code that deals with colormaps may have */
       /*       to be rewritten or removed.  It is expected that window   */
       /*       managers will be at least partially responsible for        */
-      /*       managing colormaps.  (DWO)                                */
+      /*       managing colormaps.  */
       }
    }
 
@@ -352,11 +350,10 @@ static int XgksFocusOutEvent(Display *dpy)
    /* NOTE: If we don't flush, switching quickly */ /* c1145 */
    /*       in and out of the window could cause */ /* c1145 */
    /*       the wrong color map to be displayed. */ /* c1145 */
-   /*                                (DWO)       */ /* c1145 */
 
    xgks_state.focus_ws = NULL;                      /* c1145 */ /*c1147*/
    /* focus_ws remains null until the next */       /* c1145 */
-   /* FocusIn event. (DWO)                 */       /* c1145 */
+   /* FocusIn event. */       /* c1145 */
 
    return(0);
    }

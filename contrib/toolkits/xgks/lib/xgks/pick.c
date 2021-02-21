@@ -84,12 +84,9 @@ Gint ginitpick(Gint ws_id, Gint dev, Gpick *init, Gint pet, Glimit *area, Gpickr
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errginitpick) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitpick)   /* c1012 */
 
 /* open workstation ? */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errginitpick)  /* c1012 */
 
 /* check category */
@@ -160,12 +157,9 @@ Gint gsetpickmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetpickmode) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetpickmode)   /* c1012 */
 
 /* workstation id valid and open */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetpickmode)  /* c1012 */
 
 /* check category */
@@ -237,12 +231,9 @@ Gint greqpick(Gint ws_id, Gint dev, Gpick *response)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgreqpick) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqpick)   /* c1012 */
 
 /* workstation id open */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgreqpick)  /* c1012 */
 
 /* check category */
@@ -323,12 +314,9 @@ Gint gsamplepick(Gint ws_id, Gint dev, Gpick *response)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsamplepick) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplepick)   /* c1012 */
 
 /* workstation id open */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsamplepick)  /* c1012 */
 
 /* check category */
@@ -376,12 +364,9 @@ Gint ginqpickst(Gint ws_id, Gint dev, Gqtype type, Gpickst *state)
     GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpickst ) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpickst)   /* c1012 */
 
 /* check for ws_id, if correspond to opened ws */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqpickst )  /* c1012 */
 
 /* valid workstation type */

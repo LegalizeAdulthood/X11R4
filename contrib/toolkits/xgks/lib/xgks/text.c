@@ -105,7 +105,7 @@ void XgksInitGksText(void)
 
         /* check if user has chosen a new font db dir */            /* c1159 */
         /* (file is not actually opened until xReadFont */          /* c1159 */
-        /* in xtext.c)             (DWO)                */          /* c1159 */
+        /* in xtext.c) */          /* c1159 */
         xgks_state.fontdbdir = getenv("XGKSFontDir");       /* c1159 */
         if (xgks_state.fontdbdir == NULL)                           /* c1159 */
           xgks_state.fontdbdir = FONTDBDIR;       /* use default */ /* c1159 */
@@ -407,12 +407,9 @@ Gint gsettextrep(Gint ws_id, Gint idx, Gtxbundl *bundle)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsettextrep) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsettextrep)   /* c1012 */
 
 /* check for open workstation identifier */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) , 25, errgsettextrep)  /* c1012 */
 
 /* check for proper workstation category */
@@ -565,12 +562,9 @@ Gint ginqtextextent(Gint ws_id, Gpoint position, Gchar *string, Gextent *extent)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqtextextent); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqtextextent)   /* c1012 */
 
 /* check if this workstation is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqtextextent);  /* c1012 */
 
 /* check workstation type */

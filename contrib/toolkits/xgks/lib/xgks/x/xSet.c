@@ -143,7 +143,7 @@ void xXgksSetFillStyle(Display *dpy, GC gc, int fill_style)
 /* larger to keep it from clipping thing on the border.  Of course, this */
 /* means that some things will be displayed that should be clipped!  But */
 /* until XGKS does it's own clipping instead of passing all the clipping */
-/* on to X, you have to choose one evil or the other. (DWO)              */
+/* on to X, you have to choose one evil or the other. */
 void XgksFudge(XRectangle *rectangle)
 {
   rectangle->width += 2;

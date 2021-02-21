@@ -107,8 +107,6 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
 /* check proper state */
     GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgopenws)           /*c1147*/
 
-/* DWO 7/26/88  changed inline check ws_id < 0 to macro call for PTR c1012 */
-/* check for valid ws_id  ..  ws_id must be positive */
     GKSERROR ((!VALID_WSID(ws_id)) ,20, errgopenws)  /* c1012 */
 
 /* Check for valid connection */
@@ -127,7 +125,6 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
     GKSERROR ( (ewstype == WST_INVALID) ,23, errgopenws)
 
 /* check workstation already open */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR ((OPEN_WSID(ws_id) != NULL) ,24, errgopenws)  /* c1012 */
 
 /* update <openedws> array in gks_state list */
@@ -222,12 +219,9 @@ Gint gclosews(Gint ws_id)
     GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) ,7, errgclosews) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgclosews)   /* c1012 */
 
 /* check for workstation not open yet */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgclosews)  /* c1012 */
 
 /* check for workstation still active */
@@ -243,7 +237,7 @@ Gint gclosews(Gint ws_id)
 /*       being lost.  So... we call XgksIDevDelete to destroy the      */
 /*       devices so no new events will enter and also free the memory  */
 /*       used by the devices.  (XgksIDevDelete was written, but never  */
-/*       called.  This seems to be the place it was meant for.) (DWO)  */
+/*       called.  This seems to be the place it was meant for.) */
     if (ws->ewstype != MO && ws->ewstype != WISS) /* c1167 */   /* c1139 */
         XgksIDevDelete (ws);                 /* PTR c1120 */    /* c1139 */
 
@@ -252,7 +246,6 @@ Gint gclosews(Gint ws_id)
 /* which erases all the devices, then deletes the segments, then calls     */
 /* XgksIDevEnable to redraw all the devices.  This caused them to flash.   */
 /* Now, the devices are deleted before the segments.                       */
-/*      (Done while fixing ptr c1023  -  DWO)                              */
 /* delete all segments from this ws, and at the same time   */  /* c1141 */
 /* delete this ws from all segments associated with it      */  /* c1141 */
 /* (XgksDelAllWsSeg would be a better name)                 */  /* c1141 */
@@ -265,7 +258,7 @@ Gint gclosews(Gint ws_id)
 /* in while the ws is in an unstable state.  (if a change   */ /* c1164 */
 /* focus came in after the xXgksCloseWs, but before the     */ /* c1164 */
 /* completion of gclosews, GKS used to try to inquire the   */ /* c1164 */
-/* color map of an X window that was already gone)  DWO     */ /* c1164 */
+/* color map of an X window that was already gone) */ /* c1164 */
     ws->ws_is_closing = TRUE;                                  /* c1164 */
 
 /* House keeping for workstation consistency */
@@ -314,12 +307,10 @@ Gint gclearws(Gint ws_id, Gclrflag control_flag)
 /* check for proper operating state */
     GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC) ,6, errgclearws) /*c1147*/
 
-/* DWO 7/26/88  changed inline check ws_id < 0 to macro call for PTR c1012 */
-/* Check for valid ws_id  ..  ws_id must be positive */
+/* Check for valid ws_id  */
     GKSERROR ((!VALID_WSID(ws_id)) ,20, errgclearws)  /* c1012 */
 
 /* check for valid ws_id */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgclearws)  /* c1012 */
 
 /* check for proper category */

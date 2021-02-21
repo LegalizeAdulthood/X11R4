@@ -69,12 +69,9 @@ Gint gsetcolourrep(ws_id, idx, rep)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetcolourrep) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetcolourrep)   /* c1012 */
 
 /* check if ws is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errgsetcolourrep)  /* c1012 */
 
 /* check workstation category */
@@ -94,11 +91,11 @@ Gint gsetcolourrep(ws_id, idx, rep)
     GKSERROR ((status != 0) ,93, errgsetcolourrep)
 
     /* if this is the 1st call to setcolourrep, alloc & init */ /* c1152 */
-    /* storage of set values (ws->set_colour_rep[]) (DWO)    */ /* c1152 */
+    /* storage of set values (ws->set_colour_rep[]) */
     if (ws->set_colour_rep == (Gcobundl *)NULL)                 /* c1152 */
        {                                                        /* c1152 */
        /* allocate  & init memory for set colour   */           /* c1152 */
-       /* rep table for use in ginqcolourrep (DWO) */           /* c1152 */
+       /* rep table for use in ginqcolourrep */
        ws->set_colour_rep = (Gcobundl *)                        /* c1152 */
              calloc(ws->wscolour, sizeof(Gcobundl));            /* c1152 */
        GKSERROR ((!ws->set_colour_rep),300,errgsetcolourrep)    /* c1152 */
@@ -146,12 +143,9 @@ Gint ginqcolourrep(ws_id, idx, type, rep)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqcolourrep)/*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqcolourrep)   /* c1012 */
 
 /* check if ws is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errginqcolourrep)  /* c1012 */
 
 /* check workstation category */
@@ -200,12 +194,9 @@ Gint ginqcolourindices(ws_id, indices)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqcolourindices) /*c1113*/ /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqcolourindices)   /* c1012 */
 
 /* check if ws is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errginqcolourindices)  /* c1012 */
 
 /* check workstation category */

@@ -53,12 +53,9 @@ Gipoint *dim;
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixelarraydim); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixelarraydim)   /* c1012 */
 
 /* check if this workstation is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpixelarraydim);  /* c1012 */
 
 /* check workstation type */
@@ -96,12 +93,9 @@ Gpxarray *pxarr;
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixelarray); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixelarray)   /* c1012 */
 
 /* check if this workstation is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpixelarray);  /* c1012 */
 
 /* check workstation type */
@@ -140,12 +134,9 @@ Gint *pix;
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixel); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixel)   /* c1012 */
 
 /* check if this workstation is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpixel);  /* c1012 */
 
 /* check workstation type */

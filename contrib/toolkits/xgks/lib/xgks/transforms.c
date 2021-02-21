@@ -361,12 +361,9 @@ Gint gsetwswindow(Gint ws_id, Glimit *window)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetwswindow) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetwswindow)   /* c1012 */
 
 /* check for open ws_id */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetwswindow)  /* c1012 */
 
 /* check for proper ws category */
@@ -414,12 +411,9 @@ Gint gsetwsviewport(Gint ws_id, Glimit *viewport)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetwsviewport) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetwsviewport)   /* c1012 */
 
 /* check for open ws_id */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetwsviewport)  /* c1012 */
 
 /* check for proper ws category */
@@ -523,7 +517,7 @@ Bool XgksFindNTrans(Gpoint *ndcpt, Gloc *gloc)
            /* this should not happen because trans 0 covers full NDC      */
            /* space - so, if it does happen, there are bogus points in    */
            /* the list.  (from bogus initial points, altered data, or     */
-           /* transforms were changed since point data was created. (DWO) */
+           /* transforms were changed since point data was created. */
            trans = 0;                                            /* c1014 */
            NtNdcToWc(trans, ndcpt, &wcpt);                       /* c1014 */
            return (-1);                                          /* c1014 */
@@ -579,7 +573,7 @@ Bool XgksFindNTransNpts(int num, Gpoint *ndcpts, Gint *ntrans, Gpoint *wcpts)
            /* this should not happen because trans 0 covers full NDC      */
            /* space - so, if it does happen, there are bogus points in    */
            /* the list.  (from bogus initial points, altered data, or     */
-           /* transforms were changed since point data was created. (DWO) */
+           /* transforms were changed since point data was created. */
            {
            /* convert remaining points... */
            do {

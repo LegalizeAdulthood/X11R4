@@ -199,7 +199,7 @@ void XgksIProcessXEvent(XEvent *xev)
         /* if the closing of this ws has already been initiated, */ /* c1164 */
         /* don't try to do anything.  (by the time we get to the */ /* c1164 */
         /* inquire color map the actual X window may be gone -   */ /* c1164 */
-        /* producing an X error!)         DWO                    */ /* c1164 */
+        /* producing an X error!) */
         if (ws->ws_is_closing)                                      /* c1164 */
            return;                                                  /* c1164 */
 
@@ -357,28 +357,24 @@ void XgksIDevDisable(WS_STATE_ENTRY *ws)
                 case GCHOICE:
                         /* This call has been commented out because it caused */
                         /* all the devices to flash for each primitive drawn  */
-                        /* (This was the cause of PTR c1023  -  DWO)          */
                         /*if(idev->data.cho.initst.esw==GECHO)*/
                         /*XgksChoUpdatePrompt( ws, idev, PROMPTOFF, (XMotionEvent *)NULL, -1);
                         break;
                 case GPICK:
                         /* This call has been commented out because it caused */
                         /* all the devices to flash for each primitive drawn  */
-                        /* (This was the cause of PTR c1023  -  DWO)          */
                         /*if(idev->data.pic.initst.esw==GECHO)*/
                         /*XgksPicUpdatePrompt( ws, idev, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);*/
                         break;
                 case GVALUATOR:
                         /* This call has been commented out because it caused */
                         /* all the devices to flash for each primitive drawn  */
-                        /* (This was the cause of PTR c1023  -  DWO)          */
                         /*if(idev->data.val.initst.esw==GECHO)*/
                         /*XgksValUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);*/
                         break;
                 case GISTRING:
                         /* This call has been commented out because it caused */
                         /* all the devices to flash for each primitive drawn  */
-                        /* (This was the cause of PTR c1023  -  DWO)          */
                         /*if(idev->data.str.initst.esw==GECHO)*/
                         /*XgksStrUpdatePrompt( ws, idev, PROMPTOFF, (XKeyPressedEvent *)NULL, -1);*/
                         break;

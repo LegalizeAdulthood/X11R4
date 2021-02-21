@@ -262,12 +262,9 @@ Gint gsetlinerep(Gint ws_id, Gint idx, Glnbundl *rep)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetlinerep) /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetlinerep)   /* c1012 */
 
 /* check for open ws_id */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetlinerep)  /* c1012 */
 
 /* check for valid workstation category*/

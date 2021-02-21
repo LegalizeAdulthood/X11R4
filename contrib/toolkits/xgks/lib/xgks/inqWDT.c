@@ -348,12 +348,9 @@ Gint ginqwsconntype(ws_id, ct)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsconntype); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsconntype)   /* c1012 */
 
 /* check for open workstation id */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsconntype);  /* c1012 */
 
 /* set up the return values */
@@ -389,12 +386,9 @@ Gint ginqwsst(ws_id, state)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsst); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsst)   /* c1012 */
 
 /* check for open workstation id */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsst);  /* c1012 */
 
 /* check for valid workstation category                                 c1081 */
@@ -429,12 +423,9 @@ Gint ginqwsdeferupdatest(ws_id, du)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsdeferupdatest); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsdeferupdatest)   /* c1012 */
 
 /* check for open workstation id */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsdeferupdatest);  /* c1012 */
 
 /* check for valid workstation category                                 c1081 */

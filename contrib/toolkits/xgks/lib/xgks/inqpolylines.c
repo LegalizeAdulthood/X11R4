@@ -154,12 +154,9 @@ Gint ginqlineindices(ws_id, idxlist)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqlineindices); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqlineindices)   /* c1012 */
 
 /* check if this workstation is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqlineindices);  /* c1012 */
 
 /* check workstation type */
@@ -203,12 +200,9 @@ Gint ginqlinerep(ws_id, idx, type, rep)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqlinerep); /*c1147*/
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqlinerep)   /* c1012 */
 
 /* check if this workstation is opened */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqlinerep);  /* c1012 */
 
 /* check workstation type */

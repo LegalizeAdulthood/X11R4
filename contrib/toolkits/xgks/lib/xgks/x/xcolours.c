@@ -142,7 +142,7 @@ int xXgksSetColourRep(ws, idx, rep)                             /*c1147*/
         /* If this ws has the focus, then change the color  */ /* c1145 */
         /* right now, otherwise the actual change will have */ /* c1145 */
         /* to wait until we do have the focus.  (focus_ws   */ /* c1145 */
-        /* is updated in xevent.c)    (DWO)                 */ /* c1145 */
+        /* is updated in xevent.c) */ /* c1145 */
         if ((ws != NULL) && (ws == xgks_state.focus_ws)) /* c1145 */ /*c1147*/
             {                                                  /* c1145 */
             XInstallColormap(dpy, ws->wclmp);                  /* c1145 */
@@ -150,7 +150,6 @@ int xXgksSetColourRep(ws, idx, rep)                             /*c1147*/
             /* NOTE: If we don't flush, switching quickly */   /* c1145 */
             /*       in and out of the window could cause */   /* c1145 */
             /*       the wrong color map to be displayed. */   /* c1145 */
-            /*                                (DWO)       */   /* c1145 */
             }                                                  /* c1145 */
 
 
@@ -178,7 +177,7 @@ int xXgksInqColourRep(ws, idx, type, rep)                       /*c1147*/
 /*****************************************************************/ /* c1152 */
 /* NOTE: This routine is now only called for the GREALIZED case! */ /* c1152 */
 /*       When type == GSET, everything is handled in             */ /* c1152 */
-/*       ginqcolourrep() in colors.c  (DWO)                      */ /* c1152 */
+/*       ginqcolourrep() in colors.c */ /* c1152 */
 /*****************************************************************/ /* c1152 */
 
         if (ws->ewstype != X_WIN) return (OK);

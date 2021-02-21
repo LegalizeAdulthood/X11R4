@@ -76,12 +76,9 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
     GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitstroke) /* c1147 */
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitstroke)   /* c1012 */
 
 /* open wsid? */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitstroke)  /* c1012 */
 
 /* valid workstation category */
@@ -112,7 +109,7 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
     GKSERROR( init->transform > MAX_TRANS, 50, errginitstroke)
 
 /* check that editpos is within the initial points (so that bogus data       */
-/* won't be mistaken for valid points) for ptr c1014 (DWO).                  */
+/* won't be mistaken for valid points) */
 /* The standard doesn't really mention this restriction, but it seems needed.*/
 
     GKSERROR(record->pet1.editpos>init->n_points+1,152,errginitstroke) /*c1014*/
@@ -264,12 +261,9 @@ Gint gsetstrokemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetstrokemode ) /* c1147 */
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetstrokemode)   /* c1012 */
 
 /* open wsid? */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetstrokemode )  /* c1012 */
 
 /* valid workstation type */
@@ -353,12 +347,9 @@ Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqstroke ) /* c1147 */
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqstroke)   /* c1012 */
 
 /* open wsid? */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqstroke )  /* c1012 */
 
 /* valid workstation type */
@@ -473,12 +464,9 @@ Gint gsamplestroke(Gint ws_id, Gint dev, Gstroke *response)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplestroke ) /* c1147 */
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplestroke)   /* c1012 */
 
 /* open wsid? */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsamplestroke )  /* c1012 */
 
 /* valid workstation type */
@@ -532,12 +520,9 @@ Gint ginqstrokest(Gint ws_id, Gint dev, Gqtype type, Gstrokest *state)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqstrokest ) /* c1147 */
 
 /* check for invalid workstation id */
-/* DWO 7/28/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqstrokest)   /* c1012 */
 
 /* open wsid? */
-/* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqstrokest )  /* c1012 */
 
 /* valid workstation type */
@@ -878,7 +863,7 @@ void XgksStkDelete(WS_STATE_ENTRY *ws, INPUT_DEV *idev)
     /* pets and in the same position, and with the same amount of    */
     /* memory defined above it).  This is not the case here.         */
     /* (It's probably not a good practice to assume the union will   */
-    /* always remain the way it is today anyway!)     (DWO)          */
+    /* always remain the way it is today anyway!) */
     switch ( idev->data.stk.initst.pet )                       /* PTR c1120 */
       {                                                        /* PTR c1120 */
       case 1: /* pet 1 */                                      /* PTR c1120 */
