@@ -393,7 +393,7 @@ Gint gsetlocmode( ws_id, dev, mode, echo )
     else {
         if ((idev->active == True) && (idev->data.loc.initst.esw == GECHO))
             XgksLocUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL,
-                (XMotionEvent *)NULL,-1);  /*MIT*/ /* PTR c1133 */
+                (XMotionEvent *)NULL,-1);
     }
 
     idev->data.loc.initst.mode = mode;
@@ -410,7 +410,7 @@ Gint gsetlocmode( ws_id, dev, mode, echo )
         idev->active = True;
         if ( echo == GECHO )
             XgksLocUpdatePrompt( ws, idev, PROMPTON, (Gpoint *)NULL,
-                (XMotionEvent *)NULL,-1);  /*MIT*/ /* PTR c1133 */
+                (XMotionEvent *)NULL,-1);
     }
     else    /* GREQUEST */
         idev->active = False;
@@ -497,7 +497,7 @@ Gint greqloc( ws_id, dev, response )
 
     if ( idev->data.loc.initst.esw == GECHO )
         XgksLocUpdatePrompt( ws, idev, PROMPTON, (Gpoint *)NULL,
-            (XMotionEvent *)NULL,-1);   /*MIT*/ /* PTR c1133 */
+            (XMotionEvent *)NULL,-1);
     idev->active = True;
 
 /* wait for trigger or break */
@@ -513,7 +513,7 @@ Gint greqloc( ws_id, dev, response )
     idev->active = False;
     if ( idev->data.loc.initst.esw == GECHO )
         XgksLocUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL,
-                (XMotionEvent *)NULL,-1);       /*MIT*/ /* PTR c1133 */
+                (XMotionEvent *)NULL,-1);
 
     if ( (idev->breakhit == True) ) {
         response->status = GNONE;
@@ -898,7 +898,7 @@ Gint XgksLocUpdatePrompt( ws, idev, pstate, newdcpt, xmev, event_id )
                 XBell( ws->dpy, 0);
                 XgksFindNTrans( &ndcpt, data );
                 XgksEnqueueEvent( ws->ws_id, idev->dev, GLOCATOR,
-                    (char *)data,event_id); /*MIT*/ /* PTR c1133 */
+                    (char *)data,event_id);
             
             break;
         }

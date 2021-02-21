@@ -172,7 +172,7 @@ Gint gsetstringmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
         else {
         if ((idev->active == True) && (idev->data.str.initst.esw == GECHO))
         XgksStrUpdatePrompt( ws, idev, PROMPTOFF,
-             (XKeyPressedEvent *)NULL,-1 ); /*MIT*/ /* PTR c1133 */
+             (XKeyPressedEvent *)NULL,-1 );
         }
     idev->data.str.initst.mode = mode;
     idev->data.str.initst.esw = echo;
@@ -185,7 +185,7 @@ Gint gsetstringmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
         idev->active = True;
         if ( echo == GECHO )
         XgksStrUpdatePrompt( ws, idev, PROMPTON,
-          (XKeyPressedEvent *)NULL,-1 ); /*MIT*/ /* PTR c1133 */
+          (XKeyPressedEvent *)NULL,-1 );
     }
     else    /* GREQUEST */
         idev->active = False;
@@ -238,7 +238,7 @@ Gint greqstring(Gint ws_id, Gint dev, Gqstring *response)
     idev->data.str.editpos = idev->data.str.initst.record.pet1.position;
     if ( idev->data.str.initst.esw == GECHO )
         XgksStrUpdatePrompt( ws, idev, PROMPTON,
-          (XKeyPressedEvent *)NULL,-1 ); /*MIT*/ /* PTR c1133 */
+          (XKeyPressedEvent *)NULL,-1 );
     idev->active = True;
 
 /* wait for trigger or break */
@@ -250,7 +250,7 @@ Gint greqstring(Gint ws_id, Gint dev, Gqstring *response)
     idev->active = False;
     if ( idev->data.str.initst.esw == GECHO )
         XgksStrUpdatePrompt( ws, idev, PROMPTOFF,
-           (XKeyPressedEvent *)NULL, -1 ); /*MIT*/ /* PTR c1133 */
+           (XKeyPressedEvent *)NULL, -1 );
 
     if ( idev->breakhit == True ) {
         response->status = GNONE;
@@ -582,7 +582,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 
                     XBell( ws->dpy, 0 );
                     STRCPY( data, Str );        /* c1176 */
-                    XgksEnqueueEvent( ws->ws_id, idev->dev, GISTRING, (char *)data, event_id ); /*MIT*/ /* PTR c1133 */
+                    XgksEnqueueEvent( ws->ws_id, idev->dev, GISTRING, (char *)data, event_id );
                 
                 break;
             }

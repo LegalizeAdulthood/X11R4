@@ -135,7 +135,7 @@ INPUT_DEV *XgksIDevNew(void)
         INPUT_DEV *new;
 
         if ( (new = (INPUT_DEV *) malloc (sizeof (INPUT_DEV))) != NULL) {
-                new->class   = GNCLASS;         /*MIT*/
+                new->class   = GNCLASS;
                 new->dev     = INVALID;
                 new->active  = FALSE;
                 new->touched = FALSE;
@@ -261,7 +261,7 @@ if ( InEchoArea )
         ||((idev->data.cho.initst.pet==1)&&(xev->type==KeyPress))    /* AUG */
         ||((idev->data.cho.initst.pet==2)&&(xev->type==KeyPress)))   /* AUG */
 
-                                                XgksChoUpdatePrompt( ws, idev, PROMPTMOVE, xmev, current_event_id);} /*MIT*/ /* PTR c1133 */
+                                                XgksChoUpdatePrompt( ws, idev, PROMPTMOVE, xmev, current_event_id);}
                                 break;
                         case GVALUATOR:
                                 ea = &idev->data.val.initst.e_area;
@@ -286,7 +286,7 @@ else fprintf(stderr, "XgksIProcessXEvent: device GPICK --> InEchoArea .. %f %f %
                                                 idev->breakhit = True;
                                         else
                                             if (xev->type!=KeyPress) /* c1151 */
-                                                XgksPicUpdatePrompt( ws, idev, &dcpt, xmev, current_event_id);  /*MIT*/ /* PTR c1133 */
+                                                XgksPicUpdatePrompt( ws, idev, &dcpt, xmev, current_event_id);
                                 break;
                         case GISTRING:
                                 ea = &idev->data.str.initst.e_area;
@@ -295,7 +295,7 @@ else fprintf(stderr, "XgksIProcessXEvent: device GPICK --> InEchoArea .. %f %f %
                                                 idev->breakhit = True;
                                         else {
                         if(xev->type==KeyPress)                         /* AUG */
-                                                XgksStrUpdatePrompt( ws, idev, PROMPTMOVE, (XKeyEvent *) xmev, current_event_id);} /*MIT*/ /* PTR c1133 */
+                                                XgksStrUpdatePrompt( ws, idev, PROMPTMOVE, (XKeyEvent *) xmev, current_event_id);}
                                 break;
                         case GISTROKE:
                                 ea = &idev->data.stk.initst.e_area;
@@ -353,35 +353,34 @@ void XgksIDevDisable(WS_STATE_ENTRY *ws)
                         if(idev->data.loc.initst.esw==GECHO) /* AUG     c1157 */
                           XgksLocUpdatePrompt( ws, idev, PROMPTOFF,  /* c1157 */
                              (Gpoint *)NULL,(XMotionEvent *)NULL,-1);/* c1157 */
-                             /*MIT*/ /* PTR c1133 */ /* DWO */       /* c1157 */
                         break;
                 case GCHOICE:
                         /* This call has been commented out because it caused */
                         /* all the devices to flash for each primitive drawn  */
                         /* (This was the cause of PTR c1023  -  DWO)          */
                         /*if(idev->data.cho.initst.esw==GECHO)*/ /* AUG */
-                        /*XgksChoUpdatePrompt( ws, idev, PROMPTOFF, (XMotionEvent *)NULL, -1); */ /*MIT*/ /* PTR c1023 */ /* PTR c1133 */
+                        /*XgksChoUpdatePrompt( ws, idev, PROMPTOFF, (XMotionEvent *)NULL, -1);
                         break;
                 case GPICK:
                         /* This call has been commented out because it caused */
                         /* all the devices to flash for each primitive drawn  */
                         /* (This was the cause of PTR c1023  -  DWO)          */
                         /*if(idev->data.pic.initst.esw==GECHO)*/ /* AUG */
-                        /*XgksPicUpdatePrompt( ws, idev, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);*/  /*MIT*/ /* PTR c1023 */ /* PTR c1133 */
+                        /*XgksPicUpdatePrompt( ws, idev, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);*/
                         break;
                 case GVALUATOR:
                         /* This call has been commented out because it caused */
                         /* all the devices to flash for each primitive drawn  */
                         /* (This was the cause of PTR c1023  -  DWO)          */
                         /*if(idev->data.val.initst.esw==GECHO)*/ /* AUG */
-                        /*XgksValUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);*/  /*MIT*/ /* PTR c1023 */ /* PTR c1133 */
+                        /*XgksValUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);*/
                         break;
                 case GISTRING:
                         /* This call has been commented out because it caused */
                         /* all the devices to flash for each primitive drawn  */
                         /* (This was the cause of PTR c1023  -  DWO)          */
                         /*if(idev->data.str.initst.esw==GECHO)*/ /* AUG */
-                        /*XgksStrUpdatePrompt( ws, idev, PROMPTOFF, (XKeyPressedEvent *)NULL, -1);*/  /*MIT*/ /* PTR c1023 */ /* PTR c1133 */
+                        /*XgksStrUpdatePrompt( ws, idev, PROMPTOFF, (XKeyPressedEvent *)NULL, -1);*/
                         break;
                 case GISTROKE:
                         /* this call is not commented out because  *//* c1151 */
@@ -389,7 +388,7 @@ void XgksIDevDisable(WS_STATE_ENTRY *ws)
                         /* didn't erase it now, it would disappear *//* c1151 */
                         /* when we tried to redraw it later!       *//* c1151 */
                         if(idev->data.stk.initst.esw==GECHO)/* AUG *//* c1151 */
-                          XgksStkUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);  /*MIT*/ /* PTR c1133 */ /* c1151 */
+                          XgksStkUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);
                         break;
                 default:
                         break;

@@ -1795,7 +1795,7 @@ printf("seg= %d, mark dist= %f\n",seg->segattr.seg,dist_primi);
 printf("seg= %d, text dist= %f\n",seg->segattr.seg,dist_primi);
 #endif
                                   break;
-                case FILL_AREA  : dist_primi = XgksDistFillarea(seg, primi, pt); /*MIT*/
+                case FILL_AREA  : dist_primi = XgksDistFillarea(seg, primi, pt);
 #ifdef SEGMENTDEBUG
 printf("seg= %d, fill dist= %f\n",seg->segattr.seg,dist_primi);
 #endif
@@ -2142,7 +2142,7 @@ static void XgksSegCopyMo(WS_STATE_PTR ws, SEG_STATE_PTR seg)
                 XgksOutPrimiToMo (ws, XgksSegPrimiTran(primi, seg->segattr.segtran));
                 primi = primi->next;
         }
-        XgksMoSetClipOnWs (ws, &xgks_state.cliprec.rec); /*MIT*/ /* c1137 */ /*c1147*/
+        XgksMoSetClipOnWs (ws, &xgks_state.cliprec.rec);
 }
 
 static void XgksSegProcessMo(WS_STATE_PTR ws, SEG_STATE_PTR seg)
@@ -2261,7 +2261,7 @@ void XgksSetTextAttrMo(WS_STATE_PTR ws, Gtxattr *txattr, CHATTR *chattr)
 void XgksSetFillPatAttrMo(WS_STATE_PTR ws, Gflattr *flattr, PTATTR  *ptattr)
 {
         XgksMoSetGraphicAttrOnWs (ws, 37, flattr->fill);
-        XgksMoSetFillIntStyleOnWs(ws, flattr->bundl.inter);     /*MIT*/
+        XgksMoSetFillIntStyleOnWs(ws, flattr->bundl.inter);
         XgksMoSetGraphicAttrOnWs (ws, 39, flattr->bundl.style);
         XgksMoSetGraphicAttrOnWs (ws, 40, flattr->bundl.colour);
         /* 41 & 42 not supported (patterns) */

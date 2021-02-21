@@ -402,7 +402,7 @@ Gint ws_id;
  * delete <ws_id> from openedws[] in gks state list by setting corresponding entry to INVALID
  *
  */
-static void XgksDeleteOpenWs (ws_id)            /*MIT*/
+static void XgksDeleteOpenWs (ws_id)
 Gint  ws_id;
 {
     Gint i;
@@ -412,7 +412,7 @@ Gint  ws_id;
             xgks_state.openedws[i].ws_id = INVALID;                     /*c1147*/
             xgks_state.openedws[i].win = INVALID;                       /*c1147*/
             xgks_state.openedws[i].ws = NULL;                           /*c1147*/
-            return;                     /*MIT*/
+            return;
         }
     }
 }
@@ -449,9 +449,9 @@ static WS_STATE_PTR XgksNewWs(void)
         new->wsstate = GINACTIVE;
         new->conn    = NULL;
         new->mfp     = NULL;
-        new->clip = xgks_state.cliprec.rec;             /*MIT*/ /*c1147*/
+        new->clip = xgks_state.cliprec.rec;
         new->primi_list.pid = CLIP_REC;
-        new->primi_list.seg_cnt = 0;            /*MIT*/
+        new->primi_list.seg_cnt = 0;
         new->primi_list.primi.clip.rec = xgks_state.cliprec.rec;/*c1147*/
         new->primi_list.primi.clip.segment = FALSE;
         new->primi_list.next = NULL;

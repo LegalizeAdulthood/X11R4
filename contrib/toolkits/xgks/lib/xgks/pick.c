@@ -519,7 +519,7 @@ Gint XgksPicUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                     data->status = GP_OK;
                      } else data->status = GP_NOPICK; }
                  XgksEnqueueEvent(ws->ws_id, idev->dev, GPICK,
-                   (char *)data,-1); /*MIT*/ /* PTR c1133 */
+                   (char *)data,-1);
             
             break;
         default :

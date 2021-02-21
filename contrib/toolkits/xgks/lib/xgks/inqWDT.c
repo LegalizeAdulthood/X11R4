@@ -171,13 +171,13 @@ Gint ginqwsclass(ws_type, class)
 
 /* check for valid workstation type */
         ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqwsclass); /*MIT*/
+        GKSERROR( (ewstype == WST_INVALID), 22, errginqwsclass);
         GKSERROR( (ewstype == WISS || ewstype == MO || ewstype == MI), 39,
-                 errginqwsclass);  /*MIT*/
+                 errginqwsclass);
 
 /* set up the return values */
-        if (ewstype == X_WIN)           /*MIT*/
-          *class = GRASTER;             /*MIT*/
+        if (ewstype == X_WIN)
+          *class = GRASTER;
         return( OK );
 }
 

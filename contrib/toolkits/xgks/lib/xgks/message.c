@@ -38,8 +38,9 @@
  *
  */
 
+#include <strings.h>
+
 #include "gks_implem.h"
-#include <strings.h>            /*MIT*/
 
 void XgksMoMessage(WS_STATE_PTR ws, Gchar *string);
 

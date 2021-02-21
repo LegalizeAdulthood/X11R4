@@ -130,8 +130,7 @@ Gint gclosegks(void)
 * Gfile *err_file;
 */
 
-static void XgksInitGksErrorStateList(err_file)         /*MIT*/
-Gfile *err_file;
+static void XgksInitGksErrorStateList(Gfile *err_file)
 {
         xgks_state.gks_err_file = err_file; /* save the error file  */ /*c1147*/
         xgks_state.gks_err_state = ERR_OFF; /* no error has occured */ /*c1147*/

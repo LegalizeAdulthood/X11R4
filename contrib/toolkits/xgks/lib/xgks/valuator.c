@@ -245,7 +245,7 @@ Gint gsetvalmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
         {
             Gpoint tmp = { idev->data.val.CurPos, idev->data.val.CurPos };
             XgksValUpdatePrompt (ws, idev, PROMPTON, &tmp,
-                         (XMotionEvent *)NULL,-1); /*MIT*/ /* PTR c1133 c1177 */
+                         (XMotionEvent *)NULL,-1);
             if (tmp.x != idev->data.val.CurPos)
                 idev->data.val.CurPos = tmp.x;
             else
@@ -710,7 +710,7 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 
                     *data = DcToVal (CurPos, (idev->data.val.convert));
                     XgksEnqueueEvent(ws->ws_id, idev->dev, GVALUATOR,
-                          (char *)data, event_id); /*MIT*/ /* PTR c1133 */
+                          (char *)data, event_id);
                 
                 break;
 

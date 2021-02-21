@@ -125,22 +125,22 @@ void XgksInitWssTrans(WS_STATE_PTR ws)
         ws->wsti.current.w.xmax = 1.0;
         ws->wsti.current.w.ymin = 0.0;
         ws->wsti.current.w.ymax = 1.0;
-        ws->wsti.request.w.xmin = 0.0;                  /*MIT*/
-        ws->wsti.request.w.xmax = 1.0;                  /*MIT*/
-        ws->wsti.request.w.ymin = 0.0;                  /*MIT*/
-        ws->wsti.request.w.ymax = 1.0;                  /*MIT*/
+        ws->wsti.request.w.xmin = 0.0;
+        ws->wsti.request.w.xmax = 1.0;
+        ws->wsti.request.w.ymin = 0.0;
+        ws->wsti.request.w.ymax = 1.0;
 
         ws->wsti.current.v.xmin = 0.0;    /* Vieport defalut should be set to DC MAX !! ?? */
         ws->wsti.current.v.xmax = ws->size.x;
         ws->wsti.current.v.ymin = 0.0;
         ws->wsti.current.v.ymax = ws->size.y;
-        ws->wsti.request.v.xmin = 0.0;                  /*MIT*/
-        ws->wsti.request.v.xmax = ws->size.x;           /*MIT*/
-        ws->wsti.request.v.ymin = 0.0;                  /*MIT*/
-        ws->wsti.request.v.ymax = ws->size.y;           /*MIT*/
+        ws->wsti.request.v.xmin = 0.0;
+        ws->wsti.request.v.xmax = ws->size.x;
+        ws->wsti.request.v.ymin = 0.0;
+        ws->wsti.request.v.ymax = ws->size.y;
 
         if (ws->ewstype != MO) {                                /* c1139 */
-                XgksSetWsWindow(ws, &(ws->wsti.current.w));     /*MIT*/
+                XgksSetWsWindow(ws, &(ws->wsti.current.w));
                 XgksSetWsViewport(ws, &(ws->wsti.current.v));
         }                                                       /* c1139 */
 }
@@ -227,7 +227,7 @@ Gint gsetviewport(Gint trans, Glimit *viewport)
         if (MO_OPENED == TRUE) {
                 XgksMoSetPatRef ();   /*  PTR# c1144  */
                 XgksMoSetPatSize ();  /*  PTR# c1144  */
-                XgksMoSetCharUp ();             /*MIT*/
+                XgksMoSetCharUp ();
                 XgksMoSetClip (&xgks_state.cliprec.rec);                /*c1147*/
         }
 
@@ -307,7 +307,7 @@ Gint gselntran(Gint trans)
         if (MO_OPENED == TRUE) {
                 XgksMoSetPatRef ();   /*  PTR# c1144  */
                 XgksMoSetPatSize ();  /*  PTR# c1144  */
-                XgksMoSetCharUp ();             /*MIT*/
+                XgksMoSetCharUp ();
                 XgksMoSetClip (&xgks_state.cliprec.rec);        /*c1147*/
         }
 

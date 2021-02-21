@@ -340,7 +340,7 @@ Gint gsetchoicemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     }
     else {
         if ((idev->active == True) && (idev->data.cho.initst.esw == GECHO))
-           XgksChoUpdatePrompt( ws, idev, PROMPTOFF, (XMotionEvent *)NULL,-1); /*MIT*/ /* PTR c1133 */
+           XgksChoUpdatePrompt( ws, idev, PROMPTOFF, (XMotionEvent *)NULL,-1);
     }
     idev->data.cho.initst.mode = mode;
     idev->data.cho.initst.esw = echo;
@@ -351,7 +351,7 @@ Gint gsetchoicemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
            signal( SIGALRM, XgksAwaitInterrupt); /* Set up signal call PTR# c1057  */
         idev->active = True;
         if ( echo == GECHO )
-            XgksChoUpdatePrompt( ws, idev, PROMPTON, (XMotionEvent *)NULL,-1); /*MIT*/ /* PTR c1133 */
+            XgksChoUpdatePrompt( ws, idev, PROMPTON, (XMotionEvent *)NULL,-1);
     }
     else    /* GREQUEST */
         idev->active = False;
@@ -438,7 +438,7 @@ Gint greqchoice(Gint ws_id, Gint dev, Gchoice *response)
 
     idev->data.cho.curcho = 0;
     if ( idev->data.cho.initst.esw == GECHO )
-        XgksChoUpdatePrompt( ws, idev, PROMPTON, (XMotionEvent *)NULL,-1); /*MIT*/ /* PTR c1133 */
+        XgksChoUpdatePrompt( ws, idev, PROMPTON, (XMotionEvent *)NULL,-1);
     idev->active = True;
 
 /* wait for trigger or break */
@@ -451,7 +451,7 @@ Gint greqchoice(Gint ws_id, Gint dev, Gchoice *response)
 
     idev->active = False;
     if ( idev->data.cho.initst.esw == GECHO )
-        XgksChoUpdatePrompt( ws, idev, PROMPTOFF, (XMotionEvent *)NULL,-1); /*MIT*/ /* PTR c1133 */
+        XgksChoUpdatePrompt( ws, idev, PROMPTOFF, (XMotionEvent *)NULL,-1);
 
     if ( idev->breakhit == True ) {
         response->status = GC_NONE;
@@ -818,9 +818,7 @@ Gint XgksChoUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                     XBell( ws->dpy, 0);
                     data->status = (CurItem == 0) ? GC_NOCHOICE : GC_OK;
                     data->choice = CurItem;
-                    XgksEnqueueEvent( ws->ws_id, idev->dev, GCHOICE, (char *)data,event_id); /* PTR c1133 */
-                                                                        /*MIT*/
-                
+                    XgksEnqueueEvent( ws->ws_id, idev->dev, GCHOICE, (char *)data,event_id);
             }
             break;
         }

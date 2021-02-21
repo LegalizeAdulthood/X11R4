@@ -290,7 +290,7 @@ Gint gsetstrokemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
         else {
                 if ((idev->active == True) && (idev->data.stk.initst.esw == GECHO))
                         XgksStkUpdatePrompt( ws, idev, PROMPTOFF,(Gpoint *)NULL,
-                             (XMotionEvent *)NULL,-1 ); /*MIT*/ /* PTR c1133 */
+                             (XMotionEvent *)NULL,-1 );
         }
         idev->data.stk.initst.mode = mode;
         idev->data.stk.initst.esw = echo;
@@ -325,7 +325,7 @@ Gint gsetstrokemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
                 idev->active = True;
                 if ( echo == GECHO )
                         XgksStkUpdatePrompt( ws, idev, PROMPTON, &(idev->data.stk.stkbuf[idev->data.stk.editpos]),
-                           (XMotionEvent *)NULL,-1 ); /*MIT*/ /* PTR c1133 c1177 */
+                           (XMotionEvent *)NULL,-1 );
         }
         else    /* GREQUEST */
                 idev->active = False;
@@ -406,7 +406,7 @@ Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response)
     if ( idev->data.stk.initst.esw == GECHO )
         /* update prompt (display initial points etc?) */
          XgksStkUpdatePrompt( ws, idev, PROMPTON, &(idev->data.stk.stkbuf[idev->data.stk.editpos]),
-             (XMotionEvent *)NULL,-1 ); /*MIT*/ /* PTR c1133 c1177 */
+             (XMotionEvent *)NULL,-1 );
 
 /* wait for trigger or break */
         idev->touched = False;
@@ -418,7 +418,7 @@ Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response)
         idev->active = False;
         if ( idev->data.stk.initst.esw == GECHO )
                 XgksStkUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL,
-                   (XMotionEvent *)NULL,-1 ); /*MIT*/ /* PTR c1133 */
+                   (XMotionEvent *)NULL,-1 );
 
         /* if user hit <break>, return GNONE, else return GOK */
         if ( (idev->breakhit == True) ) {
@@ -846,7 +846,7 @@ Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 data->n_points = STKEDITPOS;
                 free( ndcpts );
                 XgksEnqueueEvent( ws->ws_id, idev->dev, GISTROKE,
-                  (char *)data,event_id); /*MIT*/ /* PTR c1133 */
+                  (char *)data,event_id);
             
             break;
         }
