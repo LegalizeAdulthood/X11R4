@@ -5,7 +5,7 @@ function(gksDemo name)
     target_include_directories(${name} PUBLIC ${DEMO_DIR})
 endfunction()
 
-# gksDemo(bsort)
+gksDemo(bsort)
 # gksDemo(clock)
 # gksDemo(defcolors)
 # gksDemo(font)
