@@ -40,6 +40,7 @@
 #include <signal.h>
 #include <string.h>
 #include <sys/ioctl.h>
+#include <sys/socket.h>
 #include <unistd.h>
 
 #include "gks_implem.h"
@@ -66,8 +67,7 @@ int XgksSIGIO_ON(Display *dpy);
  * the XEvent interrupt processing routine
  */
 
-static                                                          /* c1147 */
-VOIDTYPE xProcessEvents()
+static void xProcessEvents()
 {
    Display *dpy;
    XEvent xev;
@@ -125,7 +125,6 @@ VOIDTYPE xProcessEvents()
         }
    }
 }
-        return VOIDVAL(0);
 }
 
 
@@ -138,21 +137,20 @@ int xXgksSIGIOStart(WS_STATE_PTR ws)
         Display *dpy;
         int one = 1;
         int pid = getpid();
-        /* TODO */
-        /*struct sigvec invec,outvec; */
+        struct sigaction action =
+        {
+            SIG_IGN
+        };
 
         dpy = ws->dpy;
         if (dpy == NULL)                /* not opened yet */
-                return (INVALID);
-        /* TODO
-        invec.sv_handler = SIG_IGN;
-        invec.sv_mask = 0;
-        invec.sv_onstack = 0;
-        sigvec(SIGIO,&invec,&outvec);
-        ioctl( dpy->fd, SIOCSPGRP, &pid);
-        ioctl( dpy->fd, FIOASYNC, &one);
-        */
-        return (0);
+                return INVALID;
+
+        sigaction(SIGIO, &action, NULL);
+        ioctl(ConnectionNumber(dpy), SIOCSPGRP, &pid);
+        ioctl(ConnectionNumber(dpy), FIOASYNC, &one);
+
+        return OK;
 }
 
 static int SigCount = 0;
