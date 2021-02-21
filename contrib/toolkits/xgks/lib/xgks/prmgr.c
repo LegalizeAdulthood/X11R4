@@ -197,7 +197,7 @@ OUT_PRIMI *primi;
 void XgksProcessClip(Glimit *rec)
 {
         if (xgks_state.gks_state == GSGOP)
-	    XgksAppendSegClip();
+            XgksAppendSegClip();
         XgksAppendWsClip (rec); /* always update ws->primilist */
 }
 

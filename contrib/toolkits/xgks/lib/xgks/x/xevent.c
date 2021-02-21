@@ -138,20 +138,20 @@ int xXgksSIGIOStart(WS_STATE_PTR ws)
         Display *dpy;
         int one = 1;
         int pid = getpid();
-	/* TODO */
+        /* TODO */
         /*struct sigvec invec,outvec; */
 
         dpy = ws->dpy;
         if (dpy == NULL)                /* not opened yet */
                 return (INVALID);
-	/* TODO
+        /* TODO
         invec.sv_handler = SIG_IGN;
         invec.sv_mask = 0;
         invec.sv_onstack = 0;
         sigvec(SIGIO,&invec,&outvec);
         ioctl( dpy->fd, SIOCSPGRP, &pid);
         ioctl( dpy->fd, FIOASYNC, &one);
-	*/
+        */
         return (0);
 }
 
@@ -160,9 +160,9 @@ static int SigCount = 0;
 int XgksSIGIO_OFF(Display *dpy)
 {
         int zero = 0;
-	/* TODO
+        /* TODO
         struct sigvec invec,outvec;
-	*/
+        */
         SigCount++;
 
 #ifdef SIGDEBUG
@@ -170,25 +170,25 @@ int XgksSIGIO_OFF(Display *dpy)
 #endif
         if (SigCount > 1)       /* already off */
                 return(0);
-	/* if socket does not exist io is not possible */
+        /* if socket does not exist io is not possible */
         if (dpy == NULL)
                 return(0);
-	/* TODO
+        /* TODO
         invec.sv_handler = SIG_IGN;
         invec.sv_mask = 0;
         invec.sv_onstack = 0;
         sigvec( SIGIO, &invec,&outvec);
         ioctl( dpy->fd, FIOASYNC, &zero);
-	*/
+        */
 }
 
 int XgksSIGIO_ON(Display *dpy)
 {
         int one = 1;
         int pid = getpid();
-	/* TODO
+        /* TODO
         struct sigvec invec,outvec;
-	*/
+        */
 
         SigCount--;
 
@@ -198,18 +198,18 @@ int XgksSIGIO_ON(Display *dpy)
         if (SigCount > 0)       /* only on last request */
                 return(0);
 
-	/* if socket does not exist io is not possible */
+        /* if socket does not exist io is not possible */
         if (dpy == NULL)
                 return(0);
         xProcessEvents(one);
-	/* TODO
+        /* TODO
         invec.sv_handler = xProcessEvents;
         invec.sv_mask = 0;
         invec.sv_onstack = 0;
         sigvec( SIGIO, &invec,&outvec);
         ioctl( dpy->fd, SIOCSPGRP, &pid);
         ioctl( dpy->fd, FIOASYNC, &one);
-	*/
+        */
 }
 
 static int XgksExposeEvent(XEvent *xev, Display *dpy)

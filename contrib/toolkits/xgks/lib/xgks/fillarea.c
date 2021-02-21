@@ -315,7 +315,7 @@ Gint XgksInitWssFillArea(WS_STATE_PTR ws)
                 for (k=0; k < j; k++)
                   ws->ptbundl_table[i].array[k] = xgks_xpttn[i].array[k]; /*c1147*/
         }
-	return 0;
+        return 0;
 }
 
 /*$F

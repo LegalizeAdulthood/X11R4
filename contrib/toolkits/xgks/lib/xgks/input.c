@@ -417,46 +417,46 @@ void XgksIDevEnable(WS_STATE_ENTRY *ws)
 
 /* check each active input device for trigger */
     for( idev=ws->in_dev_list; idev != NULL; idev = idev->next) {
-	if ( idev->active == False)
-	    continue;
+        if ( idev->active == False)
+            continue;
         /* check echo area */
-	switch( idev->class ) {
-	    case GLOCATOR:
+        switch( idev->class ) {
+            case GLOCATOR:
                 if(idev->data.loc.initst.esw==GECHO)
-		    XgksLocUpdatePrompt( ws, idev, PROMPTON, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);
+                    XgksLocUpdatePrompt( ws, idev, PROMPTON, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);
                 break;
 
-	    case GCHOICE:
+            case GCHOICE:
                 if(idev->data.cho.initst.esw==GECHO)
                     XgksChoUpdatePrompt( ws, idev, PROMPTON, (XMotionEvent *)NULL, -1);
-		break;
+                break;
 
-	    case GPICK:
-		if(idev->data.pic.initst.esw==GECHO)
-		    XgksPicUpdatePrompt( ws, idev, &(idev->data.pic.curpos), (XMotionEvent *)NULL, -1);
-		break;
-	    case GVALUATOR:
-		if(idev->data.val.initst.esw==GECHO)
-		{
-		    Gpoint tmp = { idev->data.val.CurPos, idev->data.val.CurPos };
-		    XgksValUpdatePrompt( ws, idev, PROMPTON, &tmp, (XMotionEvent *)NULL, -1);
-		    if (tmp.x != idev->data.val.CurPos)
-			idev->data.val.CurPos = tmp.x;
-		    else
-			idev->data.val.CurPos = tmp.y;
-		}
-		break;
-	    case GISTRING:
-		if(idev->data.str.initst.esw==GECHO)
-		    XgksStrUpdatePrompt( ws, idev, PROMPTON, (XKeyPressedEvent *)NULL, -1);
-		break;
-	    case GISTROKE:
-		if(idev->data.stk.initst.esw==GECHO)
-		    XgksStkUpdatePrompt( ws, idev, PROMPTON, &(idev->data.stk.stkbuf[idev->data.stk.editpos]), (XMotionEvent *)NULL, -1);
-		break;
-	    default:
-		break;
-	    }
+            case GPICK:
+                if(idev->data.pic.initst.esw==GECHO)
+                    XgksPicUpdatePrompt( ws, idev, &(idev->data.pic.curpos), (XMotionEvent *)NULL, -1);
+                break;
+            case GVALUATOR:
+                if(idev->data.val.initst.esw==GECHO)
+                {
+                    Gpoint tmp = { idev->data.val.CurPos, idev->data.val.CurPos };
+                    XgksValUpdatePrompt( ws, idev, PROMPTON, &tmp, (XMotionEvent *)NULL, -1);
+                    if (tmp.x != idev->data.val.CurPos)
+                        idev->data.val.CurPos = tmp.x;
+                    else
+                        idev->data.val.CurPos = tmp.y;
+                }
+                break;
+            case GISTRING:
+                if(idev->data.str.initst.esw==GECHO)
+                    XgksStrUpdatePrompt( ws, idev, PROMPTON, (XKeyPressedEvent *)NULL, -1);
+                break;
+            case GISTROKE:
+                if(idev->data.stk.initst.esw==GECHO)
+                    XgksStkUpdatePrompt( ws, idev, PROMPTON, &(idev->data.stk.stkbuf[idev->data.stk.editpos]), (XMotionEvent *)NULL, -1);
+                break;
+            default:
+                break;
+            }
     }
     XgksSIGIO_ON(ws->dpy);
 }

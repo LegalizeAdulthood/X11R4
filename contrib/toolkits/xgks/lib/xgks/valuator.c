@@ -242,15 +242,15 @@ Gint gsetvalmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
            signal( SIGALRM, XgksAwaitInterrupt); /* Set up signal call PTR# c1057 */
         idev->active = TRUE;
         if (echo == GECHO)
-	{
-	    Gpoint tmp = { idev->data.val.CurPos, idev->data.val.CurPos };
+        {
+            Gpoint tmp = { idev->data.val.CurPos, idev->data.val.CurPos };
             XgksValUpdatePrompt (ws, idev, PROMPTON, &tmp,
                          (XMotionEvent *)NULL,-1); /*MIT*/ /* PTR c1133 c1177 */
-	    if (tmp.x != idev->data.val.CurPos)
-		idev->data.val.CurPos = tmp.x;
-	    else
-		idev->data.val.CurPos = tmp.y;
-	}
+            if (tmp.x != idev->data.val.CurPos)
+                idev->data.val.CurPos = tmp.x;
+            else
+                idev->data.val.CurPos = tmp.y;
+        }
     } else  /* GREQUEST */
         idev->active = FALSE;
 
@@ -334,12 +334,12 @@ Gint greqval(Gint ws_id, Gint dev, Gqval *response)
     idev->data.val.CurPos = idev->data.val.initst.val;
     if (idev->data.val.initst.esw == GECHO)
     {
-	Gpoint tmp = { idev->data.val.CurPos, idev->data.val.CurPos };
+        Gpoint tmp = { idev->data.val.CurPos, idev->data.val.CurPos };
         XgksValUpdatePrompt (ws, idev, PROMPTON, &tmp, (XMotionEvent *)NULL,-1);
-	if (tmp.x != idev->data.val.CurPos)
-	    idev->data.val.CurPos = tmp.x;
-	else
-	    idev->data.val.CurPos = tmp.y;
+        if (tmp.x != idev->data.val.CurPos)
+            idev->data.val.CurPos = tmp.x;
+        else
+            idev->data.val.CurPos = tmp.y;
     }
     idev->active = TRUE;
 
@@ -353,12 +353,12 @@ Gint greqval(Gint ws_id, Gint dev, Gqval *response)
 
     if (idev->data.val.initst.esw == GECHO)
     {
-	Gpoint tmp = { idev->data.val.CurPos, idev->data.val.CurPos };
+        Gpoint tmp = { idev->data.val.CurPos, idev->data.val.CurPos };
         XgksValUpdatePrompt (ws, idev, PROMPTOFF, &tmp, (XMotionEvent *)NULL,-1);
-	if (tmp.x != idev->data.val.CurPos)
-	    idev->data.val.CurPos = tmp.x;
-	else
-	    idev->data.val.CurPos = tmp.y;
+        if (tmp.x != idev->data.val.CurPos)
+            idev->data.val.CurPos = tmp.x;
+        else
+            idev->data.val.CurPos = tmp.y;
     }
 
     if (idev->breakhit == TRUE)
@@ -616,7 +616,7 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
         case 2:                                               /* c1015 */
             /* Set up the echo area first */
             XSetForeground (ws->dpy, idev->gc, VAL_FOREGROUND);
-	    XFillRectangle( ws->dpy, ws->win, idev->gc, e_rect.x, e_rect.y, e_rect.width, e_rect.height);
+            XFillRectangle( ws->dpy, ws->win, idev->gc, e_rect.x, e_rect.y, e_rect.width, e_rect.height);
 
             /* Set up Sliding Rule and Bar parameters */
             XSetForeground (ws->dpy, idev->gc, VAL_BACKGROUND);
@@ -629,12 +629,12 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
 
             /* Draw the Sliding Bar */
             XFillRectangle( ws->dpy, ws->win, idev->gc,
-		new_rect.x, new_rect.y, new_rect.width, new_rect.height);
+                new_rect.x, new_rect.y, new_rect.width, new_rect.height);
             break;
 
-	default:
-	    break;
-	}
+        default:
+            break;
+        }
         break;
 
     case PROMPTOFF:
@@ -642,11 +642,11 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
         case 1:    /* Wipe out the echoed prompt with Background colour */
         case 2:                                               /* c1015 */
             XSetForeground (ws->dpy, idev->gc, VAL_BACKGROUND);
-	    XFillRectangle( ws->dpy, ws->win, idev->gc, e_rect.x, e_rect.y, e_rect.width, e_rect.height);
+            XFillRectangle( ws->dpy, ws->win, idev->gc, e_rect.x, e_rect.y, e_rect.width, e_rect.height);
             break;
 
         default:
-	    break;
+            break;
         }
         break;
 
@@ -661,8 +661,8 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             DcToX ( ws, &(RULE[1]), &xptmax );
 
             /* Fist wipe out the Slide Bar by setting it to ForeGround colour */
-	    XFillRectangle( ws->dpy, ws->win, idev->gc,
-		old_rect.x, old_rect.y, old_rect.width, old_rect.height);
+            XFillRectangle( ws->dpy, ws->win, idev->gc,
+                old_rect.x, old_rect.y, old_rect.width, old_rect.height);
 
             /* Now draw Rule line */
             XSetForeground (ws->dpy, idev->gc, VAL_BACKGROUND);
@@ -674,12 +674,12 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             break;
 
         default:
-	    break;
+            break;
         }
         break;
 
     default:
-	break;
+        break;
     }
     }
     if (pstate == PROMPTMOVE) {
@@ -715,7 +715,7 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 break;
 
             default:
-		break;
+                break;
         }
     }
     XFlush(ws->dpy);
