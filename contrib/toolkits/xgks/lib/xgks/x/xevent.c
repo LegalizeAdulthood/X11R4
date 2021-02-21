@@ -67,7 +67,7 @@ int XgksSIGIO_ON(Display *dpy);
  * the XEvent interrupt processing routine
  */
 
-static void xProcessEvents()
+static void xProcessEvents(int signum)
 {
    Display *dpy;
    XEvent xev;
@@ -158,35 +158,34 @@ static int SigCount = 0;
 int XgksSIGIO_OFF(Display *dpy)
 {
         int zero = 0;
-        /* TODO
-        struct sigvec invec,outvec;
-        */
+        struct sigaction action =
+        {
+            SIG_IGN
+        };
         SigCount++;
 
 #ifdef SIGDEBUG
         fprintf(stderr, "XgksSIGIO_OFF SigCount == %d\n", SigCount);
 #endif
         if (SigCount > 1)       /* already off */
-                return(0);
+                return 0;
+
         /* if socket does not exist io is not possible */
         if (dpy == NULL)
-                return(0);
-        /* TODO
-        invec.sv_handler = SIG_IGN;
-        invec.sv_mask = 0;
-        invec.sv_onstack = 0;
-        sigvec( SIGIO, &invec,&outvec);
-        ioctl( dpy->fd, FIOASYNC, &zero);
-        */
+                return 0;
+
+        sigaction(SIGIO, &action, NULL);
+        ioctl(ConnectionNumber(dpy), FIOASYNC, &zero);
 }
 
 int XgksSIGIO_ON(Display *dpy)
 {
         int one = 1;
         int pid = getpid();
-        /* TODO
-        struct sigvec invec,outvec;
-        */
+        struct sigaction action =
+        {
+            xProcessEvents
+        };
 
         SigCount--;
 
@@ -194,20 +193,16 @@ int XgksSIGIO_ON(Display *dpy)
         fprintf(stderr, "XgksSIGIO_ON SigCount == %d\n", SigCount);
 #endif
         if (SigCount > 0)       /* only on last request */
-                return(0);
+                return 0;
 
         /* if socket does not exist io is not possible */
         if (dpy == NULL)
-                return(0);
-        xProcessEvents(one);
-        /* TODO
-        invec.sv_handler = xProcessEvents;
-        invec.sv_mask = 0;
-        invec.sv_onstack = 0;
-        sigvec( SIGIO, &invec,&outvec);
-        ioctl( dpy->fd, SIOCSPGRP, &pid);
-        ioctl( dpy->fd, FIOASYNC, &one);
-        */
+                return 0;
+
+        xProcessEvents(SIGIO);
+        sigaction(SIGIO, &action, NULL);
+        ioctl(ConnectionNumber(dpy), SIOCSPGRP, &pid);
+        ioctl(ConnectionNumber(dpy), FIOASYNC, &one);
 }
 
 static int XgksExposeEvent(XEvent *xev, Display *dpy)
