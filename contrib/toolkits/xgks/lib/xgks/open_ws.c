@@ -102,7 +102,7 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
     WS_STATE_PTR ws;    /* workstation state list */
     EWSTYPE ewstype;    /* corresponding enum-valued ws_type */
     char *getenv();
-    int status;         /* AUG */
+    int status;
 
 /* check proper state */
     GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgopenws)           /*c1147*/
@@ -151,11 +151,11 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
     ws->dpy = NULL;                 /* c1167 */
     switch (ewstype) {
         case X_WIN : /* open the workstation as X-11 window */
-                      if ((status=xXgksOpenWs(ws)) != 0) {      /* AUG */ /*c1147*/
+                      if ((status=xXgksOpenWs(ws)) != 0) {
                 free((char *)ws->conn);
                 free((char *)ws);
                 XgksDeleteOpenWs(ws_id);    /* update openedws[] array */
-             gerrorhand(status, errgopenws, xgks_state.gks_err_file); /* AUG *//*c1147*/
+             gerrorhand(status, errgopenws, xgks_state.gks_err_file);
                 return(status);                                 /* c1096 */
                       }
                       break;

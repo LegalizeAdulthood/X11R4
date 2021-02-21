@@ -335,11 +335,11 @@ Gint gsamplepick(Gint ws_id, Gint dev, Gpick *response)
     GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgsamplepick)
 
 /* valid pick device */
-    GKSERROR ((dev<1), 140, errgsamplepick)                     /* AUG */
-    idev=XgksIDevLookup(ws, dev, GPICK);                        /* AUG */
+    GKSERROR ((dev<1), 140, errgsamplepick)
+    idev=XgksIDevLookup(ws, dev, GPICK);
 
 /* is current mode SAMPLE ? */
-   GKSERROR ((idev==NULL) || (idev->data.pic.initst.mode != GSAMPLE), 142, errgsamplepick)      /* AUG */
+   GKSERROR ((idev==NULL) || (idev->data.pic.initst.mode != GSAMPLE), 142, errgsamplepick)
 
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );

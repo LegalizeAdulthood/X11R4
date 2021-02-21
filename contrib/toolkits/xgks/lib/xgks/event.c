@@ -131,7 +131,7 @@ Gint gawaitevent(Gfloat timeout, Gevent *event)
         itime.it_value.tv_usec = (long) (100000 * (timeout - (long)timeout));
         setitimer( ITIMER_REAL, &itime, (struct itimerval *)NULL);
 
-        signal( SIGALRM, XgksAwaitInterrupt);           /* AUG */
+        signal( SIGALRM, XgksAwaitInterrupt);
 /*
  * Stop and wait for the timeout to expire or a logical input device to enque
  * an event.  This looping will be broken by XgksAwaitInterrupt() or EnqueueEvent()
@@ -232,7 +232,7 @@ Gint ginqinputoverflow(Gqueue *overflow)
         overflow->class = GNCLASS;
         overflow->devno = 0;
 
-        return( 148 );          /* AUG */
+        return( 148 );
 }
 
 

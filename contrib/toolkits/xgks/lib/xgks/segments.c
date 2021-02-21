@@ -1832,7 +1832,7 @@ static float XgksDistPline(WS_STATE_PTR ws, SEG_STATE_PTR seg, OUT_PRIMI *primi,
         float s, s1, s2, x, y, X, Y, x1, y1, x2, y2;
         float DX, DY, DY1, DY2, mini, dist, width;
 #ifdef notdef                           /* c1179 */
-        float DD;                  /* AUG */
+        float DD;
 #endif
         Gpoint pe, p;
         Gint i;
@@ -1851,33 +1851,33 @@ static float XgksDistPline(WS_STATE_PTR ws, SEG_STATE_PTR seg, OUT_PRIMI *primi,
                 SegTrans( &(line->pts[i+1]), &p, seg->segattr.segtran);
                 x2 = p.x;
                 y2 = p.y;
-                if (y1 == y2) { X = x; Y = y1; }        /* Horizontal line  AUG */
-                else if (x1 == x2) { X = x1; Y = y; }   /* Vertical line    AUG */
+                if (y1 == y2) { X = x; Y = y1; }        /* Horizontal line */
+                else if (x1 == x2) { X = x1; Y = y; }   /* Vertical line */
                   else { s = (y1-y2)/(x1-x2);
                          s1 = 1/s;
                          s2 = s*s + 1.0;
                          X = (s*x1-y1+y+s1*x)*s/s2;
                          Y = (y1-y-s*x1-s1*x)/s2 + y + s1*x;
                   }
-/* The line (x,y)(X,Y) is perpendicular to (x1,y1)(x2,y2)               AUG
- * and intersects (x1,y1)(x2,y2) at (X,Y)                               AUG
- * Note: (X,Y) is not necessarily between (x1,y1) and (x2,y2)           AUG
+/* The line (x,y)(X,Y) is perpendicular to (x1,y1)(x2,y2)
+ * and intersects (x1,y1)(x2,y2) at (X,Y)
+ * Note: (X,Y) is not necessarily between (x1,y1) and (x2,y2)
  */
-/* DX = Perpendicular distance   AUG */
+/* DX = Perpendicular distance */
                 DX = (float)sqrt( (double)( (X-x)*(X-x) + (Y-y)*(Y-y) ) );
 
-/* DY = line length              AUG */
+/* DY = line length */
                 DY = (float)sqrt( (double)( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) ) );
 
-/* DY1 = distance from (X,Y) to (x1,y1) endpoint    AUG */
+/* DY1 = distance from (X,Y) to (x1,y1) endpoint */
                 DY1 = (float)sqrt( (double)( (X-x1)*(X-x1) + (Y-y1)*(Y-y1) ) );
 
-/* DY2 = distance from (X,Y) to (x2,y2) endpoint    AUG */
+/* DY2 = distance from (X,Y) to (x2,y2) endpoint */
                 DY2 = (float)sqrt( (double)( (X-x2)*(X-x2) + (Y-y2)*(Y-y2) ) );
 
-                if ( (dist = DY1+DY2) > DY )    /* (X,Y) is not between (x1,y1)(x2,y2)  AUG*/
-                        dist = sqrt( (DX+dist)*(DX+dist) );     /* AUG */
-                else {                                          /* AUG */
+                if ( (dist = DY1+DY2) > DY )    /* (X,Y) is not between (x1,y1)(x2,y2) */
+                        dist = sqrt( (DX+dist)*(DX+dist) );
+                else {
                         pe.x = DX;
                         pe.y = 0.0;
                         NdcToX(ws, &pe, &xpe);
@@ -1889,7 +1889,7 @@ static float XgksDistPline(WS_STATE_PTR ws, SEG_STATE_PTR seg, OUT_PRIMI *primi,
                         dist = ( width >= xpe.x ) ? 0.0 : DX ;
                 }
 
-#ifdef notdef           /* AUG  c1179 */
+#ifdef notdef
 /* minimum distance of intersect to endpoint */
                 dist = ( DY1 < DY2 ) ? DY1 : DY2 ;
                 DD = DY1 + DY2;
@@ -1905,8 +1905,8 @@ static float XgksDistPline(WS_STATE_PTR ws, SEG_STATE_PTR seg, OUT_PRIMI *primi,
                         width = width/2;
                         mini = ( width >= xpe.x ) ? 0.0 : mini ;
                 }
-#endif  /* AUG */
-                mini = ( dist < mini ) ? dist : mini ;  /* AUG */
+#endif
+                mini = ( dist < mini ) ? dist : mini ;
                 if ( mini == 0.0 ) return(0.0);
         }
         return(mini);

@@ -127,7 +127,7 @@ Gint gwritegksm (Gint ws_id, Gint type, Gint length, Gchar *data)
         WS_STATE_PTR ws;
         Gint i;
 
-        GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgwritegksm) /*AUG*/ /*c1147*/
+        GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgwritegksm)
 
 /* DWO 7/26/88  added new check for validity in the name of PTR c1012 */
         GKSERROR ((!VALID_WSID(ws_id)), 20, errgwritegksm)   /* c1012 */
@@ -329,7 +329,7 @@ Gint ginterpret(Ggksmit *recInfo, Gchar *data)
         /* c1068:  Can't check for 165 in ginterpret due to file format. */
         /* c1068:  Can't really check for 163, either.                   */
 
-        GKSERROR ( (recInfo->type >100), 167, errginterpret)    /* AUG */
+        GKSERROR ( (recInfo->type >100), 167, errginterpret)
 
         GKSERROR ((NOTSUPPORTED(recInfo->type)), 168, errginterpret)
 
@@ -889,7 +889,7 @@ void XgksMoSetPatRep(WS_STATE_PTR ws, Gint idx, Gptbundl *rep)
 
         size = rep->size.x * rep->size.y;
 
-        fprintf(ws->mfp, "55 %zu %d %d %d ", (size*INT_SIZE)+XgksMRecSize(55), idx, rep->size.x, rep->size.y);  /*AUG*/
+        fprintf(ws->mfp, "55 %zu %d %d %d ", (size*INT_SIZE)+XgksMRecSize(55), idx, rep->size.x, rep->size.y);
 
         for (i=0; i<size; i++)
                 fprintf(ws->mfp, "%d ",rep->array[i]);
@@ -1087,7 +1087,7 @@ static Gint XgksValidGksMItem (Gint type)
         if (type==71 || type==72) return (OK);
         if (type>=81 && type<=84) return (OK);
         if (type>=91 && type<=95) return (OK);
-        if (type>100) return (OK);                      /* AUG */
+        if (type>100) return (OK);
         return(INVALID);
 }
 
@@ -1194,11 +1194,11 @@ static Gint XgksInputData (Gfile *fp, Gint key, Gchar *record)
         XGKSMPATREF     *patref;        /* c1144 */
         XGKSMPATSIZ     *patsiz;        /* c1144 */
         Gint   i,j;
-        Gint type;                                                      /* AUG */
+        Gint type;
         Gint readcnt = 1;                                       /* c1068 */
 
 
-        type=GksmInfo[key].CurItem.type;                                /* AUG */
+        type=GksmInfo[key].CurItem.type;
         clearerr( fp );                                         /* c1068 */
 
         if(type>100) {                                          /* c1068 */

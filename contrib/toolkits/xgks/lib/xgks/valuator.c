@@ -197,7 +197,7 @@ Gint gsetvalmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     GKSERROR (((WS_CAT(ws)!=GOUTIN)&&(WS_CAT(ws)!=GINPUT)), 38, errgsetvalmode)
 
 /* valid locator device number */
-        GKSERROR( (dev < 1), 140, errgsetvalmode )              /* AUG */
+        GKSERROR( (dev < 1), 140, errgsetvalmode )
 
 /* check enumerated type values */
     GKSERROR (((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT) ||
@@ -217,7 +217,7 @@ Gint gsetvalmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
                   GCFunction  | GCForeground | GCBackground |
                   GCLineWidth | GCLineStyle  | GCFillStyle, &gcvalues);
         idev->class = GVALUATOR;
-        idev->dev = dev;        /* AUG */
+        idev->dev = dev;
         idev->data.val.initst.mode = GREQUEST;    /* initialize to GREQUEST */
         idev->data.val.initst.esw  = GECHO;
         idev->data.val.initst.val = 0.5;
@@ -406,11 +406,11 @@ Gint gsampleval(Gint ws_id, Gint dev, Gfloat *response)
     GKSERROR (((WS_CAT(ws)!=GOUTIN) && (WS_CAT(ws)!=GINPUT)) , 38, errgsampleval)
 
 /* valid val device */
-    GKSERROR ( (dev<1), 140, errgsampleval)     /* AUG */
-    idev=XgksIDevLookup(ws, dev, GVALUATOR);    /* AUG */
+    GKSERROR ( (dev<1), 140, errgsampleval)
+    idev=XgksIDevLookup(ws, dev, GVALUATOR);
 
 /* is current mode SAMPLE ? */
-        GKSERROR ((idev==NULL) || (idev->data.val.initst.mode != GSAMPLE), 142, errgsampleval)  /* AUG */
+        GKSERROR ((idev==NULL) || (idev->data.val.initst.mode != GSAMPLE), 142, errgsampleval)
 
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );

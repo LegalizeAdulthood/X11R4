@@ -66,7 +66,7 @@ Gint ginqlinefacil(ws_type, fac)
         GKSERROR( ewstype != X_WIN, 39, errginqlinefacil);
 
 /* set the return values */
-        fac->widths = 0;                                /* AUG */
+        fac->widths = 0;
         fac->nom = 1.0;
         fac->min = 0.01;                                /* c1156 */
         fac->max = 1024.0;

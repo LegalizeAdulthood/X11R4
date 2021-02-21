@@ -42,7 +42,7 @@
 #include "x/colours.h"
 #include "x/xevent.h"
 
-static int loadcache();         /* AUG */
+static int loadcache();
 
 Gint XgksMaxColours(Gchar *ws_type);
 

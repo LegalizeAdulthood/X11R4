@@ -257,9 +257,9 @@ if ( InEchoArea )
                                         if (breakhit)
                                                 idev->breakhit = True;
                                         else{
-        if(((idev->data.cho.initst.pet==3)&& (xev->type!=KeyPress))  /* AUG */
-        ||((idev->data.cho.initst.pet==1)&&(xev->type==KeyPress))    /* AUG */
-        ||((idev->data.cho.initst.pet==2)&&(xev->type==KeyPress)))   /* AUG */
+        if(((idev->data.cho.initst.pet==3)&& (xev->type!=KeyPress))
+        ||((idev->data.cho.initst.pet==1)&&(xev->type==KeyPress))
+        ||((idev->data.cho.initst.pet==2)&&(xev->type==KeyPress)))
 
                                                 XgksChoUpdatePrompt( ws, idev, PROMPTMOVE, xmev, current_event_id);}
                                 break;
@@ -294,7 +294,7 @@ else fprintf(stderr, "XgksIProcessXEvent: device GPICK --> InEchoArea .. %f %f %
                                         if (breakhit)
                                                 idev->breakhit = True;
                                         else {
-                        if(xev->type==KeyPress)                         /* AUG */
+                        if(xev->type==KeyPress)
                                                 XgksStrUpdatePrompt( ws, idev, PROMPTMOVE, (XKeyEvent *) xmev, current_event_id);}
                                 break;
                         case GISTROKE:
@@ -350,7 +350,7 @@ void XgksIDevDisable(WS_STATE_ENTRY *ws)
                         /* loclines are draw in XOR mode. So if we *//* c1157 */
                         /* didn't erase it now, it would disappear *//* c1157 */
                         /* when we tried to redraw it later!       *//* c1157 */
-                        if(idev->data.loc.initst.esw==GECHO) /* AUG     c1157 */
+                        if(idev->data.loc.initst.esw==GECHO)
                           XgksLocUpdatePrompt( ws, idev, PROMPTOFF,  /* c1157 */
                              (Gpoint *)NULL,(XMotionEvent *)NULL,-1);/* c1157 */
                         break;
@@ -358,28 +358,28 @@ void XgksIDevDisable(WS_STATE_ENTRY *ws)
                         /* This call has been commented out because it caused */
                         /* all the devices to flash for each primitive drawn  */
                         /* (This was the cause of PTR c1023  -  DWO)          */
-                        /*if(idev->data.cho.initst.esw==GECHO)*/ /* AUG */
+                        /*if(idev->data.cho.initst.esw==GECHO)*/
                         /*XgksChoUpdatePrompt( ws, idev, PROMPTOFF, (XMotionEvent *)NULL, -1);
                         break;
                 case GPICK:
                         /* This call has been commented out because it caused */
                         /* all the devices to flash for each primitive drawn  */
                         /* (This was the cause of PTR c1023  -  DWO)          */
-                        /*if(idev->data.pic.initst.esw==GECHO)*/ /* AUG */
+                        /*if(idev->data.pic.initst.esw==GECHO)*/
                         /*XgksPicUpdatePrompt( ws, idev, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);*/
                         break;
                 case GVALUATOR:
                         /* This call has been commented out because it caused */
                         /* all the devices to flash for each primitive drawn  */
                         /* (This was the cause of PTR c1023  -  DWO)          */
-                        /*if(idev->data.val.initst.esw==GECHO)*/ /* AUG */
+                        /*if(idev->data.val.initst.esw==GECHO)*/
                         /*XgksValUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);*/
                         break;
                 case GISTRING:
                         /* This call has been commented out because it caused */
                         /* all the devices to flash for each primitive drawn  */
                         /* (This was the cause of PTR c1023  -  DWO)          */
-                        /*if(idev->data.str.initst.esw==GECHO)*/ /* AUG */
+                        /*if(idev->data.str.initst.esw==GECHO)*/
                         /*XgksStrUpdatePrompt( ws, idev, PROMPTOFF, (XKeyPressedEvent *)NULL, -1);*/
                         break;
                 case GISTROKE:
@@ -387,7 +387,7 @@ void XgksIDevDisable(WS_STATE_ENTRY *ws)
                         /* strokes are drawn in XOR mode.  So if we*//* c1151 */
                         /* didn't erase it now, it would disappear *//* c1151 */
                         /* when we tried to redraw it later!       *//* c1151 */
-                        if(idev->data.stk.initst.esw==GECHO)/* AUG *//* c1151 */
+                        if(idev->data.stk.initst.esw==GECHO)
                           XgksStkUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);
                         break;
                 default:

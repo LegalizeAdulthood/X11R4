@@ -558,11 +558,11 @@ Gint gsampleloc( ws_id, dev, response)
     GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsampleloc)
 
 /* valid locator device number */
-    GKSERROR( (dev < 1), 140, errgsampleloc )                   /* AUG */
-    idev = XgksIDevLookup( ws, dev, GLOCATOR );                 /* AUG */
+    GKSERROR( (dev < 1), 140, errgsampleloc )
+    idev = XgksIDevLookup( ws, dev, GLOCATOR );
 
 /* In SAMPLE mode? */
-    GKSERROR( (idev == NULL) || (idev->data.loc.initst.mode != GSAMPLE), 142, errgsampleloc )   /* AUG */
+    GKSERROR( (idev == NULL) || (idev->data.loc.initst.mode != GSAMPLE), 142, errgsampleloc )
 
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );

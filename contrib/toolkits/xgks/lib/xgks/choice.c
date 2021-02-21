@@ -325,7 +325,7 @@ Gint gsetchoicemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
             &gcvalues);
         idev->data.cho.initst.mode = GREQUEST;
         idev->data.cho.initst.esw = GECHO;
-        idev->data.cho.initst.choice.status = GC_NOCHOICE;      /* AUG */
+        idev->data.cho.initst.choice.status = GC_NOCHOICE;
         idev->data.cho.initst.choice.choice = 1;                /* c1153 */
         idev->data.cho.initst.pet = 1;
         idev->data.cho.initst.e_area.xmin = 0.0;
@@ -494,13 +494,13 @@ Gint gsamplechoice(Gint ws_id, Gint dev, Gchoice *response)
 /* valid workstation type */
     GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsamplechoice)
 
-/* valid choice device number */                        /* AUG */
+/* valid choice device number */
     GKSERROR( (dev < 1), 140, errgsamplechoice )
 
-    idev = XgksIDevLookup( ws, dev, GCHOICE );          /* AUG */
+    idev = XgksIDevLookup( ws, dev, GCHOICE );
 
-/* In SAMPLE mode? (if NULL then implicitly in request mode) */ /* AUG */
-  GKSERROR( (idev == NULL) || (idev->data.cho.initst.mode != GSAMPLE), 142, errgsamplechoice)  /* AUG */
+/* In SAMPLE mode? (if NULL then implicitly in request mode) */
+  GKSERROR( (idev == NULL) || (idev->data.cho.initst.mode != GSAMPLE), 142, errgsamplechoice)
 
     /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );

@@ -158,7 +158,7 @@ Gint gsetstringmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
         GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetstringmode)
 
 /* valid string device number */
-        GKSERROR( (dev < 1), 140, errgsetstringmode )   /* AUG */
+        GKSERROR( (dev < 1), 140, errgsetstringmode )
 
 /* check enumerations */
     GKSERROR( ((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT)
@@ -220,7 +220,7 @@ Gint greqstring(Gint ws_id, Gint dev, Gqstring *response)
         GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqstring)
 
 /* valid string device number */
-        GKSERROR( (dev < 1), 140, errgreqstring )       /* AUG */
+        GKSERROR( (dev < 1), 140, errgreqstring )
 
         if ((idev = XgksIDevLookup( ws, dev, GISTRING)) == NULL) {
         /* Create the Input Device structure */
@@ -294,10 +294,10 @@ Gint gsamplestring(Gint ws_id, Gint dev, Gchar *response)
         GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsamplestring)
 
 /* valid string device number */
-        GKSERROR( (dev < 1), 140, errgsamplestring )    /* AUG */
+        GKSERROR( (dev < 1), 140, errgsamplestring )
 
-        idev = XgksIDevLookup( ws, dev, GISTRING);      /* AUG */
-        GKSERROR( (idev == NULL) || (idev->data.str.initst.mode != GSAMPLE), 142, errgsamplestring)     /* AUG */
+        idev = XgksIDevLookup( ws, dev, GISTRING);
+        GKSERROR( (idev == NULL) || (idev->data.str.initst.mode != GSAMPLE), 142, errgsamplestring)
 
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
@@ -336,7 +336,7 @@ Gint ginqstringst(Gint ws_id, Gint dev, Gstringst *state)
         GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqstringst)
 
 /* valid string device number */
-        GKSERROR( (dev < 1), 140, errginqstringst )     /* AUG */
+        GKSERROR( (dev < 1), 140, errginqstringst )
 
         if ((idev = XgksIDevLookup( ws, dev, GISTRING)) == NULL) {
         /* Create the Input Device structure */

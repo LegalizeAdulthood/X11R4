@@ -179,7 +179,7 @@ Gint gsetwindow(Gint trans, Glimit *window)
            {
            XgksMoSetPatRef ();   /*  PTR# c1144  */
            XgksMoSetPatSize ();  /*  PTR# c1144  */
-           XgksMoSetCharUp ();          /* AUG */
+           XgksMoSetCharUp ();
            }
 
         if (trans == xgks_state.cur_ntrans) XgksSetClip(xgks_state.cliprec.ind); /*c1147*/

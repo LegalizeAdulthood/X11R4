@@ -75,8 +75,7 @@ Gint ginqtextfacil(ws_type, fac)
 /* set the return values */
         for (i=0; i<fac->fps; i++) {
                 fac->fp_list[i].font = i+1;
-                fac->fp_list[i].prec = GSTROKE /* GSTRING */ ;          /* AUG */
-                                        /* |----- is this OK???? */     /* AUG */
+                fac->fp_list[i].prec = GSTROKE;
         }
         fac->heights = 0.0;
         fac->min_ht = 0.01;                                     /* c1156 */

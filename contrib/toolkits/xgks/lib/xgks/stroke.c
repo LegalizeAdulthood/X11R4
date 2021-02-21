@@ -487,8 +487,8 @@ Gint gsamplestroke(Gint ws_id, Gint dev, Gstroke *response)
 /* valid locator device number */
         GKSERROR( (dev < 1), 140, errgsamplestroke )
 
-        idev = XgksIDevLookup( ws, dev, GISTROKE);      /* AUG */
-        GKSERROR( (idev == NULL) || (idev->data.stk.initst.mode != GSAMPLE), 142, errgsamplestroke)  /* AUG */
+        idev = XgksIDevLookup( ws, dev, GISTROKE);
+        GKSERROR( (idev == NULL) || (idev->data.stk.initst.mode != GSAMPLE), 142, errgsamplestroke)
 
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );

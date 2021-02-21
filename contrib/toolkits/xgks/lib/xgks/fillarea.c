@@ -634,7 +634,6 @@ Gint gsetpatrep(Gint ws_id, Gint idx, Gptbundl *rep)
 /*      i = ws->ptbundl_table[idx-1].size.x * ws->ptbundl_table[idx-1].size.y;
  *      for (j=0; j < i; j++)
  *              GKSERROR( !WS_AVAIL_COLOUR(ws,rep->array[j]), 93, errgsetpatrep);
- * AUG
  */
 
 /* STEP 2: set the pattern bundle table values */

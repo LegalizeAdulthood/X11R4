@@ -63,7 +63,7 @@ Gint gcellarray(Grect *rect, Gipoint *dim, Gint row, Gint *colour)
         GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errgcellarray) /*c1147*/
 
 /* check array size */
-        GKSERROR ( (dim->x < 1 || dim->y < 1), 91, errgcellarray)       /* AUG */
+        GKSERROR ( (dim->x < 1 || dim->y < 1), 91, errgcellarray)
 
 /* open an primitive structure */
         GKSERROR (( (cell = XgksNewPrimi()) == NULL ) ,300, errgcellarray)

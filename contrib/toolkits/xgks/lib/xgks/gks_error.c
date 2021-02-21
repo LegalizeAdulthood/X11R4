@@ -329,7 +329,7 @@ Gint gerrorlog(Gint errnum, Gint funcname, Gfile *perrfile)
                 perrfile = stderr;      /* c1130 */
 
         if (errnum < 0)
-                errnum = 0;     /* AUG */
+                errnum = 0;
 
         if (errnum < 201)
                 if (GKSErrorMessages0to200[errnum] == (char *)NULL)

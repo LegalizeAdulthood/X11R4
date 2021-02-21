@@ -66,7 +66,7 @@ Gint ginqmarkerfacil(ws_type, fac)
         GKSERROR( ewstype != X_WIN, 39, errginqmarkerfacil);
 
 /* set the return values */
-        fac->sizes = 0;                                 /* AUG */
+        fac->sizes = 0;
         fac->nom = 6.0;
         fac->min = 0.01;                                /* c1156 */
         fac->max = 1024.0;
