@@ -33,8 +33,6 @@
  *	is_object_inbounds
  */
 
-static char rcsid[] = "$Header: objects_detect.c,v 4.1 89/09/07 11:49:04 amy Exp $";
-
 #include "objects.h"
 #include "key.h"
 #include "ws.h"

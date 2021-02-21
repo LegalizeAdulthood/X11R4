@@ -82,8 +82,6 @@
  *	get_vert_just
  */
 
-static char rcsid[] = "$Header: add_objects.c,v 4.0 89/09/01 15:52:04 amy Exp $";
-
 #include <math.h>
 #include <sys/ioctl.h>
 #include <stdio.h>

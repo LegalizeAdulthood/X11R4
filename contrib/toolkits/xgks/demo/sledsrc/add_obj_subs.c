@@ -23,8 +23,6 @@
  *	alloc_stroke_font_tbl
  */
 
-static char rcsid[] = "$Header: add_objects_subs.c,v 4.0 89/09/01 15:52:18 amy Exp $";
-
 #include <xgks.h>
 #include "changes.h"
 #include "ws.h"

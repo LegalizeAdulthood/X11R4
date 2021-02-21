@@ -28,8 +28,6 @@
  *	get_clr_idx_from_pt
  */
 
-static char rcsid[] = "$Header: palette.c,v 4.0 89/09/01 15:54:59 amy Exp $";
-
 #include <stdio.h>
 #include "ws.h"
 #include "color.h"

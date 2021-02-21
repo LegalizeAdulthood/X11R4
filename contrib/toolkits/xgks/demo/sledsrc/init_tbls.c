@@ -25,8 +25,6 @@
  *	init_char_hts_n_wds
  */
 
-static char rcsid[] = "$Header: init_tbls.c,v 4.0 89/09/01 15:53:48 amy Exp $";
-
 #include <stdio.h>
 #include "defs.h"
 #include "func.h"

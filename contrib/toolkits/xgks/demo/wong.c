@@ -32,7 +32,6 @@
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
  */
-static char *rcsid = "$Header: wong.c,v 4.0 89/09/01 14:24:04 amy Exp $";
 
 #include <xgks.h>
 #include "demo.h"

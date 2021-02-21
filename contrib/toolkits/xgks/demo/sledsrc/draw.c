@@ -33,8 +33,6 @@
  *	set_free_fill_rep
  */
 
-static char rcsid[] = "$Header: draw.c,v 4.0 89/09/01 15:53:05 amy Exp $";
-
 #include "screen_items.h"
 #include "color.h"
 #include "draw.h"

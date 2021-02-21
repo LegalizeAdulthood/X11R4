@@ -32,7 +32,6 @@
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
  */
-static char *rcsid = "$Header: hanoi.c,v 4.0 89/09/01 14:23:40 amy Exp $";
 
 /*
  * solve "tower of hanoi" problem for n disks

@@ -27,8 +27,6 @@
  *	free_text
  */
 
-static char rcsid[] = "$Header: objects_free.c,v 4.0 89/09/01 15:54:51 amy Exp $";
-
 #include "objects.h"
 #include "object_tbl.h"
 

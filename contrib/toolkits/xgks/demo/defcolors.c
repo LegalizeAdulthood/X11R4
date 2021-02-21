@@ -32,7 +32,6 @@
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
  */
-static char *rcsid = "$Header: defcolors.c,v 4.0 89/09/01 14:23:32 amy Exp $";
 
 #include <stdio.h>
 #include <xgks.h>

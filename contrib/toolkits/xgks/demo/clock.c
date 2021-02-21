@@ -32,7 +32,6 @@
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
  */
-static char *rcsid = "$Header: clock.c,v 4.1 89/09/06 16:53:57 amy Exp $";
 
 #define GLOVE 1
 #include <stdio.h>

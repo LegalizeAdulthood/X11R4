@@ -35,8 +35,6 @@
  *	get_object_list
  */
 
-static char rcsid[] = "$Header: object_list.c,v 4.0 89/09/01 15:54:23 amy Exp $";
-
 #include "defs.h"
 #include "draw.h"
 #include "popup.h"

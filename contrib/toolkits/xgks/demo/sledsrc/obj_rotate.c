@@ -26,8 +26,6 @@
  *	rotate_text
  */
 
-static char rcsid[] = "$Header: objects_rotate.c,v 4.0 89/09/01 15:54:56 amy Exp $";
-
 #include "objects.h"
 #include "object_tbl.h"
 #include "screen_items.h"

@@ -23,8 +23,6 @@
  *	get_object_func_tbl_idx
  */
 
-static char rcsid[] = "$Header: object_tbl.c,v 4.0 89/09/01 15:54:30 amy Exp $";
-
 #include "defs.h"
 #include "objects.h"
 #include "object_tbl.h"

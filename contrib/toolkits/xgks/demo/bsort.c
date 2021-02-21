@@ -32,7 +32,6 @@
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
  */
-static char *rcsid = "$Header: bsort.c,v 4.1 89/09/06 16:00:41 amy Exp $";
 
 #define private static
 

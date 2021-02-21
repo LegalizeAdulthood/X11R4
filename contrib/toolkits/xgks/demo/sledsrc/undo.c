@@ -29,8 +29,6 @@
  *	test_undo_flag
  */
 
-static char rcsid[] = "$Header: undo.c,v 4.0 89/09/01 15:55:52 amy Exp $";
-
 #include "defs.h"
 #include <strings.h>
 #include "functbl.h"

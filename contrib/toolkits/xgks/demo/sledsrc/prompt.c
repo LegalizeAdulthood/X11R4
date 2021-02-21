@@ -30,8 +30,6 @@
  *	restore_msg_area
  */
 
-static char rcsid[] = "$Header: prompt.c,v 4.0 89/09/01 15:55:24 amy Exp $";
-
 #include <strings.h>
 #include "key.h"
 #include "draw.h"

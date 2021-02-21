@@ -33,8 +33,6 @@
  *	draw_arrow
  */
 
-static char rcsid[] = "$Header: clr_selector_draw.c,v 4.0 89/09/01 15:52:33 amy Exp $";
-
 #include <math.h>
 #include "key.h"
 #include "defs.h"

@@ -31,8 +31,6 @@
  *	set_currmitem
  */
 
-static char rcsid[] = "$Header: menu.c,v 4.0 89/09/01 15:54:15 amy Exp $";
-
 #include "screen_items.h"
 #include "functbl.h"
 #include "key.h"

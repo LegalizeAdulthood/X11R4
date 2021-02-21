@@ -34,7 +34,6 @@
  *
  * printer.c - GKS function to draw the IBM Personal Computer Color Printer.
  */
-static char rcsid[] = "$Header: printer.c,v 4.0 89/09/01 14:41:38 amy Exp $";
 
 #include <stdio.h>
 #include <xgks.h>

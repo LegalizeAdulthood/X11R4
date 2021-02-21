@@ -27,8 +27,6 @@
  *	draw_clr_area
  */
 
-static char rcsid[] = "$Header: draw_palette.c,v 4.1 89/09/07 11:49:02 amy Exp $";
-
 #include <strings.h>
 #include "palette.h"
 #include "color.h"

@@ -26,8 +26,6 @@
  *	redraw_all
  */
 
-static char rcsid[] = "$Header: main.c,v 4.0 89/09/01 15:54:07 amy Exp $";
-
 #include "changes.h"
 #include <stdio.h>
 #include <strings.h>

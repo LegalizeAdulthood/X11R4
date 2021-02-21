@@ -34,8 +34,6 @@
  *	arrow_picked
  */
 
-static char rcsid[] = "$Header: clr_selector_exec.c,v 4.0 89/09/01 15:52:42 amy Exp $";
-
 #include "screen_items.h"
 #include "functbl.h"
 #include "draw.h"

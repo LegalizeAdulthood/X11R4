@@ -28,8 +28,6 @@
  *	read_text
  */
 
-static char rcsid[] = "$Header: read_input.c,v 4.0 89/09/01 15:55:28 amy Exp $";
-
 #include <stdio.h>
 #include "io.h"
 #include "defs.h"

@@ -28,8 +28,6 @@
  *	alloc_clr_tbl_entries
  */
 
-static char rcsid[] = "$Header: color.c,v 4.0 89/09/01 15:52:51 amy Exp $";
-
 #include <xgks.h>
 #include "defs.h"
 #include "ws.h"

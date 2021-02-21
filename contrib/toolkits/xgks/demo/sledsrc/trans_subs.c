@@ -27,8 +27,6 @@
  *	s_rot_mat
  */
 
-static char rcsid[] = "$Header: trans_subs.c,v 4.0 89/09/01 15:55:50 amy Exp $";
-
 #include <math.h>
 #include <xgks.h>
 

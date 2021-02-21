@@ -38,8 +38,6 @@
  *	write_char
  */
 
-static char rcsid[] = "$Header: io.c,v 4.0 89/09/01 15:53:57 amy Exp $";
-
 #include <stdio.h>
 #include <strings.h>
 #include <xgks.h>

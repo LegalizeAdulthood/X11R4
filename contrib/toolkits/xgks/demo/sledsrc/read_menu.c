@@ -24,8 +24,6 @@
  *	read_menu
  */
 
-static char rcsid[] = "$Header: read_menu.c,v 4.0 89/09/01 15:55:32 amy Exp $";
-
 #include <stdio.h>
 #include <xgks.h>
 #include "screen_items.h"

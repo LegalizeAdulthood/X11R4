@@ -29,8 +29,6 @@
  *	unhilite
  */
 
-static char rcsid[] = "$Header: draw_menu.c,v 4.0 89/09/01 15:53:12 amy Exp $";
-
 #include "color.h"
 #include "defs.h"
 #include "key.h"

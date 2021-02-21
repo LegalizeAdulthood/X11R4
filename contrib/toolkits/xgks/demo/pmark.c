@@ -32,7 +32,6 @@
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
  */
-static char rcsid[] = "$Header: pmark.c,v 4.0 89/09/01 14:23:54 amy Exp $";
 
 #include <xgks.h>
 

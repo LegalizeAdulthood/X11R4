@@ -34,7 +34,6 @@
  *
  * ethernet.c - function to draw the ethernet portion of the logo
  */
-static char rcsid[]= "$Header: ethernet.c,v 4.0 89/09/01 14:41:34 amy Exp $";
 
 #include <stdio.h>
 #include <xgks.h>

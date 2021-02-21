@@ -36,8 +36,6 @@
  *	erase_popups
  */
 
-static char rcsid[] = "$Header: popup.c,v 4.0 89/09/01 15:55:16 amy Exp $";
-
 #include "key.h"
 #include "draw.h"
 #include "color.h"

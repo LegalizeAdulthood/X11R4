@@ -54,8 +54,6 @@
  *	get_rot_angle
  */
 
-static char rcsid[] = "$Header: edit_picture.c,v 4.0 89/09/01 15:53:22 amy Exp $";
-
 #include "draw.h"
 #include "objects.h"
 #include "popup.h"

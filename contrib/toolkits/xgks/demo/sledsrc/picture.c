@@ -23,8 +23,6 @@
  *	display_picture_area
  */
 
-static char rcsid[] = "$Header: picture.c,v 4.0 89/09/01 15:55:14 amy Exp $";
-
 #include "key.h"
 #include "draw.h"
 #include "trans.h"

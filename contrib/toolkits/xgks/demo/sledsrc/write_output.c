@@ -28,8 +28,6 @@
  *	write_text
  */
 
-static char rcsid[] = "$Header: write_output.c,v 4.0 89/09/01 15:55:55 amy Exp $";
-
 #include <stdio.h>
 #include "io.h"
 #include "screen_items.h"

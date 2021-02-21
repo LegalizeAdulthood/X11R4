@@ -23,8 +23,6 @@
  *	exit_error
  */
 
-static char rcsid[] = "$Header: error.c,v 4.0 89/09/01 15:53:30 amy Exp $";
-
 #include <stdio.h>
 
 /*

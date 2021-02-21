@@ -33,8 +33,6 @@
  *	display_text
  */
 
-static char rcsid[] = "$Header: objects_draw.c,v 4.0 89/09/01 15:54:46 amy Exp $";
-
 #include "popup.h"
 #include "color.h"
 #include "objects.h"

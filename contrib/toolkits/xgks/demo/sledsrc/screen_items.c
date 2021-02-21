@@ -34,8 +34,6 @@
  *	draw_screen_background
  */
 
-static char rcsid[] = "$Header: screen_items.c,v 4.0 89/09/01 15:55:35 amy Exp $";
-
 #include "defs.h"
 #include "popup.h"
 #include "key.h"

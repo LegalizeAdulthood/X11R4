@@ -37,8 +37,6 @@
  *	get_grid_state
  */
 
-static char rcsid[] = "$Header: main_menu.c,v 4.0 89/09/01 15:54:11 amy Exp $";
-
 #include <strings.h>
 #include <stdio.h>
 #include "color.h"

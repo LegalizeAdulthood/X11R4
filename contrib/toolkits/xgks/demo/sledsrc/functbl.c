@@ -26,8 +26,6 @@
  *	find_menu_tbl_idx
  */
 
-static char rcsid[] = "$Header: functbl.c,v 4.0 89/09/01 15:53:37 amy Exp $";
-
 #include "screen_items.h"
 #include "functbl.h"
 #include "defs.h"

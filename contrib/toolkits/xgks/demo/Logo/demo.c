@@ -37,7 +37,6 @@
  * usage:logo  [hostname:display]
  *
  */
-static char rcsid[] = "$Header: demo.c,v 4.0 89/09/01 14:41:30 amy Exp $";
 
 #include <stdio.h>
 #include <xgks.h>

@@ -32,7 +32,6 @@
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
  */
-static char rcsid[] = "$Header: font.c,v 4.0 89/09/01 14:23:36 amy Exp $";
 
 #include <stdio.h>
 #include <xgks.h>

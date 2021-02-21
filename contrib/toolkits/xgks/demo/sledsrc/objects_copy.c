@@ -27,8 +27,6 @@
  *	copy_text
  */
 
-static char rcsid[] = "$Header: objects_copy.c,v 4.0 89/09/01 15:54:39 amy Exp $";
-
 #include "objects.h"
 #include "object_tbl.h"
 #include "screen_items.h"

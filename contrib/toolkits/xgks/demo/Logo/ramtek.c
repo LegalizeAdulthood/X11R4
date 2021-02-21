@@ -34,7 +34,6 @@
  *
  * ramtek.c - GKS function to draw the Ramtek
  */
-static char rcsid[] = "$Header: ramtek.c,v 4.0 89/09/01 14:41:43 amy Exp $";
 
 #include <stdio.h>
 #include <xgks.h>

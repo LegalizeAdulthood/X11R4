@@ -27,8 +27,6 @@
  *	get_text_fac			" " : ginqtextfacil
  */
 
-static char rcsid[] = "$Header: attributes.c,v 4.1 89/09/07 11:48:58 amy Exp $";
-
 #include "attributes.h"
 #include "ws.h"
 

@@ -24,8 +24,6 @@
  *	select_pt
  */
 
-static char rcsid[] = "$Header: input.c,v 4.0 89/09/01 15:53:55 amy Exp $";
-
 #include "color.h"
 #include "ws.h"
 #include "defs.h"
