@@ -36,9 +36,14 @@
 /*
  * bsort - graphical bubble sort.
  */
+
 #include <stdio.h>
-#include <string.h>             /*MIT*/
+#include <stdlib.h>
+#include <string.h>
+#include <sys/time.h>
+
 #include <xgks.h>
+
 #include "demo.h"
 
 #define FALSE 0
@@ -57,7 +62,14 @@ Gint color_list[MAX];   /*MIT*/
 
 double atof();
 
-main(argc,argv)
+static int gen_colors();
+static int init_list();
+static int bsort();
+static int show_it();
+void quick_sort(int l, int r);
+void perr(int i, char *s);
+
+int main(argc,argv)
         int argc;
         char *argv[];
 {
@@ -110,7 +122,7 @@ main(argc,argv)
         ypos = 1023.0;
         xpos = 640;
         show_it();
-        qsort(0,MAX-1);
+        quick_sort(0,MAX-1);
 
         WaitForBreak( ws_id );
 
@@ -119,16 +131,13 @@ main(argc,argv)
         gclosegks();
 }
 
-perr(i,s)
-int i;
-char *s;
+void perr(int i, char *s)
 {
         fprintf(stdout,"%s %d\n",s,i);
         exit(1);
 }
 
-static int
-show_it()
+static int show_it()
 {
         Gpoint pt;
         int i;
@@ -143,8 +152,7 @@ show_it()
         return (0);
 }
 
-static int
-bsort()
+static int bsort()
 {
         int n, m, t;
         int sorted;
@@ -166,8 +174,7 @@ bsort()
 }
 
 
-qsort(l,r)
-int l,r;
+void quick_sort(int l, int r)
 {
         int ll, rr, k, t;
 
@@ -186,14 +193,13 @@ int l,r;
                 } while (rr > ll);
                 color_list[l] = color_list[rr];                 /*MIT*/
                 color_list[rr] = k;                             /*MIT*/
-                qsort(l,rr-1);
-                qsort(rr+1, r);
+                quick_sort(l,rr-1);
+                quick_sort(rr+1, r);
                 show_it();
         }
 }
 
-static int
-gen_colors()
+static int gen_colors()
 {
         Gcobundl cb;
         Gint color;
@@ -227,10 +233,7 @@ gen_colors()
         return (0);
 }
 
-#include <sys/time.h>
-
-static int
-init_list()
+static int init_list()
 {
         struct timeval tp;
         struct timezone tzp;
