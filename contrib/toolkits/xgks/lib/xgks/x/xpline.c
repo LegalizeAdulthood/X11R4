@@ -52,12 +52,12 @@ void xXgksSetDashes(Display *dpy, GC gc, WS_STATE_PTR ws, Gint i);
 void xXgksSetPlineClipRectangles(Display *dpy, GC gc, WS_STATE_PTR ws, XRectangle *rectangle);
 
 /* Not static because the input devices need this information */
-DashList xgksDASHES[10] = {                                             /*c1147*/
-        { 2, {8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },     /* AUG */
-        {12, {1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 3, 1, 0, 0, 0, 0, 0} },     /*  |  */
-        { 8, {2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0} },     /*  |  */
-        { 4, {4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },     /* \ / */
-        {16, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0} },     /*  v  */
+DashList xgksDASHES[10] = {
+        { 2, {8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
+        {12, {1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 3, 1, 0, 0, 0, 0, 0} },
+        { 8, {2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
+        { 4, {4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
+        {16, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0} },
         { 8, {1, 2, 3, 2, 1, 2, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
         { 4, {4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
         { 4, {4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
@@ -106,7 +106,7 @@ int xXgksPolyLine(WS_STATE_PTR ws, PLINE_ST *plin_ptr)
 
     dpy = ws->dpy;
     win = ws->win;
-    gc = ws->plinegc;   /* AUG */
+    gc = ws->plinegc;
 
     xpe = (XPoint *) malloc(sizeof(plin_ptr->pts[0]) * plin_ptr->num_pts);
     ype = xpe;
@@ -132,7 +132,7 @@ int xXgksPolyLine(WS_STATE_PTR ws, PLINE_ST *plin_ptr)
         if (i == 0) i = ws->wsbg;
         else if (i == 1) i = ws->wsfg;
     }
-    xXgksSetForeground(dpy, gc, i );    /* AUG */       /*c1147*/
+    xXgksSetForeground(dpy, gc, i );
 
     /* the fill style attribute */
 
@@ -152,8 +152,8 @@ int xXgksPolyLine(WS_STATE_PTR ws, PLINE_ST *plin_ptr)
     if (i == GLN_SOLID || !WS_LINE_TYPE(i)) {
         i = GLN_SOLID;
         line_style = LineSolid;
-        if (line_width == 1)            /* AUG */
-                line_width = 0;         /* AUG */
+        if (line_width == 1)
+                line_width = 0;
     }
     else {                   /* set dashed line values */
         if ( i < 0 )
@@ -161,13 +161,13 @@ int xXgksPolyLine(WS_STATE_PTR ws, PLINE_ST *plin_ptr)
         else
             i += 1;
         line_style = LineOnOffDash;
-        xXgksSetDashes(dpy, gc, ws, i); /* AUG */ /*c1147*/
+        xXgksSetDashes(dpy, gc, ws, i);
     }
 
-    xXgksSetLineAttributes(dpy, gc, line_width, line_style, CapButt, JoinMiter); /*AUG*/ /*c1147*/
-    xXgksSetFillStyle(dpy, gc, FillSolid);           /*AUG*/ /*c1147*/
+    xXgksSetLineAttributes(dpy, gc, line_width, line_style, CapButt, JoinMiter);
+    xXgksSetFillStyle(dpy, gc, FillSolid);
 
-    xXgksSetPlineClipRectangles(dpy, gc, ws, &(ws->xclip));     /*AUG*/ /*c1147*/
+    xXgksSetPlineClipRectangles(dpy, gc, ws, &(ws->xclip));
 
     /* Display Workstation Transformation */
 

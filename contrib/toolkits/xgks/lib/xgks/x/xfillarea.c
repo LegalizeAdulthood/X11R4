@@ -81,7 +81,7 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
 
         dpy = ws->dpy;
         win = ws->win;
-        gc = ws->fillareagc;    /* AUG */
+        gc = ws->fillareagc;
 
         xpe = (XPoint *) malloc(sizeof(fill_ptr->pts[0]) * (fill_ptr->num_pts+1));
         ype = xpe;
@@ -111,7 +111,7 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
                 if (fill_colour == 0) fill_colour = ws->wsbg;
                 else if (fill_colour == 1) fill_colour = ws->wsfg;
         }
-        xXgksSetForeground(dpy, gc, fill_colour );  /* AUG */ /*c1147*/
+        xXgksSetForeground(dpy, gc, fill_colour );
 
         /* the fill interior attribute */       /* c1174 */
 
@@ -139,8 +139,8 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
 
         /* set GC values */
 
-        xXgksSetLineAttributes(dpy, gc, 0, LineSolid, CapButt, JoinMiter); /* AUG */ /*c1147*/
-        xXgksSetFillStyle(dpy, gc, FillSolid);          /* AUG */ /*c1147*/
+        xXgksSetLineAttributes(dpy, gc, 0, LineSolid, CapButt, JoinMiter);
+        xXgksSetFillStyle(dpy, gc, FillSolid);
 
         /* Display Workstation Transformation */
 
@@ -163,15 +163,15 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
         /* Output the primitive  */
 
         if (fill_inter == GHOLLOW) {
-                xXgksSetFillAreaClipRectangles(dpy, gc, ws, &(ws->xclip)); /* AUG */ /*c1147*/
+                xXgksSetFillAreaClipRectangles(dpy, gc, ws, &(ws->xclip));
                 XDrawLines(dpy, win, gc, ype, npnt, CoordModeOrigin);
         }
         else if (fill_inter == GSOLID) {
-                xXgksSetFillAreaClipRectangles(dpy, gc, ws, &(ws->xclip)); /* AUG */ /*c1147*/
+                xXgksSetFillAreaClipRectangles(dpy, gc, ws, &(ws->xclip));
                 XFillPolygon(dpy, win, gc, ype, npnt, Complex, CoordModeOrigin);
         }
         else if (fill_inter == GPATTERN) {
-                XSetClipMask(dpy, gc, None); /* AUG - xSet.. doesn't work with 'None' c1124 */
+                XSetClipMask(dpy, gc, None);
                 pixm = XCreatePixmap(dpy, win,
                         ws->ptbundl_table[fill_style].size.x,
                         ws->ptbundl_table[fill_style].size.y,
@@ -205,7 +205,7 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
                                 }
                                 if ( cur != prev ) {    /* colour change */
 
-                                        xXgksSetForeground(dpy, gc, prev ); /* AUG */ /*c1147*/
+                                        xXgksSetForeground(dpy, gc, prev );
                                         XDrawPoints(dpy, pixm, gc, ptt1, n, CoordModeOrigin );
                                         n = 0; ptt = ptt1;      /* reset */
                                         prev = cur;
@@ -215,14 +215,14 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
                                 array++;
                         }
                 }
-                xXgksSetForeground(dpy, gc, prev );  /* AUG */ /*c1147*/
+                xXgksSetForeground(dpy, gc, prev );
                 XDrawPoints(dpy, pixm, gc, ptt1, n, CoordModeOrigin );
 
 /* load the tile and draw the fill area */
-                xXgksSetFillStyle(dpy, gc, FillTiled);  /* AUG */ /*c1147*/
-                xXgksSetTile(dpy, gc, pixm);            /* AUG */ /*c1147*/
+                xXgksSetFillStyle(dpy, gc, FillTiled);
+                xXgksSetTile(dpy, gc, pixm);
 
-                xXgksSetFillAreaClipRectangles(dpy, gc, ws,  &(ws->xclip)); /* AUG */ /*c1147*/
+                xXgksSetFillAreaClipRectangles(dpy, gc, ws,  &(ws->xclip));
 
                 XFillPolygon(dpy, win, gc, ype, npnt, Complex, CoordModeOrigin);
 
@@ -280,11 +280,11 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
                 XDrawPoints(dpy, pixm, stipgc, ptt1, n, CoordModeOrigin );
 
 /* load the tile and draw the fill area */
-                xXgksSetForeground(dpy, gc, fill_colour ); /* AUG */ /*c1147*/
-                xXgksSetFillStyle(dpy, gc, FillStippled);  /* AUG */ /*c1147*/
-                xXgksSetStipple(dpy, gc, pixm);            /* AUG */ /*c1147*/
+                xXgksSetForeground(dpy, gc, fill_colour );
+                xXgksSetFillStyle(dpy, gc, FillStippled);
+                xXgksSetStipple(dpy, gc, pixm);
 
-                xXgksSetFillAreaClipRectangles(dpy, gc, ws, &(ws->xclip)); /* AUG */ /*c1147*/
+                xXgksSetFillAreaClipRectangles(dpy, gc, ws, &(ws->xclip));
 
                 XFillPolygon(dpy, win, gc, ype, npnt, Complex, CoordModeOrigin);
 

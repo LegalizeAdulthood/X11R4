@@ -210,7 +210,7 @@ fprintf(stderr, "\n\nEntering ......---->  XTEXT  <-----......\n");
         /* X-window attributes init */
         dpy = ws->dpy;
         win = ws->win;
-        gc  = ws->textgc;       /* AUG */
+        gc  = ws->textgc;
 
         xComputeText(ws, tx);
 
@@ -365,10 +365,10 @@ xDumpMatrix("stroke_trans", stroke_trans);      /*ILL2*/
 
 
 /* set up x-system output attribute */
-        xXgksSetTextClipRectangles(dpy, gc, ws,  &(ws->xclip)); /* AUG */ /*c1147*/
-        xXgksSetForeground(dpy, gc, wsr_colour);                /* AUG */ /*c1147*/
-        xXgksSetLineAttributes (dpy, gc, 0, LineSolid, CapButt, JoinMiter); /* AUG */ /*c1147*/
-        xXgksSetFillStyle (dpy, gc, FillSolid);                 /* AUG */ /*c1147*/
+        xXgksSetTextClipRectangles(dpy, gc, ws,  &(ws->xclip));
+        xXgksSetForeground(dpy, gc, wsr_colour);
+        xXgksSetLineAttributes (dpy, gc, 0, LineSolid, CapButt, JoinMiter);
+        xXgksSetFillStyle (dpy, gc, FillSolid);
 
         for (text_ptr = tx->string; *text_ptr; text_ptr++) {
                 xPlotStrokeChar(&(cfont->fchars[cfont->fcharoffset[*text_ptr]]));

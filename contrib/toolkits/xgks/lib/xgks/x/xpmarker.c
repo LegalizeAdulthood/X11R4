@@ -78,7 +78,7 @@ Gint xXgksPolyMarker(WS_STATE_PTR ws, PMARK_ST *pmk_ptr)
 
         dpy = ws->dpy;
         win = ws->win;
-        gc = ws->pmarkgc;       /* AUG */
+        gc = ws->pmarkgc;
 
         xpe = (XPoint *) malloc(sizeof(pmk_ptr->location[0]) * pmk_ptr->num_pts);
         ype = xpe;
@@ -106,7 +106,7 @@ Gint xXgksPolyMarker(WS_STATE_PTR ws, PMARK_ST *pmk_ptr)
                 if (i == 0) i = ws->wsbg;
                 else if (i == 1) i = ws->wsfg;
         }
-        xXgksSetForeground(dpy, gc, i );        /* AUG */ /*c1147*/
+        xXgksSetForeground(dpy, gc, i );
 
         /* the fill style attribute */
 
@@ -127,10 +127,10 @@ Gint xXgksPolyMarker(WS_STATE_PTR ws, PMARK_ST *pmk_ptr)
                 mark_type = GMK_STAR;
 
 
-        xXgksSetLineAttributes(dpy, gc, 0, LineSolid, CapButt, JoinMiter); /* AUG */ /*c1147*/
-        xXgksSetFillStyle(dpy, gc, FillSolid);          /* AUG */ /*c1147*/
+        xXgksSetLineAttributes(dpy, gc, 0, LineSolid, CapButt, JoinMiter);
+        xXgksSetFillStyle(dpy, gc, FillSolid);
 
-        xXgksSetPmarkerClipRectangles(dpy, gc, ws, &(ws->xclip)); /* AUG */ /*c1147*/
+        xXgksSetPmarkerClipRectangles(dpy, gc, ws, &(ws->xclip));
 
         /* Display Workstation Transformation */
 

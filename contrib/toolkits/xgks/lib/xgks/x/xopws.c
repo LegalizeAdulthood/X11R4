@@ -232,10 +232,10 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
         /* create a GC for this new window  */
 
         wk->gc = XCreateGC(dpy, wk->win, 0, NULL);
-        wk->plinegc=XCreateGC(dpy, wk->win, 0, NULL);           /* AUG */
-        wk->pmarkgc=XCreateGC(dpy, wk->win, 0, NULL);           /* AUG */
-        wk->fillareagc=XCreateGC(dpy, wk->win, 0, NULL);        /* AUG */
-        wk->textgc=XCreateGC(dpy, wk->win, 0, NULL);            /* AUG */
+        wk->plinegc=XCreateGC(dpy, wk->win, 0, NULL);
+        wk->pmarkgc=XCreateGC(dpy, wk->win, 0, NULL);
+        wk->fillareagc=XCreateGC(dpy, wk->win, 0, NULL);
+        wk->textgc=XCreateGC(dpy, wk->win, 0, NULL);
 
         XSetForeground(dpy, wk->gc, wk->wsfg);
         XSetBackground(dpy, wk->gc, wk->wsbg);
@@ -349,7 +349,7 @@ int xXgksHighLight(WS_STATE_PTR ws, Gpoint *bd)
 
         XgksSIGIO_OFF(ws->dpy);
         XSetFunction(dpy, gc, GXinvert);
-        XSetLineAttributes(dpy, gc, 0, LineSolid, CapButt, JoinMiter);  /* AUG */
+        XSetLineAttributes(dpy, gc, 0, LineSolid, CapButt, JoinMiter);
         XSetFillStyle(dpy, gc, FillSolid);
 
         for (i = 0; i < 5; i++) {
