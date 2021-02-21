@@ -33,8 +33,6 @@
  * Author: Yu Pan
  */
 
-#define private static
-
 /*
  * bsort - graphical bubble sort.
  */
@@ -129,7 +127,7 @@ char *s;
         exit(1);
 }
 
-private int
+static int
 show_it()
 {
         Gpoint pt;
@@ -145,7 +143,7 @@ show_it()
         return (0);
 }
 
-private int
+static int
 bsort()
 {
         int n, m, t;
@@ -194,7 +192,7 @@ int l,r;
         }
 }
 
-private int
+static int
 gen_colors()
 {
         Gcobundl cb;
@@ -231,7 +229,7 @@ gen_colors()
 
 #include <sys/time.h>
 
-private int
+static int
 init_list()
 {
         struct timeval tp;
