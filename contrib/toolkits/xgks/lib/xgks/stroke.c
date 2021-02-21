@@ -37,9 +37,11 @@
  *
  */
 
-#include "gks_implem.h"
-#include <signal.h>             /*c1057*/
 #include <math.h>
+#include <signal.h>
+#include <unistd.h>
+
+#include "gks_implem.h"
 
 static Bool XgksCreateDefStroke(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp);
 Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
@@ -410,7 +412,7 @@ Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response)
         idev->touched = False;
         idev->breakhit = False;
         while( (idev->touched == False) && (idev->breakhit == False) )
-                sigpause( 0 );
+                pause();
 
         /* deactivate stroke device */
         idev->active = False;

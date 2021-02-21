@@ -43,6 +43,7 @@
 
 #include <strings.h>
 #include <signal.h>
+#include <unistd.h>
 
 #include "gks_implem.h"
 
@@ -244,7 +245,7 @@ Gint greqstring(Gint ws_id, Gint dev, Gqstring *response)
     idev->touched = False;
     idev->breakhit = False;
     while ( (idev->touched == False) && (idev->breakhit == False) )
-        sigpause( 0 );
+        pause();
 
     idev->active = False;
     if ( idev->data.str.initst.esw == GECHO )

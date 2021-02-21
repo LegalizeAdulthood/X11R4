@@ -37,12 +37,12 @@
  *
  */
 
-#include "gks_implem.h"
-#include <strings.h>
 #include <signal.h>
+#include <strings.h>
 #include <sys/time.h>
 #include <unistd.h>
 
+#include "gks_implem.h"
 
 /*
  * enqueue an event.  Memory pointed to by data must be malloc'ed by the
@@ -139,7 +139,7 @@ Gint gawaitevent(Gfloat timeout, Gevent *event)
 
         Waiting = True;
         while( (xgks_state.event_queue_head == (EQEntry *)NULL) && (Waiting == True) ) /*c1147*/
-                sigpause( 0 );
+                pause();
         Waiting = False;
 
 /* set up the return values */

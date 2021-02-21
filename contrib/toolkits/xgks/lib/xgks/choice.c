@@ -37,16 +37,17 @@
  *
  */
 
-#include "gks_implem.h"
-#include "event.h"
-#include "x/xevent.h"
-
-#include <signal.h>
-#include <strings.h>
-
 #define XK_MISCELLANY
 #define XK_LATIN1
 #include <X11/keysymdef.h>
+
+#include <signal.h>
+#include <strings.h>
+#include <unistd.h>
+
+#include "gks_implem.h"
+#include "event.h"
+#include "x/xevent.h"
 
 Gint XgksChoUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     PromptStatus pstate, XMotionEvent *xmev, int event_id);
@@ -444,7 +445,9 @@ Gint greqchoice(Gint ws_id, Gint dev, Gchoice *response)
     idev->touched = False;
     idev->breakhit = False;
     while ( (idev->touched == False) && (idev->breakhit == False) )
-        sigpause( 0 );
+    {
+        pause();
+    }
 
     idev->active = False;
     if ( idev->data.cho.initst.esw == GECHO )

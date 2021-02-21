@@ -37,8 +37,10 @@
  *
  */
 
+#include <signal.h>
+#include <unistd.h>
+
 #include "gks_implem.h"
-#include <signal.h>             /*c1057*/
 
 Gint XgksLocUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     PromptStatus pstate, Gpoint *newdcpt, XMotionEvent *xmev, int event_id);
@@ -502,7 +504,7 @@ Gint greqloc( ws_id, dev, response )
     idev->touched = False;
     idev->breakhit = False;
     while( (idev->touched == False) && (idev->breakhit == False) )
-        sigpause( 0 );
+        pause();
 
 #ifdef LOCDEBUG
     fprintf(stderr, "greqloc() touched %d %s breakhit %d %s\n",idev->touched,(idev->touched==True)? "True":"False", idev->breakhit,(idev->breakhit == True)?"True":"False");

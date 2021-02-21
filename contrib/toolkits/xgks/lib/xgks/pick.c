@@ -44,7 +44,9 @@
  *
  */
 
-#include <signal.h>             /*c1057*/
+#include <signal.h>
+#include <unistd.h>
+
 #include "gks_implem.h"
 
 
@@ -286,7 +288,7 @@ Gint greqpick(Gint ws_id, Gint dev, Gpick *response)
     idev->touched = FALSE;
     idev->breakhit = FALSE;
     while ( (idev->touched == FALSE) && (idev->breakhit == FALSE) )
-        sigpause (0);
+        pause();
 
     idev->active = FALSE;
 

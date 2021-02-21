@@ -46,8 +46,10 @@
  *
  */
 
+#include <signal.h>
+#include <unistd.h>
+
 #include "gks_implem.h"
-#include <signal.h>             /*c1057*/
 
 static void XgksSetValEchoAttr(WSVALUATOR *ValPtr);
 Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
@@ -345,7 +347,7 @@ Gint greqval(Gint ws_id, Gint dev, Gqval *response)
     idev->touched = FALSE;
     idev->breakhit = FALSE;
     while ( (idev->touched == FALSE) && (idev->breakhit == FALSE) )
-        sigpause (0);
+        pause();
 
     idev->active = FALSE;
 
