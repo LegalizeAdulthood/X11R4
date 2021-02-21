@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -23,7 +23,7 @@
  * University of Illinois at Urbana-Champaign
  * Department of Computer Science
  * 1304 W. Springfield Ave.
- * Urbana, IL	61801
+ * Urbana, IL   61801
  *
  * (C) Copyright 1987, 1988 by The University of Illinois Board of Trustees.
  * All rights reserved.
@@ -32,96 +32,23 @@
  * Author: Gregory Scott Rogers
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
- * 
+ *
  *  XGKS -- Xevent interrupt handeling and process routines
- * 
- * $Header: xevent.c,v 1.1 89/09/18 17:25:13 jim Exp $
- *
- * $Source: /xsrc/contrib/toolkits/xgks/lib/x/RCS/xevent.c,v $
- *
- * $Log:	xevent.c,v $
- * Revision 1.1  89/09/18  17:25:13  jim
- * Initial revision
- * 
- * Revision 4.0  89/08/31  16:28:38  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 3.28  89/06/05  10:26:36  bruce
- * DCR# d1:	Changed include file name from gks_implement.h to gks_implem.h
- * 		for the AIX compiler.  Also added a display argument to all
- * 		calls to SIGIO functions.
- * 
- * Revision 3.27  89/03/15  16:37:51  amy
- * PTR c1164	xProcessEvents:  add check for ws_is_closing before 
- * 		continuing with event processing.
- * 
- * Revision 3.26  89/02/13  13:26:37  amy
- * PTR c1147	XgksSIGIO_ON defined as an int function.
- * 
- * Revision 3.25  89/02/04  15:28:43  amy
- * PTR c1147	Make global vars. and functions private, or static where possible.
- * 
- * Revision 3.24  89/01/27  12:53:08  amy
- * Cosmetic change to Log.
- * 
- * Revision 3.23  89/01/27  12:41:34  amy
- * PTR c1145	xProcessEvents:  switch on just xev.type, without masking out the old
- * 		XSendEvent bit; there is now a field in the event structure containing 
- *		this information.  
- *		Rewrite switch statement so that action to take at each case is 
- * 		contained in asubroutine.
- * 		On FocusIn event, update the focus_ws pointer in the GKS state list,  
- * 		and change color table if necessary.
- * 
- * Revision 3.22  89/01/26  11:45:29  amy
- * Cosmetic change to Log.
- * 
- * Revision 3.21  89/01/26  11:42:16  amy
- * PTR c1127	xProcessEvents:    case FocusIn,  call DefaultColormap with correct  
- * 		display pointer.  Same for case LeaveNotify.
- * 
- * Revision 3.20  88/12/08  17:52:29  amy
- * Changed Colourmap back to Colormap.
- * 
- * Revision 3.19  88/12/08  14:06:54  amy
- * Changed spelling of color to colour.
- * 
- * Revision 3.18  88/12/01  12:30:20  amy
- * New 4.3 C compiler--
- * 	SIGIO_ON and SIGIO_OFF defined as void functions, since no callers 
- * 	expect a return value from these functions.
- * 
- * Revision 3.17  88/11/02  09:59:23  amy
- * Edited the log for neatness.
- * 
- * Revision 3.16  88/11/02  09:56:04  amy
- * PTR c1129	xProcessEvents:  for expose events, added check to see if
- * 		there is another expose event in the queue for this window,
- * 		and if so, whether there is more than one.  Then, only process
- * 		the last expose event in the queue for this window.  
- * 		This prevents double refresh under the uwm window manager.
- * 		
- * Revision 3.15  88/08/18  14:55:02  amy
- * No additional changes in August tape version-- no changes made.
- * 
- * Revision 1.1  88/07/21  10:51:57  david
- * Initial revision
- *  
  *
  */
 
-static char rcsid[] = "$Header: xevent.c,v 1.1 89/09/18 17:25:13 jim Exp $";
-
+#define _BSD_SOURCE
+#include <signal.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
 
 #include "string.h"
-#include "gks_implem.h"		/* d1 */
-#include <signal.h>
-#include <sys/ioctl.h>		/* d1 */
+#include "gks_implem.h"
 
 #ifdef EVENTDEBUG
 #define PRINT_EVENT(evnt) print_event(evnt)
 #else
-#define PRINT_EVENT(evnt) 
+#define PRINT_EVENT(evnt)
 #endif
 
 #ifdef SIGNALRETURNSINT
@@ -132,11 +59,23 @@ static char rcsid[] = "$Header: xevent.c,v 1.1 89/09/18 17:25:13 jim Exp $";
 #define VOIDVAL(val) /**/
 #endif
 
+static int XgksExposeEvent(XEvent *xev, Display *dpy);
+static int XgksFocusInEvent(XEvent *xev, Display *dpy);
+static int XgksFocusOutEvent(Display *dpy);
+void XgksIProcessXEvent(XEvent *xev);
+void XgksIDevDisable(WS_STATE_ENTRY *ws);
+void XgksXReDrawWs(WS_STATE_PTR ws);
+void XgksIDevEnable(WS_STATE_ENTRY *ws);
+
+void xXgksUpdateTrans(WS_STATE_PTR ws);
+int XgksSIGIO_OFF(Display *dpy);
+int XgksSIGIO_ON(Display *dpy);
+
 /*
  * the XEvent interrupt processing routine
  */
 
-static								/* c1147 */
+static                                                          /* c1147 */
 VOIDTYPE xProcessEvents()
 {
    Display *dpy;
@@ -150,16 +89,16 @@ VOIDTYPE xProcessEvents()
    /* getting past this "if" once the window has started to      */ /* c1164 */
    /* close.                                   DWO               */ /* c1164 */
 
-	for (i=0; i<MAX_OPEN_WS; i++)
-	   {
-	   if ((xgks_state.openedws[i].ws_id != INVALID)  /*c1147*/
+        for (i=0; i<MAX_OPEN_WS; i++)
+           {
+           if ((xgks_state.openedws[i].ws_id != INVALID)  /*c1147*/
              && ((dpy = xgks_state.openedws[i].ws->dpy) != NULL)  /*c1147*/
              && (!xgks_state.openedws[i].ws->ws_is_closing) )     /* c1164 */
-		while (XPending(dpy)) 
-	   	   {		/* return # pending events */
-	   	   XNextEvent(dpy, &xev);
+                while (XPending(dpy))
+                   {            /* return # pending events */
+                   XNextEvent(dpy, &xev);
 
-		   /* call debugging printer if EVENTDEBUG is defined */
+                   /* call debugging printer if EVENTDEBUG is defined */
                    PRINT_EVENT(&xev);
 
                    /* NOTE: this used to say "xev.type & 0177" to */ /* c1145 */
@@ -169,117 +108,125 @@ VOIDTYPE xProcessEvents()
                    /*       Now there is a field called send_event*/ /* c1145 */
                    /*       that indicates the same.  (DWO)       */ /* c1145 */
                    switch( xev.type )                                /* c1145 */
-			{
+                        {
 
-			case Expose:
-				XgksExposeEvent(&xev,dpy);		/*c1145*/
-                		break;
+                        case Expose:
+                                XgksExposeEvent(&xev,dpy);              /*c1145*/
+                                break;
 
-			case KeyPress:		/* Physical device triggered */
-			case MotionNotify:	/* Physical device triggered */
-			case ButtonPress:
-			case ButtonRelease:
-				XgksIProcessXEvent( &xev );
-				break;
+                        case KeyPress:          /* Physical device triggered */
+                        case MotionNotify:      /* Physical device triggered */
+                        case ButtonPress:
+                        case ButtonRelease:
+                                XgksIProcessXEvent( &xev );
+                                break;
 
-		case EnterNotify:
-		case FocusIn:
-			XgksFocusInEvent(&xev,dpy);		/*c1145*/
-			break;
+                case EnterNotify:
+                case FocusIn:
+                        XgksFocusInEvent(&xev,dpy);             /*c1145*/
+                        break;
 
-		case FocusOut:
-		case LeaveNotify:
-			XgksFocusOutEvent(dpy);		/*c1145*/
-			break;
+                case FocusOut:
+                case LeaveNotify:
+                        XgksFocusOutEvent(dpy);         /*c1145*/
+                        break;
 
-	}
+        }
    }
 }
-	return VOIDVAL(0);
+        return VOIDVAL(0);
 }
 
 
 
 /*
- * start the SIGIO interrupt system 
+ * start the SIGIO interrupt system
  * This function was rewritten for the AIX PORT
  */
-int xXgksSIGIOStart(ws)					/*c1147*/
+int xXgksSIGIOStart(ws)                                 /*c1147*/
 WS_STATE_PTR ws;
 {
-	Display *dpy;                           /* d1 */
-	int one = 1;                            /* d1 */
-	int pid = getpid();                     /* d1 */
-	struct sigvec invec,outvec;             /* d1 */
+        Display *dpy;
+        int one = 1;
+        int pid = getpid();
+	/* TODO */
+        /*struct sigvec invec,outvec; */
 
-	dpy = ws->dpy;
-	if (dpy == NULL)		/* not opened yet */
-		return (INVALID);
-        invec.sv_handler = SIG_IGN;             /* d1 */
-        invec.sv_mask = 0;                      /* d1 */
-        invec.sv_onstack = 0;                   /* d1 */
-        sigvec(SIGIO,&invec,&outvec);           /* d1 */
-        ioctl( dpy->fd, SIOCSPGRP, &pid);       /* d1 */
-        ioctl( dpy->fd, FIOASYNC, &one);        /* d1 */
-	return (0);
+        dpy = ws->dpy;
+        if (dpy == NULL)                /* not opened yet */
+                return (INVALID);
+	/* TODO
+        invec.sv_handler = SIG_IGN;
+        invec.sv_mask = 0;
+        invec.sv_onstack = 0;
+        sigvec(SIGIO,&invec,&outvec);
+        ioctl( dpy->fd, SIOCSPGRP, &pid);
+        ioctl( dpy->fd, FIOASYNC, &one);
+	*/
+        return (0);
 }
 
 static int SigCount = 0;
 
-int XgksSIGIO_OFF(dpy)				/*c1147*//* d1 */
-Display *dpy;                                   /* d1 */
+int XgksSIGIO_OFF(dpy)
+Display *dpy;
 {
-        int zero = 0;                           /* d1 */
-        struct sigvec invec,outvec;             /* d1 */
-	SigCount++;
+        int zero = 0;
+	/* TODO
+        struct sigvec invec,outvec;
+	*/
+        SigCount++;
 
 #ifdef SIGDEBUG
-	fprintf(stderr, "XgksSIGIO_OFF SigCount == %d\n", SigCount);
+        fprintf(stderr, "XgksSIGIO_OFF SigCount == %d\n", SigCount);
 #endif
-	if (SigCount > 1)	/* already off */
-		return(0);
-/* if socket does not exist io is not possible     d1 */
-        if (dpy == NULL)                        /* d1 */
-                return(0);                      /* d1 */
-        invec.sv_handler = SIG_IGN;             /* d1 */
-        invec.sv_mask = 0;                      /* d1 */
-        invec.sv_onstack = 0;                   /* d1 */
-        sigvec( SIGIO, &invec,&outvec);         /* d1 */
-        ioctl( dpy->fd, FIOASYNC, &zero);       /* d1 */
+        if (SigCount > 1)       /* already off */
+                return(0);
+	/* if socket does not exist io is not possible */
+        if (dpy == NULL)
+                return(0);
+	/* TODO
+        invec.sv_handler = SIG_IGN;
+        invec.sv_mask = 0;
+        invec.sv_onstack = 0;
+        sigvec( SIGIO, &invec,&outvec);
+        ioctl( dpy->fd, FIOASYNC, &zero);
+	*/
 }
 
-int XgksSIGIO_ON(dpy)						/*c1147*//* d1 */
-Display *dpy;                                   /* d1 */
+int XgksSIGIO_ON(dpy)
+Display *dpy;
 {
-        int one = 1;                            /* d1 */
-        int pid = getpid();                     /* d1 */
-        struct sigvec invec,outvec;             /* d1 */
+        int one = 1;
+        int pid = getpid();
+	/* TODO
+        struct sigvec invec,outvec;
+	*/
 
-	SigCount--;
+        SigCount--;
 
 #ifdef SIGDEBUG
-	fprintf(stderr, "XgksSIGIO_ON SigCount == %d\n", SigCount);
+        fprintf(stderr, "XgksSIGIO_ON SigCount == %d\n", SigCount);
 #endif
-	if (SigCount > 0)	/* only on last request */
-		return(0);
+        if (SigCount > 0)       /* only on last request */
+                return(0);
 
-/* if socket does not exist io is not possible     d1 */
-        if (dpy == NULL)                        /* d1 */
-                return(0);                      /* d1 */
-        xProcessEvents(one);                    /* d1 */
-        invec.sv_handler = xProcessEvents;      /* d1 */
-        invec.sv_mask = 0;                      /* d1 */
-        invec.sv_onstack = 0;                   /* d1 */
-        sigvec( SIGIO, &invec,&outvec);         /* d1 */
-        ioctl( dpy->fd, SIOCSPGRP, &pid);       /* d1 */
-        ioctl( dpy->fd, FIOASYNC, &one);        /* d1 */
-
+	/* if socket does not exist io is not possible */
+        if (dpy == NULL)
+                return(0);
+        xProcessEvents(one);
+	/* TODO
+        invec.sv_handler = xProcessEvents;
+        invec.sv_mask = 0;
+        invec.sv_onstack = 0;
+        sigvec( SIGIO, &invec,&outvec);
+        ioctl( dpy->fd, SIOCSPGRP, &pid);
+        ioctl( dpy->fd, FIOASYNC, &one);
+	*/
 }
 
-static int XgksExposeEvent (xev,dpy)
-   XEvent *xev;
-   Display *dpy;
-   {
+static int XgksExposeEvent(XEvent *xev, Display *dpy)
+{
    XEvent tmpxev;
    Gint ii;
    Window  win;
@@ -310,9 +257,9 @@ static int XgksExposeEvent (xev,dpy)
    /* get the event window and the related wslist pointer */
 
    for (ii=0; ii < MAX_OPEN_WS; ii++)
-      if ((xgks_state.openedws[ii].win == xev->xexpose.window) && 
+      if ((xgks_state.openedws[ii].win == xev->xexpose.window) &&
               (xgks_state.openedws[ii].ws->dpy == dpy)) /*c1147*/
-         break;							/* DWO */
+         break;                                                 /* DWO */
 
    if (ii >= MAX_OPEN_WS)
       return(0);
@@ -325,21 +272,21 @@ static int XgksExposeEvent (xev,dpy)
 
    /* get current window width and height values */
 
-   XGetWindowAttributes(dpy, win, &win_att);    
+   XGetWindowAttributes(dpy, win, &win_att);
 
    ws->wbound.x = win_att.width;
-   ws->wbound.y = win_att.height;        
+   ws->wbound.y = win_att.height;
 
    /* for the latest Expose Event redraw the window contents */
 
-   xXgksUpdateTrans(ws);					 /* c1147 */
+   xXgksUpdateTrans(ws);                                         /* c1147 */
 
-   XClearArea(dpy, win, 0, 0, 0, 0, False);  
+   XClearArea(dpy, win, 0, 0, 0, 0, False);
 
    XSync(dpy, 0);
 
-   XgksXReDrawWs(ws);  						/* c1147 */
-        
+   XgksXReDrawWs(ws);                                           /* c1147 */
+
    /* if necessary call user defined redraw notifying function */
    if (ws->redrawfuncp != NULL)
       (*(ws->redrawfuncp))( ws->ws_id, GRD_X );
@@ -348,12 +295,10 @@ static int XgksExposeEvent (xev,dpy)
    XgksIDevEnable( ws );
 
    }
-   
-   
-static int XgksFocusInEvent (xev,dpy)
-   XEvent *xev;
-   Display *dpy;
-   {
+
+
+static int XgksFocusInEvent(XEvent *xev, Display *dpy)
+{
    int n;
    Colormap dclmp, *clmp_installed;
    Gint ii;
@@ -364,27 +309,27 @@ static int XgksFocusInEvent (xev,dpy)
 
    if (xev->xfocus.detail == NotifyNonlinearVirtual)
       return(0);
-   
+
    clmp_installed = XListInstalledColormaps(dpy, xev->xfocus.window, &n);
-   
-   if (xev->xfocus.window != DefaultRootWindow(xev->xfocus.display)) 
+
+   if (xev->xfocus.window != DefaultRootWindow(xev->xfocus.display))
       {
       for (ii=0; ii < MAX_OPEN_WS; ii++)
-      if ((xgks_state.openedws[ii].win == xev->xfocus.window)  
+      if ((xgks_state.openedws[ii].win == xev->xfocus.window)
            && (xgks_state.openedws[ii].ws->dpy == dpy)) /*c1147*/
-         break;							/* DWO */
-   
+         break;                                                 /* DWO */
+
       if (ii >= MAX_OPEN_WS)
          return(0);
-   
+
       ws  = xgks_state.openedws[ii].ws; /*c1147*/
       win = xgks_state.openedws[ii].win; /*c1147*/
-   
+
       /* remember who has the focus */   /* c1145 */
       xgks_state.focus_ws = ws;                     /* c1145 */ /*c1147*/
-   
+
       /* Instal a new color map when necessary */
-   
+
       if (ws->wclmp != *clmp_installed)
          {
          XInstallColormap(dpy, ws->wclmp);
@@ -394,7 +339,7 @@ static int XgksFocusInEvent (xev,dpy)
          /*       the wrong color map to be displayed. */ /* c1145 */
          /*                                (DWO)       */ /* c1145 */
          }                                                /* c1145 */
-   
+
       }
    else
       {
@@ -417,9 +362,8 @@ static int XgksFocusInEvent (xev,dpy)
 
 
 
-static int XgksFocusOutEvent (dpy)
-   Display *dpy;
-   {
+static int XgksFocusOutEvent(Display *dpy)
+{
    Colormap dclmp;
 
    dclmp = DefaultColormap(dpy, DefaultScreen(dpy)); /* c1127 */
@@ -430,7 +374,7 @@ static int XgksFocusOutEvent (dpy)
    /*       the wrong color map to be displayed. */ /* c1145 */
    /*                                (DWO)       */ /* c1145 */
 
-   xgks_state.focus_ws = NULL;                 	    /* c1145 */ /*c1147*/
+   xgks_state.focus_ws = NULL;                      /* c1145 */ /*c1147*/
    /* focus_ws remains null until the next */       /* c1145 */
    /* FocusIn event. (DWO)                 */       /* c1145 */
 
@@ -442,9 +386,8 @@ static int XgksFocusOutEvent (dpy)
 
 
 #ifdef EVENTDEBUG
-static int print_event (evnt)
-   XEvent *evnt;
-   {
+static int print_event(XEvent *evnt)
+{
    switch (evnt->type)
       {
       case 0:
@@ -566,5 +509,5 @@ static int print_event (evnt)
    return(0);
    }
 #endif
-   
-  
+
+

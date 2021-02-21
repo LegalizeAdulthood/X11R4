@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -23,7 +23,7 @@
  * University of Illinois at Urbana-Champaign
  * Department of Computer Science
  * 1304 W. Springfield Ave.
- * Urbana, IL	61801
+ * Urbana, IL   61801
  *
  * (C) Copyright 1987, 1988 by The University of Illinois Board of Trustees.
  * All rights reserved.
@@ -39,13 +39,13 @@
  *
  * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/input.h,v $
  *
- * $Log:	input.h,v $
+ * $Log:        input.h,v $
  * Revision 4.0  89/08/31  16:35:01  amy
  * Changed IBM copyright for MIT distribution.
  * 
  * Revision 3.3  88/12/16  12:27:32  amy
- * PTR c1133	Typedef EQEntry:  added int field called id for the event id
- * 		to be used in determining the presence of simultaneous events.
+ * PTR c1133    Typedef EQEntry:  added int field called id for the event id
+ *              to be used in determining the presence of simultaneous events.
  * 
  * Revision 3.2  88/08/19  13:19:18  amy
  * No additional changes in August tape version-- no changes made.
@@ -75,97 +75,97 @@
  */
 
 typedef struct {
-	Gchoicest initst;	/* initial state */
-				/* implementation state */
-	Gint curcho;		/* current choice */
-				/* X space coordinates are computed each time PROMPTON is envoked */
-	XPoint origin;		/* top left corner of menu in X space */
-	int iheight;		/* height of each item in X space */
-	int width;		/* width of each item in X space */
-	int height;		/* total height of menu in X space */
+        Gchoicest initst;       /* initial state */
+                                /* implementation state */
+        Gint curcho;            /* current choice */
+                                /* X space coordinates are computed each time PROMPTON is envoked */
+        XPoint origin;          /* top left corner of menu in X space */
+        int iheight;            /* height of each item in X space */
+        int width;              /* width of each item in X space */
+        int height;             /* total height of menu in X space */
 } WSCHOICE;
 
 typedef struct {
-	Glocst initst;		/* initial state */
-				/* implementation state */
-	Gpoint initpos;		/* initial position in DC */
-	Gpoint curpos;		/* current position in DC */
+        Glocst initst;          /* initial state */
+                                /* implementation state */
+        Gpoint initpos;         /* initial position in DC */
+        Gpoint curpos;          /* current position in DC */
 } WSLOCATOR;
 
 typedef struct {
-	Gpoint	curpos;		/* current position in DC */
-	Gpickst initst;		/* initial state */
-				/* implementation state */
+        Gpoint  curpos;         /* current position in DC */
+        Gpickst initst;         /* initial state */
+                                /* implementation state */
 } WSPICK;
 
 typedef struct {
-	Gstringst initst;	/* initial state */
-				/* implementation state */
-	Gchar *strbuf;		/* input string buffer */
-	Gint editpos;		/* edit position */
-	XPoint curpos;		/* current position of the cursor in X space */
+        Gstringst initst;       /* initial state */
+                                /* implementation state */
+        Gchar *strbuf;          /* input string buffer */
+        Gint editpos;           /* edit position */
+        XPoint curpos;          /* current position of the cursor in X space */
 } WSSTRING;
 
 typedef struct {
-	Gstrokest initst;	/* initial state */
-				/* implementation state */
-	Gpoint *stkbuf;		/* input stroke buffer */
-	Gpoint interval;	/* minimum interval between points DC*/
-	Gint editpos;		/* insertion point */
+        Gstrokest initst;       /* initial state */
+                                /* implementation state */
+        Gpoint *stkbuf;         /* input stroke buffer */
+        Gpoint interval;        /* minimum interval between points DC*/
+        Gint editpos;           /* insertion point */
 } WSSTROKE;
 
 typedef struct {
-	Gvalst initst;	    /* initial state */
-	VAL_AXIS axis;	    /* Orientation of echo area */
-	Gfloat convert[2];  /* convertion from DC to valuator output
-			       val == (DC*convert[0] - convert[1]) */
-	Gfloat BarWidth;    /* Width of the sliding bar */
-	Gfloat BarHeight;   /* Height of Sliding Bar */
-			    /* Note the sliding bar is always constructed with 
-			       input DC at center, so what is being saved here are
-			       actually OFFSETS FROM CENTER to construct the sliging bar */ 
-	Gfloat CurPos; 	    /* Current position (in DC) w.r.t. the echo min 
-			       This is either X or Y value */
-	Gpoint SlidRule[2]; /* Location of the Slide Ruler in DC */
-	Gqval  val;    	    /* Response record in valuator-ratio  */
-			    /* implementation state */
+        Gvalst initst;      /* initial state */
+        VAL_AXIS axis;      /* Orientation of echo area */
+        Gfloat convert[2];  /* convertion from DC to valuator output
+                               val == (DC*convert[0] - convert[1]) */
+        Gfloat BarWidth;    /* Width of the sliding bar */
+        Gfloat BarHeight;   /* Height of Sliding Bar */
+                            /* Note the sliding bar is always constructed with 
+                               input DC at center, so what is being saved here are
+                               actually OFFSETS FROM CENTER to construct the sliging bar */ 
+        Gfloat CurPos;      /* Current position (in DC) w.r.t. the echo min 
+                               This is either X or Y value */
+        Gpoint SlidRule[2]; /* Location of the Slide Ruler in DC */
+        Gqval  val;         /* Response record in valuator-ratio  */
+                            /* implementation state */
 } WSVALUATOR;
 
 typedef struct INPUT_DEV {
-	Giclass	class;			/* device class */
-	Gint	dev;			/* device number */
-	Bool	active;			/* is this device active? */
-	Bool	touched;		/* has the device been used lately? */
-	Bool	breakhit;		/* was break hit? */
-	GC	gc;			/* graphics context */
-	struct INPUT_DEV *next;	/* linked list */
-	union {
-		WSCHOICE	cho;
-		WSLOCATOR	loc;
-		WSPICK		pic;
-		WSSTRING	str;
-		WSSTROKE	stk;
-		WSVALUATOR	val;
-	} data;
+        Giclass class;                  /* device class */
+        Gint    dev;                    /* device number */
+        Bool    active;                 /* is this device active? */
+        Bool    touched;                /* has the device been used lately? */
+        Bool    breakhit;               /* was break hit? */
+        GC      gc;                     /* graphics context */
+        struct INPUT_DEV *next; /* linked list */
+        union {
+                WSCHOICE        cho;
+                WSLOCATOR       loc;
+                WSPICK          pic;
+                WSSTRING        str;
+                WSSTROKE        stk;
+                WSVALUATOR      val;
+        } data;
 } INPUT_DEV;
 
 typedef struct EQEntry {
-	struct EQEntry *next;	/* Event queue is a linked list */
-	Gevent event;		/* Data returned by Await Event */
-	char *data;		/* Data returned by Get<class> functions */
-	int    id;              /* event id (simultaneous */ /* PTR c1133 */
+        struct EQEntry *next;   /* Event queue is a linked list */
+        Gevent event;           /* Data returned by Await Event */
+        char *data;             /* Data returned by Get<class> functions */
+        int    id;              /* event id (simultaneous */ /* PTR c1133 */
                                 /* events have same id)   */
 } EQEntry;
+
+typedef enum {
+        PROMPTON,
+        PROMPTOFF,
+        PROMPTMOVE
+} PromptStatus;
 
 void XgksIDevAdd();
 INPUT_DEV *XgksIDevLookup();
 INPUT_DEV *XgksIDevNew();
 Gpstat XgksFindPickSeg ();
-
-typedef enum {
-	PROMPTON,
-	PROMPTOFF,
-	PROMPTMOVE
-} PromptStatus;
 
 #endif

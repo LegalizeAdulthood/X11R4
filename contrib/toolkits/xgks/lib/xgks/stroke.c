@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -34,128 +34,20 @@
  * Author: Yu Pan
  *
  * stroke.c - functions and data for GKS Stroke
- * 
- * $Header: stroke.c,v 4.0 89/08/31 16:24:58 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/src/RCS/stroke.c,v $
- *
- * $Log:	stroke.c,v $
- * Revision 4.0  89/08/31  16:24:58  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 3.33  89/06/05  10:07:47  bruce
- * DCR# d1:	Changed include file name from gks_implement.h
- * 		to gks_implem.h for AIX compiler.
- * PTR# c1179:	Changed exp field to tx_exp or ch_exp for AIX
- * 		compiler.  Moved variable declarations.  
- * 
- * Revision 3.32  89/05/22  09:25:32  bruce
- * PTR# c1177:  Made changes to code in the Update Prompt calls and in other places to 
- * 		insure that NULL is not dereferenced.
- * 
- * Revision 3.31  89/04/20  14:49:48  bruce
- * PTR# c2065:	Change all values for the default stroke buffer size from 1 to 64.
- * PTR# c2066:	Change all values for the default stroke interval from
- * 		0 to 0.001.
- * 
- * Revision 3.30  89/02/24  12:19:33  amy
- * PTR c1151	XgksStkUpdatePrompt:  Stroke echoing made faster
- * 		by drawing only new line/marker input, instead of
- * 		redrawing entire stroke.  Subroutine XgksXDrawLines
- * 		added to make multiple calls to XDrawLine.
- * 
- * Revision 3.29  89/02/04  15:29:45  amy
- * PTR c1147	Make global vars. and functions private, and static where possible.
- * 
- * Revision 3.28  89/01/17  17:22:40  amy
- * Moved data definitions added for PTR c1014 from within code to data section for ginitstroke.
- * 
- * Revision 3.27  88/12/19  17:11:38  amy
- * PTR c1148	XgksCreateDefStroke:  replace malloc with a call to XgksIDevNew.
- * 
- * Revision 3.26  88/12/16  12:43:32  amy
- * PTR c1133	XgksStkUpdatePrompt:  add event id to parameter list.
- * 		XgksEnqueueEvent calls:  add event id to parameter list.
- * 
- * Revision 3.25  88/12/13  10:22:24  amy
- * PTR c1049	ginitstroke:  After call to XChangeGC, an IF statement checks the
- * 		linestyle in the gc.  If this statement immediately follows the
- * 		call to XChangeGC, the program core dumps with a bus error.
- * 		The problem is avoided if the IF statement is moved to immediately
- * 		before the return.
- * 
- * Revision 3.24  88/12/09  11:41:04  amy
- * Changed WS_AVAIL_COLOR to WS_AVAIL_COLOUR.
- * 
- * Revision 3.23  88/12/08  13:16:20  amy
- * PTR c1130	GKSERROR and gerrorhand calls:  changed function name parameter
- * 		from character string to enum. type value.
- * Changed spelling of color to colour.
- * 
- * Revision 3.22  88/12/01  12:19:26  amy
- * New 4.3 C compiler--
- * 	ginitstroke:  calls to WS_AVAIL_COLOUR with an unsigned long parameter
- * 	are cast to type int.
- * 	Variable didx initialized to 0.
- * 
- * Revision 3.21  88/11/04  10:48:25  amy
- * PTR c1057	gsetstrokemode:  set up SIGALRM signal handler if mode = GEVENT.
- * 
- * Revision 3.20  88/11/02  08:45:25  amy
- * PTR c1120	XgksStkDelete:  do a switch on the pet to free the data
- * 		field of the Gstrokerec structure.
- * 
- * Revision 3.19  88/10/12  13:52:19  amy
- * PTR c1014  greqstroke was not gracefully handling bogus data in the
- *     data buffer, e.g., initial points = 0 and editpos > 1.
- *     Accept editpos values >= 1 and <= bufsize.
- * 
- * Revision 3.18  88/10/11  12:14:08  amy
- * No change.
- * 
- * Revision 3.17  88/09/26  09:08:35  amy
- * MIT	Declare local and global functions where used.
- * 	XgksStkUpdatePrompt:  call with correct number and types of parameters.
- * 	XgksEnqueueEvent:  recast data parameter in calls as a (char *).
- * 	Rename CreateDefStroke XgksCreateDefStroke to follow convention.
- * 
- * Revision 3.16  88/08/18  09:25:40  amy
- * AUG  gsamplestroke:  changed check for SAMPLE mode, 
- *        and removed init. of new device.
- * 
- * Revision 3.15  88/08/11  09:02:14  amy
- * PTR c1012  ginitstroke, ginqstrokest, greqstroke, gsamplestroke &
- * gsetstrokemode:  added call to VALID_WSID to check for error 20.
- * 
- * Revision 1.5  88/07/28  15:05:26  owens
- * added check for error 20 for PTR c1012
- * 
- * Revision 1.4  88/07/27  13:59:05  bruce
- * GKSERROR macros had to be either added or changed to handle
- * error code 63 and 64
- * 
- * 
- * Revision 1.3  88/07/27  13:46:27  bruce
- * 
- * 
- * Revision 1.2  88/07/26  17:54:09  owens
- * renamed/replaced VALID_WSID macro for PTR c1012 (DWO)
- * 
- * Revision 1.1  88/07/21  10:50:23  david
- * Initial revision
- *  
  *
  */
 
-static char rcsid[]="$Header: stroke.c,v 4.0 89/08/31 16:24:58 amy Exp $";
- 
-#include "gks_implem.h"                 /* d1 */
-#include <signal.h>		/*c1057*/
-double fabs();
+#include "gks_implem.h"
+#include <signal.h>             /*c1057*/
+#include <math.h>
 
-extern  XgksAwaitInterrupt();	/*  Declare  Interrupt function   PTR# c1057  */
- 
-
+static Bool XgksCreateDefStroke(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp);
+Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
+    PromptStatus pstate, Gpoint *newdcpt, XMotionEvent *xmev, int event_id);
+Bool XgksFindNTransNpts(int num, Gpoint *ndcpts, Gint *ntrans, Gpoint *wcpts);
+void XgksDrawMarkers(Display *dpy, Window win, GC gc, XPoint *pe, int n, int type, float s);
+void XgksXDrawLines(Display *dpy, Drawable win, GC gc, XPoint *xpts, int npts, int mode);
+
 /*
  * INITIALISE STROKE
  *
@@ -163,35 +55,24 @@ extern  XgksAwaitInterrupt();	/*  Declare  Interrupt function   PTR# c1057  */
  *
  * See Also: ANSI Standard p.121
  */
- 
-ginitstroke( ws_id, dev, init, pet, area, record )
-    Gint ws_id;
-    Gint dev;
-    Gstroke *init;
-    Gint pet;
-    Glimit *area;
-    Gstrokerec *record;
-{
-	/*
-	 * declare local functions
-	 */
-	static Bool XgksCreateDefStroke();	/*MIT*/
 
+Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gstrokerec *record)
+{
     WS_STATE_ENTRY *ws;
     INPUT_DEV *idev;
     XGCValues gcvalues;
     Gpoint *spt, *dpt;
     int i, didx;
-    static Gpoint *ptr;				/* c1179 c1014 */
-    static int cnt = 1;				/* c1179 c1014 */
-    static Glimit *win;				/* c1179 c1014 */
-    
-    
- 
+    static Gpoint *ptr;                         /* c1179 c1014 */
+    static int cnt = 1;                         /* c1179 c1014 */
+    static Glimit *win;                         /* c1179 c1014 */
+
+
+
 /* STEP 1: check for errors. */
 /* proper gks state? */
     GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitstroke) /* c1147 */
- 
+
 /* check for invalid workstation id */
 /* DWO 7/28/88  added check to differentiate between */
 /*              error 20 and error 25 for PTR c1012  */
@@ -200,27 +81,27 @@ ginitstroke( ws_id, dev, init, pet, area, record )
 /* open wsid? */
 /* DWO 7/26/88  changed macro name from VALID_WSID */
     GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitstroke)  /* c1012 */
- 
+
 /* valid workstation category */
     GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginitstroke)
- 
+
 /* valid echo area */
         GKSERROR( (area->xmin > area->xmax || area->ymin > area->ymax), 51, errginitstroke )
- 
-/* valid stroke device number 	c1014 */
+
+/* valid stroke device number   c1014 */
         GKSERROR( (dev < 1), 140, errginitstroke )
- 
+
 /* valid and supported prompt mode? */
         GKSERROR( pet != 1 && pet != 3 && pet != 4, 144, errginitstroke)
- 
+
 /* Echo inside display space? */
         GKSERROR( (area->xmin < 0 || area->xmax > ws->size.x
                 || area->ymin < 0 || area->ymax > ws->size.y),
                 145, errginitstroke )
- 
+
 /* valid data record */
     GKSERROR( record->pet1.bufsiz < 1, 146, errginitstroke)
-    GKSERROR( record->pet1.editpos < 1, 146, errginitstroke)	/*c1014*/
+    GKSERROR( record->pet1.editpos < 1, 146, errginitstroke)    /*c1014*/
   GKSERROR( record->pet1.editpos > record->pet1.bufsiz, 146, errginitstroke) /*c1014*/
     GKSERROR( record->pet1.time < 0.0, 146, errginitstroke)
     GKSERROR( init->n_points < 0, 152, errginitstroke)
@@ -242,8 +123,8 @@ ginitstroke( ws_id, dev, init, pet, area, record )
       GKSERROR( ((ptr->x < win->xmin) || (win->xmax < ptr->x)       /* c1014 */
               || (ptr->y < win->ymin) || (win->ymax < ptr->y)),     /* c1014 */
               146, errginitstroke)                                   /* c1014 */
- 
-    didx = 0;				/* New 4.3 C compiler:  initialize */
+
+    didx = 0;                           /* New 4.3 C compiler:  initialize */
     switch( pet ) {
     default:
     case 1:
@@ -256,11 +137,11 @@ ginitstroke( ws_id, dev, init, pet, area, record )
             GKSERROR( !WS_AVAIL_COLOUR(ws, record->pet3.mk.bundl.colour), 92, errginitstroke)
         }
         else {
-            record->pet3.mk.type = xgks_state.gks_mkattr.type;		/* c1147 */
-            record->pet3.mk.size = xgks_state.gks_mkattr.size;		/* c1147 */
-            record->pet3.mk.colour = xgks_state.gks_mkattr.colour;	/* c1147 */
-            record->pet3.mk.mark = xgks_state.gks_mkattr.mark;		/* c1147 */
-            record->pet3.mk.bundl = xgks_state.gks_mkattr.bundl;	/* c1147 */
+            record->pet3.mk.type = xgks_state.gks_mkattr.type;          /* c1147 */
+            record->pet3.mk.size = xgks_state.gks_mkattr.size;          /* c1147 */
+            record->pet3.mk.colour = xgks_state.gks_mkattr.colour;      /* c1147 */
+            record->pet3.mk.mark = xgks_state.gks_mkattr.mark;          /* c1147 */
+            record->pet3.mk.bundl = xgks_state.gks_mkattr.bundl;        /* c1147 */
         }
     /* Bind attributes to device by storing in pet3.mk.bundl the attributes
      * based on the state of the ASF flags.
@@ -272,7 +153,7 @@ ginitstroke( ws_id, dev, init, pet, area, record )
             record->pet3.mk.bundl.size = MKBUND.size;
         if (record->pet3.mk.colour == GBUNDLED)
             record->pet3.mk.bundl.colour = MKBUND.colour;
-            
+
     /* Bind values into the GC */
         gcvalues.function = GXinvert;
         gcvalues.foreground = record->pet3.mk.bundl.colour;
@@ -291,11 +172,11 @@ ginitstroke( ws_id, dev, init, pet, area, record )
             GKSERROR( !WS_AVAIL_COLOUR(ws, record->pet4.ln.bundl.colour), 92, errginitstroke)
         }
         else {
-            record->pet4.ln.type = xgks_state.gks_lnattr.type;		/* c1147 */
-            record->pet4.ln.width = xgks_state.gks_lnattr.width;	/* c1147 */
-            record->pet4.ln.colour = xgks_state.gks_lnattr.colour;	/* c1147 */
-            record->pet4.ln.line = xgks_state.gks_lnattr.line;		/* c1147 */
-            record->pet4.ln.bundl = xgks_state.gks_lnattr.bundl;	/* c1147 */
+            record->pet4.ln.type = xgks_state.gks_lnattr.type;          /* c1147 */
+            record->pet4.ln.width = xgks_state.gks_lnattr.width;        /* c1147 */
+            record->pet4.ln.colour = xgks_state.gks_lnattr.colour;      /* c1147 */
+            record->pet4.ln.line = xgks_state.gks_lnattr.line;          /* c1147 */
+            record->pet4.ln.bundl = xgks_state.gks_lnattr.bundl;        /* c1147 */
         }
     /* Bind attributes to device by storing in pet3.mk.bundl the attributes
      * based on the state of the ASF flags.
@@ -307,7 +188,7 @@ ginitstroke( ws_id, dev, init, pet, area, record )
             record->pet4.ln.bundl.width = LNBUND.width;
         if (record->pet4.ln.colour == GBUNDLED)
             record->pet4.ln.bundl.colour = LNBUND.colour;
-            
+
     /* Bind values into the GC */
         gcvalues.function = GXinvert;
         gcvalues.line_style = (int) record->pet4.ln.bundl.type;
@@ -315,7 +196,7 @@ ginitstroke( ws_id, dev, init, pet, area, record )
         if (didx < 0 ) didx += 3;
         else if (didx > 0) didx += 1;
         /* if (didx == 0) doesn't matter */
- 
+
         gcvalues.line_style = (gcvalues.line_style == GLN_SOLID) ?
             LineSolid : LineOnOffDash;
         gcvalues.line_width = (int) record->pet4.ln.bundl.width;
@@ -342,12 +223,12 @@ ginitstroke( ws_id, dev, init, pet, area, record )
     if ( idev->data.stk.initst.stroke.points != NULL)
         free( idev->data.stk.initst.stroke.points );
     idev->data.stk.initst.stroke = *init;
-    dpt = idev->data.stk.initst.stroke.points = 
+    dpt = idev->data.stk.initst.stroke.points =
                (Gpoint *)malloc( sizeof(Gpoint) * init->n_points );
     GKSERROR( dpt == NULL, 300, errginitstroke)
     for( i=0, spt = init->points; i<init->n_points; i++, spt++, dpt++)
         *dpt = *spt;
-    
+
 /* copy other initialization data */
     idev->data.stk.initst.pet    = pet;
     idev->data.stk.initst.e_area    = *area;
@@ -357,7 +238,7 @@ ginitstroke( ws_id, dev, init, pet, area, record )
        don't know why, but this fixes it - bg   PTR# c1049 */
     if (gcvalues.line_style == LineOnOffDash)
         XSetDashes( ws->dpy, idev->gc, 0, xgksDASHES[didx].dashl, xgksDASHES[didx].dn); /* c1147 */
- 
+
     return(0);
 }
 
@@ -368,27 +249,18 @@ ginitstroke( ws_id, dev, init, pet, area, record )
  *
  * See Also: ANSI Standard p.129
  */
- 
-gsetstrokemode(ws_id, dev, mode, echo)
-    Gint ws_id;
-    Gint dev;
-    Gimode mode;
-    Gesw echo;
-{
-	/*
-	 * declare local functions
-	 */
-	static Bool XgksCreateDefStroke();	/*MIT*/
 
+Gint gsetstrokemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
+{
     WS_STATE_ENTRY *ws;
     INPUT_DEV *idev;
     Gpoint *spt, *dpt, ndcpt, wcpt;
     int i;
- 
+
 /* STEP 1: check for errors. */
 /* proper gks state? */
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetstrokemode ) /* c1147 */
- 
+
 /* check for invalid workstation id */
 /* DWO 7/28/88  added check to differentiate between */
 /*              error 20 and error 25 for PTR c1012  */
@@ -397,18 +269,18 @@ gsetstrokemode(ws_id, dev, mode, echo)
 /* open wsid? */
 /* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetstrokemode )  /* c1012 */
- 
+
 /* valid workstation type */
         GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetstrokemode)
- 
+
 /* valid stroke device number */
         GKSERROR( (dev < 1), 140, errgsetstrokemode )
- 
+
 /* check enumerations */
         GKSERROR( ((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT)
                         || (echo != GECHO && echo != GNOECHO)),
                 2000, errgsetstrokemode )
- 
+
         if ((idev = XgksIDevLookup( ws, dev, GISTROKE)) == NULL) {
         /* Create the Input Device structure */
                 GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errgsetstrokemode)
@@ -420,8 +292,8 @@ gsetstrokemode(ws_id, dev, mode, echo)
         }
         idev->data.stk.initst.mode = mode;
         idev->data.stk.initst.esw = echo;
- 
-        if (mode == GSAMPLE || mode == GEVENT) 
+
+        if (mode == GSAMPLE || mode == GEVENT)
            {
     /* copy & transform initial points to current stroke */
         if ( idev->data.stk.stkbuf != NULL)
@@ -429,7 +301,7 @@ gsetstrokemode(ws_id, dev, mode, echo)
         dpt = idev->data.stk.stkbuf = (Gpoint *)malloc( sizeof(Gpoint) * idev->data.stk.initst.record.pet1.bufsiz );
         GKSERROR( dpt == NULL, 300, errgsetstrokemode)
         for( i=0, spt = idev->data.stk.initst.stroke.points;
-            i<idev->data.stk.initst.stroke.n_points; i++, spt++, dpt++) 
+            i<idev->data.stk.initst.stroke.n_points; i++, spt++, dpt++)
         {
             NtWcToNdc( idev->data.stk.initst.stroke.transform, spt, &ndcpt );
             NdcToDc( ws, &ndcpt, dpt );
@@ -443,11 +315,11 @@ gsetstrokemode(ws_id, dev, mode, echo)
                                                         - ndcpt.x) );
         idev->data.stk.interval.y = fabs( (double)(idev->data.stk.interval.y
                                                         - ndcpt.y) );
- 
-                idev->data.stk.editpos = 
+
+                idev->data.stk.editpos =
                     idev->data.stk.initst.record.pet1.editpos-1;   /* c1014 */
-		if ( mode == GEVENT )
-	  	    signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for 						           event mode  c1057  */
+                if ( mode == GEVENT )
+                    signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for                                                        event mode  c1057  */
                 idev->active = True;
                 if ( echo == GECHO )
                         XgksStkUpdatePrompt( ws, idev, PROMPTON, &(idev->data.stk.stkbuf[idev->data.stk.editpos]),
@@ -455,7 +327,7 @@ gsetstrokemode(ws_id, dev, mode, echo)
         }
         else    /* GREQUEST */
                 idev->active = False;
- 
+
     return(0);
 }
 
@@ -466,30 +338,18 @@ gsetstrokemode(ws_id, dev, mode, echo)
  *
  * See Also: ANSI Standard p.132
  */
- 
-greqstroke(ws_id, dev, response )
-    Gint ws_id;
-    Gint dev;
-    Gqstroke *response;
-{
-	/*
-	 * declare local functions
-	 */
-	static Bool XgksCreateDefStroke();	/*MIT*/
-	/*
-	 * declare global functions
-	 */
-	Bool XgksFindNTransNpts();		/*MIT	c1014*/
 
+Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response)
+{
     WS_STATE_ENTRY *ws;
     INPUT_DEV *idev;
     Gpoint *spt, *dpt, ndcpt, *ndcpts, wcpt;
     int i;
- 
+
 /* STEP 1: check for errors. */
 /* proper gks state? */
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqstroke ) /* c1147 */
- 
+
 /* check for invalid workstation id */
 /* DWO 7/28/88  added check to differentiate between */
 /*              error 20 and error 25 for PTR c1012  */
@@ -498,13 +358,13 @@ greqstroke(ws_id, dev, response )
 /* open wsid? */
 /* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqstroke )  /* c1012 */
- 
+
 /* valid workstation type */
         GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqstroke)
- 
+
 /* valid locator device number */
         GKSERROR( (dev < 1), 140, errgreqstroke )
- 
+
         if ((idev = XgksIDevLookup( ws, dev, GISTROKE)) == NULL) {
         /* Create the Input Device structure */
                 GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errgreqstroke)
@@ -514,7 +374,7 @@ greqstroke(ws_id, dev, response )
     }
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
- 
+
 /* copy & transform initial points to current stroke */
     if ( idev->data.stk.stkbuf != NULL)
         free( idev->data.stk.stkbuf );
@@ -532,33 +392,33 @@ greqstroke(ws_id, dev, response )
     NtWcToNdc( idev->data.stk.initst.stroke.transform, &wcpt, &ndcpt);
     idev->data.stk.interval.x = fabs( (double)(idev->data.stk.interval.x - ndcpt.x) );
     idev->data.stk.interval.y = fabs( (double)(idev->data.stk.interval.y - ndcpt.y) );
- 
+
     /* set editpos to the editpos specified in initstroke             */
     /* NOTE: this will be incremented by incoming data!  From here on */
     /*       do not confuse it with the initstroke version of editpos */
-    idev->data.stk.editpos = 
+    idev->data.stk.editpos =
            idev->data.stk.initst.record.pet1.editpos-1;           /* c1014 */
- 
+
     idev->active = True; /* activate the stroke device */
     /* if echo is set to on... */
     if ( idev->data.stk.initst.esw == GECHO )
-	/* update prompt (display initial points etc?) */
+        /* update prompt (display initial points etc?) */
          XgksStkUpdatePrompt( ws, idev, PROMPTON, &(idev->data.stk.stkbuf[idev->data.stk.editpos]),
-             (XMotionEvent *)NULL,-1 );	/*MIT*/ /* PTR c1133 c1177 */
- 
+             (XMotionEvent *)NULL,-1 ); /*MIT*/ /* PTR c1133 c1177 */
+
 /* wait for trigger or break */
         idev->touched = False;
         idev->breakhit = False;
         while( (idev->touched == False) && (idev->breakhit == False) )
                 sigpause( 0 );
- 
-	/* deactivate stroke device */
+
+        /* deactivate stroke device */
         idev->active = False;
         if ( idev->data.stk.initst.esw == GECHO )
-                XgksStkUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL, 
+                XgksStkUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL,
                    (XMotionEvent *)NULL,-1 ); /*MIT*/ /* PTR c1133 */
- 
-	/* if user hit <break>, return GNONE, else return GOK */
+
+        /* if user hit <break>, return GNONE, else return GOK */
         if ( (idev->breakhit == True) ) {
                 response->status = GNONE;
         }
@@ -568,26 +428,26 @@ greqstroke(ws_id, dev, response )
         spt= ndcpts= (Gpoint *)malloc( sizeof(Gpoint) *idev->data.stk.editpos );
         GKSERROR( spt == NULL, 300, errgreqstroke)
 
-	 /* convert all points from DC to NDC (and copy into ndcpts) */
+         /* convert all points from DC to NDC (and copy into ndcpts) */
         for( i=0, dpt = idev->data.stk.stkbuf;
             i<idev->data.stk.editpos; i++, spt++, dpt++) {
             DcToNdc( ws, dpt, spt);
         }
         /* find the ntrans and WC points */
         if ( idev->data.stk.editpos > 0 )
-            XgksFindNTransNpts( idev->data.stk.editpos, ndcpts, 
-                                    &(response->stroke.transform), 
+            XgksFindNTransNpts( idev->data.stk.editpos, ndcpts,
+                                    &(response->stroke.transform),
                                     response->stroke.points );
         response->stroke.n_points = idev->data.stk.editpos;
         free( ndcpts );
-	/* NOTE: editpos at this point is not the editpos set in initstroke. */
+        /* NOTE: editpos at this point is not the editpos set in initstroke. */
         /*       editpos is incremented as new points are added to the       */
         /*       buffer.  It is reset at the beginning of request stroke to  */
         /*       the initialized value.  (It is also one less - the user     */
         /*       refers to the edit position starting at 1, while internally */
         /*       it starts at 0)                                             */
     }
- 
+
     return( OK );
 }
 
@@ -598,30 +458,18 @@ greqstroke(ws_id, dev, response )
  *
  * See Also: ANSI Standard p.135
  */
- 
-gsamplestroke( ws_id, dev, response )
-    Gint ws_id;
-    Gint dev;
-    Gstroke *response;
-{
-	/*
-	 * declare local functions
-	 */
-	static Bool XgksCreateDefStroke();	/*MIT*/
-	/*
-	 * declare global functions
-	 */
-	Bool XgksFindNTransNpts();		/*MIT	c1014*/
 
+Gint gsamplestroke(Gint ws_id, Gint dev, Gstroke *response)
+{
     WS_STATE_ENTRY *ws;
     INPUT_DEV *idev;
     Gpoint *spt, *dpt, *ndcpts;
     int i;
- 
+
 /* STEP 1: check for errors. */
 /* proper gks state? */
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplestroke ) /* c1147 */
- 
+
 /* check for invalid workstation id */
 /* DWO 7/28/88  added check to differentiate between */
 /*              error 20 and error 25 for PTR c1012  */
@@ -630,19 +478,19 @@ gsamplestroke( ws_id, dev, response )
 /* open wsid? */
 /* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsamplestroke )  /* c1012 */
- 
+
 /* valid workstation type */
         GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsamplestroke)
- 
+
 /* valid locator device number */
         GKSERROR( (dev < 1), 140, errgsamplestroke )
- 
-	idev = XgksIDevLookup( ws, dev, GISTROKE);	/* AUG */
-	GKSERROR( (idev == NULL) || (idev->data.stk.initst.mode != GSAMPLE), 142, errgsamplestroke)  /* AUG */
+
+        idev = XgksIDevLookup( ws, dev, GISTROKE);      /* AUG */
+        GKSERROR( (idev == NULL) || (idev->data.stk.initst.mode != GSAMPLE), 142, errgsamplestroke)  /* AUG */
 
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
- 
+
 /* Convert current measure to WC space */
     spt = ndcpts = (Gpoint *)malloc( sizeof(Gpoint) * idev->data.stk.editpos );
     GKSERROR( spt == NULL, 300, errgsamplestroke)
@@ -655,7 +503,7 @@ gsamplestroke( ws_id, dev, response )
         XgksFindNTransNpts( idev->data.stk.editpos, ndcpts, &(response->transform), response->points );
     response->n_points = idev->data.stk.editpos;
     free( ndcpts );
- 
+
     return( OK );
 }
 
@@ -669,27 +517,18 @@ gsamplestroke( ws_id, dev, response )
  *
  * See Also: ANSI Standard p.167
  */
- 
-ginqstrokest(ws_id, dev, type, state )
-    Gint ws_id;
-    Gint dev;
-    Gqtype type;
-    Gstrokest *state;
-{
-	/*
-	 * declare local functions
-	 */
-	static Bool XgksCreateDefStroke();	/*MIT*/
 
+Gint ginqstrokest(Gint ws_id, Gint dev, Gqtype type, Gstrokest *state)
+{
     WS_STATE_ENTRY *ws;
     INPUT_DEV *idev;
     Gpoint *spt, *dpt;
     int i;
- 
+
 /* STEP 1: check for errors. */
 /* proper gks state? */
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqstrokest ) /* c1147 */
- 
+
 /* check for invalid workstation id */
 /* DWO 7/28/88  added check to differentiate between */
 /*              error 20 and error 25 for PTR c1012  */
@@ -698,16 +537,16 @@ ginqstrokest(ws_id, dev, type, state )
 /* open wsid? */
 /* DWO 7/26/88  changed macro name from VALID_WSID */
         GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqstrokest )  /* c1012 */
- 
+
 /* valid workstation type */
         GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqstrokest)
- 
+
 /* valid locator device number */
         GKSERROR( (dev < 1), 140, errginqstrokest )
- 
+
 /* valid enumeration */
     GKSERROR( (type != GSET) && (type != GREALIZED), 2000, errginqstrokest)
- 
+
         if ((idev = XgksIDevLookup( ws, dev, GISTROKE)) == NULL) {
         /* Create the Input Device structure */
                 GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errginqstrokest)
@@ -718,11 +557,11 @@ ginqstrokest(ws_id, dev, type, state )
     for( i=0, spt = idev->data.stk.initst.stroke.points;
         i<state->stroke.n_points; i++, spt++, dpt++)
         *dpt = *spt;
- 
+
     /* if idev->data.stk.initst.record.pet?.data pointed to anything it
      * would be copied here.
      */
- 
+
      return( OK );
 }
 
@@ -736,62 +575,55 @@ ginqstrokest(ws_id, dev, type, state )
  *
  * See Also: ANSI Standard p.186
  */
- 
-ginqdefstroke( type, dev, data )
-    Gchar *type;
-    Gint dev;
-    Gdefstroke *data;
+
+Gint ginqdefstroke(Gchar *type, Gint dev, Gdefstroke *data)
 {
         EWSTYPE ewstype;
- 
+
 /* STEP 1: check for errors */
         GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefstroke) /* c1147 */
- 
+
 /* valid wsid? */
         ewstype = XgksWsTypeToEnum( type );
         GKSERROR( ewstype == WST_INVALID, 22, errginqdefstroke )
         GKSERROR( ewstype != X_WIN, 38, errginqdefstroke )
- 
+
 /* valid stroke dev number */
         GKSERROR( dev < 1, 140, errginqdefstroke )
- 
+
 /* STEP 2: set up the return values */
     data->bufsiz = 64;          /* c2065 */
- 
+
     data->pets.number = 3;
     data->pets.integers = (Gint *) malloc( sizeof( Gint ) * 3);
         GKSERROR( data->pets.integers == NULL, 300, errginqdefstroke )
     data->pets.integers[0] = 1;
     data->pets.integers[1] = 3;
     data->pets.integers[2] = 4;
- 
+
     data->e_area.xmin = 0.0;
     data->e_area.xmax = WS_MAX_DCX;
     data->e_area.ymin = 0.0;
     data->e_area.ymax = WS_MAX_DCY;
- 
+
     data->record.pet1.bufsiz = 64;            /* c2065 */
     data->record.pet1.editpos = 1;            /* c1014 */
     data->record.pet1.interval.x = 0.001;     /* c2066 */
     data->record.pet1.interval.y = 0.001;     /* c2066 */
     data->record.pet1.time = 0.0;
     data->record.pet1.data = NULL;
- 
+
     return( OK );
 }
 
 /*
  * create a default string device. returns True if cannot creat.
  */
-static Bool
-XgksCreateDefStroke( ws, dev, idevp )
-    WS_STATE_ENTRY *ws;
-    Gint dev;
-    INPUT_DEV **idevp;
+static Bool XgksCreateDefStroke(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp)
 {
     XGCValues gcvalues;
     INPUT_DEV *idev;
-    
+
     idev = XgksIDevNew();    /*c1148*/
     if (idev == NULL)
         return( True );
@@ -824,7 +656,7 @@ XgksCreateDefStroke( ws, dev, idevp )
     idev->data.stk.initst.record.pet1.interval.y = 0.001;       /* c2066 */
     idev->data.stk.initst.record.pet1.time = 0.0;
     idev->data.stk.initst.record.pet1.data = NULL;
- 
+
     idev->data.stk.stkbuf = (Gpoint *) malloc( sizeof( Gpoint ) * 64);/*c2065*/
     if (idev->data.stk.stkbuf == NULL)
         return( True );
@@ -833,11 +665,11 @@ XgksCreateDefStroke( ws, dev, idevp )
     idev->data.stk.interval.x = 0.001;                          /* c2066 */
     idev->data.stk.interval.y = 0.001;                          /* c2066 */
     idev->data.stk.editpos = 0;
- 
+
 /* link the new device into the list */
         idev->next = ws->in_dev_list;
         ws->in_dev_list = idev;
- 
+
         *idevp = idev;
         return( False );
 }
@@ -846,37 +678,27 @@ XgksCreateDefStroke( ws, dev, idevp )
 /*
  * XgksStkUpdatePrompt - update the stroke prompt
  */
- 
-XgksStkUpdatePrompt( ws, idev, pstate, newdcpt, xmev, event_id ) /* PTR c1133 */
-    WS_STATE_ENTRY *ws;
-    INPUT_DEV *idev;
-    PromptStatus pstate;
-    Gpoint *newdcpt;
-    XMotionEvent *xmev;
-    int event_id;        /* PTR c1133 */
-{
-	/*
-	 * declare global functions
-	 */
-	Bool XgksFindNTransNpts();	/*MIT	c1014*/
 
+Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
+    PromptStatus pstate, Gpoint *newdcpt, XMotionEvent *xmev, int event_id)
+{
     Gpoint prev, ndcpt, *ndcpts, *spt, *dpt;
     Gstroke *data;
     XRectangle rect;
     XPoint *xpts, *xpoints;
     int i;
- 
+
 #define STKBUFSIZ(P)    (idev->data.stk.initst.record.P.bufsiz)
 #define STKEDITPOS    (idev->data.stk.editpos)
 #define MTYPE    (idev->data.stk.initst.record.pet3.mk.bundl.type)
 #define MSIZE    (idev->data.stk.initst.record.pet3.mk.bundl.size)
- 
+
     rect.x = 0;
     rect.y = 0;
     rect.width = ws->wbound.x;
     rect.height = ws->wbound.y;
     XSetClipRectangles(ws->dpy, idev->gc, 0, 0, &rect, 1, Unsorted);
- 
+
     switch( pstate ) {
     case PROMPTON:
     /* transform the points */
@@ -930,13 +752,13 @@ XgksStkUpdatePrompt( ws, idev, pstate, newdcpt, xmev, event_id ) /* PTR c1133 */
         fprintf(stderr,"    editpos %d bufsiz %d mtype %d msize %f\n",
             STKEDITPOS, STKBUFSIZ(pet1), MTYPE, MSIZE);
 #endif
- 
+
         if (ndcpt.x < ws->wsti.current.w.xmin
                 || ndcpt.x > ws->wsti.current.w.xmax
                 || ndcpt.y < ws->wsti.current.w.ymin
                 || ndcpt.y > ws->wsti.current.w.ymax )
             return( 0 );
- 
+
         if (STKEDITPOS > 0) {
             DcToNdc( ws, &(idev->data.stk.stkbuf[STKEDITPOS-1]), &prev);
 #ifdef STKDEBUG
@@ -1002,10 +824,10 @@ XgksStkUpdatePrompt( ws, idev, pstate, newdcpt, xmev, event_id ) /* PTR c1133 */
                 break;
             data = (Gstroke *) malloc( sizeof( Gstroke ));
             if ( data == NULL )
-	    {
+            {
                 gerrorhand( 300, errXgksStkUpdatePrompt, xgks_state.gks_err_file ); /* c1147 */
-	        return(300);
-	    }
+                return(300);
+            }
             else {
                 XBell( ws->dpy, 0);
             /* Convert current measure to WC space */
@@ -1021,7 +843,7 @@ XgksStkUpdatePrompt( ws, idev, pstate, newdcpt, xmev, event_id ) /* PTR c1133 */
                     XgksFindNTransNpts( STKEDITPOS, ndcpts, &(data->transform), data->points );
                 data->n_points = STKEDITPOS;
                 free( ndcpts );
-                XgksEnqueueEvent( ws->ws_id, idev->dev, GISTROKE, 
+                XgksEnqueueEvent( ws->ws_id, idev->dev, GISTROKE,
                   (char *)data,event_id); /*MIT*/ /* PTR c1133 */
             }
             break;
@@ -1030,7 +852,7 @@ XgksStkUpdatePrompt( ws, idev, pstate, newdcpt, xmev, event_id ) /* PTR c1133 */
     default:
         break;
     }
- 
+
     XFlush(ws->dpy);
     return( 0 );
 }
@@ -1038,14 +860,12 @@ XgksStkUpdatePrompt( ws, idev, pstate, newdcpt, xmev, event_id ) /* PTR c1133 */
 /*
  * free all memory associate with a stroke logical input device
  */
-XgksStkDelete( ws, idev )
-    WS_STATE_ENTRY *ws;
-    INPUT_DEV *idev;
+void XgksStkDelete(WS_STATE_ENTRY *ws, INPUT_DEV *idev)
 {
     XFreeGC( ws->dpy, idev->gc );
     if ( idev->data.stk.initst.stroke.points != NULL )
         free( idev->data.stk.initst.stroke.points );
-    
+
 /* this used to say:                                             */
     /*   if ( idev->data.stk.initst.record.pet1.data != NULL )       */
     /*     free( idev->data.stk.initst.record.pet1.data );           */
@@ -1089,36 +909,30 @@ XgksStkDelete( ws, idev )
 /* and be able to erase it without leaving trash behind.  So... this    */
 /* function will make multiple calls to XDrawLine.                      */
 
-XgksXDrawLines( dpy, win, gc, xpts, npts, mode )         /* c1151 */
-  Display *dpy;                                          /* c1151 */
-  Drawable win;                                          /* c1151 */
-  GC gc;                                                 /* c1151 */
-  XPoint *xpts;                                          /* c1151 */
-  int npts;                                              /* c1151 */
-  int mode;                                              /* c1151 */
-  {                                                      /* c1151 */
-  int i;                                                 /* c1151 */
-                                                         /* c1151 */
-  if (npts > 1)                                          /* c1151 */
-    {                                                    /* c1151 */
-    if (mode != CoordModeOrigin)                         /* c1151 */
-      /* convert to CoordModeOrigin */                   /* c1151 */
-      for (i=1; i<npts; i++)                             /* c1151 */
-        {                                                /* c1151 */
-        xpts[i].x += xpts[i-1].x;                        /* c1151 */
-        xpts[i].y += xpts[i-1].y;                        /* c1151 */
-        }                                                /* c1151 */
-                                                         /* c1151 */
-    for (i=1; i<npts; i++)                               /* c1151 */
-      XDrawLine (dpy,win,gc, xpts[i-1].x,xpts[i-1].y,    /* c1151 */
-                             xpts[i].x,  xpts[i].y);     /* c1151 */
-                                                         /* c1151 */
-    if (mode != CoordModeOrigin)                         /* c1151 */
-      /* convert back to CoordModePrevious */            /* c1151 */
-      for (i=npts-1; i>0; i--)                           /* c1151 */
-        {                                                /* c1151 */
-        xpts[i].x -= xpts[i-1].x;                        /* c1151 */
-        xpts[i].y -= xpts[i-1].y;                        /* c1151 */
-        }                                                /* c1151 */
-    }                                                    /* c1151 */
-  }                                                      /* c1151 */
+void XgksXDrawLines(Display *dpy, Drawable win, GC gc, XPoint *xpts, int npts, int mode)
+{
+  int i;
+
+  if (npts > 1)
+    {
+    if (mode != CoordModeOrigin)
+      /* convert to CoordModeOrigin */
+      for (i=1; i<npts; i++)
+        {
+        xpts[i].x += xpts[i-1].x;
+        xpts[i].y += xpts[i-1].y;
+        }
+
+    for (i=1; i<npts; i++)
+      XDrawLine (dpy,win,gc, xpts[i-1].x,xpts[i-1].y,
+                             xpts[i].x,  xpts[i].y);
+
+    if (mode != CoordModeOrigin)
+      /* convert back to CoordModePrevious */
+      for (i=npts-1; i>0; i--)
+        {
+        xpts[i].x -= xpts[i-1].x;
+        xpts[i].y -= xpts[i-1].y;
+        }
+    }
+  }

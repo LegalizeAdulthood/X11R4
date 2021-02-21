@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -23,7 +23,7 @@
  * University of Illinois at Urbana-Champaign
  * Department of Computer Science
  * 1304 W. Springfield Ave.
- * Urbana, IL	61801
+ * Urbana, IL   61801
  *
  * (C) Copyright 1987, 1988 by The University of Illinois Board of Trustees.
  * All rights reserved.
@@ -39,7 +39,7 @@
  *
  * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/font.h,v $
  *
- * $Log:	font.h,v $
+ * $Log:        font.h,v $
  * Revision 4.0  89/08/31  16:34:05  amy
  * Changed IBM copyright for MIT distribution.
  * 
@@ -52,19 +52,19 @@
  *
  */
 
-#define bits16	short			/* MACHINE DEPENDENT */
+#define bits16  short                   /* MACHINE DEPENDENT */
 
 /* vc_type : semantics of vc_x and vc_y:
- *	s = character extent minimum
- *	S = character extent maximum
- *	m = move current position to
- *	d = draw to 
- *	e = end of character definition
+ *      s = character extent minimum
+ *      S = character extent maximum
+ *      m = move current position to
+ *      d = draw to 
+ *      e = end of character definition
  */
 struct vcharst {
-	char	vc_type;
-	bits16	vc_x;
-	bits16	vc_y;
+        char    vc_type;
+        bits16  vc_x;
+        bits16  vc_y;
 };
 
 /*
@@ -72,15 +72,15 @@ struct vcharst {
  * defined by an array of vcharst structures
  */
 typedef struct {
-	char	fname[30];		/* font name */
-	bits16	fnominalx, fnominaly;	/* nominal character size (size 'm') */
-	bits16	ftop,			/* displacment from y == 0 */
-		fcap,
-		fhalf,
-		fbase,
-		fbottom;
-	int	fcharoffset[256];	/* offset into fchars to beginning
-					 * of each character. -1 means no
-					 * definition for that character */
-	struct	vcharst fchars[1];	/* the chars */
+        char    fname[30];              /* font name */
+        bits16  fnominalx, fnominaly;   /* nominal character size (size 'm') */
+        bits16  ftop,                   /* displacment from y == 0 */
+                fcap,
+                fhalf,
+                fbase,
+                fbottom;
+        int     fcharoffset[256];       /* offset into fchars to beginning
+                                         * of each character. -1 means no
+                                         * definition for that character */
+        struct  vcharst fchars[1];      /* the chars */
 } FONT;

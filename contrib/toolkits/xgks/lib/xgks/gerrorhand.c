@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -35,38 +35,11 @@
  *
  * gerrorhand.c - GKS functions  gerrorhand()
  *
- * $Header: gerrorhand.c,v 4.0 89/08/31 16:20:58 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/src/RCS/gerrorhand.c,v $
- *
- * $Log:	gerrorhand.c,v $
- * Revision 4.0  89/08/31  16:20:58  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 1.5  89/06/05  10:16:28  bruce
- * DCR# d1:	Changed include file name from gks_implement.h
- * 		to gks_implem.h for AIX compiler.
- * 
- * Revision 1.4  89/02/04  15:23:59  amy
- * PTR c1147	Make global vars. and functions private, and static where possible.
- * 
- * Revision 1.3  88/12/12  11:21:34  amy
- * PTR c1130	gerrorhand:  changed funcname from an int point to an int.
- * 
- * Revision 1.2  88/12/07  17:07:12  amy
- * No change.
- * 
- * Revision 1.1  88/12/01  13:17:34  amy
- * Initial revision
- * 
- * Revision 1.2  88/12/01  11:07:59  todd
- * Removed function gerrorhand from gks_error.c
- * 
  */
 
-static char *rcsid = "$Header: gerrorhand.c,v 4.0 89/08/31 16:20:58 amy Exp $";
+#include "gks_implem.h"
 
-#include "gks_implem.h" /* d1 */
+Gint gerrorlog(Gint errnum, Gint funcname, Gfile *perrfile);
 
 /*$F
  * ERROR HANDLING
@@ -78,12 +51,14 @@ static char *rcsid = "$Header: gerrorhand.c,v 4.0 89/08/31 16:20:58 amy Exp $";
  * returns: 0 (always)
  *
  * See also: Ansi standard p. 195
+ *
+ *      Gint errnum;            number for the error that was detected.
+ *      Gint funcname;          name of function that detected the error.
+ *      Gfile *perrfile;        file where error message is to be printed.
+ *
  */
 
-gerrorhand(errnum, funcname, perrfile)
-        Gint errnum;            /* number for the error that was detected. */
-        Gint funcname;          /* name of function that detected the error. */
-        Gfile *perrfile;        /* file where error message is to be printed. */
+Gint gerrorhand(Gint errnum, Gint funcname, Gfile *perrfile)
 {
         if (xgks_state.gks_state == GGKCL) /* don't use the perrfile it's not defined */ /*c1147*/
                 perrfile = stderr;

@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -23,7 +23,7 @@
  * University of Illinois at Urbana-Champaign
  * Department of Computer Science
  * 1304 W. Springfield Ave.
- * Urbana, IL	61801
+ * Urbana, IL   61801
  *
  * (C) Copyright 1987, 1988 by The University of Illinois Board of Trustees.
  * All rights reserved.
@@ -35,31 +35,15 @@
  * 
  *  Define file for : Xevent 
  *
- * 
- * $Header: event.h,v 4.0 89/08/31 16:33:52 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/event.h,v $
- *
- * $Log:	event.h,v $
- * Revision 4.0  89/08/31  16:33:52  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 3.3  89/02/04  15:31:40  amy
- * PTR c1147	Make global vars. and functions private, or static where possible.
- * 
- * Revision 3.2  88/08/19  13:09:29  amy
- * No additional changes in August tape version-- no changes made.
- * 
- * Revision 1.1  88/07/21  10:47:07  david
- * Initial revision
- *  
- *
  */
 
 #ifndef EVENT_H
 #define EVENT_H
 
-extern int xXgksSIGIOStart ();					/* c1147 */
-/* c1147:  xProcessEvents no longer needed by other modules */
+void       XgksAwaitInterrupt(int);
+
+extern int xXgksSIGIOStart();
+
+void XgksEnqueueEvent( Gint ws, Gint dev, Giclass class, char *data, int event_id );
 
 #endif

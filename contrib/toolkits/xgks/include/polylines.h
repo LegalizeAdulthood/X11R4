@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -24,68 +24,56 @@
  * Author:  Michael Wojcik
  * 
  * Define file for :  polyline predefined bundles
- * 
- * $Header: polylines.h,v 4.0 89/08/31 16:35:14 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/polylines.h,v $
- *
- * $Log:	polylines.h,v $
- * Revision 4.0  89/08/31  16:35:14  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 1.2  89/06/01  14:05:21  bruce
- * PTR# c1178:	Changed default structures to accomodate compiler glitch.
- * 
- * Revision 1.1  89/02/04  15:32:54  amy
- * PTR c1147	Make global vars. and functions private, or static where possible.
- * 
- * Revision 1.1  89/01/11  08:58:26  mike
- * Initial revision
- *   
  *
  */
 
+#if !defined(XGKS_POLYLINES_H)
+#define XGKS_POLYLINES_H
 
 /* c1147:  Moved these here from polylines.c and made them static */
 /* c1178:  Compiler glitch caused us to declare these globally and make     */
 /*         them externs in the files they're used in                        */
 
 #ifdef polylines_c                                              /* c1178 */
-Glnbundl def_lnbundl[PDF_LINE_BNDLS] =				/* c1143 */
-	{							/* c1143 */
-	   /* predefined line rep 1 */				/* c1143 */
-	   {							/* c1143 */
-              GLN_SOLID,	/* type */			/* c1143 */
-              1.0,		/* width */			/* c1143 */
-              1			/* colour */			/* c1143 */
-	   },							/* c1143 */
-	   /* predefined line rep 2 */				/* c1143 */
-	   {							/* c1143 */
-              GLN_DASH,		/* type */			/* c1143 */
-              1.0,		/* width */			/* c1143 */
-              1			/* colour */			/* c1143 */
-	   },							/* c1143 */
-	   /* predefined line rep 3 */				/* c1143 */
-	   {							/* c1143 */
-              GLN_DOT,		/* type */			/* c1143 */
-              1.0,		/* width */			/* c1143 */
-              1			/* colour */			/* c1143 */
-	   },							/* c1143 */
-	   /* predefined line rep 4 */				/* c1143 */
-	   {							/* c1143 */
-              GLN_DOTDASH,	/* type */			/* c1143 */
-              1.0,		/* width */			/* c1143 */
-              1			/* colour */			/* c1143 */
-	   },							/* c1143 */
-	   /* predefined line rep 5 */				/* c1143 */
-	   {							/* c1143 */
-              GLN_SOLID,	/* type */			/* c1143 */
-              5.0,		/* width */			/* c1143 */
-              1			/* colour */			/* c1143 */
-	   }							/* c1143 */
-	};							/* c1143 */
+Glnbundl def_lnbundl[PDF_LINE_BNDLS] =                          /* c1143 */
+        {                                                       /* c1143 */
+           /* predefined line rep 1 */                          /* c1143 */
+           {                                                    /* c1143 */
+              GLN_SOLID,        /* type */                      /* c1143 */
+              1.0,              /* width */                     /* c1143 */
+              1                 /* colour */                    /* c1143 */
+           },                                                   /* c1143 */
+           /* predefined line rep 2 */                          /* c1143 */
+           {                                                    /* c1143 */
+              GLN_DASH,         /* type */                      /* c1143 */
+              1.0,              /* width */                     /* c1143 */
+              1                 /* colour */                    /* c1143 */
+           },                                                   /* c1143 */
+           /* predefined line rep 3 */                          /* c1143 */
+           {                                                    /* c1143 */
+              GLN_DOT,          /* type */                      /* c1143 */
+              1.0,              /* width */                     /* c1143 */
+              1                 /* colour */                    /* c1143 */
+           },                                                   /* c1143 */
+           /* predefined line rep 4 */                          /* c1143 */
+           {                                                    /* c1143 */
+              GLN_DOTDASH,      /* type */                      /* c1143 */
+              1.0,              /* width */                     /* c1143 */
+              1                 /* colour */                    /* c1143 */
+           },                                                   /* c1143 */
+           /* predefined line rep 5 */                          /* c1143 */
+           {                                                    /* c1143 */
+              GLN_SOLID,        /* type */                      /* c1143 */
+              5.0,              /* width */                     /* c1143 */
+              1                 /* colour */                    /* c1143 */
+           }                                                    /* c1143 */
+        };                                                      /* c1143 */
 
 #else                           /* c1178 */
 extern                          /* c1178 */
 Glnbundl def_lnbundl[];         /* c1178 */
 #endif                          /* c1178 */
+
+Gint gsetlineind(Gint idx);
+
+#endif

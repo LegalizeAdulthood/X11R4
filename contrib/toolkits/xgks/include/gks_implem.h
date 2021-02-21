@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -23,7 +23,7 @@
  * University of Illinois at Urbana-Champaign
  * Department of Computer Science
  * 1304 W. Springfield Ave.
- * Urbana, IL	61801
+ * Urbana, IL   61801
  *
  * (C) Copyright 1987, 1988 by The University of Illinois Board of Trustees.
  * All rights reserved.
@@ -34,25 +34,12 @@
  * Author: Yu Pan
  * 
  * Define file for : XGKS implementation 
- *		     all implementation files have to include this and only this 
- *		     define file
- * 
- * $Header: gks_implem.h,v 4.0 89/08/31 16:34:28 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/gks_implem.h,v $
- *
- * $Log:	gks_implem.h,v $
- * Revision 4.0  89/08/31  16:34:28  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 3.3  88/08/19  13:15:43  amy
- * No additional changes in August tape version-- no changes made.
- * 
- * Revision 1.1  88/07/21  10:47:19  david
- * Initial revision
- *  
- *
+ *                   all implementation files have to include this and only this 
+ *                   define file
  */
+
+#if !defined(XGKS_GKS_IMPLEM_H)
+#define XGKS_GKS_IMPLEM_H
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -67,3 +54,5 @@
 #include "gkserrmsg.h"
 #include "gks_errors.h"
 #include "event.h"
+
+#endif

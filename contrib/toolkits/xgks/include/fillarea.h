@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -29,15 +29,15 @@
  *
  * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/fillarea.h,v $
  *
- * $Log:	fillarea.h,v $
+ * $Log:        fillarea.h,v $
  * Revision 4.0  89/08/31  16:33:58  amy
  * Changed IBM copyright for MIT distribution.
  * 
  * Revision 1.2  89/06/01  14:06:11  bruce
- * PTR# c1178:	Changed default structures to accomodate compiler glitch.
+ * PTR# c1178:  Changed default structures to accomodate compiler glitch.
  * 
  * Revision 1.1  89/02/04  15:31:45  amy
- * PTR c1147	Make global vars. and functions private, or static where possible.
+ * PTR c1147    Make global vars. and functions private, or static where possible.
  * 
  * Revision 1.2  89/01/30  10:07:22  mike
  * PTR c1143:  Changed fill area bundles to include one pattern.
@@ -53,39 +53,39 @@
 /*         them externs in the files they're used in                        */
 
 #ifdef fillarea_c                                               /* c1178 */
-Gflbundl def_flbundl[PDF_FILL_BNDLS] =				/* c1143 */
-	{							/* c1143 */
-	   /* predefined fill rep 1 */				/* c1143 */
-           {							/* c1143 */
-              GHOLLOW,		/* interior style */		/* c1143 */
-              1,		/* style index */		/* c1143 */
-              1			/* colour index */		/* c1143 */
-	   },							/* c1143 */
-	   /* predefined fill rep 2 */				/* c1143 */
-           {							/* c1143 */
-              GSOLID,		/* interior style */		/* c1143 */
-              1,		/* style index */		/* c1143 */
-              1			/* colour index */		/* c1143 */
-           },							/* c1143 */
-	   /* predefined fill rep 3 */				/* c1143 */
-           {							/* c1143 */
-              GPATTERN,		/* interior style */		/* c1143 */
-              1,		/* style index */		/* c1143 */
-              1			/* colour index */		/* c1143 */
-           },							/* c1143 */
-	   /* predefined fill rep 4 */				/* c1143 */
-           {							/* c1143 */
-              GHATCH,		/* interior style */		/* c1143 */
-              -1,		/* style index */		/* c1143 c1174 */
-              1			/* colour index */		/* c1143 */
-           },							/* c1143 */
-	   /* predefined fill rep 5 */				/* c1143 */
-           {							/* c1143 */
-              GHATCH,		/* interior style */		/* c1143 */
-              -10,		/* style index */		/* c1143 c1174 */
-              1			/* colour index */		/* c1143 */
-           }							/* c1143 */
-	};							/* c1143 */
+Gflbundl def_flbundl[PDF_FILL_BNDLS] =                          /* c1143 */
+        {                                                       /* c1143 */
+           /* predefined fill rep 1 */                          /* c1143 */
+           {                                                    /* c1143 */
+              GHOLLOW,          /* interior style */            /* c1143 */
+              1,                /* style index */               /* c1143 */
+              1                 /* colour index */              /* c1143 */
+           },                                                   /* c1143 */
+           /* predefined fill rep 2 */                          /* c1143 */
+           {                                                    /* c1143 */
+              GSOLID,           /* interior style */            /* c1143 */
+              1,                /* style index */               /* c1143 */
+              1                 /* colour index */              /* c1143 */
+           },                                                   /* c1143 */
+           /* predefined fill rep 3 */                          /* c1143 */
+           {                                                    /* c1143 */
+              GPATTERN,         /* interior style */            /* c1143 */
+              1,                /* style index */               /* c1143 */
+              1                 /* colour index */              /* c1143 */
+           },                                                   /* c1143 */
+           /* predefined fill rep 4 */                          /* c1143 */
+           {                                                    /* c1143 */
+              GHATCH,           /* interior style */            /* c1143 */
+              -1,               /* style index */               /* c1143 c1174 */
+              1                 /* colour index */              /* c1143 */
+           },                                                   /* c1143 */
+           /* predefined fill rep 5 */                          /* c1143 */
+           {                                                    /* c1143 */
+              GHATCH,           /* interior style */            /* c1143 */
+              -10,              /* style index */               /* c1143 c1174 */
+              1                 /* colour index */              /* c1143 */
+           }                                                    /* c1143 */
+        };                                                      /* c1143 */
 
 /* c1144:  Created predefined pattern attributes */
 PTATTR  def_ptattr =
