@@ -64,11 +64,11 @@ void xXgksUpdateTrans(WS_STATE_PTR ws)
         D_DCX = ws->size.x;
         D_DCY = ws->size.y;
 
-        D_WWX = (float) (ws->wsti.current.w.xmax - ws->wsti.current.w.xmin);
-        D_WWY = (float) (ws->wsti.current.w.ymax - ws->wsti.current.w.ymin);
+        D_WWX = (ws->wsti.current.w.xmax - ws->wsti.current.w.xmin);
+        D_WWY = (ws->wsti.current.w.ymax - ws->wsti.current.w.ymin);
 
-        D_WVX = (float) (ws->wsti.current.v.xmax - ws->wsti.current.v.xmin);
-        D_WVY = (float) (ws->wsti.current.v.ymax - ws->wsti.current.v.ymin);
+        D_WVX = (ws->wsti.current.v.xmax - ws->wsti.current.v.xmin);
+        D_WVY = (ws->wsti.current.v.ymax - ws->wsti.current.v.ymin);
 
         if ((flt1 = D_WVX / D_WWX) < (flt2 = D_WVY / D_WWY))
                 scale_WT = flt1;

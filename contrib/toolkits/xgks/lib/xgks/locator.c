@@ -155,7 +155,7 @@ Gint ginitloc( ws_id, dev, init, pet, area, record)
         gcvalues.background = ws->wsbg;
         gcvalues.line_width = (int)((record->pet4.ln.width == GBUNDLED)?
             LNBUNDLE.width : record->pet4.ln.bundl.width);
-        gcvalues.line_style = (int)((record->pet4.ln.type == GBUNDLED)?
+        gcvalues.line_style = ((record->pet4.ln.type == GBUNDLED)?
             LNBUNDLE.type : record->pet4.ln.bundl.type);
         didx = gcvalues.line_style;
         if (didx < 0 ) didx += 3;
@@ -210,7 +210,7 @@ fprintf(stderr, "initloc() pet 4, style %s\n",
             gcvalues.background = ws->wsbg;
             gcvalues.line_width = (int)((record->pet5.attr.ln.width == GBUNDLED)?
             LNBUNDLE.width : record->pet5.attr.ln.bundl.width);
-            gcvalues.line_style = (int)((record->pet5.attr.ln.type == GBUNDLED)?
+            gcvalues.line_style = ((record->pet5.attr.ln.type == GBUNDLED)?
             LNBUNDLE.type : record->pet5.attr.ln.bundl.type);
             didx = gcvalues.line_style;
             if (didx < 0 ) didx += 3;

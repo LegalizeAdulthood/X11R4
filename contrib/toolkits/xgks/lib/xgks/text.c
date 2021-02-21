@@ -106,7 +106,7 @@ void XgksInitGksText(void)
         /* check if user has chosen a new font db dir */            /* c1159 */
         /* (file is not actually opened until xReadFont */          /* c1159 */
         /* in xtext.c)             (DWO)                */          /* c1159 */
-        xgks_state.fontdbdir = (char *)getenv("XGKSFontDir");       /* c1159 */
+        xgks_state.fontdbdir = getenv("XGKSFontDir");       /* c1159 */
         if (xgks_state.fontdbdir == NULL)                           /* c1159 */
           xgks_state.fontdbdir = FONTDBDIR;       /* use default */ /* c1159 */
 
