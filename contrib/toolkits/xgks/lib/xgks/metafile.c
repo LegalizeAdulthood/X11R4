@@ -1756,9 +1756,9 @@ static Gint XgksInputData (Gfile *fp, Gint key, Gchar *record)
                 if (ferror( fp )) {                             /* c1068 */
                         return( MF_FILE_ERR );                  /* c1068 */
                 }                                               /* c1068 */
-                else {                                          /* c1068 */
+                                                         /* c1068 */
                         return( MF_DATA_ERR );                  /* c1068 */
-                }                                               /* c1068 */
+                                                              /* c1068 */
         }                                                       /* c1068 */
         else {                                                  /* c1068 */
                 return( METAFILE_OK );                          /* c1068 */
@@ -2279,5 +2279,5 @@ static Gint XgksFeoln(Gfile *fp)
         if ((i = getc( fp )) == EOF) return( TRUE );            /* c1068 */
         ungetc( i, fp );                                        /* c1068 */
         if (i == '\n') return( TRUE );                          /* c1068 */
-        else return( FALSE );                                   /* c1068 */
+        return( FALSE );                                   /* c1068 */
 }                                                               /* c1068 */

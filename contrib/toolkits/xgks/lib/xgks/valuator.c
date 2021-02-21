@@ -707,11 +707,11 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                     gerrorhand( 300, errXgksValUpdatePrompt, xgks_state.gks_err_file ); /*c1147*/
                     return (300);
                 }
-                else {
+                
                     *data = DcToVal (CurPos, (idev->data.val.convert));
                     XgksEnqueueEvent(ws->ws_id, idev->dev, GVALUATOR,
                           (char *)data, event_id); /*MIT*/ /* PTR c1133 */
-                }
+                
                 break;
 
             default:

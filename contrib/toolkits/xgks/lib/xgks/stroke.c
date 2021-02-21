@@ -830,7 +830,7 @@ Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 gerrorhand( 300, errXgksStkUpdatePrompt, xgks_state.gks_err_file ); /* c1147 */
                 return(300);
             }
-            else {
+            
                 XBell( ws->dpy, 0);
             /* Convert current measure to WC space */
                 spt = ndcpts = (Gpoint *)malloc( sizeof(Gpoint) * STKEDITPOS );
@@ -847,7 +847,7 @@ Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 free( ndcpts );
                 XgksEnqueueEvent( ws->ws_id, idev->dev, GISTROKE,
                   (char *)data,event_id); /*MIT*/ /* PTR c1133 */
-            }
+            
             break;
         }
         break;

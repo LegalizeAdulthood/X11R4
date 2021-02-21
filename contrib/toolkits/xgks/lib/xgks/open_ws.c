@@ -487,7 +487,7 @@ static int XgksOneOpenWs(void)
 EWSTYPE XgksWsTypeToEnum(Gchar *ws_type)
 {
     if (STRCMP(ws_type, "MI") == 0)                return( MI );        /* c1176 */
-    else if (STRCMP(ws_type, "MO") == 0)            return( MO );       /* c1176 */
+    if (STRCMP(ws_type, "MO") == 0)            return( MO );       /* c1176 */
     else if (STRCMP(ws_type, "WISS") == 0)            return( WISS );   /* c1176 */
     else if (ws_type == NULL)                return( X_WIN );
     else if (index( ws_type, ':') != 0 )            return( X_WIN );
@@ -502,7 +502,7 @@ EWSTYPE XgksWsTypeToEnum(Gchar *ws_type)
 Gwscat XgksWsCategory(WS_STATE_PTR ws)
 {
     if (ws->ewstype == X_WIN) return (GOUTIN);
-    else if (ws->ewstype == WISS) return (GWISS);
+    if (ws->ewstype == WISS) return (GWISS);
     else if (ws->ewstype == MI) return (GMI);
     else if (ws->ewstype == MO) return (GMO);
     else return ((Gwscat) INVALID);

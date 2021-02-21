@@ -512,7 +512,7 @@ Gint XgksPicUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 gerrorhand( 300, errXgksPicUpdatePrompt, xgks_state.gks_err_file); /*c1147*/
                 return(300);
             }
-            else {
+            
                 if (idev->breakhit == TRUE)
                     data->status = GP_NONE;
                 else {if (XgksFindPickSeg(ws,&ndcpt,data,idev,1)== GP_OK) { /*c1032*/
@@ -520,7 +520,7 @@ Gint XgksPicUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                      } else data->status = GP_NOPICK; }
                  XgksEnqueueEvent(ws->ws_id, idev->dev, GPICK,
                    (char *)data,-1); /*MIT*/ /* PTR c1133 */
-            }
+            
             break;
         default :
             break;

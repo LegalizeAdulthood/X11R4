@@ -528,10 +528,10 @@ Bool XgksFindNTrans(Gpoint *ndcpt, Gloc *gloc)
            NtNdcToWc(trans, ndcpt, &wcpt);                       /* c1014 */
            return (-1);                                          /* c1014 */
            }
-        else
-           {
+        
+           
            return (0);                                           /* c1014 */
-           }
+           
 #undef trans
 #undef wcpt
 }
@@ -591,7 +591,7 @@ Bool XgksFindNTransNpts(int num, Gpoint *ndcpts, Gint *ntrans, Gpoint *wcpts)
            *ntrans = 0; /* return trans 0 as a default */        /* c1014 */
            return (-1); /* indicate that something is wrong... *//* c1014 */
            }            /* ...in case we care someday */
-        else
+        
            return (0);                                           /* c1014 */
 }
 /*

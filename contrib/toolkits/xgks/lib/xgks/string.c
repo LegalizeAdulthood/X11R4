@@ -579,11 +579,11 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                     gerrorhand( 300, errXgksStrUpdatePrompt, xgks_state.gks_err_file); /* c1147 */
                     return(300);
                 }
-                else {
+                
                     XBell( ws->dpy, 0 );
                     STRCPY( data, Str );        /* c1176 */
                     XgksEnqueueEvent( ws->ws_id, idev->dev, GISTRING, (char *)data, event_id ); /*MIT*/ /* PTR c1133 */
-                }
+                
                 break;
             }
         }

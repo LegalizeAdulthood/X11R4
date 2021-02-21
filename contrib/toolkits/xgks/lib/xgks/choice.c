@@ -814,13 +814,13 @@ Gint XgksChoUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                     gerrorhand(300,errXgksChoUpdatePrompt,xgks_state.gks_err_file); /*c1147*/
                     return(300);
                 }
-                else {
+                
                     XBell( ws->dpy, 0);
                     data->status = (CurItem == 0) ? GC_NOCHOICE : GC_OK;
                     data->choice = CurItem;
                     XgksEnqueueEvent( ws->ws_id, idev->dev, GCHOICE, (char *)data,event_id); /* PTR c1133 */
                                                                         /*MIT*/
-                }
+                
             }
             break;
         }

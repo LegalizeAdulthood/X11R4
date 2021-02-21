@@ -1347,13 +1347,13 @@ void XgksAppendSegClip(void)
         if (seg->primi_insert_pt->pid == CLIP_REC) {
                 seg->primi_insert_pt->primi.clip.rec = xgks_state.cliprec.rec; /*c1147*/
                 return;
-        } else {
+        } 
                 clip = XgksNewPrimi();
                 clip->pid = CLIP_REC;
                 clip->primi.clip.segment = TRUE;
                 clip->primi.clip.rec = xgks_state.cliprec.rec;          /*c1147*/
                 XgksInsertPrimi (&(seg->primi_insert_pt), clip);
-        }
+        
 }
 
 /*
@@ -1645,7 +1645,7 @@ static int XgksInSeg(SEG_STATE_PTR seg, Gpoint *pt, Gpoint *pe, Gint m)
             ( pt->y <= limits[3].y + 0.01  && pt->y <= limits[2].y + 0.01 ) && /* c1170 */
             ( pt->y >= limits[0].y - 0.01  && pt->y >= limits[1].y - 0.01 ))   /* c1170 */
           return(1);
-        else
+        
           return(0);
 }
 

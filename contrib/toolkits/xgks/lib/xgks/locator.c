@@ -894,12 +894,12 @@ Gint XgksLocUpdatePrompt( ws, idev, pstate, newdcpt, xmev, event_id )
                 gerrorhand( 300, errXgksLocUpdatePrompt, xgks_state.gks_err_file ); /*c1147*/
                   return (300);
             }
-            else {
+            
                 XBell( ws->dpy, 0);
                 XgksFindNTrans( &ndcpt, data );
                 XgksEnqueueEvent( ws->ws_id, idev->dev, GLOCATOR,
                     (char *)data,event_id); /*MIT*/ /* PTR c1133 */
-            }
+            
             break;
         }
         break;
