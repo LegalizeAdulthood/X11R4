@@ -37,26 +37,17 @@
  *
  */
 
-#define _BSD_SOURCE
 #include <signal.h>
+#include <string.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-#include "string.h"
 #include "gks_implem.h"
 
 #ifdef EVENTDEBUG
 #define PRINT_EVENT(evnt) print_event(evnt)
 #else
 #define PRINT_EVENT(evnt)
-#endif
-
-#ifdef SIGNALRETURNSINT
-#define VOIDTYPE int
-#define VOIDVAL(val) val
-#else
-#define VOIDTYPE void
-#define VOIDVAL(val) /**/
 #endif
 
 static int XgksExposeEvent(XEvent *xev, Display *dpy);
@@ -141,10 +132,8 @@ VOIDTYPE xProcessEvents()
 
 /*
  * start the SIGIO interrupt system
- * This function was rewritten for the AIX PORT
  */
-int xXgksSIGIOStart(ws)                                 /*c1147*/
-WS_STATE_PTR ws;
+int xXgksSIGIOStart(WS_STATE_PTR ws)
 {
         Display *dpy;
         int one = 1;
@@ -168,8 +157,7 @@ WS_STATE_PTR ws;
 
 static int SigCount = 0;
 
-int XgksSIGIO_OFF(dpy)
-Display *dpy;
+int XgksSIGIO_OFF(Display *dpy)
 {
         int zero = 0;
 	/* TODO
@@ -194,8 +182,7 @@ Display *dpy;
 	*/
 }
 
-int XgksSIGIO_ON(dpy)
-Display *dpy;
+int XgksSIGIO_ON(Display *dpy)
 {
         int one = 1;
         int pid = getpid();
