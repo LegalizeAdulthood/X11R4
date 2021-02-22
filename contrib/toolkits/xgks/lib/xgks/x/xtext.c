@@ -559,7 +559,7 @@ static int xScaleMatrix(m, sx, sy)
 
         xIdentityMatrix(sm);
         sm[0] = sx; sm[4] = sy;
-        xMultMatrix(m, sm, newm);       /*ILL*/
+        xMultMatrix(m, sm, newm);
         xCopyMatrix(m, newm);
 }
 
@@ -581,7 +581,7 @@ static int xRotateMatrix(m, axis, rad)
         default:
                 return;
         }
-        xMultMatrix(m, rm, newm);       /*ILL*/
+        xMultMatrix(m, rm, newm);
         xCopyMatrix(m, newm);
 }
 #endif
@@ -950,7 +950,7 @@ Gint xXgksMesg(WS_STATE_PTR ws, MESG_ST *mesg)
         Window  win;
         GC      gc;
         Gpoint  dc_pos;
-        int height, width, tempwidth, topheight;        /*ILL*/
+        int height, width, tempwidth, topheight;
         XPoint  x_pos;
         XRectangle x_clip;
         XFontStruct  *MFontInfo;
@@ -978,9 +978,9 @@ Gint xXgksMesg(WS_STATE_PTR ws, MESG_ST *mesg)
         width=MAX( tempwidth, ws->last_message_width);
         ws->last_message_width=tempwidth;
         height=MFontInfo->ascent+MFontInfo->descent;
-        topheight=MFontInfo->ascent;            /*ILL*/
+        topheight=MFontInfo->ascent;
         XSetForeground(dpy, gc, ws->wsbg);
-     XFillRectangle(dpy, win, gc, x_pos.x, x_pos.y-topheight, width, height); /*ILL*/
+     XFillRectangle(dpy, win, gc, x_pos.x, x_pos.y-topheight, width, height);
 
         if ( ws->wscolour == 2 )                /* monochrome ? */
                 XSetForeground(dpy, gc, ws->wsfg );
