@@ -1673,7 +1673,7 @@ Gint findpickid;
         while (WsSeg != NULL) {
                 seg = XgksFindSeg(WsSeg->seg);
                 if (seg->segattr.det == GDETECTABLE && seg->segattr.vis==GVISIBLE && seg->segattr.pri >= highest) {
-                        XgksProcessLocalBound (ws, seg, &localbound);  /* if text is present up date bound  c1032 */
+                        XgksProcessLocalBound (ws, seg, &localbound);  /* if text is present up date bound  */
                         segpt[0].x = localbound.xmin; segpt[0].y = localbound.ymin;
                         segpt[1].x = localbound.xmax; segpt[1].y = localbound.ymin;
                         segpt[2].x = localbound.xmax; segpt[2].y = localbound.ymax;
@@ -1691,16 +1691,16 @@ Gint findpickid;
 
 /* If no segment is satisfied just return NO_PICK */
         if (response->seg == INVALID) return ((response->status=GP_NOPICK));
-        idev->active = FALSE;  /* prevent another pick from interrupting  c1032*/
+        idev->active = FALSE;  /* prevent another pick from interrupting  */
         /* if findpickid == 2 then the segment has already been
            highlighted so don't rehighlight just find the pickid.
-           This only happens in sample mode.                              c1032*/
+           This only happens in sample mode. */
         if ((findpickid != 2) && (idev->data.pic.initst.esw == GECHO))
                 XgksShowPick(ws, foundseg);
 
         if (findpickid)  /* is it necessary to find the pick id ? */
          {
-          XgksFindDistance(ws, foundseg, &pickid, ndcpt);  /* Find Pick Id  c1032*/
+          XgksFindDistance(ws, foundseg, &pickid, ndcpt);  /* Find Pick Id */
           response->pickid = pickid;
          }
         idev->active = TRUE;    /* allow more picks */
