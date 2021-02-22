@@ -69,7 +69,7 @@ Gint ginqavailgdp(Gchar *type, Ggdplist *gdps)
   gdps->functions = (Gint(*)()) NULL; /* pointer to a function */
   gdps->indices = (Gint *) NULL;
 
-  return(OK);  /* c1173 */
+  return(OK);
   }
 
 
