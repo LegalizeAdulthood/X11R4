@@ -595,8 +595,8 @@ Gint ginqdefstroke(Gchar *type, Gint dev, Gdefstroke *data)
 
     data->record.pet1.bufsiz = 64;
     data->record.pet1.editpos = 1;
-    data->record.pet1.interval.x = 0.001;     /* c2066 */
-    data->record.pet1.interval.y = 0.001;     /* c2066 */
+    data->record.pet1.interval.x = 0.001;
+    data->record.pet1.interval.y = 0.001;
     data->record.pet1.time = 0.0;
     data->record.pet1.data = NULL;
 
@@ -639,8 +639,8 @@ static Bool XgksCreateDefStroke(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp)
     idev->data.stk.initst.e_area.ymax = ws->size.y;
     idev->data.stk.initst.record.pet1.bufsiz = 64;
     idev->data.stk.initst.record.pet1.editpos = 1;
-    idev->data.stk.initst.record.pet1.interval.x = 0.001;       /* c2066 */
-    idev->data.stk.initst.record.pet1.interval.y = 0.001;       /* c2066 */
+    idev->data.stk.initst.record.pet1.interval.x = 0.001;
+    idev->data.stk.initst.record.pet1.interval.y = 0.001;
     idev->data.stk.initst.record.pet1.time = 0.0;
     idev->data.stk.initst.record.pet1.data = NULL;
 
@@ -649,8 +649,8 @@ static Bool XgksCreateDefStroke(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp)
         return( True );
     idev->data.stk.stkbuf[0].x = 0.5;
     idev->data.stk.stkbuf[0].y = 0.5;
-    idev->data.stk.interval.x = 0.001;                          /* c2066 */
-    idev->data.stk.interval.y = 0.001;                          /* c2066 */
+    idev->data.stk.interval.x = 0.001;
+    idev->data.stk.interval.y = 0.001;
     idev->data.stk.editpos = 0;
 
 /* link the new device into the list */
