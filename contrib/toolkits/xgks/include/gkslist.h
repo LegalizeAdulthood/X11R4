@@ -103,7 +103,6 @@ typedef struct {
         Gcliprec                cliprec;                /* Clipping rectangle in NDC */
 
 
-/* c1142:  The following two moved from segments.c to gks state list */
         Gint    gks_open_seg;           /* name of current open seg */
         Gint    gks_pick_id;            /* current pick id */
 

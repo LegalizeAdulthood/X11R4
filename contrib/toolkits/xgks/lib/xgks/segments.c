@@ -119,8 +119,6 @@ typedef struct seg_st {
         struct seg_st   *seg_next;              /* pointer to next */
 } *SEG_STATE_PTR, SEG_STATE_ENTRY;
 
-/* c1142:  segment information and state list moved to gks state list */
-
 #define SHSIZE          128
 #define SHASH(segname)  (segname & (SHSIZE-1))
 
