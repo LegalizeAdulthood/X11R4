@@ -594,7 +594,7 @@ Gint gsetpatrep(Gint ws_id, Gint idx, Gptbundl *rep)
 {
         WS_STATE_PTR ws;
         Gint i, j;
-        Gint *slot;     /* c1102 */
+        Gint *slot;
 
 /* check for proper gks state */
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetpatrep)
@@ -615,10 +615,10 @@ Gint gsetpatrep(Gint ws_id, Gint idx, Gptbundl *rep)
 /* valid dimensions */
         GKSERROR ((rep->size.x < 1 || rep->size.y < 1) , 91, errgsetpatrep) /*c1101*/
 
-/* valid colour indices */                                /* c1102 */
-        i = rep->size.x * rep->size.y;                   /* c1102 */
-        for (j=0,slot=rep->array; j < i; j++,slot++)     /* c1102 */
-           GKSERROR ((*slot < 0), 93, errgsetpatrep)      /* c1102 */
+/* valid colour indices */
+        i = rep->size.x * rep->size.y;
+        for (j=0,slot=rep->array; j < i; j++,slot++)
+           GKSERROR ((*slot < 0), 93, errgsetpatrep)
 
 /* valid colour values? */
 /*      i = ws->ptbundl_table[idx-1].size.x * ws->ptbundl_table[idx-1].size.y;
