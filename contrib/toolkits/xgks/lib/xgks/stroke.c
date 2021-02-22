@@ -579,7 +579,7 @@ Gint ginqdefstroke(Gchar *type, Gint dev, Gdefstroke *data)
         GKSERROR( dev < 1, 140, errginqdefstroke )
 
 /* STEP 2: set up the return values */
-    data->bufsiz = 64;          /* c2065 */
+    data->bufsiz = 64;
 
     data->pets.number = 3;
     data->pets.integers = (Gint *) malloc( sizeof( Gint ) * 3);
@@ -593,7 +593,7 @@ Gint ginqdefstroke(Gchar *type, Gint dev, Gdefstroke *data)
     data->e_area.ymin = 0.0;
     data->e_area.ymax = WS_MAX_DCY;
 
-    data->record.pet1.bufsiz = 64;            /* c2065 */
+    data->record.pet1.bufsiz = 64;
     data->record.pet1.editpos = 1;
     data->record.pet1.interval.x = 0.001;     /* c2066 */
     data->record.pet1.interval.y = 0.001;     /* c2066 */
@@ -637,14 +637,14 @@ static Bool XgksCreateDefStroke(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp)
     idev->data.stk.initst.e_area.xmax = ws->size.x;
     idev->data.stk.initst.e_area.ymin = 0.0;
     idev->data.stk.initst.e_area.ymax = ws->size.y;
-    idev->data.stk.initst.record.pet1.bufsiz = 64;              /* c2065 */
+    idev->data.stk.initst.record.pet1.bufsiz = 64;
     idev->data.stk.initst.record.pet1.editpos = 1;
     idev->data.stk.initst.record.pet1.interval.x = 0.001;       /* c2066 */
     idev->data.stk.initst.record.pet1.interval.y = 0.001;       /* c2066 */
     idev->data.stk.initst.record.pet1.time = 0.0;
     idev->data.stk.initst.record.pet1.data = NULL;
 
-    idev->data.stk.stkbuf = (Gpoint *) malloc( sizeof( Gpoint ) * 64);/*c2065*/
+    idev->data.stk.stkbuf = (Gpoint *) malloc( sizeof( Gpoint ) * 64);
     if (idev->data.stk.stkbuf == NULL)
         return( True );
     idev->data.stk.stkbuf[0].x = 0.5;
