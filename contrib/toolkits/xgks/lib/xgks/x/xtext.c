@@ -300,11 +300,11 @@ fprintf(stderr, "xtext  fsize = %f fwidth=%f\n", fsize, fwidth);
                 case GTH_RIGHT:         xtrans = -fwidth;       break;
                 }
                 switch(tx->chattr.align.ver) {
-                case GTV_TOP:   ytrans = -fsize;         break; /*c1083*/
+                case GTV_TOP:   ytrans = -fsize;         break;
                 case GTV_CAP:   ytrans = -fsize - cfont->fnominaly * wsr_spacing;
-                                                                /*c1083*/
+
                                 break;
-                case GTV_HALF:  ytrans = -fsize/2.0;     break; /*c1083*/
+                case GTV_HALF:  ytrans = -fsize/2.0;     break;
                 default:                                        /* New 4.3 compiler*/
                 case GTV_NORMAL:
                 case GTV_BASE:  ytrans = 0;      break;
@@ -777,10 +777,10 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTH_RIGHT:         xtrans = -fwidth;       break;
                 }
                 switch(tx->chattr.align.ver) {
-                case GTV_TOP:   ytrans = -fsize;         break;         /*c1083*/
-                case GTV_CAP:   ytrans = -fsize - cfont->fnominaly * wsr_spacing;/*c1083*/
+                case GTV_TOP:   ytrans = -fsize;         break;
+                case GTV_CAP:   ytrans = -fsize - cfont->fnominaly * wsr_spacing;
                                 break;
-                case GTV_HALF:  ytrans = -fsize/2.0;     break;         /*c1083*/
+                case GTV_HALF:  ytrans = -fsize/2.0;     break;
                 default:                                        /* New 4.3 compiler*/
                 case GTV_NORMAL:
                 case GTV_BASE:  ytrans = 0;      break;
@@ -917,7 +917,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 }
                 switch(tx->chattr.align.ver) {
                 default:                                        /* New 4.3 compiler*/
-                case GTV_NORMAL:                                        /*c1083*/
+                case GTV_NORMAL:
                 case GTV_TOP: ndc_points[0].y = -fsize + YmaxFirst; break;
                 case GTV_CAP: ndc_points[0].y = -fsize + YmaxFirst; break;
                 case GTV_HALF: ndc_points[0].y = YmaxFirst - fsize/2; break;
