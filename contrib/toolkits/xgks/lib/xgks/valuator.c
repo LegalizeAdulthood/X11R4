@@ -55,8 +55,8 @@ static void XgksSetValEchoAttr(WSVALUATOR *ValPtr);
 Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     PromptStatus pstate, Gpoint *newdcpt, XMotionEvent *xmev, int event_id);
 
-/* As under current implementation pets 1 and 2 are supported */  /* c1015 */
-#define SUPPORTED_VAL_PROMPT(pet)    ((pet==1) || (pet==2))       /* c1015 */
+/* As under current implementation pets 1 and 2 are supported */
+#define SUPPORTED_VAL_PROMPT(pet)    ((pet==1) || (pet==2))
 
 
 #define VAL_FOREGROUND    ws->wsfg
@@ -598,7 +598,7 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     case PROMPTON :
         switch (idev->data.val.initst.pet) {
         case 1:
-        case 2:                                               /* c1015 */
+        case 2:
             /* Set up the echo area first */
             XSetForeground (ws->dpy, idev->gc, VAL_FOREGROUND);
             XFillRectangle( ws->dpy, ws->win, idev->gc, e_rect.x, e_rect.y, e_rect.width, e_rect.height);
@@ -625,7 +625,7 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     case PROMPTOFF:
         switch (idev->data.val.initst.pet) {
         case 1:    /* Wipe out the echoed prompt with Background colour */
-        case 2:                                               /* c1015 */
+        case 2:
             XSetForeground (ws->dpy, idev->gc, VAL_BACKGROUND);
             XFillRectangle( ws->dpy, ws->win, idev->gc, e_rect.x, e_rect.y, e_rect.width, e_rect.height);
             break;
@@ -638,7 +638,7 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     case PROMPTMOVE:
         switch (idev->data.val.initst.pet) {
         case 1: /* Set up parameters for wiping out old Bar and drawing new one */
-        case 2:                                               /* c1015 */
+        case 2:
             XSetForeground (ws->dpy, idev->gc, VAL_FOREGROUND);
             BUILD_BAR_RECT(old_rect, idev->data.val.CurPos);
             BUILD_BAR_RECT(new_rect, CurPos);
