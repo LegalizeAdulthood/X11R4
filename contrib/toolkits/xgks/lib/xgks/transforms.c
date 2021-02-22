@@ -116,7 +116,7 @@ void XgksInitGksTrans(void)
  */
 void XgksInitWssTrans(WS_STATE_PTR ws)
 {
-        ws->wsdus.defmode = GASAP;              /*c2016*/
+        ws->wsdus.defmode = GASAP;
         ws->wsdus.dspsurf = GEMPTY;
         ws->wsdus.irgmode = GALLOWED;
         ws->wsdus.nframe  = GNO;
