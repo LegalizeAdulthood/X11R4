@@ -35,6 +35,10 @@
 
 #include <xgks.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
+
 #include "demo.h"
 
 Gint    ws_id = 1;
@@ -53,9 +57,10 @@ Gint i=0,j=1;
 
 Gfloat x[15];
 
-main(argc,argv)
-int argc;
-char *argv[];
+void perr(int i, char *s);
+void plot_data(int i);
+
+int main(int argc, char *argv[])
 {
         Gint num,ds;
 
@@ -110,16 +115,13 @@ char *argv[];
         fprintf(stderr, "GKS is closed\n\n");
 }
 
-perr(i,s)
-int i;
-char *s;
+void perr(int i, char *s)
 {
         fprintf(stdout,"%s %d\n",s,i);
         exit(1);
 }
 
-plot_data(i)
-int i;
+void plot_data(int i)
 {
         Gpoint pts[15];
         Gint  num_pts;

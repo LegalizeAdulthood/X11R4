@@ -14,7 +14,7 @@ gksDemo(mi)
 gksDemo(pline)
 gksDemo(pmark)
 gksDemo(usa)
-# gksDemo(wong)
+gksDemo(wong)
 
 # add_subdirectory(example)
 # add_subdirectory(Logo)
