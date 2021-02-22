@@ -153,7 +153,7 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
 
         /* Set up window parameters, create and map window  */
 
-        XgksSIGIO_OFF(wk->dpy);                 /* c1185 */
+        XgksSIGIO_OFF(wk->dpy);
 
         dpy = wk->dpy;
 
