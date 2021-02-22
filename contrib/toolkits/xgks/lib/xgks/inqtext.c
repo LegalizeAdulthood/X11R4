@@ -84,7 +84,7 @@ Gint ginqtextfacil(ws_type, fac)
         fac->min_ht = 0.01;
         fac->max_ht = 1024.0;
         fac->expansions = 0.0;
-        fac->min_ex = 0.001;                                    /* c2011 */
+        fac->min_ex = 0.001;
         fac->max_ex = 1024.0;
         fac->predefined = PDF_TEXT_BNDLS;
 
