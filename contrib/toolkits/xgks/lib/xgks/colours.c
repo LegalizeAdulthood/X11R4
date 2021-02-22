@@ -63,7 +63,7 @@ Gint gsetcolourrep(ws_id, idx, rep)
     Gcobundl *rep;
 {
     WS_STATE_PTR ws;
-    int i,status;                       /* c1152 */
+    int i,status;
 
 /* check for proper gks operating state */
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetcolourrep)
@@ -90,27 +90,27 @@ Gint gsetcolourrep(ws_id, idx, rep)
     status = xXgksSetColourRep(ws, idx, rep);
     GKSERROR ((status != 0) ,93, errgsetcolourrep)
 
-    /* if this is the 1st call to setcolourrep, alloc & init */ /* c1152 */
+    /* if this is the 1st call to setcolourrep, alloc & init */
     /* storage of set values (ws->set_colour_rep[]) */
-    if (ws->set_colour_rep == (Gcobundl *)NULL)                 /* c1152 */
-       {                                                        /* c1152 */
-       /* allocate  & init memory for set colour   */           /* c1152 */
+    if (ws->set_colour_rep == (Gcobundl *)NULL)
+       {
+       /* allocate  & init memory for set colour   */
        /* rep table for use in ginqcolourrep */
-       ws->set_colour_rep = (Gcobundl *)                        /* c1152 */
-             calloc(ws->wscolour, sizeof(Gcobundl));            /* c1152 */
-       GKSERROR ((!ws->set_colour_rep),300,errgsetcolourrep)    /* c1152 */
-       for (i=0; i < ws->wscolour; i++)                         /* c1152 */
-         {                                                      /* c1152 */
-         ws->set_colour_rep[i].red = NOT_SET;                   /* c1152 */
-         ws->set_colour_rep[i].green = NOT_SET;                 /* c1152 */
-         ws->set_colour_rep[i].blue = NOT_SET;                  /* c1152 */
-         }                                                      /* c1152 */
+       ws->set_colour_rep = (Gcobundl *)
+             calloc(ws->wscolour, sizeof(Gcobundl));
+       GKSERROR ((!ws->set_colour_rep),300,errgsetcolourrep)
+       for (i=0; i < ws->wscolour; i++)
+         {
+         ws->set_colour_rep[i].red = NOT_SET;
+         ws->set_colour_rep[i].green = NOT_SET;
+         ws->set_colour_rep[i].blue = NOT_SET;
+         }
        }
 
-    /* remember values used for inqcolourrep(set) */  /* c1152 */
-    ws->set_colour_rep[idx].red = rep->red;           /* c1152 */
-    ws->set_colour_rep[idx].green = rep->green;       /* c1152 */
-    ws->set_colour_rep[idx].blue = rep->blue;         /* c1152 */
+    /* remember values used for inqcolourrep(set) */
+    ws->set_colour_rep[idx].red = rep->red;
+    ws->set_colour_rep[idx].green = rep->green;
+    ws->set_colour_rep[idx].blue = rep->blue;
 
     if (ws->ewstype == MO)
         XgksMoSetColourRep (ws, idx, rep);
@@ -156,21 +156,21 @@ Gint ginqcolourrep(ws_id, idx, type, rep)
 /* check for valid idx */
     GKSERROR ((!WS_AVAIL_COLOUR(ws, idx)) ,93, errginqcolourrep)
 
-    /* if the user wants SET, and some have been set, and */ /* c1152 */
-    /* idx has been set....                               */ /* c1152 */
-    if (type == GSET  &&  ws->set_colour_rep != NULL  &&     /* c1152 */
-           ws->set_colour_rep[idx].red >= 0.0 )              /* c1152 */
-       { /* give him SET... */                               /* c1152 */
-       rep->red = ws->set_colour_rep[idx].red;               /* c1152 */
-       rep->green = ws->set_colour_rep[idx].green;           /* c1152 */
-       rep->blue = ws->set_colour_rep[idx].blue;             /* c1152 */
-       }                                                     /* c1152 */
-    else /* type == GREALIZED */                             /* c1152 */
-       { /* give him REALIZED */                             /* c1152 */
-       /* call the X routine */                              /* c1152 */
+    /* if the user wants SET, and some have been set, and */
+    /* idx has been set....                               */
+    if (type == GSET  &&  ws->set_colour_rep != NULL  &&
+           ws->set_colour_rep[idx].red >= 0.0 )
+       { /* give him SET... */
+       rep->red = ws->set_colour_rep[idx].red;
+       rep->green = ws->set_colour_rep[idx].green;
+       rep->blue = ws->set_colour_rep[idx].blue;
+       }
+    else /* type == GREALIZED */
+       { /* give him REALIZED */
+       /* call the X routine */
        status = xXgksInqColourRep(ws, idx, type, rep);
-       GKSERROR ((status != 0) ,93, errginqcolourrep)        /* c1152 */
-       }                                                     /* c1152 */
+       GKSERROR ((status != 0) ,93, errginqcolourrep)
+       }
 
     return(0);
 }

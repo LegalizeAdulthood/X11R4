@@ -142,7 +142,7 @@ typedef struct ws_struct {
         Colormap        wclmp;          /* the window colourmap ID */
         Gpoint          wbound;         /* Current x window bound */
         Gint            wscolour;       /* Number of available colour on the ws */
-        Gcobundl        *set_colour_rep;/* colours set by user */ /* c1152 */
+        Gcobundl        *set_colour_rep;/* colours set by user */
         Gint            wsfg, wsbg;     /* foreground and background pixel values */
         WS_TRANS        dctoxtrans;     /* transformation constants from DC space to X_WIN space */
         WS_TRANS        ndctoxtrans;    /* composite of ndctodc and dctox */

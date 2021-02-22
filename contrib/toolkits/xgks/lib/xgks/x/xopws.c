@@ -159,10 +159,10 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
 
         wk->wscolour = DisplayCells(dpy, DefaultScreen(dpy));   /* size of colour map */
 
-        /* init pointer to table of set values to NULL */     /* c1152 */
-        /* The table will be alloc'ed and init'ed in   */     /* c1152 */
-        /* gsetcolourrep on the 1st call */     /* c1152 */
-        wk->set_colour_rep = (Gcobundl *)NULL;                /* c1152 */
+        /* init pointer to table of set values to NULL */
+        /* The table will be alloc'ed and init'ed in   */
+        /* gsetcolourrep on the 1st call */
+        wk->set_colour_rep = (Gcobundl *)NULL;
 
         winW = 640;
         winH = 512;

@@ -174,11 +174,9 @@ int xXgksInqColourRep(ws, idx, type, rep)
         XColor colour_ret;
         int ncolours;
 
-/*****************************************************************/ /* c1152 */
-/* NOTE: This routine is now only called for the GREALIZED case! */ /* c1152 */
-/*       When type == GSET, everything is handled in             */ /* c1152 */
-/*       ginqcolourrep() in colors.c */ /* c1152 */
-/*****************************************************************/ /* c1152 */
+/* NOTE: This routine is called for the GREALIZED case! */
+/*       When type == GSET, everything is handled in */
+/*       ginqcolourrep() in colors.c */
 
         if (ws->ewstype != X_WIN) return (OK);
 
@@ -201,7 +199,7 @@ int xXgksInqColourRep(ws, idx, type, rep)
         colour_ret.pixel = idx;
         XQueryColor(dpy, wclmp, &colour_ret);
 
-        XAllocColor(dpy, wclmp, &colour_ret);   /* c1152 */
+        XAllocColor(dpy, wclmp, &colour_ret);
 
         /* set the returned RGB values */
 
