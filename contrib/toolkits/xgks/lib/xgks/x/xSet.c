@@ -90,7 +90,7 @@ void xXgksSetPlineClipRectangles(Display *dpy, GC gc, WS_STATE_PTR ws, XRectangl
                 ||(rectangle->y!=ws->last_pline_rectangle.y)
                 ||(rectangle->width!=ws->last_pline_rectangle.width)
                 ||(rectangle->height!=ws->last_pline_rectangle.height)){
-                      XgksFudge(rectangle); /* c1008 */
+                      XgksFudge(rectangle);
                       XSetClipRectangles(dpy,gc,0, 0, rectangle, 1, Unsorted);
                       ws->last_pline_rectangle= *rectangle;
                       }
@@ -102,7 +102,7 @@ void xXgksSetPmarkerClipRectangles(Display *dpy, GC gc, WS_STATE_PTR ws, XRectan
                 ||(rectangle->y!=ws->last_pmarker_rectangle.y)
                 ||(rectangle->width!=ws->last_pmarker_rectangle.width)
                 ||(rectangle->height!=ws->last_pmarker_rectangle.height)){
-                      XgksFudge(rectangle); /* c1008 */
+                      XgksFudge(rectangle);
                       XSetClipRectangles(dpy,gc,0, 0, rectangle, 1, Unsorted);
                       ws->last_pmarker_rectangle= *rectangle;
                      }
@@ -114,7 +114,7 @@ void xXgksSetFillAreaClipRectangles(Display *dpy, GC gc, WS_STATE_PTR ws, XRecta
                 ||(rectangle->y!=ws->last_farea_rectangle.y)
                 ||(rectangle->width!=ws->last_farea_rectangle.width)
                 ||(rectangle->height!=ws->last_farea_rectangle.height)){
-                      XgksFudge(rectangle); /* c1008 */
+                      XgksFudge(rectangle);
                       XSetClipRectangles(dpy,gc,0, 0, rectangle, 1, Unsorted);
                       ws->last_farea_rectangle= *rectangle;
                       }
@@ -126,7 +126,7 @@ void xXgksSetTextClipRectangles(Display *dpy, GC gc, WS_STATE_PTR ws, XRectangle
                 ||(rectangle->y!=ws->last_text_rectangle.y)
                 ||(rectangle->width!=ws->last_text_rectangle.width)
                 ||(rectangle->height!=ws->last_text_rectangle.height)){
-                      XgksFudge(rectangle); /* c1008 */
+                      XgksFudge(rectangle);
                       XSetClipRectangles(dpy,gc,0, 0, rectangle, 1, Unsorted);
                       ws->last_text_rectangle= *rectangle;
                       }

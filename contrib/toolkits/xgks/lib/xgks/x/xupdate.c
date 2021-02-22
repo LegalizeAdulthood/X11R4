@@ -79,7 +79,7 @@ void xXgksUpdateTrans(WS_STATE_PTR ws)
         D_XWY = (float) (ws->wbound.y);
 
         /* -1 is a fudge to fill window */
-        if ((flt1 = D_XWX / (D_DCX)) < (flt2 = (D_XWY-1) / (D_DCY))) /* c1008 */
+        if ((flt1 = D_XWX / (D_DCX)) < (flt2 = (D_XWY-1) / (D_DCY)))
                 scale_DT = flt1;
         else
                 scale_DT = flt2;
@@ -94,7 +94,7 @@ void xXgksUpdateTrans(WS_STATE_PTR ws)
         ws->dctoxtrans.xScale = scale_DT;
         ws->dctoxtrans.yScale = scale_DT;
         ws->dctoxtrans.xTrans = 0.0;
-        ws->dctoxtrans.yTrans = 1.0;  /* c1008 - fudge to fill window */
+        ws->dctoxtrans.yTrans = 1.0;  /* fudge to fill window */
 
 /* NDC to X transformation */
         ws->ndctoxtrans.xScale = ws->ndctodctrans.xScale * ws->dctoxtrans.xScale;

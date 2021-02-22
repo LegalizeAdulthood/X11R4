@@ -253,8 +253,8 @@ Gint gsetviewportinputpri(Gint trans, Gint ref_trans, Gvpri priority)
         GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetviewportinputpri)
 
 /* check for valid transformation number */
-        GKSERROR ((trans > MAX_TRANS || trans < 0) ,     /* c1008 */
-                     50, errgsetviewportinputpri)        /* c1008 */
+        GKSERROR ((trans > MAX_TRANS || trans < 0) ,
+                     50, errgsetviewportinputpri)
 
 /* check for invalid priority value */
         GKSERROR ((priority != GHIGHER && priority != GLOWER), 2000, errgsetviewportinputpri)
@@ -298,7 +298,7 @@ Gint gselntran(Gint trans)
         GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgselntran)
 
 /* check for valid transformation number */
-        GKSERROR ((trans > MAX_TRANS || trans < 0) ,50, errgselntran) /*c1008*/
+        GKSERROR ((trans > MAX_TRANS || trans < 0) ,50, errgselntran)
 
 /* change the current normalization */
         xgks_state.cur_ntrans = trans;
