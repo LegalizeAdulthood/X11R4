@@ -228,8 +228,7 @@ Gint gclosews(Gint ws_id)
     GKSERROR ((ws->wsstate == GACTIVE) ,29, errgclosews)
 
 /* delete all input devices associated with this ws */
-/* NOTE: This is what caused ptr c1120 (key presses as ws closes cause */
-/*       X error).  New events entered after the gflushevents but      */
+/* NOTE: New events entered after the gflushevents but      */
 /*       before the ws was completely gone.  This left an event in the */
 /*       queue pointing to a non-existant ws.  Also - the devices on a */
 /*       workstation were never being handled when the workstation     */

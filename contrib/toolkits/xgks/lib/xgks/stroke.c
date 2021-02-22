@@ -864,25 +864,25 @@ void XgksStkDelete(WS_STATE_ENTRY *ws, INPUT_DEV *idev)
     /* memory defined above it).  This is not the case here.         */
     /* (It's probably not a good practice to assume the union will   */
     /* always remain the way it is today anyway!) */
-    switch ( idev->data.stk.initst.pet )                       /* PTR c1120 */
-      {                                                        /* PTR c1120 */
-      case 1: /* pet 1 */                                      /* PTR c1120 */
-         if ( idev->data.stk.initst.record.pet1.data != NULL ) /* PTR c1120 */
-           free( idev->data.stk.initst.record.pet1.data );     /* PTR c1120 */
-         break;                                                /* PTR c1120 */
-      case 2: /* pet 2 */                                      /* PTR c1120 */
-         if ( idev->data.stk.initst.record.pet2.data != NULL ) /* PTR c1120 */
-           free( idev->data.stk.initst.record.pet2.data );     /* PTR c1120 */
-         break;                                                /* PTR c1120 */
-      case 3: /* pet 3 */                                      /* PTR c1120 */
-         if ( idev->data.stk.initst.record.pet3.data != NULL ) /* PTR c1120 */
-           free( idev->data.stk.initst.record.pet3.data );     /* PTR c1120 */
-         break;                                                /* PTR c1120 */
-      case 4: /* pet 4 */                                      /* PTR c1120 */
-         if ( idev->data.stk.initst.record.pet4.data != NULL ) /* PTR c1120 */
-           free( idev->data.stk.initst.record.pet4.data );     /* PTR c1120 */
-         break;                                                /* PTR c1120 */
-      }                                                        /* PTR c1120 */
+    switch ( idev->data.stk.initst.pet )
+      {
+      case 1: /* pet 1 */
+         if ( idev->data.stk.initst.record.pet1.data != NULL )
+           free( idev->data.stk.initst.record.pet1.data );
+         break;
+      case 2: /* pet 2 */
+         if ( idev->data.stk.initst.record.pet2.data != NULL )
+           free( idev->data.stk.initst.record.pet2.data );
+         break;
+      case 3: /* pet 3 */
+         if ( idev->data.stk.initst.record.pet3.data != NULL )
+           free( idev->data.stk.initst.record.pet3.data );
+         break;
+      case 4: /* pet 4 */
+         if ( idev->data.stk.initst.record.pet4.data != NULL )
+           free( idev->data.stk.initst.record.pet4.data );
+         break;
+      }
 
     if ( idev->data.stk.stkbuf != NULL )
         free( idev->data.stk.stkbuf );
