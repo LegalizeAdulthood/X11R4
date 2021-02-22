@@ -13,7 +13,7 @@ gksDemo(hanoi)
 gksDemo(mi)
 gksDemo(pline)
 gksDemo(pmark)
-# gksDemo(usa)
+gksDemo(usa)
 # gksDemo(wong)
 
 # add_subdirectory(example)

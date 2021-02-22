@@ -36,6 +36,7 @@
 #include <xgks.h>
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <strings.h>
 
 #include "demo.h"
@@ -45,9 +46,11 @@
 Gint   ws_id=1;
 Gint result;
 
-main(argc,argv)
-int argc;
-char *argv[];
+void perr(int i, char *s);
+void PlotMap(void);
+void minmax(void);
+
+int main(int argc, char *argv[])
 {
         double atof();
 
@@ -115,9 +118,7 @@ char *argv[];
                 perr(result,"...close_gks");
 }
 
-perr(i,s)
-int i;
-char *s;
+void perr(int i, char *s)
 {
         fprintf(stdout,"%s %d\n",s,i);
         exit(1);
@@ -130,11 +131,12 @@ char *s;
  * is either a 2 or a 3 where 3 means pen up and 2 means pen down.
  */
 
-PlotMap()
+void PlotMap(void)
 {
         FILE *pointsfile;
         Gpoint pts[200], *pt;
-        Glong ud, x, y, cnt;
+        typedef long int lint;
+        lint ud, x, y, cnt;
 
         if ((pointsfile = fopen("usa.points", "r")) == NULL) {
                 fprintf(stderr, "usa: Can't open usa.points\n");
@@ -166,7 +168,7 @@ PlotMap()
         fclose(pointsfile);
 }
 
-minmax()
+void minmax(void)
 {
         Gint ud, x, X, y, Y;
         Gint ix, iy;
