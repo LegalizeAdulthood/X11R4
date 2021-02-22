@@ -80,10 +80,10 @@ Gint ginqfillfacil(ws_type, fac)
         GKSERROR( (fac->hatches.integers == NULL), 300, errginqfillfacil);
 
 /* set returned index values */
-        fac->interiors.integers[0] = (Gint) GHOLLOW;            /* c1158 */
-        fac->interiors.integers[1] = (Gint) GSOLID;             /* c1158 */
-        fac->interiors.integers[2] = (Gint) GPATTERN;           /* c1158 */
-        fac->interiors.integers[3] = (Gint) GHATCH;             /* c1158 */
+        fac->interiors.integers[0] = (Gint) GHOLLOW;
+        fac->interiors.integers[1] = (Gint) GSOLID;
+        fac->interiors.integers[2] = (Gint) GPATTERN;
+        fac->interiors.integers[3] = (Gint) GHATCH;
 
         for(i=0; i< fac->hatches.number; i++)
                 fac->hatches.integers[i] = -(i+1);
