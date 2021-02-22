@@ -40,60 +40,60 @@ Gtxbundl def_txbundl[PDF_TEXT_BNDLS] =
         {
            /* predefined text rep 1 */
            {
-            {                                                   /* d1 */
+            {
               1,                /* font */
               GSTROKE           /* precision */
-            },                                                  /* d1 */
+            },
               1.0,              /* expansion */
               0.15,             /* spacing */
               1                 /* colour */
            },
            /* predefined text rep 2 */
            {
-            {                                                   /* d1 */
+            {
               2,                /* font */
               GSTROKE           /* precision */
-            },                                                  /* d1 */
+            },
               1.0,              /* expansion */
               0.15,             /* spacing */
               1                 /* colour */
            },
            /* predefined text rep 3 */
            {
-            {                                                   /* d1 */
+            {
               3,                /* font */
               GSTROKE           /* precision */
-            },                                                  /* d1 */
+            },
               1.0,              /* expansion */
               0.2,              /* spacing */
               1                 /* colour */
            },
            /* predefined text rep 4 */
            {
-            {                                                   /* d1 */
+            {
               4,                /* font */
               GSTROKE           /* precision */
-            },                                                  /* d1 */
+            },
               1.0,              /* expansion */
               0.15,             /* spacing */
               1                 /* colour */
            },
            /* predefined text rep 5 */
            {
-            {                                                   /* d1 */
+            {
               5,                /* font */
               GSTROKE           /* precision */
-            },                                                  /* d1 */
+            },
               1.0,              /* expansion */
               0.1,              /* spacing */
               1                 /* colour */
            },
            /* predefined text rep 6 */
            {
-            {                                                   /* d1 */
+            {
               6,                /* font */
               GSTROKE           /* precision */
-            },                                                  /* d1 */
+            },
               1.0,              /* expansion */
               0.1,              /* spacing */
               1                 /* colour */

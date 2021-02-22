@@ -294,7 +294,6 @@ Gint ginqpredcolourrep( ws_type, index, rep )
         if (STRCMP( xgks_state.openedws[i].ws->wstype, server ) == 0)
             break;
     }
-/* for the AIX port the SIGIO_OFF was postponed until the display is known #d1 */
     if ( i < MAX_OPEN_WS ) {    /* found a connection */
         dpy = xgks_state.openedws[i].ws->dpy;
         XgksSIGIO_OFF(dpy);
@@ -377,8 +376,6 @@ int XgksMaxColours( server )
     Display *dpy;
     char *getenv();
 
-
-/* wait till dpy is known to turn SIGIO off  AIX PORT #d1 */
 
 /* default server is in the Unix environment */
     if (server == NULL)
