@@ -2057,24 +2057,24 @@ void XgksCleanUpWsSegList(WS_STATE_PTR ws)
                                         ws->seglist = cnt;
                                 }
 
-                                /* if we just deleted the segment */ /* c1165 */
-                                /* pointed to by seg_insertpt,    */ /* c1165 */
-                                /* then, we better reset the      */ /* c1165 */
-                                /* insert point. */ /* c1165 */
-                                if (pre == ws->seg_insertpt)         /* c1165 */
-                                        ws->seg_insertpt = cnt;      /* c1165 */
+                                /* if we just deleted the segment */
+                                /* pointed to by seg_insertpt,    */
+                                /* then, we better reset the      */
+                                /* insert point. */
+                                if (pre == ws->seg_insertpt)
+                                        ws->seg_insertpt = cnt;
 
                                 free (pre);
                                 pre = cnt;
                         } else {
                                 pre->next = cnt->next;
 
-                                /* if we just deleted the segment */ /* c1165 */
-                                /* pointed to by seg_insertpt,    */ /* c1165 */
-                                /* then, we better reset the      */ /* c1165 */
-                                /* insert point. */ /* c1165 */
-                                if (cnt == ws->seg_insertpt)         /* c1165 */
-                                        ws->seg_insertpt = pre;      /* c1165 */
+                                /* if we just deleted the segment */
+                                /* pointed to by seg_insertpt,    */
+                                /* then, we better reset the      */
+                                /* insert point. */
+                                if (cnt == ws->seg_insertpt)
+                                        ws->seg_insertpt = pre;
 
                                 free (cnt);
                                 cnt = pre->next;
