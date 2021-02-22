@@ -60,16 +60,14 @@ int bkg;
 Gfloat ypos, xpos;
 Gint color_list[MAX];
 
-static int gen_colors();
-static int init_list();
-static int bsort();
-static int show_it();
+static void gen_colors(void);
+static void init_list(void);
+static void bsort(void);
+static void show_it(void);
 void quick_sort(int l, int r);
 void perr(int i, char *s);
 
-int main(argc,argv)
-        int argc;
-        char *argv[];
+int main(int argc, char *argv[])
 {
         char *conn = (char *)NULL;
         Glimit WsWindow;
@@ -135,7 +133,7 @@ void perr(int i, char *s)
         exit(1);
 }
 
-static int show_it()
+static void show_it(void)
 {
         Gpoint pt;
         int i;
@@ -147,10 +145,9 @@ static int show_it()
                 gpolymarker(1, &pt);
         }
         ypos -= 6.0;
-        return (0);
 }
 
-static int bsort()
+static void bsort(void)
 {
         int n, m, t;
         int sorted;
@@ -168,7 +165,6 @@ static int bsort()
                 }
                 if (sorted) break;
         }
-        return (0);
 }
 
 
@@ -197,7 +193,7 @@ void quick_sort(int l, int r)
         }
 }
 
-static int gen_colors()
+static void gen_colors(void)
 {
         Gcobundl cb;
         Gint color;
@@ -228,10 +224,9 @@ static int gen_colors()
                 cb.blue -= 3.0/CMAX;
                 cb.red = ((cb.red + 3.0/CMAX) > 1.0) ? 1.0 : cb.red + 3.0/CMAX;
         }
-        return (0);
 }
 
-static int init_list()
+static void init_list(void)
 {
         struct timeval tp;
         struct timezone tzp;
@@ -242,7 +237,5 @@ static int init_list()
 
         for (i=0; i < MAX; i++)
                 color_list[i] = random() % CMAX;
-
-        return (0);
 }
 
