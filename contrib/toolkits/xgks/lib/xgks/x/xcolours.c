@@ -83,7 +83,7 @@ int xXgksSetColourRep(ws, idx, rep)
                 return(0);
         }
 
-        if ( (idx < 0) || (idx >=ncolours) ) {                          /*c1111*/
+        if ( (idx < 0) || (idx >=ncolours) ) {
                 XgksSIGIO_ON(ws->dpy); /* index value out of the size of the colour map */
                 return(1);
         }
