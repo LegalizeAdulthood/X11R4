@@ -2051,7 +2051,7 @@ void XgksCleanUpWsSegList(WS_STATE_PTR ws)
                 if (cnt->seg == INVALID) {
                         if (cnt == pre) {
                                 cnt = cnt->next;
-                                /* c1073:  change ws seg ptr if deleting */
+                                /* change ws seg ptr if deleting */
                                 /*    head of list                       */
                                 if (pre == ws->seglist) {
                                         ws->seglist = cnt;
