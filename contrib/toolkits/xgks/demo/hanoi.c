@@ -38,11 +38,10 @@
  * with graphical narration of solution
  */
 
-
 #include <xgks.h>
 
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
 
@@ -50,12 +49,12 @@
 
 #define TOWERSPC 9.0
 #define WINDWD 40.0
-#define WINDHT WINDWD*0.75
+#define WINDHT WINDWD * 0.75
 
 /*
  * default values for command line options
  */
-int n = 5 ;
+int n = 5;
 
 void f(int n, int a, int b, int c);
 void box(Glimit *l);
@@ -73,53 +72,50 @@ int popdisk(int tower);
 
 int main(int argc, char *argv[])
 {
-        Glimit WsWindow;
-        Gint ws_id = 1;
-        Gint mo_id = 3;
-        char *conn = (char *)NULL;
-        int i;
+    Glimit WsWindow;
+    Gint ws_id = 1;
+    Gint mo_id = 3;
+    char *conn = (char *) NULL;
+    int i;
 
-        WsWindow.xmin = 0.0;
-        WsWindow.xmax = 1.0;
-        WsWindow.ymin = 0.0;
-        WsWindow.ymax = 0.8;
+    WsWindow.xmin = 0.0;
+    WsWindow.xmax = 1.0;
+    WsWindow.ymin = 0.0;
+    WsWindow.ymax = 0.8;
 
-        for( i=1; i<argc; i++){
-                if (index( argv[i], ':'))
-                        conn = argv[i];
+    for (i = 1; i < argc; i++)
+    {
+        if (index(argv[i], ':'))
+            conn = argv[i];
         /* Application dependent options here */
-                else
-                        n = atoi(argv[i]);
-        }
+        else
+            n = atoi(argv[i]);
+    }
 
-        gopengks(stdout,0);
+    gopengks(stdout, 0);
 
-        gopenws(ws_id, conn, conn);
-        gactivatews(ws_id);
+    gopenws(ws_id, conn, conn);
+    gactivatews(ws_id);
 
-        gopenws(mo_id, "hanoi.out", "MO");
-        gactivatews(mo_id);
+    gopenws(mo_id, "hanoi.out", "MO");
+    gactivatews(mo_id);
 
-        gsetwswindow( ws_id, &WsWindow );
-        gsetwswindow( mo_id, &WsWindow );
+    gsetwswindow(ws_id, &WsWindow);
+    gsetwswindow(mo_id, &WsWindow);
 
-        title() ;
+    title();
 
-/*
- * solve the problem
- */
-        inittower(n) ;
-        f(n, 0, 1, 2) ;
-/*
- * close workstation and GKS
- */
+    /* solve the problem */
+    inittower(n);
+    f(n, 0, 1, 2);
+    /* close workstation and GKS */
 
-        WaitForBreak( ws_id );
-        gdeactivatews(mo_id);
-        gdeactivatews(ws_id);
-        gclosews(mo_id);
-        gclosews(ws_id);
-        gclosegks();
+    WaitForBreak(ws_id);
+    gdeactivatews(mo_id);
+    gdeactivatews(ws_id);
+    gclosews(mo_id);
+    gclosews(ws_id);
+    gclosegks();
 }
 
 /*
@@ -131,72 +127,77 @@ int main(int argc, char *argv[])
  */
 void f(int n, int a, int b, int c)
 {
-        if(n == 0)
-                return ;
+    if (n == 0)
+        return;
 
-        f(n-1, a, c, b) ;
-        movedisk(a,b) ;
-        f(n-1, c, b, a) ;
+    f(n - 1, a, c, b);
+    movedisk(a, b);
+    f(n - 1, c, b, a);
 }
 
 void box(Glimit *l)
 {
-        Gpoint pts[5];
+    Gpoint pts[5];
 #define e 0.01
 
-        pts[0].x = l->xmin+e; pts[0].y = l->ymin+e;
-        pts[1].x = l->xmin+e; pts[1].y = l->ymax-e;
-        pts[2].x = l->xmax-e; pts[2].y = l->ymax-e;
-        pts[3].x = l->xmax-e; pts[3].y = l->ymin+e;
-        pts[4].x = l->xmin+e; pts[4].y = l->ymin+e;
-        gsetfillcolorind( 1 );
-        gfillarea( 5, pts );
-
+    pts[0].x = l->xmin + e;
+    pts[0].y = l->ymin + e;
+    pts[1].x = l->xmin + e;
+    pts[1].y = l->ymax - e;
+    pts[2].x = l->xmax - e;
+    pts[2].y = l->ymax - e;
+    pts[3].x = l->xmax - e;
+    pts[3].y = l->ymin + e;
+    pts[4].x = l->xmin + e;
+    pts[4].y = l->ymin + e;
+    gsetfillcolorind(1);
+    gfillarea(5, pts);
 }
 /*
  * print title across top of page
  */
 void title(void)
 {
-        Gpoint p ;
-        Glimit Window;
-        Glimit Viewport;
-        Gtxfp txfp;
-        Gtxalign txalign;
+    Gpoint p;
+    Glimit Window;
+    Glimit Viewport;
+    Gtxfp txfp;
+    Gtxalign txalign;
 
-        Window.xmin = 0.0;
-        Window.xmax = 16.0;
-        Window.ymin = 0.0;
-        Window.ymax = 2.0;
+    Window.xmin = 0.0;
+    Window.xmax = 16.0;
+    Window.ymin = 0.0;
+    Window.ymax = 2.0;
 
-        Viewport.xmin = 0.1;
-        Viewport.xmax = 0.9;
-        Viewport.ymin = 0.58;
-        Viewport.ymax = 0.74;
+    Viewport.xmin = 0.1;
+    Viewport.xmax = 0.9;
+    Viewport.ymin = 0.58;
+    Viewport.ymax = 0.74;
 
-        txfp.font = 2;
-        txfp.prec = GSTROKE;
+    txfp.font = 2;
+    txfp.prec = GSTROKE;
 
-        txalign.hor = GTH_CENTER;
-        txalign.ver = GTV_HALF;
+    txalign.hor = GTH_CENTER;
+    txalign.ver = GTV_HALF;
 
-        gsetdeferst(1, GASAP, GALLOWED);
-        gsetwindow(1, &Window );
-        gsetviewport(1, &Viewport);
-        gselntran(1) ;
+    gsetdeferst(1, GASAP, GALLOWED);
+    gsetwindow(1, &Window);
+    gsetviewport(1, &Viewport);
+    gselntran(1);
 
-/*      box( &Window ); */
+    /*      box( &Window ); */
 
-        txfp.font = 1;  txfp.prec = GSTROKE;
-        gsettextfontprec( &txfp );
-        gsetcharspace(0.2);
-        gsetcharheight(1.0);
-        gsettextalign( &txalign );
-        gsettextcolorind( YELLOW ) ;
+    txfp.font = 1;
+    txfp.prec = GSTROKE;
+    gsettextfontprec(&txfp);
+    gsetcharspace(0.2);
+    gsetcharheight(1.0);
+    gsettextalign(&txalign);
+    gsettextcolorind(YELLOW);
 
-        p.x = 8.0 ;
-        p.y = 1.0 ;
-        gtext( &p, "Tower of Hanoi") ;
+    p.x = 8.0;
+    p.y = 1.0;
+    gtext(&p, "Tower of Hanoi");
 }
 
 /*
@@ -204,93 +205,93 @@ void title(void)
  */
 void inittower(int n)
 {
-        Glimit Window;
-        Glimit Viewport;
-        int i ;
+    Glimit Window;
+    Glimit Viewport;
+    int i;
 
-        Window.xmin = 0.0;
-        Window.xmax = WINDWD;
-        Window.ymin = 0.0;
-        Window.ymax = WINDHT;
+    Window.xmin = 0.0;
+    Window.xmax = WINDWD;
+    Window.ymin = 0.0;
+    Window.ymax = WINDHT;
 
-        Viewport.xmin = 0.1;
-        Viewport.xmax = 0.9;
-        Viewport.ymin =  0.06;
-        Viewport.ymax =  0.54;
+    Viewport.xmin = 0.1;
+    Viewport.xmax = 0.9;
+    Viewport.ymin = 0.06;
+    Viewport.ymax = 0.54;
 
-        gsetwindow(1, &Window );
-        gsetviewport(1, &Viewport);
-        border(0.0, WINDWD, 0.0, WINDHT) ;
+    gsetwindow(1, &Window);
+    gsetviewport(1, &Viewport);
+    border(0.0, WINDWD, 0.0, WINDHT);
 
-        for(i=n; i>0; i--)
-                placedisk(0, i) ;
+    for (i = n; i > 0; i--)
+        placedisk(0, i);
 }
 
 /*
  * tower data structures and manipulation
  */
 
-Gfloat tcount[3] = {0.2, 0.2, 0.2} ;
+Gfloat tcount[3] = { 0.2, 0.2, 0.2 };
 
-int towers[3][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+int towers[3][10] = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
-int towerx[3] = {0, 0, 0} ;
+int towerx[3] = { 0, 0, 0 };
 
 void movedisk(int a, int b)
 {
-        int diskno ;
+    int diskno;
 
-        path(a,b) ;
-        diskno = removedisk(a) ;
-        unpath() ;
-        placedisk(b, diskno) ;
+    path(a, b);
+    diskno = removedisk(a);
+    unpath();
+    placedisk(b, diskno);
 }
 
 void placedisk(int tower, int diskno)
 {
-        gsetfillcolorind(100 + diskno) ;
-        gsetfillintstyle(GSOLID) ;
+    gsetfillcolorind(100 + diskno);
+    gsetfillintstyle(GSOLID);
 
-        disk(diskno, TOWERSPC * (1 + tower) - (Gfloat)(diskno)/2.0, tcount[tower]) ;
-        tcount[tower] += (Gfloat)diskno ;
-        pushdisk(tower, diskno) ;
+    disk(diskno, TOWERSPC * (1 + tower) - (Gfloat)(diskno) / 2.0, tcount[tower]);
+    tcount[tower] += (Gfloat) diskno;
+    pushdisk(tower, diskno);
 }
 
 int removedisk(int tower)
 {
-        int diskno ;
+    int diskno;
 
-        diskno = popdisk(tower) ;
-        gsetfillcolorind( 0 );
-        gsetfillintstyle( GSOLID );
+    diskno = popdisk(tower);
+    gsetfillcolorind(0);
+    gsetfillintstyle(GSOLID);
 
-        tcount[tower] -= (Gfloat)diskno ;
-        disk(diskno, TOWERSPC * (1 + tower) - (Gfloat)(diskno)/2.0, tcount[tower]) ;
-        return(diskno) ;
+    tcount[tower] -= (Gfloat) diskno;
+    disk(diskno, TOWERSPC * (1 + tower) - (Gfloat)(diskno) / 2.0, tcount[tower]);
+    return (diskno);
 }
 
 void disk(int diskno, Gfloat x, Gfloat y)
 {
-        Gpoint pts[4] ;
+    Gpoint pts[4];
 
 #ifdef DEBUG
-        printf("disk(%d, %8.3f, %8.3f\n", diskno, x, y) ;
+    printf("disk(%d, %8.3f, %8.3f\n", diskno, x, y);
 #endif
-        pts[0].x = x ;
-        pts[0].y = y ;
-        pts[1].x = x ;
-        pts[1].y = y + (Gfloat)diskno ;
-        pts[2].x = x + (Gfloat)diskno ;
-        pts[2].y = y + (Gfloat)diskno ;
-        pts[3].x = x + (Gfloat)diskno ;
-        pts[3].y = y ;
+    pts[0].x = x;
+    pts[0].y = y;
+    pts[1].x = x;
+    pts[1].y = y + (Gfloat) diskno;
+    pts[2].x = x + (Gfloat) diskno;
+    pts[2].y = y + (Gfloat) diskno;
+    pts[3].x = x + (Gfloat) diskno;
+    pts[3].y = y;
 
-        gfillarea(4, pts) ;
+    gfillarea(4, pts);
 }
 
-Gpoint pathpts[4] = {{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}} ;
+Gpoint pathpts[4] = { { 0.0, 0.0 }, { 0.0, 0.0 }, { 0.0, 0.0 }, { 0.0, 0.0 } };
 
 /*
  * draw a line from top disk of tower a to top of screen, then over
@@ -298,58 +299,56 @@ Gpoint pathpts[4] = {{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}} ;
  */
 void path(int a, int b)
 {
-        gsetlinecolorind( GREEN ) ;
-        gsetlinetype( GLN_DASH) ;
-        gsetlinewidth(3.0) ;
-        pathpts[0].x = (a + 1)*TOWERSPC ;
-        pathpts[0].y = tcount[a] + (WINDHT * .05) ;
-        pathpts[1].x = (a + 1)*TOWERSPC ;
-        pathpts[1].y = WINDHT - 1.0 ;
-        pathpts[2].x = (b + 1)*TOWERSPC ;
-        pathpts[2].y = WINDHT - 1.0 ;
-        pathpts[3].x = (b + 1)*TOWERSPC ;
-        pathpts[3].y = tcount[b] + (WINDHT * .05) ;
+    gsetlinecolorind(GREEN);
+    gsetlinetype(GLN_DASH);
+    gsetlinewidth(3.0);
+    pathpts[0].x = (a + 1) * TOWERSPC;
+    pathpts[0].y = tcount[a] + (WINDHT * .05);
+    pathpts[1].x = (a + 1) * TOWERSPC;
+    pathpts[1].y = WINDHT - 1.0;
+    pathpts[2].x = (b + 1) * TOWERSPC;
+    pathpts[2].y = WINDHT - 1.0;
+    pathpts[3].x = (b + 1) * TOWERSPC;
+    pathpts[3].y = tcount[b] + (WINDHT * .05);
 
-        gpolyline(4, pathpts) ;
+    gpolyline(4, pathpts);
 }
 
 void unpath(void)
 {
-        gsetlinecolorind(0) ;
-        gpolyline(4, pathpts) ;
+    gsetlinecolorind(0);
+    gpolyline(4, pathpts);
 }
-
 
 void border(Gfloat x1, Gfloat x2, Gfloat y1, Gfloat y2)
 {
-        Gpoint pts[5] ;
+    Gpoint pts[5];
 
-        gsetlinecolorind(8) ;
-        gsetlinetype(GSOLID) ;
-        gsetlinewidth(2.0) ;
-        pts[0].x = x1 ;
-        pts[0].y = y1 ;
-        pts[1].x = x1 ;
-        pts[1].y = y2 ;
-        pts[2].x = x2 ;
-        pts[2].y = y2 ;
-        pts[3].x = x2 ;
-        pts[3].y = y1 ;
-        pts[4].x = x1 ;
-        pts[4].y = y1 ;
+    gsetlinecolorind(8);
+    gsetlinetype(GSOLID);
+    gsetlinewidth(2.0);
+    pts[0].x = x1;
+    pts[0].y = y1;
+    pts[1].x = x1;
+    pts[1].y = y2;
+    pts[2].x = x2;
+    pts[2].y = y2;
+    pts[3].x = x2;
+    pts[3].y = y1;
+    pts[4].x = x1;
+    pts[4].y = y1;
 
-        gpolyline(5, pts) ;
+    gpolyline(5, pts);
 }
 
 void pushdisk(int tower, int diskno)
 {
-        towers[tower][towerx[tower]] = diskno ;
-        towerx[tower]++ ;
+    towers[tower][towerx[tower]] = diskno;
+    towerx[tower]++;
 }
 
 int popdisk(int tower)
 {
-
-        towerx[tower]-- ;
-        return(towers[tower][towerx[tower]]) ;
+    towerx[tower]--;
+    return (towers[tower][towerx[tower]]);
 }
