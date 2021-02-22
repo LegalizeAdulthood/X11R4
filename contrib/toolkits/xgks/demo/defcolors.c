@@ -40,88 +40,94 @@
 
 #include "demo.h"
 
-void FillBox( Gpoint *org, Gfloat wid, Gfloat ht, Gint color )
+void FillBox(Gpoint *org, Gfloat wid, Gfloat ht, Gint color)
 {
-        Gpoint pts[5];
-        Gchar num[5];
+    Gpoint pts[5];
+    Gchar num[5];
 
-        pts[0].x = org->x;              pts[0].y = org->y;
-        pts[1].x = org->x;              pts[1].y = org->y + ht;
-        pts[2].x = org->x + wid;        pts[2].y = org->y + ht;
-        pts[3].x = org->x + wid;        pts[3].y = org->y;
-        pts[4].x = org->x;              pts[4].y = org->y;
+    pts[0].x = org->x;
+    pts[0].y = org->y;
+    pts[1].x = org->x;
+    pts[1].y = org->y + ht;
+    pts[2].x = org->x + wid;
+    pts[2].y = org->y + ht;
+    pts[3].x = org->x + wid;
+    pts[3].y = org->y;
+    pts[4].x = org->x;
+    pts[4].y = org->y;
 
-        gsetfillcolorind( color );
-        gfillarea( 5, pts );
+    gsetfillcolorind(color);
+    gfillarea(5, pts);
 
-        sprintf(num, "%d", color );
-        pts[0].x = org->x + wid/2.0;
-        pts[0].y = org->y + ht/2.0;
-        gtext( pts, num );
+    sprintf(num, "%d", color);
+    pts[0].x = org->x + wid / 2.0;
+    pts[0].y = org->y + ht / 2.0;
+    gtext(pts, num);
 }
 
-int main( int argc, char *argv[] )
+int main(int argc, char *argv[])
 {
-        Gint ws_id = 1;
-        char *conn = (char *)NULL;
-        Glimit Window;
-        Glimit WsWindow;
-        Gpoint org;
-        Gint color;
-        Gtxfp txfp;
-        Gtxalign txalign;
+    Gint ws_id = 1;
+    char *conn = (char *) NULL;
+    Glimit Window;
+    Glimit WsWindow;
+    Gpoint org;
+    Gint color;
+    Gtxfp txfp;
+    Gtxalign txalign;
 
-        int i;
+    int i;
 
-        Window.xmin = 0.0;
-        Window.xmax = 1279.0;
-        Window.ymin = 0.0;
-        Window.ymax = 1023.0;
+    Window.xmin = 0.0;
+    Window.xmax = 1279.0;
+    Window.ymin = 0.0;
+    Window.ymax = 1023.0;
 
-        WsWindow.xmin = 0.0;
-        WsWindow.xmax = 1.0;
-        WsWindow.ymin = 0.0;
-        WsWindow.ymax = 0.8;
+    WsWindow.xmin = 0.0;
+    WsWindow.xmax = 1.0;
+    WsWindow.ymin = 0.0;
+    WsWindow.ymax = 0.8;
 
-        txfp.font = 1;
-        txfp.prec = GSTROKE;
+    txfp.font = 1;
+    txfp.prec = GSTROKE;
 
-        txalign.hor = GTH_CENTER;
-        txalign.ver = GTV_HALF;
+    txalign.hor = GTH_CENTER;
+    txalign.ver = GTV_HALF;
 
-        for( i=1; i<argc; i++){
-                if (index( argv[i], ':'))
-                        conn = argv[i];
+    for (i = 1; i < argc; i++)
+    {
+        if (index(argv[i], ':'))
+            conn = argv[i];
         /* Application dependent options here */
-        }
+    }
 
-        gopengks(stdout,0);
-        gopenws(ws_id, conn, conn);
-        gactivatews(ws_id);
+    gopengks(stdout, 0);
+    gopenws(ws_id, conn, conn);
+    gactivatews(ws_id);
 
-        gsetwindow( 1, &Window );
-        gsetviewport( 1, &WsWindow );
-        gselntran( 1 );
-        gsetwswindow( ws_id, &WsWindow );
+    gsetwindow(1, &Window);
+    gsetviewport(1, &WsWindow);
+    gselntran(1);
+    gsetwswindow(ws_id, &WsWindow);
 
-        gsetfillintstyle( GSOLID );
+    gsetfillintstyle(GSOLID);
 
-        gsettextfontprec( &txfp );
-        gsetcharheight( 28.0 );
-        gsetcharspace( 0.2 );
-        gsettextalign( &txalign );
-        gsettextcolorind( 0 );
+    gsettextfontprec(&txfp);
+    gsetcharheight(28.0);
+    gsetcharspace(0.2);
+    gsettextalign(&txalign);
+    gsettextcolorind(0);
 
-        color = 0;
-        for( org.y = 0.0; org.y < 1023.0; org.y += 64.0 )
-            for( org.x = 0.0; org.x < 1280.0; org.x += 80.0 )
-                FillBox( &org, 80.0, 64.0, color++);
+    color = 0;
+    for (org.y = 0.0; org.y < 1023.0; org.y += 64.0)
+        for (org.x = 0.0; org.x < 1280.0; org.x += 80.0)
+            FillBox(&org, 80.0, 64.0, color++);
 
-        WaitForBreak( ws_id );
+    WaitForBreak(ws_id);
 
-        gdeactivatews(ws_id);
-        gclosews(ws_id);
-        gclosegks();
+    gdeactivatews(ws_id);
+    gclosews(ws_id);
+    gclosegks();
 
-        return 0;
+    return 0;
 }
