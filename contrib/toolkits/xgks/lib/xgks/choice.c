@@ -646,8 +646,8 @@ Gint XgksChoUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     DcToX( ws, &dcpt, &xpt );
     rect.x = xpt.x;
     rect.y = xpt.y;
-    idev->data.cho.origin.x = rect.x;  /* c1168 */
-    idev->data.cho.origin.y = rect.y;  /* c1168 */
+    idev->data.cho.origin.x = rect.x;
+    idev->data.cho.origin.y = rect.y;
 
     dcpt.x = idev->data.cho.initst.e_area.xmax;
     dcpt.y = idev->data.cho.initst.e_area.ymin;
