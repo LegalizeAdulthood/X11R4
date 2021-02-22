@@ -194,8 +194,8 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
                         if (prev == 0) prev = ws->wsbg;
                         else if (prev == 1) prev = ws->wsfg;
                 }
-                for( py=0; py<h; py++) {                        /* c2044 */
-                        for( px=0; px<w; px++) {                /* c2044 */
+                for( py=0; py<h; py++) {
+                        for( px=0; px<w; px++) {
                                 cur = *array;
                                 if ( ! WS_AVAIL_COLOUR(ws, cur))
                                         cur = 1;
