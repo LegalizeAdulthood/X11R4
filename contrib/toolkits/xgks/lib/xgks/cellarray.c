@@ -80,15 +80,15 @@ Gint gcellarray(Grect *rect, Gipoint *dim, Gint row, Gint *colour)
 
 /* transform the WC to NDC */
         pnt = rect->ll;
-        WcToNdc(&pnt, &(cell->primi.cell_array.ll));            /* c2018 */
+        WcToNdc(&pnt, &(cell->primi.cell_array.ll));
         pnt = rect->ur;
-        WcToNdc(&pnt, &(cell->primi.cell_array.ur));            /* c2018 */
+        WcToNdc(&pnt, &(cell->primi.cell_array.ur));
         pnt.x = rect->ll.x;
         pnt.y = rect->ur.y;
-        WcToNdc(&pnt, &(cell->primi.cell_array.ul));            /* c2018 */
+        WcToNdc(&pnt, &(cell->primi.cell_array.ul));
         pnt.x = rect->ur.x;
         pnt.y = rect->ll.y;
-        WcToNdc(&pnt, &(cell->primi.cell_array.lr));            /* c2018 */
+        WcToNdc(&pnt, &(cell->primi.cell_array.lr));
 
         p1 = colour;
         p2 = cell->primi.cell_array.colour;
