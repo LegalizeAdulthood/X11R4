@@ -703,8 +703,8 @@ Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             break;
         case 4:    /* polyline */
             if (STKEDITPOS > 1)
-                XgksXDrawLines( ws->dpy, ws->win, idev->gc, xpoints, /* c1151 */
-                         STKEDITPOS, CoordModeOrigin );              /* c1151 */
+                XgksXDrawLines( ws->dpy, ws->win, idev->gc, xpoints,
+                         STKEDITPOS, CoordModeOrigin );
             break;
         }
         free( xpoints );
@@ -725,8 +725,8 @@ Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             break;
         case 4:    /* polyline */
             if (STKEDITPOS > 1)
-                XgksXDrawLines( ws->dpy, ws->win, idev->gc, xpoints, /* c1151 */
-                         STKEDITPOS, CoordModeOrigin );              /* c1151 */
+                XgksXDrawLines( ws->dpy, ws->win, idev->gc, xpoints,
+                         STKEDITPOS, CoordModeOrigin );
             break;
         }
         free( xpoints );
@@ -757,7 +757,7 @@ Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             || (fabs((double)(ndcpt.x - prev.x)) >= idev->data.stk.interval.x)
             || (fabs((double)(ndcpt.y - prev.y)) >= idev->data.stk.interval.y) ) {
         /* transform the points */
-            xpoints=(XPoint *)malloc(sizeof(XPoint)*(STKEDITPOS+1)); /* c1151 */
+            xpoints=(XPoint *)malloc(sizeof(XPoint)*(STKEDITPOS+1));
             for( i=0, ndcpts=idev->data.stk.stkbuf, xpts=xpoints;
                 i< STKEDITPOS; i++, ndcpts++, xpts++ ) {
                 DcToX( ws, ndcpts, xpts );
@@ -770,27 +770,27 @@ Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                     STKEDITPOS++;
                 }
                 break;
-            case 3:    /* polymarker */                              /* c1151 */
-                if (STKEDITPOS < STKBUFSIZ(pet3)) {                  /* c1151 */
-                   idev->data.stk.stkbuf[ STKEDITPOS ] = *newdcpt;   /* c1151 */
-                   DcToX( ws, &(idev->data.stk.stkbuf[ STKEDITPOS ]),/* c1151 */
-                             &(xpoints[ STKEDITPOS ]) );             /* c1151 */
-                   STKEDITPOS++;                                     /* c1151 */
-                   if(idev->data.stk.initst.esw==GECHO)              /* c1151 */
-                      XgksDrawMarkers( ws->dpy, ws->win, idev->gc,   /* c1151 */
-                            &(xpoints[STKEDITPOS-1]),1,MTYPE,MSIZE );/* c1151 */
+            case 3:    /* polymarker */
+                if (STKEDITPOS < STKBUFSIZ(pet3)) {
+                   idev->data.stk.stkbuf[ STKEDITPOS ] = *newdcpt;
+                   DcToX( ws, &(idev->data.stk.stkbuf[ STKEDITPOS ]),
+                             &(xpoints[ STKEDITPOS ]) );
+                   STKEDITPOS++;
+                   if(idev->data.stk.initst.esw==GECHO)
+                      XgksDrawMarkers( ws->dpy, ws->win, idev->gc,
+                            &(xpoints[STKEDITPOS-1]),1,MTYPE,MSIZE );
                 }
                 break;
             case 4:    /* polyline */
-                if (STKEDITPOS < STKBUFSIZ(pet4)) {                  /* c1151 */
-                  idev->data.stk.stkbuf[ STKEDITPOS ] = *newdcpt;    /* c1151 */
-                  DcToX( ws, &(idev->data.stk.stkbuf[STKEDITPOS]),   /* c1151 */
-                           &(xpoints[ STKEDITPOS ]) );               /* c1151 */
-                  STKEDITPOS++;                                      /* c1151 */
-                  if (idev->data.stk.initst.esw == GECHO             /* c1151 */
-                             && STKEDITPOS > 1)                      /* c1151 */
-                     XgksXDrawLines( ws->dpy, ws->win, idev->gc,     /* c1151 */
-                        &(xpoints[STKEDITPOS-2]),2,CoordModeOrigin); /* c1151 */
+                if (STKEDITPOS < STKBUFSIZ(pet4)) {
+                  idev->data.stk.stkbuf[ STKEDITPOS ] = *newdcpt;
+                  DcToX( ws, &(idev->data.stk.stkbuf[STKEDITPOS]),
+                           &(xpoints[ STKEDITPOS ]) );
+                  STKEDITPOS++;
+                  if (idev->data.stk.initst.esw == GECHO
+                             && STKEDITPOS > 1)
+                     XgksXDrawLines( ws->dpy, ws->win, idev->gc,
+                        &(xpoints[STKEDITPOS-2]),2,CoordModeOrigin);
                 }
                 break;
             }

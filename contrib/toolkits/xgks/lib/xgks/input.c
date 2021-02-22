@@ -242,7 +242,7 @@ void XgksIProcessXEvent(XEvent *xev)
                                         if (breakhit)
                                                 idev->breakhit = True;
                                         else
-                                            if (xev->type!=KeyPress) /* c1151 */
+                                            if (xev->type!=KeyPress)
                                                 XgksLocUpdatePrompt( ws, idev, PROMPTMOVE, &dcpt, xmev, current_event_id);
                                 break;
                         case GCHOICE:
@@ -269,7 +269,7 @@ if ( InEchoArea )
                                         if (breakhit)
                                                 idev->breakhit = True;
                                         else
-                                            if (xev->type!=KeyPress) /* c1151 */
+                                            if (xev->type!=KeyPress)
                                                 XgksValUpdatePrompt( ws, idev, PROMPTMOVE, &dcpt, xmev, current_event_id);
                                 break;
                         case GPICK:
@@ -285,7 +285,7 @@ else fprintf(stderr, "XgksIProcessXEvent: device GPICK --> InEchoArea .. %f %f %
                                         if (breakhit)
                                                 idev->breakhit = True;
                                         else
-                                            if (xev->type!=KeyPress) /* c1151 */
+                                            if (xev->type!=KeyPress)
                                                 XgksPicUpdatePrompt( ws, idev, &dcpt, xmev, current_event_id);
                                 break;
                         case GISTRING:
@@ -303,7 +303,7 @@ else fprintf(stderr, "XgksIProcessXEvent: device GPICK --> InEchoArea .. %f %f %
                                         if (breakhit)
                                                 idev->breakhit = True;
                                         else
-                                           if (xev->type!=KeyPress) /* c1151 */
+                                           if (xev->type!=KeyPress)
                                                 XgksStkUpdatePrompt( ws, idev, PROMPTMOVE, &dcpt, xmev, current_event_id);
                                 break;
                         default:
@@ -379,10 +379,10 @@ void XgksIDevDisable(WS_STATE_ENTRY *ws)
                         /*XgksStrUpdatePrompt( ws, idev, PROMPTOFF, (XKeyPressedEvent *)NULL, -1);*/
                         break;
                 case GISTROKE:
-                        /* this call is not commented out because  *//* c1151 */
-                        /* strokes are drawn in XOR mode.  So if we*//* c1151 */
-                        /* didn't erase it now, it would disappear *//* c1151 */
-                        /* when we tried to redraw it later!       *//* c1151 */
+                        /* this call is not commented out because  */
+                        /* strokes are drawn in XOR mode.  So if we*/
+                        /* didn't erase it now, it would disappear */
+                        /* when we tried to redraw it later!       */
                         if(idev->data.stk.initst.esw==GECHO)
                           XgksStkUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL, (XMotionEvent *)NULL, -1);
                         break;
