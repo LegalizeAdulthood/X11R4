@@ -64,8 +64,6 @@ typedef struct {
         EQEntry *event_queue_head;      /* Event queue */
         EQEntry *event_queue_tail;      /* Insert after tail */
 
-/* current event (used in event.c)  definition moved from event.c */
-/* for PTR c1058        (DWO)                                     */
         EQEntry CurEvent;                             /* PTR c1058 */
 
 /* gks_state list variables */

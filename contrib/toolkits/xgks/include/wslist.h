@@ -162,12 +162,6 @@ Gwscat XgksWsCategory();
 EWSTYPE XgksWsTypeToEnum( /* Gchar *wstype */ );
 WS_STATE_PTR XgksValidWsId();
 
-/* DWO 7/26/88  VALID_WSID(i) used to check to see if there was a workstation open with     */
-/*              the name i.  I renamed this function OPEN_WSID and created a new VALID_WSID */
-/*              that checks if the ws id is valid (non-negative).  This was all done in the */
-/*              name of PTR c1012: many functions returned error 25 (ws not open) in cases  */
-/*              where error 20 (ws invalid) would be more appropriate.                      */
-
 #define VALID_WSID(i)   ((i) >= 0)            /* c1012 */  
 #define OPEN_WSID(i)    (XgksValidWsId(i))   /* c1012 */ 
 #define WS_CAT(t)       (XgksWsCategory(t))
