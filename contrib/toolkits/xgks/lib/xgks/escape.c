@@ -121,7 +121,6 @@ Gint gescsetdcsize(Gint ws_id, Gpoint size)
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescsetdcsize)
 
 /* check for workstation opened */
-/* ALP 8/8/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescsetdcsize)
 
 /* check for valid workstation category */
