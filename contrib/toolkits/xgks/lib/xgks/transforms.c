@@ -518,13 +518,13 @@ Bool XgksFindNTrans(Gpoint *ndcpt, Gloc *gloc)
            /* space - so, if it does happen, there are bogus points in    */
            /* the list.  (from bogus initial points, altered data, or     */
            /* transforms were changed since point data was created. */
-           trans = 0;                                            /* c1014 */
-           NtNdcToWc(trans, ndcpt, &wcpt);                       /* c1014 */
-           return (-1);                                          /* c1014 */
+           trans = 0;
+           NtNdcToWc(trans, ndcpt, &wcpt);
+           return (-1);
            }
         
            
-           return (0);                                           /* c1014 */
+           return (0);
            
 #undef trans
 #undef wcpt
@@ -582,11 +582,11 @@ Bool XgksFindNTransNpts(int num, Gpoint *ndcpts, Gint *ntrans, Gpoint *wcpts)
               ndcpt++;
               }
            while( ++cnt < num );    /* go thru rest of points */
-           *ntrans = 0; /* return trans 0 as a default */        /* c1014 */
-           return (-1); /* indicate that something is wrong... *//* c1014 */
+           *ntrans = 0; /* return trans 0 as a default */
+           return (-1); /* indicate that something is wrong... */
            }            /* ...in case we care someday */
         
-           return (0);                                           /* c1014 */
+           return (0);
 }
 /*
  * XgksUpdateWsClip ()  - according to gks clip.ind

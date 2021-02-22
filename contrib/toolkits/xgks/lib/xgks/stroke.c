@@ -87,7 +87,7 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
 /* valid echo area */
         GKSERROR( (area->xmin > area->xmax || area->ymin > area->ymax), 51, errginitstroke )
 
-/* valid stroke device number   c1014 */
+/* valid stroke device number */
         GKSERROR( (dev < 1), 140, errginitstroke )
 
 /* valid and supported prompt mode? */
@@ -100,8 +100,8 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
 
 /* valid data record */
     GKSERROR( record->pet1.bufsiz < 1, 146, errginitstroke)
-    GKSERROR( record->pet1.editpos < 1, 146, errginitstroke)    /*c1014*/
-  GKSERROR( record->pet1.editpos > record->pet1.bufsiz, 146, errginitstroke) /*c1014*/
+    GKSERROR( record->pet1.editpos < 1, 146, errginitstroke)
+  GKSERROR( record->pet1.editpos > record->pet1.bufsiz, 146, errginitstroke)
     GKSERROR( record->pet1.time < 0.0, 146, errginitstroke)
     GKSERROR( init->n_points < 0, 152, errginitstroke)
     GKSERROR( init->n_points > record->pet1.bufsiz, 153, errginitstroke)
@@ -112,16 +112,16 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
 /* won't be mistaken for valid points) */
 /* The standard doesn't really mention this restriction, but it seems needed.*/
 
-    GKSERROR(record->pet1.editpos>init->n_points+1,152,errginitstroke) /*c1014*/
+    GKSERROR(record->pet1.editpos>init->n_points+1,152,errginitstroke)
 
 /* make sure initial points are within the transform in initstroke           */
     win = &xgks_state.ntrans_list[init->transform].ntrans.w;
-    for ( ptr = init->points, cnt = 1;                              /* c1014 */
-          cnt <= init->n_points;                                    /* c1014 */
-          ptr++,cnt++)                                              /* c1014 */
-      GKSERROR( ((ptr->x < win->xmin) || (win->xmax < ptr->x)       /* c1014 */
-              || (ptr->y < win->ymin) || (win->ymax < ptr->y)),     /* c1014 */
-              146, errginitstroke)                                   /* c1014 */
+    for ( ptr = init->points, cnt = 1;
+          cnt <= init->n_points;
+          ptr++,cnt++)
+      GKSERROR( ((ptr->x < win->xmin) || (win->xmax < ptr->x)
+              || (ptr->y < win->ymin) || (win->ymax < ptr->y)),
+              146, errginitstroke)
 
     didx = 0;                           /* New 4.3 C compiler:  initialize */
     switch( pet ) {
@@ -313,7 +313,7 @@ Gint gsetstrokemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
                                                         - ndcpt.y) );
 
                 idev->data.stk.editpos =
-                    idev->data.stk.initst.record.pet1.editpos-1;   /* c1014 */
+                    idev->data.stk.initst.record.pet1.editpos-1;
                 if ( mode == GEVENT )
                     signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for                                                        event mode  c1057  */
                 idev->active = True;
@@ -390,7 +390,7 @@ Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response)
     /* NOTE: this will be incremented by incoming data!  From here on */
     /*       do not confuse it with the initstroke version of editpos */
     idev->data.stk.editpos =
-           idev->data.stk.initst.record.pet1.editpos-1;           /* c1014 */
+           idev->data.stk.initst.record.pet1.editpos-1;
 
     idev->active = True; /* activate the stroke device */
     /* if echo is set to on... */
@@ -594,7 +594,7 @@ Gint ginqdefstroke(Gchar *type, Gint dev, Gdefstroke *data)
     data->e_area.ymax = WS_MAX_DCY;
 
     data->record.pet1.bufsiz = 64;            /* c2065 */
-    data->record.pet1.editpos = 1;            /* c1014 */
+    data->record.pet1.editpos = 1;
     data->record.pet1.interval.x = 0.001;     /* c2066 */
     data->record.pet1.interval.y = 0.001;     /* c2066 */
     data->record.pet1.time = 0.0;
@@ -638,7 +638,7 @@ static Bool XgksCreateDefStroke(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp)
     idev->data.stk.initst.e_area.ymin = 0.0;
     idev->data.stk.initst.e_area.ymax = ws->size.y;
     idev->data.stk.initst.record.pet1.bufsiz = 64;              /* c2065 */
-    idev->data.stk.initst.record.pet1.editpos = 1;              /* c1014 */
+    idev->data.stk.initst.record.pet1.editpos = 1;
     idev->data.stk.initst.record.pet1.interval.x = 0.001;       /* c2066 */
     idev->data.stk.initst.record.pet1.interval.y = 0.001;       /* c2066 */
     idev->data.stk.initst.record.pet1.time = 0.0;
