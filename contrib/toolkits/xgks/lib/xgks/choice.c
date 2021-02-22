@@ -295,7 +295,7 @@ Gint gsetchoicemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
         idev->data.cho.initst.mode = GREQUEST;
         idev->data.cho.initst.esw = GECHO;
         idev->data.cho.initst.choice.status = GC_NOCHOICE;
-        idev->data.cho.initst.choice.choice = 1;                /* c1153 */
+        idev->data.cho.initst.choice.choice = 1;
         idev->data.cho.initst.pet = 1;
         idev->data.cho.initst.e_area.xmin = 0.0;
         idev->data.cho.initst.e_area.xmax = ws->size.x;
@@ -384,7 +384,7 @@ Gint greqchoice(Gint ws_id, Gint dev, Gchoice *response)
         idev->data.cho.initst.mode = GREQUEST;
         idev->data.cho.initst.esw = GECHO;
         idev->data.cho.initst.choice.status = GC_NOCHOICE; /* c2046 */
-        idev->data.cho.initst.choice.choice = 1;                /* c1153 */
+        idev->data.cho.initst.choice.choice = 1;
         idev->data.cho.initst.pet = 1;
         idev->data.cho.initst.e_area.xmin = 0.0;
         idev->data.cho.initst.e_area.xmax = ws->size.x;
@@ -513,7 +513,7 @@ Gint ginqchoicest(Gint ws_id, Gint dev, Gchoicest *state)
         state->mode = GREQUEST;
         state->esw = GECHO;
         state->choice.status = GC_NOCHOICE;
-        state->choice.choice = 1;               /* c1153 */
+        state->choice.choice = 1;
         state->pet = 1;
         state->e_area.xmin = 0.0;
         state->e_area.xmax = ws->size.x;
