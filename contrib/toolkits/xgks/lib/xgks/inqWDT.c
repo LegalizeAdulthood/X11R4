@@ -391,10 +391,10 @@ Gint ginqwsst(ws_id, state)
 /* check for open workstation id */
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsst);
 
-/* check for valid workstation category                                 c1081 */
+/* check for valid workstation category */
         GKSERROR ( (WS_CAT(ws)==GMI), 33, errginqwsst);    /* c1079 */
 
-        GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errginqwsst); /* c1081 */
+        GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errginqwsst);
 
 /* set up the return values */
         *state = ws->wsstate;
@@ -428,12 +428,12 @@ Gint ginqwsdeferupdatest(ws_id, du)
 /* check for open workstation id */
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsdeferupdatest);
 
-/* check for valid workstation category                                 c1081 */
+/* check for valid workstation category */
         GKSERROR ( (WS_CAT(ws)==GMI), 33, errginqwsdeferupdatest);    /* c1079 */
 
-        GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errginqwsdeferupdatest); /* c1081 */
+        GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errginqwsdeferupdatest);
 
-        GKSERROR ( (WS_CAT(ws)==GWISS), 36, errginqwsdeferupdatest);  /* c1081 */
+        GKSERROR ( (WS_CAT(ws)==GWISS), 36, errginqwsdeferupdatest);
 
 /* set up the return values */
         *du = ws->wsdus;
