@@ -36,7 +36,6 @@
  * States
  * 
  */
-/* c1097 changed msg # 5,6,7,8 */
 #define ENOTGKCL        1       /* GKS not in proper state: GKS shall be in the state GKCL */
 #define ENOTGKKOP       2       /* GKS not in proper state: GKS shall be in the state GKOP */
 #define ENOTWASC        3       /* GKS not in proper state: GKS shall be in the state WSAC */
@@ -48,7 +47,6 @@
 /*
  * Workstations
  */
-/* c1097 changed msg # 38,41 */
 #define EWSIDINV        20      /* Specified workstation identifier is invalid */
 #define ECNIDINV        21      /* Specified connection identifier is invalid */
 #define EWSTPINV        22      /* Specified workstation type is invalid */
@@ -84,7 +82,6 @@
 /*
  * Output Attributes
  */
-/* c1097 changed msg #62,63,68,69,75,84,89,91,92,93,95 */
 #define EBADLINX        60      /* Polyline index is invalid */
 #define ENOLINEX        61      /* A representation for the specified polyline index has not been defined on this workstation */
 #define ENOPLINX        62      /* A representation for the specified polyline index has not been predefined on this workstation */
@@ -126,7 +123,6 @@
 /*
  * Output Primitives
  */
-/* c1097 changed msg #105 */
 #define ENPOINTS        100     /* Number of points is invalid */
 #define ECHRCODE        101     /* Invalid code in string */
 #define EBDGDPID        102     /* Generalized drawing primitive identifier is invalid */
@@ -146,7 +142,6 @@
 /*
  * Input
  */
-/* c1097 changed msg #154 */
 #define ENOINDEV        140     /* Specified input device is not present on workstation */
 #define EREQUEST        141     /* Input device is not in REQUEST mode */
 #define ENSAMPLE        142     /* Input device is not in SAMPLE mode */
@@ -165,7 +160,6 @@
 /*
  * Metafiles
  */
-/* c1097 changed msg #162 */
 #define ERESERVE        160     /* Item type is not allowed for user items */
 #define EBDLNGTH        161     /* Item length is invalid */
 #define EMNOITEM        162     /* No item is left in GKS Metafile input */
@@ -178,7 +172,6 @@
 /*
  * Escape
  */
-/* c1097 changed msg #180,181 */
 #define ENOESCFN        180     /* Specified escape function is not supported */
 #define ESCIDINV        181     /* Specified escape function identification is invalid */
 #define EESCDATA        182     /* Contents of escape data record are invalid */

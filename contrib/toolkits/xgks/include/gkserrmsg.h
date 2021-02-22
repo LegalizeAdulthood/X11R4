@@ -44,7 +44,6 @@
  * States
  * 
  */
-/* c1097 changed msg # 5,6,7,8 */
 char *GKSErrorMessages0to200[] = {
 /* 0 */ (char *)NULL,
 /* ENOTGKCL 1 */        "GKS not in proper state: GKS shall be in the state GKCL",
@@ -58,7 +57,6 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Workstations
  */
-/* c1097 changed msg # 38,41 */
 /* 9 */ (char *)NULL,
 /* 10 */        (char *)NULL,
 /* 11 */        (char *)NULL,
@@ -111,7 +109,6 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Output Attributes
  */
-/* c1097 changed msg #62,63,68,69,75,84,89,91,92,93,95 */
 /* 55 */        (char *)NULL,
 /* 56 */        (char *)NULL,
 /* 57 */        (char *)NULL,
@@ -158,7 +155,6 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Output Primitives
  */
-/* c1097 changed msg #105 */
 /* 98 */        (char *)NULL,
 /* 99 */        (char *)NULL,
 /* ENPOINTS 100 */      "Number of points is invalid",
@@ -194,7 +190,6 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Input
  */
-/* c1097 changed msg #154 */
 /* 127 */       (char *)NULL,
 /* 128 */       (char *)NULL,
 /* 129 */       (char *)NULL,
@@ -226,7 +221,6 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Metafiles
  */
-/* c1097 changed msg #162 */
 /* 155 */       (char *)NULL,
 /* 156 */       (char *)NULL,
 /* 157 */       (char *)NULL,
@@ -244,7 +238,6 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Escape
  */
-/* c1097 changed msg #180,181 */
 /* 169 */       (char *)NULL,
 /* 170 */       (char *)NULL,
 /* 171 */       (char *)NULL,
