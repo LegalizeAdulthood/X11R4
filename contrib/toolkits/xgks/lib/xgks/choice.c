@@ -585,7 +585,7 @@ Gint ginqdefchoice(Gchar *type, Gint dev, Gdefchoice *data)
 
 /* STEP 2: set up the return values */
     data->choices = 0x7fff;
-    data->pets.number = 3;    /* c1180 */
+    data->pets.number = 3;
     data->pets.integers = (Gint *) malloc( sizeof( int )*3 );
     GKSERROR( (data->pets.integers == NULL), 300, errginqdefchoice)
     data->pets.integers[0] = 1;
