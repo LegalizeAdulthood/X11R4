@@ -238,7 +238,7 @@ Gint gclosews(Gint ws_id)
 /*       devices so no new events will enter and also free the memory  */
 /*       used by the devices.  (XgksIDevDelete was written, but never  */
 /*       called.  This seems to be the place it was meant for.) */
-    if (ws->ewstype != MO && ws->ewstype != WISS) /* c1167 */   /* c1139 */
+    if (ws->ewstype != MO && ws->ewstype != WISS)
         XgksIDevDelete (ws);
 
 /* XgksDeleteAllSeg was moved after XgksIDevDelete to stop the devices     */
@@ -249,7 +249,7 @@ Gint gclosews(Gint ws_id)
 /* delete all segments from this ws, and at the same time   */  /* c1141 */
 /* delete this ws from all segments associated with it      */  /* c1141 */
 /* (XgksDelAllWsSeg would be a better name)                 */  /* c1141 */
-    if (ws->ewstype != MO)                                      /* c1139 */
+    if (ws->ewstype != MO)
         XgksDeleteAllSeg (ws);
     else                                                        /* c1141 */
         XgksDelAllMoSeg( ws );                                  /* c1141 */
@@ -325,18 +325,18 @@ Gint gclearws(Gint ws_id, Gclrflag control_flag)
     if (control_flag == GCONDITIONALLY && ws->wsdus.dspsurf == GEMPTY)
         return (OK);
 
-    if (ws->ewstype != MO) {                                    /* c1139 */
-        XgksIDevDisable( ws );                                  /* c1139 */
+    if (ws->ewstype != MO) {
+        XgksIDevDisable( ws );
         xXgksClearWs(ws);
-    }                                                           /* c1139 */
+    }
     if (ws->wsti.wstus == GPENDING) XgksUnpendPendingTrans(ws);
 
-    if (ws->ewstype != MO) {                                          /* c1139 */
-        XgksDeletePrimi (&(ws->primi_list), &(ws->primi_insert_pt));  /* c1139 */
+    if (ws->ewstype != MO) {
+        XgksDeletePrimi (&(ws->primi_list), &(ws->primi_insert_pt));
         ws->message_pt = NULL;    /* Clear any messages */
-        XgksDeleteAllSeg (ws);                                        /* c1139 */
-        XgksIDevEnable( ws );                                         /* c1139 */
-    }                                                                 /* c1139 */
+        XgksDeleteAllSeg (ws);
+        XgksIDevEnable( ws );
+    }
 
     ws->wsdus.nframe = GNO;
     ws->wsdus.dspsurf = GEMPTY;

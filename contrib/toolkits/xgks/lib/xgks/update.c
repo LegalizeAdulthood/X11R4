@@ -77,8 +77,8 @@ Gint gupdatews(Gint ws_id, Gregen regenflag)
 
         if (regenflag == GPOSTPONE || ws->wsdus.nframe == GNO) return (OK);
 
-        if (ws->ewstype != MO)                                  /* c1139 */
-                XgksReDrawSegWs (ws);                           /* c1139 */
+        if (ws->ewstype != MO)
+                XgksReDrawSegWs (ws);
 
 /* if necessary call user defined redraw notifying function */
         if (ws->redrawfuncp != NULL)

@@ -87,7 +87,7 @@ Gint gsetdeferst(ws_id, deferral_mode, regen_mode)
         ws->wsdus.defmode = deferral_mode;
         ws->wsdus.irgmode = regen_mode;
 
-        if (ws->wsdus.irgmode==GALLOWED && ws->wsdus.nframe==GYES && ws->ewstype!=MO)  /* c1139 */
+        if (ws->wsdus.irgmode==GALLOWED && ws->wsdus.nframe==GYES && ws->ewstype!=MO)
                 XgksReDrawSegWs(ws);
 
         return(OK);

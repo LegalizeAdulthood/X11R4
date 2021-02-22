@@ -139,10 +139,10 @@ void XgksInitWssTrans(WS_STATE_PTR ws)
         ws->wsti.request.v.ymin = 0.0;
         ws->wsti.request.v.ymax = ws->size.y;
 
-        if (ws->ewstype != MO) {                                /* c1139 */
+        if (ws->ewstype != MO) {
                 XgksSetWsWindow(ws, &(ws->wsti.current.w));
                 XgksSetWsViewport(ws, &(ws->wsti.current.v));
-        }                                                       /* c1139 */
+        }
 }
 
 /*$F
@@ -379,8 +379,8 @@ Gint gsetwswindow(Gint ws_id, Glimit *window)
                    window->ymin < 0.0 || window->ymin > 1.0 || window->ymax < 0.0 || window->ymax > 1.0)
                    ,53, errgsetwswindow)
 
-        if (ws->ewstype != MO)                                  /* c1139 */
-                XgksSetWsWindow (ws, window);                   /* c1139 */
+        if (ws->ewstype != MO)
+                XgksSetWsWindow (ws, window);
 
         if (ws->ewstype == MO) XgksMoSetLimit (ws, 71, window);
 
@@ -432,8 +432,8 @@ Gint gsetwsviewport(Gint ws_id, Glimit *viewport)
                 54, errgsetwsviewport)
 
 
-        if (ws->ewstype != MO)                                  /* c1139 */
-                XgksSetWsViewport (ws, viewport);               /* c1139 */
+        if (ws->ewstype != MO)
+                XgksSetWsViewport (ws, viewport);
 
         if (ws->ewstype == MO) XgksMoSetLimit (ws, 72, viewport);
 

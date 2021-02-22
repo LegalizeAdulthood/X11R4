@@ -289,7 +289,7 @@ Gint gcreateseg(Gint name)
                         if (xgks_state.activews[wscnt].ws->ewstype != MO) {
                                 XgksInsertWsSeg (xgks_state.activews[wscnt].ws, name);
                                 UPDATE_SEG_CNT(xgks_state.activews[wscnt].ws->primi_insert_pt);
-                        }                                        /* c1139 */
+                        }
                 }
 
         for(; i < MAX_ASSOC_WS; i++)
@@ -402,10 +402,10 @@ Gint gdelseg(Gint name)
 /* Now delete the segment from ws segment list and redraw all associated workstations */
         for (wscnt=0; seg->assoc_ws[wscnt] != INVALID; wscnt++) {
                 ws = OPEN_WSID(seg->assoc_ws[wscnt]);
-                if (ws->ewstype != MO) {                        /* c1139 */
+                if (ws->ewstype != MO) {
                         XgksDeleteWsSeg (ws, name);
                         REDRAWWS(ws);
-                }                                               /* c1139 */
+                }
         }
 
         XgksDeletePrimi(&(seg->primi_list), &(seg->primi_insert_pt));  /* remove ALL assoc primitive */
@@ -455,7 +455,7 @@ Gint gdelsegws(Gint ws_id, Gint name)
 /* delete the segment from the assoc_ws array */
         GKSERROR ( (XgksDelAssocWs(seg, ws->ws_id) == INVALID), 123, errgdelsegws)
 
-        if (ws->ewstype != MO) XgksDeleteWsSeg (ws, name);      /* c1139 */
+        if (ws->ewstype != MO) XgksDeleteWsSeg (ws, name);
 
         if (ws->ewstype == MO) XgksMoSetGraphicAttrOnWs (ws, 84, name);
 
@@ -639,14 +639,14 @@ Gint gassocsegws(Gint ws_id, Gint seg_id)
         }
         seg->assoc_ws[i] = ws_id;
 
-/* Now insert the segment into ws->seglist if ws is not MO */   /* c1139 */
-        if (ws->ewstype != MO) {                                /* c1139 */
+/* Now insert the segment into ws->seglist if ws is not MO */
+        if (ws->ewstype != MO) {
                 XgksInsertWsSeg (ws, seg_id);
                 UPDATE_SEG_CNT(ws->primi_insert_pt);
-        }                                                       /* c1139 */
+        }
 
 /* if destination ws is a MO, do what should be done, and return */
-        else {                                                  /* c1139 */
+        else {
                 XgksMoSetGraphicAttrOnWs (ws, 81, seg_id);
                 XgksSegAttrMo (ws, seg);
                 XgksRestoreMoGksStateOnWs (ws);       /* c1144 */
@@ -1025,7 +1025,7 @@ static void XgksRenameWsSeg(WS_STATE_PTR ws, Gint old, Gint new)
 {
         WS_SEG_LIST *ptr;
 
-        if (ws->ewstype == MO) return;                          /* c1139 */
+        if (ws->ewstype == MO) return;
 
         ptr = ws->seglist;
         while (ptr != NULL) {
