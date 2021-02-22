@@ -1018,7 +1018,7 @@ void XgksMoSetSegDet(Gint name, Gsegdet det)
         }
 }
 
-/* c1140:  following function added to do write initial MO gks attributes */
+/* write initial MO gks attributes */
 void XgksMoActivateWs(WS_STATE_PTR ws)
 {
         XgksMoSetClipOnWs( ws, &xgks_state.cliprec.rec );

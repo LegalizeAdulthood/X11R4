@@ -92,8 +92,8 @@ Gint gactivatews(Gint ws_id)
         if (xgks_state.gks_state == GWSOP)
                 xgks_state.gks_state = GWSAC;   /* change operating state */
 
-        if (MO_OPENED == TRUE)                                  /* c1140 */
-                XgksMoActivateWs( ws );                         /* c1140 */
+        if (MO_OPENED == TRUE)
+                XgksMoActivateWs( ws );
 
         return (OK);
 }
