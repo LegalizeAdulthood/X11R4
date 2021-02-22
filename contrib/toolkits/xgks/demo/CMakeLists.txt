@@ -12,7 +12,7 @@ gksDemo(font)
 gksDemo(hanoi)
 gksDemo(mi)
 gksDemo(pline)
-# gksDemo(pmark)
+gksDemo(pmark)
 # gksDemo(usa)
 # gksDemo(wong)
 

@@ -35,9 +35,14 @@
 
 #include <xgks.h>
 
-static
-WaitForBreak( ws_id )
-        Gint ws_id;
+#include <stdlib.h>
+#include <strings.h>
+
+void perr(int i, char *s);
+void LoadColors(Gint ws_id);
+void test_pmark(void);
+
+static void WaitForBreak(Gint ws_id)
 {
         Gchoice init;
         Gchoicerec record;
@@ -61,9 +66,7 @@ Gint    ws_id = 1;
 
 Gint result;
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
         double atof();
         Gchar *conn = (char *)NULL;
@@ -100,9 +103,7 @@ char *argv[];
         exit(0);
 }
 
-perr(i,s)
-int i;
-char *s;
+void perr(int i, char *s)
 {
         if (i) fprintf(stdout,"%s %d\n",s,i);
         else fprintf(stdout,"%s %d\n",s,i);
@@ -129,8 +130,7 @@ Gcobundl Colors[] = {
         { 1.0, 1.0, 1.0 }
 };
 
-LoadColors(ws_id)
-        Gint ws_id;
+void LoadColors(Gint ws_id)
 {
         int i;
 
@@ -151,7 +151,7 @@ Gasfs BASFs = {
         GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL           /* fillarea */
 };
 
-test_pmark()
+void test_pmark(void)
 {
         Gpoint tpt, pt;
         Gint i, type;
