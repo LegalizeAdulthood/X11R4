@@ -35,32 +35,6 @@
  * 
  * wdt.h - GKS workstation description table structure
  * 
- * $Header: wdt.h,v 4.0 89/08/31 16:35:40 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/wdt.h,v $
- *
- * $Log:        wdt.h,v $
- * Revision 4.0  89/08/31  16:35:40  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 3.7  89/06/01  14:06:44  bruce
- * PTR# c1174:  Changed macro to check fill type before verifying hatch index.
- * 
- * Revision 3.6  88/12/21  14:42:21  amy
- * PTR c1146    WS_LINE_TYPE macro changed to allow negative line types
- *              line type -3 through 4 are allowed-- zero is checked in code.
- * 
- * Revision 3.5  88/12/07  15:04:57  amy
- * Changed spellings from color to colour.
- * 
- * Revision 3.4  88/08/19  13:30:25  amy
- * AUG  WS_LINE_TYPE macro changed.
- *      WS_AVAIL_COLOUR macro changed to check for ws type MO or MI.
- * 
- * Revision 1.1  88/07/21  10:47:30  david
- * Initial revision
- *  
- *
  */
 
 #ifndef WDT_H

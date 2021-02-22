@@ -19,7 +19,6 @@
  * ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  * SOFTWARE.
  *
- * $Header: functbl.h,v 4.1 89/09/06 16:02:57 amy Exp $ 
  */
 
 #include "screen_items.h"

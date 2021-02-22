@@ -35,25 +35,6 @@
  * 
  * GKS Input processing structures
  * 
- * $Header: input.h,v 4.0 89/08/31 16:35:01 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/input.h,v $
- *
- * $Log:        input.h,v $
- * Revision 4.0  89/08/31  16:35:01  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 3.3  88/12/16  12:27:32  amy
- * PTR c1133    Typedef EQEntry:  added int field called id for the event id
- *              to be used in determining the presence of simultaneous events.
- * 
- * Revision 3.2  88/08/19  13:19:18  amy
- * No additional changes in August tape version-- no changes made.
- * 
- * Revision 1.1  88/07/21  10:47:22  david
- * Initial revision
- *  
- *
  */
 
 #ifndef INPUT_H

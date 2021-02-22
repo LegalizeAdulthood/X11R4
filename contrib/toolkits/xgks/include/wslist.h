@@ -33,64 +33,6 @@
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
  * 
- * $Header: wslist.h,v 4.0 89/08/31 16:35:47 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/wslist.h,v $
- *
- * $Log:        wslist.h,v $
- * Revision 4.0  89/08/31  16:35:47  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 3.18  89/03/15  16:36:27  amy
- * PTR c1164    Added ws_is_closing field to workstation state list
- *              structure.
- * 
- * Revision 3.17  89/02/20  13:52:19  amy
- * PTR c1152    Added set_colour_rep pointer to ws state list.
- * 
- * Revision 3.16  89/02/04  15:33:51  amy
- * PTR c1147    Make global vars. and functions private, or static where possible.
- * 
- * Revision 3.15  88/12/08  17:12:37  amy
- * Changed Colourmap back to Colormap.
- * 
- * Revision 3.14  88/12/07  15:06:20  amy
- * Changed spellings from color to colour.
- * 
- * Revision 3.13  88/11/18  14:15:13  amy
- * PTR c1068    Added the filestat field to the workstation state list to
- *      retain metafile error condition flags (see changes to metafile.c for
- *      this PTR).
- * 
- * Revision 3.12  88/09/26  09:54:40  amy
- * MIT  DcToX, NdcToX:  cast float as short before assigning to another short.
- * 
- * Revision 3.11  88/08/19  13:45:02  amy
- * AUG  The following fields were added to the WS_STATE_PTR structure:
- *        plinegc,
- *        pmarkgc
- *        fillareagc
- *        textgc
- *        last_pline_rectangle
- *        last_pmarker_rectangle
- *        last_farea_rectangle
- *        last_text_rectangle
- *        last_dash_index
- * 
- * Revision 3.10  88/08/15  06:52:48  amy
- * PTR c1001  WS state table modified for message problem fix.
- * 
- * Revision 1.3  88/08/08  15:47:34  bruce
- * PTR# c1001 - Two fields had to be added to the WS state table to manage 
- * workstation messages.
- * 
- * Revision 1.2  88/07/26  15:01:18  owens
- * DWO c1012: changed name of VALID_WSID to OPEN_WSID and added new VALID_WSID
- * 
- * Revision 1.1  88/07/21  10:47:32  david
- * Initial revision
- *  
- *
  */
 
 #ifndef  WSLIST_H

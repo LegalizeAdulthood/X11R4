@@ -19,7 +19,6 @@
  * ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  * SOFTWARE.
  *
- * $Header: red.c,v 1.1 89/09/18 18:58:32 jim Exp $
  */
 
 #include <stdio.h>

@@ -19,7 +19,6 @@
  * ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  * SOFTWARE.
  *
- * $Header: pictures.h,v 4.0 89/09/01 16:08:17 amy Exp $
  */
 
 #define CASTLEPNTS 21

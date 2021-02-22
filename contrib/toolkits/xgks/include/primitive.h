@@ -35,25 +35,6 @@
  * 
  * Define file for : GKS output primitive structures
  *
- * 
- * $Header: primitive.h,v 4.0 89/08/31 16:35:26 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/primitive.h,v $
- *
- * $Log:        primitive.h,v $
- * Revision 4.0  89/08/31  16:35:26  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 3.3  88/12/07  15:03:37  amy
- * Changed spellings from color to colour.
- * 
- * Revision 3.2  88/08/19  13:23:18  amy
- * No additional changes in August tape version-- no changes made.
- * 
- * Revision 1.1  88/07/21  10:47:28  david
- * Initial revision
- *  
- *
  */
 
         /* All structures for output primitives are subjected to changes */

@@ -35,33 +35,6 @@
  * 
  * States
  * 
- * $Header: gks_errors.h,v 4.0 89/08/31 16:34:20 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/gks_errors.h,v $
- *
- * $Log:        gks_errors.h,v $
- * Revision 4.0  89/08/31  16:34:20  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 3.5  89/03/15  18:08:01  amy
- * PTR c1130    Added definitions for FORTRAN-specific errors.
- * 
- * Revision 3.4  88/12/07  14:58:28  amy
- * Changed all spellings from color to colour.
- * 
- * Revision 3.3  88/11/29  17:50:01  amy
- * No change.
- * 
- * Revision 3.2  88/09/27  13:57:15  amy
- * PTR c1097    Corrected text of messages to match that in the GKS ANSI standard.
- * 
- * Revision 1.2  88/08/22  13:30:41  ritu
- * PTR # 1097. modified error messages to match those in the ansi standard.
- * 
- * Revision 1.1  88/07/21  10:47:14  david
- * Initial revision
- *  
- *
  */
 /* c1097 changed msg # 5,6,7,8 */
 #define ENOTGKCL        1       /* GKS not in proper state: GKS shall be in the state GKCL */

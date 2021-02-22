@@ -25,30 +25,6 @@
  * 
  * Define file for :  polymarker predefined bundles
  * 
- * $Header: polymarkers.h,v 4.0 89/08/31 16:35:20 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/polymarkers.h,v $
- *
- * $Log:        polymarkers.h,v $
- * Revision 4.0  89/08/31  16:35:20  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 1.3  89/06/01  14:06:04  bruce
- * PTR# c1178:  Changed default structures to accomodate compiler glitch.
- * 
- * Revision 1.2  89/02/13  16:59:10  amy
- * No change.
- * 
- * Revision 1.1  89/02/04  15:33:16  amy
- * PTR c1147    Make global vars. and functions private, or static where possible.
- * 
- * Revision 1.2  89/01/27  13:17:59  bruce
- * PTR c1154    Added constant with which to initialize default polymarker size 
- *              scale factor.
- * 
- * Revision 1.1  89/01/11  08:58:43  mike
- * Initial revision
- *   
  *
  */
 

@@ -19,7 +19,6 @@
  * ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  * SOFTWARE.
  *
- * $Header: stratego.h,v 4.0 89/09/01 16:08:29 amy Exp $
  */
 
 #define   NO_PIECE  0

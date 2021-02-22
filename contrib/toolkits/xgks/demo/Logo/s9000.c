@@ -34,7 +34,6 @@
  *
  * Draw a picture of the IBM Instruments S9000 workstation.
  *
- * $Header: s9000.c,v 4.0 89/09/01 14:41:48 amy Exp $
  */
 #include <stdio.h>
 #include <xgks.h>

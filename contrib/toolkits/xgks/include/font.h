@@ -35,21 +35,6 @@
  * 
  * font.h - vector fonts for UIGKS servers.
  *
- * $Header: font.h,v 4.0 89/08/31 16:34:05 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/font.h,v $
- *
- * $Log:        font.h,v $
- * Revision 4.0  89/08/31  16:34:05  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 3.3  88/08/19  13:10:58  amy
- * No additional changes in August tape version-- no changes made.
- * 
- * Revision 1.1  88/07/21  10:47:10  david
- * Initial revision
- *  
- *
  */
 
 #define bits16  short                   /* MACHINE DEPENDENT */

@@ -33,52 +33,6 @@
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
  * 
- * $Header: gkslist.h,v 4.0 89/08/31 16:34:53 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/gkslist.h,v $
- *
- * $Log:        gkslist.h,v $
- * Revision 4.0  89/08/31  16:34:53  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 3.12  89/03/16  13:12:44  amy
- * PTR c2048    REDRAWWS:  calls XgksCleanUpWsSegList if irgmode is SUPPRESSED.
- * 
- * Revision 3.11  89/03/15  17:40:56  amy
- * PTR c1159    Added fontdbdir field to gks state list to contain the
- *              fonts path.
- * 
- * Revision 3.10  89/02/04  15:32:42  amy
- * PTR c1147    Make global vars. and functions private, or static where possible.
- * 
- * Revision 3.9  89/01/27  12:56:22  amy
- * Cosmetic change to the log.
- * 
- * Revision 3.8  89/01/27  12:54:48  amy
- * PTR c1145    To GKS state list variables, added focus_ws, pointer to ws which  
- *              currently has the focus.
- * 
- * Revision 3.7  88/12/29  11:04:12  amy
- * PTR c1139    REDRAWWS macro:  check that ws is not an MO before redrawing
- *              segments on ws.
- * 
- * Revision 3.6  88/12/22  14:13:35  amy
- * PTR c1142    Added extern statements for current pick id and current open
- *              segment.
- * 
- * Revision 3.5  88/12/16  11:29:26  amy
- * PTR c1133    Removed variable "simultev."
- * 
- * Revision 3.4  88/11/29  10:08:07  amy
- * PTR c1058    Declare CurEvent an extern.
- * 
- * Revision 3.3  88/08/19  13:17:49  amy
- * No additional changes in August tape version-- no changes made.
- * 
- * Revision 1.1  88/07/21  10:47:20  david
- * Initial revision
- *  
- * 
  */
 
 #ifndef  GKSLIST_H

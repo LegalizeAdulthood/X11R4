@@ -25,27 +25,6 @@
  * 
  * Define file for :  fillarea predefined bundles
  * 
- * $Header: fillarea.h,v 4.0 89/08/31 16:33:58 amy Exp $
- *
- * $Source: /andrew/Xgks/source/xgks.bld/include/RCS/fillarea.h,v $
- *
- * $Log:        fillarea.h,v $
- * Revision 4.0  89/08/31  16:33:58  amy
- * Changed IBM copyright for MIT distribution.
- * 
- * Revision 1.2  89/06/01  14:06:11  bruce
- * PTR# c1178:  Changed default structures to accomodate compiler glitch.
- * 
- * Revision 1.1  89/02/04  15:31:45  amy
- * PTR c1147    Make global vars. and functions private, or static where possible.
- * 
- * Revision 1.2  89/01/30  10:07:22  mike
- * PTR c1143:  Changed fill area bundles to include one pattern.
- * 
- * Revision 1.1  89/01/11  08:57:43  mike
- * Initial revision
- *   
- *
  */
 
 /* c1147:  Moved these predefined reps from fillarea.c and made them static */
