@@ -245,13 +245,13 @@ Gint gclosews(Gint ws_id)
 /* which erases all the devices, then deletes the segments, then calls     */
 /* XgksIDevEnable to redraw all the devices.  This caused them to flash.   */
 /* Now, the devices are deleted before the segments.                       */
-/* delete all segments from this ws, and at the same time   */  /* c1141 */
-/* delete this ws from all segments associated with it      */  /* c1141 */
-/* (XgksDelAllWsSeg would be a better name)                 */  /* c1141 */
+/* delete all segments from this ws, and at the same time   */
+/* delete this ws from all segments associated with it      */
+/* (XgksDelAllWsSeg would be a better name)                 */
     if (ws->ewstype != MO)
         XgksDeleteAllSeg (ws);
-    else                                                        /* c1141 */
-        XgksDelAllMoSeg( ws );                                  /* c1141 */
+    else
+        XgksDelAllMoSeg( ws );
 
 /* mark the ws as closing to prevent any interrupts to jump */
 /* in while the ws is in an unstable state.  (if a change   */

@@ -1110,28 +1110,27 @@ void XgksDeleteAllSeg(WS_STATE_PTR ws)
         REDRAWWS(ws);
 }
 
-/* c1141:  This function added for MO's */
-/*                                                               * c1141 *
- * XgksDelAllMoSeg( ws )        delete the MO ws from all assoc  * c1141 *
- *                              seg                              * c1141 *
- *                                                               * c1141 *
- * Note that MO ws have no segment list, so we have to search    * c1141 *
- *    all seg                                                    * c1141 *
- *                                                               * c1141 *
- */                                                             /* c1141 */
-void XgksDelAllMoSeg( ws )                                      /* c1141 */
-        WS_STATE_PTR ws;                                        /* c1141 */
-{                                                               /* c1141 */
-        Gint i;                                                 /* c1141 */
-        SEG_STATE_PTR seg;                                      /* c1141 */
-                                                                /* c1141 */
-        for (i = 0; i < SHSIZE; i++) {                          /* c1141 */
-                seg = segtable[i];                              /* c1141 */
-                while (seg != NULL) {                           /* c1141 */
-                        XgksDelAssocWs( seg, ws->ws_id );       /* c1141 */
-                        seg = seg->seg_next;                    /* c1141 */
-                }                                               /* c1141 */
-        }                                                       /* c1141 */
+/*
+ * XgksDelAllMoSeg( ws )        delete the MO ws from all assoc
+ *                              seg
+ *
+ * Note that MO ws have no segment list, so we have to search
+ *    all seg
+ *
+ */
+void XgksDelAllMoSeg( ws )
+        WS_STATE_PTR ws;
+{
+        Gint i;
+        SEG_STATE_PTR seg;
+
+        for (i = 0; i < SHSIZE; i++) {
+                seg = segtable[i];
+                while (seg != NULL) {
+                        XgksDelAssocWs( seg, ws->ws_id );
+                        seg = seg->seg_next;
+                }
+        }
 }
 
 /*
