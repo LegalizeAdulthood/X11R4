@@ -145,7 +145,7 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
     STRCPY((ws->conn), connection);
 
     XgksSetWsPtr(ws_id, ws);        /* add this ws ptr into openedws[] array */
-    ws->dpy = NULL;                 /* c1167 */
+    ws->dpy = NULL;
     switch (ewstype) {
         case X_WIN : /* open the workstation as X-11 window */
                       if ((status=xXgksOpenWs(ws)) != 0) {
