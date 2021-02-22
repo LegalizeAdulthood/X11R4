@@ -224,7 +224,7 @@ static int XgksExposeEvent(XEvent *xev, Display *dpy)
       and if the expose count on the one we found is greater than 0, then we
       can bag that one also because we know another one has to follow it.  If
       the expose count on the one we found is 0 then it has to be re-sent to
-      put it back at the tail of the queue.  (Got it?)    PTR# c1129  */
+      put it back at the tail of the queue.  (Got it?) */
 
    if (XCheckTypedWindowEvent (dpy, xev->xexpose.window, Expose, &tmpxev))
       {
@@ -232,7 +232,7 @@ static int XgksExposeEvent(XEvent *xev, Display *dpy)
       if (tmpxev.xexpose.count == 0) /*  And we are re-sending it.  */
          XSendEvent (dpy, xev->xexpose.window, True, ExposureMask, &tmpxev);
       return(0); /* We know there's an expose after this one so don't process */
-      }      /*  End of changes for PTR# c1129  */
+      }
 
    /* get the event window and the related wslist pointer */
 

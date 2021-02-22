@@ -180,9 +180,9 @@ void XgksIProcessXEvent(XEvent *xev)
 
         XMotionEvent *xmev;
 
-        /* simultaneous events have same ID! */ /* PTR c1133 */
-        static int current_event_id = 0;        /* PTR c1133 */
-#define MAX_EVENT_ID 32767                      /* PTR c1133 */
+        /* simultaneous events have same ID! */
+        static int current_event_id = 0;
+#define MAX_EVENT_ID 32767
 
         xmev = (XMotionEvent *)xev;
 /* Find the gks workstation associated with the X window */
@@ -223,12 +223,12 @@ void XgksIProcessXEvent(XEvent *xev)
                 fprintf(stderr, "XgksIProcessXEvent() xmev %d %d xpt=%d %d dcpt %f %f\n", xmev->x, xmev->y, xpt.x, xpt.y, dcpt.x, dcpt.y);
 #endif
 
-         /* increment curr event ID.  (used */  /* PTR c1133 */
-        /* to determine if two events are  */  /* PTR c1133 */
-        /* simultaneous events - they are  */  /* PTR c1133 */
-        /* if they have the same ID        */  /* PTR c1133 */
-        if (++current_event_id > MAX_EVENT_ID) /* PTR c1133 */
-          current_event_id = 0;                /* PTR c1133 */
+         /* increment curr event ID.  (used */
+        /* to determine if two events are  */
+        /* simultaneous events - they are  */
+        /* if they have the same ID        */
+        if (++current_event_id > MAX_EVENT_ID)
+          current_event_id = 0;
 
         /* check each active input device for trigger */
                 for( idev=ws->in_dev_list; idev != NULL; idev = idev->next) {
@@ -243,7 +243,7 @@ void XgksIProcessXEvent(XEvent *xev)
                                                 idev->breakhit = True;
                                         else
                                             if (xev->type!=KeyPress) /* c1151 */
-                                                XgksLocUpdatePrompt( ws, idev, PROMPTMOVE, &dcpt, xmev, current_event_id); /* PTR c1133 */
+                                                XgksLocUpdatePrompt( ws, idev, PROMPTMOVE, &dcpt, xmev, current_event_id);
                                 break;
                         case GCHOICE:
                                 ea = &idev->data.cho.initst.e_area;
@@ -270,7 +270,7 @@ if ( InEchoArea )
                                                 idev->breakhit = True;
                                         else
                                             if (xev->type!=KeyPress) /* c1151 */
-                                                XgksValUpdatePrompt( ws, idev, PROMPTMOVE, &dcpt, xmev, current_event_id); /* PTR c1133 */
+                                                XgksValUpdatePrompt( ws, idev, PROMPTMOVE, &dcpt, xmev, current_event_id);
                                 break;
                         case GPICK:
                                 ea = &idev->data.pic.initst.e_area;
@@ -304,7 +304,7 @@ else fprintf(stderr, "XgksIProcessXEvent: device GPICK --> InEchoArea .. %f %f %
                                                 idev->breakhit = True;
                                         else
                                            if (xev->type!=KeyPress) /* c1151 */
-                                                XgksStkUpdatePrompt( ws, idev, PROMPTMOVE, &dcpt, xmev, current_event_id); /* PTR c1133 */
+                                                XgksStkUpdatePrompt( ws, idev, PROMPTMOVE, &dcpt, xmev, current_event_id);
                                 break;
                         default:
                                 break;

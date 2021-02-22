@@ -150,8 +150,6 @@ Gint ginqmarkerindices(ws_id, idxlist)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqmarkerindices); /*c1147*/
 
 /* check for invalid workstation id */
-/* ALP 8/11/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqmarkerindices)   /* c1012 */
 
 /* check if this ws_id is opened */

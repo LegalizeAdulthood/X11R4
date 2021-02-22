@@ -61,7 +61,7 @@ static XFontStruct *MFontInfo = (XFontStruct *)NULL;
  * returns: 0, 7, 20, 25, 38, 51, 120, 122, 123, 140, 141, 144, 145, 146, 152, 300
  */
 
-#define MenuPadV 4        /* These macros defs had to be moved  PTR# c1030 */
+#define MenuPadV 4
 #define MenuPadH MenuPadV
 
 Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gchoicerec *record)
@@ -79,7 +79,7 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
     char **menustr;        /* menu dimensions that used to be computed */
     Gpoint dcpt;           /* in the PROMPTON: portion of the prompt */
     XRectangle rect;       /* update routine that isn't called when there's */
-    XPoint xpt;            /* no echo     PTR# c1030 */
+    XPoint xpt;            /* no echo */
 
 #ifdef CHODEBUG
     fprintf(stderr, "xgks:ginitchoice()\n");
@@ -112,7 +112,6 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
         145, errginitchoice )
 
 /* initial values valid */                                         /* c1019 */
-/* rewritten for correctness and to resolve PTR c1019 */           /* c1019 */
     switch ( pet ) {                                               /* c1019 */
     case 1:        /* no data */                                   /* c1019 */
         /* initial value ok (make sure key in range) */            /* c1019 */
@@ -169,7 +168,7 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
 
     if ((idev = XgksIDevLookup( ws, dev, GCHOICE)) == NULL) {
     /* Create the Input Device structure */
-        idev = XgksIDevNew();  /* PTR# c1148 */
+        idev = XgksIDevNew();
         GKSERROR( (idev == NULL), 300, errginitchoice)
         idev->class = GCHOICE;
         idev->dev = dev;
@@ -223,11 +222,6 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
             STRCPY( *d, *s );   /* c1176 */
         }
 
-    /* The code from this line to the end of the case switch was moved from
-       the PROMPTON: portion of the prompt update procedure because these
-       numbers are needed when the echo is off and the prompt update code
-       isn't called then   PTR# c1030  */
-
         dcpt.x = idev->data.cho.initst.e_area.xmin;
         dcpt.y = idev->data.cho.initst.e_area.ymax;
         DcToX( ws, &dcpt, &xpt );
@@ -253,8 +247,6 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
                 MFontInfo->ascent+MFontInfo->descent+(MenuPadV << 1);
         idev->data.cho.height = idev->data.cho.iheight * number;
         idev->data.cho.width = maxwidth + (MenuPadH << 1);
-
-        /*  End of changes for PTR# c1030  */
     }
     return(0);
 }
@@ -342,7 +334,7 @@ Gint gsetchoicemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     if (mode == GSAMPLE || mode == GEVENT) {
         idev->data.cho.curcho = 0;
         if (mode == GEVENT)
-           signal( SIGALRM, XgksAwaitInterrupt); /* Set up signal call PTR# c1057  */
+           signal( SIGALRM, XgksAwaitInterrupt); /* Set up signal call */
         idev->active = True;
         if ( echo == GECHO )
             XgksChoUpdatePrompt( ws, idev, PROMPTON, (XMotionEvent *)NULL,-1);
@@ -648,7 +640,7 @@ Gint ginqdefchoice(Gchar *type, Gint dev, Gdefchoice *data)
     XFillRectangle( ws->dpy, ws->win, idev->gc, pos.x, pos.y, MenuWid, MenuIHt); \
     XSetForeground( ws->dpy, idev->gc, fg); \
     XDrawString( ws->dpy, ws->win, idev->gc, pos.x+MenuPadH, pos.y+MenuPadV+MFontInfo->ascent, str, (str != NULL) ? strlen(str) : 0); \
-} /* macro changed for PTR# c1176 */
+}
 
 Gint XgksChoUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     PromptStatus pstate, XMotionEvent *xmev, int event_id)
@@ -689,7 +681,7 @@ Gint XgksChoUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
         case 2:
             break;
         case 3:
-            /* menu size is now computed in ginitchoice()   PTR# c1030  */
+            /* menu size is computed in ginitchoice() */
             /* display the menu */
             number = idev->data.cho.initst.record.pet3.number;  /*c1030*/
             /* Full size background */

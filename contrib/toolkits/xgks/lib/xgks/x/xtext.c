@@ -244,7 +244,6 @@ xDumpMatrix("stroke_trans", stroke_trans);      /*ILL2*/
                                         break;
                         case GTP_UP:
                         case GTP_DOWN:  fsize += xFyMax(cdef) - xFyMin(cdef);
-                                               /* PTR# c1083     ^^^^^^^^^^  */
                                         fsize += cfont->fnominaly * wsr_spacing;
                                         if ((i=xFxMax(cdef)) > fwidth) fwidth=i;
                                         break;
@@ -323,7 +322,6 @@ fprintf(stderr, "xtext  fsize = %f fwidth=%f\n", fsize, fwidth);
                 case GTV_NORMAL:
                 case GTV_BASE:  ytrans = 0;      break;
                 case GTV_BOTTOM:ytrans = - cfont->fbottom; break;
-                /* Changed fsize to -fsize   PTR# c1083  */
                 }
                 break;
 
@@ -385,14 +383,12 @@ xDumpMatrix("stroke_trans", stroke_trans);      /*ILL2*/
                                 break;
                 case GTP_UP:    ytrans = xFyMax(&(cfont->fchars[cfont->fcharoffset[*text_ptr]])) -
                                 xFyMin(&(cfont->fchars[cfont->fcharoffset[*(text_ptr+1)]]))
-                                /* Corrects y pos of char  PTR# c1083 */
                                         + cfont->fnominaly * wsr_spacing;
                                 xtrans = 0;
                                 break;
                 case GTP_DOWN:  ytrans = - xFyMax(&(cfont->fchars[cfont->fcharoffset[*(text_ptr+1)]]))  +
                                 xFyMin(&(cfont->fchars[cfont->fcharoffset[*(text_ptr)]]))
                                         - cfont->fnominaly * wsr_spacing;
-                                /* Corrects y pos of char  PTR# c1083 */
                                 xtrans = 0;
                                 break;
                 }
@@ -484,7 +480,7 @@ static Gfloat xFxMax(struct vcharst *cvp)
 
 /*
  * xFyMin(struct vcharst *cvp)  returns depth from base of char starting at vcp
- *     added to correct y positioning of characters with descenders  PTR# c1083
+ *     added to correct y positioning of characters with descenders
  */
 static Gfloat xFyMin(struct vcharst *cvp)
 {
@@ -694,7 +690,6 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
         Gpoint atsndc;          /*       ||||||||| */
         FONT *cfont;            /* c1171 VVVVVVVVV */
         Gfloat fsize, fwidth, xtrans=0.0, ytrans=0.0, xFyMin(), xFxMax(), xFyMax();
-                                   /* new xFyMin() funct added  PTR# c1083 */
         Gfloat Xmin, Xmax, Ymin, Ymax;
         Gfloat XminFirst, XmaxFirst, YminFirst, YmaxFirst;
         struct vcharst *cdef;
@@ -732,10 +727,8 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                                         break;
                         case GTP_UP:
                         case GTP_DOWN:  fsize += xFyMax(cdef) - xFyMin(cdef);
-                                               /* PTR# c1083     ^^^^^^^^^^  */
                                         fsize += cfont->fnominaly * wsr_spacing;
                                         if ((i=xFxMax(cdef)) > fwidth) fwidth=i;
-                        /* This was xFyMax ------^ now fixed.  PTR# c1082*/
                                         break;
                         }
                 }
@@ -805,7 +798,6 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTV_NORMAL:
                 case GTV_BASE:  ytrans = 0;      break;
                 case GTV_BOTTOM:ytrans = - cfont->fbottom; break;
-                /* Changed fsize to -fsize   PTR# c1083  */
                 }
                 break;
 
@@ -865,7 +857,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTH_NORMAL:
                 case GTH_LEFT:   ndc_points[0].x = fsize;       break;
                 case GTH_CENTRE: ndc_points[0].x = (fsize-XminFirst) /2; break;
-                /* when align is CENTRE define concat pt as start pt PTR#c1083*/
+                /* when align is CENTRE define concat pt as start pt */
                 case GTH_RIGHT:  ndc_points[0].x = XminFirst; break;
                 }
                 switch(tx->chattr.align.ver) {
@@ -886,7 +878,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 switch(tx->chattr.align.hor) {
                 case GTH_LEFT: ndc_points[0].x = XmaxFirst; break;
                 case GTH_CENTRE: ndc_points[0].x = XmaxFirst - fsize/2; break;
-                /* when align is CENTRE define concat pt as start pt PTR#c1083*/
+                /* when align is CENTRE define concat pt as start pt */
                 default:                                        /* New 4.3 compiler*/
                 case GTH_NORMAL:
                 case GTH_RIGHT: ndc_points[0].x = -fsize + XmaxFirst; break;
@@ -917,7 +909,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTV_TOP: ndc_points[0].y = YminFirst; break;
                 case GTV_CAP: ndc_points[0].y = YminFirst; break;
                 case GTV_HALF: ndc_points[0].y = fsize/2; break;
-                /* when align is HALF define concat pt as start pt PTR#c1083*/
+                /* when align is HALF define concat pt as start pt */
                 default:                                        /* New 4.3 compiler*/
                 case GTV_NORMAL:
                 case GTV_BASE:ndc_points[0].y = fsize; break;
@@ -942,7 +934,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTV_TOP: ndc_points[0].y = -fsize + YmaxFirst; break;
                 case GTV_CAP: ndc_points[0].y = -fsize + YmaxFirst; break;
                 case GTV_HALF: ndc_points[0].y = YmaxFirst - fsize/2; break;
-                /* when align is HALF define concat pt as start pt PTR#c1083*/
+                /* when align is HALF define concat pt as start pt */
                 case GTV_BASE: ndc_points[0].y = YmaxFirst; break;
                 case GTV_BOTTOM: ndc_points[0].y = YmaxFirst; break;
                 }
@@ -994,7 +986,7 @@ Gint xXgksMesg(WS_STATE_PTR ws, MESG_ST *mesg)
 
         /* must clear a rectangle for the message */
         MFontInfo=XLoadQueryFont(dpy, "6x10");  /* c1136 */
-        XSetFont(dpy, gc, MFontInfo->fid);      /* PTR# c1136 */
+        XSetFont(dpy, gc, MFontInfo->fid);
         tempwidth=XTextWidth(MFontInfo, mesg->string, STRLEN(mesg->string));    /* c1176 */
         width=MAX( tempwidth, ws->last_message_width);
         ws->last_message_width=tempwidth;
@@ -1002,8 +994,6 @@ Gint xXgksMesg(WS_STATE_PTR ws, MESG_ST *mesg)
         topheight=MFontInfo->ascent;            /*ILL*/
         XSetForeground(dpy, gc, ws->wsbg);
      XFillRectangle(dpy, win, gc, x_pos.x, x_pos.y-topheight, width, height); /*ILL*/
-        /*XFillRectangle(dpy, win, gc, x_pos.x, x_pos.y - height + MFontInfo->descent, width, height);*/
-                          /* the y position needed correction - PTR# c1001 */
 
         if ( ws->wscolour == 2 )                /* monochrome ? */
                 XSetForeground(dpy, gc, ws->wsfg );

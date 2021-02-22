@@ -44,7 +44,7 @@
  *                - transformation, visibility, highlight, prioirty, detectability
  *              gsetpickid()
  *              gredrawsegws()
- *              XgksInSeg ()                PTR#  c1032
+ *              XgksInSeg ()
  *              gassocsegws()
  *              gcopysegws()
  *              ginsertseg()
@@ -1433,7 +1433,7 @@ static void XgksClearWs(WS_STATE_PTR ws)
 /* Free up ALL non-segment primitive associcated with this ws */
         XgksDeletePrimi (&(ws->primi_list), &(ws->primi_insert_pt));
 
-/* Clear message ptr    PTR# c1001 */
+/* Clear message ptr */
         ws->message_pt = NULL;
 
 /* Now delete All the ws->seglist with name = INVALID */
@@ -1649,8 +1649,6 @@ static int XgksInSeg(SEG_STATE_PTR seg, Gpoint *pt, Gpoint *pe, Gint m)
  *
  *      if seg_id == INVALID return GP_NOPICK
  *      else pick_id <- first non_clip primitive pick_id
- *
- *      10/28/88 TRG   PTR c1032
  *
  *      This function was modified to improve performance.
  *      The findpickid is used as a flag to prevent unnecessary
@@ -2114,8 +2112,8 @@ static void XgksSegCopyMo(WS_STATE_PTR ws, SEG_STATE_PTR seg)
 {
         OUT_PRIMI *primi = seg->primi_list.next;
 
-        XgksMoSetPatRefOnWs (ws);   /*  PTR# c1144  */
-        XgksMoSetPatSizeOnWs (ws);  /*  PTR# c1144  */
+        XgksMoSetPatRefOnWs (ws);
+        XgksMoSetPatSizeOnWs (ws);
         XgksMoSetAsfOnWs (ws);
         while (primi != NULL) {
                 XgksOutPrimiToMo (ws, XgksSegPrimiTran(primi, seg->segattr.segtran));

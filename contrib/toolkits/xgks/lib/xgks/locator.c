@@ -400,7 +400,7 @@ Gint gsetlocmode( ws_id, dev, mode, echo )
         NdcToDc( ws, &ndcpt, &idev->data.loc.initpos);
         idev->data.loc.curpos = idev->data.loc.initpos;
         if ( mode == GEVENT )
-           signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for event mode  PTR# c1057 */
+           signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for event mode */
         idev->active = True;
         if ( echo == GECHO )
             XgksLocUpdatePrompt( ws, idev, PROMPTON, (Gpoint *)NULL,

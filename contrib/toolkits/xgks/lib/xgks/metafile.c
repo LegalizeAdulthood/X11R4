@@ -1811,8 +1811,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
                         }
                   }
                   break;
-        case 82 : /* PTR c1073:  only need to call gcloseseg() once, */
-                  /*    not for each workstation                     */
+        case 82 : /* only need to call gcloseseg() once, not for each workstation */
                   gcloseseg();
                   break;
 

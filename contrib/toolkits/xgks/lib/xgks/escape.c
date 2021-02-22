@@ -53,12 +53,9 @@ Gint gescinqxattr(Gint ws_id, Display **dpy, Window *win, GC *gc)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescinqxattr) /*c1147*/
 
 /* check for valid ws_id */
-/* ALP 8/16/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescinqxattr)   /* c1012 */
 
 /* check for workstation opened */
-/* ALP 8/16/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescinqxattr)  /*c1012*/
 
 /* check for valid workstation category*/
@@ -90,12 +87,9 @@ Gint gescsetcolourmask(Gint ws_id, unsigned long mask)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescsetcolourmask) /*c1147*/
 
 /* check for valid ws_id */
-/* ALP 8/8/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescsetcolourmask)   /* c1012 */
 
 /* check for workstation opened */
-/* ALP 8/8/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescsetcolourmask)  /*c1012*/
 
 /* check for valid workstation category*/
@@ -124,8 +118,6 @@ Gint gescsetdcsize(Gint ws_id, Gpoint size)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescsetdcsize) /*c1147*/
 
 /* check for valid ws_id */
-/* ALP 8/8/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescsetdcsize)   /* c1012 */
 
 /* check for workstation opened */
@@ -179,13 +171,9 @@ Gint gescstoreprimi(Gint ws_id, Gstore store)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescstoreprimi) /*c1147*/
 
 /* check for valid ws_id */
-/* check for invalid workstation id */
-/* ALP 8/8/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescstoreprimi)   /* c1012 */
 
 /* check for workstation opened */
-/* ALP 8/8/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescstoreprimi)  /* c1012 */
 
 /* check for valid workstation category*/
@@ -213,13 +201,9 @@ Gint gescredrawnotify(Gint ws_id, Gint (*funcp)())
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescredrawnotify) /*c1147*/
 
 /* check for valid ws_id */
-/* check for invalid workstation id */
-/* ALP 8/8/88  added check to differentiate between */
-/*              error 20 and error 25 for PTR c1012  */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescredrawnotify)   /* c1012 */
 
 /* check for workstation opened */
-/* ALP 8/8/88  changed macro name from VALID_WSID */
         GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescredrawnotify)  /* c1012 */
 
 /* check for valid workstation category*/

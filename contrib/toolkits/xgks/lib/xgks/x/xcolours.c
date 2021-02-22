@@ -192,9 +192,9 @@ int xXgksInqColourRep(ws, idx, type, rep)                       /*c1147*/
         wclmp = ws->wclmp;
         ncolours = ws->wscolour;
 
-        /* removed check for valid idx here because that */ /* PTR# c1111 */
-        /* check has already been done before this       */ /* PTR# c1111 */
-        /* routine is called                             */ /* PTR# c1111 */
+        /* removed check for valid idx here because that */
+        /* check has already been done before this       */
+        /* routine is called                             */
 
         /* get the RGB values */
 

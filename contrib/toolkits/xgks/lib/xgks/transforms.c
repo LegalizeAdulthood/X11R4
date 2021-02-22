@@ -177,8 +177,8 @@ Gint gsetwindow(Gint trans, Glimit *window)
 
         if (MO_OPENED == TRUE)
            {
-           XgksMoSetPatRef ();   /*  PTR# c1144  */
-           XgksMoSetPatSize ();  /*  PTR# c1144  */
+           XgksMoSetPatRef ();
+           XgksMoSetPatSize ();
            XgksMoSetCharUp ();
            }
 
@@ -225,8 +225,8 @@ Gint gsetviewport(Gint trans, Glimit *viewport)
         if (trans == xgks_state.cur_ntrans)  XgksSetClip(xgks_state.cliprec.ind); /*c1147*/
 
         if (MO_OPENED == TRUE) {
-                XgksMoSetPatRef ();   /*  PTR# c1144  */
-                XgksMoSetPatSize ();  /*  PTR# c1144  */
+                XgksMoSetPatRef ();
+                XgksMoSetPatSize ();
                 XgksMoSetCharUp ();
                 XgksMoSetClip (&xgks_state.cliprec.rec);                /*c1147*/
         }
@@ -305,8 +305,8 @@ Gint gselntran(Gint trans)
         XgksSetClip(xgks_state.cliprec.ind);                    /*c1147*/
 
         if (MO_OPENED == TRUE) {
-                XgksMoSetPatRef ();   /*  PTR# c1144  */
-                XgksMoSetPatSize ();  /*  PTR# c1144  */
+                XgksMoSetPatRef ();
+                XgksMoSetPatSize ();
                 XgksMoSetCharUp ();
                 XgksMoSetClip (&xgks_state.cliprec.rec);        /*c1147*/
         }

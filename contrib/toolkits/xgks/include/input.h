@@ -134,7 +134,7 @@ typedef struct EQEntry {
         struct EQEntry *next;   /* Event queue is a linked list */
         Gevent event;           /* Data returned by Await Event */
         char *data;             /* Data returned by Get<class> functions */
-        int    id;              /* event id (simultaneous */ /* PTR c1133 */
+        int    id;              /* event id (simultaneous */
                                 /* events have same id)   */
 } EQEntry;
 

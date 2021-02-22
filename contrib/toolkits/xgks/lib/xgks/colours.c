@@ -336,7 +336,7 @@ loadcache(dpy, index)
 
     if ((CprevDpy != dpy) || (CprevDpy == NULL)) {
         ncolours = DisplayCells( dpy, DefaultScreen( dpy ) );
-        if ( index >= ncolours ) { /* Chg exp to >= from >  PTR# c1123 */
+        if ( index >= ncolours ) {
             gerrorhand( 93, errginqpredcolourrep, xgks_state.gks_err_file ); /*c1147*/
             return( 93 );
         }

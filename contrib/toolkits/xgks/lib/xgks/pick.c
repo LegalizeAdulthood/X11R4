@@ -200,7 +200,7 @@ Gint gsetpickmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     idev->data.pic.initst.esw  = echo;
 
     if ( mode == GEVENT )
-       signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for event mode  PTR# c1057 */
+       signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for event mode */
     if ( mode == GSAMPLE || mode == GEVENT ) idev->active = TRUE;
 
     return(0);

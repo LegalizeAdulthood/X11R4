@@ -123,8 +123,8 @@ typedef struct ws_struct {
            with this workstation */
         OUT_PRIMI       primi_list;             /* First primitve is always a CLIP_REC */
         OUT_PRIMI       *primi_insert_pt;       /* Primitive manager needs this for efficient insertion */
-        OUT_PRIMI       *message_pt;            /* Points to mesg. prim. in list;  NULL if none  PTR c1001*/
-        OUT_PRIMI       *bef_message;           /* Points to node before mesg in list    PTR c1001*/
+        OUT_PRIMI       *message_pt;            /* Points to mesg. prim. in list;  NULL if none */
+        OUT_PRIMI       *bef_message;           /* Points to node before mesg in list */
 
         WS_TRANS        ndctodctrans;        /* transformation constants from NDC space to DC space */
 

@@ -234,7 +234,7 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
     idev->data.stk.initst.record    = *record;
 
      /* moved this if from after ChangeGC to avoid core dump problem.
-       don't know why, but this fixes it - bg   PTR# c1049 */
+       don't know why, but this fixes it */
     if (gcvalues.line_style == LineOnOffDash)
         XSetDashes( ws->dpy, idev->gc, 0, xgksDASHES[didx].dashl, xgksDASHES[didx].dn); /* c1147 */
 

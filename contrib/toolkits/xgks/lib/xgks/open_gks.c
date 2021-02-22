@@ -187,12 +187,12 @@ static void XgksInitGksStateList(void)
         xgks_state.event_queue_head = NULL;                     /*c1147*/
         xgks_state.event_queue_tail = NULL;                     /*c1147*/
 
-        xgks_state.CurEvent.next = (EQEntry *)NULL;    /* PTR c1058 */ /*c1147*/
-        xgks_state.CurEvent.event.ws = 0;              /* PTR c1058 */ /*c1147*/
-        xgks_state.CurEvent.event.dev = 0;             /* PTR c1058 */ /*c1147*/
-        xgks_state.CurEvent.event.class = GNCLASS;     /* PTR c1058 */ /*c1147*/
-        xgks_state.CurEvent.data = (char *)NULL;       /* PTR c1058 */ /*c1147*/
-        xgks_state.CurEvent.id = -999;                 /* PTR c1133 */ /*c1147*/
-        xgks_state.focus_ws = (WS_STATE_PTR) NULL;     /* PTR c1145 */ /*c1147*/
+        xgks_state.CurEvent.next = (EQEntry *)NULL;
+        xgks_state.CurEvent.event.ws = 0;
+        xgks_state.CurEvent.event.dev = 0;
+        xgks_state.CurEvent.event.class = GNCLASS;
+        xgks_state.CurEvent.data = (char *)NULL;
+        xgks_state.CurEvent.id = -999;
+        xgks_state.focus_ws = (WS_STATE_PTR) NULL;
 
 }

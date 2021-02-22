@@ -57,7 +57,7 @@ void XgksEnqueueEvent( Gint ws, Gint dev, Giclass class, char *data, int event_i
                 return;
         }
 
-        e->id           = event_id; /* PTR c1133 */
+        e->id           = event_id;
         e->event.ws     = ws;
         e->event.dev    = dev;
         e->event.class  = class;
@@ -70,7 +70,7 @@ void XgksEnqueueEvent( Gint ws, Gint dev, Giclass class, char *data, int event_i
         }
         else {
                 xgks_state.event_queue_tail->next = e;          /*c1147*/
-                xgks_state.event_queue_tail = e; /* PTR c1028 c1031 c1034 c1055 c1058 c1147 */
+                xgks_state.event_queue_tail = e;
         }
 
 /* If await event is waiting, then stop it */

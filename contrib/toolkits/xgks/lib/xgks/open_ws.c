@@ -239,7 +239,7 @@ Gint gclosews(Gint ws_id)
 /*       used by the devices.  (XgksIDevDelete was written, but never  */
 /*       called.  This seems to be the place it was meant for.) */
     if (ws->ewstype != MO && ws->ewstype != WISS) /* c1167 */   /* c1139 */
-        XgksIDevDelete (ws);                 /* PTR c1120 */    /* c1139 */
+        XgksIDevDelete (ws);
 
 /* XgksDeleteAllSeg was moved after XgksIDevDelete to stop the devices     */
 /* from flashing as the ws closes.  XgksDeleteAllSeg calls XgksIDevDisable */
@@ -250,7 +250,7 @@ Gint gclosews(Gint ws_id)
 /* delete this ws from all segments associated with it      */  /* c1141 */
 /* (XgksDelAllWsSeg would be a better name)                 */  /* c1141 */
     if (ws->ewstype != MO)                                      /* c1139 */
-        XgksDeleteAllSeg (ws);               /* PTR c1023 */    /* c1139 */
+        XgksDeleteAllSeg (ws);
     else                                                        /* c1141 */
         XgksDelAllMoSeg( ws );                                  /* c1141 */
 
@@ -333,7 +333,7 @@ Gint gclearws(Gint ws_id, Gclrflag control_flag)
 
     if (ws->ewstype != MO) {                                          /* c1139 */
         XgksDeletePrimi (&(ws->primi_list), &(ws->primi_insert_pt));  /* c1139 */
-        ws->message_pt = NULL;    /* Clear any messages   PTR c1001*/ /* c1139 */
+        ws->message_pt = NULL;    /* Clear any messages */
         XgksDeleteAllSeg (ws);                                        /* c1139 */
         XgksIDevEnable( ws );                                         /* c1139 */
     }                                                                 /* c1139 */
@@ -447,7 +447,7 @@ static WS_STATE_PTR XgksNewWs(void)
         new->primi_list.primi.clip.segment = FALSE;
         new->primi_list.next = NULL;
         new->primi_insert_pt = &(new->primi_list);
-        new->message_pt = NULL;    /* Initialize message ptr    PTR# c1001 */
+        new->message_pt = NULL;
         new->seglist = NULL;
         new->seg_insertpt = NULL;
         new->seg_list_dirty = FALSE;

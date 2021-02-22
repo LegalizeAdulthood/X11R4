@@ -175,7 +175,7 @@ Gint gsetstringmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
         STRCPY( idev->data.str.strbuf, idev->data.str.initst.string );  /* c1176 */
         idev->data.str.editpos = idev->data.str.initst.record.pet1.position;
         if ( mode == GEVENT )
-           signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for event mode  PTR# c1057 */
+           signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for event mode */
         idev->active = True;
         if ( echo == GECHO )
         XgksStrUpdatePrompt( ws, idev, PROMPTON,

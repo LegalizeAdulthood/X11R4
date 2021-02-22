@@ -84,7 +84,7 @@ OUT_PRIMI *XgksNewPrimi()
 }
 
 /*
- *   XgksInsertMesgPrimi (ws, primi) -  function added in response to PTR c1001
+ *   XgksInsertMesgPrimi (ws, primi)
  *       WS_STATE_PTR  ws     points to the active workstation record
  *                            we need the message_pt pointer and if it's NULL, we
  *                            need the insert_pt

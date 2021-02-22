@@ -233,7 +233,7 @@ Gint gsetvalmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     /* Have to initialize device state */
         idev->data.val.CurPos = idev->data.val.initst.val;
         if (mode == GEVENT)
-           signal( SIGALRM, XgksAwaitInterrupt); /* Set up signal call PTR# c1057 */
+           signal( SIGALRM, XgksAwaitInterrupt);
         idev->active = TRUE;
         if (echo == GECHO)
         {
@@ -300,7 +300,7 @@ Gint greqval(Gint ws_id, Gint dev, Gqval *response)
                   GCFunction  | GCForeground | GCBackground |
                   GCLineWidth | GCLineStyle  | GCFillStyle, &gcvalues);
         idev->class = GVALUATOR;
-        idev->dev = dev; /* was being set to 1, should be dev  PTR# c1018  */
+        idev->dev = dev;
         idev->data.val.initst.mode = GREQUEST;    /* initialize to GREQUEST */
         idev->data.val.initst.esw  = GECHO;
         idev->data.val.initst.val = 0.5;
@@ -425,7 +425,7 @@ Gint ginqvalst(Gint ws_id, Gint dev, Gvalst *state)
 {
     WS_STATE_ENTRY *ws;
     INPUT_DEV *idev;
-    Gfloat    Low;      /* PTR# c1018 */        /* New 4.3 C compiler */
+    Gfloat    Low;
 
 /* STEP 1: check for errors. */
 /* proper gks state? */

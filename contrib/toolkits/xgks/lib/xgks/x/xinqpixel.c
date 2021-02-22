@@ -168,9 +168,6 @@ Gint xXgksInqPixelarray(WS_STATE_PTR ws, Gpoint *point, Gipoint *dim, Gpxarray *
              else
                 y2 = xp1.y + dim->y;
 
-        /* removed code for Z pixmap - not needed with new server  PTR# c1126  */
-                                                 /* for XYPixmap */
-
         image = XGetImage(dpy, win, x1, y1, x2-x1+1, y2-y1+1, AllPlanes, XYPixmap);
 
 /* return the values of the dimensions */
@@ -250,7 +247,6 @@ void xXgksInqPixel(WS_STATE_PTR ws, Gpoint *ppoint, Gint *pix)
                 (rootattr.height-wsattr.y-wsattr.border_width-1) : ws->wbound.y;
 
         if (xp1.x >= 0 && xp1.x <= maxx && xp1.y >= 0 && xp1.y <= maxy) {       /* c1162 */
-            /* removed code for Z pixmap - not needed with new server  PTR# c1126  */
                 image = XGetImage(dpy, win, xp1.x, xp1.y, 1, 1, AllPlanes, XYPixmap);
                 *pix = XGetPixel(image, 0, 0);
         }
