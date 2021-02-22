@@ -472,16 +472,16 @@ Gint gsetfillrep(Gint ws_id, Gint idx, Gflbundl *rep)
 /* check for valid fill area bundle table index */
         GKSERROR ((idx < 1 || idx >= MAX_BUNDL_TBL) , 80, errgsetfillrep)
 
-/* check for valid interior style */                        /* c1100 */
-        GKSERROR((rep->inter != GHOLLOW && rep->inter != GSOLID && rep->inter != GPATTERN && rep->inter != GHATCH ) , 83, errgsetfillrep)  /* c1100 */
+/* check for valid interior style */
+        GKSERROR((rep->inter != GHOLLOW && rep->inter != GSOLID && rep->inter != GPATTERN && rep->inter != GHATCH ) , 83, errgsetfillrep)
 
-/* check for style index equal to zero */                   /* c1100 */
-        if ((rep->inter == GPATTERN) || (rep->inter == GHATCH))     /* c1100 */
-                GKSERROR ((rep->style == 0), 84, errgsetfillrep);    /* c1100 */
+/* check for style index equal to zero */
+        if ((rep->inter == GPATTERN) || (rep->inter == GHATCH))
+                GKSERROR ((rep->style == 0), 84, errgsetfillrep);
 
 /* valid pattern index */
         if (rep->inter == GPATTERN)
-                GKSERROR ((!WS_FILL_TYPE(rep->inter,rep->style)), 85, errgsetfillrep); /* c1100 c1174 */
+                GKSERROR ((!WS_FILL_TYPE(rep->inter,rep->style)), 85, errgsetfillrep);
 
 /* valid hatch index */
         if (rep->inter == GHATCH)
