@@ -52,7 +52,7 @@
 Gint gsetasf(Gasfs *asf)
 {
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL), 8, errgsetasf)
+        GKSERROR ((xgks_state.gks_state == GGKCL), 8, errgsetasf);
 
 /* Set the asf in gks list */
         xgks_state.gks_lnattr.type      = asf->ln_type;

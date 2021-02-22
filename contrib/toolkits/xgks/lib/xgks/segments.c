@@ -260,16 +260,16 @@ Gint gcreateseg(Gint name)
 
 /* STEP 1: Check for errors */
 /* check for proper state */
-        GKSERROR ((xgks_state.gks_state != GWSAC) ,3, errgcreateseg)
+        GKSERROR ((xgks_state.gks_state != GWSAC) ,3, errgcreateseg);
 
 /* check for valid segment name */
-        GKSERROR ((name<1) ,120, errgcreateseg)
+        GKSERROR ((name<1) ,120, errgcreateseg);
 
 /* check for name in use */
-        GKSERROR ((XgksFindSeg(name) != NULL) ,121, errgcreateseg)
+        GKSERROR ((XgksFindSeg(name) != NULL) ,121, errgcreateseg);
 
 /* STEP 2: Allocate memory for segment state list entry */
-        GKSERROR (((seg=XgksNewSeg()) == NULL) ,300, errgcreateseg)
+        GKSERROR (((seg=XgksNewSeg()) == NULL) ,300, errgcreateseg);
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (81, name);
 
@@ -309,7 +309,7 @@ Gint gcreateseg(Gint name)
 Gint gcloseseg(void)
 {
 /* STEP 1: check for errors */
-        GKSERROR ((xgks_state.gks_state != GSGOP) ,4, errgcloseseg)
+        GKSERROR ((xgks_state.gks_state != GSGOP) ,4, errgcloseseg);
 
 /* STEP 2: INVALIDate gks_open_seg */
         xgks_state.gks_open_seg = INVALID;
@@ -339,16 +339,16 @@ Gint grenameseg(Gint old, Gint new)
 
 /* STEP 1: check for errors */
 /* check for proper state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgrenameseg)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgrenameseg);
 
 /* check for invalid name */
-        GKSERROR (( (old<1) || (new<1)),120, errgrenameseg)
+        GKSERROR (( (old<1) || (new<1)),120, errgrenameseg);
 
 /* check for new name already in use */
-        GKSERROR ((XgksFindSeg(new) != NULL) ,121, errgrenameseg)
+        GKSERROR ((XgksFindSeg(new) != NULL) ,121, errgrenameseg);
 
 /* check for existance of old segment by delete it from segment state list */
-        GKSERROR (((seg=XgksDeleteSeg(old)) == NULL) ,122, errgrenameseg)
+        GKSERROR (((seg=XgksDeleteSeg(old)) == NULL) ,122, errgrenameseg);
 
         if (MO_OPENED == TRUE) XgksMoRenameSeg (old, new);
 
@@ -383,17 +383,17 @@ Gint gdelseg(Gint name)
 
 /* STEP 1: check for errors. */
 /* check for proper state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgdelseg)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgdelseg);
 
 /* check for invalid name */
-        GKSERROR ((name < 1) ,120, errgdelseg)
+        GKSERROR ((name < 1) ,120, errgdelseg);
 
 /* check for segment currently open */
-        GKSERROR ((xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == name) ,125, errgdelseg)
+        GKSERROR ((xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == name) ,125, errgdelseg);
 
 /* try to delete the segment from segment state list in the mean time
    check for existance of segment */
-        GKSERROR (((seg=XgksDeleteSeg(name)) == NULL) ,122, errgdelseg)
+        GKSERROR (((seg=XgksDeleteSeg(name)) == NULL) ,122, errgdelseg);
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (84, name);
 
@@ -428,30 +428,30 @@ Gint gdelsegws(Gint ws_id, Gint name)
 
 /* STEP 1: check for errors. */
 /* check for proper state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgdelsegws)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgdelsegws);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgdelsegws)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgdelsegws);
 
 /* check for invalid workstation identifier */
-        GKSERROR (((ws = OPEN_WSID(ws_id)) == NULL) ,25, errgdelsegws)
+        GKSERROR (((ws = OPEN_WSID(ws_id)) == NULL) ,25, errgdelsegws);
 
 /* check workstation category */
-        GKSERROR ((WS_CAT(ws) == GMI) ,33, errgdelsegws)
+        GKSERROR ((WS_CAT(ws) == GMI) ,33, errgdelsegws);
 
-        GKSERROR ((WS_CAT(ws) == GINPUT) ,35, errgdelsegws)
+        GKSERROR ((WS_CAT(ws) == GINPUT) ,35, errgdelsegws);
 
 /* check for invalid name */
-        GKSERROR ((name < 1) ,120, errgdelsegws)
+        GKSERROR ((name < 1) ,120, errgdelsegws);
 
 /* check for existance of segment */
-        GKSERROR (( (seg=XgksFindSeg(name)) == NULL ) ,123, errgdelsegws)
+        GKSERROR (( (seg=XgksFindSeg(name)) == NULL ) ,123, errgdelsegws);
 
 /* check for segment currently open */
-        GKSERROR ((xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == name) ,125, errgdelsegws)
+        GKSERROR ((xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == name) ,125, errgdelsegws);
 
 /* delete the segment from the assoc_ws array */
-        GKSERROR ( (XgksDelAssocWs(seg, ws->ws_id) == INVALID), 123, errgdelsegws)
+        GKSERROR ( (XgksDelAssocWs(seg, ws->ws_id) == INVALID), 123, errgdelsegws);
 
         if (ws->ewstype != MO) XgksDeleteWsSeg (ws, name);
 
@@ -484,13 +484,13 @@ Gint gsetsegattr(Gint name, Gsegattr *segattr)
 
 /* STEP 1: check for errors. */
 /* check for proper state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetsegattr)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetsegattr);
 
 /* check for invalid name */
-        GKSERROR ((name < 1) ,120, errgsetsegattr)
+        GKSERROR ((name < 1) ,120, errgsetsegattr);
 
 /* check for existance osegment */
-        GKSERROR (((seg = XgksFindSeg(name))==NULL) ,122, errgsetsegattr)
+        GKSERROR (((seg = XgksFindSeg(name))==NULL) ,122, errgsetsegattr);
 
 /* check for valid priority */
         GKSERROR( (segattr->pri>1.0 || segattr->pri<0.0), 126, errgsetsegattr);
@@ -567,10 +567,10 @@ Gint gsetpickid(Gint pick_id)
 {
 /* STEP 1: check for errors */
 /* gks in proper state? */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetpickid)
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetpickid);
 
 /* valid pick id? */
-        GKSERROR ((pick_id < 0) ,97, errgsetpickid)
+        GKSERROR ((pick_id < 0) ,97, errgsetpickid);
 
 /* STEP 2: change the current pick id */
         xgks_state.gks_pick_id = pick_id;
@@ -598,23 +598,23 @@ Gint gassocsegws(Gint ws_id, Gint seg_id)
         Gint i;
 
 /* check for operating state */
-        GKSERROR ( (xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC), 6, errgassocsegws)
+        GKSERROR ( (xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC), 6, errgassocsegws);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgassocsegws)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgassocsegws);
 
 /* Check if ws_id is opened */
-        GKSERROR ( ((ws=OPEN_WSID(ws_id))==NULL), 25, errgassocsegws)
+        GKSERROR ( ((ws=OPEN_WSID(ws_id))==NULL), 25, errgassocsegws);
 
 /* Check if WISS ws is opened */
         GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errgassocsegws);
 
 /* check for valid ws category */
-        GKSERROR ( (WS_CAT(ws) == GMI), 33, errgassocsegws)
-        GKSERROR ( (WS_CAT(ws) == GINPUT), 35, errgassocsegws)
+        GKSERROR ( (WS_CAT(ws) == GMI), 33, errgassocsegws);
+        GKSERROR ( (WS_CAT(ws) == GINPUT), 35, errgassocsegws);
 
 /* check for valid seg_id */
-        GKSERROR ( (seg_id<1), 120, errgassocsegws)
+        GKSERROR ( (seg_id<1), 120, errgassocsegws);
 
 /* Check if Segment is on WISS */
         WsSeg = wis->seglist;
@@ -687,24 +687,24 @@ Gint gcopysegws(Gint ws_id, Gint seg_id)
         Glimit  wsclip;
 
 /* check for operating state */
-        GKSERROR ( (xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC), 6, errgcopysegws)
+        GKSERROR ( (xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC), 6, errgcopysegws);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgcopysegws)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgcopysegws);
 
 /* Check if ws_id is opened */
-        GKSERROR ( ((ws=OPEN_WSID(ws_id))==NULL), 25, errgcopysegws)
+        GKSERROR ( ((ws=OPEN_WSID(ws_id))==NULL), 25, errgcopysegws);
 
 /* Check if WISS ws is opened */
         GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errgcopysegws);
 
 /* check for valid ws category */
-        GKSERROR ( (WS_CAT(ws) == GMI), 33, errgcopysegws)
-        GKSERROR ( (WS_CAT(ws) == GINPUT), 35, errgcopysegws)
-        GKSERROR ( (WS_CAT(ws) == GWISS), 36, errgcopysegws)
+        GKSERROR ( (WS_CAT(ws) == GMI), 33, errgcopysegws);
+        GKSERROR ( (WS_CAT(ws) == GINPUT), 35, errgcopysegws);
+        GKSERROR ( (WS_CAT(ws) == GWISS), 36, errgcopysegws);
 
 /* check for valid seg_id */
-        GKSERROR ( (seg_id<1), 120, errgcopysegws)
+        GKSERROR ( (seg_id<1), 120, errgcopysegws);
 
 /* Check if Segment is on WISS */
         WsSeg = wis->seglist;
@@ -769,16 +769,16 @@ Gint ginsertseg(Gint seg_id, Gfloat segtran[2][3])
         Gint   tmp_pickid = 0;          /* MWW: added to suppress warning */
 
 /* check for operating state */
-        GKSERROR ( (xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errginsertseg)
+        GKSERROR ( (xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errginsertseg);
 
 /* Check if WISS ws is opened */
         GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errginsertseg);
 
 /* check for valid seg_id */
-        GKSERROR ( (seg_id<1), 120, errginsertseg)
+        GKSERROR ( (seg_id<1), 120, errginsertseg);
 
 /* check if seg_id is currently opened */
-        GKSERROR ( (xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == seg_id), 125, errginsertseg)
+        GKSERROR ( (xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == seg_id), 125, errginsertseg);
 
 /* Check if Segment is on WISS */
         WsSeg = wis->seglist;
@@ -835,20 +835,20 @@ Gint gredrawsegws(Gint ws_id)
         WS_STATE_PTR ws;
 
 /* check proper gks operating state */
-        GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) ,7, errgredrawsegws)
+        GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) ,7, errgredrawsegws);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgredrawsegws)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgredrawsegws);
 
 /* check valid ws_id */
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) ,25, errgredrawsegws)
+        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) ,25, errgredrawsegws);
 
 /* check for valid workstation category */
-        GKSERROR ((WS_CAT(ws) == GMI) ,33, errgredrawsegws)
+        GKSERROR ((WS_CAT(ws) == GMI) ,33, errgredrawsegws);
 
-        GKSERROR ((WS_CAT(ws) == GINPUT) ,35, errgredrawsegws)
+        GKSERROR ((WS_CAT(ws) == GINPUT) ,35, errgredrawsegws);
 
-        GKSERROR ((WS_CAT(ws) == GWISS) ,36, errgredrawsegws)
+        GKSERROR ((WS_CAT(ws) == GWISS) ,36, errgredrawsegws);
 
 /* If MO, output info to file */
         if (ws->ewstype == MO) {
@@ -2365,7 +2365,7 @@ Gint ginqassocws(Gint seg, Gintlist *asswk)
 /* STEP 2: set up the return values */
         for (i=0; segp->assoc_ws[i] != INVALID; i++) ;
         asswk->number = i;
-        GKSERROR (((asswk->integers = (Gint *)malloc( i * sizeof(Gint)))==NULL), 300, errginqassocws)
+        GKSERROR (((asswk->integers = (Gint *)malloc( i * sizeof(Gint)))==NULL), 300, errginqassocws);
         for (i=0; i < asswk->number; i++)
                 asswk->integers[i] = segp->assoc_ws[i];
 
@@ -2406,7 +2406,7 @@ Gint ginqsegnames(Gintlist *segs)
                 cnt++;
         }
         segs->number = num_seg;
-        GKSERROR (((segs->integers = (Gint *)malloc( num_seg * sizeof(Gint)))==NULL), 300, errginqsegnames)
+        GKSERROR (((segs->integers = (Gint *)malloc( num_seg * sizeof(Gint)))==NULL), 300, errginqsegnames);
         cnt = num_seg = 0;
         while (cnt < SHSIZE) {
                 if ((seg=segtable[cnt]) != NULL) {
@@ -2446,7 +2446,7 @@ Gint ginqsegnamesws(Gint ws_id, Gintlist *segs)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqsegnamesws);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqsegnamesws)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqsegnamesws);
 
 /* workstation open? */
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqsegnamesws);
@@ -2457,7 +2457,7 @@ Gint ginqsegnamesws(Gint ws_id, Gintlist *segs)
 /* STEP 2: ask the workstation */
         for (i=0, seg=ws->seglist; seg != NULL; seg=seg->next, i++) ;
         segs->number = i;
-        GKSERROR(((segs->integers = (Gint *)malloc( i * sizeof(int)))==NULL), 300, errginqsegnamesws)
+        GKSERROR(((segs->integers = (Gint *)malloc( i * sizeof(int)))==NULL), 300, errginqsegnamesws);
         for (i=0, seg=ws->seglist; seg != NULL; seg=seg->next, i++)
                 segs->integers[i] = seg->seg;
         return (OK);

@@ -73,46 +73,46 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitstroke)
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitstroke);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitstroke)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitstroke);
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitstroke)
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitstroke);
 
 /* valid workstation category */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginitstroke)
+    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginitstroke);
 
 /* valid echo area */
-        GKSERROR( (area->xmin > area->xmax || area->ymin > area->ymax), 51, errginitstroke )
+        GKSERROR( (area->xmin > area->xmax || area->ymin > area->ymax), 51, errginitstroke );
 
 /* valid stroke device number */
-        GKSERROR( (dev < 1), 140, errginitstroke )
+        GKSERROR( (dev < 1), 140, errginitstroke );
 
 /* valid and supported prompt mode? */
-        GKSERROR( pet != 1 && pet != 3 && pet != 4, 144, errginitstroke)
+        GKSERROR( pet != 1 && pet != 3 && pet != 4, 144, errginitstroke);
 
 /* Echo inside display space? */
         GKSERROR( (area->xmin < 0 || area->xmax > ws->size.x
                 || area->ymin < 0 || area->ymax > ws->size.y),
-                145, errginitstroke )
+                145, errginitstroke );
 
 /* valid data record */
-    GKSERROR( record->pet1.bufsiz < 1, 146, errginitstroke)
-    GKSERROR( record->pet1.editpos < 1, 146, errginitstroke)
-  GKSERROR( record->pet1.editpos > record->pet1.bufsiz, 146, errginitstroke)
-    GKSERROR( record->pet1.time < 0.0, 146, errginitstroke)
-    GKSERROR( init->n_points < 0, 152, errginitstroke)
-    GKSERROR( init->n_points > record->pet1.bufsiz, 153, errginitstroke)
-    GKSERROR( init->transform < 0, 50, errginitstroke)
-    GKSERROR( init->transform > MAX_TRANS, 50, errginitstroke)
+    GKSERROR( record->pet1.bufsiz < 1, 146, errginitstroke);
+    GKSERROR( record->pet1.editpos < 1, 146, errginitstroke);
+  GKSERROR( record->pet1.editpos > record->pet1.bufsiz, 146, errginitstroke);
+    GKSERROR( record->pet1.time < 0.0, 146, errginitstroke);
+    GKSERROR( init->n_points < 0, 152, errginitstroke);
+    GKSERROR( init->n_points > record->pet1.bufsiz, 153, errginitstroke);
+    GKSERROR( init->transform < 0, 50, errginitstroke);
+    GKSERROR( init->transform > MAX_TRANS, 50, errginitstroke);
 
 /* check that editpos is within the initial points (so that bogus data       */
 /* won't be mistaken for valid points) */
 /* The standard doesn't really mention this restriction, but it seems needed.*/
 
-    GKSERROR(record->pet1.editpos>init->n_points+1,152,errginitstroke)
+    GKSERROR(record->pet1.editpos>init->n_points+1,152,errginitstroke);
 
 /* make sure initial points are within the transform in initstroke           */
     win = &xgks_state.ntrans_list[init->transform].ntrans.w;
@@ -121,7 +121,7 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
           ptr++,cnt++)
       GKSERROR( ((ptr->x < win->xmin) || (win->xmax < ptr->x)
               || (ptr->y < win->ymin) || (win->ymax < ptr->y)),
-              146, errginitstroke)
+              146, errginitstroke);
 
     didx = 0;
     switch( pet ) {
@@ -130,10 +130,10 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
         break;
     case 3:    /* polymarker */
         if (record->pet3.acf == GSPECIFIED) {
-            GKSERROR( record->pet3.mk.mark < 1 || record->pet3.mk.mark >= MAX_BUNDL_TBL, 66, errginitstroke)
-            GKSERROR( !WS_MARKER_TYPE(record->pet3.mk.bundl.type), 69, errginitstroke)
-            GKSERROR( record->pet3.mk.bundl.size < 0.0, 71, errginitstroke)
-            GKSERROR( !WS_AVAIL_COLOUR(ws, record->pet3.mk.bundl.colour), 92, errginitstroke)
+            GKSERROR( record->pet3.mk.mark < 1 || record->pet3.mk.mark >= MAX_BUNDL_TBL, 66, errginitstroke);
+            GKSERROR( !WS_MARKER_TYPE(record->pet3.mk.bundl.type), 69, errginitstroke);
+            GKSERROR( record->pet3.mk.bundl.size < 0.0, 71, errginitstroke);
+            GKSERROR( !WS_AVAIL_COLOUR(ws, record->pet3.mk.bundl.colour), 92, errginitstroke);
         }
         else {
             record->pet3.mk.type = xgks_state.gks_mkattr.type;
@@ -164,11 +164,11 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
         break;
     case 4:    /* polyline */
         if (record->pet4.acf == GSPECIFIED) {
-            GKSERROR( record->pet4.ln.line < 1 || record->pet4.ln.line >= MAX_BUNDL_TBL, 60, errginitstroke)
-            GKSERROR( record->pet4.ln.bundl.type == 0, 63, errginitstroke)
-            GKSERROR( !WS_LINE_TYPE(record->pet4.ln.bundl.type), 64, errginitstroke)
-            GKSERROR( record->pet4.ln.bundl.width < 0.0, 65, errginitstroke)
-            GKSERROR( !WS_AVAIL_COLOUR(ws, record->pet4.ln.bundl.colour), 92, errginitstroke)
+            GKSERROR( record->pet4.ln.line < 1 || record->pet4.ln.line >= MAX_BUNDL_TBL, 60, errginitstroke);
+            GKSERROR( record->pet4.ln.bundl.type == 0, 63, errginitstroke);
+            GKSERROR( !WS_LINE_TYPE(record->pet4.ln.bundl.type), 64, errginitstroke);
+            GKSERROR( record->pet4.ln.bundl.width < 0.0, 65, errginitstroke);
+            GKSERROR( !WS_AVAIL_COLOUR(ws, record->pet4.ln.bundl.colour), 92, errginitstroke);
         }
         else {
             record->pet4.ln.type = xgks_state.gks_lnattr.type;
@@ -208,10 +208,10 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
         break;
     }
     if ((idev = XgksIDevLookup( ws, dev, GISTROKE)) == NULL) {
-        GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errginitstroke)
+        GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errginitstroke);
     }
     else {
-        GKSERROR( idev->data.stk.initst.mode != GREQUEST, 141, errginitstroke)
+        GKSERROR( idev->data.stk.initst.mode != GREQUEST, 141, errginitstroke);
     }
     gcvalues.background = ws->wsbg;
     XChangeGC( ws->dpy, idev->gc,
@@ -224,7 +224,7 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
     idev->data.stk.initst.stroke = *init;
     dpt = idev->data.stk.initst.stroke.points =
                (Gpoint *)malloc( sizeof(Gpoint) * init->n_points );
-    GKSERROR( dpt == NULL, 300, errginitstroke)
+    GKSERROR( dpt == NULL, 300, errginitstroke);
     for( i=0, spt = init->points; i<init->n_points; i++, spt++, dpt++)
         *dpt = *spt;
 
@@ -258,28 +258,28 @@ Gint gsetstrokemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetstrokemode )
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetstrokemode );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetstrokemode)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetstrokemode);
 
 /* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetstrokemode )
+        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetstrokemode );
 
 /* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetstrokemode)
+        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetstrokemode);
 
 /* valid stroke device number */
-        GKSERROR( (dev < 1), 140, errgsetstrokemode )
+        GKSERROR( (dev < 1), 140, errgsetstrokemode );
 
 /* check enumerations */
         GKSERROR( ((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT)
                         || (echo != GECHO && echo != GNOECHO)),
-                2000, errgsetstrokemode )
+                2000, errgsetstrokemode );
 
         if ((idev = XgksIDevLookup( ws, dev, GISTROKE)) == NULL) {
         /* Create the Input Device structure */
-                GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errgsetstrokemode)
+                GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errgsetstrokemode);
         }
         else {
                 if ((idev->active == True) && (idev->data.stk.initst.esw == GECHO))
@@ -295,7 +295,7 @@ Gint gsetstrokemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
         if ( idev->data.stk.stkbuf != NULL)
             free( idev->data.stk.stkbuf );
         dpt = idev->data.stk.stkbuf = (Gpoint *)malloc( sizeof(Gpoint) * idev->data.stk.initst.record.pet1.bufsiz );
-        GKSERROR( dpt == NULL, 300, errgsetstrokemode)
+        GKSERROR( dpt == NULL, 300, errgsetstrokemode);
         for( i=0, spt = idev->data.stk.initst.stroke.points;
             i<idev->data.stk.initst.stroke.n_points; i++, spt++, dpt++)
         {
@@ -344,26 +344,26 @@ Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqstroke )
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqstroke );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqstroke)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqstroke);
 
 /* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqstroke )
+        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqstroke );
 
 /* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqstroke)
+        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqstroke);
 
 /* valid locator device number */
-        GKSERROR( (dev < 1), 140, errgreqstroke )
+        GKSERROR( (dev < 1), 140, errgreqstroke );
 
         if ((idev = XgksIDevLookup( ws, dev, GISTROKE)) == NULL) {
         /* Create the Input Device structure */
-                GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errgreqstroke)
+                GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errgreqstroke);
         }
         else {
-        GKSERROR( (idev->data.stk.initst.mode != GREQUEST), 141, errgreqstroke)
+        GKSERROR( (idev->data.stk.initst.mode != GREQUEST), 141, errgreqstroke);
     }
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
@@ -372,7 +372,7 @@ Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response)
     if ( idev->data.stk.stkbuf != NULL)
         free( idev->data.stk.stkbuf );
     dpt = idev->data.stk.stkbuf = (Gpoint *)malloc( sizeof(Gpoint) * idev->data.stk.initst.record.pet1.bufsiz );
-    GKSERROR( dpt == NULL, 300, errgreqstroke)
+    GKSERROR( dpt == NULL, 300, errgreqstroke);
     for( i=0, spt = idev->data.stk.initst.stroke.points;
         i<idev->data.stk.initst.stroke.n_points; i++, spt++, dpt++) {
         NtWcToNdc( idev->data.stk.initst.stroke.transform, spt, &ndcpt );
@@ -419,7 +419,7 @@ Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response)
                 response->status = GOK;
         /* get a buffer to store the points in */
         spt= ndcpts= (Gpoint *)malloc( sizeof(Gpoint) *idev->data.stk.editpos );
-        GKSERROR( spt == NULL, 300, errgreqstroke)
+        GKSERROR( spt == NULL, 300, errgreqstroke);
 
          /* convert all points from DC to NDC (and copy into ndcpts) */
         for( i=0, dpt = idev->data.stk.stkbuf;
@@ -461,29 +461,29 @@ Gint gsamplestroke(Gint ws_id, Gint dev, Gstroke *response)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplestroke )
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplestroke );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplestroke)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplestroke);
 
 /* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsamplestroke )
+        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsamplestroke );
 
 /* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsamplestroke)
+        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsamplestroke);
 
 /* valid locator device number */
-        GKSERROR( (dev < 1), 140, errgsamplestroke )
+        GKSERROR( (dev < 1), 140, errgsamplestroke );
 
         idev = XgksIDevLookup( ws, dev, GISTROKE);
-        GKSERROR( (idev == NULL) || (idev->data.stk.initst.mode != GSAMPLE), 142, errgsamplestroke)
+        GKSERROR( (idev == NULL) || (idev->data.stk.initst.mode != GSAMPLE), 142, errgsamplestroke);
 
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
 
 /* Convert current measure to WC space */
     spt = ndcpts = (Gpoint *)malloc( sizeof(Gpoint) * idev->data.stk.editpos );
-    GKSERROR( spt == NULL, 300, errgsamplestroke)
+    GKSERROR( spt == NULL, 300, errgsamplestroke);
     for( i=0, dpt = idev->data.stk.stkbuf;
         i<idev->data.stk.editpos; i++, spt++, dpt++) {
         DcToNdc( ws, dpt, spt);
@@ -517,30 +517,30 @@ Gint ginqstrokest(Gint ws_id, Gint dev, Gqtype type, Gstrokest *state)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqstrokest )
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqstrokest );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqstrokest)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqstrokest);
 
 /* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqstrokest )
+        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqstrokest );
 
 /* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqstrokest)
+        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqstrokest);
 
 /* valid locator device number */
-        GKSERROR( (dev < 1), 140, errginqstrokest )
+        GKSERROR( (dev < 1), 140, errginqstrokest );
 
 /* valid enumeration */
-    GKSERROR( (type != GSET) && (type != GREALIZED), 2000, errginqstrokest)
+    GKSERROR( (type != GSET) && (type != GREALIZED), 2000, errginqstrokest);
 
         if ((idev = XgksIDevLookup( ws, dev, GISTROKE)) == NULL) {
         /* Create the Input Device structure */
-                GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errginqstrokest)
+                GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errginqstrokest);
         }
     *state = idev->data.stk.initst;
     dpt = state->stroke.points = (Gpoint *)malloc( sizeof(Gpoint) * state->stroke.n_points );
-    GKSERROR( state->stroke.points == NULL, 300, errginqstrokest)
+    GKSERROR( state->stroke.points == NULL, 300, errginqstrokest);
     for( i=0, spt = idev->data.stk.initst.stroke.points;
         i<state->stroke.n_points; i++, spt++, dpt++)
         *dpt = *spt;
@@ -568,22 +568,22 @@ Gint ginqdefstroke(Gchar *type, Gint dev, Gdefstroke *data)
         EWSTYPE ewstype;
 
 /* STEP 1: check for errors */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefstroke)
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefstroke);
 
 /* valid wsid? */
         ewstype = XgksWsTypeToEnum( type );
-        GKSERROR( ewstype == WST_INVALID, 22, errginqdefstroke )
-        GKSERROR( ewstype != X_WIN, 38, errginqdefstroke )
+        GKSERROR( ewstype == WST_INVALID, 22, errginqdefstroke );
+        GKSERROR( ewstype != X_WIN, 38, errginqdefstroke );
 
 /* valid stroke dev number */
-        GKSERROR( dev < 1, 140, errginqdefstroke )
+        GKSERROR( dev < 1, 140, errginqdefstroke );
 
 /* STEP 2: set up the return values */
     data->bufsiz = 64;
 
     data->pets.number = 3;
     data->pets.integers = (Gint *) malloc( sizeof( Gint ) * 3);
-        GKSERROR( data->pets.integers == NULL, 300, errginqdefstroke )
+        GKSERROR( data->pets.integers == NULL, 300, errginqdefstroke );
     data->pets.integers[0] = 1;
     data->pets.integers[1] = 3;
     data->pets.integers[2] = 4;
@@ -820,7 +820,7 @@ Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             /* Convert current measure to WC space */
                 spt = ndcpts = (Gpoint *)malloc( sizeof(Gpoint) * STKEDITPOS );
                 data->points = (Gpoint *)malloc( sizeof(Gpoint) * STKEDITPOS );
-                GKSERROR( spt == NULL || data->points == NULL, 300, errXgksStkUpdatePrompt)
+                GKSERROR( spt == NULL || data->points == NULL, 300, errXgksStkUpdatePrompt);
                 for( i=0, dpt = idev->data.stk.stkbuf;
                     i<STKEDITPOS; i++, spt++, dpt++) {
                     DcToNdc( ws, dpt, spt);

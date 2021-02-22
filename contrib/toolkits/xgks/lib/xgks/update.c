@@ -56,12 +56,12 @@ Gint gupdatews(Gint ws_id, Gregen regenflag)
         WS_STATE_PTR ws;        /* workstation state list ptr */
 
 /* check proper state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgupdatews)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgupdatews);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgupdatews)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgupdatews);
 
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL), 25, errgupdatews)
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL), 25, errgupdatews);
 
 /* check for valid ws category */
         GKSERROR ( (WS_CAT(ws)==GMI), 33, errgupdatews);

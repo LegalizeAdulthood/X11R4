@@ -331,10 +331,10 @@ Gint gfillarea(Gint num_pts, Gpoint *pts)
         Gint cnt;
 
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgfillarea)
+        GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgfillarea);
 
 /* check for a valid number of points */
-        GKSERROR ((num_pts < 3) , 100, errgfillarea)
+        GKSERROR ((num_pts < 3) , 100, errgfillarea);
 
 /* open an primitive structure */
         GKSERROR (( (flarea = XgksNewPrimi()) == NULL ), 300, errgfillarea);
@@ -344,7 +344,7 @@ Gint gfillarea(Gint num_pts, Gpoint *pts)
 
 /* now get memory for transformed points */
         GKSERROR ((((flarea->primi.fill_area.pts) =
-                  (Gpoint *) malloc((unsigned)num_pts * sizeof(Gpoint))) == NULL) , 300, errgfillarea)
+                  (Gpoint *) malloc((unsigned)num_pts * sizeof(Gpoint))) == NULL) , 300, errgfillarea);
 
         ndc_pt = flarea->primi.fill_area.pts;
 /* transform the WC to NDC */
@@ -376,10 +376,10 @@ Gint gfillarea(Gint num_pts, Gpoint *pts)
 Gint gsetfillcolourind(Gint colour)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillcolourind)
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillcolourind);
 
 /* check for valid colour index */
-        GKSERROR ((colour < 0) , 92, errgsetfillcolourind)
+        GKSERROR ((colour < 0) , 92, errgsetfillcolourind);
 
 /* change the colour */
         xgks_state.gks_flattr.bundl.colour = colour;
@@ -401,10 +401,10 @@ Gint gsetfillcolourind(Gint colour)
 Gint gsetfillind(Gint idx)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillind)
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillind);
 
 /* check for valid index */
-        GKSERROR ((idx < 1 ), 80, errgsetfillind)
+        GKSERROR ((idx < 1 ), 80, errgsetfillind);
 
 /* ok to change the idx */
         xgks_state.gks_flattr.fill = idx;
@@ -427,7 +427,7 @@ Gint gsetfillind(Gint idx)
 Gint gsetfillintstyle(Gflinter style)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillintstyle)
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillintstyle);
 
 /* check for valid style */
         if (style != GHOLLOW && style != GSOLID && style != GPATTERN && style != GHATCH )
@@ -456,24 +456,24 @@ Gint gsetfillrep(Gint ws_id, Gint idx, Gflbundl *rep)
         WS_STATE_PTR ws;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetfillrep)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetfillrep);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetfillrep)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetfillrep);
 
 /* check for open workstation identifier */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) , 25, errgsetfillrep)
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) , 25, errgsetfillrep);
 
 /* Check for valid workstation category */
-        GKSERROR ((WS_CAT(ws) == GMI), 33, errgsetfillrep)
-        GKSERROR ((WS_CAT(ws) == GINPUT), 35, errgsetfillrep)
-        GKSERROR ((WS_CAT(ws) == GWISS), 36, errgsetfillrep)
+        GKSERROR ((WS_CAT(ws) == GMI), 33, errgsetfillrep);
+        GKSERROR ((WS_CAT(ws) == GINPUT), 35, errgsetfillrep);
+        GKSERROR ((WS_CAT(ws) == GWISS), 36, errgsetfillrep);
 
 /* check for valid fill area bundle table index */
-        GKSERROR ((idx < 1 || idx >= MAX_BUNDL_TBL) , 80, errgsetfillrep)
+        GKSERROR ((idx < 1 || idx >= MAX_BUNDL_TBL) , 80, errgsetfillrep);
 
 /* check for valid interior style */
-        GKSERROR((rep->inter != GHOLLOW && rep->inter != GSOLID && rep->inter != GPATTERN && rep->inter != GHATCH ) , 83, errgsetfillrep)
+        GKSERROR((rep->inter != GHOLLOW && rep->inter != GSOLID && rep->inter != GPATTERN && rep->inter != GHATCH ) , 83, errgsetfillrep);
 
 /* check for style index equal to zero */
         if ((rep->inter == GPATTERN) || (rep->inter == GHATCH))
@@ -488,7 +488,7 @@ Gint gsetfillrep(Gint ws_id, Gint idx, Gflbundl *rep)
                 GKSERROR ((!WS_FILL_TYPE(rep->inter,rep->style)), 86, errgsetfillrep);
 
 /* check for valid colour index */
-        GKSERROR ((!WS_AVAIL_COLOUR(ws,rep->colour)) , 93, errgsetfillrep)
+        GKSERROR ((!WS_AVAIL_COLOUR(ws,rep->colour)) , 93, errgsetfillrep);
 
         if (ws->ewstype == MO)
                 XgksMoSetFillRep (ws, idx, rep);
@@ -511,10 +511,10 @@ Gint gsetfillrep(Gint ws_id, Gint idx, Gflbundl *rep)
 Gint gsetfillstyleind(Gint idx)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillstyleind)
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillstyleind);
 
 /* check for valid style index */
-        GKSERROR ((idx == 0) , 84, errgsetfillstyleind)
+        GKSERROR ((idx == 0) , 84, errgsetfillstyleind);
 
 /* ok to proceed */
         xgks_state.gks_flattr.bundl.style = idx;
@@ -537,7 +537,7 @@ Gint gsetfillstyleind(Gint idx)
 Gint gsetpatrefpt(Gpoint *ref)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetpatrefpt )
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetpatrefpt );
 
 /* ok to proceed */
         xgks_state.gks_ptattr.ptp = *ref;
@@ -561,10 +561,10 @@ Gint gsetpatrefpt(Gpoint *ref)
 Gint gsetpatsize(Gpoint  *siz)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetpatsize )
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetpatsize );
 
 /* check for valid style index */
-        GKSERROR ( ((siz->x < 0) || (siz->y < 0)) , 87, errgsetpatsize )
+        GKSERROR ( ((siz->x < 0) || (siz->y < 0)) , 87, errgsetpatsize );
 
 /* ok to proceed */
         xgks_state.gks_ptattr.widthvec.x = siz->x;
@@ -597,28 +597,28 @@ Gint gsetpatrep(Gint ws_id, Gint idx, Gptbundl *rep)
         Gint *slot;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetpatrep)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetpatrep);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetpatrep)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetpatrep);
 
 /* check for open workstation */
-        GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetpatrep)
+        GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetpatrep);
 
 /* check proper workstation category */
-        GKSERROR ((WS_CAT(ws) == GMI), 33, errgsetpatrep)
-        GKSERROR ((WS_CAT(ws) == GWISS), 36, errgsetpatrep)
+        GKSERROR ((WS_CAT(ws) == GMI), 33, errgsetpatrep);
+        GKSERROR ((WS_CAT(ws) == GWISS), 36, errgsetpatrep);
 
 /* valid pattern index? */
-        GKSERROR ((idx < 1 || idx >= MAX_BUNDL_TBL) , 85, errgsetpatrep)
+        GKSERROR ((idx < 1 || idx >= MAX_BUNDL_TBL) , 85, errgsetpatrep);
 
 /* valid dimensions */
-        GKSERROR ((rep->size.x < 1 || rep->size.y < 1) , 91, errgsetpatrep)
+        GKSERROR ((rep->size.x < 1 || rep->size.y < 1) , 91, errgsetpatrep);
 
 /* valid colour indices */
         i = rep->size.x * rep->size.y;
         for (j=0,slot=rep->array; j < i; j++,slot++)
-           GKSERROR ((*slot < 0), 93, errgsetpatrep)
+           GKSERROR ((*slot < 0), 93, errgsetpatrep);
 
 /* valid colour values? */
 /*      i = ws->ptbundl_table[idx-1].size.x * ws->ptbundl_table[idx-1].size.y;

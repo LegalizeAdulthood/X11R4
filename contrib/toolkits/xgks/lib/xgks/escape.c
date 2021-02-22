@@ -50,13 +50,13 @@ Gint gescinqxattr(Gint ws_id, Display **dpy, Window *win, GC *gc)
         WS_STATE_ENTRY *ws;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescinqxattr)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescinqxattr);
 
 /* check for valid ws_id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescinqxattr)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescinqxattr);
 
 /* check for workstation opened */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescinqxattr)
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescinqxattr);
 
 /* check for valid workstation category*/
         GKSERROR ( (WS_CAT(ws)==GMO), 31, errgescinqxattr);
@@ -84,13 +84,13 @@ Gint gescsetcolourmask(Gint ws_id, unsigned long mask)
         WS_STATE_PTR ws;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescsetcolourmask)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescsetcolourmask);
 
 /* check for valid ws_id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescsetcolourmask)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescsetcolourmask);
 
 /* check for workstation opened */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescsetcolourmask)
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescsetcolourmask);
 
 /* check for valid workstation category*/
         GKSERROR ( (WS_CAT(ws)==GMI), 33, errgescsetcolourmask);
@@ -115,13 +115,13 @@ Gint gescsetdcsize(Gint ws_id, Gpoint size)
         WS_STATE_PTR ws;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescsetdcsize)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescsetdcsize);
 
 /* check for valid ws_id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescsetdcsize)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescsetdcsize);
 
 /* check for workstation opened */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescsetdcsize)
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescsetdcsize);
 
 /* check for valid workstation category */
         GKSERROR ( (WS_CAT(ws)==GMI), 33, errgescsetdcsize);
@@ -167,13 +167,13 @@ Gint gescstoreprimi(Gint ws_id, Gstore store)
         WS_STATE_PTR ws;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescstoreprimi)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescstoreprimi);
 
 /* check for valid ws_id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescstoreprimi)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescstoreprimi);
 
 /* check for workstation opened */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescstoreprimi)
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescstoreprimi);
 
 /* check for valid workstation category*/
         GKSERROR ( (WS_CAT(ws)==GMI), 33, errgescstoreprimi);
@@ -197,13 +197,13 @@ Gint gescredrawnotify(Gint ws_id, Gint (*funcp)())
 {
         WS_STATE_PTR ws;
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescredrawnotify)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescredrawnotify);
 
 /* check for valid ws_id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescredrawnotify)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescredrawnotify);
 
 /* check for workstation opened */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescredrawnotify)
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescredrawnotify);
 
 /* check for valid workstation category*/
         GKSERROR ( (WS_CAT(ws)==GMI), 33, errgescredrawnotify);

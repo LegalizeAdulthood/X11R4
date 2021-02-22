@@ -60,7 +60,7 @@
 #define GKSERROR( c, n, m ) \
         do { \
         if (c) { gerrorhand( n, (Gint)m, xgks_state.gks_err_file); return( n ); } \
-        } while (0);
+        } while (0)
 
 #define MAX_SEG         32767           /* Largest segment name for 16-bit integers */
 #define MAX_OPEN_WS     10              /* Hardwired limits */

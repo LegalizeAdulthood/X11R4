@@ -144,7 +144,7 @@ Gint ginqfillindices(ws_id, idxlist)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqfillindices);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqfillindices)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqfillindices);
 
 /* check if this ws_id is opened */
         GKSERROR( ((ws=OPEN_WSID(ws_id))==NULL), 25, errginqfillindices);
@@ -184,7 +184,7 @@ Gint ginqfillrep(ws_id, idx, type, rep)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqfillrep);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqfillrep)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqfillrep);
 
 /* check if this ws_id is opened */
         GKSERROR( ((ws=OPEN_WSID(ws_id))==NULL), 25, errginqfillrep);
@@ -290,7 +290,7 @@ Gint ginqpatindices(ws_id, idxlist)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpatindices);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpatindices)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpatindices);
 
 /* check if this ws_id is opened */
         GKSERROR( ((ws=OPEN_WSID(ws_id))==NULL), 25, errginqpatindices);
@@ -331,7 +331,7 @@ Gint ginqpatrep(ws_id, idx, type, rep)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpatrep);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpatrep)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpatrep);
 
 /* check if this ws_id is opened */
         GKSERROR( ((ws=OPEN_WSID(ws_id))==NULL), 25, errginqpatrep);

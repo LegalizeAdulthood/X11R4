@@ -158,13 +158,13 @@ void XgksInitWssTrans(WS_STATE_PTR ws)
 Gint gsetwindow(Gint trans, Glimit *window)
 {
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetwindow)
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetwindow);
 
 /* check for valid transformation number */
-        GKSERROR ((trans < 1 || trans > MAX_TRANS) ,50, errgsetwindow)
+        GKSERROR ((trans < 1 || trans > MAX_TRANS) ,50, errgsetwindow);
 
 /* check valid mins and maxs */
-        GKSERROR ((window->xmin >= window->xmax || window->ymin >= window->ymax) ,51, errgsetwindow)
+        GKSERROR ((window->xmin >= window->xmax || window->ymin >= window->ymax) ,51, errgsetwindow);
 
 /* OK to change the window! */
         xgks_state.ntrans_list[trans].ntrans.w.xmax = window->xmax;
@@ -200,18 +200,18 @@ Gint gsetwindow(Gint trans, Glimit *window)
 Gint gsetviewport(Gint trans, Glimit *viewport)
 {
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetviewport)
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetviewport);
 
 /* check for valid transformation number */
-        GKSERROR ((trans < 1 || trans > MAX_TRANS) ,50, errgsetviewport)
+        GKSERROR ((trans < 1 || trans > MAX_TRANS) ,50, errgsetviewport);
 
 /* check valid mins and maxs */
-        GKSERROR ((viewport->xmin >= viewport->xmax || viewport->ymin >= viewport->ymax) ,51, errgsetviewport)
+        GKSERROR ((viewport->xmin >= viewport->xmax || viewport->ymin >= viewport->ymax) ,51, errgsetviewport);
 
 /* check all within 0..1 */
         GKSERROR ((viewport->xmin < 0.0 || viewport->xmin > 1.0 || viewport->xmax < 0.0 ||
                    viewport->xmax > 1.0 || viewport->ymin < 0.0 || viewport->ymin > 1.0 ||
-                   viewport->ymax < 0.0 || viewport->ymax > 1.0) ,52, errgsetviewport)
+                   viewport->ymax < 0.0 || viewport->ymax > 1.0) ,52, errgsetviewport);
 
 /* ok to change the viewport */
         xgks_state.ntrans_list[trans].ntrans.v.xmax = viewport->xmax;
@@ -250,14 +250,14 @@ Gint gsetviewportinputpri(Gint trans, Gint ref_trans, Gvpri priority)
 {
         Gint i, j;
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetviewportinputpri)
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetviewportinputpri);
 
 /* check for valid transformation number */
         GKSERROR ((trans > MAX_TRANS || trans < 0) ,
-                     50, errgsetviewportinputpri)
+                     50, errgsetviewportinputpri);
 
 /* check for invalid priority value */
-        GKSERROR ((priority != GHIGHER && priority != GLOWER), 2000, errgsetviewportinputpri)
+        GKSERROR ((priority != GHIGHER && priority != GLOWER), 2000, errgsetviewportinputpri);
 
         if (trans != ref_trans) {
         /* first find & remove trans from the priority list */
@@ -295,10 +295,10 @@ Gint gsetviewportinputpri(Gint trans, Gint ref_trans, Gvpri priority)
 Gint gselntran(Gint trans)
 {
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgselntran)
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgselntran);
 
 /* check for valid transformation number */
-        GKSERROR ((trans > MAX_TRANS || trans < 0) ,50, errgselntran)
+        GKSERROR ((trans > MAX_TRANS || trans < 0) ,50, errgselntran);
 
 /* change the current normalization */
         xgks_state.cur_ntrans = trans;
@@ -326,7 +326,7 @@ Gint gselntran(Gint trans)
 Gint gsetclip(Gclip ind)
 {
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetclip)
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetclip);
 
 /* Check for valid enumeration type */
         GKSERROR ((ind!=GCLIP && ind!=GNOCLIP), 2000, errgsetclip);
@@ -358,26 +358,26 @@ Gint gsetwswindow(Gint ws_id, Glimit *window)
 
 /* step 1: check for errors */
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetwswindow)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetwswindow);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetwswindow)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetwswindow);
 
 /* check for open ws_id */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetwswindow)
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetwswindow);
 
 /* check for proper ws category */
-        GKSERROR ((WS_CAT(ws) == GMI) ,33, errgsetwswindow)
+        GKSERROR ((WS_CAT(ws) == GMI) ,33, errgsetwswindow);
 
-        GKSERROR ((WS_CAT(ws) == GWISS) ,36, errgsetwswindow)
+        GKSERROR ((WS_CAT(ws) == GWISS) ,36, errgsetwswindow);
 
 /* check valid mins and maxs */
-        GKSERROR ((window->xmin >= window->xmax || window->ymin >= window->ymax) ,51, errgsetwswindow)
+        GKSERROR ((window->xmin >= window->xmax || window->ymin >= window->ymax) ,51, errgsetwswindow);
 
 /* check all within 0..1 */
         GKSERROR ((window->xmin < 0.0 || window->xmin > 1.0 || window->xmax < 0.0 || window->xmax > 1.0 ||
                    window->ymin < 0.0 || window->ymin > 1.0 || window->ymax < 0.0 || window->ymax > 1.0)
-                   ,53, errgsetwswindow)
+                   ,53, errgsetwswindow);
 
         if (ws->ewstype != MO)
                 XgksSetWsWindow (ws, window);
@@ -408,28 +408,28 @@ Gint gsetwsviewport(Gint ws_id, Glimit *viewport)
 
 /* STEP 1: check for errors */
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetwsviewport)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetwsviewport);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetwsviewport)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetwsviewport);
 
 /* check for open ws_id */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetwsviewport)
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetwsviewport);
 
 /* check for proper ws category */
-        GKSERROR ((WS_CAT(ws) == GMI) ,33, errgsetwsviewport)
+        GKSERROR ((WS_CAT(ws) == GMI) ,33, errgsetwsviewport);
 
-        GKSERROR ((WS_CAT(ws) == GWISS) ,36, errgsetwsviewport)
+        GKSERROR ((WS_CAT(ws) == GWISS) ,36, errgsetwsviewport);
 
 /* check valid mins and maxs */
-        GKSERROR ((viewport->xmin >= viewport->xmax || viewport->ymin >= viewport->ymax), 51, errgsetwsviewport)
+        GKSERROR ((viewport->xmin >= viewport->xmax || viewport->ymin >= viewport->ymax), 51, errgsetwsviewport);
 
 /* check all within display space */
         GKSERROR ((viewport->xmin < 0.0 || viewport->xmin > ws->size.x
                 || viewport->xmax < 0.0 || viewport->xmax > ws->size.x
                 || viewport->ymin < 0.0 || viewport->ymin > ws->size.y
                 || viewport->ymax < 0.0 || viewport->ymax > ws->size.y),
-                54, errgsetwsviewport)
+                54, errgsetwsviewport);
 
 
         if (ws->ewstype != MO)

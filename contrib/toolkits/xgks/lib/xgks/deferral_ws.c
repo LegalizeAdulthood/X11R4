@@ -62,23 +62,23 @@ Gint gsetdeferst(ws_id, deferral_mode, regen_mode)
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) , 7, errgsetdeferst)
+        GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) , 7, errgsetdeferst);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetdeferst)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetdeferst);
 
 /* check for open ws_id */
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) , 25, errgsetdeferst)
+        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) , 25, errgsetdeferst);
 
 /* check for valid category */
-        GKSERROR ((WS_CAT(ws) == GMI) , 33, errgsetdeferst)
-        GKSERROR ((WS_CAT(ws) == GINPUT) , 35, errgsetdeferst)
-        GKSERROR ((WS_CAT(ws) == GWISS) , 36, errgsetdeferst)
+        GKSERROR ((WS_CAT(ws) == GMI) , 33, errgsetdeferst);
+        GKSERROR ((WS_CAT(ws) == GINPUT) , 35, errgsetdeferst);
+        GKSERROR ((WS_CAT(ws) == GWISS) , 36, errgsetdeferst);
 
 /* check for valid deferral_mode & regen_mode */
         GKSERROR ( (deferral_mode != GASAP && deferral_mode != GBNIG &&
                 deferral_mode != GBNIL && deferral_mode != GASTI),
-                2000, errgsetdeferst)
+                2000, errgsetdeferst);
 
         if (ws->ewstype == MO)  XgksMoDeferWs (ws, deferral_mode, regen_mode);
 

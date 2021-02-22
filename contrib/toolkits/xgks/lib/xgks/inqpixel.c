@@ -54,7 +54,7 @@ Gipoint *dim;
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixelarraydim);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixelarraydim)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixelarraydim);
 
 /* check if this workstation is opened */
         GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpixelarraydim);
@@ -94,7 +94,7 @@ Gpxarray *pxarr;
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixelarray);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixelarray)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixelarray);
 
 /* check if this workstation is opened */
         GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpixelarray);
@@ -135,7 +135,7 @@ Gint *pix;
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixel);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixel)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixel);
 
 /* check if this workstation is opened */
         GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpixel);

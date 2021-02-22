@@ -108,20 +108,20 @@ Gint gpolyline(Gint num_pts, Gpoint *pts)
         OUT_PRIMI  *line;
 
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errgpolyline)
+        GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errgpolyline);
 
 /* check for at least two points */
-        GKSERROR ((num_pts < 2) ,100, errgpolyline)
+        GKSERROR ((num_pts < 2) ,100, errgpolyline);
 
 /* open an primitive structure */
-        GKSERROR (( (line = XgksNewPrimi()) == NULL ) ,300, errgpolyline)
+        GKSERROR (( (line = XgksNewPrimi()) == NULL ) ,300, errgpolyline);
 
         line->pid = PLINE;
         line->primi.pline.num_pts = num_pts;
 
 /* now get memory for transformed points */
         GKSERROR ((((line->primi.pline.pts) = (Gpoint *) malloc((unsigned)num_pts * sizeof(Gpoint))) == NULL) ,
-                    300, errgpolyline)
+                    300, errgpolyline);
 
         ndc_pt = line->primi.pline.pts;
 /* transform the WC to NDC */
@@ -150,10 +150,10 @@ Gint gpolyline(Gint num_pts, Gpoint *pts)
 Gint gsetlineind(Gint idx)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlineind)
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlineind);
 
 /* check for valid polyline bundle table index */
-        GKSERROR ((idx < 1) ,60, errgsetlineind)
+        GKSERROR ((idx < 1) ,60, errgsetlineind);
 
         xgks_state.gks_lnattr.line = idx; /* change the bundle entry index (gks state table) */
 
@@ -175,10 +175,10 @@ Gint gsetlineind(Gint idx)
 Gint gsetlinetype(Gint type)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlinetype)
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlinetype);
 
 /* check for valid linetype */
-        GKSERROR ((type == 0) ,63, errgsetlinetype)
+        GKSERROR ((type == 0) ,63, errgsetlinetype);
 
 /* change the gks state list */
         xgks_state.gks_lnattr.bundl.type = type;
@@ -201,10 +201,10 @@ Gint gsetlinetype(Gint type)
 Gint gsetlinewidth(Gfloat width)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlinewidth)
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlinewidth);
 
 /* check for invalid width */
-        GKSERROR ((width < 0) ,65, errgsetlinewidth)
+        GKSERROR ((width < 0) ,65, errgsetlinewidth);
 
 /* now change the gks state table */
         xgks_state.gks_lnattr.bundl.width = width;
@@ -227,10 +227,10 @@ Gint gsetlinewidth(Gfloat width)
 Gint gsetlinecolourind(Gint idx)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlinecolourind)
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlinecolourind);
 
 /* check for invalid colour */
-        GKSERROR ((idx < 0) ,92, errgsetlinecolourind)
+        GKSERROR ((idx < 0) ,92, errgsetlinecolourind);
 
 /* change the gks state list */
         xgks_state.gks_lnattr.bundl.colour = idx;
@@ -256,13 +256,13 @@ Gint gsetlinerep(Gint ws_id, Gint idx, Glnbundl *rep)
         WS_STATE_PTR ws;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetlinerep)
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetlinerep);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetlinerep)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetlinerep);
 
 /* check for open ws_id */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetlinerep)
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetlinerep);
 
 /* check for valid workstation category*/
         GKSERROR ( (WS_CAT(ws)==GMI), 33, errgsetlinerep);
@@ -272,18 +272,18 @@ Gint gsetlinerep(Gint ws_id, Gint idx, Glnbundl *rep)
         GKSERROR ( (WS_CAT(ws)==GWISS), 36, errgsetlinerep);
 
 /* check for valid idx */
-        GKSERROR ((idx < 1 || idx >= MAX_BUNDL_TBL) ,60, errgsetlinerep)
+        GKSERROR ((idx < 1 || idx >= MAX_BUNDL_TBL) ,60, errgsetlinerep);
 
 /* check for valid linetype */
-        GKSERROR ((rep->type == 0) ,63, errgsetlinerep)
+        GKSERROR ((rep->type == 0) ,63, errgsetlinerep);
 
-        GKSERROR ((!WS_LINE_TYPE(rep->type)) ,64, errgsetlinerep)
+        GKSERROR ((!WS_LINE_TYPE(rep->type)) ,64, errgsetlinerep);
 
 /* check for valid width */
-        GKSERROR ((rep->width < 0) ,65, errgsetlinerep)
+        GKSERROR ((rep->width < 0) ,65, errgsetlinerep);
 
 /* check for valid colour  */
-        GKSERROR ((!WS_AVAIL_COLOUR(ws, rep->colour)) ,93, errgsetlinerep)
+        GKSERROR ((!WS_AVAIL_COLOUR(ws, rep->colour)) ,93, errgsetlinerep);
 
         if (ws->ewstype == MO)
                 XgksMoSetLineMarkRep (ws, 51, idx, rep->type, rep->width, rep->colour);

@@ -61,13 +61,13 @@ Gint gcellarray(Grect *rect, Gipoint *dim, Gint row, Gint *colour)
         OUT_PRIMI  *cell;
 
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errgcellarray)
+        GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errgcellarray);
 
 /* check array size */
-        GKSERROR ( (dim->x < 1 || dim->y < 1), 91, errgcellarray)
+        GKSERROR ( (dim->x < 1 || dim->y < 1), 91, errgcellarray);
 
 /* open an primitive structure */
-        GKSERROR (( (cell = XgksNewPrimi()) == NULL ) ,300, errgcellarray)
+        GKSERROR (( (cell = XgksNewPrimi()) == NULL ) ,300, errgcellarray);
 
         cell->pid = CELL_ARRAY;
         cell->primi.cell_array.dim = *dim;

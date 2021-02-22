@@ -72,49 +72,49 @@ Gint ginitstring(Gint ws_id, Gint dev, Gchar *init, Gint pet, Glimit *area, Gstr
     INPUT_DEV *idev;
 
 /* STEP 1: check for errors */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitstring)
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitstring);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitstring)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitstring);
 
 /* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitstring )
+        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitstring );
 
 /* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginitstring)
+        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginitstring);
 
 /* valid echo area */
-        GKSERROR( (area->xmin >= area->xmax || area->ymin >= area->ymax), 51, errginitstring )
+        GKSERROR( (area->xmin >= area->xmax || area->ymin >= area->ymax), 51, errginitstring );
 
 /* valid string device number */
-        GKSERROR( (dev < 1), 140, errginitstring )
+        GKSERROR( (dev < 1), 140, errginitstring );
 
 /* valid and supported prompt mode? */
-        GKSERROR( (pet != 1), 144, errginitstring)
+        GKSERROR( (pet != 1), 144, errginitstring);
 
 /* Echo inside display space? */
         GKSERROR( (area->xmin < 0 || area->xmax > ws->size.x
                 || area->ymin < 0 || area->ymax > ws->size.y),
-                145, errginitstring )
+                145, errginitstring );
 
 /* data record contents valid */
-    GKSERROR( (record->pet1.bufsiz <= 0), 146, errginitstring)
-    GKSERROR( (record->pet1.position <= 0), 146, errginitstring)
-    GKSERROR( (record->pet1.position > (STRLEN(init) + 1)), 146, errginitstring)
-    GKSERROR( (STRLEN(init) > record->pet1.bufsiz), 154, errginitstring)
+    GKSERROR( (record->pet1.bufsiz <= 0), 146, errginitstring);
+    GKSERROR( (record->pet1.position <= 0), 146, errginitstring);
+    GKSERROR( (record->pet1.position > (STRLEN(init) + 1)), 146, errginitstring);
+    GKSERROR( (STRLEN(init) > record->pet1.bufsiz), 154, errginitstring);
 
         if ((idev = XgksIDevLookup( ws, dev, GISTRING)) == NULL) {
         /* Create the Input Device structure */
-        GKSERROR( XgksCreateDefString( ws, dev, &idev ), 300, errginitstring)
+        GKSERROR( XgksCreateDefString( ws, dev, &idev ), 300, errginitstring);
         }
         else {
         /* if the device is not in REQUEST mode, not allowed to initialize it */
-                GKSERROR( idev->data.str.initst.mode != GREQUEST, 141, errginitstring )
+                GKSERROR( idev->data.str.initst.mode != GREQUEST, 141, errginitstring );
         }
     if ( idev->data.str.initst.string != NULL)
         free( idev->data.str.initst.string );
         idev->data.str.initst.string = (Gchar *)malloc( STRLEN(init) +1);
-    GKSERROR( idev->data.str.initst.string == NULL, 300, errginitstring)
+    GKSERROR( idev->data.str.initst.string == NULL, 300, errginitstring);
     STRCPY( idev->data.str.initst.string, init);
         idev->data.str.initst.pet    = pet;
         idev->data.str.initst.e_area = *area;
@@ -122,7 +122,7 @@ Gint ginitstring(Gint ws_id, Gint dev, Gchar *init, Gint pet, Glimit *area, Gstr
         idev->data.str.initst.record.pet1.position--;
     free( idev->data.str.strbuf );
     idev->data.str.strbuf = (Gchar *) malloc( sizeof( char ) * idev->data.str.initst.record.pet1.bufsiz);
-    GKSERROR( idev->data.str.strbuf == NULL, 300, errginitstring)
+    GKSERROR( idev->data.str.strbuf == NULL, 300, errginitstring);
     idev->data.str.strbuf[0] = '\0';
 
     return(0);
@@ -140,19 +140,19 @@ Gint gsetstringmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     INPUT_DEV *idev;
 
 /* STEP 1: check for errors */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetstringmode)
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetstringmode);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetstringmode)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetstringmode);
 
 /* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetstringmode )
+        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetstringmode );
 
 /* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetstringmode)
+        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetstringmode);
 
 /* valid string device number */
-        GKSERROR( (dev < 1), 140, errgsetstringmode )
+        GKSERROR( (dev < 1), 140, errgsetstringmode );
 
 /* check enumerations */
     GKSERROR( ((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT)
@@ -161,7 +161,7 @@ Gint gsetstringmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
 
         if ((idev = XgksIDevLookup( ws, dev, GISTRING)) == NULL) {
         /* Create the Input Device structure */
-        GKSERROR( XgksCreateDefString( ws, dev, &idev ), 300, errgsetstringmode)
+        GKSERROR( XgksCreateDefString( ws, dev, &idev ), 300, errgsetstringmode);
         }
         else {
         if ((idev->active == True) && (idev->data.str.initst.esw == GECHO))
@@ -199,26 +199,26 @@ Gint greqstring(Gint ws_id, Gint dev, Gqstring *response)
     INPUT_DEV *idev;
 
 /* STEP 1: check for errors */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqstring)
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqstring);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqstring)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqstring);
 
 /* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqstring )
+        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqstring );
 
 /* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqstring)
+        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqstring);
 
 /* valid string device number */
-        GKSERROR( (dev < 1), 140, errgreqstring )
+        GKSERROR( (dev < 1), 140, errgreqstring );
 
         if ((idev = XgksIDevLookup( ws, dev, GISTRING)) == NULL) {
         /* Create the Input Device structure */
-        GKSERROR( XgksCreateDefString( ws, dev, &idev ), 300, errgreqstring)
+        GKSERROR( XgksCreateDefString( ws, dev, &idev ), 300, errgreqstring);
         }
     else {
-        GKSERROR((idev->data.str.initst.mode !=GREQUEST), 141 , errgreqstring)
+        GKSERROR((idev->data.str.initst.mode !=GREQUEST), 141 , errgreqstring);
     }
 
 /* Make sure the workstation is up to date */
@@ -270,22 +270,22 @@ Gint gsamplestring(Gint ws_id, Gint dev, Gchar *response)
     INPUT_DEV *idev;
 
 /* STEP 1: check for errors */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplestring)
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplestring);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplestring)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplestring);
 
 /* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsamplestring )
+        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsamplestring );
 
 /* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsamplestring)
+        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsamplestring);
 
 /* valid string device number */
-        GKSERROR( (dev < 1), 140, errgsamplestring )
+        GKSERROR( (dev < 1), 140, errgsamplestring );
 
         idev = XgksIDevLookup( ws, dev, GISTRING);
-        GKSERROR( (idev == NULL) || (idev->data.str.initst.mode != GSAMPLE), 142, errgsamplestring)
+        GKSERROR( (idev == NULL) || (idev->data.str.initst.mode != GSAMPLE), 142, errgsamplestring);
 
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
@@ -309,28 +309,28 @@ Gint ginqstringst(Gint ws_id, Gint dev, Gstringst *state)
     INPUT_DEV *idev;
 
 /* STEP 1: check for errors */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqstringst)
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqstringst);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqstringst)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqstringst);
 
 /* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqstringst )
+        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqstringst );
 
 /* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqstringst)
+        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqstringst);
 
 /* valid string device number */
-        GKSERROR( (dev < 1), 140, errginqstringst )
+        GKSERROR( (dev < 1), 140, errginqstringst );
 
         if ((idev = XgksIDevLookup( ws, dev, GISTRING)) == NULL) {
         /* Create the Input Device structure */
-        GKSERROR( XgksCreateDefString( ws, dev, &idev ), 300, errginqstringst)
+        GKSERROR( XgksCreateDefString( ws, dev, &idev ), 300, errginqstringst);
         }
     *state = idev->data.str.initst;
         state->record.pet1.position++;
     state->string = (Gchar *)malloc( STRLEN(idev->data.str.initst.string) +1);
-    GKSERROR( state->string == NULL, 300, errginqstringst)
+    GKSERROR( state->string == NULL, 300, errginqstringst);
     STRCPY( state->string, idev->data.str.initst.string );
 
     return( 0 );
@@ -347,20 +347,20 @@ Gint ginqdefstring(Gchar *type, Gint dev, Gdefstring *data)
     EWSTYPE ewstype;
 
 /* STEP 1: check for errors */
-    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefstring)
+    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefstring);
 
 /* valid wsid? */
     ewstype = XgksWsTypeToEnum( type );
-    GKSERROR( ewstype == WST_INVALID, 22, errginqdefstring )
-    GKSERROR( ewstype != X_WIN, 38, errginqdefstring )
+    GKSERROR( ewstype == WST_INVALID, 22, errginqdefstring );
+    GKSERROR( ewstype != X_WIN, 38, errginqdefstring );
 
 /* valid string dev number */
-    GKSERROR( dev < 1, 140, errginqdefstring )
+    GKSERROR( dev < 1, 140, errginqdefstring );
 
     data->bufsiz = DEF_STR_BUFSIZ;
     data->pets.number = 1;
     data->pets.integers = (Gint *)malloc( sizeof( int ) );
-    GKSERROR( data->pets.integers == NULL, 300, errginqdefstring)
+    GKSERROR( data->pets.integers == NULL, 300, errginqdefstring);
     data->pets.integers[0] = 1;
     data->e_area.xmin = 0.0;
     data->e_area.xmax = WS_MAX_DCX;

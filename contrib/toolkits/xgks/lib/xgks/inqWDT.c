@@ -349,7 +349,7 @@ Gint ginqwsconntype(ws_id, ct)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsconntype);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsconntype)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsconntype);
 
 /* check for open workstation id */
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsconntype);
@@ -387,7 +387,7 @@ Gint ginqwsst(ws_id, state)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsst);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsst)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsst);
 
 /* check for open workstation id */
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsst);
@@ -424,7 +424,7 @@ Gint ginqwsdeferupdatest(ws_id, du)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsdeferupdatest);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsdeferupdatest)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsdeferupdatest);
 
 /* check for open workstation id */
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsdeferupdatest);

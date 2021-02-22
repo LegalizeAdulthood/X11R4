@@ -128,20 +128,20 @@ Gint gwritegksm (Gint ws_id, Gint type, Gint length, Gchar *data)
         WS_STATE_PTR ws;
         Gint i;
 
-        GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgwritegksm)
+        GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgwritegksm);
 
-        GKSERROR ((!VALID_WSID(ws_id)), 20, errgwritegksm)
+        GKSERROR ((!VALID_WSID(ws_id)), 20, errgwritegksm);
 
 /*              if it isn't open, it can't be active...                          */
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 30, errgwritegksm)
+        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 30, errgwritegksm);
 
-        GKSERROR ((ws->wsstate != GACTIVE), 30, errgwritegksm)
+        GKSERROR ((ws->wsstate != GACTIVE), 30, errgwritegksm);
 
-        GKSERROR ((WS_CAT(ws) != GMO), 32, errgwritegksm)
+        GKSERROR ((WS_CAT(ws) != GMO), 32, errgwritegksm);
 
-        GKSERROR ((type <= 100), 160, errgwritegksm)
+        GKSERROR ((type <= 100), 160, errgwritegksm);
 
-        GKSERROR ((length < 0), 161, errgwritegksm)
+        GKSERROR ((length < 0), 161, errgwritegksm);
 
         fprintf(ws->mfp, "%d %d ", type, length);
         for (i=0; i<length; i++)
@@ -166,18 +166,18 @@ Gint ggetgksm (Gint ws_id, Ggksmit *result)
         WS_STATE_PTR ws;
         Gint key;
 
-        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errggetgksm)
+        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errggetgksm);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errggetgksm)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errggetgksm);
 
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 25, errggetgksm)
+        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 25, errggetgksm);
 
-        GKSERROR ((WS_CAT(ws) != GMI), 34, errggetgksm)
+        GKSERROR ((WS_CAT(ws) != GMI), 34, errggetgksm);
 
-        GKSERROR (((key=XgksMFindKey(ws_id))==INVALID), 34, errggetgksm)
+        GKSERROR (((key=XgksMFindKey(ws_id))==INVALID), 34, errggetgksm);
 
-        GKSERROR ((GksmInfo[key].GksmEmpty == TRUE), 162, errggetgksm)
+        GKSERROR ((GksmInfo[key].GksmEmpty == TRUE), 162, errggetgksm);
 
         if (XgksValidGksMItem(GksmInfo[key].CurItem.type)
             == INVALID)                                   {
@@ -186,7 +186,7 @@ Gint ggetgksm (Gint ws_id, Ggksmit *result)
 
         *result = GksmInfo[key].CurItem;
 
-        GKSERROR ((ws->filestat != METAFILE_OK), 163, errggetgksm)
+        GKSERROR ((ws->filestat != METAFILE_OK), 163, errggetgksm);
 
         return (OK);
 }
@@ -233,23 +233,23 @@ Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
         Gint key;
         Gchar *intrec;
 
-        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errgreadgksm)
+        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errgreadgksm);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreadgksm)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreadgksm);
 
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 25, errgreadgksm)
+        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 25, errgreadgksm);
 
-        GKSERROR ((WS_CAT(ws) != GMI), 34, errgreadgksm)
+        GKSERROR ((WS_CAT(ws) != GMI), 34, errgreadgksm);
 
-        GKSERROR (((key=XgksMFindKey(ws_id))==INVALID), 34, errgreadgksm)
+        GKSERROR (((key=XgksMFindKey(ws_id))==INVALID), 34, errgreadgksm);
 
         if (GksmInfo[key].CurItem.type == 0)
         {
                 GksmInfo[key].GksmEmpty = TRUE;
         }
 
-        GKSERROR ((GksmInfo[key].GksmEmpty == TRUE), 162, errgreadgksm)
+        GKSERROR ((GksmInfo[key].GksmEmpty == TRUE), 162, errgreadgksm);
 
         if (ws->filestat == MF_FILE_ERR) {
                 GksmInfo[key].GksmEmpty = TRUE;
@@ -262,15 +262,15 @@ Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
                 ws->filestat = MF_ITEM_ERR;
         }
 
-        GKSERROR (((ws->filestat == MF_ITEM_ERR) && (length != 0)), MF_ITEM_ERR,                   errgreadgksm)
+        GKSERROR (((ws->filestat == MF_ITEM_ERR) && (length != 0)), MF_ITEM_ERR,                   errgreadgksm);
 
-        GKSERROR (((ws->filestat == MF_DATA_ERR) && (length != 0)), MF_DATA_ERR,                   errgreadgksm)
+        GKSERROR (((ws->filestat == MF_DATA_ERR) && (length != 0)), MF_DATA_ERR,                   errgreadgksm);
 
-        GKSERROR ((length < 0), 166, errgreadgksm)
+        GKSERROR ((length < 0), 166, errgreadgksm);
 
         if (length > 0) {
                 intrec = (Gchar *)malloc( GksmInfo[key].CurItem.length );
-                GKSERROR ((intrec == NULL), 300, errgreadgksm)
+                GKSERROR ((intrec == NULL), 300, errgreadgksm);
                 ws->filestat =
                 XgksInputData (ws->mfp, key, intrec);
                 bcopy( intrec, record, length );
@@ -280,8 +280,8 @@ Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
                         gerrorhand( 162, errgreadgksm, xgks_state.gks_err_file );
                         return( 162 );
                 }
-                GKSERROR ((ws->filestat == MF_ITEM_ERR) ||                                                (ws->filestat == MF_FILE_ERR), 163, errgreadgksm)
-                GKSERROR ((ws->filestat == MF_DATA_ERR), 165, errgreadgksm)
+                GKSERROR ((ws->filestat == MF_ITEM_ERR) ||                                                (ws->filestat == MF_FILE_ERR), 163, errgreadgksm);
+                GKSERROR ((ws->filestat == MF_DATA_ERR), 165, errgreadgksm);
         }
         else
         {
@@ -306,25 +306,25 @@ Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
  */
 Gint ginterpret(Ggksmit *recInfo, Gchar *data)
 {
-        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errginterpret)
+        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errginterpret);
 
-        GKSERROR ((recInfo == NULL), 163, errginterpret )
+        GKSERROR ((recInfo == NULL), 163, errginterpret );
 
-        GKSERROR (((recInfo->length > 0)&&(data == NULL)), 165, errginterpret )
+        GKSERROR (((recInfo->length > 0)&&(data == NULL)), 165, errginterpret );
 
-        GKSERROR ((recInfo->length<XgksMRecSize(recInfo->type)), 161, errginterpret)
+        GKSERROR ((recInfo->length<XgksMRecSize(recInfo->type)), 161, errginterpret);
 
         GKSERROR ((XgksValidGksMItem(recInfo->type)==INVALID), 164, errginterpret
-)
+);
 
         /* Can't check for 165 in ginterpret due to file format. */
         /* Can't really check for 163, either.                   */
 
-        GKSERROR ( (recInfo->type >100), 167, errginterpret)
+        GKSERROR ( (recInfo->type >100), 167, errginterpret);
 
-        GKSERROR ((NOTSUPPORTED(recInfo->type)), 168, errginterpret)
+        GKSERROR ((NOTSUPPORTED(recInfo->type)), 168, errginterpret);
 
-        GKSERROR ((XgksExecData (recInfo->type, data) != 0), 164, errginterpret)
+        GKSERROR ((XgksExecData (recInfo->type, data) != 0), 164, errginterpret);
 
         return (OK);
 }
@@ -1964,21 +1964,21 @@ static Gint XgksExecData(Gint type, Gchar *record)
                   break;
 
         case 11 : graph = (XGKSMGRAPH *)record;
-                  GKSERROR (((pts = (Gpoint *) malloc (graph->num_pts*sizeof(Gpoint)))==NULL), 300, errXgksExecData)
+                  GKSERROR (((pts = (Gpoint *) malloc (graph->num_pts*sizeof(Gpoint)))==NULL), 300, errXgksExecData);
                   for (i=0; i<graph->num_pts; i++)
                         NdcToWc (&(graph->pts[i]), &(pts[i]));
                   gpolyline (graph->num_pts, pts);
                   free (pts);
                   break;
         case 12 : graph = (XGKSMGRAPH *)record;
-                  GKSERROR (((pts = (Gpoint *) malloc (graph->num_pts*sizeof(Gpoint)))==NULL), 300, errXgksExecData)
+                  GKSERROR (((pts = (Gpoint *) malloc (graph->num_pts*sizeof(Gpoint)))==NULL), 300, errXgksExecData);
                   for (i=0; i<graph->num_pts; i++)
                         NdcToWc (&(graph->pts[i]), &(pts[i]));
                   gpolymarker (graph->num_pts, pts);
                   free (pts);
                   break;
         case 14 : graph = (XGKSMGRAPH *)record;
-                  GKSERROR (((pts = (Gpoint *) malloc (graph->num_pts*sizeof(Gpoint)))==NULL), 300, errXgksExecData)
+                  GKSERROR (((pts = (Gpoint *) malloc (graph->num_pts*sizeof(Gpoint)))==NULL), 300, errXgksExecData);
                   for (i=0; i<graph->num_pts; i++)
                         NdcToWc (&(graph->pts[i]), &(pts[i]));
                   gfillarea (graph->num_pts, pts);
@@ -1986,20 +1986,20 @@ static Gint XgksExecData(Gint type, Gchar *record)
                   break;
 
         case 13 : text = (XGKSMTEXT *)record;
-                  GKSERROR (((pts = (Gpoint *) malloc (sizeof(Gpoint)))==NULL), 300, errXgksExecData)
+                  GKSERROR (((pts = (Gpoint *) malloc (sizeof(Gpoint)))==NULL), 300, errXgksExecData);
                   NdcToWc (&(text->location), pts);
                   gtext (pts, text->string);
                   free (pts);
                   break;
 
         case 15 : cell = (XGKSMCELLARRAY *)record;
-                  GKSERROR (((primi = XgksNewPrimi())==NULL), 300, errXgksExecData)
+                  GKSERROR (((primi = XgksNewPrimi())==NULL), 300, errXgksExecData);
                   primi->pid = CELL_ARRAY;
                   primi->primi.cell_array.dim = cell->dim;
                   /* rowsize is equal to cell->dim.x */
                   primi->primi.cell_array.rowsize = cell->dim.x;
                   j = cell->dim.x * cell->dim.y;
-                  GKSERROR (((primi->primi.cell_array.colour=(Gint *)malloc(j*sizeof(Gint)))==NULL),300, errXgksExecData)
+                  GKSERROR (((primi->primi.cell_array.colour=(Gint *)malloc(j*sizeof(Gint)))==NULL),300, errXgksExecData);
                   primi->primi.cell_array.ll = cell->ll;
                   primi->primi.cell_array.ur = cell->ur;
                   primi->primi.cell_array.lr = cell->lr;
@@ -2119,7 +2119,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
                   ptrep.size.x = patrep->size.x;
                   ptrep.size.y = patrep->size.y;
                   j = ptrep.size.x * ptrep.size.y;
-                  GKSERROR (((ptrep.array = (Gint *) malloc (j*sizeof(Gint)))==NULL), 300, errXgksExecData)
+                  GKSERROR (((ptrep.array = (Gint *) malloc (j*sizeof(Gint)))==NULL), 300, errXgksExecData);
                   for (i=0; i<j ;i++)
                           ptrep.array[i] = patrep->array[i];
                   for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */

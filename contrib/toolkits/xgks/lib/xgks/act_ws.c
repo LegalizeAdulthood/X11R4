@@ -70,16 +70,16 @@ Gint gactivatews(Gint ws_id)
         WS_STATE_PTR ws;
 
 /* check for valid workstation open and active (must be at least one) */
-        GKSERROR ( ((xgks_state.gks_state != GWSOP) && (xgks_state.gks_state != GWSAC)), 6, errgactivatews)
+        GKSERROR ( ((xgks_state.gks_state != GWSOP) && (xgks_state.gks_state != GWSAC)), 6, errgactivatews);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgactivatews)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgactivatews);
 
 /* check for workstation opened */
-        GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errgactivatews)
+        GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errgactivatews);
 
 /* check for workstation active */
-        GKSERROR ((ws->wsstate == GACTIVE), 29, errgactivatews)
+        GKSERROR ((ws->wsstate == GACTIVE), 29, errgactivatews);
 
 /* check for ws category */
         GKSERROR ((WS_CAT(ws) == GMI), 33, errgactivatews);
@@ -88,7 +88,7 @@ Gint gactivatews(Gint ws_id)
 
         ws->wsstate = GACTIVE;
 /* check if max number of allowable active ws would be exceeded */
-        GKSERROR ((XgksAllocActiveWs (ws_id,ws)!=0), 43, errgactivatews)
+        GKSERROR ((XgksAllocActiveWs (ws_id,ws)!=0), 43, errgactivatews);
 
         if (xgks_state.gks_state == GWSOP)
                 xgks_state.gks_state = GWSAC;   /* change operating state */
@@ -117,7 +117,7 @@ Gint gdeactivatews(Gint ws_id)
         WS_STATE_PTR ws;
 
 /* first check for proper state */
-        GKSERROR ((xgks_state.gks_state != GWSAC), 3, errgdeactivatews)
+        GKSERROR ((xgks_state.gks_state != GWSAC), 3, errgdeactivatews);
 
 /* check for ws invalid */
         GKSERROR ((!VALID_WSID(ws_id)), 20, errgdeactivatews);
@@ -126,7 +126,7 @@ Gint gdeactivatews(Gint ws_id)
         GKSERROR(((ws=OPEN_WSID(ws_id))==NULL), 30, errgdeactivatews);
 
 /* check for workstation active */
-        GKSERROR ((ws->wsstate == GINACTIVE), 30, errgdeactivatews)
+        GKSERROR ((ws->wsstate == GINACTIVE), 30, errgdeactivatews);
 
 /* check for ws category */
         GKSERROR ((WS_CAT(ws) == GMI), 33, errgdeactivatews);

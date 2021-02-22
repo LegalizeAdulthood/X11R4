@@ -84,48 +84,48 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
 #endif
 /* STEP 1: check for errors */
 /*    gks in proper state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitchoice )
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitchoice );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitchoice)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitchoice);
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitchoice )
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitchoice );
 
 /* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginitchoice)
+    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginitchoice);
 
 /* valid echo area */
-    GKSERROR( (area->xmin > area->xmax || area->ymin > area->ymax), 51, errginitchoice )
+    GKSERROR( (area->xmin > area->xmax || area->ymin > area->ymax), 51, errginitchoice );
 
 /* valid locator device number */
-    GKSERROR( (dev < 1), 140, errginitchoice )
+    GKSERROR( (dev < 1), 140, errginitchoice );
 
 /* valid and supported prompt mode? */
-    GKSERROR( (pet < 1) || (pet > 3), 144, errginitchoice)
+    GKSERROR( (pet < 1) || (pet > 3), 144, errginitchoice);
 
 /* Echo inside display space? */
     GKSERROR( (area->xmin < 0 || area->xmax > ws->size.x
         || area->ymin < 0 || area->ymax > ws->size.y),
-        145, errginitchoice )
+        145, errginitchoice );
 
 /* initial values valid */
     switch ( pet ) {
     case 1:        /* no data */
         /* initial value ok (make sure key in range) */
-        GKSERROR( (init->status == GC_OK) && (init->choice < 1), 152, errginitchoice)
+        GKSERROR( (init->status == GC_OK) && (init->choice < 1), 152, errginitchoice);
         break;
     case 2:        /* array of prompt flags ON | OFF */
-        GKSERROR( (record->pet2.number < 1), 146, errginitchoice)
+        GKSERROR( (record->pet2.number < 1), 146, errginitchoice);
         /* initial value ok (make sure key in range) */
-        GKSERROR( (init->status == GC_OK) && (init->choice < 1), 152, errginitchoice)
+        GKSERROR( (init->status == GC_OK) && (init->choice < 1), 152, errginitchoice);
         /* (make sure key is flagged on) */
-        GKSERROR( (init->status == GC_OK) && (record->pet2.enable[init->choice-1] == GPROFF), 152, errginitchoice)
+        GKSERROR( (init->status == GC_OK) && (record->pet2.enable[init->choice-1] == GPROFF), 152, errginitchoice);
         break;
     case 3:        /* menu strings */
-        GKSERROR( (record->pet3.number < 1), 146, errginitchoice)
+        GKSERROR( (record->pet3.number < 1), 146, errginitchoice);
         /* initial value ok (make sure choice is in range) */
-        GKSERROR( (init->status == GC_OK) && ((init->choice > record->pet2.number) || (init->choice < 1)), 152, errginitchoice)
+        GKSERROR( (init->status == GC_OK) && ((init->choice > record->pet2.number) || (init->choice < 1)), 152, errginitchoice);
         break;
     case 4:        /* strings that can be typed in */
         break;
@@ -153,7 +153,7 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
     if ((idev = XgksIDevLookup( ws, dev, GCHOICE)) == NULL) {
     /* Create the Input Device structure */
         idev = XgksIDevNew();
-        GKSERROR( (idev == NULL), 300, errginitchoice)
+        GKSERROR( (idev == NULL), 300, errginitchoice);
         idev->class = GCHOICE;
         idev->dev = dev;
         idev->active = False;
@@ -170,7 +170,7 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
     }
     else {
     /* if the device is not in REQUEST mode, not allowed to initialize it */
-        GKSERROR( idev->data.cho.initst.mode != GREQUEST, 141, errginitchoice )
+        GKSERROR( idev->data.cho.initst.mode != GREQUEST, 141, errginitchoice );
         XChangeGC( ws->dpy, idev->gc,
             GCFunction | GCForeground | GCBackground |
             GCLineWidth | GCLineStyle | GCFillStyle | GCFont,
@@ -189,7 +189,7 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
     case 2:
         number = record->pet2.number;
         f = idev->data.cho.initst.record.pet2.enable = (Gprflag *)malloc( sizeof( Gprflag ) * number);
-        GKSERROR( (f == NULL), 300, errginitchoice)
+        GKSERROR( (f == NULL), 300, errginitchoice);
         for( i = 0; i<number; i++)
             f[i] = record->pet2.enable[i];
         break;
@@ -199,10 +199,10 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
     case 3:        /* copy strings in data record */
         number = record->pet3.number;
         d = idev->data.cho.initst.record.pet3.strings = (char **)malloc( sizeof (char *) * number);
-        GKSERROR( (d == NULL), 300, errginitchoice)
+        GKSERROR( (d == NULL), 300, errginitchoice);
         for( i=0, s=record->pet3.strings; i<number; i++, d++, s++) {
             *d = (char *) malloc( STRLEN( *s ) +1);
-            GKSERROR( (*d == NULL), 300, errginitchoice)
+            GKSERROR( (*d == NULL), 300, errginitchoice);
             STRCPY( *d, *s );
         }
 
@@ -252,29 +252,29 @@ Gint gsetchoicemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
 #endif
 /* STEP 1: check for errors */
 /*    gks in proper state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetchoicemode )
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetchoicemode );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetchoicemode)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetchoicemode);
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetchoicemode )
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetchoicemode );
 
 /* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetchoicemode)
+    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetchoicemode);
 
 /* valid locator device number */
-    GKSERROR( (dev < 1), 140, errgsetchoicemode )
+    GKSERROR( (dev < 1), 140, errgsetchoicemode );
 
 /* check enumerations */
     GKSERROR( ((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT)
             || (echo != GECHO && echo != GNOECHO)),
-        2000, errgsetchoicemode )
+        2000, errgsetchoicemode );
 
     if ((idev = XgksIDevLookup( ws, dev, GCHOICE)) == NULL) {
     /* Create the Input Device structure */
         idev = XgksIDevNew();
-        GKSERROR( (idev == NULL), 300, errgsetchoicemode)
+        GKSERROR( (idev == NULL), 300, errgsetchoicemode);
         idev->class = GCHOICE;
         idev->dev = dev;
         idev->active = False;
@@ -346,24 +346,24 @@ Gint greqchoice(Gint ws_id, Gint dev, Gchoice *response)
 #endif
 /* STEP 1: check for errors */
 /*    gks in proper state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqchoice )
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqchoice );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqchoice)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqchoice);
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqchoice )
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqchoice );
 
 /* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqchoice)
+    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqchoice);
 
 /* valid locator device number */
-    GKSERROR( (dev < 1), 140, errgreqchoice )
+    GKSERROR( (dev < 1), 140, errgreqchoice );
 
     if ((idev = XgksIDevLookup( ws, dev, GCHOICE)) == NULL) {
     /* Create the Input Device structure */
         idev = XgksIDevNew();
-        GKSERROR( (idev == NULL), 300, errgreqchoice)
+        GKSERROR( (idev == NULL), 300, errgreqchoice);
         idev->class = GCHOICE;
         idev->dev = dev;
         idev->active = False;
@@ -398,7 +398,7 @@ Gint greqchoice(Gint ws_id, Gint dev, Gchoice *response)
         ws->in_dev_list = idev;
     }
     else {
-        GKSERROR( (idev->data.cho.initst.mode != GREQUEST), 141, errgreqchoice)
+        GKSERROR( (idev->data.cho.initst.mode != GREQUEST), 141, errgreqchoice);
     }
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
@@ -447,24 +447,24 @@ Gint gsamplechoice(Gint ws_id, Gint dev, Gchoice *response)
 #endif
 /* STEP 1: check for errors */
 /*    gks in proper state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplechoice )
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplechoice );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplechoice)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplechoice);
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsamplechoice )
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsamplechoice );
 
 /* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsamplechoice)
+    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsamplechoice);
 
 /* valid choice device number */
-    GKSERROR( (dev < 1), 140, errgsamplechoice )
+    GKSERROR( (dev < 1), 140, errgsamplechoice );
 
     idev = XgksIDevLookup( ws, dev, GCHOICE );
 
 /* In SAMPLE mode? (if NULL then implicitly in request mode) */
-  GKSERROR( (idev == NULL) || (idev->data.cho.initst.mode != GSAMPLE), 142, errgsamplechoice)
+  GKSERROR( (idev == NULL) || (idev->data.cho.initst.mode != GSAMPLE), 142, errgsamplechoice);
 
     /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
@@ -496,19 +496,19 @@ Gint ginqchoicest(Gint ws_id, Gint dev, Gchoicest *state)
 #endif
 /* STEP 1: check for errors */
 /*    gks in proper state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqchoicest )
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqchoicest );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqchoicest)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqchoicest);
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqchoicest )
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqchoicest );
 
 /* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqchoicest)
+    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqchoicest);
 
 /* valid locator device number */
-    GKSERROR( (dev < 1), 140, errginqchoicest )
+    GKSERROR( (dev < 1), 140, errginqchoicest );
 
     if ((idev = XgksIDevLookup( ws, dev, GCHOICE)) == NULL) {
         state->mode = GREQUEST;
@@ -532,7 +532,7 @@ Gint ginqchoicest(Gint ws_id, Gint dev, Gchoicest *state)
         case 2:
             number = idev->data.cho.initst.record.pet2.number;
             f = state->record.pet2.enable = (Gprflag *)malloc( sizeof( Gprflag ) * number);
-            GKSERROR( (f == NULL), 300, errginqchoicest)
+            GKSERROR( (f == NULL), 300, errginqchoicest);
             for( i = 0; i<number; i++)
                 f[i] = idev->data.cho.initst.record.pet2.enable[i];
             break;
@@ -543,10 +543,10 @@ Gint ginqchoicest(Gint ws_id, Gint dev, Gchoicest *state)
             number = idev->data.cho.initst.record.pet3.number;
             d = state->record.pet3.strings = (char **)malloc( sizeof(char *) * number);
             s = idev->data.cho.initst.record.pet3.strings;
-            GKSERROR( (d == NULL), 300, errginqchoicest)
+            GKSERROR( (d == NULL), 300, errginqchoicest);
             for( i=0; i<number; i++, d++, s++) {
                 *d = (char *) malloc( STRLEN( *s ) +1);
-                GKSERROR( (*d == NULL), 300, errginqchoicest)
+                GKSERROR( (*d == NULL), 300, errginqchoicest);
                 STRCPY( *d, *s );
             }
         }
@@ -572,23 +572,23 @@ Gint ginqdefchoice(Gchar *type, Gint dev, Gdefchoice *data)
 #endif
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefchoice )
+    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefchoice );
 
 /* valid wsid? */
     ewstype = XgksWsTypeToEnum( type );
-    GKSERROR( ewstype == WST_INVALID, 22, errginqdefchoice )
+    GKSERROR( ewstype == WST_INVALID, 22, errginqdefchoice );
 
 /* valid workstation type (assumes all INPUT and OUTIN workstations are X_WIN */
-    GKSERROR( ewstype != X_WIN, 38, errginqdefchoice)
+    GKSERROR( ewstype != X_WIN, 38, errginqdefchoice);
 
 /* valid locator device? */
-    GKSERROR( (dev < 1), 140, errginqdefchoice)
+    GKSERROR( (dev < 1), 140, errginqdefchoice);
 
 /* STEP 2: set up the return values */
     data->choices = 0x7fff;
     data->pets.number = 3;
     data->pets.integers = (Gint *) malloc( sizeof( int )*3 );
-    GKSERROR( (data->pets.integers == NULL), 300, errginqdefchoice)
+    GKSERROR( (data->pets.integers == NULL), 300, errginqdefchoice);
     data->pets.integers[0] = 1;
     data->pets.integers[1] = 2;
     data->pets.integers[2] = 3;

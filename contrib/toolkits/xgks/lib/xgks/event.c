@@ -96,10 +96,10 @@ Gint gawaitevent(Gfloat timeout, Gevent *event)
         struct itimerval itime;
 
 /* check for proper state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgawaitevent)
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgawaitevent);
 
 /* valid timeout value */
-        GKSERROR( (timeout < 0.0), 151, errgawaitevent)
+        GKSERROR( (timeout < 0.0), 151, errgawaitevent);
 
 /* set up the return values */
         if ( xgks_state.event_queue_head != (EQEntry *)NULL) {
@@ -164,19 +164,19 @@ Gint gflushevents(Gint ws_id, Giclass class, Gint dev)
         EQEntry *e, *prev;
 
 /* check gks state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgflushevents)
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgflushevents);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgflushevents)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgflushevents);
 
 /* open workstation */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgflushevents)
+        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgflushevents);
 
 /* valid workstation category */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgflushevents)
+        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgflushevents);
 
 /* valid device number */
-        GKSERROR( (class != GNCLASS) && (dev < 1), 140, errgflushevents)
+        GKSERROR( (class != GNCLASS) && (dev < 1), 140, errgflushevents);
 
 /* search the event queue for events to delete */
         for( e=xgks_state.event_queue_head, prev=(EQEntry *)NULL; e != (EQEntry *)NULL; )
@@ -259,7 +259,7 @@ Gint ggetloc(Gloc *response)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errggetloc );
 
 /* Is the Current Event the proper a Locator event? */
-        GKSERROR( (xgks_state.CurEvent.event.class != GLOCATOR), 150, errggetloc)
+        GKSERROR( (xgks_state.CurEvent.event.class != GLOCATOR), 150, errggetloc);
 
 /* return the event data */
         *response = *(Gloc *)xgks_state.CurEvent.data;
@@ -279,7 +279,7 @@ Gint ggetstroke(Gstroke *response)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errggetstroke );
 
 /* Is the Current Event the proper a Stroke event? */
-        GKSERROR( (xgks_state.CurEvent.event.class != GISTROKE), 150, errggetstroke)
+        GKSERROR( (xgks_state.CurEvent.event.class != GISTROKE), 150, errggetstroke);
 
 /* return the event data */
         *response = *(Gstroke *)xgks_state.CurEvent.data;
@@ -299,7 +299,7 @@ Gint ggetchoice(Gchoice *response)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errggetchoice );
 
 /* Is the Current Event the proper a Choice event? */
-        GKSERROR( (xgks_state.CurEvent.event.class != GCHOICE), 150, errggetchoice)
+        GKSERROR( (xgks_state.CurEvent.event.class != GCHOICE), 150, errggetchoice);
 
 /* return the event data */
         *response = *(Gchoice *)xgks_state.CurEvent.data;
@@ -318,7 +318,7 @@ Gint ggetpick(Gpick *response)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errggetpick );
 
 /* Is the Current Event the proper a Pick event? */
-        GKSERROR( (xgks_state.CurEvent.event.class != GPICK), 150, errggetpick)
+        GKSERROR( (xgks_state.CurEvent.event.class != GPICK), 150, errggetpick);
 
 /* return the event data */
         *response = *(Gpick *)xgks_state.CurEvent.data;
@@ -337,7 +337,7 @@ Gint ggetval(Gfloat *response)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errggetval );
 
 /* Is the Current Event the proper a valuator event? */
-        GKSERROR( (xgks_state.CurEvent.event.class != GVALUATOR), 150, errggetval)
+        GKSERROR( (xgks_state.CurEvent.event.class != GVALUATOR), 150, errggetval);
 
 /* return the event data */
         *response = *(Gfloat *)xgks_state.CurEvent.data;
@@ -356,7 +356,7 @@ Gint ggetstring(Gchar *response)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errggetstring );
 
 /* Is the Current Event the proper a valuator event? */
-        GKSERROR( (xgks_state.CurEvent.event.class != GISTRING), 150, errggetstring)
+        GKSERROR( (xgks_state.CurEvent.event.class != GISTRING), 150, errggetstring);
 
 /* return the event data */
         STRCPY( response, (Gchar *)xgks_state.CurEvent.data );

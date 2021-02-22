@@ -149,7 +149,7 @@ Gint ginqmarkerindices(ws_id, idxlist)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqmarkerindices);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqmarkerindices)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqmarkerindices);
 
 /* check if this ws_id is opened */
         GKSERROR( ((ws = OPEN_WSID(ws_id))==NULL), 25, errginqmarkerindices);
@@ -195,7 +195,7 @@ Gint ginqmarkerrep(ws_id, idx, type, rep)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqmarkerrep);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqmarkerrep)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqmarkerrep);
 
 /* check if this ws_id is opened */
         GKSERROR( ((ws = OPEN_WSID(ws_id))==NULL), 25, errginqmarkerrep);

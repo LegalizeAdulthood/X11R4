@@ -81,35 +81,35 @@ Gint ginitpick(Gint ws_id, Gint dev, Gpick *init, Gint pet, Glimit *area, Gpickr
 
 /* STEP 1: check for errors */
 /*    gks in proper state? */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errginitpick)
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errginitpick);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitpick)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitpick);
 
 /* open workstation ? */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errginitpick)
+    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errginitpick);
 
 /* check category */
-    GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errginitpick)
+    GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errginitpick);
 
 /* rectangle defintion ok */
-    GKSERROR ((area->xmin >= area->xmax || area->ymin >= area->ymax) , 51, errginitpick)
+    GKSERROR ((area->xmin >= area->xmax || area->ymin >= area->ymax) , 51, errginitpick);
 
 /* valid pick device number */
-    GKSERROR ((dev < 1), 140, errginitpick)
+    GKSERROR ((dev < 1), 140, errginitpick);
 
 /* prompt and echo type supported */
-    GKSERROR ((!SUPPORTED_PICK_PROMPT(pet)) , 144, errginitpick)
+    GKSERROR ((!SUPPORTED_PICK_PROMPT(pet)) , 144, errginitpick);
 
 /* echo area within display space */
-    GKSERROR ((area->xmin<0 || area->xmax>ws->size.x || area->ymin<0 || area->ymax>ws->size.y) , 145, errginitpick)
+    GKSERROR ((area->xmin<0 || area->xmax>ws->size.x || area->ymin<0 || area->ymax>ws->size.y) , 145, errginitpick);
 
 /* initial values ok */
 /* pick id can take on any value */
-    GKSERROR ((init->seg < 1) , 152, errginitpick)
+    GKSERROR ((init->seg < 1) , 152, errginitpick);
 
     GKSERROR ((init->status != GP_OK && init->status != GP_NOPICK &&
-        init->status != GP_NONE) , 2000, errginitpick)
+        init->status != GP_NONE) , 2000, errginitpick);
 
 /* Check if the device already exist */
     if ( (idev = XgksIDevLookup(ws, dev, GPICK)) == NULL) {
@@ -125,7 +125,7 @@ Gint ginitpick(Gint ws_id, Gint dev, Gpick *init, Gint pet, Glimit *area, Gpickr
         XgksIDevAdd (ws, idev);
     } else {
     /* pick device must be in REQUEST mode */
-        GKSERROR ((idev->data.pic.initst.mode!=GREQUEST), 141, errginitpick)
+        GKSERROR ((idev->data.pic.initst.mode!=GREQUEST), 141, errginitpick);
     }
     idev->data.pic.initst.pick = *init;
     idev->data.pic.initst.pet = pet;
@@ -154,23 +154,23 @@ Gint gsetpickmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
 
 /* STEP 1: check for errors */
 /*     gks in proper state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetpickmode)
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetpickmode);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetpickmode)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetpickmode);
 
 /* workstation id valid and open */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetpickmode)
+    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetpickmode);
 
 /* check category */
-    GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgsetpickmode)
+    GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgsetpickmode);
 
 /* valid pick device */
-    GKSERROR ((dev < 1) , 140, errgsetpickmode)
+    GKSERROR ((dev < 1) , 140, errgsetpickmode);
 
 /* check enumerated type values */
     GKSERROR (((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT) ||
-           (echo != GECHO && echo != GNOECHO) ) , 2000, errgsetpickmode)
+           (echo != GECHO && echo != GNOECHO) ) , 2000, errgsetpickmode);
 
 /* STEP 2: tell the workstation */
     if ( (idev = XgksIDevLookup(ws, dev, GPICK)) == NULL ) {
@@ -228,19 +228,19 @@ Gint greqpick(Gint ws_id, Gint dev, Gpick *response)
 
 /* STEP 1: check for errors */
 /*     gks in proper state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgreqpick)
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgreqpick);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqpick)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqpick);
 
 /* workstation id open */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgreqpick)
+    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgreqpick);
 
 /* check category */
-    GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgreqpick)
+    GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgreqpick);
 
 /* valid pick device */
-    GKSERROR ((dev < 1) , 140, errgreqpick)
+    GKSERROR ((dev < 1) , 140, errgreqpick);
 
 /* ask the workstation for the device */
         if ( (idev = XgksIDevLookup(ws, dev, GPICK)) == NULL ) {
@@ -267,7 +267,7 @@ Gint greqpick(Gint ws_id, Gint dev, Gpick *response)
         XgksIDevAdd (ws, idev);
         }
     else {
-        GKSERROR ((idev->data.pic.initst.mode !=GREQUEST), 141, errgreqpick)
+        GKSERROR ((idev->data.pic.initst.mode !=GREQUEST), 141, errgreqpick);
     }
 
 /* Make sure the workstation is up to date */
@@ -311,23 +311,23 @@ Gint gsamplepick(Gint ws_id, Gint dev, Gpick *response)
 
 /* STEP 1: check for errors */
 /*     gks in proper state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsamplepick)
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsamplepick);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplepick)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplepick);
 
 /* workstation id open */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsamplepick)
+    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsamplepick);
 
 /* check category */
-    GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgsamplepick)
+    GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgsamplepick);
 
 /* valid pick device */
-    GKSERROR ((dev<1), 140, errgsamplepick)
+    GKSERROR ((dev<1), 140, errgsamplepick);
     idev=XgksIDevLookup(ws, dev, GPICK);
 
 /* is current mode SAMPLE ? */
-   GKSERROR ((idev==NULL) || (idev->data.pic.initst.mode != GSAMPLE), 142, errgsamplepick)
+   GKSERROR ((idev==NULL) || (idev->data.pic.initst.mode != GSAMPLE), 142, errgsamplepick);
 
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
@@ -361,22 +361,22 @@ Gint ginqpickst(Gint ws_id, Gint dev, Gqtype type, Gpickst *state)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpickst )
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpickst );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpickst)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpickst);
 
 /* check for ws_id, if correspond to opened ws */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqpickst )
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqpickst );
 
 /* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN), 37, errginqpickst)
+    GKSERROR( (WS_CAT(ws) != GOUTIN), 37, errginqpickst);
 
 /* check enumeration */
-    GKSERROR( (type != GSET && type != GREALIZED ), 2000, errginqpickst )
+    GKSERROR( (type != GSET && type != GREALIZED ), 2000, errginqpickst );
 
 /* valid locator device number */
-    GKSERROR( (dev < 1), 140, errginqpickst )
+    GKSERROR( (dev < 1), 140, errginqpickst );
 
 /* Copy the data to the user's structure */
     if ((idev = XgksIDevLookup( ws, dev, GPICK )) == NULL) {
@@ -421,17 +421,17 @@ Gint ginqdefpick(Gchar *type, Gint dev, Gdefpick *data)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefpick )
+    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefpick );
 
 /* valid wsid? */
     ewstype = XgksWsTypeToEnum( type );
-    GKSERROR( (ewstype == WST_INVALID), 22, errginqdefpick )
+    GKSERROR( (ewstype == WST_INVALID), 22, errginqdefpick );
 
 /* valid workstation type (assumes all INPUT and OUTIN workstations are X_WIN */
-    GKSERROR( ewstype != X_WIN, 38, errginqdefpick)
+    GKSERROR( ewstype != X_WIN, 38, errginqdefpick);
 
 /* valid locator device? */
-    GKSERROR( (dev < 1), 140, errginqdefpick)
+    GKSERROR( (dev < 1), 140, errginqdefpick);
 
 /* STEP 2: set up the return values */
     data->pets.number    = 2;

@@ -71,39 +71,39 @@ Gint ginitloc( ws_id, dev, init, pet, area, record)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitloc )
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitloc );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitloc)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitloc);
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitloc )
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitloc );
 
 /* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginitloc)
+    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginitloc);
 
 /* valid echo area */
-    GKSERROR( (area->xmin > area->xmax || area->ymin > area->ymax), 51, errginitloc )
+    GKSERROR( (area->xmin > area->xmax || area->ymin > area->ymax), 51, errginitloc );
 
 /* valid locator device number */
-    GKSERROR( (dev < 1), 140, errginitloc )
+    GKSERROR( (dev < 1), 140, errginitloc );
 
 /* valid and supported prompt mode? */
-    GKSERROR( pet>5, 144, errginitloc)
-    GKSERROR( (pet==0) || (pet>5), 144, errginitloc)
+    GKSERROR( pet>5, 144, errginitloc);
+    GKSERROR( (pet==0) || (pet>5), 144, errginitloc);
     if (pet<0) pet = 1;
 
 /* Echo inside display space? */
     GKSERROR( (area->xmin < 0 || area->xmax > ws->size.x
         || area->ymin < 0 || area->ymax > ws->size.y),
-        145, errginitloc )
+        145, errginitloc );
 
 /* Valid initial locator position? */
     GKSERROR ((init->position.x < TRANSFORM[init->transform].ntrans.w.xmin ||
                init->position.x > TRANSFORM[init->transform].ntrans.w.xmax ||
                init->position.y < TRANSFORM[init->transform].ntrans.w.ymin ||
                init->position.y > TRANSFORM[init->transform].ntrans.w.ymax),
-               152, errginitloc)
+               152, errginitloc);
 
 
 /* CHECK PROMPT DEPENDENT DATA */
@@ -120,21 +120,21 @@ Gint ginitloc( ws_id, dev, init, pet, area, record)
     case 4:
         /* valid attribute flag */
         GKSERROR( ((record->pet4.acf != GCURRENT) && (record->pet4.acf != GSPECIFIED) ),
-            2000, errginitloc)
+            2000, errginitloc);
 
         if (record->pet4.acf == GSPECIFIED) {
             GKSERROR( (record->pet4.ln.type != GINDIVIDUAL) && (record->pet4.ln.type != GBUNDLED),
-                2000, errginitloc)
+                2000, errginitloc);
             GKSERROR( (record->pet4.ln.width != GINDIVIDUAL) && (record->pet4.ln.width != GBUNDLED),
-                2000, errginitloc)
+                2000, errginitloc);
             GKSERROR( (record->pet4.ln.colour != GINDIVIDUAL) && (record->pet4.ln.colour != GBUNDLED),
-                2000, errginitloc)
+                2000, errginitloc);
             GKSERROR( (record->pet4.ln.line < 1) || (record->pet4.ln.line >= MAX_BUNDL_TBL),
-                60, errginitloc)
-            GKSERROR( (record->pet4.ln.bundl.type == 0), 63, errginitloc)
-            GKSERROR( ! WS_LINE_TYPE(record->pet4.ln.bundl.type), 64, errginitloc)
-            GKSERROR( ! WS_AVAIL_COLOUR(ws, (record->pet4.ln.bundl.colour)), 93, errginitloc)
-            GKSERROR( (record->pet4.ln.bundl.width < 0.0), 65, errginitloc)
+                60, errginitloc);
+            GKSERROR( (record->pet4.ln.bundl.type == 0), 63, errginitloc);
+            GKSERROR( ! WS_LINE_TYPE(record->pet4.ln.bundl.type), 64, errginitloc);
+            GKSERROR( ! WS_AVAIL_COLOUR(ws, (record->pet4.ln.bundl.colour)), 93, errginitloc);
+            GKSERROR( (record->pet4.ln.bundl.width < 0.0), 65, errginitloc);
         }
         else {
             record->pet4.ln.type    = xgks_state.gks_lnattr.type;
@@ -171,24 +171,24 @@ fprintf(stderr, "initloc() pet 4, style %s\n",
     case 5:
         /* valid attribute flag */
         GKSERROR( ((record->pet5.acf != GCURRENT) && (record->pet5.acf != GSPECIFIED) ),
-            2000, errginitloc)
+            2000, errginitloc);
         /* valid echo primitive */
         GKSERROR( ((record->pet5.pfcf != GPF_POLYLINE) && (record->pet5.pfcf != GPF_FILLAREA) ),
-            2000, errginitloc)
+            2000, errginitloc);
         if (record->pet5.pfcf == GPF_POLYLINE ) {
             if (record->pet5.acf == GSPECIFIED ) {
             GKSERROR( (record->pet5.attr.ln.type != GINDIVIDUAL) && (record->pet5.attr.ln.type != GBUNDLED),
-                2000, errginitloc)
+                2000, errginitloc);
             GKSERROR( (record->pet5.attr.ln.width != GINDIVIDUAL) && (record->pet5.attr.ln.width != GBUNDLED),
-                2000, errginitloc)
+                2000, errginitloc);
             GKSERROR( (record->pet5.attr.ln.colour != GINDIVIDUAL) && (record->pet5.attr.ln.colour != GBUNDLED),
-                2000, errginitloc)
+                2000, errginitloc);
             GKSERROR( (record->pet5.attr.ln.line < 1) || (record->pet5.attr.ln.line >= MAX_BUNDL_TBL),
-                60, errginitloc)
-            GKSERROR( record->pet5.attr.ln.bundl.type == 0, 63, errginitloc)
-            GKSERROR( ! WS_LINE_TYPE(record->pet5.attr.ln.bundl.type), 64, errginitloc)
-            GKSERROR( ! WS_AVAIL_COLOUR (ws, (record->pet5.attr.ln.bundl.colour)), 93, errginitloc)
-            GKSERROR( (record->pet5.attr.ln.bundl.width < 0.0), 65, errginitloc)
+                60, errginitloc);
+            GKSERROR( record->pet5.attr.ln.bundl.type == 0, 63, errginitloc);
+            GKSERROR( ! WS_LINE_TYPE(record->pet5.attr.ln.bundl.type), 64, errginitloc);
+            GKSERROR( ! WS_AVAIL_COLOUR (ws, (record->pet5.attr.ln.bundl.colour)), 93, errginitloc);
+            GKSERROR( (record->pet5.attr.ln.bundl.width < 0.0), 65, errginitloc);
             }
             else {
             record->pet5.attr.ln.type    = xgks_state.gks_lnattr.type;
@@ -226,21 +226,21 @@ fprintf(stderr, "initloc() pet 5, style %s\n",
         else if ( record->pet5.pfcf == GPF_FILLAREA ) {
             if (record->pet5.acf == GSPECIFIED ) {
             GKSERROR( (record->pet5.attr.fl.inter != GINDIVIDUAL) && (record->pet5.attr.fl.inter != GBUNDLED),
-                2000, errginitloc)
+                2000, errginitloc);
             GKSERROR( (record->pet5.attr.fl.style != GINDIVIDUAL) && (record->pet5.attr.fl.style != GBUNDLED),
-                2000, errginitloc)
+                2000, errginitloc);
             GKSERROR( (record->pet5.attr.fl.colour != GINDIVIDUAL) && (record->pet5.attr.fl.colour != GBUNDLED),
-                2000, errginitloc)
+                2000, errginitloc);
             GKSERROR( (record->pet5.attr.fl.fill <0 ) || (record->pet5.attr.fl.fill >= MAX_BUNDL_TBL ),
-                80, errginitloc)
+                80, errginitloc);
                         GKSERROR( (record->pet5.attr.fl.bundl.inter != GHOLLOW)
                                 && (record->pet5.attr.fl.bundl.inter != GSOLID)
                                 && (record->pet5.attr.fl.bundl.inter != GPATTERN)
                                 && (record->pet5.attr.fl.bundl.inter != GHATCH),
-                                83, errginitloc)
+                                83, errginitloc);
             GKSERROR( ! WS_FILL_TYPE(record->pet5.attr.fl.bundl.inter,
-                                     record->pet5.attr.fl.bundl.style), 85, errginitloc)
-            GKSERROR( ! WS_AVAIL_COLOUR (ws, (record->pet5.attr.fl.bundl.colour)), 93, errginitloc)
+                                     record->pet5.attr.fl.bundl.style), 85, errginitloc);
+            GKSERROR( ! WS_AVAIL_COLOUR (ws, (record->pet5.attr.fl.bundl.colour)), 93, errginitloc);
             }
             else {
             record->pet5.attr.fl.inter    = xgks_state.gks_flattr.inter;
@@ -269,7 +269,7 @@ fprintf(stderr, "initloc() pet 5, style %s\n",
     if ((idev = XgksIDevLookup( ws, dev, GLOCATOR )) == NULL) {
     /* Create the Input Device structure */
         idev = XgksIDevNew();
-        GKSERROR( (idev == NULL), 300, errginitloc)
+        GKSERROR( (idev == NULL), 300, errginitloc);
         idev->class = GLOCATOR;
         idev->dev = dev;
         idev->active = False;
@@ -298,7 +298,7 @@ xgksDASHES[didx].dashl[0], xgksDASHES[didx].dashl[1], xgksDASHES[didx].dashl[2])
     }
     else {
     /* if the device is not in REQUEST mode, not allowed to initialize it */
-        GKSERROR( idev->data.loc.initst.mode != GREQUEST, 141, errginitloc )
+        GKSERROR( idev->data.loc.initst.mode != GREQUEST, 141, errginitloc );
         if ((gcvalues.line_style == LineSolid) && (gcvalues.line_width == 1))
             gcvalues.line_width--;
         XChangeGC( ws->dpy, idev->gc,
@@ -333,29 +333,29 @@ Gint gsetlocmode( ws_id, dev, mode, echo )
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetlocmode )
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetlocmode );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetlocmode)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetlocmode);
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetlocmode )
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetlocmode );
 
 /* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetlocmode)
+    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetlocmode);
 
 /* valid locator device number */
-    GKSERROR( (dev < 1), 140, errgsetlocmode )
+    GKSERROR( (dev < 1), 140, errgsetlocmode );
 
 /* check enumerations */
     GKSERROR( ((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT)
             || (echo != GECHO && echo != GNOECHO)),
-        2000, errgsetlocmode )
+        2000, errgsetlocmode );
 
     if ((idev = XgksIDevLookup( ws, dev, GLOCATOR )) == NULL) {
     /* Create the Input Device structure */
         idev = XgksIDevNew();
-        GKSERROR( (idev == NULL), 300, errgsetlocmode)
+        GKSERROR( (idev == NULL), 300, errgsetlocmode);
     /* load it with the default values */
         idev->class = GLOCATOR;
         idev->dev = dev;
@@ -429,19 +429,19 @@ Gint greqloc( ws_id, dev, response )
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqloc )
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqloc );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqloc)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqloc);
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqloc )
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqloc );
 
 /* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqloc)
+    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqloc);
 
 /* valid locator device number */
-    GKSERROR( (dev < 1), 140, errgreqloc )
+    GKSERROR( (dev < 1), 140, errgreqloc );
 
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
@@ -449,7 +449,7 @@ Gint greqloc( ws_id, dev, response )
     if ((idev = XgksIDevLookup( ws, dev, GLOCATOR )) == NULL) {
     /* Create the Input Device structure */
         idev = XgksIDevNew();
-        GKSERROR( (idev == NULL), 300, errgreqloc)
+        GKSERROR( (idev == NULL), 300, errgreqloc);
     /* load it with the default values */
         idev->class = GLOCATOR;
         idev->dev = dev;
@@ -479,7 +479,7 @@ Gint greqloc( ws_id, dev, response )
         ws->in_dev_list = idev;
     }
     else {
-        GKSERROR( (idev->data.loc.initst.mode != GREQUEST), 141, errgreqloc )
+        GKSERROR( (idev->data.loc.initst.mode != GREQUEST), 141, errgreqloc );
     }
 /* initialise current values */
     NtWcToNdc( idev->data.loc.initst.loc.transform, &idev->data.loc.initst.loc.position, &ndcpt );
@@ -534,23 +534,23 @@ Gint gsampleloc( ws_id, dev, response)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsampleloc )
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsampleloc );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsampleloc)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsampleloc);
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsampleloc )
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsampleloc );
 
 /* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsampleloc)
+    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsampleloc);
 
 /* valid locator device number */
-    GKSERROR( (dev < 1), 140, errgsampleloc )
+    GKSERROR( (dev < 1), 140, errgsampleloc );
     idev = XgksIDevLookup( ws, dev, GLOCATOR );
 
 /* In SAMPLE mode? */
-    GKSERROR( (idev == NULL) || (idev->data.loc.initst.mode != GSAMPLE), 142, errgsampleloc )
+    GKSERROR( (idev == NULL) || (idev->data.loc.initst.mode != GSAMPLE), 142, errgsampleloc );
 
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
@@ -580,22 +580,22 @@ Gint ginqlocst( ws_id, dev, type, state)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqlocst )
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqlocst );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqlocst)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqlocst);
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqlocst )
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqlocst );
 
 /* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqlocst)
+    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqlocst);
 
 /* check enumeration */
-    GKSERROR( (type != GSET && type != GREALIZED ), 2000, errginqlocst )
+    GKSERROR( (type != GSET && type != GREALIZED ), 2000, errginqlocst );
 
 /* valid locator device number */
-    GKSERROR( (dev < 1), 140, errginqlocst )
+    GKSERROR( (dev < 1), 140, errginqlocst );
 
 /* Copy the data to the user's structure */
     if ((idev = XgksIDevLookup( ws, dev, GLOCATOR )) == NULL) {
@@ -640,17 +640,17 @@ Gint ginqdefloc( type, dev, data )
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefloc )
+    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefloc );
 
 /* valid ws type? */
     ewstype = XgksWsTypeToEnum( type );
-    GKSERROR( (ewstype == WST_INVALID), 22, errginqdefloc )
+    GKSERROR( (ewstype == WST_INVALID), 22, errginqdefloc );
 
 /* valid workstation type (assumes all INPUT and OUTIN workstations are X_WIN */
-    GKSERROR( ewstype != X_WIN, 38, errginqdefloc)
+    GKSERROR( ewstype != X_WIN, 38, errginqdefloc);
 
 /* valid locator device? */
-    GKSERROR( (dev < 1), 140, errginqdefloc)
+    GKSERROR( (dev < 1), 140, errginqdefloc);
 
 /* STEP 2: set up the return values */
     data->position.x    = 0.5;

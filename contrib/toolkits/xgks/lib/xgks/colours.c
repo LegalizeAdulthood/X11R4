@@ -67,29 +67,29 @@ Gint gsetcolourrep(ws_id, idx, rep)
     int i,status;
 
 /* check for proper gks operating state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetcolourrep)
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetcolourrep);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetcolourrep)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetcolourrep);
 
 /* check if ws is opened */
-    GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errgsetcolourrep)
+    GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errgsetcolourrep);
 
 /* check workstation category */
-    GKSERROR ((WS_CAT(ws) == GMI), 33, errgsetcolourrep)
-    GKSERROR ((WS_CAT(ws) == GINPUT) ,35, errgsetcolourrep)
-    GKSERROR ((WS_CAT(ws) == GWISS) ,36, errgsetcolourrep)
+    GKSERROR ((WS_CAT(ws) == GMI), 33, errgsetcolourrep);
+    GKSERROR ((WS_CAT(ws) == GINPUT) ,35, errgsetcolourrep);
+    GKSERROR ((WS_CAT(ws) == GWISS) ,36, errgsetcolourrep);
 
 /* check for valid idx */
-    GKSERROR ((!WS_AVAIL_COLOUR(ws, idx)) ,93, errgsetcolourrep)
+    GKSERROR ((!WS_AVAIL_COLOUR(ws, idx)) ,93, errgsetcolourrep);
 
 /* check for colours within range 0..1 */
     GKSERROR (((rep->red < 0.0 || rep->red > 1.0) || (rep-> green < 0.0 || rep->green > 1.0) ||
-           (rep->blue < 0.0 || rep->blue > 1.0)) ,96, errgsetcolourrep)
+           (rep->blue < 0.0 || rep->blue > 1.0)) ,96, errgsetcolourrep);
 
 /* STEP 2: send it to the workstation */
     status = xXgksSetColourRep(ws, idx, rep);
-    GKSERROR ((status != 0) ,93, errgsetcolourrep)
+    GKSERROR ((status != 0) ,93, errgsetcolourrep);
 
     /* if this is the 1st call to setcolourrep, alloc & init */
     /* storage of set values (ws->set_colour_rep[]) */
@@ -99,7 +99,7 @@ Gint gsetcolourrep(ws_id, idx, rep)
        /* rep table for use in ginqcolourrep */
        ws->set_colour_rep = (Gcobundl *)
              calloc(ws->wscolour, sizeof(Gcobundl));
-       GKSERROR ((!ws->set_colour_rep),300,errgsetcolourrep)
+       GKSERROR ((!ws->set_colour_rep),300,errgsetcolourrep);
        for (i=0; i < ws->wscolour; i++)
          {
          ws->set_colour_rep[i].red = NOT_SET;
@@ -141,21 +141,21 @@ Gint ginqcolourrep(ws_id, idx, type, rep)
     int status;
 
 /* check for proper gks operating state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqcolourrep)
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqcolourrep);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqcolourrep)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqcolourrep);
 
 /* check if ws is opened */
-    GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errginqcolourrep)
+    GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errginqcolourrep);
 
 /* check workstation category */
-    GKSERROR ((WS_CAT(ws) == GMI), 33, errginqcolourrep)
-    GKSERROR ((WS_CAT(ws) == GINPUT) ,35, errginqcolourrep)
-    GKSERROR ((WS_CAT(ws) == GWISS) ,36, errginqcolourrep)
+    GKSERROR ((WS_CAT(ws) == GMI), 33, errginqcolourrep);
+    GKSERROR ((WS_CAT(ws) == GINPUT) ,35, errginqcolourrep);
+    GKSERROR ((WS_CAT(ws) == GWISS) ,36, errginqcolourrep);
 
 /* check for valid idx */
-    GKSERROR ((!WS_AVAIL_COLOUR(ws, idx)) ,93, errginqcolourrep)
+    GKSERROR ((!WS_AVAIL_COLOUR(ws, idx)) ,93, errginqcolourrep);
 
     /* if the user wants SET, and some have been set, and */
     /* idx has been set....                               */
@@ -170,7 +170,7 @@ Gint ginqcolourrep(ws_id, idx, type, rep)
        { /* give him REALIZED */
        /* call the X routine */
        status = xXgksInqColourRep(ws, idx, type, rep);
-       GKSERROR ((status != 0) ,93, errginqcolourrep)
+       GKSERROR ((status != 0) ,93, errginqcolourrep);
        }
 
     return(0);
@@ -192,22 +192,22 @@ Gint ginqcolourindices(ws_id, indices)
     int i;
 
 /* check for proper gks operating state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqcolourindices)
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqcolourindices);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqcolourindices)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqcolourindices);
 
 /* check if ws is opened */
-    GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errginqcolourindices)
+    GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errginqcolourindices);
 
 /* check workstation category */
-    GKSERROR ((WS_CAT(ws) == GMI), 33, errginqcolourindices)
-    GKSERROR ((WS_CAT(ws) == GINPUT), 35, errginqcolourindices)
-    GKSERROR ((WS_CAT(ws) == GWISS), 36, errginqcolourindices)
+    GKSERROR ((WS_CAT(ws) == GMI), 33, errginqcolourindices);
+    GKSERROR ((WS_CAT(ws) == GINPUT), 35, errginqcolourindices);
+    GKSERROR ((WS_CAT(ws) == GWISS), 36, errginqcolourindices);
 
     indices->number = ws->wscolour;
     indices->integers = (Gint *) malloc( sizeof( int ) * ws->wscolour );
-    GKSERROR (indices->integers == NULL, 300, errginqcolourindices)
+    GKSERROR (indices->integers == NULL, 300, errginqcolourindices);
     for( i=0; i<ws->wscolour; i++ )
         indices->integers[i] = i;
 

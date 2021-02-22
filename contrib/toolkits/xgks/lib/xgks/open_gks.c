@@ -94,10 +94,10 @@ Gint gopengks(Gfile *err_file, Glong memory)
 
 
 /* specified error file is not opened yet */
-        GKSERROR ((err_file == NULL) ,200, errgopengks)
+        GKSERROR ((err_file == NULL) ,200, errgopengks);
 
 /* can't open if not closed */
-        GKSERROR ((xgks_state.gks_state != GGKCL) ,1, errgopengks)
+        GKSERROR ((xgks_state.gks_state != GGKCL) ,1, errgopengks);
 
         XgksInitGksErrorStateList(err_file);
         XgksInitGksStateList();
@@ -119,7 +119,7 @@ Gint gclosegks(void)
 {
 
 /* check for proper state */
-        GKSERROR ((xgks_state.gks_state != GGKOP) ,2, errgclosegks)
+        GKSERROR ((xgks_state.gks_state != GGKOP) ,2, errgclosegks);
 
         xgks_state.gks_state = GGKCL;
         return(0);

@@ -89,28 +89,28 @@ Gint ginitval(Gint ws_id, Gint dev, Gfloat init, Gint pet, Glimit *area, Gvalrec
 
 /* STEP 1: check for errors */
 /*    gks in proper state? */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errginitval)
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errginitval);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitval)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitval);
 
 /* open workstation */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errginitval)
+    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errginitval);
 
 /* check category */
-    GKSERROR (((WS_CAT(ws) != GOUTIN)&&(WS_CAT(ws) != GINPUT)) , 38, errginitval)
+    GKSERROR (((WS_CAT(ws) != GOUTIN)&&(WS_CAT(ws) != GINPUT)) , 38, errginitval);
 
 /* rectangle defintion ok */
-    GKSERROR ((area->xmin >= area->xmax || area->ymin >= area->ymax) , 51, errginitval)
+    GKSERROR ((area->xmin >= area->xmax || area->ymin >= area->ymax) , 51, errginitval);
 
 /* valid val device number */
-    GKSERROR ((dev < 1), 140, errginitval)
+    GKSERROR ((dev < 1), 140, errginitval);
 
 /* prompt and echo type supported */
-    GKSERROR ((!SUPPORTED_VAL_PROMPT(pet)) , 144, errginitval)
+    GKSERROR ((!SUPPORTED_VAL_PROMPT(pet)) , 144, errginitval);
 
 /* echo area within display space */
-    GKSERROR ((area->xmin<0 || area->xmax>ws->size.x || area->ymin<0 || area->ymax>ws->size.y) , 145, errginitval)
+    GKSERROR ((area->xmin<0 || area->xmax>ws->size.x || area->ymin<0 || area->ymax>ws->size.y) , 145, errginitval);
 
 /* check for valid data-record and initial values */
     switch (pet) {
@@ -149,7 +149,7 @@ Gint ginitval(Gint ws_id, Gint dev, Gfloat init, Gint pet, Glimit *area, Gvalrec
         XgksIDevAdd (ws, idev);
     } else {
     /* val device must be in REQUEST mode */
-        GKSERROR ((idev->data.val.initst.mode!=GREQUEST), 141, errginitval)
+        GKSERROR ((idev->data.val.initst.mode!=GREQUEST), 141, errginitval);
     }
     idev->data.val.initst.val = init;
     idev->data.val.initst.pet = pet;
@@ -179,23 +179,23 @@ Gint gsetvalmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
 
 /* STEP 1: check for errors */
 /*     gks in proper state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetvalmode)
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetvalmode);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetvalmode)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetvalmode);
 
 /* workstation id open */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetvalmode)
+    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetvalmode);
 
 /* check category */
-    GKSERROR (((WS_CAT(ws)!=GOUTIN)&&(WS_CAT(ws)!=GINPUT)), 38, errgsetvalmode)
+    GKSERROR (((WS_CAT(ws)!=GOUTIN)&&(WS_CAT(ws)!=GINPUT)), 38, errgsetvalmode);
 
 /* valid locator device number */
-        GKSERROR( (dev < 1), 140, errgsetvalmode )
+        GKSERROR( (dev < 1), 140, errgsetvalmode );
 
 /* check enumerated type values */
     GKSERROR (((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT) ||
-           (echo != GECHO && echo != GNOECHO) ) , 2000, errgsetvalmode)
+           (echo != GECHO && echo != GNOECHO) ) , 2000, errgsetvalmode);
 
 /* STEP 2: tell the workstation */
     if ( (idev = XgksIDevLookup(ws, dev, GVALUATOR)) == NULL ) {
@@ -272,19 +272,19 @@ Gint greqval(Gint ws_id, Gint dev, Gqval *response)
 
 /* STEP 1: check for errors */
 /*     gks in proper state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgreqval)
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgreqval);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqval)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqval);
 
 /* workstation id open */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgreqval)
+    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgreqval);
 
 /* check category */
-    GKSERROR (((WS_CAT(ws)!=GOUTIN) && (WS_CAT(ws)!=GINPUT)) , 38, errgreqval)
+    GKSERROR (((WS_CAT(ws)!=GOUTIN) && (WS_CAT(ws)!=GINPUT)) , 38, errgreqval);
 
 /* valid val device */
-    GKSERROR ((dev < 1) , 140, errgreqval)
+    GKSERROR ((dev < 1) , 140, errgreqval);
 
 /* ask the workstation for the device */
         if ( (idev = XgksIDevLookup(ws, dev, GVALUATOR)) == NULL ) {
@@ -316,7 +316,7 @@ Gint greqval(Gint ws_id, Gint dev, Gqval *response)
         XgksIDevAdd (ws, idev);
         }
     else {
-        GKSERROR((idev->data.val.initst.mode !=GREQUEST), 141, errgreqval)
+        GKSERROR((idev->data.val.initst.mode !=GREQUEST), 141, errgreqval);
     }
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
@@ -382,23 +382,23 @@ Gint gsampleval(Gint ws_id, Gint dev, Gfloat *response)
 
 /* STEP 1: check for errors */
 /*     gks in proper state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsampleval)
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsampleval);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsampleval)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsampleval);
 
 /* workstation id open */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsampleval)
+    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsampleval);
 
 /* check category */
-    GKSERROR (((WS_CAT(ws)!=GOUTIN) && (WS_CAT(ws)!=GINPUT)) , 38, errgsampleval)
+    GKSERROR (((WS_CAT(ws)!=GOUTIN) && (WS_CAT(ws)!=GINPUT)) , 38, errgsampleval);
 
 /* valid val device */
-    GKSERROR ( (dev<1), 140, errgsampleval)
+    GKSERROR ( (dev<1), 140, errgsampleval);
     idev=XgksIDevLookup(ws, dev, GVALUATOR);
 
 /* is current mode SAMPLE ? */
-        GKSERROR ((idev==NULL) || (idev->data.val.initst.mode != GSAMPLE), 142, errgsampleval)
+        GKSERROR ((idev==NULL) || (idev->data.val.initst.mode != GSAMPLE), 142, errgsampleval);
 
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
@@ -429,19 +429,19 @@ Gint ginqvalst(Gint ws_id, Gint dev, Gvalst *state)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqvalst )
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqvalst );
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqvalst)
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqvalst);
 
 /* check for ws_id, if correspond to opened ws */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqvalst )
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqvalst );
 
 /* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqvalst)
+    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqvalst);
 
 /* valid locator device number */
-    GKSERROR( (dev < 1), 140, errginqvalst )
+    GKSERROR( (dev < 1), 140, errginqvalst );
 
 /* Copy the data to the user's structure */
     if ((idev = XgksIDevLookup( ws, dev, GVALUATOR )) == NULL) {
@@ -506,17 +506,17 @@ Gint ginqdefval(Gchar *type, Gint dev, Gdefval *data)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefval )
+    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefval );
 
 /* valid wsid? */
     ewstype = XgksWsTypeToEnum( type );
-    GKSERROR( (ewstype == WST_INVALID), 22, errginqdefval )
+    GKSERROR( (ewstype == WST_INVALID), 22, errginqdefval );
 
 /* valid workstation type (assumes all INPUT and OUTIN workstations are X_WIN */
-    GKSERROR( ewstype != X_WIN, 38, errginqdefval)
+    GKSERROR( ewstype != X_WIN, 38, errginqdefval);
 
 /* valid locator device? */
-    GKSERROR( (dev < 1), 140, errginqdefval)
+    GKSERROR( (dev < 1), 140, errginqdefval);
 
 /* STEP 2: set up the return values */
     data->pets.number    = 1;
