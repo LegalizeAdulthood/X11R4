@@ -272,7 +272,7 @@ Gint gsetchoicemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
 
     if ((idev = XgksIDevLookup( ws, dev, GCHOICE)) == NULL) {
     /* Create the Input Device structure */
-        idev = XgksIDevNew();    /* c1148 */
+        idev = XgksIDevNew();
         GKSERROR( (idev == NULL), 300, errgsetchoicemode)       /* ALP */
         idev->class = GCHOICE;
         idev->dev = dev;
@@ -361,7 +361,7 @@ Gint greqchoice(Gint ws_id, Gint dev, Gchoice *response)
 
     if ((idev = XgksIDevLookup( ws, dev, GCHOICE)) == NULL) {
     /* Create the Input Device structure */
-        idev = XgksIDevNew(); /* c1148 */
+        idev = XgksIDevNew();
         GKSERROR( (idev == NULL), 300, errgreqchoice)
         idev->class = GCHOICE;
         idev->dev = dev;

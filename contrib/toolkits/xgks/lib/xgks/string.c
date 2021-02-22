@@ -382,7 +382,7 @@ static Bool XgksCreateDefString(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp)
     XGCValues gcvalues;
 
 /* Create the Input Device structure */
-    idev = XgksIDevNew();   /*c1148*/
+    idev = XgksIDevNew();
     if (idev == NULL)
         return( True );
     idev->class = GISTRING;

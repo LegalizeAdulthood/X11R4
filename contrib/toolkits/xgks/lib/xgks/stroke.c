@@ -611,7 +611,7 @@ static Bool XgksCreateDefStroke(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp)
     XGCValues gcvalues;
     INPUT_DEV *idev;
 
-    idev = XgksIDevNew();    /*c1148*/
+    idev = XgksIDevNew();
     if (idev == NULL)
         return( True );
     idev->class = GISTROKE;

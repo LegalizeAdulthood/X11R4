@@ -268,7 +268,7 @@ fprintf(stderr, "initloc() pet 5, style %s\n",
 
     if ((idev = XgksIDevLookup( ws, dev, GLOCATOR )) == NULL) {
     /* Create the Input Device structure */
-        idev = XgksIDevNew();   /*c1148*/
+        idev = XgksIDevNew();
         GKSERROR( (idev == NULL), 300, errginitloc)
         idev->class = GLOCATOR;
         idev->dev = dev;
@@ -354,7 +354,7 @@ Gint gsetlocmode( ws_id, dev, mode, echo )
 
     if ((idev = XgksIDevLookup( ws, dev, GLOCATOR )) == NULL) {
     /* Create the Input Device structure */
-        idev = XgksIDevNew();   /*c1148*/
+        idev = XgksIDevNew();
         GKSERROR( (idev == NULL), 300, errgsetlocmode)
     /* load it with the default values */
         idev->class = GLOCATOR;
@@ -448,7 +448,7 @@ Gint greqloc( ws_id, dev, response )
 
     if ((idev = XgksIDevLookup( ws, dev, GLOCATOR )) == NULL) {
     /* Create the Input Device structure */
-        idev = XgksIDevNew();   /*c1148*/
+        idev = XgksIDevNew();
         GKSERROR( (idev == NULL), 300, errgreqloc)
     /* load it with the default values */
         idev->class = GLOCATOR;
