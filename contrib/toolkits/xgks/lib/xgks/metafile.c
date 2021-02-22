@@ -138,7 +138,7 @@ Gint gwritegksm (Gint ws_id, Gint type, Gint length, Gchar *data)
 
         GKSERROR ((WS_CAT(ws) != GMO), 32, errgwritegksm)
 
-        GKSERROR ((type <= 100), 160, errgwritegksm)                 /* c1118 */
+        GKSERROR ((type <= 100), 160, errgwritegksm)
 
         GKSERROR ((length < 0), 161, errgwritegksm)             /* c1068 */
 
