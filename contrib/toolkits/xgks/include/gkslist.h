@@ -58,7 +58,7 @@ typedef struct {
         Glimit          wc_to_ndc;      /* Transformation maxtrix for wc to ndc mapping */
 } NORM_TRANS;
 
-/* c1147: this is the structure which contains the gks state list */
+/* this is the structure which contains the gks state list */
 typedef struct {
 
         EQEntry *event_queue_head;      /* Event queue */
@@ -107,8 +107,6 @@ typedef struct {
         Gint    gks_open_seg;           /* name of current open seg */
         Gint    gks_pick_id;            /* current pick id */
 
-/* c1147:  The "gks error state list" was added to the rest of the GKS state */
-/*    list.                                                                  */
         ERROR_ST        gks_err_state;  /* ON=error occured OFF= no error */
         Gfile           *gks_err_file;  /* file for error messages */
 
@@ -116,10 +114,9 @@ typedef struct {
 
 } GKS_STATE_LIST;                       /* end of GKS state list structure */
 
-extern GKS_STATE_LIST   xgks_state;     /* c1147: this is the gks state list */
+extern GKS_STATE_LIST   xgks_state;     /* this is the gks state list */
 
 
-/* c1147:  Moved these macros down for clarity's sake. */
 #define WcToNdc(w,n) { \
         /* Gpoint *w, *n; */ \
         Glimit *nt = &(xgks_state.ntrans_list[xgks_state.cur_ntrans].wc_to_ndc); \

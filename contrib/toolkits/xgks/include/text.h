@@ -33,7 +33,6 @@
 
 void XgksComputeVec(Gpoint *up_vec, Gpoint *base_vec);
 
-/* c1147:  Moved these here from text.c and made them static */
 /* c1178:  Compiler glitch caused us to declare these globally and make     */
 /*         them externs in the files they're used in                        */
 

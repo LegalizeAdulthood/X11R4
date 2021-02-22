@@ -62,7 +62,7 @@ Gint gsetdeferst(ws_id, deferral_mode, regen_mode)
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) , 7, errgsetdeferst) /*c1147*/
+        GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) , 7, errgsetdeferst)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetdeferst)   /* c1012 */

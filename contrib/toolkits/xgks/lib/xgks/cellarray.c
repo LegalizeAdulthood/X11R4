@@ -60,7 +60,7 @@ Gint gcellarray(Grect *rect, Gipoint *dim, Gint row, Gint *colour)
         OUT_PRIMI  *cell;
 
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errgcellarray) /*c1147*/
+        GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errgcellarray)
 
 /* check array size */
         GKSERROR ( (dim->x < 1 || dim->y < 1), 91, errgcellarray)

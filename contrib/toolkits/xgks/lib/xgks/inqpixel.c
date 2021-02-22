@@ -50,7 +50,7 @@ Gipoint *dim;
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixelarraydim); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixelarraydim);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixelarraydim)   /* c1012 */
@@ -62,7 +62,7 @@ Gipoint *dim;
         GKSERROR( (ws->ewstype != X_WIN), 39, errginqpixelarraydim);
 
 /* get the returned values from the X-server */
-        xXgksInqPixelarrayDim(ws, rect, dim);           /*c1147*/
+        xXgksInqPixelarrayDim(ws, rect, dim);
 
         return( OK );
 }
@@ -90,7 +90,7 @@ Gpxarray *pxarr;
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixelarray); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixelarray);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixelarray)   /* c1012 */
@@ -105,7 +105,7 @@ Gpxarray *pxarr;
         GKSERROR( (dimen->x < 1 || dimen->y < 1), 91, errginqpixelarray);
 
 /* get the returned values from the X-server */
-        xXgksInqPixelarray(ws, point, dimen, pxarr);    /*c1147*/
+        xXgksInqPixelarray(ws, point, dimen, pxarr);
 
         return( OK );
 }
@@ -131,7 +131,7 @@ Gint *pix;
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixel); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixel);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixel)   /* c1012 */
@@ -143,7 +143,7 @@ Gint *pix;
         GKSERROR( (ws->ewstype != X_WIN), 39, errginqpixel);
 
 /* get the returned values from the X-server */
-        xXgksInqPixel(ws, ppoint, pix);         /*c1147*/
+        xXgksInqPixel(ws, ppoint, pix);
 
         return( OK );
 }

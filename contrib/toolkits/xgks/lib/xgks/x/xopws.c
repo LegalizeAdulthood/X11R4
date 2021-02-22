@@ -100,12 +100,12 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
         wk_p = NULL;
 
         for (i = 0; i < MAX_OPEN_WS; i++) {
-                if (xgks_state.openedws[i].ws_id < 0)                   /*c1147*/
+                if (xgks_state.openedws[i].ws_id < 0)
                         continue;
-                if (xgks_state.openedws[i].ws->ewstype != X_WIN)        /*c1147*/
+                if (xgks_state.openedws[i].ws->ewstype != X_WIN)
                         continue;
 
-                wk_p = xgks_state.openedws[i].ws;                       /*c1147*/
+                wk_p = xgks_state.openedws[i].ws;
                 j = STRCMP(wk->conn, wk_p->conn);                       /* c1176 */
 
                 if ((j == 0) && (wk_p != wk))
@@ -243,9 +243,9 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
         /* set some values  */
 
         for (i=0; i<MAX_OPEN_WS; i++)
-                if (wk->ws_id == xgks_state.openedws[i].ws_id)  /*c1147*/
+                if (wk->ws_id == xgks_state.openedws[i].ws_id)
                         break;
-        xgks_state.openedws[i].win = wk->win;   /* window identifier */ /*c1147*/
+        xgks_state.openedws[i].win = wk->win;   /* window identifier */
 
         /* Get currunt window attributes  */
 

@@ -71,7 +71,7 @@ Gint ginitloc( ws_id, dev, init, pet, area, record)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitloc ) /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitloc )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitloc)   /* c1012 */
@@ -137,11 +137,11 @@ Gint ginitloc( ws_id, dev, init, pet, area, record)
             GKSERROR( (record->pet4.ln.bundl.width < 0.0), 65, errginitloc)
         }
         else {
-            record->pet4.ln.type    = xgks_state.gks_lnattr.type;       /*c1147*/
-            record->pet4.ln.width    = xgks_state.gks_lnattr.width;     /*c1147*/
-            record->pet4.ln.colour    = xgks_state.gks_lnattr.colour;   /*c1147*/
-            record->pet4.ln.line    = xgks_state.gks_lnattr.line;       /*c1147*/
-            record->pet4.ln.bundl    = xgks_state.gks_lnattr.bundl;     /*c1147*/
+            record->pet4.ln.type    = xgks_state.gks_lnattr.type;
+            record->pet4.ln.width    = xgks_state.gks_lnattr.width;
+            record->pet4.ln.colour    = xgks_state.gks_lnattr.colour;
+            record->pet4.ln.line    = xgks_state.gks_lnattr.line;
+            record->pet4.ln.bundl    = xgks_state.gks_lnattr.bundl;
         }
 #define LNBUNDLE    ws->lnbundl_table[record->pet4.ln.line]
         gcvalues.function = GXinvert;
@@ -191,11 +191,11 @@ fprintf(stderr, "initloc() pet 4, style %s\n",
             GKSERROR( (record->pet5.attr.ln.bundl.width < 0.0), 65, errginitloc)
             }
             else {
-            record->pet5.attr.ln.type    = xgks_state.gks_lnattr.type;     /*c1147*/
-            record->pet5.attr.ln.width    = xgks_state.gks_lnattr.width;   /*c1147*/
-            record->pet5.attr.ln.colour    = xgks_state.gks_lnattr.colour; /*c1147*/
-            record->pet5.attr.ln.line    = xgks_state.gks_lnattr.line;     /*c1147*/
-            record->pet5.attr.ln.bundl    = xgks_state.gks_lnattr.bundl;   /*c1147*/
+            record->pet5.attr.ln.type    = xgks_state.gks_lnattr.type;
+            record->pet5.attr.ln.width    = xgks_state.gks_lnattr.width;
+            record->pet5.attr.ln.colour    = xgks_state.gks_lnattr.colour;
+            record->pet5.attr.ln.line    = xgks_state.gks_lnattr.line;
+            record->pet5.attr.ln.bundl    = xgks_state.gks_lnattr.bundl;
             }
 
 #define LNBUNDLE    ws->lnbundl_table[record->pet5.attr.ln.line]
@@ -243,11 +243,11 @@ fprintf(stderr, "initloc() pet 5, style %s\n",
             GKSERROR( ! WS_AVAIL_COLOUR (ws, (record->pet5.attr.fl.bundl.colour)), 93, errginitloc)
             }
             else {
-            record->pet5.attr.fl.inter    = xgks_state.gks_flattr.inter;   /*c1147*/
-            record->pet5.attr.fl.style    = xgks_state.gks_flattr.style;   /*c1147*/
-            record->pet5.attr.fl.colour    = xgks_state.gks_flattr.colour; /*c1147*/
-            record->pet5.attr.fl.fill    = xgks_state.gks_flattr.fill;     /*c1147*/
-            record->pet5.attr.fl.bundl    = xgks_state.gks_flattr.bundl;   /*c1147*/
+            record->pet5.attr.fl.inter    = xgks_state.gks_flattr.inter;
+            record->pet5.attr.fl.style    = xgks_state.gks_flattr.style;
+            record->pet5.attr.fl.colour    = xgks_state.gks_flattr.colour;
+            record->pet5.attr.fl.fill    = xgks_state.gks_flattr.fill;
+            record->pet5.attr.fl.bundl    = xgks_state.gks_flattr.bundl;
             }
             /* ONLY SUPPORTING HOLLOW FILLS */
 #define FLBUNDLE    ws->flbundl_table[record->pet5.attr.fl.fill]
@@ -284,10 +284,10 @@ fprintf(stderr, "width %d, style %s didx %d\n", gcvalues.line_width, (gcvalues.l
         if (gcvalues.line_style == LineOnOffDash) {
 #ifdef LOCDEBUG
 fprintf(stderr, "XSetDashes(): gc %d didx %d dash length %d dashes %d %d %d\n", idev->gc, didx,
-xgksDASHES[didx].dn,  /*c1147*/
-xgksDASHES[didx].dashl[0], xgksDASHES[didx].dashl[1], xgksDASHES[didx].dashl[2]); /*c1147*/
+xgksDASHES[didx].dn,
+xgksDASHES[didx].dashl[0], xgksDASHES[didx].dashl[1], xgksDASHES[didx].dashl[2]);
 #endif
-            XSetDashes( ws->dpy, idev->gc, 0, xgksDASHES[didx].dashl, xgksDASHES[didx].dn); /*c1147*/
+            XSetDashes( ws->dpy, idev->gc, 0, xgksDASHES[didx].dashl, xgksDASHES[didx].dn);
         }
         idev->data.loc.initst.mode = GREQUEST;
         idev->data.loc.initst.esw = GECHO;
@@ -305,7 +305,7 @@ xgksDASHES[didx].dashl[0], xgksDASHES[didx].dashl[1], xgksDASHES[didx].dashl[2])
             GCFunction | GCForeground | GCBackground | GCLineWidth
             | GCLineStyle, &gcvalues);
         if (gcvalues.line_style == LineOnOffDash)
-            XSetDashes( ws->dpy, idev->gc, 0, xgksDASHES[didx].dashl, xgksDASHES[didx].dn); /*c1147*/
+            XSetDashes( ws->dpy, idev->gc, 0, xgksDASHES[didx].dashl, xgksDASHES[didx].dn);
     }
     idev->data.loc.initst.loc = *init;
     idev->data.loc.initst.pet = pet;
@@ -333,7 +333,7 @@ Gint gsetlocmode( ws_id, dev, mode, echo )
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetlocmode ) /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetlocmode )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetlocmode)   /* c1012 */
@@ -429,7 +429,7 @@ Gint greqloc( ws_id, dev, response )
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqloc ) /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqloc )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqloc)   /* c1012 */
@@ -534,7 +534,7 @@ Gint gsampleloc( ws_id, dev, response)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsampleloc ) /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsampleloc )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsampleloc)   /* c1012 */
@@ -580,7 +580,7 @@ Gint ginqlocst( ws_id, dev, type, state)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqlocst ) /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqlocst )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqlocst)   /* c1012 */
@@ -640,7 +640,7 @@ Gint ginqdefloc( type, dev, data )
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefloc ) /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefloc )
 
 /* valid ws type? */
     ewstype = XgksWsTypeToEnum( type );
@@ -659,7 +659,7 @@ Gint ginqdefloc( type, dev, data )
     data->pets.integers    = (Gint *) malloc( sizeof( Gint ) * data->pets.number);
     if ( data->pets.integers==NULL) {
         free( data );
-        gerrorhand( 300, errginqdefloc, xgks_state.gks_err_file);       /*c1147*/
+        gerrorhand( 300, errginqdefloc, xgks_state.gks_err_file);
         return( 300 );
     }
     for( i=0; i<5; i++)
@@ -876,7 +876,7 @@ Gint XgksLocUpdatePrompt( ws, idev, pstate, newdcpt, xmev, event_id )
             data = (Gloc *) malloc( sizeof (Gloc) );
             if ( data == NULL )
             {
-                gerrorhand( 300, errXgksLocUpdatePrompt, xgks_state.gks_err_file ); /*c1147*/
+                gerrorhand( 300, errXgksLocUpdatePrompt, xgks_state.gks_err_file );
                   return (300);
             }
             

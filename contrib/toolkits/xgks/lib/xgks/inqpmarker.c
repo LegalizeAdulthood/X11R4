@@ -37,6 +37,8 @@
 
 #include "gks_implem.h"
 
+#include "polymarkers.h"
+
 
 /*$F
  * ginqmarkerfacil(ws_type, fac)
@@ -58,7 +60,7 @@ Gint ginqmarkerfacil(ws_type, fac)
         int i;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmarkerfacil); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmarkerfacil);
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -98,9 +100,6 @@ Gint ginqmarkerfacil(ws_type, fac)
  * See also: ANSI standard p.171
  */
 
-/* c1147:  Predefined marker bundles moved to polymarkers.h */
-#include "polymarkers.h"                                        /*c1147*/
-
 Gint ginqpredmarkerrep(ws_type, idx, rep)
         Gchar   *ws_type;
         Gint idx;
@@ -109,7 +108,7 @@ Gint ginqpredmarkerrep(ws_type, idx, rep)
         EWSTYPE ewstype;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredmarkerrep); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredmarkerrep);
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -147,7 +146,7 @@ Gint ginqmarkerindices(ws_id, idxlist)
         int  i;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqmarkerindices); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqmarkerindices);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqmarkerindices)   /* c1012 */
@@ -193,7 +192,7 @@ Gint ginqmarkerrep(ws_id, idx, type, rep)
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqmarkerrep); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqmarkerrep);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqmarkerrep)   /* c1012 */

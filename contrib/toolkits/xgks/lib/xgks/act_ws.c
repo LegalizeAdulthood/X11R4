@@ -69,7 +69,7 @@ Gint gactivatews(Gint ws_id)
         WS_STATE_PTR ws;
 
 /* check for valid workstation open and active (must be at least one) */
-        GKSERROR ( ((xgks_state.gks_state != GWSOP) && (xgks_state.gks_state != GWSAC)), 6, errgactivatews) /*c1147*/
+        GKSERROR ( ((xgks_state.gks_state != GWSOP) && (xgks_state.gks_state != GWSAC)), 6, errgactivatews)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgactivatews)   /* c1012 */
@@ -89,8 +89,8 @@ Gint gactivatews(Gint ws_id)
 /* check if max number of allowable active ws would be exceeded */
         GKSERROR ((XgksAllocActiveWs (ws_id,ws)!=0), 43, errgactivatews)
 
-        if (xgks_state.gks_state == GWSOP)                      /*c1147*/
-                xgks_state.gks_state = GWSAC;   /* change operating state *//*c1147*/
+        if (xgks_state.gks_state == GWSOP)
+                xgks_state.gks_state = GWSAC;   /* change operating state */
 
         if (MO_OPENED == TRUE)                                  /* c1140 */
                 XgksMoActivateWs( ws );                         /* c1140 */
@@ -116,7 +116,7 @@ Gint gdeactivatews(Gint ws_id)
         WS_STATE_PTR ws;
 
 /* first check for proper state */
-        GKSERROR ((xgks_state.gks_state != GWSAC), 3, errgdeactivatews) /*c1147*/
+        GKSERROR ((xgks_state.gks_state != GWSAC), 3, errgdeactivatews)
 
 /* check for ws invalid */
         GKSERROR ((!VALID_WSID(ws_id)), 20, errgdeactivatews);  /* c1012 */
@@ -135,7 +135,7 @@ Gint gdeactivatews(Gint ws_id)
         ws->wsstate = GINACTIVE;
         XgksDeleteActiveWs (ws_id);
         if (XgksNoActiveWs() == TRUE)
-                xgks_state.gks_state = GWSOP;   /* change operating state *//*c1147*/
+                xgks_state.gks_state = GWSOP;   /* change operating state */
         return (OK);
 }
 
@@ -147,7 +147,7 @@ static Gint XgksNoActiveWs()
 {
         Gint i;
         for (i=0; i<MAX_ACTIVE_WS; i++)
-                if (xgks_state.activews[i].ws_id != INVALID) return (FALSE);/*c1147*/
+                if (xgks_state.activews[i].ws_id != INVALID) return (FALSE);
         return (TRUE);
 }
 /*
@@ -166,9 +166,9 @@ WS_STATE_PTR ws;
    Gint i;
 
    for (i=0; i<MAX_ACTIVE_WS; i++)
-        if (xgks_state.activews[i].ws_id == INVALID) {          /*c1147*/
-                xgks_state.activews[i].ws_id = ws_id;           /*c1147*/
-                xgks_state.activews[i].ws = ws;                 /*c1147*/
+        if (xgks_state.activews[i].ws_id == INVALID) {
+                xgks_state.activews[i].ws_id = ws_id;
+                xgks_state.activews[i].ws = ws;
                 return(0);
         }
    return (INVALID);
@@ -186,10 +186,10 @@ Gint  ws_id;
         Gint i;
 
         for (i=0; i<MAX_ACTIVE_WS; i++) {
-                if (xgks_state.activews[i].ws_id == ws_id) {            /*c1147*/
-                        xgks_state.activews[i].ws_id = INVALID;         /*c1147*/
-                        xgks_state.activews[i].win = INVALID;           /*c1147*/
-                        xgks_state.activews[i].ws = NULL;               /*c1147*/
+                if (xgks_state.activews[i].ws_id == ws_id) {
+                        xgks_state.activews[i].ws_id = INVALID;
+                        xgks_state.activews[i].win = INVALID;
+                        xgks_state.activews[i].ws = NULL;
                         return;
                 }
         }

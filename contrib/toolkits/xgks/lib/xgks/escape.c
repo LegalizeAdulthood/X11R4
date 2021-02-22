@@ -50,7 +50,7 @@ Gint gescinqxattr(Gint ws_id, Display **dpy, Window *win, GC *gc)
         WS_STATE_ENTRY *ws;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescinqxattr) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescinqxattr)
 
 /* check for valid ws_id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescinqxattr)   /* c1012 */
@@ -84,7 +84,7 @@ Gint gescsetcolourmask(Gint ws_id, unsigned long mask)
         WS_STATE_PTR ws;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescsetcolourmask) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescsetcolourmask)
 
 /* check for valid ws_id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescsetcolourmask)   /* c1012 */
@@ -115,7 +115,7 @@ Gint gescsetdcsize(Gint ws_id, Gpoint size)
         WS_STATE_PTR ws;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescsetdcsize) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescsetdcsize)
 
 /* check for valid ws_id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescsetdcsize)   /* c1012 */
@@ -149,11 +149,11 @@ Gint gescsetdcsize(Gint ws_id, Gpoint size)
         if (ws->wsti.current.v.ymax > size.y) ws->wsti.current.v.ymax = size.y;
 
 /* update the workstation transformation matrix and clip region */
-        xXgksUpdateTrans(ws);                                   /*c1147*/
-        XgksUpdateWsClip(ws, &(xgks_state.cliprec.rec));        /*c1147*/
+        xXgksUpdateTrans(ws);
+        XgksUpdateWsClip(ws, &(xgks_state.cliprec.rec));
 
 /* redraw the workstation content */
-        XgksXReDrawWs(ws);                                      /*c1147*/
+        XgksXReDrawWs(ws);
 
         return(OK);
 }
@@ -168,7 +168,7 @@ Gint gescstoreprimi(Gint ws_id, Gstore store)
         WS_STATE_PTR ws;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescstoreprimi) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescstoreprimi)
 
 /* check for valid ws_id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescstoreprimi)   /* c1012 */
@@ -198,7 +198,7 @@ Gint gescredrawnotify(Gint ws_id, Gint (*funcp)())
 {
         WS_STATE_PTR ws;
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescredrawnotify) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescredrawnotify)
 
 /* check for valid ws_id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescredrawnotify)   /* c1012 */

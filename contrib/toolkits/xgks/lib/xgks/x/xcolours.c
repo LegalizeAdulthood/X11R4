@@ -47,7 +47,7 @@
 int XgksSIGIO_OFF(Display *dpy);
 int XgksSIGIO_ON(Display *dpy);
 
-int xXgksSetColourRep(ws, idx, rep)                             /*c1147*/
+int xXgksSetColourRep(ws, idx, rep)
         WS_STATE_PTR ws;
         int idx;
         Gcobundl *rep;
@@ -143,7 +143,7 @@ int xXgksSetColourRep(ws, idx, rep)                             /*c1147*/
         /* right now, otherwise the actual change will have */ /* c1145 */
         /* to wait until we do have the focus.  (focus_ws   */ /* c1145 */
         /* is updated in xevent.c) */ /* c1145 */
-        if ((ws != NULL) && (ws == xgks_state.focus_ws)) /* c1145 */ /*c1147*/
+        if ((ws != NULL) && (ws == xgks_state.focus_ws))
             {                                                  /* c1145 */
             XInstallColormap(dpy, ws->wclmp);                  /* c1145 */
             XFlush (dpy);                                      /* c1145 */
@@ -162,7 +162,7 @@ int xXgksSetColourRep(ws, idx, rep)                             /*c1147*/
 
 
 
-int xXgksInqColourRep(ws, idx, type, rep)                       /*c1147*/
+int xXgksInqColourRep(ws, idx, type, rep)
         WS_STATE_PTR ws;
         int idx;
         Gqtype type;
@@ -213,6 +213,3 @@ int xXgksInqColourRep(ws, idx, type, rep)                       /*c1147*/
 
         return(0);
 }
-
-
-/* c1147:  Deleted xInqColourInd */

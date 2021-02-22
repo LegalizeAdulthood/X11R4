@@ -282,18 +282,18 @@ Gint gemergencyclosegks(void)
 {
         int i;
 
-        if (xgks_state.gks_state == GGKCL) /* already closed, nothing to do *//*c1147*/
+        if (xgks_state.gks_state == GGKCL) /* already closed, nothing to do */
                 return( OK );
 
-        if (xgks_state.gks_state == GSGOP) /* close any open segment */ /*c1147*/
+        if (xgks_state.gks_state == GSGOP) /* close any open segment */
                 gcloseseg();
 
-        if (xgks_state.gks_state != GGKCL && xgks_state.gks_state != GGKOP) { /* any workstations open? */ /*c1147*/
+        if (xgks_state.gks_state != GGKCL && xgks_state.gks_state != GGKOP) { /* any workstations open? */
                 for(i=0; i<MAX_OPEN_WS; i++)
-                        if ( xgks_state.openedws[i].ws_id != INVALID ) { /*c1147*/
-                          if (xgks_state.openedws[i].ws->wsstate == GACTIVE) /*c1147*/
-                             gdeactivatews( xgks_state.openedws[i].ws_id ); /*c1147*/
-                        gclosews( xgks_state.openedws[i].ws_id ); /*c1147*/
+                        if ( xgks_state.openedws[i].ws_id != INVALID ) {
+                          if (xgks_state.openedws[i].ws->wsstate == GACTIVE)
+                             gdeactivatews( xgks_state.openedws[i].ws_id );
+                        gclosews( xgks_state.openedws[i].ws_id );
                         }
         }
         gclosegks();

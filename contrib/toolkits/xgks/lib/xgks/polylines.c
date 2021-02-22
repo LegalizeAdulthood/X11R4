@@ -49,6 +49,8 @@
 
 #include "gks_implem.h"
 
+#include "polylines.h"
+
 void XgksMoGraphicOutput(Gint code, Gint num_pt, Gpoint *pos);
 void XgksMoSetGraphicAttr(Gint code, Gint attr);
 void XgksMoSetGraphicSize(Gint code, Gfloat size);
@@ -60,19 +62,16 @@ void XgksMoSetLineMarkRep(WS_STATE_PTR ws, Gint code, Gint idx, Gint type, Gint 
 
 /* c1143:  Created predefined reps 1-5 */
 
-/* c1147:  Moved predefined reps to polylines.h */
-#include "polylines.h"                                                  /*c1147*/
-
 void XgksInitGksPlines(void)
 {
-        xgks_state.gks_lnattr.line  = 1;    /* line indx */ /* c1143 */ /*c1147*/
-        xgks_state.gks_lnattr.type  = GINDIVIDUAL; /* type ASF */ /* c1143 */ /*c1147*/
-        xgks_state.gks_lnattr.width = GINDIVIDUAL; /* width ASF *//* c1143 */ /*c1147*/
-        xgks_state.gks_lnattr.colour = GINDIVIDUAL;/* colour ASF *//* c1143 *//*c1147*/
+        xgks_state.gks_lnattr.line  = 1;    /* line indx */
+        xgks_state.gks_lnattr.type  = GINDIVIDUAL; /* type ASF */
+        xgks_state.gks_lnattr.width = GINDIVIDUAL; /* width ASF */
+        xgks_state.gks_lnattr.colour = GINDIVIDUAL;/* colour ASF */
         /* line bundle */                                          /* c1143 */
-        xgks_state.gks_lnattr.bundl.type  = def_lnbundl[0].type; /* c1143 */ /*c1147*/
-        xgks_state.gks_lnattr.bundl.width = def_lnbundl[0].width;/* c1143 */ /*c1147*/
-        xgks_state.gks_lnattr.bundl.colour = def_lnbundl[0].colour;/* c1143 *//*c1147*/
+        xgks_state.gks_lnattr.bundl.type  = def_lnbundl[0].type;
+        xgks_state.gks_lnattr.bundl.width = def_lnbundl[0].width;
+        xgks_state.gks_lnattr.bundl.colour = def_lnbundl[0].colour;
 }
 /*
  * XgksInitWssPlines(ws) - Initialize workstation line bundle talbe
@@ -111,7 +110,7 @@ Gint gpolyline(Gint num_pts, Gpoint *pts)
         OUT_PRIMI  *line;
 
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errgpolyline) /*c1147*/
+        GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errgpolyline)
 
 /* check for at least two points */
         GKSERROR ((num_pts < 2) ,100, errgpolyline)
@@ -131,7 +130,7 @@ Gint gpolyline(Gint num_pts, Gpoint *pts)
         for (cnt=0; cnt < num_pts; cnt++, pts++, ndc_pt++)
                 WcToNdc(pts, ndc_pt);   /* convert to ndc coordinate */
 
-        line->primi.pline.plnattr = xgks_state.gks_lnattr; /* copy SAF and individual values from GKS state list */ /*c1147*/
+        line->primi.pline.plnattr = xgks_state.gks_lnattr; /* copy SAF and individual values from GKS state list */
         XgksProcessPrimi(line);
 
         if (MO_OPENED == TRUE) XgksMoGraphicOutput (11, num_pts, line->primi.pline.pts);
@@ -153,12 +152,12 @@ Gint gpolyline(Gint num_pts, Gpoint *pts)
 Gint gsetlineind(Gint idx)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlineind) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlineind)
 
 /* check for valid polyline bundle table index */
         GKSERROR ((idx < 1) ,60, errgsetlineind)
 
-        xgks_state.gks_lnattr.line = idx; /* change the bundle entry index (gks state table) */ /*c1147*/
+        xgks_state.gks_lnattr.line = idx; /* change the bundle entry index (gks state table) */
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (21, idx);
 
@@ -178,13 +177,13 @@ Gint gsetlineind(Gint idx)
 Gint gsetlinetype(Gint type)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlinetype) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlinetype)
 
 /* check for valid linetype */
         GKSERROR ((type == 0) ,63, errgsetlinetype)
 
 /* change the gks state list */
-        xgks_state.gks_lnattr.bundl.type = type;                /*c1147*/
+        xgks_state.gks_lnattr.bundl.type = type;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (22, type);
 
@@ -204,13 +203,13 @@ Gint gsetlinetype(Gint type)
 Gint gsetlinewidth(Gfloat width)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlinewidth) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlinewidth)
 
 /* check for invalid width */
         GKSERROR ((width < 0) ,65, errgsetlinewidth)
 
 /* now change the gks state table */
-        xgks_state.gks_lnattr.bundl.width = width;              /*c1147*/
+        xgks_state.gks_lnattr.bundl.width = width;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicSize (23, width);
 
@@ -230,13 +229,13 @@ Gint gsetlinewidth(Gfloat width)
 Gint gsetlinecolourind(Gint idx)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlinecolourind) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetlinecolourind)
 
 /* check for invalid colour */
         GKSERROR ((idx < 0) ,92, errgsetlinecolourind)
 
 /* change the gks state list */
-        xgks_state.gks_lnattr.bundl.colour = idx;               /*c1147*/
+        xgks_state.gks_lnattr.bundl.colour = idx;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (24, idx);
 
@@ -259,7 +258,7 @@ Gint gsetlinerep(Gint ws_id, Gint idx, Glnbundl *rep)
         WS_STATE_PTR ws;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetlinerep) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetlinerep)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetlinerep)   /* c1012 */

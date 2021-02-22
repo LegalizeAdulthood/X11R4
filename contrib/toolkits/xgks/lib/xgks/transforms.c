@@ -79,28 +79,28 @@ void XgksInitGksTrans(void)
         Gint i;                         /* Loop counter */
         Glimit tmp;                     /* temporary limit variable */
 
-        xgks_state.cur_ntrans   = 0; /* current normalization transformation */ /*c1147*/
-        xgks_state.cliprec.ind  = GCLIP; /* clip at window and viewport */ /*c1147*/
-        xgks_state.cliprec.rec.xmin= 0.0;                               /*c1147*/
-        xgks_state.cliprec.rec.xmax= 1.0;                               /*c1147*/
-        xgks_state.cliprec.rec.ymin= 0.0;                               /*c1147*/
-        xgks_state.cliprec.rec.ymax= 1.0;                               /*c1147*/
+        xgks_state.cur_ntrans   = 0; /* current normalization transformation */
+        xgks_state.cliprec.ind  = GCLIP; /* clip at window and viewport */
+        xgks_state.cliprec.rec.xmin= 0.0;
+        xgks_state.cliprec.rec.xmax= 1.0;
+        xgks_state.cliprec.rec.ymin= 0.0;
+        xgks_state.cliprec.rec.ymax= 1.0;
 
         for( i=0; i<=MAX_TRANS; i++)
-                xgks_state.ntrans_priority[i] = i;                      /*c1147*/
+                xgks_state.ntrans_priority[i] = i;
 
-        xgks_state.ntrans_list[0].ntrans.w.xmin = 0.0;    /* window */  /*c1147*/
-        xgks_state.ntrans_list[0].ntrans.w.xmax = 1.0;                  /*c1147*/
-        xgks_state.ntrans_list[0].ntrans.w.ymin = 0.0;                  /*c1147*/
-        xgks_state.ntrans_list[0].ntrans.w.ymax = 1.0;                  /*c1147*/
-        xgks_state.ntrans_list[0].ntrans.v.xmin = 0.0;   /*viewport */  /*c1147*/
-        xgks_state.ntrans_list[0].ntrans.v.xmax = 1.0;                  /*c1147*/
-        xgks_state.ntrans_list[0].ntrans.v.ymin = 0.0;                  /*c1147*/
-        xgks_state.ntrans_list[0].ntrans.v.ymax = 1.0;                  /*c1147*/
-        xgks_state.ntrans_list[0].wc_to_ndc.xmax = 0.0; /* sx */        /*c1147*/
-        xgks_state.ntrans_list[0].wc_to_ndc.xmin = 1.0; /* tx */        /*c1147*/
-        xgks_state.ntrans_list[0].wc_to_ndc.ymax = 0.0; /* sx */        /*c1147*/
-        xgks_state.ntrans_list[0].wc_to_ndc.ymin = 1.0; /* tx */        /*c1147*/
+        xgks_state.ntrans_list[0].ntrans.w.xmin = 0.0;    /* window */
+        xgks_state.ntrans_list[0].ntrans.w.xmax = 1.0;
+        xgks_state.ntrans_list[0].ntrans.w.ymin = 0.0;
+        xgks_state.ntrans_list[0].ntrans.w.ymax = 1.0;
+        xgks_state.ntrans_list[0].ntrans.v.xmin = 0.0;   /*viewport */
+        xgks_state.ntrans_list[0].ntrans.v.xmax = 1.0;
+        xgks_state.ntrans_list[0].ntrans.v.ymin = 0.0;
+        xgks_state.ntrans_list[0].ntrans.v.ymax = 1.0;
+        xgks_state.ntrans_list[0].wc_to_ndc.xmax = 0.0; /* sx */
+        xgks_state.ntrans_list[0].wc_to_ndc.xmin = 1.0; /* tx */
+        xgks_state.ntrans_list[0].wc_to_ndc.ymax = 0.0; /* sx */
+        xgks_state.ntrans_list[0].wc_to_ndc.ymin = 1.0; /* tx */
 
         /* now use normal methods to initialise others */
         tmp.xmin = 0.0; tmp.xmax = 1.0; tmp.ymin = 0.0; tmp.ymax = 1.0;
@@ -158,7 +158,7 @@ void XgksInitWssTrans(WS_STATE_PTR ws)
 Gint gsetwindow(Gint trans, Glimit *window)
 {
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetwindow)    /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetwindow)
 
 /* check for valid transformation number */
         GKSERROR ((trans < 1 || trans > MAX_TRANS) ,50, errgsetwindow)
@@ -167,10 +167,10 @@ Gint gsetwindow(Gint trans, Glimit *window)
         GKSERROR ((window->xmin >= window->xmax || window->ymin >= window->ymax) ,51, errgsetwindow)
 
 /* OK to change the window! */
-        xgks_state.ntrans_list[trans].ntrans.w.xmax = window->xmax;     /*c1147*/
-        xgks_state.ntrans_list[trans].ntrans.w.xmin = window->xmin;     /*c1147*/
-        xgks_state.ntrans_list[trans].ntrans.w.ymax = window->ymax;     /*c1147*/
-        xgks_state.ntrans_list[trans].ntrans.w.ymin = window->ymin;     /*c1147*/
+        xgks_state.ntrans_list[trans].ntrans.w.xmax = window->xmax;
+        xgks_state.ntrans_list[trans].ntrans.w.xmin = window->xmin;
+        xgks_state.ntrans_list[trans].ntrans.w.ymax = window->ymax;
+        xgks_state.ntrans_list[trans].ntrans.w.ymin = window->ymin;
 
 /* now compute the new values for the wc to ndc transform and clip rectangle */
         XgksComputeTrans(trans);
@@ -182,7 +182,7 @@ Gint gsetwindow(Gint trans, Glimit *window)
            XgksMoSetCharUp ();
            }
 
-        if (trans == xgks_state.cur_ntrans) XgksSetClip(xgks_state.cliprec.ind); /*c1147*/
+        if (trans == xgks_state.cur_ntrans) XgksSetClip(xgks_state.cliprec.ind);
 
         return( OK );
 }
@@ -200,7 +200,7 @@ Gint gsetwindow(Gint trans, Glimit *window)
 Gint gsetviewport(Gint trans, Glimit *viewport)
 {
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetviewport)  /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetviewport)
 
 /* check for valid transformation number */
         GKSERROR ((trans < 1 || trans > MAX_TRANS) ,50, errgsetviewport)
@@ -214,21 +214,21 @@ Gint gsetviewport(Gint trans, Glimit *viewport)
                    viewport->ymax < 0.0 || viewport->ymax > 1.0) ,52, errgsetviewport)
 
 /* ok to change the viewport */
-        xgks_state.ntrans_list[trans].ntrans.v.xmax = viewport->xmax;   /*c1147*/
-        xgks_state.ntrans_list[trans].ntrans.v.xmin = viewport->xmin;   /*c1147*/
-        xgks_state.ntrans_list[trans].ntrans.v.ymax = viewport->ymax;   /*c1147*/
-        xgks_state.ntrans_list[trans].ntrans.v.ymin = viewport->ymin;   /*c1147*/
+        xgks_state.ntrans_list[trans].ntrans.v.xmax = viewport->xmax;
+        xgks_state.ntrans_list[trans].ntrans.v.xmin = viewport->xmin;
+        xgks_state.ntrans_list[trans].ntrans.v.ymax = viewport->ymax;
+        xgks_state.ntrans_list[trans].ntrans.v.ymin = viewport->ymin;
 
 /* now compute the new values for the wc to ndc transform and clip */
         XgksComputeTrans(trans);
 
-        if (trans == xgks_state.cur_ntrans)  XgksSetClip(xgks_state.cliprec.ind); /*c1147*/
+        if (trans == xgks_state.cur_ntrans)  XgksSetClip(xgks_state.cliprec.ind);
 
         if (MO_OPENED == TRUE) {
                 XgksMoSetPatRef ();
                 XgksMoSetPatSize ();
                 XgksMoSetCharUp ();
-                XgksMoSetClip (&xgks_state.cliprec.rec);                /*c1147*/
+                XgksMoSetClip (&xgks_state.cliprec.rec);
         }
 
         return( OK );
@@ -250,7 +250,7 @@ Gint gsetviewportinputpri(Gint trans, Gint ref_trans, Gvpri priority)
 {
         Gint i, j;
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetviewportinputpri) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetviewportinputpri)
 
 /* check for valid transformation number */
         GKSERROR ((trans > MAX_TRANS || trans < 0) ,     /* c1008 */
@@ -261,23 +261,23 @@ Gint gsetviewportinputpri(Gint trans, Gint ref_trans, Gvpri priority)
 
         if (trans != ref_trans) {
         /* first find & remove trans from the priority list */
-                for (i=0; xgks_state.ntrans_priority[i] != trans; i++)  /*c1147*/
+                for (i=0; xgks_state.ntrans_priority[i] != trans; i++)
                         continue;
                 while (i < MAX_TRANS) {
-                        xgks_state.ntrans_priority[i] = xgks_state.ntrans_priority[i+1]; /*c1147*/
+                        xgks_state.ntrans_priority[i] = xgks_state.ntrans_priority[i+1];
                         i++;
                 }
-                xgks_state.ntrans_priority[MAX_TRANS] = ref_trans; /* just to be safe in the next step */ /*c1147*/
+                xgks_state.ntrans_priority[MAX_TRANS] = ref_trans; /* just to be safe in the next step */
 
         /* now find the reference transformation in the priority list */
-                for (i=0; xgks_state.ntrans_priority[i] != ref_trans; i++) /*c1147*/
+                for (i=0; xgks_state.ntrans_priority[i] != ref_trans; i++)
                         continue;
         /* insert trans back into the list */
                 if (priority == GLOWER)
                         i++;
                 for (j=MAX_TRANS; i < j; j--)
-                        xgks_state.ntrans_priority[j] = xgks_state.ntrans_priority[j-1]; /*c1147*/
-                xgks_state.ntrans_priority[i] = trans;                  /*c1147*/
+                        xgks_state.ntrans_priority[j] = xgks_state.ntrans_priority[j-1];
+                xgks_state.ntrans_priority[i] = trans;
         }
         return( OK );
 }
@@ -295,20 +295,20 @@ Gint gsetviewportinputpri(Gint trans, Gint ref_trans, Gvpri priority)
 Gint gselntran(Gint trans)
 {
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgselntran)     /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgselntran)
 
 /* check for valid transformation number */
         GKSERROR ((trans > MAX_TRANS || trans < 0) ,50, errgselntran) /*c1008*/
 
 /* change the current normalization */
-        xgks_state.cur_ntrans = trans;                          /*c1147*/
-        XgksSetClip(xgks_state.cliprec.ind);                    /*c1147*/
+        xgks_state.cur_ntrans = trans;
+        XgksSetClip(xgks_state.cliprec.ind);
 
         if (MO_OPENED == TRUE) {
                 XgksMoSetPatRef ();
                 XgksMoSetPatSize ();
                 XgksMoSetCharUp ();
-                XgksMoSetClip (&xgks_state.cliprec.rec);        /*c1147*/
+                XgksMoSetClip (&xgks_state.cliprec.rec);
         }
 
         return( OK );
@@ -326,17 +326,17 @@ Gint gselntran(Gint trans)
 Gint gsetclip(Gclip ind)
 {
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetclip)      /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetclip)
 
 /* Check for valid enumeration type */
         GKSERROR ((ind!=GCLIP && ind!=GNOCLIP), 2000, errgsetclip);
 
 /* set it and change the clipping rectangle */
-        xgks_state.cliprec.ind = ind;                           /*c1147*/
+        xgks_state.cliprec.ind = ind;
 
         XgksSetClip (ind);
 
-        if (MO_OPENED == TRUE) XgksMoSetClip (&(xgks_state.cliprec.rec)); /*c1147*/
+        if (MO_OPENED == TRUE) XgksMoSetClip (&(xgks_state.cliprec.rec));
 
         return( OK );
 }
@@ -358,7 +358,7 @@ Gint gsetwswindow(Gint ws_id, Glimit *window)
 
 /* step 1: check for errors */
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetwswindow) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetwswindow)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetwswindow)   /* c1012 */
@@ -408,7 +408,7 @@ Gint gsetwsviewport(Gint ws_id, Glimit *viewport)
 
 /* STEP 1: check for errors */
 /* check gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetwsviewport) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetwsviewport)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetwsviewport)   /* c1012 */
@@ -451,7 +451,7 @@ static void XgksComputeTrans(Gint trans)
 {
         NORM_TRANS *nt;
 
-        nt = &(xgks_state.ntrans_list[trans]);                          /*c1147*/
+        nt = &(xgks_state.ntrans_list[trans]);
 /* compute the wc to ndc matrix values (sx,tx,sy,ty)*/
 
         nt->wc_to_ndc.xmin = (nt->ntrans.v.xmax - nt->ntrans.v.xmin) / (nt->ntrans.w.xmax - nt->ntrans.w.xmin);
@@ -478,8 +478,8 @@ void XgksUnpendPendingTrans(WS_STATE_PTR ws)
 
 /* step 3: compute the ndc_to_dc transformation */
         /* this is part is pushed down to xlib */
-        xXgksUpdateTrans(ws);                                           /*c1147*/
-        XgksUpdateWsClip(ws, &(xgks_state.cliprec.rec));                /*c1147*/
+        xXgksUpdateTrans(ws);
+        XgksUpdateWsClip(ws, &(xgks_state.cliprec.rec));
 }
 
 /*
@@ -505,9 +505,9 @@ Bool XgksFindNTrans(Gpoint *ndcpt, Gloc *gloc)
 
 /* run down the priority list */
         for (pl=0; pl <= MAX_TRANS; pl++) {
-                trans = xgks_state.ntrans_priority[pl]; /* get trans. of prio. pl*/ /*c1147*/
+                trans = xgks_state.ntrans_priority[pl]; /* get trans. of prio. pl*/
                 NtNdcToWc(trans, ndcpt, &wcpt);   /* convert point with trans */
-                win = &xgks_state.ntrans_list[trans].ntrans.w;  /* get limits of trans.  */ /*c1147*/
+                win = &xgks_state.ntrans_list[trans].ntrans.w;  /* get limits of trans.  */
                 /* if within limits of transform window... */
                 if (wcpt.x >= win->xmin && wcpt.y >= win->ymin
                         && wcpt.x <= win->xmax && wcpt.y <= win->ymax)
@@ -549,8 +549,8 @@ Bool XgksFindNTransNpts(int num, Gpoint *ndcpts, Gint *ntrans, Gpoint *wcpts)
 
 /* run down the priority list */
         for (pl=0; pl <= MAX_TRANS; pl++) {
-                *ntrans = xgks_state.ntrans_priority[pl]; /* transform of pri pl */ /*c1147*/
-                win     = &xgks_state.ntrans_list[*ntrans].ntrans.w; /* limits of trans */ /*c1147*/
+                *ntrans = xgks_state.ntrans_priority[pl]; /* transform of pri pl */
+                win     = &xgks_state.ntrans_list[*ntrans].ntrans.w; /* limits of trans */
                 ndcpt   = ndcpts;                         /* head of list */
                 wcpt    = wcpts -1;                       /* backup one */
                 cnt     = 0;                              /* count points */
@@ -600,7 +600,7 @@ void XgksUpdateWsClip(WS_STATE_PTR ws, Glimit *bound)
 {
         if (ws->ewstype != X_WIN) return;
         XgksWsWinInterset (ws, bound, &(ws->clip));
-        xXgksUpdateClip(ws);                                    /*c1147*/
+        xXgksUpdateClip(ws);
 }
 /*
  * XgksWsWinInterset (ws, v, clip)      find the intersection between NDC-viewport and ws-window
@@ -663,7 +663,7 @@ fprintf(stderr, "gevaltran:transforms.c: input result = %f %f %f %f %f %f\n",
 #endif
 
 /* check for proper gks operating state */
-        GKSERROR ( (xgks_state.gks_state == GGKCL), 8, errgevaltran);   /*c1147*/
+        GKSERROR ( (xgks_state.gks_state == GGKCL), 8, errgevaltran);
 
 /* check for proper coordinate type */
         GKSERROR ( (coord != GWC && coord != GNDC), 2000, errgevaltran);
@@ -722,7 +722,7 @@ Gint gaccumtran(Gfloat segtran[2][3], Gpoint *ppoint, Gpoint *pshift, Gfloat ang
         double  c,s;    /* cosine, sine vars    c1175 */
 
 /* check for proper gks operating state */
-        GKSERROR ( (xgks_state.gks_state == GGKCL), 8, errgaccumtran);  /*c1147*/
+        GKSERROR ( (xgks_state.gks_state == GGKCL), 8, errgaccumtran);
 
 /* check for proper coordinate type */
         GKSERROR ( (coord != GWC && coord != GNDC), 2000, errgaccumtran);
@@ -759,17 +759,17 @@ Gint gaccumtran(Gfloat segtran[2][3], Gpoint *ppoint, Gpoint *pshift, Gfloat ang
 static void XgksSetClip(Gclip ind)
 {
         if (ind == GCLIP) {
-                xgks_state.cliprec.rec.xmin = xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.xmin; /*c1147*/
-                xgks_state.cliprec.rec.xmax = xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.xmax; /*c1147*/
-                xgks_state.cliprec.rec.ymin = xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.ymin; /*c1147*/
-                xgks_state.cliprec.rec.ymax = xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.ymax; /*c1147*/
+                xgks_state.cliprec.rec.xmin = xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.xmin;
+                xgks_state.cliprec.rec.xmax = xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.xmax;
+                xgks_state.cliprec.rec.ymin = xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.ymin;
+                xgks_state.cliprec.rec.ymax = xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.ymax;
         }
         else {
-                xgks_state.cliprec.rec.xmin = xgks_state.cliprec.rec.ymin = 0.0; /*c1147*/
-                xgks_state.cliprec.rec.xmax = xgks_state.cliprec.rec.ymax = 1.0; /*c1147*/
+                xgks_state.cliprec.rec.xmin = xgks_state.cliprec.rec.ymin = 0.0;
+                xgks_state.cliprec.rec.xmax = xgks_state.cliprec.rec.ymax = 1.0;
         }
 
-        XgksProcessClip(&(xgks_state.cliprec.rec));             /*c1147*/
+        XgksProcessClip(&(xgks_state.cliprec.rec));
 }
 
 static void XgksSetWsWindow(WS_STATE_PTR ws, Glimit *window)

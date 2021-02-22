@@ -36,7 +36,10 @@
  */
 
 #include <string.h>
+
 #include "gks_implem.h"
+
+#include "polylines.h"
 
 /*
  * ginqlinefacil(ws_type, fac)
@@ -58,7 +61,7 @@ Gint ginqlinefacil(ws_type, fac)
         EWSTYPE ewstype;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqlinefacil); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqlinefacil);
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -102,9 +105,6 @@ Gint ginqlinefacil(ws_type, fac)
  * See also: ANSI standard p.171
  */
 
-/* c1147:  Predefined bundles in polylines.h */
-#include "polylines.h"                                  /*c1147*/
-
 Gint ginqpredlinerep(ws_type, idx, rep)
         Gchar *ws_type;
         Gint idx;
@@ -113,7 +113,7 @@ Gint ginqpredlinerep(ws_type, idx, rep)
         EWSTYPE ewstype;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredlinerep); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredlinerep);
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -151,7 +151,7 @@ Gint ginqlineindices(ws_id, idxlist)
         int  i;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqlineindices); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqlineindices);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqlineindices)   /* c1012 */
@@ -197,7 +197,7 @@ Gint ginqlinerep(ws_id, idx, type, rep)
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqlinerep); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqlinerep);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqlinerep)   /* c1012 */

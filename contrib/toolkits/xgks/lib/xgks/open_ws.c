@@ -105,7 +105,7 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
     int status;
 
 /* check proper state */
-    GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgopenws)           /*c1147*/
+    GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgopenws)
 
     GKSERROR ((!VALID_WSID(ws_id)) ,20, errgopenws)  /* c1012 */
 
@@ -160,7 +160,7 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
                 free((char *)ws->conn);
                 free((char *)ws);
                 XgksDeleteOpenWs(ws_id);    /* update openedws[] array */
-                gerrorhand(26, errgopenws, xgks_state.gks_err_file);    /*c1147*/
+                gerrorhand(26, errgopenws, xgks_state.gks_err_file);
                 return(26);
                       }
                 GKSERROR ((XgksMiOpenWs ( ws ) != 0), 26, errgopenws) /* c1068 */
@@ -169,20 +169,20 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
                 free((char *)ws->conn);
                 free((char *)ws);
                 XgksDeleteOpenWs(ws_id);    /* update openedws[] array */
-                gerrorhand(26, errgopenws, xgks_state.gks_err_file);    /*c1147*/
+                gerrorhand(26, errgopenws, xgks_state.gks_err_file);
                 return(26);
                       }
                  XgksMoOpenWs ( ws );
-                 xgks_state.open_mo++;                                  /*c1147*/
+                 xgks_state.open_mo++;
                  break;
         case WISS  : /* If opening WISS, make sure there's no other WISS being opened */
-                      GKSERROR ((xgks_state.wiss_id != INVALID), 28, errgopenws); /*c1147*/
-                      xgks_state.wiss_id = ws_id;                       /*c1147*/
+                      GKSERROR ((xgks_state.wiss_id != INVALID), 28, errgopenws);
+                      xgks_state.wiss_id = ws_id;
                       break;
     }
 
-    if (xgks_state.gks_state == GGKOP)                                   /*c1147*/
-        xgks_state.gks_state = GWSOP;    /* change state to 1 ws open */ /*c1147*/
+    if (xgks_state.gks_state == GGKOP)
+        xgks_state.gks_state = GWSOP;
 
     XgksInitWssPlines(ws);        /* init POLYLINE BUNDLE TABLE */
     XgksInitWssPmarkers(ws);    /* POLYMARKER BUNDLE TABLE */
@@ -216,7 +216,7 @@ Gint gclosews(Gint ws_id)
     WS_STATE_PTR ws;
 
 /* check gks in proper state */
-    GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) ,7, errgclosews) /*c1147*/
+    GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) ,7, errgclosews)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgclosews)   /* c1012 */
@@ -264,16 +264,16 @@ Gint gclosews(Gint ws_id)
 /* House keeping for workstation consistency */
     switch (ws->ewstype) {
         case X_WIN : /* tell x-window system to destroy the window */
-                 xXgksCloseWs(ws);                              /*c1147*/
+                 xXgksCloseWs(ws);
                  /* Flush the event queue for this workstation */
                  gflushevents (ws_id, GNCLASS, 0);
                  break;
         case MI    : XgksMiCloseWs (ws);
                  break;
         case MO    : XgksMoCloseWs (ws);
-                 xgks_state.open_mo--;                          /*c1147*/
+                 xgks_state.open_mo--;
                  break;
-        case WISS  : xgks_state.wiss_id = INVALID;              /*c1147*/
+        case WISS  : xgks_state.wiss_id = INVALID;
                  break;
     }
 
@@ -285,7 +285,7 @@ Gint gclosews(Gint ws_id)
 
 /* clean up stuff */
     if (XgksOneOpenWs() == FALSE )    /* that was the last workstation open */
-        xgks_state.gks_state = GGKOP; /* set state to gks open no ws open */ /*c1147*/
+        xgks_state.gks_state = GGKOP; /* set state to gks open no ws open */
 
 /* everything went ok */
     return(OK);
@@ -305,7 +305,7 @@ Gint gclearws(Gint ws_id, Gclrflag control_flag)
     WS_STATE_PTR ws;
 
 /* check for proper operating state */
-    GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC) ,6, errgclearws) /*c1147*/
+    GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC) ,6, errgclearws)
 
 /* Check for valid ws_id  */
     GKSERROR ((!VALID_WSID(ws_id)) ,20, errgclearws)  /* c1012 */
@@ -327,7 +327,7 @@ Gint gclearws(Gint ws_id, Gclrflag control_flag)
 
     if (ws->ewstype != MO) {                                    /* c1139 */
         XgksIDevDisable( ws );                                  /* c1139 */
-        xXgksClearWs(ws);                                       /* c1139 *//*c1147*/
+        xXgksClearWs(ws);
     }                                                           /* c1139 */
     if (ws->wsti.wstus == GPENDING) XgksUnpendPendingTrans(ws);
 
@@ -359,8 +359,8 @@ WS_STATE_PTR ws;
    Gint i;
 
    for (i=0; i<MAX_OPEN_WS; i++)
-         if (xgks_state.openedws[i].ws_id == ws_id) {                   /*c1147*/
-        xgks_state.openedws[i].ws = ws;                                 /*c1147*/
+         if (xgks_state.openedws[i].ws_id == ws_id) {
+        xgks_state.openedws[i].ws = ws;
         return(OK);
     }
    return (INVALID);
@@ -380,8 +380,8 @@ Gint ws_id;
    Gint i;
 
    for (i=0; i<MAX_OPEN_WS; i++)
-         if (xgks_state.openedws[i].ws_id == INVALID) {                 /*c1147*/
-        xgks_state.openedws[i].ws_id = ws_id;                           /*c1147*/
+         if (xgks_state.openedws[i].ws_id == INVALID) {
+        xgks_state.openedws[i].ws_id = ws_id;
         return(OK);
     }
    return (INVALID);
@@ -399,10 +399,10 @@ Gint  ws_id;
     Gint i;
 
     for (i=0; i<MAX_OPEN_WS; i++) {
-        if (xgks_state.openedws[i].ws_id == ws_id) {                    /*c1147*/
-            xgks_state.openedws[i].ws_id = INVALID;                     /*c1147*/
-            xgks_state.openedws[i].win = INVALID;                       /*c1147*/
-            xgks_state.openedws[i].ws = NULL;                           /*c1147*/
+        if (xgks_state.openedws[i].ws_id == ws_id) {
+            xgks_state.openedws[i].ws_id = INVALID;
+            xgks_state.openedws[i].win = INVALID;
+            xgks_state.openedws[i].ws = NULL;
             return;
         }
     }
@@ -420,7 +420,7 @@ WS_STATE_PTR XgksValidWsId(Gint ws_id)
     Gint i;
 
     for (i=0; i<MAX_OPEN_WS; i++) {
-        if (xgks_state.openedws[i].ws_id == ws_id)  return(xgks_state.openedws[i].ws); /*c1147*/
+        if (xgks_state.openedws[i].ws_id == ws_id)  return(xgks_state.openedws[i].ws);
     }
     return (NULL);
 }
@@ -443,7 +443,7 @@ static WS_STATE_PTR XgksNewWs(void)
         new->clip = xgks_state.cliprec.rec;
         new->primi_list.pid = CLIP_REC;
         new->primi_list.seg_cnt = 0;
-        new->primi_list.primi.clip.rec = xgks_state.cliprec.rec;/*c1147*/
+        new->primi_list.primi.clip.rec = xgks_state.cliprec.rec;
         new->primi_list.primi.clip.segment = FALSE;
         new->primi_list.next = NULL;
         new->primi_insert_pt = &(new->primi_list);
@@ -468,7 +468,7 @@ static int XgksOneOpenWs(void)
     Gint i;
 
     for (i=0; i<MAX_OPEN_WS; i++) {
-        if (xgks_state.openedws[i].ws_id != INVALID)  return(TRUE);     /*c1147*/
+        if (xgks_state.openedws[i].ws_id != INVALID)  return(TRUE);
     }
     return (FALSE);
 }
@@ -522,11 +522,11 @@ void XgksXReDrawWs(WS_STATE_PTR ws)
             seg_ptr = seg_ptr->next;
         }
         ws->clip = tmp_nonsegclip;    /* restore non-segment primitive clip regions */
-        xXgksUpdateClip(ws);                                    /*c1147*/
+        xXgksUpdateClip(ws);
         primi = primi->next;
     }
     ws->clip = tmp_wsclip;    /* restore the old ws->clip value */
-    xXgksUpdateClip(ws);                                        /*c1147*/
+    xXgksUpdateClip(ws);
 }
 
 /*
@@ -539,9 +539,9 @@ void XgksOutputToWs(OUT_PRIMI *primi)
     Gint cnt;
 
     for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {         /* send to all active workstations */
-        if (xgks_state.activews[cnt].ws_id != INVALID) {                /*c1147*/
-            switch (xgks_state.activews[cnt].ws->ewstype) {             /*c1147*/
-            case X_WIN:    XgksDrawToWs(xgks_state.activews[cnt].ws, primi); /*c1147*/
+        if (xgks_state.activews[cnt].ws_id != INVALID) {
+            switch (xgks_state.activews[cnt].ws->ewstype) {
+            case X_WIN:    XgksDrawToWs(xgks_state.activews[cnt].ws, primi);
                     break;
             case MO:
             case MI:
@@ -562,29 +562,29 @@ WS_STATE_PTR ws;
 OUT_PRIMI *primi;
 {
     switch (primi->pid) {
-        case PLINE     : xXgksPolyLine (ws, &(primi->primi.pline));     /*c1147*/
+        case PLINE     : xXgksPolyLine (ws, &(primi->primi.pline));
                   ws->wsdus.dspsurf = GNOTEMPTY;
                        break;
-        case PMARK     : xXgksPolyMarker (ws, &(primi->primi.pmark));   /*c1147*/
+        case PMARK     : xXgksPolyMarker (ws, &(primi->primi.pmark));
                   ws->wsdus.dspsurf = GNOTEMPTY;
                   break;
-        case FILL_AREA  : xXgksFillArea (ws, &(primi->primi.fill_area));/*c1147*/
+        case FILL_AREA  : xXgksFillArea (ws, &(primi->primi.fill_area));
                   ws->wsdus.dspsurf = GNOTEMPTY;
                   break;
         case CLIP_REC   : if (primi->primi.clip.segment == TRUE) {
                     XgksUpdateWsClip(ws, &(primi->primi.clip.rec));
                   } else {
                     ws->clip = primi->primi.clip.rec;
-                      xXgksUpdateClip (ws);                     /*c1147*/
+                      xXgksUpdateClip (ws);
                   }
                   break;
-        case TEXT      : xXgksText (ws, &(primi->primi.text));  /*c1147*/
+        case TEXT      : xXgksText (ws, &(primi->primi.text));
                   ws->wsdus.dspsurf = GNOTEMPTY;
                   break;
-        case MESG      : xXgksMesg (ws, &(primi->primi.mesg));  /*c1147*/
+        case MESG      : xXgksMesg (ws, &(primi->primi.mesg));
                   ws->wsdus.dspsurf = GNOTEMPTY;
                   break;
-        case CELL_ARRAY : xXgksCellarray(ws, &(primi->primi.cell_array)); /*c1147*/
+        case CELL_ARRAY : xXgksCellarray(ws, &(primi->primi.cell_array));
                   ws->wsdus.dspsurf = GNOTEMPTY;
                   break;
         case GDP    : break;
@@ -601,29 +601,29 @@ void XgksDrawToWs(WS_STATE_PTR ws, OUT_PRIMI *primi)
 {
     XgksIDevDisable(ws);    /* Disable all input devices */
     switch (primi->pid) {
-        case PLINE     : xXgksPolyLine (ws, &(primi->primi.pline));     /*c1147*/
+        case PLINE     : xXgksPolyLine (ws, &(primi->primi.pline));
                   ws->wsdus.dspsurf = GNOTEMPTY;
                        break;
-        case PMARK     : xXgksPolyMarker (ws, &(primi->primi.pmark));   /*c1147*/
+        case PMARK     : xXgksPolyMarker (ws, &(primi->primi.pmark));
                   ws->wsdus.dspsurf = GNOTEMPTY;
                   break;
-        case FILL_AREA  : xXgksFillArea (ws, &(primi->primi.fill_area));/*c1147*/
+        case FILL_AREA  : xXgksFillArea (ws, &(primi->primi.fill_area));
                   ws->wsdus.dspsurf = GNOTEMPTY;
                   break;
         case CLIP_REC   : if (primi->primi.clip.segment == TRUE) {
                      XgksUpdateWsClip (ws, &(primi->primi.clip.rec));
                   } else {
                       ws->clip = primi->primi.clip.rec;
-                      xXgksUpdateClip (ws);                     /*c1147*/
+                      xXgksUpdateClip (ws);
                   }
                   break;
-        case TEXT      : xXgksText (ws, &(primi->primi.text));  /*c1147*/
+        case TEXT      : xXgksText (ws, &(primi->primi.text));
                   ws->wsdus.dspsurf = GNOTEMPTY;
                   break;
-        case MESG      : xXgksMesg (ws, &(primi->primi.mesg));  /*c1147*/
+        case MESG      : xXgksMesg (ws, &(primi->primi.mesg));
                   ws->wsdus.dspsurf = GNOTEMPTY;
                   break;
-        case CELL_ARRAY : xXgksCellarray(ws, &(primi->primi.cell_array)); /*c1147*/
+        case CELL_ARRAY : xXgksCellarray(ws, &(primi->primi.cell_array));
                   ws->wsdus.dspsurf = GNOTEMPTY;
                   break;
         case GDP    : break;
@@ -643,11 +643,11 @@ void XgksAppendWsPrimi(OUT_PRIMI *primi)
     for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {      /* send to all active workstations */
         if ( (xgks_state.activews[cnt].ws_id != INVALID)
                 && (xgks_state.activews[cnt].ws->primi_store == GYES)
-                && (xgks_state.activews[cnt].ws->ewstype != MO)) /* c1139 *//*c1147*/
+                && (xgks_state.activews[cnt].ws->ewstype != MO))
             if (primi->pid == MESG)   /* Check if prim. is MESG        c1001 */
-                XgksInsertMesgPrimi(xgks_state.activews[cnt].ws, primi);    /*c1147*/
+                XgksInsertMesgPrimi(xgks_state.activews[cnt].ws, primi);
             else          /* message primitives have to be inserted differently */
-               XgksInsertPrimi(&(xgks_state.activews[cnt].ws->primi_insert_pt), primi); /*c1147*/
+               XgksInsertPrimi(&(xgks_state.activews[cnt].ws->primi_insert_pt), primi);
     }
 }
 
@@ -662,17 +662,17 @@ void XgksAppendWsClip(Glimit *rec)
     OUT_PRIMI *clip;
 
     for (cnt=0; cnt < MAX_OPEN_WS; cnt++) {
-        if (xgks_state.openedws[cnt].ws_id != INVALID) {                /*c1147*/
-        if (xgks_state.openedws[cnt].ws->primi_insert_pt->pid == CLIP_REC) { /*c1147*/
-                XgksWsWinInterset(xgks_state.openedws[cnt].ws, rec, &(xgks_state.openedws[cnt].ws->primi_insert_pt->primi.clip.rec)); /*c1147*/
+        if (xgks_state.openedws[cnt].ws_id != INVALID) {
+        if (xgks_state.openedws[cnt].ws->primi_insert_pt->pid == CLIP_REC) {
+                XgksWsWinInterset(xgks_state.openedws[cnt].ws, rec, &(xgks_state.openedws[cnt].ws->primi_insert_pt->primi.clip.rec));
          } else {
             clip = XgksNewPrimi();
             clip->pid = CLIP_REC;
             clip->primi.clip.segment = FALSE;
-                XgksWsWinInterset(xgks_state.openedws[cnt].ws, rec, &(clip->primi.clip.rec)); /*c1147*/
-                XgksInsertPrimi(&(xgks_state.openedws[cnt].ws->primi_insert_pt), clip); /*c1147*/
+                XgksWsWinInterset(xgks_state.openedws[cnt].ws, rec, &(clip->primi.clip.rec));
+                XgksInsertPrimi(&(xgks_state.openedws[cnt].ws->primi_insert_pt), clip);
              }
-            XgksUpdateWsClip (xgks_state.openedws[cnt].ws, rec);        /*c1147*/
+            XgksUpdateWsClip (xgks_state.openedws[cnt].ws, rec);
         }
     }
 }

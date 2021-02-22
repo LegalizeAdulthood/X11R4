@@ -165,7 +165,7 @@ Gint ggetgksm (Gint ws_id, Ggksmit *result)
         WS_STATE_PTR ws;
         Gint key;
 
-        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errggetgksm) /*c1147*/
+        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errggetgksm)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errggetgksm)   /* c1012 */
@@ -234,7 +234,7 @@ Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
         Gint key;                                               /* c1068 */
         Gchar *intrec;                                          /* c1068 */
 
-        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errgreadgksm) /*c1147*/
+        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errgreadgksm)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreadgksm)   /* c1012 */
@@ -254,7 +254,7 @@ Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
 
         if (ws->filestat == MF_FILE_ERR) {                      /* c1068 */
                 GksmInfo[key].GksmEmpty = TRUE;                 /* c1068 */
-                gerrorhand( 162, errgreadgksm, xgks_state.gks_err_file ); /* c1068 */ /*c1147*/
+                gerrorhand( 162, errgreadgksm, xgks_state.gks_err_file );
                 return( 162 );                                  /* c1068 */
         }                                                       /* c1068 */
 
@@ -278,7 +278,7 @@ Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
                 free( intrec );                                 /* c1068 */
                 if (feof( ws->mfp )) {                          /* c1068 */
                         GksmInfo[key].GksmEmpty = TRUE;         /* c1068 */
-                        gerrorhand( 162, errgreadgksm, xgks_state.gks_err_file ); /* c1068 */ /*c1147*/
+                        gerrorhand( 162, errgreadgksm, xgks_state.gks_err_file );
                         return( 162 );                          /* c1068 */
                 }
                 GKSERROR ((ws->filestat == MF_ITEM_ERR) ||                                                (ws->filestat == MF_FILE_ERR), 163, errgreadgksm)                                                                     /* c1068 */
@@ -307,7 +307,7 @@ Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
  */
 Gint ginterpret(Ggksmit *recInfo, Gchar *data)
 {
-        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errginterpret) /*c1147*/
+        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errginterpret)
 
         GKSERROR ((recInfo == NULL), 163, errginterpret )       /* c1068 */
 
@@ -769,13 +769,13 @@ void XgksMoSetPatSizeOnWs(WS_STATE_PTR ws)
 {
   fprintf(ws->mfp, "41 %d %f %f %f %f\n", XgksMRecSize(41),
     xgks_state.gks_ptattr.widthvec.x, xgks_state.gks_ptattr.widthvec.y,
-    xgks_state.gks_ptattr.heightvec.x, xgks_state.gks_ptattr.heightvec.y); /*c1147*/
+    xgks_state.gks_ptattr.heightvec.x, xgks_state.gks_ptattr.heightvec.y);
 }
 
 void XgksMoSetPatRefOnWs(WS_STATE_PTR ws)
 {
   fprintf(ws->mfp, "42 %d %f %f\n", XgksMRecSize(42),
-    xgks_state.gks_ptattr.ptp.x, xgks_state.gks_ptattr.ptp.y);          /*c1147*/
+    xgks_state.gks_ptattr.ptp.x, xgks_state.gks_ptattr.ptp.y);
 }
 
 void XgksMoSetPatSize(void)
@@ -787,7 +787,7 @@ void XgksMoSetPatSize(void)
                         if (xgks_state.activews[cnt].ws->ewstype == MO)
                           fprintf(xgks_state.activews[cnt].ws->mfp, "41 %d %f %f %f %f\n", XgksMRecSize(41),
                             xgks_state.gks_ptattr.widthvec.x, xgks_state.gks_ptattr.widthvec.y,
-                            xgks_state.gks_ptattr.heightvec.x, xgks_state.gks_ptattr.heightvec.y);                              /*c1147*/
+                            xgks_state.gks_ptattr.heightvec.x, xgks_state.gks_ptattr.heightvec.y);
         }
 }
 
@@ -799,16 +799,16 @@ void XgksMoSetPatRef(void)
                 if (xgks_state.activews[cnt].ws_id != INVALID)
                         if (xgks_state.activews[cnt].ws->ewstype == MO)
                           fprintf(xgks_state.activews[cnt].ws->mfp, "42 %d %f %f\n", XgksMRecSize(42),
-                            xgks_state.gks_ptattr.ptp.x, xgks_state.gks_ptattr.ptp.y); /*c1147*/
+                            xgks_state.gks_ptattr.ptp.x, xgks_state.gks_ptattr.ptp.y);
         }
 }
 
 void XgksMoSetAsfOnWs(WS_STATE_PTR ws)
 {
         fprintf(ws->mfp, "43 %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n", XgksMRecSize(43),
-          (xgks_state.gks_lnattr.type == GBUNDLED ? 0 : 1),             /*c1147*/
-          (xgks_state.gks_lnattr.width == GBUNDLED ? 0 : 1),            /*c1147*/
-          (xgks_state.gks_lnattr.colour == GBUNDLED ? 0 : 1),           /*c1147*/
+          (xgks_state.gks_lnattr.type == GBUNDLED ? 0 : 1),
+          (xgks_state.gks_lnattr.width == GBUNDLED ? 0 : 1),
+          (xgks_state.gks_lnattr.colour == GBUNDLED ? 0 : 1),
           (xgks_state.gks_mkattr.type == GBUNDLED ? 0 : 1),
           (xgks_state.gks_mkattr.size == GBUNDLED ? 0 : 1),
           (xgks_state.gks_mkattr.colour == GBUNDLED ? 0 : 1),
@@ -1025,13 +1025,13 @@ void XgksMoActivateWs(WS_STATE_PTR ws)
 
         XgksSetLineAttrMo( ws, &xgks_state.gks_lnattr );
         XgksSetMarkAttrMo( ws, &xgks_state.gks_mkattr );
-        XgksSetTextAttrMo( ws, &xgks_state.gks_txattr, &xgks_state.gks_chattr ); /*c1147*/
-        XgksSetFillPatAttrMo( ws, &xgks_state.gks_flattr, &xgks_state.gks_ptattr ); /*c1147*/
+        XgksSetTextAttrMo( ws, &xgks_state.gks_txattr, &xgks_state.gks_chattr );
+        XgksSetFillPatAttrMo( ws, &xgks_state.gks_flattr, &xgks_state.gks_ptattr );
 
         XgksMoSetPatSizeOnWs ( ws );    /* c1144 */
         XgksMoSetPatRefOnWs ( ws );     /* c1144 */
         XgksMoSetAsfOnWs( ws );
-        XgksMoSetGraphicAttrOnWs( ws, 44, xgks_state.gks_pick_id );     /*c1147*/
+        XgksMoSetGraphicAttrOnWs( ws, 44, xgks_state.gks_pick_id );
 }
 
 static Gint XgksMInstall(Gint ws_id)

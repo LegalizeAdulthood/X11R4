@@ -66,7 +66,7 @@ void xXgksSetStipple(Display *dpy, GC gc, Pixmap stipple)
 void xXgksSetDashes(Display *dpy, GC gc, WS_STATE_PTR ws, Gint i)
 {
     if(i!= ws->last_dash_index)
-         XSetDashes(dpy, gc, 0, xgksDASHES[i].dashl, xgksDASHES[i].dn); /*c1147*/
+         XSetDashes(dpy, gc, 0, xgksDASHES[i].dashl, xgksDASHES[i].dn);
 }
 
 

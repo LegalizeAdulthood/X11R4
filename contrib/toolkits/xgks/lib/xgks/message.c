@@ -68,7 +68,7 @@ Gint gmessage(Gint ws_id, Gchar *string)
         Gint i;
 
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgmessage) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgmessage)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgmessage)   /* c1012 */
@@ -100,22 +100,22 @@ Gint gmessage(Gint ws_id, Gchar *string)
            Also we have to changed the xgks_state.activews[] array to only one
            worstation active */
 
-        tmp_os = xgks_state.gks_state;                                   /*c1147*/
-        for (i=0; i<MAX_ACTIVE_WS; i++) tmp_act[i] = xgks_state.activews[i]; /*c1147*/
+        tmp_os = xgks_state.gks_state;
+        for (i=0; i<MAX_ACTIVE_WS; i++) tmp_act[i] = xgks_state.activews[i];
 
-        if (xgks_state.gks_state == GSGOP) xgks_state.gks_state = GWSAC; /*c1147*/
+        if (xgks_state.gks_state == GSGOP) xgks_state.gks_state = GWSAC;
 
         for (i=0; i<MAX_ACTIVE_WS; i++) {
-                if (xgks_state.openedws[i].ws_id == ws_id)              /*c1147*/
-                   xgks_state.activews[0] = xgks_state.openedws[i];     /*c1147*/
+                if (xgks_state.openedws[i].ws_id == ws_id)
+                   xgks_state.activews[0] = xgks_state.openedws[i];
                 if (i != 0)
-                   xgks_state.activews[i].ws_id = INVALID;              /*c1147*/
+                   xgks_state.activews[i].ws_id = INVALID;
         }
 
         XgksProcessPrimi (mesg);
 
-        for (i=0; i<MAX_ACTIVE_WS; i++) xgks_state.activews[i] = tmp_act[i]; /*c1147*/
-        xgks_state.gks_state = tmp_os;                          /*c1147*/
+        for (i=0; i<MAX_ACTIVE_WS; i++) xgks_state.activews[i] = tmp_act[i];
+        xgks_state.gks_state = tmp_os;
 
         free (mesg->primi.mesg.string);
         free (mesg);

@@ -66,7 +66,7 @@ Gint gsetcolourrep(ws_id, idx, rep)
     int i,status;                       /* c1152 */
 
 /* check for proper gks operating state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetcolourrep) /*c1147*/
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetcolourrep)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetcolourrep)   /* c1012 */
@@ -87,7 +87,7 @@ Gint gsetcolourrep(ws_id, idx, rep)
            (rep->blue < 0.0 || rep->blue > 1.0)) ,96, errgsetcolourrep)
 
 /* STEP 2: send it to the workstation */
-    status = xXgksSetColourRep(ws, idx, rep);           /*c1147*/
+    status = xXgksSetColourRep(ws, idx, rep);
     GKSERROR ((status != 0) ,93, errgsetcolourrep)
 
     /* if this is the 1st call to setcolourrep, alloc & init */ /* c1152 */
@@ -140,7 +140,7 @@ Gint ginqcolourrep(ws_id, idx, type, rep)
     int status;
 
 /* check for proper gks operating state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqcolourrep)/*c1147*/
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqcolourrep)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqcolourrep)   /* c1012 */
@@ -168,7 +168,7 @@ Gint ginqcolourrep(ws_id, idx, type, rep)
     else /* type == GREALIZED */                             /* c1152 */
        { /* give him REALIZED */                             /* c1152 */
        /* call the X routine */                              /* c1152 */
-       status = xXgksInqColourRep(ws, idx, type, rep); /* c1147 c1152 */
+       status = xXgksInqColourRep(ws, idx, type, rep);
        GKSERROR ((status != 0) ,93, errginqcolourrep)        /* c1152 */
        }                                                     /* c1152 */
 
@@ -191,7 +191,7 @@ Gint ginqcolourindices(ws_id, indices)
     int i;
 
 /* check for proper gks operating state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqcolourindices) /*c1113*/ /*c1147*/
+    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqcolourindices)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqcolourindices)   /* c1012 */
@@ -228,7 +228,7 @@ Gint ginqcolourfacil(ws_type, fac )
     EWSTYPE ewstype;
 
 /* check for proper gks operating state */
-    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqcolourfacil); /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqcolourfacil);
 
 /* check valid ws_type */
     ewstype = XgksWsTypeToEnum( ws_type );
@@ -269,7 +269,7 @@ Gint ginqpredcolourrep( ws_type, index, rep )
     char *getenv();
 
 /* check for proper gks operating state */
-    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredcolourrep); /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredcolourrep);
 
 /* check valid ws_type */
     ewstype = XgksWsTypeToEnum( ws_type );
@@ -289,14 +289,14 @@ Gint ginqpredcolourrep( ws_type, index, rep )
 /* check for existing connection to this server. */
     for( i=0; i<MAX_OPEN_WS; i++ ) {
         if (xgks_state.openedws[i].ws_id == INVALID ||
-            xgks_state.openedws[i].ws->ewstype != X_WIN)        /*c1147*/
+            xgks_state.openedws[i].ws->ewstype != X_WIN)
             continue;
-        if (STRCMP( xgks_state.openedws[i].ws->wstype, server ) == 0) /*c1147 c1176 */
+        if (STRCMP( xgks_state.openedws[i].ws->wstype, server ) == 0)
             break;
     }
 /* for the AIX port the SIGIO_OFF was postponed until the display is known #d1 */
     if ( i < MAX_OPEN_WS ) {    /* found a connection */
-        dpy = xgks_state.openedws[i].ws->dpy;           /*c1147*/
+        dpy = xgks_state.openedws[i].ws->dpy;
         XgksSIGIO_OFF(dpy);
         if ((i=loadcache(dpy, index)) != 0) {
             XgksSIGIO_ON(dpy);
@@ -337,14 +337,14 @@ loadcache(dpy, index)
     if ((CprevDpy != dpy) || (CprevDpy == NULL)) {
         ncolours = DisplayCells( dpy, DefaultScreen( dpy ) );
         if ( index >= ncolours ) {
-            gerrorhand( 93, errginqpredcolourrep, xgks_state.gks_err_file ); /*c1147*/
+            gerrorhand( 93, errginqpredcolourrep, xgks_state.gks_err_file );
             return( 93 );
         }
         if (Ccolours != NULL)
             free(Ccolours);
         Ccolours = (XColor *)malloc( sizeof(XColor) * ncolours);
         if ( Ccolours == NULL ) {
-            gerrorhand( 300, errginqpredcolourrep, xgks_state.gks_err_file ); /*c1147*/
+            gerrorhand( 300, errginqpredcolourrep, xgks_state.gks_err_file );
             CprevDpy = NULL;
             return( 300 );
         }
@@ -359,7 +359,7 @@ loadcache(dpy, index)
     }
     else {
         if ( index >= Cncolours ) {                             /*c1123*/
-            gerrorhand( 93, errginqpredcolourrep, xgks_state.gks_err_file ); /*c1147*/
+            gerrorhand( 93, errginqpredcolourrep, xgks_state.gks_err_file );
             return( 93 );
         }
     }
@@ -387,13 +387,13 @@ int XgksMaxColours( server )
 /* check for existing connection to this server. */
     for( i=0; i<MAX_OPEN_WS; i++ ) {
         if (xgks_state.openedws[i].ws_id == INVALID
-           || xgks_state.openedws[i].ws->ewstype != X_WIN)      /*c1147*/
+           || xgks_state.openedws[i].ws->ewstype != X_WIN)
             continue;
-        if (STRCMP( xgks_state.openedws[i].ws->wstype, server ) == 0) /* c1147 c1176 */
+        if (STRCMP( xgks_state.openedws[i].ws->wstype, server ) == 0)
             break;
     }
     if ( i < MAX_OPEN_WS ) {    /* found a connection */
-        dpy = xgks_state.openedws[i].ws->dpy;                   /*c1147*/
+        dpy = xgks_state.openedws[i].ws->dpy;
         XgksSIGIO_OFF(dpy);
         colours = DisplayCells( dpy, DefaultScreen( dpy ) );
     }

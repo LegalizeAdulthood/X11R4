@@ -51,22 +51,22 @@
 Gint gsetasf(Gasfs *asf)
 {
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL), 8, errgsetasf)       /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL), 8, errgsetasf)
 
 /* Set the asf in gks list */
-        xgks_state.gks_lnattr.type      = asf->ln_type;         /*c1147*/
-        xgks_state.gks_lnattr.width     = asf->ln_width;        /*c1147*/
-        xgks_state.gks_lnattr.colour    = asf->ln_colour;       /*c1147*/
-        xgks_state.gks_mkattr.type      = asf->mk_type;         /*c1147*/
-        xgks_state.gks_mkattr.size      = asf->mk_size;         /*c1147*/
-        xgks_state.gks_mkattr.colour    = asf->mk_colour;       /*c1147*/
-        xgks_state.gks_txattr.fp        = asf->tx_fp;           /*c1147*/
-        xgks_state.gks_txattr.tx_exp    = asf->tx_exp;          /* c1179 c1147*/
-        xgks_state.gks_txattr.space     = asf->tx_space;        /*c1147*/
-        xgks_state.gks_txattr.colour    = asf->tx_colour;       /*c1147*/
-        xgks_state.gks_flattr.inter     = asf->fl_inter;        /*c1147*/
-        xgks_state.gks_flattr.style     = asf->fl_style;        /*c1147*/
-        xgks_state.gks_flattr.colour    = asf->fl_colour;       /*c1147*/
+        xgks_state.gks_lnattr.type      = asf->ln_type;
+        xgks_state.gks_lnattr.width     = asf->ln_width;
+        xgks_state.gks_lnattr.colour    = asf->ln_colour;
+        xgks_state.gks_mkattr.type      = asf->mk_type;
+        xgks_state.gks_mkattr.size      = asf->mk_size;
+        xgks_state.gks_mkattr.colour    = asf->mk_colour;
+        xgks_state.gks_txattr.fp        = asf->tx_fp;
+        xgks_state.gks_txattr.tx_exp    = asf->tx_exp;
+        xgks_state.gks_txattr.space     = asf->tx_space;
+        xgks_state.gks_txattr.colour    = asf->tx_colour;
+        xgks_state.gks_flattr.inter     = asf->fl_inter;
+        xgks_state.gks_flattr.style     = asf->fl_style;
+        xgks_state.gks_flattr.colour    = asf->fl_colour;
 
         if (MO_OPENED == TRUE) XgksMoSetAsf();
 
@@ -78,17 +78,17 @@ Gint gsetasf(Gasfs *asf)
  */
 void XgksInitGksAsf(void)
 {
-        xgks_state.gks_lnattr.type      = GINDIVIDUAL;          /*c1147*/
-        xgks_state.gks_lnattr.width     = GINDIVIDUAL;          /*c1147*/
-        xgks_state.gks_lnattr.colour    = GINDIVIDUAL;          /*c1147*/
-        xgks_state.gks_mkattr.type      = GINDIVIDUAL;          /*c1147*/
-        xgks_state.gks_mkattr.size      = GINDIVIDUAL;          /*c1147*/
-        xgks_state.gks_mkattr.colour    = GINDIVIDUAL;          /*c1147*/
-        xgks_state.gks_txattr.fp        = GINDIVIDUAL;          /*c1147*/
-        xgks_state.gks_txattr.tx_exp    = GINDIVIDUAL;          /* c1179 c1147*/
-        xgks_state.gks_txattr.space     = GINDIVIDUAL;          /*c1147*/
-        xgks_state.gks_txattr.colour    = GINDIVIDUAL;          /*c1147*/
-        xgks_state.gks_flattr.inter     = GINDIVIDUAL;          /*c1147*/
-        xgks_state.gks_flattr.style     = GINDIVIDUAL;          /*c1147*/
-        xgks_state.gks_flattr.colour    = GINDIVIDUAL;          /*c1147*/
+        xgks_state.gks_lnattr.type      = GINDIVIDUAL;
+        xgks_state.gks_lnattr.width     = GINDIVIDUAL;
+        xgks_state.gks_lnattr.colour    = GINDIVIDUAL;
+        xgks_state.gks_mkattr.type      = GINDIVIDUAL;
+        xgks_state.gks_mkattr.size      = GINDIVIDUAL;
+        xgks_state.gks_mkattr.colour    = GINDIVIDUAL;
+        xgks_state.gks_txattr.fp        = GINDIVIDUAL;
+        xgks_state.gks_txattr.tx_exp    = GINDIVIDUAL;
+        xgks_state.gks_txattr.space     = GINDIVIDUAL;
+        xgks_state.gks_txattr.colour    = GINDIVIDUAL;
+        xgks_state.gks_flattr.inter     = GINDIVIDUAL;
+        xgks_state.gks_flattr.style     = GINDIVIDUAL;
+        xgks_state.gks_flattr.colour    = GINDIVIDUAL;
 }

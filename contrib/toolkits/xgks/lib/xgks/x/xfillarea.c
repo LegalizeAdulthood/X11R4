@@ -266,7 +266,7 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
                                         cur = 1;
                                 if (cur != 0) cur = 1;
                                 if ( cur != prev ) {    /* colour change */
-                                        xXgksSetForeground(dpy, stipgc, prev ); /*c1147*/
+                                        xXgksSetForeground(dpy, stipgc, prev );
                                         XDrawPoints(dpy, pixm, stipgc, ptt1, n, CoordModeOrigin );
                                         n = 0; ptt = ptt1;      /* reset */
                                         prev = cur;
@@ -276,7 +276,7 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
                                 array++;
                         }
                 }
-                xXgksSetForeground(dpy, stipgc, prev ); /*c1147*/
+                xXgksSetForeground(dpy, stipgc, prev );
                 XDrawPoints(dpy, pixm, stipgc, ptt1, n, CoordModeOrigin );
 
 /* load the tile and draw the fill area */

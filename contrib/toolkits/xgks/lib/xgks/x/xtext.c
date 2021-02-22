@@ -67,23 +67,13 @@ static int ApplyMatrix(Gfloat m[6], Gpoint *in, Gpoint *out);
 
 #define MAX_CHAR_STROKE  100    /* Hope this is enought, it should be ..*/
 
-static                                                          /* c1147 */
-Gpoint sndc_ht;    /* ndc_ht */         /*ILL*/
-static                                                          /* c1147 */
-Gpoint sndc_wt;    /* ndc_wt */         /*ILL*/
-
-static                                                          /* c1147 */
-Gfloat stroke_trans[6];                 /*ILL2*/
-
-static                                                          /* c1147 */
-Gfloat wsr_spacing;     /* additional spacing */
-static                                                          /* c1147 */
-Gint wsr_font;
-static                                                          /* c1147 */
-unsigned long wsr_colour;
-
-static                                                          /* c1147 */
-unsigned int DCYMAX;
+static Gpoint sndc_ht;    /* ndc_ht */
+static Gpoint sndc_wt;    /* ndc_wt */
+static Gfloat stroke_trans[6];
+static Gfloat wsr_spacing;     /* additional spacing */
+static Gint wsr_font;
+static unsigned long wsr_colour;
+static unsigned int DCYMAX;
 
 static struct {
         Gint f_loaded;
@@ -92,12 +82,9 @@ static struct {
 
 static Gint FirstTime = TRUE;
 
-static                                                          /* c1147 */
-Display *dpy;
-static                                                          /* c1147 */
-Window  win;
-static                                                          /* c1147 */
-GC      gc;
+static Display *dpy;
+static Window  win;
+static GC      gc;
 
 static void xComputeText(WS_STATE_PTR ws, TEXT_ST *tx)
 {

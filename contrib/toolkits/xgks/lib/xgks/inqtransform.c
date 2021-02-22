@@ -51,10 +51,10 @@ Gint ginqcurntrannum(tran)
         Gint *tran;
 {
 /* check proper gks operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqcurntrannum); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqcurntrannum);
 
 /* set up return values */
-        *tran = xgks_state.cur_ntrans;          /*c1147*/
+        *tran = xgks_state.cur_ntrans;
         return( OK );
 }
 
@@ -77,14 +77,14 @@ Gint ginqntrannum(tranlist)
         int i;
 
 /* check proper gks operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqntrannum); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqntrannum);
 
 /* allocate the memory for the list */
         tranlist->integers = (Gint *) malloc( (MAX_TRANS+1) * sizeof(int));
 
 /* set up return values */
         for(i=0; i <= MAX_TRANS; i++)
-                tranlist->integers[i] = xgks_state.ntrans_priority[i]; /*c1147*/
+                tranlist->integers[i] = xgks_state.ntrans_priority[i];
         tranlist->number = MAX_TRANS +1;
 
         return( OK );
@@ -107,13 +107,13 @@ Gint num;
 Gwstran *tran;
 {
 /* check proper gks operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqntran); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqntran);
 
 /* check for valid trans number */
         GKSERROR( (num < 0 || num > MAX_TRANS), 50, errginqntran);
 
 /* set up the return values */
-        *tran = xgks_state.ntrans_list[num].ntrans;     /*c1147*/
+        *tran = xgks_state.ntrans_list[num].ntrans;
 
         return( OK );
 }
@@ -134,11 +134,11 @@ Gcliprec *clipping;
 {
 
 /* check proper gks operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqclip); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqclip);
 
 /* set up return values */
         if (xgks_state.cliprec.ind == GCLIP)                /* c2009 */
-           *clipping = xgks_state.cliprec;   /* c1147 */    /* c2009 */
+           *clipping = xgks_state.cliprec;
         else /* ...ind == GNOCLIP */                        /* c2009 */
            {                                                /* c2009 */
            clipping->ind = GNOCLIP;                         /* c2009 */
@@ -170,7 +170,7 @@ Gint ginqmaxntrannum(maxtran)
 Gint *maxtran;
 {
 /* check proper gks operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmaxntrannum); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmaxntrannum);
 
 /* set up return values */
         *maxtran = MAX_TRANS;
@@ -202,7 +202,7 @@ Gwsti *wstran;
         WS_STATE_PTR ws;
 
 /* check proper gks operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwstran); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwstran);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwstran)   /* c1012 */

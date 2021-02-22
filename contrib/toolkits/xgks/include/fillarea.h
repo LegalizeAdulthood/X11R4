@@ -27,7 +27,6 @@
  * 
  */
 
-/* c1147:  Moved these predefined reps from fillarea.c and made them static */
 /* c1178:  Compiler glitch caused us to declare these globally and make     */
 /*         them externs in the files they're used in                        */
 

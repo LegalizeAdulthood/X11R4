@@ -52,7 +52,7 @@ Gint ginqavailgdp(Gchar *type, Ggdplist *gdps)
   EWSTYPE ewstype;
 
   /* check for proper state */
-  GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errginqavailgdp);       /*c1147*/
+  GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errginqavailgdp);
 
   /* check for valid and existing workstation */
   ewstype = XgksWsTypeToEnum( type );
@@ -92,7 +92,7 @@ Gint ginqgdp(Gchar *type, Gint function, Ggdpfac *fac)
   EWSTYPE ewstype;
 
   /* check for proper state */
-  GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errginqgdp);            /*c1147*/
+  GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errginqgdp);
 
   /* check for valid and existing workstation */
   ewstype = XgksWsTypeToEnum( type );
@@ -130,7 +130,7 @@ Gint ggdp(Gint npoints, Gpoint *points, Gint function, Ggdprec *data)
   {
 
   /* check for proper state */
-  GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errggdp); /*c1147*/
+  GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errggdp);
 
   /* check for "number of points is invalid" */
   GKSERROR ((npoints<0), 100, errggdp);

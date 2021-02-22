@@ -82,8 +82,8 @@ static void xProcessEvents(int signum)
 
         for (i=0; i<MAX_OPEN_WS; i++)
            {
-           if ((xgks_state.openedws[i].ws_id != INVALID)  /*c1147*/
-             && ((dpy = xgks_state.openedws[i].ws->dpy) != NULL)  /*c1147*/
+           if ((xgks_state.openedws[i].ws_id != INVALID)
+             && ((dpy = xgks_state.openedws[i].ws->dpy) != NULL)
              && (!xgks_state.openedws[i].ws->ws_is_closing) )     /* c1164 */
                 while (XPending(dpy))
                    {            /* return # pending events */
@@ -238,14 +238,14 @@ static int XgksExposeEvent(XEvent *xev, Display *dpy)
 
    for (ii=0; ii < MAX_OPEN_WS; ii++)
       if ((xgks_state.openedws[ii].win == xev->xexpose.window) &&
-              (xgks_state.openedws[ii].ws->dpy == dpy)) /*c1147*/
+              (xgks_state.openedws[ii].ws->dpy == dpy))
          break;
 
    if (ii >= MAX_OPEN_WS)
       return(0);
 
-   ws  = xgks_state.openedws[ii].ws; /*c1147*/
-   win = xgks_state.openedws[ii].win; /*c1147*/
+   ws  = xgks_state.openedws[ii].ws;
+   win = xgks_state.openedws[ii].win;
 
    /* disable all input devices */
    XgksIDevDisable( ws );
@@ -259,13 +259,13 @@ static int XgksExposeEvent(XEvent *xev, Display *dpy)
 
    /* for the latest Expose Event redraw the window contents */
 
-   xXgksUpdateTrans(ws);                                         /* c1147 */
+   xXgksUpdateTrans(ws);
 
    XClearArea(dpy, win, 0, 0, 0, 0, False);
 
    XSync(dpy, 0);
 
-   XgksXReDrawWs(ws);                                           /* c1147 */
+   XgksXReDrawWs(ws);
 
    /* if necessary call user defined redraw notifying function */
    if (ws->redrawfuncp != NULL)
@@ -296,17 +296,17 @@ static int XgksFocusInEvent(XEvent *xev, Display *dpy)
       {
       for (ii=0; ii < MAX_OPEN_WS; ii++)
       if ((xgks_state.openedws[ii].win == xev->xfocus.window)
-           && (xgks_state.openedws[ii].ws->dpy == dpy)) /*c1147*/
+           && (xgks_state.openedws[ii].ws->dpy == dpy))
          break;
 
       if (ii >= MAX_OPEN_WS)
          return(0);
 
-      ws  = xgks_state.openedws[ii].ws; /*c1147*/
-      win = xgks_state.openedws[ii].win; /*c1147*/
+      ws  = xgks_state.openedws[ii].ws;
+      win = xgks_state.openedws[ii].win;
 
       /* remember who has the focus */   /* c1145 */
-      xgks_state.focus_ws = ws;                     /* c1145 */ /*c1147*/
+      xgks_state.focus_ws = ws;
 
       /* Instal a new color map when necessary */
 
@@ -351,7 +351,7 @@ static int XgksFocusOutEvent(Display *dpy)
    /*       in and out of the window could cause */ /* c1145 */
    /*       the wrong color map to be displayed. */ /* c1145 */
 
-   xgks_state.focus_ws = NULL;                      /* c1145 */ /*c1147*/
+   xgks_state.focus_ws = NULL;
    /* focus_ws remains null until the next */       /* c1145 */
    /* FocusIn event. */       /* c1145 */
 

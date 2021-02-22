@@ -80,28 +80,28 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5]);
  */
 void XgksInitGksText(void)
 {
-        xgks_state.gks_txattr.text      = 1; /* text indx */ /* c1143 */ /* c1147 */
-        xgks_state.gks_txattr.fp  = GINDIVIDUAL; /* font ASF */ /* c1143 */ /* c1147 */
-        xgks_state.gks_txattr.tx_exp = GINDIVIDUAL; /* exp ASF  c1143 c1147 c1179 */
-        xgks_state.gks_txattr.space = GINDIVIDUAL; /* space ASF */ /*c1143*/ /*c1147*/
-        xgks_state.gks_txattr.colour = GINDIVIDUAL; /* colour ASF */ /* c1143 */ /* c1147 */
+        xgks_state.gks_txattr.text      = 1; /* text indx */
+        xgks_state.gks_txattr.fp  = GINDIVIDUAL; /* font ASF */
+        xgks_state.gks_txattr.tx_exp = GINDIVIDUAL; /* exp ASF */
+        xgks_state.gks_txattr.space = GINDIVIDUAL; /* space ASF */
+        xgks_state.gks_txattr.colour = GINDIVIDUAL; /* colour ASF */
         /* text bundle */                                               /* c1143 */
-        xgks_state.gks_txattr.bundl.fp.font= def_txbundl[0].fp.font; /* c1143 */ /*c1147*/
-        xgks_state.gks_txattr.bundl.fp.prec= GSTRING;             /* c1154 c1143 c1147*/
-        xgks_state.gks_txattr.bundl.ch_exp      = def_txbundl[0].ch_exp; /* c1143 c1147 c1179 */
-        xgks_state.gks_txattr.bundl.space       = DEFCHRSPACE;  /* c1154 c1143 c1147*/
-        xgks_state.gks_txattr.bundl.colour      = def_txbundl[0].colour; /* c1143 */ /*c1147*/
+        xgks_state.gks_txattr.bundl.fp.font= def_txbundl[0].fp.font;
+        xgks_state.gks_txattr.bundl.fp.prec= GSTRING;
+        xgks_state.gks_txattr.bundl.ch_exp      = def_txbundl[0].ch_exp;
+        xgks_state.gks_txattr.bundl.space       = DEFCHRSPACE;
+        xgks_state.gks_txattr.bundl.colour      = def_txbundl[0].colour;
 
-        xgks_state.gks_chattr.height = 0.01;  /* height of capital */   /*c1147*/
-        xgks_state.gks_chattr.chwidth  = 0.01;                          /*c1147*/
-        xgks_state.gks_chattr.up.x     = 0.0;  /* angle w.r.t the X axis, in WC */ /*c1147*/
-        xgks_state.gks_chattr.up.y     = 1.0;                           /*c1147*/
-        xgks_state.gks_chattr.base.x   = 1.0;                           /*c1147*/
-        xgks_state.gks_chattr.base.y   = 0.0;                           /*c1147*/
+        xgks_state.gks_chattr.height = 0.01;  /* height of capital */
+        xgks_state.gks_chattr.chwidth  = 0.01;
+        xgks_state.gks_chattr.up.x     = 0.0;  /* angle w.r.t the X axis, in WC */
+        xgks_state.gks_chattr.up.y     = 1.0;
+        xgks_state.gks_chattr.base.x   = 1.0;
+        xgks_state.gks_chattr.base.y   = 0.0;
 
-        xgks_state.gks_chattr.path     = GTP_RIGHT;  /* writing direction w.r.t.up vector */ /*c1147*/
-        xgks_state.gks_chattr.align.hor = GTH_NORMAL;                   /*c1147*/
-        xgks_state.gks_chattr.align.ver = GTV_NORMAL;                   /*c1147*/
+        xgks_state.gks_chattr.path     = GTP_RIGHT;  /* writing direction w.r.t.up vector */
+        xgks_state.gks_chattr.align.hor = GTH_NORMAL;
+        xgks_state.gks_chattr.align.ver = GTV_NORMAL;
 
         /* check if user has chosen a new font db dir */            /* c1159 */
         /* (file is not actually opened until xReadFont */          /* c1159 */
@@ -148,13 +148,13 @@ void XgksInitWssText(WS_STATE_PTR ws)
 Gint gsetcharexpan(Gfloat expansion)
 {
 /* check for proper gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetcharexpan) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetcharexpan)
 
 /* check for valid expansion factor */
         GKSERROR ((expansion <= 0.0) , 77, errgsetcharexpan)
 
 /* Ok to change the current expansion factor */
-        xgks_state.gks_txattr.bundl.ch_exp = expansion;         /* c1179 c1147 */
+        xgks_state.gks_txattr.bundl.ch_exp = expansion;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicSize (31, expansion);
 
@@ -176,7 +176,7 @@ Gint gsetcharexpan(Gfloat expansion)
 Gint gsetcharheight(Gfloat height)
 {
 /* check for proper gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetcharheight) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetcharheight)
 
 /* check for valid character height */
         GKSERROR ((height <= 0.0) , 78, errgsetcharheight)
@@ -203,10 +203,10 @@ Gint gsetcharheight(Gfloat height)
 Gint gsetcharspace(Gfloat spacing)
 {
 /* check for proper gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetcharspace) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetcharspace)
 
 /* ok to change the spacing */
-        xgks_state.gks_txattr.bundl.space = spacing;                    /*c1147*/
+        xgks_state.gks_txattr.bundl.space = spacing;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicSize (32, spacing);
 
@@ -230,7 +230,7 @@ Gint gsetcharup(Gpoint *up_vector)
 {
         Gfloat scale;
 /* check for proper gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetcharup) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetcharup)
 
 /* check for valid character up vector*/
         GKSERROR ((up_vector->x == 0.0 && up_vector->y == 0.0) , 79, errgsetcharup)
@@ -266,7 +266,7 @@ Gint gsetcharup(Gpoint *up_vector)
 Gint gsettextalign(Gtxalign *txalign)
 {
 /* check for proper gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsettextalign) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsettextalign)
 
 /* check for valid enumration type */
         GKSERROR ((txalign->hor!=GTH_NORMAL && txalign->hor!=GTH_LEFT &&
@@ -294,13 +294,13 @@ Gint gsettextalign(Gtxalign *txalign)
 Gint gsettextcolourind(Gint colour)
 {
 /* check for proper gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsettextcolourind) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsettextcolourind)
 
 /* check for valid colour index */
         GKSERROR ((colour < 0) , 92, errgsettextcolourind)
 
 /* ok to change the colour */
-        xgks_state.gks_txattr.bundl.colour = colour;            /*c1147*/
+        xgks_state.gks_txattr.bundl.colour = colour;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (33, colour);
 
@@ -321,7 +321,7 @@ Gint gsettextcolourind(Gint colour)
 Gint gsettextfontprec(Gtxfp *txfp)
 {
 /* check for proper gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsettextfontprec) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsettextfontprec)
 
 /* check for valid font number */
         GKSERROR ((txfp->font == 0) , 75, errgsettextfontprec)
@@ -330,7 +330,7 @@ Gint gsettextfontprec(Gtxfp *txfp)
         GKSERROR ((txfp->prec!=GSTRING && txfp->prec!=GCHAR  && txfp->prec!=GSTROKE), 2000, errgsettextfontprec)
 
 /* ok to change the font and precision*/
-        xgks_state.gks_txattr.bundl.fp = (*txfp);               /*c1147*/
+        xgks_state.gks_txattr.bundl.fp = (*txfp);
 
         if (MO_OPENED == TRUE) XgksMoSetTextFP (txfp);
 
@@ -350,13 +350,13 @@ Gint gsettextfontprec(Gtxfp *txfp)
 Gint gsettextind(Gint idx)
 {
 /* check for proper gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsettextind) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsettextind)
 
 /* check if valid font number */     /* c1092   comment wasn't closed! */
         GKSERROR ((idx < 1) , 72, errgsettextind)
 
 /* ok to change the index */
-        xgks_state.gks_txattr.text = idx;                       /*c1147*/
+        xgks_state.gks_txattr.text = idx;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (29, idx);
 
@@ -375,7 +375,7 @@ Gint gsettextind(Gint idx)
 Gint gsettextpath(Gtxpath path)
 {
 /* check for proper gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsettextpath) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsettextpath)
 
 /* check for valid enumeration type */
         GKSERROR ((path!=GTP_RIGHT && path!=GTP_LEFT && path!=GTP_UP && path!=GTP_DOWN), 2000, errgsettextpath)
@@ -404,7 +404,7 @@ Gint gsettextrep(Gint ws_id, Gint idx, Gtxbundl *bundle)
         WS_STATE_PTR ws;
 
 /* check for proper gks operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsettextrep) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsettextrep)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsettextrep)   /* c1012 */
@@ -504,7 +504,7 @@ Gint gtext(Gpoint *at, Gchar *string)
         OUT_PRIMI  *text;
 
 /* check for proper gks operating state */
-        GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP) , 5, errgtext) /*c1147*/
+        GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP) , 5, errgtext)
 
 /* open an primitive structure */
         GKSERROR ( ((text = XgksNewPrimi()) == NULL), 300, errgtext);
@@ -525,7 +525,7 @@ Gint gtext(Gpoint *at, Gchar *string)
 /* make sure vectors are loaded */
         XgksComputeVec (&(text->primi.text.up_vec), &(text->primi.text.base_vec));
 
-        text->primi.text.txattr = xgks_state.gks_txattr;                /*c1147*/
+        text->primi.text.txattr = xgks_state.gks_txattr;
         text->primi.text.chattr = xgks_state.gks_chattr;
 
         XgksProcessPrimi (text);
@@ -559,7 +559,7 @@ Gint ginqtextextent(Gint ws_id, Gpoint position, Gchar *string, Gextent *extent)
         Gpoint *ndc_ptr, *wc_ptr, ndc_points[5];
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqtextextent); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqtextextent);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqtextextent)   /* c1012 */
@@ -591,25 +591,25 @@ Gint ginqtextextent(Gint ws_id, Gpoint position, Gchar *string, Gextent *extent)
 /* make sure vectors are loaded */
         XgksComputeVec (&(text.up_vec), &(text.base_vec));
 
-        text.txattr = xgks_state.gks_txattr;                    /*c1147*/
+        text.txattr = xgks_state.gks_txattr;
         text.chattr = xgks_state.gks_chattr;
 
-        xXgksInqTextExtent (ws, &text, ndc_points);             /*c1147*/
+        xXgksInqTextExtent (ws, &text, ndc_points);
 
         ndc_ptr = ndc_points; wc_ptr = &(extent->concat);
-        NtNdcToWc(xgks_state.cur_ntrans, ndc_ptr, wc_ptr);      /*c1147*/
+        NtNdcToWc(xgks_state.cur_ntrans, ndc_ptr, wc_ptr);
 
         ndc_ptr++;  wc_ptr = &(extent->ll);
-        NtNdcToWc(xgks_state.cur_ntrans, ndc_ptr, wc_ptr);      /*c1147*/
+        NtNdcToWc(xgks_state.cur_ntrans, ndc_ptr, wc_ptr);
 
         ndc_ptr++;  wc_ptr = &(extent->lr);
-        NtNdcToWc(xgks_state.cur_ntrans, ndc_ptr, wc_ptr);      /*c1147*/
+        NtNdcToWc(xgks_state.cur_ntrans, ndc_ptr, wc_ptr);
 
         ndc_ptr++;  wc_ptr = &(extent->ur);
-        NtNdcToWc(xgks_state.cur_ntrans, ndc_ptr, wc_ptr);      /*c1147*/
+        NtNdcToWc(xgks_state.cur_ntrans, ndc_ptr, wc_ptr);
 
         ndc_ptr++;  wc_ptr = &(extent->ul);
-        NtNdcToWc(xgks_state.cur_ntrans, ndc_ptr, wc_ptr);      /*c1147*/
+        NtNdcToWc(xgks_state.cur_ntrans, ndc_ptr, wc_ptr);
 
         free( text.location );
         free( text.string );

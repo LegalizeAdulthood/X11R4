@@ -58,7 +58,7 @@ Gint ginqavailwstypes( wstypes )
         Gstrlist *wstypes;
 {
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqavailwstypes); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqavailwstypes);
 
         wstypes->number = 4;
         wstypes->strings = (Gchar **) malloc( sizeof( Gchar *) * 4);
@@ -88,7 +88,7 @@ Gint ginqdisplayspacesize(ws_type, dspsz)
         EWSTYPE ewstype;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdisplayspacesize); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdisplayspacesize);
 
 /* check for valid workstation type */
         ewstype = XgksWsTypeToEnum(ws_type);
@@ -123,7 +123,7 @@ Gwscat *cat;
 {
         EWSTYPE ewstype;
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqwscategory); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqwscategory);
 
 /* check for valid workstation type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -167,7 +167,7 @@ Gint ginqwsclass(ws_type, class)
         EWSTYPE ewstype;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqwsclass); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqwsclass);
 
 /* check for valid workstation type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -200,7 +200,7 @@ Gint ginqmodwsattr(ws_type, dyn)
         EWSTYPE ewstype;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmodwsattr); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmodwsattr);
 
 /* check for valid workstation type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -235,7 +235,7 @@ Gint ginqdefdeferst(ws_type, def)
 {
         EWSTYPE ewstype;
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefdeferst); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefdeferst);
 
 /* check for valid workstation type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -267,7 +267,7 @@ Gint ginqmaxwssttables(ws_type, tables)
 {
         EWSTYPE ewstype;
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmaxwssttables); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmaxwssttables);
 
 /* check for valid workstation type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -304,7 +304,7 @@ Gint ginqnumavailinput(ws_type, num)
 {
         EWSTYPE ewstype;
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqnumavailinput); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqnumavailinput);
 
 /* check for valid workstation type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -345,7 +345,7 @@ Gint ginqwsconntype(ws_id, ct)
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsconntype); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsconntype);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsconntype)   /* c1012 */
@@ -383,7 +383,7 @@ Gint ginqwsst(ws_id, state)
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsst); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsst);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsst)   /* c1012 */
@@ -420,7 +420,7 @@ Gint ginqwsdeferupdatest(ws_id, du)
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsdeferupdatest); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsdeferupdatest);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsdeferupdatest)   /* c1012 */

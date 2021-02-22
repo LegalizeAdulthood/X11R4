@@ -49,6 +49,8 @@
 
 #include "gks_implem.h"
 
+#include "polymarkers.h"
+
 void XgksMoGraphicOutput(Gint code, Gint num_pt, Gpoint *pos);
 void XgksMoSetGraphicAttr(Gint code, Gint attr);
 void XgksMoSetGraphicSize(Gint code, Gfloat size);
@@ -60,19 +62,16 @@ void XgksMoSetLineMarkRep(WS_STATE_PTR ws, Gint code, Gint idx, Gint type, Gint 
 
 /* c1143:  Created predefined reps 1-5 */
 
-/* c1147:  Moved them to polymarkers.h */
-#include "polymarkers.h"                                                /*c1147*/
-
 void XgksInitGksPmarkers(void)
 {
-        xgks_state.gks_mkattr.mark   = 1;          /* mark indx */ /* c1143 *//*c1147*/
-        xgks_state.gks_mkattr.type   = GINDIVIDUAL;/* type ASF */  /* c1143 *//*c1147*/
-        xgks_state.gks_mkattr.size   = GINDIVIDUAL;/* size ASF */  /* c1143 *//*c1147*/
-        xgks_state.gks_mkattr.colour = GINDIVIDUAL;/* colour ASF *//* c1143 *//*c1147*/
+        xgks_state.gks_mkattr.mark   = 1;          /* mark indx */
+        xgks_state.gks_mkattr.type   = GINDIVIDUAL;/* type ASF */
+        xgks_state.gks_mkattr.size   = GINDIVIDUAL;/* size ASF */
+        xgks_state.gks_mkattr.colour = GINDIVIDUAL;/* colour ASF */
         /* marker bundle */                                        /* c1143 */
-        xgks_state.gks_mkattr.bundl.type   = def_mkbundl[0].type;  /* c1143 *//*c1147*/
-        xgks_state.gks_mkattr.bundl.size   = DEFMRKRSIZE; /*c1154*/  /*c1143*//*c1147*/
-        xgks_state.gks_mkattr.bundl.colour = def_mkbundl[0].colour;/* c1143 *//*c1147*/
+        xgks_state.gks_mkattr.bundl.type   = def_mkbundl[0].type;
+        xgks_state.gks_mkattr.bundl.size   = DEFMRKRSIZE;
+        xgks_state.gks_mkattr.bundl.colour = def_mkbundl[0].colour;
 }
 /*
  * XgksInitWssPmarkers(ws) - send the current INDIVIDUAL attributes and BUNDLE
@@ -112,7 +111,7 @@ Gint gpolymarker(Gint num_pts, Gpoint *pts)
         OUT_PRIMI  *pmark;
 
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errgpolymarker) /*c1147*/
+        GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errgpolymarker)
 
 /* check for valid number of points */
         GKSERROR ((num_pts < 1) ,100, errgpolymarker)
@@ -130,7 +129,7 @@ Gint gpolymarker(Gint num_pts, Gpoint *pts)
         ndc_pt = pmark->primi.pmark.location;
         for (cnt=0; cnt < num_pts; cnt++, pts++, ndc_pt++)
                 WcToNdc(pts, ndc_pt);
-        pmark->primi.pmark.mkattr = xgks_state.gks_mkattr; /* set up attributes for pmarker from gks state list */ /*c1147*/
+        pmark->primi.pmark.mkattr = xgks_state.gks_mkattr; /* set up attributes for pmarker from gks state list */
 
         XgksProcessPrimi (pmark);
 
@@ -154,13 +153,13 @@ Gint gpolymarker(Gint num_pts, Gpoint *pts)
 Gint gsetmarkersize(Gfloat size)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetmarkersize) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetmarkersize)
 
 /* check for proper scale factor size */
         GKSERROR ((size < 0.0 )  ,71, errgsetmarkersize)
 
 /* ok to change scale factor */
-        xgks_state.gks_mkattr.bundl.size = size;                /*c1147*/
+        xgks_state.gks_mkattr.bundl.size = size;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicSize (27, size);
 
@@ -179,13 +178,13 @@ Gint gsetmarkersize(Gfloat size)
 Gint gsetmarkertype(Gint type)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetmarkertype) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetmarkertype)
 
 /* check for valid type */
         GKSERROR ((type == 0) ,69, errgsetmarkertype)
 
 /* ok to change the type */
-        xgks_state.gks_mkattr.bundl.type = type;                /*c1147*/
+        xgks_state.gks_mkattr.bundl.type = type;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (26, type);
 
@@ -204,13 +203,13 @@ Gint gsetmarkertype(Gint type)
 Gint gsetmarkercolourind(Gint colour)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetmarkercolourind) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetmarkercolourind)
 
 /* check for proper colour index */
         GKSERROR ((colour < 0) ,92, errgsetmarkercolourind)
 
 /* ok to change the colour */
-        xgks_state.gks_mkattr.bundl.colour = colour;            /*c1147*/
+        xgks_state.gks_mkattr.bundl.colour = colour;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (28, colour);
 
@@ -229,13 +228,13 @@ Gint gsetmarkercolourind(Gint colour)
 Gint gsetmarkerind(Gint idx)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetmarkerind) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetmarkerind)
 
 /* check for valid polymarker index */
         GKSERROR ((idx < 1) ,66, errgsetmarkerind)
 
 /* change the bundle table index in the gks state table */
-        xgks_state.gks_mkattr.mark = idx;                       /*c1147*/
+        xgks_state.gks_mkattr.mark = idx;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (25, idx);
 
@@ -258,7 +257,7 @@ Gint gsetmarkerrep(Gint ws_id, Gint idx, Gmkbundl *rep)
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetmarkerrep) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetmarkerrep)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetmarkerrep)   /* c1012 */

@@ -36,7 +36,10 @@
  */
 
 #include <string.h>
+
 #include "gks_implem.h"
+
+#include "text.h"
 
 /*
  * ginqtextfacil(ws_type, fac)
@@ -59,7 +62,7 @@ Gint ginqtextfacil(ws_type, fac)
         int i;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqtextfacil); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqtextfacil);
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -102,9 +105,6 @@ Gint ginqtextfacil(ws_type, fac)
  * See also: ANSI standard p.171
  */
 
-/* c1147:  Moved predefined text bundles into text.h */
-#include "text.h"                                       /*c1147*/
-
 Gint ginqpredtextrep(ws_type, idx, rep)
         Gchar *ws_type;
         Gint idx;
@@ -113,7 +113,7 @@ Gint ginqpredtextrep(ws_type, idx, rep)
         EWSTYPE ewstype;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredtextrep); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredtextrep);
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -153,7 +153,7 @@ Gint ginqtextindices(ws_id, idxlist)
         int  i;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqtextindices); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqtextindices);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqtextindices)   /* c1012 */
@@ -199,7 +199,7 @@ Gint ginqtextrep(ws_id, idx, type, rep)
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqtextrep); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqtextrep);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqtextrep)   /* c1012 */

@@ -72,7 +72,7 @@ Gint ginitstring(Gint ws_id, Gint dev, Gchar *init, Gint pet, Glimit *area, Gstr
     INPUT_DEV *idev;
 
 /* STEP 1: check for errors */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitstring) /* c1147 */
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitstring)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitstring)   /* c1012 */
@@ -140,7 +140,7 @@ Gint gsetstringmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     INPUT_DEV *idev;
 
 /* STEP 1: check for errors */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetstringmode) /* c1147 */
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetstringmode)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetstringmode)   /* c1012 */
@@ -199,7 +199,7 @@ Gint greqstring(Gint ws_id, Gint dev, Gqstring *response)
     INPUT_DEV *idev;
 
 /* STEP 1: check for errors */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqstring) /* c1147 */
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqstring)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqstring)   /* c1012 */
@@ -270,7 +270,7 @@ Gint gsamplestring(Gint ws_id, Gint dev, Gchar *response)
     INPUT_DEV *idev;
 
 /* STEP 1: check for errors */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplestring) /* c1147 */
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplestring)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplestring)   /* c1012 */
@@ -309,7 +309,7 @@ Gint ginqstringst(Gint ws_id, Gint dev, Gstringst *state)
     INPUT_DEV *idev;
 
 /* STEP 1: check for errors */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqstringst) /* c1147 */
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqstringst)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqstringst)   /* c1012 */
@@ -347,7 +347,7 @@ Gint ginqdefstring(Gchar *type, Gint dev, Gdefstring *data)
     EWSTYPE ewstype;
 
 /* STEP 1: check for errors */
-    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefstring)     /* c1147 */
+    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefstring)
 
 /* valid wsid? */
     ewstype = XgksWsTypeToEnum( type );
@@ -561,7 +561,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 data = (Gchar *)malloc( STRLEN( Str ) +1 );     /* c1176 */
                 if (data == NULL)
                 {
-                    gerrorhand( 300, errXgksStrUpdatePrompt, xgks_state.gks_err_file); /* c1147 */
+                    gerrorhand( 300, errXgksStrUpdatePrompt, xgks_state.gks_err_file);
                     return(300);
                 }
                 

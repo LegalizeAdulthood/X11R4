@@ -187,14 +187,14 @@ void XgksIProcessXEvent(XEvent *xev)
         xmev = (XMotionEvent *)xev;
 /* Find the gks workstation associated with the X window */
         for( i=0; i<MAX_OPEN_WS; i++) {
-                if ( xgks_state.openedws[i].ws_id == INVALID) continue; /*c1147*/
-                if ( xgks_state.openedws[i].win == xmev->window )       /*c1147*/
+                if ( xgks_state.openedws[i].ws_id == INVALID) continue;
+                if ( xgks_state.openedws[i].win == xmev->window )
                         break;
         }
         if ( i == MAX_OPEN_WS )         /* NOT FOUND */
                 return;
 
-        ws = xgks_state.openedws[i].ws;                                 /*c1147*/
+        ws = xgks_state.openedws[i].ws;
 
         /* if the closing of this ws has already been initiated, */ /* c1164 */
         /* don't try to do anything.  (by the time we get to the */ /* c1164 */

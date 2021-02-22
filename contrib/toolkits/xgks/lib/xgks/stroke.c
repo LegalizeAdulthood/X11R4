@@ -73,7 +73,7 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitstroke) /* c1147 */
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitstroke)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitstroke)   /* c1012 */
@@ -115,7 +115,7 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
     GKSERROR(record->pet1.editpos>init->n_points+1,152,errginitstroke) /*c1014*/
 
 /* make sure initial points are within the transform in initstroke           */
-    win = &xgks_state.ntrans_list[init->transform].ntrans.w; /* c1014 */ /* c1147 */
+    win = &xgks_state.ntrans_list[init->transform].ntrans.w;
     for ( ptr = init->points, cnt = 1;                              /* c1014 */
           cnt <= init->n_points;                                    /* c1014 */
           ptr++,cnt++)                                              /* c1014 */
@@ -136,11 +136,11 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
             GKSERROR( !WS_AVAIL_COLOUR(ws, record->pet3.mk.bundl.colour), 92, errginitstroke)
         }
         else {
-            record->pet3.mk.type = xgks_state.gks_mkattr.type;          /* c1147 */
-            record->pet3.mk.size = xgks_state.gks_mkattr.size;          /* c1147 */
-            record->pet3.mk.colour = xgks_state.gks_mkattr.colour;      /* c1147 */
-            record->pet3.mk.mark = xgks_state.gks_mkattr.mark;          /* c1147 */
-            record->pet3.mk.bundl = xgks_state.gks_mkattr.bundl;        /* c1147 */
+            record->pet3.mk.type = xgks_state.gks_mkattr.type;
+            record->pet3.mk.size = xgks_state.gks_mkattr.size;
+            record->pet3.mk.colour = xgks_state.gks_mkattr.colour;
+            record->pet3.mk.mark = xgks_state.gks_mkattr.mark;
+            record->pet3.mk.bundl = xgks_state.gks_mkattr.bundl;
         }
     /* Bind attributes to device by storing in pet3.mk.bundl the attributes
      * based on the state of the ASF flags.
@@ -171,11 +171,11 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
             GKSERROR( !WS_AVAIL_COLOUR(ws, record->pet4.ln.bundl.colour), 92, errginitstroke)
         }
         else {
-            record->pet4.ln.type = xgks_state.gks_lnattr.type;          /* c1147 */
-            record->pet4.ln.width = xgks_state.gks_lnattr.width;        /* c1147 */
-            record->pet4.ln.colour = xgks_state.gks_lnattr.colour;      /* c1147 */
-            record->pet4.ln.line = xgks_state.gks_lnattr.line;          /* c1147 */
-            record->pet4.ln.bundl = xgks_state.gks_lnattr.bundl;        /* c1147 */
+            record->pet4.ln.type = xgks_state.gks_lnattr.type;
+            record->pet4.ln.width = xgks_state.gks_lnattr.width;
+            record->pet4.ln.colour = xgks_state.gks_lnattr.colour;
+            record->pet4.ln.line = xgks_state.gks_lnattr.line;
+            record->pet4.ln.bundl = xgks_state.gks_lnattr.bundl;
         }
     /* Bind attributes to device by storing in pet3.mk.bundl the attributes
      * based on the state of the ASF flags.
@@ -236,7 +236,7 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
      /* moved this if from after ChangeGC to avoid core dump problem.
        don't know why, but this fixes it */
     if (gcvalues.line_style == LineOnOffDash)
-        XSetDashes( ws->dpy, idev->gc, 0, xgksDASHES[didx].dashl, xgksDASHES[didx].dn); /* c1147 */
+        XSetDashes( ws->dpy, idev->gc, 0, xgksDASHES[didx].dashl, xgksDASHES[didx].dn);
 
     return(0);
 }
@@ -258,7 +258,7 @@ Gint gsetstrokemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetstrokemode ) /* c1147 */
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetstrokemode )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetstrokemode)   /* c1012 */
@@ -344,7 +344,7 @@ Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqstroke ) /* c1147 */
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqstroke )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqstroke)   /* c1012 */
@@ -461,7 +461,7 @@ Gint gsamplestroke(Gint ws_id, Gint dev, Gstroke *response)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplestroke ) /* c1147 */
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplestroke )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplestroke)   /* c1012 */
@@ -517,7 +517,7 @@ Gint ginqstrokest(Gint ws_id, Gint dev, Gqtype type, Gstrokest *state)
 
 /* STEP 1: check for errors. */
 /* proper gks state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqstrokest ) /* c1147 */
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqstrokest )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqstrokest)   /* c1012 */
@@ -568,7 +568,7 @@ Gint ginqdefstroke(Gchar *type, Gint dev, Gdefstroke *data)
         EWSTYPE ewstype;
 
 /* STEP 1: check for errors */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefstroke) /* c1147 */
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefstroke)
 
 /* valid wsid? */
         ewstype = XgksWsTypeToEnum( type );
@@ -812,7 +812,7 @@ Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             data = (Gstroke *) malloc( sizeof( Gstroke ));
             if ( data == NULL )
             {
-                gerrorhand( 300, errXgksStkUpdatePrompt, xgks_state.gks_err_file ); /* c1147 */
+                gerrorhand( 300, errXgksStkUpdatePrompt, xgks_state.gks_err_file );
                 return(300);
             }
             

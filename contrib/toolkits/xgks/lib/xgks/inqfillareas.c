@@ -37,6 +37,7 @@
 
 #include "gks_implem.h"
 
+#include "fillarea.h"
 
 
 /*
@@ -48,7 +49,7 @@
  */
 
 
-extern Gptbundl xgks_xpttn[];           /*c1147*/
+extern Gptbundl xgks_xpttn[];
 
 
 Gint ginqfillfacil(ws_type, fac)
@@ -59,7 +60,7 @@ Gint ginqfillfacil(ws_type, fac)
         EWSTYPE ewstype;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqfillfacil); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqfillfacil);
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -98,9 +99,6 @@ Gint ginqfillfacil(ws_type, fac)
  * See also: ANSI standard p.178
  */
 
-/* c1147:  Predefined bundles now kept in fillarea.h */
-#include "fillarea.h"                                           /* c1147 */
-
 Gint ginqpredfillrep(ws_type, idx, rep)
         Gchar *ws_type;
         Gint idx;
@@ -109,7 +107,7 @@ Gint ginqpredfillrep(ws_type, idx, rep)
         EWSTYPE ewstype;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredfillrep); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredfillrep);
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -143,7 +141,7 @@ Gint ginqfillindices(ws_id, idxlist)
         int  i;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqfillindices); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqfillindices);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqfillindices)   /* c1012 */
@@ -183,7 +181,7 @@ Gint ginqfillrep(ws_id, idx, type, rep)
         WS_STATE_PTR ws;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqfillrep); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqfillrep);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqfillrep)   /* c1012 */
@@ -221,7 +219,7 @@ Gint ginqpatfacil(ws_type, fac)
         EWSTYPE ewstype;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpatfacil); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpatfacil);
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -251,7 +249,7 @@ Gint ginqpredpatrep(ws_type, idx, rep)
         int i, j;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredpatrep); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredpatrep);
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
@@ -262,13 +260,13 @@ Gint ginqpredpatrep(ws_type, idx, rep)
         GKSERROR( (idx < 1 || idx > 20), 85, errginqpredpatrep);
 
 /* set the return values */
-        *rep = xgks_xpttn[idx-1];                               /*c1147*/
+        *rep = xgks_xpttn[idx-1];
         j = rep->size.x * rep->size.y;
         rep->array = (Gint *)malloc( j * sizeof(int));
         GKSERROR( (rep->array == NULL), 300, errginqpredpatrep);
 
         for (i=0; i < j; i++)
-                rep->array[i] = xgks_xpttn[idx-1].array[i];     /*c1147*/
+                rep->array[i] = xgks_xpttn[idx-1].array[i];
 
         return( OK );
 }
@@ -289,7 +287,7 @@ Gint ginqpatindices(ws_id, idxlist)
         int  i;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpatindices); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpatindices);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpatindices)   /* c1012 */
@@ -330,7 +328,7 @@ Gint ginqpatrep(ws_id, idx, type, rep)
         int i, j;
 
 /* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpatrep); /*c1147*/
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpatrep);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpatrep)   /* c1012 */

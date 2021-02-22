@@ -55,10 +55,6 @@ int main(int argc, char *argv[])
         printf(" */\n");
         printf("\n#ifndef GKSERRMSG_H\n#define GKSERRMSG_H\n");
 
-/* c1147: the following line no longer needed, as gks_err_file is now part */
-/* of the gks state list.                                                */
-/*      printf("\nextern Gfile *gks_err_file;\n\n");                       */
-
         printf("#ifdef GKS_ERROR_C\n");
         while(fgets(line, sizeof(line), stdin) != NULL) {
                 if (strncmp( "#define", line, 7) != 0)

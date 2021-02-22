@@ -110,7 +110,7 @@ void XgksInsertMesgPrimi(WS_STATE_PTR ws, OUT_PRIMI *primi)
     {
        if ((tmp = (Gchar *)malloc ((unsigned)STRLEN(primi->primi.mesg.string) + 1)) == NULL)    /* c1176 */
           {
-          gerrorhand (300, errXgksInsertMesgPrimi, xgks_state.gks_err_file); /*c1147*/
+          gerrorhand (300, errXgksInsertMesgPrimi, xgks_state.gks_err_file);
           return;
           }
        STRCPY (tmp, primi->primi.mesg.string);  /* Make a copy of the new message */    /* c1176 */
@@ -162,7 +162,7 @@ void XgksDeletePrimi(OUT_PRIMI *head, OUT_PRIMI **insert_pt)
         head->seg_cnt = 0;
         head->pickid = INVALID;
         head->primi.clip.segment = FALSE;
-        head->primi.clip.rec = xgks_state.cliprec.rec;          /*c1147*/
+        head->primi.clip.rec = xgks_state.cliprec.rec;
         (*insert_pt) = head;
         head->next = NULL;
 }
@@ -178,7 +178,7 @@ OUT_PRIMI *primi;
 {
         OUT_PRIMI *tmp;
 
-        if (xgks_state.gks_state == GSGOP) { /* there's opened segment, append to it */ /*c1147*/
+        if (xgks_state.gks_state == GSGOP) { /* there's opened segment, append to it */
                 if ( (tmp=XgksAppendSegPrimi(primi)) == NULL)
                         return;         /* this means do not darw out, eg segment invisible */
                 XgksOutputToWs (tmp);
@@ -323,7 +323,7 @@ OUT_PRIMI *primi;
     OUT_PRIMI *new_primi;
 
     if ((new_primi = XgksNewPrimi ()) == NULL) {
-        gerrorhand (300, errXgksDuplicatePrimi, xgks_state.gks_err_file); /*c1147*/
+        gerrorhand (300, errXgksDuplicatePrimi, xgks_state.gks_err_file);
         return (NULL);
     }
 
@@ -333,7 +333,7 @@ OUT_PRIMI *primi;
         case PLINE:
                 num_pts = new_primi->primi.pline.num_pts = primi->primi.pline.num_pts;
                 if ((new_pts = (Gpoint *) malloc ((unsigned) num_pts*sizeof(Gpoint)))==NULL) {
-                        gerrorhand (300, errXgksDuplicatePrimi, xgks_state.gks_err_file); /*c1147*/
+                        gerrorhand (300, errXgksDuplicatePrimi, xgks_state.gks_err_file);
                         return (NULL);
                 }
                 new_primi->primi.pline.pts = new_pts;
@@ -344,7 +344,7 @@ OUT_PRIMI *primi;
         case PMARK:
                 num_pts = new_primi->primi.pmark.num_pts = primi->primi.pmark.num_pts;
                 if ((new_pts = (Gpoint *) malloc ((unsigned) num_pts*sizeof(Gpoint)))==NULL) {
-                        gerrorhand (300, errXgksDuplicatePrimi, xgks_state.gks_err_file); /*c1147*/
+                        gerrorhand (300, errXgksDuplicatePrimi, xgks_state.gks_err_file);
                         return (NULL);
                 }
                 new_primi->primi.pmark.location = new_pts;
@@ -355,7 +355,7 @@ OUT_PRIMI *primi;
         case FILL_AREA:
                 num_pts = new_primi->primi.fill_area.num_pts = primi->primi.fill_area.num_pts;
                 if ((new_pts = (Gpoint *) malloc ((unsigned) num_pts*sizeof(Gpoint)))==NULL) {
-                        gerrorhand (300, errXgksDuplicatePrimi, xgks_state.gks_err_file); /*c1147*/
+                        gerrorhand (300, errXgksDuplicatePrimi, xgks_state.gks_err_file);
                         return (NULL);
                 }
                 new_primi->primi.fill_area.pts = new_pts;
@@ -369,21 +369,21 @@ OUT_PRIMI *primi;
                 break;
         case TEXT      :
                 if ((new_pts = (Gpoint *) malloc ((unsigned)sizeof(Gpoint)))==NULL) {
-                        gerrorhand (300, errXgksDuplicatePrimi, xgks_state.gks_err_file); /*c1147*/
+                        gerrorhand (300, errXgksDuplicatePrimi, xgks_state.gks_err_file);
                         return (NULL);
                 }
                 new_primi->primi.text.location = new_pts;
                 old_pts = primi->primi.text.location;
                 *new_pts = *old_pts;
                 if ((new_primi->primi.text.string= (Gchar *)malloc ((unsigned) STRLEN(primi->primi.text.string) + 1))==NULL) {  /* c1176 */
-                        gerrorhand(300, errXgksDuplicatePrimi, xgks_state.gks_err_file); /*c1147*/
+                        gerrorhand(300, errXgksDuplicatePrimi, xgks_state.gks_err_file);
                         return (NULL);
                 }
                 STRCPY ((new_primi->primi.text.string), primi->primi.text.string);      /* c1176 */
                 break;
         case MESG      :
                 if ((new_primi->primi.mesg.string= (Gchar *)malloc ((unsigned) STRLEN(primi->primi.mesg.string) + 1))==NULL) {  /* c1176 */
-                        gerrorhand(300, errXgksDuplicatePrimi, xgks_state.gks_err_file); /*c1147*/
+                        gerrorhand(300, errXgksDuplicatePrimi, xgks_state.gks_err_file);
                         return (NULL);
                 }
                 STRCPY ((new_primi->primi.mesg.string), primi->primi.mesg.string);      /* c1176 */
@@ -391,7 +391,7 @@ OUT_PRIMI *primi;
         case CELL_ARRAY:
                 cnt = primi->primi.cell_array.rowsize * primi->primi.cell_array.dim.y;
                 if ((new_primi->primi.cell_array.colour=(Gint *)malloc(cnt * sizeof(Gint))) == NULL) {
-                        gerrorhand(300, errXgksDuplicatePrimi, xgks_state.gks_err_file); /*c1147*/
+                        gerrorhand(300, errXgksDuplicatePrimi, xgks_state.gks_err_file);
                         return (NULL);
                 }
                 cnt--;

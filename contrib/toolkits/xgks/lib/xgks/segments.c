@@ -139,7 +139,7 @@ typedef struct seg_st {
 #define MAX(a,b)        ((a)>(b) ? (a) : (b))
 #define MIN(a,b)        ((a)>(b) ? (b) : (a))
 
-#define NOT_WISS(ws_id) ((ws_id) != xgks_state.wiss_id)                 /* c1147 */
+#define NOT_WISS(ws_id) ((ws_id) != xgks_state.wiss_id)
 
 static SEG_STATE_PTR segtable[SHSIZE];  /* Hash table where segment state information are stored */
 
@@ -242,8 +242,8 @@ void XgksInitGksSegments(void)
 
         for (i=0; i<SHSIZE; i++)
                 segtable[i] = (SEG_STATE_PTR) NULL;
-        xgks_state.gks_open_seg = INVALID;                      /* c1147 */
-        xgks_state.gks_pick_id  = 0;                      /* c1154 c1147 */
+        xgks_state.gks_open_seg = INVALID;
+        xgks_state.gks_pick_id  = 0;
 }
 
 /*$F
@@ -262,7 +262,7 @@ Gint gcreateseg(Gint name)
 
 /* STEP 1: Check for errors */
 /* check for proper state */
-        GKSERROR ((xgks_state.gks_state != GWSAC) ,3, errgcreateseg) /* c1147 */
+        GKSERROR ((xgks_state.gks_state != GWSAC) ,3, errgcreateseg)
 
 /* check for valid segment name */
         GKSERROR ((name<1) ,120, errgcreateseg)         /* c1175 */
@@ -275,7 +275,7 @@ Gint gcreateseg(Gint name)
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (81, name);
 
-        xgks_state.gks_open_seg = seg->segattr.seg = name;      /* c1147 */
+        xgks_state.gks_open_seg = seg->segattr.seg = name;
 
         /* install it in segment state list */
         XgksInstallSeg (seg);
@@ -284,11 +284,11 @@ Gint gcreateseg(Gint name)
            insert it into ws->seglist */
         i = 0;
         for (wscnt=0; wscnt < MAX_ACTIVE_WS; wscnt++)
-                if (xgks_state.activews[wscnt].ws_id != INVALID) {      /* c1147 */
-                        seg->assoc_ws[i++] = xgks_state.activews[wscnt].ws_id; /* c1147 */
-                        if (xgks_state.activews[wscnt].ws->ewstype != MO) { /* c1139 */ /* c1147 */
-                                XgksInsertWsSeg (xgks_state.activews[wscnt].ws, name); /* c1147 */
-                                UPDATE_SEG_CNT(xgks_state.activews[wscnt].ws->primi_insert_pt); /* c1147 */
+                if (xgks_state.activews[wscnt].ws_id != INVALID) {
+                        seg->assoc_ws[i++] = xgks_state.activews[wscnt].ws_id;
+                        if (xgks_state.activews[wscnt].ws->ewstype != MO) {
+                                XgksInsertWsSeg (xgks_state.activews[wscnt].ws, name);
+                                UPDATE_SEG_CNT(xgks_state.activews[wscnt].ws->primi_insert_pt);
                         }                                        /* c1139 */
                 }
 
@@ -296,7 +296,7 @@ Gint gcreateseg(Gint name)
                 seg->assoc_ws[i] = INVALID;
 
 /* STEP 3: Change operating state */
-        xgks_state.gks_state = GSGOP;                           /* c1147 */
+        xgks_state.gks_state = GSGOP;
 
         return(0);
 }
@@ -311,13 +311,13 @@ Gint gcreateseg(Gint name)
 Gint gcloseseg(void)
 {
 /* STEP 1: check for errors */
-        GKSERROR ((xgks_state.gks_state != GSGOP) ,4, errgcloseseg)     /* c1147 */
+        GKSERROR ((xgks_state.gks_state != GSGOP) ,4, errgcloseseg)
 
 /* STEP 2: INVALIDate gks_open_seg */
-        xgks_state.gks_open_seg = INVALID;                      /* c1147 */
+        xgks_state.gks_open_seg = INVALID;
 
 /* STEP 3: change state */
-        xgks_state.gks_state = GWSAC;                           /* c1147 */
+        xgks_state.gks_state = GWSAC;
 
         if (MO_OPENED == TRUE) XgksMoCloseSeg ();
 
@@ -341,7 +341,7 @@ Gint grenameseg(Gint old, Gint new)
 
 /* STEP 1: check for errors */
 /* check for proper state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgrenameseg) /* c1147 */
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgrenameseg)
 
 /* check for invalid name */
         GKSERROR (( (old<1) || (new<1)),120, errgrenameseg)     /* c1175 */
@@ -357,8 +357,8 @@ Gint grenameseg(Gint old, Gint new)
 /* STEP 2: change the segments name and re-install it into segment state list */
         seg->segattr.seg = new;
 /* If segment being renamed is the currently open one, update gks state list. */
-        if (xgks_state.gks_open_seg == old)             /*c2012*/       /* c1147 */
-                xgks_state.gks_open_seg = new;          /*c2012*/       /* c1147 */
+        if (xgks_state.gks_open_seg == old)
+                xgks_state.gks_open_seg = new;
         XgksInstallSeg(seg);
 
 /* Now do the renaming in all associated ws->seglist */
@@ -385,13 +385,13 @@ Gint gdelseg(Gint name)
 
 /* STEP 1: check for errors. */
 /* check for proper state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgdelseg) /* c1147 */
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgdelseg)
 
 /* check for invalid name */
         GKSERROR ((name < 1) ,120, errgdelseg)  /* c1175 */
 
 /* check for segment currently open */
-        GKSERROR ((xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == name) ,125, errgdelseg) /* c1147 */
+        GKSERROR ((xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == name) ,125, errgdelseg)
 
 /* try to delete the segment from segment state list in the mean time
    check for existance of segment */
@@ -430,7 +430,7 @@ Gint gdelsegws(Gint ws_id, Gint name)
 
 /* STEP 1: check for errors. */
 /* check for proper state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgdelsegws) /* c1147 */
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgdelsegws)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgdelsegws)   /* c1012 */
@@ -450,7 +450,7 @@ Gint gdelsegws(Gint ws_id, Gint name)
         GKSERROR (( (seg=XgksFindSeg(name)) == NULL ) ,123, errgdelsegws)
 
 /* check for segment currently open */
-        GKSERROR ((xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == name) ,125, errgdelsegws) /* c1147 */
+        GKSERROR ((xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == name) ,125, errgdelsegws)
 
 /* delete the segment from the assoc_ws array */
         GKSERROR ( (XgksDelAssocWs(seg, ws->ws_id) == INVALID), 123, errgdelsegws)
@@ -486,7 +486,7 @@ Gint gsetsegattr(Gint name, Gsegattr *segattr)
 
 /* STEP 1: check for errors. */
 /* check for proper state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetsegattr) /* c1147 */
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetsegattr)
 
 /* check for invalid name */
         GKSERROR ((name < 1) ,120, errgsetsegattr)      /* c1175 */
@@ -569,13 +569,13 @@ Gint gsetpickid(Gint pick_id)
 {
 /* STEP 1: check for errors */
 /* gks in proper state? */
-        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetpickid)    /* c1147 */
+        GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetpickid)
 
 /* valid pick id? */
         GKSERROR ((pick_id < 0) ,97, errgsetpickid)     /* c1160 */
 
 /* STEP 2: change the current pick id */
-        xgks_state.gks_pick_id = pick_id;                               /* c1147 */
+        xgks_state.gks_pick_id = pick_id;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (44, pick_id);
 
@@ -600,7 +600,7 @@ Gint gassocsegws(Gint ws_id, Gint seg_id)
         Gint i;
 
 /* check for operating state */
-        GKSERROR ( (xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC), 6, errgassocsegws) /* c1147 */
+        GKSERROR ( (xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC), 6, errgassocsegws)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgassocsegws)   /* c1012 */
@@ -609,7 +609,7 @@ Gint gassocsegws(Gint ws_id, Gint seg_id)
         GKSERROR ( ((ws=OPEN_WSID(ws_id))==NULL), 25, errgassocsegws)  /* c1012 */
 
 /* Check if WISS ws is opened */
-        GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errgassocsegws); /* c1012 *//* c1147 */
+        GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errgassocsegws);
 
 /* check for valid ws category */
         GKSERROR ( (WS_CAT(ws) == GMI), 33, errgassocsegws)
@@ -689,7 +689,7 @@ Gint gcopysegws(Gint ws_id, Gint seg_id)
         Glimit  wsclip;
 
 /* check for operating state */
-        GKSERROR ( (xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC), 6, errgcopysegws) /* c1147 */
+        GKSERROR ( (xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC), 6, errgcopysegws)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgcopysegws)   /* c1012 */
@@ -698,7 +698,7 @@ Gint gcopysegws(Gint ws_id, Gint seg_id)
         GKSERROR ( ((ws=OPEN_WSID(ws_id))==NULL), 25, errgcopysegws)  /* c1012 */
 
 /* Check if WISS ws is opened */
-        GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errgcopysegws); /* c1012 *//* c1147 */
+        GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errgcopysegws);
 
 /* check for valid ws category */
         GKSERROR ( (WS_CAT(ws) == GMI), 33, errgcopysegws)
@@ -747,7 +747,7 @@ Gint gcopysegws(Gint ws_id, Gint seg_id)
         }
         XgksIDevEnable (ws);    /* Disable all input devices */
         ws->clip = wsclip;      /* Restore the old ws->clip */
-        xXgksUpdateClip(ws);    /* imform x about the clip-rec change */ /* c1147 */
+        xXgksUpdateClip(ws);    /* imform x about the clip-rec change */
 
         return (0);
 }
@@ -771,16 +771,16 @@ Gint ginsertseg(Gint seg_id, Gfloat segtran[2][3])
         Gint   tmp_pickid = 0;          /* MWW: added to suppress warning */
 
 /* check for operating state */
-        GKSERROR ( (xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errginsertseg) /* c1147 */
+        GKSERROR ( (xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errginsertseg)
 
 /* Check if WISS ws is opened */
-        GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errginsertseg); /* c1012 *//* c1147 */
+        GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errginsertseg);
 
 /* check for valid seg_id */
         GKSERROR ( (seg_id<1), 120, errginsertseg)      /* c1175 */
 
 /* check if seg_id is currently opened */
-        GKSERROR ( (xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == seg_id), 125, errginsertseg) /* c1147 */
+        GKSERROR ( (xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == seg_id), 125, errginsertseg)
 
 /* Check if Segment is on WISS */
         WsSeg = wis->seglist;
@@ -796,7 +796,7 @@ Gint ginsertseg(Gint seg_id, Gfloat segtran[2][3])
                 XgksSegTransProcessMo (XgksFindSeg(seg_id), segtran);   /* c1144 */
         }
 
-        if (xgks_state.gks_state == GSGOP)  tmp_pickid = xgks_state.gks_pick_id; /*c1147*/
+        if (xgks_state.gks_state == GSGOP)  tmp_pickid = xgks_state.gks_pick_id;
 
 /* Get ready to output all primitives in segment to ws */
         seg = XgksFindSeg (seg_id);
@@ -804,8 +804,8 @@ Gint ginsertseg(Gint seg_id, Gfloat segtran[2][3])
         while (primi != NULL) {
                 if (primi->pid != CLIP_REC) {                   /* Ignore all clipings use, current
                                                                    gkslist clip */
-                        if (xgks_state.gks_state == GSGOP) {            /* c1147 */
-                                xgks_state.gks_pick_id = primi->pickid; /* c1147 */
+                        if (xgks_state.gks_state == GSGOP) {
+                                xgks_state.gks_pick_id = primi->pickid;
                                 tran2 = XgksDuplicatePrimi(XgksSegPrimiTran(primi, segtran));
                                 if ((tran = XgksAppendSegPrimi (tran2)) != NULL)
                                         XgksOutputToWs (tran);
@@ -818,7 +818,7 @@ Gint ginsertseg(Gint seg_id, Gfloat segtran[2][3])
                 primi = primi->next;
         }
 
-        if (xgks_state.gks_state == GSGOP)   xgks_state.gks_pick_id = tmp_pickid; /*c1147*/
+        if (xgks_state.gks_state == GSGOP)   xgks_state.gks_pick_id = tmp_pickid;
 
         return (0);
 }
@@ -837,7 +837,7 @@ Gint gredrawsegws(Gint ws_id)
         WS_STATE_PTR ws;
 
 /* check proper gks operating state */
-        GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) ,7, errgredrawsegws) /* c1147 */
+        GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) ,7, errgredrawsegws)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgredrawsegws)   /* c1012 */
@@ -899,7 +899,7 @@ static SEG_STATE_PTR XgksNewSeg()
         if ( (new = (SEG_STATE_PTR)  malloc ( (unsigned) sizeof(SEG_STATE_ENTRY) )) != NULL )  {
                 new->primi_list.pid = CLIP_REC;
                 new->primi_list.primi.clip.segment = TRUE;
-                new->primi_list.primi.clip.rec = xgks_state.cliprec.rec; /*c1147*/
+                new->primi_list.primi.clip.rec = xgks_state.cliprec.rec;
                 new->primi_list.next = NULL;
                 new->primi_insert_pt = &(new->primi_list);
                 new->segattr.seg = INVALID;
@@ -1053,8 +1053,8 @@ OUT_PRIMI *primi;
 {
     SEG_STATE_PTR seg;
 
-    seg = XgksFindSeg(xgks_state.gks_open_seg);         /* c1147 */
-    primi->pickid = xgks_state.gks_pick_id;             /* c1147 */
+    seg = XgksFindSeg(xgks_state.gks_open_seg);
+    primi->pickid = xgks_state.gks_pick_id;
     XgksInsertPrimi (&(seg->primi_insert_pt), primi);
     XgksUpdatePrimiBound (primi, &(seg->bound));
     if (primi->pid == TEXT) seg->text_present = TRUE;
@@ -1196,7 +1196,7 @@ static void XgksOutputSeg(WS_STATE_PTR ws, SEG_STATE_PTR seg)
                 primi = primi->next;
         }
         ws->clip = tmp_clip;    /* restore clip ws-clip region */
-        xXgksUpdateClip(ws);                                            /* c1147 */
+        xXgksUpdateClip(ws);
 }
 
 /*
@@ -1322,15 +1322,15 @@ void XgksAppendSegClip(void)
         SEG_STATE_PTR seg;
         OUT_PRIMI *clip;
 
-        seg = XgksFindSeg(xgks_state.gks_open_seg);             /* c1147 */
+        seg = XgksFindSeg(xgks_state.gks_open_seg);
         if (seg->primi_insert_pt->pid == CLIP_REC) {
-                seg->primi_insert_pt->primi.clip.rec = xgks_state.cliprec.rec; /*c1147*/
+                seg->primi_insert_pt->primi.clip.rec = xgks_state.cliprec.rec;
                 return;
         } 
                 clip = XgksNewPrimi();
                 clip->pid = CLIP_REC;
                 clip->primi.clip.segment = TRUE;
-                clip->primi.clip.rec = xgks_state.cliprec.rec;          /*c1147*/
+                clip->primi.clip.rec = xgks_state.cliprec.rec;
                 XgksInsertPrimi (&(seg->primi_insert_pt), clip);
         
 }
@@ -1369,14 +1369,14 @@ static void XgksSetHighLight(WS_STATE_PTR ws, SEG_STATE_PTR seg)
         trans[4] = trans[0];    /* for xpolyline to do drawing */
 
         XgksIDevDisable (ws);
-        xXgksHighLight (ws, trans);                                     /* c1147 */
+        xXgksHighLight (ws, trans);
         XgksIDevEnable (ws);
 }
 
 /*
  * XgksSegdump() - ....
  */
-#ifdef SEGMENTDEBUG                                             /* c1147 */
+#ifdef SEGMENTDEBUG
 void XgksSegDump(SEG_STATE_PTR seg)
 {
         fprintf(stderr,"name=%d, vis=%d, hi=%d, det=%d, pri=%f\n", seg->segattr.seg, seg->segattr.vis,
@@ -1387,7 +1387,7 @@ void XgksSegDump(SEG_STATE_PTR seg)
                  seg->segattr.segtran[1][1],seg->segattr.segtran[1][2]);
 }
 
-#endif                                                          /* c1147 */
+#endif
 /*
  * XgksDelAssocWs (seg, ws_id)  - delete ws_id from segment state return OK if
  *                                successful, else INVALID, will free the segment
@@ -1440,7 +1440,7 @@ static void XgksClearWs(WS_STATE_PTR ws)
         XgksCleanUpWsSegList (ws);
 
 /* if display surface is not empty, clear display */
-        if (ws->wsdus.dspsurf == GNOTEMPTY) xXgksClearWs(ws);           /* c1147 */
+        if (ws->wsdus.dspsurf == GNOTEMPTY) xXgksClearWs(ws);
 
 /* Display now empty, and no new fram on display */
         ws->wsdus.dspsurf = GEMPTY;
@@ -1449,7 +1449,7 @@ static void XgksClearWs(WS_STATE_PTR ws)
 /* unpend pending transformations */
         if (ws->wsti.wstus == GPENDING) XgksUnpendPendingTrans(ws);
 
-        return;                                                 /* c1147 */
+        return;
 }
 
 /*
@@ -1535,7 +1535,7 @@ void XgksReDrawSeg(WS_STATE_PTR ws, Gint seg_id)
                         primi = primi->next;
                 }
                 ws->clip = tmp_clip;    /* restore clip ws-clip region */
-                xXgksUpdateClip(ws);                                    /* c1147 */
+                xXgksUpdateClip(ws);
                 if (seg->segattr.hilight == GHIGHLIGHTED) XgksSetHighLight(ws, seg);
         }
 }
@@ -1974,7 +1974,7 @@ static float XgksDistText(WS_STATE_PTR ws, SEG_STATE_PTR seg, OUT_PRIMI *primi, 
         Gfloat mini;
 
 
-        xXgksInqTextExtent(ws, &(primi->primi.text), points);                /* c1147 */
+        xXgksInqTextExtent(ws, &(primi->primi.text), points);
         ptn[0] = points[1];     ptn[1] = points[2];
         ptn[2] = points[3];     ptn[3] = points[4];
         ptn[4] = points[1];
@@ -2096,16 +2096,16 @@ static void XgksSegTransProcessMo(SEG_STATE_PTR seg, Gfloat matrix[2][3])
         OUT_PRIMI *primi;
 
         for (wscnt=0; wscnt<MAX_ACTIVE_WS; wscnt++) {
-                if ( (xgks_state.activews[wscnt].ws_id != INVALID) && (xgks_state.activews[wscnt].ws->ewstype == MO) )  {                       /* c1147 */
-                        XgksMoSetAsfOnWs (xgks_state.activews[wscnt].ws); /* c1144 */ /* c1147 */
+                if ( (xgks_state.activews[wscnt].ws_id != INVALID) && (xgks_state.activews[wscnt].ws->ewstype == MO) )  {
+                        XgksMoSetAsfOnWs (xgks_state.activews[wscnt].ws);
                         primi = seg->primi_list.next;
                         while (primi != NULL) {
-                                XgksOutPrimiToMo (xgks_state.activews[wscnt].ws, XgksSegPrimiTran(primi, matrix)); /* c1147 */
+                                XgksOutPrimiToMo (xgks_state.activews[wscnt].ws, XgksSegPrimiTran(primi, matrix));
                                 primi = primi->next;
                         }
                 }
         }
-        XgksMoSetClip (&xgks_state.cliprec.rec);      /*  c1144   */ /*c1147*/
+        XgksMoSetClip (&xgks_state.cliprec.rec);
 }
 
 static void XgksSegCopyMo(WS_STATE_PTR ws, SEG_STATE_PTR seg)
@@ -2131,7 +2131,7 @@ static void XgksSegProcessMo(WS_STATE_PTR ws, SEG_STATE_PTR seg)
                 XgksOutPrimiToMo (ws, primi);
                 primi = primi->next;
         }
-        XgksMoSetClipOnWs (ws, &xgks_state.cliprec.rec); /* c1137 */ /*c1147*/
+        XgksMoSetClipOnWs (ws, &xgks_state.cliprec.rec);
 }
 
 static void XgksOutPrimiToMo(WS_STATE_PTR ws, OUT_PRIMI *primi)
@@ -2176,12 +2176,12 @@ static void XgksRestoreMoGksState(void)
         Gint cnt;
 
         for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {
-                ws = xgks_state.activews[cnt].ws;               /* c1144 *//* c1147 */
-                if (xgks_state.activews[cnt].ws_id != INVALID && xgks_state.activews[cnt].ws->ewstype == MO) {                  /* c1147 */
-                        XgksSetLineAttrMo (ws, &(xgks_state.gks_lnattr)); /* c1144 *//* c1147 */
-                        XgksSetMarkAttrMo (ws, &(xgks_state.gks_mkattr));/* c1144 *//* c1147 */
-                        XgksSetTextAttrMo (ws, &(xgks_state.gks_txattr),  &(xgks_state.gks_chattr)); /* c1144 */ /* c1147 */
-                        XgksSetFillPatAttrMo (ws, &(xgks_state.gks_flattr), &(xgks_state.gks_ptattr));  /* c1144 */ /* c1147 */
+                ws = xgks_state.activews[cnt].ws;
+                if (xgks_state.activews[cnt].ws_id != INVALID && xgks_state.activews[cnt].ws->ewstype == MO) {
+                        XgksSetLineAttrMo (ws, &(xgks_state.gks_lnattr));
+                        XgksSetMarkAttrMo (ws, &(xgks_state.gks_mkattr));
+                        XgksSetTextAttrMo (ws, &(xgks_state.gks_txattr),  &(xgks_state.gks_chattr));
+                        XgksSetFillPatAttrMo (ws, &(xgks_state.gks_flattr), &(xgks_state.gks_ptattr));
                         XgksMoSetPatRefOnWs (ws);    /* c1144 */
                         XgksMoSetPatSizeOnWs (ws);   /* c1144 */
 
@@ -2192,10 +2192,10 @@ static void XgksRestoreMoGksState(void)
 static void XgksRestoreMoGksStateOnWs(WS_STATE_PTR ws)
 {
         if (ws->ws_id != INVALID && ws->ewstype == MO) {
-                XgksSetLineAttrMo (ws, &(xgks_state.gks_lnattr)); /* c1144 *//* c1147 */
-                XgksSetMarkAttrMo (ws, &(xgks_state.gks_mkattr)); /* c1144 */ /* c1147 */
-                XgksSetTextAttrMo (ws, &(xgks_state.gks_txattr), &(xgks_state.gks_chattr));     /* c1144 */ /* c1147 */
-                XgksSetFillPatAttrMo (ws, &(xgks_state.gks_flattr), &(xgks_state.gks_ptattr));  /* c1144 */ /* c1147 */
+                XgksSetLineAttrMo (ws, &(xgks_state.gks_lnattr));
+                XgksSetMarkAttrMo (ws, &(xgks_state.gks_mkattr));
+                XgksSetTextAttrMo (ws, &(xgks_state.gks_txattr), &(xgks_state.gks_chattr));
+                XgksSetFillPatAttrMo (ws, &(xgks_state.gks_flattr), &(xgks_state.gks_ptattr));
                 XgksMoSetPatRefOnWs (ws);    /* c1144 */
                 XgksMoSetPatSizeOnWs (ws);   /* c1144 */
         }
@@ -2227,12 +2227,12 @@ void XgksSetTextAttrMo(WS_STATE_PTR ws, Gtxattr *txattr, CHATTR *chattr)
         XgksMoSetGraphicSizeOnWs (ws, 32, txattr->bundl.space);
         XgksMoSetGraphicAttrOnWs (ws, 33, txattr->bundl.colour);
 
-        tmp = xgks_state.gks_chattr;                            /* c1147 */
-        xgks_state.gks_chattr = *chattr;                        /* c1147 */
+        tmp = xgks_state.gks_chattr;
+        xgks_state.gks_chattr = *chattr;
         XgksMoSetCharUpOnWs      (ws);
         XgksMoSetTextPathOnWs    (ws,    chattr->path);         /* c1137 */
         XgksMoSetTextAlignOnWs   (ws,    &(chattr->align));
-        xgks_state.gks_chattr = tmp;                            /* c1147 */
+        xgks_state.gks_chattr = tmp;
 }
 
 void XgksSetFillPatAttrMo(WS_STATE_PTR ws, Gflattr *flattr, PTATTR  *ptattr)
@@ -2272,7 +2272,7 @@ Gint ginqmodsegattr(Gchar *ws_type, Gmodseg *dyn)
         EWSTYPE ewstype;
 
 /* STEP 1: check for errors */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmodsegattr); /* c1147 */
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmodsegattr);
 
 /* check for valid workstation */
         ewstype = XgksWsTypeToEnum ( ws_type );
@@ -2305,10 +2305,10 @@ Gint ginqmodsegattr(Gchar *ws_type, Gmodseg *dyn)
 Gint ginqnameopenseg(Gint *seg)
 {
 /* STEP 1: check for errors */
-        GKSERROR( (xgks_state.gks_state != GSGOP), 4, errginqnameopenseg); /* c1147 */
+        GKSERROR( (xgks_state.gks_state != GSGOP), 4, errginqnameopenseg);
 
 /* STEP 2: set up the return values */
-        *seg = xgks_state.gks_open_seg;                         /* c1147 */
+        *seg = xgks_state.gks_open_seg;
 
         return (OK);
 }
@@ -2327,7 +2327,7 @@ Gint ginqsegattr(Gsegattr *segattr)
         SEG_STATE_PTR seg;
 
 /* STEP 1: check for errors */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqsegattr); /* c1147 */
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqsegattr);
 
 /* check for valid segment name */
         GKSERROR( (segattr->seg < 1), 120, errginqsegattr);     /* c1175 */
@@ -2358,7 +2358,7 @@ Gint ginqassocws(Gint seg, Gintlist *asswk)
         Gint i;
 
 /* STEP 1: check for errors */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqassocws); /* c1147 */
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqassocws);
 
 /* check for valid segment name */
         GKSERROR( (seg < 1), 120, errginqassocws);      /* c1175 */
@@ -2395,7 +2395,7 @@ Gint ginqsegnames(Gintlist *segs)
         Gint cnt=0, num_seg=0;
 
 /* STEP 1: check for errors */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqsegnames); /* c1147 */
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqsegnames);
 
 /* STEP 2: set up the return values. */
         while (cnt < SHSIZE) {
@@ -2447,7 +2447,7 @@ Gint ginqsegnamesws(Gint ws_id, Gintlist *segs)
 
 /* STEP 1: check for errors */
 /* gks in proper state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqsegnamesws); /* c1147 */
+        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqsegnamesws);
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqsegnamesws)   /* c1012 */
@@ -2483,7 +2483,7 @@ Gint ginqnumsegpri(Gchar *ws_type, Gint *numpri)
 
 /* STEP 1: check for errors */
 /* proper state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqnumsegpri); /* c1147 */
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqnumsegpri);
 
 /* valid workstation type */
         ewstype = XgksWsTypeToEnum ( ws_type );
@@ -2510,9 +2510,9 @@ Gint ginqcurpickid(Gint *pickid)
 {
 /* STEP 1: check for errors */
 /* proper state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqcurpickid); /* c1147 */
+        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqcurpickid);
 
 /* STEP 2: set up the return values */
-        *pickid = xgks_state.gks_pick_id;                               /* c1147 */
+        *pickid = xgks_state.gks_pick_id;
         return (OK);
 }

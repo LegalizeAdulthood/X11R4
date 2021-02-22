@@ -86,7 +86,7 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
 #endif
 /* STEP 1: check for errors */
 /*    gks in proper state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitchoice ) /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitchoice )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitchoice)   /* c1012 */
@@ -268,7 +268,7 @@ Gint gsetchoicemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
 #endif
 /* STEP 1: check for errors */
 /*    gks in proper state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetchoicemode ) /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetchoicemode )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetchoicemode)   /* c1012 */
@@ -362,7 +362,7 @@ Gint greqchoice(Gint ws_id, Gint dev, Gchoice *response)
 #endif
 /* STEP 1: check for errors */
 /*    gks in proper state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqchoice ) /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqchoice )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqchoice)   /* c1012 */
@@ -463,7 +463,7 @@ Gint gsamplechoice(Gint ws_id, Gint dev, Gchoice *response)
 #endif
 /* STEP 1: check for errors */
 /*    gks in proper state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplechoice ) /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplechoice )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplechoice)   /* c1012 */
@@ -512,7 +512,7 @@ Gint ginqchoicest(Gint ws_id, Gint dev, Gchoicest *state)
 #endif
 /* STEP 1: check for errors */
 /*    gks in proper state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqchoicest ) /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqchoicest )
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqchoicest)   /* c1012 */
@@ -588,7 +588,7 @@ Gint ginqdefchoice(Gchar *type, Gint dev, Gdefchoice *data)
 #endif
 /* STEP 1: check for errors. */
 /* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefchoice ) /*c1147*/
+    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefchoice )
 
 /* valid wsid? */
     ewstype = XgksWsTypeToEnum( type );
@@ -788,7 +788,7 @@ Gint XgksChoUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 data = (Gchoice *) malloc( sizeof (Gchoice) );
                 if ( data == NULL )
                 {
-                    gerrorhand(300,errXgksChoUpdatePrompt,xgks_state.gks_err_file); /*c1147*/
+                    gerrorhand(300,errXgksChoUpdatePrompt,xgks_state.gks_err_file);
                     return(300);
                 }
                 

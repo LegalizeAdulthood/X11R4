@@ -30,7 +30,6 @@
 #if !defined(XGKS_POLYLINES_H)
 #define XGKS_POLYLINES_H
 
-/* c1147:  Moved these here from polylines.c and made them static */
 /* c1178:  Compiler glitch caused us to declare these globally and make     */
 /*         them externs in the files they're used in                        */
 

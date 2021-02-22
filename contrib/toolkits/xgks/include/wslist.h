@@ -68,7 +68,7 @@ typedef struct {                       /* dash list type definition  */
         char dashl[17];                /* dash list         */
 } DashList;
 
-extern DashList xgksDASHES[10]; /* defined in x/xpline.c */ /*c1147*/
+extern DashList xgksDASHES[10]; /* defined in x/xpline.c */
 
 
 typedef struct ws_struct {

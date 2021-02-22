@@ -88,7 +88,7 @@ Gint xXgksCellarray(WS_STATE_PTR ws, CELL_ARRAY_ST *cell_ptr)
         /* get the memory for subset of the colour index array */
 
         cll = (Gint *)malloc((unsigned)(nx * cell_ptr->dim.y * sizeof(int)));
-        GKSERROR( (cll == NULL), 300, errgcellarray);           /*c1147*/
+        GKSERROR( (cll == NULL), 300, errgcellarray);
 
         /* copy the values of the subset of colour index array */
 

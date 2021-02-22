@@ -52,6 +52,8 @@
 
 #include "gks_implem.h"
 
+#include "fillarea.h"
+
 void XgksMoGraphicOutput(Gint code, Gint num_pt, Gpoint *pos);
 void XgksMoSetGraphicAttr(Gint code, Gint attr);
 void XgksMoSetFillIntStyle(Gflinter style);
@@ -66,12 +68,8 @@ void XgksMoSetPatRep(WS_STATE_PTR ws, Gint idx, Gptbundl *rep);
 
 /* c1143:  Created predefined reps 1-5 */
 
-/* c1147:  Put them into fillarea.h */
-#include "fillarea.h"
-
 void XgksInitGksFillArea(void)
 {
-        /* c1147: changed this function to use gks state list structure */
         xgks_state.gks_flattr.fill   = 1;               /* fill index */ /* c1143 */
         xgks_state.gks_flattr.style  = GINDIVIDUAL;     /* style ASF  */ /* c1143 */
         xgks_state.gks_flattr.inter  = GINDIVIDUAL;     /* inter ASF  */ /* c1143 */
@@ -93,67 +91,67 @@ void XgksInitGksFillArea(void)
 
 /* The data for predefined patterns */
 
-static                                                          /* c1147 */
+static
 Gint pttn0[] = {1, 0, 0, 0,
                 1, 1, 0, 0,
                 1, 1, 1, 0,
                 1, 1, 1, 1};
-static                                                          /* c1147 */
+static
 Gint pttn1[] = {1, 1, 1, 1,
                 1, 0, 0, 1,
                 1, 0, 0, 1,
                 1, 1, 1, 1};
-static                                                          /* c1147 */
+static
 Gint pttn2[] = {0, 0, 0, 0,
                 0, 1, 1, 0,
                 0, 1, 1, 0,
                 0, 0, 0, 0};
-static                                                          /* c1147 */
+static
 Gint pttn3[] = {0, 0, 1, 1,
                 0, 0, 1, 1,
                 1, 1, 0, 0,
                 1, 1, 0, 0};
-static                                                          /* c1147 */
+static
 Gint pttn4[] = {1, 0, 0, 0,
                 1, 0, 0, 0,
                 1, 0, 0, 0,
                 1, 0, 0, 0};
-static                                                          /* c1147 */
+static
 Gint pttn5[] = {0, 0, 0, 0,
                 0, 0, 0, 0,
                 0, 0, 0, 0,
                 1, 1, 1, 1};
-static                                                          /* c1147 */
+static
 Gint pttn6[] = {1, 1, 1, 0,
                 1, 1, 1, 0,
                 1, 1, 1, 0,
                 1, 1, 1, 0};
-static                                                          /* c1147 */
+static
 Gint pttn7[] = {1, 1, 1, 1,
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 0, 0, 0, 0};
-static                                                          /* c1147 */
+static
 Gint pttn8[] = {1, 1, 1, 0,
                 1, 1, 0, 1,
                 1, 0, 1, 1,
                 0, 1, 1, 1};
-static                                                          /* c1147 */
+static
 Gint pttn9[] = {0, 0, 0, 1,
                 0, 0, 1, 0,
                 0, 1, 0, 0,
                 1, 0, 0, 0};
-static                                                          /* c1147 */
+static
 Gint pttn10[] = {0, 1, 1, 1,
                 1, 0, 1, 1,
                 1, 1, 0, 1,
                 1, 1, 1, 0};
-static                                                          /* c1147 */
+static
 Gint pttn11[] = {1, 0, 0, 0,
                 0, 1, 0, 0,
                 0, 0, 1, 0,
                 0, 0, 0, 1};
-static                                                          /* c1147 */
+static
 Gint pttn12[] = {1, 0, 0, 0, 0, 0, 0, 0,
                 1, 0, 0, 0, 0, 0, 0, 0,
                 1, 0, 0, 0, 0, 0, 0, 0,
@@ -162,7 +160,7 @@ Gint pttn12[] = {1, 0, 0, 0, 0, 0, 0, 0,
                 1, 0, 0, 0, 0, 0, 0, 0,
                 1, 0, 0, 0, 0, 0, 0, 0,
                 1, 1, 1, 1, 1, 1, 1, 1};
-static                                                          /* c1147 */
+static
 Gint pttn13[] = {1, 0, 0, 0, 0, 0, 0, 1,
                 0, 1, 0, 0, 0, 0, 1, 0,
                 0, 0, 1, 0, 0, 1, 0, 0,
@@ -171,7 +169,7 @@ Gint pttn13[] = {1, 0, 0, 0, 0, 0, 0, 1,
                 0, 0, 1, 0, 0, 1, 0, 0,
                 0, 1, 0, 0, 0, 0, 1, 0,
                 1, 0, 0, 0, 0, 0, 0, 1};
-static                                                          /* c1147 */
+static
 Gint pttn14[] = {0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0,
@@ -180,7 +178,7 @@ Gint pttn14[] = {0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0,
                 1, 1, 1, 1, 1, 1, 1, 1};
-static                                                          /* c1147 */
+static
 Gint pttn15[] = {1, 0, 0, 1, 0, 0, 0, 0,
                 1, 0, 0, 1, 0, 0, 0, 0,
                 1, 0, 0, 1, 0, 0, 0, 0,
@@ -189,7 +187,7 @@ Gint pttn15[] = {1, 0, 0, 1, 0, 0, 0, 0,
                 1, 0, 0, 1, 0, 0, 0, 0,
                 1, 0, 0, 1, 0, 0, 0, 0,
                 1, 0, 0, 1, 0, 0, 0, 0};
-static                                                          /* c1147 */
+static
 Gint pttn16[] = {
         1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
         1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
@@ -208,7 +206,7 @@ Gint pttn16[] = {
         1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0,
         0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1
 };
-static                                                          /* c1147 */
+static
 Gint pttn17[] = {
         0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
         1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
@@ -227,7 +225,7 @@ Gint pttn17[] = {
         0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
         1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0
 };
-static                                                          /* c1147 */
+static
 Gint pttn18[] = {
         1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
         1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
@@ -246,7 +244,7 @@ Gint pttn18[] = {
         1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
         1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0
 };
-static                                                          /* c1147 */
+static
 Gint pttn19[] = {
         1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1,
         0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
@@ -265,7 +263,7 @@ Gint pttn19[] = {
         0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
         0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1
 };
-Gptbundl xgks_xpttn[] = {               /*c1147*/
+Gptbundl xgks_xpttn[] = {
         {{4, 4}, pttn0},
         {{4, 4}, pttn1},
         {{4, 4}, pttn2},
@@ -307,13 +305,13 @@ Gint XgksInitWssFillArea(WS_STATE_PTR ws)
            ws->flbundl_table[i] = def_flbundl[0];                       /* c1143 */
 
         for (i=0; i<MAX_BUNDL_TBL; i++) {                  /* set default pattern table values */
-                j = xgks_xpttn[i].size.x * xgks_xpttn[i].size.y;        /*c1147*/
-                ws->ptbundl_table[i] = xgks_xpttn[i];                   /*c1147*/
+                j = xgks_xpttn[i].size.x * xgks_xpttn[i].size.y;
+                ws->ptbundl_table[i] = xgks_xpttn[i];
                 ws->ptbundl_table[i].array = (Gint *)malloc( j * sizeof(int));
                 GKSERROR( (ws->ptbundl_table[i].array == NULL), 300, errXgksInitWssFillArea);
 
                 for (k=0; k < j; k++)
-                  ws->ptbundl_table[i].array[k] = xgks_xpttn[i].array[k]; /*c1147*/
+                  ws->ptbundl_table[i].array[k] = xgks_xpttn[i].array[k];
         }
         return 0;
 }
@@ -335,7 +333,7 @@ Gint gfillarea(Gint num_pts, Gpoint *pts)
         Gint cnt;
 
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgfillarea) /*c1147*/
+        GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgfillarea)
 
 /* check for a valid number of points */
         GKSERROR ((num_pts < 3) , 100, errgfillarea)
@@ -355,8 +353,8 @@ Gint gfillarea(Gint num_pts, Gpoint *pts)
         for (cnt=0; cnt<num_pts; cnt++, pts++, ndc_pt++)
                 WcToNdc(pts, ndc_pt);   /* convert to ndc coordinate */
 
-        flarea->primi.fill_area.flattr = xgks_state.gks_flattr;         /*c1147*/
-        flarea->primi.fill_area.ptattr = xgks_state.gks_ptattr;         /*c1147*/
+        flarea->primi.fill_area.flattr = xgks_state.gks_flattr;
+        flarea->primi.fill_area.ptattr = xgks_state.gks_ptattr;
 
         XgksProcessPrimi(flarea);
 
@@ -380,13 +378,13 @@ Gint gfillarea(Gint num_pts, Gpoint *pts)
 Gint gsetfillcolourind(Gint colour)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillcolourind) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillcolourind)
 
 /* check for valid colour index */
         GKSERROR ((colour < 0) , 92, errgsetfillcolourind)
 
 /* change the colour */
-        xgks_state.gks_flattr.bundl.colour = colour;            /*c1147*/
+        xgks_state.gks_flattr.bundl.colour = colour;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (40, colour);
 
@@ -405,13 +403,13 @@ Gint gsetfillcolourind(Gint colour)
 Gint gsetfillind(Gint idx)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillind) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillind)
 
 /* check for valid index */
         GKSERROR ((idx < 1 ), 80, errgsetfillind)
 
 /* ok to change the idx */
-        xgks_state.gks_flattr.fill = idx;                       /*c1147*/
+        xgks_state.gks_flattr.fill = idx;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (37, idx);
 
@@ -431,13 +429,13 @@ Gint gsetfillind(Gint idx)
 Gint gsetfillintstyle(Gflinter style)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillintstyle) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillintstyle)
 
 /* check for valid style */
         if (style != GHOLLOW && style != GSOLID && style != GPATTERN && style != GHATCH )
                 style = GHOLLOW;
 
-        xgks_state.gks_flattr.bundl.inter = style;              /*c1147*/
+        xgks_state.gks_flattr.bundl.inter = style;
 
         if (MO_OPENED == TRUE) XgksMoSetFillIntStyle (style);
 
@@ -460,7 +458,7 @@ Gint gsetfillrep(Gint ws_id, Gint idx, Gflbundl *rep)
         WS_STATE_PTR ws;
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetfillrep) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetfillrep)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetfillrep)   /* c1012 */
@@ -515,13 +513,13 @@ Gint gsetfillrep(Gint ws_id, Gint idx, Gflbundl *rep)
 Gint gsetfillstyleind(Gint idx)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillstyleind) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillstyleind)
 
 /* check for valid style index */
         GKSERROR ((idx == 0) , 84, errgsetfillstyleind)
 
 /* ok to proceed */
-        xgks_state.gks_flattr.bundl.style = idx;                /*c1147*/
+        xgks_state.gks_flattr.bundl.style = idx;
 
         if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (39, idx);
 
@@ -541,10 +539,10 @@ Gint gsetfillstyleind(Gint idx)
 Gint gsetpatrefpt(Gpoint *ref)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetpatrefpt ) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetpatrefpt )
 
 /* ok to proceed */
-        xgks_state.gks_ptattr.ptp = *ref;               /*c1147*/
+        xgks_state.gks_ptattr.ptp = *ref;
 
         if (MO_OPENED == TRUE) XgksMoSetPatRef ();
 
@@ -565,16 +563,16 @@ Gint gsetpatrefpt(Gpoint *ref)
 Gint gsetpatsize(Gpoint  *siz)
 {
 /* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetpatsize ) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetpatsize )
 
 /* check for valid style index */
         GKSERROR ( ((siz->x < 0) || (siz->y < 0)) , 87, errgsetpatsize )
 
 /* ok to proceed */
-        xgks_state.gks_ptattr.widthvec.x = siz->x;      /*c1147*/
-        xgks_state.gks_ptattr.widthvec.y = 0.0;         /*c1147*/
-        xgks_state.gks_ptattr.heightvec.x = 0.0;        /*c1147*/
-        xgks_state.gks_ptattr.heightvec.y = siz->y;     /*c1147*/
+        xgks_state.gks_ptattr.widthvec.x = siz->x;
+        xgks_state.gks_ptattr.widthvec.y = 0.0;
+        xgks_state.gks_ptattr.heightvec.x = 0.0;
+        xgks_state.gks_ptattr.heightvec.y = siz->y;
 
         if (MO_OPENED == TRUE) XgksMoSetPatSize ();
 
@@ -601,7 +599,7 @@ Gint gsetpatrep(Gint ws_id, Gint idx, Gptbundl *rep)
         Gint *slot;     /* c1102 */
 
 /* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetpatrep) /*c1147*/
+        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetpatrep)
 
 /* check for invalid workstation id */
         GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetpatrep)   /* c1012 */
