@@ -137,20 +137,20 @@ Gcliprec *clipping;
         GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqclip);
 
 /* set up return values */
-        if (xgks_state.cliprec.ind == GCLIP)                /* c2009 */
+        if (xgks_state.cliprec.ind == GCLIP)
            *clipping = xgks_state.cliprec;
-        else /* ...ind == GNOCLIP */                        /* c2009 */
-           {                                                /* c2009 */
-           clipping->ind = GNOCLIP;                         /* c2009 */
+        else /* ...ind == GNOCLIP */
+           {
+           clipping->ind = GNOCLIP;
            clipping->rec.xmin =
-                 xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.xmin; /* c2009 */
+                 xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.xmin;
            clipping->rec.xmax =
-                 xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.xmax; /* c2009 */
+                 xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.xmax;
            clipping->rec.ymin =
-                 xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.ymin; /* c2009 */
+                 xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.ymin;
            clipping->rec.ymax =
-                 xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.ymax; /* c2009 */
-           }                                                /* c2009 */
+                 xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.ymax;
+           }
 
         return( OK );
 }
