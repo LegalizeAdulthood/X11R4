@@ -41,8 +41,21 @@
 #include <xgks.h>
 
 #include <stdio.h>
+#include <strings.h>
 
 #include "demo.h"
+
+#include "ethernet.h"
+#include "printer.h"
+#include "ramtek.h"
+#include "s9000.h"
+
+void do_connections(void);
+void background( Gint bkg);
+void show_logo(void);
+void show_printer(void);
+void show_ramtek(void);
+void show_9000(void);
 
 char *Menu[] = {
         "Printer",
@@ -56,9 +69,7 @@ Glimit Marea = { 0.0, 150.0, 770.0, 1023.0 };
 Gint    ws_id = 1;
 Gint    mo_id = 200;
 
-main(argc,argv)
-        int argc;
-        char *argv[];
+int main( int argc, char *argv[])
 {
         Glimit WsWindow;
         char *conn = (char *)NULL;
@@ -137,7 +148,7 @@ main(argc,argv)
         gclosegks();
 }
 
-do_connections()
+void do_connections(void)
 {
         Gpoint pts[22];
         Glimit Window;
@@ -182,8 +193,7 @@ do_connections()
 
 
 /* fill the screen with the background color */
-background(bkg)
-        Gint bkg;
+void background( Gint bkg)
 {
         Gpoint pts[20];
         Glimit Viewport;
@@ -220,7 +230,7 @@ Glimit Viewport;
         Viewport.ymin = yl; Viewport.ymax = yh; \
         gsetviewport(w, &Viewport )
 
-show_logo()
+void show_logo(void)
 {
         Gpoint mid;
 
@@ -279,7 +289,7 @@ show_logo()
         draw_9000(ws_id);
 }
 
-show_printer()
+void show_printer(void)
 {
         Gpoint mid;
 
@@ -290,7 +300,7 @@ show_printer()
         draw_printer(ws_id);
 }
 
-show_ramtek()
+void show_ramtek(void)
 {
         Gpoint mid;
 
@@ -301,7 +311,7 @@ show_ramtek()
         draw_ramtek(ws_id);
 }
 
-show_9000()
+void show_9000(void)
 {
         Gpoint mid;
 

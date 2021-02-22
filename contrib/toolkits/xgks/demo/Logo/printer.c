@@ -41,8 +41,11 @@
 
 #include "demo.h"
 
-draw_printer(wsid)
-Gint wsid;
+#include "printer.h"
+
+void do_printer(void);
+
+void draw_printer(Gint wsid)
 {
         Glimit Window;
 
@@ -57,7 +60,7 @@ Gint wsid;
         do_printer();
 }
 
-do_printer()
+void do_printer(void)
 {
         Gpoint pts[20];
         

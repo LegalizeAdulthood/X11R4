@@ -41,8 +41,11 @@
 
 #include "demo.h"
 
-draw_ramtek(wsid)
-Gint wsid;
+#include "ramtek.h"
+
+void do_ram_monitor(void);
+
+void draw_ramtek(Gint wsid)
 {
         Glimit Window;
 
@@ -59,7 +62,7 @@ Gint wsid;
 }
 
 
-do_ram_monitor()
+void do_ram_monitor(void)
 {
         Gpoint pts[20];
         

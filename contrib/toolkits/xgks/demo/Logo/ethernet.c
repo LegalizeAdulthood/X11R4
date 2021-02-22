@@ -38,12 +38,16 @@
 #include <xgks.h>
 
 #include <stdio.h>
+#include <string.h>
 
 #include "demo.h"
 
-draw_ethernet(wsid, dotext)
-Gint wsid;
-Gint dotext;
+#include "ethernet.h"
+
+void do_text(void);
+void do_ethernet(void);
+
+void draw_ethernet( Gint wsid, Gint dotext)
 {
         Glimit Window;
 
@@ -64,7 +68,7 @@ Gint dotext;
 #define BORDERSZ 87.0
 #define INTFACTOR 0.97
 
-do_text()
+void do_text(void)
 {
         char c[2], words[25];
         Gpoint pt;
@@ -106,7 +110,7 @@ do_text()
         }
 }
 
-do_ethernet()
+void do_ethernet(void)
 {
 
         Gpoint pts[51] ;

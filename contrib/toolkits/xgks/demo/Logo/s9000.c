@@ -42,8 +42,14 @@
 
 #include "demo.h"
 
-draw_9000(wsid)
-        Gint wsid;
+#include "s9000.h"
+
+void do_9000_computer(void);
+void do_9000_monitor(void);
+void do_9000_disk(void);
+void do_9000_keyboard(void);
+
+void draw_9000(Gint wsid)
 {
         Glimit Window;
 
@@ -62,8 +68,7 @@ draw_9000(wsid)
 
 }
 
-
-do_9000_computer()
+void do_9000_computer(void)
 {
         Gpoint pts[20];
         
@@ -120,7 +125,7 @@ do_9000_computer()
         gfillarea(5, pts);
 }
 
-do_9000_monitor()
+void do_9000_monitor(void)
 {
         Gpoint pts[20];
         Gfloat x;
@@ -224,7 +229,7 @@ do_9000_monitor()
         gfillarea(13, pts);
 }
 
-do_9000_disk()
+void do_9000_disk(void)
 {
         Gpoint pts[20];
 
@@ -373,7 +378,7 @@ do_9000_disk()
 
 }
 
-do_9000_keyboard()
+void do_9000_keyboard(void)
 {
         Gpoint pts[20];
         Gfloat x, y;

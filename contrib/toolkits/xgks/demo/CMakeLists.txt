@@ -17,6 +17,6 @@ gksDemo(usa)
 gksDemo(wong)
 
 add_subdirectory(example)
-# add_subdirectory(Logo)
+add_subdirectory(Logo)
 # add_subdirectory(sledsrc)
 # add_subdirectory(stratego)
