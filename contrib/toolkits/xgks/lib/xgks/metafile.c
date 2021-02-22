@@ -466,7 +466,7 @@ void XgksMoDeferWs(WS_STATE_PTR ws, Gdefmode defer_mode, Girgmode regen_mode)
         else if (defer_mode == GBNIL) defer = 2;
         else  defer = 3;
 
-        if (regen_mode == GSUPPRESSED) regen = 0;               /* c1137 */
+        if (regen_mode == GSUPPRESSED) regen = 0;
         else regen = 1;
 
         fprintf(ws->mfp, "4 %d %d %d\n", XgksMRecSize(4), defer, regen);
@@ -2238,25 +2238,25 @@ static Gchar *XgksMAuthor(void)
 
 static Gchar *XgksMDate(void)
 {
-        struct timeval   gmt_time;                              /* c1137 */
-        struct timezone  our_tmzn;                              /* c1137 */
-        long             clock;                                 /* c1137 */
-        struct tm       *our_time;                              /* c1137 */
+        struct timeval   gmt_time;
+        struct timezone  our_tmzn;
+        long             clock;
+        struct tm       *our_time;
 
-        /* go thru agonizing UNIX stuff to get date */          /* c1137 */
-        gettimeofday (&gmt_time, &our_tmzn);                    /* c1137 */
-        clock = gmt_time.tv_sec;                                /* c1137 */
-        our_time = localtime (&clock);                          /* c1137 */
-        /* build date string for metafile header */             /* c1137 */
-        sprintf (date, "%02d/%02d/%02d",                        /* c1137 */
-                /* if year > 2000, truncate to 2 digits */      /* c1137 */
-                (our_time->tm_year < 100 ?                      /* c1137 */
-                        our_time->tm_year :                     /* c1137 */
-                        our_time->tm_year - 100),               /* c1137 */
-                /* month goes 0-11 so add 1 */                  /* c1137 */
-                our_time->tm_mon+1,                             /* c1137 */
-                /* day is fine, anyway */                       /* c1137 */
-                our_time->tm_mday);                             /* c1137 */
+        /* go thru agonizing UNIX stuff to get date */
+        gettimeofday (&gmt_time, &our_tmzn);
+        clock = gmt_time.tv_sec;
+        our_time = localtime (&clock);
+        /* build date string for metafile header */
+        sprintf (date, "%02d/%02d/%02d",
+                /* if year > 2000, truncate to 2 digits */
+                (our_time->tm_year < 100 ?
+                        our_time->tm_year :
+                        our_time->tm_year - 100),
+                /* month goes 0-11 so add 1 */
+                our_time->tm_mon+1,
+                /* day is fine, anyway */
+                our_time->tm_mday);
 
         return (date);
 }

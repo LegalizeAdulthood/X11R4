@@ -2230,7 +2230,7 @@ void XgksSetTextAttrMo(WS_STATE_PTR ws, Gtxattr *txattr, CHATTR *chattr)
         tmp = xgks_state.gks_chattr;
         xgks_state.gks_chattr = *chattr;
         XgksMoSetCharUpOnWs      (ws);
-        XgksMoSetTextPathOnWs    (ws,    chattr->path);         /* c1137 */
+        XgksMoSetTextPathOnWs    (ws,    chattr->path);
         XgksMoSetTextAlignOnWs   (ws,    &(chattr->align));
         xgks_state.gks_chattr = tmp;
 }
