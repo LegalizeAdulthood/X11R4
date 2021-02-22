@@ -35,9 +35,12 @@
 
 #include <xgks.h>
 
-static
-WaitForBreak( ws_id )
-        Gint ws_id;
+#include <stdlib.h>
+
+void perr(int i, char *s);
+void test_pline(void);
+
+static void WaitForBreak(Gint ws_id)
 {
         Gchoice init;
         Gchoicerec record;
@@ -61,9 +64,7 @@ Gint    ws_id = 1;
 
 Gint result;
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
         if ((result = gopengks(stdout,0)) != 0)
                 perr(result,"...open_gks");
@@ -91,9 +92,7 @@ char *argv[];
         exit(0);
 }
 
-perr(i,s)
-int i;
-char *s;
+void perr(int i, char *s)
 {
         fprintf(stdout,"%s %d\n",s,i);
         exit(1);
@@ -119,8 +118,7 @@ Gcobundl Colors[] = {
         { 1.0, 1.0, 1.0 }
 };
 
-LoadColors(ws_id)
-        Gint ws_id;
+void LoadColors(Gint ws_id)
 {
         int i;
 
@@ -130,7 +128,8 @@ LoadColors(ws_id)
 
 int lntbl[] = { GLN_LDASH, GLN_DDOTDASH, GLN_SDASH, GLN_SOLID,
         GLN_DASH, GLN_DOT, GLN_DOTDASH };
-test_pline ()
+
+void test_pline(void)
 {
         Gpoint lpts[2], tpt;
         Gint i;
