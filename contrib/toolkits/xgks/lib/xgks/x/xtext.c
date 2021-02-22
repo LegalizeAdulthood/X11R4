@@ -134,13 +134,13 @@ static void xComputeText(WS_STATE_PTR ws, TEXT_ST *tx)
         sndc_wt.y = (tx->base_vec.y*ws->ndctoxtrans.yScale);    /*ILL2*/
 
         /* apply the char_expansion factor */
-        if (tx->txattr.tx_exp == GINDIVIDUAL) {         /* c1179 */
-                sndc_wt.x *= tx->txattr.bundl.ch_exp;   /* c1179 */
-                sndc_wt.y *= tx->txattr.bundl.ch_exp;   /* c1179 */
+        if (tx->txattr.tx_exp == GINDIVIDUAL) {
+                sndc_wt.x *= tx->txattr.bundl.ch_exp;
+                sndc_wt.y *= tx->txattr.bundl.ch_exp;
         }
         else {
-                sndc_wt.x *= ws->txbundl_table[idx].ch_exp;     /* c1179 */
-                sndc_wt.y *= ws->txbundl_table[idx].ch_exp;     /* c1179 */
+                sndc_wt.x *= ws->txbundl_table[idx].ch_exp;
+                sndc_wt.y *= ws->txbundl_table[idx].ch_exp;
         }
         xIdentityMatrix(stroke_trans);
         stroke_trans[0] =

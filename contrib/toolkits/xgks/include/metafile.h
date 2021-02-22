@@ -213,7 +213,7 @@ typedef struct {
 */
 typedef struct {
         Gint    idx, font, prec, colour;
-        Gfloat  tx_exp, space;          /* c1179 */
+        Gfloat  tx_exp, space;
 } XGKSMTEXTREP;
 
 

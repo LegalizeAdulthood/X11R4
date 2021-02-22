@@ -217,7 +217,7 @@ Gint ginqtextrep(ws_id, idx, type, rep)
 /* set the returned values */
         rep->fp.font = ws->txbundl_table[idx].fp.font;
         rep->fp.prec = ws->txbundl_table[idx].fp.prec;
-        rep->ch_exp = ws->txbundl_table[idx].ch_exp;    /* c1179 */
+        rep->ch_exp = ws->txbundl_table[idx].ch_exp;
         rep->space = ws->txbundl_table[idx].space;
         rep->colour = ws->txbundl_table[idx].colour;
 

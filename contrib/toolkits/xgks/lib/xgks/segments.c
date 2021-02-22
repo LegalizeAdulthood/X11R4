@@ -1808,7 +1808,7 @@ static float XgksDistPline(WS_STATE_PTR ws, SEG_STATE_PTR seg, OUT_PRIMI *primi,
         PLINE_ST *line;
         float s, s1, s2, x, y, X, Y, x1, y1, x2, y2;
         float DX, DY, DY1, DY2, mini, dist, width;
-#ifdef notdef                           /* c1179 */
+#ifdef notdef
         float DD;
 #endif
         Gpoint pe, p;
@@ -2223,7 +2223,7 @@ void XgksSetTextAttrMo(WS_STATE_PTR ws, Gtxattr *txattr, CHATTR *chattr)
 
         XgksMoSetGraphicAttrOnWs (ws, 29, txattr->text);
         XgksMoSetTextFPOnWs      (ws,   &(txattr->bundl.fp));
-        XgksMoSetGraphicSizeOnWs (ws, 31, txattr->bundl.ch_exp);        /* c1179 */
+        XgksMoSetGraphicSizeOnWs (ws, 31, txattr->bundl.ch_exp);
         XgksMoSetGraphicSizeOnWs (ws, 32, txattr->bundl.space);
         XgksMoSetGraphicAttrOnWs (ws, 33, txattr->bundl.colour);
 

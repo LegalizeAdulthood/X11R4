@@ -65,9 +65,9 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
     XGCValues gcvalues;
     Gpoint *spt, *dpt;
     int i, didx;
-    static Gpoint *ptr;                         /* c1179 c1014 */
-    static int cnt = 1;                         /* c1179 c1014 */
-    static Glimit *win;                         /* c1179 c1014 */
+    static Gpoint *ptr;
+    static int cnt = 1;
+    static Glimit *win;
 
 
 

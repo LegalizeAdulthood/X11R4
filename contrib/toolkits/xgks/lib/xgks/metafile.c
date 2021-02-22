@@ -813,7 +813,7 @@ void XgksMoSetAsfOnWs(WS_STATE_PTR ws)
           (xgks_state.gks_mkattr.size == GBUNDLED ? 0 : 1),
           (xgks_state.gks_mkattr.colour == GBUNDLED ? 0 : 1),
           (xgks_state.gks_txattr.fp == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_txattr.tx_exp == GBUNDLED ? 0 : 1),   /* c1179 */
+          (xgks_state.gks_txattr.tx_exp == GBUNDLED ? 0 : 1),
           (xgks_state.gks_txattr.space == GBUNDLED ? 0 : 1),
           (xgks_state.gks_txattr.colour == GBUNDLED ? 0 : 1),
           (xgks_state.gks_flattr.inter == GBUNDLED ? 0 : 1),
@@ -837,7 +837,7 @@ void XgksMoSetAsf(void)
                                   (xgks_state.gks_mkattr.size == GBUNDLED ? 0 : 1),
                                   (xgks_state.gks_mkattr.colour == GBUNDLED ? 0 : 1),
                                   (xgks_state.gks_txattr.fp == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_txattr.tx_exp == GBUNDLED ? 0 : 1),   /* c1179 */
+                                  (xgks_state.gks_txattr.tx_exp == GBUNDLED ? 0 : 1),
                                   (xgks_state.gks_txattr.space == GBUNDLED ? 0 : 1),
                                   (xgks_state.gks_txattr.colour == GBUNDLED ? 0 : 1),
                                   (xgks_state.gks_flattr.inter == GBUNDLED ? 0 : 1),
@@ -860,7 +860,7 @@ void XgksMoSetTextRep(WS_STATE_PTR ws, Gint idx, Gtxbundl *rep)
         else prec = 2;
 
         fprintf (ws->mfp, "53 %d %d %d %d %f %f %d\n", XgksMRecSize(53),
-                idx, rep->fp.font, prec, rep->ch_exp, rep->space, rep->colour); /* c1179 */
+                idx, rep->fp.font, prec, rep->ch_exp, rep->space, rep->colour);
 }
 
 void XgksMoSetFillRep(WS_STATE_PTR ws, Gint idx, Gflbundl *rep)
@@ -1556,7 +1556,7 @@ static Gint XgksInputData (Gfile *fp, Gint key, Gchar *record)
                         readcnt = 0;                            /* c1068 */
                         break;                                  /* c1068 */
                   }                                             /* c1068 */
-                  readcnt = READFTP (fp, txrep->tx_exp);  /* c1179 c1068 */
+                  readcnt = READFTP (fp, txrep->tx_exp);
                   if (!readcnt) break;                          /* c1068 */
                   if (XgksFeoln( fp )) {                        /* c1068 */
                         readcnt = 0;                            /* c1068 */
@@ -2083,7 +2083,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
 
         case 53 : txrep = (XGKSMTEXTREP *)record;
                   textrep.fp.font = txrep->font;
-                  textrep.ch_exp  = txrep->tx_exp;      /* c1179 */
+                  textrep.ch_exp  = txrep->tx_exp;
                   textrep.space   = txrep->space;
                   textrep.colour   = txrep->colour;
                   if (txrep->prec == 0) textrep.fp.prec = GSTRING;
