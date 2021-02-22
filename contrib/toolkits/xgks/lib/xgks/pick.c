@@ -106,7 +106,7 @@ Gint ginitpick(Gint ws_id, Gint dev, Gpick *init, Gint pet, Glimit *area, Gpickr
 
 /* initial values ok */
 /* pick id can take on any value */
-    GKSERROR ((init->seg < 1) , 152, errginitpick)      /* c1175 */
+    GKSERROR ((init->seg < 1) , 152, errginitpick)
 
     GKSERROR ((init->status != GP_OK && init->status != GP_NOPICK &&
         init->status != GP_NONE) , 2000, errginitpick)

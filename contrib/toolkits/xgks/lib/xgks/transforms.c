@@ -680,17 +680,17 @@ fprintf(stderr, "gevaltran:transforms.c: input result = %f %f %f %f %f %f\n",
                 ndc_ref = *ppoint;
                 ndc_shift = *pshift;
         }
-        c = (cos( (double) angle) );    /* c1175 */
-        s = (sin( (double) angle) );    /* c1175 */
+        c = (cos( (double) angle) );
+        s = (sin( (double) angle) );
 
 #ifdef TRANDEBUG
 fprintf(stderr, "gevaltran:transforms.c: (cosine angle)c=%f, (sine angle)s=%f\n", c, s);
 #endif
 
-        result[0][0] = (Gfloat)(pscale->x * c);         /* c1175 */
-        result[0][1] = (Gfloat)(pscale->x * s);         /* c1175 */
-        result[1][0] = (Gfloat)(-(pscale->y * s));      /* c1175 */
-        result[1][1] = (Gfloat)(pscale->y * c);         /* c1175 */
+        result[0][0] = (Gfloat)(pscale->x * c);
+        result[0][1] = (Gfloat)(pscale->x * s);
+        result[1][0] = (Gfloat)(-(pscale->y * s));
+        result[1][1] = (Gfloat)(pscale->y * c);
         result[0][2] = (ndc_ref.x+ndc_shift.x) - (ndc_ref.x*result[0][0]) - (ndc_ref.y*result[1][0]);
         result[1][2] = (ndc_ref.y+ndc_shift.y) - (ndc_ref.x*result[0][1]) - (ndc_ref.y*result[1][1]);
 #ifdef TRANDEBUG
@@ -719,7 +719,7 @@ fprintf(stderr, "gevaltran:transforms.c: result = %f %f %f %f %f %f\n",
 Gint gaccumtran(Gfloat segtran[2][3], Gpoint *ppoint, Gpoint *pshift, Gfloat angle, Gpoint *pscale, Gcsw coord, Gfloat result[2][3])
 {
         Gpoint  ndc_ref, ndc_shift, wc_org, ndc_org;
-        double  c,s;    /* cosine, sine vars    c1175 */
+        double  c,s;    /* cosine, sine vars */
 
 /* check for proper gks operating state */
         GKSERROR ( (xgks_state.gks_state == GGKCL), 8, errgaccumtran);
@@ -740,19 +740,19 @@ Gint gaccumtran(Gfloat segtran[2][3], Gpoint *ppoint, Gpoint *pshift, Gfloat ang
                 ndc_shift = *pshift;
         }
         /* calculate cosine and sine ONCE */
-        c = cos((double)angle);         /* c1175 */
-        s = sin((double)angle);         /* c1175 */
+        c = cos((double)angle);
+        s = sin((double)angle);
 
-        result[0][0] = (segtran[0][0]*pscale->x*c) + (segtran[1][0]*pscale->x*s);       /* c1175 */
-        result[0][1] = (segtran[0][1]*pscale->x*c) + (segtran[1][1]*pscale->x*s);       /* c1175 */
-        result[1][0] = (-segtran[0][0]*pscale->y*s) + (segtran[1][0]*pscale->y*c);      /* c1175 */
-        result[1][1] = (-segtran[0][1]*pscale->y*s) + (segtran[1][1]*pscale->y*c);      /* c1175 */
-        result[0][2] = (ndc_ref.x+ndc_shift.x) +                                        /* c1175 */
-                        segtran[0][2]*pscale->x*c - segtran[1][2]*pscale->y*s +         /* c1175 */
-                        ndc_ref.y*pscale->y*s - ndc_ref.x*pscale->x*c;                  /* c1175 */
-        result[1][2] = (ndc_ref.y+ndc_shift.y) +                                        /* c1175 */
-                        segtran[0][2]*pscale->x*s + segtran[1][2]*pscale->y*c -         /* c1175 */
-                        ndc_ref.x*pscale->x*s - ndc_ref.y*pscale->y*c;                  /* c1175 */
+        result[0][0] = (segtran[0][0]*pscale->x*c) + (segtran[1][0]*pscale->x*s);
+        result[0][1] = (segtran[0][1]*pscale->x*c) + (segtran[1][1]*pscale->x*s);
+        result[1][0] = (-segtran[0][0]*pscale->y*s) + (segtran[1][0]*pscale->y*c);
+        result[1][1] = (-segtran[0][1]*pscale->y*s) + (segtran[1][1]*pscale->y*c);
+        result[0][2] = (ndc_ref.x+ndc_shift.x) +
+                        segtran[0][2]*pscale->x*c - segtran[1][2]*pscale->y*s +
+                        ndc_ref.y*pscale->y*s - ndc_ref.x*pscale->x*c;
+        result[1][2] = (ndc_ref.y+ndc_shift.y) +
+                        segtran[0][2]*pscale->x*s + segtran[1][2]*pscale->y*c -
+                        ndc_ref.x*pscale->x*s - ndc_ref.y*pscale->y*c;
         return (OK);
 }
 

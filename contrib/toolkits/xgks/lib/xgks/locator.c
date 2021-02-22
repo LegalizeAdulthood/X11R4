@@ -98,7 +98,7 @@ Gint ginitloc( ws_id, dev, init, pet, area, record)
         || area->ymin < 0 || area->ymax > ws->size.y),
         145, errginitloc )
 
-/* Valid initial locator position?              c1175 */
+/* Valid initial locator position? */
     GKSERROR ((init->position.x < TRANSFORM[init->transform].ntrans.w.xmin ||
                init->position.x > TRANSFORM[init->transform].ntrans.w.xmax ||
                init->position.y < TRANSFORM[init->transform].ntrans.w.ymin ||

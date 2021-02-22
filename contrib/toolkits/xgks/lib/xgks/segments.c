@@ -249,7 +249,7 @@ void XgksInitGksSegments(void)
 /*$F
  * gcreateseg(name) - CREATE SEGMENT
  *
- * Gint name;           Name of the new segment. 1..n   c1175
+ * Gint name;           Name of the new segment. 1..n
  *
  * returns: 0, 3, 120, 121, 300
  *
@@ -265,7 +265,7 @@ Gint gcreateseg(Gint name)
         GKSERROR ((xgks_state.gks_state != GWSAC) ,3, errgcreateseg)
 
 /* check for valid segment name */
-        GKSERROR ((name<1) ,120, errgcreateseg)         /* c1175 */
+        GKSERROR ((name<1) ,120, errgcreateseg)
 
 /* check for name in use */
         GKSERROR ((XgksFindSeg(name) != NULL) ,121, errgcreateseg)
@@ -344,7 +344,7 @@ Gint grenameseg(Gint old, Gint new)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgrenameseg)
 
 /* check for invalid name */
-        GKSERROR (( (old<1) || (new<1)),120, errgrenameseg)     /* c1175 */
+        GKSERROR (( (old<1) || (new<1)),120, errgrenameseg)
 
 /* check for new name already in use */
         GKSERROR ((XgksFindSeg(new) != NULL) ,121, errgrenameseg)
@@ -388,7 +388,7 @@ Gint gdelseg(Gint name)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgdelseg)
 
 /* check for invalid name */
-        GKSERROR ((name < 1) ,120, errgdelseg)  /* c1175 */
+        GKSERROR ((name < 1) ,120, errgdelseg)
 
 /* check for segment currently open */
         GKSERROR ((xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == name) ,125, errgdelseg)
@@ -444,7 +444,7 @@ Gint gdelsegws(Gint ws_id, Gint name)
         GKSERROR ((WS_CAT(ws) == GINPUT) ,35, errgdelsegws)
 
 /* check for invalid name */
-        GKSERROR ((name < 1) ,120, errgdelsegws)        /* c1175 */
+        GKSERROR ((name < 1) ,120, errgdelsegws)
 
 /* check for existance of segment */
         GKSERROR (( (seg=XgksFindSeg(name)) == NULL ) ,123, errgdelsegws)
@@ -489,7 +489,7 @@ Gint gsetsegattr(Gint name, Gsegattr *segattr)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetsegattr)
 
 /* check for invalid name */
-        GKSERROR ((name < 1) ,120, errgsetsegattr)      /* c1175 */
+        GKSERROR ((name < 1) ,120, errgsetsegattr)
 
 /* check for existance osegment */
         GKSERROR (((seg = XgksFindSeg(name))==NULL) ,122, errgsetsegattr)
@@ -616,7 +616,7 @@ Gint gassocsegws(Gint ws_id, Gint seg_id)
         GKSERROR ( (WS_CAT(ws) == GINPUT), 35, errgassocsegws)
 
 /* check for valid seg_id */
-        GKSERROR ( (seg_id<1), 120, errgassocsegws)     /* c1175 */
+        GKSERROR ( (seg_id<1), 120, errgassocsegws)
 
 /* Check if Segment is on WISS */
         WsSeg = wis->seglist;
@@ -706,7 +706,7 @@ Gint gcopysegws(Gint ws_id, Gint seg_id)
         GKSERROR ( (WS_CAT(ws) == GWISS), 36, errgcopysegws)
 
 /* check for valid seg_id */
-        GKSERROR ( (seg_id<1), 120, errgcopysegws)      /* c1175 */
+        GKSERROR ( (seg_id<1), 120, errgcopysegws)
 
 /* Check if Segment is on WISS */
         WsSeg = wis->seglist;
@@ -777,7 +777,7 @@ Gint ginsertseg(Gint seg_id, Gfloat segtran[2][3])
         GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errginsertseg);
 
 /* check for valid seg_id */
-        GKSERROR ( (seg_id<1), 120, errginsertseg)      /* c1175 */
+        GKSERROR ( (seg_id<1), 120, errginsertseg)
 
 /* check if seg_id is currently opened */
         GKSERROR ( (xgks_state.gks_state == GSGOP && xgks_state.gks_open_seg == seg_id), 125, errginsertseg)
@@ -2330,7 +2330,7 @@ Gint ginqsegattr(Gsegattr *segattr)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqsegattr);
 
 /* check for valid segment name */
-        GKSERROR( (segattr->seg < 1), 120, errginqsegattr);     /* c1175 */
+        GKSERROR( (segattr->seg < 1), 120, errginqsegattr);
 
 /* check for segment existance */
         GKSERROR( ((seg=XgksFindSeg(segattr->seg)) == NULL), 122, errginqsegattr);
@@ -2361,7 +2361,7 @@ Gint ginqassocws(Gint seg, Gintlist *asswk)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqassocws);
 
 /* check for valid segment name */
-        GKSERROR( (seg < 1), 120, errginqassocws);      /* c1175 */
+        GKSERROR( (seg < 1), 120, errginqassocws);
 
 /* check for segment existance */
         GKSERROR( ((segp=XgksFindSeg(seg)) == NULL), 122, errginqassocws);
