@@ -851,11 +851,11 @@ Gint gredrawsegws(Gint ws_id)
         GKSERROR ((WS_CAT(ws) == GWISS) ,36, errgredrawsegws)
 
 /* If MO, output info to file */
-        if (ws->ewstype == MO) {                                /* c1073 */
-                XgksMoReDrawAllSeg (ws);                        /* c1073 */
-        }                                                       /* c1073 */
-        else {                                                  /* c1073 */
-                XgksReDrawSegWs (ws);                           /* c1073 */
+        if (ws->ewstype == MO) {
+                XgksMoReDrawAllSeg (ws);
+        }
+        else {
+                XgksReDrawSegWs (ws);
         }
 
 /* if necessary call user defined redraw notifying function */
@@ -1008,7 +1008,7 @@ static int XgksDeleteWsSeg(WS_STATE_PTR ws, Gint seg_id)
         while (cnt != NULL ) {
                 if (cnt->seg == seg_id) {
                         cnt->seg = INVALID;
-                        return (seg_id);                        /* c1073 */
+                        return (seg_id);
                 }
                 cnt = cnt->next;
         }
@@ -2053,9 +2053,9 @@ void XgksCleanUpWsSegList(WS_STATE_PTR ws)
                                 cnt = cnt->next;
                                 /* c1073:  change ws seg ptr if deleting */
                                 /*    head of list                       */
-                                if (pre == ws->seglist) {       /* c1073 */
-                                        ws->seglist = cnt;      /* c1073 */
-                                }                               /* c1073 */
+                                if (pre == ws->seglist) {
+                                        ws->seglist = cnt;
+                                }
 
                                 /* if we just deleted the segment */ /* c1165 */
                                 /* pointed to by seg_insertpt,    */ /* c1165 */
