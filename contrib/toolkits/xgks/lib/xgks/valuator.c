@@ -460,7 +460,7 @@ Gint ginqvalst(Gint ws_id, Gint dev, Gvalst *state)
     else {
         *state = idev->data.val.initst;
 
-        /* Initial value had to be converted back from device coordinates  c1018 */
+        /* Initial value had to be converted back from device coordinates */
 
         switch (idev->data.val.initst.pet) {
             case 1: Low  = idev->data.val.initst.record.pet1.low;
