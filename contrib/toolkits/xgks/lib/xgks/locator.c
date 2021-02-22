@@ -131,7 +131,7 @@ Gint ginitloc( ws_id, dev, init, pet, area, record)
                 2000, errginitloc)
             GKSERROR( (record->pet4.ln.line < 1) || (record->pet4.ln.line >= MAX_BUNDL_TBL),
                 60, errginitloc)
-            GKSERROR( (record->pet4.ln.bundl.type == 0), 63, errginitloc) /* c1013 */
+            GKSERROR( (record->pet4.ln.bundl.type == 0), 63, errginitloc)
             GKSERROR( ! WS_LINE_TYPE(record->pet4.ln.bundl.type), 64, errginitloc)
             GKSERROR( ! WS_AVAIL_COLOUR(ws, (record->pet4.ln.bundl.colour)), 93, errginitloc)
             GKSERROR( (record->pet4.ln.bundl.width < 0.0), 65, errginitloc)
@@ -185,7 +185,7 @@ fprintf(stderr, "initloc() pet 4, style %s\n",
                 2000, errginitloc)
             GKSERROR( (record->pet5.attr.ln.line < 1) || (record->pet5.attr.ln.line >= MAX_BUNDL_TBL),
                 60, errginitloc)
-            GKSERROR( record->pet5.attr.ln.bundl.type == 0, 63, errginitloc)  /* c1013 */
+            GKSERROR( record->pet5.attr.ln.bundl.type == 0, 63, errginitloc)
             GKSERROR( ! WS_LINE_TYPE(record->pet5.attr.ln.bundl.type), 64, errginitloc)
             GKSERROR( ! WS_AVAIL_COLOUR (ws, (record->pet5.attr.ln.bundl.colour)), 93, errginitloc)
             GKSERROR( (record->pet5.attr.ln.bundl.width < 0.0), 65, errginitloc)

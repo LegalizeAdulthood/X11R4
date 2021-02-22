@@ -165,8 +165,8 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
     case 4:    /* polyline */
         if (record->pet4.acf == GSPECIFIED) {
             GKSERROR( record->pet4.ln.line < 1 || record->pet4.ln.line >= MAX_BUNDL_TBL, 60, errginitstroke)
-            GKSERROR( record->pet4.ln.bundl.type == 0, 63, errginitstroke)  /* c1013 */
-            GKSERROR( !WS_LINE_TYPE(record->pet4.ln.bundl.type), 64, errginitstroke) /* c1013 */
+            GKSERROR( record->pet4.ln.bundl.type == 0, 63, errginitstroke)
+            GKSERROR( !WS_LINE_TYPE(record->pet4.ln.bundl.type), 64, errginitstroke)
             GKSERROR( record->pet4.ln.bundl.width < 0.0, 65, errginitstroke)
             GKSERROR( !WS_AVAIL_COLOUR(ws, record->pet4.ln.bundl.colour), 92, errginitstroke)
         }
