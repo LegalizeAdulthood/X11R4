@@ -392,7 +392,7 @@ Gint ginqwsst(ws_id, state)
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsst);
 
 /* check for valid workstation category */
-        GKSERROR ( (WS_CAT(ws)==GMI), 33, errginqwsst);    /* c1079 */
+        GKSERROR ( (WS_CAT(ws)==GMI), 33, errginqwsst);
 
         GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errginqwsst);
 
@@ -429,7 +429,7 @@ Gint ginqwsdeferupdatest(ws_id, du)
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsdeferupdatest);
 
 /* check for valid workstation category */
-        GKSERROR ( (WS_CAT(ws)==GMI), 33, errginqwsdeferupdatest);    /* c1079 */
+        GKSERROR ( (WS_CAT(ws)==GMI), 33, errginqwsdeferupdatest);
 
         GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errginqwsdeferupdatest);
 
