@@ -328,7 +328,7 @@ Gint ginqstringst(Gint ws_id, Gint dev, Gstringst *state)
         GKSERROR( XgksCreateDefString( ws, dev, &idev ), 300, errginqstringst)
         }
     *state = idev->data.str.initst;
-        state->record.pet1.position++; /* PTR# c1016  changed to reflect what was passed in init */
+        state->record.pet1.position++;
     state->string = (Gchar *)malloc( STRLEN(idev->data.str.initst.string) +1);
     GKSERROR( state->string == NULL, 300, errginqstringst)
     STRCPY( state->string, idev->data.str.initst.string );
@@ -434,7 +434,7 @@ static Bool XgksCreateDefString(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp)
  * XgksStrUpdatePrompt
  */
 
-#define MIN(a,b)  (( a > b ) ? b : a ) /* added to control box size PTR# c1016 */
+#define MIN(a,b)  (( a > b ) ? b : a )
 #define FG    ws->wsfg
 #define BG    ws->wsbg
 #define PADH    2
@@ -443,8 +443,8 @@ static Bool XgksCreateDefString(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp)
 #define StrY    idev->data.str.curpos.y
 #define StrPos    idev->data.str.editpos
 #define Str    idev->data.str.strbuf
-#define StrBufSiz idev->data.str.initst.record.pet1.bufsiz /* PTR# c1016 */
-#define StrInitPos idev->data.str.initst.record.pet1.position  /* PTR# c1016 */
+#define StrBufSiz idev->data.str.initst.record.pet1.bufsiz
+#define StrInitPos idev->data.str.initst.record.pet1.position
 
 Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     PromptStatus pstate, XKeyPressedEvent *xev, int event_id)
@@ -456,7 +456,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     char keybuf[2];
     Gchar *data;
     int count, wid;
-    int place;  /*  Added for 'DEL' key option   PTR# c1016  */
+    int place;
 
 /* Set up clipping area */
     dcpt.x = idev->data.str.initst.e_area.xmin;
@@ -469,7 +469,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     dcpt.y = idev->data.str.initst.e_area.ymin;
     DcToX( ws, &dcpt, &xpt );
     rect.width = MIN (xpt.x - rect.x, XTextWidth (MFontInfo, "W", StrBufSiz + 1));
-         /* box width is limited to length of input buf or size of echo area  PTR# c1016 */
+         /* box width is limited to length of input buf or size of echo area  */
     rect.height = xpt.y - rect.y;
 
     XSetClipRectangles( ws->dpy, idev->gc, 0, 0, &rect, 1, Unsorted );
@@ -491,11 +491,11 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
         XDrawString( ws->dpy, ws->win, idev->gc, StrX, StrY, Str, STRLEN( Str ) );
     /* text cursor */
         /* Start cursor at current cursor position - this option is called on update/repaint */
-        StrX += XTextWidth( MFontInfo, Str, StrPos ); /* PTR# c1016 */
+        StrX += XTextWidth( MFontInfo, Str, StrPos );
         XFillRectangle( ws->dpy, ws->win, idev->gc, StrX,
             StrY-MFontInfo->ascent, MFontInfo->max_bounds.width,
             MFontInfo->ascent + MFontInfo->descent );
-        XSetForeground( ws->dpy, idev->gc, BG);   /* 3 lines   PTR# c1016   */
+        XSetForeground( ws->dpy, idev->gc, BG);
         if (StrPos < STRLEN(Str))
            XDrawString( ws->dpy, ws->win, idev->gc, StrX, StrY, &(Str[StrPos]), 1 );
                                                   /* This code shows char under cursor */
@@ -504,7 +504,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     /* cover the area with the background colour */
         XSetForeground( ws->dpy, idev->gc, BG);
         XFillRectangle( ws->dpy, ws->win, idev->gc, rect.x, rect.y,
-      rect.width, MFontInfo->ascent + MFontInfo->descent + PADV + PADV + PADV ); /*c1016*/
+      rect.width, MFontInfo->ascent + MFontInfo->descent + PADV + PADV + PADV );
         break;
     case PROMPTMOVE:
     /* turn off text cursor */
@@ -524,14 +524,14 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 wid = XTextWidth( MFontInfo, &(Str[ --StrPos]), 1);
                 StrX -= wid;
             if(idev->data.str.initst.esw==GECHO){
-            /* Redraw char cursor was just on and fix rectangle     PTR# c1016  */
+            /* Redraw char cursor was just on and fix rectangle */
                     XDrawString( ws->dpy, ws->win, idev->gc, StrX + wid, StrY, &(Str[StrPos+1]), 1 );
                     XDrawRectangle( ws->dpy, ws->win, idev->gc, rect.x, rect.y,
                     rect.width -1, MFontInfo->ascent + MFontInfo->descent + PADV + PADV );
                              }
             }
         }
-        else if (ksym == XK_Delete) { /* user hit Delete key - delete chars past cursor  c1016 */
+        else if (ksym == XK_Delete) { /* user hit Delete key - delete chars past cursor */
            for (place = StrPos; place < STRLEN(Str); place++ ) /* rem char from Str */
               Str[place] = Str[place+1];
            if(idev->data.str.initst.esw==GECHO){  /* only redraw if ECHO  c1027 */
@@ -579,12 +579,12 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
         else if (count > 0) {
         /* if we're too close to the right edge, don't accept it */
             if (((StrX + MFontInfo->max_bounds.width + PADH) > xpt.x) ||
-                (StrPos == StrBufSiz)) {      /* PTR# c1016  check if input exceeds BufSiz */
+                (StrPos == StrBufSiz)) {      /* check if input exceeds BufSiz */
                 XBell( ws->dpy, 0 );
             }
             else {
-            if (Str[StrPos] == '\0')   /* if we're at end of Str, move null char out 1 pos */ /*c1016*/
-               Str[StrPos + 1] = '\0';  /* PTR# c1016 */
+            if (Str[StrPos] == '\0')   /* if we're at end of Str, move null char out 1 pos */ 
+               Str[StrPos + 1] = '\0';
         /* Copy new char into Str */
             Str[StrPos++] = keybuf[0];
             if(idev->data.str.initst.esw==GECHO)
@@ -600,7 +600,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
         XFillRectangle( ws->dpy, ws->win, idev->gc, StrX,
             StrY-MFontInfo->ascent, MFontInfo->max_bounds.width,
             MFontInfo->ascent + MFontInfo->descent );
-        XSetForeground( ws->dpy, idev->gc, BG);  /*  3 lines   PTR# c1016  */
+        XSetForeground( ws->dpy, idev->gc, BG);
         if (StrPos < STRLEN(Str))
             XDrawString( ws->dpy, ws->win, idev->gc, StrX, StrY, &(Str[StrPos]), 1 );
                                                 /*  This code shows the char under cursor */
