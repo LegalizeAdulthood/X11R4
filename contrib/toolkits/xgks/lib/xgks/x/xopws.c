@@ -106,7 +106,7 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
                         continue;
 
                 wk_p = xgks_state.openedws[i].ws;
-                j = STRCMP(wk->conn, wk_p->conn);                       /* c1176 */
+                j = STRCMP(wk->conn, wk_p->conn);
 
                 if ((j == 0) && (wk_p != wk))
                         break;
@@ -134,12 +134,12 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
 
                 ptr= DisplayString(wk->dpy);
                 free (wk->conn);
-                if ( (wk->conn = (char *) malloc ( (unsigned) (STRLEN(ptr)+1 ))) == NULL ) {/* c1176 */
+                if ( (wk->conn = (char *) malloc ( (unsigned) (STRLEN(ptr)+1 ))) == NULL ) {
                     XgksSIGIO_ON(wk->dpy);
                     return (300);
                 }
 
-                STRCPY (wk->conn, ptr);         /* c1176 */
+                STRCPY (wk->conn, ptr);
 
                 /* get the screen default colour map ID */
 
@@ -171,7 +171,7 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
 
         if (wk->wscolour == 2) {                /* MONOCHROME */
                 onoff = XGetDefault( dpy, "xgks", "invertmono");
-                if ( (onoff != NULL) && (STRCMP( onoff, "on") == 0) ) { /* c1176 */
+                if ( (onoff != NULL) && (STRCMP( onoff, "on") == 0) ) {
                         wk->wsbg = WhitePixel(dpy, DefaultScreen(dpy));
                         wk->wsfg = BlackPixel(dpy, DefaultScreen(dpy));
                 }

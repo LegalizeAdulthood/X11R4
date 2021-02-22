@@ -974,7 +974,7 @@ Gint xXgksMesg(WS_STATE_PTR ws, MESG_ST *mesg)
         /* must clear a rectangle for the message */
         MFontInfo=XLoadQueryFont(dpy, "6x10");  /* c1136 */
         XSetFont(dpy, gc, MFontInfo->fid);
-        tempwidth=XTextWidth(MFontInfo, mesg->string, STRLEN(mesg->string));    /* c1176 */
+        tempwidth=XTextWidth(MFontInfo, mesg->string, STRLEN(mesg->string));
         width=MAX( tempwidth, ws->last_message_width);
         ws->last_message_width=tempwidth;
         height=MFontInfo->ascent+MFontInfo->descent;
@@ -989,7 +989,7 @@ Gint xXgksMesg(WS_STATE_PTR ws, MESG_ST *mesg)
 
         /* the fill style attribute */
         XSetClipRectangles (dpy, gc, 0, 0, &x_clip, 1, Unsorted);
-        XDrawString (dpy, win, gc, x_pos.x, x_pos.y, mesg->string, STRLEN(mesg->string));/* c1176 */
+        XDrawString (dpy, win, gc, x_pos.x, x_pos.y, mesg->string, STRLEN(mesg->string));
 
         XgksSIGIO_ON(ws->dpy);
 

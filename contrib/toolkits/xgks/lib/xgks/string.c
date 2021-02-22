@@ -100,8 +100,8 @@ Gint ginitstring(Gint ws_id, Gint dev, Gchar *init, Gint pet, Glimit *area, Gstr
 /* data record contents valid */
     GKSERROR( (record->pet1.bufsiz <= 0), 146, errginitstring)
     GKSERROR( (record->pet1.position <= 0), 146, errginitstring)
-    GKSERROR( (record->pet1.position > (STRLEN(init) + 1)), 146, errginitstring) /* c1016 c1176 */
-    GKSERROR( (STRLEN(init) > record->pet1.bufsiz), 154, errginitstring)        /* c1176 c1175 */
+    GKSERROR( (record->pet1.position > (STRLEN(init) + 1)), 146, errginitstring)
+    GKSERROR( (STRLEN(init) > record->pet1.bufsiz), 154, errginitstring)
 
         if ((idev = XgksIDevLookup( ws, dev, GISTRING)) == NULL) {
         /* Create the Input Device structure */
@@ -113,9 +113,9 @@ Gint ginitstring(Gint ws_id, Gint dev, Gchar *init, Gint pet, Glimit *area, Gstr
         }
     if ( idev->data.str.initst.string != NULL)
         free( idev->data.str.initst.string );
-        idev->data.str.initst.string = (Gchar *)malloc( STRLEN(init) +1);       /* c1176 */
+        idev->data.str.initst.string = (Gchar *)malloc( STRLEN(init) +1);
     GKSERROR( idev->data.str.initst.string == NULL, 300, errginitstring)
-    STRCPY( idev->data.str.initst.string, init);        /* c1176 */
+    STRCPY( idev->data.str.initst.string, init);
         idev->data.str.initst.pet    = pet;
         idev->data.str.initst.e_area = *area;
         idev->data.str.initst.record = *record;
@@ -172,7 +172,7 @@ Gint gsetstringmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     idev->data.str.initst.esw = echo;
 
     if (mode == GSAMPLE || mode == GEVENT) {
-        STRCPY( idev->data.str.strbuf, idev->data.str.initst.string );  /* c1176 */
+        STRCPY( idev->data.str.strbuf, idev->data.str.initst.string );
         idev->data.str.editpos = idev->data.str.initst.record.pet1.position;
         if ( mode == GEVENT )
            signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for event mode */
@@ -225,7 +225,7 @@ Gint greqstring(Gint ws_id, Gint dev, Gqstring *response)
     gupdatews( ws_id, GPERFORM );
 
 /* set up initial value */
-    STRCPY( idev->data.str.strbuf, idev->data.str.initst.string);       /* c1176 */
+    STRCPY( idev->data.str.strbuf, idev->data.str.initst.string);
     idev->data.str.editpos = idev->data.str.initst.record.pet1.position;
     if ( idev->data.str.initst.esw == GECHO )
         XgksStrUpdatePrompt( ws, idev, PROMPTON,
@@ -248,7 +248,7 @@ Gint greqstring(Gint ws_id, Gint dev, Gqstring *response)
     }
     else {
         response->status = GOK;
-        STRCPY( response->string, idev->data.str.strbuf );      /* c1176 */
+        STRCPY( response->string, idev->data.str.strbuf );
     }
 
     return(0);
@@ -290,7 +290,7 @@ Gint gsamplestring(Gint ws_id, Gint dev, Gchar *response)
 /* Make sure the workstation is up to date */
     gupdatews( ws_id, GPERFORM );
 
-    STRCPY( response, idev->data.str.strbuf );  /* c1176 */
+    STRCPY( response, idev->data.str.strbuf );
 
     return(0);
 }
@@ -329,9 +329,9 @@ Gint ginqstringst(Gint ws_id, Gint dev, Gstringst *state)
         }
     *state = idev->data.str.initst;
         state->record.pet1.position++; /* PTR# c1016  changed to reflect what was passed in init */
-    state->string = (Gchar *)malloc( STRLEN(idev->data.str.initst.string) +1);  /* c1176 */
+    state->string = (Gchar *)malloc( STRLEN(idev->data.str.initst.string) +1);
     GKSERROR( state->string == NULL, 300, errginqstringst)
-    STRCPY( state->string, idev->data.str.initst.string );      /* c1176 */
+    STRCPY( state->string, idev->data.str.initst.string );
 
     return( 0 );
 }
@@ -488,7 +488,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
         StrX = rect.x + PADH;
         StrY = rect.y + MFontInfo->ascent + PADV;
     /*  Draw initial string  */
-        XDrawString( ws->dpy, ws->win, idev->gc, StrX, StrY, Str, STRLEN( Str ) );      /* c1176 */
+        XDrawString( ws->dpy, ws->win, idev->gc, StrX, StrY, Str, STRLEN( Str ) );
     /* text cursor */
         /* Start cursor at current cursor position - this option is called on update/repaint */
         StrX += XTextWidth( MFontInfo, Str, StrPos ); /* PTR# c1016 */
@@ -496,7 +496,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             StrY-MFontInfo->ascent, MFontInfo->max_bounds.width,
             MFontInfo->ascent + MFontInfo->descent );
         XSetForeground( ws->dpy, idev->gc, BG);   /* 3 lines   PTR# c1016   */
-        if (StrPos < STRLEN(Str))       /* c1176 */
+        if (StrPos < STRLEN(Str))
            XDrawString( ws->dpy, ws->win, idev->gc, StrX, StrY, &(Str[StrPos]), 1 );
                                                   /* This code shows char under cursor */
         break;
@@ -532,7 +532,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             }
         }
         else if (ksym == XK_Delete) { /* user hit Delete key - delete chars past cursor  c1016 */
-           for (place = StrPos; place < STRLEN(Str); place++ ) /* rem char from Str *//* c1176 */
+           for (place = StrPos; place < STRLEN(Str); place++ ) /* rem char from Str */
               Str[place] = Str[place+1];
            if(idev->data.str.initst.esw==GECHO){  /* only redraw if ECHO  c1027 */
                  XSetForeground( ws->dpy, idev->gc, BG);
@@ -541,7 +541,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                  MFontInfo->ascent + MFontInfo->descent );
                 XSetForeground( ws->dpy, idev->gc, FG);
                 /* Redraw new Str from StrPos on */
-                XDrawString( ws->dpy, ws->win, idev->gc, StrX, StrY, &(Str[StrPos]), STRLEN(Str)-StrPos);/* c1176 */
+                XDrawString( ws->dpy, ws->win, idev->gc, StrX, StrY, &(Str[StrPos]), STRLEN(Str)-StrPos);
                 /* Redraw rectangle */
                 XDrawRectangle( ws->dpy, ws->win, idev->gc, rect.x, rect.y,
                   rect.width -1, MFontInfo->ascent + MFontInfo->descent + PADV + PADV );
@@ -558,7 +558,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             case GSAMPLE:
                 break;
             case GEVENT:
-                data = (Gchar *)malloc( STRLEN( Str ) +1 );     /* c1176 */
+                data = (Gchar *)malloc( STRLEN( Str ) +1 );
                 if (data == NULL)
                 {
                     gerrorhand( 300, errXgksStrUpdatePrompt, xgks_state.gks_err_file);
@@ -566,7 +566,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 }
                 
                     XBell( ws->dpy, 0 );
-                    STRCPY( data, Str );        /* c1176 */
+                    STRCPY( data, Str );
                     XgksEnqueueEvent( ws->ws_id, idev->dev, GISTRING, (char *)data, event_id );
                 
                 break;
@@ -601,7 +601,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             StrY-MFontInfo->ascent, MFontInfo->max_bounds.width,
             MFontInfo->ascent + MFontInfo->descent );
         XSetForeground( ws->dpy, idev->gc, BG);  /*  3 lines   PTR# c1016  */
-        if (StrPos < STRLEN(Str))       /* c1176 */
+        if (StrPos < STRLEN(Str))
             XDrawString( ws->dpy, ws->win, idev->gc, StrX, StrY, &(Str[StrPos]), 1 );
                                                 /*  This code shows the char under cursor */
                 }

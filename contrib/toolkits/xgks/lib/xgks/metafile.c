@@ -530,7 +530,7 @@ void XgksMoTextToWs(WS_STATE_PTR ws, Gpoint *at, Gchar *string)
 {
         Gint length;
 
-        length = STRLEN (string);       /* c1176 */
+        length = STRLEN (string);
         fprintf(ws->mfp, "13 %d %f %f %d %s\n",
                         length+1+XgksMRecSize(13), at->x, at->y, length, string);
 }
@@ -539,7 +539,7 @@ void XgksMoText(Gpoint *at, Gchar *string)
 {
         Gint cnt,length;
 
-        length = STRLEN (string);       /* c1176 */
+        length = STRLEN (string);
         for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
                 if (xgks_state.activews[cnt].ws_id != INVALID)
                         if (xgks_state.activews[cnt].ws->ewstype == MO)
@@ -2228,11 +2228,11 @@ static Gchar *XgksMAuthor(void)
 
         passwd = getpwuid (getuid());
         strncat (buffer, passwd->pw_name, 15);
-        for (i=STRLEN(passwd->pw_name); i<15; i++)      /* c1176 */
+        for (i=STRLEN(passwd->pw_name); i<15; i++)
                 buffer[i] = ' ';
         strcat (&(buffer[15]), " at :");
         gethostname (&(buffer[20]), 20);
-        for (i=STRLEN(buffer); i<40; i++)       /* c1176 */
+        for (i=STRLEN(buffer); i<40; i++)
                 buffer[i] = ' ';
         buffer[40] = 0;
         return (buffer);

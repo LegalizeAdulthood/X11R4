@@ -354,13 +354,13 @@ Gint ginqwsconntype(ws_id, ct)
         GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsconntype);
 
 /* set up the return values */
-        ct->conn = (Gchar *)malloc(STRLEN(ws->conn)+1);         /* c1176 */
+        ct->conn = (Gchar *)malloc(STRLEN(ws->conn)+1);
         GKSERROR( (ct->conn == NULL), 300, errginqwsconntype);
-        STRCPY(ct->conn, ws->conn);             /* c1176 */
+        STRCPY(ct->conn, ws->conn);
 
-        ct->type = (Gchar *)malloc(STRLEN(ws->wstype)+1);       /* c1176 */
+        ct->type = (Gchar *)malloc(STRLEN(ws->wstype)+1);
         GKSERROR( (ct->type == NULL), 300, errginqwsconntype);
-        STRCPY(ct->type, ws->wstype);   /* c1176 */
+        STRCPY(ct->type, ws->wstype);
 
         return( OK );
 }

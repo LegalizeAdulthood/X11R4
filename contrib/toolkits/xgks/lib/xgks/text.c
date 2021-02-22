@@ -516,9 +516,9 @@ Gint gtext(Gpoint *at, Gchar *string)
                   300, errgtext);
 
 /* get momory for text string */
-        GKSERROR ( ( (text->primi.text.string= (Gchar *)malloc ((unsigned) STRLEN(string) + 1)) == NULL ), 300, errgtext);      /* c1176 */
+        GKSERROR ( ( (text->primi.text.string= (Gchar *)malloc ((unsigned) STRLEN(string) + 1)) == NULL ), 300, errgtext);
 
-        STRCPY ((text->primi.text.string), string);     /* c1176 */
+        STRCPY ((text->primi.text.string), string);
 
         WcToNdc(at, (text->primi.text.location));
 
@@ -571,7 +571,7 @@ Gint ginqtextextent(Gint ws_id, Gpoint position, Gchar *string, Gextent *extent)
         GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GOUTPUT), 39, errginqtextextent);
 
 /* check for valid string */
-        GKSERROR ( (STRLEN(string) == 0), 101, errginqtextextent);      /* c1176 */
+        GKSERROR ( (STRLEN(string) == 0), 101, errginqtextextent);
 /*
  * The actual inquiries have to be done in x-rountine
  *
@@ -582,9 +582,9 @@ Gint ginqtextextent(Gint ws_id, Gpoint position, Gchar *string, Gextent *extent)
         GKSERROR ( ( ((text.location) = (Gpoint *) malloc ((unsigned) sizeof(Gpoint)))==NULL), 300, errginqtextextent);
 
 /* get momory for text string */
-        GKSERROR ( ( (text.string= (Gchar *)malloc ((unsigned) STRLEN(string) + 1)) == NULL ), 300, errginqtextextent); /* c1176 */
+        GKSERROR ( ( (text.string= (Gchar *)malloc ((unsigned) STRLEN(string) + 1)) == NULL ), 300, errginqtextextent);
 
-        STRCPY ((text.string), string); /* c1176 */
+        STRCPY ((text.string), string);
 
         WcToNdc(&(position), text.location);
 

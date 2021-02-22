@@ -47,13 +47,12 @@
 #include "xgks.h"                       /* Standard GKS C-language binding definitions */
 
 /* strlen was defined as STRLEN so a NULL ptr is allowed AIX port */
-#define STRLEN(a)       ((a == NULL) ? 0 : strlen(a))   /* c1176 */
+#define STRLEN(a)       ((a == NULL) ? 0 : strlen(a))
 
 /* strcmp was defined as STRCMP so a NULL ptr is allowed AIX port */
 /* Note: STRCMP given a NULL pointer will return 1                */
 /*                                                                */
 #define STRCMP(a,b) (((a) != NULL && (b) != NULL) ? strcmp((a),(b)) : 1)
-                                                        /* c1176 */
 
 /* strcpy was defined as STRCPY so a NULL ptr is allowed AIX port */
 #define STRCPY(d,s) {if ((s) != NULL) strcpy((d),(s));}

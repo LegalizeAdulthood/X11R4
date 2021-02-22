@@ -108,12 +108,12 @@ void XgksInsertMesgPrimi(WS_STATE_PTR ws, OUT_PRIMI *primi)
     }
     else  /* Change the Message pointed to by message_pt  */
     {
-       if ((tmp = (Gchar *)malloc ((unsigned)STRLEN(primi->primi.mesg.string) + 1)) == NULL)    /* c1176 */
+       if ((tmp = (Gchar *)malloc ((unsigned)STRLEN(primi->primi.mesg.string) + 1)) == NULL)
           {
           gerrorhand (300, errXgksInsertMesgPrimi, xgks_state.gks_err_file);
           return;
           }
-       STRCPY (tmp, primi->primi.mesg.string);  /* Make a copy of the new message */    /* c1176 */
+       STRCPY (tmp, primi->primi.mesg.string);  /* Make a copy of the new message */
        free (ws->message_pt->primi.mesg.string); /* Free the old message space */
        ws->message_pt->primi.mesg.string = tmp;  /* and set the message ptr to the new message */
        if (ws->primi_insert_pt != ws->message_pt)/* if mesg node needs to be moved, */
@@ -375,18 +375,18 @@ OUT_PRIMI *primi;
                 new_primi->primi.text.location = new_pts;
                 old_pts = primi->primi.text.location;
                 *new_pts = *old_pts;
-                if ((new_primi->primi.text.string= (Gchar *)malloc ((unsigned) STRLEN(primi->primi.text.string) + 1))==NULL) {  /* c1176 */
+                if ((new_primi->primi.text.string= (Gchar *)malloc ((unsigned) STRLEN(primi->primi.text.string) + 1))==NULL) {
                         gerrorhand(300, errXgksDuplicatePrimi, xgks_state.gks_err_file);
                         return (NULL);
                 }
-                STRCPY ((new_primi->primi.text.string), primi->primi.text.string);      /* c1176 */
+                STRCPY ((new_primi->primi.text.string), primi->primi.text.string);
                 break;
         case MESG      :
-                if ((new_primi->primi.mesg.string= (Gchar *)malloc ((unsigned) STRLEN(primi->primi.mesg.string) + 1))==NULL) {  /* c1176 */
+                if ((new_primi->primi.mesg.string= (Gchar *)malloc ((unsigned) STRLEN(primi->primi.mesg.string) + 1))==NULL) {
                         gerrorhand(300, errXgksDuplicatePrimi, xgks_state.gks_err_file);
                         return (NULL);
                 }
-                STRCPY ((new_primi->primi.mesg.string), primi->primi.mesg.string);      /* c1176 */
+                STRCPY ((new_primi->primi.mesg.string), primi->primi.mesg.string);
                 break;
         case CELL_ARRAY:
                 cnt = primi->primi.cell_array.rowsize * primi->primi.cell_array.dim.y;

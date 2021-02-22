@@ -1286,8 +1286,8 @@ static OUT_PRIMI *XgksSegPrimiTran(OUT_PRIMI *primi, Gfloat matrix[2][3])
                 trans_primi.primi.text.base_vec.x -= matrix[0][2];
                 trans_primi.primi.text.base_vec.y -= matrix[1][2];
 
-                ALLOC_CHECK((string = (Gchar *)malloc ((unsigned) STRLEN(primi->primi.text.string) + 1))==NULL);        /* c1176 */
-                STRCPY (string, primi->primi.text.string);      /* c1176 */
+                ALLOC_CHECK((string = (Gchar *)malloc ((unsigned) STRLEN(primi->primi.text.string) + 1))==NULL);
+                STRCPY (string, primi->primi.text.string);
                 trans_primi.primi.text.string = string;
                 break;
 

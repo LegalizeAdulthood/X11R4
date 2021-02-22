@@ -113,13 +113,13 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
     if (connection == (char *)NULL)
         connection = getenv( "DISPLAY" );
 
-    GKSERROR ((STRLEN(connection) == 0) ,21, errgopenws)        /* c1176 */
+    GKSERROR ((STRLEN(connection) == 0) ,21, errgopenws)
 
 /* check valid ws_type */
         if (ws_type == (char *)NULL)
                 ws_type = connection; /* if type==NULL type = connection  c1078 */
 
-        GKSERROR ((STRLEN(ws_type) == 0) ,23, errgopenws)       /* c1176 */
+        GKSERROR ((STRLEN(ws_type) == 0) ,23, errgopenws)
 
     ewstype = XgksWsTypeToEnum( ws_type );
     GKSERROR ( (ewstype == WST_INVALID) ,23, errgopenws)
@@ -135,14 +135,14 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
 
     ws->ws_id = ws_id;
     ws->wsstate = GINACTIVE;
-    ws->wstype = (Gchar *) malloc( STRLEN( ws_type ) +1);       /* c1176 */
+    ws->wstype = (Gchar *) malloc( STRLEN( ws_type ) +1);
     GKSERROR( ws->wstype == NULL ,300, errgopenws)
-    STRCPY( ws->wstype, ws_type);       /* c1176 */
+    STRCPY( ws->wstype, ws_type);
     ws->ewstype = ewstype;
     ws->ws_is_closing = FALSE;  /* not in the process of closing */ /* c1164 */
 
-    GKSERROR(((ws->conn = (Gchar *)malloc((unsigned)(STRLEN(connection) +1))) == NULL) ,300, errgopenws)        /* c1176 */
-    STRCPY((ws->conn), connection);     /* c1176 */
+    GKSERROR(((ws->conn = (Gchar *)malloc((unsigned)(STRLEN(connection) +1))) == NULL) ,300, errgopenws)
+    STRCPY((ws->conn), connection);
 
     XgksSetWsPtr(ws_id, ws);        /* add this ws ptr into openedws[] array */
     ws->dpy = NULL;                 /* c1167 */
@@ -477,9 +477,9 @@ static int XgksOneOpenWs(void)
  */
 EWSTYPE XgksWsTypeToEnum(Gchar *ws_type)
 {
-    if (STRCMP(ws_type, "MI") == 0)                return( MI );        /* c1176 */
-    if (STRCMP(ws_type, "MO") == 0)            return( MO );       /* c1176 */
-    else if (STRCMP(ws_type, "WISS") == 0)            return( WISS );   /* c1176 */
+    if (STRCMP(ws_type, "MI") == 0)                return( MI );
+    if (STRCMP(ws_type, "MO") == 0)            return( MO );
+    else if (STRCMP(ws_type, "WISS") == 0)            return( WISS );
     else if (ws_type == NULL)                return( X_WIN );
     else if (index( ws_type, ':') != 0 )            return( X_WIN );
     else return( WST_INVALID );

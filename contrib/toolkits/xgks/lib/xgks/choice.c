@@ -200,9 +200,9 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
         d = idev->data.cho.initst.record.pet3.strings = (char **)malloc( sizeof (char *) * number);
         GKSERROR( (d == NULL), 300, errginitchoice)
         for( i=0, s=record->pet3.strings; i<number; i++, d++, s++) {
-            *d = (char *) malloc( STRLEN( *s ) +1);     /* c1176 */
+            *d = (char *) malloc( STRLEN( *s ) +1);
             GKSERROR( (*d == NULL), 300, errginitchoice)
-            STRCPY( *d, *s );   /* c1176 */
+            STRCPY( *d, *s );
         }
 
         dcpt.x = idev->data.cho.initst.e_area.xmin;
@@ -219,9 +219,9 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
 
     /* figure out size of menu */
         menustr = record->pet3.strings;
-        maxwidth = XTextWidth( MFontInfo, *menustr, STRLEN( *menustr) );        /* c1176 */
+        maxwidth = XTextWidth( MFontInfo, *menustr, STRLEN( *menustr) );
         for( i=1, menustr++; i< number; i++, menustr++) {
-            width = XTextWidth( MFontInfo, *menustr, STRLEN( *menustr) );       /* c1176 */
+            width = XTextWidth( MFontInfo, *menustr, STRLEN( *menustr) );
             if (width > maxwidth) maxwidth = width;
         }
         idev->data.cho.origin.x = rect.x;
@@ -544,9 +544,9 @@ Gint ginqchoicest(Gint ws_id, Gint dev, Gchoicest *state)
             s = idev->data.cho.initst.record.pet3.strings;
             GKSERROR( (d == NULL), 300, errginqchoicest)
             for( i=0; i<number; i++, d++, s++) {
-                *d = (char *) malloc( STRLEN( *s ) +1);         /* c1176 */
+                *d = (char *) malloc( STRLEN( *s ) +1);
                 GKSERROR( (*d == NULL), 300, errginqchoicest)
-                STRCPY( *d, *s );               /* c1176 */
+                STRCPY( *d, *s );
             }
         }
     }
