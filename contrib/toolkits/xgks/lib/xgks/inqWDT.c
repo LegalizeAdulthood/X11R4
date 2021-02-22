@@ -312,12 +312,12 @@ Gint ginqnumavailinput(ws_type, num)
         GKSERROR( (ewstype != X_WIN), 38, errginqnumavailinput);
 
 /* set up the return values */
-        num->locator = 10;      /* c2048 */
-        num->stroke  = 10;      /* c2048 */
-        num->valuator= 10;      /* c2048 */
-        num->choice  = 10;      /* c2048 */
-        num->pick    = 10;      /* c2048 */
-        num->string  = 10;      /* c2048 */
+        num->locator = 10;
+        num->stroke  = 10;
+        num->valuator= 10;
+        num->choice  = 10;
+        num->pick    = 10;
+        num->string  = 10;
 
         return( OK );
 }
