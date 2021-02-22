@@ -361,10 +361,10 @@ Gint gsetwswindow(Gint ws_id, Glimit *window)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetwswindow)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetwswindow)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetwswindow)
 
 /* check for open ws_id */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetwswindow)  /* c1012 */
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetwswindow)
 
 /* check for proper ws category */
         GKSERROR ((WS_CAT(ws) == GMI) ,33, errgsetwswindow)
@@ -411,10 +411,10 @@ Gint gsetwsviewport(Gint ws_id, Glimit *viewport)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetwsviewport)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetwsviewport)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetwsviewport)
 
 /* check for open ws_id */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetwsviewport)  /* c1012 */
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetwsviewport)
 
 /* check for proper ws category */
         GKSERROR ((WS_CAT(ws) == GMI) ,33, errgsetwsviewport)

@@ -407,10 +407,10 @@ Gint gsettextrep(Gint ws_id, Gint idx, Gtxbundl *bundle)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsettextrep)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsettextrep)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsettextrep)
 
 /* check for open workstation identifier */
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) , 25, errgsettextrep)  /* c1012 */
+        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) , 25, errgsettextrep)
 
 /* check for proper workstation category */
         GKSERROR ((WS_CAT(ws)== GMI) , 33, errgsettextrep)
@@ -562,10 +562,10 @@ Gint ginqtextextent(Gint ws_id, Gpoint position, Gchar *string, Gextent *extent)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqtextextent);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqtextextent)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqtextextent)
 
 /* check if this workstation is opened */
-        GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqtextextent);  /* c1012 */
+        GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqtextextent);
 
 /* check workstation type */
         GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GOUTPUT), 39, errginqtextextent);

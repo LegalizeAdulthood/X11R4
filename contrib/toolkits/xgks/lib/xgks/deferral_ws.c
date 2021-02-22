@@ -65,10 +65,10 @@ Gint gsetdeferst(ws_id, deferral_mode, regen_mode)
         GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) , 7, errgsetdeferst)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetdeferst)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetdeferst)
 
 /* check for open ws_id */
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) , 25, errgsetdeferst)  /* c1012 */
+        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) , 25, errgsetdeferst)
 
 /* check for valid category */
         GKSERROR ((WS_CAT(ws) == GMI) , 33, errgsetdeferst)

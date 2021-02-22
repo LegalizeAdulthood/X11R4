@@ -74,10 +74,10 @@ Gint ginitloc( ws_id, dev, init, pet, area, record)
     GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitloc )
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitloc)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitloc)
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitloc )  /* c1012 */
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitloc )
 
 /* valid workstation type */
     GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginitloc)
@@ -336,10 +336,10 @@ Gint gsetlocmode( ws_id, dev, mode, echo )
     GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetlocmode )
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetlocmode)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetlocmode)
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetlocmode )  /* c1012 */
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetlocmode )
 
 /* valid workstation type */
     GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetlocmode)
@@ -432,10 +432,10 @@ Gint greqloc( ws_id, dev, response )
     GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqloc )
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqloc)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqloc)
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqloc )  /* c1012 */
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqloc )
 
 /* valid workstation type */
     GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqloc)
@@ -537,10 +537,10 @@ Gint gsampleloc( ws_id, dev, response)
     GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsampleloc )
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsampleloc)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsampleloc)
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsampleloc )  /* c1012 */
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsampleloc )
 
 /* valid workstation type */
     GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsampleloc)
@@ -583,10 +583,10 @@ Gint ginqlocst( ws_id, dev, type, state)
     GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqlocst )
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqlocst)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqlocst)
 
 /* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqlocst )  /* c1012 */
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqlocst )
 
 /* valid workstation type */
     GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqlocst)

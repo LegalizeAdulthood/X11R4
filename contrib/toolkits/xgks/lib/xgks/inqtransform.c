@@ -205,10 +205,10 @@ Gwsti *wstran;
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwstran);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwstran)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwstran)
 
 /* check for open ws_id */
-        GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwstran);  /* c1012 */
+        GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwstran);
 
 /* proper category */
         GKSERROR( (ws->ewstype == MI), 33, errginqwstran);

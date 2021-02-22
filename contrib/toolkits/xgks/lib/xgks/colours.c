@@ -69,10 +69,10 @@ Gint gsetcolourrep(ws_id, idx, rep)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetcolourrep)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetcolourrep)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetcolourrep)
 
 /* check if ws is opened */
-    GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errgsetcolourrep)  /* c1012 */
+    GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errgsetcolourrep)
 
 /* check workstation category */
     GKSERROR ((WS_CAT(ws) == GMI), 33, errgsetcolourrep)
@@ -143,10 +143,10 @@ Gint ginqcolourrep(ws_id, idx, type, rep)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqcolourrep)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqcolourrep)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqcolourrep)
 
 /* check if ws is opened */
-    GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errginqcolourrep)  /* c1012 */
+    GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errginqcolourrep)
 
 /* check workstation category */
     GKSERROR ((WS_CAT(ws) == GMI), 33, errginqcolourrep)
@@ -194,10 +194,10 @@ Gint ginqcolourindices(ws_id, indices)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqcolourindices)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqcolourindices)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqcolourindices)
 
 /* check if ws is opened */
-    GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errginqcolourindices)  /* c1012 */
+    GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errginqcolourindices)
 
 /* check workstation category */
     GKSERROR ((WS_CAT(ws) == GMI), 33, errginqcolourindices)

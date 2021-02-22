@@ -260,10 +260,10 @@ Gint gsetmarkerrep(Gint ws_id, Gint idx, Gmkbundl *rep)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgsetmarkerrep)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetmarkerrep)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetmarkerrep)
 
 /* check for open ws_id */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetmarkerrep)  /* c1012 */
+        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgsetmarkerrep)
 
 /* check for valid workstation category */
         GKSERROR ( (WS_CAT(ws)==GMI), 33, errgsetmarkerrep)

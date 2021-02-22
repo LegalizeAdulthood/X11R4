@@ -129,10 +129,10 @@ Gint gwritegksm (Gint ws_id, Gint type, Gint length, Gchar *data)
 
         GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgwritegksm)
 
-        GKSERROR ((!VALID_WSID(ws_id)), 20, errgwritegksm)   /* c1012 */
+        GKSERROR ((!VALID_WSID(ws_id)), 20, errgwritegksm)
 
 /*              if it isn't open, it can't be active...                          */
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 30, errgwritegksm)  /* c1012 */
+        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 30, errgwritegksm)
 
         GKSERROR ((ws->wsstate != GACTIVE), 30, errgwritegksm)
 
@@ -168,9 +168,9 @@ Gint ggetgksm (Gint ws_id, Ggksmit *result)
         GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errggetgksm)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errggetgksm)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errggetgksm)
 
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 25, errggetgksm)  /* c1012 */
+        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 25, errggetgksm)
 
         GKSERROR ((WS_CAT(ws) != GMI), 34, errggetgksm)
 
@@ -237,9 +237,9 @@ Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
         GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errgreadgksm)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreadgksm)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreadgksm)
 
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 25, errgreadgksm) /* c1012 */
+        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 25, errgreadgksm)
 
         GKSERROR ((WS_CAT(ws) != GMI), 34, errgreadgksm)
 

@@ -167,10 +167,10 @@ Gint gflushevents(Gint ws_id, Giclass class, Gint dev)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgflushevents)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgflushevents)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgflushevents)
 
 /* open workstation */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgflushevents)  /* c1012 */
+        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgflushevents)
 
 /* valid workstation category */
         GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgflushevents)

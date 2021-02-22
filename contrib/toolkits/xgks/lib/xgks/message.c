@@ -71,10 +71,10 @@ Gint gmessage(Gint ws_id, Gchar *string)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgmessage)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgmessage)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgmessage)
 
 /* check for open workstation */
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) , 25, errgmessage)  /* c1012 */
+        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) , 25, errgmessage)
 
 /* check for valid workstation category */
         GKSERROR ((WS_CAT(ws) == GMI) , 33, errgmessage)

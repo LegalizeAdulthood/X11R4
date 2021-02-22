@@ -72,10 +72,10 @@ Gint gactivatews(Gint ws_id)
         GKSERROR ( ((xgks_state.gks_state != GWSOP) && (xgks_state.gks_state != GWSAC)), 6, errgactivatews)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgactivatews)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgactivatews)
 
 /* check for workstation opened */
-        GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errgactivatews)  /* c1012 */
+        GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errgactivatews)
 
 /* check for workstation active */
         GKSERROR ((ws->wsstate == GACTIVE), 29, errgactivatews)
@@ -119,10 +119,10 @@ Gint gdeactivatews(Gint ws_id)
         GKSERROR ((xgks_state.gks_state != GWSAC), 3, errgdeactivatews)
 
 /* check for ws invalid */
-        GKSERROR ((!VALID_WSID(ws_id)), 20, errgdeactivatews);  /* c1012 */
+        GKSERROR ((!VALID_WSID(ws_id)), 20, errgdeactivatews);
 
 /* check for  ws active (open) */
-        GKSERROR(((ws=OPEN_WSID(ws_id))==NULL), 30, errgdeactivatews);  /* c1012 */
+        GKSERROR(((ws=OPEN_WSID(ws_id))==NULL), 30, errgdeactivatews);
 
 /* check for workstation active */
         GKSERROR ((ws->wsstate == GINACTIVE), 30, errgdeactivatews)

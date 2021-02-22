@@ -162,8 +162,8 @@ Gwscat XgksWsCategory();
 EWSTYPE XgksWsTypeToEnum( /* Gchar *wstype */ );
 WS_STATE_PTR XgksValidWsId();
 
-#define VALID_WSID(i)   ((i) >= 0)            /* c1012 */  
-#define OPEN_WSID(i)    (XgksValidWsId(i))   /* c1012 */ 
+#define VALID_WSID(i)   ((i) >= 0)
+#define OPEN_WSID(i)    (XgksValidWsId(i))
 #define WS_CAT(t)       (XgksWsCategory(t))
 
 #define NdcToDc(ws, ndc, dc) { \

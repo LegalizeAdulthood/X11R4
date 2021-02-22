@@ -107,7 +107,7 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
 /* check proper state */
     GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgopenws)
 
-    GKSERROR ((!VALID_WSID(ws_id)) ,20, errgopenws)  /* c1012 */
+    GKSERROR ((!VALID_WSID(ws_id)) ,20, errgopenws)
 
 /* Check for valid connection */
     if (connection == (char *)NULL)
@@ -125,7 +125,7 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
     GKSERROR ( (ewstype == WST_INVALID) ,23, errgopenws)
 
 /* check workstation already open */
-    GKSERROR ((OPEN_WSID(ws_id) != NULL) ,24, errgopenws)  /* c1012 */
+    GKSERROR ((OPEN_WSID(ws_id) != NULL) ,24, errgopenws)
 
 /* update <openedws> array in gks_state list */
     GKSERROR ((XgksAllocNewWs(ws_id) != 0) ,42, errgopenws)
@@ -219,10 +219,10 @@ Gint gclosews(Gint ws_id)
     GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) ,7, errgclosews)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgclosews)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgclosews)
 
 /* check for workstation not open yet */
-    GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgclosews)  /* c1012 */
+    GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgclosews)
 
 /* check for workstation still active */
     GKSERROR ((ws->wsstate == GACTIVE) ,29, errgclosews)
@@ -308,10 +308,10 @@ Gint gclearws(Gint ws_id, Gclrflag control_flag)
     GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC) ,6, errgclearws)
 
 /* Check for valid ws_id  */
-    GKSERROR ((!VALID_WSID(ws_id)) ,20, errgclearws)  /* c1012 */
+    GKSERROR ((!VALID_WSID(ws_id)) ,20, errgclearws)
 
 /* check for valid ws_id */
-    GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgclearws)  /* c1012 */
+    GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgclearws)
 
 /* check for proper category */
     GKSERROR ((WS_CAT(ws) == GMI) ,33, errgclearws)

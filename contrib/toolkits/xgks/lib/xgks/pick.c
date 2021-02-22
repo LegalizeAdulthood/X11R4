@@ -84,10 +84,10 @@ Gint ginitpick(Gint ws_id, Gint dev, Gpick *init, Gint pet, Glimit *area, Gpickr
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errginitpick)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitpick)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitpick)
 
 /* open workstation ? */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errginitpick)  /* c1012 */
+    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errginitpick)
 
 /* check category */
     GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errginitpick)
@@ -157,10 +157,10 @@ Gint gsetpickmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetpickmode)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetpickmode)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetpickmode)
 
 /* workstation id valid and open */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetpickmode)  /* c1012 */
+    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetpickmode)
 
 /* check category */
     GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgsetpickmode)
@@ -231,10 +231,10 @@ Gint greqpick(Gint ws_id, Gint dev, Gpick *response)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgreqpick)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqpick)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqpick)
 
 /* workstation id open */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgreqpick)  /* c1012 */
+    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgreqpick)
 
 /* check category */
     GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgreqpick)
@@ -314,10 +314,10 @@ Gint gsamplepick(Gint ws_id, Gint dev, Gpick *response)
     GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsamplepick)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplepick)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplepick)
 
 /* workstation id open */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsamplepick)  /* c1012 */
+    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsamplepick)
 
 /* check category */
     GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgsamplepick)
@@ -364,10 +364,10 @@ Gint ginqpickst(Gint ws_id, Gint dev, Gqtype type, Gpickst *state)
     GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpickst )
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpickst)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpickst)
 
 /* check for ws_id, if correspond to opened ws */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqpickst )  /* c1012 */
+    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqpickst )
 
 /* valid workstation type */
     GKSERROR( (WS_CAT(ws) != GOUTIN), 37, errginqpickst)

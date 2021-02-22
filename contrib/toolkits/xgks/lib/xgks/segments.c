@@ -363,7 +363,7 @@ Gint grenameseg(Gint old, Gint new)
 
 /* Now do the renaming in all associated ws->seglist */
         for (i=0; seg->assoc_ws[i] != INVALID; i++)
-                XgksRenameWsSeg(OPEN_WSID(seg->assoc_ws[i]), old, new);  /* c1012 */
+                XgksRenameWsSeg(OPEN_WSID(seg->assoc_ws[i]), old, new);
 
         return(0);
 }
@@ -401,7 +401,7 @@ Gint gdelseg(Gint name)
 
 /* Now delete the segment from ws segment list and redraw all associated workstations */
         for (wscnt=0; seg->assoc_ws[wscnt] != INVALID; wscnt++) {
-                ws = OPEN_WSID(seg->assoc_ws[wscnt]);  /* c1012 */
+                ws = OPEN_WSID(seg->assoc_ws[wscnt]);
                 if (ws->ewstype != MO) {                        /* c1139 */
                         XgksDeleteWsSeg (ws, name);
                         REDRAWWS(ws);
@@ -433,10 +433,10 @@ Gint gdelsegws(Gint ws_id, Gint name)
         GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgdelsegws)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgdelsegws)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgdelsegws)
 
 /* check for invalid workstation identifier */
-        GKSERROR (((ws = OPEN_WSID(ws_id)) == NULL) ,25, errgdelsegws)  /* c1012 */
+        GKSERROR (((ws = OPEN_WSID(ws_id)) == NULL) ,25, errgdelsegws)
 
 /* check workstation category */
         GKSERROR ((WS_CAT(ws) == GMI) ,33, errgdelsegws)
@@ -513,7 +513,7 @@ Gint gsetsegattr(Gint name, Gsegattr *segattr)
         if (old.pri != seg->segattr.pri) {
                 wscnt = 0;
                 while (wscnt<MAX_ASSOC_WS && seg->assoc_ws[wscnt] != INVALID) {
-                        ws = OPEN_WSID(seg->assoc_ws[wscnt]);  /* c1012 */
+                        ws = OPEN_WSID(seg->assoc_ws[wscnt]);
                         ws->seg_list_dirty = TRUE;
                         wscnt++;
                 }
@@ -533,7 +533,7 @@ Gint gsetsegattr(Gint name, Gsegattr *segattr)
                 wscnt = 0;
                 while (wscnt<MAX_ASSOC_WS && seg->assoc_ws[wscnt]!=INVALID) {
                         if (NOT_WISS(seg->assoc_ws[wscnt])) {
-                                ws = OPEN_WSID(seg->assoc_ws[wscnt]);  /* c1012 */
+                                ws = OPEN_WSID(seg->assoc_ws[wscnt]);
                                 if (ws->wsdus.irgmode != GALLOWED) {
                                         XgksOutputSeg (ws, seg);
                                         if (seg->segattr.hilight == GHIGHLIGHTED)
@@ -546,7 +546,7 @@ Gint gsetsegattr(Gint name, Gsegattr *segattr)
                         wscnt = 0;
                         while (wscnt<MAX_ASSOC_WS && seg->assoc_ws[wscnt]!=INVALID) {
                              if (NOT_WISS(seg->assoc_ws[wscnt])) {
-                                ws = OPEN_WSID(seg->assoc_ws[wscnt]);  /* c1012 */
+                                ws = OPEN_WSID(seg->assoc_ws[wscnt]);
                                 if ( (Redraw == FALSE) || (Redraw == TRUE && ws->wsdus.irgmode != GALLOWED) )
                                         XgksSetHighLight(ws, seg);
                             }
@@ -603,10 +603,10 @@ Gint gassocsegws(Gint ws_id, Gint seg_id)
         GKSERROR ( (xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC), 6, errgassocsegws)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgassocsegws)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgassocsegws)
 
 /* Check if ws_id is opened */
-        GKSERROR ( ((ws=OPEN_WSID(ws_id))==NULL), 25, errgassocsegws)  /* c1012 */
+        GKSERROR ( ((ws=OPEN_WSID(ws_id))==NULL), 25, errgassocsegws)
 
 /* Check if WISS ws is opened */
         GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errgassocsegws);
@@ -692,10 +692,10 @@ Gint gcopysegws(Gint ws_id, Gint seg_id)
         GKSERROR ( (xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC), 6, errgcopysegws)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgcopysegws)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgcopysegws)
 
 /* Check if ws_id is opened */
-        GKSERROR ( ((ws=OPEN_WSID(ws_id))==NULL), 25, errgcopysegws)  /* c1012 */
+        GKSERROR ( ((ws=OPEN_WSID(ws_id))==NULL), 25, errgcopysegws)
 
 /* Check if WISS ws is opened */
         GKSERROR ( ((xgks_state.wiss_id == INVALID) || ((wis=OPEN_WSID(xgks_state.wiss_id)) == NULL)), 27, errgcopysegws);
@@ -840,10 +840,10 @@ Gint gredrawsegws(Gint ws_id)
         GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) ,7, errgredrawsegws)
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgredrawsegws)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgredrawsegws)
 
 /* check valid ws_id */
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) ,25, errgredrawsegws)  /* c1012 */
+        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) ,25, errgredrawsegws)
 
 /* check for valid workstation category */
         GKSERROR ((WS_CAT(ws) == GMI) ,33, errgredrawsegws)
@@ -1148,7 +1148,7 @@ static void XgksReDrawAssocWs(SEG_STATE_PTR seg)
 
         for (i=0; seg->assoc_ws[i]!=INVALID && i<MAX_ASSOC_WS; i++) {
                 if (NOT_WISS(seg->assoc_ws[i])) {
-                        ws = OPEN_WSID(seg->assoc_ws[i]);  /* c1012 */
+                        ws = OPEN_WSID(seg->assoc_ws[i]);
                         REDRAWWS(ws);
                 }
         }
@@ -2450,10 +2450,10 @@ Gint ginqsegnamesws(Gint ws_id, Gintlist *segs)
         GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqsegnamesws);
 
 /* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqsegnamesws)   /* c1012 */
+        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqsegnamesws)
 
 /* workstation open? */
-        GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqsegnamesws);  /* c1012 */
+        GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqsegnamesws);
 
 /* check the workstation category */
         GKSERROR( (WS_CAT(ws) == GMI), 33, errginqsegnamesws);
