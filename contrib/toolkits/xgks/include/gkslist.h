@@ -109,7 +109,7 @@ typedef struct {
         ERROR_ST        gks_err_state;  /* ON=error occured OFF= no error */
         Gfile           *gks_err_file;  /* file for error messages */
 
-        char    *fontdbdir;             /* dir to load fonts from */ /* c1159 */
+        char    *fontdbdir;             /* dir to load fonts from */
 
 } GKS_STATE_LIST;                       /* end of GKS state list structure */
 

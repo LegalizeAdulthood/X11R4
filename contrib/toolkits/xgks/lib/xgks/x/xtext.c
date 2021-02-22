@@ -106,7 +106,7 @@ static void xComputeText(WS_STATE_PTR ws, TEXT_ST *tx)
                 if (xReadFont(wsr_font) != 0) {
                         wsr_font = 1;
                         if (xReadFont(wsr_font) != 0) {
-                                fprintf(stderr, "XGKS: can't load font %d from path '%s' - aborting\n",wsr_font,xgks_state.fontdbdir); /* c1159 */
+                                fprintf(stderr, "XGKS: can't load font %d from path '%s' - aborting\n",wsr_font,xgks_state.fontdbdir);
                                 exit(0);
                         }
                 }
@@ -510,10 +510,10 @@ static int xReadFont(int f)
         if (FontTable[f].f_loaded == TRUE)      /* already loaded */
                 return(0);
 
-        /* xgks_state.fontdbdir is set in text.c to either */ /* c1159 */
-        /*    FONTDBDIR set by Makefile or the environment */ /* c1159 */
-        /*    variable XGKSFontDir */ /* c1159 */
-        sprintf(fontpath, "%s/%d", xgks_state.fontdbdir, f);  /* c1159 */
+        /* xgks_state.fontdbdir is set in text.c to either */
+        /*    FONTDBDIR set by Makefile or the environment */
+        /*    variable XGKSFontDir */
+        sprintf(fontpath, "%s/%d", xgks_state.fontdbdir, f);
         if ( (fd = open(fontpath, O_RDONLY, 0644)) < 0) {
                 close(fd);
                 return(-1);

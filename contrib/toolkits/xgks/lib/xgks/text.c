@@ -103,12 +103,12 @@ void XgksInitGksText(void)
         xgks_state.gks_chattr.align.hor = GTH_NORMAL;
         xgks_state.gks_chattr.align.ver = GTV_NORMAL;
 
-        /* check if user has chosen a new font db dir */            /* c1159 */
-        /* (file is not actually opened until xReadFont */          /* c1159 */
-        /* in xtext.c) */          /* c1159 */
-        xgks_state.fontdbdir = getenv("XGKSFontDir");       /* c1159 */
-        if (xgks_state.fontdbdir == NULL)                           /* c1159 */
-          xgks_state.fontdbdir = FONTDBDIR;       /* use default */ /* c1159 */
+        /* check if user has chosen a new font db dir */
+        /* (file is not actually opened until xReadFont */
+        /* in xtext.c) */
+        xgks_state.fontdbdir = getenv("XGKSFontDir");
+        if (xgks_state.fontdbdir == NULL)
+          xgks_state.fontdbdir = FONTDBDIR;       /* use default */
 
         /*fprintf(stderr,"FontDir = %s\n",xgks_state.fontdbdir);*/
 }
