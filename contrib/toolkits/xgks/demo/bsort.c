@@ -60,8 +60,6 @@ int bkg;
 Gfloat ypos, xpos;
 Gint color_list[MAX];
 
-double atof();
-
 static int gen_colors();
 static int init_list();
 static int bsort();
