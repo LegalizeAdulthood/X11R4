@@ -41,6 +41,7 @@
 #define WDT_H
 
 #include "xgks.h"
+
 #include "gks_defines.h"
 
 #define WS_CLASS        GRASTER

@@ -42,8 +42,8 @@
 #ifndef PRIMITIVE_H
 #define PRIMITIVE_H
 
-
 #include "xgks.h"
+
 #include "gks_defines.h"
 
 

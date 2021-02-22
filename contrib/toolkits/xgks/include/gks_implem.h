@@ -44,7 +44,9 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
+
 #include "xgks.h"
+
 #include "gks_defines.h"
 #include "primitive.h"
 #include "input.h"

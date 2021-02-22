@@ -39,7 +39,9 @@
 #define  WSLIST_H
 
 #include <stdio.h>
+
 #include "gks_defines.h"                /* Implementaion dependent constants and structures */
+
 #include "primitive.h"                  /* Primitive structures */
 #include "wdt.h"                        /* Workstation description table structure */
 
