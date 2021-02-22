@@ -29,12 +29,9 @@
  */
 
 
-/* c1178:  Compiler glitch caused us to declare these globally and make     */
-/*         them externs in the files they're used in                        */
-
 #define  DEFMRKRSIZE  1.0       /* c1154 */
 
-#ifdef polymarkers_c                                            /* c1178 */
+#ifdef polymarkers_c
 Gmkbundl def_mkbundl[PDF_MARK_BNDLS] =
         {
            /* predefined marker rep 1 */
@@ -69,7 +66,7 @@ Gmkbundl def_mkbundl[PDF_MARK_BNDLS] =
            }
         };
 
-#else                           /* c1178 */
-extern                          /* c1178 */
-Gmkbundl def_mkbundl[];         /* c1178 */
-#endif                          /* c1178 */
+#else
+extern
+Gmkbundl def_mkbundl[];
+#endif

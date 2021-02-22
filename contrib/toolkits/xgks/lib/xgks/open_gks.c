@@ -43,18 +43,18 @@ static char *IBMCOPYRIGHT = "(C) Copyright IBM CORPORATION 1988";
 static char *COPYRIGHT = "(C) Copyright  1987, 1988 by The University of Illinois Board of Trustees.";
 
 #include "gks_implem.h"
-#define fillarea_c              /* c1178 */
-#define text_c                  /* c1178 */
-#define polylines_c             /* c1178 */
-#define polymarkers_c           /* c1178 */
-#include "fillarea.h"           /* c1178 */
-#include "text.h"               /* c1178 */
-#include "polylines.h"          /* c1178 */
-#include "polymarkers.h"        /* c1178 */
-#undef fillarea_c               /* c1178 */
-#undef text_c                   /* c1178 */
-#undef polylines_c              /* c1178 */
-#undef polymarkers_c            /* c1178 */
+#define fillarea_c
+#define text_c
+#define polylines_c
+#define polymarkers_c
+#include "fillarea.h"
+#include "text.h"
+#include "polylines.h"
+#include "polymarkers.h"
+#undef fillarea_c
+#undef text_c
+#undef polylines_c
+#undef polymarkers_c
 
 /*
  * declare internal functions

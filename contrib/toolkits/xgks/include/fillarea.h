@@ -27,10 +27,7 @@
  * 
  */
 
-/* c1178:  Compiler glitch caused us to declare these globally and make     */
-/*         them externs in the files they're used in                        */
-
-#ifdef fillarea_c                                               /* c1178 */
+#ifdef fillarea_c
 Gflbundl def_flbundl[PDF_FILL_BNDLS] =
         {
            /* predefined fill rep 1 */
@@ -72,10 +69,10 @@ PTATTR  def_ptattr =
            { 0.0, 0.0 }    /* pattern reference point */
         };
 
-#else                           /* c1178 */
-extern                          /* c1178 */
-Gflbundl def_flbundl[];         /* c1178 */
+#else
+extern
+Gflbundl def_flbundl[];
 
-extern                          /* c1178 */
-PTATTR  def_ptattr;             /* c1178 */
-#endif                          /* c1178 */
+extern
+PTATTR  def_ptattr;
+#endif

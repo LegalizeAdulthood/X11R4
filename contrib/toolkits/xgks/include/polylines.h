@@ -30,10 +30,7 @@
 #if !defined(XGKS_POLYLINES_H)
 #define XGKS_POLYLINES_H
 
-/* c1178:  Compiler glitch caused us to declare these globally and make     */
-/*         them externs in the files they're used in                        */
-
-#ifdef polylines_c                                              /* c1178 */
+#ifdef polylines_c
 Glnbundl def_lnbundl[PDF_LINE_BNDLS] =
         {
            /* predefined line rep 1 */
@@ -68,10 +65,10 @@ Glnbundl def_lnbundl[PDF_LINE_BNDLS] =
            }
         };
 
-#else                           /* c1178 */
-extern                          /* c1178 */
-Glnbundl def_lnbundl[];         /* c1178 */
-#endif                          /* c1178 */
+#else
+extern
+Glnbundl def_lnbundl[];
+#endif
 
 Gint gsetlineind(Gint idx);
 

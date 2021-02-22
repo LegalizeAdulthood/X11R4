@@ -33,12 +33,9 @@
 
 void XgksComputeVec(Gpoint *up_vec, Gpoint *base_vec);
 
-/* c1178:  Compiler glitch caused us to declare these globally and make     */
-/*         them externs in the files they're used in                        */
-
 #define   DEFCHRSPACE    0.0 /* c1154 */
 
-#ifdef text_c                                                   /* c1178 */
+#ifdef text_c
 Gtxbundl def_txbundl[PDF_TEXT_BNDLS] =
         {
            /* predefined text rep 1 */
@@ -103,9 +100,9 @@ Gtxbundl def_txbundl[PDF_TEXT_BNDLS] =
            }
         };
 
-#else                           /* c1178 */
-extern                          /* c1178 */
-Gtxbundl def_txbundl[];         /* c1178 */
-#endif                          /* c1178 */
+#else
+extern
+Gtxbundl def_txbundl[];
+#endif
 
 #endif
