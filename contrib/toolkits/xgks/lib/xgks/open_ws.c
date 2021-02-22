@@ -117,7 +117,7 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
 
 /* check valid ws_type */
         if (ws_type == (char *)NULL)
-                ws_type = connection; /* if type==NULL type = connection  c1078 */
+                ws_type = connection; /* if type==NULL type = connection */
 
         GKSERROR ((STRLEN(ws_type) == 0) ,23, errgopenws)
 
