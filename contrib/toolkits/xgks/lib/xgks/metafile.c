@@ -78,7 +78,7 @@ static Gchar dummy[] = "dummy info."; /* 11 bytes dummy for this implementation 
 */
 
 
-#define NOTSUPPORTED(type)      (type==6 || type==16 )     /* c1144 */
+#define NOTSUPPORTED(type)      (type==6 || type==16 )
 
 typedef struct {
         Gchar   std[5];         /* the string GKSM + NULL */
@@ -1028,8 +1028,8 @@ void XgksMoActivateWs(WS_STATE_PTR ws)
         XgksSetTextAttrMo( ws, &xgks_state.gks_txattr, &xgks_state.gks_chattr );
         XgksSetFillPatAttrMo( ws, &xgks_state.gks_flattr, &xgks_state.gks_ptattr );
 
-        XgksMoSetPatSizeOnWs ( ws );    /* c1144 */
-        XgksMoSetPatRefOnWs ( ws );     /* c1144 */
+        XgksMoSetPatSizeOnWs ( ws );
+        XgksMoSetPatRefOnWs ( ws );
         XgksMoSetAsfOnWs( ws );
         XgksMoSetGraphicAttrOnWs( ws, 44, xgks_state.gks_pick_id );
 }
@@ -1137,9 +1137,9 @@ static Gint XgksMRecSize (Gint type)
 
         case 43 : return(sizeof(XGKSMASF));
 
-        case 41 : return(sizeof(XGKSMPATSIZ));    /* c1144 */
+        case 41 : return(sizeof(XGKSMPATSIZ));
 
-        case 42 : return(sizeof(XGKSMPATREF));    /* c1144 */
+        case 42 : return(sizeof(XGKSMPATREF));
 
         case 51 :
         case 52 : return(sizeof(XGKSMLMREP));
@@ -1183,8 +1183,8 @@ static Gint XgksInputData (Gfile *fp, Gint key, Gchar *record)
         XGKSMSEGTRAN    *tran;
         XGKSMSEGPRI     *pri;
         XGKSMCELLARRAY  *cell;
-        XGKSMPATREF     *patref;        /* c1144 */
-        XGKSMPATSIZ     *patsiz;        /* c1144 */
+        XGKSMPATREF     *patref;
+        XGKSMPATSIZ     *patsiz;
         Gint   i,j;
         Gint type;
         Gint readcnt = 1;                                       /* c1068 */
@@ -1455,44 +1455,44 @@ static Gint XgksInputData (Gfile *fp, Gint key, Gchar *record)
                   readcnt = READFTP (fp, vec->base.y);          /* c1068 */
                   break;
 
-        case 41 : patsiz = (XGKSMPATSIZ *)record;               /* c1144 */
-                  if (XgksFeoln( fp )) {                        /* c1144 */
-                        readcnt = 0;                            /* c1144 */
-                        break;                                  /* c1144 */
-                  }                                             /* c1144 */
-                  readcnt = READFTP (fp, patsiz->wid.x);        /* c1144 */
-                  if (!readcnt) break;                          /* c1144 */
-                  if (XgksFeoln( fp )) {                        /* c1144 */
-                        readcnt = 0;                            /* c1144 */
-                        break;                                  /* c1144 */
-                  }                                             /* c1144 */
-                  readcnt = READFTP (fp, patsiz->wid.y);        /* c1144 */
-                  if (!readcnt) break;                          /* c1144 */
-                  if (XgksFeoln( fp )) {                        /* c1144 */
-                        readcnt = 0;                            /* c1144 */
-                        break;                                  /* c1144 */
+        case 41 : patsiz = (XGKSMPATSIZ *)record;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
                   }
-                  readcnt = READFTP (fp, patsiz->hgt.x);        /* c1144 */
-                  if (!readcnt) break;                          /* c1144 */
-                  if (XgksFeoln( fp )) {                        /* c1144 */
-                        readcnt = 0;                            /* c1144 */
-                        break;                                  /* c1144 */
-                  }                                             /* c1144 */
-                  readcnt = READFTP (fp, patsiz->hgt.y);        /* c1144 */
-                  break;                                        /* c1144 */
+                  readcnt = READFTP (fp, patsiz->wid.x);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, patsiz->wid.y);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, patsiz->hgt.x);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, patsiz->hgt.y);
+                  break;
 
-        case 42 : patref = (XGKSMPATREF *)record;               /* c1144 */
-                  if (XgksFeoln( fp )) {                        /* c1144 */
-                        readcnt = 0;                            /* c1144 */
-                        break;                                  /* c1144 */
-                  }                                             /* c1144 */
-                  readcnt = READFTP (fp, patref->ref.x);        /* c1144 */
-                  if (!readcnt) break;                          /* c1144 */
-                  if (XgksFeoln( fp )) {                        /* c1144 */
-                        readcnt = 0;                            /* c1144 */
-                        break;                                  /* c1144 */
-                  }                                             /* c1144 */
-                  readcnt = READFTP (fp, patref->ref.y);        /* c1144 */
+        case 42 : patref = (XGKSMPATREF *)record;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, patref->ref.x);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, patref->ref.y);
                   break;
 
         case 43 : asf = (XGKSMASF *)record;
@@ -1795,7 +1795,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
         Gasfs           asfs;
         Gint            cnt, i,j;
         Gpoint          *pts;
-        Gpoint          siz;    /* c1144 */
+        Gpoint          siz;
         Gfloat          height;
 
         switch (type) {

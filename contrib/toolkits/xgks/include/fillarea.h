@@ -65,12 +65,11 @@ Gflbundl def_flbundl[PDF_FILL_BNDLS] =
            }
         };
 
-/* c1144:  Created predefined pattern attributes */
 PTATTR  def_ptattr =
         {
-           { 1.0, 0.0 },   /* pattern width vector */       /* c1144 */
-           { 0.0, 1.0 },   /* pattern height vector */      /* c1144 */
-           { 0.0, 0.0 }    /* pattern reference point */    /* c1144 */
+           { 1.0, 0.0 },   /* pattern width vector */
+           { 0.0, 1.0 },   /* pattern height vector */
+           { 0.0, 0.0 }    /* pattern reference point */
         };
 
 #else                           /* c1178 */

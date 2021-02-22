@@ -288,7 +288,7 @@ typedef struct {
 typedef struct {
         Gpoint  wid;
         Gpoint  hgt;
-} XGKSMPATSIZ;                                  /*c1144*/
+} XGKSMPATSIZ;
 
 
 /* Suitable for SET PATTERN REFERENCE PT
@@ -297,7 +297,7 @@ typedef struct {
 */
 typedef struct {
         Gpoint  ref;
-} XGKSMPATREF;                                  /*c1144*/
+} XGKSMPATREF;
 
 /* Function prototypes */
 

@@ -77,9 +77,9 @@ void XgksInitGksFillArea(void)
         xgks_state.gks_flattr.bundl.style  = def_flbundl[0].style;
         xgks_state.gks_flattr.bundl.colour = def_flbundl[0].colour;
 
-        xgks_state.gks_ptattr.widthvec  = def_ptattr.widthvec;          /* c1144 */
-        xgks_state.gks_ptattr.heightvec = def_ptattr.heightvec;         /* c1144 */
-        xgks_state.gks_ptattr.ptp       = def_ptattr.ptp;               /* c1144 */
+        xgks_state.gks_ptattr.widthvec  = def_ptattr.widthvec;
+        xgks_state.gks_ptattr.heightvec = def_ptattr.heightvec;
+        xgks_state.gks_ptattr.ptp       = def_ptattr.ptp;
 }
 /*
  * XgksInitWssFillArea(ws) - send predefined attributes and Bundle index to
@@ -525,7 +525,7 @@ Gint gsetfillstyleind(Gint idx)
 }
 
 /*$F
- * gsetpatrefpt (ref) - SET PATTERN REFERENCE POINT     Added for ptr c1144
+ * gsetpatrefpt (ref) - SET PATTERN REFERENCE POINT
  *
  * Gpoint *ref; new pattern reference point
  *
@@ -550,7 +550,7 @@ Gint gsetpatrefpt(Gpoint *ref)
 
 
 /*$F
- * gsetpatsize (siz) - SET PATTERN SIZE         Added for ptr c1144
+ * gsetpatsize (siz) - SET PATTERN SIZE
  *
  * Gpoint   siz;  new pattern size to be set in GKS state list.
  *

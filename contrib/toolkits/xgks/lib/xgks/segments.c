@@ -649,7 +649,7 @@ Gint gassocsegws(Gint ws_id, Gint seg_id)
         else {
                 XgksMoSetGraphicAttrOnWs (ws, 81, seg_id);
                 XgksSegAttrMo (ws, seg);
-                XgksRestoreMoGksStateOnWs (ws);       /* c1144 */
+                XgksRestoreMoGksStateOnWs (ws);
                 XgksSegProcessMo (ws, seg);
                 XgksMoCloseSegOnWs (ws);
                 return (OK);
@@ -718,7 +718,7 @@ Gint gcopysegws(Gint ws_id, Gint seg_id)
 
 /* if ws is of type MO, do what should be done */
         if (ws->ewstype == MO)  {
-                XgksRestoreMoGksStateOnWs (ws);                 /* c1144 */
+                XgksRestoreMoGksStateOnWs (ws);
                 XgksSegCopyMo (ws, XgksFindSeg(seg_id));
         }
 
@@ -792,8 +792,8 @@ Gint ginsertseg(Gint seg_id, Gfloat segtran[2][3])
 
 /* if MO opened, note what's going on in to MO */
         if (MO_OPENED == TRUE)   {
-                XgksRestoreMoGksState ();                               /* c1144 */
-                XgksSegTransProcessMo (XgksFindSeg(seg_id), segtran);   /* c1144 */
+                XgksRestoreMoGksState ();
+                XgksSegTransProcessMo (XgksFindSeg(seg_id), segtran);
         }
 
         if (xgks_state.gks_state == GSGOP)  tmp_pickid = xgks_state.gks_pick_id;
@@ -2092,7 +2092,7 @@ void XgksCleanUpWsSegList(WS_STATE_PTR ws)
 
 static void XgksSegTransProcessMo(SEG_STATE_PTR seg, Gfloat matrix[2][3])
 {
-        Gint   wscnt;             /* c1144  */
+        Gint   wscnt;
         OUT_PRIMI *primi;
 
         for (wscnt=0; wscnt<MAX_ACTIVE_WS; wscnt++) {
@@ -2172,7 +2172,7 @@ static void XgksOutPrimiToMo(WS_STATE_PTR ws, OUT_PRIMI *primi)
 
 static void XgksRestoreMoGksState(void)
 {
-        WS_STATE_PTR  ws;    /* c1144 */
+        WS_STATE_PTR  ws;
         Gint cnt;
 
         for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {
@@ -2182,8 +2182,8 @@ static void XgksRestoreMoGksState(void)
                         XgksSetMarkAttrMo (ws, &(xgks_state.gks_mkattr));
                         XgksSetTextAttrMo (ws, &(xgks_state.gks_txattr),  &(xgks_state.gks_chattr));
                         XgksSetFillPatAttrMo (ws, &(xgks_state.gks_flattr), &(xgks_state.gks_ptattr));
-                        XgksMoSetPatRefOnWs (ws);    /* c1144 */
-                        XgksMoSetPatSizeOnWs (ws);   /* c1144 */
+                        XgksMoSetPatRefOnWs (ws);
+                        XgksMoSetPatSizeOnWs (ws);
 
                 }
         }
@@ -2196,8 +2196,8 @@ static void XgksRestoreMoGksStateOnWs(WS_STATE_PTR ws)
                 XgksSetMarkAttrMo (ws, &(xgks_state.gks_mkattr));
                 XgksSetTextAttrMo (ws, &(xgks_state.gks_txattr), &(xgks_state.gks_chattr));
                 XgksSetFillPatAttrMo (ws, &(xgks_state.gks_flattr), &(xgks_state.gks_ptattr));
-                XgksMoSetPatRefOnWs (ws);    /* c1144 */
-                XgksMoSetPatSizeOnWs (ws);   /* c1144 */
+                XgksMoSetPatRefOnWs (ws);
+                XgksMoSetPatSizeOnWs (ws);
         }
 }
 
