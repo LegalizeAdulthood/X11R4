@@ -24,6 +24,8 @@
 #include <xgks.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
 
 /*
  * This function is called when the program is finished and we just want
@@ -31,8 +33,7 @@
  * a choice device to use the function keys.  However, we ignore all choices
  * and wait for the user to press the Break key.
  */
-WaitForBreak( wsid )
-        Gint wsid;
+void WaitForBreak(Gint wsid)
 {
         Gchoice init;
         Gchoicerec record;
@@ -57,7 +58,7 @@ WaitForBreak( wsid )
 /*
  * set up varius text parameters and print "Hello World"
  */
-PrintHello()
+void PrintHello(void)
 {
         Gpoint tpt;
         Gpoint up;
@@ -87,9 +88,8 @@ PrintHello()
         gtext(&tpt,"Hello World!");
 
 }
-main(argc,argv)
-int argc;
-char *argv[];
+
+int main(int argc, char *argv[])
 {
         int i, wsid=1;
         char *conn = (char *)NULL;
