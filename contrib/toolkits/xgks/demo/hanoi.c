@@ -43,6 +43,8 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
+#include <strings.h>
 
 #include "demo.h"
 
@@ -55,9 +57,21 @@
  */
 int n = 5 ;
 
-main(argc, argv)
-        int argc ;
-        char *argv[] ;
+void f(int n, int a, int b, int c);
+void box(Glimit *l);
+void title(void);
+void inittower(int n);
+void movedisk(int a, int b);
+void placedisk(int tower, int diskno);
+int removedisk(int tower);
+void disk(int diskno, Gfloat x, Gfloat y);
+void path(int a, int b);
+void unpath(void);
+void border(Gfloat x1, Gfloat x2, Gfloat y1, Gfloat y2);
+void pushdisk(int tower, int diskno);
+int popdisk(int tower);
+
+int main(int argc, char *argv[])
 {
         Glimit WsWindow;
         Gint ws_id = 1;
@@ -115,11 +129,7 @@ main(argc, argv)
  *              move 1 from a to b
  *              transfer n-1 from c to b using a
  */
-f(n, a, b, c)
-int n ;
-int a ;
-int b ;
-int c ;
+void f(int n, int a, int b, int c)
 {
         if(n == 0)
                 return ;
@@ -129,8 +139,7 @@ int c ;
         f(n-1, c, b, a) ;
 }
 
-box( l )
-        Glimit *l;
+void box(Glimit *l)
 {
         Gpoint pts[5];
 #define e 0.01
@@ -147,7 +156,7 @@ box( l )
 /*
  * print title across top of page
  */
-title()
+void title(void)
 {
         Gpoint p ;
         Glimit Window;
@@ -193,8 +202,7 @@ title()
 /*
  * initialize towers with all disks on tower 0.
  */
-inittower(n)
-int n ;
+void inittower(int n)
 {
         Glimit Window;
         Glimit Viewport;
@@ -230,18 +238,17 @@ int towers[3][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 
 int towerx[3] = {0, 0, 0} ;
 
-movedisk(a,b)
+void movedisk(int a, int b)
 {
         int diskno ;
 
         path(a,b) ;
-        diskno = remove(a) ;
+        diskno = removedisk(a) ;
         unpath() ;
         placedisk(b, diskno) ;
 }
 
-placedisk(tower, diskno)
-int tower, diskno ;
+void placedisk(int tower, int diskno)
 {
         gsetfillcolorind(100 + diskno) ;
         gsetfillintstyle(GSOLID) ;
@@ -251,8 +258,7 @@ int tower, diskno ;
         pushdisk(tower, diskno) ;
 }
 
-remove(tower)
-int tower ;
+int removedisk(int tower)
 {
         int diskno ;
 
@@ -265,9 +271,7 @@ int tower ;
         return(diskno) ;
 }
 
-disk(diskno, x, y)
-        int diskno ;
-        Gfloat x, y ;
+void disk(int diskno, Gfloat x, Gfloat y)
 {
         Gpoint pts[4] ;
 
@@ -292,8 +296,7 @@ Gpoint pathpts[4] = {{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}} ;
  * draw a line from top disk of tower a to top of screen, then over
  * to tower b.
  */
-path(a,b)
-int a,b ;
+void path(int a, int b)
 {
         gsetlinecolorind( GREEN ) ;
         gsetlinetype( GLN_DASH) ;
@@ -310,15 +313,14 @@ int a,b ;
         gpolyline(4, pathpts) ;
 }
 
-unpath()
+void unpath(void)
 {
         gsetlinecolorind(0) ;
         gpolyline(4, pathpts) ;
 }
 
 
-border(x1, x2, y1, y2)
-        Gfloat x1, x2, y1, y2 ;
+void border(Gfloat x1, Gfloat x2, Gfloat y1, Gfloat y2)
 {
         Gpoint pts[5] ;
 
@@ -339,19 +341,15 @@ border(x1, x2, y1, y2)
         gpolyline(5, pts) ;
 }
 
-pushdisk(tower, diskno)
-int tower, diskno ;
+void pushdisk(int tower, int diskno)
 {
         towers[tower][towerx[tower]] = diskno ;
         towerx[tower]++ ;
 }
 
-popdisk(tower)
-int tower ;
+int popdisk(int tower)
 {
 
         towerx[tower]-- ;
         return(towers[tower][towerx[tower]]) ;
 }
-
-
