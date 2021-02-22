@@ -978,7 +978,7 @@ static WS_SEG_LIST *XgksNewWsSeg()
  * ws->seglist according to seg_id's priority.
  *
  * The ws->seglist is a priority queue ordered from lowest to highest priority.
- * The lowest possible priority is 0. The highest priority is 1.        c1032
+ * The lowest possible priority is 0. The highest priority is 1.
  *
  */
 static void XgksInsertWsSeg(WS_STATE_PTR ws, Gint seg_id)
@@ -1489,7 +1489,7 @@ static void XgksUpdateWsSegList(WS_STATE_PTR ws)
                 cnt = ws->seglist;
                 workSeg = XgksFindSeg (cnt->seg);
                 pre = NULL;
-                while ((workSeg->segattr.pri <= oldSeg->segattr.pri) && (cnt != NULL)) { /*c1032*/ /*c1080*/
+                while ((workSeg->segattr.pri <= oldSeg->segattr.pri) && (cnt != NULL)) {
                         pre = cnt;
                         cnt = cnt->next;
                         if (cnt != NULL) workSeg = XgksFindSeg (cnt->seg);
@@ -1600,7 +1600,6 @@ void XgksShowPick(WS_STATE_PTR ws, SEG_STATE_PTR seg)
 }
 
 /*
- * Utility function added for ptr c1032.
  * Function will return 1 if pt is in the bound pointed to by pe.
  *
  * int XgksInSeg(seg, pt, pe, m) - is point *pt in segment *pe.
@@ -1656,26 +1655,26 @@ static int XgksInSeg(SEG_STATE_PTR seg, Gpoint *pt, Gpoint *pe, Gint m)
  *      is calculated only when an actual sample is done.
  *
  */
-Gpstat XgksFindPickSeg (ws, ndcpt, response, idev, findpickid)  /*c1032*/
+Gpstat XgksFindPickSeg (ws, ndcpt, response, idev, findpickid)
 WS_STATE_PTR ws;
 Gpoint *ndcpt;
 Gpick *response;
 INPUT_DEV *idev;
 Gint findpickid;
 {
-        SEG_STATE_PTR seg, foundseg = NULL;     /*c1032*/ /* New 4.3 Compiler */
+        SEG_STATE_PTR seg, foundseg = NULL;
         WS_SEG_LIST *WsSeg=ws->seglist;
         Gpoint segpt[5];
-        Gfloat highest;                         /*c1032*/
+        Gfloat highest;
         Glimit localbound;
         Gint pickid;
 
-        highest = -1;                           /*c1032*/
+        highest = -1;
         response->seg = INVALID;
         response->pickid = INVALID;
         while (WsSeg != NULL) {
                 seg = XgksFindSeg(WsSeg->seg);
-                if (seg->segattr.det == GDETECTABLE && seg->segattr.vis==GVISIBLE && seg->segattr.pri >= highest) {  /*c1032*/
+                if (seg->segattr.det == GDETECTABLE && seg->segattr.vis==GVISIBLE && seg->segattr.pri >= highest) {
                         XgksProcessLocalBound (ws, seg, &localbound);  /* if text is present up date bound  c1032 */
                         segpt[0].x = localbound.xmin; segpt[0].y = localbound.ymin;
                         segpt[1].x = localbound.xmax; segpt[1].y = localbound.ymin;
@@ -1683,9 +1682,9 @@ Gint findpickid;
                         segpt[3].x = localbound.xmin; segpt[3].y = localbound.ymax;
                         segpt[4].x = localbound.xmin; segpt[4].y = localbound.ymin;
 
-                        if ( XgksInSeg(seg, ndcpt, &segpt[0], 4)) {     /*c1032*/
-                                highest = seg->segattr.pri;             /*c1032*/
-                                foundseg = seg;                         /*c1032*/
+                        if ( XgksInSeg(seg, ndcpt, &segpt[0], 4)) {
+                                highest = seg->segattr.pri;
+                                foundseg = seg;
                                 response->seg = WsSeg->seg;
                         }
                 }
@@ -1699,14 +1698,14 @@ Gint findpickid;
            highlighted so don't rehighlight just find the pickid.
            This only happens in sample mode.                              c1032*/
         if ((findpickid != 2) && (idev->data.pic.initst.esw == GECHO))
-                XgksShowPick(ws, foundseg);                             /*c1032*/
+                XgksShowPick(ws, foundseg);
 
-        if (findpickid)  /* is it necessary to find the pick id ? */    /*c1032*/
+        if (findpickid)  /* is it necessary to find the pick id ? */
          {
           XgksFindDistance(ws, foundseg, &pickid, ndcpt);  /* Find Pick Id  c1032*/
-          response->pickid = pickid;                                    /*c1032*/
+          response->pickid = pickid;
          }
-        idev->active = TRUE;    /* allow more picks */                  /*c1032*/
+        idev->active = TRUE;    /* allow more picks */
 
         return ((response->status=GP_OK));
 }

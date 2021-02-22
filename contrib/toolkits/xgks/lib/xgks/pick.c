@@ -336,7 +336,7 @@ Gint gsamplepick(Gint ws_id, Gint dev, Gpick *response)
     if (idev->breakhit == TRUE) return (OK);
 
     DcToNdc (ws, &(idev->data.pic.curpos), &ndcpt);
-    XgksFindPickSeg(ws, &ndcpt, response,idev,2);           /* c1032 */
+    XgksFindPickSeg(ws, &ndcpt, response,idev,2);
 
     return(0);
 }
@@ -479,13 +479,13 @@ Gint XgksPicUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             if (idev->breakhit == TRUE)
                 IPICK.status = GP_NONE;
             else
-               XgksFindPickSeg(ws, &ndcpt, &(IPICK),idev,1); /* c1032 c1145 */
+               XgksFindPickSeg(ws, &ndcpt, &(IPICK),idev,1);
             break;
         case GSAMPLE :
             idev->data.pic.curpos = *newdcpt;
-            if (xmev == NULL || xmev->type != ButtonRelease)    /* c1032 */ /*c1177*/
-                break;                                     /* c1032 */
-            XgksFindPickSeg(ws, &ndcpt,&(IPICK),idev,0);   /* c1032 */
+            if (xmev == NULL || xmev->type != ButtonRelease)
+                break;
+            XgksFindPickSeg(ws, &ndcpt,&(IPICK),idev,0);
 #undef IPICK
             break;
         case GEVENT  :
@@ -500,7 +500,7 @@ Gint XgksPicUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
             
                 if (idev->breakhit == TRUE)
                     data->status = GP_NONE;
-                else {if (XgksFindPickSeg(ws,&ndcpt,data,idev,1)== GP_OK) { /*c1032*/
+                else {if (XgksFindPickSeg(ws,&ndcpt,data,idev,1)== GP_OK) {
                     data->status = GP_OK;
                      } else data->status = GP_NOPICK; }
                  XgksEnqueueEvent(ws->ws_id, idev->dev, GPICK,
