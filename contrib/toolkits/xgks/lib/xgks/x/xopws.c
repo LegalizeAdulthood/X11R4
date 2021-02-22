@@ -129,7 +129,7 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
 
                 if (wk->dpy == NULL) {
                         XgksSIGIO_ON(wk->dpy);
-                        return (26); /* open display not successful */ /*c1096*/
+                        return (26); /* open display not successful */
                 }
 
                 ptr= DisplayString(wk->dpy);

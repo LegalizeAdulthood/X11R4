@@ -153,7 +153,7 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
                 free((char *)ws);
                 XgksDeleteOpenWs(ws_id);    /* update openedws[] array */
              gerrorhand(status, errgopenws, xgks_state.gks_err_file);
-                return(status);                                 /* c1096 */
+                return(status);
                       }
                       break;
         case MI    : if ( (ws->mfp=fopen(ws->conn, "r")) == NULL) {
