@@ -94,14 +94,14 @@ Gint xXgksInqPixelarray(WS_STATE_PTR ws, Gpoint *point, Gipoint *dim, Gpxarray *
 
         Display *dpy;
         Window win;
-        XWindowAttributes rootattr;             /* c1162 */
-        XWindowAttributes wsattr;               /* c1162 */
+        XWindowAttributes rootattr;
+        XWindowAttributes wsattr;
         XPoint xp1;
         XImage *image;
 
         Gint *intp, x, y, xx, yy;
         Gint x1, y1, x2, y2;
-        Gint maxx, maxy;                        /* c1162 */
+        Gint maxx, maxy;
 
         XgksSIGIO_OFF(ws->dpy);
 
@@ -114,7 +114,7 @@ Gint xXgksInqPixelarray(WS_STATE_PTR ws, Gpoint *point, Gipoint *dim, Gpxarray *
         dpy = ws->dpy;
         win = ws->win;
 
-/* find boundaries of screen in case window is not totally on screen   c1162 */
+/* find boundaries of screen in case window is not totally on screen */
         XGetWindowAttributes (dpy, DefaultRootWindow (dpy), &rootattr);
         XGetWindowAttributes (dpy, win, &wsattr);
         maxx =  ((wsattr.x + ws->wbound.x + wsattr.border_width + 1) > rootattr.width) ?
@@ -128,8 +128,8 @@ Gint xXgksInqPixelarray(WS_STATE_PTR ws, Gpoint *point, Gipoint *dim, Gpxarray *
                 x1 = 0;
                 pxarr->covalid = GPRESENT;
         }
-        else if (xp1.x > maxx) {                /* c1162 */
-                x1 = maxx;                      /* c1162 */
+        else if (xp1.x > maxx) {
+                x1 = maxx;
                 pxarr->covalid = GPRESENT;
         }
              else
@@ -139,8 +139,8 @@ Gint xXgksInqPixelarray(WS_STATE_PTR ws, Gpoint *point, Gipoint *dim, Gpxarray *
                 y1 = 0;
                 pxarr->covalid = GPRESENT;
         }
-        else if (xp1.y > maxy) {                /* c1162 */
-                y1 = maxy;                      /* c1162 */
+        else if (xp1.y > maxy) {
+                y1 = maxy;
                 pxarr->covalid = GPRESENT;
         }
              else
@@ -150,8 +150,8 @@ Gint xXgksInqPixelarray(WS_STATE_PTR ws, Gpoint *point, Gipoint *dim, Gpxarray *
                 x2 = 0;
                 pxarr->covalid = GPRESENT;
         }
-        else if ((xp1.x + dim->x) > maxx) {     /* c1162 */
-                x2 = maxx;                      /* c1162 */
+        else if ((xp1.x + dim->x) > maxx) {
+                x2 = maxx;
                 pxarr->covalid = GPRESENT;
         }
              else
@@ -161,8 +161,8 @@ Gint xXgksInqPixelarray(WS_STATE_PTR ws, Gpoint *point, Gipoint *dim, Gpxarray *
                 y2 = 0;
                 pxarr->covalid = GPRESENT;
         }
-        else if ((xp1.y + dim->y) > maxy) {     /* c1162 */
-                y2 = maxy;                      /* c1162 */
+        else if ((xp1.y + dim->y) > maxy) {
+                y2 = maxy;
                 pxarr->covalid = GPRESENT;
         }
              else
@@ -218,11 +218,11 @@ void xXgksInqPixel(WS_STATE_PTR ws, Gpoint *ppoint, Gint *pix)
 
         Display *dpy;
         Window win;
-        XWindowAttributes rootattr;     /* c1162 */
-        XWindowAttributes wsattr;       /* c1162 */
+        XWindowAttributes rootattr;
+        XWindowAttributes wsattr;
         XPoint xp1;
         XImage *image;
-        Gint maxx, maxy;                /* c1162 */
+        Gint maxx, maxy;
 
 
         XgksSIGIO_OFF(ws->dpy);
@@ -238,7 +238,7 @@ void xXgksInqPixel(WS_STATE_PTR ws, Gpoint *ppoint, Gint *pix)
 
 
 
-/* find boundaries of screen in case window is not totally on screen    c1162 */
+/* find boundaries of screen in case window is not totally on screen */
         XGetWindowAttributes (dpy, DefaultRootWindow (dpy), &rootattr);
         XGetWindowAttributes (dpy, win, &wsattr);
         maxx =  ((wsattr.x + ws->wbound.x + wsattr.border_width + 1) > rootattr.width) ?
@@ -246,7 +246,7 @@ void xXgksInqPixel(WS_STATE_PTR ws, Gpoint *ppoint, Gint *pix)
         maxy =  ((wsattr.y + ws->wbound.y + wsattr.border_width + 1) > rootattr.height) ?
                 (rootattr.height-wsattr.y-wsattr.border_width-1) : ws->wbound.y;
 
-        if (xp1.x >= 0 && xp1.x <= maxx && xp1.y >= 0 && xp1.y <= maxy) {       /* c1162 */
+        if (xp1.x >= 0 && xp1.x <= maxx && xp1.y >= 0 && xp1.y <= maxy) {
                 image = XGetImage(dpy, win, xp1.x, xp1.y, 1, 1, AllPlanes, XYPixmap);
                 *pix = XGetPixel(image, 0, 0);
         }
