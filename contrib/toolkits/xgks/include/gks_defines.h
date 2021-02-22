@@ -86,11 +86,11 @@
 
 #define OK              0
 
-/* Metafile error flag values */                                /* c1068 */
-#define METAFILE_OK     0                                       /* c1068 */
-#define MF_ITEM_ERR     163                                     /* c1068 */
-#define MF_DATA_ERR     165                                     /* c1068 */
-#define MF_FILE_ERR     1000                                    /* c1068 */
+/* Metafile error flag values */
+#define METAFILE_OK     0
+#define MF_ITEM_ERR     163
+#define MF_DATA_ERR     165
+#define MF_FILE_ERR     1000
 
 /* PID - Primitive identifier */
 typedef enum {

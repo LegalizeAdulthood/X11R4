@@ -163,7 +163,7 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
                 gerrorhand(26, errgopenws, xgks_state.gks_err_file);
                 return(26);
                       }
-                GKSERROR ((XgksMiOpenWs ( ws ) != 0), 26, errgopenws) /* c1068 */
+                GKSERROR ((XgksMiOpenWs ( ws ) != 0), 26, errgopenws)
                 break;
         case MO    : if ( (ws->mfp=fopen(ws->conn, "w")) == NULL) {
                 free((char *)ws->conn);

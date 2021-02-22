@@ -58,11 +58,11 @@ typedef Gpoint          *POINTPTR;
 #define INTPTR_SIZE     sizeof(INTPTR)
 #define POINTPTR_SIZE   sizeof(POINTPTR)
 
-#define READINT(fptr, i)   fscanf((fptr), " %d%*1[ ]", (int *)(&(i)))                                                                           /* c1068 */
+#define READINT(fptr, i)   fscanf((fptr), " %d%*1[ ]", (int *)(&(i)))
 
-#define READFTP(fptr, ftp)   fscanf((fptr), " %f%*1[ ]", (float *)&(ftp))                                                                       /* c1068 */
+#define READFTP(fptr, ftp)   fscanf((fptr), " %f%*1[ ]", (float *)&(ftp))
 
-#define READCHR(fptr, chr)   fscanf((fptr), "%c", (char *)&(chr))                                                                               /* c1068 */
+#define READCHR(fptr, chr)   fscanf((fptr), "%c", (char *)&(chr))
 
 /* Suitable for Item type :
 

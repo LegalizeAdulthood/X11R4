@@ -81,7 +81,7 @@ typedef struct ws_struct {
 
         /* UNIX - implementation of MI/MO needs the a file pointer */
         Gfile           *mfp;                   /* Need this for MI/MO */
-        Gint            filestat;               /* File status for MI/MO   c1068 */
+        Gint            filestat;               /* File status for MI/MO */
         
         /* Entries in this group do not exist for workstation of categories INPUT and MI */
         

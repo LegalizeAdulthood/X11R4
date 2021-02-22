@@ -140,7 +140,7 @@ Gint gwritegksm (Gint ws_id, Gint type, Gint length, Gchar *data)
 
         GKSERROR ((type <= 100), 160, errgwritegksm)
 
-        GKSERROR ((length < 0), 161, errgwritegksm)             /* c1068 */
+        GKSERROR ((length < 0), 161, errgwritegksm)
 
         fprintf(ws->mfp, "%d %d ", type, length);
         for (i=0; i<length; i++)
@@ -178,14 +178,14 @@ Gint ggetgksm (Gint ws_id, Ggksmit *result)
 
         GKSERROR ((GksmInfo[key].GksmEmpty == TRUE), 162, errggetgksm)
 
-        if (XgksValidGksMItem(GksmInfo[key].CurItem.type)       /* c1068 */
-            == INVALID)                                   {     /* c1068 */
-                ws->filestat = MF_ITEM_ERR;                     /* c1068 */
-        }                                                       /* c1068 */
+        if (XgksValidGksMItem(GksmInfo[key].CurItem.type)
+            == INVALID)                                   {
+                ws->filestat = MF_ITEM_ERR;
+        }
 
-        *result = GksmInfo[key].CurItem;                        /* c1068 */
+        *result = GksmInfo[key].CurItem;
 
-        GKSERROR ((ws->filestat != METAFILE_OK), 163, errggetgksm) /* c1068 */
+        GKSERROR ((ws->filestat != METAFILE_OK), 163, errggetgksm)
 
         return (OK);
 }
@@ -231,8 +231,8 @@ Gint ggetgksm (Gint ws_id, Ggksmit *result)
 Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
 {
         WS_STATE_PTR ws;
-        Gint key;                                               /* c1068 */
-        Gchar *intrec;                                          /* c1068 */
+        Gint key;
+        Gchar *intrec;
 
         GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errgreadgksm)
 
@@ -245,52 +245,52 @@ Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
 
         GKSERROR (((key=XgksMFindKey(ws_id))==INVALID), 34, errgreadgksm)
 
-        if (GksmInfo[key].CurItem.type == 0)                    /* c1068 */
-        {                                                       /* c1068 */
-                GksmInfo[key].GksmEmpty = TRUE;                 /* c1068 */
-        }                                                       /* c1068 */
+        if (GksmInfo[key].CurItem.type == 0)
+        {
+                GksmInfo[key].GksmEmpty = TRUE;
+        }
 
         GKSERROR ((GksmInfo[key].GksmEmpty == TRUE), 162, errgreadgksm)
 
-        if (ws->filestat == MF_FILE_ERR) {                      /* c1068 */
-                GksmInfo[key].GksmEmpty = TRUE;                 /* c1068 */
+        if (ws->filestat == MF_FILE_ERR) {
+                GksmInfo[key].GksmEmpty = TRUE;
                 gerrorhand( 162, errgreadgksm, xgks_state.gks_err_file );
-                return( 162 );                                  /* c1068 */
-        }                                                       /* c1068 */
+                return( 162 );
+        }
 
-        if (XgksValidGksMItem(GksmInfo[key].CurItem.type)       /* c1068 */
-            == INVALID)                                   {     /* c1068 */
-                ws->filestat = MF_ITEM_ERR;                     /* c1068 */
-        }                                                       /* c1068 */
+        if (XgksValidGksMItem(GksmInfo[key].CurItem.type)
+            == INVALID)                                   {
+                ws->filestat = MF_ITEM_ERR;
+        }
 
-        GKSERROR (((ws->filestat == MF_ITEM_ERR) && (length != 0)), MF_ITEM_ERR,                   errgreadgksm)                                        /* c1068 */
+        GKSERROR (((ws->filestat == MF_ITEM_ERR) && (length != 0)), MF_ITEM_ERR,                   errgreadgksm)
 
-        GKSERROR (((ws->filestat == MF_DATA_ERR) && (length != 0)), MF_DATA_ERR,                   errgreadgksm)                                        /* c1068 */
+        GKSERROR (((ws->filestat == MF_DATA_ERR) && (length != 0)), MF_DATA_ERR,                   errgreadgksm)
 
-        GKSERROR ((length < 0), 166, errgreadgksm)              /* c1068 */
+        GKSERROR ((length < 0), 166, errgreadgksm)
 
-        if (length > 0) {                                       /* c1068 */
-                intrec = (Gchar *)malloc( GksmInfo[key].CurItem.length );                                                                       /* c1068 */
-                GKSERROR ((intrec == NULL), 300, errgreadgksm)  /* c1068 */
-                ws->filestat =                                  /* c1068 */
-                XgksInputData (ws->mfp, key, intrec);           /* c1068 */
-                bcopy( intrec, record, length );                /* c1068 */
-                free( intrec );                                 /* c1068 */
-                if (feof( ws->mfp )) {                          /* c1068 */
-                        GksmInfo[key].GksmEmpty = TRUE;         /* c1068 */
+        if (length > 0) {
+                intrec = (Gchar *)malloc( GksmInfo[key].CurItem.length );
+                GKSERROR ((intrec == NULL), 300, errgreadgksm)
+                ws->filestat =
+                XgksInputData (ws->mfp, key, intrec);
+                bcopy( intrec, record, length );
+                free( intrec );
+                if (feof( ws->mfp )) {
+                        GksmInfo[key].GksmEmpty = TRUE;
                         gerrorhand( 162, errgreadgksm, xgks_state.gks_err_file );
-                        return( 162 );                          /* c1068 */
+                        return( 162 );
                 }
-                GKSERROR ((ws->filestat == MF_ITEM_ERR) ||                                                (ws->filestat == MF_FILE_ERR), 163, errgreadgksm)                                                                     /* c1068 */
-                GKSERROR ((ws->filestat == MF_DATA_ERR), 165, errgreadgksm)                                                                     /* c1068 */
-        }                                                       /* c1068 */
-        else                                                    /* c1068 */
-        {                                                       /* c1068 */
-                /* skip to end of current item */               /* c1068 */
-                fscanf( ws->mfp, "%*[^\n]" );                   /* c1068 */
-        }                                                       /* c1068 */
+                GKSERROR ((ws->filestat == MF_ITEM_ERR) ||                                                (ws->filestat == MF_FILE_ERR), 163, errgreadgksm)
+                GKSERROR ((ws->filestat == MF_DATA_ERR), 165, errgreadgksm)
+        }
+        else
+        {
+                /* skip to end of current item */
+                fscanf( ws->mfp, "%*[^\n]" );
+        }
 
-        ws->filestat =                                          /* c1068 */
+        ws->filestat =
         XgksGetNextMi (ws->mfp, key);
 
         return (OK);
@@ -309,23 +309,23 @@ Gint ginterpret(Ggksmit *recInfo, Gchar *data)
 {
         GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errginterpret)
 
-        GKSERROR ((recInfo == NULL), 163, errginterpret )       /* c1068 */
+        GKSERROR ((recInfo == NULL), 163, errginterpret )
 
-        GKSERROR (((recInfo->length > 0)&&(data == NULL)), 165, errginterpret )                                                                 /* c1068 */
+        GKSERROR (((recInfo->length > 0)&&(data == NULL)), 165, errginterpret )
 
         GKSERROR ((recInfo->length<XgksMRecSize(recInfo->type)), 161, errginterpret)
 
         GKSERROR ((XgksValidGksMItem(recInfo->type)==INVALID), 164, errginterpret
 )
 
-        /* c1068:  Can't check for 165 in ginterpret due to file format. */
-        /* c1068:  Can't really check for 163, either.                   */
+        /* Can't check for 165 in ginterpret due to file format. */
+        /* Can't really check for 163, either.                   */
 
         GKSERROR ( (recInfo->type >100), 167, errginterpret)
 
         GKSERROR ((NOTSUPPORTED(recInfo->type)), 168, errginterpret)
 
-        GKSERROR ((XgksExecData (recInfo->type, data) != 0), 164, errginterpret)                                                                        /* c1068 */
+        GKSERROR ((XgksExecData (recInfo->type, data) != 0), 164, errginterpret)
 
         return (OK);
 }
@@ -335,84 +335,84 @@ Gint ginterpret(Ggksmit *recInfo, Gchar *data)
  */
 int XgksMiOpenWs(WS_STATE_PTR ws)
 {
-        Gint key,i,readct;                                      /* c1068 */
+        Gint key,i,readct;
 
-        clearerr( ws->mfp );                                    /* c1068 */
+        clearerr( ws->mfp );
         key = XgksMInstall (ws->ws_id);
-        for (i=0; i<4; i++) {                                   /* c1068 */
-                READCHR (ws->mfp, GksmInfo[key].HeaderInfo.std[i]);                                                                             /* c1068 */
-                if ((ferror( ws->mfp )) ||                      /* c1068 */
-                    (GksmInfo[key].HeaderInfo.std[i] == '\n'))  /* c1068 */
-                        return( 1 );                            /* c1068 */
-        }                                                       /* c1068 */
+        for (i=0; i<4; i++) {
+                READCHR (ws->mfp, GksmInfo[key].HeaderInfo.std[i]);
+                if ((ferror( ws->mfp )) ||
+                    (GksmInfo[key].HeaderInfo.std[i] == '\n'))
+                        return( 1 );
+        }
         GksmInfo[key].HeaderInfo.std[4] = 0;
-        for (i=0; i<40; i++) {                                  /* c1068 */
-                READCHR(ws->mfp, GksmInfo[key].HeaderInfo.info[i]);                                                                             /* c1068 */
-                if ((ferror( ws->mfp )) ||                      /* c1068 */
-                    (GksmInfo[key].HeaderInfo.info[i] == '\n')) /* c1068 */
-                        return( 1 );                            /* c1068 */
-        }                                                       /* c1068 */
+        for (i=0; i<40; i++) {
+                READCHR(ws->mfp, GksmInfo[key].HeaderInfo.info[i]);
+                if ((ferror( ws->mfp )) ||
+                    (GksmInfo[key].HeaderInfo.info[i] == '\n'))
+                        return( 1 );
+        }
         GksmInfo[key].HeaderInfo.info[40] = 0;
-        for (i=0; i<8; i++) {                                   /* c1068 */
-                READCHR(ws->mfp, GksmInfo[key].HeaderInfo.date[i]);                                                                             /* c1068 */
-                if ((ferror( ws->mfp )) ||                      /* c1068 */
-                    (GksmInfo[key].HeaderInfo.date[i] == '\n')) /* c1068 */
-                        return( 1 );                            /* c1068 */
-        }                                                       /* c1068 */
+        for (i=0; i<8; i++) {
+                READCHR(ws->mfp, GksmInfo[key].HeaderInfo.date[i]);
+                if ((ferror( ws->mfp )) ||
+                    (GksmInfo[key].HeaderInfo.date[i] == '\n'))
+                        return( 1 );
+        }
         GksmInfo[key].HeaderInfo.date[8] = 0;
-        readct =                                                /* c1068 */
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.ver);        /* c1068 */
-        if (readct != 1) return( 1 );                           /* c1068 */
-        if (XgksFeoln( ws->mfp )) return( 1 );                  /* c1068 */
-        readct =                                                /* c1068 */
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.h);          /* c1068 */
-        if (readct != 1) return( 1 );                           /* c1068 */
-        if (XgksFeoln( ws->mfp )) return( 1 );                  /* c1068 */
-        readct =                                                /* c1068 */
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.t);          /* c1068 */
-        if (readct != 1) return( 1 );                           /* c1068 */
-        if (XgksFeoln( ws->mfp )) return( 1 );                  /* c1068 */
-        readct =                                                /* c1068 */
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.l);          /* c1068 */
-        if (readct != 1) return( 1 );                           /* c1068 */
-        if (XgksFeoln( ws->mfp )) return( 1 );                  /* c1068 */
-        readct =                                                /* c1068 */
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.i);          /* c1068 */
-        if (readct != 1) return( 1 );                           /* c1068 */
-        if (XgksFeoln( ws->mfp )) return( 1 );                  /* c1068 */
-        readct =                                                /* c1068 */
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.r);          /* c1068 */
-        if (readct != 1) return( 1 );                           /* c1068 */
-        if (XgksFeoln( ws->mfp )) return( 1 );                  /* c1068 */
-        readct =                                                /* c1068 */
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.f);          /* c1068 */
-        if (readct != 1) return( 1 );                           /* c1068 */
-        if (XgksFeoln( ws->mfp )) return( 1 );                  /* c1068 */
-        readct =                                                /* c1068 */
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.ri);         /* c1068 */
-        if (readct != 1) return( 1 );                           /* c1068 */
-        for (i=0; i<11; i++) {                                  /* c1068 */
-                if (XgksFeoln( ws->mfp )) return( 1 );          /* c1068 */
-                READCHR(ws->mfp, GksmInfo[key].HeaderInfo.d1[i]);                                                                               /* c1068 */
-                if ((ferror( ws->mfp )) ||                      /* c1068 */
-                    (GksmInfo[key].HeaderInfo.d1[i] == '\n'))   /* c1068 */
-                        return( 1 );                            /* c1068 */
-        }                                                       /* c1068 */
+        readct =
+        READINT (ws->mfp, GksmInfo[key].HeaderInfo.ver);
+        if (readct != 1) return( 1 );
+        if (XgksFeoln( ws->mfp )) return( 1 );
+        readct =
+        READINT (ws->mfp, GksmInfo[key].HeaderInfo.h);
+        if (readct != 1) return( 1 );
+        if (XgksFeoln( ws->mfp )) return( 1 );
+        readct =
+        READINT (ws->mfp, GksmInfo[key].HeaderInfo.t);
+        if (readct != 1) return( 1 );
+        if (XgksFeoln( ws->mfp )) return( 1 );
+        readct =
+        READINT (ws->mfp, GksmInfo[key].HeaderInfo.l);
+        if (readct != 1) return( 1 );
+        if (XgksFeoln( ws->mfp )) return( 1 );
+        readct =
+        READINT (ws->mfp, GksmInfo[key].HeaderInfo.i);
+        if (readct != 1) return( 1 );
+        if (XgksFeoln( ws->mfp )) return( 1 );
+        readct =
+        READINT (ws->mfp, GksmInfo[key].HeaderInfo.r);
+        if (readct != 1) return( 1 );
+        if (XgksFeoln( ws->mfp )) return( 1 );
+        readct =
+        READINT (ws->mfp, GksmInfo[key].HeaderInfo.f);
+        if (readct != 1) return( 1 );
+        if (XgksFeoln( ws->mfp )) return( 1 );
+        readct =
+        READINT (ws->mfp, GksmInfo[key].HeaderInfo.ri);
+        if (readct != 1) return( 1 );
+        for (i=0; i<11; i++) {
+                if (XgksFeoln( ws->mfp )) return( 1 );
+                READCHR(ws->mfp, GksmInfo[key].HeaderInfo.d1[i]);
+                if ((ferror( ws->mfp )) ||
+                    (GksmInfo[key].HeaderInfo.d1[i] == '\n'))
+                        return( 1 );
+        }
         GksmInfo[key].HeaderInfo.d1[11] = 0;
-        for (i=0; i<11; i++) {                                  /* c1068 */
-                READCHR(ws->mfp, GksmInfo[key].HeaderInfo.d2[i]);                                                                               /* c1068 */
-                if ((ferror( ws->mfp )) ||                      /* c1068 */
-                    (GksmInfo[key].HeaderInfo.std[i] == '\n'))  /* c1068 */
-                        return( 1 );                            /* c1068 */
-        }                                                       /* c1068 */
+        for (i=0; i<11; i++) {
+                READCHR(ws->mfp, GksmInfo[key].HeaderInfo.d2[i]);
+                if ((ferror( ws->mfp )) ||
+                    (GksmInfo[key].HeaderInfo.std[i] == '\n'))
+                        return( 1 );
+        }
         GksmInfo[key].HeaderInfo.d2[11] = 0;
 
-        ws->filestat = METAFILE_OK;                             /* c1068 */
+        ws->filestat = METAFILE_OK;
 
-        ws->filestat =                                          /* c1068 */
-        XgksGetNextMi (ws->mfp, key);                           /* c1068 */
+        ws->filestat =
+        XgksGetNextMi (ws->mfp, key);
 
-        if (ws->filestat != METAFILE_OK) return( 1 );           /* c1068 */
+        if (ws->filestat != METAFILE_OK) return( 1 );
 
         return( 0 );
 }
@@ -1060,7 +1060,7 @@ static void XgksMDelete(Gint ws_id)
                 }
 }
 
-static Gint XgksMFindKey (Gint ws_id)                           /* c1068 */
+static Gint XgksMFindKey (Gint ws_id)
 {
         Gint i;
 
@@ -1187,24 +1187,24 @@ static Gint XgksInputData (Gfile *fp, Gint key, Gchar *record)
         XGKSMPATSIZ     *patsiz;
         Gint   i,j;
         Gint type;
-        Gint readcnt = 1;                                       /* c1068 */
+        Gint readcnt = 1;
 
 
         type=GksmInfo[key].CurItem.type;
-        clearerr( fp );                                         /* c1068 */
+        clearerr( fp );
 
-        if(type>100) {                                          /* c1068 */
-                for(i=0;i<GksmInfo[key].CurItem.length;i++) {   /* c1068 */
-                        READCHR(fp, *(record+i));               /* c1068 */
-                        if (ferror( fp )) {                     /* c1068 */
-                                return( MF_FILE_ERR );          /* c1068 */
-                        }                                       /* c1068 */
-                        if (*(record + i) == '\n') {            /* c1068 */
-                                return( MF_ITEM_ERR );          /* c1068 */
-                        }                                       /* c1068 */
-                }                                               /* c1068 */
-                return( METAFILE_OK );                          /* c1068 */
-        }                                                       /* c1068 */
+        if(type>100) {
+                for(i=0;i<GksmInfo[key].CurItem.length;i++) {
+                        READCHR(fp, *(record+i));
+                        if (ferror( fp )) {
+                                return( MF_FILE_ERR );
+                        }
+                        if (*(record + i) == '\n') {
+                                return( MF_ITEM_ERR );
+                        }
+                }
+                return( METAFILE_OK );
+        }
 
         switch (type) {
 
@@ -1231,12 +1231,12 @@ static Gint XgksInputData (Gfile *fp, Gint key, Gchar *record)
         case 44 :
         case 81 :
         case 84 : ptr1 = (XGKSMONE *)record;
-                  if (XgksFeoln( fp ))                          /* c1068 */
-                  {                                             /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, ptr1->flag);           /* c1068 */
+                  if (XgksFeoln( fp ))
+                  {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, ptr1->flag);
                   break;
 
         case 4  :
@@ -1246,47 +1246,47 @@ static Gint XgksInputData (Gfile *fp, Gint key, Gchar *record)
         case 92 :
         case 93 :
         case 95 : ptr2 = (XGKSMTWO *)record;
-                  if (XgksFeoln( fp ))                          /* c1068 */
-                  {                                             /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, ptr2->item1);          /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp ))                          /* c1068 */
-                  {                                             /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, ptr2->item2);          /* c1068 */
+                  if (XgksFeoln( fp ))
+                  {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, ptr2->item1);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp ))
+                  {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, ptr2->item2);
                   break;
 
         case 5  : msg = (XGKSMMESG *)record;
                   msg->string = &(record[sizeof(XGKSMMESG)]);
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, msg->strlen);          /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READCHR (fp, msg->string[0]);       /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (msg->string[0] == '\n') {                 /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  for (i=1; i<msg->strlen; i++) {               /* c1068 */
-                        readcnt = READCHR (fp, msg->string[i]); /* c1068 */
-                        if (!readcnt) break;                    /* c1068 */
-                        if (msg->string[i] == '\n') {           /* c1068 */
-                                readcnt = 0;                    /* c1068 */
-                                break;                          /* c1068 */
-                        }                                       /* c1068 */
-                  }                                             /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, msg->strlen);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READCHR (fp, msg->string[0]);
+                  if (!readcnt) break;
+                  if (msg->string[0] == '\n') {
+                        readcnt = 0;
+                        break;
+                  }
+                  for (i=1; i<msg->strlen; i++) {
+                        readcnt = READCHR (fp, msg->string[i]);
+                        if (!readcnt) break;
+                        if (msg->string[i] == '\n') {
+                                readcnt = 0;
+                                break;
+                        }
+                  }
                   msg->string[i] = 0;
                   break;
 
@@ -1294,165 +1294,165 @@ static Gint XgksInputData (Gfile *fp, Gint key, Gchar *record)
         case 12 :
         case 14 : graph = (XGKSMGRAPH *)record;
                   graph->pts = (Gpoint *) &(record[sizeof(XGKSMGRAPH)]);
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, graph->num_pts);       /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  for (i=0; i<graph->num_pts; i++) {            /* c1068 */
-                          if (XgksFeoln( fp )) {                /* c1068 */
-                                readcnt = 0;                    /* c1068 */
-                                break;                          /* c1068 */
-                          }                                     /* c1068 */
-                          readcnt = READFTP (fp, graph->pts[i].x);                                                                              /* c1068 */
-                          if (!readcnt) break;                  /* c1068 */
-                          if (XgksFeoln( fp )) {                /* c1068 */
-                                readcnt = 0;                    /* c1068 */
-                                break;                          /* c1068 */
-                          }                                     /* c1068 */
-                          readcnt = READFTP (fp, graph->pts[i].y);                                                                              /* c1068 */
-                          if (!readcnt) break;                  /* c1068 */
-                  }                                             /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, graph->num_pts);
+                  if (!readcnt) break;
+                  for (i=0; i<graph->num_pts; i++) {
+                          if (XgksFeoln( fp )) {
+                                readcnt = 0;
+                                break;
+                          }
+                          readcnt = READFTP (fp, graph->pts[i].x);
+                          if (!readcnt) break;
+                          if (XgksFeoln( fp )) {
+                                readcnt = 0;
+                                break;
+                          }
+                          readcnt = READFTP (fp, graph->pts[i].y);
+                          if (!readcnt) break;
+                  }
                   break;
 
         case 13 : text = (XGKSMTEXT *)record;
                   text->string = &(record[sizeof(XGKSMTEXT)]);
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, text->location.x);     /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, text->location.y);     /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, text->strlen);         /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READCHR (fp, text->string[0]);      /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (text->string[0] == '\n') {                /* c1068 */
-                          readcnt = 0;                          /* c1068 */
-                          break;                                /* c1068 */
-                  }                                             /* c1068 */
-                  for (i=1; i<text->strlen; i++) {              /* c1068 */
-                          readcnt = READCHR(fp, text->string[i]);                                                                               /* c1068 */
-                          if (text->string[i] == '\n') {        /* c1068 */
-                                  readcnt = 0;                  /* c1068 */
-                                  break;                        /* c1068 */
-                          }                                     /* c1068 */
-                          if (!readcnt) break;                  /* c1068 */
-                  }                                             /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, text->location.x);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, text->location.y);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, text->strlen);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READCHR (fp, text->string[0]);
+                  if (!readcnt) break;
+                  if (text->string[0] == '\n') {
+                          readcnt = 0;
+                          break;
+                  }
+                  for (i=1; i<text->strlen; i++) {
+                          readcnt = READCHR(fp, text->string[i]);
+                          if (text->string[i] == '\n') {
+                                  readcnt = 0;
+                                  break;
+                          }
+                          if (!readcnt) break;
+                  }
                   text->string[i] = 0;
                   break;
 
         case 15 : cell = (XGKSMCELLARRAY *)record;
                   cell->colour = (Gint *) &(record[sizeof(XGKSMCELLARRAY)]);
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, cell->ll.x);           /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, cell->ll.y);           /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, cell->ur.x);           /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, cell->ur.y);           /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, cell->lr.x);           /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, cell->lr.y);           /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, cell->dim.x);          /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, cell->dim.y);          /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, cell->ll.x);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, cell->ll.y);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, cell->ur.x);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, cell->ur.y);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, cell->lr.x);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, cell->lr.y);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, cell->dim.x);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, cell->dim.y);
+                  if (!readcnt) break;
                   j = cell->dim.x * cell->dim.y;
-                  for (i=0; i<j; i++) {                         /* c1068 */
-                        if (XgksFeoln( fp )) {                  /* c1068 */
-                                readcnt = 0;                    /* c1068 */
-                                break;                          /* c1068 */
-                        }                                       /* c1068 */
-                        readcnt = READINT(fp, cell->colour[i]); /* c1068 */
-                        if (!readcnt) break;                    /* c1068 */
-                  }                                             /* c1068 */
+                  for (i=0; i<j; i++) {
+                        if (XgksFeoln( fp )) {
+                                readcnt = 0;
+                                break;
+                        }
+                        readcnt = READINT(fp, cell->colour[i]);
+                        if (!readcnt) break;
+                  }
                   break;
 
         case 23 :
         case 27 :
         case 31 :
         case 32 : size = (XGKSMSIZE *)record;
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, size->size);           /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, size->size);
                   break;
 
         case 34 : vec = (XGKSMCHARVEC *)record;
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, vec->up.x);            /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, vec->up.y);            /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, vec->base.x);          /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, vec->base.y);          /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, vec->up.x);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, vec->up.y);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, vec->base.x);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, vec->base.y);
                   break;
 
         case 41 : patsiz = (XGKSMPATSIZ *)record;
@@ -1496,265 +1496,265 @@ static Gint XgksInputData (Gfile *fp, Gint key, Gchar *record)
                   break;
 
         case 43 : asf = (XGKSMASF *)record;
-                  for (i=0; i<13; i++) {                        /* c1068 */
-                        if (XgksFeoln( fp )) {                  /* c1068 */
-                                readcnt = 0;                    /* c1068 */
-                                break;                          /* c1068 */
-                        }                                       /* c1068 */
-                        readcnt = READINT (fp, asf->asf[i]);    /* c1068 */
-                        if (!readcnt) break;                    /* c1068 */
-                  }                                             /* c1068 */
+                  for (i=0; i<13; i++) {
+                        if (XgksFeoln( fp )) {
+                                readcnt = 0;
+                                break;
+                        }
+                        readcnt = READINT (fp, asf->asf[i]);
+                        if (!readcnt) break;
+                  }
                   break;
 
         case 51 :
         case 52 : lmrep = (XGKSMLMREP *)record;
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, lmrep->idx);           /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, lmrep->style);         /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, lmrep->size);          /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, lmrep->colour);                /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, lmrep->idx);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, lmrep->style);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, lmrep->size);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, lmrep->colour);
                   break;
 
         case 53 : txrep = (XGKSMTEXTREP *)record;
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, txrep->idx);           /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, txrep->font);          /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, txrep->prec);          /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, txrep->idx);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, txrep->font);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, txrep->prec);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
                   readcnt = READFTP (fp, txrep->tx_exp);
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, txrep->space);         /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, txrep->colour);                /* c1068 */
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, txrep->space);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, txrep->colour);
                   break;
 
         case 54 : flrep = (XGKSMFILLREP *)record;
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, flrep->idx);           /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, flrep->intstyle);      /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, flrep->style);         /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, flrep->colour);                /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, flrep->idx);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, flrep->intstyle);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, flrep->style);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, flrep->colour);
                   break;
 
         case 55 : patrep = (XGKSMPATREP *)record;
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, patrep->idx);          /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, patrep->size.x);       /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, patrep->size.y);       /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, patrep->idx);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, patrep->size.x);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, patrep->size.y);
+                  if (!readcnt) break;
                   patrep->array = (Gint *) &(record[sizeof(XGKSMPATREP)]);
                   j = patrep->size.x * patrep->size.y;
-                  for (i=0; i<j ;i++) {                         /* c1068 */
-                          if (XgksFeoln( fp )) {                /* c1068 */
-                                readcnt = 0;                    /* c1068 */
-                                break;                          /* c1068 */
-                          }                                     /* c1068 */
-                          readcnt = READINT(fp, patrep->array[i]);                                                                              /* c1068 */
-                          if (!readcnt) break;                  /* c1068 */
-                  }                                             /* c1068 */
+                  for (i=0; i<j ;i++) {
+                          if (XgksFeoln( fp )) {
+                                readcnt = 0;
+                                break;
+                          }
+                          readcnt = READINT(fp, patrep->array[i]);
+                          if (!readcnt) break;
+                  }
                   break;
 
         case 56 : corep = (XGKSMCOLOURREP *)record;
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, corep->idx);           /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, corep->red);           /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, corep->green);         /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, corep->blue);          /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, corep->idx);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, corep->red);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, corep->green);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, corep->blue);
                   break;
 
         case 61 :
         case 71 :
         case 72 : limit = (XGKSMLIMIT *)record;
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, limit->rect.xmin);     /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, limit->rect.xmax);     /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, limit->rect.ymin);     /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, limit->rect.ymax);     /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, limit->rect.xmin);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, limit->rect.xmax);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, limit->rect.ymin);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, limit->rect.ymax);
                   break;
 
         case 91 : tran = (XGKSMSEGTRAN *)record;
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, tran->name);           /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, tran->matrix[0][0]);   /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, tran->matrix[0][1]);   /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, tran->matrix[0][2]);   /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, tran->matrix[1][0]);   /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, tran->matrix[1][1]);   /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, tran->matrix[1][2]);   /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, tran->name);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, tran->matrix[0][0]);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, tran->matrix[0][1]);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, tran->matrix[0][2]);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, tran->matrix[1][0]);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, tran->matrix[1][1]);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, tran->matrix[1][2]);
                   break;
 
         case 94 : pri = (XGKSMSEGPRI *)record;
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READINT (fp, pri->name);            /* c1068 */
-                  if (!readcnt) break;                          /* c1068 */
-                  if (XgksFeoln( fp )) {                        /* c1068 */
-                        readcnt = 0;                            /* c1068 */
-                        break;                                  /* c1068 */
-                  }                                             /* c1068 */
-                  readcnt = READFTP (fp, pri->pri);             /* c1068 */
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READINT (fp, pri->name);
+                  if (!readcnt) break;
+                  if (XgksFeoln( fp )) {
+                        readcnt = 0;
+                        break;
+                  }
+                  readcnt = READFTP (fp, pri->pri);
                   break;
 
-        default : readcnt = 0;                                  /* c1068 */
+        default : readcnt = 0;
                   break;
         }
 
-        if (!readcnt) {                                         /* c1068 */
-                if (ferror( fp )) {                             /* c1068 */
-                        return( MF_FILE_ERR );                  /* c1068 */
-                }                                               /* c1068 */
-                                                         /* c1068 */
-                        return( MF_DATA_ERR );                  /* c1068 */
-                                                              /* c1068 */
-        }                                                       /* c1068 */
-        else {                                                  /* c1068 */
-                return( METAFILE_OK );                          /* c1068 */
-        }                                                       /* c1068 */
+        if (!readcnt) {
+                if (ferror( fp )) {
+                        return( MF_FILE_ERR );
+                }
+
+                        return( MF_DATA_ERR );
+
+        }
+        else {
+                return( METAFILE_OK );
+        }
 
 }
 
@@ -2190,7 +2190,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
                   gsetsegattr (pri->name, &segattr);
                   break;
 
-        default : return(1);                                    /* c1068 */
+        default : return(1);
         }
         return(0);
 }
@@ -2198,27 +2198,27 @@ static Gint XgksExecData(Gint type, Gchar *record)
 static Gint XgksGetNextMi(Gfile *fp, Gint key)
 {
 
-        fscanf( fp, " " );                                      /* c1068 */
+        fscanf( fp, " " );
         if (feof(fp)) {
                 GksmInfo[key].GksmEmpty = TRUE;
                 GksmInfo[key].CurItem.type = INVALID;
                 GksmInfo[key].CurItem.length = INVALID;
-                return( METAFILE_OK );                          /* c1068 */
+                return( METAFILE_OK );
         }
-        if (READINT (fp, GksmInfo[key].CurItem.type) != 1)      /* c1068 */
-                return( MF_FILE_ERR );                          /* c1068 */
-        if (feof(fp)) {                                         /* c1068 */
-                GksmInfo[key].GksmEmpty = TRUE;                 /* c1068 */
-                GksmInfo[key].CurItem.type = INVALID;           /* c1068 */
-                GksmInfo[key].CurItem.length = INVALID;         /* c1068 */
-                return( MF_FILE_ERR );                          /* c1068 */
-        }                                                       /* c1068 */
-        if (XgksFeoln( fp ))                                    /* c1068 */
-                return( MF_FILE_ERR );                          /* c1068 */
-        if (READINT (fp, GksmInfo[key].CurItem.length) != 1)    /* c1068 */
-                return( MF_FILE_ERR );                          /* c1068 */
-        GksmInfo[key].GksmEmpty = FALSE;                        /* c1068 */
-        return( METAFILE_OK );                                  /* c1068 */
+        if (READINT (fp, GksmInfo[key].CurItem.type) != 1)
+                return( MF_FILE_ERR );
+        if (feof(fp)) {
+                GksmInfo[key].GksmEmpty = TRUE;
+                GksmInfo[key].CurItem.type = INVALID;
+                GksmInfo[key].CurItem.length = INVALID;
+                return( MF_FILE_ERR );
+        }
+        if (XgksFeoln( fp ))
+                return( MF_FILE_ERR );
+        if (READINT (fp, GksmInfo[key].CurItem.length) != 1)
+                return( MF_FILE_ERR );
+        GksmInfo[key].GksmEmpty = FALSE;
+        return( METAFILE_OK );
 
 }
 
@@ -2264,11 +2264,11 @@ static Gchar *XgksMDate(void)
 }
 
 static Gint XgksFeoln(Gfile *fp)
-{                                                               /* c1068 */
-        int i;                                                  /* c1068 */
-                                                                /* c1068 */
-        if ((i = getc( fp )) == EOF) return( TRUE );            /* c1068 */
-        ungetc( i, fp );                                        /* c1068 */
-        if (i == '\n') return( TRUE );                          /* c1068 */
-        return( FALSE );                                   /* c1068 */
-}                                                               /* c1068 */
+{
+        int i;
+
+        if ((i = getc( fp )) == EOF) return( TRUE );
+        ungetc( i, fp );
+        if (i == '\n') return( TRUE );
+        return( FALSE );
+}
