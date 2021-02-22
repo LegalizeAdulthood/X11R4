@@ -613,7 +613,7 @@ Gint gsetpatrep(Gint ws_id, Gint idx, Gptbundl *rep)
         GKSERROR ((idx < 1 || idx >= MAX_BUNDL_TBL) , 85, errgsetpatrep)
 
 /* valid dimensions */
-        GKSERROR ((rep->size.x < 1 || rep->size.y < 1) , 91, errgsetpatrep) /*c1101*/
+        GKSERROR ((rep->size.x < 1 || rep->size.y < 1) , 91, errgsetpatrep)
 
 /* valid colour indices */
         i = rep->size.x * rep->size.y;
