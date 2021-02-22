@@ -101,9 +101,7 @@ struct {
 int     Vc = 0;                 /* next available vcharst slot */
 struct vcharst *Vcp = Font.fvc; /* pointer to same */
 
-int main(argc, argv)
-        int argc;
-        char *argv[];
+int main(int argc, char *argv[])
 {
         ReadVFont(argc, argv);
         SetCapHalf();
