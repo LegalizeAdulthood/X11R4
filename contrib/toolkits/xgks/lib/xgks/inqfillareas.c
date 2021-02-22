@@ -68,7 +68,7 @@ Gint ginqfillfacil(ws_type, fac)
         GKSERROR( ewstype != X_WIN, 39, errginqfillfacil);
 
 /* set the return values */
-        fac->predefined = PDF_FILL_BNDLS;                       /* c1143 */
+        fac->predefined = PDF_FILL_BNDLS;
         fac->interiors.number = 4;
         fac->hatches.number = 20;
 
@@ -115,12 +115,12 @@ Gint ginqpredfillrep(ws_type, idx, rep)
         GKSERROR( ewstype != X_WIN, 39, errginqpredfillrep);
 
 /* check for valid idx */
-        GKSERROR((idx < 1 || idx > PDF_FILL_BNDLS),80,errginqpredfillrep); /*c1143*/
+        GKSERROR((idx < 1 || idx > PDF_FILL_BNDLS),80,errginqpredfillrep);
 
 /* set the return values */
-        rep->inter = def_flbundl[idx-1].inter;                          /* c1143 */
-        rep->style = def_flbundl[idx-1].style;                          /* c1143 */
-        rep->colour = def_flbundl[idx-1].colour;                        /* c1143 */
+        rep->inter = def_flbundl[idx-1].inter;
+        rep->style = def_flbundl[idx-1].style;
+        rep->colour = def_flbundl[idx-1].colour;
 
         return( OK );
 }

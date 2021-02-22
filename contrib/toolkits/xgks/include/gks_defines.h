@@ -70,7 +70,6 @@
 #define MAX_BUNDL_TBL   21              /* Legal bundle table range 1-20 
                                            entry 0 will be initialized however */
 
-/* c1143:  Added following 4 defines for use w/ predefined representations */
 #define PDF_FILL_BNDLS  5               /* # of predef fill rep bundles */
 #define PDF_LINE_BNDLS  5               /* # of predef line rep bundles */
 #define PDF_MARK_BNDLS  5               /* # of predef marker rep bundles */

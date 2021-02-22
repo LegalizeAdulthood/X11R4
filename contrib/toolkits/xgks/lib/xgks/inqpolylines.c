@@ -73,7 +73,7 @@ Gint ginqlinefacil(ws_type, fac)
         fac->nom = 1.0;
         fac->min = 0.01;                                /* c1156 */
         fac->max = 1024.0;
-        fac->predefined = PDF_LINE_BNDLS;                       /* c1143 */
+        fac->predefined = PDF_LINE_BNDLS;
         fac->types.number = 7;
 /* get space for list */
         fac->types.integers = (Gint *)malloc((unsigned) fac->types.number * sizeof(int));
@@ -121,12 +121,12 @@ Gint ginqpredlinerep(ws_type, idx, rep)
         GKSERROR( ewstype != X_WIN, 39, errginqpredlinerep);
 
 /* check for valid idx */
-        GKSERROR((idx < 1 || idx > PDF_LINE_BNDLS), 60, errginqpredlinerep);/*c1143*/
+        GKSERROR((idx < 1 || idx > PDF_LINE_BNDLS), 60, errginqpredlinerep);
 
 /* set the return values */
-        rep->type =  def_lnbundl[idx-1].type;                           /* c1143 */
-        rep->width = def_lnbundl[idx-1].width;                          /* c1143 */
-        rep->colour = def_lnbundl[idx-1].colour;                        /* c1143 */
+        rep->type =  def_lnbundl[idx-1].type;
+        rep->width = def_lnbundl[idx-1].width;
+        rep->colour = def_lnbundl[idx-1].colour;
 
         return( OK );
 }

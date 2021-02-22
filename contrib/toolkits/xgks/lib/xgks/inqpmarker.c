@@ -72,7 +72,7 @@ Gint ginqmarkerfacil(ws_type, fac)
         fac->nom = 6.0;
         fac->min = 0.01;                                /* c1156 */
         fac->max = 1024.0;
-        fac->predefined = PDF_MARK_BNDLS;                       /* c1143 */
+        fac->predefined = PDF_MARK_BNDLS;
         fac->types.number = 5;
 
 /* get space for list */
@@ -116,12 +116,12 @@ Gint ginqpredmarkerrep(ws_type, idx, rep)
         GKSERROR( ewstype != X_WIN, 39, errginqpredmarkerrep);
 
 /* check for valid idx */
-        GKSERROR((idx < 1 || idx > PDF_MARK_BNDLS),66,errginqpredmarkerrep);/*c1143*/
+        GKSERROR((idx < 1 || idx > PDF_MARK_BNDLS),66,errginqpredmarkerrep);
 
 /* set the return values */
-        rep->type =  def_mkbundl[idx-1].type;                           /* c1143 */
-        rep->size =  def_mkbundl[idx-1].size;                           /* c1143 */
-        rep->colour = def_mkbundl[idx-1].colour;                        /* c1143 */
+        rep->type =  def_mkbundl[idx-1].type;
+        rep->size =  def_mkbundl[idx-1].size;
+        rep->colour = def_mkbundl[idx-1].colour;
 
         return( OK );
 }

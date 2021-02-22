@@ -35,39 +35,39 @@
 #define  DEFMRKRSIZE  1.0       /* c1154 */
 
 #ifdef polymarkers_c                                            /* c1178 */
-Gmkbundl def_mkbundl[PDF_MARK_BNDLS] =                          /* c1143 */
-        {                                                       /* c1143 */
-           /* predefined marker rep 1 */                        /* c1143 */
-           {                                                    /* c1143 */
-              GMK_STAR,         /* type */                      /* c1143 */
-              6.0,              /* size */                      /* c1143 */
-              1                 /* colour */                    /* c1143 */
-           },                                                   /* c1143 */
-           /* predefined marker rep 2 */                        /* c1143 */
-           {                                                    /* c1143 */
-              GMK_POINT,        /* type */                      /* c1143 */
-              6.0,              /* size */                      /* c1143 */
-              1                 /* colour */                    /* c1143 */
-           },                                                   /* c1143 */
-           /* predefined marker rep 3 */                        /* c1143 */
-           {                                                    /* c1143 */
-              GMK_PLUS,         /* type */                      /* c1143 */
-              6.0,              /* size */                      /* c1143 */
-              1                 /* colour */                    /* c1143 */
-           },                                                   /* c1143 */
-           /* predefined marker rep 4 */                        /* c1143 */
-           {                                                    /* c1143 */
-              GMK_O,            /* type */                      /* c1143 */
-              6.0,              /* size */                      /* c1143 */
-              1                 /* colour */                    /* c1143 */
-           },                                                   /* c1143 */
-           /* predefined marker rep 5 */                        /* c1143 */
-           {                                                    /* c1143 */
-              GMK_X,            /* type */                      /* c1143 */
-              6.0,              /* size */                      /* c1143 */
-              1                 /* colour */                    /* c1143 */
-           }                                                    /* c1143 */
-        };                                                      /* c1143 */
+Gmkbundl def_mkbundl[PDF_MARK_BNDLS] =
+        {
+           /* predefined marker rep 1 */
+           {
+              GMK_STAR,         /* type */
+              6.0,              /* size */
+              1                 /* colour */
+           },
+           /* predefined marker rep 2 */
+           {
+              GMK_POINT,        /* type */
+              6.0,              /* size */
+              1                 /* colour */
+           },
+           /* predefined marker rep 3 */
+           {
+              GMK_PLUS,         /* type */
+              6.0,              /* size */
+              1                 /* colour */
+           },
+           /* predefined marker rep 4 */
+           {
+              GMK_O,            /* type */
+              6.0,              /* size */
+              1                 /* colour */
+           },
+           /* predefined marker rep 5 */
+           {
+              GMK_X,            /* type */
+              6.0,              /* size */
+              1                 /* colour */
+           }
+        };
 
 #else                           /* c1178 */
 extern                          /* c1178 */

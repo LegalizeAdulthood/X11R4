@@ -66,18 +66,16 @@ void XgksMoSetPatRep(WS_STATE_PTR ws, Gint idx, Gptbundl *rep);
  * XgksInitGksFillArea: initialise gks state list fill area stuff
  */
 
-/* c1143:  Created predefined reps 1-5 */
-
 void XgksInitGksFillArea(void)
 {
-        xgks_state.gks_flattr.fill   = 1;               /* fill index */ /* c1143 */
-        xgks_state.gks_flattr.style  = GINDIVIDUAL;     /* style ASF  */ /* c1143 */
-        xgks_state.gks_flattr.inter  = GINDIVIDUAL;     /* inter ASF  */ /* c1143 */
-        xgks_state.gks_flattr.colour = GINDIVIDUAL;     /* colour ASF */ /* c1143 */
+        xgks_state.gks_flattr.fill   = 1;               /* fill index */
+        xgks_state.gks_flattr.style  = GINDIVIDUAL;     /* style ASF  */
+        xgks_state.gks_flattr.inter  = GINDIVIDUAL;     /* inter ASF  */
+        xgks_state.gks_flattr.colour = GINDIVIDUAL;     /* colour ASF */
         /* fill bundle */
-        xgks_state.gks_flattr.bundl.inter  = def_flbundl[0].inter;      /* c1143 */
-        xgks_state.gks_flattr.bundl.style  = def_flbundl[0].style;      /* c1143 */
-        xgks_state.gks_flattr.bundl.colour = def_flbundl[0].colour;     /* c1143 */
+        xgks_state.gks_flattr.bundl.inter  = def_flbundl[0].inter;
+        xgks_state.gks_flattr.bundl.style  = def_flbundl[0].style;
+        xgks_state.gks_flattr.bundl.colour = def_flbundl[0].colour;
 
         xgks_state.gks_ptattr.widthvec  = def_ptattr.widthvec;          /* c1144 */
         xgks_state.gks_ptattr.heightvec = def_ptattr.heightvec;         /* c1144 */
@@ -292,17 +290,17 @@ Gint XgksInitWssFillArea(WS_STATE_PTR ws)
 {
         Gint i, j, k;
 
-        /* c1143: flbundl_table[0] never used but initialized anyway */
-        ws->flbundl_table[0] = def_flbundl[0];                          /* c1143 */
+        /* flbundl_table[0] never used but initialized anyway */
+        ws->flbundl_table[0] = def_flbundl[0];
 
-        /* c1143: initialize predefined representation bundles */
-        for (i=1; i<=PDF_FILL_BNDLS; i++)                               /* c1143 */
+        /* initialize predefined representation bundles */
+        for (i=1; i<=PDF_FILL_BNDLS; i++)
            /* c1075: use implementation defaults, not current attributes */
-           ws->flbundl_table[i] = def_flbundl[i-1];                     /* c1143 */
+           ws->flbundl_table[i] = def_flbundl[i-1];
 
-        /* c1143: initialize rest of representation bundle array */
-        for (i=PDF_FILL_BNDLS+1; i<MAX_BUNDL_TBL; i++)                  /* c1143 */
-           ws->flbundl_table[i] = def_flbundl[0];                       /* c1143 */
+        /* initialize rest of representation bundle array */
+        for (i=PDF_FILL_BNDLS+1; i<MAX_BUNDL_TBL; i++)
+           ws->flbundl_table[i] = def_flbundl[0];
 
         for (i=0; i<MAX_BUNDL_TBL; i++) {                  /* set default pattern table values */
                 j = xgks_xpttn[i].size.x * xgks_xpttn[i].size.y;

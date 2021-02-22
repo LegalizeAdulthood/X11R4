@@ -85,7 +85,7 @@ void XgksInitGksText(void)
         xgks_state.gks_txattr.tx_exp = GINDIVIDUAL; /* exp ASF */
         xgks_state.gks_txattr.space = GINDIVIDUAL; /* space ASF */
         xgks_state.gks_txattr.colour = GINDIVIDUAL; /* colour ASF */
-        /* text bundle */                                               /* c1143 */
+        /* text bundle */
         xgks_state.gks_txattr.bundl.fp.font= def_txbundl[0].fp.font;
         xgks_state.gks_txattr.bundl.fp.prec= GSTRING;
         xgks_state.gks_txattr.bundl.ch_exp      = def_txbundl[0].ch_exp;
@@ -122,17 +122,17 @@ void XgksInitWssText(WS_STATE_PTR ws)
 {
         Gint i;
 
-        /* c1143: txbundl_table[0] never used but initialized anyway */
-        ws->txbundl_table[0] = def_txbundl[0];                          /* c1143 */
+        /* txbundl_table[0] never used but initialized anyway */
+        ws->txbundl_table[0] = def_txbundl[0];
 
-        /* c1143: initialize predefined representation bundles */
-        for (i=1; i<=PDF_TEXT_BNDLS; i++)                               /* c1143 */
+        /* initialize predefined representation bundles */
+        for (i=1; i<=PDF_TEXT_BNDLS; i++)
                 /* c1075: use implementation defaults, not current attributes */
-                ws->txbundl_table[i] = def_txbundl[i-1];                /* c1143 */
+                ws->txbundl_table[i] = def_txbundl[i-1];
 
-        /* c1143: initialize rest of representation bundle array */
-        for (i=PDF_TEXT_BNDLS+1; i<MAX_BUNDL_TBL; i++)                  /* c1143 */
-                ws->txbundl_table[i] = def_txbundl[0];                  /* c1143 */
+        /* initialize rest of representation bundle array */
+        for (i=PDF_TEXT_BNDLS+1; i<MAX_BUNDL_TBL; i++)
+                ws->txbundl_table[i] = def_txbundl[0];
 }
 
 /*$F

@@ -60,15 +60,13 @@ void XgksMoSetLineMarkRep(WS_STATE_PTR ws, Gint code, Gint idx, Gint type, Gint 
  * XgksInitGksPmarkers-- initialise gks state list polymarker stuff
  */
 
-/* c1143:  Created predefined reps 1-5 */
-
 void XgksInitGksPmarkers(void)
 {
         xgks_state.gks_mkattr.mark   = 1;          /* mark indx */
         xgks_state.gks_mkattr.type   = GINDIVIDUAL;/* type ASF */
         xgks_state.gks_mkattr.size   = GINDIVIDUAL;/* size ASF */
         xgks_state.gks_mkattr.colour = GINDIVIDUAL;/* colour ASF */
-        /* marker bundle */                                        /* c1143 */
+        /* marker bundle */
         xgks_state.gks_mkattr.bundl.type   = def_mkbundl[0].type;
         xgks_state.gks_mkattr.bundl.size   = DEFMRKRSIZE;
         xgks_state.gks_mkattr.bundl.colour = def_mkbundl[0].colour;
@@ -81,17 +79,17 @@ void XgksInitWssPmarkers(WS_STATE_PTR ws)
 {
         Gint i;                 /* Loop counter */
 
-        /* c1143: mkbundl_table[0] never used but initialized anyway */
-        ws->mkbundl_table[0] = def_mkbundl[0];                          /* c1143 */
+        /* mkbundl_table[0] never used but initialized anyway */
+        ws->mkbundl_table[0] = def_mkbundl[0];
 
-        /* c1143: initialize predefined representation bundles */
-        for (i=1; i<=PDF_MARK_BNDLS; i++)                               /* c1143 */
+        /* initialize predefined representation bundles */
+        for (i=1; i<=PDF_MARK_BNDLS; i++)
                 /* c1075: use implementation defaults, not current attributes */
-                ws->mkbundl_table[i] = def_mkbundl[i-1];                /* c1143 */
+                ws->mkbundl_table[i] = def_mkbundl[i-1];
 
-        /* c1143: initialize rest of representation bundle array */
-        for (i=PDF_MARK_BNDLS+1; i<MAX_BUNDL_TBL; i++)                  /* c1143 */
-                ws->mkbundl_table[i] = def_mkbundl[0];                  /* c1143 */
+        /* initialize rest of representation bundle array */
+        for (i=PDF_MARK_BNDLS+1; i<MAX_BUNDL_TBL; i++)
+                ws->mkbundl_table[i] = def_mkbundl[0];
 }
 
 /*$F

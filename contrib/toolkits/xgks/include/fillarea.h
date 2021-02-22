@@ -31,39 +31,39 @@
 /*         them externs in the files they're used in                        */
 
 #ifdef fillarea_c                                               /* c1178 */
-Gflbundl def_flbundl[PDF_FILL_BNDLS] =                          /* c1143 */
-        {                                                       /* c1143 */
-           /* predefined fill rep 1 */                          /* c1143 */
-           {                                                    /* c1143 */
-              GHOLLOW,          /* interior style */            /* c1143 */
-              1,                /* style index */               /* c1143 */
-              1                 /* colour index */              /* c1143 */
-           },                                                   /* c1143 */
-           /* predefined fill rep 2 */                          /* c1143 */
-           {                                                    /* c1143 */
-              GSOLID,           /* interior style */            /* c1143 */
-              1,                /* style index */               /* c1143 */
-              1                 /* colour index */              /* c1143 */
-           },                                                   /* c1143 */
-           /* predefined fill rep 3 */                          /* c1143 */
-           {                                                    /* c1143 */
-              GPATTERN,         /* interior style */            /* c1143 */
-              1,                /* style index */               /* c1143 */
-              1                 /* colour index */              /* c1143 */
-           },                                                   /* c1143 */
-           /* predefined fill rep 4 */                          /* c1143 */
-           {                                                    /* c1143 */
-              GHATCH,           /* interior style */            /* c1143 */
-              -1,               /* style index */               /* c1143 c1174 */
-              1                 /* colour index */              /* c1143 */
-           },                                                   /* c1143 */
-           /* predefined fill rep 5 */                          /* c1143 */
-           {                                                    /* c1143 */
-              GHATCH,           /* interior style */            /* c1143 */
-              -10,              /* style index */               /* c1143 c1174 */
-              1                 /* colour index */              /* c1143 */
-           }                                                    /* c1143 */
-        };                                                      /* c1143 */
+Gflbundl def_flbundl[PDF_FILL_BNDLS] =
+        {
+           /* predefined fill rep 1 */
+           {
+              GHOLLOW,          /* interior style */
+              1,                /* style index */
+              1                 /* colour index */
+           },
+           /* predefined fill rep 2 */
+           {
+              GSOLID,           /* interior style */
+              1,                /* style index */
+              1                 /* colour index */
+           },
+           /* predefined fill rep 3 */
+           {
+              GPATTERN,         /* interior style */
+              1,                /* style index */
+              1                 /* colour index */
+           },
+           /* predefined fill rep 4 */
+           {
+              GHATCH,           /* interior style */
+              -1,               /* style index */
+              1                 /* colour index */
+           },
+           /* predefined fill rep 5 */
+           {
+              GHATCH,           /* interior style */
+              -10,              /* style index */
+              1                 /* colour index */
+           }
+        };
 
 /* c1144:  Created predefined pattern attributes */
 PTATTR  def_ptattr =

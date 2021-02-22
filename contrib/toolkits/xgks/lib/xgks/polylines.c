@@ -60,15 +60,13 @@ void XgksMoSetLineMarkRep(WS_STATE_PTR ws, Gint code, Gint idx, Gint type, Gint 
  * XgksInitGksPlines() -- initialise gks state table polyline stuff
  */
 
-/* c1143:  Created predefined reps 1-5 */
-
 void XgksInitGksPlines(void)
 {
         xgks_state.gks_lnattr.line  = 1;    /* line indx */
         xgks_state.gks_lnattr.type  = GINDIVIDUAL; /* type ASF */
         xgks_state.gks_lnattr.width = GINDIVIDUAL; /* width ASF */
         xgks_state.gks_lnattr.colour = GINDIVIDUAL;/* colour ASF */
-        /* line bundle */                                          /* c1143 */
+        /* line bundle */
         xgks_state.gks_lnattr.bundl.type  = def_lnbundl[0].type;
         xgks_state.gks_lnattr.bundl.width = def_lnbundl[0].width;
         xgks_state.gks_lnattr.bundl.colour = def_lnbundl[0].colour;
@@ -80,17 +78,17 @@ void XgksInitWssPlines(WS_STATE_PTR ws)
 {
         Gint i;                              /* Loop counter */
 
-        /* c1143: lnbundl_table[0] never used but initialized anyway */
-        ws->lnbundl_table[0] = def_lnbundl[0];                          /* c1143 */
+        /* lnbundl_table[0] never used but initialized anyway */
+        ws->lnbundl_table[0] = def_lnbundl[0];
 
-        /* c1143: initialize predefined representation bundles */
-        for (i=1; i<=PDF_LINE_BNDLS; i++)                               /* c1143 */
+        /* initialize predefined representation bundles */
+        for (i=1; i<=PDF_LINE_BNDLS; i++)
            /* c1075: use implementation defaults, not current attributes */
-           ws->lnbundl_table[i] = def_lnbundl[i-1];                     /* c1143 */
+           ws->lnbundl_table[i] = def_lnbundl[i-1];
 
-        /* c1143: initialize rest of representation bundle array */
-        for (i=PDF_LINE_BNDLS+1; i<MAX_BUNDL_TBL; i++)                  /* c1143 */
-           ws->lnbundl_table[i] = def_lnbundl[0];                       /* c1143 */
+        /* initialize rest of representation bundle array */
+        for (i=PDF_LINE_BNDLS+1; i<MAX_BUNDL_TBL; i++)
+           ws->lnbundl_table[i] = def_lnbundl[0];
 }
 
 /*$F

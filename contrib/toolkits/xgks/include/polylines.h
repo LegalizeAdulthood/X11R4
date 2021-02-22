@@ -34,39 +34,39 @@
 /*         them externs in the files they're used in                        */
 
 #ifdef polylines_c                                              /* c1178 */
-Glnbundl def_lnbundl[PDF_LINE_BNDLS] =                          /* c1143 */
-        {                                                       /* c1143 */
-           /* predefined line rep 1 */                          /* c1143 */
-           {                                                    /* c1143 */
-              GLN_SOLID,        /* type */                      /* c1143 */
-              1.0,              /* width */                     /* c1143 */
-              1                 /* colour */                    /* c1143 */
-           },                                                   /* c1143 */
-           /* predefined line rep 2 */                          /* c1143 */
-           {                                                    /* c1143 */
-              GLN_DASH,         /* type */                      /* c1143 */
-              1.0,              /* width */                     /* c1143 */
-              1                 /* colour */                    /* c1143 */
-           },                                                   /* c1143 */
-           /* predefined line rep 3 */                          /* c1143 */
-           {                                                    /* c1143 */
-              GLN_DOT,          /* type */                      /* c1143 */
-              1.0,              /* width */                     /* c1143 */
-              1                 /* colour */                    /* c1143 */
-           },                                                   /* c1143 */
-           /* predefined line rep 4 */                          /* c1143 */
-           {                                                    /* c1143 */
-              GLN_DOTDASH,      /* type */                      /* c1143 */
-              1.0,              /* width */                     /* c1143 */
-              1                 /* colour */                    /* c1143 */
-           },                                                   /* c1143 */
-           /* predefined line rep 5 */                          /* c1143 */
-           {                                                    /* c1143 */
-              GLN_SOLID,        /* type */                      /* c1143 */
-              5.0,              /* width */                     /* c1143 */
-              1                 /* colour */                    /* c1143 */
-           }                                                    /* c1143 */
-        };                                                      /* c1143 */
+Glnbundl def_lnbundl[PDF_LINE_BNDLS] =
+        {
+           /* predefined line rep 1 */
+           {
+              GLN_SOLID,        /* type */
+              1.0,              /* width */
+              1                 /* colour */
+           },
+           /* predefined line rep 2 */
+           {
+              GLN_DASH,         /* type */
+              1.0,              /* width */
+              1                 /* colour */
+           },
+           /* predefined line rep 3 */
+           {
+              GLN_DOT,          /* type */
+              1.0,              /* width */
+              1                 /* colour */
+           },
+           /* predefined line rep 4 */
+           {
+              GLN_DOTDASH,      /* type */
+              1.0,              /* width */
+              1                 /* colour */
+           },
+           /* predefined line rep 5 */
+           {
+              GLN_SOLID,        /* type */
+              5.0,              /* width */
+              1                 /* colour */
+           }
+        };
 
 #else                           /* c1178 */
 extern                          /* c1178 */

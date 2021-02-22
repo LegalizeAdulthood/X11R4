@@ -86,7 +86,7 @@ Gint ginqtextfacil(ws_type, fac)
         fac->expansions = 0.0;
         fac->min_ex = 0.001;                                    /* c2011 */
         fac->max_ex = 1024.0;
-        fac->predefined = PDF_TEXT_BNDLS;                       /* c1143 */
+        fac->predefined = PDF_TEXT_BNDLS;
 
         return( OK );
 }
@@ -121,14 +121,14 @@ Gint ginqpredtextrep(ws_type, idx, rep)
         GKSERROR( ewstype != X_WIN, 39, errginqpredtextrep);
 
 /* check for valid idx */
-        GKSERROR((idx < 1 || idx > PDF_TEXT_BNDLS), 72, errginqpredtextrep);/*c1143*/
+        GKSERROR((idx < 1 || idx > PDF_TEXT_BNDLS), 72, errginqpredtextrep);
 
 /* set the return values */
-        rep->fp.font = def_txbundl[idx-1].fp.font;              /* c1143 */
-        rep->fp.prec = def_txbundl[idx-1].fp.prec;              /* c1143 */
-        rep->ch_exp = def_txbundl[idx-1].ch_exp;                /* c1143 c1179 */
-        rep->space =   def_txbundl[idx-1].space;                /* c1143 */
-        rep->colour =   def_txbundl[idx-1].colour;              /* c1143 */
+        rep->fp.font = def_txbundl[idx-1].fp.font;
+        rep->fp.prec = def_txbundl[idx-1].fp.prec;
+        rep->ch_exp = def_txbundl[idx-1].ch_exp;
+        rep->space =   def_txbundl[idx-1].space;
+        rep->colour =   def_txbundl[idx-1].colour;
 
         return( OK );
 }
