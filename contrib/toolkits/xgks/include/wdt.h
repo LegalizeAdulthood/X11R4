@@ -53,7 +53,7 @@
 #define WS_MARKER_TYPE(t)  ((t)>0 && (t)<=GMK_X)
 #define WS_FONT_TYPE(t)    ((t)>0 && (t)<=DEFINED_FONT_TYPE)    /* Goes from 1 to 9 */
 #define WS_FILL_TYPE(s,t)       ((((s)==GPATTERN) && ((t)>0 && (t)<MAX_BUNDL_TBL)) \
-                                || (((s)==GHATCH) && ((t)<0 && (t)> -MAX_BUNDL_TBL)))   /* c1174 */
+                                || (((s)==GHATCH) && ((t)<0 && (t)> -MAX_BUNDL_TBL)))
 
 #define WS_FILL_IMPLEMENT       GHATCH
 

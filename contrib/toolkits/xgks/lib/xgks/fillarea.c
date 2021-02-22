@@ -485,7 +485,7 @@ Gint gsetfillrep(Gint ws_id, Gint idx, Gflbundl *rep)
 
 /* valid hatch index */
         if (rep->inter == GHATCH)
-                GKSERROR ((!WS_FILL_TYPE(rep->inter,rep->style)), 86, errgsetfillrep); /* c1174 */
+                GKSERROR ((!WS_FILL_TYPE(rep->inter,rep->style)), 86, errgsetfillrep);
 
 /* check for valid colour index */
         GKSERROR ((!WS_AVAIL_COLOUR(ws,rep->colour)) , 93, errgsetfillrep)

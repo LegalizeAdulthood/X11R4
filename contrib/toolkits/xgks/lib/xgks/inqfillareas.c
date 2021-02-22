@@ -86,7 +86,7 @@ Gint ginqfillfacil(ws_type, fac)
         fac->interiors.integers[3] = (Gint) GHATCH;             /* c1158 */
 
         for(i=0; i< fac->hatches.number; i++)
-                fac->hatches.integers[i] = -(i+1);      /* c1174 */
+                fac->hatches.integers[i] = -(i+1);
 
         return( OK );
 }

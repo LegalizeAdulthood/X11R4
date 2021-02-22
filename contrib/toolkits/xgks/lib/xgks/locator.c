@@ -239,7 +239,7 @@ fprintf(stderr, "initloc() pet 5, style %s\n",
                                 && (record->pet5.attr.fl.bundl.inter != GHATCH),
                                 83, errginitloc)
             GKSERROR( ! WS_FILL_TYPE(record->pet5.attr.fl.bundl.inter,
-                                     record->pet5.attr.fl.bundl.style), 85, errginitloc)    /* c1174 */
+                                     record->pet5.attr.fl.bundl.style), 85, errginitloc)
             GKSERROR( ! WS_AVAIL_COLOUR (ws, (record->pet5.attr.fl.bundl.colour)), 93, errginitloc)
             }
             else {

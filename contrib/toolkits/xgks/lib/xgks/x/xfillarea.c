@@ -113,7 +113,7 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
         }
         xXgksSetForeground(dpy, gc, fill_colour );
 
-        /* the fill interior attribute */       /* c1174 */
+        /* the fill interior attribute */
 
         if (ptr->inter == GBUNDLED)
                 bundl_ptr = bdl_ptr;
@@ -122,20 +122,20 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
 
         fill_inter = bundl_ptr->inter;
 
-        /* the fill style attribute */          /* c1174 */
+        /* the fill style attribute */
 
         if (ptr->style == GBUNDLED)
                 fill_style = bdl_ptr->style;
         else
                 fill_style = idv_ptr->style;
 
-        if (WS_FILL_TYPE(fill_inter,fill_style))        /* c1174 */
-           if (fill_inter == GHATCH)                    /* c1174 */
-                fill_style += 1;                        /* c1174 */
-           else                                         /* c1174 */
-                fill_style -= 1;                        /* c1174 */
-        else                                            /* c1174 */
-                fill_style = 0;                         /* c1174 */
+        if (WS_FILL_TYPE(fill_inter,fill_style))
+           if (fill_inter == GHATCH)
+                fill_style += 1;
+           else
+                fill_style -= 1;
+        else
+                fill_style = 0;
 
         /* set GC values */
 
@@ -237,18 +237,18 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
  * in the stipple bitmap to the fill colour (Foreground) and ignores the zeros.
  */
                 pixm = XCreatePixmap(dpy, win,
-                        ws->ptbundl_table[-fill_style].size.x,          /* c1174 */
-                        ws->ptbundl_table[-fill_style].size.y,          /* c1174 */
+                        ws->ptbundl_table[-fill_style].size.x,
+                        ws->ptbundl_table[-fill_style].size.y,
                         1 );
                 gcv.foreground = 1;
                 gcv.background = 0;
                 stipgc = XCreateGC(dpy, pixm, GCForeground|GCBackground, &gcv);
                 XSetClipMask(dpy, stipgc, None);
 
-                w = ws->ptbundl_table[-fill_style].size.x;              /* c1174 */
-                h = ws->ptbundl_table[-fill_style].size.y;              /* c1174 */
+                w = ws->ptbundl_table[-fill_style].size.x;
+                h = ws->ptbundl_table[-fill_style].size.y;
                 nn = w * h;
-                array = ws->ptbundl_table[-fill_style].array;           /* c1174 */
+                array = ws->ptbundl_table[-fill_style].array;
 
 /* build the pixmap to stipple with */
                 ptt1 = (XPoint *)malloc( nn * sizeof(XPoint));
