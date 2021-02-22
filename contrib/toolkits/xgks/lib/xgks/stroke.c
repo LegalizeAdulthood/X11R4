@@ -315,7 +315,7 @@ Gint gsetstrokemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
                 idev->data.stk.editpos =
                     idev->data.stk.initst.record.pet1.editpos-1;
                 if ( mode == GEVENT )
-                    signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for                                                        event mode  c1057  */
+                    signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for event mode */
                 idev->active = True;
                 if ( echo == GECHO )
                         XgksStkUpdatePrompt( ws, idev, PROMPTON, &(idev->data.stk.stkbuf[idev->data.stk.editpos]),
