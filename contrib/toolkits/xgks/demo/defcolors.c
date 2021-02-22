@@ -36,13 +36,11 @@
 #include <xgks.h>
 
 #include <stdio.h>
+#include <strings.h>
 
 #include "demo.h"
 
-FillBox( org, wid, ht, color )
-        Gpoint *org;
-        Gfloat wid, ht;
-        Gint color;
+void FillBox( Gpoint *org, Gfloat wid, Gfloat ht, Gint color )
 {
         Gpoint pts[5];
         Gchar num[5];
@@ -62,9 +60,7 @@ FillBox( org, wid, ht, color )
         gtext( pts, num );
 }
 
-main( argc, argv )
-        int argc;
-        char *argv[];
+int main( int argc, char *argv[] )
 {
         Gint ws_id = 1;
         char *conn = (char *)NULL;
@@ -126,4 +122,6 @@ main( argc, argv )
         gdeactivatews(ws_id);
         gclosews(ws_id);
         gclosegks();
+
+        return 0;
 }

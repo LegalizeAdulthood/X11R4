@@ -7,7 +7,7 @@ endfunction()
 
 gksDemo(bsort)
 # gksDemo(clock)
-# gksDemo(defcolors)
+gksDemo(defcolors)
 # gksDemo(font)
 # gksDemo(hanoi)
 gksDemo(mi)
