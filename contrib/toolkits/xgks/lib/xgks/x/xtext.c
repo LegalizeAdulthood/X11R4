@@ -126,12 +126,12 @@ static void xComputeText(WS_STATE_PTR ws, TEXT_ST *tx)
 
         /* New Text Transformation code */
         /* up_vector (with height) in X coordinate */
-        sndc_ht.x = (tx->up_vec.x*ws->ndctoxtrans.xScale);      /*ILL2*/
-        sndc_ht.y = (tx->up_vec.y*ws->ndctoxtrans.yScale);      /*ILL2*/
+        sndc_ht.x = (tx->up_vec.x*ws->ndctoxtrans.xScale);
+        sndc_ht.y = (tx->up_vec.y*ws->ndctoxtrans.yScale);
 
         /* Base vector (with size) in X coordinate */
-        sndc_wt.x = (tx->base_vec.x*ws->ndctoxtrans.xScale);    /*ILL2*/
-        sndc_wt.y = (tx->base_vec.y*ws->ndctoxtrans.yScale);    /*ILL2*/
+        sndc_wt.x = (tx->base_vec.x*ws->ndctoxtrans.xScale);
+        sndc_wt.y = (tx->base_vec.y*ws->ndctoxtrans.yScale);
 
         /* apply the char_expansion factor */
         if (tx->txattr.tx_exp == GINDIVIDUAL) {
@@ -144,13 +144,13 @@ static void xComputeText(WS_STATE_PTR ws, TEXT_ST *tx)
         }
         xIdentityMatrix(stroke_trans);
         stroke_trans[0] =
-                (sndc_wt.x) / (FontTable[wsr_font].f_font->fnominalx); /*ILL2*/
+                (sndc_wt.x) / (FontTable[wsr_font].f_font->fnominalx);
         stroke_trans[3] =
-                (sndc_wt.y) / (FontTable[wsr_font].f_font->fnominalx); /*ILL2*/
+                (sndc_wt.y) / (FontTable[wsr_font].f_font->fnominalx);
         stroke_trans[1] =
-                (sndc_ht.x) / (FontTable[wsr_font].f_font->fnominaly); /*ILL2*/
+                (sndc_ht.x) / (FontTable[wsr_font].f_font->fnominaly);
         stroke_trans[4] =
-                (sndc_ht.y) / (FontTable[wsr_font].f_font->fnominaly); /*ILL2*/
+                (sndc_ht.y) / (FontTable[wsr_font].f_font->fnominaly);
 
 /* additional spacing scale factor */
         if (tx->txattr.space == GINDIVIDUAL)
@@ -212,12 +212,12 @@ fprintf(stderr, "\n\nEntering ......---->  XTEXT  <-----......\n");
 fprintf(stderr, " from xtext ... ATSNDC.x=%f  atsndc.y=%f\n", atsndc.x, atsndc.y);
 #endif
 
-    stroke_trans[2] = atsndc.x;         /*ILL2*/
-    stroke_trans[5] = atsndc.y;         /*ILL2*/
+    stroke_trans[2] = atsndc.x;
+    stroke_trans[5] = atsndc.y;
 
 #ifdef TDEBUG
 fprintf(stderr, "after matrix ops of ATSNDc ..\n");
-xDumpMatrix("stroke_trans", stroke_trans);      /*ILL2*/
+xDumpMatrix("stroke_trans", stroke_trans);
 #endif
 
         /* find total length or height of string + spacing */
@@ -345,7 +345,7 @@ fprintf(stderr, "ibmrt_ddgks:text: xtrans=%f ytrans=%f\n",xtrans, ytrans);
 
 #ifdef TDEBUG
 fprintf(stderr, "ibmrt_ddgks:text: xtrans=%f ytrans=%f\n",xtrans, ytrans);
-xDumpMatrix("stroke_trans", stroke_trans);      /*ILL2*/
+xDumpMatrix("stroke_trans", stroke_trans);
 #endif
 
 
@@ -406,8 +406,8 @@ static void xPlotStrokeChar(struct vcharst *cvp)
 
         cnt = 0;
         pt = pts;
-        tmp.x = (int)(stroke_trans[0]* 0 + stroke_trans[1]* 0 + stroke_trans[2] + 0.5); /*ILL2*/
-    tmp.y = DCYMAX - (int)(stroke_trans[3]* 0 + stroke_trans[4]* 0 + stroke_trans[5] + 0.5); /*ILL2*/
+        tmp.x = (int)(stroke_trans[0]* 0 + stroke_trans[1]* 0 + stroke_trans[2] + 0.5);
+    tmp.y = DCYMAX - (int)(stroke_trans[3]* 0 + stroke_trans[4]* 0 + stroke_trans[5] + 0.5);
         pt++; cnt++;
 
         while ( (cvp->vc_type != 'e') ) {       /* get the next stroke */
@@ -423,22 +423,22 @@ static void xPlotStrokeChar(struct vcharst *cvp)
                         LastType = 'm';
                         cnt=1;
                         pt = pts;
-                        tmp.x = cvp->vc_x;                                   /*ILL2*/
-                        tmp.y = cvp->vc_y;                                   /*ILL2*/
+                        tmp.x = cvp->vc_x;
+                        tmp.y = cvp->vc_y;
                         pt->x = (int) (stroke_trans[0]*tmp.x +
-                           stroke_trans[1]*tmp.y + stroke_trans[2] + 0.5);   /*ILL2*/
+                           stroke_trans[1]*tmp.y + stroke_trans[2] + 0.5);
                         pt->y = (DCYMAX) - (int) (stroke_trans[3]*tmp.x
-                           + stroke_trans[4]*cvp->vc_y +stroke_trans[5]+0.5);/*ILL2*/
+                           + stroke_trans[4]*cvp->vc_y +stroke_trans[5]+0.5);
                         pt++;
                         break;
                 case 'd':
                         LastType = 'd';
-                        tmp.x = cvp->vc_x;                                   /*ILL2*/
-                        tmp.y = cvp->vc_y;                                   /*ILL2*/
+                        tmp.x = cvp->vc_x;
+                        tmp.y = cvp->vc_y;
                         pt->x = (int) (stroke_trans[0]*tmp.x +
-                          stroke_trans[1]*tmp.y + stroke_trans[2] + 0.5);    /*ILL2*/
+                          stroke_trans[1]*tmp.y + stroke_trans[2] + 0.5);
                          pt->y = (DCYMAX) - (int) (stroke_trans[3]*tmp.x
-                          + stroke_trans[4]*cvp->vc_y + stroke_trans[5]+0.5);/*ILL2*/
+                          + stroke_trans[4]*cvp->vc_y + stroke_trans[5]+0.5);
                         cnt++;
                         pt++;
                         break;
@@ -550,7 +550,7 @@ static int xIdentityMatrix(Gfloat m[6])
         return (OK);
 }
 
-#ifdef TDEBUG           /*ILL2*/
+#ifdef TDEBUG
 static int xScaleMatrix(m, sx, sy)
         Gfloat m[];
         double sx, sy;
@@ -584,7 +584,7 @@ static int xRotateMatrix(m, axis, rad)
         xMultMatrix(m, rm, newm);       /*ILL*/
         xCopyMatrix(m, newm);
 }
-#endif          /*ILL2*/
+#endif
 
 static int xTransMatrix(Gfloat m[6], Gfloat tx, Gfloat ty)
 {
@@ -696,8 +696,8 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
         atsndc.x = (tx->location->x*ws->ndctoxtrans.xScale) + ws->ndctoxtrans.xTrans;
         atsndc.y = (tx->location->y*ws->ndctoxtrans.yScale) + ws->ndctoxtrans.yTrans;
 
-        stroke_trans[2] = atsndc.x;             /*ILL2*/
-        stroke_trans[5] = atsndc.y;             /*ILL2*/
+        stroke_trans[2] = atsndc.x;
+        stroke_trans[5] = atsndc.y;
 
         /* find total length or height of string + spacing */
         /* find minimum and maximum X & Y */
@@ -817,7 +817,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
 
 #ifdef TDEBUG
         fprintf(stderr, "ibmrt_ddgks:text: xtrans=%f ytrans=%f\n",xtrans, ytrans);
-        DumpMatrix("stroke_trans", stroke_trans);       /*ILL2*/
+        DumpMatrix("stroke_trans", stroke_trans);
 #endif
 
         /* find minimum and maximum X & Y of First Character */
@@ -932,7 +932,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
  * and the inverse of the workstation transformation to get NDC coordinates
  */
         for (i=0; i<5; i++) {
-                ApplyMatrix(stroke_trans, &(ndc_points[i]), &start);    /*ILL2*/
+                ApplyMatrix(stroke_trans, &(ndc_points[i]), &start);
                 ndc_points[i].x = (start.x - ws->ndctoxtrans.xTrans) / ws->ndctoxtrans.xScale;
                 ndc_points[i].y = (start.y - ws->ndctoxtrans.yTrans) / ws->ndctoxtrans.yScale;
         }
