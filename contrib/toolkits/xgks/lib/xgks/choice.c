@@ -383,7 +383,7 @@ Gint greqchoice(Gint ws_id, Gint dev, Gchoice *response)
             &gcvalues);
         idev->data.cho.initst.mode = GREQUEST;
         idev->data.cho.initst.esw = GECHO;
-        idev->data.cho.initst.choice.status = GC_NOCHOICE; /* c2046 */
+        idev->data.cho.initst.choice.status = GC_NOCHOICE;
         idev->data.cho.initst.choice.choice = 1;
         idev->data.cho.initst.pet = 1;
         idev->data.cho.initst.e_area.xmin = 0.0;

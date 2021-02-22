@@ -186,7 +186,7 @@ Gint gsetpickmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
         idev->data.pic.initst.mode = GREQUEST;
         idev->data.pic.initst.esw  = GECHO;
         idev->data.pic.initst.pet = 1;
-        idev->data.pic.initst.pick.status = GP_NOPICK; /* c2046 */
+        idev->data.pic.initst.pick.status = GP_NOPICK;
         idev->data.pic.initst.pick.seg = INVALID;
         idev->data.pic.initst.pick.pickid = INVALID;
         idev->data.pic.initst.e_area.xmin = 0.0;
@@ -256,7 +256,7 @@ Gint greqpick(Gint ws_id, Gint dev, Gpick *response)
                 idev->data.pic.initst.mode = GREQUEST;
                 idev->data.pic.initst.esw  = GECHO;
                 idev->data.pic.initst.pet = 1;
-                idev->data.pic.initst.pick.status = GP_NOPICK; /* c2046 */
+                idev->data.pic.initst.pick.status = GP_NOPICK;
                 idev->data.pic.initst.pick.seg = INVALID;
                 idev->data.pic.initst.pick.pickid = INVALID;
                 idev->data.pic.initst.e_area.xmin = 0.0;
@@ -383,7 +383,7 @@ Gint ginqpickst(Gint ws_id, Gint dev, Gqtype type, Gpickst *state)
          state->mode = GREQUEST;
                 state->esw  = GECHO;
                 state->pet = 1;
-                state->pick.status = GP_NOPICK; /* c2046 */
+                state->pick.status = GP_NOPICK;
                 state->pick.seg = INVALID;
                 state->pick.pickid = INVALID;
                 state->e_area.xmin = 0.0;
