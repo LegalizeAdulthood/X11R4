@@ -570,7 +570,7 @@ Gint gsetpickid(Gint pick_id)
         GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errgsetpickid)
 
 /* valid pick id? */
-        GKSERROR ((pick_id < 0) ,97, errgsetpickid)     /* c1160 */
+        GKSERROR ((pick_id < 0) ,97, errgsetpickid)
 
 /* STEP 2: change the current pick id */
         xgks_state.gks_pick_id = pick_id;
