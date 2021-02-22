@@ -41,11 +41,11 @@ Gint    ws_id = 1;
 
 Gint result;
 
-Glimit w;       /*MIT*/
-Glimit v;       /*MIT*/
+Glimit w;
+Glimit v;
 
-Glimit wsw;     /*MIT*/
-Glimit wsv;     /*MIT*/
+Glimit wsw;
+Glimit wsv;
 
 main(argc,argv)
 int argc;
@@ -69,28 +69,28 @@ char *argv[];
         gopenws (200, "font.out", "MO");
         gactivatews (200);
 
-        wsw.xmin = 0.0;         /*MIT*/
-        wsw.xmax = 1.0;         /*MIT*/
-        wsw.ymin = 0.0;         /*MIT*/
-        wsw.ymax = 0.8;         /*MIT*/
+        wsw.xmin = 0.0;
+        wsw.xmax = 1.0;
+        wsw.ymin = 0.0;
+        wsw.ymax = 0.8;
         gsetwswindow(200, &wsw);
 
-        wsv.xmin = 0.0;         /*MIT*/
-        wsv.xmax = 1279.0;      /*MIT*/
-        wsv.ymin = 0.0;         /*MIT*/
-        wsv.ymax = 1023.0;      /*MIT*/
+        wsv.xmin = 0.0;
+        wsv.xmax = 1279.0;
+        wsv.ymin = 0.0;
+        wsv.ymax = 1023.0;
         gsetwsviewport(200, &wsv);
 
-        w.xmin = 0.0;           /*MIT*/
-        w.xmax = 1.0;           /*MIT*/
-        w.ymin = 0.0;           /*MIT*/
-        w.ymax = 1.0;           /*MIT*/
+        w.xmin = 0.0;
+        w.xmax = 1.0;
+        w.ymin = 0.0;
+        w.ymax = 1.0;
         gsetwindow(1, &w);
 
-        v.xmin = 0.0;           /*MIT*/
-        v.xmax = 1.0;           /*MIT*/
-        v.ymin = 0.0;           /*MIT*/
-        v.ymax = 0.8;           /*MIT*/
+        v.xmin = 0.0;
+        v.xmax = 1.0;
+        v.ymin = 0.0;
+        v.ymax = 0.8;
         gsetviewport(1, &v);
 
         gsetwswindow(ws_id, &wsw);
@@ -234,7 +234,7 @@ show_font(font)
         tpt.y -= 0.08;
         gtext(&tpt, "abcdefghijklmnopqrstuvwxyz");
         tpt.y -= 0.08;
-        gtext(&tpt, "[\\]^_`{|}~");             /*MIT*/
+        gtext(&tpt, "[\\]^_`{|}~");
 }
 
 SetColor (hash)

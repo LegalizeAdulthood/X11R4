@@ -55,16 +55,16 @@ main(argc, argv)
         int argc ;
         char *argv[] ;
 {
-        Glimit WsWindow;        /*MIT*/
+        Glimit WsWindow;
         Gint ws_id = 1;
         Gint mo_id = 3;
         char *conn = (char *)NULL;
         int i;
 
-        WsWindow.xmin = 0.0;    /*MIT*/
-        WsWindow.xmax = 1.0;    /*MIT*/
-        WsWindow.ymin = 0.0;    /*MIT*/
-        WsWindow.ymax = 0.8;    /*MIT*/
+        WsWindow.xmin = 0.0;
+        WsWindow.xmax = 1.0;
+        WsWindow.ymin = 0.0;
+        WsWindow.ymax = 0.8;
 
         for( i=1; i<argc; i++){
                 if (index( argv[i], ':'))
@@ -146,26 +146,26 @@ box( l )
 title()
 {
         Gpoint p ;
-        Glimit Window;          /*MIT*/
-        Glimit Viewport;        /*MIT*/
-        Gtxfp txfp;             /*MIT*/
-        Gtxalign txalign;       /*MIT*/
+        Glimit Window;
+        Glimit Viewport;
+        Gtxfp txfp;
+        Gtxalign txalign;
 
-        Window.xmin = 0.0;      /*MIT*/
-        Window.xmax = 16.0;     /*MIT*/
-        Window.ymin = 0.0;      /*MIT*/
-        Window.ymax = 2.0;      /*MIT*/
+        Window.xmin = 0.0;
+        Window.xmax = 16.0;
+        Window.ymin = 0.0;
+        Window.ymax = 2.0;
 
-        Viewport.xmin = 0.1;    /*MIT*/
-        Viewport.xmax = 0.9;    /*MIT*/
-        Viewport.ymin = 0.58;   /*MIT*/
-        Viewport.ymax = 0.74;   /*MIT*/
+        Viewport.xmin = 0.1;
+        Viewport.xmax = 0.9;
+        Viewport.ymin = 0.58;
+        Viewport.ymax = 0.74;
 
-        txfp.font = 2;          /*MIT*/
-        txfp.prec = GSTROKE;    /*MIT*/
+        txfp.font = 2;
+        txfp.prec = GSTROKE;
 
-        txalign.hor = GTH_CENTER;       /*MIT*/
-        txalign.ver = GTV_HALF;         /*MIT*/
+        txalign.hor = GTH_CENTER;
+        txalign.ver = GTV_HALF;
 
         gsetdeferst(1, GASAP, GALLOWED);
         gsetwindow(1, &Window );
@@ -192,19 +192,19 @@ title()
 inittower(n)
 int n ;
 {
-        Glimit Window;          /*MIT*/
-        Glimit Viewport;        /*MIT*/
+        Glimit Window;
+        Glimit Viewport;
         int i ;
 
-        Window.xmin = 0.0;      /*MIT*/
-        Window.xmax = WINDWD;   /*MIT*/
-        Window.ymin = 0.0;      /*MIT*/
-        Window.ymax = WINDHT;   /*MIT*/
+        Window.xmin = 0.0;
+        Window.xmax = WINDWD;
+        Window.ymin = 0.0;
+        Window.ymax = WINDHT;
 
-        Viewport.xmin = 0.1;    /*MIT*/
-        Viewport.xmax = 0.9;    /*MIT*/
-        Viewport.ymin =  0.06;  /*MIT*/
-        Viewport.ymax =  0.54;  /*MIT*/
+        Viewport.xmin = 0.1;
+        Viewport.xmax = 0.9;
+        Viewport.ymin =  0.06;
+        Viewport.ymax =  0.54;
 
         gsetwindow(1, &Window );
         gsetviewport(1, &Viewport);
@@ -222,7 +222,7 @@ Gfloat tcount[3] = {0.2, 0.2, 0.2} ;
 
 int towers[3][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};   /*MIT*/
+                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
 int towerx[3] = {0, 0, 0} ;
 
@@ -282,7 +282,7 @@ disk(diskno, x, y)
         gfillarea(4, pts) ;
 }
 
-Gpoint pathpts[4] = {{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}} ;  /*MIT*/
+Gpoint pathpts[4] = {{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}} ;
 
 /*
  * draw a line from top disk of tower a to top of screen, then over

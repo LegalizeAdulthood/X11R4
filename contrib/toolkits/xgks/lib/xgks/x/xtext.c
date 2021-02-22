@@ -194,7 +194,7 @@ Gint xXgksText(WS_STATE_PTR ws, TEXT_ST *tx)
         Gint i;
 
 
-        if (ws->ewstype != X_WIN) return(OK);   /*MIT*/
+        if (ws->ewstype != X_WIN) return(OK);
 
 
         XgksSIGIO_OFF(ws->dpy);
@@ -400,7 +400,7 @@ xDumpMatrix("stroke_trans", stroke_trans);      /*ILL2*/
         }
 
         XgksSIGIO_ON(ws->dpy);
-        return(OK);     /*MIT*/
+        return(OK);
 }
 
 /*
@@ -638,7 +638,7 @@ static int xMultMatrix(Gfloat a[6], Gfloat b[6], Gfloat c[6])
         return(0);/* c1171 */
 }
 
-#ifdef TDEBUG           /*MIT*/
+#ifdef TDEBUG
 static int xDumpMatrix(s, m)
 char *s;
 Gfloat m[];
@@ -650,7 +650,7 @@ Gfloat m[];
                 fprintf(stderr,"        %10.5f",m[i]);
         fprintf(stderr,"\n");
 }
-#endif          /*MIT*/
+#endif
 static int ck_ranges(struct vcharst *cdef, Gfloat *Xmin, Gfloat *Xmax, Gfloat *Ymin, Gfloat *Ymax)
 {
         Gint DoneBoth = 0;
@@ -975,7 +975,7 @@ Gint xXgksMesg(WS_STATE_PTR ws, MESG_ST *mesg)
         XPoint  x_pos;
         XRectangle x_clip;
         XFontStruct  *MFontInfo;
-        if (ws->ewstype != X_WIN) return(OK);           /*MIT*/
+        if (ws->ewstype != X_WIN) return(OK);
 
         XgksSIGIO_OFF(ws->dpy);
 
@@ -1016,5 +1016,5 @@ Gint xXgksMesg(WS_STATE_PTR ws, MESG_ST *mesg)
 
         XgksSIGIO_ON(ws->dpy);
 
-        return(OK);     /*MIT*/
+        return(OK);
 }

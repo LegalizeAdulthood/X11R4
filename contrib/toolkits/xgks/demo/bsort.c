@@ -58,7 +58,7 @@ int bkg;
 #define MAX     100
 
 Gfloat ypos, xpos;
-Gint color_list[MAX];   /*MIT*/
+Gint color_list[MAX];
 
 double atof();
 
@@ -74,9 +74,9 @@ int main(argc,argv)
         char *argv[];
 {
         char *conn = (char *)NULL;
-        Glimit WsWindow;                /*MIT*/
-        Glimit Viewport;                /*MIT*/
-        Glimit Window;                  /*MIT*/
+        Glimit WsWindow;
+        Glimit Viewport;
+        Glimit Window;
 
         int i;
 
@@ -90,25 +90,25 @@ int main(argc,argv)
         gopenws(ws_id, conn, conn);
         gactivatews(ws_id);
 
-        WsWindow.xmin = 0.0;            /*MIT*/
-        WsWindow.xmax = 1.0;            /*MIT*/
-        WsWindow.ymin = 0.0;            /*MIT*/
-        WsWindow.ymax = 0.8;            /*MIT*/
+        WsWindow.xmin = 0.0;
+        WsWindow.xmax = 1.0;
+        WsWindow.ymin = 0.0;
+        WsWindow.ymax = 0.8;
         gsetwswindow( ws_id, &WsWindow );
 
-        Viewport.xmin = 0.0;            /*MIT*/
-        Viewport.xmax = 1.0;            /*MIT*/
-        Viewport.ymin = 0.0;            /*MIT*/
-        Viewport.ymax = 0.8;            /*MIT*/
+        Viewport.xmin = 0.0;
+        Viewport.xmax = 1.0;
+        Viewport.ymin = 0.0;
+        Viewport.ymax = 0.8;
         gsetviewport( ws_id, &Viewport );
         gselntran(1);
 
         gen_colors();
 
-        Window.xmin = 0.0;              /*MIT*/
-        Window.xmax = 1279.0;           /*MIT*/
-        Window.ymin = 0.0;              /*MIT*/
-        Window.ymax = 1023.0;           /*MIT*/
+        Window.xmin = 0.0;
+        Window.xmax = 1279.0;
+        Window.ymin = 0.0;
+        Window.ymax = 1023.0;
         gsetwindow( ws_id, &Window);
 
         gsetmarkertype( GMK_POINT );
@@ -144,7 +144,7 @@ static int show_it()
 
         pt.y = ypos;
         for (i=0; i<MAX; i++) {
-                gsetmarkercolorind(color_list[i]);      /*MIT*/
+                gsetmarkercolorind(color_list[i]);
                 pt.x = xpos + (i * 6.0) + 2.0;
                 gpolymarker(1, &pt);
         }
@@ -161,11 +161,11 @@ static int bsort()
                 show_it();
                 sorted = TRUE;
                 for (m = 0; m <= n; m++) {
-                        if (color_list[m] > color_list[m+1]) {  /*MIT*/
+                        if (color_list[m] > color_list[m+1]) {
                                 sorted = FALSE;
-                                t = color_list[m];              /*MIT*/
-                                color_list[m] = color_list[m+1];/*MIT*/
-                                color_list[m+1] = t;            /*MIT*/
+                                t = color_list[m];
+                                color_list[m] = color_list[m+1];
+                                color_list[m+1] = t;
                         }
                 }
                 if (sorted) break;
@@ -181,18 +181,18 @@ void quick_sort(int l, int r)
         if (r>l) {
                 ll = l;
                 rr = r+1;
-                k  = color_list[l];     /*MIT*/
+                k  = color_list[l];
                 do {
-                        do { ll++;} while (color_list[ll] < k); /*MIT*/
-                        do { rr--;} while (color_list[rr] > k); /*MIT*/
+                        do { ll++;} while (color_list[ll] < k);
+                        do { rr--;} while (color_list[rr] > k);
                         if (ll < rr) {
-                                t = color_list[ll];             /*MIT*/
-                                color_list[ll] = color_list[rr];        /*MIT*/
-                                color_list[rr] = t;             /*MIT*/
+                                t = color_list[ll];
+                                color_list[ll] = color_list[rr];
+                                color_list[rr] = t;
                         }
                 } while (rr > ll);
-                color_list[l] = color_list[rr];                 /*MIT*/
-                color_list[rr] = k;                             /*MIT*/
+                color_list[l] = color_list[rr];
+                color_list[rr] = k;
                 quick_sort(l,rr-1);
                 quick_sort(rr+1, r);
                 show_it();
@@ -243,7 +243,7 @@ static int init_list()
         srandom(tp.tv_sec);
 
         for (i=0; i < MAX; i++)
-                color_list[i] = random() % CMAX;                /*MIT*/
+                color_list[i] = random() % CMAX;
 
         return (0);
 }

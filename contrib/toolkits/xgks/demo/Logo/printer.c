@@ -42,12 +42,12 @@
 draw_printer(wsid)
 Gint wsid;
 {
-	Glimit Window;		/*MIT*/
+	Glimit Window;
 
-	Window.xmin = 0.0;	/*MIT*/	
-	Window.xmax = 58.0;	/*MIT*/
-	Window.ymin = 0.0;	/*MIT*/
-	Window.ymax = 46.0;	/*MIT*/
+	Window.xmin = 0.0;
+	Window.xmax = 58.0;
+	Window.ymin = 0.0;
+	Window.ymax = 46.0;
 
 	gsetwindow( wsid, &Window );
 	gselntran(1);
@@ -57,7 +57,7 @@ Gint wsid;
 
 do_printer()
 {
-	Gpoint pts[20];		/*MIT*/
+	Gpoint pts[20];
 	
 	gsetfillintstyle(GSOLID);
 	gsetfillcolorind(BEIGE);

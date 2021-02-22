@@ -42,12 +42,12 @@
 draw_ramtek(wsid)
 Gint wsid;
 {
-	Glimit Window;		/*MIT*/
+	Glimit Window;
 
-	Window.xmin = 0.0;	/*MIT*/
-	Window.xmax = 57.0;	/*MIT*/
-	Window.ymin = 0.0;	/*MIT*/	
-	Window.ymax = 45.6;	/*MIT*/
+	Window.xmin = 0.0;
+	Window.xmax = 57.0;
+	Window.ymin = 0.0;
+	Window.ymax = 45.6;
 
 	gsetwindow( wsid, &Window );
 	gselntran(1);
@@ -59,7 +59,7 @@ Gint wsid;
 
 do_ram_monitor()
 {
-	Gpoint pts[20];		/*MIT*/
+	Gpoint pts[20];
 	
 	gsetfillcolorind(DARKGRAY);
 	

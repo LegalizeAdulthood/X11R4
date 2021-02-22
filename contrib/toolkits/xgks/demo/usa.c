@@ -34,7 +34,7 @@
  */
 
 #include <stdio.h>
-#include <strings.h>            /*MIT*/
+#include <strings.h>
 #include <xgks.h>
 #include "demo.h"
 
@@ -49,10 +49,10 @@ char *argv[];
 {
         double atof();
 
-        Glimit w;       /*MIT*/
-        Glimit v;       /*MIT*/
-        Glimit wsw;     /*MIT*/
-        Glimit wsv;     /*MIT*/
+        Glimit w;
+        Glimit v;
+        Glimit wsw;
+        Glimit wsv;
 
         char *conn = (char *)NULL;
         int i;
@@ -74,29 +74,29 @@ char *argv[];
 
         /* i_max_display_size( ws_type, &result, &units, dc_size, raster_size); */
 
-        w.xmin = 803770.5;      /*MIT*/
-        w.xmax = 8103770.5;     /*MIT*/
-        w.ymin = -903359.0;     /*MIT*/
-        w.ymax = 4287752.0;     /*MIT*/
+        w.xmin = 803770.5;
+        w.xmax = 8103770.5;
+        w.ymin = -903359.0;
+        w.ymax = 4287752.0;
         gsetwindow(1, &w);
 
-        v.xmin = 0.0;           /*MIT*/
-        v.xmax = 1.0;           /*MIT*/
-        v.ymin = 0.0;           /*MIT*/
-        v.ymax = 1024.0/1280.0; /*MIT*/
+        v.xmin = 0.0;
+        v.xmax = 1.0;
+        v.ymin = 0.0;
+        v.ymax = 1024.0/1280.0;
         gsetviewport(1, &v);
 
         gselntran(1);
-        wsw.xmin = 0.0;                 /*MIT*/
-        wsw.xmax = 1.0;                 /*MIT*/
-        wsw.ymin = 0.0;                 /*MIT*/
-        wsw.ymax = 1024.0/1280.0;       /*MIT*/
+        wsw.xmin = 0.0;
+        wsw.xmax = 1.0;
+        wsw.ymin = 0.0;
+        wsw.ymax = 1024.0/1280.0;
         gsetwswindow(ws_id, &wsw);
 
-        wsv.xmin = 0.0;                 /*MIT*/
-        wsv.xmax = 1279.0;              /*MIT*/
-        wsv.ymin = 0.0;                 /*MIT*/
-        wsv.ymax = 1023.0;              /*MIT*/
+        wsv.xmin = 0.0;
+        wsv.xmax = 1279.0;
+        wsv.ymin = 0.0;
+        wsv.ymax = 1023.0;
         gsetwsviewport(ws_id, &wsv);
 
         PlotMap();
@@ -145,7 +145,7 @@ PlotMap()
         gsetlinewidth( 0.0 );
         cnt=0;
         pt = pts;
-        while ( fscanf(pointsfile, "%ld %ld %ld", &ud, &x, &y) == 3)    /*MIT*/
+        while ( fscanf(pointsfile, "%ld %ld %ld", &ud, &x, &y) == 3)
                 switch( ud ) {
                 case 2:
                         pt->x = x; (pt++)->y = y;

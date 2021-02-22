@@ -97,7 +97,7 @@ int xXgksPolyLine(WS_STATE_PTR ws, PLINE_ST *plin_ptr)
     int i, npnt;
 
 
-    if (ws->ewstype != X_WIN) return(OK);       /*MIT*/
+    if (ws->ewstype != X_WIN) return(OK);
 
 
     /* Initialization  */
@@ -189,6 +189,6 @@ int xXgksPolyLine(WS_STATE_PTR ws, PLINE_ST *plin_ptr)
 
     XgksSIGIO_ON(ws->dpy);
 
-    return(OK); /*MIT*/
+    return(OK);
 }
 

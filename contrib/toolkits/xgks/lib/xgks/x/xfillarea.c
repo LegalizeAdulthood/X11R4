@@ -73,7 +73,7 @@ Gint xXgksFillArea(WS_STATE_PTR ws, FILL_AREA_ST *fill_ptr)
         int i, w, h, npnt, n, nn;
         int px, py, prev, cur;
 
-        if (ws->ewstype != X_WIN) return(OK);   /*MIT*/
+        if (ws->ewstype != X_WIN) return(OK);
 
         /* Initialization  */
 

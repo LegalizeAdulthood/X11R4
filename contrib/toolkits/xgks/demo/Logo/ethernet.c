@@ -43,14 +43,14 @@ draw_ethernet(wsid, dotext)
 Gint wsid;
 Gint dotext;
 {
-	Glimit Window;		/*MIT*/
+	Glimit Window;
 
-	Window.xmin = -100.0;	/*MIT*/
-	Window.xmax = 100.0;	/*MIT*/
-	Window.ymin = -100.0;	/*MIT*/
-	Window.ymax = 100.0;	/*MIT*/
+	Window.xmin = -100.0;
+	Window.xmax = 100.0;
+	Window.ymin = -100.0;
+	Window.ymax = 100.0;
 
-	gsetwindow(wsid, &Window );	/*MIT*/
+	gsetwindow(wsid, &Window );
 	gselntran(1) ;
 
 	if (dotext)
@@ -69,13 +69,13 @@ do_text()
 	double sin(), cos() ;
 	int i ;
 	Gfloat deg2rad = 3.14159 / 180.0 ;
-	Gtxfp txfp;			/*MIT*/
-	Gtxalign txalign;		/*MIT*/
+	Gtxfp txfp;
+	Gtxalign txalign;
 
-	txfp.font = 4;			/*MIT*/
-	txfp.prec = GSTROKE;		/*MIT*/
-	txalign.hor = GTH_CENTER;	/*MIT*/
-	txalign.ver = GTV_HALF;		/*MIT*/
+	txfp.font = 4;
+	txfp.prec = GSTROKE;
+	txalign.hor = GTH_CENTER;
+	txalign.ver = GTV_HALF;
 
 	c[1] = '\0';
 	strcpy(words,"PROFESSIONAL WORKSTATION");

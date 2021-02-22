@@ -43,12 +43,12 @@
 draw_9000(wsid)
 	Gint wsid;
 {
-	Glimit Window;		/*MIT*/
+	Glimit Window;
 
-	Window.xmin = 0.0;	/*MIT*/
-	Window.xmax = 78.0;	/*MIT*/
-	Window.ymin = 0.0;	/*MIT*/
-	Window.ymax = 62.4;	/*MIT*/
+	Window.xmin = 0.0;
+	Window.xmax = 78.0;
+	Window.ymin = 0.0;
+	Window.ymax = 62.4;
 
 	gsetwindow( wsid, &Window );
 	gselntran(1);
@@ -63,7 +63,7 @@ draw_9000(wsid)
 
 do_9000_computer()
 {
-	Gpoint pts[20];		/*MIT*/
+	Gpoint pts[20];
 	
 	gsetfillintstyle(GSOLID);
 	gsetfillcolorind(BEIGE);
@@ -120,8 +120,8 @@ do_9000_computer()
 
 do_9000_monitor()
 {
-	Gpoint pts[20];		/*MIT*/
-	Gfloat x;		/*MIT*/	
+	Gpoint pts[20];
+	Gfloat x;
 
 	gsetfillcolorind(BEIGE);
 	
@@ -224,7 +224,7 @@ do_9000_monitor()
 
 do_9000_disk()
 {
-	Gpoint pts[20];		/*MIT*/
+	Gpoint pts[20];
 
 	gsetfillcolorind(0);
 	
@@ -373,7 +373,7 @@ do_9000_disk()
 
 do_9000_keyboard()
 {
-	Gpoint pts[20];		/*MIT*/
+	Gpoint pts[20];
 	Gfloat x, y;
 
 	gsetfillcolorind(BEIGE);

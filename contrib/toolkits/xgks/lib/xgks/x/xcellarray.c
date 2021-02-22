@@ -60,7 +60,7 @@ Gint xXgksCellarray(WS_STATE_PTR ws, CELL_ARRAY_ST *cell_ptr)
 
 
 
-        if (ws->ewstype != X_WIN) return(OK);   /*MIT*/
+        if (ws->ewstype != X_WIN) return(OK);
 
         /* Initialization  */
 

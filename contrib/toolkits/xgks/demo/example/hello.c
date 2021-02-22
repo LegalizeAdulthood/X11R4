@@ -34,12 +34,12 @@ WaitForBreak( wsid )
 {
 	Gchoice init;
 	Gchoicerec record;
-	Glimit earea;		/*MIT*/
+	Glimit earea;
 
-	earea.xmin = 0.0;	/*MIT*/	
-	earea.xmax = 1279.0;	/*MIT*/
-	earea.ymin = 0.0;	/*MIT*/
-	earea.ymax = 1023.0;	/*MIT*/
+	earea.xmin = 0.0;
+	earea.xmax = 1279.0;
+	earea.ymin = 0.0;
+	earea.ymax = 1023.0;
 
 	gmessage(wsid, "Done, press Break to quit ...");
 

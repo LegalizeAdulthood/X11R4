@@ -249,7 +249,7 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
 
         /* Get currunt window attributes  */
 
-        XGetWindowAttributes(dpy, wk->win, &win_att);           /*MIT*/
+        XGetWindowAttributes(dpy, wk->win, &win_att);
 
         wk->wbound.x = (Gfloat)win_att.width;
         wk->wbound.y = (Gfloat)win_att.height;
@@ -293,14 +293,14 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
 int xXgksClearWs(WS_STATE_PTR wk)
 {
 
-        if (wk->ewstype != X_WIN) return(OK);   /*MIT*/
+        if (wk->ewstype != X_WIN) return(OK);
 
         XgksSIGIO_OFF(wk->dpy);
         XClearArea(wk->dpy, wk->win, 0, 0, 0, 0, False);
         XSync(wk->dpy, 0);
         XgksSIGIO_ON(wk->dpy);
 
-        return(OK);     /*MIT*/
+        return(OK);
 
 }
 
@@ -312,7 +312,7 @@ int xXgksClearWs(WS_STATE_PTR wk)
 int xXgksCloseWs(WS_STATE_PTR ws)
 {
 
-        if (ws->ewstype != X_WIN) return(OK);   /*MIT*/
+        if (ws->ewstype != X_WIN) return(OK);
 
         XgksSIGIO_OFF(ws->dpy);
         XUnmapWindow(ws->dpy, ws->win);
@@ -321,7 +321,7 @@ int xXgksCloseWs(WS_STATE_PTR ws)
         XSync(ws->dpy, 0);
         XgksSIGIO_ON(ws->dpy);
 
-        return(OK);     /*MIT*/
+        return(OK);
 }
 
 
@@ -344,7 +344,7 @@ int xXgksHighLight(WS_STATE_PTR ws, Gpoint *bd)
         gc = ws->gc;
 
 
-        if (ws->ewstype != X_WIN) return(OK);   /*MIT*/
+        if (ws->ewstype != X_WIN) return(OK);
 
 
         XgksSIGIO_OFF(ws->dpy);
@@ -365,5 +365,5 @@ int xXgksHighLight(WS_STATE_PTR ws, Gpoint *bd)
         XSetFunction(dpy, gc, GXcopy);
         XgksSIGIO_ON(ws->dpy);
 
-        return(OK);     /*MIT*/
+        return(OK);
 }

@@ -58,17 +58,17 @@ main(argc,argv)
 	int argc;
 	char *argv[];
 {
-	Glimit WsWindow;	/*MIT*/
+	Glimit WsWindow;
 	char *conn = (char *)NULL;
 	Gchoice init;
 	Gchoicerec record;
 
 	int i;
 
-	WsWindow.xmin = 0.0;	/*MIT*/
-	WsWindow.xmax = 1.0;	/*MIT*/
-	WsWindow.ymin = 0.0;	/*MIT*/	
-	WsWindow.ymax = 0.8;	/*MIT*/
+	WsWindow.xmin = 0.0;
+	WsWindow.xmax = 1.0;
+	WsWindow.ymin = 0.0;
+	WsWindow.ymax = 0.8;
 
 	for( i=1; i<argc; i++){
 		if (index( argv[i], ':'))
@@ -138,12 +138,12 @@ main(argc,argv)
 do_connections()
 {
 	Gpoint pts[22];
-	Glimit Window;		/*MIT*/
+	Glimit Window;
 	
-	Window.xmin = 0.0;	/*MIT*/
-	Window.xmax = 1.0;	/*MIT*/
-	Window.ymin = 0.0;	/*MIT*/
-	Window.ymax = 0.8;	/*MIT*/
+	Window.xmin = 0.0;
+	Window.xmax = 1.0;
+	Window.ymin = 0.0;
+	Window.ymax = 0.8;
 
 	gsetwindow( 1, &Window );
 	gsetviewport( 1, &Window );
@@ -183,19 +183,19 @@ do_connections()
 background(bkg)
 	Gint bkg;
 {
-	Gpoint pts[20];		/*MIT*/
-	Glimit Viewport;	/*MIT*/
-	Glimit Window;		/*MIT*/
+	Gpoint pts[20];
+	Glimit Viewport;
+	Glimit Window;
 
-	Viewport.xmin = 0.0;	/*MIT*/
-	Viewport.xmax = 1.0;	/*MIT*/	
-	Viewport.ymin = 0.0;	/*MIT*/
-	Viewport.ymax = 0.8;	/*MIT*/
+	Viewport.xmin = 0.0;
+	Viewport.xmax = 1.0;
+	Viewport.ymin = 0.0;
+	Viewport.ymax = 0.8;
 
-	Window.xmin = 0.0;	/*MIT*/
-	Window.xmax = 100.0;	/*MIT*/
-	Window.ymin = 0.0;	/*MIT*/
-	Window.ymax = 100.0;	/*MIT*/
+	Window.xmin = 0.0;
+	Window.xmax = 100.0;
+	Window.ymin = 0.0;
+	Window.ymax = 100.0;
 
 	gsetwindow(1, &Window );
 	gsetviewport( 1, &Viewport );

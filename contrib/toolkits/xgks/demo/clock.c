@@ -68,7 +68,7 @@ jmp_buf jmpenv ;
 #define BIGHAND 2
 #define LITTLEHAND 3
 
-Gfloat trans[2][3] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};    /*MIT*/
+Gfloat trans[2][3] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
 Gasfs asf = {   GBUNDLED, GBUNDLED, GBUNDLED,           /* polyline asfs */
                 GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL,  /* polymarker asfs */
@@ -100,29 +100,29 @@ main(argc, argv)
 
         Gint ws_id = 1;
         char *conn = (char *)NULL;
-        Glimit Window;          /*MIT*/
-        Glimit WsWindow;        /*MIT*/
-        Glimit WsViewport;      /*MIT*/
-        Glnbundl plrep;         /*MIT*/
+        Glimit Window;
+        Glimit WsWindow;
+        Glimit WsViewport;
+        Glnbundl plrep;
 
-        Window.xmin = -100.0;           /*MIT*/
-        Window.xmax = 100.0;            /*MIT*/
-        Window.ymin = -100.0;           /*MIT*/
-        Window.ymax = 100.0;            /*MIT*/
+        Window.xmin = -100.0;
+        Window.xmax = 100.0;
+        Window.ymin = -100.0;
+        Window.ymax = 100.0;
 
-        WsWindow.xmin = 0.0;            /*MIT*/
-        WsWindow.xmax = 1.0;            /*MIT*/
-        WsWindow.ymin = 0.0;            /*MIT*/
-        WsWindow.ymax = 1.0;            /*MIT*/
+        WsWindow.xmin = 0.0;
+        WsWindow.xmax = 1.0;
+        WsWindow.ymin = 0.0;
+        WsWindow.ymax = 1.0;
 
-        WsViewport.xmin = 128.0;        /*MIT*/
-        WsViewport.xmax = 1151.0;       /*MIT*/
-        WsViewport.ymin = 0.0;          /*MIT*/
-        WsViewport.ymax = 1023.0;       /*MIT*/
+        WsViewport.xmin = 128.0;
+        WsViewport.xmax = 1151.0;
+        WsViewport.ymin = 0.0;
+        WsViewport.ymax = 1023.0;
 
-        plrep.type = 1;                 /*MIT*/
-        plrep.width = 1.0;              /*MIT*/
-        plrep.colour = BLACK;           /*MIT*/
+        plrep.type = 1;
+        plrep.width = 1.0;
+        plrep.colour = BLACK;
 
         for( i=1; i<argc; i++){
                 if (index( argv[i], ':'))
@@ -220,13 +220,13 @@ clockface()
         Gflbundl farep;
 #define SetFillRep(w, n, i, s, c) farep.inter = i; farep.style = s; farep.color = c; gsetfillrep(w, n, &farep )
 
-        Gtxfp txfp ;            /*MIT*/
-        Gtxalign txalign;       /*MIT*/
+        Gtxfp txfp ;
+        Gtxalign txalign;
 
-        txfp.font = 2;                  /*MIT*/
-        txfp.prec = GSTROKE;            /*MIT*/
-        txalign.hor = GTH_CENTER;       /*MIT*/
-        txalign.ver = GTV_HALF;         /*MIT*/
+        txfp.font = 2;
+        txfp.prec = GSTROKE;
+        txalign.hor = GTH_CENTER;
+        txalign.ver = GTV_HALF;
 
         gclearws( 1, GALWAYS );
 

@@ -66,8 +66,8 @@ main( argc, argv )
 {
         Gint ws_id = 1;
         char *conn = (char *)NULL;
-        Glimit Window;          /*MIT*/
-        Glimit WsWindow;        /*MIT*/
+        Glimit Window;
+        Glimit WsWindow;
         Gpoint org;
         Gint color;
         Gtxfp txfp;
@@ -75,21 +75,21 @@ main( argc, argv )
 
         int i;
 
-        Window.xmin = 0.0;              /*MIT*/
-        Window.xmax = 1279.0;           /*MIT*/
-        Window.ymin = 0.0;              /*MIT*/
-        Window.ymax = 1023.0;           /*MIT*/
+        Window.xmin = 0.0;
+        Window.xmax = 1279.0;
+        Window.ymin = 0.0;
+        Window.ymax = 1023.0;
 
-        WsWindow.xmin = 0.0;            /*MIT*/
-        WsWindow.xmax = 1.0;            /*MIT*/
-        WsWindow.ymin = 0.0;            /*MIT*/
-        WsWindow.ymax = 0.8;            /*MIT*/
+        WsWindow.xmin = 0.0;
+        WsWindow.xmax = 1.0;
+        WsWindow.ymin = 0.0;
+        WsWindow.ymax = 0.8;
 
-        txfp.font = 1;                  /*MIT*/
-        txfp.prec = GSTROKE;            /*MIT*/
+        txfp.font = 1;
+        txfp.prec = GSTROKE;
 
-        txalign.hor = GTH_CENTER;       /*MIT*/
-        txalign.ver = GTV_HALF;         /*MIT*/
+        txalign.hor = GTH_CENTER;
+        txalign.ver = GTV_HALF;
 
         for( i=1; i<argc; i++){
                 if (index( argv[i], ':'))
