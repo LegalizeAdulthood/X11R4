@@ -35,24 +35,24 @@
  */
 void WaitForBreak(Gint wsid)
 {
-        Gchoice init;
-        Gchoicerec record;
-        Glimit earea;
+    Gchoice init;
+    Gchoicerec record;
+    Glimit earea;
 
-        earea.xmin = 0.0;
-        earea.xmax = 1279.0;
-        earea.ymin = 0.0;
-        earea.ymax = 1023.0;
+    earea.xmin = 0.0;
+    earea.xmax = 1279.0;
+    earea.ymin = 0.0;
+    earea.ymax = 1023.0;
 
-        gmessage(wsid, "Done, press Break to quit ...");
+    gmessage(wsid, "Done, press Break to quit ...");
 
-        init.status = GC_NOCHOICE;
-        init.choice = 0;
-        record.pet1.data = NULL;
-        ginitchoice( wsid, 1, &init, 1, &earea, &record );
-        gsetchoicemode( wsid, 1, GREQUEST, GECHO );
-        for( ; init.status != GC_NONE ; )
-                greqchoice( wsid, 1, &init );
+    init.status = GC_NOCHOICE;
+    init.choice = 0;
+    record.pet1.data = NULL;
+    ginitchoice(wsid, 1, &init, 1, &earea, &record);
+    gsetchoicemode(wsid, 1, GREQUEST, GECHO);
+    for (; init.status != GC_NONE;)
+        greqchoice(wsid, 1, &init);
 }
 
 /*
@@ -60,58 +60,60 @@ void WaitForBreak(Gint wsid)
  */
 void PrintHello(void)
 {
-        Gpoint tpt;
-        Gpoint up;
-        Gtxfp txfp;
-        Gtxalign align;
+    Gpoint tpt;
+    Gpoint up;
+    Gtxfp txfp;
+    Gtxalign align;
 
-        txfp.font = 4;                  /* use Serif Bold Roman font */
-        txfp.prec = GSTROKE;
-        gsettextfontprec(&txfp);
+    txfp.font = 4; /* use Serif Bold Roman font */
+    txfp.prec = GSTROKE;
+    gsettextfontprec(&txfp);
 
-        gsetcharexpan(0.5);
-        gsetcharspace(0.2);
-        gsettextcolorind( 1 );          /* should be white */
+    gsetcharexpan(0.5);
+    gsetcharspace(0.2);
+    gsettextcolorind(1); /* should be white */
 
-        gsetcharheight(0.05);
+    gsetcharheight(0.05);
 
-        up.x = 0.0; up.y = 1.0;         /* characters are straight up */
-        gsetcharup(&up);
+    up.x = 0.0;
+    up.y = 1.0; /* characters are straight up */
+    gsetcharup(&up);
 
-        align.hor = GTH_CENTER;
-        align.ver = GTV_HALF;
-        gsettextalign(&align);
+    align.hor = GTH_CENTER;
+    align.ver = GTV_HALF;
+    gsettextalign(&align);
 
-        gsettextpath(GTP_RIGHT);        /* print from left to right */
+    gsettextpath(GTP_RIGHT); /* print from left to right */
 
-        tpt.x = 0.5; tpt.y = 0.5;       /* center of the window */
-        gtext(&tpt,"Hello World!");
-
+    tpt.x = 0.5;
+    tpt.y = 0.5; /* center of the window */
+    gtext(&tpt, "Hello World!");
 }
 
 int main(int argc, char *argv[])
 {
-        int i, wsid=1;
-        char *conn = (char *)NULL;
+    int i, wsid = 1;
+    char *conn = (char *) NULL;
 
-        for( i=1; i<argc; i++){
-                if (index( argv[i], ':'))
-                        conn = argv[i];
+    for (i = 1; i < argc; i++)
+    {
+        if (index(argv[i], ':'))
+            conn = argv[i];
         /* Application dependent options here */
-        }
+    }
 
-        gopengks(stdout,0);
+    gopengks(stdout, 0);
 
-        if (gopenws( wsid , conn, conn) != 0)
-                exit(0);
-        gactivatews( wsid );
-
-        PrintHello();
-        WaitForBreak ( wsid );
-
-        gdeactivatews( wsid );
-        gclosews( wsid );
-
-        gclosegks();
+    if (gopenws(wsid, conn, conn) != 0)
         exit(0);
+    gactivatews(wsid);
+
+    PrintHello();
+    WaitForBreak(wsid);
+
+    gdeactivatews(wsid);
+    gclosews(wsid);
+
+    gclosegks();
+    exit(0);
 }
