@@ -71,10 +71,7 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
     XGCValues gcvalues;
     Gprflag *f;
     char **d, **s;
-    int number, i;                                              /* c1019 */
-#if 0   /* following line commented out for now (MW) */         /* c1019 */
-    int keycode;                                                /* c1019 */
-#endif                                                          /* c1019 */
+    int number, i;
     int maxwidth, width;   /* These vars were added to compute string */
     char **menustr;        /* menu dimensions that used to be computed */
     Gpoint dcpt;           /* in the PROMPTON: portion of the prompt */
@@ -111,48 +108,34 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
         || area->ymin < 0 || area->ymax > ws->size.y),
         145, errginitchoice )
 
-/* initial values valid */                                         /* c1019 */
-    switch ( pet ) {                                               /* c1019 */
-    case 1:        /* no data */                                   /* c1019 */
-        /* initial value ok (make sure key in range) */            /* c1019 */
-        GKSERROR( (init->status == GC_OK) && (init->choice < 1), 152, errginitchoice)                                                               /* c1019 */
-#if 0   /* following block commented out for now (MW) */           /* c1019 */
-        /* (make sure key exists) */                               /* c1019 */
-        keycode =                                                  /* c1019 */
-        XKeysymToKeycode( ws->dpy,                                 /* c1019 */
-                          (KeySym)(XK_F1+init->choice - 1) );      /* c1019 */
-        GKSERROR( (init->status == GC_OK) && (keycode == 0), 152, errginitchoice)                                                                   /* c1019 */
-#endif
-        break;                                                     /* c1019 */
-    case 2:        /* array of prompt flags ON | OFF */            /* c1019 */
-        GKSERROR( (record->pet2.number < 1), 146, errginitchoice)   /* c1019 */
-        /* initial value ok (make sure key in range) */            /* c1019 */
-        GKSERROR( (init->status == GC_OK) && (init->choice < 1), 152, errginitchoice)                                                               /* c1019 */
-#if 0   /* following block commented out for now (MW) */           /* c1019 */
-        /* (make sure key exists) */                               /* c1019 */
-        keycode =                                                  /* c1019 */
-        XKeysymToKeycode( ws->dpy,                                 /* c1019 */
-                          (KeySym)(XK_F1+init->choice - 1) );      /* c1019 */
-        GKSERROR( (init->status == GC_OK) && (keycode == 0), 152, errginitchoice)                                                                   /* c1019 */
-#endif
-        /* (make sure key is flagged on) */                        /* c1019 */
-        GKSERROR( (init->status == GC_OK) && (record->pet2.enable[init->choice-1] == GPROFF), 152, errginitchoice)                                  /* c1019 */
-        break;                                                     /* c1019 */
-    case 3:        /* menu strings */                              /* c1019 */
-        GKSERROR( (record->pet3.number < 1), 146, errginitchoice)   /* c1019 */
-        /* initial value ok (make sure choice is in range) */      /* c1019 */
-        GKSERROR( (init->status == GC_OK) && ((init->choice > record->pet2.number) || (init->choice < 1)), 152, errginitchoice)                     /* c1019 */
-        break;                                                     /* c1019 */
-    case 4:        /* strings that can be typed in */              /* c1019 */
-        break;                                                     /* c1019 */
-    case 5:        /* segment */                                   /* c1019 */
-        break;                                                     /* c1019 */
-    default:                                                       /* c1019 */
-        break;                                                     /* c1019 */
-    }                                                              /* c1019 */
+/* initial values valid */
+    switch ( pet ) {
+    case 1:        /* no data */
+        /* initial value ok (make sure key in range) */
+        GKSERROR( (init->status == GC_OK) && (init->choice < 1), 152, errginitchoice)
+        break;
+    case 2:        /* array of prompt flags ON | OFF */
+        GKSERROR( (record->pet2.number < 1), 146, errginitchoice)
+        /* initial value ok (make sure key in range) */
+        GKSERROR( (init->status == GC_OK) && (init->choice < 1), 152, errginitchoice)
+        /* (make sure key is flagged on) */
+        GKSERROR( (init->status == GC_OK) && (record->pet2.enable[init->choice-1] == GPROFF), 152, errginitchoice)
+        break;
+    case 3:        /* menu strings */
+        GKSERROR( (record->pet3.number < 1), 146, errginitchoice)
+        /* initial value ok (make sure choice is in range) */
+        GKSERROR( (init->status == GC_OK) && ((init->choice > record->pet2.number) || (init->choice < 1)), 152, errginitchoice)
+        break;
+    case 4:        /* strings that can be typed in */
+        break;
+    case 5:        /* segment */
+        break;
+    default:
+        break;
+    }
 
-    if ((pet > 0) && (pet < 4)) {                                  /* c1019 */
-    /* Set up the gcvalues */                                      /* c1019 */
+    if ((pet > 0) && (pet < 4)) {
+    /* Set up the gcvalues */
         gcvalues.function = GXcopy;
         gcvalues.foreground = ws->wsfg;
         gcvalues.background = ws->wsbg;
@@ -164,7 +147,7 @@ Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gc
             MFontInfo = XLoadQueryFont( ws->dpy, DEF_CHO_FONT );
         XgksSIGIO_ON(ws->dpy);
         gcvalues.font = MFontInfo->fid;
-    }                                                            /* c1019 */
+    }
 
     if ((idev = XgksIDevLookup( ws, dev, GCHOICE)) == NULL) {
     /* Create the Input Device structure */
