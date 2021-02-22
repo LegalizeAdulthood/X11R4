@@ -75,7 +75,7 @@ int xXgksSetColourRep(ws, idx, rep)
         win = ws->win;
         dclmp = ws->dclmp;
         wclmp = ws->wclmp;
-        visual = DefaultVisual(dpy, DefaultScreen(dpy) ); /* c1127 */
+        visual = DefaultVisual(dpy, DefaultScreen(dpy) );
         ncolours = ws->wscolour;
 
         if ( ncolours < 3 ) {
@@ -101,11 +101,11 @@ int xXgksSetColourRep(ws, idx, rep)
                         case StaticColor:
                         case TrueColor:
                                 ws->wclmp = XCreateColormap(dpy, win,
-                                        visual, AllocNone); /* c1127 */
+                                        visual, AllocNone);
                                 break;
                         default:
                                 ws->wclmp = XCreateColormap(dpy, win,
-                                        visual, AllocAll); /* c1127 */
+                                        visual, AllocAll);
                                 break;
                 }
 

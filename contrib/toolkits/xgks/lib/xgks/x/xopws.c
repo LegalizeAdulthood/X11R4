@@ -143,7 +143,7 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
 
                 /* get the screen default colour map ID */
 
-                wk->dclmp = DefaultColormap(wk->dpy, DefaultScreen(wk->dpy));/*c1127*/
+                wk->dclmp = DefaultColormap(wk->dpy, DefaultScreen(wk->dpy));
                 wk->wclmp = wk->dclmp;
 
                 XSelectInput(wk->dpy, DefaultRootWindow(wk->dpy), FocusChangeMask );

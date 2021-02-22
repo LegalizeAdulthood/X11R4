@@ -352,7 +352,7 @@ loadcache(dpy, index)
                         clr->pixel = i;
                         clr->flags = DoRed | DoGreen | DoBlue;
                 }
-        cmap = DefaultColormap( dpy, DefaultScreen(dpy) ); /* c1127 */
+        cmap = DefaultColormap( dpy, DefaultScreen(dpy) );
         XQueryColors(dpy, cmap, Ccolours, ncolours);
         CprevDpy = dpy;
         Cncolours = ncolours;

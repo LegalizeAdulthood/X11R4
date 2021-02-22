@@ -322,7 +322,7 @@ static int XgksFocusInEvent(XEvent *xev, Display *dpy)
       }
    else
       {
-      if (*clmp_installed != (dclmp = DefaultColormap(dpy, DefaultScreen(dpy)))) /* c1127 */
+      if (*clmp_installed != (dclmp = DefaultColormap(dpy, DefaultScreen(dpy))))
          {
          XInstallColormap(dpy, dclmp);
          XFlush (dpy);                                    /* c1145 */
@@ -344,7 +344,7 @@ static int XgksFocusOutEvent(Display *dpy)
 {
    Colormap dclmp;
 
-   dclmp = DefaultColormap(dpy, DefaultScreen(dpy)); /* c1127 */
+   dclmp = DefaultColormap(dpy, DefaultScreen(dpy));
    XInstallColormap(dpy, dclmp);
    XFlush(dpy);
    /* NOTE: If we don't flush, switching quickly */ /* c1145 */
