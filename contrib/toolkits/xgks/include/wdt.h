@@ -49,7 +49,7 @@
 #define WS_MAX_DCX      1280
 #define WS_MAX_DCY      1024
 
-#define WS_LINE_TYPE(t)    ( (t)>=GLN_LDASH && (t)<=GLN_DOTDASH ) /* Back to > GLN_LDASH  c1146 */
+#define WS_LINE_TYPE(t)    ( (t)>=GLN_LDASH && (t)<=GLN_DOTDASH ) /* Back to > GLN_LDASH */
 #define WS_MARKER_TYPE(t)  ((t)>0 && (t)<=GMK_X)
 #define WS_FONT_TYPE(t)    ((t)>0 && (t)<=DEFINED_FONT_TYPE)    /* Goes from 1 to 9 */
 #define WS_FILL_TYPE(s,t)       ((((s)==GPATTERN) && ((t)>0 && (t)<MAX_BUNDL_TBL)) \
