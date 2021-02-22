@@ -631,7 +631,7 @@ Gint XgksChoUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
         Gpoint dcpt;
         XRectangle rect;
         XPoint xpt, itempos;
-    int i, number;              /*c1030*/
+    int i, number;
     char **menustr;
     Gchoice *data;
     KeySym ksym;
@@ -666,7 +666,7 @@ Gint XgksChoUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
         case 3:
             /* menu size is computed in ginitchoice() */
             /* display the menu */
-            number = idev->data.cho.initst.record.pet3.number;  /*c1030*/
+            number = idev->data.cho.initst.record.pet3.number;
             /* Full size background */
             XSetForeground( ws->dpy, idev->gc, MenuFG );
             XFillRectangle( ws->dpy, ws->win, idev->gc, MenuLeft, MenuTop, MenuWid+4, MenuHt+4 );
