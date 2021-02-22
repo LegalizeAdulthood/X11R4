@@ -65,7 +65,7 @@ Gint ginqlinefacil(ws_type, fac)
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqlinefacil);    /* c1087 */
+        GKSERROR( (ewstype == WST_INVALID), 22, errginqlinefacil);
         GKSERROR( ewstype != X_WIN, 39, errginqlinefacil);
 
 /* set the return values */
@@ -117,7 +117,7 @@ Gint ginqpredlinerep(ws_type, idx, rep)
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqpredlinerep);   /* c1087 */
+        GKSERROR( (ewstype == WST_INVALID), 22, errginqpredlinerep);
         GKSERROR( ewstype != X_WIN, 39, errginqpredlinerep);
 
 /* check for valid idx */

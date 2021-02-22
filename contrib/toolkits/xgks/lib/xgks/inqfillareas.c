@@ -64,7 +64,7 @@ Gint ginqfillfacil(ws_type, fac)
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqfillfacil);  /* c1087 */
+        GKSERROR( (ewstype == WST_INVALID), 22, errginqfillfacil);
         GKSERROR( ewstype != X_WIN, 39, errginqfillfacil);
 
 /* set the return values */
@@ -111,7 +111,7 @@ Gint ginqpredfillrep(ws_type, idx, rep)
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqpredfillrep);     /* c1087 */
+        GKSERROR( (ewstype == WST_INVALID), 22, errginqpredfillrep);
         GKSERROR( ewstype != X_WIN, 39, errginqpredfillrep);
 
 /* check for valid idx */
@@ -223,7 +223,7 @@ Gint ginqpatfacil(ws_type, fac)
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype ==  WST_INVALID), 22, errginqpatfacil);  /* c1087 */
+        GKSERROR( (ewstype ==  WST_INVALID), 22, errginqpatfacil);
         GKSERROR( ewstype != X_WIN, 39, errginqpatfacil);
 
 /* set the return values */
@@ -253,7 +253,7 @@ Gint ginqpredpatrep(ws_type, idx, rep)
 
 /* check for valid ws_type */
         ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqpredpatrep);    /* c1087 */
+        GKSERROR( (ewstype == WST_INVALID), 22, errginqpredpatrep);
         GKSERROR( ewstype != X_WIN, 39, errginqpredpatrep);
 
 /* check for valid idx */

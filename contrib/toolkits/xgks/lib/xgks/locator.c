@@ -644,7 +644,7 @@ Gint ginqdefloc( type, dev, data )
 
 /* valid ws type? */
     ewstype = XgksWsTypeToEnum( type );
-    GKSERROR( (ewstype == WST_INVALID), 22, errginqdefloc )     /*c1087*/
+    GKSERROR( (ewstype == WST_INVALID), 22, errginqdefloc )
 
 /* valid workstation type (assumes all INPUT and OUTIN workstations are X_WIN */
     GKSERROR( ewstype != X_WIN, 38, errginqdefloc)

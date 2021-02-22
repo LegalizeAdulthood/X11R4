@@ -575,7 +575,7 @@ Gint ginqdefchoice(Gchar *type, Gint dev, Gdefchoice *data)
 
 /* valid wsid? */
     ewstype = XgksWsTypeToEnum( type );
-    GKSERROR( ewstype == WST_INVALID, 22, errginqdefchoice )    /*c1087*/
+    GKSERROR( ewstype == WST_INVALID, 22, errginqdefchoice )
 
 /* valid workstation type (assumes all INPUT and OUTIN workstations are X_WIN */
     GKSERROR( ewstype != X_WIN, 38, errginqdefchoice)
