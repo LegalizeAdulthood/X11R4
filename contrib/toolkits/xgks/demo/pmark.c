@@ -44,165 +44,175 @@ void test_pmark(void);
 
 static void WaitForBreak(Gint ws_id)
 {
-        Gchoice init;
-        Gchoicerec record;
-        Glimit earea;
+    Gchoice init;
+    Gchoicerec record;
+    Glimit earea;
 
-        earea.xmin = 0.0;
-        earea.xmax = 1279.0;
-        earea.ymin = 0.0;
-        earea.ymax = 1023.0;
+    earea.xmin = 0.0;
+    earea.xmax = 1279.0;
+    earea.ymin = 0.0;
+    earea.ymax = 1023.0;
 
-        init.status = GC_NOCHOICE;
-        init.choice = 0;
-        record.pet1.data = NULL;
-        ginitchoice( ws_id, 1, &init, 1, &earea, &record );
-        gsetchoicemode( ws_id, 1, GREQUEST, GECHO );
-        for( ; init.status != GC_NONE ; )
-                greqchoice( ws_id, 1, &init );
+    init.status = GC_NOCHOICE;
+    init.choice = 0;
+    record.pet1.data = NULL;
+    ginitchoice(ws_id, 1, &init, 1, &earea, &record);
+    gsetchoicemode(ws_id, 1, GREQUEST, GECHO);
+    for (; init.status != GC_NONE;)
+        greqchoice(ws_id, 1, &init);
 }
 
-Gint    ws_id = 1;
+Gint ws_id = 1;
 
 Gint result;
 
 int main(int argc, char *argv[])
 {
-        double atof();
-        Gchar *conn = (char *)NULL;
-        Gint i;
+    double atof();
+    Gchar *conn = (char *) NULL;
+    Gint i;
 
-        for (i=1; i<argc; i++) {
-                if (index( argv[i], ':')) conn = argv[i];
-        }
+    for (i = 1; i < argc; i++)
+    {
+        if (index(argv[i], ':'))
+            conn = argv[i];
+    }
 
-        if ((result = gopengks(stdout,0)) != 0)
-                perr(result,"...open_gks");
+    if ((result = gopengks(stdout, 0)) != 0)
+        perr(result, "...open_gks");
 
-        if ((result = gopenws(ws_id,conn,conn)) != 0)
-                perr(result, "...open_ws");
+    if ((result = gopenws(ws_id, conn, conn)) != 0)
+        perr(result, "...open_ws");
 
-        if ((result = gactivatews(ws_id)) != 0)
-                perr(result, "...activate_ws");
+    if ((result = gactivatews(ws_id)) != 0)
+        perr(result, "...activate_ws");
 
-        test_pmark();
+    test_pmark();
 
-        fprintf(stderr,"Done, press break...\n");
+    fprintf(stderr, "Done, press break...\n");
 
-        WaitForBreak (1);
+    WaitForBreak(1);
 
-        if ((result = gdeactivatews(ws_id)) != 0)
-                perr(result, "...deactivate_ws");
+    if ((result = gdeactivatews(ws_id)) != 0)
+        perr(result, "...deactivate_ws");
 
-        if ((result = gclosews(ws_id)) != 0)
-                perr(result, "...close_ws");
+    if ((result = gclosews(ws_id)) != 0)
+        perr(result, "...close_ws");
 
-        if ((result = gclosegks()) != 0)
-                perr(result,"...close_gks");
-        fprintf(stdout,"after close_gks\n");
-        exit(0);
+    if ((result = gclosegks()) != 0)
+        perr(result, "...close_gks");
+    fprintf(stdout, "after close_gks\n");
+    exit(0);
 }
 
 void perr(int i, char *s)
 {
-        if (i) fprintf(stdout,"%s %d\n",s,i);
-        else fprintf(stdout,"%s %d\n",s,i);
-        exit(1);
+    if (i)
+        fprintf(stdout, "%s %d\n", s, i);
+    else
+        fprintf(stdout, "%s %d\n", s, i);
+    exit(1);
 }
 
-#define BLACK   0
-#define BLUE    1
-#define GREEN   2
-#define CYAN    3
-#define RED     4
+#define BLACK 0
+#define BLUE 1
+#define GREEN 2
+#define CYAN 3
+#define RED 4
 #define MAGENTA 5
-#define YELLOW  6
-#define WHITE   7
+#define YELLOW 6
+#define WHITE 7
 
 Gcobundl Colors[] = {
-        { 0.0, 0.0, 0.0 },
-        { 0.0, 0.0, 1.0 },
-        { 0.0, 1.0, 0.0 },
-        { 0.0, 1.0, 1.0 },
-        { 1.0, 0.0, 0.0 },
-        { 1.0, 0.0, 1.0 },
-        { 1.0, 1.0, 0.0 },
-        { 1.0, 1.0, 1.0 }
+    { 0.0, 0.0, 0.0 },
+    { 0.0, 0.0, 1.0 },
+    { 0.0, 1.0, 0.0 },
+    { 0.0, 1.0, 1.0 },
+    { 1.0, 0.0, 0.0 },
+    { 1.0, 0.0, 1.0 },
+    { 1.0, 1.0, 0.0 },
+    { 1.0, 1.0, 1.0 }
 };
 
 void LoadColors(Gint ws_id)
 {
-        int i;
+    int i;
 
-        for(i=BLACK; i<=WHITE; i++)
-                gsetcolorrep( ws_id, i, &Colors[i]);
+    for (i = BLACK; i <= WHITE; i++)
+        gsetcolorrep(ws_id, i, &Colors[i]);
 }
 Gasfs IASFs = {
-        GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL,          /* polyline */
-        GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL,          /* polymarker */
-        GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL,     /* text */
-        GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL           /* fillarea */
+    GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL,              /* polyline */
+    GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL,              /* polymarker */
+    GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL, /* text */
+    GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL               /* fillarea */
 };
 
 Gasfs BASFs = {
-        GBUNDLED, GBUNDLED, GBUNDLED,                   /* polyline */
-        GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL,          /* polymarker */
-        GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL,     /* text */
-        GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL           /* fillarea */
+    GBUNDLED, GBUNDLED, GBUNDLED,                       /* polyline */
+    GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL,              /* polymarker */
+    GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL, /* text */
+    GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL               /* fillarea */
 };
 
 void test_pmark(void)
 {
-        Gpoint tpt, pt;
-        Gint i, type;
-        Gchar s[20];
-        Gpoint up;
-        Gtxfp txfp;
-        Gtxalign align;
+    Gpoint tpt, pt;
+    Gint i, type;
+    Gchar s[20];
+    Gpoint up;
+    Gtxfp txfp;
+    Gtxalign align;
 
-        LoadColors(ws_id);
-        gsetdeferst(ws_id, GASAP, GALLOWED);
+    LoadColors(ws_id);
+    gsetdeferst(ws_id, GASAP, GALLOWED);
 
-        txfp.font = 4;
-        txfp.prec = GSTROKE;
-        gsettextfontprec(&txfp);;
-        gsetcharexpan(0.5);
-        gsetcharspace(0.4);
-        gsettextcolorind(WHITE);        /* WHITE */
+    txfp.font = 4;
+    txfp.prec = GSTROKE;
+    gsettextfontprec(&txfp);
+    ;
+    gsetcharexpan(0.5);
+    gsetcharspace(0.4);
+    gsettextcolorind(WHITE); /* WHITE */
 
-        gsetcharheight(0.05);
-        up.x = 0.0; up.y = 1.0;
-        gsetcharup(&up);
-        align.hor = GTH_CENTER;
-        align.ver = GTV_BASE;
-        gsettextalign(&align);
-        gsettextpath(GTP_RIGHT);
+    gsetcharheight(0.05);
+    up.x = 0.0;
+    up.y = 1.0;
+    gsetcharup(&up);
+    align.hor = GTH_CENTER;
+    align.ver = GTV_BASE;
+    gsettextalign(&align);
+    gsettextpath(GTP_RIGHT);
 
-        tpt.x = 0.5; tpt.y = 0.9;
-        gtext(&tpt,"GKS POLYMARKERS");
+    tpt.x = 0.5;
+    tpt.y = 0.9;
+    gtext(&tpt, "GKS POLYMARKERS");
 
-        txfp.font = 1;
-        txfp.prec = GSTROKE;
-        gsettextfontprec(&txfp);
-        gsetcharheight(0.03);
-        align.hor = GTH_RIGHT;
-        align.ver = GTV_HALF;
-        gsettextalign(&align);
+    txfp.font = 1;
+    txfp.prec = GSTROKE;
+    gsettextfontprec(&txfp);
+    gsetcharheight(0.03);
+    align.hor = GTH_RIGHT;
+    align.ver = GTV_HALF;
+    gsettextalign(&align);
 
-        tpt.x = 0.15; tpt.y = 0.9;
-        pt.y = 0.9;
-        for(i=1; i<9; i++) {
-                tpt.y -= 0.1;
-                sprintf(s,"scale %5.2f",(float)(2.0*i));
-                gtext(&tpt, s);
-                gsetmarkersize( (float) (2.0*i));
-                gsetmarkercolorind( (i%7)+1 );
-                pt.x = 0.25;
-                pt.y -= 0.1;
-                for(type=1; type<6; type++) {
-                        gsetmarkertype( type );
-                        gpolymarker(1, &pt);
-                        pt.x += 0.16;
-                }
+    tpt.x = 0.15;
+    tpt.y = 0.9;
+    pt.y = 0.9;
+    for (i = 1; i < 9; i++)
+    {
+        tpt.y -= 0.1;
+        sprintf(s, "scale %5.2f", (float) (2.0 * i));
+        gtext(&tpt, s);
+        gsetmarkersize((float) (2.0 * i));
+        gsetmarkercolorind((i % 7) + 1);
+        pt.x = 0.25;
+        pt.y -= 0.1;
+        for (type = 1; type < 6; type++)
+        {
+            gsetmarkertype(type);
+            gpolymarker(1, &pt);
+            pt.x += 0.16;
         }
+    }
 }
