@@ -234,15 +234,15 @@ Gint ginqmoreevents(Gsimultev *events)
 /* check gks state */
         GKSERROR ( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqmoreevents );
 
-        /* Each event has an ID that is set when  */    /* c1133 */
-        /* the event is generated.  If two events */    /* c1133 */
-        /* have the same ID, they were produced   */    /* c1133 */
-        /* simultaneously by the same trigger!    */    /* c1133 */
+        /* Each event has an ID that is set when  */
+        /* the event is generated.  If two events */
+        /* have the same ID, they were produced   */
+        /* simultaneously by the same trigger!    */
         if ( (xgks_state.event_queue_head != NULL)
           && (xgks_state.CurEvent.id == xgks_state.event_queue_head->id) )
-          *events = GMORE;                              /* c1133 */
-        else                                            /* c1133 */
-          *events = GNOMORE;                            /* c1133 */
+          *events = GMORE;
+        else
+          *events = GNOMORE;
 
         return( 0 );
 }
