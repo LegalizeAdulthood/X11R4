@@ -36,6 +36,8 @@
 #include <xgks.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
 
 #include "demo.h"
 
@@ -49,9 +51,12 @@ Glimit v;
 Glimit wsw;
 Glimit wsv;
 
-main(argc,argv)
-int argc;
-char *argv[];
+void perr(int i, char *s);
+void test_font(void);
+void show_font(int font);
+void SetColor(Gint hash);
+
+int main(int argc, char *argv[])
 {
         double atof();
         int i;
@@ -130,9 +135,7 @@ char *argv[];
         exit(0);
 }
 
-perr(i,s)
-int i;
-char *s;
+void perr(int i, char *s)
 {
         fprintf(stdout,"%s %d\n",s,i);
         exit(1);
@@ -145,7 +148,7 @@ Gasfs asf = {
         GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL           /* fillarea */
 };
 
-test_font()
+void test_font(void)
 {
         Gpoint tpt;
         char s[100];
@@ -190,8 +193,8 @@ test_font()
                 gtext(&tpt, s);
         }
 }
-show_font(font)
-        int font;
+
+void show_font(int font)
 {
         Gpoint tpt;
         char s[100];
@@ -239,8 +242,7 @@ show_font(font)
         gtext(&tpt, "[\\]^_`{|}~");
 }
 
-SetColor (hash)
-Gint hash;
+void SetColor (Gint hash)
 {
         switch (hash) {
                 case 1 : gsettextcolorind(WHITE);   return;
