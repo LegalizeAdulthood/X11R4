@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -24,11 +24,11 @@
  * implemented.
  *
  * These functions are:
- *	photo
- *	four_by_five
- *	eight_by_ten
- *	konica_ft1
- *	one_to_one
+ *      photo
+ *      four_by_five
+ *      eight_by_ten
+ *      konica_ft1
+ *      one_to_one
  */
 
 #include "screen_items.h"
@@ -36,9 +36,9 @@
 photo(menu_item)
 MENU_ITEM *menu_item;
 {
-	hilite(menu_item->key);
-	reprompt(0);
-	unhilite(menu_item->key);
+        hilite(menu_item->key);
+        reprompt(0);
+        unhilite(menu_item->key);
 }
 
 four_by_five(menu_item)

@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -22,10 +22,10 @@
  * University of Illinois at Urbana-Champaign
  * Department of Computer Science
  * 1304 W. Springfield Ave.
- * Urbana, IL	61801
+ * Urbana, IL   61801
  *
  * (C) Copyright 1987, 1988 by The University of Illinois Board of Trustees.
- *	All rights reserved.
+ *      All rights reserved.
  *
  * Tool: X 11 Graphical Kernel System
  * Author: Gregory Scott Rogers
@@ -43,19 +43,19 @@ draw_ethernet(wsid, dotext)
 Gint wsid;
 Gint dotext;
 {
-	Glimit Window;
+        Glimit Window;
 
-	Window.xmin = -100.0;
-	Window.xmax = 100.0;
-	Window.ymin = -100.0;
-	Window.ymax = 100.0;
+        Window.xmin = -100.0;
+        Window.xmax = 100.0;
+        Window.ymin = -100.0;
+        Window.ymax = 100.0;
 
-	gsetwindow(wsid, &Window );
-	gselntran(1) ;
+        gsetwindow(wsid, &Window );
+        gselntran(1) ;
 
-	if (dotext)
-		do_text();
-	do_ethernet();
+        if (dotext)
+                do_text();
+        do_ethernet();
 }
 
 
@@ -64,67 +64,67 @@ Gint dotext;
 
 do_text()
 {
-	char c[2], words[25];
-	Gpoint pt;
-	double sin(), cos() ;
-	int i ;
-	Gfloat deg2rad = 3.14159 / 180.0 ;
-	Gtxfp txfp;
-	Gtxalign txalign;
+        char c[2], words[25];
+        Gpoint pt;
+        double sin(), cos() ;
+        int i ;
+        Gfloat deg2rad = 3.14159 / 180.0 ;
+        Gtxfp txfp;
+        Gtxalign txalign;
 
-	txfp.font = 4;
-	txfp.prec = GSTROKE;
-	txalign.hor = GTH_CENTER;
-	txalign.ver = GTV_HALF;
+        txfp.font = 4;
+        txfp.prec = GSTROKE;
+        txalign.hor = GTH_CENTER;
+        txalign.ver = GTV_HALF;
 
-	c[1] = '\0';
-	strcpy(words,"PROFESSIONAL WORKSTATION");
+        c[1] = '\0';
+        strcpy(words,"PROFESSIONAL WORKSTATION");
 
-	gsettextfontprec( &txfp ) ;
-	gsetcharspace(0.0) ;
-	gsetcharheight(10.0) ;
-	gsettextalign( &txalign ) ;
-	gsettextcolorind(YELLOW) ;
+        gsettextfontprec( &txfp ) ;
+        gsetcharspace(0.0) ;
+        gsetcharheight(10.0) ;
+        gsettextalign( &txalign ) ;
+        gsettextcolorind(YELLOW) ;
 
-	for(i=0; i<strlen(words); i++)
-	{
-		pt.x = (BORDERSZ +7) * cos((180.0 -((360.0/46.0)*i)) * deg2rad) ;
-		pt.y = (BORDERSZ +7) * sin((180.0 -((360.0/46.0)*i)) * deg2rad) ;
-		c[0] = words[i];
-		gtext(&pt,c);
-	}
+        for(i=0; i<strlen(words); i++)
+        {
+                pt.x = (BORDERSZ +7) * cos((180.0 -((360.0/46.0)*i)) * deg2rad) ;
+                pt.y = (BORDERSZ +7) * sin((180.0 -((360.0/46.0)*i)) * deg2rad) ;
+                c[0] = words[i];
+                gtext(&pt,c);
+        }
 
-	strcpy(words,"RESEARCH GROUP");
-	for(i=0; i<strlen(words); i++)
-	{
-		pt.x = (BORDERSZ +7) * cos((180.0 +((360.0/46.0)*(i+5))) * deg2rad) ;
-		pt.y = (BORDERSZ +7) * sin((180.0 +((360.0/46.0)*(i+5))) * deg2rad) ;
-		c[0] = words[i];
-		gtext(&pt,c);
-	}
+        strcpy(words,"RESEARCH GROUP");
+        for(i=0; i<strlen(words); i++)
+        {
+                pt.x = (BORDERSZ +7) * cos((180.0 +((360.0/46.0)*(i+5))) * deg2rad) ;
+                pt.y = (BORDERSZ +7) * sin((180.0 +((360.0/46.0)*(i+5))) * deg2rad) ;
+                c[0] = words[i];
+                gtext(&pt,c);
+        }
 }
 
 do_ethernet()
 {
 
-	Gpoint pts[51] ;
-	double sin(), cos() ;
-	int i ;
-	Gfloat deg2rad = 3.14159 / 180.0 ;
+        Gpoint pts[51] ;
+        double sin(), cos() ;
+        int i ;
+        Gfloat deg2rad = 3.14159 / 180.0 ;
 
-	for(i=0; i<51; i++)
-	{
-		pts[i].x = BORDERSZ * cos((360.0/50.0) * i * deg2rad) ;
-		pts[i].y = BORDERSZ * sin((360.0/50.0) * i * deg2rad) ;
-	}
-	gsetfillintstyle(GSOLID) ;
-	gsetfillcolorind(YELLOW) ;
-	gfillarea(51, pts) ;
-	for(i=0; i<51; i++)
-	{
-		pts[i].x *= INTFACTOR ;
-		pts[i].y *= INTFACTOR ;
-	}
-	gsetfillcolorind(BLUE) ;
-	gfillarea(51, pts) ;
+        for(i=0; i<51; i++)
+        {
+                pts[i].x = BORDERSZ * cos((360.0/50.0) * i * deg2rad) ;
+                pts[i].y = BORDERSZ * sin((360.0/50.0) * i * deg2rad) ;
+        }
+        gsetfillintstyle(GSOLID) ;
+        gsetfillcolorind(YELLOW) ;
+        gfillarea(51, pts) ;
+        for(i=0; i<51; i++)
+        {
+                pts[i].x *= INTFACTOR ;
+                pts[i].y *= INTFACTOR ;
+        }
+        gsetfillcolorind(BLUE) ;
+        gfillarea(51, pts) ;
 }

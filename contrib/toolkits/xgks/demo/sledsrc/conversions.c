@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -27,16 +27,16 @@
  * in GKS.
  *
  * The conversion functions are:
- *	num_to_style
- *	style_to_num
- *	num_to_vert
- *	vert_to_num
- *	num_to_horz
- *	horz_to_num
- *	num_to_path
- *	path_to_num
- *	num_to_vis
- *	vis_to_num
+ *      num_to_style
+ *      style_to_num
+ *      num_to_vert
+ *      vert_to_num
+ *      num_to_horz
+ *      horz_to_num
+ *      num_to_path
+ *      path_to_num
+ *      num_to_vis
+ *      vis_to_num
  */
 
 #include <xgks.h>
@@ -45,138 +45,138 @@
 Gflinter num_to_style(i)
 int i;
 {
-	Gflinter prov;
-	if (i == 1)
-		prov = GSOLID; 
-	else	/* default */
-		prov = GHOLLOW; 
-	return(prov);
+        Gflinter prov;
+        if (i == 1)
+                prov = GSOLID; 
+        else    /* default */
+                prov = GHOLLOW; 
+        return(prov);
 }
 
 style_to_num(style)
 Gflinter style;
 {
-	int i;
-	if (style == GSOLID)
-		i = 1;
-	else
-		i = 0;
-	return(i);
+        int i;
+        if (style == GSOLID)
+                i = 1;
+        else
+                i = 0;
+        return(i);
 }
-		
+                
 
 Gtxver num_to_vert(i)
 int i;
 {
-	Gtxver prov;
-	switch (i)
-	{
-		case 1: prov = GTV_TOP; break;
-		case 2: prov = GTV_CAP; break;
-		case 3: prov = GTV_HALF; break;
-		case 4: prov = GTV_BASE; break;
-		case 5: prov = GTV_BOTTOM; break;
-		case 6: prov = GTV_NORMAL; break;
-		default: prov = GTV_NORMAL; 
-	} /* end switch */
-	return(prov);
+        Gtxver prov;
+        switch (i)
+        {
+                case 1: prov = GTV_TOP; break;
+                case 2: prov = GTV_CAP; break;
+                case 3: prov = GTV_HALF; break;
+                case 4: prov = GTV_BASE; break;
+                case 5: prov = GTV_BOTTOM; break;
+                case 6: prov = GTV_NORMAL; break;
+                default: prov = GTV_NORMAL; 
+        } /* end switch */
+        return(prov);
 }
 
 vert_to_num(ver)
 Gtxver ver;
 {
-	int i;
-	switch (ver)
-	{
-		case GTV_TOP: i = 1; break;
-		case GTV_CAP: i = 2; break;
-		case GTV_HALF: i = 3; break;
-		case GTV_BASE: i = 4; break;
-		case GTV_BOTTOM: i = 5; break;
-		case GTV_NORMAL: i = 6; break;
-		default: i = 6;
-	}
-	return(i);
+        int i;
+        switch (ver)
+        {
+                case GTV_TOP: i = 1; break;
+                case GTV_CAP: i = 2; break;
+                case GTV_HALF: i = 3; break;
+                case GTV_BASE: i = 4; break;
+                case GTV_BOTTOM: i = 5; break;
+                case GTV_NORMAL: i = 6; break;
+                default: i = 6;
+        }
+        return(i);
 }
 
 Gtxhor num_to_horz(i)
 int i;
 {
-	Gtxhor prov;
-	switch (i)
-	{
-		case 1: prov = GTH_RIGHT; break;
-		case 2: prov = GTH_LEFT; break;
-		case 3: prov = GTH_CENTER; break;
-		case 6: prov = GTH_NORMAL; break;
-		default: prov = GTH_NORMAL;
-	} /* end switch */
-	return(prov);
+        Gtxhor prov;
+        switch (i)
+        {
+                case 1: prov = GTH_RIGHT; break;
+                case 2: prov = GTH_LEFT; break;
+                case 3: prov = GTH_CENTER; break;
+                case 6: prov = GTH_NORMAL; break;
+                default: prov = GTH_NORMAL;
+        } /* end switch */
+        return(prov);
 }
 
 horz_to_num(hor)
 Gtxhor hor;
 {
-	int i;
-	switch (hor)
-	{
-		case GTH_RIGHT: i = 1; break;
-		case GTH_LEFT: i = 2; break;
-		case GTH_CENTER: i = 3; break;
-		case GTH_NORMAL: i = 6; break;
-		default: i = 6;
-	}
-	return(i);
+        int i;
+        switch (hor)
+        {
+                case GTH_RIGHT: i = 1; break;
+                case GTH_LEFT: i = 2; break;
+                case GTH_CENTER: i = 3; break;
+                case GTH_NORMAL: i = 6; break;
+                default: i = 6;
+        }
+        return(i);
 }
 
 Gtxpath num_to_path(i)
 int i;
 {
-	Gtxpath prov;
-	switch (i)
-	{
-		case 1: prov = GTP_RIGHT; break;
-		case 2: prov = GTP_LEFT; break;
-		case 3: prov = GTP_UP; break;
-		case 4: prov = GTP_DOWN; break;
-		default: prov = GTP_RIGHT;
-	} /* end switch */
-	return(prov);
+        Gtxpath prov;
+        switch (i)
+        {
+                case 1: prov = GTP_RIGHT; break;
+                case 2: prov = GTP_LEFT; break;
+                case 3: prov = GTP_UP; break;
+                case 4: prov = GTP_DOWN; break;
+                default: prov = GTP_RIGHT;
+        } /* end switch */
+        return(prov);
 }
 
 path_to_num(p)
 Gtxpath p;
 {
-	int i;
-	switch (p)
-	{
-		case GTP_RIGHT: i = 1; break;
-		case GTP_LEFT: i = 2; break;
-		case GTP_UP: i = 3; break;
-		case GTP_DOWN: i = 4; break;
-		default: i = 1;
-	}
-	return(i);
+        int i;
+        switch (p)
+        {
+                case GTP_RIGHT: i = 1; break;
+                case GTP_LEFT: i = 2; break;
+                case GTP_UP: i = 3; break;
+                case GTP_DOWN: i = 4; break;
+                default: i = 1;
+        }
+        return(i);
 }
 
 Gsegvis num_to_vis(i)
 int i;
 {
-	Gsegvis vis;
-	if (i == 1)
-		vis = GVISIBLE;
-	else
-		vis = GINVISIBLE;
-	return(vis);
+        Gsegvis vis;
+        if (i == 1)
+                vis = GVISIBLE;
+        else
+                vis = GINVISIBLE;
+        return(vis);
 }
 
 vis_to_num(vis)
 Gsegvis vis;
 {
-	int i;
-	if (vis == GVISIBLE)
-		i = 1;
-	else
-		i = 0;
-	return(i);
+        int i;
+        if (vis == GVISIBLE)
+                i = 1;
+        else
+                i = 0;
+        return(i);
 }

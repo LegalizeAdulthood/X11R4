@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -20,10 +20,10 @@
  * SOFTWARE.
  *
  * this file includes
- *	rotate_comb_ob
- *	rotate_object
- *	rotate_gen
- *	rotate_text
+ *      rotate_comb_ob
+ *      rotate_object
+ *      rotate_gen
+ *      rotate_text
  */
 
 #include "objects.h"
@@ -35,11 +35,11 @@
 /*
  *  rotate_comb_ob
  *
- *  description:	rotates comb-ob about given pt
+ *  description:        rotates comb-ob about given pt
  *
- *  parameters:		comb_ob (COMB_OB *) - original comb_ob
- *			pt (Gpoint) - pt of rotation
- *			angle (Gfloat) - angle of rotation
+ *  parameters:         comb_ob (COMB_OB *) - original comb_ob
+ *                      pt (Gpoint) - pt of rotation
+ *                      angle (Gfloat) - angle of rotation
  *
  */
 
@@ -48,23 +48,23 @@ COMB_OB *comb_ob;
 Gpoint pt;
 Gfloat angle;
 {
-	OBJECT *object;
+        OBJECT *object;
 
-	for (object = comb_ob->child; object != (OBJECT *) NULL;
-		object = object->next)
-		
-		rotate_object(object,pt,angle);
+        for (object = comb_ob->child; object != (OBJECT *) NULL;
+                object = object->next)
+                
+                rotate_object(object,pt,angle);
 }  /* end rotate_comb_ob */
 
 
 /*
  *  rotate_object
  *
- *  description:	rotates single object
+ *  description:        rotates single object
  *
- *  parameters:		object (OBJECT *) - object to rotate
- *			pt (Gpoint) - pt to rotate object about
- *			angle (Gfloat) - angle of rotation
+ *  parameters:         object (OBJECT *) - object to rotate
+ *                      pt (Gpoint) - pt to rotate object about
+ *                      angle (Gfloat) - angle of rotation
  */
 
 rotate_object(object,pt,angle)
@@ -72,19 +72,19 @@ OBJECT *object;
 Gpoint pt;
 Gfloat angle;
 {
-	(*(object_func_tbl[get_object_func_tbl_idx(object->key)].rotate))
-		(object,pt,angle);
+        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].rotate))
+                (object,pt,angle);
 }  /* end rotate_object */
 
 
 /*
  *  rotate_gen
  *
- *  description:	rotates object other than text object
+ *  description:        rotates object other than text object
  *
- *  parameters:		object (OBJECT *) - object to rotate
- *			pt (Gpoint) - pt to rotate object about
- *			angle (Gfloat) - angle of rotation
+ *  parameters:         object (OBJECT *) - object to rotate
+ *                      pt (Gpoint) - pt to rotate object about
+ *                      angle (Gfloat) - angle of rotation
  */
 
 rotate_gen(object,pt,angle)
@@ -92,21 +92,21 @@ OBJECT *object;
 Gpoint pt;
 Gfloat angle;
 {
-		Gfloat trans[6];
+                Gfloat trans[6];
 
-		s_rot_mat(trans,pt,angle);
-		mat_mult(object->trans,trans,object->trans);
+                s_rot_mat(trans,pt,angle);
+                mat_mult(object->trans,trans,object->trans);
 }  /* end rotate_gen */
 
 
 /*
  *  rotate_text
  *
- *  description:	rotates textob
+ *  description:        rotates textob
  *
- *  parameters:		object (OBJECT *) - text object to rotate
- *			pt (Gpoint) - pt to roate text about
- *			angle (Gfloat) - angle of rotation
+ *  parameters:         object (OBJECT *) - text object to rotate
+ *                      pt (Gpoint) - pt to roate text about
+ *                      angle (Gfloat) - angle of rotation
  */
 
 rotate_text(object,pt,angle)
@@ -114,16 +114,16 @@ OBJECT *object;
 Gpoint pt;
 Gfloat angle;
 {
-		Gfloat trans[6];
-		Gpoint orig;
+                Gfloat trans[6];
+                Gpoint orig;
 
-		/* rotate view up vector */
+                /* rotate view up vector */
 
-		orig.x = 0.0;
-		orig.y = 0.0;
-		s_rot_mat(trans,orig,angle);
-		pt_mult(&(object->textob.up_vec),1,trans);
+                orig.x = 0.0;
+                orig.y = 0.0;
+                s_rot_mat(trans,orig,angle);
+                pt_mult(&(object->textob.up_vec),1,trans);
 
-		s_rot_mat(trans,pt,angle);
-		mat_mult(object->trans,trans,object->trans);
+                s_rot_mat(trans,pt,angle);
+                mat_mult(object->trans,trans,object->trans);
 }  /* end rotate_text */

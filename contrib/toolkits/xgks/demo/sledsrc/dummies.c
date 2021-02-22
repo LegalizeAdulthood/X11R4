@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -20,12 +20,12 @@
  * SOFTWARE.
  *
  * This file includes:
- *	init_locator
- *	req_locator
- *	in_bounds_delta
+ *      init_locator
+ *      req_locator
+ *      in_bounds_delta
  */
 
-#include "trans.h"	/* Defines MIN,MAX and includes <xgks.h> */
+#include "trans.h"      /* Defines MIN,MAX and includes <xgks.h> */
 #include "changes.h"
 
 init_locator(id,dev,pos,ntrans,prompt,xmin,xmax,ymin,ymax) /* ,locdata) */
@@ -36,19 +36,19 @@ IDX ntrans;
 int prompt;
 Gfloat xmin,xmax,ymin,ymax;
 {
-	Gloc init;
-	Glimit area;
-	Glocrec data;
-	
-	init.position.x = pos->x;
+        Gloc init;
+        Glimit area;
+        Glocrec data;
+        
+        init.position.x = pos->x;
         init.position.y = pos->y;
         init.transform = ntrans;
-	area.xmin = xmin;
-	area.xmax = xmax;
-	area.ymin = ymin;
-	area.ymax = ymax;
+        area.xmin = xmin;
+        area.xmax = xmax;
+        area.ymin = ymin;
+        area.ymax = ymax;
 
-	data.pet3.data = NULL;
+        data.pet3.data = NULL;
 
         ginitloc(id,dev,&init,prompt,&area,&data);
 }
@@ -60,14 +60,14 @@ Gistat *status;
 IDX *ntrans;
 Gpoint *pos;
 {
-	Gqloc response;
+        Gqloc response;
 
-	greqloc(id,dev,&response);
+        greqloc(id,dev,&response);
 
-	*status = response.status;
-	*ntrans = response.loc.transform;
-	pos->x = response.loc.position.x;
-	pos->y = response.loc.position.y;
+        *status = response.status;
+        *ntrans = response.loc.transform;
+        pos->x = response.loc.position.x;
+        pos->y = response.loc.position.y;
 }
 
 BOOLEAN

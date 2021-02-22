@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -20,11 +20,11 @@
  * SOFTWARE.
  *
  *  this file includes:
- *	free_comb_ob
- *	free_object
- *	free_line
- *	free_poly
- *	free_text
+ *      free_comb_ob
+ *      free_object
+ *      free_line
+ *      free_poly
+ *      free_text
  */
 
 #include "objects.h"
@@ -34,94 +34,94 @@
 /*
  *  free_comb_ob
  *
- *  description:	frees storage associated with comb_ob
+ *  description:        frees storage associated with comb_ob
  *
- *  parameters:		comb_ob (COMB_OB *) - combination object
+ *  parameters:         comb_ob (COMB_OB *) - combination object
  */
 
 free_comb_ob(comb_ob)
 COMB_OB *comb_ob;
 {
-	OBJECT *object_ptr,*temp;
+        OBJECT *object_ptr,*temp;
 
-	object_ptr = (OBJECT *) comb_ob->child;
-		
-	while (object_ptr != (OBJECT *) NULL)
-	{
-		temp = object_ptr->next;
-		free_object(object_ptr);
-		object_ptr = temp;
-	}
-	free((char *) comb_ob);
+        object_ptr = (OBJECT *) comb_ob->child;
+                
+        while (object_ptr != (OBJECT *) NULL)
+        {
+                temp = object_ptr->next;
+                free_object(object_ptr);
+                object_ptr = temp;
+        }
+        free((char *) comb_ob);
 }  /* end free_comb_ob */
 
 
 /*
  *  free_object
  *
- *  description:	frees storage associated with object
+ *  description:        frees storage associated with object
  *
- *  parameters:		(OBJECT *) - object
+ *  parameters:         (OBJECT *) - object
  */
 
 free_object(object)
 OBJECT *object;
 {
-	(*(object_func_tbl[get_object_func_tbl_idx(object->key)].free))
-		(object);
-	free((char *) object->key);
-	free((char *) object);
+        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].free))
+                (object);
+        free((char *) object->key);
+        free((char *) object);
 }  /* end free_object */
 
 
 /*
  *  free_line
  *
- *  description:	frees all pointers in line object
+ *  description:        frees all pointers in line object
  *
- *  parameters:		none
+ *  parameters:         none
  */
 
 free_line(object)
 OBJECT *object;
 {
-	free((char *) object->lineob.pts);
+        free((char *) object->lineob.pts);
 }  /* end free_line */
 
 
 /*
  *  free_poly
  *
- *  description:	frees all pointers in poly object
+ *  description:        frees all pointers in poly object
  *
- *  parameters:		none
+ *  parameters:         none
  */
 
 free_poly(object)
 OBJECT *object;
 {
-	free((char *) object->polyob.pts);
+        free((char *) object->polyob.pts);
 }  /* end free_poly */
 
 
 /*
  *  free_text
  *
- *  description:	frees all pointers in text object
+ *  description:        frees all pointers in text object
  *
- *  parameters:		none
+ *  parameters:         none
  */
 
 free_text(object)
 OBJECT *object;
 {
-	CHAR_OB *ch_ptr,*temp;
+        CHAR_OB *ch_ptr,*temp;
 
-	ch_ptr = object->textob.str; 
-	while (ch_ptr != (CHAR_OB *) NULL)
-	{
-		temp = ch_ptr->next;
-		free((char *) ch_ptr);
-		ch_ptr = temp;
-	}
+        ch_ptr = object->textob.str; 
+        while (ch_ptr != (CHAR_OB *) NULL)
+        {
+                temp = ch_ptr->next;
+                free((char *) ch_ptr);
+                ch_ptr = temp;
+        }
 }  /* end free_text */

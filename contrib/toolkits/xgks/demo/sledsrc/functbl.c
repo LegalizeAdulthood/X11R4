@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -20,10 +20,10 @@
  * SOFTWARE.
  *
  *  this file contains:
- *	find_screen_tbl_idx
- *	find_popup_tbl_idx
- *	find_menu_item_tbl_idx
- *	find_menu_tbl_idx
+ *      find_screen_tbl_idx
+ *      find_popup_tbl_idx
+ *      find_menu_item_tbl_idx
+ *      find_menu_tbl_idx
  */
 
 #include "screen_items.h"
@@ -35,28 +35,28 @@
 /*
  *  find_screen_tbl_idx
  *
- *  description:	returns ptr to screen tbl entry matching
- *			area
+ *  description:        returns ptr to screen tbl entry matching
+ *                      area
  *
- *  parameters:		area (AREA) - screen area
+ *  parameters:         area (AREA) - screen area
  */
 
 find_screen_tbl_idx(area)
-AREA area;				/* screen area */
+AREA area;                              /* screen area */
 {
-	int i;
+        int i;
 
-	/* look for area in tbl */
+        /* look for area in tbl */
 
-	for (i=0; (!eq(screen_tbl[i].area,area) && i<screen_tbl_sz);
-		i++);
+        for (i=0; (!eq(screen_tbl[i].area,area) && i<screen_tbl_sz);
+                i++);
 
-	/* if found return index, else return -1 */
+        /* if found return index, else return -1 */
 
-	if (eq(screen_tbl[i].area,area))
-		return(i);
-	else
-		return(-1);
+        if (eq(screen_tbl[i].area,area))
+                return(i);
+        else
+                return(-1);
 
 };  /* end find_screen_tbl_idx */
 
@@ -64,81 +64,81 @@ AREA area;				/* screen area */
 /*
  *  find_popup_func_tbl_idx
  *
- *  description:	returns index in popup_func_tbl of
- *			routines corresponding to popup
- *			uniquely identified by key
+ *  description:        returns index in popup_func_tbl of
+ *                      routines corresponding to popup
+ *                      uniquely identified by key
  *
- *  parameters:		key (KEY) - unique popup key
+ *  parameters:         key (KEY) - unique popup key
  *
- *  returns:		idx (IDX) - index of key in popup_func_tbl
+ *  returns:            idx (IDX) - index of key in popup_func_tbl
  */
 
 find_popup_func_tbl_idx(key)
 KEY key;
 {
-	IDX idx;
+        IDX idx;
 
-	for (idx=0; (!eq(popup_func_tbl[idx].key,key) && 
-		(idx < popup_func_tbl_sz)); idx++);
+        for (idx=0; (!eq(popup_func_tbl[idx].key,key) && 
+                (idx < popup_func_tbl_sz)); idx++);
 
-	if (eq(popup_func_tbl[idx].key,key))
-		return(idx);
-	else
-		return(-1);
+        if (eq(popup_func_tbl[idx].key,key))
+                return(idx);
+        else
+                return(-1);
 }  /* find_popup_func_tbl_idx */
 
 
 /*
  *  find_menu_item_func_tbl_idx
  *
- *  description:	returns index in menu_item_func_tbl of
- *			routines corresponding to menu_item
- *			uniquely identified by key
+ *  description:        returns index in menu_item_func_tbl of
+ *                      routines corresponding to menu_item
+ *                      uniquely identified by key
  *
- *  parameters:		key (KEY) - unique menu_item key
+ *  parameters:         key (KEY) - unique menu_item key
  *
- *  returns:		idx (IDX) - index of key in menu_item_func_tbl
+ *  returns:            idx (IDX) - index of key in menu_item_func_tbl
  */
 
 find_menu_item_func_tbl_idx(key)
 KEY key;
 {
-	IDX idx;
+        IDX idx;
 
-	for (idx=0; (!eq(menu_item_func_tbl[idx].key,key) && 
-		(idx < menu_item_func_tbl_sz)); idx++);
+        for (idx=0; (!eq(menu_item_func_tbl[idx].key,key) && 
+                (idx < menu_item_func_tbl_sz)); idx++);
 
-	if (eq(menu_item_func_tbl[idx].key,key))
-		return(idx);
-	else
-		return(-1);
+        if (eq(menu_item_func_tbl[idx].key,key))
+                return(idx);
+        else
+                return(-1);
 }  /* find_menu_item_func_tbl_idx */
 
 
 /*
  *  find_menu_func_tbl_idx
  *
- *  description:	returns index in menu_func_tbl of
- *			routines corresponding to menu
- *			uniquely identified by key
+ *  description:        returns index in menu_func_tbl of
+ *                      routines corresponding to menu
+ *                      uniquely identified by key
  *
- *  parameters:		key (KEY) - unique menu key
+ *  parameters:         key (KEY) - unique menu key
  *
- *  returns:		idx (IDX) - index of key in menu_func_tbl
+ *  returns:            idx (IDX) - index of key in menu_func_tbl
  */
 
 find_menu_func_tbl_idx(key)
 KEY key;
 {
-	IDX idx;
+        IDX idx;
 
-	for (idx=0; (!eq(menu_func_tbl[idx].key,key) && 
-		(idx < menu_func_tbl_sz)); idx++);
+        for (idx=0; (!eq(menu_func_tbl[idx].key,key) && 
+                (idx < menu_func_tbl_sz)); idx++);
 
-	if (eq(menu_func_tbl[idx].key,key))
-		return(idx);
-	else
-		return(-1);
+        if (eq(menu_func_tbl[idx].key,key))
+                return(idx);
+        else
+                return(-1);
 }  /* find_menu_func_tbl_idx */
 
 

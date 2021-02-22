@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -39,8 +39,8 @@ static Gloc last={ 1, 5.0, 5.0 };
 static Glocrec loc;
 static Gcobundl co_flashon  = { 1.0, 0.0, 0.0 },
                 co_flashoff = { 1.0, 1.0, 1.0 };
-static int pRtB[2];			/* Red to Blue pipe descriptors */
-static int pBtR[2];			/* Blue to Red pipe descriptors */
+static int pRtB[2];                     /* Red to Blue pipe descriptors */
+static int pBtR[2];                     /* Blue to Red pipe descriptors */
 
  
 
@@ -145,20 +145,20 @@ startup(envp)
    strcpy( progname, "blue" );
    
    /* open the two pipes */
-   pipe(pRtB);			/* Red to Blue */
-   pipe(pBtR);			/* Blue to Red */
+   pipe(pRtB);                  /* Red to Blue */
+   pipe(pBtR);                  /* Blue to Red */
  
    /* prepare parameters to send to blue */
-   strcpy( aparms[0], "blue" );		/* program name */
-   sprintf( aparms[1], "%d", pRtB[READ] );	/* number of read-descriptor */
-   sprintf( aparms[2], "%d", pBtR[WRITE] );	/* number of write-descriptor */
-   strcpy( aparms[3], remote_dis );	/* remote display name */
+   strcpy( aparms[0], "blue" );         /* program name */
+   sprintf( aparms[1], "%d", pRtB[READ] );      /* number of read-descriptor */
+   sprintf( aparms[2], "%d", pBtR[WRITE] );     /* number of write-descriptor */
+   strcpy( aparms[3], remote_dis );     /* remote display name */
    /* fill in parameter list */
    vparms[0] = (char *)aparms[0];
    vparms[1] = (char *)aparms[1];
    vparms[2] = (char *)aparms[2];
    vparms[3] = (char *)aparms[3];
-   vparms[4] = (char *)NULL;		/* mark end of parameter list */
+   vparms[4] = (char *)NULL;            /* mark end of parameter list */
     
    /* fork and replace child with blue */
    if (fork()==0)
@@ -449,7 +449,7 @@ putdownpc()
                {
                   finished=TRUE;
                   valid=TRUE;
-                  picked=1;		/* anything non-zero will do */
+                  picked=1;             /* anything non-zero will do */
                }
             }
             else if ((y<4) && ((picked=board[x][y].rank) != 0))

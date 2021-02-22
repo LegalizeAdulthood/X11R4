@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -22,10 +22,10 @@
  * University of Illinois at Urbana-Champaign
  * Department of Computer Science
  * 1304 W. Springfield Ave.
- * Urbana, IL	61801
+ * Urbana, IL   61801
  *
  * (C) Copyright 1987, 1988 by The University of Illinois Board of Trustees.
- *	All rights reserved.
+ *      All rights reserved.
  *
  * Tool: X 11 Graphical Kernel System
  * Author: Gregory Scott Rogers
@@ -42,73 +42,73 @@
 draw_ramtek(wsid)
 Gint wsid;
 {
-	Glimit Window;
+        Glimit Window;
 
-	Window.xmin = 0.0;
-	Window.xmax = 57.0;
-	Window.ymin = 0.0;
-	Window.ymax = 45.6;
+        Window.xmin = 0.0;
+        Window.xmax = 57.0;
+        Window.ymin = 0.0;
+        Window.ymax = 45.6;
 
-	gsetwindow( wsid, &Window );
-	gselntran(1);
+        gsetwindow( wsid, &Window );
+        gselntran(1);
 
-	do_ram_monitor();
+        do_ram_monitor();
 
 }
 
 
 do_ram_monitor()
 {
-	Gpoint pts[20];
-	
-	gsetfillcolorind(DARKGRAY);
-	
-	gsetfillintstyle( GSOLID );
+        Gpoint pts[20];
+        
+        gsetfillcolorind(DARKGRAY);
+        
+        gsetfillintstyle( GSOLID );
 
-	gsetlinecolorind(BLACK);
+        gsetlinecolorind(BLACK);
 
 /* base */
-	pts[0].x=0.0;	pts[0].y=0.0;
-	pts[1].x=49.0;	pts[1].y=0.0;
-	pts[2].x=49.0;	pts[2].y=45.5;
-	pts[3].x=0.0;	pts[3].y=45.5;
-	pts[4].x=0.0;	pts[4].y=0.0;
-	gfillarea(5, pts);
+        pts[0].x=0.0;   pts[0].y=0.0;
+        pts[1].x=49.0;  pts[1].y=0.0;
+        pts[2].x=49.0;  pts[2].y=45.5;
+        pts[3].x=0.0;   pts[3].y=45.5;
+        pts[4].x=0.0;   pts[4].y=0.0;
+        gfillarea(5, pts);
 
 /* bezel */
-	gsetfillcolorind(BLACK);
-	
-	pts[0].x=1.5;	pts[0].y= 8.0;
-	pts[1].x=47.5;	pts[1].y= 8.0;
-	pts[2].x=47.5;	pts[2].y=44.0;
-	pts[3].x=1.5;	pts[3].y=44.0;
-	pts[4].x=1.5;	pts[4].y= 8.0;
-	gfillarea(5, pts);
+        gsetfillcolorind(BLACK);
+        
+        pts[0].x=1.5;   pts[0].y= 8.0;
+        pts[1].x=47.5;  pts[1].y= 8.0;
+        pts[2].x=47.5;  pts[2].y=44.0;
+        pts[3].x=1.5;   pts[3].y=44.0;
+        pts[4].x=1.5;   pts[4].y= 8.0;
+        gfillarea(5, pts);
 /* screen */
-	gsetfillcolorind(BLUE);
-	pts[0].x=5.0;	pts[0].y=11.5;
-	pts[1].x=44.0;	pts[1].y=11.5;
-	pts[2].x=44.0;	pts[2].y=40.5;
-	pts[3].x=5.0;	pts[3].y=40.5;
-	pts[4].x=5.0;	pts[4].y=11.5;
-	gfillarea(5, pts);
+        gsetfillcolorind(BLUE);
+        pts[0].x=5.0;   pts[0].y=11.5;
+        pts[1].x=44.0;  pts[1].y=11.5;
+        pts[2].x=44.0;  pts[2].y=40.5;
+        pts[3].x=5.0;   pts[3].y=40.5;
+        pts[4].x=5.0;   pts[4].y=11.5;
+        gfillarea(5, pts);
 
 /* handles */
-	gsetfillcolorind(SILVER);
-	pts[0].x= 0.5;	pts[0].y=1.0;
-	pts[1].x= 2.0;	pts[1].y=1.0;
-	pts[2].x= 2.0;	pts[2].y=7.0;
-	pts[3].x= 0.5;	pts[3].y=7.0;
-	pts[4].x= 0.5;	pts[4].y=1.0;
-	gfillarea(5, pts);
+        gsetfillcolorind(SILVER);
+        pts[0].x= 0.5;  pts[0].y=1.0;
+        pts[1].x= 2.0;  pts[1].y=1.0;
+        pts[2].x= 2.0;  pts[2].y=7.0;
+        pts[3].x= 0.5;  pts[3].y=7.0;
+        pts[4].x= 0.5;  pts[4].y=1.0;
+        gfillarea(5, pts);
 
 /* handles */
-	gsetfillcolorind(SILVER);
-	pts[0].x=47.0;	pts[0].y=1.0;
-	pts[1].x=48.5;	pts[1].y=1.0;
-	pts[2].x=48.5;	pts[2].y=7.0;
-	pts[3].x=47.0;	pts[3].y=7.0;
-	pts[4].x=47.0;	pts[4].y=1.0;
-	gfillarea(5, pts);
+        gsetfillcolorind(SILVER);
+        pts[0].x=47.0;  pts[0].y=1.0;
+        pts[1].x=48.5;  pts[1].y=1.0;
+        pts[2].x=48.5;  pts[2].y=7.0;
+        pts[3].x=47.0;  pts[3].y=7.0;
+        pts[4].x=47.0;  pts[4].y=1.0;
+        gfillarea(5, pts);
 
 }

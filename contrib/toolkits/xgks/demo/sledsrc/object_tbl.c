@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -20,7 +20,7 @@
  * SOFTWARE.
  *
  *  this file contains:
- *	get_object_func_tbl_idx
+ *      get_object_func_tbl_idx
  */
 
 #include "defs.h"
@@ -31,120 +31,120 @@
 int object_func_tbl_sz = 7;
 struct object_func_tbl_entry object_func_tbl[] =
 {
-	{
-		LINEOB,			/* object type key */
-		draw_line,		/* draw function */
-		erase_line,		/* erase function */
-		detect_line,		/* detect function */
-		get_line_extent,	/* get_extent function */
-		copy_line,		/* copy function */
-		rotate_gen,		/* rotate function */
-		free_line,		/* free function */
-		read_line,		/* read funtion */
-		write_line		/* write funtion */
-	},
+        {
+                LINEOB,                 /* object type key */
+                draw_line,              /* draw function */
+                erase_line,             /* erase function */
+                detect_line,            /* detect function */
+                get_line_extent,        /* get_extent function */
+                copy_line,              /* copy function */
+                rotate_gen,             /* rotate function */
+                free_line,              /* free function */
+                read_line,              /* read funtion */
+                write_line              /* write funtion */
+        },
 
-	{
-		BOXOB,			/* object type key */
-		draw_poly,		/* draw function */
-		erase_poly,		/* erase function */
-		detect_poly,		/* detect function */
-		get_poly_extent,	/* get_extent function */
-		copy_poly,		/* copy function */
-		rotate_gen,		/* rotate function */
-		free_poly,		/* free function */
-		read_poly,		/* read funtion */
-		write_poly		/* write funtion */
-	},
+        {
+                BOXOB,                  /* object type key */
+                draw_poly,              /* draw function */
+                erase_poly,             /* erase function */
+                detect_poly,            /* detect function */
+                get_poly_extent,        /* get_extent function */
+                copy_poly,              /* copy function */
+                rotate_gen,             /* rotate function */
+                free_poly,              /* free function */
+                read_poly,              /* read funtion */
+                write_poly              /* write funtion */
+        },
 
-	{
-		POLYOB,			/* object type key */
-		draw_poly,		/* draw function */
-		erase_poly,		/* erase function */
-		detect_poly,		/* detect function */
-		get_poly_extent,	/* get_extent function */
-		copy_poly,		/* copy function */
-		rotate_gen,		/* rotate function */
-		free_poly,		/* free function */
-		read_poly,		/* read funtion */
-		write_poly		/* write funtion */
-	},
+        {
+                POLYOB,                 /* object type key */
+                draw_poly,              /* draw function */
+                erase_poly,             /* erase function */
+                detect_poly,            /* detect function */
+                get_poly_extent,        /* get_extent function */
+                copy_poly,              /* copy function */
+                rotate_gen,             /* rotate function */
+                free_poly,              /* free function */
+                read_poly,              /* read funtion */
+                write_poly              /* write funtion */
+        },
 
-	{
-		CIRCLEOB,		/* object type key */
-		draw_poly,		/* draw function */
-		erase_poly,		/* erase function */
-		detect_poly,		/* detect function */
-		get_poly_extent,	/* get_extent function */
-		copy_poly,		/* copy function */
-		rotate_gen,		/* rotate function */
-		free_poly,		/* free function */
-		read_poly,		/* read funtion */
-		write_poly		/* write funtion */
-	},
+        {
+                CIRCLEOB,               /* object type key */
+                draw_poly,              /* draw function */
+                erase_poly,             /* erase function */
+                detect_poly,            /* detect function */
+                get_poly_extent,        /* get_extent function */
+                copy_poly,              /* copy function */
+                rotate_gen,             /* rotate function */
+                free_poly,              /* free function */
+                read_poly,              /* read funtion */
+                write_poly              /* write funtion */
+        },
 
-	{
-		CONICOB,		/* object type key */
-		draw_poly,		/* draw function */
-		erase_poly,		/* erase function */
-		detect_poly,		/* detect function */
-		get_poly_extent,	/* get_extent function */
-		copy_poly,		/* copy function */
-		rotate_gen,		/* rotate function */
-		free_poly,		/* free function */
-		read_poly,		/* read funtion */
-		write_poly		/* write funtion */
-	},
+        {
+                CONICOB,                /* object type key */
+                draw_poly,              /* draw function */
+                erase_poly,             /* erase function */
+                detect_poly,            /* detect function */
+                get_poly_extent,        /* get_extent function */
+                copy_poly,              /* copy function */
+                rotate_gen,             /* rotate function */
+                free_poly,              /* free function */
+                read_poly,              /* read funtion */
+                write_poly              /* write funtion */
+        },
 
-	{
-		CURVEOB,		/* object type key */
-		draw_line,		/* draw function */
-		erase_line,		/* erase function */
-		detect_line,		/* detect function */
-		get_line_extent,	/* get_extent function */
-		copy_line,		/* copy function */
-		rotate_gen,		/* rotate function */
-		free_line,		/* free function */
-		read_line,		/* read funtion */
-		write_line		/* write funtion */
-	},
+        {
+                CURVEOB,                /* object type key */
+                draw_line,              /* draw function */
+                erase_line,             /* erase function */
+                detect_line,            /* detect function */
+                get_line_extent,        /* get_extent function */
+                copy_line,              /* copy function */
+                rotate_gen,             /* rotate function */
+                free_line,              /* free function */
+                read_line,              /* read funtion */
+                write_line              /* write funtion */
+        },
 
-	{
-		TEXTOB,			/* object type key */
-		draw_text,		/* draw function */
-		erase_text,		/* erase function */
-		detect_text,		/* detect function */
-		get_string_extent,	/* get_extent function */
-		copy_text,		/* copy function */
-		rotate_text,		/* rotate function */
-		free_text,		/* free function */
-		read_text,		/* read funtion */
-		write_text		/* write funtion */
-	}
+        {
+                TEXTOB,                 /* object type key */
+                draw_text,              /* draw function */
+                erase_text,             /* erase function */
+                detect_text,            /* detect function */
+                get_string_extent,      /* get_extent function */
+                copy_text,              /* copy function */
+                rotate_text,            /* rotate function */
+                free_text,              /* free function */
+                read_text,              /* read funtion */
+                write_text              /* write funtion */
+        }
 };
 
 
 /*
  *  get_object_func_tbl_idx
  *
- *  description:	finds index in object_func_tbl of
- *			object type identified by key
+ *  description:        finds index in object_func_tbl of
+ *                      object type identified by key
  *
- *  parameters:		key (KEY) - key identifying object type
+ *  parameters:         key (KEY) - key identifying object type
  */
 
 IDX
 get_object_func_tbl_idx(key)
 KEY key;
 {
-	IDX idx;
+        IDX idx;
 
-	for (idx = 0; ((idx < object_func_tbl_sz) &&
-		!eq(key,object_func_tbl[idx].key)); idx++);
+        for (idx = 0; ((idx < object_func_tbl_sz) &&
+                !eq(key,object_func_tbl[idx].key)); idx++);
 
-	if (!eq(key,object_func_tbl[idx].key))
-		exit_error("get_object_func_tbl_idx",9);
-	return(idx);
+        if (!eq(key,object_func_tbl[idx].key))
+                exit_error("get_object_func_tbl_idx",9);
+        return(idx);
 }  /* end get_object_func_tbl_idx */
 
 

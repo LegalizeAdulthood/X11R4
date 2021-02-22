@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -39,8 +39,8 @@ static Gloc last={ 1, 5.0, 5.0};
 static Glocrec loc;
 static Gcobundl co_flashon  = { 1.0, 0.0, 0.0 },
                 co_flashoff = { 1.0, 1.0, 1.0 };
-static int pdes[2];		/* Blue-to-Red write descriptor and */
-				/*    Red-to-Blue read descriptor   */
+static int pdes[2];             /* Blue-to-Red write descriptor and */
+                                /*    Red-to-Blue read descriptor   */
 Gchar tempstr[100];
  
 
@@ -131,7 +131,7 @@ startup(argv)
 
    /* initialize gks */
    gopengks(stderr,0);
-   gopenws(1,argv[3],NULL);		/* argv[3] == display name */
+   gopenws(1,argv[3],NULL);             /* argv[3] == display name */
 
    gescinqxattr(1,&xdpy,&xwin,&xgc);
 
@@ -389,7 +389,7 @@ putdownpc()
                {
                   finished=TRUE;
                   valid=TRUE;
-                  picked=1;		/* anything non-zero will do */
+                  picked=1;             /* anything non-zero will do */
                }
             }
             else if ((y<4) && ((picked=board[x][y].rank) != 0))

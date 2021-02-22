@@ -1,5 +1,5 @@
 /*  
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -20,20 +20,20 @@
  * SOFTWARE.
  *
  * this file includes:
- *	add_to_currpoptbl
- *	rm_from_currpoptbl
- *	assign_popup_extent
- *	display_popup_area
- *	display_popup_text
- *	display_popup
- *	display_number_popup
- *	switch_popup_state
- *	switch_number_popup_state
- *	draw_high_order_digit
- *	draw_low_order_digit
- *	erase_popup
- *	display_popups
- *	erase_popups
+ *      add_to_currpoptbl
+ *      rm_from_currpoptbl
+ *      assign_popup_extent
+ *      display_popup_area
+ *      display_popup_text
+ *      display_popup
+ *      display_number_popup
+ *      switch_popup_state
+ *      switch_number_popup_state
+ *      draw_high_order_digit
+ *      draw_low_order_digit
+ *      erase_popup
+ *      display_popups
+ *      erase_popups
  */
 
 #include "key.h"
@@ -50,26 +50,26 @@
 /*
  *  add_to_currpoptbl
  *
- *  description:	adds linked list of popups to currpoptbl
+ *  description:        adds linked list of popups to currpoptbl
  *
- *  parameters:		head_popup (POPUP *) - head of popup list
+ *  parameters:         head_popup (POPUP *) - head of popup list
  */
 
 add_to_currpoptbl(head_popup)
 POPUP *head_popup;
 {
-	POPUP *tbl_ptr;
+        POPUP *tbl_ptr;
 
-	if (currpoptbl == (POPUP *) NULL)
-		currpoptbl = head_popup;
-	else
-	{
-		tbl_ptr = currpoptbl;
-		while (tbl_ptr->next != (POPUP *) NULL)
-			tbl_ptr = tbl_ptr->next;
-	
-		tbl_ptr->next = head_popup;
-	}
+        if (currpoptbl == (POPUP *) NULL)
+                currpoptbl = head_popup;
+        else
+        {
+                tbl_ptr = currpoptbl;
+                while (tbl_ptr->next != (POPUP *) NULL)
+                        tbl_ptr = tbl_ptr->next;
+        
+                tbl_ptr->next = head_popup;
+        }
 
 }  /* add_to_currpoptbl */
 
@@ -77,32 +77,32 @@ POPUP *head_popup;
 /*
  *  rm_from_currpoptbl
  *
- *  description:	removes linked list of popups from
- *			end of currpoptbl beginning with head_popup
+ *  description:        removes linked list of popups from
+ *                      end of currpoptbl beginning with head_popup
  *
- *  parameters:		head_popup (POPUP *) - head of popup list
- *				to remove
+ *  parameters:         head_popup (POPUP *) - head of popup list
+ *                              to remove
  */
 
 rm_from_currpoptbl(head_popup)
 POPUP *head_popup;
 {
-	POPUP *tbl_ptr;
+        POPUP *tbl_ptr;
 
-	if (currpoptbl == head_popup)
-		currpoptbl = (POPUP *) NULL;
+        if (currpoptbl == head_popup)
+                currpoptbl = (POPUP *) NULL;
 
-	else if (currpoptbl != (POPUP *) NULL)
-	{
-		tbl_ptr = currpoptbl;
-		while ((tbl_ptr->next != head_popup) &&
-			(tbl_ptr->next != (POPUP *) NULL))
-		{
-			tbl_ptr = tbl_ptr->next;
-		}
+        else if (currpoptbl != (POPUP *) NULL)
+        {
+                tbl_ptr = currpoptbl;
+                while ((tbl_ptr->next != head_popup) &&
+                        (tbl_ptr->next != (POPUP *) NULL))
+                {
+                        tbl_ptr = tbl_ptr->next;
+                }
 
-		tbl_ptr->next = (POPUP *) NULL;
-	}
+                tbl_ptr->next = (POPUP *) NULL;
+        }
 
 }  /* rm_from_currpoptbl */
 
@@ -110,45 +110,45 @@ POPUP *head_popup;
 /*
  *  assign_popup_extent
  *
- *  description:	assigns extent to popup based on
- *			location in currpoptbl
+ *  description:        assigns extent to popup based on
+ *                      location in currpoptbl
  *
- *  parameters:		popup (POPUP *) - popup whose extent is to
- *				be assigned
+ *  parameters:         popup (POPUP *) - popup whose extent is to
+ *                              be assigned
  */
 
 assign_popup_extent(popup)
 POPUP *popup;
 {
-	POPUP *tbl_ptr;			/* ptr into currpoptbl */
-	int i;				/* posiion in currpoptbl */
-					/* initial position is 1 */
-	Gpoint window[2];		/* popup area window */
-	Gfloat popup_width;		/* width of popup */
+        POPUP *tbl_ptr;                 /* ptr into currpoptbl */
+        int i;                          /* posiion in currpoptbl */
+                                        /* initial position is 1 */
+        Gpoint window[2];               /* popup area window */
+        Gfloat popup_width;             /* width of popup */
 
-	/* determine position of popup in currpoptbl */
+        /* determine position of popup in currpoptbl */
 
-	i = 1;
-	tbl_ptr = currpoptbl;
-	while (tbl_ptr != popup)
-	{
-		tbl_ptr = tbl_ptr->next;
-		i++;
-	}
+        i = 1;
+        tbl_ptr = currpoptbl;
+        while (tbl_ptr != popup)
+        {
+                tbl_ptr = tbl_ptr->next;
+                i++;
+        }
 
-	/* determine x-extent */
+        /* determine x-extent */
 
-	get_window(POPUP_AREA,window);
-	popup_width = 12 * (window[MAX].x - window[MIN].x)
-		/ (MAX_NUM_POPUPS *12 + MAX_NUM_POPUPS - 1);
-	popup->extent[MIN].x = window[MAX].x - i * popup_width
-		- (i-1) * (popup_width / 12);
-	popup->extent[MAX].x = popup->extent[MIN].x + popup_width;
+        get_window(POPUP_AREA,window);
+        popup_width = 12 * (window[MAX].x - window[MIN].x)
+                / (MAX_NUM_POPUPS *12 + MAX_NUM_POPUPS - 1);
+        popup->extent[MIN].x = window[MAX].x - i * popup_width
+                - (i-1) * (popup_width / 12);
+        popup->extent[MAX].x = popup->extent[MIN].x + popup_width;
 
-	/* determine y-extent */
+        /* determine y-extent */
 
-	popup->extent[MIN].y = window[MIN].y;
-	popup->extent[MAX].y = window[MAX].y;
+        popup->extent[MIN].y = window[MIN].y;
+        popup->extent[MAX].y = window[MAX].y;
 
 }  /* end assign_popup_extent */
 
@@ -156,44 +156,44 @@ POPUP *popup;
 /*
  *  display_popup_area
  *
- *  description:	displays popup_area
+ *  description:        displays popup_area
  *
- *  parameters:		none
+ *  parameters:         none
  */
 
 display_popup_area()
 {
-	Gpoint window[2];		/* popup area window */
-	Gpoint box[4];			/* pts of window */
-	POPUP *tbl_ptr;			/* ptr to popup list */
-	IDX idx;			/* popup_func_tbl index */
+        Gpoint window[2];               /* popup area window */
+        Gpoint box[4];                  /* pts of window */
+        POPUP *tbl_ptr;                 /* ptr to popup list */
+        IDX idx;                        /* popup_func_tbl index */
 
-	push_curr_trans();
-	alloc_trans(POPUP_AREA);
-	activate(POPUP_AREA);
+        push_curr_trans();
+        alloc_trans(POPUP_AREA);
+        activate(POPUP_AREA);
 
-	set_aspect_flags(GBUNDLED);
+        set_aspect_flags(GBUNDLED);
 
-	get_window(POPUP_AREA,window);
-	load_box(box,window[MIN].x,window[MAX].x,
-		window[MIN].y,window[MAX].y);
-	gsetfillind(BLACK_SOLID);
-	gfillarea(4,box);
+        get_window(POPUP_AREA,window);
+        load_box(box,window[MIN].x,window[MAX].x,
+                window[MIN].y,window[MAX].y);
+        gsetfillind(BLACK_SOLID);
+        gfillarea(4,box);
 
-	set_aspect_flags(GINDIVIDUAL);
+        set_aspect_flags(GINDIVIDUAL);
 
-	/* display all active popups in poptbl */
+        /* display all active popups in poptbl */
 
-	for (tbl_ptr = currpoptbl;
-		tbl_ptr != (POPUP *) NULL;
-		tbl_ptr = tbl_ptr->next)
-	{
-		idx = find_popup_func_tbl_idx(tbl_ptr->key);
-		if (tbl_ptr->is_active == TRUE)
-			(*(popup_func_tbl[idx].init))(tbl_ptr);
-	}
+        for (tbl_ptr = currpoptbl;
+                tbl_ptr != (POPUP *) NULL;
+                tbl_ptr = tbl_ptr->next)
+        {
+                idx = find_popup_func_tbl_idx(tbl_ptr->key);
+                if (tbl_ptr->is_active == TRUE)
+                        (*(popup_func_tbl[idx].init))(tbl_ptr);
+        }
 
-	pop_curr_trans();
+        pop_curr_trans();
 
 
 }  /* end display_popup_area */
@@ -202,25 +202,25 @@ display_popup_area()
 /*
  *  display_popup_text
  *
- *  description:	display text centered within popup.
+ *  description:        display text centered within popup.
  *
- *  parameters:		nlns (int) - no of lines to display
- *			lines (char **) - text lines
- *			extent (Gpoint *) - popup extent
- *			clrno (IDX) - index of color to use
+ *  parameters:         nlns (int) - no of lines to display
+ *                      lines (char **) - text lines
+ *                      extent (Gpoint *) - popup extent
+ *                      clrno (IDX) - index of color to use
  */
 
 display_popup_text(nlns,lines,extent,clrno)
-int nlns;				/* no of lines to display */
-char **lines;				/* text lines to display */
-Gpoint extent[];			/* popup extent */
-IDX clrno;				/* clr to use */
+int nlns;                               /* no of lines to display */
+char **lines;                           /* text lines to display */
+Gpoint extent[];                        /* popup extent */
+IDX clrno;                              /* clr to use */
 {
-	Gpoint center;			/* popup center */
+        Gpoint center;                  /* popup center */
 
-	center.x = (extent[MIN].x + extent[MAX].x) / 2;
-	center.y = (extent[MIN].y + extent[MAX].y) / 2;
-	center_text(nlns,lines,&center,clrno,POPUP_TEXT);
+        center.x = (extent[MIN].x + extent[MAX].x) / 2;
+        center.y = (extent[MIN].y + extent[MAX].y) / 2;
+        center_text(nlns,lines,&center,clrno,POPUP_TEXT);
 
 }  /* end display_popup_text */
 
@@ -228,23 +228,23 @@ IDX clrno;				/* clr to use */
 /*
  *  erase_popup_text
  *
- *  description:	erase text centered within popup.
+ *  description:        erase text centered within popup.
  *
- *  parameters:		extent (Gpoint *) - popup extent
+ *  parameters:         extent (Gpoint *) - popup extent
  */
 
 erase_popup_text(extent)
-Gpoint extent[];			/* popup extent */
+Gpoint extent[];                        /* popup extent */
 {
-	Gpoint box[5];			/* boundary of extent */
+        Gpoint box[5];                  /* boundary of extent */
 
-	load_box(box,extent[MIN].x,extent[MAX].x,extent[MIN].y,
-		extent[MAX].y);
+        load_box(box,extent[MIN].x,extent[MAX].x,extent[MIN].y,
+                extent[MAX].y);
 
-	gsetfillind(GREY_SOLID);
-	gfillarea(4,box);
-	gsetfillind(WHITE_HOLLOW);
-	gfillarea(4,box);
+        gsetfillind(GREY_SOLID);
+        gfillarea(4,box);
+        gsetfillind(WHITE_HOLLOW);
+        gfillarea(4,box);
 
 }  /* end erase_popup_text */
 
@@ -252,48 +252,48 @@ Gpoint extent[];			/* popup extent */
 /*
  *  display_popup
  *
- *  description:	display entire popup (i.e. box and text)
+ *  description:        display entire popup (i.e. box and text)
  *
- *			REMEMBER: popup must be in currpoptbl before
- *			before calling display_popup
+ *                      REMEMBER: popup must be in currpoptbl before
+ *                      before calling display_popup
  *
- *  parameters:		popup (POPUP *) - popup to display
- *			nlns (int) - no of lines to display
- *			lines (char **) - text lines
+ *  parameters:         popup (POPUP *) - popup to display
+ *                      nlns (int) - no of lines to display
+ *                      lines (char **) - text lines
  */
 
 display_popup(popup,nlns,lines)
 POPUP *popup;
-int nlns;				/* no of lines of text */
-char **lines;				/* text to display */
+int nlns;                               /* no of lines of text */
+char **lines;                           /* text to display */
 {
-	Gpoint box[4];			/* boundary of popup */
+        Gpoint box[4];                  /* boundary of popup */
 
-	push_curr_trans();
-	activate(POPUP_AREA);
+        push_curr_trans();
+        activate(POPUP_AREA);
 
-	/* draw popup box */
+        /* draw popup box */
 
-	set_aspect_flags(GBUNDLED);
+        set_aspect_flags(GBUNDLED);
 
-	assign_popup_extent(popup);
-	load_box(box,popup->extent[MIN].x,
-		popup->extent[MAX].x,
-		popup->extent[MIN].y,
-		popup->extent[MAX].y);
-	gsetfillind(GREY_SOLID);
-	gfillarea(4,box);
-	gsetfillind(WHITE_HOLLOW);
-	gfillarea(4,box);
+        assign_popup_extent(popup);
+        load_box(box,popup->extent[MIN].x,
+                popup->extent[MAX].x,
+                popup->extent[MIN].y,
+                popup->extent[MAX].y);
+        gsetfillind(GREY_SOLID);
+        gfillarea(4,box);
+        gsetfillind(WHITE_HOLLOW);
+        gfillarea(4,box);
 
-	/* draw text */
+        /* draw text */
 
-	display_popup_text(nlns,lines,popup->extent,white);
+        display_popup_text(nlns,lines,popup->extent,white);
 
-	set_aspect_flags(GINDIVIDUAL);
-	pop_curr_trans();
+        set_aspect_flags(GINDIVIDUAL);
+        pop_curr_trans();
 
-	popup->is_active = TRUE;
+        popup->is_active = TRUE;
 
 }  /* end display_popup */
 
@@ -301,11 +301,11 @@ char **lines;				/* text to display */
 /*
  *  display_number_popup
  *
- *  description:	displays popup with numbers
+ *  description:        displays popup with numbers
  *
- *  parameters:		popup (POPUP *) - popup to display
- *			text (char *) - pointer to text label
- *			state (int) - popup state (i.e value)
+ *  parameters:         popup (POPUP *) - popup to display
+ *                      text (char *) - pointer to text label
+ *                      state (int) - popup state (i.e value)
  */
 
 display_number_popup(popup,text,state)
@@ -313,53 +313,53 @@ POPUP *popup;
 char *text;
 int state;
 {
-	Gpoint center;
-	Gpoint box[4];
+        Gpoint center;
+        Gpoint box[4];
 
-	push_curr_trans();
-	activate(POPUP_AREA);
+        push_curr_trans();
+        activate(POPUP_AREA);
 
-	/* draw popup box */
+        /* draw popup box */
 
-	set_aspect_flags(GBUNDLED);
+        set_aspect_flags(GBUNDLED);
 
-	assign_popup_extent(popup);
-	load_box(box,popup->extent[MIN].x,
-		popup->extent[MAX].x,
-		popup->extent[MIN].y,
-		popup->extent[MAX].y);
-	gsetfillind(GREY_SOLID);
-	gfillarea(4,box);
-	gsetfillind(WHITE_HOLLOW);
-	gfillarea(4,box);
+        assign_popup_extent(popup);
+        load_box(box,popup->extent[MIN].x,
+                popup->extent[MAX].x,
+                popup->extent[MIN].y,
+                popup->extent[MAX].y);
+        gsetfillind(GREY_SOLID);
+        gfillarea(4,box);
+        gsetfillind(WHITE_HOLLOW);
+        gfillarea(4,box);
 
-	/* draw text */
+        /* draw text */
 
-	center.x = (popup->extent[MIN].x +
-		popup->extent[MAX].x) / 2.0;
-	center.y = (popup->extent[MAX].y - popup->extent[MIN].y) 
-		* 1.0 / 5.0 + popup->extent[MIN].y;
+        center.x = (popup->extent[MIN].x +
+                popup->extent[MAX].x) / 2.0;
+        center.y = (popup->extent[MAX].y - popup->extent[MIN].y) 
+                * 1.0 / 5.0 + popup->extent[MIN].y;
 
-	center_text(1,&text,&center,white,POPUP_TEXT);
+        center_text(1,&text,&center,white,POPUP_TEXT);
 
-	draw_high_order_digit(popup->extent,(int) (state / 10.0),white);
-	draw_low_order_digit(popup->extent,(int) state % 10,white);
+        draw_high_order_digit(popup->extent,(int) (state / 10.0),white);
+        draw_low_order_digit(popup->extent,(int) state % 10,white);
 
-	set_aspect_flags(GINDIVIDUAL);
-	pop_curr_trans();
+        set_aspect_flags(GINDIVIDUAL);
+        pop_curr_trans();
 
-	popup->is_active = TRUE;
+        popup->is_active = TRUE;
 }  /* end display_number_popup */
 
 
 /*
  *  display_header_popup
  *
- *  description:	displays popup with headers
+ *  description:        displays popup with headers
  *
- *  parameters:		popup (POPUP *) - popup to display
- *			header_text (char *) - header string
- *			text (char **) - pointer to text label
+ *  parameters:         popup (POPUP *) - popup to display
+ *                      header_text (char *) - header string
+ *                      text (char **) - pointer to text label
  */
 
 display_header_popup(popup,header_text,text,nlns)
@@ -367,98 +367,98 @@ POPUP *popup;
 char *header_text, **text;
 int nlns;
 {
-	Gpoint center;
-	Gpoint box[4];
+        Gpoint center;
+        Gpoint box[4];
 
-	push_curr_trans();
-	activate(POPUP_AREA);
+        push_curr_trans();
+        activate(POPUP_AREA);
 
-	/* draw popup box */
+        /* draw popup box */
 
-	set_aspect_flags(GBUNDLED);
+        set_aspect_flags(GBUNDLED);
 
-	assign_popup_extent(popup);
-	load_box(box,popup->extent[MIN].x,
-		popup->extent[MAX].x,
-		popup->extent[MIN].y,
-		popup->extent[MAX].y);
-	gsetfillind(GREY_SOLID);
-	gfillarea(4,box);
-	gsetfillind(WHITE_HOLLOW);
-	gfillarea(4,box);
+        assign_popup_extent(popup);
+        load_box(box,popup->extent[MIN].x,
+                popup->extent[MAX].x,
+                popup->extent[MIN].y,
+                popup->extent[MAX].y);
+        gsetfillind(GREY_SOLID);
+        gfillarea(4,box);
+        gsetfillind(WHITE_HOLLOW);
+        gfillarea(4,box);
 
-	/* draw header_text */
+        /* draw header_text */
 
-	center.x = (popup->extent[MIN].x
-		+ popup->extent[MAX].x) / 2.0;
-	center.y = (popup->extent[MAX].y 
-		- popup->extent[MIN].y) 
-		* 5.0 / 6.0 + popup->extent[MIN].y;
-	center_text(1,&header_text,&center,white,POPUP_TEXT);
+        center.x = (popup->extent[MIN].x
+                + popup->extent[MAX].x) / 2.0;
+        center.y = (popup->extent[MAX].y 
+                - popup->extent[MIN].y) 
+                * 5.0 / 6.0 + popup->extent[MIN].y;
+        center_text(1,&header_text,&center,white,POPUP_TEXT);
 
-	/* draw text */
+        /* draw text */
 
-	center.y = (popup->extent[MAX].y 
-		- popup->extent[MIN].y) 
-		/ 3.0 + popup->extent[MIN].y;
-	center_text(nlns,text,&center,white,POPUP_TEXT);
+        center.y = (popup->extent[MAX].y 
+                - popup->extent[MIN].y) 
+                / 3.0 + popup->extent[MIN].y;
+        center_text(nlns,text,&center,white,POPUP_TEXT);
 
-	set_aspect_flags(GINDIVIDUAL);
-	pop_curr_trans();
+        set_aspect_flags(GINDIVIDUAL);
+        pop_curr_trans();
 
-	popup->is_active = TRUE;
+        popup->is_active = TRUE;
 }  /* end display_header_popup */
 
 
 /*
  *  switch_popup_state
  *
- *  description:	switches popup state to next state
- *			and redraws popup
+ *  description:        switches popup state to next state
+ *                      and redraws popup
  *
- *  parameters:		state - (ENUM *) current popup state
- *			nostates (int) - no of popup states
- *			nlns (int) - no of text lines to display
- *			lines (char **) - nlns * state is the
- *				starting addr of lines corresponding to
- *				state
- *			extent (Gpoint *) - popup extent
+ *  parameters:         state - (ENUM *) current popup state
+ *                      nostates (int) - no of popup states
+ *                      nlns (int) - no of text lines to display
+ *                      lines (char **) - nlns * state is the
+ *                              starting addr of lines corresponding to
+ *                              state
+ *                      extent (Gpoint *) - popup extent
  */
 
 switch_popup_state(state,nostates,nlns,lines,extent)
-int *state;				/* current popup state */
-int nostates;				/* no of popup states */
-int nlns;				/* no of lines to display */
-char **lines;				/* popup text */
-Gpoint extent[];			/* popup extent */
+int *state;                             /* current popup state */
+int nostates;                           /* no of popup states */
+int nlns;                               /* no of lines to display */
+char **lines;                           /* popup text */
+Gpoint extent[];                        /* popup extent */
 {
-	char **ln_ptr;			/* ptr to appropriate lines */
-	int i;
+        char **ln_ptr;                  /* ptr to appropriate lines */
+        int i;
 
-	push_curr_trans();
-	activate(POPUP_AREA);
-	set_aspect_flags(GBUNDLED);
+        push_curr_trans();
+        activate(POPUP_AREA);
+        set_aspect_flags(GBUNDLED);
 
-	/* erase old popup text */
+        /* erase old popup text */
 
-	ln_ptr = lines;
-	for (i=0; i<(nlns * (*state)); i++)
-		ln_ptr++;
-	erase_popup_text(extent);
+        ln_ptr = lines;
+        for (i=0; i<(nlns * (*state)); i++)
+                ln_ptr++;
+        erase_popup_text(extent);
 
-	/* switch state */
+        /* switch state */
 
-	*state = ((*state) + 1) % nostates;
+        *state = ((*state) + 1) % nostates;
 
-	/* display new popup text */
+        /* display new popup text */
 
-	ln_ptr = lines;
-	for (i=0; i<(nlns * (*state)); i++)
-		ln_ptr++;
-	display_popup_text(nlns,ln_ptr,extent,white);
+        ln_ptr = lines;
+        for (i=0; i<(nlns * (*state)); i++)
+                ln_ptr++;
+        display_popup_text(nlns,ln_ptr,extent,white);
 
-	set_aspect_flags(GINDIVIDUAL);
-	pop_curr_trans();
+        set_aspect_flags(GINDIVIDUAL);
+        pop_curr_trans();
 
 }  /* end switch_popup_state */
 
@@ -466,12 +466,12 @@ Gpoint extent[];			/* popup extent */
 /*
  *  switch_number_popup_state
  *
- *  description:	if a digit was picked, that digit is
- *			incremented
+ *  description:        if a digit was picked, that digit is
+ *                      incremented
  *
- *  parameters:		extent (Gpoint *) - popup extent
- *			state (int *) - current popup state
- *			pt (Gpoint) -pt picked by user
+ *  parameters:         extent (Gpoint *) - popup extent
+ *                      state (int *) - current popup state
+ *                      pt (Gpoint) -pt picked by user
  */
 
 switch_number_popup_state(extent,state,pt,mini,maxi)
@@ -480,100 +480,100 @@ int *state;
 Gpoint pt;
 int mini,maxi;
 {
-	Gfloat x,y;
-	int high_order_digit;
-	int low_order_digit;
-	int min_high_order_digit;
-	int min_low_order_digit;
-	int max_high_order_digit;
-	int max_low_order_digit;
+        Gfloat x,y;
+        int high_order_digit;
+        int low_order_digit;
+        int min_high_order_digit;
+        int min_low_order_digit;
+        int max_high_order_digit;
+        int max_low_order_digit;
 
-	x = (extent[MIN].x + extent[MAX].x) 
-		/ 2.0;
-	y = (extent[MAX].y - extent[MIN].y) 
-		* 2.0 / 3.0 + extent[MIN].y;
+        x = (extent[MIN].x + extent[MAX].x) 
+                / 2.0;
+        y = (extent[MAX].y - extent[MIN].y) 
+                * 2.0 / 3.0 + extent[MIN].y;
 
-	/* determine if either low order or 
-	   high order digit was picked */
+        /* determine if either low order or 
+           high order digit was picked */
 
-	if (pt.y > y)
-	{
-		reprompt(1);
-		return;
-	}
+        if (pt.y > y)
+        {
+                reprompt(1);
+                return;
+        }
 
-	high_order_digit = (*state / 10);
-	low_order_digit = (*state % 10);
+        high_order_digit = (*state / 10);
+        low_order_digit = (*state % 10);
 
-	min_high_order_digit = (mini / 10);
-	min_low_order_digit = (mini % 10);
+        min_high_order_digit = (mini / 10);
+        min_low_order_digit = (mini % 10);
 
-	max_high_order_digit = (maxi / 10);
-	max_low_order_digit = (maxi % 10);
+        max_high_order_digit = (maxi / 10);
+        max_low_order_digit = (maxi % 10);
 
-	if (pt.x < x)
-	{
-		/* high order digit picked */
+        if (pt.x < x)
+        {
+                /* high order digit picked */
 
-		draw_high_order_digit(extent,high_order_digit,grey);
-		high_order_digit = (high_order_digit + 1) % 10;
-		if (high_order_digit > max_high_order_digit)
-			high_order_digit = min_high_order_digit;
-		draw_high_order_digit(extent,high_order_digit,white);
+                draw_high_order_digit(extent,high_order_digit,grey);
+                high_order_digit = (high_order_digit + 1) % 10;
+                if (high_order_digit > max_high_order_digit)
+                        high_order_digit = min_high_order_digit;
+                draw_high_order_digit(extent,high_order_digit,white);
 
-		/* state cannot be zero */
+                /* state cannot be zero */
 
-		if ((high_order_digit == min_high_order_digit) 
-			&& (low_order_digit < min_low_order_digit))
-		{
-			draw_low_order_digit(extent,low_order_digit,grey);
-			low_order_digit = min_low_order_digit;
-			draw_low_order_digit(extent,low_order_digit,white);
-		}
-		else if ((high_order_digit == max_high_order_digit) 
-			&& (low_order_digit > max_low_order_digit))
-		{
-			draw_low_order_digit(extent,low_order_digit,grey);
-			low_order_digit = max_low_order_digit;
-			draw_low_order_digit(extent,low_order_digit,white);
-		}
-	}
-	else
-	{
-		/* low order digit picked */
+                if ((high_order_digit == min_high_order_digit) 
+                        && (low_order_digit < min_low_order_digit))
+                {
+                        draw_low_order_digit(extent,low_order_digit,grey);
+                        low_order_digit = min_low_order_digit;
+                        draw_low_order_digit(extent,low_order_digit,white);
+                }
+                else if ((high_order_digit == max_high_order_digit) 
+                        && (low_order_digit > max_low_order_digit))
+                {
+                        draw_low_order_digit(extent,low_order_digit,grey);
+                        low_order_digit = max_low_order_digit;
+                        draw_low_order_digit(extent,low_order_digit,white);
+                }
+        }
+        else
+        {
+                /* low order digit picked */
 
-		draw_low_order_digit(extent,low_order_digit,grey);
-		low_order_digit = (low_order_digit + 1) % 10;
+                draw_low_order_digit(extent,low_order_digit,grey);
+                low_order_digit = (low_order_digit + 1) % 10;
 
-		/* state cannot be zero */
+                /* state cannot be zero */
 
 
-		if ((high_order_digit == min_high_order_digit) 
-			&& (low_order_digit < min_low_order_digit))
-		{
-			low_order_digit = min_low_order_digit;
-		}
-		else if ((high_order_digit == max_high_order_digit) 
-			&& (low_order_digit > max_low_order_digit))
-		{
-			low_order_digit = max_low_order_digit;
-		}
+                if ((high_order_digit == min_high_order_digit) 
+                        && (low_order_digit < min_low_order_digit))
+                {
+                        low_order_digit = min_low_order_digit;
+                }
+                else if ((high_order_digit == max_high_order_digit) 
+                        && (low_order_digit > max_low_order_digit))
+                {
+                        low_order_digit = max_low_order_digit;
+                }
 
-		draw_low_order_digit(extent,low_order_digit,white);
-	}
+                draw_low_order_digit(extent,low_order_digit,white);
+        }
 
-	*state = high_order_digit * 10 + low_order_digit;
+        *state = high_order_digit * 10 + low_order_digit;
 } /* end switch_number_popup_state */
 
 
 /*
  *  draw_high_order_digit
  *
- *  description:	draws high order digit in desired color
+ *  description:        draws high order digit in desired color
  *
- *  parameters:		extent (Gpoint *) - popup extent
- *			digit (int) - digit to draw
- *			clrno (IDX) - clr tbl index
+ *  parameters:         extent (Gpoint *) - popup extent
+ *                      digit (int) - digit to draw
+ *                      clrno (IDX) - clr tbl index
  */
 
 
@@ -582,39 +582,39 @@ Gpoint *extent;
 int digit;
 IDX clrno;
 {
-	char *string;
-	Gfloat x;
-	Gpoint center;
+        char *string;
+        Gfloat x;
+        Gpoint center;
 
-	push_curr_trans();
-	activate(POPUP_AREA);
-	set_aspect_flags(GBUNDLED);
+        push_curr_trans();
+        activate(POPUP_AREA);
+        set_aspect_flags(GBUNDLED);
 
-	x = (extent[MIN].x + extent[MAX].x) 
-		/ 2.0;
+        x = (extent[MIN].x + extent[MAX].x) 
+                / 2.0;
 
-	/* draw digit */
+        /* draw digit */
 
-	center.x = x - (x - extent[MIN].x) / 4.0;
-	center.y = x;
-	string = (char *) calloc (2,sizeof(char));
-	sprintf(string,"%d",digit);
-	center_text(1,&string,&center,clrno,POPUP_NUMBER_TEXT);
-	free((char *) string);
+        center.x = x - (x - extent[MIN].x) / 4.0;
+        center.y = x;
+        string = (char *) calloc (2,sizeof(char));
+        sprintf(string,"%d",digit);
+        center_text(1,&string,&center,clrno,POPUP_NUMBER_TEXT);
+        free((char *) string);
 
-	set_aspect_flags(GINDIVIDUAL);
-	pop_curr_trans();
+        set_aspect_flags(GINDIVIDUAL);
+        pop_curr_trans();
 }  /* end draw_high_order_digit */
 
 
 /*
  *  draw_low_order_digit
  *
- *  description:	draws low order digit in desired color
+ *  description:        draws low order digit in desired color
  *
- *  parameters:		extent (Gpoint *) - popup extent
- *			digit (int) - digit to draw
- *			clrno (IDX) - clr tbl index
+ *  parameters:         extent (Gpoint *) - popup extent
+ *                      digit (int) - digit to draw
+ *                      clrno (IDX) - clr tbl index
  */
 
 
@@ -623,84 +623,84 @@ Gpoint *extent;
 int digit;
 IDX clrno;
 {
-	char *string;
-	Gfloat x;
-	Gpoint center;
+        char *string;
+        Gfloat x;
+        Gpoint center;
 
-	push_curr_trans();
-	activate(POPUP_AREA);
-	set_aspect_flags(GBUNDLED);
+        push_curr_trans();
+        activate(POPUP_AREA);
+        set_aspect_flags(GBUNDLED);
 
-	x = (extent[MIN].x + extent[MAX].x) 
-		/ 2.0;
+        x = (extent[MIN].x + extent[MAX].x) 
+                / 2.0;
 
-	/* draw digit */
+        /* draw digit */
 
-	center.x = x + (extent[MAX].x - x) / 4.0;
-	center.y = x;
-	string = (char *) calloc (2,sizeof(char));
-	sprintf(string,"%d",digit);
-	center_text(1,&string,&center,clrno,POPUP_NUMBER_TEXT);
-	free((char *) string);
+        center.x = x + (extent[MAX].x - x) / 4.0;
+        center.y = x;
+        string = (char *) calloc (2,sizeof(char));
+        sprintf(string,"%d",digit);
+        center_text(1,&string,&center,clrno,POPUP_NUMBER_TEXT);
+        free((char *) string);
 
-	set_aspect_flags(GINDIVIDUAL);
-	pop_curr_trans();
+        set_aspect_flags(GINDIVIDUAL);
+        pop_curr_trans();
 }  /* end draw_low_order_digit */
 
 
 /*
  *  switch_header_popup_state
  *
- *  description:	switches popup state to next state
- *			and redraws popup
+ *  description:        switches popup state to next state
+ *                      and redraws popup
  *
- *  parameters:		state - (ENUM *) current popup state
- *			nostates (int) - no of popup states
- *			nlns (int) - no of text lines to display
- *			lines (char **) - nlns * state is the
- *				starting addr of lines corresponding to
- *				state
- *			extent (Gpoint *) - popup extent
+ *  parameters:         state - (ENUM *) current popup state
+ *                      nostates (int) - no of popup states
+ *                      nlns (int) - no of text lines to display
+ *                      lines (char **) - nlns * state is the
+ *                              starting addr of lines corresponding to
+ *                              state
+ *                      extent (Gpoint *) - popup extent
  */
 
 switch_header_popup_state(state,nostates,nlns,lines,extent)
-int *state;				/* current popup state */
-int nostates;				/* no of popup states */
-int nlns;				/* no of lines to display */
-char **lines;				/* popup text */
-Gpoint extent[];			/* popup extent */
+int *state;                             /* current popup state */
+int nostates;                           /* no of popup states */
+int nlns;                               /* no of lines to display */
+char **lines;                           /* popup text */
+Gpoint extent[];                        /* popup extent */
 {
-	char **ln_ptr;			/* ptr to appropriate lines */
-	int i;
-	Gpoint center;
+        char **ln_ptr;                  /* ptr to appropriate lines */
+        int i;
+        Gpoint center;
 
-	push_curr_trans();
-	activate(POPUP_AREA);
-	set_aspect_flags(GBUNDLED);
+        push_curr_trans();
+        activate(POPUP_AREA);
+        set_aspect_flags(GBUNDLED);
 
-	/* erase old popup text */
+        /* erase old popup text */
 
-	ln_ptr = lines;
-	for (i=0; i<(nlns * (*state)); i++)
-		ln_ptr++;
-	center.x = (extent[MIN].x + extent[MAX].x) / 2.0;
-	center.y = (extent[MAX].y - extent[MIN].y) 
-		/ 3.0 + extent[MIN].y;
-	center_text(nlns,ln_ptr,&center,grey,POPUP_TEXT);
+        ln_ptr = lines;
+        for (i=0; i<(nlns * (*state)); i++)
+                ln_ptr++;
+        center.x = (extent[MIN].x + extent[MAX].x) / 2.0;
+        center.y = (extent[MAX].y - extent[MIN].y) 
+                / 3.0 + extent[MIN].y;
+        center_text(nlns,ln_ptr,&center,grey,POPUP_TEXT);
 
-	/* switch state */
+        /* switch state */
 
-	*state = ((*state) + 1) % nostates;
+        *state = ((*state) + 1) % nostates;
 
-	/* display new popup text */
+        /* display new popup text */
 
-	ln_ptr = lines;
-	for (i=0; i<(nlns * (*state)); i++)
-		ln_ptr++;
-	center_text(nlns,ln_ptr,&center,white,POPUP_TEXT);
+        ln_ptr = lines;
+        for (i=0; i<(nlns * (*state)); i++)
+                ln_ptr++;
+        center_text(nlns,ln_ptr,&center,white,POPUP_TEXT);
 
-	set_aspect_flags(GINDIVIDUAL);
-	pop_curr_trans();
+        set_aspect_flags(GINDIVIDUAL);
+        pop_curr_trans();
 
 }  /* end switch_header_popup_state */
 
@@ -708,89 +708,89 @@ Gpoint extent[];			/* popup extent */
 /*
  *  erase_popup
  *
- *  description:	erases popup from screen and sets
- *			active flag to false.
+ *  description:        erases popup from screen and sets
+ *                      active flag to false.
  *
- *  parameters:		popup (POPUP *) - popup to erase
+ *  parameters:         popup (POPUP *) - popup to erase
  */
 
 erase_popup(popup)
-POPUP *popup;			/* popup to erase */
+POPUP *popup;                   /* popup to erase */
 {
-	Gpoint box[4];		/* pts of popup extent */
+        Gpoint box[4];          /* pts of popup extent */
 
-	/* erase popup from screen */
+        /* erase popup from screen */
 
-	push_curr_trans();
-	activate(POPUP_AREA);
-	set_aspect_flags(GBUNDLED);
+        push_curr_trans();
+        activate(POPUP_AREA);
+        set_aspect_flags(GBUNDLED);
 
-	load_box(box,popup->extent[MIN].x,popup->extent[MAX].x,
-		popup->extent[MIN].y,popup->extent[MAX].y);
-	gsetfillind(BLACK_SOLID);
-	gfillarea(4,box);
+        load_box(box,popup->extent[MIN].x,popup->extent[MAX].x,
+                popup->extent[MIN].y,popup->extent[MAX].y);
+        gsetfillind(BLACK_SOLID);
+        gfillarea(4,box);
 
-	set_aspect_flags(GINDIVIDUAL);
-	pop_curr_trans();
+        set_aspect_flags(GINDIVIDUAL);
+        pop_curr_trans();
 
-	/* note that it is unpickable */
+        /* note that it is unpickable */
 
-	popup->is_active = FALSE;
+        popup->is_active = FALSE;
 }  /* end erase_popup */
 
 
 /*
  *  display_popups
  *
- *  description:	displays list of popups
- *			checks for empty list
+ *  description:        displays list of popups
+ *                      checks for empty list
  *
- *  parameters:		poplst (POPUP *) - list of popups to display
+ *  parameters:         poplst (POPUP *) - list of popups to display
  */
 
 display_popups(poplst)
 POPUP *poplst;
 {
-	POPUP *tbl_ptr;
-	IDX idx;
+        POPUP *tbl_ptr;
+        IDX idx;
 
-	if (poplst != (POPUP *) NULL)
-	{
-		add_to_currpoptbl(poplst);
-		if (screen_tbl[find_screen_tbl_idx(POPUP_AREA)].is_active
-			== TRUE)
-			for (tbl_ptr = poplst;
-				tbl_ptr != (POPUP *) NULL;
-				tbl_ptr = tbl_ptr->next)
-			{
-				idx = find_popup_func_tbl_idx(tbl_ptr->key);
-				(*(popup_func_tbl[idx].init))(tbl_ptr);
-			}
-	}
+        if (poplst != (POPUP *) NULL)
+        {
+                add_to_currpoptbl(poplst);
+                if (screen_tbl[find_screen_tbl_idx(POPUP_AREA)].is_active
+                        == TRUE)
+                        for (tbl_ptr = poplst;
+                                tbl_ptr != (POPUP *) NULL;
+                                tbl_ptr = tbl_ptr->next)
+                        {
+                                idx = find_popup_func_tbl_idx(tbl_ptr->key);
+                                (*(popup_func_tbl[idx].init))(tbl_ptr);
+                        }
+        }
 }  /* end display_popups */
 
 
 /*
  *  erase_popups
  *
- *  description:	erases list of popups and removes them
- *			from poptbl
+ *  description:        erases list of popups and removes them
+ *                      from poptbl
  *
- *  parameters:		poplst (POPUP *) - list of popups
+ *  parameters:         poplst (POPUP *) - list of popups
  */
 
 erase_popups(poplst)
 POPUP *poplst;
 {
-	POPUP *tbl_ptr;
-	IDX idx;
+        POPUP *tbl_ptr;
+        IDX idx;
 
-	rm_from_currpoptbl(poplst);
-	for (tbl_ptr = poplst;
-		tbl_ptr != (POPUP *) NULL;
-		tbl_ptr = tbl_ptr->next)
-	{
-		idx = find_popup_func_tbl_idx(tbl_ptr->key);
-		(*(popup_func_tbl[idx].cleanup))(tbl_ptr);
-	}
+        rm_from_currpoptbl(poplst);
+        for (tbl_ptr = poplst;
+                tbl_ptr != (POPUP *) NULL;
+                tbl_ptr = tbl_ptr->next)
+        {
+                idx = find_popup_func_tbl_idx(tbl_ptr->key);
+                (*(popup_func_tbl[idx].cleanup))(tbl_ptr);
+        }
 }  /* end erase_popups */
