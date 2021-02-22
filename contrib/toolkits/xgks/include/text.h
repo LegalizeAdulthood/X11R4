@@ -33,7 +33,7 @@
 
 void XgksComputeVec(Gpoint *up_vec, Gpoint *base_vec);
 
-#define   DEFCHRSPACE    0.0 /* c1154 */
+#define   DEFCHRSPACE    0.0
 
 #ifdef text_c
 Gtxbundl def_txbundl[PDF_TEXT_BNDLS] =

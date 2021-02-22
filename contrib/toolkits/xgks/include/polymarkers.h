@@ -29,7 +29,7 @@
  */
 
 
-#define  DEFMRKRSIZE  1.0       /* c1154 */
+#define  DEFMRKRSIZE  1.0
 
 #ifdef polymarkers_c
 Gmkbundl def_mkbundl[PDF_MARK_BNDLS] =
