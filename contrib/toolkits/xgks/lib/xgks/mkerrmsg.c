@@ -45,6 +45,7 @@
 int main(int argc, char *argv[])
 {
     char line[1024], dstr[30], estr[30];
+    char comment[30];
     char *cp;
     int cnt = 0, num, max = 201;
     int first = 1;
@@ -59,7 +60,7 @@ int main(int argc, char *argv[])
     while (fgets(line, sizeof(line), stdin) != NULL)
     {
         if (strncmp("#define", line, 7) != 0)
-            puts(line);
+            fputs(line, stdout);
         else
         {
             if (first)
@@ -75,7 +76,10 @@ int main(int argc, char *argv[])
                 if (max == 201)
                 {
                     for (; cnt < max; cnt++)
-                        printf("/* %d */        (char *)NULL,\n", cnt);
+                    {
+                        snprintf(comment, sizeof(comment), "/* %d */", cnt);
+                        printf("%-24s(char *) NULL,\n", comment);
+                    }
                     printf("};\n");
                     printf("char *GKSErrorMessages300to309[] = {\n");
                     cnt = 300;
@@ -84,7 +88,10 @@ int main(int argc, char *argv[])
                 else if (max == 310)
                 {
                     for (; cnt < max; cnt++)
-                        printf("/* %d */        (char *)NULL,\n", cnt);
+                    {
+                        snprintf(comment, sizeof(comment), "/* %d */", cnt);
+                        printf("%-24s(char *) NULL,\n", comment);
+                    }
                     printf("};\n");
                     printf("char *GKSErrorMessages2000to2000[] = {\n");
                     cnt = 2000;
@@ -94,9 +101,13 @@ int main(int argc, char *argv[])
                     printf("};\n");
             }
             for (; cnt < num; cnt++)
-                printf("/* %d */        (char *)NULL,\n", cnt);
+            {
+                snprintf(comment, sizeof(comment), "/* %d */", cnt);
+                printf("%-24s(char *) NULL,\n", comment);
+            }
             cnt++;
-            printf("/* %s %d */     ", estr, num);
+            snprintf(comment, sizeof(comment), "/* %s %d */", estr, num);
+            printf("%-24s", comment);
             cp = rindex(line, '*');
             cp--;
             *cp = '\0';
@@ -106,7 +117,7 @@ int main(int argc, char *argv[])
         }
     }
     printf("};\n");
-    printf("\n#else GKS_ERROR_C\n");
+    printf("\n#else /* GKS_ERROR_C */\n");
     printf("extern char *GKSErrorMessages0to200[];\n");
     printf("extern char *GKSErrorMessages300to309[];\n");
     printf("extern char *GKSErrorMessages2000to2000[];\n");

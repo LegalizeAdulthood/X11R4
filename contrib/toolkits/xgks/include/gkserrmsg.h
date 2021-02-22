@@ -41,11 +41,15 @@
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
  * 
+ */
+
+/* clang-format off */
+
+/* 
  * States
- * 
  */
 char *GKSErrorMessages0to200[] = {
-/* 0 */ (char *)NULL,
+/* 0 */                 (char *) NULL,
 /* ENOTGKCL 1 */        "GKS not in proper state: GKS shall be in the state GKCL",
 /* ENOTGKKOP 2 */       "GKS not in proper state: GKS shall be in the state GKOP",
 /* ENOTWASC 3 */        "GKS not in proper state: GKS shall be in the state WSAC",
@@ -57,17 +61,17 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Workstations
  */
-/* 9 */ (char *)NULL,
-/* 10 */        (char *)NULL,
-/* 11 */        (char *)NULL,
-/* 12 */        (char *)NULL,
-/* 13 */        (char *)NULL,
-/* 14 */        (char *)NULL,
-/* 15 */        (char *)NULL,
-/* 16 */        (char *)NULL,
-/* 17 */        (char *)NULL,
-/* 18 */        (char *)NULL,
-/* 19 */        (char *)NULL,
+/* 9 */                 (char *) NULL,
+/* 10 */                (char *) NULL,
+/* 11 */                (char *) NULL,
+/* 12 */                (char *) NULL,
+/* 13 */                (char *) NULL,
+/* 14 */                (char *) NULL,
+/* 15 */                (char *) NULL,
+/* 16 */                (char *) NULL,
+/* 17 */                (char *) NULL,
+/* 18 */                (char *) NULL,
+/* 19 */                (char *) NULL,
 /* EWSIDINV 20 */       "Specified workstation identifier is invalid",
 /* ECNIDINV 21 */       "Specified connection identifier is invalid",
 /* EWSTPINV 22 */       "Specified workstation type is invalid",
@@ -95,12 +99,12 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Transformations
  */
-/* 44 */        (char *)NULL,
-/* 45 */        (char *)NULL,
-/* 46 */        (char *)NULL,
-/* 47 */        (char *)NULL,
-/* 48 */        (char *)NULL,
-/* 49 */        (char *)NULL,
+/* 44 */                (char *) NULL,
+/* 45 */                (char *) NULL,
+/* 46 */                (char *) NULL,
+/* 47 */                (char *) NULL,
+/* 48 */                (char *) NULL,
+/* 49 */                (char *) NULL,
 /* EBADXFRM 50 */       "Transformation number is invalid",
 /* EBADRCTD 51 */       "Rectangle definition is invalid",
 /* EBDVIEWP 52 */       "Viewport is not within the Normalized Device Coordinate unit square",
@@ -109,11 +113,11 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Output Attributes
  */
-/* 55 */        (char *)NULL,
-/* 56 */        (char *)NULL,
-/* 57 */        (char *)NULL,
-/* 58 */        (char *)NULL,
-/* 59 */        (char *)NULL,
+/* 55 */                (char *) NULL,
+/* 56 */                (char *) NULL,
+/* 57 */                (char *) NULL,
+/* 58 */                (char *) NULL,
+/* 59 */                (char *) NULL,
 /* EBADLINX 60 */       "Polyline index is invalid",
 /* ENOLINEX 61 */       "A representation for the specified polyline index has not been defined on this workstation",
 /* ENOPLINX 62 */       "A representation for the specified polyline index has not been predefined on this workstation",
@@ -155,8 +159,8 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Output Primitives
  */
-/* 98 */        (char *)NULL,
-/* 99 */        (char *)NULL,
+/* 98 */                (char *) NULL,
+/* 99 */                (char *) NULL,
 /* ENPOINTS 100 */      "Number of points is invalid",
 /* ECHRCODE 101 */      "Invalid code in string",
 /* EBDGDPID 102 */      "Generalized drawing primitive identifier is invalid",
@@ -166,20 +170,20 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Segments
  */
-/* 106 */       (char *)NULL,
-/* 107 */       (char *)NULL,
-/* 108 */       (char *)NULL,
-/* 109 */       (char *)NULL,
-/* 110 */       (char *)NULL,
-/* 111 */       (char *)NULL,
-/* 112 */       (char *)NULL,
-/* 113 */       (char *)NULL,
-/* 114 */       (char *)NULL,
-/* 115 */       (char *)NULL,
-/* 116 */       (char *)NULL,
-/* 117 */       (char *)NULL,
-/* 118 */       (char *)NULL,
-/* 119 */       (char *)NULL,
+/* 106 */               (char *) NULL,
+/* 107 */               (char *) NULL,
+/* 108 */               (char *) NULL,
+/* 109 */               (char *) NULL,
+/* 110 */               (char *) NULL,
+/* 111 */               (char *) NULL,
+/* 112 */               (char *) NULL,
+/* 113 */               (char *) NULL,
+/* 114 */               (char *) NULL,
+/* 115 */               (char *) NULL,
+/* 116 */               (char *) NULL,
+/* 117 */               (char *) NULL,
+/* 118 */               (char *) NULL,
+/* 119 */               (char *) NULL,
 /* EBADNAME 120 */      "Specified segment name is invalid",
 /* ENAMUSED 121 */      "Specified segment name is already in use",
 /* EWHATSEG 122 */      "Specified segment does not exist",
@@ -190,19 +194,19 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Input
  */
-/* 127 */       (char *)NULL,
-/* 128 */       (char *)NULL,
-/* 129 */       (char *)NULL,
-/* 130 */       (char *)NULL,
-/* 131 */       (char *)NULL,
-/* 132 */       (char *)NULL,
-/* 133 */       (char *)NULL,
-/* 134 */       (char *)NULL,
-/* 135 */       (char *)NULL,
-/* 136 */       (char *)NULL,
-/* 137 */       (char *)NULL,
-/* 138 */       (char *)NULL,
-/* 139 */       (char *)NULL,
+/* 127 */               (char *) NULL,
+/* 128 */               (char *) NULL,
+/* 129 */               (char *) NULL,
+/* 130 */               (char *) NULL,
+/* 131 */               (char *) NULL,
+/* 132 */               (char *) NULL,
+/* 133 */               (char *) NULL,
+/* 134 */               (char *) NULL,
+/* 135 */               (char *) NULL,
+/* 136 */               (char *) NULL,
+/* 137 */               (char *) NULL,
+/* 138 */               (char *) NULL,
+/* 139 */               (char *) NULL,
 /* ENOINDEV 140 */      "Specified input device is not present on workstation",
 /* EREQUEST 141 */      "Input device is not in REQUEST mode",
 /* ENSAMPLE 142 */      "Input device is not in SAMPLE mode",
@@ -221,11 +225,11 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Metafiles
  */
-/* 155 */       (char *)NULL,
-/* 156 */       (char *)NULL,
-/* 157 */       (char *)NULL,
-/* 158 */       (char *)NULL,
-/* 159 */       (char *)NULL,
+/* 155 */               (char *) NULL,
+/* 156 */               (char *) NULL,
+/* 157 */               (char *) NULL,
+/* 158 */               (char *) NULL,
+/* 159 */               (char *) NULL,
 /* ERESERVE 160 */      "Item type is not allowed for user items",
 /* EBDLNGTH 161 */      "Item length is invalid",
 /* EMNOITEM 162 */      "No item is left in GKS Metafile input",
@@ -238,40 +242,40 @@ char *GKSErrorMessages0to200[] = {
 /*
  * Escape
  */
-/* 169 */       (char *)NULL,
-/* 170 */       (char *)NULL,
-/* 171 */       (char *)NULL,
-/* 172 */       (char *)NULL,
-/* 173 */       (char *)NULL,
-/* 174 */       (char *)NULL,
-/* 175 */       (char *)NULL,
-/* 176 */       (char *)NULL,
-/* 177 */       (char *)NULL,
-/* 178 */       (char *)NULL,
-/* 179 */       (char *)NULL,
+/* 169 */               (char *) NULL,
+/* 170 */               (char *) NULL,
+/* 171 */               (char *) NULL,
+/* 172 */               (char *) NULL,
+/* 173 */               (char *) NULL,
+/* 174 */               (char *) NULL,
+/* 175 */               (char *) NULL,
+/* 176 */               (char *) NULL,
+/* 177 */               (char *) NULL,
+/* 178 */               (char *) NULL,
+/* 179 */               (char *) NULL,
 /* ENOESCFN 180 */      "Specified escape function is not supported",
 /* ESCIDINV 181 */      "Specified escape function identification is invalid",
 /* EESCDATA 182 */      "Contents of escape data record are invalid",
 /* 
  * Miscellaneous
 */
-/* 183 */       (char *)NULL,
-/* 184 */       (char *)NULL,
-/* 185 */       (char *)NULL,
-/* 186 */       (char *)NULL,
-/* 187 */       (char *)NULL,
-/* 188 */       (char *)NULL,
-/* 189 */       (char *)NULL,
-/* 190 */       (char *)NULL,
-/* 191 */       (char *)NULL,
-/* 192 */       (char *)NULL,
-/* 193 */       (char *)NULL,
-/* 194 */       (char *)NULL,
-/* 195 */       (char *)NULL,
-/* 196 */       (char *)NULL,
-/* 197 */       (char *)NULL,
-/* 198 */       (char *)NULL,
-/* 199 */       (char *)NULL,
+/* 183 */               (char *) NULL,
+/* 184 */               (char *) NULL,
+/* 185 */               (char *) NULL,
+/* 186 */               (char *) NULL,
+/* 187 */               (char *) NULL,
+/* 188 */               (char *) NULL,
+/* 189 */               (char *) NULL,
+/* 190 */               (char *) NULL,
+/* 191 */               (char *) NULL,
+/* 192 */               (char *) NULL,
+/* 193 */               (char *) NULL,
+/* 194 */               (char *) NULL,
+/* 195 */               (char *) NULL,
+/* 196 */               (char *) NULL,
+/* 197 */               (char *) NULL,
+/* 198 */               (char *) NULL,
+/* 199 */               (char *) NULL,
 /* EBDERRFL 200 */      "Specified error file is invalid",
 /* 
  * System

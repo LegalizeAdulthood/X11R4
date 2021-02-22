@@ -33,8 +33,12 @@
  * Author: Sung Hsien Ching Kelvin
  * Author: Yu Pan
  * 
+ */
+
+/* clang-format off */
+
+/* 
  * States
- * 
  */
 #define ENOTGKCL        1       /* GKS not in proper state: GKS shall be in the state GKCL */
 #define ENOTGKKOP       2       /* GKS not in proper state: GKS shall be in the state GKOP */
