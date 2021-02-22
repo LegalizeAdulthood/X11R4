@@ -609,7 +609,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     default:
         break;
     }
-    keybuf[0] = ' ';  /* clear buf so a following shift isn't seen as another bksp  PTR# c1047*/
+    keybuf[0] = ' ';  /* clear buf so a following shift isn't seen as another bksp */
     XFlush( ws->dpy );
     return( 0 );
 }
