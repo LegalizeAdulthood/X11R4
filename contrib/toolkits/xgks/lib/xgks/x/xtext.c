@@ -174,8 +174,8 @@ Gint xXgksText(WS_STATE_PTR ws, TEXT_ST *tx)
 {
         Gchar *string;
         Gchar *text_ptr;
-        Gpoint atsndc;          /*       ||||||||| */
-        FONT *cfont;            /* c1171 VVVVVVVVV */
+        Gpoint atsndc;
+        FONT *cfont;
         Gfloat fsize, fwidth, xtrans=0.0, ytrans=0.0;
         struct vcharst *cdef;
         Gint i;
@@ -341,7 +341,7 @@ fprintf(stderr, "xtext  fsize = %f fwidth=%f\n", fsize, fwidth);
 fprintf(stderr, "ibmrt_ddgks:text: xtrans=%f ytrans=%f\n",xtrans, ytrans);
 #endif
 
-        xTransMatrix(stroke_trans, xtrans, ytrans); /*ILL2*//* c1171 */
+        xTransMatrix(stroke_trans, xtrans, ytrans);
 
 #ifdef TDEBUG
 fprintf(stderr, "ibmrt_ddgks:text: xtrans=%f ytrans=%f\n",xtrans, ytrans);
@@ -379,7 +379,7 @@ xDumpMatrix("stroke_trans", stroke_trans);      /*ILL2*/
                                 xtrans = 0;
                                 break;
                 }
-                xTransMatrix(stroke_trans, xtrans, ytrans);/*ILL2*//* c1171 */
+                xTransMatrix(stroke_trans, xtrans, ytrans);
         }
 
         XgksSIGIO_ON(ws->dpy);
@@ -547,7 +547,7 @@ static int xIdentityMatrix(Gfloat m[6])
         m[0] = 1;       m[3] = 0;       /* 0 */
         m[1] = 0;       m[4] = 1;       /* 0 */
         m[2] = 0;       m[5] = 0;       /* 1 */
-        return (OK);/* c1171 */
+        return (OK);
 }
 
 #ifdef TDEBUG           /*ILL2*/
@@ -594,7 +594,7 @@ static int xTransMatrix(Gfloat m[6], Gfloat tx, Gfloat ty)
         tm[2] = tx; tm[5] = ty;
         xMultMatrix(tm, m, newm);
         xCopyMatrix(m, newm);
-        return (OK);/* c1171 */
+        return (OK);
 }
 
 static int xCopyMatrix(Gfloat dest[6], Gfloat src[6])
@@ -603,7 +603,7 @@ static int xCopyMatrix(Gfloat dest[6], Gfloat src[6])
 
         for (i=0; i<6; i++)
                 dest[i] = src[i];
-        return(0);/* c1171 */
+        return(0);
 }
 
 /*
@@ -618,7 +618,7 @@ static int xMultMatrix(Gfloat a[6], Gfloat b[6], Gfloat c[6])
         c[3] = a[0]*b[3] + a[3]*b[4] + 0*b[5];
         c[4] = a[1]*b[3] + a[4]*b[4] + 0*b[5];
         c[5] = a[2]*b[3] + a[5]*b[4] + 1*b[5];
-        return(0);/* c1171 */
+        return(0);
 }
 
 #ifdef TDEBUG
@@ -656,14 +656,14 @@ static int ck_ranges(struct vcharst *cdef, Gfloat *Xmin, Gfloat *Xmax, Gfloat *Y
                 }
                 cdef++;
         }
-        return(0);/* c1171 */
+        return(0);
 }
 
 static int ApplyMatrix(Gfloat m[6], Gpoint *in, Gpoint *out)
 {
         out->x = m[0]*in->x + m[1]*in->y + m[2]*1.0;
         out->y = m[3]*in->x + m[4]*in->y + m[5]*1.0;
-        return(0);/* c1171 */
+        return(0);
 }
 
 /*
@@ -674,8 +674,8 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
 {
         Gpoint start;
         Gchar *string;
-        Gpoint atsndc;          /*       ||||||||| */
-        FONT *cfont;            /* c1171 VVVVVVVVV */
+        Gpoint atsndc;
+        FONT *cfont;
         Gfloat fsize, fwidth, xtrans=0.0, ytrans=0.0, xFyMin(), xFxMax(), xFyMax();
         Gfloat Xmin, Xmax, Ymin, Ymax;
         Gfloat XminFirst, XmaxFirst, YminFirst, YmaxFirst;
@@ -813,7 +813,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 break;
         }
 
-        xTransMatrix(stroke_trans, xtrans, ytrans); /*ILL2*//* c1171 */
+        xTransMatrix(stroke_trans, xtrans, ytrans);
 
 #ifdef TDEBUG
         fprintf(stderr, "ibmrt_ddgks:text: xtrans=%f ytrans=%f\n",xtrans, ytrans);
