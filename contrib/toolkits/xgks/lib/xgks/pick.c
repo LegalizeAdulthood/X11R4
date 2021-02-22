@@ -473,7 +473,7 @@ Gint XgksPicUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
 #define IPICK idev->data.pic.initst.pick
     switch (idev->data.pic.initst.mode) {
         case GREQUEST:
-            if (xmev == NULL || xmev->type != ButtonRelease)  /* c1177 */
+            if (xmev == NULL || xmev->type != ButtonRelease)
                 break;
             idev->touched = TRUE;
             if (idev->breakhit == TRUE)
@@ -489,7 +489,7 @@ Gint XgksPicUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
 #undef IPICK
             break;
         case GEVENT  :
-            if (xmev == NULL || xmev->type != ButtonRelease)  /* c1177 */
+            if (xmev == NULL || xmev->type != ButtonRelease)
                 break;
             data = (Gpick *) malloc( sizeof (Gpick) );
             if (data == NULL)

@@ -671,7 +671,7 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
         idev->data.val.CurPos = CurPos;
         switch (idev->data.val.initst.mode) {
             case GREQUEST:
-                if (xmev == NULL || xmev->type != ButtonRelease)  /* c1177 */
+                if (xmev == NULL || xmev->type != ButtonRelease)
                     break;
                 idev->touched = TRUE;
                 idev->data.val.val.val = DcToVal (CurPos, (idev->data.val.convert));
@@ -684,7 +684,7 @@ Gint XgksValUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 break;
 
             case GEVENT  :
-                if (xmev == NULL ||xmev->type != ButtonRelease)  /* c1177 */
+                if (xmev == NULL ||xmev->type != ButtonRelease)
                     break;
                 data = (Gfloat *) malloc( sizeof (Gfloat) );
                 if (data == NULL)
