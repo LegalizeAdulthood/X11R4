@@ -298,7 +298,6 @@ char *GKSErrorMessages300to309[] = {
 /*
  * Language Binding Specific
  */
-/* 2001,2,3 added for c1130 */
 };
 char *GKSErrorMessages2000to2000[] = {
 /* EBADENUM 2000 */     "Enumeration type out of range",

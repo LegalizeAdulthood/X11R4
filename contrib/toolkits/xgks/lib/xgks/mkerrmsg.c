@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
                                         printf("};\n");
                                         printf("char *GKSErrorMessages2000to2000[] = {\n");
                                         cnt = 2000;
-                                        max = 2004; /* c1130 */
+                                        max = 2004;
                                 }
                                 else
                                         printf("};\n");

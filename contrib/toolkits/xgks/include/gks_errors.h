@@ -202,7 +202,6 @@
 /*
  * Language Binding Specific
  */
-/* 2001,2,3 added for c1130 */
 #define EBADENUM        2000    /* Enumeration type out of range */
 #define EOUTSIZE        2001    /* Output parameter size insufficient */
 #define EBADSMEM        2002    /* List element or set member not available */

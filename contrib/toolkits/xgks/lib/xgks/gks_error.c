@@ -45,7 +45,7 @@
 Gint gclosews(Gint ws_id);
 Gint gclosegks(void);
 
-/* the following tables of gks function names are added for c1130 */
+/* the following tables are gks function names */
 /* when adding or deleting entries from this table, be sure to correct */
 /* the range checking if statements located in the errorlog() function */
 char    *procname[] =
@@ -243,9 +243,9 @@ char    *procname[] =
     "ginqwsdeferupdatest()",
     "ginqwsmaxnum()",
     "ginqwsst()",
-    "ginqwstran()",     /* c1130 */
-    "gurec()",          /* c1130 */
-    "gprec()"           /* c1130 */
+    "ginqwstran()",
+    "gurec()",
+    "gprec()"
    };
 
 /* when adding or deleting entries from this table, be sure to correct */
@@ -313,10 +313,9 @@ Gint gemergencyclosegks(void)
 
 Gint gerrorlog(Gint errnum, Gint funcname, Gfile *perrfile)
 {
-        Gchar *fname;           /* c1130  */
+        Gchar *fname;
 
-        /* look up function name - this is printed now instead of the function number */
-        /* all fprintf statements reflect this change   *** c1130 ***/
+        /* look up function name for printing instead of the function number */
         if ((funcname < 197) && (funcname > 0))
            fname = procname[funcname];
         else
@@ -326,7 +325,7 @@ Gint gerrorlog(Gint errnum, Gint funcname, Gfile *perrfile)
                fname = "Invalid function name/number";
 
         if (perrfile == NULL)
-                perrfile = stderr;      /* c1130 */
+                perrfile = stderr;
 
         if (errnum < 0)
                 errnum = 0;
@@ -343,7 +342,7 @@ Gint gerrorlog(Gint errnum, Gint funcname, Gfile *perrfile)
                 else
                         fprintf(perrfile, "%s %4d %s\n", fname, errnum, GKSErrorMessages300to309[errnum-300]);
         else
-        if ((errnum > 1999) && (errnum < 2004)) /* c1130 */
+        if ((errnum > 1999) && (errnum < 2004))
                 if (GKSErrorMessages2000to2000[errnum-2000] == (char *)NULL)
                         fprintf(perrfile, "%s %d <Undefined Error>\n", fname, errnum);
                 else
