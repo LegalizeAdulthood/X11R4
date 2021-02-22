@@ -346,13 +346,13 @@ void XgksIDevDisable(WS_STATE_ENTRY *ws)
         /* check echo area */
                 switch( idev->class ) {
                 case GLOCATOR:
-                        /* this call is not commented out because  *//* c1157 */
-                        /* loclines are draw in XOR mode. So if we *//* c1157 */
-                        /* didn't erase it now, it would disappear *//* c1157 */
-                        /* when we tried to redraw it later!       *//* c1157 */
+                        /* this call is not commented out because  */
+                        /* loclines are draw in XOR mode. So if we */
+                        /* didn't erase it now, it would disappear */
+                        /* when we tried to redraw it later!       */
                         if(idev->data.loc.initst.esw==GECHO)
-                          XgksLocUpdatePrompt( ws, idev, PROMPTOFF,  /* c1157 */
-                             (Gpoint *)NULL,(XMotionEvent *)NULL,-1);/* c1157 */
+                          XgksLocUpdatePrompt( ws, idev, PROMPTOFF,
+                             (Gpoint *)NULL,(XMotionEvent *)NULL,-1);
                         break;
                 case GCHOICE:
                         /* This call has been commented out because it caused */
