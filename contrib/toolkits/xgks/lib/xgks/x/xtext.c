@@ -972,7 +972,7 @@ Gint xXgksMesg(WS_STATE_PTR ws, MESG_ST *mesg)
         x_clip.height = ws->wbound.y;
 
         /* must clear a rectangle for the message */
-        MFontInfo=XLoadQueryFont(dpy, "6x10");  /* c1136 */
+        MFontInfo=XLoadQueryFont(dpy, "6x10");
         XSetFont(dpy, gc, MFontInfo->fid);
         tempwidth=XTextWidth(MFontInfo, mesg->string, STRLEN(mesg->string));
         width=MAX( tempwidth, ws->last_message_width);
