@@ -198,11 +198,11 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
                           Button4MotionMask | Button5MotionMask | \
                           ButtonMotionMask)
 
-        /* we need Enter & Focus even as the window comes up */  /* c1145 */
-        /* in case the cursor starts in the window (so set   */  /* c1145 */
-        /* the color map to ours) */  /* c1145 */
-        xswa.event_mask = FocusChangeMask | StructureNotifyMask  /* c1145 */
-              | ExposureMask | EnterWindowMask;                  /* c1145 */
+        /* we need Enter & Focus even as the window comes up */
+        /* in case the cursor starts in the window (so set   */
+        /* the color map to ours) */
+        xswa.event_mask = FocusChangeMask | StructureNotifyMask
+              | ExposureMask | EnterWindowMask;
         xswa.background_pixel = wk->wsbg;
         xswa.border_pixel = wk->wsfg;
         xswa.do_not_propagate_mask = (wk->event_mask & DeviceEventsMask);
@@ -222,9 +222,9 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
 
         XMapWindow(dpy, wk->win);
 
-        /* block the program until the window mapped  */   /* c1145 */
-        /*  (wait 'til we receive an exposure event)  */   /* c1145 */
-        XWindowEvent(dpy, wk->win, ExposureMask, &xev);    /* c1145 */
+        /* block the program until the window mapped  */
+        /*  (wait 'til we receive an exposure event)  */
+        XWindowEvent(dpy, wk->win, ExposureMask, &xev);
 
         XSync(dpy, 0);
 
@@ -254,23 +254,23 @@ Gint xXgksOpenWs(WS_STATE_PTR wk)
         wk->wbound.x = (Gfloat)win_att.width;
         wk->wbound.y = (Gfloat)win_att.height;
 
-        /* NOTE: we don't have access to argv and */    /* c1145 */
-        /*       argc, so for now we use NULL,0   */    /* c1145 */
-        XSetStandardProperties (wk->dpy,wk->win,"XGKS", /* set props    c1145 */
-             "XGKS", None,NULL,0,&size_hints);          /* and size     c1145 */
+        /* NOTE: we don't have access to argv and */
+        /*       argc, so for now we use NULL,0   */
+        XSetStandardProperties (wk->dpy,wk->win,"XGKS", /* set props */
+             "XGKS", None,NULL,0,&size_hints);          /* and size */
 
-        XSetWMHints (wk->dpy,wk->win,&wm_hints);      /* set hints      c1145 */
+        XSetWMHints (wk->dpy,wk->win,&wm_hints);      /* set hints */
 
-        size_hints.x = wk->wbound.x;                  /* user spec x    c1145 */
-        size_hints.y = wk->wbound.y;                  /* user spec y    c1145 */
-        size_hints.width = winW;                      /* prog spec w    c1145 */
-        size_hints.height = winH;                     /* prog spec h    c1145 */
-        XSetNormalHints (wk->dpy,wk->win,&size_hints);/* set size hints c1145 */
+        size_hints.x = wk->wbound.x;                  /* user spec x */
+        size_hints.y = wk->wbound.y;                  /* user spec y */
+        size_hints.width = winW;                      /* prog spec w */
+        size_hints.height = winH;                     /* prog spec h */
+        XSetNormalHints (wk->dpy,wk->win,&size_hints);/* set size hints */
 
-        size_hints.flags = 0;                         /* specify none   c1145 */
-        XSetZoomHints (wk->dpy,wk->win,&size_hints);  /* set zoom hints c1145 */
+        size_hints.flags = 0;                         /* specify none   */
+        XSetZoomHints (wk->dpy,wk->win,&size_hints);  /* set zoom hints */
 
-        XSetClassHint (wk->dpy,wk->win,&class_hints); /* set class hint c1145 */
+        XSetClassHint (wk->dpy,wk->win,&class_hints); /* set class hint */
 
 
         /* Select Input Events */

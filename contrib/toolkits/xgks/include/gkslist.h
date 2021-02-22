@@ -77,7 +77,7 @@ typedef struct {
         WS_ENTRY        openedws[MAX_OPEN_WS];   /* List of open workstations */
         WS_ENTRY        activews[MAX_ACTIVE_WS]; /* List of active wrkstatns */
 
-        WS_STATE_PTR    focus_ws;       /* ws /w focus */ /* c1145 */
+        WS_STATE_PTR    focus_ws;       /* ws /w focus */
 
         Glnattr         gks_lnattr;     /* Attributes for polyline */
         Gmkattr         gks_mkattr;     /* Attributes for polymarker */

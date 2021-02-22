@@ -139,18 +139,18 @@ int xXgksSetColourRep(ws, idx, rep)
         colour_ret.flags = DoRed | DoGreen | DoBlue;
         XStoreColor(dpy, wclmp, &colour_ret);
 
-        /* If this ws has the focus, then change the color  */ /* c1145 */
-        /* right now, otherwise the actual change will have */ /* c1145 */
-        /* to wait until we do have the focus.  (focus_ws   */ /* c1145 */
-        /* is updated in xevent.c) */ /* c1145 */
+        /* If this ws has the focus, then change the color  */
+        /* right now, otherwise the actual change will have */
+        /* to wait until we do have the focus.  (focus_ws   */
+        /* is updated in xevent.c) */
         if ((ws != NULL) && (ws == xgks_state.focus_ws))
-            {                                                  /* c1145 */
-            XInstallColormap(dpy, ws->wclmp);                  /* c1145 */
-            XFlush (dpy);                                      /* c1145 */
-            /* NOTE: If we don't flush, switching quickly */   /* c1145 */
-            /*       in and out of the window could cause */   /* c1145 */
-            /*       the wrong color map to be displayed. */   /* c1145 */
-            }                                                  /* c1145 */
+            {
+            XInstallColormap(dpy, ws->wclmp);
+            XFlush (dpy);
+            /* NOTE: If we don't flush, switching quickly */
+            /*       in and out of the window could cause */
+            /*       the wrong color map to be displayed. */
+            }
 
 
         /* store the interrupt of I/O signals */

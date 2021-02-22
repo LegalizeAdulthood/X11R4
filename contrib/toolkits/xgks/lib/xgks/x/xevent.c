@@ -90,17 +90,17 @@ static void xProcessEvents(int signum)
                    /* call debugging printer if EVENTDEBUG is defined */
                    PRINT_EVENT(&xev);
 
-                   /* NOTE: this used to say "xev.type & 0177" to */ /* c1145 */
-                   /*       mask out the "XSendEvent" bit that    */ /* c1145 */
-                   /*       indicated that the event had been sent*/ /* c1145 */
-                   /*       with XSendEvent.  This is obsolete now*/ /* c1145 */
-                   /*       Now there is a field called send_event*/ /* c1145 */
-                   /*       that indicates the same. */ /* c1145 */
-                   switch( xev.type )                                /* c1145 */
+                   /* NOTE: this used to say "xev.type & 0177" to */
+                   /*       mask out the "XSendEvent" bit that    */
+                   /*       indicated that the event had been sent*/
+                   /*       with XSendEvent.  This is obsolete now*/
+                   /*       Now there is a field called send_event*/
+                   /*       that indicates the same. */
+                   switch( xev.type )
                         {
 
                         case Expose:
-                                XgksExposeEvent(&xev,dpy);              /*c1145*/
+                                XgksExposeEvent(&xev,dpy);
                                 break;
 
                         case KeyPress:          /* Physical device triggered */
@@ -112,12 +112,12 @@ static void xProcessEvents(int signum)
 
                 case EnterNotify:
                 case FocusIn:
-                        XgksFocusInEvent(&xev,dpy);             /*c1145*/
+                        XgksFocusInEvent(&xev,dpy);
                         break;
 
                 case FocusOut:
                 case LeaveNotify:
-                        XgksFocusOutEvent(dpy);         /*c1145*/
+                        XgksFocusOutEvent(dpy);
                         break;
 
         }
@@ -303,7 +303,7 @@ static int XgksFocusInEvent(XEvent *xev, Display *dpy)
       ws  = xgks_state.openedws[ii].ws;
       win = xgks_state.openedws[ii].win;
 
-      /* remember who has the focus */   /* c1145 */
+      /* remember who has the focus */
       xgks_state.focus_ws = ws;
 
       /* Instal a new color map when necessary */
@@ -311,11 +311,11 @@ static int XgksFocusInEvent(XEvent *xev, Display *dpy)
       if (ws->wclmp != *clmp_installed)
          {
          XInstallColormap(dpy, ws->wclmp);
-         XFlush (dpy);                                    /* c1145 */
-         /* NOTE: If we don't flush, switching quickly */ /* c1145 */
-         /*       in and out of the window could cause */ /* c1145 */
-         /*       the wrong color map to be displayed. */ /* c1145 */
-         }                                                /* c1145 */
+         XFlush (dpy);
+         /* NOTE: If we don't flush, switching quickly */
+         /*       in and out of the window could cause */
+         /*       the wrong color map to be displayed. */
+         }
 
       }
    else
@@ -323,10 +323,10 @@ static int XgksFocusInEvent(XEvent *xev, Display *dpy)
       if (*clmp_installed != (dclmp = DefaultColormap(dpy, DefaultScreen(dpy))))
          {
          XInstallColormap(dpy, dclmp);
-         XFlush (dpy);                                    /* c1145 */
-         /* NOTE: If we don't flush, switching quickly */ /* c1145 */
-         /*       in and out of the window could cause */ /* c1145 */
-         /*       the wrong color map to be displayed. */ /* c1145 */
+         XFlush (dpy);
+         /* NOTE: If we don't flush, switching quickly */
+         /*       in and out of the window could cause */
+         /*       the wrong color map to be displayed. */
          }
       /* NOTE: Someday (when they finish defining standards for window  */
       /*       managers) all the code that deals with colormaps may have */
@@ -345,13 +345,13 @@ static int XgksFocusOutEvent(Display *dpy)
    dclmp = DefaultColormap(dpy, DefaultScreen(dpy));
    XInstallColormap(dpy, dclmp);
    XFlush(dpy);
-   /* NOTE: If we don't flush, switching quickly */ /* c1145 */
-   /*       in and out of the window could cause */ /* c1145 */
-   /*       the wrong color map to be displayed. */ /* c1145 */
+   /* NOTE: If we don't flush, switching quickly */
+   /*       in and out of the window could cause */
+   /*       the wrong color map to be displayed. */
 
    xgks_state.focus_ws = NULL;
-   /* focus_ws remains null until the next */       /* c1145 */
-   /* FocusIn event. */       /* c1145 */
+   /* focus_ws remains null until the next */
+   /* FocusIn event. */
 
    return(0);
    }
