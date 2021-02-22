@@ -534,7 +534,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
         else if (ksym == XK_Delete) { /* user hit Delete key - delete chars past cursor */
            for (place = StrPos; place < STRLEN(Str); place++ ) /* rem char from Str */
               Str[place] = Str[place+1];
-           if(idev->data.str.initst.esw==GECHO){  /* only redraw if ECHO  c1027 */
+           if(idev->data.str.initst.esw==GECHO){  /* only redraw if ECHO */
                  XSetForeground( ws->dpy, idev->gc, BG);
                  XFillRectangle( ws->dpy, ws->win, idev->gc, StrX,   /* clear string from StrPos on */
                 StrY-MFontInfo->ascent, xpt.x - StrX - PADH,
@@ -545,7 +545,7 @@ Gint XgksStrUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
                 /* Redraw rectangle */
                 XDrawRectangle( ws->dpy, ws->win, idev->gc, rect.x, rect.y,
                   rect.width -1, MFontInfo->ascent + MFontInfo->descent + PADV + PADV );
-           }                                                            /*c1027*/
+           }
         }
         else if (ksym == XK_Linefeed || ksym == XK_Return
             || (count > 0 && (keybuf[0] == '\n' || keybuf[0] == '\r')) ) {
