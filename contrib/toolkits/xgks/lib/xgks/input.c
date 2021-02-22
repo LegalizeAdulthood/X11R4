@@ -196,12 +196,12 @@ void XgksIProcessXEvent(XEvent *xev)
 
         ws = xgks_state.openedws[i].ws;
 
-        /* if the closing of this ws has already been initiated, */ /* c1164 */
-        /* don't try to do anything.  (by the time we get to the */ /* c1164 */
-        /* inquire color map the actual X window may be gone -   */ /* c1164 */
+        /* if the closing of this ws has already been initiated, */
+        /* don't try to do anything.  (by the time we get to the */
+        /* inquire color map the actual X window may be gone -   */
         /* producing an X error!) */
-        if (ws->ws_is_closing)                                      /* c1164 */
-           return;                                                  /* c1164 */
+        if (ws->ws_is_closing)
+           return;
 
         switch( xev->type ) {
         case ButtonPress:

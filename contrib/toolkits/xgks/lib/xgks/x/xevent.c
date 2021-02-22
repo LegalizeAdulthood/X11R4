@@ -73,18 +73,16 @@ static void xProcessEvents(int signum)
    XEvent xev;
    Gint i;
 
-   /* The check "&& (!xgks_state.openedws[i].ws->ws_is_closing)" */ /* c1164 */
-   /* was added to fix c1164 (X error if focus change as the     */ /* c1164 */
-   /* window is closing)  Now ws_is_closing is set to true early */ /* c1164 */
-   /* in the window closing process.  This blocks events from    */ /* c1164 */
-   /* getting past this "if" once the window has started to      */ /* c1164 */
+   /* ws_is_closing is set to true early */
+   /* in the window closing process.  This blocks events from    */
+   /* getting past this "if" once the window has started to      */
    /* close. */
 
         for (i=0; i<MAX_OPEN_WS; i++)
            {
            if ((xgks_state.openedws[i].ws_id != INVALID)
              && ((dpy = xgks_state.openedws[i].ws->dpy) != NULL)
-             && (!xgks_state.openedws[i].ws->ws_is_closing) )     /* c1164 */
+             && (!xgks_state.openedws[i].ws->ws_is_closing) )
                 while (XPending(dpy))
                    {            /* return # pending events */
                    XNextEvent(dpy, &xev);

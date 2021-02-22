@@ -139,7 +139,7 @@ Gint gopenws(Gint ws_id, Gchar *connection, Gchar *ws_type)
     GKSERROR( ws->wstype == NULL ,300, errgopenws)
     STRCPY( ws->wstype, ws_type);
     ws->ewstype = ewstype;
-    ws->ws_is_closing = FALSE;  /* not in the process of closing */ /* c1164 */
+    ws->ws_is_closing = FALSE;  /* not in the process of closing */
 
     GKSERROR(((ws->conn = (Gchar *)malloc((unsigned)(STRLEN(connection) +1))) == NULL) ,300, errgopenws)
     STRCPY((ws->conn), connection);
@@ -254,12 +254,12 @@ Gint gclosews(Gint ws_id)
     else                                                        /* c1141 */
         XgksDelAllMoSeg( ws );                                  /* c1141 */
 
-/* mark the ws as closing to prevent any interrupts to jump */ /* c1164 */
-/* in while the ws is in an unstable state.  (if a change   */ /* c1164 */
-/* focus came in after the xXgksCloseWs, but before the     */ /* c1164 */
-/* completion of gclosews, GKS used to try to inquire the   */ /* c1164 */
-/* color map of an X window that was already gone) */ /* c1164 */
-    ws->ws_is_closing = TRUE;                                  /* c1164 */
+/* mark the ws as closing to prevent any interrupts to jump */
+/* in while the ws is in an unstable state.  (if a change   */
+/* focus came in after the xXgksCloseWs, but before the     */
+/* completion of gclosews, GKS used to try to inquire the   */
+/* color map of an X window that was already gone) */
+    ws->ws_is_closing = TRUE;
 
 /* House keeping for workstation consistency */
     switch (ws->ewstype) {

@@ -77,7 +77,7 @@ typedef struct ws_struct {
         Gchar           *wstype;                /* workstation type */
         EWSTYPE         ewstype;                /* enum ws type */
 
-        Gint            ws_is_closing;          /* true = closing */ /* c1164 */
+        Gint            ws_is_closing;          /* true = closing */
 
         /* UNIX - implementation of MI/MO needs the a file pointer */
         Gfile           *mfp;                   /* Need this for MI/MO */
