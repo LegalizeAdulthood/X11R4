@@ -352,7 +352,7 @@ Gint gsettextind(Gint idx)
 /* check for proper gks operating state */
         GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsettextind)
 
-/* check if valid font number */     /* c1092   comment wasn't closed! */
+/* check if valid font number */
         GKSERROR ((idx < 1) , 72, errgsettextind)
 
 /* ok to change the index */
