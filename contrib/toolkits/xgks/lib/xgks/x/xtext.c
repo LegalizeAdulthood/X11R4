@@ -247,10 +247,10 @@ fprintf(stderr, "xtext  fsize = %f fwidth=%f\n", fsize, fwidth);
          * the LEFT BASE of the first character in the string.
          */
         switch(tx->chattr.path) {
-        default:                                                /* New 4.3 compiler*/
+        default:
         case GTP_RIGHT:
                 switch(tx->chattr.align.hor) {
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTH_NORMAL:
                 case GTH_LEFT  :        xtrans = 0;             break;
                 case GTH_CENTRE:        xtrans = - fsize / 2.0; break;
@@ -260,7 +260,7 @@ fprintf(stderr, "xtext  fsize = %f fwidth=%f\n", fsize, fwidth);
                 case GTV_TOP:           ytrans = -cfont->ftop;   break;
                 case GTV_CAP:           ytrans = -cfont->fcap;   break;
                 case GTV_HALF:          ytrans = -cfont->fhalf;  break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTV_NORMAL:
                 case GTV_BASE:          ytrans = -cfont->fbase;  break;
                 case GTV_BOTTOM:        ytrans = -cfont->fbottom; break;
@@ -275,7 +275,7 @@ fprintf(stderr, "xtext  fsize = %f fwidth=%f\n", fsize, fwidth);
                 case GTH_CENTRE:
                         xtrans = fsize / 2.0 - xFxMax(&(cfont->fchars[cfont->fcharoffset[*(tx->string)]]));
                         break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTH_NORMAL:
                 case GTH_RIGHT:
                         xtrans = - xFxMax(&(cfont->fchars[cfont->fcharoffset[*(tx->string)]]));
@@ -294,7 +294,7 @@ fprintf(stderr, "xtext  fsize = %f fwidth=%f\n", fsize, fwidth);
         case GTP_UP:
                 switch(tx->chattr.align.hor) {
                 case GTH_LEFT:          xtrans = 0;             break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTH_NORMAL:
                 case GTH_CENTRE:        xtrans = -fwidth / 2.0; break;
                 case GTH_RIGHT:         xtrans = -fwidth;       break;
@@ -305,7 +305,7 @@ fprintf(stderr, "xtext  fsize = %f fwidth=%f\n", fsize, fwidth);
 
                                 break;
                 case GTV_HALF:  ytrans = -fsize/2.0;     break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTV_NORMAL:
                 case GTV_BASE:  ytrans = 0;      break;
                 case GTV_BOTTOM:ytrans = - cfont->fbottom; break;
@@ -314,14 +314,14 @@ fprintf(stderr, "xtext  fsize = %f fwidth=%f\n", fsize, fwidth);
 
         case GTP_DOWN:
                 switch(tx->chattr.align.hor) {
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTH_LEFT:          xtrans = 0;             break;
                 case GTH_NORMAL:
                 case GTH_CENTRE:        xtrans = -fwidth / 2.0; break;
                 case GTH_RIGHT:         xtrans = -fwidth;       break;
                 }
                 switch(tx->chattr.align.ver) {
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTV_NORMAL:
                 case GTV_TOP:   ytrans = - cfont->ftop; break;
                 case GTV_CAP:   ytrans = - cfont->fcap;
@@ -359,7 +359,7 @@ xDumpMatrix("stroke_trans", stroke_trans);
                 xPlotStrokeChar(&(cfont->fchars[cfont->fcharoffset[*text_ptr]]));
                 /* modify trans to move to LEFT BASE of next char */
                 switch(tx->chattr.path) {
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTP_RIGHT: xtrans = xFxMax(&(cfont->fchars[cfont->fcharoffset[*text_ptr]]))
                                         + cfont->fnominalx * wsr_spacing;
                                 ytrans = 0;
@@ -724,10 +724,10 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
          * the LEFT BASE of the first character in the string.
          */
         switch(tx->chattr.path) {
-        default:                                                /* New 4.3 compiler*/
+        default:
         case GTP_RIGHT:
                 switch(tx->chattr.align.hor) {
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTH_NORMAL:
                 case GTH_LEFT:          xtrans = 0;     break;
                 case GTH_CENTRE:        xtrans = - fsize / 2.0; break;
@@ -737,7 +737,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTV_TOP:   ytrans = -cfont->ftop;   break;
                 case GTV_CAP:   ytrans = -cfont->fcap;   break;
                 case GTV_HALF:  ytrans = -cfont->fhalf;  break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTV_NORMAL:
                 case GTV_BASE:  ytrans = -cfont->fbase;  break;
                 case GTV_BOTTOM:ytrans = -cfont->fbottom; break;
@@ -752,7 +752,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTH_CENTRE:
                         xtrans = fsize / 2.0 - xFxMax(&(cfont->fchars[cfont->fcharoffset[*(tx->string)]]));
                         break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTH_NORMAL:
                 case GTH_RIGHT:
                         xtrans = - xFxMax(&(cfont->fchars[cfont->fcharoffset[*(tx->string)]]));
@@ -762,7 +762,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTV_TOP:   ytrans = -cfont->ftop;   break;
                 case GTV_CAP:   ytrans = -cfont->fcap;   break;
                 case GTV_HALF:  ytrans = -cfont->fhalf;  break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTV_NORMAL:
                 case GTV_BASE:  ytrans = -cfont->fbase;  break;
                 case GTV_BOTTOM:ytrans = -cfont->fbottom; break;
@@ -771,7 +771,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
         case GTP_UP:
                 switch(tx->chattr.align.hor) {
                 case GTH_LEFT:  xtrans = 0;             break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTH_NORMAL:
                 case GTH_CENTRE:        xtrans = -fwidth / 2.0; break;
                 case GTH_RIGHT:         xtrans = -fwidth;       break;
@@ -781,7 +781,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTV_CAP:   ytrans = -fsize - cfont->fnominaly * wsr_spacing;
                                 break;
                 case GTV_HALF:  ytrans = -fsize/2.0;     break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTV_NORMAL:
                 case GTV_BASE:  ytrans = 0;      break;
                 case GTV_BOTTOM:ytrans = - cfont->fbottom; break;
@@ -791,13 +791,13 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
         case GTP_DOWN:
                 switch(tx->chattr.align.hor) {
                 case GTH_LEFT:          xtrans = 0;             break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTH_NORMAL:
                 case GTH_CENTRE:        xtrans = -fwidth / 2.0; break;
                 case GTH_RIGHT:         xtrans = -fwidth;       break;
                 }
                 switch(tx->chattr.align.ver) {
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTV_NORMAL:
                 case GTV_TOP:   ytrans = - cfont->ftop; break;
                 case GTV_CAP:   ytrans = - cfont->fcap;
@@ -833,14 +833,14 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
 /* we know all we need to know so send the bounding box through the trans */
 
         switch(tx->chattr.path) {
-        default:                                                /* New 4.3 compiler*/
+        default:
         case GTP_RIGHT:
                 ndc_points[1].x = XminFirst; ndc_points[1].y = Ymin;
                 ndc_points[2].x = fsize;     ndc_points[2].y = Ymin;
                 ndc_points[3].x = fsize;     ndc_points[3].y = Ymax;
                 ndc_points[4].x = XminFirst; ndc_points[4].y = Ymax;
                 switch(tx->chattr.align.hor) {
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTH_NORMAL:
                 case GTH_LEFT:   ndc_points[0].x = fsize;       break;
                 case GTH_CENTRE: ndc_points[0].x = (fsize-XminFirst) /2; break;
@@ -851,7 +851,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTV_TOP: ndc_points[0].y = cfont->ftop; break;
                 case GTV_CAP: ndc_points[0].y = cfont->fcap; break;
                 case GTV_HALF:ndc_points[0].y = cfont->fhalf; break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTV_NORMAL:
                 case GTV_BASE:  ndc_points[0].y = cfont->fbase; break;
                 case GTV_BOTTOM:ndc_points[0].y = cfont->fbottom; break;
@@ -866,7 +866,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTH_LEFT: ndc_points[0].x = XmaxFirst; break;
                 case GTH_CENTRE: ndc_points[0].x = XmaxFirst - fsize/2; break;
                 /* when align is CENTRE define concat pt as start pt */
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTH_NORMAL:
                 case GTH_RIGHT: ndc_points[0].x = -fsize + XmaxFirst; break;
                 }
@@ -874,7 +874,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTV_TOP: ndc_points[0].y = cfont->ftop; break;
                 case GTV_CAP: ndc_points[0].y = cfont->fcap; break;
                 case GTV_HALF: ndc_points[0].y = cfont->fhalf; break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTV_NORMAL:
                 case GTV_BASE: ndc_points[0].y = cfont->fbase; break;
                 case GTV_BOTTOM: ndc_points[0].y = cfont->fbottom; break;
@@ -887,7 +887,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 ndc_points[4].x = Xmin; ndc_points[4].y = fsize;
                 switch(tx->chattr.align.hor) {
                 case GTH_LEFT: ndc_points[0].x = Xmin; break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTH_NORMAL:
                 case GTH_CENTRE: ndc_points[0].x = (Xmax-Xmin)/2.0; break;
                 case GTH_RIGHT:  ndc_points[0].x = Xmax; break;
@@ -897,7 +897,7 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 case GTV_CAP: ndc_points[0].y = YminFirst; break;
                 case GTV_HALF: ndc_points[0].y = fsize/2; break;
                 /* when align is HALF define concat pt as start pt */
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTV_NORMAL:
                 case GTV_BASE:ndc_points[0].y = fsize; break;
                 case GTV_BOTTOM: ndc_points[0].y = fsize; break;
@@ -910,13 +910,13 @@ int xXgksInqTextExtent(WS_STATE_PTR ws, TEXT_ST *tx, Gpoint ndc_points[5])
                 ndc_points[4].x = Xmin; ndc_points[4].y = YmaxFirst;
                 switch(tx->chattr.align.hor) {
                 case GTH_LEFT: ndc_points[0].x = Xmin; break;
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTH_NORMAL:
                 case GTH_CENTRE: ndc_points[0].x = (Xmax-Xmin)/2.0; break;
                 case GTH_RIGHT: ndc_points[0].x = Xmax; break;
                 }
                 switch(tx->chattr.align.ver) {
-                default:                                        /* New 4.3 compiler*/
+                default:
                 case GTV_NORMAL:
                 case GTV_TOP: ndc_points[0].y = -fsize + YmaxFirst; break;
                 case GTV_CAP: ndc_points[0].y = -fsize + YmaxFirst; break;

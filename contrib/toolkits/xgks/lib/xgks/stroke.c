@@ -123,7 +123,7 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
               || (ptr->y < win->ymin) || (win->ymax < ptr->y)),
               146, errginitstroke)
 
-    didx = 0;                           /* New 4.3 C compiler:  initialize */
+    didx = 0;
     switch( pet ) {
     default:
     case 1:
@@ -156,7 +156,7 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
     /* Bind values into the GC */
         gcvalues.function = GXinvert;
         gcvalues.foreground = record->pet3.mk.bundl.colour;
-        if ( !WS_AVAIL_COLOUR( ws, (int)gcvalues.foreground) ) /* New 4.3 compiler */
+        if ( !WS_AVAIL_COLOUR( ws, (int)gcvalues.foreground) )
             gcvalues.foreground = ws->wsfg;
         gcvalues.line_width = 0;
         gcvalues.line_style = LineSolid;
@@ -202,7 +202,7 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
         if (gcvalues.line_style == LineSolid && gcvalues.line_width == 1)
             gcvalues.line_width = 0;
         gcvalues.foreground = record->pet4.ln.bundl.colour;
-        if ( !WS_AVAIL_COLOUR( ws, (int)gcvalues.foreground) )  /* New 4.3 compiler */
+        if ( !WS_AVAIL_COLOUR( ws, (int)gcvalues.foreground) )
             gcvalues.foreground = ws->wsfg;
 #undef LNBUNDLE
         break;

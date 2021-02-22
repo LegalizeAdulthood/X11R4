@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 {
         char line[1024], dstr[30], estr[30];
         char *cp;
-        int cnt=0, num, max=201;                        /* New 4.3 Compiler */
+        int cnt=0, num, max=201;
         int first=1;
 
         printf("/*\n");
