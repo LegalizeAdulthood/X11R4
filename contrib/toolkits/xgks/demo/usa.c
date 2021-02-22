@@ -122,7 +122,7 @@ char *s;
 }
 
 /*
- * Written 10:17 pm  Jun 26, 1987 by rassilon@eddie.MIT.EDU in uiucdcsm:comp.graphics
+ * Written 10:17 pm  Jun 26, 1987 by rassilon@eddie.mit.edu in uiucdcsm:comp.graphics
  * The following is a map of the United States in the form of a mercator
  * projection.  There are approximately 2700 points here.  The first number
  * is either a 2 or a 3 where 3 means pen up and 2 means pen down.

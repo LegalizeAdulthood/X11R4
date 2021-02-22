@@ -188,7 +188,7 @@ WS_STATE_PTR XgksValidWsId();
         /* WS_STATE_ENTRY *ws; Gpoint *dc; XPoint *xpt; */  \
         (xpt)->x = (short)((dc)->x * (ws)->dctoxtrans.xScale + (ws)->dctoxtrans.xTrans); \
         (xpt)->y = (short)(ws->wbound.y - ((dc)->y * (ws)->dctoxtrans.yScale + (ws)->dctoxtrans.yTrans)); \
-        }       /*MIT*/
+        }
 
 #define XToDc(ws, xpt, dc) { \
         /* WS_STATE_ENTRY *ws; Gpoint *dc; XPoint *xpt; */  \
@@ -200,7 +200,7 @@ WS_STATE_PTR XgksValidWsId();
         /* WS_STATE_ENTRY *ws; Gpoint *ndc; XPoint *xpt; */  \
         (xpt)->x = (short)((ndc)->x * (ws)->ndctoxtrans.xScale + (ws)->ndctoxtrans.xTrans); \
         (xpt)->y = (short)(ws->wbound.y - ((ndc)->y * (ws)->ndctoxtrans.yScale + (ws)->ndctoxtrans.yTrans)); \
-        }       /*MIT*/ 
+        }
 
 #define XToNdc(ws, xpt, ndc) { \
         /* WS_STATE_ENTRY *ws; Gpoint *ndc; XPoint *xpt; */  \
