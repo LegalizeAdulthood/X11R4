@@ -81,7 +81,7 @@ Gint ginqtextfacil(ws_type, fac)
                 fac->fp_list[i].prec = GSTROKE;
         }
         fac->heights = 0.0;
-        fac->min_ht = 0.01;                                     /* c1156 */
+        fac->min_ht = 0.01;
         fac->max_ht = 1024.0;
         fac->expansions = 0.0;
         fac->min_ex = 0.001;                                    /* c2011 */

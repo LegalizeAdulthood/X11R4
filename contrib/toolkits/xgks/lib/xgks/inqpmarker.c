@@ -70,7 +70,7 @@ Gint ginqmarkerfacil(ws_type, fac)
 /* set the return values */
         fac->sizes = 0;
         fac->nom = 6.0;
-        fac->min = 0.01;                                /* c1156 */
+        fac->min = 0.01;
         fac->max = 1024.0;
         fac->predefined = PDF_MARK_BNDLS;
         fac->types.number = 5;

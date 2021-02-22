@@ -71,7 +71,7 @@ Gint ginqlinefacil(ws_type, fac)
 /* set the return values */
         fac->widths = 0;
         fac->nom = 1.0;
-        fac->min = 0.01;                                /* c1156 */
+        fac->min = 0.01;
         fac->max = 1024.0;
         fac->predefined = PDF_LINE_BNDLS;
         fac->types.number = 7;
