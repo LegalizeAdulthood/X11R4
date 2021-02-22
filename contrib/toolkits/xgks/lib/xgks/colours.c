@@ -358,7 +358,7 @@ loadcache(dpy, index)
         Cncolours = ncolours;
     }
     else {
-        if ( index >= Cncolours ) {                             /*c1123*/
+        if ( index >= Cncolours ) {
             gerrorhand( 93, errginqpredcolourrep, xgks_state.gks_err_file );
             return( 93 );
         }
