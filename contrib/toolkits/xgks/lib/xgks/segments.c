@@ -1614,11 +1614,11 @@ static int XgksInSeg(SEG_STATE_PTR seg, Gpoint *pt, Gpoint *pe, Gint m)
         for (i=0; i < m; i++, pe++)
          SegTrans( pe, &limits[i], seg->segattr.segtran );
 
-        /* test if pt is within the segment bound  + or - 0.01 c1170  */
-        if (( pt->x >= limits[0].x - 0.01  && pt->x >= limits[3].x - 0.01 ) && /* c1170 */
-            ( pt->x <= limits[1].x + 0.01  && pt->x <= limits[2].x + 0.01 ) && /* c1170 */
-            ( pt->y <= limits[3].y + 0.01  && pt->y <= limits[2].y + 0.01 ) && /* c1170 */
-            ( pt->y >= limits[0].y - 0.01  && pt->y >= limits[1].y - 0.01 ))   /* c1170 */
+        /* test if pt is within the segment bound  + or - 0.01 */
+        if (( pt->x >= limits[0].x - 0.01  && pt->x >= limits[3].x - 0.01 ) &&
+            ( pt->x <= limits[1].x + 0.01  && pt->x <= limits[2].x + 0.01 ) &&
+            ( pt->y <= limits[3].y + 0.01  && pt->y <= limits[2].y + 0.01 ) &&
+            ( pt->y >= limits[0].y - 0.01  && pt->y >= limits[1].y - 0.01 ))
           return(1);
         
           return(0);
