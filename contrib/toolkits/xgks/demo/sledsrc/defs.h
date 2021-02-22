@@ -22,6 +22,7 @@
  */
 
 #include <strings.h>
+
 #include <xgks.h>
 
 #define sqr(a)		((a) * (a))

@@ -28,7 +28,10 @@
  *      read_text
  */
 
+#include <xgks.h>
+
 #include <stdio.h>
+
 #include "io.h"
 #include "defs.h"
 #include "screen_items.h"
@@ -37,7 +40,6 @@
 #include "objects.h"
 #include "object_tbl.h"
 #include "object_list.h"
-#include <xgks.h>
 #include "conversions.h"
 
 extern char *read_char_str();

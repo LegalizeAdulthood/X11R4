@@ -27,8 +27,9 @@
  *      s_rot_mat
  */
 
-#include <math.h>
 #include <xgks.h>
+
+#include <math.h>
 
 /*
  *  ident

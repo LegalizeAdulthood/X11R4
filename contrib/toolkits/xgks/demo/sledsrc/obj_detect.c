@@ -33,11 +33,12 @@
  *      is_object_inbounds
  */
 
+#include <math.h>
+
 #include "objects.h"
 #include "key.h"
 #include "ws.h"
 #include "object_tbl.h"
-#include <math.h>
 #include "defs.h"
 #include "trans.h"
 

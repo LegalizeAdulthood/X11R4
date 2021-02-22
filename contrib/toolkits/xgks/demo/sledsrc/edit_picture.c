@@ -54,6 +54,8 @@
  *      get_rot_angle
  */
 
+#include <xgks.h>
+
 #include "draw.h"
 #include "objects.h"
 #include "popup.h"
@@ -62,7 +64,6 @@
 #include "key.h"
 #include "defs.h"
 #include "screen_items.h"
-#include <xgks.h>
 
 #define EDIT_PICTURE_UNDO       "edit picture undo menu item"
 

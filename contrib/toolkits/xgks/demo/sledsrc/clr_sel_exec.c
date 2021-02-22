@@ -34,15 +34,17 @@
  *      arrow_picked
  */
 
+#include <xgks.h>
+
+#include <math.h>
+
 #include "screen_items.h"
 #include "functbl.h"
 #include "draw.h"
-#include <math.h>
 #include "clr_selector.h"
 #include "defs.h"
 #include "key.h"
 #include "color.h"
-#include <xgks.h>
 
 
 /*

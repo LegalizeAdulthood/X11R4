@@ -29,6 +29,8 @@
  *      unhilite
  */
 
+#include <xgks.h>
+
 #include "color.h"
 #include "defs.h"
 #include "key.h"
@@ -37,7 +39,6 @@
 #include "menu.h"
 #include "trans.h"
 #include "functbl.h"
-#include <xgks.h>
 
 int max_num_menu_entries = 0;           /* max num of entries in menu
                                            including header */

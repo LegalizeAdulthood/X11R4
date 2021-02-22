@@ -41,6 +41,7 @@
  */
 
 #include "gks_implem.h"
+
 #include "input.h"
 #include "metafile.h"
 #include "wslist.h"

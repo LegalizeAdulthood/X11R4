@@ -37,8 +37,11 @@
  *      get_grid_state
  */
 
+#include <xgks.h>
+
 #include <strings.h>
 #include <stdio.h>
+
 #include "color.h"
 #include "defs.h"
 #include "key.h"
@@ -49,7 +52,6 @@
 #include "draw.h"
 #include "screen_items.h"
 #include "functbl.h"
-#include <xgks.h>
 
 static char *last_file_accessed;
 extern char *gets();

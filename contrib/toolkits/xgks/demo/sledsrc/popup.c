@@ -36,6 +36,8 @@
  *      erase_popups
  */
 
+#include <xgks.h>
+
 #include "key.h"
 #include "draw.h"
 #include "color.h"
@@ -43,7 +45,6 @@
 #include "trans.h"
 #include "popup.h"
 #include "functbl.h"
-#include <xgks.h>
 #include "changes.h"
 
 

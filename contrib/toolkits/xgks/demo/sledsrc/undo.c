@@ -29,11 +29,13 @@
  *      test_undo_flag
  */
 
-#include "defs.h"
+#include <xgks.h>
+
 #include <strings.h>
+
+#include "defs.h"
 #include "functbl.h"
 #include "screen_items.h"
-#include <xgks.h>
 #include "changes.h"
 
 

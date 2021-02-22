@@ -33,7 +33,10 @@
  *      draw_arrow
  */
 
+#include <xgks.h>
+
 #include <math.h>
+
 #include "key.h"
 #include "defs.h"
 #include "draw.h"
@@ -41,7 +44,6 @@
 #include "clr_selector.h"
 #include "color.h"
 #include "trans.h"
-#include <xgks.h>
 
 BOOLEAN clr_picked;                     /* index of color picked */
 IDX display_clr_picked;                 /* color picked up by user */

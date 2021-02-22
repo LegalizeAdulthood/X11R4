@@ -46,6 +46,10 @@
  *      adjust_grid_undo
  */
 
+#include <xgks.h>
+
+#include <math.h>
+
 #include "trans.h"
 #include "popup.h"
 #include "functbl.h"
@@ -55,8 +59,6 @@
 #include "draw.h"
 #include "objects.h"
 #include "color.h"
-#include <math.h>
-#include <xgks.h>
 
 IDX grid_color;
 Gpoint grid_pt;

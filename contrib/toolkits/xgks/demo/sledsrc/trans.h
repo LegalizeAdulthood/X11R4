@@ -23,6 +23,7 @@
  */
 
 #include <xgks.h>
+
 #include "screen_items.h"
 
 #define NON_EXISTENT	-1

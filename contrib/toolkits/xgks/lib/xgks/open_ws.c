@@ -40,6 +40,7 @@
  */
 
 #include <string.h>
+
 #include "gks_implem.h"
 
 static void XgksDeleteOpenWs(Gint ws_id);

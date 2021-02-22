@@ -38,11 +38,12 @@
  *
  */
 
-#include "gks_implem.h"
 #include <X11/cursorfont.h>
 #define XK_MISCELLANY
 #define XK_LATIN1
 #include <X11/keysymdef.h>
+
+#include "gks_implem.h"
 
 void XgksChoDelete(WS_STATE_ENTRY *ws, INPUT_DEV *idev);
 void XgksLocDelete(WS_STATE_ENTRY *ws, INPUT_DEV *idev);

@@ -33,8 +33,10 @@
  * Author: Yu Pan
  */
 
-#include <stdio.h>
 #include <xgks.h>
+
+#include <stdio.h>
+
 #include "demo.h"
 
 Gint    ws_id = 1;

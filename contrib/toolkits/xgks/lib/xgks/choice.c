@@ -46,6 +46,7 @@
 #include <unistd.h>
 
 #include "gks_implem.h"
+
 #include "event.h"
 #include "x/xevent.h"
 

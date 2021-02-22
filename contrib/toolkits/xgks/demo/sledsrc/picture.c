@@ -23,10 +23,11 @@
  *      display_picture_area
  */
 
+#include <xgks.h>
+
 #include "key.h"
 #include "draw.h"
 #include "trans.h"
-#include <xgks.h>
 
 /*
  *  display_picture_area

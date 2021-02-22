@@ -82,9 +82,12 @@
  *      get_vert_just
  */
 
+#include <xgks.h>
+
 #include <math.h>
 #include <sys/ioctl.h>
 #include <stdio.h>
+
 #include "color.h"
 #include "functbl.h"
 #include "screen_items.h"
@@ -98,7 +101,6 @@
 #include "object_defs.h"
 #include "object_list.h"
 #include "popup.h"
-#include <xgks.h>
 #include "changes.h"
 
 #define ADD_OBJECTS_UNDO        "add objects undo menu item"

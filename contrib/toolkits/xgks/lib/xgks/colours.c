@@ -38,6 +38,7 @@
  */
 
 #include "gks_implem.h"
+
 #include "metafile.h"
 #include "x/colours.h"
 #include "x/xevent.h"

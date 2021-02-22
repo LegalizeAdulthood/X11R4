@@ -33,6 +33,8 @@
  *      set_free_fill_rep
  */
 
+#include <xgks.h>
+
 #include "screen_items.h"
 #include "color.h"
 #include "draw.h"
@@ -40,7 +42,6 @@
 #include "trans.h"
 #include "defs.h"
 #include "math.h"
-#include <xgks.h>
 
 TEXT_BNDL *text_bndl_tbl;
 

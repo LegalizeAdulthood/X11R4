@@ -45,6 +45,7 @@
 #include <unistd.h>
 
 #include "gks_implem.h"
+
 #include "metafile.h"
 #include "segment.h"
 #include "text.h"

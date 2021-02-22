@@ -22,6 +22,7 @@
  */
 
 #include <xgks.h>
+
 #include "changes.h"
 
 #ifndef _objects

@@ -21,8 +21,9 @@
  *
  */
 
-#include "screen_items.h"
 #include <xgks.h>
+
+#include "screen_items.h"
 
 #define	MAX_PAL_ENTRIES	80
 #define	NOT_ALLOCATED	-1

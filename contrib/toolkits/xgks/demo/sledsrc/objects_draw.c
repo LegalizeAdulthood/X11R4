@@ -37,7 +37,6 @@
 #include "color.h"
 #include "objects.h"
 #include "object_tbl.h"
-
 #include "key.h"
 #include "trans.h"
 #include "draw.h"

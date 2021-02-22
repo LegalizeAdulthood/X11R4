@@ -36,6 +36,7 @@
  */
 
 #include <string.h>
+
 #include "gks_implem.h"
 
 void xXgksInqPixelarrayDim(WS_STATE_PTR ws, Grect *rect, Gipoint *dim);

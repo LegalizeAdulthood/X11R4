@@ -58,6 +58,7 @@
 
 #include <sys/file.h>
 #include <strings.h>
+
 #include "gks_implem.h"
 
 OUT_PRIMI *XgksDuplicatePrimi(OUT_PRIMI *primi);

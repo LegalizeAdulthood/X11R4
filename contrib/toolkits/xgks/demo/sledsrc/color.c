@@ -29,6 +29,7 @@
  */
 
 #include <xgks.h>
+
 #include "defs.h"
 #include "ws.h"
 #include "color.h"

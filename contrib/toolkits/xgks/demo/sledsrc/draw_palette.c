@@ -27,14 +27,16 @@
  *      draw_clr_area
  */
 
+#include <xgks.h>
+
 #include <strings.h>
+
 #include "palette.h"
 #include "color.h"
 #include "defs.h"
 #include "key.h"
 #include "trans.h"
 #include "draw.h"
-#include <xgks.h>
 #include "changes.h"
 
 /*

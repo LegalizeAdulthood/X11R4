@@ -35,8 +35,10 @@
  * ethernet.c - function to draw the ethernet portion of the logo
  */
 
-#include <stdio.h>
 #include <xgks.h>
+
+#include <stdio.h>
+
 #include "demo.h"
 
 draw_ethernet(wsid, dotext)

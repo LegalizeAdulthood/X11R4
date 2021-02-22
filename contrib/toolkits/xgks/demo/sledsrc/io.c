@@ -38,9 +38,11 @@
  *      write_char
  */
 
+#include <xgks.h>
+
 #include <stdio.h>
 #include <strings.h>
-#include <xgks.h>
+
 #include "changes.h"
 
 extern char *calloc();

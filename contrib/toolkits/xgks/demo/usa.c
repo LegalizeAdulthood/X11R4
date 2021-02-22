@@ -33,9 +33,11 @@
  * Author: Yu Pan
  */
 
+#include <xgks.h>
+
 #include <stdio.h>
 #include <strings.h>
-#include <xgks.h>
+
 #include "demo.h"
 
 /* input format should look like ....[ usa sherman:0.0 ] */

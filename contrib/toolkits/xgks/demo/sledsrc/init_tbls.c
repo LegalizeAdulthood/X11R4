@@ -25,7 +25,10 @@
  *      init_char_hts_n_wds
  */
 
+#include <xgks.h>
+
 #include <stdio.h>
+
 #include "defs.h"
 #include "func.h"
 #include "key.h"
@@ -36,7 +39,6 @@
 #include "functbl.h"
 #include "palette.h"
 #include "add_objects.h"
-#include <xgks.h>
 
 
 /*

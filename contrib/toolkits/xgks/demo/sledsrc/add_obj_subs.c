@@ -24,6 +24,7 @@
  */
 
 #include <xgks.h>
+
 #include "changes.h"
 #include "ws.h"
 

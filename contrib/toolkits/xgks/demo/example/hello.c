@@ -20,8 +20,10 @@
  * SOFTWARE.
  *
 */
-#include <stdio.h>
+
 #include <xgks.h>
+
+#include <stdio.h>
 
 /*
  * This function is called when the program is finished and we just want

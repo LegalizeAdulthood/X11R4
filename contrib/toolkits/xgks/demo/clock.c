@@ -33,12 +33,13 @@
  * Author: Yu Pan
  */
 
-#define GLOVE 1
+#include <xgks.h>
+
 #include <stdio.h>
 #include <setjmp.h>
 #include <signal.h>
 
-#include <xgks.h>
+#define GLOVE 1
 
 #define BLACK 0
 #define WHITE 1

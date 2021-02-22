@@ -35,8 +35,9 @@
  *
  */
 
-#include "gks_implem.h"
 #include <strings.h>
+
+#include "gks_implem.h"
 
 Gint XgksMaxColours(Gchar *ws_type);
 

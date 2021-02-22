@@ -22,7 +22,9 @@
  * LINTLIBRARY
  */
 #include <xgks.h>
+
 #include <stdio.h>
+
 /*ARGSUSED*/
 GKSERR open_gks (err_file,memory)
    struct _iobuf *err_file;

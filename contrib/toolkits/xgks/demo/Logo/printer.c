@@ -35,8 +35,10 @@
  * printer.c - GKS function to draw the IBM Personal Computer Color Printer.
  */
 
-#include <stdio.h>
 #include <xgks.h>
+
+#include <stdio.h>
+
 #include "demo.h"
 
 draw_printer(wsid)

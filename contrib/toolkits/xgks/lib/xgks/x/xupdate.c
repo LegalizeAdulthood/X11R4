@@ -47,7 +47,8 @@
  *
  */
 
-#include "string.h"
+#include <string.h>
+
 #include "gks_implem.h"
 
 void xXgksUpdateTrans(WS_STATE_PTR ws)

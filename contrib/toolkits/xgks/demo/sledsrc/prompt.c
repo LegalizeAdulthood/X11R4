@@ -30,14 +30,16 @@
  *      restore_msg_area
  */
 
+#include <xgks.h>
+
 #include <strings.h>
+
 #include "key.h"
 #include "draw.h"
 #include "trans.h"
 #include "color.h"
 #include "popup.h"
 #include "functbl.h"
-#include <xgks.h>
 
 
 #define NO_PROMPT -1

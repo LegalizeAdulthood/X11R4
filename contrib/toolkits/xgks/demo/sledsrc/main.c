@@ -26,10 +26,12 @@
  *      redraw_all
  */
 
-#include "changes.h"
+#include <xgks.h>
+
 #include <stdio.h>
 #include <strings.h>
-#include <xgks.h>
+
+#include "changes.h"
 #include "key.h"
 #include "screen_items.h"
 #include "functbl.h"

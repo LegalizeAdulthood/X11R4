@@ -21,15 +21,13 @@
  *
  */
 
-/*#include "/mntm/1/kubitz/graphics/matrix/src/libmatrix/matrix.h"*/
+#include <xgks.h>
+
 #include "key.h"
 #include "trans.h"
 #include "draw.h"
 #include "ws.h"
 #include "functbl.h"
-#ifndef _gks_types
-#include <xgks.h>
-#endif
 
 #define FOUR_BY_FIVE    1
 #define EIGHT_BY_TEN    2

@@ -23,6 +23,7 @@
  */
 
 #include <xgks.h>
+
 #include "changes.h"
 
 #define UNDEFINED -1			/* arbitrary unused val when

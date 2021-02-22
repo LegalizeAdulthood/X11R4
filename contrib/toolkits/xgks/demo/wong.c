@@ -34,6 +34,7 @@
  */
 
 #include <xgks.h>
+
 #include "demo.h"
 
 Gint    ws_id = 1;

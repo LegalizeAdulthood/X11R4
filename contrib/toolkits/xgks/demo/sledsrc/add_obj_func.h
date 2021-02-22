@@ -23,6 +23,7 @@
  */
 
 #include <xgks.h>
+
 #include "changes.h"
 
 extern int add_objects_init();

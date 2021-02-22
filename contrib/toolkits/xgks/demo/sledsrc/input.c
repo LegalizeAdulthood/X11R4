@@ -24,11 +24,12 @@
  *      select_pt
  */
 
+#include <xgks.h>
+
 #include "color.h"
 #include "ws.h"
 #include "defs.h"
 #include "trans.h"
-#include <xgks.h>
 
 #define LOCATOR_DEV     1
 #define LOCATOR_PROMPT  3

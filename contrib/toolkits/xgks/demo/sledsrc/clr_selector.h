@@ -22,6 +22,7 @@
  */
 
 #include <xgks.h>
+
 #include "changes.h"
 
 #define	VERT	0

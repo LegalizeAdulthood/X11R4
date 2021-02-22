@@ -37,9 +37,13 @@
  * solve "tower of hanoi" problem for n disks
  * with graphical narration of solution
  */
+
+
+#include <xgks.h>
+
 #include <stdio.h>
 #include <math.h>
-#include <xgks.h>
+
 #include "demo.h"
 
 #define TOWERSPC 9.0

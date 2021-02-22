@@ -26,10 +26,11 @@
  *      find_menu_tbl_idx
  */
 
+#include <strings.h>
+
 #include "screen_items.h"
 #include "functbl.h"
 #include "defs.h"
-#include <strings.h>
 
 
 /*

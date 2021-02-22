@@ -22,6 +22,7 @@
  */
 
 #include <xgks.h>
+
 #include "changes.h"
 
 extern Gfloat *char_wd_tbl;

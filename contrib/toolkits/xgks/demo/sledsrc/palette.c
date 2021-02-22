@@ -27,13 +27,14 @@
  *      init_palette_clrs
  *      get_clr_idx_from_pt
  */
+#include <xgks.h>
 
 #include <stdio.h>
+
 #include "ws.h"
 #include "color.h"
 #include "key.h"
 #include "defs.h"
-#include <xgks.h>
 #include "trans.h"
 #include "palette.h"
 #include "changes.h"

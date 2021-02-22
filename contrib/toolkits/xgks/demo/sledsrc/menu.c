@@ -31,12 +31,13 @@
  *      set_currmitem
  */
 
+#include <xgks.h>
+
 #include "screen_items.h"
 #include "functbl.h"
 #include "key.h"
 #include "defs.h"
 #include "menu.h"
-#include <xgks.h>
 
 int menu_tbl_sz = 2;
 struct menu_area_tbl_entry menu_tbl[2] =

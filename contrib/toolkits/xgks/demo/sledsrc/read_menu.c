@@ -24,12 +24,14 @@
  *      read_menu
  */
 
-#include <stdio.h>
 #include <xgks.h>
+
+#include <stdio.h>
+#include <strings.h>
+
 #include "screen_items.h"
 #include "menu.h"
 #include "key.h"
-#include <strings.h>
 
 
 /*

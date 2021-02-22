@@ -35,8 +35,11 @@
  * Draw a picture of the IBM Instruments S9000 workstation.
  *
  */
-#include <stdio.h>
+
 #include <xgks.h>
+
+#include <stdio.h>
+
 #include "demo.h"
 
 draw_9000(wsid)

@@ -39,11 +39,12 @@
  *      is_ident
  */
 
+#include <strings.h>
+
 #include "trans.h"
 #include "functbl.h"
 #include "defs.h"
 #include "ws.h"
-#include <strings.h>
 
 
 /*

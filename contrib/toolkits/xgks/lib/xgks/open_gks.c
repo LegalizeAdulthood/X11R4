@@ -43,6 +43,7 @@ static char *IBMCOPYRIGHT = "(C) Copyright IBM CORPORATION 1988";
 static char *COPYRIGHT = "(C) Copyright  1987, 1988 by The University of Illinois Board of Trustees.";
 
 #include "gks_implem.h"
+
 #define fillarea_c
 #define text_c
 #define polylines_c

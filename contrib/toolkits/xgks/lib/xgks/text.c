@@ -57,6 +57,7 @@
 #include <math.h>
 
 #include "gks_implem.h"
+
 #include "text.h"
 
 #define PI      3.1415926535897932384626433

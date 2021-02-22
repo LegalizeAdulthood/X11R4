@@ -35,8 +35,10 @@
  * ramtek.c - GKS function to draw the Ramtek
  */
 
-#include <stdio.h>
 #include <xgks.h>
+
+#include <stdio.h>
+
 #include "demo.h"
 
 draw_ramtek(wsid)

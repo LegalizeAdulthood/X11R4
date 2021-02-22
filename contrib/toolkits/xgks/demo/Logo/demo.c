@@ -38,8 +38,10 @@
  *
  */
 
-#include <stdio.h>
 #include <xgks.h>
+
+#include <stdio.h>
+
 #include "demo.h"
 
 char *Menu[] = {
