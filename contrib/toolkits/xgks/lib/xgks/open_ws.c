@@ -643,7 +643,7 @@ void XgksAppendWsPrimi(OUT_PRIMI *primi)
         if ( (xgks_state.activews[cnt].ws_id != INVALID)
                 && (xgks_state.activews[cnt].ws->primi_store == GYES)
                 && (xgks_state.activews[cnt].ws->ewstype != MO))
-            if (primi->pid == MESG)   /* Check if prim. is MESG        c1001 */
+            if (primi->pid == MESG)   /* Check if prim. is MESG */
                 XgksInsertMesgPrimi(xgks_state.activews[cnt].ws, primi);
             else          /* message primitives have to be inserted differently */
                XgksInsertPrimi(&(xgks_state.activews[cnt].ws->primi_insert_pt), primi);
