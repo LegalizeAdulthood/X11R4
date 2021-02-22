@@ -53,21 +53,21 @@
 /*
  * forward declare local functions
  */
-static Gint   XgksExecData(Gint type, Gchar *record);
-static Gint   XgksFeoln(Gfile *fp);
-static Gint   XgksGetNextMi(Gfile *fp, Gint key);
-static Gint   XgksInputData(Gfile *fp, Gint key, Gchar *record);
+static Gint XgksExecData(Gint type, Gchar *record);
+static Gint XgksFeoln(Gfile *fp);
+static Gint XgksGetNextMi(Gfile *fp, Gint key);
+static Gint XgksInputData(Gfile *fp, Gint key, Gchar *record);
 static Gchar *XgksMAuthor(void);
 static Gchar *XgksMDate(void);
-static void   XgksMDelete(Gint ws_id);
-static Gint   XgksMFindKey(Gint ws_id);
-static Gint   XgksMInstall(Gint ws_id);
-static Gint   XgksMRecSize(Gint type);
-static Gint   XgksValidGksMItem(Gint type);
+static void XgksMDelete(Gint ws_id);
+static Gint XgksMFindKey(Gint ws_id);
+static Gint XgksMInstall(Gint ws_id);
+static Gint XgksMRecSize(Gint type);
+static Gint XgksValidGksMItem(Gint type);
 
 static Gint gksm_version = 1;
 
-static struct passwd  *passwd;
+static struct passwd *passwd;
 
 static Gchar buffer[41];
 static Gchar date[9];
@@ -78,38 +78,38 @@ static Gchar dummy[] = "dummy info."; /* 11 bytes dummy for this implementation 
 
 */
 
+#define NOTSUPPORTED(type) (type == 6 || type == 16)
 
-#define NOTSUPPORTED(type)      (type==6 || type==16 )
-
-typedef struct {
-        Gchar   std[5];         /* the string GKSM + NULL */
-        Gchar   info[41];       /* author installation etc. + NULL */
-        Gchar   date[9];        /* yy/mm/dd + NULL */
-        Gint    ver;            /* version numer */
-        Gint    h,t,l,i,r,f,ri; /* misc info */
-        Gchar   d1[12], d2[12]; /* dummy in this implementation */
+typedef struct
+{
+    Gchar std[5];              /* the string GKSM + NULL */
+    Gchar info[41];            /* author installation etc. + NULL */
+    Gchar date[9];             /* yy/mm/dd + NULL */
+    Gint ver;                  /* version numer */
+    Gint h, t, l, i, r, f, ri; /* misc info */
+    Gchar d1[12], d2[12];      /* dummy in this implementation */
 } GKSM_HEADER;
 
-static struct {
-        Ggksmit         CurItem;                /* Each opened ws have their current item type store here */
-        GKSM_HEADER     HeaderInfo;
-        Gint            ws_id;
-        Gint            GksmEmpty;
+static struct
+{
+    Ggksmit CurItem; /* Each opened ws have their current item type store here */
+    GKSM_HEADER HeaderInfo;
+    Gint ws_id;
+    Gint GksmEmpty;
 } GksmInfo[MAX_OPEN_WS];
-
 
 void XgksInitGksM(void)
 {
-        Gint i;
+    Gint i;
 
-        for (i=0; i<MAX_OPEN_WS; i++) {
-                GksmInfo[i].CurItem.type = INVALID;
-                GksmInfo[i].CurItem.length = INVALID;
-                GksmInfo[i].ws_id = INVALID;
-                GksmInfo[i].GksmEmpty = TRUE;
-        }
+    for (i = 0; i < MAX_OPEN_WS; i++)
+    {
+        GksmInfo[i].CurItem.type = INVALID;
+        GksmInfo[i].CurItem.length = INVALID;
+        GksmInfo[i].ws_id = INVALID;
+        GksmInfo[i].GksmEmpty = TRUE;
+    }
 }
-
 
 /*
  * gwritegksm (ws_id, type, length, data) -- WRITE ITEM TO GKSM
@@ -122,33 +122,32 @@ void XgksInitGksM(void)
  *
  * See Also: ANSI Standard p.142
  */
-Gint gwritegksm (Gint ws_id, Gint type, Gint length, Gchar *data)
+Gint gwritegksm(Gint ws_id, Gint type, Gint length, Gchar *data)
 {
+    WS_STATE_PTR ws;
+    Gint i;
 
-        WS_STATE_PTR ws;
-        Gint i;
+    GKSERROR((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgwritegksm);
 
-        GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgwritegksm);
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgwritegksm);
 
-        GKSERROR ((!VALID_WSID(ws_id)), 20, errgwritegksm);
+    /*              if it isn't open, it can't be active...                          */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 30, errgwritegksm);
 
-/*              if it isn't open, it can't be active...                          */
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 30, errgwritegksm);
+    GKSERROR((ws->wsstate != GACTIVE), 30, errgwritegksm);
 
-        GKSERROR ((ws->wsstate != GACTIVE), 30, errgwritegksm);
+    GKSERROR((WS_CAT(ws) != GMO), 32, errgwritegksm);
 
-        GKSERROR ((WS_CAT(ws) != GMO), 32, errgwritegksm);
+    GKSERROR((type <= 100), 160, errgwritegksm);
 
-        GKSERROR ((type <= 100), 160, errgwritegksm);
+    GKSERROR((length < 0), 161, errgwritegksm);
 
-        GKSERROR ((length < 0), 161, errgwritegksm);
+    fprintf(ws->mfp, "%d %d ", type, length);
+    for (i = 0; i < length; i++)
+        fprintf(ws->mfp, "%c", data[i]);
+    fprintf(ws->mfp, "\n");
 
-        fprintf(ws->mfp, "%d %d ", type, length);
-        for (i=0; i<length; i++)
-                fprintf(ws->mfp, "%c", data[i]);
-        fprintf(ws->mfp, "\n");
-
-        return (OK);
+    return (OK);
 }
 
 /*
@@ -161,34 +160,35 @@ Gint gwritegksm (Gint ws_id, Gint type, Gint length, Gchar *data)
  * See Also: greadgksm (for explanation of ws->filestat),
  *           ANSI Standard p.142
  */
-Gint ggetgksm (Gint ws_id, Ggksmit *result)
+Gint ggetgksm(Gint ws_id, Ggksmit *result)
 {
-        WS_STATE_PTR ws;
-        Gint key;
+    WS_STATE_PTR ws;
+    Gint key;
 
-        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errggetgksm);
+    GKSERROR((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errggetgksm);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errggetgksm);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errggetgksm);
 
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 25, errggetgksm);
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errggetgksm);
 
-        GKSERROR ((WS_CAT(ws) != GMI), 34, errggetgksm);
+    GKSERROR((WS_CAT(ws) != GMI), 34, errggetgksm);
 
-        GKSERROR (((key=XgksMFindKey(ws_id))==INVALID), 34, errggetgksm);
+    GKSERROR(((key = XgksMFindKey(ws_id)) == INVALID), 34, errggetgksm);
 
-        GKSERROR ((GksmInfo[key].GksmEmpty == TRUE), 162, errggetgksm);
+    GKSERROR((GksmInfo[key].GksmEmpty == TRUE), 162, errggetgksm);
 
-        if (XgksValidGksMItem(GksmInfo[key].CurItem.type)
-            == INVALID)                                   {
-                ws->filestat = MF_ITEM_ERR;
-        }
+    if (XgksValidGksMItem(GksmInfo[key].CurItem.type)
+        == INVALID)
+    {
+        ws->filestat = MF_ITEM_ERR;
+    }
 
-        *result = GksmInfo[key].CurItem;
+    *result = GksmInfo[key].CurItem;
 
-        GKSERROR ((ws->filestat != METAFILE_OK), 163, errggetgksm);
+    GKSERROR((ws->filestat != METAFILE_OK), 163, errggetgksm);
 
-        return (OK);
+    return (OK);
 }
 
 /*
@@ -227,72 +227,74 @@ Gint ggetgksm (Gint ws_id, Ggksmit *result)
  * invalid), subsequent get/read attempts will return error 162, no items left
  * in MI, since the error is unrecoverable and no more reading is allowed.
  */
-Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
+Gint greadgksm(Gint ws_id, Gint length, Gchar *record)
 {
-        WS_STATE_PTR ws;
-        Gint key;
-        Gchar *intrec;
+    WS_STATE_PTR ws;
+    Gint key;
+    Gchar *intrec;
 
-        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errgreadgksm);
+    GKSERROR((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errgreadgksm);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreadgksm);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgreadgksm);
 
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL), 25, errgreadgksm);
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errgreadgksm);
 
-        GKSERROR ((WS_CAT(ws) != GMI), 34, errgreadgksm);
+    GKSERROR((WS_CAT(ws) != GMI), 34, errgreadgksm);
 
-        GKSERROR (((key=XgksMFindKey(ws_id))==INVALID), 34, errgreadgksm);
+    GKSERROR(((key = XgksMFindKey(ws_id)) == INVALID), 34, errgreadgksm);
 
-        if (GksmInfo[key].CurItem.type == 0)
+    if (GksmInfo[key].CurItem.type == 0)
+    {
+        GksmInfo[key].GksmEmpty = TRUE;
+    }
+
+    GKSERROR((GksmInfo[key].GksmEmpty == TRUE), 162, errgreadgksm);
+
+    if (ws->filestat == MF_FILE_ERR)
+    {
+        GksmInfo[key].GksmEmpty = TRUE;
+        gerrorhand(162, errgreadgksm, xgks_state.gks_err_file);
+        return (162);
+    }
+
+    if (XgksValidGksMItem(GksmInfo[key].CurItem.type)
+        == INVALID)
+    {
+        ws->filestat = MF_ITEM_ERR;
+    }
+
+    GKSERROR(((ws->filestat == MF_ITEM_ERR) && (length != 0)), MF_ITEM_ERR, errgreadgksm);
+
+    GKSERROR(((ws->filestat == MF_DATA_ERR) && (length != 0)), MF_DATA_ERR, errgreadgksm);
+
+    GKSERROR((length < 0), 166, errgreadgksm);
+
+    if (length > 0)
+    {
+        intrec = (Gchar *) malloc(GksmInfo[key].CurItem.length);
+        GKSERROR((intrec == NULL), 300, errgreadgksm);
+        ws->filestat = XgksInputData(ws->mfp, key, intrec);
+        bcopy(intrec, record, length);
+        free(intrec);
+        if (feof(ws->mfp))
         {
-                GksmInfo[key].GksmEmpty = TRUE;
+            GksmInfo[key].GksmEmpty = TRUE;
+            gerrorhand(162, errgreadgksm, xgks_state.gks_err_file);
+            return (162);
         }
+        GKSERROR((ws->filestat == MF_ITEM_ERR) || (ws->filestat == MF_FILE_ERR), 163, errgreadgksm);
+        GKSERROR((ws->filestat == MF_DATA_ERR), 165, errgreadgksm);
+    }
+    else
+    {
+        /* skip to end of current item */
+        fscanf(ws->mfp, "%*[^\n]");
+    }
 
-        GKSERROR ((GksmInfo[key].GksmEmpty == TRUE), 162, errgreadgksm);
+    ws->filestat = XgksGetNextMi(ws->mfp, key);
 
-        if (ws->filestat == MF_FILE_ERR) {
-                GksmInfo[key].GksmEmpty = TRUE;
-                gerrorhand( 162, errgreadgksm, xgks_state.gks_err_file );
-                return( 162 );
-        }
-
-        if (XgksValidGksMItem(GksmInfo[key].CurItem.type)
-            == INVALID)                                   {
-                ws->filestat = MF_ITEM_ERR;
-        }
-
-        GKSERROR (((ws->filestat == MF_ITEM_ERR) && (length != 0)), MF_ITEM_ERR,                   errgreadgksm);
-
-        GKSERROR (((ws->filestat == MF_DATA_ERR) && (length != 0)), MF_DATA_ERR,                   errgreadgksm);
-
-        GKSERROR ((length < 0), 166, errgreadgksm);
-
-        if (length > 0) {
-                intrec = (Gchar *)malloc( GksmInfo[key].CurItem.length );
-                GKSERROR ((intrec == NULL), 300, errgreadgksm);
-                ws->filestat =
-                XgksInputData (ws->mfp, key, intrec);
-                bcopy( intrec, record, length );
-                free( intrec );
-                if (feof( ws->mfp )) {
-                        GksmInfo[key].GksmEmpty = TRUE;
-                        gerrorhand( 162, errgreadgksm, xgks_state.gks_err_file );
-                        return( 162 );
-                }
-                GKSERROR ((ws->filestat == MF_ITEM_ERR) ||                                                (ws->filestat == MF_FILE_ERR), 163, errgreadgksm);
-                GKSERROR ((ws->filestat == MF_DATA_ERR), 165, errgreadgksm);
-        }
-        else
-        {
-                /* skip to end of current item */
-                fscanf( ws->mfp, "%*[^\n]" );
-        }
-
-        ws->filestat =
-        XgksGetNextMi (ws->mfp, key);
-
-        return (OK);
+    return (OK);
 }
 
 /*
@@ -306,27 +308,26 @@ Gint greadgksm (Gint ws_id, Gint length, Gchar *record)
  */
 Gint ginterpret(Ggksmit *recInfo, Gchar *data)
 {
-        GKSERROR ((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errginterpret);
+    GKSERROR((xgks_state.gks_state != GWSOP && xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 7, errginterpret);
 
-        GKSERROR ((recInfo == NULL), 163, errginterpret );
+    GKSERROR((recInfo == NULL), 163, errginterpret);
 
-        GKSERROR (((recInfo->length > 0)&&(data == NULL)), 165, errginterpret );
+    GKSERROR(((recInfo->length > 0) && (data == NULL)), 165, errginterpret);
 
-        GKSERROR ((recInfo->length<XgksMRecSize(recInfo->type)), 161, errginterpret);
+    GKSERROR((recInfo->length < XgksMRecSize(recInfo->type)), 161, errginterpret);
 
-        GKSERROR ((XgksValidGksMItem(recInfo->type)==INVALID), 164, errginterpret
-);
+    GKSERROR((XgksValidGksMItem(recInfo->type) == INVALID), 164, errginterpret);
 
-        /* Can't check for 165 in ginterpret due to file format. */
-        /* Can't really check for 163, either.                   */
+    /* Can't check for 165 in ginterpret due to file format. */
+    /* Can't really check for 163, either.                   */
 
-        GKSERROR ( (recInfo->type >100), 167, errginterpret);
+    GKSERROR((recInfo->type > 100), 167, errginterpret);
 
-        GKSERROR ((NOTSUPPORTED(recInfo->type)), 168, errginterpret);
+    GKSERROR((NOTSUPPORTED(recInfo->type)), 168, errginterpret);
 
-        GKSERROR ((XgksExecData (recInfo->type, data) != 0), 164, errginterpret);
+    GKSERROR((XgksExecData(recInfo->type, data) != 0), 164, errginterpret);
 
-        return (OK);
+    return (OK);
 }
 
 /*
@@ -334,86 +335,94 @@ Gint ginterpret(Ggksmit *recInfo, Gchar *data)
  */
 int XgksMiOpenWs(WS_STATE_PTR ws)
 {
-        Gint key,i,readct;
+    Gint key, i, readct;
 
-        clearerr( ws->mfp );
-        key = XgksMInstall (ws->ws_id);
-        for (i=0; i<4; i++) {
-                READCHR (ws->mfp, GksmInfo[key].HeaderInfo.std[i]);
-                if ((ferror( ws->mfp )) ||
-                    (GksmInfo[key].HeaderInfo.std[i] == '\n'))
-                        return( 1 );
-        }
-        GksmInfo[key].HeaderInfo.std[4] = 0;
-        for (i=0; i<40; i++) {
-                READCHR(ws->mfp, GksmInfo[key].HeaderInfo.info[i]);
-                if ((ferror( ws->mfp )) ||
-                    (GksmInfo[key].HeaderInfo.info[i] == '\n'))
-                        return( 1 );
-        }
-        GksmInfo[key].HeaderInfo.info[40] = 0;
-        for (i=0; i<8; i++) {
-                READCHR(ws->mfp, GksmInfo[key].HeaderInfo.date[i]);
-                if ((ferror( ws->mfp )) ||
-                    (GksmInfo[key].HeaderInfo.date[i] == '\n'))
-                        return( 1 );
-        }
-        GksmInfo[key].HeaderInfo.date[8] = 0;
-        readct =
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.ver);
-        if (readct != 1) return( 1 );
-        if (XgksFeoln( ws->mfp )) return( 1 );
-        readct =
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.h);
-        if (readct != 1) return( 1 );
-        if (XgksFeoln( ws->mfp )) return( 1 );
-        readct =
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.t);
-        if (readct != 1) return( 1 );
-        if (XgksFeoln( ws->mfp )) return( 1 );
-        readct =
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.l);
-        if (readct != 1) return( 1 );
-        if (XgksFeoln( ws->mfp )) return( 1 );
-        readct =
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.i);
-        if (readct != 1) return( 1 );
-        if (XgksFeoln( ws->mfp )) return( 1 );
-        readct =
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.r);
-        if (readct != 1) return( 1 );
-        if (XgksFeoln( ws->mfp )) return( 1 );
-        readct =
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.f);
-        if (readct != 1) return( 1 );
-        if (XgksFeoln( ws->mfp )) return( 1 );
-        readct =
-        READINT (ws->mfp, GksmInfo[key].HeaderInfo.ri);
-        if (readct != 1) return( 1 );
-        for (i=0; i<11; i++) {
-                if (XgksFeoln( ws->mfp )) return( 1 );
-                READCHR(ws->mfp, GksmInfo[key].HeaderInfo.d1[i]);
-                if ((ferror( ws->mfp )) ||
-                    (GksmInfo[key].HeaderInfo.d1[i] == '\n'))
-                        return( 1 );
-        }
-        GksmInfo[key].HeaderInfo.d1[11] = 0;
-        for (i=0; i<11; i++) {
-                READCHR(ws->mfp, GksmInfo[key].HeaderInfo.d2[i]);
-                if ((ferror( ws->mfp )) ||
-                    (GksmInfo[key].HeaderInfo.std[i] == '\n'))
-                        return( 1 );
-        }
-        GksmInfo[key].HeaderInfo.d2[11] = 0;
+    clearerr(ws->mfp);
+    key = XgksMInstall(ws->ws_id);
+    for (i = 0; i < 4; i++)
+    {
+        READCHR(ws->mfp, GksmInfo[key].HeaderInfo.std[i]);
+        if ((ferror(ws->mfp)) || (GksmInfo[key].HeaderInfo.std[i] == '\n'))
+            return (1);
+    }
+    GksmInfo[key].HeaderInfo.std[4] = 0;
+    for (i = 0; i < 40; i++)
+    {
+        READCHR(ws->mfp, GksmInfo[key].HeaderInfo.info[i]);
+        if ((ferror(ws->mfp)) || (GksmInfo[key].HeaderInfo.info[i] == '\n'))
+            return (1);
+    }
+    GksmInfo[key].HeaderInfo.info[40] = 0;
+    for (i = 0; i < 8; i++)
+    {
+        READCHR(ws->mfp, GksmInfo[key].HeaderInfo.date[i]);
+        if ((ferror(ws->mfp)) || (GksmInfo[key].HeaderInfo.date[i] == '\n'))
+            return (1);
+    }
+    GksmInfo[key].HeaderInfo.date[8] = 0;
+    readct = READINT(ws->mfp, GksmInfo[key].HeaderInfo.ver);
+    if (readct != 1)
+        return (1);
+    if (XgksFeoln(ws->mfp))
+        return (1);
+    readct = READINT(ws->mfp, GksmInfo[key].HeaderInfo.h);
+    if (readct != 1)
+        return (1);
+    if (XgksFeoln(ws->mfp))
+        return (1);
+    readct = READINT(ws->mfp, GksmInfo[key].HeaderInfo.t);
+    if (readct != 1)
+        return (1);
+    if (XgksFeoln(ws->mfp))
+        return (1);
+    readct = READINT(ws->mfp, GksmInfo[key].HeaderInfo.l);
+    if (readct != 1)
+        return (1);
+    if (XgksFeoln(ws->mfp))
+        return (1);
+    readct = READINT(ws->mfp, GksmInfo[key].HeaderInfo.i);
+    if (readct != 1)
+        return (1);
+    if (XgksFeoln(ws->mfp))
+        return (1);
+    readct = READINT(ws->mfp, GksmInfo[key].HeaderInfo.r);
+    if (readct != 1)
+        return (1);
+    if (XgksFeoln(ws->mfp))
+        return (1);
+    readct = READINT(ws->mfp, GksmInfo[key].HeaderInfo.f);
+    if (readct != 1)
+        return (1);
+    if (XgksFeoln(ws->mfp))
+        return (1);
+    readct = READINT(ws->mfp, GksmInfo[key].HeaderInfo.ri);
+    if (readct != 1)
+        return (1);
+    for (i = 0; i < 11; i++)
+    {
+        if (XgksFeoln(ws->mfp))
+            return (1);
+        READCHR(ws->mfp, GksmInfo[key].HeaderInfo.d1[i]);
+        if ((ferror(ws->mfp)) || (GksmInfo[key].HeaderInfo.d1[i] == '\n'))
+            return (1);
+    }
+    GksmInfo[key].HeaderInfo.d1[11] = 0;
+    for (i = 0; i < 11; i++)
+    {
+        READCHR(ws->mfp, GksmInfo[key].HeaderInfo.d2[i]);
+        if ((ferror(ws->mfp)) || (GksmInfo[key].HeaderInfo.std[i] == '\n'))
+            return (1);
+    }
+    GksmInfo[key].HeaderInfo.d2[11] = 0;
 
-        ws->filestat = METAFILE_OK;
+    ws->filestat = METAFILE_OK;
 
-        ws->filestat =
-        XgksGetNextMi (ws->mfp, key);
+    ws->filestat = XgksGetNextMi(ws->mfp, key);
 
-        if (ws->filestat != METAFILE_OK) return( 1 );
+    if (ws->filestat != METAFILE_OK)
+        return (1);
 
-        return( 0 );
+    return (0);
 }
 
 /*
@@ -421,17 +430,15 @@ int XgksMiOpenWs(WS_STATE_PTR ws)
  */
 Gint XgksMoOpenWs(WS_STATE_PTR ws)
 {
-
-        fprintf (ws->mfp, "%s%s%s\n", "GKSM", XgksMAuthor(), XgksMDate());
-        fprintf (ws->mfp, "%d 0 %zu %zu %zu %zu 1 1", gksm_version, INT_SIZE, INT_SIZE, INT_SIZE, FLOAT_SIZE);
-        fprintf (ws->mfp, "%s%s\n", dummy, dummy);
+    fprintf(ws->mfp, "%s%s%s\n", "GKSM", XgksMAuthor(), XgksMDate());
+    fprintf(ws->mfp, "%d 0 %zu %zu %zu %zu 1 1", gksm_version, INT_SIZE, INT_SIZE, INT_SIZE, FLOAT_SIZE);
+    fprintf(ws->mfp, "%s%s\n", dummy, dummy);
 }
 
 void XgksMiCloseWs(WS_STATE_PTR ws)
 {
-
-        XgksMDelete(ws->ws_id);
-        fclose (ws->mfp);
+    XgksMDelete(ws->ws_id);
+    fclose(ws->mfp);
 }
 
 /*
@@ -439,43 +446,49 @@ void XgksMiCloseWs(WS_STATE_PTR ws)
  */
 void XgksMoCloseWs(WS_STATE_PTR ws)
 {
-        fprintf (ws->mfp, "0 %d\n",XgksMRecSize(0));
-        fclose  (ws->mfp);
+    fprintf(ws->mfp, "0 %d\n", XgksMRecSize(0));
+    fclose(ws->mfp);
 }
 
 void XgksMoClearWs(WS_STATE_PTR ws, Gclrflag flag)
 {
-        fprintf (ws->mfp, "1 %d %d\n", XgksMRecSize(1), (flag == GCONDITIONALLY ? 0 : 1));
+    fprintf(ws->mfp, "1 %d %d\n", XgksMRecSize(1), (flag == GCONDITIONALLY ? 0 : 1));
 }
 
 void XgksMoReDrawAllSeg(WS_STATE_PTR ws)
 {
-        fprintf(ws->mfp, "2 %d\n", XgksMRecSize(2));
+    fprintf(ws->mfp, "2 %d\n", XgksMRecSize(2));
 }
 
 void XgksMoUpdateWs(WS_STATE_PTR ws, Gregen regenflag)
 {
-        fprintf(ws->mfp, "3 %d %d\n", XgksMRecSize(3), (regenflag == GPERFORM ? 0 : 1));
+    fprintf(ws->mfp, "3 %d %d\n", XgksMRecSize(3), (regenflag == GPERFORM ? 0 : 1));
 }
 
 void XgksMoDeferWs(WS_STATE_PTR ws, Gdefmode defer_mode, Girgmode regen_mode)
 {
-        Gint defer, regen;
+    Gint defer, regen;
 
-        if (defer_mode == GASAP) defer = 0;
-        else if (defer_mode == GBNIG) defer = 1;
-        else if (defer_mode == GBNIL) defer = 2;
-        else  defer = 3;
+    if (defer_mode == GASAP)
+        defer = 0;
+    else if (defer_mode == GBNIG)
+        defer = 1;
+    else if (defer_mode == GBNIL)
+        defer = 2;
+    else
+        defer = 3;
 
-        if (regen_mode == GSUPPRESSED) regen = 0;
-        else regen = 1;
+    if (regen_mode == GSUPPRESSED)
+        regen = 0;
+    else
+        regen = 1;
 
-        fprintf(ws->mfp, "4 %d %d %d\n", XgksMRecSize(4), defer, regen);
+    fprintf(ws->mfp, "4 %d %d %d\n", XgksMRecSize(4), defer, regen);
 }
 
 void XgksMoMessage(WS_STATE_PTR ws, Gchar *string)
 {
-         fprintf(ws->mfp, "5 %zu %zu %s\n", STRLEN(string)+1+XgksMRecSize(5), STRLEN(string), string);
+    fprintf(ws->mfp, "5 %zu %zu %s\n", STRLEN(string) + 1 + XgksMRecSize(5), STRLEN(string), string);
 }
 
 /*
@@ -489,14 +502,15 @@ void XgksMoMessage(WS_STATE_PTR ws, Gchar *string)
  */
 void XgksMoGraphicOutputToWs(WS_STATE_PTR ws, Gint code, Gint num_pt, Gpoint *pos)
 {
-        Gint     i;
+    Gint i;
 
-        fprintf(ws->mfp, "%d %zu %d ",code, (num_pt*POINT_SIZE)+XgksMRecSize(code), num_pt);
-        for (i=0; i<num_pt; i++) {
-                fprintf(ws->mfp, "%f %f ", pos->x, pos->y);
-                pos++;
-        }
-        fprintf(ws->mfp, "\n");
+    fprintf(ws->mfp, "%d %zu %d ", code, (num_pt * POINT_SIZE) + XgksMRecSize(code), num_pt);
+    for (i = 0; i < num_pt; i++)
+    {
+        fprintf(ws->mfp, "%f %f ", pos->x, pos->y);
+        pos++;
+    }
+    fprintf(ws->mfp, "\n");
 }
 /*
  * This routine is suitable for
@@ -509,1765 +523,2154 @@ void XgksMoGraphicOutputToWs(WS_STATE_PTR ws, Gint code, Gint num_pt, Gpoint *po
  */
 void XgksMoGraphicOutput(Gint code, Gint num_pt, Gpoint *pos)
 {
-        Gint     i, cnt;
+    Gint i, cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO) {
-                                  fprintf(xgks_state.activews[cnt].ws->mfp, "%d %zu %d ",code,
-                                        (num_pt*POINT_SIZE)+XgksMRecSize(code), num_pt);
-                                  for (i=0; i<num_pt; i++) {
-                                        fprintf(xgks_state.activews[cnt].ws->mfp, "%f %f ", pos->x, pos->y);
-                                        pos++;
-                                  }
-                                  fprintf(xgks_state.activews[cnt].ws->mfp, "\n");
-                        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+            {
+                fprintf(xgks_state.activews[cnt].ws->mfp, "%d %zu %d ", code,
+                    (num_pt * POINT_SIZE) + XgksMRecSize(code), num_pt);
+                for (i = 0; i < num_pt; i++)
+                {
+                    fprintf(xgks_state.activews[cnt].ws->mfp, "%f %f ", pos->x, pos->y);
+                    pos++;
                 }
+                fprintf(xgks_state.activews[cnt].ws->mfp, "\n");
+            }
+    }
 }
 
 void XgksMoTextToWs(WS_STATE_PTR ws, Gpoint *at, Gchar *string)
 {
-        Gint length;
+    Gint length;
 
-        length = STRLEN (string);
-        fprintf(ws->mfp, "13 %d %f %f %d %s\n",
-                        length+1+XgksMRecSize(13), at->x, at->y, length, string);
+    length = STRLEN(string);
+    fprintf(ws->mfp, "13 %d %f %f %d %s\n",
+        length + 1 + XgksMRecSize(13), at->x, at->y, length, string);
 }
 
 void XgksMoText(Gpoint *at, Gchar *string)
 {
-        Gint cnt,length;
+    Gint cnt, length;
 
-        length = STRLEN (string);
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "13 %d %f %f %d %s\n",
-                                        length+1+XgksMRecSize(13), at->x, at->y, length, string);
-        }
+    length = STRLEN(string);
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "13 %d %f %f %d %s\n",
+                    length + 1 + XgksMRecSize(13), at->x, at->y, length, string);
+    }
 }
 
 void XgksMoCellArrayToWs(WS_STATE_PTR ws,
     Gpoint *ll, Gpoint *ur, Gpoint *lr, Gint row, Gint *colour, Gipoint *dim)
 {
-        Gint  i,j, size;
+    Gint i, j, size;
 
-        size = dim->x * dim->y;
-        fprintf(ws->mfp, "15 %zu %f %f %f %f %f %f %d %d ",
-                  XgksMRecSize(15)+(size*INT_SIZE),
-                  ll->x, ll->y, ur->x, ur->y, lr->x, lr->y, dim->x, dim->y);
-        for (i=0; i<dim->y; i++)
-                for (j=0; j<row; j++)
-                        if (j<dim->x) fprintf(ws->mfp, "%d ", colour[i*row+j]);
-        fprintf(ws->mfp, "\n");
+    size = dim->x * dim->y;
+    fprintf(ws->mfp, "15 %zu %f %f %f %f %f %f %d %d ",
+        XgksMRecSize(15) + (size * INT_SIZE),
+        ll->x, ll->y, ur->x, ur->y, lr->x, lr->y, dim->x, dim->y);
+    for (i = 0; i < dim->y; i++)
+        for (j = 0; j < row; j++)
+            if (j < dim->x)
+                fprintf(ws->mfp, "%d ", colour[i * row + j]);
+    fprintf(ws->mfp, "\n");
 }
 
 void XgksMoCellArray(Gpoint *ll, Gpoint *ur, Gpoint *lr, Gint row, Gint *colour, Gipoint *dim)
 {
-        Gint cnt, i, j, size;
+    Gint cnt, i, j, size;
 
-        size = dim->x * dim->y;
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)   {
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "15 %zu %f %f %f %f %f %f %d %d ",
-                                  XgksMRecSize(15)+(size*INT_SIZE),
-                                  ll->x, ll->y, ur->x, ur->y, lr->x, lr->y, dim->x, dim->y);
-                                for (i=0; i<dim->y; i++)
-                                        for (j=0; j<row; j++)
-                                                if (j<dim->x) fprintf(xgks_state.activews[cnt].ws->mfp, "%d ", colour[i*row+j]);
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "\n");
-                        }
-        }
+    size = dim->x * dim->y;
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+            {
+                fprintf(xgks_state.activews[cnt].ws->mfp, "15 %zu %f %f %f %f %f %f %d %d ",
+                    XgksMRecSize(15) + (size * INT_SIZE),
+                    ll->x, ll->y, ur->x, ur->y, lr->x, lr->y, dim->x, dim->y);
+                for (i = 0; i < dim->y; i++)
+                    for (j = 0; j < row; j++)
+                        if (j < dim->x)
+                            fprintf(xgks_state.activews[cnt].ws->mfp, "%d ", colour[i * row + j]);
+                fprintf(xgks_state.activews[cnt].ws->mfp, "\n");
+            }
+    }
 }
 
 void XgksMoSetGraphicSizeOnWs(WS_STATE_PTR ws, Gint code, Gfloat size)
 {
-        fprintf(ws->mfp, "%d %d %f\n",code, XgksMRecSize(code), size);
+    fprintf(ws->mfp, "%d %d %f\n", code, XgksMRecSize(code), size);
 }
 
 void XgksMoSetGraphicSize(Gint code, Gfloat size)
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "%d %d %f\n",code, XgksMRecSize(code), size);
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "%d %d %f\n", code, XgksMRecSize(code), size);
+    }
 }
 
 void XgksMoCloseSegOnWs(WS_STATE_PTR ws)
 {
-        fprintf(ws->mfp, "%d %d\n",82, XgksMRecSize(82));
+    fprintf(ws->mfp, "%d %d\n", 82, XgksMRecSize(82));
 }
 
 void XgksMoSetGraphicAttrOnWs(WS_STATE_PTR ws, Gint code, Gint attr)
 {
-        fprintf(ws->mfp, "%d %d %d\n",code, XgksMRecSize(code), attr);
+    fprintf(ws->mfp, "%d %d %d\n", code, XgksMRecSize(code), attr);
 }
 
 void XgksMoSetGraphicAttr(Gint code, Gint attr)
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "%d %d %d\n",code, XgksMRecSize(code), attr);
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "%d %d %d\n", code, XgksMRecSize(code), attr);
+    }
 }
 
 void XgksMoSetTextFPOnWs(WS_STATE_PTR ws, Gtxfp *txfp)
 {
-        Gint prec;
+    Gint prec;
 
-        if (txfp->prec == GSTRING) prec = 0;
-        else if (txfp->prec == GCHAR) prec = 1;
-        else prec = 2;
+    if (txfp->prec == GSTRING)
+        prec = 0;
+    else if (txfp->prec == GCHAR)
+        prec = 1;
+    else
+        prec = 2;
 
-        fprintf(ws->mfp, "30 %d %d %d\n", XgksMRecSize(30),txfp->font, prec);
+    fprintf(ws->mfp, "30 %d %d %d\n", XgksMRecSize(30), txfp->font, prec);
 }
 
 void XgksMoSetTextFP(Gtxfp *txfp)
 {
-        Gint cnt,prec;
+    Gint cnt, prec;
 
-        if (txfp->prec == GSTRING) prec = 0;
-        else if (txfp->prec == GCHAR) prec = 1;
-        else prec = 2;
+    if (txfp->prec == GSTRING)
+        prec = 0;
+    else if (txfp->prec == GCHAR)
+        prec = 1;
+    else
+        prec = 2;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "30 %d %d %d\n", XgksMRecSize(30),txfp->font, prec);
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "30 %d %d %d\n", XgksMRecSize(30), txfp->font, prec);
+    }
 }
 
 void XgksMoSetCharUpOnWs(WS_STATE_PTR ws)
 {
-        Gpoint ndc_up, ndc_base;
+    Gpoint ndc_up, ndc_base;
 
-        XgksComputeVec (&ndc_up, &ndc_base);
-        fprintf(ws->mfp, "34 %d %f %f %f %f\n", XgksMRecSize(34), ndc_up.x, ndc_up.y, ndc_base.x, ndc_base.y);
+    XgksComputeVec(&ndc_up, &ndc_base);
+    fprintf(ws->mfp, "34 %d %f %f %f %f\n", XgksMRecSize(34), ndc_up.x, ndc_up.y, ndc_base.x, ndc_base.y);
 }
 
 void XgksMoSetCharUp(void)
 {
-        Gint cnt;
-        Gpoint ndc_up, ndc_base;
+    Gint cnt;
+    Gpoint ndc_up, ndc_base;
 
-        XgksComputeVec (&ndc_up, &ndc_base);
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "34 %d %f %f %f %f\n",
-                                        XgksMRecSize(34), ndc_up.x, ndc_up.y, ndc_base.x, ndc_base.y);
-        }
+    XgksComputeVec(&ndc_up, &ndc_base);
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "34 %d %f %f %f %f\n",
+                    XgksMRecSize(34), ndc_up.x, ndc_up.y, ndc_base.x, ndc_base.y);
+    }
 }
 
 void XgksMoSetTextPathOnWs(WS_STATE_PTR ws, Gtxpath path)
 {
-        Gint txpath;
+    Gint txpath;
 
-        if (path == GTP_RIGHT) txpath = 0;
-        else if (path == GTP_LEFT) txpath = 1;
-        else if (path == GTP_UP) txpath = 2;
-        else txpath = 3;
+    if (path == GTP_RIGHT)
+        txpath = 0;
+    else if (path == GTP_LEFT)
+        txpath = 1;
+    else if (path == GTP_UP)
+        txpath = 2;
+    else
+        txpath = 3;
 
-        fprintf(ws->mfp, "35 %d %d\n", XgksMRecSize(35), txpath);
+    fprintf(ws->mfp, "35 %d %d\n", XgksMRecSize(35), txpath);
 }
 
 void XgksMoSetTextPath(Gtxpath path)
 {
-        Gint txpath, cnt;
+    Gint txpath, cnt;
 
-        if (path == GTP_RIGHT) txpath = 0;
-        else if (path == GTP_LEFT) txpath = 1;
-        else if (path == GTP_UP) txpath = 2;
-        else txpath = 3;
+    if (path == GTP_RIGHT)
+        txpath = 0;
+    else if (path == GTP_LEFT)
+        txpath = 1;
+    else if (path == GTP_UP)
+        txpath = 2;
+    else
+        txpath = 3;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "35 %d %d\n", XgksMRecSize(35), txpath);
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "35 %d %d\n", XgksMRecSize(35), txpath);
+    }
 }
 
 void XgksMoSetTextAlignOnWs(WS_STATE_PTR ws, Gtxalign *align)
 {
-        Gint hor, ver;
+    Gint hor, ver;
 
-        if (align->hor == GTH_NORMAL) hor = 0;
-        else if (align->hor == GTH_LEFT) hor = 1;
-        else if (align->hor == GTH_CENTRE) hor = 2;
-        else hor = 3;
+    if (align->hor == GTH_NORMAL)
+        hor = 0;
+    else if (align->hor == GTH_LEFT)
+        hor = 1;
+    else if (align->hor == GTH_CENTRE)
+        hor = 2;
+    else
+        hor = 3;
 
-        if (align->ver == GTV_NORMAL) ver = 0;
-        else if (align->ver == GTV_TOP) ver = 1;
-        else if (align->ver == GTV_CAP) ver = 2;
-        else if (align->ver == GTV_HALF) ver = 3;
-        else if (align->ver == GTV_BASE) ver = 4;
-        else ver = 5;
+    if (align->ver == GTV_NORMAL)
+        ver = 0;
+    else if (align->ver == GTV_TOP)
+        ver = 1;
+    else if (align->ver == GTV_CAP)
+        ver = 2;
+    else if (align->ver == GTV_HALF)
+        ver = 3;
+    else if (align->ver == GTV_BASE)
+        ver = 4;
+    else
+        ver = 5;
 
-        fprintf(ws->mfp, "36 %d %d %d\n",XgksMRecSize(36), hor, ver);
+    fprintf(ws->mfp, "36 %d %d %d\n", XgksMRecSize(36), hor, ver);
 }
 
 void XgksMoSetTextAlign(Gtxalign *align)
 {
-        Gint hor, ver, cnt;
+    Gint hor, ver, cnt;
 
-        if (align->hor == GTH_NORMAL) hor = 0;
-        else if (align->hor == GTH_LEFT) hor = 1;
-        else if (align->hor == GTH_CENTRE) hor = 2;
-        else hor = 3;
+    if (align->hor == GTH_NORMAL)
+        hor = 0;
+    else if (align->hor == GTH_LEFT)
+        hor = 1;
+    else if (align->hor == GTH_CENTRE)
+        hor = 2;
+    else
+        hor = 3;
 
-        if (align->ver == GTV_NORMAL) ver = 0;
-        else if (align->ver == GTV_TOP) ver = 1;
-        else if (align->ver == GTV_CAP) ver = 2;
-        else if (align->ver == GTV_HALF) ver = 3;
-        else if (align->ver == GTV_BASE) ver = 4;
-        else ver = 5;
+    if (align->ver == GTV_NORMAL)
+        ver = 0;
+    else if (align->ver == GTV_TOP)
+        ver = 1;
+    else if (align->ver == GTV_CAP)
+        ver = 2;
+    else if (align->ver == GTV_HALF)
+        ver = 3;
+    else if (align->ver == GTV_BASE)
+        ver = 4;
+    else
+        ver = 5;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "36 %d %d %d\n",XgksMRecSize(36), hor, ver);
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "36 %d %d %d\n", XgksMRecSize(36), hor, ver);
+    }
 }
 
 void XgksMoSetFillIntStyleOnWs(WS_STATE_PTR ws, Gflinter style)
 {
-        Gint intstyle;
+    Gint intstyle;
 
-        if (style == GHOLLOW) intstyle = 0;
-        else if (style == GSOLID) intstyle = 1;
-        else if (style == GPATTERN) intstyle = 2;
-        else intstyle = 3;
+    if (style == GHOLLOW)
+        intstyle = 0;
+    else if (style == GSOLID)
+        intstyle = 1;
+    else if (style == GPATTERN)
+        intstyle = 2;
+    else
+        intstyle = 3;
 
-        fprintf(ws->mfp, "38 %d %d\n", XgksMRecSize(38), intstyle);
+    fprintf(ws->mfp, "38 %d %d\n", XgksMRecSize(38), intstyle);
 }
 
 void XgksMoSetFillIntStyle(Gflinter style)
 {
-        Gint intstyle, cnt;
+    Gint intstyle, cnt;
 
-        if (style == GHOLLOW) intstyle = 0;
-        else if (style == GSOLID) intstyle = 1;
-        else if (style == GPATTERN) intstyle = 2;
-        else intstyle = 3;
+    if (style == GHOLLOW)
+        intstyle = 0;
+    else if (style == GSOLID)
+        intstyle = 1;
+    else if (style == GPATTERN)
+        intstyle = 2;
+    else
+        intstyle = 3;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "38 %d %d\n", XgksMRecSize(38), intstyle);
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "38 %d %d\n", XgksMRecSize(38), intstyle);
+    }
 }
 
 void XgksMoSetPatSizeOnWs(WS_STATE_PTR ws)
 {
-  fprintf(ws->mfp, "41 %d %f %f %f %f\n", XgksMRecSize(41),
-    xgks_state.gks_ptattr.widthvec.x, xgks_state.gks_ptattr.widthvec.y,
-    xgks_state.gks_ptattr.heightvec.x, xgks_state.gks_ptattr.heightvec.y);
+    fprintf(ws->mfp, "41 %d %f %f %f %f\n", XgksMRecSize(41),
+        xgks_state.gks_ptattr.widthvec.x, xgks_state.gks_ptattr.widthvec.y,
+        xgks_state.gks_ptattr.heightvec.x, xgks_state.gks_ptattr.heightvec.y);
 }
 
 void XgksMoSetPatRefOnWs(WS_STATE_PTR ws)
 {
-  fprintf(ws->mfp, "42 %d %f %f\n", XgksMRecSize(42),
-    xgks_state.gks_ptattr.ptp.x, xgks_state.gks_ptattr.ptp.y);
+    fprintf(ws->mfp, "42 %d %f %f\n", XgksMRecSize(42),
+        xgks_state.gks_ptattr.ptp.x, xgks_state.gks_ptattr.ptp.y);
 }
 
 void XgksMoSetPatSize(void)
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                          fprintf(xgks_state.activews[cnt].ws->mfp, "41 %d %f %f %f %f\n", XgksMRecSize(41),
-                            xgks_state.gks_ptattr.widthvec.x, xgks_state.gks_ptattr.widthvec.y,
-                            xgks_state.gks_ptattr.heightvec.x, xgks_state.gks_ptattr.heightvec.y);
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "41 %d %f %f %f %f\n", XgksMRecSize(41),
+                    xgks_state.gks_ptattr.widthvec.x, xgks_state.gks_ptattr.widthvec.y,
+                    xgks_state.gks_ptattr.heightvec.x, xgks_state.gks_ptattr.heightvec.y);
+    }
 }
 
 void XgksMoSetPatRef(void)
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                          fprintf(xgks_state.activews[cnt].ws->mfp, "42 %d %f %f\n", XgksMRecSize(42),
-                            xgks_state.gks_ptattr.ptp.x, xgks_state.gks_ptattr.ptp.y);
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "42 %d %f %f\n", XgksMRecSize(42),
+                    xgks_state.gks_ptattr.ptp.x, xgks_state.gks_ptattr.ptp.y);
+    }
 }
 
 void XgksMoSetAsfOnWs(WS_STATE_PTR ws)
 {
-        fprintf(ws->mfp, "43 %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n", XgksMRecSize(43),
-          (xgks_state.gks_lnattr.type == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_lnattr.width == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_lnattr.colour == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_mkattr.type == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_mkattr.size == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_mkattr.colour == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_txattr.fp == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_txattr.tx_exp == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_txattr.space == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_txattr.colour == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_flattr.inter == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_flattr.style == GBUNDLED ? 0 : 1),
-          (xgks_state.gks_flattr.colour == GBUNDLED ? 0 : 1));
+    fprintf(ws->mfp, "43 %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n", XgksMRecSize(43),
+        (xgks_state.gks_lnattr.type == GBUNDLED ? 0 : 1),
+        (xgks_state.gks_lnattr.width == GBUNDLED ? 0 : 1),
+        (xgks_state.gks_lnattr.colour == GBUNDLED ? 0 : 1),
+        (xgks_state.gks_mkattr.type == GBUNDLED ? 0 : 1),
+        (xgks_state.gks_mkattr.size == GBUNDLED ? 0 : 1),
+        (xgks_state.gks_mkattr.colour == GBUNDLED ? 0 : 1),
+        (xgks_state.gks_txattr.fp == GBUNDLED ? 0 : 1),
+        (xgks_state.gks_txattr.tx_exp == GBUNDLED ? 0 : 1),
+        (xgks_state.gks_txattr.space == GBUNDLED ? 0 : 1),
+        (xgks_state.gks_txattr.colour == GBUNDLED ? 0 : 1),
+        (xgks_state.gks_flattr.inter == GBUNDLED ? 0 : 1),
+        (xgks_state.gks_flattr.style == GBUNDLED ? 0 : 1),
+        (xgks_state.gks_flattr.colour == GBUNDLED ? 0 : 1));
 }
 
 void XgksMoSetAsf(void)
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "43 %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-                                  XgksMRecSize(43),
-                                  (xgks_state.gks_lnattr.type == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_lnattr.width == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_lnattr.colour == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_mkattr.type == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_mkattr.size == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_mkattr.colour == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_txattr.fp == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_txattr.tx_exp == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_txattr.space == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_txattr.colour == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_flattr.inter == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_flattr.style == GBUNDLED ? 0 : 1),
-                                  (xgks_state.gks_flattr.colour == GBUNDLED ? 0 : 1));
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "43 %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+                    XgksMRecSize(43),
+                    (xgks_state.gks_lnattr.type == GBUNDLED ? 0 : 1),
+                    (xgks_state.gks_lnattr.width == GBUNDLED ? 0 : 1),
+                    (xgks_state.gks_lnattr.colour == GBUNDLED ? 0 : 1),
+                    (xgks_state.gks_mkattr.type == GBUNDLED ? 0 : 1),
+                    (xgks_state.gks_mkattr.size == GBUNDLED ? 0 : 1),
+                    (xgks_state.gks_mkattr.colour == GBUNDLED ? 0 : 1),
+                    (xgks_state.gks_txattr.fp == GBUNDLED ? 0 : 1),
+                    (xgks_state.gks_txattr.tx_exp == GBUNDLED ? 0 : 1),
+                    (xgks_state.gks_txattr.space == GBUNDLED ? 0 : 1),
+                    (xgks_state.gks_txattr.colour == GBUNDLED ? 0 : 1),
+                    (xgks_state.gks_flattr.inter == GBUNDLED ? 0 : 1),
+                    (xgks_state.gks_flattr.style == GBUNDLED ? 0 : 1),
+                    (xgks_state.gks_flattr.colour == GBUNDLED ? 0 : 1));
+    }
 }
 
 void XgksMoSetLineMarkRep(WS_STATE_PTR ws, Gint code, Gint idx, Gint type, Gint colour, Gfloat size)
 {
-        fprintf(ws->mfp, "%d %d %d %d %f %d\n", code, XgksMRecSize(code), idx, type, size, colour);
+    fprintf(ws->mfp, "%d %d %d %d %f %d\n", code, XgksMRecSize(code), idx, type, size, colour);
 }
 
 void XgksMoSetTextRep(WS_STATE_PTR ws, Gint idx, Gtxbundl *rep)
 {
-        Gint prec;
+    Gint prec;
 
-        if (rep->fp.prec == GSTRING) prec = 0;
-        else if (rep->fp.prec == GCHAR) prec = 1;
-        else prec = 2;
+    if (rep->fp.prec == GSTRING)
+        prec = 0;
+    else if (rep->fp.prec == GCHAR)
+        prec = 1;
+    else
+        prec = 2;
 
-        fprintf (ws->mfp, "53 %d %d %d %d %f %f %d\n", XgksMRecSize(53),
-                idx, rep->fp.font, prec, rep->ch_exp, rep->space, rep->colour);
+    fprintf(ws->mfp, "53 %d %d %d %d %f %f %d\n", XgksMRecSize(53),
+        idx, rep->fp.font, prec, rep->ch_exp, rep->space, rep->colour);
 }
 
 void XgksMoSetFillRep(WS_STATE_PTR ws, Gint idx, Gflbundl *rep)
 {
-        Gint intstyle;
+    Gint intstyle;
 
-        if (rep->inter == GHOLLOW) intstyle = 0;
-        else if (rep->inter == GSOLID) intstyle = 1;
-        else if (rep->inter == GPATTERN) intstyle = 2;
-        else intstyle = 3;
+    if (rep->inter == GHOLLOW)
+        intstyle = 0;
+    else if (rep->inter == GSOLID)
+        intstyle = 1;
+    else if (rep->inter == GPATTERN)
+        intstyle = 2;
+    else
+        intstyle = 3;
 
-        fprintf(ws->mfp, "54 %d %d %d %d %d\n", XgksMRecSize(54), idx, intstyle, rep->style, rep->colour);
+    fprintf(ws->mfp, "54 %d %d %d %d %d\n", XgksMRecSize(54), idx, intstyle, rep->style, rep->colour);
 }
 
 void XgksMoSetPatRep(WS_STATE_PTR ws, Gint idx, Gptbundl *rep)
 {
-        Gint size, i;
+    Gint size, i;
 
-        size = rep->size.x * rep->size.y;
+    size = rep->size.x * rep->size.y;
 
-        fprintf(ws->mfp, "55 %zu %d %d %d ", (size*INT_SIZE)+XgksMRecSize(55), idx, rep->size.x, rep->size.y);
+    fprintf(ws->mfp, "55 %zu %d %d %d ", (size * INT_SIZE) + XgksMRecSize(55), idx, rep->size.x, rep->size.y);
 
-        for (i=0; i<size; i++)
-                fprintf(ws->mfp, "%d ",rep->array[i]);
+    for (i = 0; i < size; i++)
+        fprintf(ws->mfp, "%d ", rep->array[i]);
 
-        fprintf(ws->mfp, "\n");
+    fprintf(ws->mfp, "\n");
 }
 
 void XgksMoSetColourRep(WS_STATE_PTR ws, Gint idx, Gcobundl *rep)
 {
-        fprintf(ws->mfp, "56 %d %d %f %f %f\n", XgksMRecSize(56), idx, rep->red, rep->green, rep->blue);
+    fprintf(ws->mfp, "56 %d %d %f %f %f\n", XgksMRecSize(56), idx, rep->red, rep->green, rep->blue);
 }
 
 void XgksMoSetClipOnWs(WS_STATE_PTR ws, Glimit *rect)
 {
-        fprintf(ws->mfp, "61 %d %f %f %f %f\n", XgksMRecSize(61), rect->xmin, rect->xmax, rect->ymin, rect->ymax);
+    fprintf(ws->mfp, "61 %d %f %f %f %f\n", XgksMRecSize(61), rect->xmin, rect->xmax, rect->ymin, rect->ymax);
 }
 
 void XgksMoSetClip(Glimit *rect)
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "61 %d %f %f %f %f\n",
-                                        XgksMRecSize(61), rect->xmin, rect->xmax, rect->ymin, rect->ymax);
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "61 %d %f %f %f %f\n",
+                    XgksMRecSize(61), rect->xmin, rect->xmax, rect->ymin, rect->ymax);
+    }
 }
 
 void XgksMoSetLimit(WS_STATE_PTR ws, Gint code, Glimit *rect)
 {
-        fprintf(ws->mfp, "%d %d %f %f %f %f\n", code, XgksMRecSize(code),
-                rect->xmin, rect->xmax, rect->ymin, rect->ymax);
+    fprintf(ws->mfp, "%d %d %f %f %f %f\n", code, XgksMRecSize(code),
+        rect->xmin, rect->xmax, rect->ymin, rect->ymax);
 }
 
 void XgksMoCloseSeg(void)
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "82 %d\n", XgksMRecSize(82));
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "82 %d\n", XgksMRecSize(82));
+    }
 }
 
 void XgksMoRenameSeg(Gint old, Gint new)
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "83 %d %d %d\n", XgksMRecSize(83), old, new);
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "83 %d %d %d\n", XgksMRecSize(83), old, new);
+    }
 }
 
 void XgksMoSetSegTransOnWs(WS_STATE_PTR ws, Gint name, Gfloat matrix[2][3])
 {
-        fprintf(ws->mfp, "91 %d %d %f %f %f %f %f %f \n", XgksMRecSize(91), name,
-                 matrix[0][0], matrix[0][1], matrix[0][2],
-                 matrix[1][0], matrix[1][1], matrix[1][2]);
+    fprintf(ws->mfp, "91 %d %d %f %f %f %f %f %f \n", XgksMRecSize(91), name,
+        matrix[0][0], matrix[0][1], matrix[0][2],
+        matrix[1][0], matrix[1][1], matrix[1][2]);
 }
 
 void XgksMoSetSegTrans(Gint name, Gfloat matrix[2][3])
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "91 %d %d %f %f %f %f %f %f \n",
-                                 XgksMRecSize(91), name,
-                                 matrix[0][0], matrix[0][1], matrix[0][2],
-                                 matrix[1][0], matrix[1][1], matrix[1][2]);
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "91 %d %d %f %f %f %f %f %f \n",
+                    XgksMRecSize(91), name,
+                    matrix[0][0], matrix[0][1], matrix[0][2],
+                    matrix[1][0], matrix[1][1], matrix[1][2]);
+    }
 }
 
 void XgksMoSetSegAttrOnWs(WS_STATE_PTR ws, Gint name, Gint code, Gint attr)
 {
-        fprintf(ws->mfp, "%d %d %d %d\n", code, XgksMRecSize(code), name, attr);
+    fprintf(ws->mfp, "%d %d %d %d\n", code, XgksMRecSize(code), name, attr);
 }
 
 void XgksMoSetSegVis(Gint name, Gsegvis vis)
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "92 %d %d %d\n",
-                                        XgksMRecSize(92), name, (vis == GVISIBLE ? 0 : 1));
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "92 %d %d %d\n",
+                    XgksMRecSize(92), name, (vis == GVISIBLE ? 0 : 1));
+    }
 }
 
 void XgksMoSetSegHiLight(Gint name, Gseghi hilight)
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "93 %d %d %d\n",
-                                        XgksMRecSize(93), name, (hilight == GNORMAL ? 0 : 1));
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "93 %d %d %d\n",
+                    XgksMRecSize(93), name, (hilight == GNORMAL ? 0 : 1));
+    }
 }
 
 void XgksMoSetSegPriOnWs(WS_STATE_PTR ws, Gint name, Gfloat pri)
 {
-        fprintf(ws->mfp, "94 %d %d %f\n", XgksMRecSize(94), name, pri);
+    fprintf(ws->mfp, "94 %d %d %f\n", XgksMRecSize(94), name, pri);
 }
 
 void XgksMoSetSegPri(Gint name, Gfloat pri)
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "94 %d %d %f\n",
-                                        XgksMRecSize(94), name, pri);
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "94 %d %d %f\n",
+                    XgksMRecSize(94), name, pri);
+    }
 }
 
 void XgksMoSetSegDet(Gint name, Gsegdet det)
 {
-        Gint cnt;
+    Gint cnt;
 
-        for(cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {           /* try to find MO */
-                if (xgks_state.activews[cnt].ws_id != INVALID)
-                        if (xgks_state.activews[cnt].ws->ewstype == MO)
-                                fprintf(xgks_state.activews[cnt].ws->mfp, "95 %d %d %d\n",
-                                        XgksMRecSize(95), name, (det == GUNDETECTABLE ? 0 : 1));
-        }
+    for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+    { /* try to find MO */
+        if (xgks_state.activews[cnt].ws_id != INVALID)
+            if (xgks_state.activews[cnt].ws->ewstype == MO)
+                fprintf(xgks_state.activews[cnt].ws->mfp, "95 %d %d %d\n",
+                    XgksMRecSize(95), name, (det == GUNDETECTABLE ? 0 : 1));
+    }
 }
 
 /* write initial MO gks attributes */
 void XgksMoActivateWs(WS_STATE_PTR ws)
 {
-        XgksMoSetClipOnWs( ws, &xgks_state.cliprec.rec );
+    XgksMoSetClipOnWs(ws, &xgks_state.cliprec.rec);
 
-        XgksSetLineAttrMo( ws, &xgks_state.gks_lnattr );
-        XgksSetMarkAttrMo( ws, &xgks_state.gks_mkattr );
-        XgksSetTextAttrMo( ws, &xgks_state.gks_txattr, &xgks_state.gks_chattr );
-        XgksSetFillPatAttrMo( ws, &xgks_state.gks_flattr, &xgks_state.gks_ptattr );
+    XgksSetLineAttrMo(ws, &xgks_state.gks_lnattr);
+    XgksSetMarkAttrMo(ws, &xgks_state.gks_mkattr);
+    XgksSetTextAttrMo(ws, &xgks_state.gks_txattr, &xgks_state.gks_chattr);
+    XgksSetFillPatAttrMo(ws, &xgks_state.gks_flattr, &xgks_state.gks_ptattr);
 
-        XgksMoSetPatSizeOnWs ( ws );
-        XgksMoSetPatRefOnWs ( ws );
-        XgksMoSetAsfOnWs( ws );
-        XgksMoSetGraphicAttrOnWs( ws, 44, xgks_state.gks_pick_id );
+    XgksMoSetPatSizeOnWs(ws);
+    XgksMoSetPatRefOnWs(ws);
+    XgksMoSetAsfOnWs(ws);
+    XgksMoSetGraphicAttrOnWs(ws, 44, xgks_state.gks_pick_id);
 }
 
 static Gint XgksMInstall(Gint ws_id)
 {
-        Gint i;
+    Gint i;
 
-        for (i=0; i<MAX_OPEN_WS; i++)
-                if (GksmInfo[i].ws_id == INVALID) {
-                        GksmInfo[i].ws_id = ws_id;
-                        return(i);
-                }
-        return (INVALID);
+    for (i = 0; i < MAX_OPEN_WS; i++)
+        if (GksmInfo[i].ws_id == INVALID)
+        {
+            GksmInfo[i].ws_id = ws_id;
+            return (i);
+        }
+    return (INVALID);
 }
 
 static void XgksMDelete(Gint ws_id)
 {
-        Gint i;
+    Gint i;
 
-        for (i=0; i< MAX_OPEN_WS; i++)
-                if (GksmInfo[i].ws_id == ws_id) {
-                        GksmInfo[i].CurItem.type = INVALID;
-                        GksmInfo[i].CurItem.length = INVALID;
-                        GksmInfo[i].ws_id = INVALID;
-                        GksmInfo[i].GksmEmpty = TRUE;
-                        return ;
-                }
+    for (i = 0; i < MAX_OPEN_WS; i++)
+        if (GksmInfo[i].ws_id == ws_id)
+        {
+            GksmInfo[i].CurItem.type = INVALID;
+            GksmInfo[i].CurItem.length = INVALID;
+            GksmInfo[i].ws_id = INVALID;
+            GksmInfo[i].GksmEmpty = TRUE;
+            return;
+        }
 }
 
-static Gint XgksMFindKey (Gint ws_id)
+static Gint XgksMFindKey(Gint ws_id)
 {
-        Gint i;
+    Gint i;
 
-        for (i=0; i< MAX_OPEN_WS; i++)
-                if (GksmInfo[i].ws_id == ws_id) return(i);
+    for (i = 0; i < MAX_OPEN_WS; i++)
+        if (GksmInfo[i].ws_id == ws_id)
+            return (i);
+    return (INVALID);
+}
+
+static Gint XgksValidGksMItem(Gint type)
+{
+    if (type >= 0 && type <= 6)
+        return (OK);
+    if (type >= 11 && type <= 16)
+        return (OK);
+    if (type >= 21 && type <= 44)
+        return (OK);
+    if (type >= 51 && type <= 56)
+        return (OK);
+    if (type == 61)
+        return (OK);
+    if (type == 71 || type == 72)
+        return (OK);
+    if (type >= 81 && type <= 84)
+        return (OK);
+    if (type >= 91 && type <= 95)
+        return (OK);
+    if (type > 100)
+        return (OK);
+    return (INVALID);
+}
+
+static Gint XgksMRecSize(Gint type)
+{
+    switch (type)
+    {
+    case 0:
+    case 2:
+    case 82:
+        return (0);
+
+    case 1:
+    case 3:
+    case 21:
+    case 22:
+    case 24:
+    case 25:
+    case 26:
+    case 28:
+    case 29:
+    case 33:
+    case 35:
+    case 37:
+    case 38:
+    case 39:
+    case 40:
+    case 44:
+    case 81:
+    case 84:
+        return (sizeof(XGKSMONE));
+
+    case 4:
+    case 30:
+    case 36:
+    case 83:
+    case 92:
+    case 93:
+    case 95:
+        return (sizeof(XGKSMTWO));
+
+    case 5:
+        return (sizeof(XGKSMMESG));
+
+    case 11:
+    case 12:
+    case 14:
+        return (sizeof(XGKSMGRAPH));
+
+    case 13:
+        return (sizeof(XGKSMTEXT));
+
+    case 15:
+        return (sizeof(XGKSMCELLARRAY));
+
+    case 23:
+    case 27:
+    case 31:
+    case 32:
+        return (sizeof(XGKSMSIZE));
+
+    case 34:
+        return (sizeof(XGKSMCHARVEC));
+
+    case 43:
+        return (sizeof(XGKSMASF));
+
+    case 41:
+        return (sizeof(XGKSMPATSIZ));
+
+    case 42:
+        return (sizeof(XGKSMPATREF));
+
+    case 51:
+    case 52:
+        return (sizeof(XGKSMLMREP));
+
+    case 53:
+        return (sizeof(XGKSMTEXTREP));
+
+    case 54:
+        return (sizeof(XGKSMFILLREP));
+
+    case 55:
+        return (sizeof(XGKSMPATREP));
+
+    case 56:
+        return (sizeof(XGKSMCOLOURREP));
+
+    case 61:
+    case 71:
+    case 72:
+        return (sizeof(XGKSMLIMIT));
+
+    case 91:
+        return (sizeof(XGKSMSEGTRAN));
+
+    case 94:
+        return (sizeof(XGKSMSEGPRI));
+
+    default:
         return (INVALID);
+    }
 }
 
-static Gint XgksValidGksMItem (Gint type)
+static Gint XgksInputData(Gfile *fp, Gint key, Gchar *record)
 {
-        if (type>= 0 && type<= 6) return (OK);
-        if (type>=11 && type<=16) return (OK);
-        if (type>=21 && type<=44) return (OK);
-        if (type>=51 && type<=56) return (OK);
-        if (type==61) return (OK);
-        if (type==71 || type==72) return (OK);
-        if (type>=81 && type<=84) return (OK);
-        if (type>=91 && type<=95) return (OK);
-        if (type>100) return (OK);
-        return(INVALID);
-}
+    XGKSMONE *ptr1;
+    XGKSMTWO *ptr2;
+    XGKSMMESG *msg;
+    XGKSMGRAPH *graph;
+    XGKSMTEXT *text;
+    XGKSMSIZE *size;
+    XGKSMCHARVEC *vec;
+    XGKSMASF *asf;
+    XGKSMLMREP *lmrep;
+    XGKSMTEXTREP *txrep;
+    XGKSMFILLREP *flrep;
+    XGKSMPATREP *patrep;
+    XGKSMCOLOURREP *corep;
+    XGKSMLIMIT *limit;
+    XGKSMSEGTRAN *tran;
+    XGKSMSEGPRI *pri;
+    XGKSMCELLARRAY *cell;
+    XGKSMPATREF *patref;
+    XGKSMPATSIZ *patsiz;
+    Gint i, j;
+    Gint type;
+    Gint readcnt = 1;
 
-static Gint XgksMRecSize (Gint type)
-{
-        switch (type) {
+    type = GksmInfo[key].CurItem.type;
+    clearerr(fp);
 
-        case 0  :
-        case 2  :
-        case 82 : return (0);
-
-        case 1  :
-        case 3  :
-        case 21 :
-        case 22 :
-        case 24 :
-        case 25 :
-        case 26 :
-        case 28 :
-        case 29 :
-        case 33 :
-        case 35 :
-        case 37 :
-        case 38 :
-        case 39 :
-        case 40 :
-        case 44 :
-        case 81 :
-        case 84 : return (sizeof(XGKSMONE));
-
-        case 4  :
-        case 30 :
-        case 36 :
-        case 83 :
-        case 92 :
-        case 93 :
-        case 95 : return (sizeof(XGKSMTWO));
-
-        case 5  : return (sizeof(XGKSMMESG));
-
-        case 11 :
-        case 12 :
-        case 14 : return(sizeof(XGKSMGRAPH));
-
-        case 13 : return(sizeof(XGKSMTEXT));
-
-        case 15 : return(sizeof(XGKSMCELLARRAY));
-
-        case 23 :
-        case 27 :
-        case 31 :
-        case 32 : return(sizeof(XGKSMSIZE));
-
-        case 34 : return(sizeof(XGKSMCHARVEC));
-
-        case 43 : return(sizeof(XGKSMASF));
-
-        case 41 : return(sizeof(XGKSMPATSIZ));
-
-        case 42 : return(sizeof(XGKSMPATREF));
-
-        case 51 :
-        case 52 : return(sizeof(XGKSMLMREP));
-
-        case 53 : return(sizeof(XGKSMTEXTREP));
-
-        case 54 : return(sizeof(XGKSMFILLREP));
-
-        case 55 : return(sizeof(XGKSMPATREP));
-
-        case 56 : return(sizeof(XGKSMCOLOURREP));
-
-        case 61 :
-        case 71 :
-        case 72 : return(sizeof(XGKSMLIMIT));
-
-        case 91 : return(sizeof(XGKSMSEGTRAN));
-
-        case 94 : return(sizeof(XGKSMSEGPRI));
-
-        default : return(INVALID);
+    if (type > 100)
+    {
+        for (i = 0; i < GksmInfo[key].CurItem.length; i++)
+        {
+            READCHR(fp, *(record + i));
+            if (ferror(fp))
+            {
+                return (MF_FILE_ERR);
+            }
+            if (*(record + i) == '\n')
+            {
+                return (MF_ITEM_ERR);
+            }
         }
-}
+        return (METAFILE_OK);
+    }
 
-static Gint XgksInputData (Gfile *fp, Gint key, Gchar *record)
-{
-        XGKSMONE        *ptr1;
-        XGKSMTWO        *ptr2;
-        XGKSMMESG       *msg;
-        XGKSMGRAPH      *graph;
-        XGKSMTEXT       *text;
-        XGKSMSIZE       *size;
-        XGKSMCHARVEC    *vec;
-        XGKSMASF        *asf;
-        XGKSMLMREP      *lmrep;
-        XGKSMTEXTREP    *txrep;
-        XGKSMFILLREP    *flrep;
-        XGKSMPATREP     *patrep;
-        XGKSMCOLOURREP  *corep;
-        XGKSMLIMIT      *limit;
-        XGKSMSEGTRAN    *tran;
-        XGKSMSEGPRI     *pri;
-        XGKSMCELLARRAY  *cell;
-        XGKSMPATREF     *patref;
-        XGKSMPATSIZ     *patsiz;
-        Gint   i,j;
-        Gint type;
-        Gint readcnt = 1;
+    switch (type)
+    {
+    case 0:
+    case 2:
+    case 82:
+        *record = 0;
+        break;
 
+    case 1:
+    case 3:
+    case 21:
+    case 22:
+    case 24:
+    case 25:
+    case 26:
+    case 28:
+    case 29:
+    case 33:
+    case 35:
+    case 37:
+    case 38:
+    case 39:
+    case 40:
+    case 44:
+    case 81:
+    case 84:
+        ptr1 = (XGKSMONE *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, ptr1->flag);
+        break;
 
-        type=GksmInfo[key].CurItem.type;
-        clearerr( fp );
+    case 4:
+    case 30:
+    case 36:
+    case 83:
+    case 92:
+    case 93:
+    case 95:
+        ptr2 = (XGKSMTWO *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, ptr2->item1);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, ptr2->item2);
+        break;
 
-        if(type>100) {
-                for(i=0;i<GksmInfo[key].CurItem.length;i++) {
-                        READCHR(fp, *(record+i));
-                        if (ferror( fp )) {
-                                return( MF_FILE_ERR );
-                        }
-                        if (*(record + i) == '\n') {
-                                return( MF_ITEM_ERR );
-                        }
-                }
-                return( METAFILE_OK );
+    case 5:
+        msg = (XGKSMMESG *) record;
+        msg->string = &(record[sizeof(XGKSMMESG)]);
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, msg->strlen);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READCHR(fp, msg->string[0]);
+        if (!readcnt)
+            break;
+        if (msg->string[0] == '\n')
+        {
+            readcnt = 0;
+            break;
+        }
+        for (i = 1; i < msg->strlen; i++)
+        {
+            readcnt = READCHR(fp, msg->string[i]);
+            if (!readcnt)
+                break;
+            if (msg->string[i] == '\n')
+            {
+                readcnt = 0;
+                break;
+            }
+        }
+        msg->string[i] = 0;
+        break;
+
+    case 11:
+    case 12:
+    case 14:
+        graph = (XGKSMGRAPH *) record;
+        graph->pts = (Gpoint *) &(record[sizeof(XGKSMGRAPH)]);
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, graph->num_pts);
+        if (!readcnt)
+            break;
+        for (i = 0; i < graph->num_pts; i++)
+        {
+            if (XgksFeoln(fp))
+            {
+                readcnt = 0;
+                break;
+            }
+            readcnt = READFTP(fp, graph->pts[i].x);
+            if (!readcnt)
+                break;
+            if (XgksFeoln(fp))
+            {
+                readcnt = 0;
+                break;
+            }
+            readcnt = READFTP(fp, graph->pts[i].y);
+            if (!readcnt)
+                break;
+        }
+        break;
+
+    case 13:
+        text = (XGKSMTEXT *) record;
+        text->string = &(record[sizeof(XGKSMTEXT)]);
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, text->location.x);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, text->location.y);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, text->strlen);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READCHR(fp, text->string[0]);
+        if (!readcnt)
+            break;
+        if (text->string[0] == '\n')
+        {
+            readcnt = 0;
+            break;
+        }
+        for (i = 1; i < text->strlen; i++)
+        {
+            readcnt = READCHR(fp, text->string[i]);
+            if (text->string[i] == '\n')
+            {
+                readcnt = 0;
+                break;
+            }
+            if (!readcnt)
+                break;
+        }
+        text->string[i] = 0;
+        break;
+
+    case 15:
+        cell = (XGKSMCELLARRAY *) record;
+        cell->colour = (Gint *) &(record[sizeof(XGKSMCELLARRAY)]);
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, cell->ll.x);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, cell->ll.y);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, cell->ur.x);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, cell->ur.y);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, cell->lr.x);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, cell->lr.y);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, cell->dim.x);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, cell->dim.y);
+        if (!readcnt)
+            break;
+        j = cell->dim.x * cell->dim.y;
+        for (i = 0; i < j; i++)
+        {
+            if (XgksFeoln(fp))
+            {
+                readcnt = 0;
+                break;
+            }
+            readcnt = READINT(fp, cell->colour[i]);
+            if (!readcnt)
+                break;
+        }
+        break;
+
+    case 23:
+    case 27:
+    case 31:
+    case 32:
+        size = (XGKSMSIZE *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, size->size);
+        break;
+
+    case 34:
+        vec = (XGKSMCHARVEC *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, vec->up.x);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, vec->up.y);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, vec->base.x);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, vec->base.y);
+        break;
+
+    case 41:
+        patsiz = (XGKSMPATSIZ *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, patsiz->wid.x);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, patsiz->wid.y);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, patsiz->hgt.x);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, patsiz->hgt.y);
+        break;
+
+    case 42:
+        patref = (XGKSMPATREF *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, patref->ref.x);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, patref->ref.y);
+        break;
+
+    case 43:
+        asf = (XGKSMASF *) record;
+        for (i = 0; i < 13; i++)
+        {
+            if (XgksFeoln(fp))
+            {
+                readcnt = 0;
+                break;
+            }
+            readcnt = READINT(fp, asf->asf[i]);
+            if (!readcnt)
+                break;
+        }
+        break;
+
+    case 51:
+    case 52:
+        lmrep = (XGKSMLMREP *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, lmrep->idx);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, lmrep->style);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, lmrep->size);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, lmrep->colour);
+        break;
+
+    case 53:
+        txrep = (XGKSMTEXTREP *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, txrep->idx);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, txrep->font);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, txrep->prec);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, txrep->tx_exp);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, txrep->space);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, txrep->colour);
+        break;
+
+    case 54:
+        flrep = (XGKSMFILLREP *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, flrep->idx);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, flrep->intstyle);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, flrep->style);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, flrep->colour);
+        break;
+
+    case 55:
+        patrep = (XGKSMPATREP *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, patrep->idx);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, patrep->size.x);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, patrep->size.y);
+        if (!readcnt)
+            break;
+        patrep->array = (Gint *) &(record[sizeof(XGKSMPATREP)]);
+        j = patrep->size.x * patrep->size.y;
+        for (i = 0; i < j; i++)
+        {
+            if (XgksFeoln(fp))
+            {
+                readcnt = 0;
+                break;
+            }
+            readcnt = READINT(fp, patrep->array[i]);
+            if (!readcnt)
+                break;
+        }
+        break;
+
+    case 56:
+        corep = (XGKSMCOLOURREP *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, corep->idx);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, corep->red);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, corep->green);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, corep->blue);
+        break;
+
+    case 61:
+    case 71:
+    case 72:
+        limit = (XGKSMLIMIT *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, limit->rect.xmin);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, limit->rect.xmax);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, limit->rect.ymin);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, limit->rect.ymax);
+        break;
+
+    case 91:
+        tran = (XGKSMSEGTRAN *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, tran->name);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, tran->matrix[0][0]);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, tran->matrix[0][1]);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, tran->matrix[0][2]);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, tran->matrix[1][0]);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, tran->matrix[1][1]);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, tran->matrix[1][2]);
+        break;
+
+    case 94:
+        pri = (XGKSMSEGPRI *) record;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READINT(fp, pri->name);
+        if (!readcnt)
+            break;
+        if (XgksFeoln(fp))
+        {
+            readcnt = 0;
+            break;
+        }
+        readcnt = READFTP(fp, pri->pri);
+        break;
+
+    default:
+        readcnt = 0;
+        break;
+    }
+
+    if (!readcnt)
+    {
+        if (ferror(fp))
+        {
+            return (MF_FILE_ERR);
         }
 
-        switch (type) {
-
-        case 0  :
-        case 2  :
-        case 82 : *record = 0;
-                  break;
-
-        case 1  :
-        case 3  :
-        case 21 :
-        case 22 :
-        case 24 :
-        case 25 :
-        case 26 :
-        case 28 :
-        case 29 :
-        case 33 :
-        case 35 :
-        case 37 :
-        case 38 :
-        case 39 :
-        case 40 :
-        case 44 :
-        case 81 :
-        case 84 : ptr1 = (XGKSMONE *)record;
-                  if (XgksFeoln( fp ))
-                  {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, ptr1->flag);
-                  break;
-
-        case 4  :
-        case 30 :
-        case 36 :
-        case 83 :
-        case 92 :
-        case 93 :
-        case 95 : ptr2 = (XGKSMTWO *)record;
-                  if (XgksFeoln( fp ))
-                  {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, ptr2->item1);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp ))
-                  {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, ptr2->item2);
-                  break;
-
-        case 5  : msg = (XGKSMMESG *)record;
-                  msg->string = &(record[sizeof(XGKSMMESG)]);
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, msg->strlen);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READCHR (fp, msg->string[0]);
-                  if (!readcnt) break;
-                  if (msg->string[0] == '\n') {
-                        readcnt = 0;
-                        break;
-                  }
-                  for (i=1; i<msg->strlen; i++) {
-                        readcnt = READCHR (fp, msg->string[i]);
-                        if (!readcnt) break;
-                        if (msg->string[i] == '\n') {
-                                readcnt = 0;
-                                break;
-                        }
-                  }
-                  msg->string[i] = 0;
-                  break;
-
-        case 11 :
-        case 12 :
-        case 14 : graph = (XGKSMGRAPH *)record;
-                  graph->pts = (Gpoint *) &(record[sizeof(XGKSMGRAPH)]);
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, graph->num_pts);
-                  if (!readcnt) break;
-                  for (i=0; i<graph->num_pts; i++) {
-                          if (XgksFeoln( fp )) {
-                                readcnt = 0;
-                                break;
-                          }
-                          readcnt = READFTP (fp, graph->pts[i].x);
-                          if (!readcnt) break;
-                          if (XgksFeoln( fp )) {
-                                readcnt = 0;
-                                break;
-                          }
-                          readcnt = READFTP (fp, graph->pts[i].y);
-                          if (!readcnt) break;
-                  }
-                  break;
-
-        case 13 : text = (XGKSMTEXT *)record;
-                  text->string = &(record[sizeof(XGKSMTEXT)]);
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, text->location.x);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, text->location.y);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, text->strlen);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READCHR (fp, text->string[0]);
-                  if (!readcnt) break;
-                  if (text->string[0] == '\n') {
-                          readcnt = 0;
-                          break;
-                  }
-                  for (i=1; i<text->strlen; i++) {
-                          readcnt = READCHR(fp, text->string[i]);
-                          if (text->string[i] == '\n') {
-                                  readcnt = 0;
-                                  break;
-                          }
-                          if (!readcnt) break;
-                  }
-                  text->string[i] = 0;
-                  break;
-
-        case 15 : cell = (XGKSMCELLARRAY *)record;
-                  cell->colour = (Gint *) &(record[sizeof(XGKSMCELLARRAY)]);
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, cell->ll.x);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, cell->ll.y);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, cell->ur.x);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, cell->ur.y);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, cell->lr.x);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, cell->lr.y);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, cell->dim.x);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, cell->dim.y);
-                  if (!readcnt) break;
-                  j = cell->dim.x * cell->dim.y;
-                  for (i=0; i<j; i++) {
-                        if (XgksFeoln( fp )) {
-                                readcnt = 0;
-                                break;
-                        }
-                        readcnt = READINT(fp, cell->colour[i]);
-                        if (!readcnt) break;
-                  }
-                  break;
-
-        case 23 :
-        case 27 :
-        case 31 :
-        case 32 : size = (XGKSMSIZE *)record;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, size->size);
-                  break;
-
-        case 34 : vec = (XGKSMCHARVEC *)record;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, vec->up.x);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, vec->up.y);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, vec->base.x);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, vec->base.y);
-                  break;
-
-        case 41 : patsiz = (XGKSMPATSIZ *)record;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, patsiz->wid.x);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, patsiz->wid.y);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, patsiz->hgt.x);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, patsiz->hgt.y);
-                  break;
-
-        case 42 : patref = (XGKSMPATREF *)record;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, patref->ref.x);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, patref->ref.y);
-                  break;
-
-        case 43 : asf = (XGKSMASF *)record;
-                  for (i=0; i<13; i++) {
-                        if (XgksFeoln( fp )) {
-                                readcnt = 0;
-                                break;
-                        }
-                        readcnt = READINT (fp, asf->asf[i]);
-                        if (!readcnt) break;
-                  }
-                  break;
-
-        case 51 :
-        case 52 : lmrep = (XGKSMLMREP *)record;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, lmrep->idx);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, lmrep->style);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, lmrep->size);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, lmrep->colour);
-                  break;
-
-        case 53 : txrep = (XGKSMTEXTREP *)record;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, txrep->idx);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, txrep->font);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, txrep->prec);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, txrep->tx_exp);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, txrep->space);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, txrep->colour);
-                  break;
-
-        case 54 : flrep = (XGKSMFILLREP *)record;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, flrep->idx);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, flrep->intstyle);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, flrep->style);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, flrep->colour);
-                  break;
-
-        case 55 : patrep = (XGKSMPATREP *)record;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, patrep->idx);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, patrep->size.x);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, patrep->size.y);
-                  if (!readcnt) break;
-                  patrep->array = (Gint *) &(record[sizeof(XGKSMPATREP)]);
-                  j = patrep->size.x * patrep->size.y;
-                  for (i=0; i<j ;i++) {
-                          if (XgksFeoln( fp )) {
-                                readcnt = 0;
-                                break;
-                          }
-                          readcnt = READINT(fp, patrep->array[i]);
-                          if (!readcnt) break;
-                  }
-                  break;
-
-        case 56 : corep = (XGKSMCOLOURREP *)record;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, corep->idx);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, corep->red);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, corep->green);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, corep->blue);
-                  break;
-
-        case 61 :
-        case 71 :
-        case 72 : limit = (XGKSMLIMIT *)record;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, limit->rect.xmin);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, limit->rect.xmax);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, limit->rect.ymin);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, limit->rect.ymax);
-                  break;
-
-        case 91 : tran = (XGKSMSEGTRAN *)record;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, tran->name);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, tran->matrix[0][0]);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, tran->matrix[0][1]);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, tran->matrix[0][2]);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, tran->matrix[1][0]);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, tran->matrix[1][1]);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, tran->matrix[1][2]);
-                  break;
-
-        case 94 : pri = (XGKSMSEGPRI *)record;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READINT (fp, pri->name);
-                  if (!readcnt) break;
-                  if (XgksFeoln( fp )) {
-                        readcnt = 0;
-                        break;
-                  }
-                  readcnt = READFTP (fp, pri->pri);
-                  break;
-
-        default : readcnt = 0;
-                  break;
-        }
-
-        if (!readcnt) {
-                if (ferror( fp )) {
-                        return( MF_FILE_ERR );
-                }
-
-                        return( MF_DATA_ERR );
-
-        }
-        else {
-                return( METAFILE_OK );
-        }
-
+        return (MF_DATA_ERR);
+    }
+    else
+    {
+        return (METAFILE_OK);
+    }
 }
 
 static Gint XgksExecData(Gint type, Gchar *record)
 {
-        XGKSMONE        *ptr1;
-        XGKSMTWO        *ptr2;
-        XGKSMMESG       *msg;
-        XGKSMGRAPH      *graph;
-        XGKSMTEXT       *text;
-        XGKSMSIZE       *size;
-        XGKSMCHARVEC    *vec;
-        XGKSMASF        *asf;
-        XGKSMLMREP      *lmrep;
-        XGKSMTEXTREP    *txrep;
-        XGKSMFILLREP    *flrep;
-        XGKSMPATREP     *patrep;
-        XGKSMCOLOURREP  *corep;
-        XGKSMLIMIT      *limit;
-        XGKSMSEGTRAN    *tran;
-        XGKSMSEGPRI     *pri;
-        XGKSMCELLARRAY  *cell;
-        XGKSMPATREF     *patref;
-        XGKSMPATSIZ     *patsiz;
-        OUT_PRIMI       *primi;
-        Gtxpath         path;
-        Gflinter        inter;
-        Gdefmode        defmode;
-        Gtxfp           txfp;
-        Gsegattr        segattr;
-        Gtxalign        txalign;
-        Glnbundl        lnrep;
-        Gmkbundl        mkrep;
-        Gtxbundl        textrep;
-        Gflbundl        fillrep;
-        Gptbundl        ptrep;
-        Gcobundl        colourrep;
-        Gasfs           asfs;
-        Gint            cnt, i,j;
-        Gpoint          *pts;
-        Gpoint          siz;
-        Gfloat          height;
+    XGKSMONE *ptr1;
+    XGKSMTWO *ptr2;
+    XGKSMMESG *msg;
+    XGKSMGRAPH *graph;
+    XGKSMTEXT *text;
+    XGKSMSIZE *size;
+    XGKSMCHARVEC *vec;
+    XGKSMASF *asf;
+    XGKSMLMREP *lmrep;
+    XGKSMTEXTREP *txrep;
+    XGKSMFILLREP *flrep;
+    XGKSMPATREP *patrep;
+    XGKSMCOLOURREP *corep;
+    XGKSMLIMIT *limit;
+    XGKSMSEGTRAN *tran;
+    XGKSMSEGPRI *pri;
+    XGKSMCELLARRAY *cell;
+    XGKSMPATREF *patref;
+    XGKSMPATSIZ *patsiz;
+    OUT_PRIMI *primi;
+    Gtxpath path;
+    Gflinter inter;
+    Gdefmode defmode;
+    Gtxfp txfp;
+    Gsegattr segattr;
+    Gtxalign txalign;
+    Glnbundl lnrep;
+    Gmkbundl mkrep;
+    Gtxbundl textrep;
+    Gflbundl fillrep;
+    Gptbundl ptrep;
+    Gcobundl colourrep;
+    Gasfs asfs;
+    Gint cnt, i, j;
+    Gpoint *pts;
+    Gpoint siz;
+    Gfloat height;
 
-        switch (type) {
+    switch (type)
+    {
+    case 0:
+        break;
 
-        case 0  : break;
-
-        case 2  : for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* don't do this on WISS */
-                                if (xgks_state.activews[cnt].ws->ewstype != WISS) {
-                                        gredrawsegws (xgks_state.activews[cnt].ws_id);
-                                }
-                        }
-                  }
-                  break;
-        case 82 : /* only need to call gcloseseg() once, not for each workstation */
-                  gcloseseg();
-                  break;
-
-        case 1  : ptr1 = (XGKSMONE *)record;
-                  for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                gclearws (xgks_state.activews[cnt].ws_id, (ptr1->flag == 0 ? GCONDITIONALLY : GALWAYS));
-                        }
-                  }
-                  break;
-        case 3  : ptr1 = (XGKSMONE *)record;
-                  for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* don't do this on WISS */
-                                if (xgks_state.activews[cnt].ws->ewstype != WISS) {
-                                        gupdatews (xgks_state.activews[cnt].ws_id, (ptr1->flag == 0 ? GPERFORM : GPOSTPONE));
-                                }
-                        }
-                  }
-                  break;
-        case 21 : ptr1 = (XGKSMONE *)record;
-                  gsetlineind (ptr1->flag);
-                  break;
-        case 22 : ptr1 = (XGKSMONE *)record;
-                  gsetlinetype (ptr1->flag);
-                  break;
-        case 24 : ptr1 = (XGKSMONE *)record;
-                  gsetlinecolourind (ptr1->flag);
-                  break;
-        case 25 : ptr1 = (XGKSMONE *)record;
-                  gsetmarkerind (ptr1->flag);
-                  break;
-        case 26 : ptr1 = (XGKSMONE *)record;
-                  gsetmarkertype (ptr1->flag);
-                  break;
-        case 28 : ptr1 = (XGKSMONE *)record;
-                  gsetmarkercolourind (ptr1->flag);
-                  break;
-        case 29 : ptr1 = (XGKSMONE *)record;
-                  gsettextind (ptr1->flag);
-                  break;
-        case 33 : ptr1 = (XGKSMONE *)record;
-                  gsettextcolourind (ptr1->flag);
-                  break;
-        case 35 : ptr1 = (XGKSMONE *)record;
-                  if (ptr1->flag == 0) path = GTP_RIGHT;
-                  else if (ptr1->flag == 1) path = GTP_LEFT;
-                  else if (ptr1->flag == 2) path = GTP_UP;
-                  else path = GTP_DOWN;
-                  gsettextpath (path);
-                  break;
-        case 37 : ptr1 = (XGKSMONE *)record;
-                  gsetfillind (ptr1->flag);
-                  break;
-        case 38 : ptr1 = (XGKSMONE *)record;
-                  if (ptr1->flag == 0) inter = GHOLLOW;
-                  else if (ptr1->flag == 1) inter = GSOLID;
-                  else if (ptr1->flag == 2) inter = GPATTERN;
-                  else inter = GHATCH;
-                  gsetfillintstyle (inter);
-                  break;
-        case 39 : ptr1 = (XGKSMONE *)record;
-                  gsetfillstyleind (ptr1->flag);
-                  break;
-        case 40 : ptr1 = (XGKSMONE *)record;
-                  gsetfillcolourind (ptr1->flag);
-                  break;
-        case 41 : patsiz = (XGKSMPATSIZ *)record;
-                  siz.x = patsiz->wid.x;
-                  siz.y = patsiz->hgt.y;
-                  gsetpatsize (&siz);
-                  break;
-        case 42 : patref = (XGKSMPATREF *)record;
-                  gsetpatrefpt (&patref->ref);
-                  break;
-        case 44 : ptr1 = (XGKSMONE *)record;
-                  gsetpickid (ptr1->flag);
-                  break;
-        case 81 : ptr1 = (XGKSMONE *)record;
-                  gcreateseg (ptr1->flag);
-                  break;
-        case 84 : ptr1 = (XGKSMONE *)record;
-                  gdelseg (ptr1->flag);
-                  break;
-
-        case 4  : ptr2 = (XGKSMTWO *)record;
-                  if (ptr2->item1 == 0) defmode = GASAP;
-                  else if (ptr2->item1 == 1) defmode = GBNIG;
-                  else if (ptr2->item1 == 2) defmode = GBNIL;
-                  else  defmode = GASTI;
-                  for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* don't do this on WISS */
-                                if (xgks_state.activews[cnt].ws->ewstype != WISS) {
-                                        gsetdeferst (xgks_state.activews[cnt].ws_id, defmode,(ptr2->item2==0 ? GALLOWED : GSUPPRESSED));
-                                }
-                        }
-                  }
-                  break;
-        case 30 : ptr2 = (XGKSMTWO *)record;
-                  txfp.font = ptr2->item1;
-                  if (ptr2->item2 == 0) txfp.prec = GSTRING;
-                  else if (ptr2->item2 == 1) txfp.prec = GCHAR;
-                  else txfp.prec = GSTROKE;
-                  gsettextfontprec (&txfp);
-                  break;
-        case 36 : ptr2 = (XGKSMTWO *)record;
-                  if (ptr2->item1 == 0) txalign.hor = GTH_NORMAL;
-                  else if (ptr2->item1 == 1) txalign.hor = GTH_LEFT;
-                  else if (ptr2->item1 == 2) txalign.hor = GTH_CENTRE;
-                  else  txalign.hor = GTH_RIGHT;
-                  if (ptr2->item2 == 0) txalign.ver = GTV_NORMAL;
-                  else if (ptr2->item2 == 1) txalign.ver = GTV_TOP;
-                  else if (ptr2->item2 == 2) txalign.ver = GTV_CAP;
-                  else if (ptr2->item2 == 3) txalign.ver = GTV_HALF;
-                  else if (ptr2->item2 == 4) txalign.ver = GTV_BASE;
-                  else txalign.ver = GTV_BOTTOM;
-                  gsettextalign (&txalign);
-                  break;
-        case 83 : ptr2 = (XGKSMTWO *)record;
-                  grenameseg (ptr2->item1, ptr2->item2);
-                  break;
-        case 92 : ptr2 = (XGKSMTWO *)record;
-                  segattr.seg = ptr2->item1;
-                  ginqsegattr (&segattr);
-                  segattr.vis = (ptr2->item2 == 0 ? GVISIBLE : GINVISIBLE);
-                  gsetsegattr (ptr2->item1, &segattr);
-                  break;
-        case 93 : ptr2 = (XGKSMTWO *)record;
-                  segattr.seg = ptr2->item1;
-                  ginqsegattr (&segattr);
-                  segattr.hilight = (ptr2->item2 == 0 ? GNORMAL : GHIGHLIGHTED);
-                  gsetsegattr (ptr2->item1, &segattr);
-                  break;
-        case 95 : ptr2 = (XGKSMTWO *)record;
-                  segattr.seg = ptr2->item1;
-                  ginqsegattr (&segattr);
-                  segattr.det = (ptr2->item2 == 0 ? GUNDETECTABLE : GDETECTABLE);
-                  gsetsegattr (ptr2->item1, &segattr);
-                  break;
-
-        case 5  : msg = (XGKSMMESG *)record;
-                  for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* don't do this on WISS */
-                                if (xgks_state.activews[cnt].ws->ewstype != WISS) {
-                                        gmessage (xgks_state.activews[cnt].ws_id, msg->string);
-                                }
-                        }
-                  }
-                  break;
-
-        case 11 : graph = (XGKSMGRAPH *)record;
-                  GKSERROR (((pts = (Gpoint *) malloc (graph->num_pts*sizeof(Gpoint)))==NULL), 300, errXgksExecData);
-                  for (i=0; i<graph->num_pts; i++)
-                        NdcToWc (&(graph->pts[i]), &(pts[i]));
-                  gpolyline (graph->num_pts, pts);
-                  free (pts);
-                  break;
-        case 12 : graph = (XGKSMGRAPH *)record;
-                  GKSERROR (((pts = (Gpoint *) malloc (graph->num_pts*sizeof(Gpoint)))==NULL), 300, errXgksExecData);
-                  for (i=0; i<graph->num_pts; i++)
-                        NdcToWc (&(graph->pts[i]), &(pts[i]));
-                  gpolymarker (graph->num_pts, pts);
-                  free (pts);
-                  break;
-        case 14 : graph = (XGKSMGRAPH *)record;
-                  GKSERROR (((pts = (Gpoint *) malloc (graph->num_pts*sizeof(Gpoint)))==NULL), 300, errXgksExecData);
-                  for (i=0; i<graph->num_pts; i++)
-                        NdcToWc (&(graph->pts[i]), &(pts[i]));
-                  gfillarea (graph->num_pts, pts);
-                  free (pts);
-                  break;
-
-        case 13 : text = (XGKSMTEXT *)record;
-                  GKSERROR (((pts = (Gpoint *) malloc (sizeof(Gpoint)))==NULL), 300, errXgksExecData);
-                  NdcToWc (&(text->location), pts);
-                  gtext (pts, text->string);
-                  free (pts);
-                  break;
-
-        case 15 : cell = (XGKSMCELLARRAY *)record;
-                  GKSERROR (((primi = XgksNewPrimi())==NULL), 300, errXgksExecData);
-                  primi->pid = CELL_ARRAY;
-                  primi->primi.cell_array.dim = cell->dim;
-                  /* rowsize is equal to cell->dim.x */
-                  primi->primi.cell_array.rowsize = cell->dim.x;
-                  j = cell->dim.x * cell->dim.y;
-                  GKSERROR (((primi->primi.cell_array.colour=(Gint *)malloc(j*sizeof(Gint)))==NULL),300, errXgksExecData);
-                  primi->primi.cell_array.ll = cell->ll;
-                  primi->primi.cell_array.ur = cell->ur;
-                  primi->primi.cell_array.lr = cell->lr;
-                  primi->primi.cell_array.ul.x = cell->ll.x + (cell->ur.x - cell->lr.x);
-                  primi->primi.cell_array.ul.y = cell->ll.y + (cell->ur.y - cell->lr.y);
-                  for (i=0; i<j; i++)
-                        primi->primi.cell_array.colour[i] = cell->colour[i];
-                  XgksProcessPrimi (primi);
-                  if (MO_OPENED == TRUE)
-                        XgksMoCellArray (&(primi->primi.cell_array.ll), &(primi->primi.cell_array.ur),
-                        &(primi->primi.cell_array.lr), primi->primi.cell_array.rowsize, primi->primi.cell_array.colour,
-                        &(primi->primi.cell_array.dim));
-                  free (primi->primi.cell_array.colour);
-                  free (primi);
-                  break;
-
-        case 23 : size = (XGKSMSIZE *)record;
-                  gsetlinewidth (size->size);
-                  break;
-        case 27 : size = (XGKSMSIZE *)record;
-                  gsetmarkersize (size->size);
-                  break;
-        case 31 : size = (XGKSMSIZE *)record;
-                  gsetcharexpan (size->size);
-                  break;
-        case 32 : size = (XGKSMSIZE *)record;
-                  gsetcharspace (size->size);
-                  break;
-
-        case 34 : vec = (XGKSMCHARVEC *)record;
-                  gsetcharup (&(vec->up));
-                  NdcToWc (&(vec->up), &(vec->base))
-                  height = sqrt((vec->base.x*vec->base.x)+(vec->base.y*vec->base.y));
-                  gsetcharheight (height);
-                  break;
-
-        case 43 : asf = (XGKSMASF *)record;
-                  asfs.ln_type  = (asf->asf[0]  == 0 ? GBUNDLED : GINDIVIDUAL);
-                  asfs.ln_width = (asf->asf[1]  == 0 ? GBUNDLED : GINDIVIDUAL);
-                  asfs.ln_colour = (asf->asf[2]  == 0 ? GBUNDLED : GINDIVIDUAL);
-                  asfs.mk_type  = (asf->asf[3]  == 0 ? GBUNDLED : GINDIVIDUAL);
-                  asfs.mk_size  = (asf->asf[4]  == 0 ? GBUNDLED : GINDIVIDUAL);
-                  asfs.mk_colour = (asf->asf[5]  == 0 ? GBUNDLED : GINDIVIDUAL);
-                  asfs.tx_fp    = (asf->asf[6]  == 0 ? GBUNDLED : GINDIVIDUAL);
-                  asfs.tx_exp   = (asf->asf[7]  == 0 ? GBUNDLED : GINDIVIDUAL);
-                  asfs.tx_space = (asf->asf[8]  == 0 ? GBUNDLED : GINDIVIDUAL);
-                  asfs.tx_colour = (asf->asf[9]  == 0 ? GBUNDLED : GINDIVIDUAL);
-                  asfs.fl_inter = (asf->asf[10] == 0 ? GBUNDLED : GINDIVIDUAL);
-                  asfs.fl_style = (asf->asf[11] == 0 ? GBUNDLED : GINDIVIDUAL);
-                  asfs.fl_colour = (asf->asf[12] == 0 ? GBUNDLED : GINDIVIDUAL);
-                  gsetasf (&asfs);
-                  break;
-
-        case 51 : lmrep = (XGKSMLMREP *)record;
-                  lnrep.type  = lmrep->style;
-                  lnrep.width = lmrep->size;
-                  lnrep.colour = lmrep->colour;
-                  for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* don't do this on WISS */
-                                if (xgks_state.activews[cnt].ws->ewstype != WISS) {
-                                        gsetlinerep (xgks_state.activews[cnt].ws_id, lmrep->idx, &lnrep);
-                                }
-                        }
-                  }
-                  break;
-        case 52 : lmrep = (XGKSMLMREP *)record;
-                  mkrep.type  = lmrep->style;
-                  mkrep.size  = lmrep->size;
-                  mkrep.colour = lmrep->colour;
-                  for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* don't do this on WISS */
-                                if (xgks_state.activews[cnt].ws->ewstype != WISS) {
-                                        gsetmarkerrep (xgks_state.activews[cnt].ws_id, lmrep->idx, &mkrep);
-                                }
-                        }
-                  }
-                  break;
-
-        case 53 : txrep = (XGKSMTEXTREP *)record;
-                  textrep.fp.font = txrep->font;
-                  textrep.ch_exp  = txrep->tx_exp;
-                  textrep.space   = txrep->space;
-                  textrep.colour   = txrep->colour;
-                  if (txrep->prec == 0) textrep.fp.prec = GSTRING;
-                  else if (txrep->prec == 1) textrep.fp.prec = GCHAR;
-                  else textrep.fp.prec = GSTROKE;
-                  for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* don't do this on WISS */
-                                if (xgks_state.activews[cnt].ws->ewstype != WISS) {
-                                        gsettextrep (xgks_state.activews[cnt].ws_id, txrep->idx, &textrep);
-                                }
-                        }
-                  }
-                  break;
-
-        case 54 : flrep = (XGKSMFILLREP *)record;
-                  fillrep.style = flrep->style;
-                  fillrep.colour = flrep->colour;
-                  if (flrep->intstyle == 0) fillrep.inter = GHOLLOW;
-                  else if (flrep->intstyle == 1) fillrep.inter = GSOLID;
-                  else if (flrep->intstyle == 2) fillrep.inter = GPATTERN;
-                  else fillrep.inter = GHATCH;
-                  for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* don't do this on WISS */
-                                if (xgks_state.activews[cnt].ws->ewstype != WISS) {
-                                        gsetfillrep (xgks_state.activews[cnt].ws_id, flrep->idx, &fillrep);
-                                }
-                        }
-                  }
-                  break;
-
-        case 55 : patrep = (XGKSMPATREP *)record;
-                  ptrep.size.x = patrep->size.x;
-                  ptrep.size.y = patrep->size.y;
-                  j = ptrep.size.x * ptrep.size.y;
-                  GKSERROR (((ptrep.array = (Gint *) malloc (j*sizeof(Gint)))==NULL), 300, errXgksExecData);
-                  for (i=0; i<j ;i++)
-                          ptrep.array[i] = patrep->array[i];
-                  for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* don't do this on WISS */
-                                if (xgks_state.activews[cnt].ws->ewstype != WISS) {
-                                        gsetpatrep (xgks_state.activews[cnt].ws_id, patrep->idx, &ptrep);
-                                }
-                        }
-                  }
-                  break;
-
-        case 56 : corep = (XGKSMCOLOURREP *)record;
-                  colourrep.red = corep->red;
-                  colourrep.green = corep->green;
-                  colourrep.blue = corep->blue;
-                  for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* don't do this on WISS */
-                                if (xgks_state.activews[cnt].ws->ewstype != WISS) {
-                                        gsetcolourrep (xgks_state.activews[cnt].ws_id, corep->idx, &colourrep);
-                                }
-                        }
-                  }
-                  break;
-
-        case 61 : limit = (XGKSMLIMIT *)record;
-                  xgks_state.cliprec.rec = limit->rect;
-                  break;
-        case 71 : limit = (XGKSMLIMIT *)record;
-                  for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* don't do this on WISS */
-                                if (xgks_state.activews[cnt].ws->ewstype != WISS) {
-                                        gsetwswindow (xgks_state.activews[cnt].ws_id, &(limit->rect));
-                                }
-                        }
-                  }
-                  break;
-        case 72 : limit = (XGKSMLIMIT *)record;
-                  for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
-                        if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* don't do this on WISS */
-                                if (xgks_state.activews[cnt].ws->ewstype != WISS) {
-                                        gsetwsviewport (xgks_state.activews[cnt].ws_id, &(limit->rect));
-                                }
-                        }
-                  }
-                  break;
-
-        case 91 : tran = (XGKSMSEGTRAN *)record;
-                  segattr.seg = tran->name;
-                  ginqsegattr (&segattr);
-                  segattr.segtran[0][0] = tran->matrix[0][0];
-                  segattr.segtran[0][1] = tran->matrix[0][1];
-                  segattr.segtran[0][2] = tran->matrix[0][2];
-                  segattr.segtran[1][0] = tran->matrix[1][0];
-                  segattr.segtran[1][1] = tran->matrix[1][1];
-                  segattr.segtran[1][2] = tran->matrix[1][2];
-                  gsetsegattr (tran->name, &segattr);
-                  break;
-
-        case 94 : pri = (XGKSMSEGPRI *)record;
-                  segattr.seg = pri->name;
-                  ginqsegattr (&segattr);
-                  segattr.pri = pri->pri;
-                  gsetsegattr (pri->name, &segattr);
-                  break;
-
-        default : return(1);
+    case 2:
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                /* don't do this on WISS */
+                if (xgks_state.activews[cnt].ws->ewstype != WISS)
+                {
+                    gredrawsegws(xgks_state.activews[cnt].ws_id);
+                }
+            }
         }
-        return(0);
+        break;
+    case 82: /* only need to call gcloseseg() once, not for each workstation */
+        gcloseseg();
+        break;
+
+    case 1:
+        ptr1 = (XGKSMONE *) record;
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                gclearws(xgks_state.activews[cnt].ws_id, (ptr1->flag == 0 ? GCONDITIONALLY : GALWAYS));
+            }
+        }
+        break;
+    case 3:
+        ptr1 = (XGKSMONE *) record;
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                /* don't do this on WISS */
+                if (xgks_state.activews[cnt].ws->ewstype != WISS)
+                {
+                    gupdatews(xgks_state.activews[cnt].ws_id, (ptr1->flag == 0 ? GPERFORM : GPOSTPONE));
+                }
+            }
+        }
+        break;
+    case 21:
+        ptr1 = (XGKSMONE *) record;
+        gsetlineind(ptr1->flag);
+        break;
+    case 22:
+        ptr1 = (XGKSMONE *) record;
+        gsetlinetype(ptr1->flag);
+        break;
+    case 24:
+        ptr1 = (XGKSMONE *) record;
+        gsetlinecolourind(ptr1->flag);
+        break;
+    case 25:
+        ptr1 = (XGKSMONE *) record;
+        gsetmarkerind(ptr1->flag);
+        break;
+    case 26:
+        ptr1 = (XGKSMONE *) record;
+        gsetmarkertype(ptr1->flag);
+        break;
+    case 28:
+        ptr1 = (XGKSMONE *) record;
+        gsetmarkercolourind(ptr1->flag);
+        break;
+    case 29:
+        ptr1 = (XGKSMONE *) record;
+        gsettextind(ptr1->flag);
+        break;
+    case 33:
+        ptr1 = (XGKSMONE *) record;
+        gsettextcolourind(ptr1->flag);
+        break;
+    case 35:
+        ptr1 = (XGKSMONE *) record;
+        if (ptr1->flag == 0)
+            path = GTP_RIGHT;
+        else if (ptr1->flag == 1)
+            path = GTP_LEFT;
+        else if (ptr1->flag == 2)
+            path = GTP_UP;
+        else
+            path = GTP_DOWN;
+        gsettextpath(path);
+        break;
+    case 37:
+        ptr1 = (XGKSMONE *) record;
+        gsetfillind(ptr1->flag);
+        break;
+    case 38:
+        ptr1 = (XGKSMONE *) record;
+        if (ptr1->flag == 0)
+            inter = GHOLLOW;
+        else if (ptr1->flag == 1)
+            inter = GSOLID;
+        else if (ptr1->flag == 2)
+            inter = GPATTERN;
+        else
+            inter = GHATCH;
+        gsetfillintstyle(inter);
+        break;
+    case 39:
+        ptr1 = (XGKSMONE *) record;
+        gsetfillstyleind(ptr1->flag);
+        break;
+    case 40:
+        ptr1 = (XGKSMONE *) record;
+        gsetfillcolourind(ptr1->flag);
+        break;
+    case 41:
+        patsiz = (XGKSMPATSIZ *) record;
+        siz.x = patsiz->wid.x;
+        siz.y = patsiz->hgt.y;
+        gsetpatsize(&siz);
+        break;
+    case 42:
+        patref = (XGKSMPATREF *) record;
+        gsetpatrefpt(&patref->ref);
+        break;
+    case 44:
+        ptr1 = (XGKSMONE *) record;
+        gsetpickid(ptr1->flag);
+        break;
+    case 81:
+        ptr1 = (XGKSMONE *) record;
+        gcreateseg(ptr1->flag);
+        break;
+    case 84:
+        ptr1 = (XGKSMONE *) record;
+        gdelseg(ptr1->flag);
+        break;
+
+    case 4:
+        ptr2 = (XGKSMTWO *) record;
+        if (ptr2->item1 == 0)
+            defmode = GASAP;
+        else if (ptr2->item1 == 1)
+            defmode = GBNIG;
+        else if (ptr2->item1 == 2)
+            defmode = GBNIL;
+        else
+            defmode = GASTI;
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                /* don't do this on WISS */
+                if (xgks_state.activews[cnt].ws->ewstype != WISS)
+                {
+                    gsetdeferst(xgks_state.activews[cnt].ws_id, defmode, (ptr2->item2 == 0 ? GALLOWED : GSUPPRESSED));
+                }
+            }
+        }
+        break;
+    case 30:
+        ptr2 = (XGKSMTWO *) record;
+        txfp.font = ptr2->item1;
+        if (ptr2->item2 == 0)
+            txfp.prec = GSTRING;
+        else if (ptr2->item2 == 1)
+            txfp.prec = GCHAR;
+        else
+            txfp.prec = GSTROKE;
+        gsettextfontprec(&txfp);
+        break;
+    case 36:
+        ptr2 = (XGKSMTWO *) record;
+        if (ptr2->item1 == 0)
+            txalign.hor = GTH_NORMAL;
+        else if (ptr2->item1 == 1)
+            txalign.hor = GTH_LEFT;
+        else if (ptr2->item1 == 2)
+            txalign.hor = GTH_CENTRE;
+        else
+            txalign.hor = GTH_RIGHT;
+        if (ptr2->item2 == 0)
+            txalign.ver = GTV_NORMAL;
+        else if (ptr2->item2 == 1)
+            txalign.ver = GTV_TOP;
+        else if (ptr2->item2 == 2)
+            txalign.ver = GTV_CAP;
+        else if (ptr2->item2 == 3)
+            txalign.ver = GTV_HALF;
+        else if (ptr2->item2 == 4)
+            txalign.ver = GTV_BASE;
+        else
+            txalign.ver = GTV_BOTTOM;
+        gsettextalign(&txalign);
+        break;
+    case 83:
+        ptr2 = (XGKSMTWO *) record;
+        grenameseg(ptr2->item1, ptr2->item2);
+        break;
+    case 92:
+        ptr2 = (XGKSMTWO *) record;
+        segattr.seg = ptr2->item1;
+        ginqsegattr(&segattr);
+        segattr.vis = (ptr2->item2 == 0 ? GVISIBLE : GINVISIBLE);
+        gsetsegattr(ptr2->item1, &segattr);
+        break;
+    case 93:
+        ptr2 = (XGKSMTWO *) record;
+        segattr.seg = ptr2->item1;
+        ginqsegattr(&segattr);
+        segattr.hilight = (ptr2->item2 == 0 ? GNORMAL : GHIGHLIGHTED);
+        gsetsegattr(ptr2->item1, &segattr);
+        break;
+    case 95:
+        ptr2 = (XGKSMTWO *) record;
+        segattr.seg = ptr2->item1;
+        ginqsegattr(&segattr);
+        segattr.det = (ptr2->item2 == 0 ? GUNDETECTABLE : GDETECTABLE);
+        gsetsegattr(ptr2->item1, &segattr);
+        break;
+
+    case 5:
+        msg = (XGKSMMESG *) record;
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                /* don't do this on WISS */
+                if (xgks_state.activews[cnt].ws->ewstype != WISS)
+                {
+                    gmessage(xgks_state.activews[cnt].ws_id, msg->string);
+                }
+            }
+        }
+        break;
+
+    case 11:
+        graph = (XGKSMGRAPH *) record;
+        GKSERROR(((pts = (Gpoint *) malloc(graph->num_pts * sizeof(Gpoint))) == NULL), 300, errXgksExecData);
+        for (i = 0; i < graph->num_pts; i++)
+            NdcToWc(&(graph->pts[i]), &(pts[i]));
+        gpolyline(graph->num_pts, pts);
+        free(pts);
+        break;
+    case 12:
+        graph = (XGKSMGRAPH *) record;
+        GKSERROR(((pts = (Gpoint *) malloc(graph->num_pts * sizeof(Gpoint))) == NULL), 300, errXgksExecData);
+        for (i = 0; i < graph->num_pts; i++)
+            NdcToWc(&(graph->pts[i]), &(pts[i]));
+        gpolymarker(graph->num_pts, pts);
+        free(pts);
+        break;
+    case 14:
+        graph = (XGKSMGRAPH *) record;
+        GKSERROR(((pts = (Gpoint *) malloc(graph->num_pts * sizeof(Gpoint))) == NULL), 300, errXgksExecData);
+        for (i = 0; i < graph->num_pts; i++)
+            NdcToWc(&(graph->pts[i]), &(pts[i]));
+        gfillarea(graph->num_pts, pts);
+        free(pts);
+        break;
+
+    case 13:
+        text = (XGKSMTEXT *) record;
+        GKSERROR(((pts = (Gpoint *) malloc(sizeof(Gpoint))) == NULL), 300, errXgksExecData);
+        NdcToWc(&(text->location), pts);
+        gtext(pts, text->string);
+        free(pts);
+        break;
+
+    case 15:
+        cell = (XGKSMCELLARRAY *) record;
+        GKSERROR(((primi = XgksNewPrimi()) == NULL), 300, errXgksExecData);
+        primi->pid = CELL_ARRAY;
+        primi->primi.cell_array.dim = cell->dim;
+        /* rowsize is equal to cell->dim.x */
+        primi->primi.cell_array.rowsize = cell->dim.x;
+        j = cell->dim.x * cell->dim.y;
+        GKSERROR(((primi->primi.cell_array.colour = (Gint *) malloc(j * sizeof(Gint))) == NULL), 300, errXgksExecData);
+        primi->primi.cell_array.ll = cell->ll;
+        primi->primi.cell_array.ur = cell->ur;
+        primi->primi.cell_array.lr = cell->lr;
+        primi->primi.cell_array.ul.x = cell->ll.x + (cell->ur.x - cell->lr.x);
+        primi->primi.cell_array.ul.y = cell->ll.y + (cell->ur.y - cell->lr.y);
+        for (i = 0; i < j; i++)
+            primi->primi.cell_array.colour[i] = cell->colour[i];
+        XgksProcessPrimi(primi);
+        if (MO_OPENED == TRUE)
+            XgksMoCellArray(&(primi->primi.cell_array.ll), &(primi->primi.cell_array.ur),
+                &(primi->primi.cell_array.lr), primi->primi.cell_array.rowsize, primi->primi.cell_array.colour,
+                &(primi->primi.cell_array.dim));
+        free(primi->primi.cell_array.colour);
+        free(primi);
+        break;
+
+    case 23:
+        size = (XGKSMSIZE *) record;
+        gsetlinewidth(size->size);
+        break;
+    case 27:
+        size = (XGKSMSIZE *) record;
+        gsetmarkersize(size->size);
+        break;
+    case 31:
+        size = (XGKSMSIZE *) record;
+        gsetcharexpan(size->size);
+        break;
+    case 32:
+        size = (XGKSMSIZE *) record;
+        gsetcharspace(size->size);
+        break;
+
+    case 34:
+        vec = (XGKSMCHARVEC *) record;
+        gsetcharup(&(vec->up));
+        NdcToWc(&(vec->up), &(vec->base))
+            height
+            = sqrt((vec->base.x * vec->base.x) + (vec->base.y * vec->base.y));
+        gsetcharheight(height);
+        break;
+
+    case 43:
+        asf = (XGKSMASF *) record;
+        asfs.ln_type = (asf->asf[0] == 0 ? GBUNDLED : GINDIVIDUAL);
+        asfs.ln_width = (asf->asf[1] == 0 ? GBUNDLED : GINDIVIDUAL);
+        asfs.ln_colour = (asf->asf[2] == 0 ? GBUNDLED : GINDIVIDUAL);
+        asfs.mk_type = (asf->asf[3] == 0 ? GBUNDLED : GINDIVIDUAL);
+        asfs.mk_size = (asf->asf[4] == 0 ? GBUNDLED : GINDIVIDUAL);
+        asfs.mk_colour = (asf->asf[5] == 0 ? GBUNDLED : GINDIVIDUAL);
+        asfs.tx_fp = (asf->asf[6] == 0 ? GBUNDLED : GINDIVIDUAL);
+        asfs.tx_exp = (asf->asf[7] == 0 ? GBUNDLED : GINDIVIDUAL);
+        asfs.tx_space = (asf->asf[8] == 0 ? GBUNDLED : GINDIVIDUAL);
+        asfs.tx_colour = (asf->asf[9] == 0 ? GBUNDLED : GINDIVIDUAL);
+        asfs.fl_inter = (asf->asf[10] == 0 ? GBUNDLED : GINDIVIDUAL);
+        asfs.fl_style = (asf->asf[11] == 0 ? GBUNDLED : GINDIVIDUAL);
+        asfs.fl_colour = (asf->asf[12] == 0 ? GBUNDLED : GINDIVIDUAL);
+        gsetasf(&asfs);
+        break;
+
+    case 51:
+        lmrep = (XGKSMLMREP *) record;
+        lnrep.type = lmrep->style;
+        lnrep.width = lmrep->size;
+        lnrep.colour = lmrep->colour;
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                /* don't do this on WISS */
+                if (xgks_state.activews[cnt].ws->ewstype != WISS)
+                {
+                    gsetlinerep(xgks_state.activews[cnt].ws_id, lmrep->idx, &lnrep);
+                }
+            }
+        }
+        break;
+    case 52:
+        lmrep = (XGKSMLMREP *) record;
+        mkrep.type = lmrep->style;
+        mkrep.size = lmrep->size;
+        mkrep.colour = lmrep->colour;
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                /* don't do this on WISS */
+                if (xgks_state.activews[cnt].ws->ewstype != WISS)
+                {
+                    gsetmarkerrep(xgks_state.activews[cnt].ws_id, lmrep->idx, &mkrep);
+                }
+            }
+        }
+        break;
+
+    case 53:
+        txrep = (XGKSMTEXTREP *) record;
+        textrep.fp.font = txrep->font;
+        textrep.ch_exp = txrep->tx_exp;
+        textrep.space = txrep->space;
+        textrep.colour = txrep->colour;
+        if (txrep->prec == 0)
+            textrep.fp.prec = GSTRING;
+        else if (txrep->prec == 1)
+            textrep.fp.prec = GCHAR;
+        else
+            textrep.fp.prec = GSTROKE;
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                /* don't do this on WISS */
+                if (xgks_state.activews[cnt].ws->ewstype != WISS)
+                {
+                    gsettextrep(xgks_state.activews[cnt].ws_id, txrep->idx, &textrep);
+                }
+            }
+        }
+        break;
+
+    case 54:
+        flrep = (XGKSMFILLREP *) record;
+        fillrep.style = flrep->style;
+        fillrep.colour = flrep->colour;
+        if (flrep->intstyle == 0)
+            fillrep.inter = GHOLLOW;
+        else if (flrep->intstyle == 1)
+            fillrep.inter = GSOLID;
+        else if (flrep->intstyle == 2)
+            fillrep.inter = GPATTERN;
+        else
+            fillrep.inter = GHATCH;
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                /* don't do this on WISS */
+                if (xgks_state.activews[cnt].ws->ewstype != WISS)
+                {
+                    gsetfillrep(xgks_state.activews[cnt].ws_id, flrep->idx, &fillrep);
+                }
+            }
+        }
+        break;
+
+    case 55:
+        patrep = (XGKSMPATREP *) record;
+        ptrep.size.x = patrep->size.x;
+        ptrep.size.y = patrep->size.y;
+        j = ptrep.size.x * ptrep.size.y;
+        GKSERROR(((ptrep.array = (Gint *) malloc(j * sizeof(Gint))) == NULL), 300, errXgksExecData);
+        for (i = 0; i < j; i++)
+            ptrep.array[i] = patrep->array[i];
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                /* don't do this on WISS */
+                if (xgks_state.activews[cnt].ws->ewstype != WISS)
+                {
+                    gsetpatrep(xgks_state.activews[cnt].ws_id, patrep->idx, &ptrep);
+                }
+            }
+        }
+        break;
+
+    case 56:
+        corep = (XGKSMCOLOURREP *) record;
+        colourrep.red = corep->red;
+        colourrep.green = corep->green;
+        colourrep.blue = corep->blue;
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                /* don't do this on WISS */
+                if (xgks_state.activews[cnt].ws->ewstype != WISS)
+                {
+                    gsetcolourrep(xgks_state.activews[cnt].ws_id, corep->idx, &colourrep);
+                }
+            }
+        }
+        break;
+
+    case 61:
+        limit = (XGKSMLIMIT *) record;
+        xgks_state.cliprec.rec = limit->rect;
+        break;
+    case 71:
+        limit = (XGKSMLIMIT *) record;
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                /* don't do this on WISS */
+                if (xgks_state.activews[cnt].ws->ewstype != WISS)
+                {
+                    gsetwswindow(xgks_state.activews[cnt].ws_id, &(limit->rect));
+                }
+            }
+        }
+        break;
+    case 72:
+        limit = (XGKSMLIMIT *) record;
+        for (cnt = 0; cnt < MAX_ACTIVE_WS; cnt++)
+        { /* Do it on all active ws */
+            if (xgks_state.activews[cnt].ws_id != INVALID)
+            {
+                /* don't do this on WISS */
+                if (xgks_state.activews[cnt].ws->ewstype != WISS)
+                {
+                    gsetwsviewport(xgks_state.activews[cnt].ws_id, &(limit->rect));
+                }
+            }
+        }
+        break;
+
+    case 91:
+        tran = (XGKSMSEGTRAN *) record;
+        segattr.seg = tran->name;
+        ginqsegattr(&segattr);
+        segattr.segtran[0][0] = tran->matrix[0][0];
+        segattr.segtran[0][1] = tran->matrix[0][1];
+        segattr.segtran[0][2] = tran->matrix[0][2];
+        segattr.segtran[1][0] = tran->matrix[1][0];
+        segattr.segtran[1][1] = tran->matrix[1][1];
+        segattr.segtran[1][2] = tran->matrix[1][2];
+        gsetsegattr(tran->name, &segattr);
+        break;
+
+    case 94:
+        pri = (XGKSMSEGPRI *) record;
+        segattr.seg = pri->name;
+        ginqsegattr(&segattr);
+        segattr.pri = pri->pri;
+        gsetsegattr(pri->name, &segattr);
+        break;
+
+    default:
+        return (1);
+    }
+    return (0);
 }
 
 static Gint XgksGetNextMi(Gfile *fp, Gint key)
 {
-
-        fscanf( fp, " " );
-        if (feof(fp)) {
-                GksmInfo[key].GksmEmpty = TRUE;
-                GksmInfo[key].CurItem.type = INVALID;
-                GksmInfo[key].CurItem.length = INVALID;
-                return( METAFILE_OK );
-        }
-        if (READINT (fp, GksmInfo[key].CurItem.type) != 1)
-                return( MF_FILE_ERR );
-        if (feof(fp)) {
-                GksmInfo[key].GksmEmpty = TRUE;
-                GksmInfo[key].CurItem.type = INVALID;
-                GksmInfo[key].CurItem.length = INVALID;
-                return( MF_FILE_ERR );
-        }
-        if (XgksFeoln( fp ))
-                return( MF_FILE_ERR );
-        if (READINT (fp, GksmInfo[key].CurItem.length) != 1)
-                return( MF_FILE_ERR );
-        GksmInfo[key].GksmEmpty = FALSE;
-        return( METAFILE_OK );
-
+    fscanf(fp, " ");
+    if (feof(fp))
+    {
+        GksmInfo[key].GksmEmpty = TRUE;
+        GksmInfo[key].CurItem.type = INVALID;
+        GksmInfo[key].CurItem.length = INVALID;
+        return (METAFILE_OK);
+    }
+    if (READINT(fp, GksmInfo[key].CurItem.type) != 1)
+        return (MF_FILE_ERR);
+    if (feof(fp))
+    {
+        GksmInfo[key].GksmEmpty = TRUE;
+        GksmInfo[key].CurItem.type = INVALID;
+        GksmInfo[key].CurItem.length = INVALID;
+        return (MF_FILE_ERR);
+    }
+    if (XgksFeoln(fp))
+        return (MF_FILE_ERR);
+    if (READINT(fp, GksmInfo[key].CurItem.length) != 1)
+        return (MF_FILE_ERR);
+    GksmInfo[key].GksmEmpty = FALSE;
+    return (METAFILE_OK);
 }
 
 static Gchar *XgksMAuthor(void)
 {
-        Gint i;
+    Gint i;
 
-        passwd = getpwuid (getuid());
-        strncat (buffer, passwd->pw_name, 15);
-        for (i=STRLEN(passwd->pw_name); i<15; i++)
-                buffer[i] = ' ';
-        strcat (&(buffer[15]), " at :");
-        gethostname (&(buffer[20]), 20);
-        for (i=STRLEN(buffer); i<40; i++)
-                buffer[i] = ' ';
-        buffer[40] = 0;
-        return (buffer);
+    passwd = getpwuid(getuid());
+    strncat(buffer, passwd->pw_name, 15);
+    for (i = STRLEN(passwd->pw_name); i < 15; i++)
+        buffer[i] = ' ';
+    strcat(&(buffer[15]), " at :");
+    gethostname(&(buffer[20]), 20);
+    for (i = STRLEN(buffer); i < 40; i++)
+        buffer[i] = ' ';
+    buffer[40] = 0;
+    return (buffer);
 }
 
 static Gchar *XgksMDate(void)
 {
-        struct timeval   gmt_time;
-        struct timezone  our_tmzn;
-        long             clock;
-        struct tm       *our_time;
+    struct timeval gmt_time;
+    struct timezone our_tmzn;
+    long clock;
+    struct tm *our_time;
 
-        /* go thru agonizing UNIX stuff to get date */
-        gettimeofday (&gmt_time, &our_tmzn);
-        clock = gmt_time.tv_sec;
-        our_time = localtime (&clock);
-        /* build date string for metafile header */
-        sprintf (date, "%02d/%02d/%02d",
-                /* if year > 2000, truncate to 2 digits */
-                (our_time->tm_year < 100 ?
-                        our_time->tm_year :
-                        our_time->tm_year - 100),
-                /* month goes 0-11 so add 1 */
-                our_time->tm_mon+1,
-                /* day is fine, anyway */
-                our_time->tm_mday);
+    /* go thru agonizing UNIX stuff to get date */
+    gettimeofday(&gmt_time, &our_tmzn);
+    clock = gmt_time.tv_sec;
+    our_time = localtime(&clock);
+    /* build date string for metafile header */
+    sprintf(date, "%02d/%02d/%02d",
+        /* if year > 2000, truncate to 2 digits */
+        (our_time->tm_year < 100 ? our_time->tm_year : our_time->tm_year - 100),
+        /* month goes 0-11 so add 1 */
+        our_time->tm_mon + 1,
+        /* day is fine, anyway */
+        our_time->tm_mday);
 
-        return (date);
+    return (date);
 }
 
 static Gint XgksFeoln(Gfile *fp)
 {
-        int i;
+    int i;
 
-        if ((i = getc( fp )) == EOF) return( TRUE );
-        ungetc( i, fp );
-        if (i == '\n') return( TRUE );
-        return( FALSE );
+    if ((i = getc(fp)) == EOF)
+        return (TRUE);
+    ungetc(i, fp);
+    if (i == '\n')
+        return (TRUE);
+    return (FALSE);
 }

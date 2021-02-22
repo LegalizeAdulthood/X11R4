@@ -53,7 +53,6 @@ static Gint XgksAllocActiveWs();
 static void XgksDeleteActiveWs();
 static Gint XgksNoActiveWs();
 
-
 /*$F
  * gactivatews(ws_id) - ACTIVATE WORKSTATION
  *
@@ -67,36 +66,36 @@ static Gint XgksNoActiveWs();
  */
 Gint gactivatews(Gint ws_id)
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for valid workstation open and active (must be at least one) */
-        GKSERROR ( ((xgks_state.gks_state != GWSOP) && (xgks_state.gks_state != GWSAC)), 6, errgactivatews);
+    /* check for valid workstation open and active (must be at least one) */
+    GKSERROR(((xgks_state.gks_state != GWSOP) && (xgks_state.gks_state != GWSAC)), 6, errgactivatews);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgactivatews);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgactivatews);
 
-/* check for workstation opened */
-        GKSERROR (((ws = OPEN_WSID(ws_id))==NULL), 25, errgactivatews);
+    /* check for workstation opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errgactivatews);
 
-/* check for workstation active */
-        GKSERROR ((ws->wsstate == GACTIVE), 29, errgactivatews);
+    /* check for workstation active */
+    GKSERROR((ws->wsstate == GACTIVE), 29, errgactivatews);
 
-/* check for ws category */
-        GKSERROR ((WS_CAT(ws) == GMI), 33, errgactivatews);
+    /* check for ws category */
+    GKSERROR((WS_CAT(ws) == GMI), 33, errgactivatews);
 
-        GKSERROR ((WS_CAT(ws) == GINPUT), 35, errgactivatews);
+    GKSERROR((WS_CAT(ws) == GINPUT), 35, errgactivatews);
 
-        ws->wsstate = GACTIVE;
-/* check if max number of allowable active ws would be exceeded */
-        GKSERROR ((XgksAllocActiveWs (ws_id,ws)!=0), 43, errgactivatews);
+    ws->wsstate = GACTIVE;
+    /* check if max number of allowable active ws would be exceeded */
+    GKSERROR((XgksAllocActiveWs(ws_id, ws) != 0), 43, errgactivatews);
 
-        if (xgks_state.gks_state == GWSOP)
-                xgks_state.gks_state = GWSAC;   /* change operating state */
+    if (xgks_state.gks_state == GWSOP)
+        xgks_state.gks_state = GWSAC; /* change operating state */
 
-        if (MO_OPENED == TRUE)
-                XgksMoActivateWs( ws );
+    if (MO_OPENED == TRUE)
+        XgksMoActivateWs(ws);
 
-        return (OK);
+    return (OK);
 }
 /*$F
  * gdeactivatews(ws_id) - DEACTIVATE WORKSTATION
@@ -114,30 +113,30 @@ Gint gactivatews(Gint ws_id)
 
 Gint gdeactivatews(Gint ws_id)
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* first check for proper state */
-        GKSERROR ((xgks_state.gks_state != GWSAC), 3, errgdeactivatews);
+    /* first check for proper state */
+    GKSERROR((xgks_state.gks_state != GWSAC), 3, errgdeactivatews);
 
-/* check for ws invalid */
-        GKSERROR ((!VALID_WSID(ws_id)), 20, errgdeactivatews);
+    /* check for ws invalid */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgdeactivatews);
 
-/* check for  ws active (open) */
-        GKSERROR(((ws=OPEN_WSID(ws_id))==NULL), 30, errgdeactivatews);
+    /* check for  ws active (open) */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 30, errgdeactivatews);
 
-/* check for workstation active */
-        GKSERROR ((ws->wsstate == GINACTIVE), 30, errgdeactivatews);
+    /* check for workstation active */
+    GKSERROR((ws->wsstate == GINACTIVE), 30, errgdeactivatews);
 
-/* check for ws category */
-        GKSERROR ((WS_CAT(ws) == GMI), 33, errgdeactivatews);
+    /* check for ws category */
+    GKSERROR((WS_CAT(ws) == GMI), 33, errgdeactivatews);
 
-        GKSERROR ((WS_CAT(ws) == GINPUT), 35, errgdeactivatews);
+    GKSERROR((WS_CAT(ws) == GINPUT), 35, errgdeactivatews);
 
-        ws->wsstate = GINACTIVE;
-        XgksDeleteActiveWs (ws_id);
-        if (XgksNoActiveWs() == TRUE)
-                xgks_state.gks_state = GWSOP;   /* change operating state */
-        return (OK);
+    ws->wsstate = GINACTIVE;
+    XgksDeleteActiveWs(ws_id);
+    if (XgksNoActiveWs() == TRUE)
+        xgks_state.gks_state = GWSOP; /* change operating state */
+    return (OK);
 }
 
 /*
@@ -146,10 +145,11 @@ Gint gdeactivatews(Gint ws_id)
  */
 static Gint XgksNoActiveWs()
 {
-        Gint i;
-        for (i=0; i<MAX_ACTIVE_WS; i++)
-                if (xgks_state.activews[i].ws_id != INVALID) return (FALSE);
-        return (TRUE);
+    Gint i;
+    for (i = 0; i < MAX_ACTIVE_WS; i++)
+        if (xgks_state.activews[i].ws_id != INVALID)
+            return (FALSE);
+    return (TRUE);
 }
 /*
  * XgksAllocActiveWs (ws_id)
@@ -160,19 +160,20 @@ static Gint XgksNoActiveWs()
  * return INVALID if there's no empty slot
  *
  */
-static Gint XgksAllocActiveWs (ws_id,ws)
-Gint ws_id;
+static Gint XgksAllocActiveWs(ws_id, ws)
+    Gint ws_id;
 WS_STATE_PTR ws;
 {
-   Gint i;
+    Gint i;
 
-   for (i=0; i<MAX_ACTIVE_WS; i++)
-        if (xgks_state.activews[i].ws_id == INVALID) {
-                xgks_state.activews[i].ws_id = ws_id;
-                xgks_state.activews[i].ws = ws;
-                return(0);
+    for (i = 0; i < MAX_ACTIVE_WS; i++)
+        if (xgks_state.activews[i].ws_id == INVALID)
+        {
+            xgks_state.activews[i].ws_id = ws_id;
+            xgks_state.activews[i].ws = ws;
+            return (0);
         }
-   return (INVALID);
+    return (INVALID);
 }
 /*
  * XgksDeleteActiveWs (ws_id)
@@ -181,17 +182,19 @@ WS_STATE_PTR ws;
  * delete <ws_id> from activews[] in gks state list by setting corresponding entry to INVALID
  *
  */
-static void XgksDeleteActiveWs (ws_id)
-Gint  ws_id;
+static void XgksDeleteActiveWs(ws_id)
+    Gint ws_id;
 {
-        Gint i;
+    Gint i;
 
-        for (i=0; i<MAX_ACTIVE_WS; i++) {
-                if (xgks_state.activews[i].ws_id == ws_id) {
-                        xgks_state.activews[i].ws_id = INVALID;
-                        xgks_state.activews[i].win = INVALID;
-                        xgks_state.activews[i].ws = NULL;
-                        return;
-                }
+    for (i = 0; i < MAX_ACTIVE_WS; i++)
+    {
+        if (xgks_state.activews[i].ws_id == ws_id)
+        {
+            xgks_state.activews[i].ws_id = INVALID;
+            xgks_state.activews[i].win = INVALID;
+            xgks_state.activews[i].ws = NULL;
+            return;
         }
+    }
 }

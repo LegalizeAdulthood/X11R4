@@ -48,126 +48,127 @@ int XgksSIGIO_ON(Display *dpy);
 
 Gint xXgksCellarray(WS_STATE_PTR ws, CELL_ARRAY_ST *cell_ptr)
 {
-        Display *dpy;
-        Window win;
-        GC gc;
-        XPoint ll, lr, ur, ul, pol2[4];
+    Display *dpy;
+    Window win;
+    GC gc;
+    XPoint ll, lr, ur, ul, pol2[4];
 
-        Gpoint pol[4];
-        Gfloat dx0, dy0, dx1, dy1;
-        Gint i, j, k, nx, clr, *cll, *clp, row;
-        Gfloat DX, DY;
+    Gpoint pol[4];
+    Gfloat dx0, dy0, dx1, dy1;
+    Gint i, j, k, nx, clr, *cll, *clp, row;
+    Gfloat DX, DY;
 
+    if (ws->ewstype != X_WIN)
+        return (OK);
 
+    /* Initialization  */
 
-        if (ws->ewstype != X_WIN) return(OK);
+    XgksSIGIO_OFF(ws->dpy);
 
-        /* Initialization  */
+    dpy = ws->dpy;
+    win = ws->win;
+    gc = ws->gc;
 
-        XgksSIGIO_OFF(ws->dpy);
+    /* display workstation transformation NDC to X_WIN */
 
-        dpy = ws->dpy;
-        win = ws->win;
-        gc = ws->gc;
+    NdcToX(ws, &(cell_ptr->ll), &ll);
+    NdcToX(ws, &(cell_ptr->lr), &lr);
+    NdcToX(ws, &(cell_ptr->ur), &ur);
+    NdcToX(ws, &(cell_ptr->ul), &ul);
 
-        /* display workstation transformation NDC to X_WIN */
+    dx0 = (((Gfloat)(lr.x - ll.x)) / cell_ptr->dim.x);
+    dy0 = (((Gfloat)(lr.y - ll.y)) / cell_ptr->dim.x);
+    dx1 = (((Gfloat)(ul.x - ll.x)) / cell_ptr->dim.y);
+    dy1 = (((Gfloat)(ul.y - ll.y)) / cell_ptr->dim.y);
 
-        NdcToX(ws, &(cell_ptr->ll), &ll);
-        NdcToX(ws, &(cell_ptr->lr), &lr);
-        NdcToX(ws, &(cell_ptr->ur), &ur);
-        NdcToX(ws, &(cell_ptr->ul), &ul);
+    nx = cell_ptr->dim.x;
 
+    /* get the memory for subset of the colour index array */
 
-        dx0 = (( (Gfloat)(lr.x - ll.x))/cell_ptr->dim.x);
-        dy0 = (( (Gfloat)(lr.y - ll.y))/cell_ptr->dim.x);
-        dx1 = (( (Gfloat)(ul.x - ll.x))/cell_ptr->dim.y);
-        dy1 = (( (Gfloat)(ul.y - ll.y))/cell_ptr->dim.y);
+    cll = (Gint *) malloc((unsigned) (nx * cell_ptr->dim.y * sizeof(int)));
+    GKSERROR((cll == NULL), 300, errgcellarray);
 
-        nx  = cell_ptr->dim.x;
+    /* copy the values of the subset of colour index array */
 
-        /* get the memory for subset of the colour index array */
+    clp = cll;
+    row = cell_ptr->rowsize;
 
-        cll = (Gint *)malloc((unsigned)(nx * cell_ptr->dim.y * sizeof(int)));
-        GKSERROR( (cll == NULL), 300, errgcellarray);
+    for (i = 0; i < cell_ptr->dim.y; i++)
+        for (j = 0; j < row; j++)
+            if (j < nx)
+            {
+                *clp = cell_ptr->colour[i * row + j];
+                clp++;
+            }
 
-        /* copy the values of the subset of colour index array */
+    clp = cll;
 
-        clp = cll;
-        row = cell_ptr->rowsize;
+    /* set the clip area and fill area style */
 
-        for (i=0; i<cell_ptr->dim.y; i++)
-                for (j=0; j<row; j++)
-                        if (j<nx) {
-                                *clp = cell_ptr->colour[i*row+j];
-                                clp++;
-                        }
+    XSetClipRectangles(dpy, gc, 0, 0, &(ws->xclip), 1, Unsorted);
 
+    XSetFillStyle(dpy, gc, FillSolid);
 
-        clp = cll;
+    /* draw the cell array */
 
-        /* set the clip area and fill area style */
+    DX = cell_ptr->dim.x * dx0;
+    DY = cell_ptr->dim.x * dy0;
 
-        XSetClipRectangles(dpy, gc, 0, 0, &(ws->xclip), 1, Unsorted);
+    pol[0].x = ll.x + DX - dx0 - dx1;
+    pol[0].y = ll.y + DY - dy0 - dy1;
 
-        XSetFillStyle(dpy, gc, FillSolid);
+    for (i = 0; i < cell_ptr->dim.y; i++)
+    {
+        pol[0].x -= DX;
+        pol[0].y -= DY;
 
-        /* draw the cell array */
+        pol[0].x += dx1;
+        pol[0].y += dy1;
 
-        DX = cell_ptr->dim.x * dx0;
-        DY = cell_ptr->dim.x * dy0;
+        for (j = 0; j < cell_ptr->dim.x; j++)
+        {
+            pol[0].x += dx0;
+            pol[0].y += dy0;
 
-        pol[0].x = ll.x + DX - dx0 - dx1;
-        pol[0].y = ll.y + DY - dy0 - dy1;
+            pol[1].x = pol[0].x + dx0;
+            pol[1].y = pol[0].y + dy0;
 
-        for (i=0; i<cell_ptr->dim.y; i++) {
+            pol[2].x = pol[1].x + dx1;
+            pol[2].y = pol[1].y + dy1;
 
-                pol[0].x -= DX;
-                pol[0].y -= DY;
+            pol[3].x = pol[0].x + dx1;
+            pol[3].y = pol[0].y + dy1;
 
-                pol[0].x += dx1;
-                pol[0].y += dy1;
+            clr = *clp;
+            clp++;
 
-                for (j=0; j<cell_ptr->dim.x; j++) {
+            if (!WS_AVAIL_COLOUR(ws, clr))
+                clr = 1;
+            if (ws->wscolour == 2)
+            { /* monochrome ? */
+                if (clr == 0)
+                    clr = ws->wsbg;
+                else if (clr == 1)
+                    clr = ws->wsfg;
+            }
 
-                        pol[0].x += dx0;
-                        pol[0].y += dy0;
+            XSetForeground(dpy, gc, clr);
 
-                        pol[1].x = pol[0].x + dx0;
-                        pol[1].y = pol[0].y + dy0;
+            for (k = 0; k < 4; k++)
+            {
+                pol2[k].x = pol[k].x;
+                pol2[k].y = pol[k].y;
+            }
 
-                        pol[2].x = pol[1].x + dx1;
-                        pol[2].y = pol[1].y + dy1;
-
-                        pol[3].x = pol[0].x + dx1;
-                        pol[3].y = pol[0].y + dy1;
-
-                        clr = *clp;
-                        clp++;
-
-                        if ( ! WS_AVAIL_COLOUR(ws, clr))
-                                clr = 1;
-                        if ( ws->wscolour == 2 )        {       /* monochrome ? */
-                                if (clr == 0) clr = ws->wsbg;
-                                else if (clr == 1) clr = ws->wsfg;
-                        }
-
-                        XSetForeground(dpy, gc, clr);
-
-                        for(k=0;k<4;k++){
-                                pol2[k].x=pol[k].x;
-                                pol2[k].y=pol[k].y;
-                        }
-
-                        XFillPolygon(dpy, win, gc, &pol2[0], 4, Complex, CoordModeOrigin);
-                }
+            XFillPolygon(dpy, win, gc, &pol2[0], 4, Complex, CoordModeOrigin);
         }
+    }
 
-        XFlush(dpy);
+    XFlush(dpy);
 
-        free(cll);
+    free(cll);
 
-        XgksSIGIO_ON(ws->dpy);
+    XgksSIGIO_ON(ws->dpy);
 
-        return(OK);
+    return (OK);
 }
-

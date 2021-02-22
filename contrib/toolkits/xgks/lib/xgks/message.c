@@ -44,7 +44,7 @@
 
 void XgksMoMessage(WS_STATE_PTR ws, Gchar *string);
 
-static WS_ENTRY  tmp_act[MAX_ACTIVE_WS];        /* Make sure message will only be output to
+static WS_ENTRY tmp_act[MAX_ACTIVE_WS]; /* Make sure message will only be output to
                                                    the specified workstaiton, this is done by
                                                    setting saving current activews[] and unset
                                                    rest of the ws_id beside the one we wnat */
@@ -62,63 +62,68 @@ static WS_ENTRY  tmp_act[MAX_ACTIVE_WS];        /* Make sure message will only b
  */
 Gint gmessage(Gint ws_id, Gchar *string)
 {
-        WS_STATE_PTR ws;
-        OUT_PRIMI *mesg;
-        Gos tmp_os;
-        Gint i;
+    WS_STATE_PTR ws;
+    OUT_PRIMI *mesg;
+    Gos tmp_os;
+    Gint i;
 
-/* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgmessage);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgmessage);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgmessage);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgmessage);
 
-/* check for open workstation */
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) , 25, errgmessage);
+    /* check for open workstation */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errgmessage);
 
-/* check for valid workstation category */
-        GKSERROR ((WS_CAT(ws) == GMI) , 33, errgmessage);
+    /* check for valid workstation category */
+    GKSERROR((WS_CAT(ws) == GMI), 33, errgmessage);
 
-        GKSERROR ((WS_CAT(ws) == GWISS) , 36, errgmessage);
+    GKSERROR((WS_CAT(ws) == GWISS), 36, errgmessage);
 
-        if (ws->ewstype == MO) XgksMoMessage (ws, string);
+    if (ws->ewstype == MO)
+        XgksMoMessage(ws, string);
 
-/* open an primitive structure */
-        GKSERROR ( ((mesg = XgksNewPrimi()) == NULL), 300, errgmessage);
+    /* open an primitive structure */
+    GKSERROR(((mesg = XgksNewPrimi()) == NULL), 300, errgmessage);
 
-        mesg->pid = MESG;
+    mesg->pid = MESG;
 
-/* get momory for mesg string */
-        GKSERROR ( ( (mesg->primi.mesg.string= (Gchar *)malloc ((unsigned) STRLEN(string) + 1)) == NULL ), 300, errgmessage);
+    /* get momory for mesg string */
+    GKSERROR(((mesg->primi.mesg.string = (Gchar *) malloc((unsigned) STRLEN(string) + 1)) == NULL), 300, errgmessage);
 
-        STRCPY ((mesg->primi.mesg.string), string);
+    STRCPY((mesg->primi.mesg.string), string);
 
-        /* Have to avaoid message being saved as part of segments
+    /* Have to avaoid message being saved as part of segments
            so save current gks_state, and if it's GSGOP, then set it to GWSAC
            and restore gks_state, after output is done
 
            Also we have to changed the xgks_state.activews[] array to only one
            worstation active */
 
-        tmp_os = xgks_state.gks_state;
-        for (i=0; i<MAX_ACTIVE_WS; i++) tmp_act[i] = xgks_state.activews[i];
+    tmp_os = xgks_state.gks_state;
+    for (i = 0; i < MAX_ACTIVE_WS; i++)
+        tmp_act[i] = xgks_state.activews[i];
 
-        if (xgks_state.gks_state == GSGOP) xgks_state.gks_state = GWSAC;
+    if (xgks_state.gks_state == GSGOP)
+        xgks_state.gks_state = GWSAC;
 
-        for (i=0; i<MAX_ACTIVE_WS; i++) {
-                if (xgks_state.openedws[i].ws_id == ws_id)
-                   xgks_state.activews[0] = xgks_state.openedws[i];
-                if (i != 0)
-                   xgks_state.activews[i].ws_id = INVALID;
-        }
+    for (i = 0; i < MAX_ACTIVE_WS; i++)
+    {
+        if (xgks_state.openedws[i].ws_id == ws_id)
+            xgks_state.activews[0] = xgks_state.openedws[i];
+        if (i != 0)
+            xgks_state.activews[i].ws_id = INVALID;
+    }
 
-        XgksProcessPrimi (mesg);
+    XgksProcessPrimi(mesg);
 
-        for (i=0; i<MAX_ACTIVE_WS; i++) xgks_state.activews[i] = tmp_act[i];
-        xgks_state.gks_state = tmp_os;
+    for (i = 0; i < MAX_ACTIVE_WS; i++)
+        xgks_state.activews[i] = tmp_act[i];
+    xgks_state.gks_state = tmp_os;
 
-        free (mesg->primi.mesg.string);
-        free (mesg);
+    free(mesg->primi.mesg.string);
+    free(mesg);
 
-        return(OK);
+    return (OK);
 }

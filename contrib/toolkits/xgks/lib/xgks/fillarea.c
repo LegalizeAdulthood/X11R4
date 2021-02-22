@@ -68,250 +68,229 @@ void XgksMoSetPatRep(WS_STATE_PTR ws, Gint idx, Gptbundl *rep);
 
 void XgksInitGksFillArea(void)
 {
-        xgks_state.gks_flattr.fill   = 1;               /* fill index */
-        xgks_state.gks_flattr.style  = GINDIVIDUAL;     /* style ASF  */
-        xgks_state.gks_flattr.inter  = GINDIVIDUAL;     /* inter ASF  */
-        xgks_state.gks_flattr.colour = GINDIVIDUAL;     /* colour ASF */
-        /* fill bundle */
-        xgks_state.gks_flattr.bundl.inter  = def_flbundl[0].inter;
-        xgks_state.gks_flattr.bundl.style  = def_flbundl[0].style;
-        xgks_state.gks_flattr.bundl.colour = def_flbundl[0].colour;
+    xgks_state.gks_flattr.fill = 1;             /* fill index */
+    xgks_state.gks_flattr.style = GINDIVIDUAL;  /* style ASF  */
+    xgks_state.gks_flattr.inter = GINDIVIDUAL;  /* inter ASF  */
+    xgks_state.gks_flattr.colour = GINDIVIDUAL; /* colour ASF */
+    /* fill bundle */
+    xgks_state.gks_flattr.bundl.inter = def_flbundl[0].inter;
+    xgks_state.gks_flattr.bundl.style = def_flbundl[0].style;
+    xgks_state.gks_flattr.bundl.colour = def_flbundl[0].colour;
 
-        xgks_state.gks_ptattr.widthvec  = def_ptattr.widthvec;
-        xgks_state.gks_ptattr.heightvec = def_ptattr.heightvec;
-        xgks_state.gks_ptattr.ptp       = def_ptattr.ptp;
+    xgks_state.gks_ptattr.widthvec = def_ptattr.widthvec;
+    xgks_state.gks_ptattr.heightvec = def_ptattr.heightvec;
+    xgks_state.gks_ptattr.ptp = def_ptattr.ptp;
 }
 /*
  * XgksInitWssFillArea(ws) - send predefined attributes and Bundle index to
  *      newly opened workstation ws;
  */
 
-
 /* The data for predefined patterns */
 
-static
-Gint pttn0[] = {1, 0, 0, 0,
-                1, 1, 0, 0,
-                1, 1, 1, 0,
-                1, 1, 1, 1};
-static
-Gint pttn1[] = {1, 1, 1, 1,
-                1, 0, 0, 1,
-                1, 0, 0, 1,
-                1, 1, 1, 1};
-static
-Gint pttn2[] = {0, 0, 0, 0,
-                0, 1, 1, 0,
-                0, 1, 1, 0,
-                0, 0, 0, 0};
-static
-Gint pttn3[] = {0, 0, 1, 1,
-                0, 0, 1, 1,
-                1, 1, 0, 0,
-                1, 1, 0, 0};
-static
-Gint pttn4[] = {1, 0, 0, 0,
-                1, 0, 0, 0,
-                1, 0, 0, 0,
-                1, 0, 0, 0};
-static
-Gint pttn5[] = {0, 0, 0, 0,
-                0, 0, 0, 0,
-                0, 0, 0, 0,
-                1, 1, 1, 1};
-static
-Gint pttn6[] = {1, 1, 1, 0,
-                1, 1, 1, 0,
-                1, 1, 1, 0,
-                1, 1, 1, 0};
-static
-Gint pttn7[] = {1, 1, 1, 1,
-                1, 1, 1, 1,
-                1, 1, 1, 1,
-                0, 0, 0, 0};
-static
-Gint pttn8[] = {1, 1, 1, 0,
-                1, 1, 0, 1,
-                1, 0, 1, 1,
-                0, 1, 1, 1};
-static
-Gint pttn9[] = {0, 0, 0, 1,
-                0, 0, 1, 0,
-                0, 1, 0, 0,
-                1, 0, 0, 0};
-static
-Gint pttn10[] = {0, 1, 1, 1,
-                1, 0, 1, 1,
-                1, 1, 0, 1,
-                1, 1, 1, 0};
-static
-Gint pttn11[] = {1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, 1, 0,
-                0, 0, 0, 1};
-static
-Gint pttn12[] = {1, 0, 0, 0, 0, 0, 0, 0,
-                1, 0, 0, 0, 0, 0, 0, 0,
-                1, 0, 0, 0, 0, 0, 0, 0,
-                1, 0, 0, 0, 0, 0, 0, 0,
-                1, 0, 0, 0, 0, 0, 0, 0,
-                1, 0, 0, 0, 0, 0, 0, 0,
-                1, 0, 0, 0, 0, 0, 0, 0,
-                1, 1, 1, 1, 1, 1, 1, 1};
-static
-Gint pttn13[] = {1, 0, 0, 0, 0, 0, 0, 1,
-                0, 1, 0, 0, 0, 0, 1, 0,
-                0, 0, 1, 0, 0, 1, 0, 0,
-                0, 0, 0, 1, 1, 0, 0, 0,
-                0, 0, 0, 1, 1, 0, 0, 0,
-                0, 0, 1, 0, 0, 1, 0, 0,
-                0, 1, 0, 0, 0, 0, 1, 0,
-                1, 0, 0, 0, 0, 0, 0, 1};
-static
-Gint pttn14[] = {0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0,
-                1, 1, 1, 1, 1, 1, 1, 1,
-                0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0,
-                1, 1, 1, 1, 1, 1, 1, 1};
-static
-Gint pttn15[] = {1, 0, 0, 1, 0, 0, 0, 0,
-                1, 0, 0, 1, 0, 0, 0, 0,
-                1, 0, 0, 1, 0, 0, 0, 0,
-                1, 0, 0, 1, 0, 0, 0, 0,
-                1, 0, 0, 1, 0, 0, 0, 0,
-                1, 0, 0, 1, 0, 0, 0, 0,
-                1, 0, 0, 1, 0, 0, 0, 0,
-                1, 0, 0, 1, 0, 0, 0, 0};
-static
-Gint pttn16[] = {
-        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
-        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
-        1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1,
-        0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1,
-        1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0,
-        1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0,
-        1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0,
-        0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1,
-        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
-        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
-        1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1,
-        0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1,
-        1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0,
-        1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0,
-        1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0,
-        0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1
+static Gint pttn0[] = { 1, 0, 0, 0,
+    1, 1, 0, 0,
+    1, 1, 1, 0,
+    1, 1, 1, 1 };
+static Gint pttn1[] = { 1, 1, 1, 1,
+    1, 0, 0, 1,
+    1, 0, 0, 1,
+    1, 1, 1, 1 };
+static Gint pttn2[] = { 0, 0, 0, 0,
+    0, 1, 1, 0,
+    0, 1, 1, 0,
+    0, 0, 0, 0 };
+static Gint pttn3[] = { 0, 0, 1, 1,
+    0, 0, 1, 1,
+    1, 1, 0, 0,
+    1, 1, 0, 0 };
+static Gint pttn4[] = { 1, 0, 0, 0,
+    1, 0, 0, 0,
+    1, 0, 0, 0,
+    1, 0, 0, 0 };
+static Gint pttn5[] = { 0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    1, 1, 1, 1 };
+static Gint pttn6[] = { 1, 1, 1, 0,
+    1, 1, 1, 0,
+    1, 1, 1, 0,
+    1, 1, 1, 0 };
+static Gint pttn7[] = { 1, 1, 1, 1,
+    1, 1, 1, 1,
+    1, 1, 1, 1,
+    0, 0, 0, 0 };
+static Gint pttn8[] = { 1, 1, 1, 0,
+    1, 1, 0, 1,
+    1, 0, 1, 1,
+    0, 1, 1, 1 };
+static Gint pttn9[] = { 0, 0, 0, 1,
+    0, 0, 1, 0,
+    0, 1, 0, 0,
+    1, 0, 0, 0 };
+static Gint pttn10[] = { 0, 1, 1, 1,
+    1, 0, 1, 1,
+    1, 1, 0, 1,
+    1, 1, 1, 0 };
+static Gint pttn11[] = { 1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, 1 };
+static Gint pttn12[] = { 1, 0, 0, 0, 0, 0, 0, 0,
+    1, 0, 0, 0, 0, 0, 0, 0,
+    1, 0, 0, 0, 0, 0, 0, 0,
+    1, 0, 0, 0, 0, 0, 0, 0,
+    1, 0, 0, 0, 0, 0, 0, 0,
+    1, 0, 0, 0, 0, 0, 0, 0,
+    1, 0, 0, 0, 0, 0, 0, 0,
+    1, 1, 1, 1, 1, 1, 1, 1 };
+static Gint pttn13[] = { 1, 0, 0, 0, 0, 0, 0, 1,
+    0, 1, 0, 0, 0, 0, 1, 0,
+    0, 0, 1, 0, 0, 1, 0, 0,
+    0, 0, 0, 1, 1, 0, 0, 0,
+    0, 0, 0, 1, 1, 0, 0, 0,
+    0, 0, 1, 0, 0, 1, 0, 0,
+    0, 1, 0, 0, 0, 0, 1, 0,
+    1, 0, 0, 0, 0, 0, 0, 1 };
+static Gint pttn14[] = { 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    1, 1, 1, 1, 1, 1, 1, 1,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    1, 1, 1, 1, 1, 1, 1, 1 };
+static Gint pttn15[] = { 1, 0, 0, 1, 0, 0, 0, 0,
+    1, 0, 0, 1, 0, 0, 0, 0,
+    1, 0, 0, 1, 0, 0, 0, 0,
+    1, 0, 0, 1, 0, 0, 0, 0,
+    1, 0, 0, 1, 0, 0, 0, 0,
+    1, 0, 0, 1, 0, 0, 0, 0,
+    1, 0, 0, 1, 0, 0, 0, 0,
+    1, 0, 0, 1, 0, 0, 0, 0 };
+static Gint pttn16[] = {
+    1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
+    1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
+    1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1,
+    0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1,
+    1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0,
+    1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0,
+    1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0,
+    0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1,
+    1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
+    1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
+    1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1,
+    0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1,
+    1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0,
+    1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0,
+    1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0,
+    0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1
 };
-static
-Gint pttn17[] = {
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
-        1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1,
-        1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0,
-        0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-        1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
-        1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1,
-        1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0,
-        0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
-        1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0
+static Gint pttn17[] = {
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
+    1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1,
+    1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0,
+    0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1,
+    1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1,
+    1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0,
+    0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+    1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0
 };
-static
-Gint pttn18[] = {
-        1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
-        1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
-        0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1,
-        0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0,
-        0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1,
-        1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
-        1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
-        1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
-        1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
-        1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
-        0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1,
-        0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0,
-        0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1,
-        1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
-        1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
-        1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0
+static Gint pttn18[] = {
+    1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
+    1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1,
+    0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0,
+    0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1,
+    1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
+    1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
+    1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
+    1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
+    1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1,
+    0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0,
+    0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1,
+    1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
+    1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
+    1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0
 };
-static
-Gint pttn19[] = {
-        1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
-        0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1
+static Gint pttn19[] = {
+    1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1
 };
 Gptbundl xgks_xpttn[] = {
-        {{4, 4}, pttn0},
-        {{4, 4}, pttn1},
-        {{4, 4}, pttn2},
-        {{4, 4}, pttn3},
-        {{4, 4}, pttn4},
-        {{4, 4}, pttn5},
-        {{4, 4}, pttn6},
-        {{4, 4}, pttn7},
-        {{4, 4}, pttn8},
-        {{4, 4}, pttn9},
-        {{4, 4}, pttn10},
-        {{4, 4}, pttn11},
-        {{8, 8}, pttn12},
-        {{8, 8}, pttn13},
-        {{8, 8}, pttn14},
-        {{8, 8}, pttn15},
-        {{16, 16}, pttn16},
-        {{16, 16}, pttn17},
-        {{16, 16}, pttn18},
-        {{16, 16}, pttn19},
-        {{4, 4}, pttn0}
+    { { 4, 4 }, pttn0 },
+    { { 4, 4 }, pttn1 },
+    { { 4, 4 }, pttn2 },
+    { { 4, 4 }, pttn3 },
+    { { 4, 4 }, pttn4 },
+    { { 4, 4 }, pttn5 },
+    { { 4, 4 }, pttn6 },
+    { { 4, 4 }, pttn7 },
+    { { 4, 4 }, pttn8 },
+    { { 4, 4 }, pttn9 },
+    { { 4, 4 }, pttn10 },
+    { { 4, 4 }, pttn11 },
+    { { 8, 8 }, pttn12 },
+    { { 8, 8 }, pttn13 },
+    { { 8, 8 }, pttn14 },
+    { { 8, 8 }, pttn15 },
+    { { 16, 16 }, pttn16 },
+    { { 16, 16 }, pttn17 },
+    { { 16, 16 }, pttn18 },
+    { { 16, 16 }, pttn19 },
+    { { 4, 4 }, pttn0 }
 };
-
 
 Gint XgksInitWssFillArea(WS_STATE_PTR ws)
 {
-        Gint i, j, k;
+    Gint i, j, k;
 
-        /* flbundl_table[0] never used but initialized anyway */
-        ws->flbundl_table[0] = def_flbundl[0];
+    /* flbundl_table[0] never used but initialized anyway */
+    ws->flbundl_table[0] = def_flbundl[0];
 
-        /* initialize predefined representation bundles */
-        for (i=1; i<=PDF_FILL_BNDLS; i++)
-           /* use implementation defaults, not current attributes */
-           ws->flbundl_table[i] = def_flbundl[i-1];
+    /* initialize predefined representation bundles */
+    for (i = 1; i <= PDF_FILL_BNDLS; i++)
+        /* use implementation defaults, not current attributes */
+        ws->flbundl_table[i] = def_flbundl[i - 1];
 
-        /* initialize rest of representation bundle array */
-        for (i=PDF_FILL_BNDLS+1; i<MAX_BUNDL_TBL; i++)
-           ws->flbundl_table[i] = def_flbundl[0];
+    /* initialize rest of representation bundle array */
+    for (i = PDF_FILL_BNDLS + 1; i < MAX_BUNDL_TBL; i++)
+        ws->flbundl_table[i] = def_flbundl[0];
 
-        for (i=0; i<MAX_BUNDL_TBL; i++) {                  /* set default pattern table values */
-                j = xgks_xpttn[i].size.x * xgks_xpttn[i].size.y;
-                ws->ptbundl_table[i] = xgks_xpttn[i];
-                ws->ptbundl_table[i].array = (Gint *)malloc( j * sizeof(int));
-                GKSERROR( (ws->ptbundl_table[i].array == NULL), 300, errXgksInitWssFillArea);
+    for (i = 0; i < MAX_BUNDL_TBL; i++)
+    { /* set default pattern table values */
+        j = xgks_xpttn[i].size.x * xgks_xpttn[i].size.y;
+        ws->ptbundl_table[i] = xgks_xpttn[i];
+        ws->ptbundl_table[i].array = (Gint *) malloc(j * sizeof(int));
+        GKSERROR((ws->ptbundl_table[i].array == NULL), 300, errXgksInitWssFillArea);
 
-                for (k=0; k < j; k++)
-                  ws->ptbundl_table[i].array[k] = xgks_xpttn[i].array[k];
-        }
-        return 0;
+        for (k = 0; k < j; k++)
+            ws->ptbundl_table[i].array[k] = xgks_xpttn[i].array[k];
+    }
+    return 0;
 }
 
 /*$F
@@ -326,42 +305,42 @@ Gint XgksInitWssFillArea(WS_STATE_PTR ws)
  */
 Gint gfillarea(Gint num_pts, Gpoint *pts)
 {
-        Gpoint *ndc_pt;
-        OUT_PRIMI *flarea;
-        Gint cnt;
+    Gpoint *ndc_pt;
+    OUT_PRIMI *flarea;
+    Gint cnt;
 
-/* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgfillarea);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgfillarea);
 
-/* check for a valid number of points */
-        GKSERROR ((num_pts < 3) , 100, errgfillarea);
+    /* check for a valid number of points */
+    GKSERROR((num_pts < 3), 100, errgfillarea);
 
-/* open an primitive structure */
-        GKSERROR (( (flarea = XgksNewPrimi()) == NULL ), 300, errgfillarea);
+    /* open an primitive structure */
+    GKSERROR(((flarea = XgksNewPrimi()) == NULL), 300, errgfillarea);
 
-        flarea->pid = FILL_AREA;
-        flarea->primi.fill_area.num_pts = num_pts;
+    flarea->pid = FILL_AREA;
+    flarea->primi.fill_area.num_pts = num_pts;
 
-/* now get memory for transformed points */
-        GKSERROR ((((flarea->primi.fill_area.pts) =
-                  (Gpoint *) malloc((unsigned)num_pts * sizeof(Gpoint))) == NULL) , 300, errgfillarea);
+    /* now get memory for transformed points */
+    GKSERROR((((flarea->primi.fill_area.pts) = (Gpoint *) malloc((unsigned) num_pts * sizeof(Gpoint))) == NULL), 300, errgfillarea);
 
-        ndc_pt = flarea->primi.fill_area.pts;
-/* transform the WC to NDC */
-        for (cnt=0; cnt<num_pts; cnt++, pts++, ndc_pt++)
-                WcToNdc(pts, ndc_pt);   /* convert to ndc coordinate */
+    ndc_pt = flarea->primi.fill_area.pts;
+    /* transform the WC to NDC */
+    for (cnt = 0; cnt < num_pts; cnt++, pts++, ndc_pt++)
+        WcToNdc(pts, ndc_pt); /* convert to ndc coordinate */
 
-        flarea->primi.fill_area.flattr = xgks_state.gks_flattr;
-        flarea->primi.fill_area.ptattr = xgks_state.gks_ptattr;
+    flarea->primi.fill_area.flattr = xgks_state.gks_flattr;
+    flarea->primi.fill_area.ptattr = xgks_state.gks_ptattr;
 
-        XgksProcessPrimi(flarea);
+    XgksProcessPrimi(flarea);
 
-        if (MO_OPENED == TRUE) XgksMoGraphicOutput (14, num_pts, flarea->primi.fill_area.pts);
+    if (MO_OPENED == TRUE)
+        XgksMoGraphicOutput(14, num_pts, flarea->primi.fill_area.pts);
 
-        free (flarea->primi.fill_area.pts);
-        free (flarea);
+    free(flarea->primi.fill_area.pts);
+    free(flarea);
 
-        return(0);
+    return (0);
 }
 
 /*$F
@@ -375,18 +354,19 @@ Gint gfillarea(Gint num_pts, Gpoint *pts)
  */
 Gint gsetfillcolourind(Gint colour)
 {
-/* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillcolourind);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errgsetfillcolourind);
 
-/* check for valid colour index */
-        GKSERROR ((colour < 0) , 92, errgsetfillcolourind);
+    /* check for valid colour index */
+    GKSERROR((colour < 0), 92, errgsetfillcolourind);
 
-/* change the colour */
-        xgks_state.gks_flattr.bundl.colour = colour;
+    /* change the colour */
+    xgks_state.gks_flattr.bundl.colour = colour;
 
-        if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (40, colour);
+    if (MO_OPENED == TRUE)
+        XgksMoSetGraphicAttr(40, colour);
 
-        return(0);
+    return (0);
 }
 
 /*$F
@@ -400,18 +380,19 @@ Gint gsetfillcolourind(Gint colour)
  */
 Gint gsetfillind(Gint idx)
 {
-/* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillind);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errgsetfillind);
 
-/* check for valid index */
-        GKSERROR ((idx < 1 ), 80, errgsetfillind);
+    /* check for valid index */
+    GKSERROR((idx < 1), 80, errgsetfillind);
 
-/* ok to change the idx */
-        xgks_state.gks_flattr.fill = idx;
+    /* ok to change the idx */
+    xgks_state.gks_flattr.fill = idx;
 
-        if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (37, idx);
+    if (MO_OPENED == TRUE)
+        XgksMoSetGraphicAttr(37, idx);
 
-        return(0);
+    return (0);
 }
 
 /*$F
@@ -426,18 +407,19 @@ Gint gsetfillind(Gint idx)
  */
 Gint gsetfillintstyle(Gflinter style)
 {
-/* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillintstyle);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errgsetfillintstyle);
 
-/* check for valid style */
-        if (style != GHOLLOW && style != GSOLID && style != GPATTERN && style != GHATCH )
-                style = GHOLLOW;
+    /* check for valid style */
+    if (style != GHOLLOW && style != GSOLID && style != GPATTERN && style != GHATCH)
+        style = GHOLLOW;
 
-        xgks_state.gks_flattr.bundl.inter = style;
+    xgks_state.gks_flattr.bundl.inter = style;
 
-        if (MO_OPENED == TRUE) XgksMoSetFillIntStyle (style);
+    if (MO_OPENED == TRUE)
+        XgksMoSetFillIntStyle(style);
 
-        return(0);
+    return (0);
 }
 
 /*$F
@@ -453,50 +435,50 @@ Gint gsetfillintstyle(Gflinter style)
  */
 Gint gsetfillrep(Gint ws_id, Gint idx, Gflbundl *rep)
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetfillrep);
+    /* check for proper gks state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetfillrep);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetfillrep);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgsetfillrep);
 
-/* check for open workstation identifier */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) , 25, errgsetfillrep);
+    /* check for open workstation identifier */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errgsetfillrep);
 
-/* Check for valid workstation category */
-        GKSERROR ((WS_CAT(ws) == GMI), 33, errgsetfillrep);
-        GKSERROR ((WS_CAT(ws) == GINPUT), 35, errgsetfillrep);
-        GKSERROR ((WS_CAT(ws) == GWISS), 36, errgsetfillrep);
+    /* Check for valid workstation category */
+    GKSERROR((WS_CAT(ws) == GMI), 33, errgsetfillrep);
+    GKSERROR((WS_CAT(ws) == GINPUT), 35, errgsetfillrep);
+    GKSERROR((WS_CAT(ws) == GWISS), 36, errgsetfillrep);
 
-/* check for valid fill area bundle table index */
-        GKSERROR ((idx < 1 || idx >= MAX_BUNDL_TBL) , 80, errgsetfillrep);
+    /* check for valid fill area bundle table index */
+    GKSERROR((idx < 1 || idx >= MAX_BUNDL_TBL), 80, errgsetfillrep);
 
-/* check for valid interior style */
-        GKSERROR((rep->inter != GHOLLOW && rep->inter != GSOLID && rep->inter != GPATTERN && rep->inter != GHATCH ) , 83, errgsetfillrep);
+    /* check for valid interior style */
+    GKSERROR((rep->inter != GHOLLOW && rep->inter != GSOLID && rep->inter != GPATTERN && rep->inter != GHATCH), 83, errgsetfillrep);
 
-/* check for style index equal to zero */
-        if ((rep->inter == GPATTERN) || (rep->inter == GHATCH))
-                GKSERROR ((rep->style == 0), 84, errgsetfillrep);
+    /* check for style index equal to zero */
+    if ((rep->inter == GPATTERN) || (rep->inter == GHATCH))
+        GKSERROR((rep->style == 0), 84, errgsetfillrep);
 
-/* valid pattern index */
-        if (rep->inter == GPATTERN)
-                GKSERROR ((!WS_FILL_TYPE(rep->inter,rep->style)), 85, errgsetfillrep);
+    /* valid pattern index */
+    if (rep->inter == GPATTERN)
+        GKSERROR((!WS_FILL_TYPE(rep->inter, rep->style)), 85, errgsetfillrep);
 
-/* valid hatch index */
-        if (rep->inter == GHATCH)
-                GKSERROR ((!WS_FILL_TYPE(rep->inter,rep->style)), 86, errgsetfillrep);
+    /* valid hatch index */
+    if (rep->inter == GHATCH)
+        GKSERROR((!WS_FILL_TYPE(rep->inter, rep->style)), 86, errgsetfillrep);
 
-/* check for valid colour index */
-        GKSERROR ((!WS_AVAIL_COLOUR(ws,rep->colour)) , 93, errgsetfillrep);
+    /* check for valid colour index */
+    GKSERROR((!WS_AVAIL_COLOUR(ws, rep->colour)), 93, errgsetfillrep);
 
-        if (ws->ewstype == MO)
-                XgksMoSetFillRep (ws, idx, rep);
+    if (ws->ewstype == MO)
+        XgksMoSetFillRep(ws, idx, rep);
 
-/* finally get to tell the workstation */
-        ws->flbundl_table[idx] = (*rep);
+    /* finally get to tell the workstation */
+    ws->flbundl_table[idx] = (*rep);
 
-        return(0);
+    return (0);
 }
 
 /*$F
@@ -510,18 +492,19 @@ Gint gsetfillrep(Gint ws_id, Gint idx, Gflbundl *rep)
  */
 Gint gsetfillstyleind(Gint idx)
 {
-/* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetfillstyleind);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errgsetfillstyleind);
 
-/* check for valid style index */
-        GKSERROR ((idx == 0) , 84, errgsetfillstyleind);
+    /* check for valid style index */
+    GKSERROR((idx == 0), 84, errgsetfillstyleind);
 
-/* ok to proceed */
-        xgks_state.gks_flattr.bundl.style = idx;
+    /* ok to proceed */
+    xgks_state.gks_flattr.bundl.style = idx;
 
-        if (MO_OPENED == TRUE) XgksMoSetGraphicAttr (39, idx);
+    if (MO_OPENED == TRUE)
+        XgksMoSetGraphicAttr(39, idx);
 
-        return(0);
+    return (0);
 }
 
 /*$F
@@ -536,18 +519,17 @@ Gint gsetfillstyleind(Gint idx)
 
 Gint gsetpatrefpt(Gpoint *ref)
 {
-/* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetpatrefpt );
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errgsetpatrefpt);
 
-/* ok to proceed */
-        xgks_state.gks_ptattr.ptp = *ref;
+    /* ok to proceed */
+    xgks_state.gks_ptattr.ptp = *ref;
 
-        if (MO_OPENED == TRUE) XgksMoSetPatRef ();
+    if (MO_OPENED == TRUE)
+        XgksMoSetPatRef();
 
-        return(0);
+    return (0);
 }
-
-
 
 /*$F
  * gsetpatsize (siz) - SET PATTERN SIZE
@@ -558,25 +540,25 @@ Gint gsetpatrefpt(Gpoint *ref)
  *
  * See Also: ANSI Standard p.98
  */
-Gint gsetpatsize(Gpoint  *siz)
+Gint gsetpatsize(Gpoint *siz)
 {
-/* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state == GGKCL) , 8, errgsetpatsize );
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errgsetpatsize);
 
-/* check for valid style index */
-        GKSERROR ( ((siz->x < 0) || (siz->y < 0)) , 87, errgsetpatsize );
+    /* check for valid style index */
+    GKSERROR(((siz->x < 0) || (siz->y < 0)), 87, errgsetpatsize);
 
-/* ok to proceed */
-        xgks_state.gks_ptattr.widthvec.x = siz->x;
-        xgks_state.gks_ptattr.widthvec.y = 0.0;
-        xgks_state.gks_ptattr.heightvec.x = 0.0;
-        xgks_state.gks_ptattr.heightvec.y = siz->y;
+    /* ok to proceed */
+    xgks_state.gks_ptattr.widthvec.x = siz->x;
+    xgks_state.gks_ptattr.widthvec.y = 0.0;
+    xgks_state.gks_ptattr.heightvec.x = 0.0;
+    xgks_state.gks_ptattr.heightvec.y = siz->y;
 
-        if (MO_OPENED == TRUE) XgksMoSetPatSize ();
+    if (MO_OPENED == TRUE)
+        XgksMoSetPatSize();
 
-        return(0);
+    return (0);
 }
-
 
 /*$F
  * gsetpatrep(ws_id, idx, rep) - SET PATTERN REPRESENTATION
@@ -592,51 +574,51 @@ Gint gsetpatsize(Gpoint  *siz)
 
 Gint gsetpatrep(Gint ws_id, Gint idx, Gptbundl *rep)
 {
-        WS_STATE_PTR ws;
-        Gint i, j;
-        Gint *slot;
+    WS_STATE_PTR ws;
+    Gint i, j;
+    Gint *slot;
 
-/* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetpatrep);
+    /* check for proper gks state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetpatrep);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetpatrep);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgsetpatrep);
 
-/* check for open workstation */
-        GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetpatrep);
+    /* check for open workstation */
+    GKSERROR((!(ws = OPEN_WSID(ws_id))), 25, errgsetpatrep);
 
-/* check proper workstation category */
-        GKSERROR ((WS_CAT(ws) == GMI), 33, errgsetpatrep);
-        GKSERROR ((WS_CAT(ws) == GWISS), 36, errgsetpatrep);
+    /* check proper workstation category */
+    GKSERROR((WS_CAT(ws) == GMI), 33, errgsetpatrep);
+    GKSERROR((WS_CAT(ws) == GWISS), 36, errgsetpatrep);
 
-/* valid pattern index? */
-        GKSERROR ((idx < 1 || idx >= MAX_BUNDL_TBL) , 85, errgsetpatrep);
+    /* valid pattern index? */
+    GKSERROR((idx < 1 || idx >= MAX_BUNDL_TBL), 85, errgsetpatrep);
 
-/* valid dimensions */
-        GKSERROR ((rep->size.x < 1 || rep->size.y < 1) , 91, errgsetpatrep);
+    /* valid dimensions */
+    GKSERROR((rep->size.x < 1 || rep->size.y < 1), 91, errgsetpatrep);
 
-/* valid colour indices */
-        i = rep->size.x * rep->size.y;
-        for (j=0,slot=rep->array; j < i; j++,slot++)
-           GKSERROR ((*slot < 0), 93, errgsetpatrep);
+    /* valid colour indices */
+    i = rep->size.x * rep->size.y;
+    for (j = 0, slot = rep->array; j < i; j++, slot++)
+        GKSERROR((*slot < 0), 93, errgsetpatrep);
 
-/* valid colour values? */
-/*      i = ws->ptbundl_table[idx-1].size.x * ws->ptbundl_table[idx-1].size.y;
+    /* valid colour values? */
+    /*      i = ws->ptbundl_table[idx-1].size.x * ws->ptbundl_table[idx-1].size.y;
  *      for (j=0; j < i; j++)
  *              GKSERROR( !WS_AVAIL_COLOUR(ws,rep->array[j]), 93, errgsetpatrep);
  */
 
-/* STEP 2: set the pattern bundle table values */
-        free(ws->ptbundl_table[idx-1].array);
-        ws->ptbundl_table[idx-1] = *rep;
-        ws->ptbundl_table[idx-1].array = (Gint *)malloc( i * sizeof(int));
-        GKSERROR( (ws->ptbundl_table[idx-1].array == NULL), 300, errgsetpatrep);
+    /* STEP 2: set the pattern bundle table values */
+    free(ws->ptbundl_table[idx - 1].array);
+    ws->ptbundl_table[idx - 1] = *rep;
+    ws->ptbundl_table[idx - 1].array = (Gint *) malloc(i * sizeof(int));
+    GKSERROR((ws->ptbundl_table[idx - 1].array == NULL), 300, errgsetpatrep);
 
-        for (j=0; j < i; j++)
-                ws->ptbundl_table[idx-1].array[j] = rep->array[j];
+    for (j = 0; j < i; j++)
+        ws->ptbundl_table[idx - 1].array[j] = rep->array[j];
 
-        if (ws->ewstype == MO)
-                XgksMoSetPatRep (ws, idx, rep);
+    if (ws->ewstype == MO)
+        XgksMoSetPatRep(ws, idx, rep);
 
-        return (OK);
+    return (OK);
 }

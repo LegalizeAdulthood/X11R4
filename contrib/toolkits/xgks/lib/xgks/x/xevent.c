@@ -69,420 +69,400 @@ int XgksSIGIO_ON(Display *dpy);
 
 static void xProcessEvents(int signum)
 {
-   Display *dpy;
-   XEvent xev;
-   Gint i;
+    Display *dpy;
+    XEvent xev;
+    Gint i;
 
-   /* ws_is_closing is set to true early */
-   /* in the window closing process.  This blocks events from    */
-   /* getting past this "if" once the window has started to      */
-   /* close. */
+    /* ws_is_closing is set to true early */
+    /* in the window closing process.  This blocks events from    */
+    /* getting past this "if" once the window has started to      */
+    /* close. */
 
-        for (i=0; i<MAX_OPEN_WS; i++)
-           {
-           if ((xgks_state.openedws[i].ws_id != INVALID)
-             && ((dpy = xgks_state.openedws[i].ws->dpy) != NULL)
-             && (!xgks_state.openedws[i].ws->ws_is_closing) )
-                while (XPending(dpy))
-                   {            /* return # pending events */
-                   XNextEvent(dpy, &xev);
+    for (i = 0; i < MAX_OPEN_WS; i++)
+    {
+        if ((xgks_state.openedws[i].ws_id != INVALID)
+            && ((dpy = xgks_state.openedws[i].ws->dpy) != NULL)
+            && (!xgks_state.openedws[i].ws->ws_is_closing))
+            while (XPending(dpy))
+            { /* return # pending events */
+                XNextEvent(dpy, &xev);
 
-                   /* call debugging printer if EVENTDEBUG is defined */
-                   PRINT_EVENT(&xev);
+                /* call debugging printer if EVENTDEBUG is defined */
+                PRINT_EVENT(&xev);
 
-                   /* NOTE: this used to say "xev.type & 0177" to */
-                   /*       mask out the "XSendEvent" bit that    */
-                   /*       indicated that the event had been sent*/
-                   /*       with XSendEvent.  This is obsolete now*/
-                   /*       Now there is a field called send_event*/
-                   /*       that indicates the same. */
-                   switch( xev.type )
-                        {
+                /* NOTE: this used to say "xev.type & 0177" to */
+                /*       mask out the "XSendEvent" bit that    */
+                /*       indicated that the event had been sent*/
+                /*       with XSendEvent.  This is obsolete now*/
+                /*       Now there is a field called send_event*/
+                /*       that indicates the same. */
+                switch (xev.type)
+                {
+                case Expose:
+                    XgksExposeEvent(&xev, dpy);
+                    break;
 
-                        case Expose:
-                                XgksExposeEvent(&xev,dpy);
-                                break;
-
-                        case KeyPress:          /* Physical device triggered */
-                        case MotionNotify:      /* Physical device triggered */
-                        case ButtonPress:
-                        case ButtonRelease:
-                                XgksIProcessXEvent( &xev );
-                                break;
+                case KeyPress:     /* Physical device triggered */
+                case MotionNotify: /* Physical device triggered */
+                case ButtonPress:
+                case ButtonRelease:
+                    XgksIProcessXEvent(&xev);
+                    break;
 
                 case EnterNotify:
                 case FocusIn:
-                        XgksFocusInEvent(&xev,dpy);
-                        break;
+                    XgksFocusInEvent(&xev, dpy);
+                    break;
 
                 case FocusOut:
                 case LeaveNotify:
-                        XgksFocusOutEvent(dpy);
-                        break;
-
-        }
-   }
+                    XgksFocusOutEvent(dpy);
+                    break;
+                }
+            }
+    }
 }
-}
-
-
 
 /*
  * start the SIGIO interrupt system
  */
 int xXgksSIGIOStart(WS_STATE_PTR ws)
 {
-        Display *dpy;
-        int one = 1;
-        int pid = getpid();
-        struct sigaction action =
-        {
-            SIG_IGN
-        };
+    Display *dpy;
+    int one = 1;
+    int pid = getpid();
+    struct sigaction action = {
+        SIG_IGN
+    };
 
-        dpy = ws->dpy;
-        if (dpy == NULL)                /* not opened yet */
-                return INVALID;
+    dpy = ws->dpy;
+    if (dpy == NULL) /* not opened yet */
+        return INVALID;
 
-        sigaction(SIGIO, &action, NULL);
-        ioctl(ConnectionNumber(dpy), SIOCSPGRP, &pid);
-        ioctl(ConnectionNumber(dpy), FIOASYNC, &one);
+    sigaction(SIGIO, &action, NULL);
+    ioctl(ConnectionNumber(dpy), SIOCSPGRP, &pid);
+    ioctl(ConnectionNumber(dpy), FIOASYNC, &one);
 
-        return OK;
+    return OK;
 }
 
 static int SigCount = 0;
 
 int XgksSIGIO_OFF(Display *dpy)
 {
-        int zero = 0;
-        struct sigaction action =
-        {
-            SIG_IGN
-        };
-        SigCount++;
+    int zero = 0;
+    struct sigaction action = {
+        SIG_IGN
+    };
+    SigCount++;
 
 #ifdef SIGDEBUG
-        fprintf(stderr, "XgksSIGIO_OFF SigCount == %d\n", SigCount);
+    fprintf(stderr, "XgksSIGIO_OFF SigCount == %d\n", SigCount);
 #endif
-        if (SigCount > 1)       /* already off */
-                return 0;
+    if (SigCount > 1) /* already off */
+        return 0;
 
-        /* if socket does not exist io is not possible */
-        if (dpy == NULL)
-                return 0;
+    /* if socket does not exist io is not possible */
+    if (dpy == NULL)
+        return 0;
 
-        sigaction(SIGIO, &action, NULL);
-        ioctl(ConnectionNumber(dpy), FIOASYNC, &zero);
+    sigaction(SIGIO, &action, NULL);
+    ioctl(ConnectionNumber(dpy), FIOASYNC, &zero);
 }
 
 int XgksSIGIO_ON(Display *dpy)
 {
-        int one = 1;
-        int pid = getpid();
-        struct sigaction action =
-        {
-            xProcessEvents
-        };
+    int one = 1;
+    int pid = getpid();
+    struct sigaction action = {
+        xProcessEvents
+    };
 
-        SigCount--;
+    SigCount--;
 
 #ifdef SIGDEBUG
-        fprintf(stderr, "XgksSIGIO_ON SigCount == %d\n", SigCount);
+    fprintf(stderr, "XgksSIGIO_ON SigCount == %d\n", SigCount);
 #endif
-        if (SigCount > 0)       /* only on last request */
-                return 0;
+    if (SigCount > 0) /* only on last request */
+        return 0;
 
-        /* if socket does not exist io is not possible */
-        if (dpy == NULL)
-                return 0;
+    /* if socket does not exist io is not possible */
+    if (dpy == NULL)
+        return 0;
 
-        xProcessEvents(SIGIO);
-        sigaction(SIGIO, &action, NULL);
-        ioctl(ConnectionNumber(dpy), SIOCSPGRP, &pid);
-        ioctl(ConnectionNumber(dpy), FIOASYNC, &one);
+    xProcessEvents(SIGIO);
+    sigaction(SIGIO, &action, NULL);
+    ioctl(ConnectionNumber(dpy), SIOCSPGRP, &pid);
+    ioctl(ConnectionNumber(dpy), FIOASYNC, &one);
 }
 
 static int XgksExposeEvent(XEvent *xev, Display *dpy)
 {
-   XEvent tmpxev;
-   Gint ii;
-   Window  win;
-   WS_STATE_PTR ws;
-   XWindowAttributes win_att;
+    XEvent tmpxev;
+    Gint ii;
+    Window win;
+    WS_STATE_PTR ws;
+    XWindowAttributes win_att;
 
+    /* if this is not the latest Expose Event, ignore it */
+    XSync(dpy, 0);
+    if (xev->xexpose.count != 0)
+        return (0);
 
-   /* if this is not the latest Expose Event, ignore it */
-   XSync(dpy, 0);
-   if (xev->xexpose.count != 0)
-      return(0);
-
-   /* if there is not another expose event further on in the queue, then we
+    /* if there is not another expose event further on in the queue, then we
       have to process this expose.  Otherwise, we can bag the current expose,
       and if the expose count on the one we found is greater than 0, then we
       can bag that one also because we know another one has to follow it.  If
       the expose count on the one we found is 0 then it has to be re-sent to
       put it back at the tail of the queue.  (Got it?) */
 
-   if (XCheckTypedWindowEvent (dpy, xev->xexpose.window, Expose, &tmpxev))
-      {
-      /*  Found another expose  */
-      if (tmpxev.xexpose.count == 0) /*  And we are re-sending it.  */
-         XSendEvent (dpy, xev->xexpose.window, True, ExposureMask, &tmpxev);
-      return(0); /* We know there's an expose after this one so don't process */
-      }
+    if (XCheckTypedWindowEvent(dpy, xev->xexpose.window, Expose, &tmpxev))
+    {
+        /*  Found another expose  */
+        if (tmpxev.xexpose.count == 0) /*  And we are re-sending it.  */
+            XSendEvent(dpy, xev->xexpose.window, True, ExposureMask, &tmpxev);
+        return (0); /* We know there's an expose after this one so don't process */
+    }
 
-   /* get the event window and the related wslist pointer */
+    /* get the event window and the related wslist pointer */
 
-   for (ii=0; ii < MAX_OPEN_WS; ii++)
-      if ((xgks_state.openedws[ii].win == xev->xexpose.window) &&
-              (xgks_state.openedws[ii].ws->dpy == dpy))
-         break;
+    for (ii = 0; ii < MAX_OPEN_WS; ii++)
+        if ((xgks_state.openedws[ii].win == xev->xexpose.window) && (xgks_state.openedws[ii].ws->dpy == dpy))
+            break;
 
-   if (ii >= MAX_OPEN_WS)
-      return(0);
+    if (ii >= MAX_OPEN_WS)
+        return (0);
 
-   ws  = xgks_state.openedws[ii].ws;
-   win = xgks_state.openedws[ii].win;
+    ws = xgks_state.openedws[ii].ws;
+    win = xgks_state.openedws[ii].win;
 
-   /* disable all input devices */
-   XgksIDevDisable( ws );
+    /* disable all input devices */
+    XgksIDevDisable(ws);
 
-   /* get current window width and height values */
+    /* get current window width and height values */
 
-   XGetWindowAttributes(dpy, win, &win_att);
+    XGetWindowAttributes(dpy, win, &win_att);
 
-   ws->wbound.x = win_att.width;
-   ws->wbound.y = win_att.height;
+    ws->wbound.x = win_att.width;
+    ws->wbound.y = win_att.height;
 
-   /* for the latest Expose Event redraw the window contents */
+    /* for the latest Expose Event redraw the window contents */
 
-   xXgksUpdateTrans(ws);
+    xXgksUpdateTrans(ws);
 
-   XClearArea(dpy, win, 0, 0, 0, 0, False);
+    XClearArea(dpy, win, 0, 0, 0, 0, False);
 
-   XSync(dpy, 0);
+    XSync(dpy, 0);
 
-   XgksXReDrawWs(ws);
+    XgksXReDrawWs(ws);
 
-   /* if necessary call user defined redraw notifying function */
-   if (ws->redrawfuncp != NULL)
-      (*(ws->redrawfuncp))( ws->ws_id, GRD_X );
+    /* if necessary call user defined redraw notifying function */
+    if (ws->redrawfuncp != NULL)
+        (*(ws->redrawfuncp))(ws->ws_id, GRD_X);
 
-   /* enable the input devices */
-   XgksIDevEnable( ws );
-
-   }
-
+    /* enable the input devices */
+    XgksIDevEnable(ws);
+}
 
 static int XgksFocusInEvent(XEvent *xev, Display *dpy)
 {
-   int n;
-   Colormap dclmp, *clmp_installed;
-   Gint ii;
-   Window  win;
-   WS_STATE_PTR ws;
+    int n;
+    Colormap dclmp, *clmp_installed;
+    Gint ii;
+    Window win;
+    WS_STATE_PTR ws;
 
-   /* get the event window and the related wslist pointer */
+    /* get the event window and the related wslist pointer */
 
-   if (xev->xfocus.detail == NotifyNonlinearVirtual)
-      return(0);
+    if (xev->xfocus.detail == NotifyNonlinearVirtual)
+        return (0);
 
-   clmp_installed = XListInstalledColormaps(dpy, xev->xfocus.window, &n);
+    clmp_installed = XListInstalledColormaps(dpy, xev->xfocus.window, &n);
 
-   if (xev->xfocus.window != DefaultRootWindow(xev->xfocus.display))
-      {
-      for (ii=0; ii < MAX_OPEN_WS; ii++)
-      if ((xgks_state.openedws[ii].win == xev->xfocus.window)
-           && (xgks_state.openedws[ii].ws->dpy == dpy))
-         break;
+    if (xev->xfocus.window != DefaultRootWindow(xev->xfocus.display))
+    {
+        for (ii = 0; ii < MAX_OPEN_WS; ii++)
+            if ((xgks_state.openedws[ii].win == xev->xfocus.window)
+                && (xgks_state.openedws[ii].ws->dpy == dpy))
+                break;
 
-      if (ii >= MAX_OPEN_WS)
-         return(0);
+        if (ii >= MAX_OPEN_WS)
+            return (0);
 
-      ws  = xgks_state.openedws[ii].ws;
-      win = xgks_state.openedws[ii].win;
+        ws = xgks_state.openedws[ii].ws;
+        win = xgks_state.openedws[ii].win;
 
-      /* remember who has the focus */
-      xgks_state.focus_ws = ws;
+        /* remember who has the focus */
+        xgks_state.focus_ws = ws;
 
-      /* Instal a new color map when necessary */
+        /* Instal a new color map when necessary */
 
-      if (ws->wclmp != *clmp_installed)
-         {
-         XInstallColormap(dpy, ws->wclmp);
-         XFlush (dpy);
-         /* NOTE: If we don't flush, switching quickly */
-         /*       in and out of the window could cause */
-         /*       the wrong color map to be displayed. */
-         }
-
-      }
-   else
-      {
-      if (*clmp_installed != (dclmp = DefaultColormap(dpy, DefaultScreen(dpy))))
-         {
-         XInstallColormap(dpy, dclmp);
-         XFlush (dpy);
-         /* NOTE: If we don't flush, switching quickly */
-         /*       in and out of the window could cause */
-         /*       the wrong color map to be displayed. */
-         }
-      /* NOTE: Someday (when they finish defining standards for window  */
-      /*       managers) all the code that deals with colormaps may have */
-      /*       to be rewritten or removed.  It is expected that window   */
-      /*       managers will be at least partially responsible for        */
-      /*       managing colormaps.  */
-      }
-   }
-
-
+        if (ws->wclmp != *clmp_installed)
+        {
+            XInstallColormap(dpy, ws->wclmp);
+            XFlush(dpy);
+            /* NOTE: If we don't flush, switching quickly */
+            /*       in and out of the window could cause */
+            /*       the wrong color map to be displayed. */
+        }
+    }
+    else
+    {
+        if (*clmp_installed != (dclmp = DefaultColormap(dpy, DefaultScreen(dpy))))
+        {
+            XInstallColormap(dpy, dclmp);
+            XFlush(dpy);
+            /* NOTE: If we don't flush, switching quickly */
+            /*       in and out of the window could cause */
+            /*       the wrong color map to be displayed. */
+        }
+        /* NOTE: Someday (when they finish defining standards for window  */
+        /*       managers) all the code that deals with colormaps may have */
+        /*       to be rewritten or removed.  It is expected that window   */
+        /*       managers will be at least partially responsible for        */
+        /*       managing colormaps.  */
+    }
+}
 
 static int XgksFocusOutEvent(Display *dpy)
 {
-   Colormap dclmp;
+    Colormap dclmp;
 
-   dclmp = DefaultColormap(dpy, DefaultScreen(dpy));
-   XInstallColormap(dpy, dclmp);
-   XFlush(dpy);
-   /* NOTE: If we don't flush, switching quickly */
-   /*       in and out of the window could cause */
-   /*       the wrong color map to be displayed. */
+    dclmp = DefaultColormap(dpy, DefaultScreen(dpy));
+    XInstallColormap(dpy, dclmp);
+    XFlush(dpy);
+    /* NOTE: If we don't flush, switching quickly */
+    /*       in and out of the window could cause */
+    /*       the wrong color map to be displayed. */
 
-   xgks_state.focus_ws = NULL;
-   /* focus_ws remains null until the next */
-   /* FocusIn event. */
+    xgks_state.focus_ws = NULL;
+    /* focus_ws remains null until the next */
+    /* FocusIn event. */
 
-   return(0);
-   }
-
-
-
-
+    return (0);
+}
 
 #ifdef EVENTDEBUG
 static int print_event(XEvent *evnt)
 {
-   switch (evnt->type)
-      {
-      case 0:
-         fprintf( stderr, "some kind of error" );
-         break;
-      case 1:
-         fprintf( stderr, "some kind of reply" );
-         break;
-      case KeyPress:
-         fprintf( stderr, "KeyPress" );
-         break;
-      case KeyRelease:
-         fprintf( stderr, "KeyRelease" );
-         break;
-      case ButtonPress:
-         fprintf( stderr, "ButtonPress" );
-         break;
-      case ButtonRelease:
-         fprintf( stderr, "ButtonRelease" );
-         break;
-      case MotionNotify:
-         fprintf( stderr, "MotionNotify" );
-         break;
-      case EnterNotify:
-         fprintf( stderr, "EnterNotify" );
-         break;
-      case LeaveNotify:
-         fprintf( stderr, "LeaveNotify" );
-         break;
-      case FocusIn:
-         fprintf( stderr, "FocusIn" );
-         break;
-      case FocusOut:
-         fprintf( stderr, "FocusOut" );
-         break;
-      case KeymapNotify:
-         fprintf( stderr, "KeymapNotify" );
-         break;
-      case Expose:
-         fprintf( stderr, "Expose" );
-         break;
-      case GraphicsExpose:
-         fprintf( stderr, "GraphicsExpose" );
-         break;
-      case NoExpose:
-         fprintf( stderr, "NoExpose" );
-         break;
-      case VisibilityNotify:
-         fprintf( stderr, "VisibilityNotify" );
-         break;
-      case CreateNotify:
-         fprintf( stderr, "CreateNotify" );
-         break;
-      case DestroyNotify:
-         fprintf( stderr, "DestroyNotify" );
-         break;
-      case UnmapNotify:
-         fprintf( stderr, "UnmapNotify" );
-         break;
-      case MapNotify:
-         fprintf( stderr, "MapNotify" );
-         break;
-      case MapRequest:
-         fprintf( stderr, "MapRequest" );
-         break;
-      case ReparentNotify:
-         fprintf( stderr, "ReparentNotify" );
-         break;
-      case ConfigureNotify:
-         fprintf( stderr, "ConfigureNotify" );
-         break;
-      case ConfigureRequest:
-         fprintf( stderr, "ConfigureRequest" );
-         break;
-      case GravityNotify:
-         fprintf( stderr, "GravityNotify" );
-         break;
-      case ResizeRequest:
-         fprintf( stderr, "ResizeRequest" );
-         break;
-      case CirculateNotify:
-         fprintf( stderr, "CirculateNotify" );
-         break;
-      case CirculateRequest:
-         fprintf( stderr, "CirculateRequest" );
-         break;
-      case PropertyNotify:
-         fprintf( stderr, "PropertyNotify" );
-         break;
-      case SelectionClear:
-         fprintf( stderr, "SelectionClear" );
-         break;
-      case SelectionRequest:
-         fprintf( stderr, "SelectionRequest" );
-         break;
-      case SelectionNotify:
-         fprintf( stderr, "SelectionNotify" );
-         break;
-      case ColormapNotify:
-         fprintf( stderr, "ColormapNotify" );
-         break;
-      case ClientMessage:
-         fprintf( stderr, "ClientMessage" );
-         break;
-      case MappingNotify:
-         fprintf( stderr, "MappingNotify" );
-         break;
-      default:
-         if (evnt->type >= LASTEvent)
-         {
-            fprintf( stderr, "extension event #%d", evnt->type );
-         }
-         else
-         {
-            fprintf( stderr, "\nInternal Error in XUnhandledWireEvent!" );
-         }
-         break;
-      }
-   return(0);
-   }
+    switch (evnt->type)
+    {
+    case 0:
+        fprintf(stderr, "some kind of error");
+        break;
+    case 1:
+        fprintf(stderr, "some kind of reply");
+        break;
+    case KeyPress:
+        fprintf(stderr, "KeyPress");
+        break;
+    case KeyRelease:
+        fprintf(stderr, "KeyRelease");
+        break;
+    case ButtonPress:
+        fprintf(stderr, "ButtonPress");
+        break;
+    case ButtonRelease:
+        fprintf(stderr, "ButtonRelease");
+        break;
+    case MotionNotify:
+        fprintf(stderr, "MotionNotify");
+        break;
+    case EnterNotify:
+        fprintf(stderr, "EnterNotify");
+        break;
+    case LeaveNotify:
+        fprintf(stderr, "LeaveNotify");
+        break;
+    case FocusIn:
+        fprintf(stderr, "FocusIn");
+        break;
+    case FocusOut:
+        fprintf(stderr, "FocusOut");
+        break;
+    case KeymapNotify:
+        fprintf(stderr, "KeymapNotify");
+        break;
+    case Expose:
+        fprintf(stderr, "Expose");
+        break;
+    case GraphicsExpose:
+        fprintf(stderr, "GraphicsExpose");
+        break;
+    case NoExpose:
+        fprintf(stderr, "NoExpose");
+        break;
+    case VisibilityNotify:
+        fprintf(stderr, "VisibilityNotify");
+        break;
+    case CreateNotify:
+        fprintf(stderr, "CreateNotify");
+        break;
+    case DestroyNotify:
+        fprintf(stderr, "DestroyNotify");
+        break;
+    case UnmapNotify:
+        fprintf(stderr, "UnmapNotify");
+        break;
+    case MapNotify:
+        fprintf(stderr, "MapNotify");
+        break;
+    case MapRequest:
+        fprintf(stderr, "MapRequest");
+        break;
+    case ReparentNotify:
+        fprintf(stderr, "ReparentNotify");
+        break;
+    case ConfigureNotify:
+        fprintf(stderr, "ConfigureNotify");
+        break;
+    case ConfigureRequest:
+        fprintf(stderr, "ConfigureRequest");
+        break;
+    case GravityNotify:
+        fprintf(stderr, "GravityNotify");
+        break;
+    case ResizeRequest:
+        fprintf(stderr, "ResizeRequest");
+        break;
+    case CirculateNotify:
+        fprintf(stderr, "CirculateNotify");
+        break;
+    case CirculateRequest:
+        fprintf(stderr, "CirculateRequest");
+        break;
+    case PropertyNotify:
+        fprintf(stderr, "PropertyNotify");
+        break;
+    case SelectionClear:
+        fprintf(stderr, "SelectionClear");
+        break;
+    case SelectionRequest:
+        fprintf(stderr, "SelectionRequest");
+        break;
+    case SelectionNotify:
+        fprintf(stderr, "SelectionNotify");
+        break;
+    case ColormapNotify:
+        fprintf(stderr, "ColormapNotify");
+        break;
+    case ClientMessage:
+        fprintf(stderr, "ClientMessage");
+        break;
+    case MappingNotify:
+        fprintf(stderr, "MappingNotify");
+        break;
+    default:
+        if (evnt->type >= LASTEvent)
+        {
+            fprintf(stderr, "extension event #%d", evnt->type);
+        }
+        else
+        {
+            fprintf(stderr, "\nInternal Error in XUnhandledWireEvent!");
+        }
+        break;
+    }
+    return (0);
+}
 #endif
-
-

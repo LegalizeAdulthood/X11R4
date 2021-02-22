@@ -44,30 +44,30 @@ Gint xXgksInqPixelarray(WS_STATE_PTR ws, Gpoint *point, Gipoint *dim, Gpxarray *
 void xXgksInqPixel(WS_STATE_PTR ws, Gpoint *ppoint, Gint *pix);
 
 Gint ginqpixelarraydim(ws_id, rect, dim)
-Gint ws_id;
+    Gint ws_id;
 Grect *rect;
 Gipoint *dim;
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixelarraydim);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixelarraydim);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixelarraydim);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqpixelarraydim);
 
-/* check if this workstation is opened */
-        GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpixelarraydim);
+    /* check if this workstation is opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpixelarraydim);
 
-/* check workstation type */
-        GKSERROR( (ws->ewstype != X_WIN), 39, errginqpixelarraydim);
+    /* check workstation type */
+    GKSERROR((ws->ewstype != X_WIN), 39, errginqpixelarraydim);
 
-/* get the returned values from the X-server */
-        xXgksInqPixelarrayDim(ws, rect, dim);
+    /* get the returned values from the X-server */
+    xXgksInqPixelarrayDim(ws, rect, dim);
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqpixelarray(ws_id, point, dimen, pxarr)   INQUIRE PIXEL ARRAY
  *
@@ -83,34 +83,34 @@ Gipoint *dim;
  */
 
 Gint ginqpixelarray(ws_id, point, dimen, pxarr)
-Gint ws_id;
+    Gint ws_id;
 Gpoint *point;
 Gipoint *dimen;
 Gpxarray *pxarr;
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixelarray);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixelarray);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixelarray);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqpixelarray);
 
-/* check if this workstation is opened */
-        GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpixelarray);
+    /* check if this workstation is opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpixelarray);
 
-/* check workstation type */
-        GKSERROR( (ws->ewstype != X_WIN), 39, errginqpixelarray);
+    /* check workstation type */
+    GKSERROR((ws->ewstype != X_WIN), 39, errginqpixelarray);
 
-/* check for valid dimensions of colour array */
-        GKSERROR( (dimen->x < 1 || dimen->y < 1), 91, errginqpixelarray);
+    /* check for valid dimensions of colour array */
+    GKSERROR((dimen->x < 1 || dimen->y < 1), 91, errginqpixelarray);
 
-/* get the returned values from the X-server */
-        xXgksInqPixelarray(ws, point, dimen, pxarr);
+    /* get the returned values from the X-server */
+    xXgksInqPixelarray(ws, point, dimen, pxarr);
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqpixel(ws_id, ppoint, pix)        INQUIRE PIXEL
  *
@@ -125,26 +125,26 @@ Gpxarray *pxarr;
  */
 
 Gint ginqpixel(ws_id, ppoint, pix)
-Gint ws_id;
+    Gint ws_id;
 Gpoint *ppoint;
 Gint *pix;
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixel);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpixel);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpixel);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqpixel);
 
-/* check if this workstation is opened */
-        GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpixel);
+    /* check if this workstation is opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpixel);
 
-/* check workstation type */
-        GKSERROR( (ws->ewstype != X_WIN), 39, errginqpixel);
+    /* check workstation type */
+    GKSERROR((ws->ewstype != X_WIN), 39, errginqpixel);
 
-/* get the returned values from the X-server */
-        xXgksInqPixel(ws, ppoint, pix);
+    /* get the returned values from the X-server */
+    xXgksInqPixel(ws, ppoint, pix);
 
-        return( OK );
+    return (OK);
 }

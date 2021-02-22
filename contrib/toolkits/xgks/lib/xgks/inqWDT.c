@@ -55,23 +55,23 @@ Gint XgksMaxColours(Gchar *ws_type);
 
 static char *WSTList[] = { "MI", "MO", "WISS", NULL };
 
-Gint ginqavailwstypes( wstypes )
-        Gstrlist *wstypes;
+Gint ginqavailwstypes(wstypes)
+    Gstrlist *wstypes;
 {
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqavailwstypes);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqavailwstypes);
 
-        wstypes->number = 4;
-        wstypes->strings = (Gchar **) malloc( sizeof( Gchar *) * 4);
-        GKSERROR( (wstypes->strings == NULL), 300, errginqavailwstypes);
-        wstypes->strings[0] = WSTList[0];
-        wstypes->strings[1] = WSTList[1];
-        wstypes->strings[2] = WSTList[2];
-        wstypes->strings[3] = WSTList[3];
+    wstypes->number = 4;
+    wstypes->strings = (Gchar **) malloc(sizeof(Gchar *) * 4);
+    GKSERROR((wstypes->strings == NULL), 300, errginqavailwstypes);
+    wstypes->strings[0] = WSTList[0];
+    wstypes->strings[1] = WSTList[1];
+    wstypes->strings[2] = WSTList[2];
+    wstypes->strings[3] = WSTList[3];
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqdisplayspacesize(ws_type, dspsz) - INQUIRE MAXIMUM DISPLAY SURFACE SIZE
  *
@@ -83,31 +83,31 @@ Gint ginqavailwstypes( wstypes )
  * See Also: ANSI Standard p.171
  */
 Gint ginqdisplayspacesize(ws_type, dspsz)
-        Gchar *ws_type;
-        Gdspsize  *dspsz;
+    Gchar *ws_type;
+Gdspsize *dspsz;
 {
-        EWSTYPE ewstype;
+    EWSTYPE ewstype;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdisplayspacesize);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqdisplayspacesize);
 
-/* check for valid workstation type */
-        ewstype = XgksWsTypeToEnum(ws_type);
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqdisplayspacesize);
-        GKSERROR( (ewstype == MO), 31, errginqdisplayspacesize);
-        GKSERROR( (ewstype == MI), 33, errginqdisplayspacesize);
-        GKSERROR( (ewstype == WISS), 36, errginqdisplayspacesize);
+    /* check for valid workstation type */
+    ewstype = XgksWsTypeToEnum(ws_type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqdisplayspacesize);
+    GKSERROR((ewstype == MO), 31, errginqdisplayspacesize);
+    GKSERROR((ewstype == MI), 33, errginqdisplayspacesize);
+    GKSERROR((ewstype == WISS), 36, errginqdisplayspacesize);
 
-/* set up the return values, all X workstation look the same. */
-        dspsz->units = GDC_OTHER;
-        dspsz->device.x = 1280.0;
-        dspsz->device.y = 1024.0;
-        dspsz->raster.x = 1280;
-        dspsz->raster.y = 1024;
+    /* set up the return values, all X workstation look the same. */
+    dspsz->units = GDC_OTHER;
+    dspsz->device.x = 1280.0;
+    dspsz->device.y = 1024.0;
+    dspsz->raster.x = 1280;
+    dspsz->raster.y = 1024;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqwscategory(ws_type, cat) - INQUIRE WORKSTATION CATEGORY
  *
@@ -119,37 +119,38 @@ Gint ginqdisplayspacesize(ws_type, dspsz)
  * See Also: ANSI Standard p.170
  */
 Gint ginqwscategory(ws_type, cat)
-Gchar *ws_type;
+    Gchar *ws_type;
 Gwscat *cat;
 {
-        EWSTYPE ewstype;
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqwscategory);
+    EWSTYPE ewstype;
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqwscategory);
 
-/* check for valid workstation type */
-        ewstype = XgksWsTypeToEnum( ws_type );
+    /* check for valid workstation type */
+    ewstype = XgksWsTypeToEnum(ws_type);
 
-/* set up the return values */
-        switch(ewstype) {
-        case WISS:
-                *cat = GWISS;
-                break;
-        case MI:
-                *cat = GMI;
-                break;
-        case MO:
-                *cat = GMO;
-                break;
-        case X_WIN:
-                *cat = GOUTIN;
-                break;
-        default:
-                GKSERROR( (ewstype == WST_INVALID), 22, errginqwscategory);
-                break;
-        }
-        return( OK );
+    /* set up the return values */
+    switch (ewstype)
+    {
+    case WISS:
+        *cat = GWISS;
+        break;
+    case MI:
+        *cat = GMI;
+        break;
+    case MO:
+        *cat = GMO;
+        break;
+    case X_WIN:
+        *cat = GOUTIN;
+        break;
+    default:
+        GKSERROR((ewstype == WST_INVALID), 22, errginqwscategory);
+        break;
+    }
+    return (OK);
 }
-
+
 /*$F
  * ginqwsclass(ws_type, class) - INQUIRE WORKSTATION CLASSIFICATION
  *
@@ -162,26 +163,26 @@ Gwscat *cat;
  */
 
 Gint ginqwsclass(ws_type, class)
-        Gchar *ws_type;
-        Gwsclass *class;
+    Gchar *ws_type;
+Gwsclass *class;
 {
-        EWSTYPE ewstype;
+    EWSTYPE ewstype;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqwsclass);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqwsclass);
 
-/* check for valid workstation type */
-        ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqwsclass);
-        GKSERROR( (ewstype == WISS || ewstype == MO || ewstype == MI), 39,
-                 errginqwsclass);
+    /* check for valid workstation type */
+    ewstype = XgksWsTypeToEnum(ws_type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqwsclass);
+    GKSERROR((ewstype == WISS || ewstype == MO || ewstype == MI), 39,
+        errginqwsclass);
 
-/* set up the return values */
-        if (ewstype == X_WIN)
-          *class = GRASTER;
-        return( OK );
+    /* set up the return values */
+    if (ewstype == X_WIN)
+        *class = GRASTER;
+    return (OK);
 }
-
+
 /*$F
  * ginqmodwsattr(ws_type, dyn) -
  *              INQUIRE DYNAMIC MODIFICATION OF WORKSTATION ATTRIBUTES
@@ -195,30 +196,30 @@ Gint ginqwsclass(ws_type, class)
  */
 
 Gint ginqmodwsattr(ws_type, dyn)
-        Gchar *ws_type;
-        Gmodws *dyn;
+    Gchar *ws_type;
+Gmodws *dyn;
 {
-        EWSTYPE ewstype;
+    EWSTYPE ewstype;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmodwsattr);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqmodwsattr);
 
-/* check for valid workstation type */
-        ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqmodwsattr);
-        GKSERROR( (ewstype != X_WIN), 39, errginqmodwsattr);
+    /* check for valid workstation type */
+    ewstype = XgksWsTypeToEnum(ws_type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqmodwsattr);
+    GKSERROR((ewstype != X_WIN), 39, errginqmodwsattr);
 
-/* set up the return values */
-        dyn->line = GIMM;
-        dyn->mark = GIMM;
-        dyn->text = GIMM;
-        dyn->fill = GIMM;
-        dyn->pat  = GIMM;
-        dyn->colour= GIMM;
-        dyn->wstran = GIRG;
-        return( OK );
+    /* set up the return values */
+    dyn->line = GIMM;
+    dyn->mark = GIMM;
+    dyn->text = GIMM;
+    dyn->fill = GIMM;
+    dyn->pat = GIMM;
+    dyn->colour = GIMM;
+    dyn->wstran = GIRG;
+    return (OK);
 }
-
+
 /*$F
  * ginqdefdeferst(ws_type, def) - INQUIRE DEFUALT DEFERRAL STATE VALUES
  *
@@ -231,25 +232,25 @@ Gint ginqmodwsattr(ws_type, dyn)
  */
 
 Gint ginqdefdeferst(ws_type, def)
-        Gchar *ws_type;
-        Gdefer *def;
+    Gchar *ws_type;
+Gdefer *def;
 {
-        EWSTYPE ewstype;
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefdeferst);
+    EWSTYPE ewstype;
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqdefdeferst);
 
-/* check for valid workstation type */
-        ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqdefdeferst);
-        GKSERROR( (ewstype != X_WIN), 39, errginqdefdeferst);
+    /* check for valid workstation type */
+    ewstype = XgksWsTypeToEnum(ws_type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqdefdeferst);
+    GKSERROR((ewstype != X_WIN), 39, errginqdefdeferst);
 
-/* set up the return values */
-        def->defmode = GASAP;
-        def->irgmode = GALLOWED;
+    /* set up the return values */
+    def->defmode = GASAP;
+    def->irgmode = GALLOWED;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqmaxwssttables(ws_type, tables) -
  *              INQUIRE MAXIMUM LENGTH OF WORKSTATION STATE TABLES
@@ -263,31 +264,31 @@ Gint ginqdefdeferst(ws_type, def)
  */
 
 Gint ginqmaxwssttables(ws_type, tables)
-        Gchar *ws_type;
-        Gwstables *tables;
+    Gchar *ws_type;
+Gwstables *tables;
 {
-        EWSTYPE ewstype;
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmaxwssttables);
+    EWSTYPE ewstype;
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqmaxwssttables);
 
-/* check for valid workstation type */
-        ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqmaxwssttables);
-        GKSERROR( (ewstype != X_WIN), 39, errginqmaxwssttables);
+    /* check for valid workstation type */
+    ewstype = XgksWsTypeToEnum(ws_type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqmaxwssttables);
+    GKSERROR((ewstype != X_WIN), 39, errginqmaxwssttables);
 
-/* set up the return values */
-        tables->line = 20;
-        tables->mark = 20;
-        tables->text = 20;
-        tables->fill = 20;
-        tables->pat  = 20;
-        tables->colour= XgksMaxColours( ws_type );
+    /* set up the return values */
+    tables->line = 20;
+    tables->mark = 20;
+    tables->text = 20;
+    tables->fill = 20;
+    tables->pat = 20;
+    tables->colour = XgksMaxColours(ws_type);
 
-        GKSERROR( tables->colour < 0, 22, errginqmaxwssttables);
+    GKSERROR(tables->colour < 0, 22, errginqmaxwssttables);
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqnumavailinput(ws_type, num)- INQUIRE NUMBER OF AVAILABLE LOGICAL INPUT DEVICES
  *
@@ -300,29 +301,29 @@ Gint ginqmaxwssttables(ws_type, tables)
  */
 
 Gint ginqnumavailinput(ws_type, num)
-        Gchar *ws_type;
-        Gnumdev *num;
+    Gchar *ws_type;
+Gnumdev *num;
 {
-        EWSTYPE ewstype;
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqnumavailinput);
+    EWSTYPE ewstype;
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqnumavailinput);
 
-/* check for valid workstation type */
-        ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqnumavailinput);
-        GKSERROR( (ewstype != X_WIN), 38, errginqnumavailinput);
+    /* check for valid workstation type */
+    ewstype = XgksWsTypeToEnum(ws_type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqnumavailinput);
+    GKSERROR((ewstype != X_WIN), 38, errginqnumavailinput);
 
-/* set up the return values */
-        num->locator = 10;
-        num->stroke  = 10;
-        num->valuator= 10;
-        num->choice  = 10;
-        num->pick    = 10;
-        num->string  = 10;
+    /* set up the return values */
+    num->locator = 10;
+    num->stroke = 10;
+    num->valuator = 10;
+    num->choice = 10;
+    num->pick = 10;
+    num->string = 10;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * Inquiry Functions for Workstation State List
  */
@@ -340,32 +341,32 @@ Gint ginqnumavailinput(ws_type, num)
  */
 
 Gint ginqwsconntype(ws_id, ct)
-        Gint ws_id;
-        Gwsct *ct;
+    Gint ws_id;
+Gwsct *ct;
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsconntype);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsconntype);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsconntype);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqwsconntype);
 
-/* check for open workstation id */
-        GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsconntype);
+    /* check for open workstation id */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqwsconntype);
 
-/* set up the return values */
-        ct->conn = (Gchar *)malloc(STRLEN(ws->conn)+1);
-        GKSERROR( (ct->conn == NULL), 300, errginqwsconntype);
-        STRCPY(ct->conn, ws->conn);
+    /* set up the return values */
+    ct->conn = (Gchar *) malloc(STRLEN(ws->conn) + 1);
+    GKSERROR((ct->conn == NULL), 300, errginqwsconntype);
+    STRCPY(ct->conn, ws->conn);
 
-        ct->type = (Gchar *)malloc(STRLEN(ws->wstype)+1);
-        GKSERROR( (ct->type == NULL), 300, errginqwsconntype);
-        STRCPY(ct->type, ws->wstype);
+    ct->type = (Gchar *) malloc(STRLEN(ws->wstype) + 1);
+    GKSERROR((ct->type == NULL), 300, errginqwsconntype);
+    STRCPY(ct->type, ws->wstype);
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqwsst(ws_id, state) - INQUIRE WORKSTATION STATE
  *
@@ -378,31 +379,31 @@ Gint ginqwsconntype(ws_id, ct)
  */
 
 Gint ginqwsst(ws_id, state)
-        Gint ws_id;
-        Gwsstate *state;
+    Gint ws_id;
+Gwsstate *state;
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsst);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsst);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsst);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqwsst);
 
-/* check for open workstation id */
-        GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsst);
+    /* check for open workstation id */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqwsst);
 
-/* check for valid workstation category */
-        GKSERROR ( (WS_CAT(ws)==GMI), 33, errginqwsst);
+    /* check for valid workstation category */
+    GKSERROR((WS_CAT(ws) == GMI), 33, errginqwsst);
 
-        GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errginqwsst);
+    GKSERROR((WS_CAT(ws) == GINPUT), 35, errginqwsst);
 
-/* set up the return values */
-        *state = ws->wsstate;
+    /* set up the return values */
+    *state = ws->wsstate;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqwsdeferupdatest(ws_id, du) - INQUIRE WORKSTATION DEFERRAL AND UPDATE STATES
  *
@@ -415,29 +416,29 @@ Gint ginqwsst(ws_id, state)
  */
 
 Gint ginqwsdeferupdatest(ws_id, du)
-        Gint ws_id;
-        Gwsdus *du;
+    Gint ws_id;
+Gwsdus *du;
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsdeferupdatest);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwsdeferupdatest);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwsdeferupdatest);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqwsdeferupdatest);
 
-/* check for open workstation id */
-        GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwsdeferupdatest);
+    /* check for open workstation id */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqwsdeferupdatest);
 
-/* check for valid workstation category */
-        GKSERROR ( (WS_CAT(ws)==GMI), 33, errginqwsdeferupdatest);
+    /* check for valid workstation category */
+    GKSERROR((WS_CAT(ws) == GMI), 33, errginqwsdeferupdatest);
 
-        GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errginqwsdeferupdatest);
+    GKSERROR((WS_CAT(ws) == GINPUT), 35, errginqwsdeferupdatest);
 
-        GKSERROR ( (WS_CAT(ws)==GWISS), 36, errginqwsdeferupdatest);
+    GKSERROR((WS_CAT(ws) == GWISS), 36, errginqwsdeferupdatest);
 
-/* set up the return values */
-        *du = ws->wsdus;
+    /* set up the return values */
+    *du = ws->wsdus;
 
-        return( OK );
+    return (OK);
 }

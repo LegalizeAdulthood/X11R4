@@ -47,31 +47,31 @@ void XgksXReDrawWs(WS_STATE_PTR ws);
 
 Gint gescinqxattr(Gint ws_id, Display **dpy, Window *win, GC *gc)
 {
-        WS_STATE_ENTRY *ws;
+    WS_STATE_ENTRY *ws;
 
-/* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescinqxattr);
+    /* check for proper gks state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgescinqxattr);
 
-/* check for valid ws_id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescinqxattr);
+    /* check for valid ws_id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgescinqxattr);
 
-/* check for workstation opened */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescinqxattr);
+    /* check for workstation opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errgescinqxattr);
 
-/* check for valid workstation category*/
-        GKSERROR ( (WS_CAT(ws)==GMO), 31, errgescinqxattr);
+    /* check for valid workstation category*/
+    GKSERROR((WS_CAT(ws) == GMO), 31, errgescinqxattr);
 
-        GKSERROR ( (WS_CAT(ws)==GMI), 33, errgescinqxattr);
+    GKSERROR((WS_CAT(ws) == GMI), 33, errgescinqxattr);
 
-        GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errgescinqxattr);
+    GKSERROR((WS_CAT(ws) == GINPUT), 35, errgescinqxattr);
 
-        GKSERROR ( (WS_CAT(ws)==GWISS), 36, errgescinqxattr);
+    GKSERROR((WS_CAT(ws) == GWISS), 36, errgescinqxattr);
 
-        *dpy = ws->dpy;
-        *win = ws->win;
-        *gc = ws->gc;
+    *dpy = ws->dpy;
+    *win = ws->win;
+    *gc = ws->gc;
 
-        return( OK );
+    return (OK);
 }
 
 /*
@@ -81,28 +81,28 @@ Gint gescinqxattr(Gint ws_id, Display **dpy, Window *win, GC *gc)
  */
 Gint gescsetcolourmask(Gint ws_id, unsigned long mask)
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescsetcolourmask);
+    /* check for proper gks state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgescsetcolourmask);
 
-/* check for valid ws_id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescsetcolourmask);
+    /* check for valid ws_id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgescsetcolourmask);
 
-/* check for workstation opened */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescsetcolourmask);
+    /* check for workstation opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errgescsetcolourmask);
 
-/* check for valid workstation category*/
-        GKSERROR ( (WS_CAT(ws)==GMI), 33, errgescsetcolourmask);
+    /* check for valid workstation category*/
+    GKSERROR((WS_CAT(ws) == GMI), 33, errgescsetcolourmask);
 
-        GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errgescsetcolourmask);
+    GKSERROR((WS_CAT(ws) == GINPUT), 35, errgescsetcolourmask);
 
-        GKSERROR ( (WS_CAT(ws)==GWISS), 36, errgescsetcolourmask);
+    GKSERROR((WS_CAT(ws) == GWISS), 36, errgescsetcolourmask);
 
-/* set the colour plane mask value in workstation GC */
-        XSetPlaneMask( ws->dpy, ws->gc, mask );
+    /* set the colour plane mask value in workstation GC */
+    XSetPlaneMask(ws->dpy, ws->gc, mask);
 
-        return(OK);
+    return (OK);
 }
 
 /*
@@ -112,49 +112,54 @@ Gint gescsetcolourmask(Gint ws_id, unsigned long mask)
  */
 Gint gescsetdcsize(Gint ws_id, Gpoint size)
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescsetdcsize);
+    /* check for proper gks state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgescsetdcsize);
 
-/* check for valid ws_id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescsetdcsize);
+    /* check for valid ws_id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgescsetdcsize);
 
-/* check for workstation opened */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescsetdcsize);
+    /* check for workstation opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errgescsetdcsize);
 
-/* check for valid workstation category */
-        GKSERROR ( (WS_CAT(ws)==GMI), 33, errgescsetdcsize);
+    /* check for valid workstation category */
+    GKSERROR((WS_CAT(ws) == GMI), 33, errgescsetdcsize);
 
-        GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errgescsetdcsize);
+    GKSERROR((WS_CAT(ws) == GINPUT), 35, errgescsetdcsize);
 
-        GKSERROR ( (WS_CAT(ws)==GWISS), 36, errgescsetdcsize);
+    GKSERROR((WS_CAT(ws) == GWISS), 36, errgescsetdcsize);
 
-/* set the colour plane mask value in workstation GC */
-        ws->size = size;
+    /* set the colour plane mask value in workstation GC */
+    ws->size = size;
 
-/* move the pending transformation to the current transformation */
-        if (ws->wsti.wstus != GNOTPENDING) {
-                ws->wsti.current.w = ws->wsti.request.w;
-                ws->wsti.current.v = ws->wsti.request.v;
+    /* move the pending transformation to the current transformation */
+    if (ws->wsti.wstus != GNOTPENDING)
+    {
+        ws->wsti.current.w = ws->wsti.request.w;
+        ws->wsti.current.v = ws->wsti.request.v;
 
-                ws->wsti.wstus = GNOTPENDING;
-        }
+        ws->wsti.wstus = GNOTPENDING;
+    }
 
-/* check and modify the workstation vieport values */
-        if (ws->wsti.current.v.xmin > size.x) ws->wsti.current.v.xmin = size.x;
-        if (ws->wsti.current.v.ymin > size.y) ws->wsti.current.v.ymin = size.y;
-        if (ws->wsti.current.v.xmax > size.x) ws->wsti.current.v.xmax = size.x;
-        if (ws->wsti.current.v.ymax > size.y) ws->wsti.current.v.ymax = size.y;
+    /* check and modify the workstation vieport values */
+    if (ws->wsti.current.v.xmin > size.x)
+        ws->wsti.current.v.xmin = size.x;
+    if (ws->wsti.current.v.ymin > size.y)
+        ws->wsti.current.v.ymin = size.y;
+    if (ws->wsti.current.v.xmax > size.x)
+        ws->wsti.current.v.xmax = size.x;
+    if (ws->wsti.current.v.ymax > size.y)
+        ws->wsti.current.v.ymax = size.y;
 
-/* update the workstation transformation matrix and clip region */
-        xXgksUpdateTrans(ws);
-        XgksUpdateWsClip(ws, &(xgks_state.cliprec.rec));
+    /* update the workstation transformation matrix and clip region */
+    xXgksUpdateTrans(ws);
+    XgksUpdateWsClip(ws, &(xgks_state.cliprec.rec));
 
-/* redraw the workstation content */
-        XgksXReDrawWs(ws);
+    /* redraw the workstation content */
+    XgksXReDrawWs(ws);
 
-        return(OK);
+    return (OK);
 }
 
 /*
@@ -164,28 +169,28 @@ Gint gescsetdcsize(Gint ws_id, Gpoint size)
  */
 Gint gescstoreprimi(Gint ws_id, Gstore store)
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescstoreprimi);
+    /* check for proper gks state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgescstoreprimi);
 
-/* check for valid ws_id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescstoreprimi);
+    /* check for valid ws_id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgescstoreprimi);
 
-/* check for workstation opened */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescstoreprimi);
+    /* check for workstation opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errgescstoreprimi);
 
-/* check for valid workstation category*/
-        GKSERROR ( (WS_CAT(ws)==GMI), 33, errgescstoreprimi);
+    /* check for valid workstation category*/
+    GKSERROR((WS_CAT(ws) == GMI), 33, errgescstoreprimi);
 
-        GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errgescstoreprimi);
+    GKSERROR((WS_CAT(ws) == GINPUT), 35, errgescstoreprimi);
 
-        GKSERROR ( (WS_CAT(ws)==GWISS), 36, errgescstoreprimi);
+    GKSERROR((WS_CAT(ws) == GWISS), 36, errgescstoreprimi);
 
-/* set the non-segment output primitive storage value */
-        ws->primi_store = store;
+    /* set the non-segment output primitive storage value */
+    ws->primi_store = store;
 
-        return(OK);
+    return (OK);
 }
 
 /*
@@ -195,35 +200,34 @@ Gint gescstoreprimi(Gint ws_id, Gstore store)
  */
 Gint gescredrawnotify(Gint ws_id, Gint (*funcp)())
 {
-        WS_STATE_PTR ws;
-/* check for proper gks state */
-        GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) ,7, errgescredrawnotify);
+    WS_STATE_PTR ws;
+    /* check for proper gks state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgescredrawnotify);
 
-/* check for valid ws_id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgescredrawnotify);
+    /* check for valid ws_id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgescredrawnotify);
 
-/* check for workstation opened */
-        GKSERROR (((ws=OPEN_WSID(ws_id)) == NULL) ,25, errgescredrawnotify);
+    /* check for workstation opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errgescredrawnotify);
 
-/* check for valid workstation category*/
-        GKSERROR ( (WS_CAT(ws)==GMI), 33, errgescredrawnotify);
+    /* check for valid workstation category*/
+    GKSERROR((WS_CAT(ws) == GMI), 33, errgescredrawnotify);
 
-        GKSERROR ( (WS_CAT(ws)==GINPUT), 35, errgescredrawnotify);
+    GKSERROR((WS_CAT(ws) == GINPUT), 35, errgescredrawnotify);
 
-        GKSERROR ( (WS_CAT(ws)==GWISS), 36, errgescredrawnotify);
+    GKSERROR((WS_CAT(ws) == GWISS), 36, errgescredrawnotify);
 
 /* set the colour plane mask value in workstation GC */
 
-
 #ifdef ESCAPEDEBUG
-fprintf(stderr,"redrawnotify=%d\n",ws->redrawfuncp);
+    fprintf(stderr, "redrawnotify=%d\n", ws->redrawfuncp);
 #endif
 
-        ws->redrawfuncp = funcp;
+    ws->redrawfuncp = funcp;
 
 #ifdef ESCAPEDEBUG
-fprintf(stderr,"redrawnotify=%d\n",ws->redrawfuncp);
+    fprintf(stderr, "redrawnotify=%d\n", ws->redrawfuncp);
 #endif
 
-        return(OK);
+    return (OK);
 }

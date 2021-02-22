@@ -49,9 +49,9 @@ static char *COPYRIGHT = "(C) Copyright  1987, 1988 by The University of Illinoi
 #define polylines_c
 #define polymarkers_c
 #include "fillarea.h"
-#include "text.h"
 #include "polylines.h"
 #include "polymarkers.h"
+#include "text.h"
 #undef fillarea_c
 #undef text_c
 #undef polylines_c
@@ -73,9 +73,7 @@ void XgksInitGksText(void);
 void XgksInitGksTrans(void);
 
 /* gks state list */
-GKS_STATE_LIST  xgks_state;
-
-
+GKS_STATE_LIST xgks_state;
 
 /*$F
  * gopengks(err_file, memory) - OPEN GKS - initialises gks data structures.
@@ -91,20 +89,16 @@ GKS_STATE_LIST  xgks_state;
  */
 Gint gopengks(Gfile *err_file, Glong memory)
 {
+    /* specified error file is not opened yet */
+    GKSERROR((err_file == NULL), 200, errgopengks);
 
+    /* can't open if not closed */
+    GKSERROR((xgks_state.gks_state != GGKCL), 1, errgopengks);
 
-/* specified error file is not opened yet */
-        GKSERROR ((err_file == NULL) ,200, errgopengks);
-
-/* can't open if not closed */
-        GKSERROR ((xgks_state.gks_state != GGKCL) ,1, errgopengks);
-
-        XgksInitGksErrorStateList(err_file);
-        XgksInitGksStateList();
-        return(0);
+    XgksInitGksErrorStateList(err_file);
+    XgksInitGksStateList();
+    return (0);
 }
-
-
 
 /*$F
  * gclosegks() - CLOSE GKS - sets the operating state to GGKCL if current state is GGKOP
@@ -117,12 +111,11 @@ Gint gopengks(Gfile *err_file, Glong memory)
 
 Gint gclosegks(void)
 {
+    /* check for proper state */
+    GKSERROR((xgks_state.gks_state != GGKOP), 2, errgclosegks);
 
-/* check for proper state */
-        GKSERROR ((xgks_state.gks_state != GGKOP) ,2, errgclosegks);
-
-        xgks_state.gks_state = GGKCL;
-        return(0);
+    xgks_state.gks_state = GGKCL;
+    return (0);
 }
 
 /*
@@ -133,11 +126,10 @@ Gint gclosegks(void)
 
 static void XgksInitGksErrorStateList(Gfile *err_file)
 {
-        xgks_state.gks_err_file = err_file; /* save the error file  */
-        xgks_state.gks_err_state = ERR_OFF; /* no error has occured */
-        /* rest of list is undefined until input queue overflow */
+    xgks_state.gks_err_file = err_file; /* save the error file  */
+    xgks_state.gks_err_state = ERR_OFF; /* no error has occured */
+                                        /* rest of list is undefined until input queue overflow */
 }
-
 
 /*
 * XgksInitGksStateList() - called by open_gks() to initialise the gks state list.
@@ -147,50 +139,51 @@ static void XgksInitGksErrorStateList(Gfile *err_file)
 
 static void XgksInitGksStateList(void)
 {
-        Gint i;
+    Gint i;
 
-        xgks_state.level = GL2C;        /* Level of GKS */
-        /* Workstation maximum numbers (open, active, assoc) */
-        xgks_state.wsmax.open = MAX_OPEN_WS;
-        xgks_state.wsmax.active = MAX_ACTIVE_WS;
-        xgks_state.wsmax.assoc = MAX_ASSOC_WS;
+    xgks_state.level = GL2C; /* Level of GKS */
+    /* Workstation maximum numbers (open, active, assoc) */
+    xgks_state.wsmax.open = MAX_OPEN_WS;
+    xgks_state.wsmax.active = MAX_ACTIVE_WS;
+    xgks_state.wsmax.assoc = MAX_ASSOC_WS;
 
-        xgks_state.wiss_id = INVALID;
-                /* Switch to keep track of Wiss's open and close */
-        xgks_state.open_mo = 0; /* Number of open meta output files */
+    xgks_state.wiss_id = INVALID;
+    /* Switch to keep track of Wiss's open and close */
+    xgks_state.open_mo = 0; /* Number of open meta output files */
 
-        /* Set all workstations to close and inactive */
-        for (i=0; i<MAX_OPEN_WS; i++) {
-            xgks_state.openedws[i].ws_id = INVALID;
-            xgks_state.openedws[i].win = INVALID;
-            xgks_state.openedws[i].ws = NULL;
-        }
-        for (i=0; i<MAX_ACTIVE_WS; i++) {
-            xgks_state.activews[i].ws_id = INVALID;
-            xgks_state.activews[i].win  = INVALID;
-            xgks_state.activews[i].ws = NULL;
-        }
+    /* Set all workstations to close and inactive */
+    for (i = 0; i < MAX_OPEN_WS; i++)
+    {
+        xgks_state.openedws[i].ws_id = INVALID;
+        xgks_state.openedws[i].win = INVALID;
+        xgks_state.openedws[i].ws = NULL;
+    }
+    for (i = 0; i < MAX_ACTIVE_WS; i++)
+    {
+        xgks_state.activews[i].ws_id = INVALID;
+        xgks_state.activews[i].win = INVALID;
+        xgks_state.activews[i].ws = NULL;
+    }
 
-        xgks_state.gks_state = GGKOP;   /* set state to GKs OPen */
-        XgksInitGksAsf();               /* initialize asfs */
-        XgksInitGksPlines();    /* initialise polyline stuff */
-        XgksInitGksPmarkers();  /* initialise polymarker stuff */
-        XgksInitGksFillArea();  /* initialise fill area stuff */
-        XgksInitGksSegments();    /* init segment menagement and state list */
-        XgksInitGksText();      /* initialise text stuff */
-        XgksInitGksTrans();     /* initialise transformation stuff */
+    xgks_state.gks_state = GGKOP; /* set state to GKs OPen */
+    XgksInitGksAsf();             /* initialize asfs */
+    XgksInitGksPlines();          /* initialise polyline stuff */
+    XgksInitGksPmarkers();        /* initialise polymarker stuff */
+    XgksInitGksFillArea();        /* initialise fill area stuff */
+    XgksInitGksSegments();        /* init segment menagement and state list */
+    XgksInitGksText();            /* initialise text stuff */
+    XgksInitGksTrans();           /* initialise transformation stuff */
 
-        XgksInitGksM ();        /* Initialise metafile system */
+    XgksInitGksM(); /* Initialise metafile system */
 
-        xgks_state.event_queue_head = NULL;
-        xgks_state.event_queue_tail = NULL;
+    xgks_state.event_queue_head = NULL;
+    xgks_state.event_queue_tail = NULL;
 
-        xgks_state.CurEvent.next = (EQEntry *)NULL;
-        xgks_state.CurEvent.event.ws = 0;
-        xgks_state.CurEvent.event.dev = 0;
-        xgks_state.CurEvent.event.class = GNCLASS;
-        xgks_state.CurEvent.data = (char *)NULL;
-        xgks_state.CurEvent.id = -999;
-        xgks_state.focus_ws = (WS_STATE_PTR) NULL;
-
+    xgks_state.CurEvent.next = (EQEntry *) NULL;
+    xgks_state.CurEvent.event.ws = 0;
+    xgks_state.CurEvent.event.dev = 0;
+    xgks_state.CurEvent.event.class = GNCLASS;
+    xgks_state.CurEvent.data = (char *) NULL;
+    xgks_state.CurEvent.id = -999;
+    xgks_state.focus_ws = (WS_STATE_PTR) NULL;
 }

@@ -49,12 +49,10 @@
 
 #include "gks_implem.h"
 
-
 /* As under current implementation only pet #1 and #3 are being supported */
-#define SUPPORTED_PICK_PROMPT(pet)    (pet==1 || pet==3)
+#define SUPPORTED_PICK_PROMPT(pet) (pet == 1 || pet == 3)
 
 extern void XgksAwaitInterrupt(int);
-
 
 /*$F
  * ginitpick(ws_id, dev, init, pet, area, record) - INITIALISE PICK
@@ -79,61 +77,63 @@ Gint ginitpick(Gint ws_id, Gint dev, Gpick *init, Gint pet, Glimit *area, Gpickr
     INPUT_DEV *idev;
     XGCValues gcvalues;
 
-/* STEP 1: check for errors */
-/*    gks in proper state? */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errginitpick);
+    /* STEP 1: check for errors */
+    /*    gks in proper state? */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitpick);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitpick);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginitpick);
 
-/* open workstation ? */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errginitpick);
+    /* open workstation ? */
+    GKSERROR((!(ws = OPEN_WSID(ws_id))), 25, errginitpick);
 
-/* check category */
-    GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errginitpick);
+    /* check category */
+    GKSERROR((WS_CAT(ws) != GOUTIN), 37, errginitpick);
 
-/* rectangle defintion ok */
-    GKSERROR ((area->xmin >= area->xmax || area->ymin >= area->ymax) , 51, errginitpick);
+    /* rectangle defintion ok */
+    GKSERROR((area->xmin >= area->xmax || area->ymin >= area->ymax), 51, errginitpick);
 
-/* valid pick device number */
-    GKSERROR ((dev < 1), 140, errginitpick);
+    /* valid pick device number */
+    GKSERROR((dev < 1), 140, errginitpick);
 
-/* prompt and echo type supported */
-    GKSERROR ((!SUPPORTED_PICK_PROMPT(pet)) , 144, errginitpick);
+    /* prompt and echo type supported */
+    GKSERROR((!SUPPORTED_PICK_PROMPT(pet)), 144, errginitpick);
 
-/* echo area within display space */
-    GKSERROR ((area->xmin<0 || area->xmax>ws->size.x || area->ymin<0 || area->ymax>ws->size.y) , 145, errginitpick);
+    /* echo area within display space */
+    GKSERROR((area->xmin < 0 || area->xmax > ws->size.x || area->ymin < 0 || area->ymax > ws->size.y), 145, errginitpick);
 
-/* initial values ok */
-/* pick id can take on any value */
-    GKSERROR ((init->seg < 1) , 152, errginitpick);
+    /* initial values ok */
+    /* pick id can take on any value */
+    GKSERROR((init->seg < 1), 152, errginitpick);
 
-    GKSERROR ((init->status != GP_OK && init->status != GP_NOPICK &&
-        init->status != GP_NONE) , 2000, errginitpick);
+    GKSERROR((init->status != GP_OK && init->status != GP_NOPICK && init->status != GP_NONE), 2000, errginitpick);
 
-/* Check if the device already exist */
-    if ( (idev = XgksIDevLookup(ws, dev, GPICK)) == NULL) {
-    /* Build a new input device structure */
+    /* Check if the device already exist */
+    if ((idev = XgksIDevLookup(ws, dev, GPICK)) == NULL)
+    {
+        /* Build a new input device structure */
         gcvalues.function = GXxor;
-        idev = XgksIDevNew ();
-        idev->gc = XCreateGC (ws->dpy, ws->win, GCFunction, &gcvalues);
+        idev = XgksIDevNew();
+        idev->gc = XCreateGC(ws->dpy, ws->win, GCFunction, &gcvalues);
         idev->class = GPICK;
         idev->dev = dev;
-        idev->data.pic.initst.mode = GREQUEST;    /* initialize to GREQUEST */
-        idev->data.pic.initst.esw  = GECHO;
-    /* Add into workstation input device queue */
-        XgksIDevAdd (ws, idev);
-    } else {
-    /* pick device must be in REQUEST mode */
-        GKSERROR ((idev->data.pic.initst.mode!=GREQUEST), 141, errginitpick);
+        idev->data.pic.initst.mode = GREQUEST; /* initialize to GREQUEST */
+        idev->data.pic.initst.esw = GECHO;
+        /* Add into workstation input device queue */
+        XgksIDevAdd(ws, idev);
+    }
+    else
+    {
+        /* pick device must be in REQUEST mode */
+        GKSERROR((idev->data.pic.initst.mode != GREQUEST), 141, errginitpick);
     }
     idev->data.pic.initst.pick = *init;
     idev->data.pic.initst.pet = pet;
     idev->data.pic.initst.e_area = *area;
     idev->data.pic.initst.record = *record;
-    return(0);
+    return (0);
 }
-
+
 /*$F
  * gsetpickmode(ws_id, dev, mode, echo) - SET PICK MODE
  *
@@ -152,31 +152,31 @@ Gint gsetpickmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     INPUT_DEV *idev;
     XGCValues gcvalues;
 
-/* STEP 1: check for errors */
-/*     gks in proper state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsetpickmode);
+    /* STEP 1: check for errors */
+    /*     gks in proper state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetpickmode);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetpickmode);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgsetpickmode);
 
-/* workstation id valid and open */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsetpickmode);
+    /* workstation id valid and open */
+    GKSERROR((!(ws = OPEN_WSID(ws_id))), 25, errgsetpickmode);
 
-/* check category */
-    GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgsetpickmode);
+    /* check category */
+    GKSERROR((WS_CAT(ws) != GOUTIN), 37, errgsetpickmode);
 
-/* valid pick device */
-    GKSERROR ((dev < 1) , 140, errgsetpickmode);
+    /* valid pick device */
+    GKSERROR((dev < 1), 140, errgsetpickmode);
 
-/* check enumerated type values */
-    GKSERROR (((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT) ||
-           (echo != GECHO && echo != GNOECHO) ) , 2000, errgsetpickmode);
+    /* check enumerated type values */
+    GKSERROR(((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT) || (echo != GECHO && echo != GNOECHO)), 2000, errgsetpickmode);
 
-/* STEP 2: tell the workstation */
-    if ( (idev = XgksIDevLookup(ws, dev, GPICK)) == NULL ) {
-    /* We have to create one with default values */
+    /* STEP 2: tell the workstation */
+    if ((idev = XgksIDevLookup(ws, dev, GPICK)) == NULL)
+    {
+/* We have to create one with default values */
 #ifdef IDEVPICKDEBUG
-    fprintf(stderr, "gsetpickmode : device does not exist ..ws_id=%d, dev=%d\n",ws_id, dev);
+        fprintf(stderr, "gsetpickmode : device does not exist ..ws_id=%d, dev=%d\n", ws_id, dev);
 #endif
         idev = XgksIDevNew();
         idev->class = GPICK;
@@ -184,7 +184,7 @@ Gint gsetpickmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
         gcvalues.function = GXxor;
         idev->gc = XCreateGC(ws->dpy, ws->win, GCFunction, &gcvalues);
         idev->data.pic.initst.mode = GREQUEST;
-        idev->data.pic.initst.esw  = GECHO;
+        idev->data.pic.initst.esw = GECHO;
         idev->data.pic.initst.pet = 1;
         idev->data.pic.initst.pick.status = GP_NOPICK;
         idev->data.pic.initst.pick.seg = INVALID;
@@ -194,18 +194,19 @@ Gint gsetpickmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
         idev->data.pic.initst.e_area.ymin = 0.0;
         idev->data.pic.initst.e_area.ymax = ws->size.y;
         idev->data.pic.initst.record.pet1.data = NULL;
-        XgksIDevAdd (ws, idev);
+        XgksIDevAdd(ws, idev);
     }
     idev->data.pic.initst.mode = mode;
-    idev->data.pic.initst.esw  = echo;
+    idev->data.pic.initst.esw = echo;
 
-    if ( mode == GEVENT )
-       signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for event mode */
-    if ( mode == GSAMPLE || mode == GEVENT ) idev->active = TRUE;
+    if (mode == GEVENT)
+        signal(SIGALRM, XgksAwaitInterrupt); /* Set signal handler for event mode */
+    if (mode == GSAMPLE || mode == GEVENT)
+        idev->active = TRUE;
 
-    return(0);
+    return (0);
 }
-
+
 /*$F
  * greqpick(ws_id, dev, respons) - REQUEST PICK
  *
@@ -226,68 +227,71 @@ Gint greqpick(Gint ws_id, Gint dev, Gpick *response)
     INPUT_DEV *idev;
     XGCValues gcvalues;
 
-/* STEP 1: check for errors */
-/*     gks in proper state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgreqpick);
+    /* STEP 1: check for errors */
+    /*     gks in proper state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqpick);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqpick);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgreqpick);
 
-/* workstation id open */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgreqpick);
+    /* workstation id open */
+    GKSERROR((!(ws = OPEN_WSID(ws_id))), 25, errgreqpick);
 
-/* check category */
-    GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgreqpick);
+    /* check category */
+    GKSERROR((WS_CAT(ws) != GOUTIN), 37, errgreqpick);
 
-/* valid pick device */
-    GKSERROR ((dev < 1) , 140, errgreqpick);
+    /* valid pick device */
+    GKSERROR((dev < 1), 140, errgreqpick);
 
-/* ask the workstation for the device */
-        if ( (idev = XgksIDevLookup(ws, dev, GPICK)) == NULL ) {
-        /* We have to create one with default values */
+    /* ask the workstation for the device */
+    if ((idev = XgksIDevLookup(ws, dev, GPICK)) == NULL)
+    {
+/* We have to create one with default values */
 #ifdef IDEVPICKDEBUG
-    fprintf(stderr, "greqpick : device does not exist ..ws_id=%d, dev=%d\n",ws_id, dev);
+        fprintf(stderr, "greqpick : device does not exist ..ws_id=%d, dev=%d\n", ws_id, dev);
 #endif
-                idev = XgksIDevNew();
-                idev->class = GPICK;
-                idev->dev = dev;
-                gcvalues.function = GXxor;
-                idev->gc = XCreateGC(ws->dpy, ws->win, GCFunction, &gcvalues);
-                idev->data.pic.initst.mode = GREQUEST;
-                idev->data.pic.initst.esw  = GECHO;
-                idev->data.pic.initst.pet = 1;
-                idev->data.pic.initst.pick.status = GP_NOPICK;
-                idev->data.pic.initst.pick.seg = INVALID;
-                idev->data.pic.initst.pick.pickid = INVALID;
-                idev->data.pic.initst.e_area.xmin = 0.0;
-                idev->data.pic.initst.e_area.xmax = ws->size.x;
-                idev->data.pic.initst.e_area.ymin = 0.0;
-                idev->data.pic.initst.e_area.ymax = ws->size.y;
-                idev->data.pic.initst.record.pet1.data = NULL;
-        XgksIDevAdd (ws, idev);
-        }
-    else {
-        GKSERROR ((idev->data.pic.initst.mode !=GREQUEST), 141, errgreqpick);
+        idev = XgksIDevNew();
+        idev->class = GPICK;
+        idev->dev = dev;
+        gcvalues.function = GXxor;
+        idev->gc = XCreateGC(ws->dpy, ws->win, GCFunction, &gcvalues);
+        idev->data.pic.initst.mode = GREQUEST;
+        idev->data.pic.initst.esw = GECHO;
+        idev->data.pic.initst.pet = 1;
+        idev->data.pic.initst.pick.status = GP_NOPICK;
+        idev->data.pic.initst.pick.seg = INVALID;
+        idev->data.pic.initst.pick.pickid = INVALID;
+        idev->data.pic.initst.e_area.xmin = 0.0;
+        idev->data.pic.initst.e_area.xmax = ws->size.x;
+        idev->data.pic.initst.e_area.ymin = 0.0;
+        idev->data.pic.initst.e_area.ymax = ws->size.y;
+        idev->data.pic.initst.record.pet1.data = NULL;
+        XgksIDevAdd(ws, idev);
+    }
+    else
+    {
+        GKSERROR((idev->data.pic.initst.mode != GREQUEST), 141, errgreqpick);
     }
 
-/* Make sure the workstation is up to date */
-    gupdatews( ws_id, GPERFORM );
+    /* Make sure the workstation is up to date */
+    gupdatews(ws_id, GPERFORM);
 
     idev->active = TRUE;
 
-/* wait for trigger or break */
+    /* wait for trigger or break */
     idev->touched = FALSE;
     idev->breakhit = FALSE;
-    while ( (idev->touched == FALSE) && (idev->breakhit == FALSE) )
+    while ((idev->touched == FALSE) && (idev->breakhit == FALSE))
         pause();
 
     idev->active = FALSE;
 
     *response = idev->data.pic.initst.pick;
 
-    if (idev->breakhit == TRUE) response->status = GP_NONE;
+    if (idev->breakhit == TRUE)
+        response->status = GP_NONE;
 
-    return(0);
+    return (0);
 }
 /*$F
  * gsamplepick(ws_id, dev, response) - SAMPLE PICK
@@ -307,38 +311,39 @@ Gint gsamplepick(Gint ws_id, Gint dev, Gpick *response)
 {
     WS_STATE_PTR ws;
     INPUT_DEV *idev;
-    Gpoint    ndcpt;
+    Gpoint ndcpt;
 
-/* STEP 1: check for errors */
-/*     gks in proper state */
-    GKSERROR ((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP) , 7, errgsamplepick);
+    /* STEP 1: check for errors */
+    /*     gks in proper state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplepick);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplepick);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgsamplepick);
 
-/* workstation id open */
-    GKSERROR ((!(ws=OPEN_WSID(ws_id))) , 25, errgsamplepick);
+    /* workstation id open */
+    GKSERROR((!(ws = OPEN_WSID(ws_id))), 25, errgsamplepick);
 
-/* check category */
-    GKSERROR ((WS_CAT(ws) != GOUTIN) , 37, errgsamplepick);
+    /* check category */
+    GKSERROR((WS_CAT(ws) != GOUTIN), 37, errgsamplepick);
 
-/* valid pick device */
-    GKSERROR ((dev<1), 140, errgsamplepick);
-    idev=XgksIDevLookup(ws, dev, GPICK);
+    /* valid pick device */
+    GKSERROR((dev < 1), 140, errgsamplepick);
+    idev = XgksIDevLookup(ws, dev, GPICK);
 
-/* is current mode SAMPLE ? */
-   GKSERROR ((idev==NULL) || (idev->data.pic.initst.mode != GSAMPLE), 142, errgsamplepick);
+    /* is current mode SAMPLE ? */
+    GKSERROR((idev == NULL) || (idev->data.pic.initst.mode != GSAMPLE), 142, errgsamplepick);
 
-/* Make sure the workstation is up to date */
-    gupdatews( ws_id, GPERFORM );
+    /* Make sure the workstation is up to date */
+    gupdatews(ws_id, GPERFORM);
 
-/* Grep the current position in pick data record and figure out the segment name */
-    if (idev->breakhit == TRUE) return (OK);
+    /* Grep the current position in pick data record and figure out the segment name */
+    if (idev->breakhit == TRUE)
+        return (OK);
 
-    DcToNdc (ws, &(idev->data.pic.curpos), &ndcpt);
-    XgksFindPickSeg(ws, &ndcpt, response,idev,2);
+    DcToNdc(ws, &(idev->data.pic.curpos), &ndcpt);
+    XgksFindPickSeg(ws, &ndcpt, response, idev, 2);
 
-    return(0);
+    return (0);
 }
 
 /*    Pick inquiries */
@@ -359,47 +364,49 @@ Gint ginqpickst(Gint ws_id, Gint dev, Gqtype type, Gpickst *state)
     WS_STATE_ENTRY *ws;
     INPUT_DEV *idev;
 
-/* STEP 1: check for errors. */
-/* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpickst );
+    /* STEP 1: check for errors. */
+    /* proper gks state? */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpickst);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpickst);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqpickst);
 
-/* check for ws_id, if correspond to opened ws */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqpickst );
+    /* check for ws_id, if correspond to opened ws */
+    GKSERROR(!(ws = OPEN_WSID(ws_id)), 25, errginqpickst);
 
-/* valid workstation type */
-    GKSERROR( (WS_CAT(ws) != GOUTIN), 37, errginqpickst);
+    /* valid workstation type */
+    GKSERROR((WS_CAT(ws) != GOUTIN), 37, errginqpickst);
 
-/* check enumeration */
-    GKSERROR( (type != GSET && type != GREALIZED ), 2000, errginqpickst );
+    /* check enumeration */
+    GKSERROR((type != GSET && type != GREALIZED), 2000, errginqpickst);
 
-/* valid locator device number */
-    GKSERROR( (dev < 1), 140, errginqpickst );
+    /* valid locator device number */
+    GKSERROR((dev < 1), 140, errginqpickst);
 
-/* Copy the data to the user's structure */
-    if ((idev = XgksIDevLookup( ws, dev, GPICK )) == NULL) {
-         state->mode = GREQUEST;
-                state->esw  = GECHO;
-                state->pet = 1;
-                state->pick.status = GP_NOPICK;
-                state->pick.seg = INVALID;
-                state->pick.pickid = INVALID;
-                state->e_area.xmin = 0.0;
-                state->e_area.xmax = ws->size.x;
-                state->e_area.ymin = 0.0;
-                state->e_area.ymax = ws->size.y;
-                state->record.pet1.data = NULL;
+    /* Copy the data to the user's structure */
+    if ((idev = XgksIDevLookup(ws, dev, GPICK)) == NULL)
+    {
+        state->mode = GREQUEST;
+        state->esw = GECHO;
+        state->pet = 1;
+        state->pick.status = GP_NOPICK;
+        state->pick.seg = INVALID;
+        state->pick.pickid = INVALID;
+        state->e_area.xmin = 0.0;
+        state->e_area.xmax = ws->size.x;
+        state->e_area.ymin = 0.0;
+        state->e_area.ymax = ws->size.y;
+        state->record.pet1.data = NULL;
     }
-    else {
+    else
+    {
         *state = idev->data.pic.initst;
         /* if idev->data.loc.initst.record pointed anywhere, it would
          * be copied here.
          */
     }
 
-    return( OK );
+    return (OK);
 }
 
 /*$F
@@ -419,38 +426,39 @@ Gint ginqdefpick(Gchar *type, Gint dev, Gdefpick *data)
     EWSTYPE ewstype;
     int i;
 
-/* STEP 1: check for errors. */
-/* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefpick );
+    /* STEP 1: check for errors. */
+    /* proper gks state? */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqdefpick);
 
-/* valid wsid? */
-    ewstype = XgksWsTypeToEnum( type );
-    GKSERROR( (ewstype == WST_INVALID), 22, errginqdefpick );
+    /* valid wsid? */
+    ewstype = XgksWsTypeToEnum(type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqdefpick);
 
-/* valid workstation type (assumes all INPUT and OUTIN workstations are X_WIN */
-    GKSERROR( ewstype != X_WIN, 38, errginqdefpick);
+    /* valid workstation type (assumes all INPUT and OUTIN workstations are X_WIN */
+    GKSERROR(ewstype != X_WIN, 38, errginqdefpick);
 
-/* valid locator device? */
-    GKSERROR( (dev < 1), 140, errginqdefpick);
+    /* valid locator device? */
+    GKSERROR((dev < 1), 140, errginqdefpick);
 
-/* STEP 2: set up the return values */
-    data->pets.number    = 2;
-    data->pets.integers    = (Gint *) malloc( sizeof( Gint ) * data->pets.number);
-    if ( data->pets.integers==NULL) {
-        free( data );
-        gerrorhand( 300, errginqdefpick, xgks_state.gks_err_file);
-        return( 300 );
+    /* STEP 2: set up the return values */
+    data->pets.number = 2;
+    data->pets.integers = (Gint *) malloc(sizeof(Gint) * data->pets.number);
+    if (data->pets.integers == NULL)
+    {
+        free(data);
+        gerrorhand(300, errginqdefpick, xgks_state.gks_err_file);
+        return (300);
     }
-    for( i=0; i<2; i++)
-        data->pets.integers[i] = i+1;
+    for (i = 0; i < 2; i++)
+        data->pets.integers[i] = i + 1;
 
-    data->e_area.xmin    = 0.0;
-    data->e_area.xmax    = WS_MAX_DCX;
-    data->e_area.ymin    = 0.0;
-    data->e_area.ymax    = WS_MAX_DCY;
-    data->record.pet1.data    = NULL;
+    data->e_area.xmin = 0.0;
+    data->e_area.xmax = WS_MAX_DCX;
+    data->e_area.ymin = 0.0;
+    data->e_area.ymax = WS_MAX_DCY;
+    data->record.pet1.data = NULL;
 
-    return(OK);
+    return (OK);
 }
 /*
  * XgksPicUpdatePrompt - update the locator prompt
@@ -458,79 +466,88 @@ Gint ginqdefpick(Gchar *type, Gint dev, Gdefpick *data)
 Gint XgksPicUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     Gpoint *newdcpt, XMotionEvent *xmev, int event_id)
 {
-    Gpick  *data;
+    Gpick *data;
     Gpoint ndcpt;
     XRectangle rect;
 
-    rect.x = 0; rect.y = 0;
-    rect.width = ws->wbound.x; rect.height = ws->wbound.y;
+    rect.x = 0;
+    rect.y = 0;
+    rect.width = ws->wbound.x;
+    rect.height = ws->wbound.y;
 
     XSetClipRectangles(ws->dpy, idev->gc, 0, 0, &rect, 1, Unsorted);
 
-/* pick point must lie within the workstation window */
-    DcToNdc( ws, newdcpt, &ndcpt);
+    /* pick point must lie within the workstation window */
+    DcToNdc(ws, newdcpt, &ndcpt);
 
 #define IPICK idev->data.pic.initst.pick
-    switch (idev->data.pic.initst.mode) {
-        case GREQUEST:
-            if (xmev == NULL || xmev->type != ButtonRelease)
-                break;
-            idev->touched = TRUE;
-            if (idev->breakhit == TRUE)
-                IPICK.status = GP_NONE;
-            else
-               XgksFindPickSeg(ws, &ndcpt, &(IPICK),idev,1);
+    switch (idev->data.pic.initst.mode)
+    {
+    case GREQUEST:
+        if (xmev == NULL || xmev->type != ButtonRelease)
             break;
-        case GSAMPLE :
-            idev->data.pic.curpos = *newdcpt;
-            if (xmev == NULL || xmev->type != ButtonRelease)
-                break;
-            XgksFindPickSeg(ws, &ndcpt,&(IPICK),idev,0);
+        idev->touched = TRUE;
+        if (idev->breakhit == TRUE)
+            IPICK.status = GP_NONE;
+        else
+            XgksFindPickSeg(ws, &ndcpt, &(IPICK), idev, 1);
+        break;
+    case GSAMPLE:
+        idev->data.pic.curpos = *newdcpt;
+        if (xmev == NULL || xmev->type != ButtonRelease)
+            break;
+        XgksFindPickSeg(ws, &ndcpt, &(IPICK), idev, 0);
 #undef IPICK
+        break;
+    case GEVENT:
+        if (xmev == NULL || xmev->type != ButtonRelease)
             break;
-        case GEVENT  :
-            if (xmev == NULL || xmev->type != ButtonRelease)
-                break;
-            data = (Gpick *) malloc( sizeof (Gpick) );
-            if (data == NULL)
+        data = (Gpick *) malloc(sizeof(Gpick));
+        if (data == NULL)
+        {
+            gerrorhand(300, errXgksPicUpdatePrompt, xgks_state.gks_err_file);
+            return (300);
+        }
+
+        if (idev->breakhit == TRUE)
+            data->status = GP_NONE;
+        else
+        {
+            if (XgksFindPickSeg(ws, &ndcpt, data, idev, 1) == GP_OK)
             {
-                gerrorhand( 300, errXgksPicUpdatePrompt, xgks_state.gks_err_file);
-                return(300);
+                data->status = GP_OK;
             }
-            
-                if (idev->breakhit == TRUE)
-                    data->status = GP_NONE;
-                else {if (XgksFindPickSeg(ws,&ndcpt,data,idev,1)== GP_OK) {
-                    data->status = GP_OK;
-                     } else data->status = GP_NOPICK; }
-                 XgksEnqueueEvent(ws->ws_id, idev->dev, GPICK,
-                   (char *)data,-1);
-            
-            break;
-        default :
-            break;
+            else
+                data->status = GP_NOPICK;
+        }
+        XgksEnqueueEvent(ws->ws_id, idev->dev, GPICK,
+            (char *) data, -1);
+
+        break;
+    default:
+        break;
     }
 #ifdef notdef
     /* XgksFindPickSeg () will always return pickid of the first non-clip
        primitive in the segment */
     /* This should be undefed... after prompt #2 is implemented */
 
-    if (idev->data.pic.initst.pet == 2) {
+    if (idev->data.pic.initst.pet == 2)
+    {
         Call a funtion to figure out exact pickid from
-        the <ndcpt> and <segment> (returned from  XgksFindPickSeg)
-    */
+                the<ndcpt> and<segment>(returned from XgksFindPickSeg)
+            * /
 #endif
 
-
-    XFlush(ws->dpy);
-    return( 0 );
-}
-/*
+            XFlush(ws->dpy);
+        return (0);
+    }
+    /*
  * XgksPicDelete -- Free Everything in the pick-device structure ...
  *             BUT, BUT not the pointer to the structure itself
  *            calling program still needs that
  */
-void XgksPicDelete(WS_STATE_ENTRY *ws, INPUT_DEV *idev)
-{
-    XFreeGC( ws->dpy, idev->gc );
-}
+    void XgksPicDelete(WS_STATE_ENTRY * ws, INPUT_DEV * idev)
+    {
+        XFreeGC(ws->dpy, idev->gc);
+    }

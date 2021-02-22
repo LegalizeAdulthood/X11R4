@@ -48,16 +48,16 @@
  * See also: ANSI Standard p.147
  */
 Gint ginqcurntrannum(tran)
-        Gint *tran;
+    Gint *tran;
 {
-/* check proper gks operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqcurntrannum);
+    /* check proper gks operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqcurntrannum);
 
-/* set up return values */
-        *tran = xgks_state.cur_ntrans;
-        return( OK );
+    /* set up return values */
+    *tran = xgks_state.cur_ntrans;
+    return (OK);
 }
-
+
 /*$F
  * ginqntrannum(tranlist) - INQUIRE LIST OF NORMALIZATION TRANSFORMATION NUMBERS
  *
@@ -72,24 +72,24 @@ Gint ginqcurntrannum(tran)
  */
 
 Gint ginqntrannum(tranlist)
-        Gintlist *tranlist;
+    Gintlist *tranlist;
 {
-        int i;
+    int i;
 
-/* check proper gks operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqntrannum);
+    /* check proper gks operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqntrannum);
 
-/* allocate the memory for the list */
-        tranlist->integers = (Gint *) malloc( (MAX_TRANS+1) * sizeof(int));
+    /* allocate the memory for the list */
+    tranlist->integers = (Gint *) malloc((MAX_TRANS + 1) * sizeof(int));
 
-/* set up return values */
-        for(i=0; i <= MAX_TRANS; i++)
-                tranlist->integers[i] = xgks_state.ntrans_priority[i];
-        tranlist->number = MAX_TRANS +1;
+    /* set up return values */
+    for (i = 0; i <= MAX_TRANS; i++)
+        tranlist->integers[i] = xgks_state.ntrans_priority[i];
+    tranlist->number = MAX_TRANS + 1;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqntran(num, tran) - INQUIRE NORMALIZATION TRANSFORMATION
  *
@@ -103,21 +103,21 @@ Gint ginqntrannum(tranlist)
  */
 
 Gint ginqntran(num, tran)
-Gint num;
+    Gint num;
 Gwstran *tran;
 {
-/* check proper gks operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqntran);
+    /* check proper gks operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqntran);
 
-/* check for valid trans number */
-        GKSERROR( (num < 0 || num > MAX_TRANS), 50, errginqntran);
+    /* check for valid trans number */
+    GKSERROR((num < 0 || num > MAX_TRANS), 50, errginqntran);
 
-/* set up the return values */
-        *tran = xgks_state.ntrans_list[num].ntrans;
+    /* set up the return values */
+    *tran = xgks_state.ntrans_list[num].ntrans;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqclip(clipping) - INQUIRE CLIPPING INDICATOR
  *
@@ -130,31 +130,26 @@ Gwstran *tran;
  */
 
 Gint ginqclip(clipping)
-Gcliprec *clipping;
+    Gcliprec *clipping;
 {
+    /* check proper gks operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqclip);
 
-/* check proper gks operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqclip);
+    /* set up return values */
+    if (xgks_state.cliprec.ind == GCLIP)
+        *clipping = xgks_state.cliprec;
+    else /* ...ind == GNOCLIP */
+    {
+        clipping->ind = GNOCLIP;
+        clipping->rec.xmin = xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.xmin;
+        clipping->rec.xmax = xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.xmax;
+        clipping->rec.ymin = xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.ymin;
+        clipping->rec.ymax = xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.ymax;
+    }
 
-/* set up return values */
-        if (xgks_state.cliprec.ind == GCLIP)
-           *clipping = xgks_state.cliprec;
-        else /* ...ind == GNOCLIP */
-           {
-           clipping->ind = GNOCLIP;
-           clipping->rec.xmin =
-                 xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.xmin;
-           clipping->rec.xmax =
-                 xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.xmax;
-           clipping->rec.ymin =
-                 xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.ymin;
-           clipping->rec.ymax =
-                 xgks_state.ntrans_list[xgks_state.cur_ntrans].ntrans.v.ymax;
-           }
-
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqmaxntrannum(maxtran) - INQUIRE MAXIMUM NORMALIZATION TRANSFORMATION NUMBER
  *
@@ -167,17 +162,17 @@ Gcliprec *clipping;
  */
 
 Gint ginqmaxntrannum(maxtran)
-Gint *maxtran;
+    Gint *maxtran;
 {
-/* check proper gks operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqmaxntrannum);
+    /* check proper gks operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqmaxntrannum);
 
-/* set up return values */
-        *maxtran = MAX_TRANS;
+    /* set up return values */
+    *maxtran = MAX_TRANS;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqwstran(ws_id, wstran)
  *              INQUIRE WORKSTATION TRANSFORMATION
@@ -196,26 +191,26 @@ Gint *maxtran;
  */
 
 Gint ginqwstran(ws_id, wstran)
-Gint ws_id;
+    Gint ws_id;
 Gwsti *wstran;
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check proper gks operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwstran);
+    /* check proper gks operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqwstran);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqwstran);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqwstran);
 
-/* check for open ws_id */
-        GKSERROR( ((ws=OPEN_WSID(ws_id)) == NULL), 25, errginqwstran);
+    /* check for open ws_id */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqwstran);
 
-/* proper category */
-        GKSERROR( (ws->ewstype == MI), 33, errginqwstran);
-        GKSERROR( (ws->ewstype == WISS), 36, errginqwstran);
+    /* proper category */
+    GKSERROR((ws->ewstype == MI), 33, errginqwstran);
+    GKSERROR((ws->ewstype == WISS), 36, errginqwstran);
 
-/* set up the return values */
-        *wstran = ws->wsti;
+    /* set up the return values */
+    *wstran = ws->wsti;
 
-        return( OK );
+    return (OK);
 }

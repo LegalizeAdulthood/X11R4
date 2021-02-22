@@ -60,10 +60,9 @@ Gint gerrorlog(Gint errnum, Gint funcname, Gfile *perrfile);
 
 Gint gerrorhand(Gint errnum, Gint funcname, Gfile *perrfile)
 {
-        if (xgks_state.gks_state == GGKCL) /* don't use the perrfile it's not defined */
-                perrfile = stderr;
-        (void) gerrorlog(errnum, funcname, perrfile);
+    if (xgks_state.gks_state == GGKCL) /* don't use the perrfile it's not defined */
+        perrfile = stderr;
+    (void) gerrorlog(errnum, funcname, perrfile);
 
-        return( OK );
+    return (OK);
 }
-

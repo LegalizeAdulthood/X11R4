@@ -48,8 +48,7 @@ Gint gclosegks(void);
 /* the following tables are gks function names */
 /* when adding or deleting entries from this table, be sure to correct */
 /* the range checking if statements located in the errorlog() function */
-char    *procname[] =
-   {"",
+char *procname[] = { "",
     "gopengks()",
     "gclosegks()",
     "gopenws()",
@@ -245,13 +244,11 @@ char    *procname[] =
     "ginqwsst()",
     "ginqwstran()",
     "gurec()",
-    "gprec()"
-   };
+    "gprec()" };
 
 /* when adding or deleting entries from this table, be sure to correct */
 /* the range checking if statements located in the errorlog() function */
-char    *procname1000[] =
-   {"XgksChoUpdatePrompt()",
+char *procname1000[] = { "XgksChoUpdatePrompt()",
     "XgksEnqueueEvent()",
     "XgksLocUpdatePrompt()",
     "XgksStrUpdatePrompt()",
@@ -267,8 +264,7 @@ char    *procname1000[] =
     "XgksExecData()",
     "xPolyMarker()",
     "xFillArea()",
-    "xInqPixelarray()"
-   };
+    "xInqPixelarray()" };
 
 /*$F
  * gemergencyclosegks() - EMERGENCY CLOSE GKS
@@ -280,27 +276,28 @@ char    *procname1000[] =
 
 Gint gemergencyclosegks(void)
 {
-        int i;
+    int i;
 
-        if (xgks_state.gks_state == GGKCL) /* already closed, nothing to do */
-                return( OK );
+    if (xgks_state.gks_state == GGKCL) /* already closed, nothing to do */
+        return (OK);
 
-        if (xgks_state.gks_state == GSGOP) /* close any open segment */
-                gcloseseg();
+    if (xgks_state.gks_state == GSGOP) /* close any open segment */
+        gcloseseg();
 
-        if (xgks_state.gks_state != GGKCL && xgks_state.gks_state != GGKOP) { /* any workstations open? */
-                for(i=0; i<MAX_OPEN_WS; i++)
-                        if ( xgks_state.openedws[i].ws_id != INVALID ) {
-                          if (xgks_state.openedws[i].ws->wsstate == GACTIVE)
-                             gdeactivatews( xgks_state.openedws[i].ws_id );
-                        gclosews( xgks_state.openedws[i].ws_id );
-                        }
-        }
-        gclosegks();
+    if (xgks_state.gks_state != GGKCL && xgks_state.gks_state != GGKOP)
+    { /* any workstations open? */
+        for (i = 0; i < MAX_OPEN_WS; i++)
+            if (xgks_state.openedws[i].ws_id != INVALID)
+            {
+                if (xgks_state.openedws[i].ws->wsstate == GACTIVE)
+                    gdeactivatews(xgks_state.openedws[i].ws_id);
+                gclosews(xgks_state.openedws[i].ws_id);
+            }
+    }
+    gclosegks();
 
-        return( OK );
+    return (OK);
 }
-
 
 /*$F
  *  ERROR LOGGING
@@ -313,42 +310,39 @@ Gint gemergencyclosegks(void)
 
 Gint gerrorlog(Gint errnum, Gint funcname, Gfile *perrfile)
 {
-        Gchar *fname;
+    Gchar *fname;
 
-        /* look up function name for printing instead of the function number */
-        if ((funcname < 197) && (funcname > 0))
-           fname = procname[funcname];
+    /* look up function name for printing instead of the function number */
+    if ((funcname < 197) && (funcname > 0))
+        fname = procname[funcname];
+    else if ((funcname > 999) && (funcname < 1017))
+        fname = procname1000[funcname - 1000];
+    else
+        fname = "Invalid function name/number";
+
+    if (perrfile == NULL)
+        perrfile = stderr;
+
+    if (errnum < 0)
+        errnum = 0;
+
+    if (errnum < 201)
+        if (GKSErrorMessages0to200[errnum] == (char *) NULL)
+            fprintf(perrfile, "%s %d <Undefined Error>\n", fname, errnum);
         else
-           if ((funcname > 999) && (funcname < 1017))
-               fname = procname1000[funcname - 1000];
-           else
-               fname = "Invalid function name/number";
-
-        if (perrfile == NULL)
-                perrfile = stderr;
-
-        if (errnum < 0)
-                errnum = 0;
-
-        if (errnum < 201)
-                if (GKSErrorMessages0to200[errnum] == (char *)NULL)
-                   fprintf(perrfile, "%s %d <Undefined Error>\n", fname, errnum);
-                else
-                   fprintf(perrfile, "%s %4d %s\n", fname, errnum, GKSErrorMessages0to200[errnum]);
+            fprintf(perrfile, "%s %4d %s\n", fname, errnum, GKSErrorMessages0to200[errnum]);
+    else if ((errnum > 299) && (errnum < 310))
+        if (GKSErrorMessages300to309[errnum - 300] == (char *) NULL)
+            fprintf(perrfile, "%s %d <Undefined Error>\n", fname, errnum);
         else
-        if ((errnum > 299) && (errnum < 310))
-                if (GKSErrorMessages300to309[errnum-300] == (char *)NULL)
-                        fprintf(perrfile, "%s %d <Undefined Error>\n", fname, errnum);
-                else
-                        fprintf(perrfile, "%s %4d %s\n", fname, errnum, GKSErrorMessages300to309[errnum-300]);
+            fprintf(perrfile, "%s %4d %s\n", fname, errnum, GKSErrorMessages300to309[errnum - 300]);
+    else if ((errnum > 1999) && (errnum < 2004))
+        if (GKSErrorMessages2000to2000[errnum - 2000] == (char *) NULL)
+            fprintf(perrfile, "%s %d <Undefined Error>\n", fname, errnum);
         else
-        if ((errnum > 1999) && (errnum < 2004))
-                if (GKSErrorMessages2000to2000[errnum-2000] == (char *)NULL)
-                        fprintf(perrfile, "%s %d <Undefined Error>\n", fname, errnum);
-                else
-                        fprintf(perrfile, "%s %4d %s\n", fname, errnum, GKSErrorMessages2000to2000[errnum-2000]);
-        else
-                fprintf(perrfile, "%s %d <Undefined Error>\n", fname, errnum);
+            fprintf(perrfile, "%s %4d %s\n", fname, errnum, GKSErrorMessages2000to2000[errnum - 2000]);
+    else
+        fprintf(perrfile, "%s %d <Undefined Error>\n", fname, errnum);
 
-        return( OK );
+    return (OK);
 }

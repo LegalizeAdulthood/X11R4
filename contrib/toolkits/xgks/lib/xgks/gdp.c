@@ -35,7 +35,6 @@
 
 #include "gks_implem.h"
 
-
 /*
  * ginqavailgdp(type,gdps) - INQUIRE LIST OF AVAILABLE GDP's
  *
@@ -49,31 +48,28 @@
  */
 Gint ginqavailgdp(Gchar *type, Ggdplist *gdps)
 {
-  EWSTYPE ewstype;
+    EWSTYPE ewstype;
 
-  /* check for proper state */
-  GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errginqavailgdp);
+    /* check for proper state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqavailgdp);
 
-  /* check for valid and existing workstation */
-  ewstype = XgksWsTypeToEnum( type );
-  GKSERROR( ewstype == WST_INVALID, 22, errginqavailgdp);
-  GKSERROR( ewstype == WST_INVALID, 23, errginqavailgdp);
-  /* I know they both check the same thing.  The difference between */
-  /* the two isn't clear                   TODO                     */
+    /* check for valid and existing workstation */
+    ewstype = XgksWsTypeToEnum(type);
+    GKSERROR(ewstype == WST_INVALID, 22, errginqavailgdp);
+    GKSERROR(ewstype == WST_INVALID, 23, errginqavailgdp);
+    /* I know they both check the same thing.  The difference between */
+    /* the two isn't clear                   TODO                     */
 
-  /* check that ws is OUTPUT or OUTIN */
-  GKSERROR( ewstype != X_WIN, 39, errginqavailgdp);
+    /* check that ws is OUTPUT or OUTIN */
+    GKSERROR(ewstype != X_WIN, 39, errginqavailgdp);
 
-  /* there are no gdp's defined... */
-  gdps->number = 0;
-  gdps->functions = (Gint(*)()) NULL; /* pointer to a function */
-  gdps->indices = (Gint *) NULL;
+    /* there are no gdp's defined... */
+    gdps->number = 0;
+    gdps->functions = (Gint(*)()) NULL; /* pointer to a function */
+    gdps->indices = (Gint *) NULL;
 
-  return(OK);
-  }
-
-
-
+    return (OK);
+}
 
 /*
  * ginqgdp(type,function,fac) - INQUIRE GDP
@@ -88,30 +84,26 @@ Gint ginqavailgdp(Gchar *type, Ggdplist *gdps)
  *
  */
 Gint ginqgdp(Gchar *type, Gint function, Ggdpfac *fac)
-  {
-  EWSTYPE ewstype;
+{
+    EWSTYPE ewstype;
 
-  /* check for proper state */
-  GKSERROR ((xgks_state.gks_state == GGKCL) ,8, errginqgdp);
+    /* check for proper state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqgdp);
 
-  /* check for valid and existing workstation */
-  ewstype = XgksWsTypeToEnum( type );
-  GKSERROR( ewstype == WST_INVALID, 22, errginqgdp);
-  GKSERROR( ewstype == WST_INVALID, 23, errginqgdp);
-  /* I know they both check the same thing.  The difference between */
-  /* the two isn't clear                   TODO                     */
+    /* check for valid and existing workstation */
+    ewstype = XgksWsTypeToEnum(type);
+    GKSERROR(ewstype == WST_INVALID, 22, errginqgdp);
+    GKSERROR(ewstype == WST_INVALID, 23, errginqgdp);
+    /* I know they both check the same thing.  The difference between */
+    /* the two isn't clear                   TODO                     */
 
-  /* check that ws is OUTPUT or OUTIN */
-  GKSERROR( ewstype != X_WIN, 39, errginqgdp);
+    /* check that ws is OUTPUT or OUTIN */
+    GKSERROR(ewstype != X_WIN, 39, errginqgdp);
 
-  /* check that the ws can generate the specified gdp              */
-  /* (until some gdp's are implimented, error 41 will be returned) */
-  GKSERROR( TRUE, 41, errginqgdp);
-
-  }
-
-
-
+    /* check that the ws can generate the specified gdp              */
+    /* (until some gdp's are implimented, error 41 will be returned) */
+    GKSERROR(TRUE, 41, errginqgdp);
+}
 
 /*
  * ggdp(npoints,points,function,data) - GENERALIZED DRAWING PRIMITIVE
@@ -127,29 +119,25 @@ Gint ginqgdp(Gchar *type, Gint function, Ggdpfac *fac)
  */
 
 Gint ggdp(Gint npoints, Gpoint *points, Gint function, Ggdprec *data)
-  {
+{
+    /* check for proper state */
+    GKSERROR((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errggdp);
 
-  /* check for proper state */
-  GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errggdp);
+    /* check for "number of points is invalid" */
+    GKSERROR((npoints < 0), 100, errggdp);
 
-  /* check for "number of points is invalid" */
-  GKSERROR ((npoints<0), 100, errggdp);
+    /* check for "GDP identifier is invalid */
+    GKSERROR((function <= 0 || function > 0), 102, errggdp);
+    /* NOTE: Since there are no gdp's defined, none are valid.  Someday, when  */
+    /*       there are some, the function>0 will be replaced with function>MAX */
 
-  /* check for "GDP identifier is invalid */
-  GKSERROR ((function<=0 || function>0), 102, errggdp);
-  /* NOTE: Since there are no gdp's defined, none are valid.  Someday, when  */
-  /*       there are some, the function>0 will be replaced with function>MAX */
+    /* check for "content of gdp data record is invalid" */
+    /* GKSERROR ( (????), 103, errggdp); */
 
-  /* check for "content of gdp data record is invalid" */
-  /* GKSERROR ( (????), 103, errggdp); */
+    /* check for "at least one ws is not able to generate specified gdp */
+    /* GKSERROR ( (????), 104, errggdp); */
 
-  /* check for "at least one ws is not able to generate specified gdp */
-  /* GKSERROR ( (????), 104, errggdp); */
-
-  /* check for "at least one ws is not able to generate specified gdp under */
-  /*     the current transformations and clipping rectangle"                */
-  /* GKSERROR ( (????), 105, errggdp); */
-
-  }
-
-
+    /* check for "at least one ws is not able to generate specified gdp under */
+    /*     the current transformations and clipping rectangle"                */
+    /* GKSERROR ( (????), 105, errggdp); */
+}

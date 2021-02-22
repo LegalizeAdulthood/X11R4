@@ -42,101 +42,99 @@ void XgksFudge(XRectangle *rectangle);
 
 void xXgksSetForeground(Display *dpy, GC gc, int fg)
 {
-    if( gc->values.foreground!=fg)
-       XSetForeground(dpy, gc, fg);
+    if (gc->values.foreground != fg)
+        XSetForeground(dpy, gc, fg);
 }
-
 
 void xXgksSetLineAttributes(Display *dpy, GC gc, unsigned int line_width, int line_style, int cap_style, int join_style)
 {
-    if((gc->values.line_width!=line_width)
-           ||(gc->values.line_style!=line_style)
-           ||(gc->values.cap_style!=cap_style)
-           ||(gc->values.join_style!=join_style))
-     XSetLineAttributes(dpy, gc, line_width, line_style, cap_style, join_style);
+    if ((gc->values.line_width != line_width)
+        || (gc->values.line_style != line_style)
+        || (gc->values.cap_style != cap_style)
+        || (gc->values.join_style != join_style))
+        XSetLineAttributes(dpy, gc, line_width, line_style, cap_style, join_style);
 }
-
 
 void xXgksSetStipple(Display *dpy, GC gc, Pixmap stipple)
-{ if(gc->values.stipple!=stipple)
-         XSetStipple(dpy, gc, stipple);
+{
+    if (gc->values.stipple != stipple)
+        XSetStipple(dpy, gc, stipple);
 }
-
 
 void xXgksSetDashes(Display *dpy, GC gc, WS_STATE_PTR ws, Gint i)
 {
-    if(i!= ws->last_dash_index)
-         XSetDashes(dpy, gc, 0, xgksDASHES[i].dashl, xgksDASHES[i].dn);
+    if (i != ws->last_dash_index)
+        XSetDashes(dpy, gc, 0, xgksDASHES[i].dashl, xgksDASHES[i].dn);
 }
-
 
 void xXgksSetTile(Display *dpy, GC gc, Pixmap tile)
 {
-    if(gc->values.tile!=tile)
-         XSetTile(dpy, gc, tile);
+    if (gc->values.tile != tile)
+        XSetTile(dpy, gc, tile);
 }
-
 
 void xXgksSetClipMask(Display *dpy, GC gc, Pixmap pixmap)
 {
-    if(gc->values.clip_mask!=pixmap)
-      XSetClipMask(dpy, gc, pixmap);
+    if (gc->values.clip_mask != pixmap)
+        XSetClipMask(dpy, gc, pixmap);
 }
-
 
 void xXgksSetPlineClipRectangles(Display *dpy, GC gc, WS_STATE_PTR ws, XRectangle *rectangle)
 {
-    if((rectangle->x!=ws->last_pline_rectangle.x)
-                ||(rectangle->y!=ws->last_pline_rectangle.y)
-                ||(rectangle->width!=ws->last_pline_rectangle.width)
-                ||(rectangle->height!=ws->last_pline_rectangle.height)){
-                      XgksFudge(rectangle);
-                      XSetClipRectangles(dpy,gc,0, 0, rectangle, 1, Unsorted);
-                      ws->last_pline_rectangle= *rectangle;
-                      }
+    if ((rectangle->x != ws->last_pline_rectangle.x)
+        || (rectangle->y != ws->last_pline_rectangle.y)
+        || (rectangle->width != ws->last_pline_rectangle.width)
+        || (rectangle->height != ws->last_pline_rectangle.height))
+    {
+        XgksFudge(rectangle);
+        XSetClipRectangles(dpy, gc, 0, 0, rectangle, 1, Unsorted);
+        ws->last_pline_rectangle = *rectangle;
+    }
 }
 
 void xXgksSetPmarkerClipRectangles(Display *dpy, GC gc, WS_STATE_PTR ws, XRectangle *rectangle)
 {
-    if((rectangle->x!=ws->last_pmarker_rectangle.x)
-                ||(rectangle->y!=ws->last_pmarker_rectangle.y)
-                ||(rectangle->width!=ws->last_pmarker_rectangle.width)
-                ||(rectangle->height!=ws->last_pmarker_rectangle.height)){
-                      XgksFudge(rectangle);
-                      XSetClipRectangles(dpy,gc,0, 0, rectangle, 1, Unsorted);
-                      ws->last_pmarker_rectangle= *rectangle;
-                     }
+    if ((rectangle->x != ws->last_pmarker_rectangle.x)
+        || (rectangle->y != ws->last_pmarker_rectangle.y)
+        || (rectangle->width != ws->last_pmarker_rectangle.width)
+        || (rectangle->height != ws->last_pmarker_rectangle.height))
+    {
+        XgksFudge(rectangle);
+        XSetClipRectangles(dpy, gc, 0, 0, rectangle, 1, Unsorted);
+        ws->last_pmarker_rectangle = *rectangle;
+    }
 }
 
 void xXgksSetFillAreaClipRectangles(Display *dpy, GC gc, WS_STATE_PTR ws, XRectangle *rectangle)
 {
-    if((rectangle->x!=ws->last_farea_rectangle.x)
-                ||(rectangle->y!=ws->last_farea_rectangle.y)
-                ||(rectangle->width!=ws->last_farea_rectangle.width)
-                ||(rectangle->height!=ws->last_farea_rectangle.height)){
-                      XgksFudge(rectangle);
-                      XSetClipRectangles(dpy,gc,0, 0, rectangle, 1, Unsorted);
-                      ws->last_farea_rectangle= *rectangle;
-                      }
+    if ((rectangle->x != ws->last_farea_rectangle.x)
+        || (rectangle->y != ws->last_farea_rectangle.y)
+        || (rectangle->width != ws->last_farea_rectangle.width)
+        || (rectangle->height != ws->last_farea_rectangle.height))
+    {
+        XgksFudge(rectangle);
+        XSetClipRectangles(dpy, gc, 0, 0, rectangle, 1, Unsorted);
+        ws->last_farea_rectangle = *rectangle;
+    }
 }
 
 void xXgksSetTextClipRectangles(Display *dpy, GC gc, WS_STATE_PTR ws, XRectangle *rectangle)
 {
-    if((rectangle->x!=ws->last_text_rectangle.x)
-                ||(rectangle->y!=ws->last_text_rectangle.y)
-                ||(rectangle->width!=ws->last_text_rectangle.width)
-                ||(rectangle->height!=ws->last_text_rectangle.height)){
-                      XgksFudge(rectangle);
-                      XSetClipRectangles(dpy,gc,0, 0, rectangle, 1, Unsorted);
-                      ws->last_text_rectangle= *rectangle;
-                      }
+    if ((rectangle->x != ws->last_text_rectangle.x)
+        || (rectangle->y != ws->last_text_rectangle.y)
+        || (rectangle->width != ws->last_text_rectangle.width)
+        || (rectangle->height != ws->last_text_rectangle.height))
+    {
+        XgksFudge(rectangle);
+        XSetClipRectangles(dpy, gc, 0, 0, rectangle, 1, Unsorted);
+        ws->last_text_rectangle = *rectangle;
+    }
 }
-
 
 void xXgksSetFillStyle(Display *dpy, GC gc, int fill_style)
 {
-    if( gc->values.fill_style !=fill_style)
-       XSetFillStyle(dpy, gc, fill_style);
+    if (gc->values.fill_style != fill_style)
+        XSetFillStyle(dpy, gc, fill_style);
 }
 
 /* the following is just a fudge to make the clipping rectangle a little */
@@ -146,6 +144,6 @@ void xXgksSetFillStyle(Display *dpy, GC gc, int fill_style)
 /* on to X, you have to choose one evil or the other. */
 void XgksFudge(XRectangle *rectangle)
 {
-  rectangle->width += 2;
-  rectangle->height += 2;
+    rectangle->width += 2;
+    rectangle->height += 2;
 }

@@ -39,7 +39,6 @@
 
 #include "fillarea.h"
 
-
 /*
  * INQUIRE FILLAREA FACILITIES
  *
@@ -48,49 +47,47 @@
  * See also: ANSI standard p.177
  */
 
-
 extern Gptbundl xgks_xpttn[];
 
-
 Gint ginqfillfacil(ws_type, fac)
-        Gchar *ws_type;
-        Gflfac *fac;
+    Gchar *ws_type;
+Gflfac *fac;
 {
-        int i;
-        EWSTYPE ewstype;
+    int i;
+    EWSTYPE ewstype;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqfillfacil);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqfillfacil);
 
-/* check for valid ws_type */
-        ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqfillfacil);
-        GKSERROR( ewstype != X_WIN, 39, errginqfillfacil);
+    /* check for valid ws_type */
+    ewstype = XgksWsTypeToEnum(ws_type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqfillfacil);
+    GKSERROR(ewstype != X_WIN, 39, errginqfillfacil);
 
-/* set the return values */
-        fac->predefined = PDF_FILL_BNDLS;
-        fac->interiors.number = 4;
-        fac->hatches.number = 20;
+    /* set the return values */
+    fac->predefined = PDF_FILL_BNDLS;
+    fac->interiors.number = 4;
+    fac->hatches.number = 20;
 
-/* get space for list */
-        fac->interiors.integers = (Gint *)malloc((unsigned) fac->interiors.number * sizeof(int));
-        GKSERROR( (fac->interiors.integers == NULL), 300, errginqfillfacil);
+    /* get space for list */
+    fac->interiors.integers = (Gint *) malloc((unsigned) fac->interiors.number * sizeof(int));
+    GKSERROR((fac->interiors.integers == NULL), 300, errginqfillfacil);
 
-        fac->hatches.integers = (Gint *)malloc((unsigned) fac->hatches.number * sizeof(int));
-        GKSERROR( (fac->hatches.integers == NULL), 300, errginqfillfacil);
+    fac->hatches.integers = (Gint *) malloc((unsigned) fac->hatches.number * sizeof(int));
+    GKSERROR((fac->hatches.integers == NULL), 300, errginqfillfacil);
 
-/* set returned index values */
-        fac->interiors.integers[0] = (Gint) GHOLLOW;
-        fac->interiors.integers[1] = (Gint) GSOLID;
-        fac->interiors.integers[2] = (Gint) GPATTERN;
-        fac->interiors.integers[3] = (Gint) GHATCH;
+    /* set returned index values */
+    fac->interiors.integers[0] = (Gint) GHOLLOW;
+    fac->interiors.integers[1] = (Gint) GSOLID;
+    fac->interiors.integers[2] = (Gint) GPATTERN;
+    fac->interiors.integers[3] = (Gint) GHATCH;
 
-        for(i=0; i< fac->hatches.number; i++)
-                fac->hatches.integers[i] = -(i+1);
+    for (i = 0; i < fac->hatches.number; i++)
+        fac->hatches.integers[i] = -(i + 1);
 
-        return( OK );
+    return (OK);
 }
-
+
 /*
  * INQUIRE PREDEFINED FILLAREA REPRESENTATION
  *
@@ -100,31 +97,31 @@ Gint ginqfillfacil(ws_type, fac)
  */
 
 Gint ginqpredfillrep(ws_type, idx, rep)
-        Gchar *ws_type;
-        Gint idx;
-        Gflbundl *rep;
+    Gchar *ws_type;
+Gint idx;
+Gflbundl *rep;
 {
-        EWSTYPE ewstype;
+    EWSTYPE ewstype;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredfillrep);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqpredfillrep);
 
-/* check for valid ws_type */
-        ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqpredfillrep);
-        GKSERROR( ewstype != X_WIN, 39, errginqpredfillrep);
+    /* check for valid ws_type */
+    ewstype = XgksWsTypeToEnum(ws_type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqpredfillrep);
+    GKSERROR(ewstype != X_WIN, 39, errginqpredfillrep);
 
-/* check for valid idx */
-        GKSERROR((idx < 1 || idx > PDF_FILL_BNDLS),80,errginqpredfillrep);
+    /* check for valid idx */
+    GKSERROR((idx < 1 || idx > PDF_FILL_BNDLS), 80, errginqpredfillrep);
 
-/* set the return values */
-        rep->inter = def_flbundl[idx-1].inter;
-        rep->style = def_flbundl[idx-1].style;
-        rep->colour = def_flbundl[idx-1].colour;
+    /* set the return values */
+    rep->inter = def_flbundl[idx - 1].inter;
+    rep->style = def_flbundl[idx - 1].style;
+    rep->colour = def_flbundl[idx - 1].colour;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*
  * INQUIRE LIST OF FILLAREA INDICES
  *
@@ -134,36 +131,36 @@ Gint ginqpredfillrep(ws_type, idx, rep)
  */
 
 Gint ginqfillindices(ws_id, idxlist)
-        Gint ws_id;
-        Gintlist *idxlist;
+    Gint ws_id;
+Gintlist *idxlist;
 {
-        WS_STATE_PTR ws;
-        int  i;
+    WS_STATE_PTR ws;
+    int i;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqfillindices);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqfillindices);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqfillindices);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqfillindices);
 
-/* check if this ws_id is opened */
-        GKSERROR( ((ws=OPEN_WSID(ws_id))==NULL), 25, errginqfillindices);
+    /* check if this ws_id is opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqfillindices);
 
-/* check workstation type */
-        GKSERROR( (ws->ewstype == MI), 33, errginqfillindices);
-        GKSERROR( (ws->ewstype == WISS), 36, errginqfillindices);
+    /* check workstation type */
+    GKSERROR((ws->ewstype == MI), 33, errginqfillindices);
+    GKSERROR((ws->ewstype == WISS), 36, errginqfillindices);
 
-/* get space for list */
-        idxlist->number = 20;
-        idxlist->integers = (Gint *)malloc((unsigned) idxlist->number * sizeof(int));
+    /* get space for list */
+    idxlist->number = 20;
+    idxlist->integers = (Gint *) malloc((unsigned) idxlist->number * sizeof(int));
 
-/* set the indecies values */
-        for (i=0; i<idxlist->number; i++)
-                idxlist->integers[i] = i+1;
+    /* set the indecies values */
+    for (i = 0; i < idxlist->number; i++)
+        idxlist->integers[i] = i + 1;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*
  * INQUIRE FILLAREA REPRESENTATION
  *
@@ -173,37 +170,37 @@ Gint ginqfillindices(ws_id, idxlist)
  */
 
 Gint ginqfillrep(ws_id, idx, type, rep)
-        Gint ws_id;
-        Gint idx;
-        Gqtype type;
-        Gflbundl *rep;
+    Gint ws_id;
+Gint idx;
+Gqtype type;
+Gflbundl *rep;
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqfillrep);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqfillrep);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqfillrep);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqfillrep);
 
-/* check if this ws_id is opened */
-        GKSERROR( ((ws=OPEN_WSID(ws_id))==NULL), 25, errginqfillrep);
+    /* check if this ws_id is opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqfillrep);
 
-/* check workstation type */
-        GKSERROR( (ws->ewstype == MI), 33, errginqfillrep);
-        GKSERROR( (ws->ewstype == WISS), 36, errginqfillrep);
+    /* check workstation type */
+    GKSERROR((ws->ewstype == MI), 33, errginqfillrep);
+    GKSERROR((ws->ewstype == WISS), 36, errginqfillrep);
 
-/* check for valid idx */
-        GKSERROR( (idx < 1 || idx > 20), 80, errginqfillrep);
+    /* check for valid idx */
+    GKSERROR((idx < 1 || idx > 20), 80, errginqfillrep);
 
-/* set the returned values */
-        rep->inter = ws->flbundl_table[idx].inter;
-        rep->style = ws->flbundl_table[idx].style;
-        rep->colour = ws->flbundl_table[idx].colour;
+    /* set the returned values */
+    rep->inter = ws->flbundl_table[idx].inter;
+    rep->style = ws->flbundl_table[idx].style;
+    rep->colour = ws->flbundl_table[idx].colour;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*
  * INQUIRE PATTERN FACILITIES
  *
@@ -213,25 +210,25 @@ Gint ginqfillrep(ws_id, idx, type, rep)
  */
 
 Gint ginqpatfacil(ws_type, fac)
-        Gchar *ws_type;
-        Gint *fac;
+    Gchar *ws_type;
+Gint *fac;
 {
-        EWSTYPE ewstype;
+    EWSTYPE ewstype;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpatfacil);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqpatfacil);
 
-/* check for valid ws_type */
-        ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype ==  WST_INVALID), 22, errginqpatfacil);
-        GKSERROR( ewstype != X_WIN, 39, errginqpatfacil);
+    /* check for valid ws_type */
+    ewstype = XgksWsTypeToEnum(ws_type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqpatfacil);
+    GKSERROR(ewstype != X_WIN, 39, errginqpatfacil);
 
-/* set the return values */
-        (*fac) = 20;
+    /* set the return values */
+    (*fac) = 20;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*
  * INQUIRE PREDEFINED PATTERN REPRESENTATION
  *
@@ -241,36 +238,36 @@ Gint ginqpatfacil(ws_type, fac)
  */
 
 Gint ginqpredpatrep(ws_type, idx, rep)
-        Gchar *ws_type;
-        Gint idx;
-        Gptbundl *rep;
+    Gchar *ws_type;
+Gint idx;
+Gptbundl *rep;
 {
-        EWSTYPE ewstype;
-        int i, j;
+    EWSTYPE ewstype;
+    int i, j;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredpatrep);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqpredpatrep);
 
-/* check for valid ws_type */
-        ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqpredpatrep);
-        GKSERROR( ewstype != X_WIN, 39, errginqpredpatrep);
+    /* check for valid ws_type */
+    ewstype = XgksWsTypeToEnum(ws_type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqpredpatrep);
+    GKSERROR(ewstype != X_WIN, 39, errginqpredpatrep);
 
-/* check for valid idx */
-        GKSERROR( (idx < 1 || idx > 20), 85, errginqpredpatrep);
+    /* check for valid idx */
+    GKSERROR((idx < 1 || idx > 20), 85, errginqpredpatrep);
 
-/* set the return values */
-        *rep = xgks_xpttn[idx-1];
-        j = rep->size.x * rep->size.y;
-        rep->array = (Gint *)malloc( j * sizeof(int));
-        GKSERROR( (rep->array == NULL), 300, errginqpredpatrep);
+    /* set the return values */
+    *rep = xgks_xpttn[idx - 1];
+    j = rep->size.x * rep->size.y;
+    rep->array = (Gint *) malloc(j * sizeof(int));
+    GKSERROR((rep->array == NULL), 300, errginqpredpatrep);
 
-        for (i=0; i < j; i++)
-                rep->array[i] = xgks_xpttn[idx-1].array[i];
+    for (i = 0; i < j; i++)
+        rep->array[i] = xgks_xpttn[idx - 1].array[i];
 
-        return( OK );
+    return (OK);
 }
-
+
 /*
  * INQUIRE LIST OF PATTERN INDICES
  *
@@ -280,36 +277,36 @@ Gint ginqpredpatrep(ws_type, idx, rep)
  */
 
 Gint ginqpatindices(ws_id, idxlist)
-        Gint ws_id;
-        Gintlist *idxlist;
+    Gint ws_id;
+Gintlist *idxlist;
 {
-        WS_STATE_PTR ws;
-        int  i;
+    WS_STATE_PTR ws;
+    int i;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpatindices);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpatindices);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpatindices);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqpatindices);
 
-/* check if this ws_id is opened */
-        GKSERROR( ((ws=OPEN_WSID(ws_id))==NULL), 25, errginqpatindices);
+    /* check if this ws_id is opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpatindices);
 
-/* check workstation type */
-        GKSERROR( (ws->ewstype == MI), 33, errginqpatindices);
-        GKSERROR( (ws->ewstype == WISS), 36, errginqpatindices);
+    /* check workstation type */
+    GKSERROR((ws->ewstype == MI), 33, errginqpatindices);
+    GKSERROR((ws->ewstype == WISS), 36, errginqpatindices);
 
-/* get space for list */
-        idxlist->number = 20;
-        idxlist->integers = (Gint *)malloc((unsigned) idxlist->number * sizeof(int));
+    /* get space for list */
+    idxlist->number = 20;
+    idxlist->integers = (Gint *) malloc((unsigned) idxlist->number * sizeof(int));
 
-/* set the indecies values */
-        for (i=0; i<idxlist->number; i++)
-                idxlist->integers[i] = i+1;
+    /* set the indecies values */
+    for (i = 0; i < idxlist->number; i++)
+        idxlist->integers[i] = i + 1;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*
  * INQUIRE PATTERN REPRESENTATION
  *
@@ -319,40 +316,38 @@ Gint ginqpatindices(ws_id, idxlist)
  */
 
 Gint ginqpatrep(ws_id, idx, type, rep)
-        Gint ws_id;
-        Gint idx;
-        Gqtype type;
-        Gptbundl *rep;
+    Gint ws_id;
+Gint idx;
+Gqtype type;
+Gptbundl *rep;
 {
-        WS_STATE_PTR ws;
-        int i, j;
+    WS_STATE_PTR ws;
+    int i, j;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpatrep);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqpatrep);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqpatrep);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqpatrep);
 
-/* check if this ws_id is opened */
-        GKSERROR( ((ws=OPEN_WSID(ws_id))==NULL), 25, errginqpatrep);
+    /* check if this ws_id is opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqpatrep);
 
-/* check workstation type */
-        GKSERROR( (ws->ewstype == MI), 33, errginqpatrep);
-        GKSERROR( (ws->ewstype == WISS), 36, errginqpatrep);
+    /* check workstation type */
+    GKSERROR((ws->ewstype == MI), 33, errginqpatrep);
+    GKSERROR((ws->ewstype == WISS), 36, errginqpatrep);
 
-/* check for valid idx */
-        GKSERROR( (idx < 1 || idx > 20), 85, errginqpatrep);
+    /* check for valid idx */
+    GKSERROR((idx < 1 || idx > 20), 85, errginqpatrep);
 
-/* set the returned values */
-        *rep = ws->ptbundl_table[idx-1];
-        j = rep->size.x * rep->size.y;
-        rep->array = (Gint *)malloc( j * sizeof(int));
-        GKSERROR( (rep->array == NULL), 300, errginqpatrep);
+    /* set the returned values */
+    *rep = ws->ptbundl_table[idx - 1];
+    j = rep->size.x * rep->size.y;
+    rep->array = (Gint *) malloc(j * sizeof(int));
+    GKSERROR((rep->array == NULL), 300, errginqpatrep);
 
-        for (i=0; i < j; i++)
-                rep->array[i] = ws->ptbundl_table[idx-1].array[i];
+    for (i = 0; i < j; i++)
+        rep->array[i] = ws->ptbundl_table[idx - 1].array[i];
 
-
-
-        return( OK );
+    return (OK);
 }

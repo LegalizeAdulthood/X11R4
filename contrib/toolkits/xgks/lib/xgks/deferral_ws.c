@@ -55,40 +55,40 @@ void XgksMoDeferWs(WS_STATE_PTR ws, Gdefmode defer_mode, Girgmode regen_mode);
  * See also: ANSI standard p.79
  */
 Gint gsetdeferst(ws_id, deferral_mode, regen_mode)
-        Gint ws_id;
-        Gdefmode deferral_mode;
-        Girgmode regen_mode;
+    Gint ws_id;
+Gdefmode deferral_mode;
+Girgmode regen_mode;
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state==GGKOP || xgks_state.gks_state==GGKCL) , 7, errgsetdeferst);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKOP || xgks_state.gks_state == GGKCL), 7, errgsetdeferst);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetdeferst);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgsetdeferst);
 
-/* check for open ws_id */
-        GKSERROR (((ws=OPEN_WSID(ws_id))==NULL) , 25, errgsetdeferst);
+    /* check for open ws_id */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errgsetdeferst);
 
-/* check for valid category */
-        GKSERROR ((WS_CAT(ws) == GMI) , 33, errgsetdeferst);
-        GKSERROR ((WS_CAT(ws) == GINPUT) , 35, errgsetdeferst);
-        GKSERROR ((WS_CAT(ws) == GWISS) , 36, errgsetdeferst);
+    /* check for valid category */
+    GKSERROR((WS_CAT(ws) == GMI), 33, errgsetdeferst);
+    GKSERROR((WS_CAT(ws) == GINPUT), 35, errgsetdeferst);
+    GKSERROR((WS_CAT(ws) == GWISS), 36, errgsetdeferst);
 
-/* check for valid deferral_mode & regen_mode */
-        GKSERROR ( (deferral_mode != GASAP && deferral_mode != GBNIG &&
-                deferral_mode != GBNIL && deferral_mode != GASTI),
-                2000, errgsetdeferst);
+    /* check for valid deferral_mode & regen_mode */
+    GKSERROR((deferral_mode != GASAP && deferral_mode != GBNIG && deferral_mode != GBNIL && deferral_mode != GASTI),
+        2000, errgsetdeferst);
 
-        if (ws->ewstype == MO)  XgksMoDeferWs (ws, deferral_mode, regen_mode);
+    if (ws->ewstype == MO)
+        XgksMoDeferWs(ws, deferral_mode, regen_mode);
 
-/* see if redraw is necessary */
+    /* see if redraw is necessary */
 
-        ws->wsdus.defmode = deferral_mode;
-        ws->wsdus.irgmode = regen_mode;
+    ws->wsdus.defmode = deferral_mode;
+    ws->wsdus.irgmode = regen_mode;
 
-        if (ws->wsdus.irgmode==GALLOWED && ws->wsdus.nframe==GYES && ws->ewstype!=MO)
-                XgksReDrawSegWs(ws);
+    if (ws->wsdus.irgmode == GALLOWED && ws->wsdus.nframe == GYES && ws->ewstype != MO)
+        XgksReDrawSegWs(ws);
 
-        return(OK);
+    return (OK);
 }

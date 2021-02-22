@@ -69,83 +69,84 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
     static int cnt = 1;
     static Glimit *win;
 
+    /* STEP 1: check for errors. */
+    /* proper gks state? */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitstroke);
 
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginitstroke);
 
-/* STEP 1: check for errors. */
-/* proper gks state? */
-    GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginitstroke);
+    /* open wsid? */
+    GKSERROR(!(ws = OPEN_WSID(ws_id)), 25, errginitstroke);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginitstroke);
+    /* valid workstation category */
+    GKSERROR((WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginitstroke);
 
-/* open wsid? */
-    GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginitstroke);
+    /* valid echo area */
+    GKSERROR((area->xmin > area->xmax || area->ymin > area->ymax), 51, errginitstroke);
 
-/* valid workstation category */
-    GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginitstroke);
+    /* valid stroke device number */
+    GKSERROR((dev < 1), 140, errginitstroke);
 
-/* valid echo area */
-        GKSERROR( (area->xmin > area->xmax || area->ymin > area->ymax), 51, errginitstroke );
+    /* valid and supported prompt mode? */
+    GKSERROR(pet != 1 && pet != 3 && pet != 4, 144, errginitstroke);
 
-/* valid stroke device number */
-        GKSERROR( (dev < 1), 140, errginitstroke );
+    /* Echo inside display space? */
+    GKSERROR((area->xmin < 0 || area->xmax > ws->size.x
+                 || area->ymin < 0 || area->ymax > ws->size.y),
+        145, errginitstroke);
 
-/* valid and supported prompt mode? */
-        GKSERROR( pet != 1 && pet != 3 && pet != 4, 144, errginitstroke);
+    /* valid data record */
+    GKSERROR(record->pet1.bufsiz < 1, 146, errginitstroke);
+    GKSERROR(record->pet1.editpos < 1, 146, errginitstroke);
+    GKSERROR(record->pet1.editpos > record->pet1.bufsiz, 146, errginitstroke);
+    GKSERROR(record->pet1.time < 0.0, 146, errginitstroke);
+    GKSERROR(init->n_points < 0, 152, errginitstroke);
+    GKSERROR(init->n_points > record->pet1.bufsiz, 153, errginitstroke);
+    GKSERROR(init->transform < 0, 50, errginitstroke);
+    GKSERROR(init->transform > MAX_TRANS, 50, errginitstroke);
 
-/* Echo inside display space? */
-        GKSERROR( (area->xmin < 0 || area->xmax > ws->size.x
-                || area->ymin < 0 || area->ymax > ws->size.y),
-                145, errginitstroke );
+    /* check that editpos is within the initial points (so that bogus data       */
+    /* won't be mistaken for valid points) */
+    /* The standard doesn't really mention this restriction, but it seems needed.*/
 
-/* valid data record */
-    GKSERROR( record->pet1.bufsiz < 1, 146, errginitstroke);
-    GKSERROR( record->pet1.editpos < 1, 146, errginitstroke);
-  GKSERROR( record->pet1.editpos > record->pet1.bufsiz, 146, errginitstroke);
-    GKSERROR( record->pet1.time < 0.0, 146, errginitstroke);
-    GKSERROR( init->n_points < 0, 152, errginitstroke);
-    GKSERROR( init->n_points > record->pet1.bufsiz, 153, errginitstroke);
-    GKSERROR( init->transform < 0, 50, errginitstroke);
-    GKSERROR( init->transform > MAX_TRANS, 50, errginitstroke);
+    GKSERROR(record->pet1.editpos > init->n_points + 1, 152, errginitstroke);
 
-/* check that editpos is within the initial points (so that bogus data       */
-/* won't be mistaken for valid points) */
-/* The standard doesn't really mention this restriction, but it seems needed.*/
-
-    GKSERROR(record->pet1.editpos>init->n_points+1,152,errginitstroke);
-
-/* make sure initial points are within the transform in initstroke           */
+    /* make sure initial points are within the transform in initstroke           */
     win = &xgks_state.ntrans_list[init->transform].ntrans.w;
-    for ( ptr = init->points, cnt = 1;
-          cnt <= init->n_points;
-          ptr++,cnt++)
-      GKSERROR( ((ptr->x < win->xmin) || (win->xmax < ptr->x)
-              || (ptr->y < win->ymin) || (win->ymax < ptr->y)),
-              146, errginitstroke);
+    for (ptr = init->points, cnt = 1;
+         cnt <= init->n_points;
+         ptr++, cnt++)
+        GKSERROR(((ptr->x < win->xmin) || (win->xmax < ptr->x)
+                     || (ptr->y < win->ymin) || (win->ymax < ptr->y)),
+            146, errginitstroke);
 
     didx = 0;
-    switch( pet ) {
+    switch (pet)
+    {
     default:
     case 1:
         break;
-    case 3:    /* polymarker */
-        if (record->pet3.acf == GSPECIFIED) {
-            GKSERROR( record->pet3.mk.mark < 1 || record->pet3.mk.mark >= MAX_BUNDL_TBL, 66, errginitstroke);
-            GKSERROR( !WS_MARKER_TYPE(record->pet3.mk.bundl.type), 69, errginitstroke);
-            GKSERROR( record->pet3.mk.bundl.size < 0.0, 71, errginitstroke);
-            GKSERROR( !WS_AVAIL_COLOUR(ws, record->pet3.mk.bundl.colour), 92, errginitstroke);
+    case 3: /* polymarker */
+        if (record->pet3.acf == GSPECIFIED)
+        {
+            GKSERROR(record->pet3.mk.mark < 1 || record->pet3.mk.mark >= MAX_BUNDL_TBL, 66, errginitstroke);
+            GKSERROR(!WS_MARKER_TYPE(record->pet3.mk.bundl.type), 69, errginitstroke);
+            GKSERROR(record->pet3.mk.bundl.size < 0.0, 71, errginitstroke);
+            GKSERROR(!WS_AVAIL_COLOUR(ws, record->pet3.mk.bundl.colour), 92, errginitstroke);
         }
-        else {
+        else
+        {
             record->pet3.mk.type = xgks_state.gks_mkattr.type;
             record->pet3.mk.size = xgks_state.gks_mkattr.size;
             record->pet3.mk.colour = xgks_state.gks_mkattr.colour;
             record->pet3.mk.mark = xgks_state.gks_mkattr.mark;
             record->pet3.mk.bundl = xgks_state.gks_mkattr.bundl;
         }
-    /* Bind attributes to device by storing in pet3.mk.bundl the attributes
+/* Bind attributes to device by storing in pet3.mk.bundl the attributes
      * based on the state of the ASF flags.
      */
-#define MKBUND    ws->mkbundl_table[record->pet3.mk.mark]
+#define MKBUND ws->mkbundl_table[record->pet3.mk.mark]
         if (record->pet3.mk.type == GBUNDLED)
             record->pet3.mk.bundl.type = MKBUND.type;
         if (record->pet3.mk.size == GBUNDLED)
@@ -153,34 +154,36 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
         if (record->pet3.mk.colour == GBUNDLED)
             record->pet3.mk.bundl.colour = MKBUND.colour;
 
-    /* Bind values into the GC */
+        /* Bind values into the GC */
         gcvalues.function = GXinvert;
         gcvalues.foreground = record->pet3.mk.bundl.colour;
-        if ( !WS_AVAIL_COLOUR( ws, (int)gcvalues.foreground) )
+        if (!WS_AVAIL_COLOUR(ws, (int) gcvalues.foreground))
             gcvalues.foreground = ws->wsfg;
         gcvalues.line_width = 0;
         gcvalues.line_style = LineSolid;
 #undef MKBUND
         break;
-    case 4:    /* polyline */
-        if (record->pet4.acf == GSPECIFIED) {
-            GKSERROR( record->pet4.ln.line < 1 || record->pet4.ln.line >= MAX_BUNDL_TBL, 60, errginitstroke);
-            GKSERROR( record->pet4.ln.bundl.type == 0, 63, errginitstroke);
-            GKSERROR( !WS_LINE_TYPE(record->pet4.ln.bundl.type), 64, errginitstroke);
-            GKSERROR( record->pet4.ln.bundl.width < 0.0, 65, errginitstroke);
-            GKSERROR( !WS_AVAIL_COLOUR(ws, record->pet4.ln.bundl.colour), 92, errginitstroke);
+    case 4: /* polyline */
+        if (record->pet4.acf == GSPECIFIED)
+        {
+            GKSERROR(record->pet4.ln.line < 1 || record->pet4.ln.line >= MAX_BUNDL_TBL, 60, errginitstroke);
+            GKSERROR(record->pet4.ln.bundl.type == 0, 63, errginitstroke);
+            GKSERROR(!WS_LINE_TYPE(record->pet4.ln.bundl.type), 64, errginitstroke);
+            GKSERROR(record->pet4.ln.bundl.width < 0.0, 65, errginitstroke);
+            GKSERROR(!WS_AVAIL_COLOUR(ws, record->pet4.ln.bundl.colour), 92, errginitstroke);
         }
-        else {
+        else
+        {
             record->pet4.ln.type = xgks_state.gks_lnattr.type;
             record->pet4.ln.width = xgks_state.gks_lnattr.width;
             record->pet4.ln.colour = xgks_state.gks_lnattr.colour;
             record->pet4.ln.line = xgks_state.gks_lnattr.line;
             record->pet4.ln.bundl = xgks_state.gks_lnattr.bundl;
         }
-    /* Bind attributes to device by storing in pet3.mk.bundl the attributes
+/* Bind attributes to device by storing in pet3.mk.bundl the attributes
      * based on the state of the ASF flags.
      */
-#define LNBUND    ws->lnbundl_table[record->pet4.ln.line]
+#define LNBUND ws->lnbundl_table[record->pet4.ln.line]
         if (record->pet4.ln.type == GBUNDLED)
             record->pet4.ln.bundl.type = LNBUND.type;
         if (record->pet4.ln.width == GBUNDLED)
@@ -188,59 +191,61 @@ Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gs
         if (record->pet4.ln.colour == GBUNDLED)
             record->pet4.ln.bundl.colour = LNBUND.colour;
 
-    /* Bind values into the GC */
+        /* Bind values into the GC */
         gcvalues.function = GXinvert;
         gcvalues.line_style = (int) record->pet4.ln.bundl.type;
         didx = gcvalues.line_style;
-        if (didx < 0 ) didx += 3;
-        else if (didx > 0) didx += 1;
+        if (didx < 0)
+            didx += 3;
+        else if (didx > 0)
+            didx += 1;
         /* if (didx == 0) doesn't matter */
 
-        gcvalues.line_style = (gcvalues.line_style == GLN_SOLID) ?
-            LineSolid : LineOnOffDash;
+        gcvalues.line_style = (gcvalues.line_style == GLN_SOLID) ? LineSolid : LineOnOffDash;
         gcvalues.line_width = (int) record->pet4.ln.bundl.width;
         if (gcvalues.line_style == LineSolid && gcvalues.line_width == 1)
             gcvalues.line_width = 0;
         gcvalues.foreground = record->pet4.ln.bundl.colour;
-        if ( !WS_AVAIL_COLOUR( ws, (int)gcvalues.foreground) )
+        if (!WS_AVAIL_COLOUR(ws, (int) gcvalues.foreground))
             gcvalues.foreground = ws->wsfg;
 #undef LNBUNDLE
         break;
     }
-    if ((idev = XgksIDevLookup( ws, dev, GISTROKE)) == NULL) {
-        GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errginitstroke);
+    if ((idev = XgksIDevLookup(ws, dev, GISTROKE)) == NULL)
+    {
+        GKSERROR(XgksCreateDefStroke(ws, dev, &idev), 300, errginitstroke);
     }
-    else {
-        GKSERROR( idev->data.stk.initst.mode != GREQUEST, 141, errginitstroke);
+    else
+    {
+        GKSERROR(idev->data.stk.initst.mode != GREQUEST, 141, errginitstroke);
     }
     gcvalues.background = ws->wsbg;
-    XChangeGC( ws->dpy, idev->gc,
-        GCFunction | GCForeground |GCBackground | GCLineWidth | GCLineStyle,
+    XChangeGC(ws->dpy, idev->gc,
+        GCFunction | GCForeground | GCBackground | GCLineWidth | GCLineStyle,
         &gcvalues);
 
-/* copy points to initial stroke */
-    if ( idev->data.stk.initst.stroke.points != NULL)
-        free( idev->data.stk.initst.stroke.points );
+    /* copy points to initial stroke */
+    if (idev->data.stk.initst.stroke.points != NULL)
+        free(idev->data.stk.initst.stroke.points);
     idev->data.stk.initst.stroke = *init;
-    dpt = idev->data.stk.initst.stroke.points =
-               (Gpoint *)malloc( sizeof(Gpoint) * init->n_points );
-    GKSERROR( dpt == NULL, 300, errginitstroke);
-    for( i=0, spt = init->points; i<init->n_points; i++, spt++, dpt++)
+    dpt = idev->data.stk.initst.stroke.points = (Gpoint *) malloc(sizeof(Gpoint) * init->n_points);
+    GKSERROR(dpt == NULL, 300, errginitstroke);
+    for (i = 0, spt = init->points; i < init->n_points; i++, spt++, dpt++)
         *dpt = *spt;
 
-/* copy other initialization data */
-    idev->data.stk.initst.pet    = pet;
-    idev->data.stk.initst.e_area    = *area;
-    idev->data.stk.initst.record    = *record;
+    /* copy other initialization data */
+    idev->data.stk.initst.pet = pet;
+    idev->data.stk.initst.e_area = *area;
+    idev->data.stk.initst.record = *record;
 
-     /* moved this if from after ChangeGC to avoid core dump problem.
+    /* moved this if from after ChangeGC to avoid core dump problem.
        don't know why, but this fixes it */
     if (gcvalues.line_style == LineOnOffDash)
-        XSetDashes( ws->dpy, idev->gc, 0, xgksDASHES[didx].dashl, xgksDASHES[didx].dn);
+        XSetDashes(ws->dpy, idev->gc, 0, xgksDASHES[didx].dashl, xgksDASHES[didx].dn);
 
-    return(0);
+    return (0);
 }
-
+
 /*
  * SET STROKE MODE
  *
@@ -256,77 +261,79 @@ Gint gsetstrokemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
     Gpoint *spt, *dpt, ndcpt, wcpt;
     int i;
 
-/* STEP 1: check for errors. */
-/* proper gks state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetstrokemode );
+    /* STEP 1: check for errors. */
+    /* proper gks state? */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsetstrokemode);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsetstrokemode);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgsetstrokemode);
 
-/* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsetstrokemode );
+    /* open wsid? */
+    GKSERROR(!(ws = OPEN_WSID(ws_id)), 25, errgsetstrokemode);
 
-/* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetstrokemode);
+    /* valid workstation type */
+    GKSERROR((WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsetstrokemode);
 
-/* valid stroke device number */
-        GKSERROR( (dev < 1), 140, errgsetstrokemode );
+    /* valid stroke device number */
+    GKSERROR((dev < 1), 140, errgsetstrokemode);
 
-/* check enumerations */
-        GKSERROR( ((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT)
-                        || (echo != GECHO && echo != GNOECHO)),
-                2000, errgsetstrokemode );
+    /* check enumerations */
+    GKSERROR(((mode != GREQUEST && mode != GSAMPLE && mode != GEVENT)
+                 || (echo != GECHO && echo != GNOECHO)),
+        2000, errgsetstrokemode);
 
-        if ((idev = XgksIDevLookup( ws, dev, GISTROKE)) == NULL) {
+    if ((idev = XgksIDevLookup(ws, dev, GISTROKE)) == NULL)
+    {
         /* Create the Input Device structure */
-                GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errgsetstrokemode);
-        }
-        else {
-                if ((idev->active == True) && (idev->data.stk.initst.esw == GECHO))
-                        XgksStkUpdatePrompt( ws, idev, PROMPTOFF,(Gpoint *)NULL,
-                             (XMotionEvent *)NULL,-1 );
-        }
-        idev->data.stk.initst.mode = mode;
-        idev->data.stk.initst.esw = echo;
+        GKSERROR(XgksCreateDefStroke(ws, dev, &idev), 300, errgsetstrokemode);
+    }
+    else
+    {
+        if ((idev->active == True) && (idev->data.stk.initst.esw == GECHO))
+            XgksStkUpdatePrompt(ws, idev, PROMPTOFF, (Gpoint *) NULL,
+                (XMotionEvent *) NULL, -1);
+    }
+    idev->data.stk.initst.mode = mode;
+    idev->data.stk.initst.esw = echo;
 
-        if (mode == GSAMPLE || mode == GEVENT)
-           {
-    /* copy & transform initial points to current stroke */
-        if ( idev->data.stk.stkbuf != NULL)
-            free( idev->data.stk.stkbuf );
-        dpt = idev->data.stk.stkbuf = (Gpoint *)malloc( sizeof(Gpoint) * idev->data.stk.initst.record.pet1.bufsiz );
-        GKSERROR( dpt == NULL, 300, errgsetstrokemode);
-        for( i=0, spt = idev->data.stk.initst.stroke.points;
-            i<idev->data.stk.initst.stroke.n_points; i++, spt++, dpt++)
+    if (mode == GSAMPLE || mode == GEVENT)
+    {
+        /* copy & transform initial points to current stroke */
+        if (idev->data.stk.stkbuf != NULL)
+            free(idev->data.stk.stkbuf);
+        dpt = idev->data.stk.stkbuf = (Gpoint *) malloc(sizeof(Gpoint) * idev->data.stk.initst.record.pet1.bufsiz);
+        GKSERROR(dpt == NULL, 300, errgsetstrokemode);
+        for (i = 0, spt = idev->data.stk.initst.stroke.points;
+             i < idev->data.stk.initst.stroke.n_points; i++, spt++, dpt++)
         {
-            NtWcToNdc( idev->data.stk.initst.stroke.transform, spt, &ndcpt );
-            NdcToDc( ws, &ndcpt, dpt );
+            NtWcToNdc(idev->data.stk.initst.stroke.transform, spt, &ndcpt);
+            NdcToDc(ws, &ndcpt, dpt);
         }
-        NtWcToNdc( idev->data.stk.initst.stroke.transform,
+        NtWcToNdc(idev->data.stk.initst.stroke.transform,
             &(idev->data.stk.initst.record.pet1.interval),
-            &(idev->data.stk.interval) );
-        wcpt.x = 0.0; wcpt.y = 0.0;
-        NtWcToNdc( idev->data.stk.initst.stroke.transform, &wcpt, &ndcpt);
-        idev->data.stk.interval.x = fabs( (double)(idev->data.stk.interval.x
-                                                        - ndcpt.x) );
-        idev->data.stk.interval.y = fabs( (double)(idev->data.stk.interval.y
-                                                        - ndcpt.y) );
+            &(idev->data.stk.interval));
+        wcpt.x = 0.0;
+        wcpt.y = 0.0;
+        NtWcToNdc(idev->data.stk.initst.stroke.transform, &wcpt, &ndcpt);
+        idev->data.stk.interval.x = fabs((double) (idev->data.stk.interval.x
+            - ndcpt.x));
+        idev->data.stk.interval.y = fabs((double) (idev->data.stk.interval.y
+            - ndcpt.y));
 
-                idev->data.stk.editpos =
-                    idev->data.stk.initst.record.pet1.editpos-1;
-                if ( mode == GEVENT )
-                    signal( SIGALRM, XgksAwaitInterrupt); /* Set signal handler for event mode */
-                idev->active = True;
-                if ( echo == GECHO )
-                        XgksStkUpdatePrompt( ws, idev, PROMPTON, &(idev->data.stk.stkbuf[idev->data.stk.editpos]),
-                           (XMotionEvent *)NULL,-1 );
-        }
-        else    /* GREQUEST */
-                idev->active = False;
+        idev->data.stk.editpos = idev->data.stk.initst.record.pet1.editpos - 1;
+        if (mode == GEVENT)
+            signal(SIGALRM, XgksAwaitInterrupt); /* Set signal handler for event mode */
+        idev->active = True;
+        if (echo == GECHO)
+            XgksStkUpdatePrompt(ws, idev, PROMPTON, &(idev->data.stk.stkbuf[idev->data.stk.editpos]),
+                (XMotionEvent *) NULL, -1);
+    }
+    else /* GREQUEST */
+        idev->active = False;
 
-    return(0);
+    return (0);
 }
-
+
 /*
  * REQUEST STROKE
  *
@@ -342,97 +349,103 @@ Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response)
     Gpoint *spt, *dpt, ndcpt, *ndcpts, wcpt;
     int i;
 
-/* STEP 1: check for errors. */
-/* proper gks state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqstroke );
+    /* STEP 1: check for errors. */
+    /* proper gks state? */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgreqstroke);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgreqstroke);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgreqstroke);
 
-/* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgreqstroke );
+    /* open wsid? */
+    GKSERROR(!(ws = OPEN_WSID(ws_id)), 25, errgreqstroke);
 
-/* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqstroke);
+    /* valid workstation type */
+    GKSERROR((WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgreqstroke);
 
-/* valid locator device number */
-        GKSERROR( (dev < 1), 140, errgreqstroke );
+    /* valid locator device number */
+    GKSERROR((dev < 1), 140, errgreqstroke);
 
-        if ((idev = XgksIDevLookup( ws, dev, GISTROKE)) == NULL) {
+    if ((idev = XgksIDevLookup(ws, dev, GISTROKE)) == NULL)
+    {
         /* Create the Input Device structure */
-                GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errgreqstroke);
-        }
-        else {
-        GKSERROR( (idev->data.stk.initst.mode != GREQUEST), 141, errgreqstroke);
+        GKSERROR(XgksCreateDefStroke(ws, dev, &idev), 300, errgreqstroke);
     }
-/* Make sure the workstation is up to date */
-    gupdatews( ws_id, GPERFORM );
+    else
+    {
+        GKSERROR((idev->data.stk.initst.mode != GREQUEST), 141, errgreqstroke);
+    }
+    /* Make sure the workstation is up to date */
+    gupdatews(ws_id, GPERFORM);
 
-/* copy & transform initial points to current stroke */
-    if ( idev->data.stk.stkbuf != NULL)
-        free( idev->data.stk.stkbuf );
-    dpt = idev->data.stk.stkbuf = (Gpoint *)malloc( sizeof(Gpoint) * idev->data.stk.initst.record.pet1.bufsiz );
-    GKSERROR( dpt == NULL, 300, errgreqstroke);
-    for( i=0, spt = idev->data.stk.initst.stroke.points;
-        i<idev->data.stk.initst.stroke.n_points; i++, spt++, dpt++) {
-        NtWcToNdc( idev->data.stk.initst.stroke.transform, spt, &ndcpt );
-        NdcToDc( ws, &ndcpt, dpt );
+    /* copy & transform initial points to current stroke */
+    if (idev->data.stk.stkbuf != NULL)
+        free(idev->data.stk.stkbuf);
+    dpt = idev->data.stk.stkbuf = (Gpoint *) malloc(sizeof(Gpoint) * idev->data.stk.initst.record.pet1.bufsiz);
+    GKSERROR(dpt == NULL, 300, errgreqstroke);
+    for (i = 0, spt = idev->data.stk.initst.stroke.points;
+         i < idev->data.stk.initst.stroke.n_points; i++, spt++, dpt++)
+    {
+        NtWcToNdc(idev->data.stk.initst.stroke.transform, spt, &ndcpt);
+        NdcToDc(ws, &ndcpt, dpt);
     }
-    NtWcToNdc( idev->data.stk.initst.stroke.transform,
+    NtWcToNdc(idev->data.stk.initst.stroke.transform,
         &(idev->data.stk.initst.record.pet1.interval),
-        &(idev->data.stk.interval) );
-    wcpt.x = 0.0; wcpt.y = 0.0;
-    NtWcToNdc( idev->data.stk.initst.stroke.transform, &wcpt, &ndcpt);
-    idev->data.stk.interval.x = fabs( (double)(idev->data.stk.interval.x - ndcpt.x) );
-    idev->data.stk.interval.y = fabs( (double)(idev->data.stk.interval.y - ndcpt.y) );
+        &(idev->data.stk.interval));
+    wcpt.x = 0.0;
+    wcpt.y = 0.0;
+    NtWcToNdc(idev->data.stk.initst.stroke.transform, &wcpt, &ndcpt);
+    idev->data.stk.interval.x = fabs((double) (idev->data.stk.interval.x - ndcpt.x));
+    idev->data.stk.interval.y = fabs((double) (idev->data.stk.interval.y - ndcpt.y));
 
     /* set editpos to the editpos specified in initstroke             */
     /* NOTE: this will be incremented by incoming data!  From here on */
     /*       do not confuse it with the initstroke version of editpos */
-    idev->data.stk.editpos =
-           idev->data.stk.initst.record.pet1.editpos-1;
+    idev->data.stk.editpos = idev->data.stk.initst.record.pet1.editpos - 1;
 
     idev->active = True; /* activate the stroke device */
     /* if echo is set to on... */
-    if ( idev->data.stk.initst.esw == GECHO )
+    if (idev->data.stk.initst.esw == GECHO)
         /* update prompt (display initial points etc?) */
-         XgksStkUpdatePrompt( ws, idev, PROMPTON, &(idev->data.stk.stkbuf[idev->data.stk.editpos]),
-             (XMotionEvent *)NULL,-1 );
+        XgksStkUpdatePrompt(ws, idev, PROMPTON, &(idev->data.stk.stkbuf[idev->data.stk.editpos]),
+            (XMotionEvent *) NULL, -1);
 
-/* wait for trigger or break */
-        idev->touched = False;
-        idev->breakhit = False;
-        while( (idev->touched == False) && (idev->breakhit == False) )
-                pause();
+    /* wait for trigger or break */
+    idev->touched = False;
+    idev->breakhit = False;
+    while ((idev->touched == False) && (idev->breakhit == False))
+        pause();
 
-        /* deactivate stroke device */
-        idev->active = False;
-        if ( idev->data.stk.initst.esw == GECHO )
-                XgksStkUpdatePrompt( ws, idev, PROMPTOFF, (Gpoint *)NULL,
-                   (XMotionEvent *)NULL,-1 );
+    /* deactivate stroke device */
+    idev->active = False;
+    if (idev->data.stk.initst.esw == GECHO)
+        XgksStkUpdatePrompt(ws, idev, PROMPTOFF, (Gpoint *) NULL,
+            (XMotionEvent *) NULL, -1);
 
-        /* if user hit <break>, return GNONE, else return GOK */
-        if ( (idev->breakhit == True) ) {
-                response->status = GNONE;
-        }
-        else {
-                response->status = GOK;
+    /* if user hit <break>, return GNONE, else return GOK */
+    if ((idev->breakhit == True))
+    {
+        response->status = GNONE;
+    }
+    else
+    {
+        response->status = GOK;
         /* get a buffer to store the points in */
-        spt= ndcpts= (Gpoint *)malloc( sizeof(Gpoint) *idev->data.stk.editpos );
-        GKSERROR( spt == NULL, 300, errgreqstroke);
+        spt = ndcpts = (Gpoint *) malloc(sizeof(Gpoint) * idev->data.stk.editpos);
+        GKSERROR(spt == NULL, 300, errgreqstroke);
 
-         /* convert all points from DC to NDC (and copy into ndcpts) */
-        for( i=0, dpt = idev->data.stk.stkbuf;
-            i<idev->data.stk.editpos; i++, spt++, dpt++) {
-            DcToNdc( ws, dpt, spt);
+        /* convert all points from DC to NDC (and copy into ndcpts) */
+        for (i = 0, dpt = idev->data.stk.stkbuf;
+             i < idev->data.stk.editpos; i++, spt++, dpt++)
+        {
+            DcToNdc(ws, dpt, spt);
         }
         /* find the ntrans and WC points */
-        if ( idev->data.stk.editpos > 0 )
-            XgksFindNTransNpts( idev->data.stk.editpos, ndcpts,
-                                    &(response->stroke.transform),
-                                    response->stroke.points );
+        if (idev->data.stk.editpos > 0)
+            XgksFindNTransNpts(idev->data.stk.editpos, ndcpts,
+                &(response->stroke.transform),
+                response->stroke.points);
         response->stroke.n_points = idev->data.stk.editpos;
-        free( ndcpts );
+        free(ndcpts);
         /* NOTE: editpos at this point is not the editpos set in initstroke. */
         /*       editpos is incremented as new points are added to the       */
         /*       buffer.  It is reset at the beginning of request stroke to  */
@@ -441,9 +454,9 @@ Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response)
         /*       it starts at 0)                                             */
     }
 
-    return( OK );
+    return (OK);
 }
-
+
 /*
  * SAMPLE STROKE
  *
@@ -459,44 +472,45 @@ Gint gsamplestroke(Gint ws_id, Gint dev, Gstroke *response)
     Gpoint *spt, *dpt, *ndcpts;
     int i;
 
-/* STEP 1: check for errors. */
-/* proper gks state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplestroke );
+    /* STEP 1: check for errors. */
+    /* proper gks state? */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errgsamplestroke);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errgsamplestroke);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errgsamplestroke);
 
-/* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errgsamplestroke );
+    /* open wsid? */
+    GKSERROR(!(ws = OPEN_WSID(ws_id)), 25, errgsamplestroke);
 
-/* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsamplestroke);
+    /* valid workstation type */
+    GKSERROR((WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errgsamplestroke);
 
-/* valid locator device number */
-        GKSERROR( (dev < 1), 140, errgsamplestroke );
+    /* valid locator device number */
+    GKSERROR((dev < 1), 140, errgsamplestroke);
 
-        idev = XgksIDevLookup( ws, dev, GISTROKE);
-        GKSERROR( (idev == NULL) || (idev->data.stk.initst.mode != GSAMPLE), 142, errgsamplestroke);
+    idev = XgksIDevLookup(ws, dev, GISTROKE);
+    GKSERROR((idev == NULL) || (idev->data.stk.initst.mode != GSAMPLE), 142, errgsamplestroke);
 
-/* Make sure the workstation is up to date */
-    gupdatews( ws_id, GPERFORM );
+    /* Make sure the workstation is up to date */
+    gupdatews(ws_id, GPERFORM);
 
-/* Convert current measure to WC space */
-    spt = ndcpts = (Gpoint *)malloc( sizeof(Gpoint) * idev->data.stk.editpos );
-    GKSERROR( spt == NULL, 300, errgsamplestroke);
-    for( i=0, dpt = idev->data.stk.stkbuf;
-        i<idev->data.stk.editpos; i++, spt++, dpt++) {
-        DcToNdc( ws, dpt, spt);
+    /* Convert current measure to WC space */
+    spt = ndcpts = (Gpoint *) malloc(sizeof(Gpoint) * idev->data.stk.editpos);
+    GKSERROR(spt == NULL, 300, errgsamplestroke);
+    for (i = 0, dpt = idev->data.stk.stkbuf;
+         i < idev->data.stk.editpos; i++, spt++, dpt++)
+    {
+        DcToNdc(ws, dpt, spt);
     }
     /* find the ntrans and WC points */
-    if ( idev->data.stk.editpos > 0)
-        XgksFindNTransNpts( idev->data.stk.editpos, ndcpts, &(response->transform), response->points );
+    if (idev->data.stk.editpos > 0)
+        XgksFindNTransNpts(idev->data.stk.editpos, ndcpts, &(response->transform), response->points);
     response->n_points = idev->data.stk.editpos;
-    free( ndcpts );
+    free(ndcpts);
 
-    return( OK );
+    return (OK);
 }
-
+
 /*
  * INQUIRE STROKE DEVICE STATE
  *
@@ -515,43 +529,44 @@ Gint ginqstrokest(Gint ws_id, Gint dev, Gqtype type, Gstrokest *state)
     Gpoint *spt, *dpt;
     int i;
 
-/* STEP 1: check for errors. */
-/* proper gks state? */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqstrokest );
+    /* STEP 1: check for errors. */
+    /* proper gks state? */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqstrokest);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqstrokest);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqstrokest);
 
-/* open wsid? */
-        GKSERROR( !(ws=OPEN_WSID(ws_id)), 25, errginqstrokest );
+    /* open wsid? */
+    GKSERROR(!(ws = OPEN_WSID(ws_id)), 25, errginqstrokest);
 
-/* valid workstation type */
-        GKSERROR( (WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqstrokest);
+    /* valid workstation type */
+    GKSERROR((WS_CAT(ws) != GOUTIN && WS_CAT(ws) != GINPUT), 38, errginqstrokest);
 
-/* valid locator device number */
-        GKSERROR( (dev < 1), 140, errginqstrokest );
+    /* valid locator device number */
+    GKSERROR((dev < 1), 140, errginqstrokest);
 
-/* valid enumeration */
-    GKSERROR( (type != GSET) && (type != GREALIZED), 2000, errginqstrokest);
+    /* valid enumeration */
+    GKSERROR((type != GSET) && (type != GREALIZED), 2000, errginqstrokest);
 
-        if ((idev = XgksIDevLookup( ws, dev, GISTROKE)) == NULL) {
+    if ((idev = XgksIDevLookup(ws, dev, GISTROKE)) == NULL)
+    {
         /* Create the Input Device structure */
-                GKSERROR( XgksCreateDefStroke( ws, dev, &idev ), 300, errginqstrokest);
-        }
+        GKSERROR(XgksCreateDefStroke(ws, dev, &idev), 300, errginqstrokest);
+    }
     *state = idev->data.stk.initst;
-    dpt = state->stroke.points = (Gpoint *)malloc( sizeof(Gpoint) * state->stroke.n_points );
-    GKSERROR( state->stroke.points == NULL, 300, errginqstrokest);
-    for( i=0, spt = idev->data.stk.initst.stroke.points;
-        i<state->stroke.n_points; i++, spt++, dpt++)
+    dpt = state->stroke.points = (Gpoint *) malloc(sizeof(Gpoint) * state->stroke.n_points);
+    GKSERROR(state->stroke.points == NULL, 300, errginqstrokest);
+    for (i = 0, spt = idev->data.stk.initst.stroke.points;
+         i < state->stroke.n_points; i++, spt++, dpt++)
         *dpt = *spt;
 
     /* if idev->data.stk.initst.record.pet?.data pointed to anything it
      * would be copied here.
      */
 
-     return( OK );
+    return (OK);
 }
-
+
 /*
  * INQUIRE DEFAULT STROKE DEVICE DATA
  *
@@ -565,25 +580,25 @@ Gint ginqstrokest(Gint ws_id, Gint dev, Gqtype type, Gstrokest *state)
 
 Gint ginqdefstroke(Gchar *type, Gint dev, Gdefstroke *data)
 {
-        EWSTYPE ewstype;
+    EWSTYPE ewstype;
 
-/* STEP 1: check for errors */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqdefstroke);
+    /* STEP 1: check for errors */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqdefstroke);
 
-/* valid wsid? */
-        ewstype = XgksWsTypeToEnum( type );
-        GKSERROR( ewstype == WST_INVALID, 22, errginqdefstroke );
-        GKSERROR( ewstype != X_WIN, 38, errginqdefstroke );
+    /* valid wsid? */
+    ewstype = XgksWsTypeToEnum(type);
+    GKSERROR(ewstype == WST_INVALID, 22, errginqdefstroke);
+    GKSERROR(ewstype != X_WIN, 38, errginqdefstroke);
 
-/* valid stroke dev number */
-        GKSERROR( dev < 1, 140, errginqdefstroke );
+    /* valid stroke dev number */
+    GKSERROR(dev < 1, 140, errginqdefstroke);
 
-/* STEP 2: set up the return values */
+    /* STEP 2: set up the return values */
     data->bufsiz = 64;
 
     data->pets.number = 3;
-    data->pets.integers = (Gint *) malloc( sizeof( Gint ) * 3);
-        GKSERROR( data->pets.integers == NULL, 300, errginqdefstroke );
+    data->pets.integers = (Gint *) malloc(sizeof(Gint) * 3);
+    GKSERROR(data->pets.integers == NULL, 300, errginqdefstroke);
     data->pets.integers[0] = 1;
     data->pets.integers[1] = 3;
     data->pets.integers[2] = 4;
@@ -600,7 +615,7 @@ Gint ginqdefstroke(Gchar *type, Gint dev, Gdefstroke *data)
     data->record.pet1.time = 0.0;
     data->record.pet1.data = NULL;
 
-    return( OK );
+    return (OK);
 }
 
 /*
@@ -613,7 +628,7 @@ static Bool XgksCreateDefStroke(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp)
 
     idev = XgksIDevNew();
     if (idev == NULL)
-        return( True );
+        return (True);
     idev->class = GISTROKE;
     idev->dev = dev;
     idev->active = False;
@@ -623,9 +638,8 @@ static Bool XgksCreateDefStroke(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp)
     gcvalues.line_width = 0;
     gcvalues.line_style = LineSolid;
     gcvalues.fill_style = FillSolid;
-    idev->gc = XCreateGC( ws->dpy, ws->win,
-        GCFunction | GCForeground | GCBackground |
-        GCLineWidth | GCLineStyle | GCFillStyle,
+    idev->gc = XCreateGC(ws->dpy, ws->win,
+        GCFunction | GCForeground | GCBackground | GCLineWidth | GCLineStyle | GCFillStyle,
         &gcvalues);
     idev->data.stk.initst.mode = GREQUEST;
     idev->data.stk.initst.esw = GECHO;
@@ -644,24 +658,23 @@ static Bool XgksCreateDefStroke(WS_STATE_ENTRY *ws, Gint dev, INPUT_DEV **idevp)
     idev->data.stk.initst.record.pet1.time = 0.0;
     idev->data.stk.initst.record.pet1.data = NULL;
 
-    idev->data.stk.stkbuf = (Gpoint *) malloc( sizeof( Gpoint ) * 64);
+    idev->data.stk.stkbuf = (Gpoint *) malloc(sizeof(Gpoint) * 64);
     if (idev->data.stk.stkbuf == NULL)
-        return( True );
+        return (True);
     idev->data.stk.stkbuf[0].x = 0.5;
     idev->data.stk.stkbuf[0].y = 0.5;
     idev->data.stk.interval.x = 0.001;
     idev->data.stk.interval.y = 0.001;
     idev->data.stk.editpos = 0;
 
-/* link the new device into the list */
-        idev->next = ws->in_dev_list;
-        ws->in_dev_list = idev;
+    /* link the new device into the list */
+    idev->next = ws->in_dev_list;
+    ws->in_dev_list = idev;
 
-        *idevp = idev;
-        return( False );
+    *idevp = idev;
+    return (False);
 }
 
-
 /*
  * XgksStkUpdatePrompt - update the stroke prompt
  */
@@ -675,10 +688,10 @@ Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     XPoint *xpts, *xpoints;
     int i;
 
-#define STKBUFSIZ(P)    (idev->data.stk.initst.record.P.bufsiz)
-#define STKEDITPOS    (idev->data.stk.editpos)
-#define MTYPE    (idev->data.stk.initst.record.pet3.mk.bundl.type)
-#define MSIZE    (idev->data.stk.initst.record.pet3.mk.bundl.size)
+#define STKBUFSIZ(P) (idev->data.stk.initst.record.P.bufsiz)
+#define STKEDITPOS (idev->data.stk.editpos)
+#define MTYPE (idev->data.stk.initst.record.pet3.mk.bundl.type)
+#define MSIZE (idev->data.stk.initst.record.pet3.mk.bundl.size)
 
     rect.x = 0;
     rect.y = 0;
@@ -686,153 +699,167 @@ Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     rect.height = ws->wbound.y;
     XSetClipRectangles(ws->dpy, idev->gc, 0, 0, &rect, 1, Unsorted);
 
-    switch( pstate ) {
+    switch (pstate)
+    {
     case PROMPTON:
-    /* transform the points */
-        xpoints = (XPoint *)malloc( sizeof( XPoint ) * STKEDITPOS );
-        for( i=0, ndcpts=idev->data.stk.stkbuf, xpts=xpoints;
-            i< STKEDITPOS; i++, ndcpts++, xpts++ ) {
-            DcToX( ws, ndcpts, xpts );
+        /* transform the points */
+        xpoints = (XPoint *) malloc(sizeof(XPoint) * STKEDITPOS);
+        for (i = 0, ndcpts = idev->data.stk.stkbuf, xpts = xpoints;
+             i < STKEDITPOS; i++, ndcpts++, xpts++)
+        {
+            DcToX(ws, ndcpts, xpts);
         }
-        switch( idev->data.stk.initst.pet ) {
+        switch (idev->data.stk.initst.pet)
+        {
         default:
-        case 1:        /* tracking cross uses X cursor */
+        case 1: /* tracking cross uses X cursor */
             break;
-        case 3:    /* polymarkers */
-            XgksDrawMarkers( ws->dpy, ws->win, idev->gc, xpoints, STKEDITPOS, MTYPE, MSIZE );
+        case 3: /* polymarkers */
+            XgksDrawMarkers(ws->dpy, ws->win, idev->gc, xpoints, STKEDITPOS, MTYPE, MSIZE);
             break;
-        case 4:    /* polyline */
+        case 4: /* polyline */
             if (STKEDITPOS > 1)
-                XgksXDrawLines( ws->dpy, ws->win, idev->gc, xpoints,
-                         STKEDITPOS, CoordModeOrigin );
+                XgksXDrawLines(ws->dpy, ws->win, idev->gc, xpoints,
+                    STKEDITPOS, CoordModeOrigin);
             break;
         }
-        free( xpoints );
+        free(xpoints);
         break;
     case PROMPTOFF:
-    /* transform the points */
-        xpoints = (XPoint *)malloc( sizeof( XPoint ) * STKEDITPOS );
-        for( i=0, ndcpts=idev->data.stk.stkbuf, xpts=xpoints;
-            i< STKEDITPOS; i++, ndcpts++, xpts++ ) {
-            DcToX( ws, ndcpts, xpts );
+        /* transform the points */
+        xpoints = (XPoint *) malloc(sizeof(XPoint) * STKEDITPOS);
+        for (i = 0, ndcpts = idev->data.stk.stkbuf, xpts = xpoints;
+             i < STKEDITPOS; i++, ndcpts++, xpts++)
+        {
+            DcToX(ws, ndcpts, xpts);
         }
-        switch( idev->data.stk.initst.pet ) {
+        switch (idev->data.stk.initst.pet)
+        {
         default:
-        case 1:        /* tracking cross uses X cursor */
+        case 1: /* tracking cross uses X cursor */
             break;
-        case 3:    /* polymarker */
-            XgksDrawMarkers( ws->dpy, ws->win, idev->gc, xpoints, STKEDITPOS, MTYPE, MSIZE );
+        case 3: /* polymarker */
+            XgksDrawMarkers(ws->dpy, ws->win, idev->gc, xpoints, STKEDITPOS, MTYPE, MSIZE);
             break;
-        case 4:    /* polyline */
+        case 4: /* polyline */
             if (STKEDITPOS > 1)
-                XgksXDrawLines( ws->dpy, ws->win, idev->gc, xpoints,
-                         STKEDITPOS, CoordModeOrigin );
+                XgksXDrawLines(ws->dpy, ws->win, idev->gc, xpoints,
+                    STKEDITPOS, CoordModeOrigin);
             break;
         }
-        free( xpoints );
+        free(xpoints);
         break;
     case PROMPTMOVE:
-    /* stroke point must lie within the workstation window */
-        DcToNdc( ws, newdcpt, &ndcpt);
+        /* stroke point must lie within the workstation window */
+        DcToNdc(ws, newdcpt, &ndcpt);
 #ifdef STKDEBUG
-        fprintf(stderr,"XgksStkUpdatePrompt( DC= %f %f NDC %f %f )\n", newdcpt->x, newdcpt->y, ndcpt.x, ndcpt.y);
-        fprintf(stderr,"    editpos %d bufsiz %d mtype %d msize %f\n",
+        fprintf(stderr, "XgksStkUpdatePrompt( DC= %f %f NDC %f %f )\n", newdcpt->x, newdcpt->y, ndcpt.x, ndcpt.y);
+        fprintf(stderr, "    editpos %d bufsiz %d mtype %d msize %f\n",
             STKEDITPOS, STKBUFSIZ(pet1), MTYPE, MSIZE);
 #endif
 
         if (ndcpt.x < ws->wsti.current.w.xmin
-                || ndcpt.x > ws->wsti.current.w.xmax
-                || ndcpt.y < ws->wsti.current.w.ymin
-                || ndcpt.y > ws->wsti.current.w.ymax )
-            return( 0 );
+            || ndcpt.x > ws->wsti.current.w.xmax
+            || ndcpt.y < ws->wsti.current.w.ymin
+            || ndcpt.y > ws->wsti.current.w.ymax)
+            return (0);
 
-        if (STKEDITPOS > 0) {
-            DcToNdc( ws, &(idev->data.stk.stkbuf[STKEDITPOS-1]), &prev);
+        if (STKEDITPOS > 0)
+        {
+            DcToNdc(ws, &(idev->data.stk.stkbuf[STKEDITPOS - 1]), &prev);
 #ifdef STKDEBUG
             fprintf(stderr, "XgksStkUpdatePrompt: dx %f dy %f\n",
-                fabs((double)(ndcpt.x - prev.x)), fabs((double)(ndcpt.y - prev.y)) );
+                fabs((double) (ndcpt.x - prev.x)), fabs((double) (ndcpt.y - prev.y)));
 #endif
         }
-        if ( (STKEDITPOS == 0)
-            || (fabs((double)(ndcpt.x - prev.x)) >= idev->data.stk.interval.x)
-            || (fabs((double)(ndcpt.y - prev.y)) >= idev->data.stk.interval.y) ) {
-        /* transform the points */
-            xpoints=(XPoint *)malloc(sizeof(XPoint)*(STKEDITPOS+1));
-            for( i=0, ndcpts=idev->data.stk.stkbuf, xpts=xpoints;
-                i< STKEDITPOS; i++, ndcpts++, xpts++ ) {
-                DcToX( ws, ndcpts, xpts );
+        if ((STKEDITPOS == 0)
+            || (fabs((double) (ndcpt.x - prev.x)) >= idev->data.stk.interval.x)
+            || (fabs((double) (ndcpt.y - prev.y)) >= idev->data.stk.interval.y))
+        {
+            /* transform the points */
+            xpoints = (XPoint *) malloc(sizeof(XPoint) * (STKEDITPOS + 1));
+            for (i = 0, ndcpts = idev->data.stk.stkbuf, xpts = xpoints;
+                 i < STKEDITPOS; i++, ndcpts++, xpts++)
+            {
+                DcToX(ws, ndcpts, xpts);
             }
-            switch( idev->data.stk.initst.pet ) {
+            switch (idev->data.stk.initst.pet)
+            {
             default:
-            case 1:        /* tracking cross uses X cursor */
-                if (STKEDITPOS < STKBUFSIZ(pet1)) {
-                    idev->data.stk.stkbuf[ STKEDITPOS ] = *newdcpt;
+            case 1: /* tracking cross uses X cursor */
+                if (STKEDITPOS < STKBUFSIZ(pet1))
+                {
+                    idev->data.stk.stkbuf[STKEDITPOS] = *newdcpt;
                     STKEDITPOS++;
                 }
                 break;
-            case 3:    /* polymarker */
-                if (STKEDITPOS < STKBUFSIZ(pet3)) {
-                   idev->data.stk.stkbuf[ STKEDITPOS ] = *newdcpt;
-                   DcToX( ws, &(idev->data.stk.stkbuf[ STKEDITPOS ]),
-                             &(xpoints[ STKEDITPOS ]) );
-                   STKEDITPOS++;
-                   if(idev->data.stk.initst.esw==GECHO)
-                      XgksDrawMarkers( ws->dpy, ws->win, idev->gc,
-                            &(xpoints[STKEDITPOS-1]),1,MTYPE,MSIZE );
+            case 3: /* polymarker */
+                if (STKEDITPOS < STKBUFSIZ(pet3))
+                {
+                    idev->data.stk.stkbuf[STKEDITPOS] = *newdcpt;
+                    DcToX(ws, &(idev->data.stk.stkbuf[STKEDITPOS]),
+                        &(xpoints[STKEDITPOS]));
+                    STKEDITPOS++;
+                    if (idev->data.stk.initst.esw == GECHO)
+                        XgksDrawMarkers(ws->dpy, ws->win, idev->gc,
+                            &(xpoints[STKEDITPOS - 1]), 1, MTYPE, MSIZE);
                 }
                 break;
-            case 4:    /* polyline */
-                if (STKEDITPOS < STKBUFSIZ(pet4)) {
-                  idev->data.stk.stkbuf[ STKEDITPOS ] = *newdcpt;
-                  DcToX( ws, &(idev->data.stk.stkbuf[STKEDITPOS]),
-                           &(xpoints[ STKEDITPOS ]) );
-                  STKEDITPOS++;
-                  if (idev->data.stk.initst.esw == GECHO
-                             && STKEDITPOS > 1)
-                     XgksXDrawLines( ws->dpy, ws->win, idev->gc,
-                        &(xpoints[STKEDITPOS-2]),2,CoordModeOrigin);
+            case 4: /* polyline */
+                if (STKEDITPOS < STKBUFSIZ(pet4))
+                {
+                    idev->data.stk.stkbuf[STKEDITPOS] = *newdcpt;
+                    DcToX(ws, &(idev->data.stk.stkbuf[STKEDITPOS]),
+                        &(xpoints[STKEDITPOS]));
+                    STKEDITPOS++;
+                    if (idev->data.stk.initst.esw == GECHO
+                        && STKEDITPOS > 1)
+                        XgksXDrawLines(ws->dpy, ws->win, idev->gc,
+                            &(xpoints[STKEDITPOS - 2]), 2, CoordModeOrigin);
                 }
                 break;
             }
-            free( xpoints );
+            free(xpoints);
         }
-        switch(idev->data.stk.initst.mode ) {
+        switch (idev->data.stk.initst.mode)
+        {
         default:
         case GREQUEST:
             if (xmev->type != ButtonRelease)
                 break;
             idev->touched = True;
-            XBell( ws->dpy, 0);
+            XBell(ws->dpy, 0);
             break;
         case GSAMPLE:
             break;
         case GEVENT:
             if (xmev->type != ButtonRelease)
                 break;
-            data = (Gstroke *) malloc( sizeof( Gstroke ));
-            if ( data == NULL )
+            data = (Gstroke *) malloc(sizeof(Gstroke));
+            if (data == NULL)
             {
-                gerrorhand( 300, errXgksStkUpdatePrompt, xgks_state.gks_err_file );
-                return(300);
+                gerrorhand(300, errXgksStkUpdatePrompt, xgks_state.gks_err_file);
+                return (300);
             }
-            
-                XBell( ws->dpy, 0);
+
+            XBell(ws->dpy, 0);
             /* Convert current measure to WC space */
-                spt = ndcpts = (Gpoint *)malloc( sizeof(Gpoint) * STKEDITPOS );
-                data->points = (Gpoint *)malloc( sizeof(Gpoint) * STKEDITPOS );
-                GKSERROR( spt == NULL || data->points == NULL, 300, errXgksStkUpdatePrompt);
-                for( i=0, dpt = idev->data.stk.stkbuf;
-                    i<STKEDITPOS; i++, spt++, dpt++) {
-                    DcToNdc( ws, dpt, spt);
-                }
-                /* find the ntrans and WC points */
-                if ( STKEDITPOS > 0 )
-                    XgksFindNTransNpts( STKEDITPOS, ndcpts, &(data->transform), data->points );
-                data->n_points = STKEDITPOS;
-                free( ndcpts );
-                XgksEnqueueEvent( ws->ws_id, idev->dev, GISTROKE,
-                  (char *)data,event_id);
-            
+            spt = ndcpts = (Gpoint *) malloc(sizeof(Gpoint) * STKEDITPOS);
+            data->points = (Gpoint *) malloc(sizeof(Gpoint) * STKEDITPOS);
+            GKSERROR(spt == NULL || data->points == NULL, 300, errXgksStkUpdatePrompt);
+            for (i = 0, dpt = idev->data.stk.stkbuf;
+                 i < STKEDITPOS; i++, spt++, dpt++)
+            {
+                DcToNdc(ws, dpt, spt);
+            }
+            /* find the ntrans and WC points */
+            if (STKEDITPOS > 0)
+                XgksFindNTransNpts(STKEDITPOS, ndcpts, &(data->transform), data->points);
+            data->n_points = STKEDITPOS;
+            free(ndcpts);
+            XgksEnqueueEvent(ws->ws_id, idev->dev, GISTROKE,
+                (char *) data, event_id);
+
             break;
         }
         break;
@@ -841,19 +868,19 @@ Gint XgksStkUpdatePrompt(WS_STATE_ENTRY *ws, INPUT_DEV *idev,
     }
 
     XFlush(ws->dpy);
-    return( 0 );
+    return (0);
 }
-
+
 /*
  * free all memory associate with a stroke logical input device
  */
 void XgksStkDelete(WS_STATE_ENTRY *ws, INPUT_DEV *idev)
 {
-    XFreeGC( ws->dpy, idev->gc );
-    if ( idev->data.stk.initst.stroke.points != NULL )
-        free( idev->data.stk.initst.stroke.points );
+    XFreeGC(ws->dpy, idev->gc);
+    if (idev->data.stk.initst.stroke.points != NULL)
+        free(idev->data.stk.initst.stroke.points);
 
-/* this used to say:                                             */
+    /* this used to say:                                             */
     /*   if ( idev->data.stk.initst.record.pet1.data != NULL )       */
     /*     free( idev->data.stk.initst.record.pet1.data );           */
     /* ...but... record.pet1, .pet2, .pet3, and .pet4 are a union.   */
@@ -864,28 +891,28 @@ void XgksStkDelete(WS_STATE_ENTRY *ws, INPUT_DEV *idev)
     /* memory defined above it).  This is not the case here.         */
     /* (It's probably not a good practice to assume the union will   */
     /* always remain the way it is today anyway!) */
-    switch ( idev->data.stk.initst.pet )
-      {
-      case 1: /* pet 1 */
-         if ( idev->data.stk.initst.record.pet1.data != NULL )
-           free( idev->data.stk.initst.record.pet1.data );
-         break;
-      case 2: /* pet 2 */
-         if ( idev->data.stk.initst.record.pet2.data != NULL )
-           free( idev->data.stk.initst.record.pet2.data );
-         break;
-      case 3: /* pet 3 */
-         if ( idev->data.stk.initst.record.pet3.data != NULL )
-           free( idev->data.stk.initst.record.pet3.data );
-         break;
-      case 4: /* pet 4 */
-         if ( idev->data.stk.initst.record.pet4.data != NULL )
-           free( idev->data.stk.initst.record.pet4.data );
-         break;
-      }
+    switch (idev->data.stk.initst.pet)
+    {
+    case 1: /* pet 1 */
+        if (idev->data.stk.initst.record.pet1.data != NULL)
+            free(idev->data.stk.initst.record.pet1.data);
+        break;
+    case 2: /* pet 2 */
+        if (idev->data.stk.initst.record.pet2.data != NULL)
+            free(idev->data.stk.initst.record.pet2.data);
+        break;
+    case 3: /* pet 3 */
+        if (idev->data.stk.initst.record.pet3.data != NULL)
+            free(idev->data.stk.initst.record.pet3.data);
+        break;
+    case 4: /* pet 4 */
+        if (idev->data.stk.initst.record.pet4.data != NULL)
+            free(idev->data.stk.initst.record.pet4.data);
+        break;
+    }
 
-    if ( idev->data.stk.stkbuf != NULL )
-        free( idev->data.stk.stkbuf );
+    if (idev->data.stk.stkbuf != NULL)
+        free(idev->data.stk.stkbuf);
 }
 
 /* this function replaces calls to XDrawLines for stroke input devices  */
@@ -898,28 +925,28 @@ void XgksStkDelete(WS_STATE_ENTRY *ws, INPUT_DEV *idev)
 
 void XgksXDrawLines(Display *dpy, Drawable win, GC gc, XPoint *xpts, int npts, int mode)
 {
-  int i;
+    int i;
 
-  if (npts > 1)
+    if (npts > 1)
     {
-    if (mode != CoordModeOrigin)
-      /* convert to CoordModeOrigin */
-      for (i=1; i<npts; i++)
-        {
-        xpts[i].x += xpts[i-1].x;
-        xpts[i].y += xpts[i-1].y;
-        }
+        if (mode != CoordModeOrigin)
+            /* convert to CoordModeOrigin */
+            for (i = 1; i < npts; i++)
+            {
+                xpts[i].x += xpts[i - 1].x;
+                xpts[i].y += xpts[i - 1].y;
+            }
 
-    for (i=1; i<npts; i++)
-      XDrawLine (dpy,win,gc, xpts[i-1].x,xpts[i-1].y,
-                             xpts[i].x,  xpts[i].y);
+        for (i = 1; i < npts; i++)
+            XDrawLine(dpy, win, gc, xpts[i - 1].x, xpts[i - 1].y,
+                xpts[i].x, xpts[i].y);
 
-    if (mode != CoordModeOrigin)
-      /* convert back to CoordModePrevious */
-      for (i=npts-1; i>0; i--)
-        {
-        xpts[i].x -= xpts[i-1].x;
-        xpts[i].y -= xpts[i-1].y;
-        }
+        if (mode != CoordModeOrigin)
+            /* convert back to CoordModePrevious */
+            for (i = npts - 1; i > 0; i--)
+            {
+                xpts[i].x -= xpts[i - 1].x;
+                xpts[i].y -= xpts[i - 1].y;
+            }
     }
-  }
+}

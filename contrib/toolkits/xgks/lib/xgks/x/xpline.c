@@ -38,8 +38,8 @@
  *
  */
 
-#include <string.h>
 #include <signal.h>
+#include <string.h>
 
 #include "gks_implem.h"
 
@@ -53,17 +53,17 @@ void xXgksSetPlineClipRectangles(Display *dpy, GC gc, WS_STATE_PTR ws, XRectangl
 
 /* Not static because the input devices need this information */
 DashList xgksDASHES[10] = {
-        { 2, {8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
-        {12, {1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 3, 1, 0, 0, 0, 0, 0} },
-        { 8, {2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
-        { 4, {4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
-        {16, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0} },
-        { 8, {1, 2, 3, 2, 1, 2, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
-        { 4, {4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
-        { 4, {4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
-        { 4, {4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
-        { 4, {4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
-/*
+    { 2, { 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
+    { 12, { 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 3, 1, 0, 0, 0, 0, 0 } },
+    { 8, { 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
+    { 4, { 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
+    { 16, { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 } },
+    { 8, { 1, 2, 3, 2, 1, 2, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
+    { 4, { 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
+    { 4, { 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
+    { 4, { 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
+    { 4, { 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
+    /*
 
                   {2, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0},
                   {6, 10, 6, 1, 4, 1, 6, 0, 0, 0, 0},
@@ -77,7 +77,6 @@ DashList xgksDASHES[10] = {
                   {2, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0},
 */
 };
-
 
 int xXgksPolyLine(WS_STATE_PTR ws, PLINE_ST *plin_ptr)
 {
@@ -96,9 +95,8 @@ int xXgksPolyLine(WS_STATE_PTR ws, PLINE_ST *plin_ptr)
 
     int i, npnt;
 
-
-    if (ws->ewstype != X_WIN) return(OK);
-
+    if (ws->ewstype != X_WIN)
+        return (OK);
 
     /* Initialization  */
 
@@ -115,48 +113,51 @@ int xXgksPolyLine(WS_STATE_PTR ws, PLINE_ST *plin_ptr)
 
     ptr = &(plin_ptr->plnattr);
     gi = ptr->line;
-    if (gi <1 || gi >= MAX_BUNDL_TBL)
+    if (gi < 1 || gi >= MAX_BUNDL_TBL)
         gi = 1;
     idv_ptr = &(ptr->bundl);
     bdl_ptr = &(ws->lnbundl_table[gi]);
 
-    if (ptr->colour == GBUNDLED)                    /* gc.foreground */
+    if (ptr->colour == GBUNDLED) /* gc.foreground */
         bundl_ptr = bdl_ptr;
     else
         bundl_ptr = idv_ptr;
 
     i = bundl_ptr->colour;
-    if ( ! WS_AVAIL_COLOUR(ws, i))
+    if (!WS_AVAIL_COLOUR(ws, i))
         i = 1;
-    if ( ws->wscolour == 2 )    {    /* monochrome ? */
-        if (i == 0) i = ws->wsbg;
-        else if (i == 1) i = ws->wsfg;
+    if (ws->wscolour == 2)
+    { /* monochrome ? */
+        if (i == 0)
+            i = ws->wsbg;
+        else if (i == 1)
+            i = ws->wsfg;
     }
-    xXgksSetForeground(dpy, gc, i );
+    xXgksSetForeground(dpy, gc, i);
 
     /* the fill style attribute */
 
-
-    if (ptr->width == GBUNDLED)            /* gc.line_width */
-        line_width = bdl_ptr->width;    /* line width    */
+    if (ptr->width == GBUNDLED)      /* gc.line_width */
+        line_width = bdl_ptr->width; /* line width    */
     else
         line_width = idv_ptr->width;
 
-
-    if (ptr->type == GBUNDLED)     /* gc.line_style */
+    if (ptr->type == GBUNDLED) /* gc.line_style */
         bundl_ptr = bdl_ptr;
-    else                   /* line type     */
+    else /* line type     */
         bundl_ptr = idv_ptr;
 
-    i=bundl_ptr->type;
-    if (i == GLN_SOLID || !WS_LINE_TYPE(i)) {
+    i = bundl_ptr->type;
+    if (i == GLN_SOLID || !WS_LINE_TYPE(i))
+    {
         i = GLN_SOLID;
         line_style = LineSolid;
         if (line_width == 1)
-                line_width = 0;
+            line_width = 0;
     }
-    else {                   /* set dashed line values */
-        if ( i < 0 )
+    else
+    { /* set dashed line values */
+        if (i < 0)
             i += 3;
         else
             i += 1;
@@ -174,7 +175,8 @@ int xXgksPolyLine(WS_STATE_PTR ws, PLINE_ST *plin_ptr)
     pe = plin_ptr->pts;
     npnt = plin_ptr->num_pts;
 
-    for (i = 0; i < npnt; i++) {
+    for (i = 0; i < npnt; i++)
+    {
         NdcToX(ws, pe, xpe);
         ++xpe;
         ++pe;
@@ -189,6 +191,5 @@ int xXgksPolyLine(WS_STATE_PTR ws, PLINE_ST *plin_ptr)
 
     XgksSIGIO_ON(ws->dpy);
 
-    return(OK);
+    return (OK);
 }
-

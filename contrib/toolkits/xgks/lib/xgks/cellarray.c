@@ -53,57 +53,56 @@
  * See also: ANSI standard p.85
  */
 
-
 Gint gcellarray(Grect *rect, Gipoint *dim, Gint row, Gint *colour)
 {
-        Gpoint pnt;                     /* temp space for tranformed points */
-        Gint i, cnt, *p1, *p2;
-        OUT_PRIMI  *cell;
+    Gpoint pnt; /* temp space for tranformed points */
+    Gint i, cnt, *p1, *p2;
+    OUT_PRIMI *cell;
 
-/* check for proper operating state */
-        GKSERROR ((xgks_state.gks_state!=GWSAC && xgks_state.gks_state!=GSGOP) ,5, errgcellarray);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state != GWSAC && xgks_state.gks_state != GSGOP), 5, errgcellarray);
 
-/* check array size */
-        GKSERROR ( (dim->x < 1 || dim->y < 1), 91, errgcellarray);
+    /* check array size */
+    GKSERROR((dim->x < 1 || dim->y < 1), 91, errgcellarray);
 
-/* open an primitive structure */
-        GKSERROR (( (cell = XgksNewPrimi()) == NULL ) ,300, errgcellarray);
+    /* open an primitive structure */
+    GKSERROR(((cell = XgksNewPrimi()) == NULL), 300, errgcellarray);
 
-        cell->pid = CELL_ARRAY;
-        cell->primi.cell_array.dim = *dim;
-        cell->primi.cell_array.rowsize = row;
+    cell->pid = CELL_ARRAY;
+    cell->primi.cell_array.dim = *dim;
+    cell->primi.cell_array.rowsize = row;
 
-        cnt = row * dim->y;
+    cnt = row * dim->y;
 
-/* now get memory for colour index array */
-        GKSERROR (((cell->primi.cell_array.colour = (Gint *) malloc((unsigned)(cnt * sizeof(Gint)))) == NULL) ,
-                         300, errgcellarray);
+    /* now get memory for colour index array */
+    GKSERROR(((cell->primi.cell_array.colour = (Gint *) malloc((unsigned) (cnt * sizeof(Gint)))) == NULL),
+        300, errgcellarray);
 
-/* transform the WC to NDC */
-        pnt = rect->ll;
-        WcToNdc(&pnt, &(cell->primi.cell_array.ll));
-        pnt = rect->ur;
-        WcToNdc(&pnt, &(cell->primi.cell_array.ur));
-        pnt.x = rect->ll.x;
-        pnt.y = rect->ur.y;
-        WcToNdc(&pnt, &(cell->primi.cell_array.ul));
-        pnt.x = rect->ur.x;
-        pnt.y = rect->ll.y;
-        WcToNdc(&pnt, &(cell->primi.cell_array.lr));
+    /* transform the WC to NDC */
+    pnt = rect->ll;
+    WcToNdc(&pnt, &(cell->primi.cell_array.ll));
+    pnt = rect->ur;
+    WcToNdc(&pnt, &(cell->primi.cell_array.ur));
+    pnt.x = rect->ll.x;
+    pnt.y = rect->ur.y;
+    WcToNdc(&pnt, &(cell->primi.cell_array.ul));
+    pnt.x = rect->ur.x;
+    pnt.y = rect->ll.y;
+    WcToNdc(&pnt, &(cell->primi.cell_array.lr));
 
-        p1 = colour;
-        p2 = cell->primi.cell_array.colour;
-        for (i=0; i<cnt; i++, p1++, p2++)
-                *p2 = *p1;
+    p1 = colour;
+    p2 = cell->primi.cell_array.colour;
+    for (i = 0; i < cnt; i++, p1++, p2++)
+        *p2 = *p1;
 
-        if (MO_OPENED == TRUE)
-                XgksMoCellArray (&(cell->primi.cell_array.ll), &(cell->primi.cell_array.ur),
-                        &(cell->primi.cell_array.lr), row, cell->primi.cell_array.colour,
-                        &(cell->primi.cell_array.dim));
+    if (MO_OPENED == TRUE)
+        XgksMoCellArray(&(cell->primi.cell_array.ll), &(cell->primi.cell_array.ur),
+            &(cell->primi.cell_array.lr), row, cell->primi.cell_array.colour,
+            &(cell->primi.cell_array.dim));
 
-/* process this primitive */
-        XgksProcessPrimi(cell);
-        free(cell->primi.cell_array.colour);
-        free (cell);
-        return(0);
+    /* process this primitive */
+    XgksProcessPrimi(cell);
+    free(cell->primi.cell_array.colour);
+    free(cell);
+    return (0);
 }

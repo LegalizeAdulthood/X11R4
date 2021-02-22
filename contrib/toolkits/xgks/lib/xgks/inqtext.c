@@ -55,42 +55,43 @@
  */
 
 Gint ginqtextfacil(ws_type, fac)
-        Gchar *ws_type;
-        Gtxfac *fac;
+    Gchar *ws_type;
+Gtxfac *fac;
 {
-        EWSTYPE ewstype;
-        int i;
+    EWSTYPE ewstype;
+    int i;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqtextfacil);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqtextfacil);
 
-/* check for valid ws_type */
-        ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqtextfacil);
-        GKSERROR( ewstype != X_WIN, 39, errginqtextfacil);
+    /* check for valid ws_type */
+    ewstype = XgksWsTypeToEnum(ws_type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqtextfacil);
+    GKSERROR(ewstype != X_WIN, 39, errginqtextfacil);
 
-/* set the return values */
-        fac->fps = 9;
+    /* set the return values */
+    fac->fps = 9;
 
-/* get space for list */
-        fac->fp_list = (Gtxfp *)malloc((unsigned) fac->fps * sizeof(Gtxfp));
+    /* get space for list */
+    fac->fp_list = (Gtxfp *) malloc((unsigned) fac->fps * sizeof(Gtxfp));
 
-/* set the return values */
-        for (i=0; i<fac->fps; i++) {
-                fac->fp_list[i].font = i+1;
-                fac->fp_list[i].prec = GSTROKE;
-        }
-        fac->heights = 0.0;
-        fac->min_ht = 0.01;
-        fac->max_ht = 1024.0;
-        fac->expansions = 0.0;
-        fac->min_ex = 0.001;
-        fac->max_ex = 1024.0;
-        fac->predefined = PDF_TEXT_BNDLS;
+    /* set the return values */
+    for (i = 0; i < fac->fps; i++)
+    {
+        fac->fp_list[i].font = i + 1;
+        fac->fp_list[i].prec = GSTROKE;
+    }
+    fac->heights = 0.0;
+    fac->min_ht = 0.01;
+    fac->max_ht = 1024.0;
+    fac->expansions = 0.0;
+    fac->min_ex = 0.001;
+    fac->max_ex = 1024.0;
+    fac->predefined = PDF_TEXT_BNDLS;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqpredtextrep(ws_type, idx, rep) -
  *      INQUIRE PREDEFINED TEXT REPRESENTATION
@@ -106,33 +107,33 @@ Gint ginqtextfacil(ws_type, fac)
  */
 
 Gint ginqpredtextrep(ws_type, idx, rep)
-        Gchar *ws_type;
-        Gint idx;
-        Gtxbundl *rep;
+    Gchar *ws_type;
+Gint idx;
+Gtxbundl *rep;
 {
-        EWSTYPE ewstype;
+    EWSTYPE ewstype;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL), 8, errginqpredtextrep);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqpredtextrep);
 
-/* check for valid ws_type */
-        ewstype = XgksWsTypeToEnum( ws_type );
-        GKSERROR( (ewstype == WST_INVALID), 22, errginqpredtextrep);
-        GKSERROR( ewstype != X_WIN, 39, errginqpredtextrep);
+    /* check for valid ws_type */
+    ewstype = XgksWsTypeToEnum(ws_type);
+    GKSERROR((ewstype == WST_INVALID), 22, errginqpredtextrep);
+    GKSERROR(ewstype != X_WIN, 39, errginqpredtextrep);
 
-/* check for valid idx */
-        GKSERROR((idx < 1 || idx > PDF_TEXT_BNDLS), 72, errginqpredtextrep);
+    /* check for valid idx */
+    GKSERROR((idx < 1 || idx > PDF_TEXT_BNDLS), 72, errginqpredtextrep);
 
-/* set the return values */
-        rep->fp.font = def_txbundl[idx-1].fp.font;
-        rep->fp.prec = def_txbundl[idx-1].fp.prec;
-        rep->ch_exp = def_txbundl[idx-1].ch_exp;
-        rep->space =   def_txbundl[idx-1].space;
-        rep->colour =   def_txbundl[idx-1].colour;
+    /* set the return values */
+    rep->fp.font = def_txbundl[idx - 1].fp.font;
+    rep->fp.prec = def_txbundl[idx - 1].fp.prec;
+    rep->ch_exp = def_txbundl[idx - 1].ch_exp;
+    rep->space = def_txbundl[idx - 1].space;
+    rep->colour = def_txbundl[idx - 1].colour;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqtextindices(ws_id, idxlist) - INQUIRE LIST OF TEXT INDICES
  *
@@ -146,36 +147,36 @@ Gint ginqpredtextrep(ws_type, idx, rep)
  */
 
 Gint ginqtextindices(ws_id, idxlist)
-        Gint ws_id;
-        Gintlist *idxlist;
+    Gint ws_id;
+Gintlist *idxlist;
 {
-        WS_STATE_PTR ws;
-        int  i;
+    WS_STATE_PTR ws;
+    int i;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqtextindices);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqtextindices);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqtextindices);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqtextindices);
 
-/* check if this workstation is opened */
-        GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqtextindices);
+    /* check if this workstation is opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqtextindices);
 
-/* check workstation type */
-        GKSERROR( (ws->ewstype == MI), 33, errginqtextindices);
-        GKSERROR( (ws->ewstype == WISS), 36, errginqtextindices);
+    /* check workstation type */
+    GKSERROR((ws->ewstype == MI), 33, errginqtextindices);
+    GKSERROR((ws->ewstype == WISS), 36, errginqtextindices);
 
-/* get space for list */
-        idxlist->number = 20;
-        idxlist->integers = (Gint *)malloc((unsigned) idxlist->number * sizeof(int));
+    /* get space for list */
+    idxlist->number = 20;
+    idxlist->integers = (Gint *) malloc((unsigned) idxlist->number * sizeof(int));
 
-/* set the indecies values */
-        for (i=0; i<idxlist->number; i++)
-                idxlist->integers[i] = i+1;
+    /* set the indecies values */
+    for (i = 0; i < idxlist->number; i++)
+        idxlist->integers[i] = i + 1;
 
-        return( OK );
+    return (OK);
 }
-
+
 /*$F
  * ginqtextrep(ws_id, idx, type, rep) - INQUIRE LIST OF TEXT INDICES
  *
@@ -191,35 +192,35 @@ Gint ginqtextindices(ws_id, idxlist)
  */
 
 Gint ginqtextrep(ws_id, idx, type, rep)
-        Gint ws_id;
-        Gint idx;
-        Gqtype type;
-        Gtxbundl *rep;
+    Gint ws_id;
+Gint idx;
+Gqtype type;
+Gtxbundl *rep;
 {
-        WS_STATE_PTR ws;
+    WS_STATE_PTR ws;
 
-/* check for proper operating state */
-        GKSERROR( (xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqtextrep);
+    /* check for proper operating state */
+    GKSERROR((xgks_state.gks_state == GGKCL || xgks_state.gks_state == GGKOP), 7, errginqtextrep);
 
-/* check for invalid workstation id */
-        GKSERROR ( (!VALID_WSID(ws_id)), 20, errginqtextrep);
+    /* check for invalid workstation id */
+    GKSERROR((!VALID_WSID(ws_id)), 20, errginqtextrep);
 
-/* check if this workstation is opened */
-        GKSERROR( ((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqtextrep);
+    /* check if this workstation is opened */
+    GKSERROR(((ws = OPEN_WSID(ws_id)) == NULL), 25, errginqtextrep);
 
-/* check workstation type */
-        GKSERROR( (ws->ewstype == MI), 33, errginqtextrep);
-        GKSERROR( (ws->ewstype == WISS), 36, errginqtextrep);
+    /* check workstation type */
+    GKSERROR((ws->ewstype == MI), 33, errginqtextrep);
+    GKSERROR((ws->ewstype == WISS), 36, errginqtextrep);
 
-/* check for valid idx */
-        GKSERROR( (idx < 1 || idx > 20), 72, errginqtextrep);
+    /* check for valid idx */
+    GKSERROR((idx < 1 || idx > 20), 72, errginqtextrep);
 
-/* set the returned values */
-        rep->fp.font = ws->txbundl_table[idx].fp.font;
-        rep->fp.prec = ws->txbundl_table[idx].fp.prec;
-        rep->ch_exp = ws->txbundl_table[idx].ch_exp;
-        rep->space = ws->txbundl_table[idx].space;
-        rep->colour = ws->txbundl_table[idx].colour;
+    /* set the returned values */
+    rep->fp.font = ws->txbundl_table[idx].fp.font;
+    rep->fp.prec = ws->txbundl_table[idx].fp.prec;
+    rep->ch_exp = ws->txbundl_table[idx].ch_exp;
+    rep->space = ws->txbundl_table[idx].space;
+    rep->colour = ws->txbundl_table[idx].colour;
 
-        return( OK );
+    return (OK);
 }
