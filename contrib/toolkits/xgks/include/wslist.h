@@ -134,10 +134,10 @@ typedef struct ws_struct {
         Window          win;            /* the window ID */
         unsigned long   event_mask;     /* the initial window event mask */
         GC              gc;             /* the window graphics context */
-        GC              plinegc;        /* graphics contexts for specific  AUG */
-        GC              pmarkgc;        /* primitives                      AUG */
-        GC              fillareagc;                                     /* AUG */
-        GC              textgc;                                         /* AUG */
+        GC              plinegc;        /* graphics contexts for specific */
+        GC              pmarkgc;        /* primitives */
+        GC              fillareagc;
+        GC              textgc;
         Colormap        dclmp;          /* the screen default colour map ID */
         Colormap        wclmp;          /* the window colourmap ID */
         Gpoint          wbound;         /* Current x window bound */
@@ -148,11 +148,11 @@ typedef struct ws_struct {
         WS_TRANS        ndctoxtrans;    /* composite of ndctodc and dctox */
 
         XRectangle      xclip;          /* the clip area in the X window */
-        XRectangle      last_pline_rectangle;           /* AUG */       
-        XRectangle      last_pmarker_rectangle;         /* AUG */
-        XRectangle      last_farea_rectangle;           /* AUG */
-        XRectangle      last_text_rectangle;            /* AUG */
-        Gint            last_dash_index;                /* AUG */
+        XRectangle      last_pline_rectangle;
+        XRectangle      last_pmarker_rectangle;
+        XRectangle      last_farea_rectangle;
+        XRectangle      last_text_rectangle;
+        Gint            last_dash_index;
         Gint            last_message_width;   
 } *WS_STATE_PTR, WS_STATE_ENTRY ;
 

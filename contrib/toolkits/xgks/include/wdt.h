@@ -58,6 +58,6 @@
 #define WS_FILL_IMPLEMENT       GHATCH
 
 #define WS_AVAIL_COLOUR(ws, colour) ((((colour)>=0) && ((colour)<(ws)->wscolour))\
-                                ||((ws)->ewstype==MO)||((ws)->ewstype==MI))  /*AUG*/
+                                ||((ws)->ewstype==MO)||((ws)->ewstype==MI))
 
 #endif

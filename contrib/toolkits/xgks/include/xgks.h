@@ -497,7 +497,7 @@ typedef enum {
 typedef struct {
         Gdevunits       units;          /* device coordinate units */
         Gpoint          device;         /* device coordinate unit size */
-        Gipoint         raster;         /* raster unit size     AUG */
+        Gipoint         raster;         /* raster unit size */
 } Gdspsize;
 
 /* Gdspsurf - display surface */
