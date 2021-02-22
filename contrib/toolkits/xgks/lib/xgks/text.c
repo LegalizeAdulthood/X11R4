@@ -127,7 +127,7 @@ void XgksInitWssText(WS_STATE_PTR ws)
 
         /* initialize predefined representation bundles */
         for (i=1; i<=PDF_TEXT_BNDLS; i++)
-                /* c1075: use implementation defaults, not current attributes */
+                /* use implementation defaults, not current attributes */
                 ws->txbundl_table[i] = def_txbundl[i-1];
 
         /* initialize rest of representation bundle array */

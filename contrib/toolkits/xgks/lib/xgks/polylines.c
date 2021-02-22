@@ -83,7 +83,7 @@ void XgksInitWssPlines(WS_STATE_PTR ws)
 
         /* initialize predefined representation bundles */
         for (i=1; i<=PDF_LINE_BNDLS; i++)
-           /* c1075: use implementation defaults, not current attributes */
+           /* use implementation defaults, not current attributes */
            ws->lnbundl_table[i] = def_lnbundl[i-1];
 
         /* initialize rest of representation bundle array */

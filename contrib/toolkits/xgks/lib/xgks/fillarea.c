@@ -295,7 +295,7 @@ Gint XgksInitWssFillArea(WS_STATE_PTR ws)
 
         /* initialize predefined representation bundles */
         for (i=1; i<=PDF_FILL_BNDLS; i++)
-           /* c1075: use implementation defaults, not current attributes */
+           /* use implementation defaults, not current attributes */
            ws->flbundl_table[i] = def_flbundl[i-1];
 
         /* initialize rest of representation bundle array */

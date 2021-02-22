@@ -84,7 +84,7 @@ void XgksInitWssPmarkers(WS_STATE_PTR ws)
 
         /* initialize predefined representation bundles */
         for (i=1; i<=PDF_MARK_BNDLS; i++)
-                /* c1075: use implementation defaults, not current attributes */
+                /* use implementation defaults, not current attributes */
                 ws->mkbundl_table[i] = def_mkbundl[i-1];
 
         /* initialize rest of representation bundle array */
