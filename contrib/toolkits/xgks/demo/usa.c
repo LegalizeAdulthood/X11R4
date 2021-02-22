@@ -43,7 +43,7 @@
 
 /* input format should look like ....[ usa sherman:0.0 ] */
 
-Gint   ws_id=1;
+Gint ws_id = 1;
 Gint result;
 
 void perr(int i, char *s);
@@ -52,76 +52,77 @@ void minmax(void);
 
 int main(int argc, char *argv[])
 {
-        double atof();
+    double atof();
 
-        Glimit w;
-        Glimit v;
-        Glimit wsw;
-        Glimit wsv;
+    Glimit w;
+    Glimit v;
+    Glimit wsw;
+    Glimit wsv;
 
-        char *conn = (char *)NULL;
-        int i;
+    char *conn = (char *) NULL;
+    int i;
 
-        for( i=1; i<argc; i++){
-                if (index( argv[i], ':'))
-                        conn = argv[i];
+    for (i = 1; i < argc; i++)
+    {
+        if (index(argv[i], ':'))
+            conn = argv[i];
         /* Application dependent options here */
-        }
+    }
 
-        if ((result = gopengks(stdout,0)) != 0)
-                perr(result,"...open_gks");
+    if ((result = gopengks(stdout, 0)) != 0)
+        perr(result, "...open_gks");
 
-        if ((result = gopenws(ws_id, conn, argv[1])) != 0)
-                perr(result, "...open_ws");
+    if ((result = gopenws(ws_id, conn, argv[1])) != 0)
+        perr(result, "...open_ws");
 
-        if ((result = gactivatews(ws_id)) != 0)
-                perr(result, "...activate_ws");
+    if ((result = gactivatews(ws_id)) != 0)
+        perr(result, "...activate_ws");
 
-        /* i_max_display_size( ws_type, &result, &units, dc_size, raster_size); */
+    /* i_max_display_size( ws_type, &result, &units, dc_size, raster_size); */
 
-        w.xmin = 803770.5;
-        w.xmax = 8103770.5;
-        w.ymin = -903359.0;
-        w.ymax = 4287752.0;
-        gsetwindow(1, &w);
+    w.xmin = 803770.5;
+    w.xmax = 8103770.5;
+    w.ymin = -903359.0;
+    w.ymax = 4287752.0;
+    gsetwindow(1, &w);
 
-        v.xmin = 0.0;
-        v.xmax = 1.0;
-        v.ymin = 0.0;
-        v.ymax = 1024.0/1280.0;
-        gsetviewport(1, &v);
+    v.xmin = 0.0;
+    v.xmax = 1.0;
+    v.ymin = 0.0;
+    v.ymax = 1024.0 / 1280.0;
+    gsetviewport(1, &v);
 
-        gselntran(1);
-        wsw.xmin = 0.0;
-        wsw.xmax = 1.0;
-        wsw.ymin = 0.0;
-        wsw.ymax = 1024.0/1280.0;
-        gsetwswindow(ws_id, &wsw);
+    gselntran(1);
+    wsw.xmin = 0.0;
+    wsw.xmax = 1.0;
+    wsw.ymin = 0.0;
+    wsw.ymax = 1024.0 / 1280.0;
+    gsetwswindow(ws_id, &wsw);
 
-        wsv.xmin = 0.0;
-        wsv.xmax = 1279.0;
-        wsv.ymin = 0.0;
-        wsv.ymax = 1023.0;
-        gsetwsviewport(ws_id, &wsv);
+    wsv.xmin = 0.0;
+    wsv.xmax = 1279.0;
+    wsv.ymin = 0.0;
+    wsv.ymax = 1023.0;
+    gsetwsviewport(ws_id, &wsv);
 
-        PlotMap();
+    PlotMap();
 
-        WaitForBreak (1);
+    WaitForBreak(1);
 
-        if ((result = gdeactivatews(ws_id)) != 0)
-                perr(result, "...deactivate_ws");
+    if ((result = gdeactivatews(ws_id)) != 0)
+        perr(result, "...deactivate_ws");
 
-        if ((result = gclosews(ws_id)) != 0)
-                perr(result, "...close_ws");
+    if ((result = gclosews(ws_id)) != 0)
+        perr(result, "...close_ws");
 
-        if ((result = gclosegks()) != 0)
-                perr(result,"...close_gks");
+    if ((result = gclosegks()) != 0)
+        perr(result, "...close_gks");
 }
 
 void perr(int i, char *s)
 {
-        fprintf(stdout,"%s %d\n",s,i);
-        exit(1);
+    fprintf(stdout, "%s %d\n", s, i);
+    exit(1);
 }
 
 /*
@@ -133,56 +134,65 @@ void perr(int i, char *s)
 
 void PlotMap(void)
 {
-        FILE *pointsfile;
-        Gpoint pts[200], *pt;
-        typedef long int lint;
-        lint ud, x, y, cnt;
+    FILE *pointsfile;
+    Gpoint pts[200], *pt;
+    typedef long int lint;
+    lint ud, x, y, cnt;
 
-        if ((pointsfile = fopen("usa.points", "r")) == NULL) {
-                fprintf(stderr, "usa: Can't open usa.points\n");
-                exit(0);
-        }
+    if ((pointsfile = fopen("usa.points", "r")) == NULL)
+    {
+        fprintf(stderr, "usa: Can't open usa.points\n");
+        exit(0);
+    }
 
-        if ((result=gsetlinecolorind(RED)) != 0)
-                perr(result, "PlotMap");
+    if ((result = gsetlinecolorind(RED)) != 0)
+        perr(result, "PlotMap");
 
-        gsetlinewidth( 0.0 );
-        cnt=0;
-        pt = pts;
-        while ( fscanf(pointsfile, "%ld %ld %ld", &ud, &x, &y) == 3)
-                switch( ud ) {
-                case 2:
-                        pt->x = x; (pt++)->y = y;
-                        cnt++;
-                        break;
-                case 3:
-                        if (cnt>1)
-                                gpolyline(cnt, pts);
-                        pts[0].x = x; pts[0].y = y;
-                        cnt = 1;
-                        pt = &(pts[1]);
-                        break;
-                }
-        if (cnt>1)
+    gsetlinewidth(0.0);
+    cnt = 0;
+    pt = pts;
+    while (fscanf(pointsfile, "%ld %ld %ld", &ud, &x, &y) == 3)
+        switch (ud)
+        {
+        case 2:
+            pt->x = x;
+            (pt++)->y = y;
+            cnt++;
+            break;
+        case 3:
+            if (cnt > 1)
                 gpolyline(cnt, pts);
-        fclose(pointsfile);
+            pts[0].x = x;
+            pts[0].y = y;
+            cnt = 1;
+            pt = &(pts[1]);
+            break;
+        }
+    if (cnt > 1)
+        gpolyline(cnt, pts);
+    fclose(pointsfile);
 }
 
 void minmax(void)
 {
-        Gint ud, x, X, y, Y;
-        Gint ix, iy;
+    Gint ud, x, X, y, Y;
+    Gint ix, iy;
 
-        x = 99999999;
-        X = -99999999;
-        y = 99999999;
-        Y = -99999999;
+    x = 99999999;
+    X = -99999999;
+    y = 99999999;
+    Y = -99999999;
 
-        while (scanf("%d %d %d", &ud, &ix, &iy) == 3) {
-                if (ix<x)       x = ix;
-                if (ix>X)       X = ix;
-                if (iy<y)       y = iy;
-                if (iy>Y)       Y = iy;
-        }
-        printf("x %d X %d y %d Y %d\n", x, X, y, Y);
+    while (scanf("%d %d %d", &ud, &ix, &iy) == 3)
+    {
+        if (ix < x)
+            x = ix;
+        if (ix > X)
+            X = ix;
+        if (iy < y)
+            y = iy;
+        if (iy > Y)
+            Y = iy;
+    }
+    printf("x %d X %d y %d Y %d\n", x, X, y, Y);
 }
