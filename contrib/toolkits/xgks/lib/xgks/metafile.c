@@ -157,8 +157,8 @@ Gint gwritegksm (Gint ws_id, Gint type, Gint length, Gchar *data)
  *
  * returns : 0, 7, 20, 25, 34, 162, 163
  *
- * See Also: greadgksm (for explanation of ws->filestat),        * c1138 *
- *           ANSI Standard p.142                                 * c1138 *
+ * See Also: greadgksm (for explanation of ws->filestat),
+ *           ANSI Standard p.142
  */
 Gint ggetgksm (Gint ws_id, Ggksmit *result)
 {
@@ -199,8 +199,6 @@ Gint ggetgksm (Gint ws_id, Ggksmit *result)
  * returns : 0, 7, 20, 25, 34, 162, 163, 165, 166
  *
  * See Also: ANSI Standard p.143
- *
- * c1138:  the following explanation was added
  *
  * The filestat field has been added to the workstation state structure to
  * retain MI error information between calls to ggetgksm and greadgksm.  The
@@ -1800,11 +1798,11 @@ static Gint XgksExecData(Gint type, Gchar *record)
 
         switch (type) {
 
-        case 0  : break;                                        /* c1138 */
+        case 0  : break;
 
         case 2  : for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
                         if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* c1138:  don't do this on WISS */
+                                /* don't do this on WISS */
                                 if (xgks_state.activews[cnt].ws->ewstype != WISS) {
                                         gredrawsegws (xgks_state.activews[cnt].ws_id);
                                 }
@@ -1825,7 +1823,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
         case 3  : ptr1 = (XGKSMONE *)record;
                   for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
                         if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* c1138:  don't do this on WISS */
+                                /* don't do this on WISS */
                                 if (xgks_state.activews[cnt].ws->ewstype != WISS) {
                                         gupdatews (xgks_state.activews[cnt].ws_id, (ptr1->flag == 0 ? GPERFORM : GPOSTPONE));
                                 }
@@ -1904,7 +1902,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
                   else  defmode = GASTI;
                   for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
                         if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* c1138:  don't do this on WISS */
+                                /* don't do this on WISS */
                                 if (xgks_state.activews[cnt].ws->ewstype != WISS) {
                                         gsetdeferst (xgks_state.activews[cnt].ws_id, defmode,(ptr2->item2==0 ? GALLOWED : GSUPPRESSED));
                                 }
@@ -1956,7 +1954,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
         case 5  : msg = (XGKSMMESG *)record;
                   for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
                         if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* c1138:  don't do this on WISS */
+                                /* don't do this on WISS */
                                 if (xgks_state.activews[cnt].ws->ewstype != WISS) {
                                         gmessage (xgks_state.activews[cnt].ws_id, msg->string);
                                 }
@@ -1997,8 +1995,8 @@ static Gint XgksExecData(Gint type, Gchar *record)
                   GKSERROR (((primi = XgksNewPrimi())==NULL), 300, errXgksExecData)
                   primi->pid = CELL_ARRAY;
                   primi->primi.cell_array.dim = cell->dim;
-                  /* rowsize is equal to cell->dim.x */         /* c1138 */
-                  primi->primi.cell_array.rowsize = cell->dim.x; /* c1138 */
+                  /* rowsize is equal to cell->dim.x */
+                  primi->primi.cell_array.rowsize = cell->dim.x;
                   j = cell->dim.x * cell->dim.y;
                   GKSERROR (((primi->primi.cell_array.colour=(Gint *)malloc(j*sizeof(Gint)))==NULL),300, errXgksExecData)
                   primi->primi.cell_array.ll = cell->ll;
@@ -2060,7 +2058,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
                   lnrep.colour = lmrep->colour;
                   for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
                         if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* c1138:  don't do this on WISS */
+                                /* don't do this on WISS */
                                 if (xgks_state.activews[cnt].ws->ewstype != WISS) {
                                         gsetlinerep (xgks_state.activews[cnt].ws_id, lmrep->idx, &lnrep);
                                 }
@@ -2073,7 +2071,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
                   mkrep.colour = lmrep->colour;
                   for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
                         if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* c1138:  don't do this on WISS */
+                                /* don't do this on WISS */
                                 if (xgks_state.activews[cnt].ws->ewstype != WISS) {
                                         gsetmarkerrep (xgks_state.activews[cnt].ws_id, lmrep->idx, &mkrep);
                                 }
@@ -2091,7 +2089,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
                   else textrep.fp.prec = GSTROKE;
                   for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
                         if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* c1138:  don't do this on WISS */
+                                /* don't do this on WISS */
                                 if (xgks_state.activews[cnt].ws->ewstype != WISS) {
                                         gsettextrep (xgks_state.activews[cnt].ws_id, txrep->idx, &textrep);
                                 }
@@ -2108,7 +2106,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
                   else fillrep.inter = GHATCH;
                   for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
                         if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* c1138:  don't do this on WISS */
+                                /* don't do this on WISS */
                                 if (xgks_state.activews[cnt].ws->ewstype != WISS) {
                                         gsetfillrep (xgks_state.activews[cnt].ws_id, flrep->idx, &fillrep);
                                 }
@@ -2125,7 +2123,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
                           ptrep.array[i] = patrep->array[i];
                   for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
                         if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* c1138:  don't do this on WISS */
+                                /* don't do this on WISS */
                                 if (xgks_state.activews[cnt].ws->ewstype != WISS) {
                                         gsetpatrep (xgks_state.activews[cnt].ws_id, patrep->idx, &ptrep);
                                 }
@@ -2139,7 +2137,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
                   colourrep.blue = corep->blue;
                   for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
                         if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* c1138:  don't do this on WISS */
+                                /* don't do this on WISS */
                                 if (xgks_state.activews[cnt].ws->ewstype != WISS) {
                                         gsetcolourrep (xgks_state.activews[cnt].ws_id, corep->idx, &colourrep);
                                 }
@@ -2153,7 +2151,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
         case 71 : limit = (XGKSMLIMIT *)record;
                   for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
                         if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* c1138:  don't do this on WISS */
+                                /* don't do this on WISS */
                                 if (xgks_state.activews[cnt].ws->ewstype != WISS) {
                                         gsetwswindow (xgks_state.activews[cnt].ws_id, &(limit->rect));
                                 }
@@ -2163,7 +2161,7 @@ static Gint XgksExecData(Gint type, Gchar *record)
         case 72 : limit = (XGKSMLIMIT *)record;
                   for (cnt=0; cnt<MAX_ACTIVE_WS; cnt++) {          /* Do it on all active ws */
                         if (xgks_state.activews[cnt].ws_id != INVALID) {
-                                /* c1138:  don't do this on WISS */
+                                /* don't do this on WISS */
                                 if (xgks_state.activews[cnt].ws->ewstype != WISS) {
                                         gsetwsviewport (xgks_state.activews[cnt].ws_id, &(limit->rect));
                                 }
