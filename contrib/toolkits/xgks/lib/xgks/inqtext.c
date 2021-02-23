@@ -54,9 +54,7 @@
  * See also: ANSI standard p.171
  */
 
-Gint ginqtextfacil(ws_type, fac)
-    Gchar *ws_type;
-Gtxfac *fac;
+Gint ginqtextfacil(Gchar *ws_type, Gtxfac *fac)
 {
     EWSTYPE ewstype;
     int i;

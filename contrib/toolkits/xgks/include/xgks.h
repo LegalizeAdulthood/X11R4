@@ -1125,6 +1125,7 @@ Gint ginqdefpick(Gchar *ws_type, Gint dev, Gdefpick *data);
 Gint ginqlinefacil(Gchar *ws_type, Glnfac *fac);
 Gint ginqmodsegattr(Gchar *ws_type, Gmodseg *dyn);
 Gint ginqnumsegpri(Gchar *ws_type, Gint *numpri);
+Gint ginqtextfacil(Gchar *ws_type, Gtxfac *fac);
 
 /* Workstation state list */
 Gint gsetcolourrep(Gint ws_id, Gint idx, Gcobundl *rep);
