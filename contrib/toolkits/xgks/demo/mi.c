@@ -42,41 +42,41 @@
 
 int main(int argc, char *argv[])
 {
+    Gint error;
+    Gchar *record;
+    Ggksmit gksmit;
 
-        Gint  error;
-        Gchar *record;
-        Ggksmit gksmit;
+    if (argc < 3)
+    {
+        fprintf(stderr, "usage: %s host:display.server# MI-FileName\n", argv[0]);
+        exit(0);
+    }
 
-        if (argc < 3) {
-                fprintf(stderr,"usage: %s host:display.server# MI-FileName\n", argv[0]);
-                exit(0);
-        }
+    gopengks(stderr, 0);
 
-        gopengks (stderr, 0);
+    gopenws(1, argv[1], argv[1]);
+    gactivatews(1);
 
-        gopenws (1,argv[1],argv[1]);
-        gactivatews(1);
+    gopenws(5, argv[2], "MI");
 
-        gopenws (5,argv[2],"MI");
+    error = 0;
+    while (error == 0)
+    {
+        error = ggetgksm(5, &gksmit);
+        record = malloc(gksmit.length);
+        error = greadgksm(5, gksmit.length, record);
+        ginterpret(&gksmit, record);
+    }
 
+    fprintf(stderr, " ... done press break....");
 
-        error = 0;
-        while (error == 0) {
-                error = ggetgksm (5, &gksmit);
-                record = malloc (gksmit.length);
-                error = greadgksm (5, gksmit.length, record);
-                ginterpret (&gksmit, record);
-        }
+    WaitForBreak(1);
 
-        fprintf(stderr, " ... done press break....");
-
-        WaitForBreak (1);
-
-        gdeactivatews(1);
-        gclosews (1);
-        fprintf(stderr, "workstation 1 is closed\n\n");
-        gclosews (5);
-        fprintf(stderr, "workstation 5 is closed\n\n");
-        gclosegks();
-        fprintf(stderr, "GKS is closed\n\n");
+    gdeactivatews(1);
+    gclosews(1);
+    fprintf(stderr, "workstation 1 is closed\n\n");
+    gclosews(5);
+    fprintf(stderr, "workstation 5 is closed\n\n");
+    gclosegks();
+    fprintf(stderr, "GKS is closed\n\n");
 }
