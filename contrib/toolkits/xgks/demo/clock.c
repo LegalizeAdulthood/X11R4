@@ -35,9 +35,9 @@
 
 #include <xgks.h>
 
-#include <stdio.h>
 #include <setjmp.h>
 #include <signal.h>
+#include <stdio.h>
 
 #define GLOVE 1
 
@@ -50,106 +50,104 @@
 #define CYAN 31
 #define VIOLET 227
 
-int catchalrm() ;
+int catchalrm();
 
-struct sigvec alrmsig =
-{
-        catchalrm,
-        0,
-        0
-} ;
+struct sigvec alrmsig = {
+    catchalrm,
+    0,
+    0
+};
 
 #define TRUE 1
 #define FALSE 0
 int ChangeTime;
 
-jmp_buf jmpenv ;
+jmp_buf jmpenv;
 
 #define FACE 1
 #define BIGHAND 2
 #define LITTLEHAND 3
 
-Gfloat trans[2][3] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+Gfloat trans[2][3] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 
-Gasfs asf = {   GBUNDLED, GBUNDLED, GBUNDLED,           /* polyline asfs */
-                GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL,  /* polymarker asfs */
-                GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL, /*text asfs */
-                GINDIVIDUAL, GINDIVIDUAL, GBUNDLED };   /* fill area asfs */
+Gasfs asf = { GBUNDLED, GBUNDLED, GBUNDLED,             /* polyline asfs */
+    GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL,              /* polymarker asfs */
+    GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL, GINDIVIDUAL, /*text asfs */
+    GINDIVIDUAL, GINDIVIDUAL, GBUNDLED };               /* fill area asfs */
 
-char *roman[] =
+char *roman[] = {
+    "XII",
+    "I",
+    "II",
+    "III",
+    "IIII",
+    "V",
+    "VI",
+    "VII",
+    "VIII",
+    "IX",
+    "X",
+    "XI",
+};
+
+main(argc, argv) int argc;
+char *argv[];
 {
-        "XII",
-        "I",
-        "II",
-        "III",
-        "IIII",
-        "V",
-        "VI",
-        "VII",
-        "VIII",
-        "IX",
-        "X",
-        "XI",
-} ;
+    int Time = 0;
+    int i;
 
-main(argc, argv)
-        int argc;
-        char *argv[] ;
-{
-        int Time = 0;
-        int i ;
+    Gint ws_id = 1;
+    char *conn = (char *) NULL;
+    Glimit Window;
+    Glimit WsWindow;
+    Glimit WsViewport;
+    Glnbundl plrep;
 
-        Gint ws_id = 1;
-        char *conn = (char *)NULL;
-        Glimit Window;
-        Glimit WsWindow;
-        Glimit WsViewport;
-        Glnbundl plrep;
+    Window.xmin = -100.0;
+    Window.xmax = 100.0;
+    Window.ymin = -100.0;
+    Window.ymax = 100.0;
 
-        Window.xmin = -100.0;
-        Window.xmax = 100.0;
-        Window.ymin = -100.0;
-        Window.ymax = 100.0;
+    WsWindow.xmin = 0.0;
+    WsWindow.xmax = 1.0;
+    WsWindow.ymin = 0.0;
+    WsWindow.ymax = 1.0;
 
-        WsWindow.xmin = 0.0;
-        WsWindow.xmax = 1.0;
-        WsWindow.ymin = 0.0;
-        WsWindow.ymax = 1.0;
+    WsViewport.xmin = 128.0;
+    WsViewport.xmax = 1151.0;
+    WsViewport.ymin = 0.0;
+    WsViewport.ymax = 1023.0;
 
-        WsViewport.xmin = 128.0;
-        WsViewport.xmax = 1151.0;
-        WsViewport.ymin = 0.0;
-        WsViewport.ymax = 1023.0;
+    plrep.type = 1;
+    plrep.width = 1.0;
+    plrep.colour = BLACK;
 
-        plrep.type = 1;
-        plrep.width = 1.0;
-        plrep.colour = BLACK;
-
-        for( i=1; i<argc; i++){
-                if (index( argv[i], ':'))
-                        conn = argv[i];
+    for (i = 1; i < argc; i++)
+    {
+        if (index(argv[i], ':'))
+            conn = argv[i];
         /* Application dependent options here */
-        }
+    }
 
-        gopengks(stdout,0);
-        gopenws(ws_id, conn, conn);
-        gactivatews(ws_id);
-        /*
+    gopengks(stdout, 0);
+    gopenws(ws_id, conn, conn);
+    gactivatews(ws_id);
+    /*
         init_colors( ws_id );
         */
 
-        sigvec(SIGALRM, &alrmsig, NULL) ;
+    sigvec(SIGALRM, &alrmsig, NULL);
 
-/*
+    /*
  * establish clock coordinates
  */
-        gsetwindow(1, &Window );
-        gsetviewport(1, &WsWindow );
-        gsetwswindow(1, &WsWindow );
-        gsetwsviewport(1, &WsViewport );
-        gselntran(1) ;
+    gsetwindow(1, &Window);
+    gsetviewport(1, &WsWindow);
+    gsetwswindow(1, &WsWindow);
+    gsetwsviewport(1, &WsViewport);
+    gselntran(1);
 
-/*
+    /*
  * define attributes for clock
  *
  *  fabnd 2 - hand
@@ -159,14 +157,13 @@ main(argc, argv)
  *  txbnd 1 - numbers
  */
 
-        gsetdeferst(1, GASAP, GALLOWED);
-        gsetasf( &asf);
+    gsetdeferst(1, GASAP, GALLOWED);
+    gsetasf(&asf);
 
-        gsetfillintstyle( GSOLID) ;
-        gsetlinerep(1, 3, &plrep) ;
+    gsetfillintstyle(GSOLID);
+    gsetlinerep(1, 3, &plrep);
 
-
-        /*
+    /*
         create_seg(FACE) ;
         clockface() ;
         close_seg() ;
@@ -187,21 +184,20 @@ main(argc, argv)
         s_sg_vis(LITTLEHAND, YES) ;
         */
 
-        for(;;)
-        {
-                setjmp(jmpenv) ;
-                Time = (time()/60) - 6 * 60 ; /* compensate for time zone */
-                alarm(60) ;
-                adjust(Time) ;
-                ChangeTime = FALSE;
-                while( ! ChangeTime )
-                        sigpause(0) ;
-        }
+    for (;;)
+    {
+        setjmp(jmpenv);
+        Time = (time() / 60) - 6 * 60; /* compensate for time zone */
+        alarm(60);
+        adjust(Time);
+        ChangeTime = FALSE;
+        while (!ChangeTime)
+            sigpause(0);
+    }
 
-
-        gdeactivatews(ws_id);
-        gclosews(ws_id);
-        gclosegks();
+    gdeactivatews(ws_id);
+    gclosews(ws_id);
+    gclosegks();
 }
 
 /*
@@ -213,67 +209,71 @@ clockface()
 #define INTFACTOR 0.95
 #define TXFACTOR 0.87
 
-        Gpoint pts[50] ;
-        Gpoint txtloc ;
-        double sin(), cos() ;
-        int i ;
-        Gfloat deg2rad = 3.14159 / 180.0 ;
-        Gflbundl farep;
-#define SetFillRep(w, n, i, s, c) farep.inter = i; farep.style = s; farep.color = c; gsetfillrep(w, n, &farep )
+    Gpoint pts[50];
+    Gpoint txtloc;
+    double sin(), cos();
+    int i;
+    Gfloat deg2rad = 3.14159 / 180.0;
+    Gflbundl farep;
+#define SetFillRep(w, n, i, s, c) \
+    farep.inter = i;              \
+    farep.style = s;              \
+    farep.color = c;              \
+    gsetfillrep(w, n, &farep)
 
-        Gtxfp txfp ;
-        Gtxalign txalign;
+    Gtxfp txfp;
+    Gtxalign txalign;
 
-        txfp.font = 2;
-        txfp.prec = GSTROKE;
-        txalign.hor = GTH_CENTER;
-        txalign.ver = GTV_HALF;
+    txfp.font = 2;
+    txfp.prec = GSTROKE;
+    txalign.hor = GTH_CENTER;
+    txalign.ver = GTV_HALF;
 
-        gclearws( 1, GALWAYS );
+    gclearws(1, GALWAYS);
 
-        SetFillRep(1, 1, GSOLID, 1, BLUE) ;
-        SetFillRep(1, 2, GSOLID, 1, WHITE) ;
-        SetFillRep(1, 3, GSOLID, 1, WHITE) ;
-        SetFillRep(1, 4, GSOLID, 1, WHITE) ;
+    SetFillRep(1, 1, GSOLID, 1, BLUE);
+    SetFillRep(1, 2, GSOLID, 1, WHITE);
+    SetFillRep(1, 3, GSOLID, 1, WHITE);
+    SetFillRep(1, 4, GSOLID, 1, WHITE);
 
-        for(i=0; i<50; i++)
-        {
-                pts[i].x = BORDERSZ * cos((360.0/50.0) * i * deg2rad) ;
-                pts[i].y = BORDERSZ * sin((360.0/50.0) * i * deg2rad) ;
-        }
-        gsetfillind(2) ;
-        gfillarea(50, pts) ;
-        for(i=0; i<50; i++)
-        {
-                pts[i].x *= INTFACTOR ;
-                pts[i].y *= INTFACTOR ;
-        }
-        gsetfillind(1) ;
-        gfillarea(50, pts) ;
+    for (i = 0; i < 50; i++)
+    {
+        pts[i].x = BORDERSZ * cos((360.0 / 50.0) * i * deg2rad);
+        pts[i].y = BORDERSZ * sin((360.0 / 50.0) * i * deg2rad);
+    }
+    gsetfillind(2);
+    gfillarea(50, pts);
+    for (i = 0; i < 50; i++)
+    {
+        pts[i].x *= INTFACTOR;
+        pts[i].y *= INTFACTOR;
+    }
+    gsetfillind(1);
+    gfillarea(50, pts);
 
-        txfp.font = 4;  txfp.prec = GSTROKE;
-        gsettextfontprec( &txfp );
-        gsetcharspace(0.2);
-        gsetcharheight(16.0);
-        gsettextalign( &txalign );
-        gsettextcolorind( YELLOW ) ;
+    txfp.font = 4;
+    txfp.prec = GSTROKE;
+    gsettextfontprec(&txfp);
+    gsetcharspace(0.2);
+    gsetcharheight(16.0);
+    gsettextalign(&txalign);
+    gsettextcolorind(YELLOW);
 
-        for(i=1; i<=12; i++)
-        {
-                txtloc.x = BORDERSZ * INTFACTOR * TXFACTOR *
-                                                cos((360.0/12.0) * i * deg2rad) ;
-                txtloc.y = BORDERSZ * INTFACTOR * TXFACTOR *
-                                                sin((360.0/12.0) * i * deg2rad) ;
-                gtext( &txtloc, roman[(2 + 13 - i) % 12]) ;
-        }
-        txtloc.x = 0 ;
-        txtloc.y = 45.0 ;
-        txfp.font = 4;  txfp.prec = GSTROKE;
-        gsettextfontprec( &txfp ) ;
-        gsetcharheight(12.0);
-        gsetcharexpan(0.6);
-        gsettextcolorind( RED ) ;
-        gtext( &txtloc, "Graphical Kernel System") ;
+    for (i = 1; i <= 12; i++)
+    {
+        txtloc.x = BORDERSZ * INTFACTOR * TXFACTOR * cos((360.0 / 12.0) * i * deg2rad);
+        txtloc.y = BORDERSZ * INTFACTOR * TXFACTOR * sin((360.0 / 12.0) * i * deg2rad);
+        gtext(&txtloc, roman[(2 + 13 - i) % 12]);
+    }
+    txtloc.x = 0;
+    txtloc.y = 45.0;
+    txfp.font = 4;
+    txfp.prec = GSTROKE;
+    gsettextfontprec(&txfp);
+    gsetcharheight(12.0);
+    gsetcharexpan(0.6);
+    gsettextcolorind(RED);
+    gtext(&txtloc, "Graphical Kernel System");
 }
 
 /*
@@ -283,161 +283,150 @@ clockface()
 #ifdef ARROW
 bighand()
 {
-        static Gpoint bh[] =
-        {
-                {-10.0, -20.0}, {-10.0, -15.0}, {-5.0, -10.0}, {-5.0, 55.0},
-                {-10.0, 50.0}, {0.0, 70.0}, {10.0, 50.0},
-                {5.0, 55.0}, {5.0, -10.0}, {10.0, -15.0}, {10.0, -20.0}, {0.0, -15.0}
-        } ;
-        Gpoint sbh[12];
+    static Gpoint bh[] = {
+        { -10.0, -20.0 }, { -10.0, -15.0 }, { -5.0, -10.0 }, { -5.0, 55.0 },
+        { -10.0, 50.0 }, { 0.0, 70.0 }, { 10.0, 50.0 },
+        { 5.0, 55.0 }, { 5.0, -10.0 }, { 10.0, -15.0 }, { 10.0, -20.0 }, { 0.0, -15.0 }
+    };
+    Gpoint sbh[12];
 
-        seg_trans(12, bh, sbh);
-        s_fill_idx(3) ;
-        fill_area((sizeof(bh)/sizeof(Gpoint)), sbh) ;
+    seg_trans(12, bh, sbh);
+    s_fill_idx(3);
+    fill_area((sizeof(bh) / sizeof(Gpoint)), sbh);
 }
 /*
  * draw little hand
  */
- littlehand()
- {
-        static Gpoint lh[] =
-        {
-                {-10.0, -20.0}, {-10.0, -15.0}, {-5.0, -10.0}, {-5.0, 30.0},
-                {-10.0, 25.0}, {0.0, 45.0}, {10.0, 25.0},
-                {5.0, 30.0}, {5.0, -10.0}, {10.0, -15.0}, {10.0, -20.0}, {0.0, -15.0}
-        } ;
+littlehand()
+{
+    static Gpoint lh[] = {
+        { -10.0, -20.0 }, { -10.0, -15.0 }, { -5.0, -10.0 }, { -5.0, 30.0 },
+        { -10.0, 25.0 }, { 0.0, 45.0 }, { 10.0, 25.0 },
+        { 5.0, 30.0 }, { 5.0, -10.0 }, { 10.0, -15.0 }, { 10.0, -20.0 }, { 0.0, -15.0 }
+    };
 
-        Gpoint slh[12];
+    Gpoint slh[12];
 
-        seg_trans(12, lh, slh);
-        s_fill_idx(3) ;
-        fill_area((sizeof(lh)/sizeof(Gpoint)), slh) ;
+    seg_trans(12, lh, slh);
+    s_fill_idx(3);
+    fill_area((sizeof(lh) / sizeof(Gpoint)), slh);
 }
 #endif
 
 #ifdef GLOVE
-static Gpoint bigarm[] =
-{
-        {0.0, -5.0}, {-2.5, 0.0}, {-2.5, 50.0}, {2.5, 50.0}, {2.5, 0.0},
-} ;
-static Gpoint littlearm[] =
-{
-        {0.0, -5.0}, {-2.5, 0.0}, {-2.5, 25.0}, {2.5, 25.0}, {2.5, 0.0}
-} ;
-static Gpoint bigglove[] =
-{
-        {-2.5, 50.0}, {-2.5, 55.0}, {-5.0, 55.0}, {-5.0, 70.0},
-        {-2.5, 70.0}, {-2.5, 65.0}, {5.0, 65.0}, {5.0, 55.0},
-        {2.5, 55.0}, {2.5, 50.0}
-} ;
-static Gpoint litglove[] =
-{
-        {-2.5, 25.0}, {-2.5, 30.0}, {-5.0, 30.0}, {-5.0, 45.0},
-        {-2.5, 45.0}, {-2.5, 40.0}, {5.0, 40.0}, {5.0, 30.0},
-        {2.5, 30.0}, {2.5, 25.0}
-} ;
-static Gpoint bigfingers[] =
-{
-        {-2.5, 50.0}, {-2.5, 55.0}, {-5.0, 55.0}, {-5.0, 70.0},
-        {-2.5, 70.0}, {-2.5, 60.0}, {-2.5, 65.0}, {0.0, 65.0},
-        {0.0, 60.0}, {0.0, 65.0}, {2.5, 65.0}, {2.5, 60.0},
-        {2.5, 65.0}, {5.0, 65.0}, {5.0, 55.0}, {2.5, 55.0},
-        {2.5, 50.0}
-} ;
-static Gpoint litfingers[] =
-{
-        {-2.5, 25.0}, {-2.5, 30.0}, {-5.0, 30.0}, {-5.0, 45.0},
-        {-2.5, 45.0}, {-2.5, 35.0}, {-2.5, 40.0}, {0.0, 40.0},
-        {0.0, 35.0}, {0.0, 40.0}, {2.5, 40.0}, {2.5, 35.0},
-        {2.5, 40.0}, {5.0, 40.0}, {5.0, 30.0}, {2.5, 30.0},
-        {2.5, 25.0}
-} ;
+static Gpoint bigarm[] = {
+    { 0.0, -5.0 }, { -2.5, 0.0 }, { -2.5, 50.0 }, { 2.5, 50.0 }, { 2.5, 0.0 },
+};
+static Gpoint littlearm[] = {
+    { 0.0, -5.0 }, { -2.5, 0.0 }, { -2.5, 25.0 }, { 2.5, 25.0 }, { 2.5, 0.0 }
+};
+static Gpoint bigglove[] = {
+    { -2.5, 50.0 }, { -2.5, 55.0 }, { -5.0, 55.0 }, { -5.0, 70.0 },
+    { -2.5, 70.0 }, { -2.5, 65.0 }, { 5.0, 65.0 }, { 5.0, 55.0 },
+    { 2.5, 55.0 }, { 2.5, 50.0 }
+};
+static Gpoint litglove[] = {
+    { -2.5, 25.0 }, { -2.5, 30.0 }, { -5.0, 30.0 }, { -5.0, 45.0 },
+    { -2.5, 45.0 }, { -2.5, 40.0 }, { 5.0, 40.0 }, { 5.0, 30.0 },
+    { 2.5, 30.0 }, { 2.5, 25.0 }
+};
+static Gpoint bigfingers[] = {
+    { -2.5, 50.0 }, { -2.5, 55.0 }, { -5.0, 55.0 }, { -5.0, 70.0 },
+    { -2.5, 70.0 }, { -2.5, 60.0 }, { -2.5, 65.0 }, { 0.0, 65.0 },
+    { 0.0, 60.0 }, { 0.0, 65.0 }, { 2.5, 65.0 }, { 2.5, 60.0 },
+    { 2.5, 65.0 }, { 5.0, 65.0 }, { 5.0, 55.0 }, { 2.5, 55.0 },
+    { 2.5, 50.0 }
+};
+static Gpoint litfingers[] = {
+    { -2.5, 25.0 }, { -2.5, 30.0 }, { -5.0, 30.0 }, { -5.0, 45.0 },
+    { -2.5, 45.0 }, { -2.5, 35.0 }, { -2.5, 40.0 }, { 0.0, 40.0 },
+    { 0.0, 35.0 }, { 0.0, 40.0 }, { 2.5, 40.0 }, { 2.5, 35.0 },
+    { 2.5, 40.0 }, { 5.0, 40.0 }, { 5.0, 30.0 }, { 2.5, 30.0 },
+    { 2.5, 25.0 }
+};
 bighand()
 {
-        Gpoint spts[17];
+    Gpoint spts[17];
 
-        seg_trans(5, bigarm, spts);
-        gsetfillind(3) ;
-        gfillarea((sizeof(bigarm)/(sizeof(Gpoint))), spts) ;
+    seg_trans(5, bigarm, spts);
+    gsetfillind(3);
+    gfillarea((sizeof(bigarm) / (sizeof(Gpoint))), spts);
 
-        seg_trans(10, bigglove, spts);
-        gsetfillind(4) ;
-        gfillarea((sizeof(bigglove)/(sizeof(Gpoint))), spts) ;
+    seg_trans(10, bigglove, spts);
+    gsetfillind(4);
+    gfillarea((sizeof(bigglove) / (sizeof(Gpoint))), spts);
 
-        seg_trans(17, bigfingers, spts);
-        gsetlineind(3) ;
-        gpolyline((sizeof(bigfingers)/(sizeof(Gpoint))), spts) ;
+    seg_trans(17, bigfingers, spts);
+    gsetlineind(3);
+    gpolyline((sizeof(bigfingers) / (sizeof(Gpoint))), spts);
 }
 littlehand()
 {
-        Gpoint spts[17];
+    Gpoint spts[17];
 
-        seg_trans(5, littlearm, spts);
-        gsetfillind(3) ;
-        gfillarea((sizeof(littlearm)/(sizeof(Gpoint))), spts) ;
+    seg_trans(5, littlearm, spts);
+    gsetfillind(3);
+    gfillarea((sizeof(littlearm) / (sizeof(Gpoint))), spts);
 
-        seg_trans(10, litglove, spts);
-        gsetfillind(4) ;
-        gfillarea((sizeof(litglove)/(sizeof(Gpoint))), spts) ;
+    seg_trans(10, litglove, spts);
+    gsetfillind(4);
+    gfillarea((sizeof(litglove) / (sizeof(Gpoint))), spts);
 
-        seg_trans(17, litfingers, spts);
-        gsetlineind(3) ;
-        gpolyline((sizeof(litfingers)/(sizeof(Gpoint))), spts) ;
+    seg_trans(17, litfingers, spts);
+    gsetlineind(3);
+    gpolyline((sizeof(litfingers) / (sizeof(Gpoint))), spts);
 }
 #endif
-
 
 /*
  * adjust big & little hands via segment transformation
  */
-adjust(minute)
-int minute ;
+adjust(minute) int minute;
 {
-        double sin(), cos() ;
+    double sin(), cos();
 
-        double angle, sinx, cosx ;
+    double angle, sinx, cosx;
 
-        clockface();
-/* do little hand */
+    clockface();
+    /* do little hand */
 
-        angle = (minute % 720) * 0.5 * 3.14159 / 180.0 ;
-        sinx = sin(angle) ;
-        cosx = cos(angle) ;
-        trans[0][0] = trans[1][1] = cosx ;
-        trans[1][0] = -(trans[0][1] = sinx) ;
-        trans[0][2] = -0.5 * (-1.0 + sinx + cosx) ;
-        trans[1][2] = -0.5 * (-1.0 + -sinx + cosx) ;
-        /* s_sg_trans(LITTLEHAND, trans) ; */
+    angle = (minute % 720) * 0.5 * 3.14159 / 180.0;
+    sinx = sin(angle);
+    cosx = cos(angle);
+    trans[0][0] = trans[1][1] = cosx;
+    trans[1][0] = -(trans[0][1] = sinx);
+    trans[0][2] = -0.5 * (-1.0 + sinx + cosx);
+    trans[1][2] = -0.5 * (-1.0 + -sinx + cosx);
+    /* s_sg_trans(LITTLEHAND, trans) ; */
 
-        littlehand();
-/* do big hand */
+    littlehand();
+    /* do big hand */
 
-        angle = (minute % 60) * 6.0 * 3.14159 / 180.0 ;
-        sinx = sin(angle) ;
-        cosx = cos(angle) ;
-        trans[0][0] = trans[1][1] = cosx ;
-        trans[1][0] = -(trans[0][1] = sinx) ;
-        trans[0][2] = -0.5 * (-1.0 + sinx + cosx) ;
-        trans[1][2] = -0.5 * (-1.0 + -sinx + cosx) ;
-        /* s_sg_trans(BIGHAND, trans) ; */
-        bighand();
+    angle = (minute % 60) * 6.0 * 3.14159 / 180.0;
+    sinx = sin(angle);
+    cosx = cos(angle);
+    trans[0][0] = trans[1][1] = cosx;
+    trans[1][0] = -(trans[0][1] = sinx);
+    trans[0][2] = -0.5 * (-1.0 + sinx + cosx);
+    trans[1][2] = -0.5 * (-1.0 + -sinx + cosx);
+    /* s_sg_trans(BIGHAND, trans) ; */
+    bighand();
 }
 
-seg_trans(num, org, trn)
-        int num;
-        Gpoint *org, *trn;
+seg_trans(num, org, trn) int num;
+Gpoint *org, *trn;
 {
-        while (num--) {
-                trn->x = org->x * trans[0][0] + org->y * trans[0][1] + trans[0][2];
-                trn->y = org->x * trans[1][0] + org->y * trans[1][1] + trans[1][2];
-                org++;
-                trn++;
-        }
+    while (num--)
+    {
+        trn->x = org->x * trans[0][0] + org->y * trans[0][1] + trans[0][2];
+        trn->y = org->x * trans[1][0] + org->y * trans[1][1] + trans[1][2];
+        org++;
+        trn++;
+    }
 }
-
 
 catchalrm()
 {
-/*      longjmp(jmpenv) ;       */
-        ChangeTime = TRUE;
+    /*      longjmp(jmpenv) ;       */
+    ChangeTime = TRUE;
 }
