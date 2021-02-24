@@ -35,9 +35,18 @@
 
 #include <xgks.h>
 
-#include <setjmp.h>
 #include <signal.h>
 #include <stdio.h>
+#include <strings.h>
+#include <time.h>
+#include <unistd.h>
+
+void clockface(void);
+void bighand(void);
+void littlehand(void);
+void adjust(int minute);
+void seg_trans(int num, Gpoint *org, Gpoint *trn);
+void catchalrm(int signum);
 
 #define GLOVE 1
 
@@ -50,19 +59,13 @@
 #define CYAN 31
 #define VIOLET 227
 
-int catchalrm();
-
-struct sigvec alrmsig = {
+struct sigaction alrmsig = {
     catchalrm,
-    0,
-    0
 };
 
 #define TRUE 1
 #define FALSE 0
 int ChangeTime;
-
-jmp_buf jmpenv;
 
 #define FACE 1
 #define BIGHAND 2
@@ -90,8 +93,7 @@ char *roman[] = {
     "XI",
 };
 
-main(argc, argv) int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
     int Time = 0;
     int i;
@@ -132,15 +134,11 @@ char *argv[];
     gopengks(stdout, 0);
     gopenws(ws_id, conn, conn);
     gactivatews(ws_id);
-    /*
-        init_colors( ws_id );
-        */
+    /* init_colors( ws_id ); */
 
-    sigvec(SIGALRM, &alrmsig, NULL);
+    sigaction(SIGALRM, &alrmsig, NULL);
 
-    /*
- * establish clock coordinates
- */
+    /* establish clock coordinates */
     gsetwindow(1, &Window);
     gsetviewport(1, &WsWindow);
     gsetwswindow(1, &WsWindow);
@@ -148,14 +146,14 @@ char *argv[];
     gselntran(1);
 
     /*
- * define attributes for clock
- *
- *  fabnd 2 - hand
- *  fabnd 3 - glove
- *
- *      plbnd 3 - finger
- *  txbnd 1 - numbers
- */
+     * define attributes for clock
+     *
+     *  fabnd 2 - hand
+     *  fabnd 3 - glove
+     *
+     *      plbnd 3 - finger
+     *  txbnd 1 - numbers
+     */
 
     gsetdeferst(1, GASAP, GALLOWED);
     gsetasf(&asf);
@@ -182,17 +180,16 @@ char *argv[];
 
         s_sg_vis(BIGHAND, YES) ;
         s_sg_vis(LITTLEHAND, YES) ;
-        */
+    */
 
     for (;;)
     {
-        setjmp(jmpenv);
-        Time = (time() / 60) - 6 * 60; /* compensate for time zone */
+        Time = (time(NULL) / 60) - 6 * 60; /* compensate for time zone */
         alarm(60);
         adjust(Time);
         ChangeTime = FALSE;
         while (!ChangeTime)
-            sigpause(0);
+            pause();
     }
 
     gdeactivatews(ws_id);
@@ -203,7 +200,7 @@ char *argv[];
 /*
  * draw clock
  */
-clockface()
+void clockface(void)
 {
 #define BORDERSZ 90.0
 #define INTFACTOR 0.95
@@ -281,7 +278,7 @@ clockface()
  */
 
 #ifdef ARROW
-bighand()
+void bighand(void)
 {
     static Gpoint bh[] = {
         { -10.0, -20.0 }, { -10.0, -15.0 }, { -5.0, -10.0 }, { -5.0, 55.0 },
@@ -297,7 +294,7 @@ bighand()
 /*
  * draw little hand
  */
-littlehand()
+void littlehand(void)
 {
     static Gpoint lh[] = {
         { -10.0, -20.0 }, { -10.0, -15.0 }, { -5.0, -10.0 }, { -5.0, 30.0 },
@@ -344,7 +341,7 @@ static Gpoint litfingers[] = {
     { 2.5, 40.0 }, { 5.0, 40.0 }, { 5.0, 30.0 }, { 2.5, 30.0 },
     { 2.5, 25.0 }
 };
-bighand()
+void bighand(void)
 {
     Gpoint spts[17];
 
@@ -360,7 +357,7 @@ bighand()
     gsetlineind(3);
     gpolyline((sizeof(bigfingers) / (sizeof(Gpoint))), spts);
 }
-littlehand()
+void littlehand(void)
 {
     Gpoint spts[17];
 
@@ -381,7 +378,7 @@ littlehand()
 /*
  * adjust big & little hands via segment transformation
  */
-adjust(minute) int minute;
+void adjust(int minute)
 {
     double sin(), cos();
 
@@ -413,8 +410,7 @@ adjust(minute) int minute;
     bighand();
 }
 
-seg_trans(num, org, trn) int num;
-Gpoint *org, *trn;
+void seg_trans(int num, Gpoint *org, Gpoint *trn)
 {
     while (num--)
     {
@@ -425,8 +421,7 @@ Gpoint *org, *trn;
     }
 }
 
-catchalrm()
+void catchalrm(int signum)
 {
-    /*      longjmp(jmpenv) ;       */
     ChangeTime = TRUE;
 }

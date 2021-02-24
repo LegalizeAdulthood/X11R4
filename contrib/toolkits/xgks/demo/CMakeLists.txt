@@ -6,7 +6,7 @@ function(gksDemo name)
 endfunction()
 
 gksDemo(bsort)
-# gksDemo(clock)
+gksDemo(clock)
 gksDemo(defcolors)
 gksDemo(font)
 gksDemo(hanoi)
