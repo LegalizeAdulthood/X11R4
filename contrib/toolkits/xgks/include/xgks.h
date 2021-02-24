@@ -1087,7 +1087,25 @@ typedef struct {
 /* Error handling function prototypes */
 Gint gerrorhand(Gint errnum, Gint funcname, Gfile *perrfile);
 
+/* GKS description table */
+Gint ginqavailwstypes(Gstrlist *wstypes);
+Gint ginqlevelgks(Glevel *lev);
+Gint ginqmaxntrannum(Gint *maxtran);
+Gint ginqwsmaxnum(Gwsmax *maxws);
+
 /* GKS state list function prototypes */
+Gint ginqactivews(Gintlist *wsids);
+Gint ginqclip(Gcliprec *clipping);
+Gint ginqcurntrannum(Gint *tran);
+Gint ginqcurpickid(Gint *pickid);
+Gint ginqindivattr(Gindattr *indivattr);
+Gint ginqinputoverflow(Gqueue *overflow);
+Gint ginqmoreevents(Gsimultev *events);
+Gint ginqntran(Gint num, Gwstran *tran);
+Gint ginqntrannum(Gintlist *tranlist);
+Gint ginqopenws(Gintlist *wsids);
+Gint ginqopst(Gos *state);
+Gint ginqprimattr(Gpriattr *primattr);
 Gint gselntran(Gint trans);
 Gint gsetasf(Gasfs *asf);
 Gint gsetcharexpan(Gfloat expansion);
@@ -1097,7 +1115,6 @@ Gint gsetcharup(Gpoint *up_vector);
 Gint gsetclip(Gclip ind);
 Gint gsetfillcolourind(Gint colour);
 Gint gsetfillcolourind(Gint idx);
-Gint gsetfillind(Gint idx);
 Gint gsetfillind(Gint idx);
 Gint gsetfillintstyle(Gflinter style);
 Gint gsetfillstyleind(Gint idx);
@@ -1110,7 +1127,7 @@ Gint gsetmarkerind(Gint idx);
 Gint gsetmarkersize(Gfloat size);
 Gint gsetmarkertype(Gint type);
 Gint gsetpatrefpt(Gpoint *ref);
-Gint gsetpatsize(Gpoint  *siz);
+Gint gsetpatsize(Gpoint *siz);
 Gint gsettextalign(Gtxalign *txalign);
 Gint gsettextcolourind(Gint idx);
 Gint gsettextfontprec(Gtxfp *txfp);
@@ -1121,13 +1138,66 @@ Gint gsetviewportinputpri(Gint trans, Gint ref_trans, Gvpri priority);
 Gint gsetwindow(Gint trans, Glimit *window);
 
 /* Workstation description table prototypes */
+Gint ginqavailgdp(Gchar *ws_type, Ggdplist *gdps);
+Gint ginqcolourfacil(Gchar *ws_type, Gcofac *fac);
+Gint ginqdefchoice(Gchar *ws_type, Gint dev, Gdefchoice *data);
+Gint ginqdefdeferst(Gchar *ws_type, Gdefer *def);
+Gint ginqdefloc(Gchar *ws_type, Gint dev, Gdefloc *data);
 Gint ginqdefpick(Gchar *ws_type, Gint dev, Gdefpick *data);
+Gint ginqdefstring(Gchar *ws_type, Gint dev, Gdefstring *data);
+Gint ginqdefstroke(Gchar *ws_type, Gint dev, Gdefstroke *data);
+Gint ginqdefval(Gchar *ws_type, Gint dev, Gdefval *data);
+Gint ginqdisplayspacesize(Gchar *ws_type, Gdspsize *dspsz);
+Gint ginqfillfacil(Gchar *ws_type, Gflfac *fac);
+Gint ginqgdp(Gchar *ws_type, Gint function, Ggdpfac *fac);
 Gint ginqlinefacil(Gchar *ws_type, Glnfac *fac);
+Gint ginqmarkerfacil(Gchar *ws_type, Gmkfac *fac);
+Gint ginqmaxwssttables(Gchar *ws_type, Gwstables *tables);
 Gint ginqmodsegattr(Gchar *ws_type, Gmodseg *dyn);
+Gint ginqmodwsattr(Gchar *ws_type, Gmodws *dyn);
+Gint ginqnumavailinput(Gchar *ws_type, Gnumdev *num);
 Gint ginqnumsegpri(Gchar *ws_type, Gint *numpri);
+Gint ginqpatfacil(Gchar *ws_type, Gint *fac);
+Gint ginqpredcolourrep(Gchar *ws_type, Gint index, Gcobundl *rep);
+Gint ginqpredfillrep(Gchar *ws_type, Gint idx, Gflbundl *rep);
+Gint ginqpredlinerep(Gchar *ws_type, Gint idx, Glnbundl *rep);
+Gint ginqpredmarkerrep(Gchar *ws_type, Gint idx, Gmkbundl *rep);
+Gint ginqpredpatrep(Gchar *ws_type, Gint idx, Gptbundl *rep);
+Gint ginqpredtextrep(Gchar *ws_type, Gint idx, Gtxbundl *rep);
 Gint ginqtextfacil(Gchar *ws_type, Gtxfac *fac);
+Gint ginqwscategory(Gchar *ws_type, Gwscat *cat);
+Gint ginqwsclass(Gchar *ws_type, Gwsclass *class);
+Gint ginqwsconntype(Gint ws_id, Gwsct *ct);
+Gint ginqwsst(Gint ws_id, Gwsstate *state);
 
 /* Workstation state list */
+Gint ginqchoicest(Gint ws_id, Gint dev, Gchoicest *state);
+Gint ginqcolourindices(Gint ws_id, Gintlist *indices);
+Gint ginqcolourrep(Gint ws_id, Gint idx, Gqtype type, Gcobundl *rep);
+Gint ginqfillindices(Gint ws_id, Gintlist *idxlist);
+Gint ginqfillrep(Gint ws_id, Gint idx, Gqtype type, Gflbundl *rep);
+Gint ginqlineindices(Gint ws_id, Gintlist *idxlist);
+Gint ginqlinerep(Gint ws_id, Gint idx, Gqtype type, Glnbundl *rep);
+Gint ginqlocst(Gint ws_id, Gint dev, Gqtype type, Glocst *state);
+Gint ginqmarkerindices(Gint ws_id, Gintlist *idxlist);
+Gint ginqmarkerrep(Gint ws_id, Gint idx, Gqtype type, Gmkbundl *rep);
+Gint ginqpatindices(Gint ws_id, Gintlist *idxlist);
+Gint ginqpatrep(Gint ws_id, Gint idx, Gqtype type, Gptbundl *rep);
+Gint ginqpickst(Gint ws_id, Gint dev, Gqtype type, Gpickst *state);
+Gint ginqpixelarraydim(Gint ws_id, Grect *rect, Gipoint *dim);
+Gint ginqpixelarray(Gint ws_id, Gpoint *point, Gipoint *dimen, Gpxarray *pxarr);
+Gint ginqpixel(Gint ws_id, Gpoint *ppoint, Gint *pix);
+Gint ginqsegnamesws(Gint ws_id, Gintlist *segs);
+Gint ginqstringst(Gint ws_id, Gint dev, Gstringst *state);
+Gint ginqstrokest(Gint ws_id, Gint dev, Gqtype type, Gstrokest *state);
+Gint ginqtextextent(Gint ws_id, Gpoint position, Gchar *string, Gextent *extent);
+Gint ginqtextindices(Gint ws_id, Gintlist *idxlist);
+Gint ginqtextrep(Gint ws_id, Gint idx, Gqtype type, Gtxbundl *rep);
+Gint ginqvalst(Gint ws_id, Gint dev, Gvalst *state);
+Gint ginqwsconntype(Gint ws_id, Gwsct *ct);
+Gint ginqwsdeferupdatest(Gint ws_id, Gwsdus *du);
+Gint ginqwsst(Gint ws_id, Gwsstate *state);
+Gint ginqwstran(Gint ws_id, Gwsti *wstran);
 Gint gsetcolourrep(Gint ws_id, Gint idx, Gcobundl *rep);
 Gint gsetdeferst(Gint ws_id, Gdefmode deferral_mode, Girgmode regen_mode);
 Gint gsetfillrep(Gint ws_id, Gint idx, Gflbundl *rep);
@@ -1173,10 +1243,16 @@ Gint ginqmoreevents(Gsimultev *events);
 /* CHOICE input function prototypes */
 Gint ginitchoice(Gint ws_id, Gint dev, Gchoice *init, Gint pet, Glimit *area, Gchoicerec *record);
 Gint ginqchoicest(Gint ws_id, Gint dev, Gchoicest *state);
-Gint ginqdefchoice(Gchar *type, Gint dev, Gdefchoice *data);
 Gint greqchoice(Gint ws_id, Gint dev, Gchoice *response);
 Gint gsamplechoice(Gint ws_id, Gint dev, Gchoice *response);
 Gint gsetchoicemode(Gint ws_id, Gint dev, Gimode mode, Gesw echo);
+
+/* LOCATOR input function prototypes */
+Gint ginitloc(Gint ws_id, Gint dev, Gloc *init, Gint pet, Glimit *area, Glocrec *record);
+Gint ginqlocst(Gint ws_id, Gint dev, Gqtype type, Glocst *state);
+Gint greqloc(Gint ws_id, Gint dev, Gqloc *response);
+Gint gsampleloc(Gint ws_id, Gint dev, Gloc *response);
+Gint gsetlocmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo);
 
 /* PICK input function prototypes */
 Gint ginitpick(Gint ws_id, Gint dev, Gpick *init, Gint pet, Glimit *area, Gpickrec *record);
@@ -1187,7 +1263,6 @@ Gint gsetpickmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo);
 
 /* STRING input function prototypes */
 Gint ginitstring(Gint ws_id, Gint dev, Gchar *init, Gint pet, Glimit *area, Gstringrec *record);
-Gint ginqdefstring(Gchar *type, Gint dev, Gdefstring *data);
 Gint ginqstringst(Gint ws_id, Gint dev, Gstringst *state);
 Gint greqstring(Gint ws_id, Gint dev, Gqstring *response);
 Gint gsamplestring(Gint ws_id, Gint dev, Gchar *response);
@@ -1195,7 +1270,6 @@ Gint gsetstringmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo);
 
 /* STROKE input device function prototypes */
 Gint ginitstroke(Gint ws_id, Gint dev, Gstroke *init, Gint pet, Glimit *area, Gstrokerec *record);
-Gint ginqdefstroke(Gchar *type, Gint dev, Gdefstroke *data);
 Gint ginqstrokest(Gint ws_id, Gint dev, Gqtype type, Gstrokest *state);
 Gint greqstroke(Gint ws_id, Gint dev, Gqstroke *response);
 Gint gsamplestroke(Gint ws_id, Gint dev, Gstroke *response);
@@ -1219,7 +1293,6 @@ Gint ginqcurpickid(Gint *pickid);
 Gint ginqnameopenseg(Gint *seg);
 Gint ginqsegattr(Gsegattr *segattr);
 Gint ginqsegnames(Gintlist *segs);
-Gint ginqsegnamesws(Gint ws_id, Gintlist *segs);
 Gint ginsertseg(Gint seg_id, Gfloat segtran[2][3]);
 Gint gredrawsegws(Gint ws_id);
 Gint grenameseg(Gint old, Gint new);
