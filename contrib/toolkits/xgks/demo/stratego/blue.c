@@ -22,15 +22,42 @@
  */
 
 #include <xgks.h>
+#include <xgksesc.h>
 
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 #include "pictures.h"
 #include "stratego.h"
+
+void lstartup(void);
+void startup(char *argv[]);
+void initialize(void);
+void setup(void);
+void clearboard(void);
+Gistat picksquare(int *x, int *y);
+void drawcastle(int x, int y, int col);
+void drawpiece(int x, int y, int col, int type);
+void putdownpc(void);
+void drawnum(Gfloat x, Gfloat y, int i, int col);
+void setupcurpts(WCPT pts[5]);
+void drawsquare(int x, int y, int col);
+void drawboard(int option);
+int makemove(void);
+int checkmove(int sx, int sy, int dx, int dy);
+int quitgame(void);
+void drawmove(void);
+void addpow(int rank);
+int findwinner(int a, int b);
+void sendmove(void);
+int receivemove(void);
+void transmit_set_up(void);
 
 static int won = FALSE;
 static int mycolor = BLUE;
@@ -38,14 +65,13 @@ static int numleft[] = { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
 static WCPT numloc = { 0.28, 0.65 };
 static Gloc last = { 1, 5.0, 5.0 };
 static Glocrec loc;
-static Gcobundl co_flashon = { 1.0, 0.0, 0.0 },
-                co_flashoff = { 1.0, 1.0, 1.0 };
+static Gcobundl co_flashon = { 1.0, 0.0, 0.0 };
+static Gcobundl co_flashoff = { 1.0, 1.0, 1.0 };
 static int pdes[2]; /* Blue-to-Red write descriptor and */
                     /*    Red-to-Blue read descriptor   */
 Gchar tempstr[100];
 
-void main(argc, argv, envp) int argc;
-char *argv[], *envp[];
+int main(int argc, char *argv[], char *envp[])
 {
     int transmit = FALSE; /* transmit or receive flag */
     int quit = FALSE;
@@ -98,7 +124,7 @@ char *argv[], *envp[];
 }
 
 /* local start up remove after debugging  */
-lstartup()
+void lstartup(void)
 {
     int i, j;
 
@@ -114,7 +140,7 @@ lstartup()
 }
 
 /****   startup  ****/
-startup(argv) char *argv[];
+void startup(char *argv[])
 {
     XWMHints xwmhints;
     Display *xdpy;
@@ -149,7 +175,7 @@ startup(argv) char *argv[];
    fill style, and line type.
 */
 
-initialize()
+void initialize(void)
 {
     Glimit templim;
     Gcobundl tempcol;
@@ -222,7 +248,7 @@ initialize()
 /* start of routine that allows player to initialize the board with  */
 /* the pieces he wants placed in the positions he wants              */
 
-setup()
+void setup(void)
 {
     int i;
     WCPT at, pts[5];
@@ -266,7 +292,7 @@ setup()
 }
 
 /* clearboard -- sets all the board to NO_PIECE */
-clearboard()
+void clearboard(void)
 {
     int x, y;
 
@@ -285,7 +311,7 @@ clearboard()
 /* this routine returns the integer value of the coordinates of the sqaure */
 /* picked by the player  */
 
-Gistat picksquare(x, y) int *x, *y;
+Gistat picksquare(int *x, int *y)
 {
     Gistat status;
     Gqloc locrec;
@@ -305,7 +331,7 @@ Gistat picksquare(x, y) int *x, *y;
 /*** draw castle  ****/
 /* this routine draws a blank castle in any color, given x,y, and color */
 
-drawcastle(x, y, col) int x, y, col;
+void drawcastle(int x, int y, int col)
 {
     int i;
     WCPT pts[CASTLEPNTS];
@@ -322,10 +348,11 @@ drawcastle(x, y, col) int x, y, col;
 /*** draw piece ****/
 /* this routine draws the actual piece faces on the blank castles, it uses */
 /* drawcastle to create the castles */
+/* int x, y;    lower left corner of piece */
+/* int col;     color of piece */
+/* int type;    rank of piece */
 
-drawpiece(x, y, col, type) int x, y; /* lower left corner of piece */
-int col;                             /* color of piece */
-int type;                            /* rank of piece */
+void drawpiece(int x, int y, int col, int type)
 {
     WCPT transpc[15]; /* translated piece coordinates */
     int i;
@@ -361,7 +388,7 @@ int type;                            /* rank of piece */
 /* this routine is the one which loops until the player is satisfied with */
 /* the position of his pieces  */
 
-putdownpc()
+void putdownpc(void)
 {
     int x, y, picked, valid, dropped, finished, i, temp;
 
@@ -459,10 +486,7 @@ putdownpc()
 /** draw number **/
 /* this routine draws a number at a specified x,y coordinate */
 
-drawnum(x, y, i, col)
-    Gfloat x,
-    y;
-int i, col;
+void drawnum(Gfloat x, Gfloat y, int i, int col)
 {
     WCPT at;
     char ch[2];
@@ -481,8 +505,7 @@ int i, col;
 }
 
 /* set up "current piece" box */
-setupcurpts(pts)
-    WCPT pts[5];
+void setupcurpts(WCPT pts[5])
 {
     pts[0].x = 7.9;
     pts[0].y = 5.9;
@@ -497,7 +520,7 @@ setupcurpts(pts)
 }
 
 /* draw square : draws a sqaure of any color */
-drawsquare(x, y, col) int x, y, col;
+void drawsquare(int x, int y, int col)
 {
     WCPT pts[5];
 
@@ -531,7 +554,7 @@ WCPT lake[] = { 2.0, 5.0, 2.2, 4.3, 3.0, 4.0, 3.4, 4.05, 4.0, 4.5,
     4.0, 5.0, 3.9, 5.4, 3.3, 5.8, 3.0, 6.0, 2.5, 5.8,
     2.2, 5.3, 2.0, 5.0 };
 
-drawboard(option) int option;
+void drawboard(int option)
 {
     WCPT point[2];
     Gfloat ymax, a;
@@ -596,7 +619,7 @@ drawboard(option) int option;
    pick.
 */
 
-makemove()
+int makemove(void)
 {
     int valid = 0;       /* flag to check if the move is valid */
     int i, j, k, l;      /* values to hold square position. i and j are for the         
@@ -668,7 +691,7 @@ makemove()
    square and dx,dy is the position of the destination square.
 */
 
-checkmove(sx, sy, dx, dy) int sx, sy, dx, dy;
+int checkmove(int sx, int sy, int dx, int dy)
 {
     int i;
     int scoutmove = 1; /* flag for moving scout */
@@ -767,7 +790,7 @@ checkmove(sx, sy, dx, dy) int sx, sy, dx, dy;
    without skipping turn.
 */
 
-quitgame()
+int quitgame(void)
 {
     char c;
 
@@ -794,7 +817,7 @@ quitgame()
    addressed.
 */
 
-drawmove()
+void drawmove(void)
 {
     int winner; /* the winner of a single fight */
     int i, j;
@@ -910,7 +933,7 @@ drawmove()
 */
 static int pow[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-addpow(rank) int rank;
+void addpow(int rank)
 {
 #if 0
    if (rank!=FLAG)
@@ -932,7 +955,7 @@ addpow(rank) int rank;
    place and change the result of the fight accordingly.
 */
 
-findwinner(a, b) int a, b;
+int findwinner(int a, int b)
 {
     int victor;
 
@@ -960,7 +983,7 @@ static struct
 /**** sendmove  ****/
 /* sendmove sends the move just made to the opponent */
 
-sendmove()
+void sendmove(void)
 {
     data_packet.fx = orig.x;
     data_packet.fy = orig.y;
@@ -975,7 +998,7 @@ sendmove()
 /**** receivemove ****/
 /* receivemove receives the opponents move */
 
-receivemove()
+int receivemove(void)
 {
     read(pdes[READ], &data_packet, sizeof(data_packet));
 
@@ -995,7 +1018,7 @@ receivemove()
     }
 }
 
-transmit_set_up()
+void transmit_set_up(void)
 {
     int rank;
     int i, j, oppcolor;
