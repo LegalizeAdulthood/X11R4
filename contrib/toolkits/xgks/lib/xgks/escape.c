@@ -35,6 +35,8 @@
  *
  */
 
+#include <xgksesc.h>
+
 #include "gks_implem.h"
 
 void xXgksUpdateTrans(WS_STATE_PTR ws);
@@ -198,7 +200,7 @@ Gint gescstoreprimi(Gint ws_id, Gstore store)
  * Gint ws_id;                  workstation identifier.
  * Gint (*funcp)();             the pointer of redraw notifying function.
  */
-Gint gescredrawnotify(Gint ws_id, Gint (*funcp)())
+Gint gescredrawnotify(Gint ws_id, void (*funcp)(Gint ws_id, Gredraw redraw))
 {
     WS_STATE_PTR ws;
     /* check for proper gks state */

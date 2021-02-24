@@ -95,7 +95,8 @@ typedef struct ws_struct {
         Gpoint          size;                   /* Workstation DC space size */
         Gwsti           wsti;                   /* Workstation transformation information */
         Gwsdus          wsdus;                  /* Workstation defferal & update state */
-        Gint            (*redrawfuncp)();       /* User defined function called each time */
+        void            (*redrawfuncp)(Gint ws_id, Gredraw redraw);
+                                                /* User defined function called each time */
                                                 /* after workstation redraw */
 
         /* Entries in this group do not exist for workstation of categoeies INPUT, WISS, MI, MO */
