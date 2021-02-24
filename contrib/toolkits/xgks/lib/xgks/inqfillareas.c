@@ -49,9 +49,7 @@
 
 extern Gptbundl xgks_xpttn[];
 
-Gint ginqfillfacil(ws_type, fac)
-    Gchar *ws_type;
-Gflfac *fac;
+Gint ginqfillfacil(Gchar *ws_type, Gflfac *fac)
 {
     int i;
     EWSTYPE ewstype;
@@ -96,10 +94,7 @@ Gflfac *fac;
  * See also: ANSI standard p.178
  */
 
-Gint ginqpredfillrep(ws_type, idx, rep)
-    Gchar *ws_type;
-Gint idx;
-Gflbundl *rep;
+Gint ginqpredfillrep(Gchar *ws_type, Gint idx, Gflbundl *rep)
 {
     EWSTYPE ewstype;
 
@@ -130,9 +125,7 @@ Gflbundl *rep;
  * See also: ANSI standard p.161
  */
 
-Gint ginqfillindices(ws_id, idxlist)
-    Gint ws_id;
-Gintlist *idxlist;
+Gint ginqfillindices(Gint ws_id, Gintlist *idxlist)
 {
     WS_STATE_PTR ws;
     int i;
@@ -169,11 +162,7 @@ Gintlist *idxlist;
  * See also: ANSI standard p.162
  */
 
-Gint ginqfillrep(ws_id, idx, type, rep)
-    Gint ws_id;
-Gint idx;
-Gqtype type;
-Gflbundl *rep;
+Gint ginqfillrep(Gint ws_id, Gint idx, Gqtype type, Gflbundl *rep)
 {
     WS_STATE_PTR ws;
 
@@ -209,9 +198,7 @@ Gflbundl *rep;
  * See also: ANSI standard p.179
  */
 
-Gint ginqpatfacil(ws_type, fac)
-    Gchar *ws_type;
-Gint *fac;
+Gint ginqpatfacil(Gchar *ws_type, Gint *fac)
 {
     EWSTYPE ewstype;
 
@@ -237,10 +224,7 @@ Gint *fac;
  * See also: ANSI standard p.179
  */
 
-Gint ginqpredpatrep(ws_type, idx, rep)
-    Gchar *ws_type;
-Gint idx;
-Gptbundl *rep;
+Gint ginqpredpatrep(Gchar *ws_type, Gint idx, Gptbundl *rep)
 {
     EWSTYPE ewstype;
     int i, j;
@@ -276,9 +260,7 @@ Gptbundl *rep;
  * See also: ANSI standard p.162
  */
 
-Gint ginqpatindices(ws_id, idxlist)
-    Gint ws_id;
-Gintlist *idxlist;
+Gint ginqpatindices(Gint ws_id, Gintlist *idxlist)
 {
     WS_STATE_PTR ws;
     int i;
@@ -315,11 +297,7 @@ Gintlist *idxlist;
  * See also: ANSI standard p.152
  */
 
-Gint ginqpatrep(ws_id, idx, type, rep)
-    Gint ws_id;
-Gint idx;
-Gqtype type;
-Gptbundl *rep;
+Gint ginqpatrep(Gint ws_id, Gint idx, Gqtype type, Gptbundl *rep)
 {
     WS_STATE_PTR ws;
     int i, j;

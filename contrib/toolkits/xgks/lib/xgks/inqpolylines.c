@@ -54,9 +54,7 @@
  * See also: ANSI standard p.173
  */
 
-Gint ginqlinefacil(ws_type, fac)
-    Gchar *ws_type;
-Glnfac *fac;
+Gint ginqlinefacil(Gchar *ws_type, Glnfac *fac)
 {
     EWSTYPE ewstype;
 
@@ -105,10 +103,7 @@ Glnfac *fac;
  * See also: ANSI standard p.171
  */
 
-Gint ginqpredlinerep(ws_type, idx, rep)
-    Gchar *ws_type;
-Gint idx;
-Glnbundl *rep;
+Gint ginqpredlinerep(Gchar *ws_type, Gint idx, Glnbundl *rep)
 {
     EWSTYPE ewstype;
 
@@ -143,9 +138,7 @@ Glnbundl *rep;
  * See also: ANSI standard p.154
  */
 
-Gint ginqlineindices(ws_id, idxlist)
-    Gint ws_id;
-Gintlist *idxlist;
+Gint ginqlineindices(Gint ws_id, Gintlist *idxlist)
 {
     WS_STATE_PTR ws;
     int i;
@@ -188,11 +181,7 @@ Gintlist *idxlist;
  * See also: ANSI standard p.152
  */
 
-Gint ginqlinerep(ws_id, idx, type, rep)
-    Gint ws_id;
-Gint idx;
-Gqtype type;
-Glnbundl *rep;
+Gint ginqlinerep(Gint ws_id, Gint idx, Gqtype type, Glnbundl *rep)
 {
     WS_STATE_PTR ws;
 

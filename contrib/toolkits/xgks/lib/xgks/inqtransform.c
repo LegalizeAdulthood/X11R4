@@ -47,8 +47,7 @@
  *
  * See also: ANSI Standard p.147
  */
-Gint ginqcurntrannum(tran)
-    Gint *tran;
+Gint ginqcurntrannum(Gint *tran)
 {
     /* check proper gks operating state */
     GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqcurntrannum);
@@ -71,8 +70,7 @@ Gint ginqcurntrannum(tran)
  * See also: ANSI Standard p.147
  */
 
-Gint ginqntrannum(tranlist)
-    Gintlist *tranlist;
+Gint ginqntrannum(Gintlist *tranlist)
 {
     int i;
 
@@ -102,9 +100,7 @@ Gint ginqntrannum(tranlist)
  * See also: ANSI Standard p.148
  */
 
-Gint ginqntran(num, tran)
-    Gint num;
-Gwstran *tran;
+Gint ginqntran(Gint num, Gwstran *tran)
 {
     /* check proper gks operating state */
     GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqntran);
@@ -129,8 +125,7 @@ Gwstran *tran;
  * See also: ANSI Standard p.148
  */
 
-Gint ginqclip(clipping)
-    Gcliprec *clipping;
+Gint ginqclip(Gcliprec *clipping)
 {
     /* check proper gks operating state */
     GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqclip);
@@ -161,8 +156,7 @@ Gint ginqclip(clipping)
  * See also: ANSI Standard p.144
  */
 
-Gint ginqmaxntrannum(maxtran)
-    Gint *maxtran;
+Gint ginqmaxntrannum(Gint *maxtran)
 {
     /* check proper gks operating state */
     GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqmaxntrannum);
@@ -190,9 +184,7 @@ Gint ginqmaxntrannum(maxtran)
  * See also: ANSI Standard p.162
  */
 
-Gint ginqwstran(ws_id, wstran)
-    Gint ws_id;
-Gwsti *wstran;
+Gint ginqwstran(Gint ws_id, Gwsti *wstran)
 {
     WS_STATE_PTR ws;
 

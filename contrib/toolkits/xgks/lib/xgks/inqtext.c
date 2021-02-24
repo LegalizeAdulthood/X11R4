@@ -104,10 +104,7 @@ Gint ginqtextfacil(Gchar *ws_type, Gtxfac *fac)
  * See also: ANSI standard p.171
  */
 
-Gint ginqpredtextrep(ws_type, idx, rep)
-    Gchar *ws_type;
-Gint idx;
-Gtxbundl *rep;
+Gint ginqpredtextrep(Gchar *ws_type, Gint idx, Gtxbundl *rep)
 {
     EWSTYPE ewstype;
 
@@ -144,9 +141,7 @@ Gtxbundl *rep;
  * See also: ANSI standard p.152
  */
 
-Gint ginqtextindices(ws_id, idxlist)
-    Gint ws_id;
-Gintlist *idxlist;
+Gint ginqtextindices(Gint ws_id, Gintlist *idxlist)
 {
     WS_STATE_PTR ws;
     int i;
@@ -189,11 +184,7 @@ Gintlist *idxlist;
  * See also: ANSI standard p.152
  */
 
-Gint ginqtextrep(ws_id, idx, type, rep)
-    Gint ws_id;
-Gint idx;
-Gqtype type;
-Gtxbundl *rep;
+Gint ginqtextrep(Gint ws_id, Gint idx, Gqtype type, Gtxbundl *rep)
 {
     WS_STATE_PTR ws;
 

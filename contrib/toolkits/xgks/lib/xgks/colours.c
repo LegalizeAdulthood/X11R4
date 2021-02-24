@@ -130,11 +130,7 @@ Gcobundl *rep;
  *
  * See also: ANSI Standard p.164
  */
-Gint ginqcolourrep(ws_id, idx, type, rep)
-    Gint ws_id;
-Gint idx;
-Gqtype type;
-Gcobundl *rep;
+Gint ginqcolourrep(Gint ws_id, Gint idx, Gqtype type, Gcobundl *rep)
 {
     WS_STATE_PTR ws;
     int status;
@@ -182,9 +178,7 @@ Gcobundl *rep;
  * See also: ANSI Standard p.164
  */
 
-Gint ginqcolourindices(ws_id, indices)
-    Gint ws_id;
-Gintlist *indices;
+Gint ginqcolourindices(Gint ws_id, Gintlist *indices)
 {
     WS_STATE_ENTRY *ws;
     int i;
@@ -220,9 +214,7 @@ Gintlist *indices;
  * See also: ANSI Standard p.180
  */
 
-Gint ginqcolourfacil(ws_type, fac)
-    Gchar *ws_type;
-Gcofac *fac;
+Gint ginqcolourfacil(Gchar *ws_type, Gcofac *fac)
 {
     EWSTYPE ewstype;
 
@@ -256,10 +248,7 @@ static Display *CprevDpy = NULL;
 static int Cncolours = 0;
 static XColor *Ccolours = NULL;
 
-Gint ginqpredcolourrep(ws_type, index, rep)
-    Gchar *ws_type;
-Gint index;
-Gcobundl *rep;
+Gint ginqpredcolourrep(Gchar *ws_type, Gint index, Gcobundl *rep)
 {
     EWSTYPE ewstype;
     char *server;

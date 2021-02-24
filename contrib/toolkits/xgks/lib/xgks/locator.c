@@ -49,16 +49,17 @@ Bool XgksFindNTrans(Gpoint *ndcpt, Gloc *gloc);
 /*
  * Initialise Locator
  *
+ * Gint ws_id;      workstation identifier
+ * Gint dev;        locator device number
+ * Gloc *init;      initial locator pointer
+ * Gint pet;        prompt and echo type
+ * Glimit *area;    echo area pointer
+ * Glocrec *record; locator data record pointer
+ *
  * Returns: 0, 7, 25, 38, 51, 60, 64, 65, 80, 83, 85, 93, 140, 141, 144, 145, 300, 2000
  */
 
-Gint ginitloc(ws_id, dev, init, pet, area, record)
-    Gint ws_id;  /* workstation identifier */
-Gint dev;        /* locator device number */
-Gloc *init;      /* initial locator pointer */
-Gint pet;        /* prompt and echo type */
-Glimit *area;    /* echo area pointer */
-Glocrec *record; /* locator data record pointer */
+Gint ginitloc(Gint ws_id, Gint dev, Gloc *init, Gint pet, Glimit *area, Glocrec *record)
 {
 #define TRANSFORM xgks_state.ntrans_list
 
@@ -327,11 +328,7 @@ Glocrec *record; /* locator data record pointer */
  * Returns: 0, 7, 25, 38, 140, 300, 2000
  */
 
-Gint gsetlocmode(ws_id, dev, mode, echo)
-    Gint ws_id; /* workstation identifier */
-Gint dev;       /* locator device number */
-Gimode mode;    /* operating mode */
-Gesw echo;      /* echo switch */
+Gint gsetlocmode(Gint ws_id, Gint dev, Gimode mode, Gesw echo)
 {
     WS_STATE_ENTRY *ws;
     INPUT_DEV *idev;
@@ -425,12 +422,13 @@ Gesw echo;      /* echo switch */
 /*
  *  REQUEST LOCATOR
  *
+ * Gint ws_id;      workstation identifier
+ * Gint dev;        locator device number
+ * Gqloc *response; OUT locator response
+ *
  * Returns: 0, 7, 20, 25, 38, 140, 141, 300
  */
-Gint greqloc(ws_id, dev, response)
-    Gint ws_id;  /* workstation identifier */
-Gint dev;        /* locator device number */
-Gqloc *response; /* OUT locator response */
+Gint greqloc(Gint ws_id, Gint dev, Gqloc *response)
 {
     WS_STATE_ENTRY *ws;
     INPUT_DEV *idev;
@@ -538,10 +536,7 @@ Gqloc *response; /* OUT locator response */
  * returns 0=ok or 7, 20, 25, 38, 140, 142
  */
 
-Gint gsampleloc(ws_id, dev, response)
-    Gint ws_id; /* workstation identifier */
-Gint dev;       /* locator device number */
-Gloc *response; /* OUT locator response */
+Gint gsampleloc(Gint ws_id, Gint dev, Gloc *response)
 {
     WS_STATE_ENTRY *ws;
     INPUT_DEV *idev;
@@ -584,11 +579,7 @@ Gloc *response; /* OUT locator response */
  *
  */
 
-Gint ginqlocst(ws_id, dev, type, state)
-    Gint ws_id; /* workstation identifier */
-Gint dev;       /* locator device number */
-Gqtype type;    /* type of returned values */
-Glocst *state;  /* OUT current locator state */
+Gint ginqlocst(Gint ws_id, Gint dev, Gqtype type, Glocst *state)
 {
     WS_STATE_ENTRY *ws;
     INPUT_DEV *idev;
@@ -647,10 +638,7 @@ Glocst *state;  /* OUT current locator state */
  * it is the user's responsibility to free these structures.
  */
 
-Gint ginqdefloc(type, dev, data)
-    Gchar *type; /* worsktation type string */
-Gint dev;        /* locator device number */
-Gdefloc *data;   /* OUT default locator device data structure */
+Gint ginqdefloc(Gchar *type, Gint dev, Gdefloc *data)
 {
     EWSTYPE ewstype;
     int i;

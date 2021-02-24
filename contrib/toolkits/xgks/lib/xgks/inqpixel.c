@@ -43,10 +43,7 @@ void xXgksInqPixelarrayDim(WS_STATE_PTR ws, Grect *rect, Gipoint *dim);
 Gint xXgksInqPixelarray(WS_STATE_PTR ws, Gpoint *point, Gipoint *dim, Gpxarray *pxarr);
 void xXgksInqPixel(WS_STATE_PTR ws, Gpoint *ppoint, Gint *pix);
 
-Gint ginqpixelarraydim(ws_id, rect, dim)
-    Gint ws_id;
-Grect *rect;
-Gipoint *dim;
+Gint ginqpixelarraydim(Gint ws_id, Grect *rect, Gipoint *dim)
 {
     WS_STATE_PTR ws;
 
@@ -82,11 +79,7 @@ Gipoint *dim;
  * See also: ANSI standard p.191
  */
 
-Gint ginqpixelarray(ws_id, point, dimen, pxarr)
-    Gint ws_id;
-Gpoint *point;
-Gipoint *dimen;
-Gpxarray *pxarr;
+Gint ginqpixelarray(Gint ws_id, Gpoint *point, Gipoint *dimen, Gpxarray *pxarr)
 {
     WS_STATE_PTR ws;
 
@@ -124,10 +117,7 @@ Gpxarray *pxarr;
  * See also: ANSI standard p.191
  */
 
-Gint ginqpixel(ws_id, ppoint, pix)
-    Gint ws_id;
-Gpoint *ppoint;
-Gint *pix;
+Gint ginqpixel(Gint ws_id, Gpoint *ppoint, Gint *pix)
 {
     WS_STATE_PTR ws;
 

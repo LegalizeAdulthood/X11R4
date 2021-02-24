@@ -51,9 +51,7 @@
  *
  * See also: ANSI standard p.171
  */
-Gint ginqmarkerfacil(ws_type, fac)
-    Gchar *ws_type;
-Gmkfac *fac;
+Gint ginqmarkerfacil(Gchar *ws_type, Gmkfac *fac)
 {
     EWSTYPE ewstype;
     int i;
@@ -99,10 +97,7 @@ Gmkfac *fac;
  * See also: ANSI standard p.171
  */
 
-Gint ginqpredmarkerrep(ws_type, idx, rep)
-    Gchar *ws_type;
-Gint idx;
-Gmkbundl *rep;
+Gint ginqpredmarkerrep(Gchar *ws_type, Gint idx, Gmkbundl *rep)
 {
     EWSTYPE ewstype;
 
@@ -137,9 +132,7 @@ Gmkbundl *rep;
  * See also: ANSI standard p.152
  */
 
-Gint ginqmarkerindices(ws_id, idxlist)
-    Gint ws_id;
-Gintlist *idxlist;
+Gint ginqmarkerindices(Gint ws_id, Gintlist *idxlist)
 {
     WS_STATE_PTR ws;
     int i;
@@ -182,11 +175,7 @@ Gintlist *idxlist;
  * See also: ANSI standard p.152
  */
 
-Gint ginqmarkerrep(ws_id, idx, type, rep)
-    Gint ws_id;
-Gint idx;
-Gqtype type;
-Gmkbundl *rep;
+Gint ginqmarkerrep(Gint ws_id, Gint idx, Gqtype type, Gmkbundl *rep)
 {
     WS_STATE_PTR ws;
 

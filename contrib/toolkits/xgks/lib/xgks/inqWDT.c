@@ -55,8 +55,7 @@ Gint XgksMaxColours(Gchar *ws_type);
 
 static char *WSTList[] = { "MI", "MO", "WISS", NULL };
 
-Gint ginqavailwstypes(wstypes)
-    Gstrlist *wstypes;
+Gint ginqavailwstypes(Gstrlist *wstypes)
 {
     /* check for proper operating state */
     GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqavailwstypes);
@@ -82,9 +81,7 @@ Gint ginqavailwstypes(wstypes)
  *
  * See Also: ANSI Standard p.171
  */
-Gint ginqdisplayspacesize(ws_type, dspsz)
-    Gchar *ws_type;
-Gdspsize *dspsz;
+Gint ginqdisplayspacesize(Gchar *ws_type, Gdspsize *dspsz)
 {
     EWSTYPE ewstype;
 
@@ -118,9 +115,7 @@ Gdspsize *dspsz;
  *
  * See Also: ANSI Standard p.170
  */
-Gint ginqwscategory(ws_type, cat)
-    Gchar *ws_type;
-Gwscat *cat;
+Gint ginqwscategory(Gchar *ws_type, Gwscat *cat)
 {
     EWSTYPE ewstype;
     /* check for proper operating state */
@@ -162,9 +157,7 @@ Gwscat *cat;
  * See Also: ANSI Standard p.171
  */
 
-Gint ginqwsclass(ws_type, class)
-    Gchar *ws_type;
-Gwsclass *class;
+Gint ginqwsclass(Gchar *ws_type, Gwsclass *class)
 {
     EWSTYPE ewstype;
 
@@ -195,9 +188,7 @@ Gwsclass *class;
  * See Also: ANSI Standard p.172
  */
 
-Gint ginqmodwsattr(ws_type, dyn)
-    Gchar *ws_type;
-Gmodws *dyn;
+Gint ginqmodwsattr(Gchar *ws_type, Gmodws *dyn)
 {
     EWSTYPE ewstype;
 
@@ -231,9 +222,7 @@ Gmodws *dyn;
  * See Also: ANSI Standard p.173
  */
 
-Gint ginqdefdeferst(ws_type, def)
-    Gchar *ws_type;
-Gdefer *def;
+Gint ginqdefdeferst(Gchar *ws_type, Gdefer *def)
 {
     EWSTYPE ewstype;
     /* check for proper operating state */
@@ -263,9 +252,7 @@ Gdefer *def;
  * See Also: ANSI Standard p.182
  */
 
-Gint ginqmaxwssttables(ws_type, tables)
-    Gchar *ws_type;
-Gwstables *tables;
+Gint ginqmaxwssttables(Gchar *ws_type, Gwstables *tables)
 {
     EWSTYPE ewstype;
     /* check for proper operating state */
@@ -300,9 +287,7 @@ Gwstables *tables;
  * See Also: ANSI Standard p.184
  */
 
-Gint ginqnumavailinput(ws_type, num)
-    Gchar *ws_type;
-Gnumdev *num;
+Gint ginqnumavailinput(Gchar *ws_type, Gnumdev *num)
 {
     EWSTYPE ewstype;
     /* check for proper operating state */
@@ -340,9 +325,7 @@ Gnumdev *num;
  * See Also: ANSI Standard p.153
  */
 
-Gint ginqwsconntype(ws_id, ct)
-    Gint ws_id;
-Gwsct *ct;
+Gint ginqwsconntype(Gint ws_id, Gwsct *ct)
 {
     WS_STATE_PTR ws;
 
@@ -378,9 +361,7 @@ Gwsct *ct;
  * See Also: ANSI Standard p.153
  */
 
-Gint ginqwsst(ws_id, state)
-    Gint ws_id;
-Gwsstate *state;
+Gint ginqwsst(Gint ws_id, Gwsstate *state)
 {
     WS_STATE_PTR ws;
 
@@ -415,9 +396,7 @@ Gwsstate *state;
  * See Also: ANSI Standard p.154
  */
 
-Gint ginqwsdeferupdatest(ws_id, du)
-    Gint ws_id;
-Gwsdus *du;
+Gint ginqwsdeferupdatest(Gint ws_id, Gwsdus *du)
 {
     WS_STATE_PTR ws;
 

@@ -51,8 +51,7 @@
  * INQUIRE OPERATING STATE VALUE
  */
 
-Gint ginqopst(state)
-    Gos *state;
+Gint ginqopst(Gos *state)
 {
     *state = xgks_state.gks_state;
     return (OK);
@@ -67,8 +66,7 @@ Gint ginqopst(state)
  * INQUIRE LEVEL OF GKS
  */
 
-Gint ginqlevelgks(lev)
-    Glevel *lev;
+Gint ginqlevelgks(Glevel *lev)
 {
     /* check for proper gks state */
     GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqlevelgks);
@@ -84,8 +82,7 @@ Gint ginqlevelgks(lev)
  * errors 0, 8
  */
 
-Gint ginqwsmaxnum(maxws)
-    Gwsmax *maxws;
+Gint ginqwsmaxnum(Gwsmax *maxws)
 {
     /* check for proper operating state */
     GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqwsmaxnum);
@@ -106,8 +103,7 @@ Gint ginqwsmaxnum(maxws)
  * errors 0, 8
  */
 
-Gint ginqopenws(wsids)
-    Gintlist *wsids;
+Gint ginqopenws(Gintlist *wsids)
 {
     int i, j;
 
@@ -145,8 +141,7 @@ Gint ginqopenws(wsids)
  * errors 0, 8
  */
 
-Gint ginqactivews(wsids)
-    Gintlist *wsids;
+Gint ginqactivews(Gintlist *wsids)
 {
     int i, j;
 
@@ -184,8 +179,7 @@ Gint ginqactivews(wsids)
  * errors 0, 8
  */
 
-Gint ginqprimattr(primattr)
-    Gpriattr *primattr;
+Gint ginqprimattr(Gpriattr *primattr)
 {
     /* check for proper operating state */
     GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqprimattr);
@@ -213,8 +207,7 @@ Gint ginqprimattr(primattr)
  * errors 0, 8.
  */
 
-Gint ginqindivattr(indivattr)
-    Gindattr *indivattr;
+Gint ginqindivattr(Gindattr *indivattr)
 {
     /* check for proper operating state */
     GKSERROR((xgks_state.gks_state == GGKCL), 8, errginqindivattr);
