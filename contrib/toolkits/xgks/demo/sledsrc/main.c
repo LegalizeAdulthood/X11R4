@@ -27,8 +27,10 @@
  */
 
 #include <xgks.h>
+#include <xgksesc.h>
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <strings.h>
 
 #include "changes.h"
@@ -36,25 +38,33 @@
 #include "screen_items.h"
 #include "functbl.h"
 #include "ws.h"
+#include "grid.h"
+#include "color.h"
+#include "trans.h"
+#include "palette.h"
+#include "clr_sel_draw.h"
+#include "prompt.h"
+#include "draw.h"
+
+void redraw_all(Gint ws_id, Gredraw redraw);
+void init_gks(void);
+void init_bundle_tbls(void);
+void read_menu_file(char *file);
+void initialize_locator(void);
+void close_down_gks(void);
 
 char *hostname;
 WSTYPE ws_type;
 WSID ws_id = 1;                         /* ws id no */
 WSID pic_wsid = 2;                      /* pic ws id no */
 
-extern int redraw_all();
-
-
 /*
  *  main
  */
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main( int argc, char *argv[])
 {
         BOOLEAN picture_read;
-        extern char *calloc();
         Gpoint pt;
 
         /* get ws_type */
@@ -141,7 +151,7 @@ char *argv[];
  *  parameters:         none
  */
 
-init_gks()
+void init_gks(void)
 {
         Gfloat xmax_dc,ymax_dc;
         Glimit win_lim,view_lim;
@@ -201,7 +211,7 @@ init_gks()
  *  parameters:         none
  */
 
-close_down_gks()
+void close_down_gks(void)
 {
         gdeactivatews(ws_id);
         gclosews(ws_id);
@@ -216,7 +226,7 @@ close_down_gks()
  *      Set to be the redraw function by "gescredrawnotify" in "init_gks."
  */
 
-redraw_all()
+void redraw_all(Gint ws_id, Gredraw redraw)
 {
 
         IDX idx;

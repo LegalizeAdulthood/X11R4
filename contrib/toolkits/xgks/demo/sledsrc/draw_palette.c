@@ -31,6 +31,8 @@
 
 #include <strings.h>
 
+#include "draw_palette.h"
+
 #include "palette.h"
 #include "color.h"
 #include "defs.h"
@@ -47,7 +49,7 @@
  *  parameters:         none
  */
 
-display_palette()
+void display_palette(void)
 {
         Gindattr attr;
         int row, col;                   /* tbl entry being displayn */
@@ -119,7 +121,7 @@ display_palette()
  *  parameters:         none
  */
 
-display_fgdclr_area()
+void display_fgdclr_area(void)
 {
         if (eq(active_clr_area,FGDCLR_AREA))
                 draw_clr_area(FGDCLR_AREA,TRUE);
@@ -137,7 +139,7 @@ display_fgdclr_area()
  *  parameters:         none
  */
 
-display_bgdclr_area()
+void display_bgdclr_area(void)
 {
         if (eq(active_clr_area,BGDCLR_AREA))
                 draw_clr_area(BGDCLR_AREA,TRUE);
@@ -155,7 +157,7 @@ display_bgdclr_area()
  *  parameters:         none
  */
 
-display_fillclr_area()
+void display_fillclr_area(void)
 {
         if (eq(active_clr_area,FILLCLR_AREA))
                 draw_clr_area(FILLCLR_AREA,TRUE);
@@ -180,9 +182,7 @@ display_fillclr_area()
  *                      text (char **) - text to display
  */
 
-draw_clr_area(clr_area,hi_lite)
-AREA clr_area;
-BOOLEAN hi_lite;
+void draw_clr_area( AREA clr_area, BOOLEAN hi_lite)
 {
         IDX fill_area_tbl_entry;
         char **lines;

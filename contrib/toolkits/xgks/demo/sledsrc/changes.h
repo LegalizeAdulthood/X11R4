@@ -29,6 +29,8 @@
 #define OFF 0
 
 typedef int IDX;
+typedef int ENUM;
+typedef int PICKID;
 typedef char *WSTYPE;
 typedef int WSID;
 typedef int BOOLEAN;

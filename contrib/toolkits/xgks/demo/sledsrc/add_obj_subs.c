@@ -25,10 +25,10 @@
 
 #include <xgks.h>
 
+#include <stdlib.h>
+
 #include "changes.h"
 #include "ws.h"
-
-extern char *calloc();
 
 /*
  *  alloc_stroke_font_tbl
@@ -40,9 +40,7 @@ extern char *calloc();
  *                      n (int *) - no of fonts with stroke precision
  */
 
-alloc_stroke_font_tbl(list,n)
-IDX **list;
-int *n;
+void alloc_stroke_font_tbl( IDX **list, int *n)
 {
         int i,j;
         Gtxfac attr;

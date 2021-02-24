@@ -22,6 +22,9 @@
  *  stack to save states of which trans are active
  */
 
+#if !defined(TRANS_H)
+#define TRANS_H
+
 #include <xgks.h>
 
 #include "screen_items.h"
@@ -59,3 +62,19 @@ struct extent_holder
 
 #define MIN		0
 #define MAX		1
+
+void push_curr_trans(void);
+void activate( AREA area);
+void pop_curr_trans(void);
+int find_trans( AREA area);
+void alloc_trans( AREA area);
+void get_window( AREA area, Gpoint *window);
+void get_viewport( AREA area, Gpoint *viewport);
+void set_window( AREA area, Gpoint *window);
+void free_trans( AREA area);
+void get_max_dc_coor(Gfloat *x, Gfloat *y);
+void adjust_screen_tbl_viewports(void);
+void init_trans_tbls(void);
+int is_ident( Gfloat *trans);
+
+#endif

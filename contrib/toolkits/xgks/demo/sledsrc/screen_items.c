@@ -34,15 +34,28 @@
  *      draw_screen_background
  */
 
+#include <stdlib.h>
+
+#include "screen_items.h"
+
 #include "defs.h"
 #include "popup.h"
 #include "key.h"
 #include "draw.h"
 #include "menu.h"
-#include "screen_items.h"
 #include "functbl.h"
 #include "trans.h"
+#include "draw_palette.h"
+#include "prompt.h"
+#include "grid.h"
+#include "main_menu.h"
+#include "palette.h"
+#include "dummies.h"
 
+void select_pt( IDX *transno, Gpoint *pt);
+
+POPUP * get_popup_from_pt( Gpoint pt);
+void set_active_clr_area( AREA clr_area);
 
 /*
  * dynamic table of current popups
@@ -74,7 +87,7 @@ AREA active_clr_area = FGDCLR_AREA;
  *  parameters:         none
  */
 
-manage_input()
+void manage_input(void)
 {
         AREA area;                      /* identifies window */
         int transno;                    /* trans no of window 
@@ -119,8 +132,7 @@ manage_input()
                         if ((screen_tbl[idx].is_active == TRUE)
                                 && (screen_tbl[idx].exec != NULL))
                         {
-                                (*(screen_tbl[idx].exec))(area,
-                                        transno,pt);
+                                (*(screen_tbl[idx].exec))(area, transno, pt);
                         }
                         else
                         {
@@ -143,7 +155,7 @@ manage_input()
  *  parameters:         none
  */
 
-signal_done()
+void signal_done(void)
 {
         done = TRUE;
 }  /* end signal_done */
@@ -160,10 +172,7 @@ signal_done()
  *                      pt (Gpoint) - pt picked
  */
 
-picture_area_exec(area,transno,pt)
-AREA area;                              /* area selected by user */
-IDX transno;                            /* trans no picked */
-Gpoint pt;                              /* pt selected */
+void picture_area_exec( AREA area, IDX transno, Gpoint pt)
 {
         IDX idx;                        /* index of currmitem in 
                                            menu_item_func_tbl */
@@ -191,10 +200,7 @@ Gpoint pt;                              /* pt selected */
  *                      pt (Gpoint) - pt picked
  */
 
-palette_area_exec(area,transno,pt)
-AREA area;                              /* area selected by user */
-IDX transno;                            /* trans no picked */
-Gpoint pt;                              /* pt selected */
+void palette_area_exec( AREA area, IDX transno, Gpoint pt)
 {
         /* entry in palette must be calculated */
 
@@ -218,10 +224,7 @@ Gpoint pt;                              /* pt selected */
  *                      pt (Gpoint) - pt picked
  */
 
-fgdclr_area_exec(area,transno,pt)
-AREA area;                              /* area selected by user */
-IDX transno;                            /* trans no picked */
-Gpoint pt;                              /* pt selected */
+void fgdclr_area_exec( AREA area, IDX transno, Gpoint pt)
 {
         set_active_clr_area(FGDCLR_AREA);
 
@@ -238,10 +241,7 @@ Gpoint pt;                              /* pt selected */
  *                      pt (Gpoint) - pt picked
  */
 
-bgdclr_area_exec(area,transno,pt)
-AREA area;                              /* area selected by user */
-IDX transno;                            /* trans no picked */
-Gpoint pt;                              /* pt selected */
+void bgdclr_area_exec( AREA area, IDX transno, Gpoint pt)
 {
         set_active_clr_area(BGDCLR_AREA);
 
@@ -258,10 +258,7 @@ Gpoint pt;                              /* pt selected */
  *                      pt (Gpoint) - pt picked
  */
 
-fillclr_area_exec(area,transno,pt)
-AREA area;                              /* area selected by user */
-IDX transno;                            /* trans no picked */
-Gpoint pt;                              /* pt selected */
+void fillclr_area_exec( AREA area, IDX transno, Gpoint pt)
 {
         set_active_clr_area(FILLCLR_AREA);
 
@@ -278,10 +275,7 @@ Gpoint pt;                              /* pt selected */
  *                      pt (Gpoint) - pt picked
  */
 
-popup_area_exec(area,transno,pt)
-AREA area;                              /* area selected by user */
-IDX transno;                            /* trans no picked */
-Gpoint pt;                              /* pt selected */
+void popup_area_exec( AREA area, IDX transno, Gpoint pt)
 {
         POPUP *popup;                   /* popup selected */
         IDX idx;                        /* popup_func_tbl index
@@ -312,8 +306,7 @@ MENU_ITEM *newmitem;            /* new menu item */
  *  returns:            (KEY) - newmitem's key
  */
 
-KEY
-get_newmitem()
+KEY get_newmitem(void)
 {
         if (newmitem == (MENU_ITEM *) NULL)
                 return((KEY) NULL);
@@ -332,10 +325,7 @@ get_newmitem()
  *                      pt (Gpoint) - pt picked
  */
 
-menu_area_exec(area,transno,pt)
-AREA area;                              /* area selected by user */
-IDX transno;                            /* trans no picked */
-Gpoint pt;                              /* pt selected */
+void menu_area_exec( AREA area, IDX transno, Gpoint pt)
 {
         IDX idx;                        /* index of menu item funcs */
         MENU *menu;                     /* menu containing item */
@@ -410,9 +400,7 @@ Gpoint pt;                              /* pt selected */
  *  returns:            tbl_ptr (POPUP *) - popup selected
  */
 
-POPUP *
-get_popup_from_pt(pt)
-Gpoint pt;
+POPUP * get_popup_from_pt( Gpoint pt)
 {
         POPUP *tbl_ptr;
 
@@ -439,11 +427,7 @@ Gpoint pt;
  *                      pt (PICKID) - pick number of menu item
  */
 
-MENU_ITEM *
-get_menu_item_from_pt(area,pt)
-AREA area;                              /* PRI_MENU_AREA or
-                                           SEC_MENU_AREA */
-Gpoint pt;                              /* pick number */
+MENU_ITEM *get_menu_item_from_pt( AREA area, Gpoint pt)
 {
         MENU *menu;
         Gpoint window[2];               /* window[MIN] = (xmin,ymin)
@@ -483,8 +467,7 @@ Gpoint pt;                              /* pick number */
  *
  */
 
-erase_area(area)
-AREA area;
+void erase_area( AREA area)
 {
         Gpoint window[2];                       /* area world window */
         Gpoint box[4];                          /* pts of rectangle 
@@ -514,8 +497,7 @@ AREA area;
  *  parameters:         clr_area (AREA) - clr area
  */
 
-set_active_clr_area(clr_area)
-AREA clr_area;
+void set_active_clr_area( AREA clr_area)
 {
         if (!eq(active_clr_area,clr_area))
         {
@@ -540,7 +522,7 @@ AREA clr_area;
  *  parameters:         none
  */
 
-draw_screen_background()
+void draw_screen_background(void)
 {
         Gpoint box[4];
 

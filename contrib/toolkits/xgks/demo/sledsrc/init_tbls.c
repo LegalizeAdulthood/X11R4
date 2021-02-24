@@ -28,7 +28,10 @@
 #include <xgks.h>
 
 #include <stdio.h>
+#include <stdlib.h>
 
+#include "menu.h"
+#include "popup.h"
 #include "defs.h"
 #include "func.h"
 #include "key.h"
@@ -39,7 +42,13 @@
 #include "functbl.h"
 #include "palette.h"
 #include "add_objects.h"
+#include "grid.h"
+#include "add_obj_func.h"
+#include "error.h"
+#include "io.h"
 
+void init_text_bundle_tbl(char *filename);
+void init_char_hts_n_wds(char *filename, Gfloat **wd_tbl, Gfloat **ht_tbl);
 
 /*
  * screen_tbl initializations
@@ -969,7 +978,7 @@ struct menu_tbl_entry menu_func_tbl[] =
  *  parameters:         none
  */
 
-init_bundle_tbls()
+void init_bundle_tbls(void)
 {
         Gflbundl frep;
         Glnbundl lrep;
@@ -1029,8 +1038,7 @@ init_bundle_tbls()
  *
  */
 
-init_text_bundle_tbl(filename)
-char *filename;                         /* file containing text info */
+void init_text_bundle_tbl(char *filename)
 {
         FILE *fd;                       /* fd for file containing text 
                                            info */
@@ -1040,7 +1048,6 @@ char *filename;                         /* file containing text info */
         int n;
 
         extern char *get_char_str();
-        extern char *calloc();
 
         /* open file containing text bundle tbl info */
 
@@ -1110,9 +1117,7 @@ char *filename;                         /* file containing text info */
  *                      ht_tbl (Gfloat *) - table of char widths
  */
 
-init_char_hts_n_wds(filename,wd_tbl,ht_tbl)
-char *filename;
-Gfloat **wd_tbl, **ht_tbl;
+void init_char_hts_n_wds(char *filename, Gfloat **wd_tbl, Gfloat **ht_tbl)
 {
         FILE *fd;
         int n,i;

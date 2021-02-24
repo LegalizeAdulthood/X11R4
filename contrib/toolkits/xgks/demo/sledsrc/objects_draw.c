@@ -33,6 +33,8 @@
  *      display_text
  */
 
+#include "objects_draw.h"
+
 #include "popup.h"
 #include "color.h"
 #include "objects.h"
@@ -41,7 +43,8 @@
 #include "trans.h"
 #include "draw.h"
 #include "ws.h"
-
+#include "palette.h"
+#include "trans_subs.h"
 
 #define DRAW    0
 #define ERASE   1
@@ -57,8 +60,7 @@
  *  parameters:         comb_ob (COMB_OB *) - comb_ob to draw
  */
 
-draw_comb_ob(comb_ob)
-COMB_OB *comb_ob;
+void draw_comb_ob( COMB_OB *comb_ob)
 {
         OBJECT *object_ptr;
 
@@ -82,8 +84,7 @@ COMB_OB *comb_ob;
  *  parameters:         comb_ob (COMB_OB *) - comb_ob to erase
  */
 
-erase_comb_ob(comb_ob)
-COMB_OB *comb_ob;
+void erase_comb_ob( COMB_OB *comb_ob)
 {
         OBJECT *object_ptr;
 
@@ -104,11 +105,9 @@ COMB_OB *comb_ob;
  *  parameters:         object (OBJECT *) - object to draw
  */
 
-draw_object(object)
-OBJECT *object;
+void draw_object(OBJECT *object)
 {
-        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].draw))
-                (object);
+        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].draw))(object);
 }  /* end draw_object */
 
 
@@ -120,11 +119,9 @@ OBJECT *object;
  *  parameters:         object (OBJECT *) - object to erase
  */
 
-erase_object(object)
-OBJECT *object;
+void erase_object(OBJECT *object)
 {
-        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].erase))
-                (object);
+        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].erase))(object);
 }  /* end erase_object */
 
 
@@ -136,8 +133,7 @@ OBJECT *object;
  *  parameters:         object (OBJECT *) - line object
  */
 
-draw_line(object)
-OBJECT *object;
+void draw_line( OBJECT *object)
 {
         /* update pts by multiplying them by transformation
            matrix and then set trans to identity matrix */
@@ -164,8 +160,7 @@ OBJECT *object;
  *  parameters:         object (OBJECT *) - line object
  */
 
-erase_line(object)
-OBJECT *object;
+void erase_line( OBJECT *object)
 {
         gsetlinecolorind(get_bgdclr());
         gsetlinetype(object->lineob.style);
@@ -183,8 +178,7 @@ OBJECT *object;
  *                              or conic) object
  */
 
-draw_poly(object)
-OBJECT *object;
+void draw_poly( OBJECT *object)
 {
         /* update pts by multiplying them by transformation
            matrix and then set trans to identity matrix */
@@ -215,8 +209,7 @@ OBJECT *object;
  *  parameters:         none
  */
 
-erase_poly(object)
-OBJECT *object;
+void erase_poly( OBJECT *object)
 {
         if (object->polyob.fillstyle == GSOLID)
         {
@@ -240,8 +233,7 @@ OBJECT *object;
  *  parameters:         object (OBJECT *) - text object
  */
 
-draw_text(object)
-OBJECT *object;
+void draw_text( OBJECT *object)
 {
         display_text(object,DRAW);
 }  /* end draw_text */
@@ -255,8 +247,7 @@ OBJECT *object;
  *  parameters:         object (OBJECT *) - text object
  */
 
-erase_text(object)
-OBJECT *object;
+void erase_text( OBJECT *object)
 {
         display_text(object,ERASE);
 }  /* end erase_text */
@@ -271,9 +262,7 @@ OBJECT *object;
  *                      draw_erase (int) - DRAW | ERASE
  */
 
-display_text(object,draw_erase)
-OBJECT *object;
-int draw_erase;
+void display_text( OBJECT *object, int draw_erase)
 {
         Gtxpath path;
         Gtxhor horz;
@@ -495,7 +484,7 @@ int draw_erase;
         gsettextpath(path);
         gsetcharup(&(object->textob.up_vec));
 
-        str[1] = (char) NULL;
+        str[1] = 0;
         for (ch_ptr = object->textob.str;
                 ch_ptr != (CHAR_OB *) NULL;
                 ch_ptr = ch_ptr->next)

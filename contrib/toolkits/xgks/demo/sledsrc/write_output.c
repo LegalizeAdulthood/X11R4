@@ -31,6 +31,7 @@
 #include <xgks.h>
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "io.h"
 #include "screen_items.h"
@@ -40,9 +41,10 @@
 #include "object_tbl.h"
 #include "object_list.h"
 #include "conversions.h"
+#include "prompt.h"
 
-extern char *calloc();
-
+void write_palette_clrs(FILE *fd);
+void write_object(FILE *fd, OBJECT *object);
 
 /*
  *  write_picture
@@ -55,9 +57,7 @@ extern char *calloc();
  *                      write in, false otherwise
  */
 
-BOOLEAN
-write_picture(filename)
-char *filename;
+BOOLEAN write_picture(char *filename)
 {
         FILE *fd;
         OBJECT *object;
@@ -141,8 +141,7 @@ char *filename;
  *  parameters:         fd (FILE *) - file descriptor
  */
 
-write_palette_clrs(fd)
-FILE *fd;
+void write_palette_clrs(FILE *fd)
 {
         Gcobundl rgb_clr;
         int i;
@@ -173,9 +172,7 @@ FILE *fd;
  *                      object (OBJECT *) - object to write out
  */
 
-write_object(fd,object)
-FILE *fd;
-OBJECT *object;
+void write_object(FILE *fd, OBJECT *object)
 {
         int i;
 
@@ -186,7 +183,7 @@ OBJECT *object;
                 write_real(fd,object->trans[i]);
 
         i = get_object_func_tbl_idx(object->key);
-        (*(object_func_tbl[i].write))(fd,object);
+        (*(object_func_tbl[i].write))(fd, object);
 }  /* end write_object */
 
 
@@ -199,9 +196,7 @@ OBJECT *object;
  *                      object (OBJECT *) - line object
  */
 
-write_line(fd,object)
-FILE *fd;
-OBJECT *object;
+void write_line(FILE *fd, OBJECT *object)
 {
         int i;
 
@@ -225,9 +220,7 @@ OBJECT *object;
  *                      object (OBJECT *) - poly object
  */
 
-write_poly(fd,object)
-FILE *fd;
-OBJECT *object;
+void write_poly(FILE *fd, OBJECT *object)
 {
         int i;
 
@@ -253,9 +246,7 @@ OBJECT *object;
  *                      object (OBJECT *) - text object
  */
 
-write_text(fd,object)
-FILE *fd;
-OBJECT *object;
+void write_text(FILE *fd, OBJECT *object)
 {
         CHAR_OB *ch_ptr;
         int i;

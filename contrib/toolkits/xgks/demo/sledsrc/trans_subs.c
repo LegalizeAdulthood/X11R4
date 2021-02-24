@@ -31,6 +31,8 @@
 
 #include <math.h>
 
+#include "trans_subs.h"
+
 /*
  *  ident
  *
@@ -40,8 +42,7 @@
  *                      (GKS format)
  */
 
-ident(trans)
-Gfloat *trans;
+void ident( Gfloat *trans)
 {
         trans[0] = 1;
         trans[1] = 0;
@@ -64,10 +65,7 @@ Gfloat *trans;
  *                      (GKS format)
  */
 
-pt_mult(pts,nopts,trans)
-Gpoint *pts;
-int nopts;
-Gfloat *trans;
+void pt_mult(Gpoint *pts, int nopts, Gfloat *trans)
 {
         int i;
         Gfloat x,y;
@@ -94,10 +92,7 @@ Gfloat *trans;
  *                      result (Gpoint *) - resulting matrix
  */
 
-mat_mult(mat1,mat2,result)
-Gfloat *mat1;
-Gfloat *mat2;
-Gfloat *result;
+void mat_mult(Gfloat *mat1, Gfloat *mat2, Gfloat *result)
 {
         Gfloat temp[6];
         int i;
@@ -124,9 +119,7 @@ Gfloat *result;
  *                      y (Gfloat) - translation in y direction
  */
 
-s_trans_mat(trans,x,y)
-Gfloat *trans;
-Gfloat x,y;
+void s_trans_mat(Gfloat *trans, Gfloat x,Gfloat y)
 {
         ident(trans);
         trans[2] = x;
@@ -144,10 +137,7 @@ Gfloat x,y;
  *                      radians - roatation angle in degrees
  */
 
-s_rot_mat(trans,pt,radians)
-Gfloat *trans;
-Gpoint pt;
-Gfloat radians;
+void s_rot_mat(Gfloat *trans, Gpoint pt, Gfloat radians)
 {
         Gfloat sin_theta, cos_theta;
 

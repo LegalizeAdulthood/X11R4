@@ -21,9 +21,11 @@
  *
  */
 
-#include <strings.h>
-
 #include <xgks.h>
+
+#include <math.h>
+#include <string.h>
+#include <strings.h>
 
 #define sqr(a)		((a) * (a))
 #define abs(a)		((a) < 0 ? (-(a)) : (a))

@@ -33,13 +33,19 @@
 
 #include <xgks.h>
 
+#include <stdlib.h>
+
 #include "screen_items.h"
 #include "functbl.h"
 #include "key.h"
 #include "defs.h"
 #include "menu.h"
+#include "error.h"
+#include "undo.h"
+#include "prompt.h"
 
 int menu_tbl_sz = 2;
+
 struct menu_area_tbl_entry menu_tbl[2] =
 {
         {
@@ -63,9 +69,7 @@ struct menu_area_tbl_entry menu_tbl[2] =
  *  parameters:         area (AREA) - area containing menu
  */
 
-MENU *
-get_menu_from_area(area)
-AREA area;
+MENU * get_menu_from_area(AREA area)
 {
         int i;
 
@@ -87,9 +91,7 @@ AREA area;
  *  parameters:         menu (MENU) * - menu containing area
  */
 
-AREA
-get_area_from_menu(menu)
-MENU *menu;
+AREA get_area_from_menu(MENU *menu)
 {
         AREA area;
         int i;
@@ -122,10 +124,7 @@ MENU *menu;
  *  returns:            menu and menu item index in menu
  */
 
-find_menu_item_idx(key,menu,idx)
-KEY key;
-MENU **menu;
-IDX *idx;
+void find_menu_item_idx( KEY key, MENU **menu, IDX *idx)
 {
         BOOLEAN found;
         int i = 1;
@@ -171,9 +170,7 @@ IDX *idx;
  *                      menu (MENU) - menu to enter
  */
 
-set_menu(area,menu)
-AREA area;
-MENU *menu;
+void set_menu( AREA area, MENU *menu)
 {
         int i;
 
@@ -195,9 +192,7 @@ MENU *menu;
  *  returns:            (MENU_ITEM *) parent menu item of child menu
  */
 
-MENU_ITEM *
-get_parent(child_menu)
-MENU *child_menu;
+MENU_ITEM * get_parent( MENU *child_menu)
 {
         int i = 0;
 
@@ -220,8 +215,7 @@ MENU *child_menu;
  *  parameters:         new_menu (MENU *) - new secondary menu
  */
 
-switch_sec_menu(new_menu)
-MENU *new_menu;                         /* new sec_menu */
+void switch_sec_menu( MENU *new_menu)
 {
         IDX idx;
         MENU *sec_menu;
@@ -243,8 +237,7 @@ MENU *new_menu;                         /* new sec_menu */
 }  /* end switch_sec_menu */
 
 
-display_child_menu(menu_item)
-MENU_ITEM *menu_item;
+void display_child_menu(MENU_ITEM *menu_item)
 {
         switch_sec_menu(menu_item->child);
         initialize_undo();
@@ -262,8 +255,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - menu item picked
  */
 
-not_implemented(menu_item)
-MENU_ITEM *menu_item;
+void not_implemented( MENU_ITEM *menu_item)
 {
         reprompt(0);
         currmitem = (MENU_ITEM *) NULL;
@@ -280,8 +272,7 @@ MENU_ITEM *menu_item;
  *                              currmitem
  */
 
-set_currmitem(menu_item)
-MENU_ITEM *menu_item;
+void set_currmitem( MENU_ITEM *menu_item)
 {
         currmitem = menu_item;
 }  /* end set_currmitem */

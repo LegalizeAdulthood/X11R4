@@ -20,9 +20,15 @@
  * SOFTWARE.
  *
  */
+#if !defined(PHOTO_FUNC_H)
+#define PHOTO_FUNC_H
 
-extern int four_by_five();
-extern int eight_by_ten();
-extern int konica_ft1();
-extern int one_to_one();
-extern int photo();
+#include "screen_items.h"
+
+extern void four_by_five(MENU_ITEM *item);
+extern void eight_by_ten(MENU_ITEM *item);
+extern void konica_ft1(MENU_ITEM *item);
+extern void one_to_one(MENU_ITEM *item);
+extern void photo(MENU_ITEM *item);
+
+#endif

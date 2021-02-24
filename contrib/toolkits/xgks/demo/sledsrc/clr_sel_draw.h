@@ -21,9 +21,22 @@
  *
  */
 
+#if !defined(CLR_SEL_DRAW_H)
+#define CLR_SEL_DRAW_H
+
 #include "changes.h"
+#include "clr_selector.h"
 
 #define		CLR_WHEEL_TEXT	"clr wheel text key"
 #define		CLR_PICKED_TEXT	"clr picked text key"
 #define		MIXER_TEXT	"clr mixer text key"
 #define		TUNER_TEXT	"fine tuner text key"
+
+void init_clr_selector_clrs(void);
+void draw_knob( ARROW *arrow, IDX fill_color);
+void draw_arrow( ARROW *arrow, IDX line_color);
+void erase_picked_clr(void);
+void display_picked_clr(Gcobundl rgb_clr);
+void display_clr_wheel_area(void);
+
+#endif

@@ -91,7 +91,10 @@ struct menu
 extern MENU_ITEM *currmitem;		/* current menu item */
 
 
-extern POPUP *get_popup_from_pt();
-extern KEY get_newmitem();
+extern KEY get_newmitem(void);
+void erase_area( AREA area);
+void draw_screen_background(void);
+void manage_input(void);
+void signal_done(void);
 
 #endif

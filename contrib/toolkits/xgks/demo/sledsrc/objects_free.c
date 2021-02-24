@@ -26,6 +26,9 @@
  *      free_poly
  *      free_text
  */
+#include <stdlib.h>
+
+#include "objects_free.h"
 
 #include "objects.h"
 #include "object_tbl.h"
@@ -39,8 +42,7 @@
  *  parameters:         comb_ob (COMB_OB *) - combination object
  */
 
-free_comb_ob(comb_ob)
-COMB_OB *comb_ob;
+void free_comb_ob(COMB_OB *comb_ob)
 {
         OBJECT *object_ptr,*temp;
 
@@ -64,11 +66,9 @@ COMB_OB *comb_ob;
  *  parameters:         (OBJECT *) - object
  */
 
-free_object(object)
-OBJECT *object;
+void free_object(OBJECT *object)
 {
-        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].free))
-                (object);
+        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].free))(object);
         free((char *) object->key);
         free((char *) object);
 }  /* end free_object */
@@ -82,8 +82,7 @@ OBJECT *object;
  *  parameters:         none
  */
 
-free_line(object)
-OBJECT *object;
+void free_line(OBJECT *object)
 {
         free((char *) object->lineob.pts);
 }  /* end free_line */
@@ -97,8 +96,7 @@ OBJECT *object;
  *  parameters:         none
  */
 
-free_poly(object)
-OBJECT *object;
+void free_poly(OBJECT *object)
 {
         free((char *) object->polyob.pts);
 }  /* end free_poly */
@@ -112,8 +110,7 @@ OBJECT *object;
  *  parameters:         none
  */
 
-free_text(object)
-OBJECT *object;
+void free_text(OBJECT *object)
 {
         CHAR_OB *ch_ptr,*temp;
 

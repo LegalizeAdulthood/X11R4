@@ -42,8 +42,7 @@
  *  parameters:         area (AREA) - screen area
  */
 
-find_screen_tbl_idx(area)
-AREA area;                              /* screen area */
+int find_screen_tbl_idx( AREA area)
 {
         int i;
 
@@ -74,8 +73,7 @@ AREA area;                              /* screen area */
  *  returns:            idx (IDX) - index of key in popup_func_tbl
  */
 
-find_popup_func_tbl_idx(key)
-KEY key;
+int find_popup_func_tbl_idx( KEY key)
 {
         IDX idx;
 
@@ -101,8 +99,7 @@ KEY key;
  *  returns:            idx (IDX) - index of key in menu_item_func_tbl
  */
 
-find_menu_item_func_tbl_idx(key)
-KEY key;
+int find_menu_item_func_tbl_idx( KEY key)
 {
         IDX idx;
 
@@ -128,8 +125,7 @@ KEY key;
  *  returns:            idx (IDX) - index of key in menu_func_tbl
  */
 
-find_menu_func_tbl_idx(key)
-KEY key;
+int find_menu_func_tbl_idx( KEY key)
 {
         IDX idx;
 

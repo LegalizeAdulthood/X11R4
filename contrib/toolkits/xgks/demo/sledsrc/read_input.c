@@ -31,6 +31,7 @@
 #include <xgks.h>
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "io.h"
 #include "defs.h"
@@ -41,11 +42,12 @@
 #include "object_tbl.h"
 #include "object_list.h"
 #include "conversions.h"
+#include "prompt.h"
+#include "palette.h"
 
 extern char *read_char_str();
 extern OBJECT *read_object();
-extern char *calloc();
-
+void read_palette_clrs(FILE *fd, Gcobundl **clrs, Gint *no_clrs, BOOLEAN *error);
 
 /*
  *  read_picture
@@ -58,9 +60,7 @@ extern char *calloc();
  *                      read in, false otherwise
  */
 
-BOOLEAN
-read_picture(filename)
-char *filename;
+BOOLEAN read_picture(char *filename)
 {
         FILE *fd;
         OBJECT *object;
@@ -241,11 +241,7 @@ char *filename;
  *                      error (BOOLEAN *) - true if error reading input file
  */
 
-read_palette_clrs(fd,clrs,no_clrs,error)
-FILE *fd;
-Gcobundl **clrs;
-Gint *no_clrs;
-BOOLEAN *error;
+void read_palette_clrs(FILE *fd, Gcobundl **clrs, Gint *no_clrs, BOOLEAN *error)
 {
         int i;
 
@@ -338,10 +334,7 @@ BOOLEAN *error;
  *                              input file
  */
 
-read_line(fd,object,error)
-FILE *fd;
-OBJECT *object;
-BOOLEAN *error;
+void read_line(FILE *fd, OBJECT *object, BOOLEAN *error)
 {
         int i;
 
@@ -373,10 +366,7 @@ BOOLEAN *error;
  *                              input file
  */
 
-read_poly(fd,object,error)
-FILE *fd;
-OBJECT *object;
-BOOLEAN *error;
+void read_poly(FILE *fd, OBJECT *object, BOOLEAN *error)
 {
         int i;
         int prov;
@@ -425,10 +415,7 @@ BOOLEAN *error;
  *                              input file
  */
 
-read_text(fd,object,error)
-FILE *fd;
-OBJECT *object;
-BOOLEAN *error;
+void read_text(FILE *fd, OBJECT *object, BOOLEAN *error)
 {
         CHAR_OB *ch_ptr;
         int i;

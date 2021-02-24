@@ -37,6 +37,10 @@
 
 #include <math.h>
 
+#include "clr_sel_func.h"
+
+#include "draw.h"
+#include "prompt.h"
 #include "key.h"
 #include "defs.h"
 #include "draw.h"
@@ -76,7 +80,7 @@ ARROW hue_arrow;                        /* hue arrow info */
  *  parameters:         none
  */
 
-init_clr_selector_clrs()
+void init_clr_selector_clrs(void)
 {
         HSV hsv_clr;
         Gfloat theta_degrees;           /* theta in degrees */
@@ -111,7 +115,7 @@ init_clr_selector_clrs()
  *  parameters:         none
  */
 
-display_clr_picked_area()
+void display_clr_picked_area(void)
 {
         if (find_trans(CLR_PICKED_AREA) == NON_EXISTENT)
                 alloc_trans(CLR_PICKED_AREA);
@@ -129,8 +133,7 @@ display_clr_picked_area()
  *  parameters:         rgb_clr (Gcobundl) - color picked in Gcobundl form
  */
 
-display_picked_clr(rgb_clr)
-Gcobundl rgb_clr;
+void display_picked_clr(Gcobundl rgb_clr)
 {
         Gfloat wd, ht;                  /* wd and ht of conic */
         Gpoint window[2];               /* boundary of area */
@@ -186,7 +189,7 @@ Gcobundl rgb_clr;
  *  parameters:         none
  */
 
-erase_picked_clr()
+void erase_picked_clr(void)
 {
         erase_area(CLR_PICKED_AREA);
         clr_picked = FALSE;
@@ -203,7 +206,7 @@ erase_picked_clr()
  *  parameters:         none
  */
 
-display_clr_wheel_area()
+void display_clr_wheel_area(void)
 {
         Gpoint window[4];
         Gpoint pts[4];
@@ -275,7 +278,7 @@ display_clr_wheel_area()
  *  parameters:         none
  */
 
-display_clr_mixer_area()
+void display_clr_mixer_area(void)
 {
         Gpoint window[4];
         Gpoint left_box[4],right_box[4],
@@ -396,7 +399,7 @@ display_clr_mixer_area()
  *  parameters:         none
  */
 
-display_fine_tuner_area()
+void display_fine_tuner_area(void)
 {
         Gpoint window[4];
         Gpoint box[4];
@@ -525,10 +528,7 @@ display_fine_tuner_area()
  *                      pt (Gpoint) - pt picked
  */
 
-display_clr_selector_pal_area(area,transno,pt)
-AREA area;
-IDX transno;
-Gpoint pt;
+void display_clr_selector_pal_area(void)
 {
         alloc_trans(CLR_SELECTOR_PAL_AREA);
 }  /* end display_clr_selector_pal_area */
@@ -544,10 +544,7 @@ Gpoint pt;
  *                      new_knob_pos (Gfloat) - new position for knob
  */
 
-display_arrow(area,arrow,new_knob_pos)
-AREA area;
-ARROW *arrow;
-Gfloat new_knob_pos;
+void display_arrow( AREA area, ARROW *arrow, Gfloat new_knob_pos)
 {
         push_curr_trans();
         activate(area);
@@ -584,9 +581,7 @@ Gfloat new_knob_pos;
  *                      fill_color (IDX) - index in fill_area bundle tbl
  */
 
-draw_knob(arrow,fill_color)
-ARROW *arrow;
-IDX fill_color;
+void draw_knob( ARROW *arrow, IDX fill_color)
 {
         Gfloat pos;                     /* adjusted position of knob */
         Gpoint box[4];                  /* pts of knob */
@@ -621,9 +616,7 @@ IDX fill_color;
  *                      line_color (IDX) - color tbl index
  */
 
-draw_arrow(arrow,line_color)
-ARROW *arrow;
-IDX line_color;
+void draw_arrow( ARROW *arrow, IDX line_color)
 {
         Gpoint pts[3];
 

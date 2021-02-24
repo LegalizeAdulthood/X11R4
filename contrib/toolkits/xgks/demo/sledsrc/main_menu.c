@@ -39,8 +39,9 @@
 
 #include <xgks.h>
 
-#include <strings.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
 
 #include "color.h"
 #include "defs.h"
@@ -51,10 +52,14 @@
 #include "trans.h"
 #include "draw.h"
 #include "screen_items.h"
+#include "grid.h"
 #include "functbl.h"
+#include "prompt.h"
+#include "draw_menu.h"
+#include "read_input.h"
+#include "write_output.h"
 
 static char *last_file_accessed;
-extern char *gets();
 
 /*
  *  quit
@@ -64,8 +69,7 @@ extern char *gets();
  *  parameters:         menu_item (MENU_ITEM *) - QUIT  menu item
  */
 
-quit(menu_item)
-MENU_ITEM *menu_item;                   /* QUIT menu item */
+void quit( MENU_ITEM *menu_item)
 {
         signal_done();
         prompt(3);
@@ -84,8 +88,7 @@ MENU_ITEM *menu_item;                   /* QUIT menu item */
  */
 
 
-up(menu_item)
-MENU_ITEM *menu_item;
+void up( MENU_ITEM *menu_item)
 {
         MENU *pri_menu;
         MENU *sec_menu;
@@ -111,8 +114,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - update menu_item
  */
 
-update(menu_item)
-MENU_ITEM *menu_item;
+void update( MENU_ITEM *menu_item)
 {
         IDX idx;
 
@@ -140,8 +142,7 @@ MENU_ITEM *menu_item;
  *                      Not used in this new GKS version.
  */
 
-create_pic_file(menu_item)
-MENU_ITEM *menu_item;
+void create_pic_file( MENU_ITEM *menu_item)
 {
         /* Gpoint window[4];
         Gpoint box[4];
@@ -214,8 +215,8 @@ unhilite(menu_item->key);
 
         printf("enter name of PIC file: ");
         prompt(35);
-        gets(ln);
-        if (ln[0] != (char) NULL)
+        fgets(ln, sizeof(ln), stdin);
+        if (ln[0] != 0)
         {
                 strcpy(command,"mv uigks.pic ");
                 strcat(command,ln);
@@ -236,8 +237,7 @@ unhilite(menu_item->key);
  *  parameters:         menu_item (MENU_ITEM *) - retrieve menu_item
  */
 
-retrieve(menu_item)
-MENU_ITEM *menu_item;
+void retrieve( MENU_ITEM *menu_item)
 {
         char ln[80];
 
@@ -255,8 +255,8 @@ MENU_ITEM *menu_item;
 
         /* if no file has been specified, then return */
 
-        (void) gets(ln);
-        if ((ln[0] == (char) NULL) &&
+        fgets(ln, sizeof(ln), stdin);
+        if ((ln[0] == 0) &&
                 (last_file_accessed == (char *) NULL))
         {
                 unhilite(menu_item->key);
@@ -265,7 +265,7 @@ MENU_ITEM *menu_item;
 
         /* set last file accessed to specified file */
 
-        if (ln[0] != (char) NULL) 
+        if (ln[0] != 0)
         {
                 if (last_file_accessed != (char *) NULL)
                         free(last_file_accessed);
@@ -295,8 +295,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - save menu_item
  */
 
-save(menu_item)
-MENU_ITEM *menu_item;
+void save( MENU_ITEM *menu_item)
 {
         char ln[80];
 
@@ -314,8 +313,8 @@ MENU_ITEM *menu_item;
 
         /* if no file specfied, return */
 
-        (void) gets(ln);
-        if ((ln[0] == (char) NULL) &&
+        fgets(ln, sizeof(ln), stdin);
+        if ((ln[0] == 0) &&
                 (last_file_accessed == (char *) NULL))
         {
                 unhilite(menu_item->key);
@@ -324,7 +323,7 @@ MENU_ITEM *menu_item;
 
         /* update last file accessed */
 
-        if (ln[0] != (char) NULL) 
+        if (ln[0] != 0)
         {
                 if (last_file_accessed != (char *) NULL)
                         free(last_file_accessed);
@@ -369,8 +368,7 @@ static char *update_text[] =
  *  parameters:         popup (POPUP *) - update popup
  */
 
-init_update_popup(popup)
-POPUP *popup;
+void init_update_popup( POPUP *popup)
 {
         char **ln_ptr;
         int i;
@@ -393,9 +391,7 @@ POPUP *popup;
  *                      pt (Gpoint) - unused
  */
 
-switch_update_state(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_update_state( POPUP *popup, Gpoint pt)
 {
         switch_popup_state(&update_state,2,2,update_text,popup->extent);
 }  /* end switch_update_state */
@@ -411,7 +407,7 @@ Gpoint pt;
  *  returns:            (Gint) - update_state
  */
 
-get_update_mode()
+int get_update_mode(void)
 {
         Gint mode;
 
@@ -442,8 +438,7 @@ static char *verbose_text[] =
  *  parameters:         popup (POPUP *) - verbose popup
  */
 
-init_verbose_popup(popup)
-POPUP *popup;
+void init_verbose_popup( POPUP *popup)
 {
         char **ln_ptr;
         int i;
@@ -466,9 +461,7 @@ POPUP *popup;
  *                      pt (Gpoint) - unused
  */
 
-switch_verbose_state(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_verbose_state( POPUP *popup, Gpoint pt)
 {
         switch_popup_state(&verbose_state,2,3,verbose_text,
                 popup->extent);
@@ -495,7 +488,7 @@ Gpoint pt;
  *  returns:            (Gint) - verbose_state
  */
 
-get_verbose_mode()
+int get_verbose_mode(void)
 {
         return(verbose_state);
 }  /* end get_verbose_mode */
@@ -522,8 +515,7 @@ static char *grid_text[] =
  *  parameters:         popup (POPUP *) - grid popup
  */
 
-init_grid_popup(popup)
-POPUP *popup;
+void init_grid_popup( POPUP *popup)
 {
         char **ln_ptr;
         int i;
@@ -546,9 +538,7 @@ POPUP *popup;
  *                      pt (Gpoint) - unused
  */
 
-switch_grid_state(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_grid_state( POPUP *popup, Gpoint pt)
 {
         IDX prev_grid_state;
 
@@ -576,7 +566,7 @@ Gpoint pt;
  *  parameters:         none
  */
 
-get_grid_state()
+int get_grid_state(void)
 {
         return(grid_state);
 }  /* end get_grid_state */

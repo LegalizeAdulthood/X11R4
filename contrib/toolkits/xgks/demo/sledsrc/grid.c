@@ -49,16 +49,26 @@
 #include <xgks.h>
 
 #include <math.h>
+#include <stdlib.h>
 
-#include "trans.h"
-#include "popup.h"
+#include "grid.h"
+
+#include "color.h"
+#include "defs.h"
+#include "draw.h"
+#include "draw_menu.h"
+#include "func.h"
 #include "functbl.h"
 #include "key.h"
-#include "defs.h"
-#include "ws.h"
-#include "draw.h"
+#include "main_menu.h"
+#include "menu.h"
+#include "object_list.h"
 #include "objects.h"
-#include "color.h"
+#include "palette.h"
+#include "popup.h"
+#include "prompt.h"
+#include "trans.h"
+#include "ws.h"
 
 IDX grid_color;
 Gpoint grid_pt;
@@ -82,7 +92,7 @@ MENU_ITEM *mitem_in_progress;
  */
 
 
-init_grid()
+void init_grid(void)
 {
         Gpoint window[2];
         Gcobundl rgb;
@@ -106,8 +116,7 @@ init_grid()
  *  returns:            (Gfloat) - grid width
  */
 
-Gfloat
-get_grid_width()
+Gfloat get_grid_width(void)
 {
         return(grid_width);
 }  /* end get_grid_width */
@@ -123,7 +132,7 @@ get_grid_width()
  *  returns:            (IDX) - grid color
  */
 
-get_grid_color()
+int get_grid_color(void)
 {
         return(grid_color);
 }  /* end get_grid_color */
@@ -139,8 +148,7 @@ get_grid_color()
  *  returns:            (Gpoint) - grid pt
  */
 
-Gpoint
-get_grid_pt()
+Gpoint get_grid_pt(void)
 {
         return(grid_pt);
 }  /* end get_grid_pt */
@@ -155,7 +163,7 @@ get_grid_pt()
  *  parameters:         none
  */
 
-override_snap()
+void override_snap(void)
 {
         override = TRUE;
 }  /* end override_snap */
@@ -170,7 +178,7 @@ override_snap()
  *  parameters:         none
  */
 
-resume_snap()
+void resume_snap(void)
 {
         override = FALSE;
 }  /* end resume_snap */
@@ -184,7 +192,7 @@ resume_snap()
  *  parameters: none
  */
 
-get_override_state()
+int get_override_state(void)
 {
         return(override);
 }  /* end get_override_state */
@@ -200,7 +208,7 @@ get_override_state()
  */
 
 
-draw_grid()
+void draw_grid(void)
 {
         Gfloat width;
         Gpoint pt;
@@ -269,7 +277,7 @@ draw_grid()
  */
 
 
-erase_grid()
+void erase_grid(void)
 {
         Gfloat width;
         Gpoint pt;
@@ -372,8 +380,7 @@ erase_grid()
  *  parameters:         (Gpoint *) point to convert
  */
 
-snap_to_grid(pt)
-Gpoint *pt;
+void snap_to_grid( Gpoint *pt)
 {
         int d;
         Gpoint gridpt;
@@ -423,8 +430,7 @@ static char *grid_color_text[] =
  *  parameters:         popup (POPUP *) - grid_color popup
  */
 
-init_grid_color_popup(popup)
-POPUP *popup;
+void init_grid_color_popup( POPUP *popup)
 {
         char **ln_ptr;
         int i;
@@ -447,9 +453,7 @@ POPUP *popup;
  *                      pt (Gpoint) - unused
  */
 
-switch_grid_color_state(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_grid_color_state( POPUP *popup, Gpoint pt)
 {
         Gcobundl rgb;
 
@@ -482,7 +486,7 @@ Gpoint pt;
  */
 
 
-save_old_grid()
+void save_old_grid(void)
 {
         undo = TRUE;
         old_grid_pt = grid_pt;
@@ -498,8 +502,7 @@ save_old_grid()
  *  parameters:         menu_item (MENU_ITEM *) - move_grid menu item
  */
 
-move_grid_init(menu_item)
-MENU_ITEM *menu_item;
+void move_grid_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -518,8 +521,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - move_grid menu item
  */
 
-move_grid_restart(menu_item)
-MENU_ITEM *menu_item;
+void move_grid_restart( MENU_ITEM *menu_item)
 {
         if (eq(get_newmitem(),ADJUST_GRID_UNDO))
                 set_currmitem(menu_item);
@@ -536,8 +538,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint) - pt selected
  */
 
-move_grid_exec(pt)
-Gpoint pt;
+void move_grid_exec( Gpoint pt)
 {
         save_old_grid();
         erase_grid();
@@ -555,8 +556,7 @@ Gpoint pt;
 *  parameters:          menu_item (MENU_ITEM *) - move_grid menu item
 */
 
-move_grid_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void move_grid_cleanup( MENU_ITEM *menu_item)
 {
 if (!eq(get_newmitem(),ADJUST_GRID_UNDO))
 {
@@ -583,8 +583,7 @@ BOOLEAN first_point_picked;
  *  parameters:         menu_item (MENU_ITEM *) - resize_grid menu item
  */
 
-resize_grid_init(menu_item)
-MENU_ITEM *menu_item;
+void resize_grid_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -604,8 +603,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - resize_grid menu item
  */
 
-resize_grid_restart(menu_item)
-MENU_ITEM *menu_item;
+void resize_grid_restart( MENU_ITEM *menu_item)
 {
         if (eq(get_newmitem(),ADJUST_GRID_UNDO))
                 set_currmitem(menu_item);
@@ -623,8 +621,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint) - pt selected
  */
 
-resize_grid_exec(pt)
-Gpoint pt;
+void resize_grid_exec( Gpoint pt)
 {
         static Gpoint first_pt;
         Gfloat dx, dy;
@@ -658,8 +655,7 @@ Gpoint pt;
  *  parameters:         menu_item (MENU_ITEM *) - resize_grid menu item
  */
 
-resize_grid_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void resize_grid_cleanup( MENU_ITEM *menu_item)
 {
         if (!eq(get_newmitem(),ADJUST_GRID_UNDO))
         {
@@ -684,8 +680,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - undo menu item
  */
 
-adjust_grid_undo(menu_item)
-MENU_ITEM *menu_item;
+void adjust_grid_undo( MENU_ITEM *menu_item)
 {
         Gpoint temppt;
         Gfloat tempwd;
@@ -729,8 +724,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - adjust_grid menu item
  */
 
-adjust_grid(menu_item)
-MENU_ITEM *menu_item;
+void adjust_grid( MENU_ITEM *menu_item)
 {
         if (get_grid_state() == GRID_OFF)
                 reprompt(33);
@@ -748,9 +742,7 @@ MENU_ITEM *menu_item;
  *                      menu (MENU *) - adjust grid menu
  */
 
-init_grid_menu(area,menu)
-AREA area;
-MENU * menu;
+void init_grid_menu( AREA area, MENU * menu)
 {
         undo = FALSE;
         mitem_in_progress = (MENU_ITEM *) NULL;

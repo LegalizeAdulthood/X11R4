@@ -25,76 +25,81 @@
 #include <xgks.h>
 
 #include "changes.h"
+#include "objects.h"
+#include "screen_items.h"
 
-extern int add_objects_init();
+void set_cbreak_mode( int state);
 
-extern int add_line_init();
-extern int add_line_restart();
-extern int add_line_exec();
-extern int add_line_cleanup();
+extern void add_objects_init( MENU_ITEM *menu_item);
 
-extern int add_curve_init();
-extern int add_curve_restart();
-extern int add_curve_exec();
-extern int add_curve_cleanup();
+extern void add_line_init( MENU_ITEM *menu_item);
+extern void add_line_restart( MENU_ITEM *menu_item);
+extern void add_line_exec(Gpoint pt);
+extern  void add_line_cleanup( MENU_ITEM *menu_item);
 
-extern int add_box_init();
-extern int add_box_restart();
-extern int add_box_exec();
-extern int add_box_cleanup();
+extern void add_curve_init( MENU_ITEM *menu_item);
+extern void add_curve_restart(MENU_ITEM *menu_item);
+extern void add_curve_exec( Gpoint pt);
+extern void add_curve_cleanup( MENU_ITEM *menu_item);
 
-extern int add_circle_init();
-extern int add_circle_restart();
-extern int add_circle_exec();
-extern int add_circle_cleanup();
+extern void add_box_init( MENU_ITEM *menu_item);
+extern void add_box_restart( MENU_ITEM *menu_item);
+extern void add_box_exec( Gpoint pt);
+extern void add_box_cleanup( MENU_ITEM *menu_item);
 
-extern int add_conic_init();
-extern int add_conic_restart();
-extern int add_conic_exec();
-extern int add_conic_cleanup();
+extern void add_circle_init( MENU_ITEM *menu_item);
+extern void add_circle_restart( MENU_ITEM *menu_item);
+extern void add_circle_exec( Gpoint pt);
+extern void add_circle_cleanup( MENU_ITEM *menu_item);
 
-extern int add_text_init();
-extern int add_text_restart();
-extern int add_text_exec();
-extern int add_text_cleanup();
+extern  void add_conic_init( MENU_ITEM *menu_item);
+extern void add_conic_restart( MENU_ITEM *menu_item);
+extern  void add_conic_exec( Gpoint pt);
+extern  void add_conic_cleanup( MENU_ITEM *menu_item);
 
-extern int add_objects_undo();
+extern  void add_text_init( MENU_ITEM *menu_item);
+extern  void add_text_restart( MENU_ITEM *menu_item);
+extern  void add_text_exec( Gpoint pt);
+extern  void add_text_cleanup( MENU_ITEM *menu_item);
 
+void add_objects_undo(MENU_ITEM *menu_item);
+void alloc_stroke_font_tbl( IDX **list, int *n);
 
 /*
  *	popups
  */
 
-extern int init_line_width_popup();
-extern int switch_line_width_popup();
-extern Gfloat get_line_width();
-extern Gint get_line_style();
-extern int init_line_connected_popup();
-extern int switch_line_connected_state();
-extern Gint get_line_connected();
-extern int init_line_style_popup();
-extern int switch_line_style_state();
-extern Gint switch_line_style_state();
-extern int switch_curve_connected_state();
-extern int init_fill_style_popup();
-extern int switch_fill_style_state();
-extern Gflinter get_fill_style();
-extern Gfloat get_char_expansion();
-extern int init_char_width_popup();
-extern int switch_char_width_popup();
-extern Gfloat get_char_width();
-extern int init_char_height_popup();
-extern int switch_char_height_popup();
-extern Gfloat get_char_height();
-extern int init_text_path_popup();
-extern int switch_text_path_popup();
-extern Gtxpath get_text_path();
-extern int init_font_style_popup();
-extern int switch_font_style_popup();
-extern IDX get_font_style();
-extern int init_horz_just_popup();
-extern int switch_horz_just_popup();
-extern Gtxhor get_horz_just();
-extern int init_vert_just_popup();
-extern int switch_vert_just_popup();
-extern Gtxver get_vert_just();
+extern void init_line_width_popup(POPUP *popup);
+extern void switch_line_width_popup(POPUP *popup, Gpoint pt);
+extern Gfloat get_line_width(void);
+extern Gint get_line_style(void);
+void init_line_connected_popup(POPUP *popup);
+extern void switch_line_connected_state(POPUP *popup, Gpoint pt);
+extern Gint get_line_connected(void);
+extern void init_line_style_popup( POPUP *popup);
+extern void switch_line_style_state(POPUP *popup, Gpoint pt);
+extern void switch_curve_connected_state(POPUP *popup, Gpoint pt);
+extern  void init_fill_style_popup( POPUP *popup);
+extern  void switch_fill_style_state( POPUP *popup, Gpoint pt);
+extern Gflinter get_fill_style(void);
+extern Gfloat get_char_expansion(void);
+extern void init_char_width_popup(POPUP *popup);
+extern  void switch_char_width_popup( POPUP *popup, Gpoint pt);
+extern Gfloat get_char_width(CHAR_OB *ch_ptr);
+extern  void init_char_height_popup( POPUP *popup);
+extern  void switch_char_height_popup( POPUP *popup, Gpoint pt);
+extern Gfloat get_char_height(void);
+extern  void init_text_path_popup( POPUP *popup);
+extern  void switch_text_path_popup( POPUP *popup, Gpoint pt);
+extern Gtxpath get_text_path(void);
+extern  void init_font_style_popup( POPUP *popup);
+extern  void switch_font_style_popup( POPUP *popup, Gpoint pt);
+extern  void init_horz_just_popup( POPUP *popup);
+extern void add_box_ntart( MENU_ITEM *menu_item);
+extern  void switch_horz_just_popup( POPUP *popup, Gpoint pt);
+extern Gtxhor get_horz_just(void);
+extern  void init_vert_just_popup( POPUP *popup);
+extern  void switch_vert_just_popup( POPUP *popup, Gpoint pt);
+extern Gtxver get_vert_just(void);
+
+

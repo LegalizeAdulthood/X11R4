@@ -24,6 +24,9 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+
+#include "error.h"
 
 /*
  *  error messages
@@ -63,9 +66,7 @@ char *err_message[] =
  *                      errnum (int) - error number
  */
 
-exit_error(routine,errnum)
-char *routine;
-int errnum;
+void exit_error( char *routine, int errnum)
 {
         fprintf(stderr,"Error: %s: %s\n",routine,err_message[errnum]);
         abort();

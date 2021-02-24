@@ -21,11 +21,21 @@
  *
  * Declaration of conversion functions from enum's to integers and back:
  */
+#if !defined(CONVERSIONS_H)
+#define CONVERSIONS_H
 
-extern Gflinter num_to_style();
-extern Gtxver num_to_vert();
-extern Gtxhor num_to_horz();
-extern Gtxpath num_to_path();
-extern Gsegvis num_to_vis();
-extern int style_to_num(),vert_to_num(), horz_to_num(), path_to_num(), vis_to_num(); 
+#include <xgks.h>
 
+Gflinter num_to_style( int i);
+Gtxver num_to_vert(int i);
+Gtxhor num_to_horz(int i);
+Gtxpath num_to_path(int i);
+Gsegvis num_to_vis( int i);
+
+int style_to_num(Gflinter i);
+int vert_to_num(Gtxver i);
+int horz_to_num(Gtxhor i);
+int path_to_num(Gtxpath i);
+int vis_to_num(Gsegvis i); 
+
+#endif

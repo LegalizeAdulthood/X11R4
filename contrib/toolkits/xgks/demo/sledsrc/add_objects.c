@@ -86,29 +86,43 @@
 
 #include <math.h>
 #include <sys/ioctl.h>
+#include <stdlib.h>
 #include <stdio.h>
+#include <termios.h>
+#include <unistd.h>
 
+#include "add_obj_func.h"
+
+#include "error.h"
+#include "obj_detect.h"
+#include "objects_draw.h"
+#include "main_menu.h"
+#include "trans_subs.h"
+#include "palette.h"
+#include "prompt.h"
+#include "draw_menu.h"
 #include "color.h"
 #include "functbl.h"
 #include "screen_items.h"
 #include "key.h"
 #include "defs.h"
 #include "draw.h"
+#include "menu.h"
 #include "objects.h"
 #include "trans.h"
 #include "ws.h"
-#include "add_obj_func.h"
 #include "object_defs.h"
 #include "object_list.h"
 #include "popup.h"
 #include "changes.h"
+#include "objects_func.h"
+
+int get_font_style(void);
 
 #define ADD_OBJECTS_UNDO        "add objects undo menu item"
 #define INTERRUPT               '@' 
 #define BACKSPACE               ''
 #define END_OF_STR              '\n'
-
-extern char *calloc();
 
 static int pt_needed;           /* FIRST_PT or SECOND_PT */ 
 static Gpoint first_pt;         /* first point of line */
@@ -143,8 +157,7 @@ Gfloat *char_ht_tbl;
  *  parameters:         menu_item
  */
 
-add_objects_init(menu_item)
-MENU_ITEM *menu_item;
+void add_objects_init( MENU_ITEM *menu_item)
 {
         display_child_menu(menu_item);
         can_undo = FALSE;
@@ -160,8 +173,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - line menu item
  */
 
-add_line_init(menu_item)
-MENU_ITEM *menu_item;
+void add_line_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -184,8 +196,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - line menu item
  */
 
-add_line_restart(menu_item)
-MENU_ITEM *menu_item;
+void add_line_restart( MENU_ITEM *menu_item)
 {
         if (eq(get_newmitem(),ADD_OBJECTS_UNDO))
         {
@@ -240,8 +251,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint) - pt picked
  */
 
-add_line_exec(pt)
-Gpoint pt;
+void add_line_exec( Gpoint pt)
 {
         if (pt_needed == FIRST_PT)
         {
@@ -314,8 +324,7 @@ Gpoint pt;
  *  parameters:         MENU_ITEM * menu_item
  */
 
-add_line_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void add_line_cleanup( MENU_ITEM *menu_item)
 {
         if (!eq(get_newmitem(),ADD_OBJECTS_UNDO))
         {
@@ -340,8 +349,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - curve menu item
  */
 
-add_curve_init(menu_item)
-MENU_ITEM *menu_item;
+void add_curve_init( MENU_ITEM *menu_item)
 {
         int i;
 
@@ -372,8 +380,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - curve menu item
  */
 
-add_curve_restart(menu_item)
-MENU_ITEM *menu_item;
+void add_curve_restart(MENU_ITEM *menu_item)
 {
         int i;
 
@@ -451,8 +458,7 @@ MENU_ITEM *menu_item;
 
 #define NUM_CURVE_PTS 100
 
-add_curve_exec(pt)
-Gpoint pt;
+void add_curve_exec( Gpoint pt)
 {
         int i;
 
@@ -549,8 +555,7 @@ Gpoint pt;
  *  parameters:         MENU_ITEM * menu_item
  */
 
-add_curve_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void add_curve_cleanup( MENU_ITEM *menu_item)
 {
         if (!eq(get_newmitem(),ADD_OBJECTS_UNDO))
         {
@@ -575,8 +580,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - box menu item
  */
 
-add_box_init(menu_item)
-MENU_ITEM *menu_item;
+void add_box_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -598,8 +602,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - box menu item
  */
 
-add_box_restart(menu_item)
-MENU_ITEM *menu_item;
+void add_box_restart( MENU_ITEM *menu_item)
 {
         if (eq(get_newmitem(),ADD_OBJECTS_UNDO))
         {
@@ -623,8 +626,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint ) - pt picked
  */
 
-add_box_exec(pt)
-Gpoint pt;
+void add_box_exec( Gpoint pt)
 {
         Gfloat xmin,xmax,ymin,ymax;
 
@@ -672,8 +674,7 @@ Gpoint pt;
  *  parameters:         MENU_ITEM * menu_item
  */
 
-add_box_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void add_box_cleanup( MENU_ITEM *menu_item)
 {
         if (!eq(get_newmitem(),ADD_OBJECTS_UNDO))
         {
@@ -698,8 +699,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - circle menu item
 */
 
-add_circle_init(menu_item)
-MENU_ITEM *menu_item;
+void add_circle_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -721,8 +721,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - circle menu item
  */
 
-add_circle_restart(menu_item)
-MENU_ITEM *menu_item;
+void add_circle_restart( MENU_ITEM *menu_item)
 {
         if (eq(get_newmitem(),ADD_OBJECTS_UNDO))
         {
@@ -746,8 +745,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint ) - pt picked
  */
 
-add_circle_exec(pt)
-Gpoint pt;
+void add_circle_exec( Gpoint pt)
 {
         if (pt_needed == FIRST_PT)
         {
@@ -789,8 +787,7 @@ Gpoint pt;
  *  parameters:         MENU_ITEM * menu_item
  */
 
-add_circle_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void add_circle_cleanup( MENU_ITEM *menu_item)
 {
         if (!eq(get_newmitem(),ADD_OBJECTS_UNDO))
         {
@@ -815,8 +812,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - conic menu item
  */
 
-add_conic_init(menu_item)
-MENU_ITEM *menu_item;
+void add_conic_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -838,8 +834,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - conic menu item
  */
 
-add_conic_restart(menu_item)
-MENU_ITEM *menu_item;
+void add_conic_restart( MENU_ITEM *menu_item)
 {
         if (eq(get_newmitem(),ADD_OBJECTS_UNDO))
         {
@@ -863,8 +858,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint ) - pt picked
  */
 
-add_conic_exec(pt)
-Gpoint pt;
+void add_conic_exec( Gpoint pt)
 {
         Gpoint center_pt;
 
@@ -911,8 +905,7 @@ Gpoint pt;
  *  parameters:         MENU_ITEM * menu_item
  */
 
-add_conic_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void add_conic_cleanup( MENU_ITEM *menu_item)
 {
         if (!eq(get_newmitem(),ADD_OBJECTS_UNDO))
         {
@@ -937,8 +930,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - text menu item
  */
 
-add_text_init(menu_item)
-MENU_ITEM *menu_item;
+void add_text_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -946,7 +938,7 @@ MENU_ITEM *menu_item;
         comb_ob = (COMB_OB *) NULL;
         object = (OBJECT *) NULL;
         is_pt_needed = TRUE;
-        ch = (char) NULL;
+        ch = 0;
         head_char = (CHAR_OB *) NULL;
         curr_char = (CHAR_OB *) NULL;
         push_curr_trans();
@@ -963,8 +955,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - text menu item
  */
 
-add_text_restart(menu_item)
-MENU_ITEM *menu_item;
+void add_text_restart( MENU_ITEM *menu_item)
 {
         CHAR_OB *temp_char, *temp2_char;
 
@@ -978,7 +969,7 @@ MENU_ITEM *menu_item;
                 object = (OBJECT *) NULL;
         }
         is_pt_needed = TRUE;
-        ch = (char) NULL;
+        ch = 0;
         prompt(12);
         temp_char = head_char;
         while (temp_char != (CHAR_OB *) NULL)
@@ -1002,8 +993,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint) - pt picked
  */
 
-add_text_exec(pt)
-Gpoint pt;
+void add_text_exec( Gpoint pt)
 {
         CHAR_OB *ch_ptr;
         extern Gfloat get_char_width();
@@ -1134,8 +1124,7 @@ Gpoint pt;
  *  parameters:         MENU_ITEM * menu_item
  */
 
-add_text_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void add_text_cleanup( MENU_ITEM *menu_item)
 {
         CHAR_OB *temp_char, *temp2_char;
 
@@ -1174,21 +1163,31 @@ MENU_ITEM *menu_item;
  *  parameters:         state (int) - ON | OFF
  */
 
-set_cbreak_mode(state)
-int state;
+void set_cbreak_mode( int state)
 {
-        struct sgttyb arg;
+    static struct termios orig_attr;
+    static int first = 1;
+    struct termios attr = { 0 };
 
-        ioctl(0,TIOCGETP,&arg);
-        if (state == ON)
-        {
-                arg.sg_flags = arg.sg_flags | CBREAK;
-        }
-        else
-        {
-                arg.sg_flags = arg.sg_flags & ~ CBREAK;
-        }
-        ioctl(0,TIOCSETP,&arg);
+    if (first)
+    {
+        tcgetattr(0, &orig_attr);
+        first = 0;
+    }
+    tcgetattr(0, &attr);
+    if (state == ON)
+    {
+        attr.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
+        attr.c_oflag &= ~OPOST;
+        attr.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+        attr.c_cflag &= ~(CSIZE | PARENB);
+        attr.c_cflag |= CS8;
+    }
+    else
+    {
+        attr = orig_attr;
+    }
+    tcsetattr(0, TCSANOW, &attr);
 }  /* end set_cbreak_mode */
 
 
@@ -1201,8 +1200,7 @@ int state;
  *  parameters:         menu_item (MENU_ITEM *) - undo menu item
  */
 
-add_objects_undo(menu_item)
-MENU_ITEM *menu_item;
+void add_objects_undo(MENU_ITEM *menu_item)
 {
         OBJECT *object;
 
@@ -1254,8 +1252,7 @@ static Gint max_line_width = 99;
  *  parameters:         popup (POPUP *) - line width popup
  */
 
-init_line_width_popup(popup)
-POPUP *popup;
+void init_line_width_popup(POPUP *popup)
 {
         display_number_popup(popup,"WIDTH",line_width);
 }  /* end init_line_width popup */
@@ -1269,9 +1266,7 @@ POPUP *popup;
  *  parameters:         popup (POPUP *) - line width popup
  */
 
-switch_line_width_popup(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_line_width_popup(POPUP *popup, Gpoint pt)
 {
         switch_number_popup_state(popup->extent,&line_width,pt,
                 min_line_width,max_line_width);
@@ -1328,8 +1323,7 @@ static char *line_connected_text[] =
  *  parameters:         popup (POPUP *) - line_connected popup
  */
 
-init_line_connected_popup(popup)
-POPUP *popup;
+void init_line_connected_popup(POPUP *popup)
 {
         char **ln_ptr;
         int i;
@@ -1352,9 +1346,7 @@ POPUP *popup;
  *                      pt (Gpoint) - unused
  */
 
-switch_line_connected_state(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_line_connected_state(POPUP *popup, Gpoint pt)
 {
 
         switch_popup_state(&line_connected_state,2,3,
@@ -1393,7 +1385,7 @@ Gpoint pt;
  *  returns:            (int) - line_connected_state
  */
 
-get_line_connected()
+int get_line_connected(void)
 {
         return(line_connected_state);
 }  /* end get_line_connected */
@@ -1422,8 +1414,7 @@ static char *line_style_text[] =
  *  parameters:         popup (POPUP *) - line_style popup
  */
 
-init_line_style_popup(popup)
-POPUP *popup;
+void init_line_style_popup( POPUP *popup)
 {
         char **ln_ptr;
         int i;
@@ -1446,9 +1437,7 @@ POPUP *popup;
  *                      pt (Gpoint) - unused
  */
 
-switch_line_style_state(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_line_style_state( POPUP *popup, Gpoint pt)
 {
 
         switch_popup_state(&line_style_state,4,2,line_style_text,popup->extent);
@@ -1501,9 +1490,7 @@ Gint get_line_style()
  *                      pt (Gpoint) - unused
  */
 
-switch_curve_connected_state(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_curve_connected_state(POPUP *popup, Gpoint pt)
 {
         Gpoint t;
         switch_popup_state(&line_connected_state,2,3,
@@ -1562,8 +1549,7 @@ static char *fill_style_text[] =
  *  parameters:         popup (POPUP *) - fill_style popup
  */
 
-init_fill_style_popup(popup)
-POPUP *popup;
+void init_fill_style_popup( POPUP *popup)
 {
         char **ln_ptr;
         int i;
@@ -1586,9 +1572,7 @@ POPUP *popup;
  *                      pt (Gpoint) - unused
  */
 
-switch_fill_style_state(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_fill_style_state( POPUP *popup, Gpoint pt)
 {
 
         switch_popup_state(&fill_style_state,2,1,
@@ -1643,8 +1627,7 @@ static char *char_width_text[] =
  *  parameters:         popup (POPUP *) - char width popup
  */
 
-init_char_width_popup(popup)
-POPUP *popup;
+void init_char_width_popup( POPUP *popup)
 {
         char **ln_ptr;
         int i;
@@ -1664,9 +1647,7 @@ POPUP *popup;
  *  parameters:         popup (POPUP *) - char width popup
  */
 
-switch_char_width_popup(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_char_width_popup( POPUP *popup, Gpoint pt)
 {
         switch_header_popup_state(&char_width_state,6,1,char_width_text,
                 popup->extent);
@@ -1683,8 +1664,7 @@ Gpoint pt;
  *  returns:            (Gfloat) - char expansion
  */
 
-Gfloat
-get_char_expansion()
+Gfloat get_char_expansion(void)
 {
         return(char_wd_tbl[char_width_state]);
 }  /* end get_char_expansion */
@@ -1700,8 +1680,7 @@ get_char_expansion()
  *  returns:            (Gfloat) - char width
  */
 
-Gfloat get_char_width(ch_ptr)
-CHAR_OB *ch_ptr;
+Gfloat get_char_width(CHAR_OB *ch_ptr)
 {
         Gpoint bound_rect[4];
         Gpoint extent[2];
@@ -1737,8 +1716,7 @@ static char *char_height_text[] =
  *  parameters:         popup (POPUP *) - char height popup
  */
 
-init_char_height_popup(popup)
-POPUP *popup;
+void init_char_height_popup( POPUP *popup)
 {
         char **ln_ptr;
         int i;
@@ -1758,9 +1736,7 @@ POPUP *popup;
  *  parameters:         popup (POPUP *) - char height popup
  */
 
-switch_char_height_popup(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_char_height_popup( POPUP *popup, Gpoint pt)
 {
         switch_header_popup_state(&char_height_state,6,1,
                 char_height_text,popup->extent);
@@ -1777,7 +1753,7 @@ Gpoint pt;
  *  returns:            (Gfloat) - char height
  */
 
-Gfloat get_char_height()
+Gfloat get_char_height(void)
 {
         return(char_ht_tbl[char_height_state]);
 }  /* end get_char_height */
@@ -1801,8 +1777,7 @@ static char *font_text[] =
  *  parameters:         popup (POPUP *) - font_style popup
  */
 
-init_font_style_popup(popup)
-POPUP *popup;
+void init_font_style_popup( POPUP *popup)
 {
         IDX old_font;
         Gtxprec old_precision;
@@ -1837,9 +1812,7 @@ POPUP *popup;
  *                      pt (Gpoint) - unused
  */
 
-switch_font_style_popup(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_font_style_popup( POPUP *popup, Gpoint pt)
 {
         IDX temp_font;
         Gtxprec temp_precision;
@@ -1870,7 +1843,7 @@ Gpoint pt;
  *  returns:            (int) - font_style_state
  */
 
-get_font_style()
+int get_font_style(void)
 {
         return(stroke_font_tbl[font_index]);
 }  /* end get_font_style */
@@ -1895,8 +1868,7 @@ static char *text_path_text[] =
  *  parameters:         popup (POPUP *) - text_path popup
  */
 
-init_text_path_popup(popup)
-POPUP *popup;
+void init_text_path_popup( POPUP *popup)
 {
         char **ln_ptr;
         int i;
@@ -1919,9 +1891,7 @@ POPUP *popup;
  *                      pt (Gpoint) - unused
  */
 
-switch_text_path_popup(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_text_path_popup( POPUP *popup, Gpoint pt)
 {
 
         switch_header_popup_state(&text_path_state,4,1,
@@ -1939,7 +1909,7 @@ Gpoint pt;
  *  returns:            (Gtxpath) - text_path
  */
 
-Gtxpath get_text_path()
+Gtxpath get_text_path(void)
 {
         Gtxpath text_path;
 
@@ -1982,8 +1952,7 @@ static char *horz_just_text[] =
  *  parameters:         popup (POPUP *) - horz_just popup
  */
 
-init_horz_just_popup(popup)
-POPUP *popup;
+void init_horz_just_popup( POPUP *popup)
 {
         char **ln_ptr;
         int i;
@@ -2006,9 +1975,7 @@ POPUP *popup;
  *                      pt (Gpoint) - unused
  */
 
-switch_horz_just_popup(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_horz_just_popup( POPUP *popup, Gpoint pt)
 {
 
         switch_header_popup_state(&horz_just_state,3,1,horz_just_text,
@@ -2066,8 +2033,7 @@ static char *vert_just_text[] =
  *  parameters:         popup (POPUP *) - vert_just popup
  */
 
-init_vert_just_popup(popup)
-POPUP *popup;
+void init_vert_just_popup( POPUP *popup)
 {
         char **ln_ptr;
         int i;
@@ -2090,9 +2056,7 @@ POPUP *popup;
  *                      pt (Gpoint) - unused
  */
 
-switch_vert_just_popup(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_vert_just_popup( POPUP *popup, Gpoint pt)
 {
         switch_header_popup_state(&vert_just_state,3,1,vert_just_text,
                 popup->extent);
@@ -2109,7 +2073,7 @@ Gpoint pt;
  *  returns:            (Gtxver) - vert_just
  */
 
-Gtxver get_vert_just()
+Gtxver get_vert_just(void)
 {
         Gtxver vert_just;
 

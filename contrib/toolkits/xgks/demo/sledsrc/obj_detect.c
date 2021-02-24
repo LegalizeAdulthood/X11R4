@@ -35,19 +35,17 @@
 
 #include <math.h>
 
+#include "obj_detect.h"
+
 #include "objects.h"
 #include "key.h"
 #include "ws.h"
 #include "object_tbl.h"
 #include "defs.h"
 #include "trans.h"
+#include "dummies.h"
 
-
-detect_object(hit,comb_ob,object,pt)
-BOOLEAN *hit;
-COMB_OB **comb_ob;
-OBJECT **object;
-Gpoint pt;
+void detect_object( BOOLEAN *hit, COMB_OB **comb_ob, OBJECT **object, Gpoint pt)
 {
         IDX idx;
         COMB_OB *comb_ob_ptr;
@@ -77,8 +75,7 @@ Gpoint pt;
                                         idx = get_object_func_tbl_idx(object_ptr->key);
                                         if (object_func_tbl[idx].detect != NULL)
                                         {
-                                                if ((*(object_func_tbl[idx].detect))
-                                                        (object_ptr,pt) == TRUE)
+                                                if ((*(object_func_tbl[idx].detect))(object_ptr, pt) == TRUE)
                                                 {
                                                         *object = object_ptr;
                                                         *comb_ob = comb_ob_ptr;
@@ -104,10 +101,7 @@ Gpoint pt;
  *  returns:            (BOOLEAN) - TRUE if detected
  */
 
-BOOLEAN
-detect_single_line(line,pt)
-Gpoint *line;
-Gpoint pt;
+BOOLEAN detect_single_line( Gpoint *line, Gpoint pt)
 {
         Gpoint extent[2];
         Gfloat distance;
@@ -153,10 +147,7 @@ Gpoint pt;
  *  returns:            (BOOLEAN) - true if detected
  */
 
-BOOLEAN
-detect_line(object,pt)
-OBJECT *object;
-Gpoint pt;
+BOOLEAN detect_line( OBJECT *object, Gpoint pt)
 {
         BOOLEAN matched;
         Gpoint extent[2];
@@ -196,10 +187,7 @@ Gpoint pt;
  *  returns:            (BOOLEAN) - true if detected
  */
 
-BOOLEAN
-detect_poly(object,pt)
-OBJECT *object;
-Gpoint pt;
+BOOLEAN detect_poly( OBJECT *object, Gpoint pt)
 {
         Gpoint extent[2];
 
@@ -222,10 +210,7 @@ Gpoint pt;
  *  returns:            (BOOLEAN) - true if detected
  */
 
-BOOLEAN
-detect_text(object,pt)
-OBJECT *object;
-Gpoint pt;
+BOOLEAN detect_text( OBJECT *object, Gpoint pt)
 {
         BOOLEAN hit;
         Gpoint rot_extent[4];
@@ -269,13 +254,7 @@ Gpoint pt;
  *                      (storage must be preallocated)
  */
 
-get_text_extent(ch,center,font,height,expansion,up_vec,extent)
-Gchar ch;
-Gpoint center;
-IDX font;
-Gfloat height, expansion;
-Gpoint up_vec;
-Gpoint *extent;
+void get_text_extent( Gchar ch, Gpoint center, IDX font, Gfloat height, Gfloat expansion, Gpoint up_vec, Gpoint *extent)
 {
         Gpriattr prim_attr;
         Gindattr indiv_attr;
@@ -302,7 +281,7 @@ Gpoint *extent;
         gsettextfontprec(&tpf);
 
         str[0] = ch;
-        str[1] = (char) NULL;
+        str[1] = 0;
 
         ginqtextextent(ws_id,center,str,&ext);
         extent[0] = ext.ll;
@@ -321,10 +300,7 @@ Gpoint *extent;
 }  /* end get_text_extent */
 
 
-get_extent(pts,npts,extent)
-Gpoint *pts;
-int npts;
-Gpoint *extent;
+void get_extent( Gpoint *pts, int npts, Gpoint *extent)
 {
         int i;
 
@@ -361,9 +337,7 @@ Gpoint *extent;
  *                      (must be preallocated)
  */
 
-get_line_extent(object,extent)
-OBJECT *object;
-Gpoint *extent;
+void get_line_extent( OBJECT *object, Gpoint *extent)
 {
         get_extent(object->lineob.pts,object->lineob.nopts,extent);
 }  /* get_line_object */
@@ -381,9 +355,7 @@ Gpoint *extent;
  *                      (must be preallocated)
  */
 
-get_poly_extent(object,extent)
-OBJECT *object;
-Gpoint *extent;
+void get_poly_extent( OBJECT *object, Gpoint *extent)
 {
         get_extent(object->polyob.pts,object->polyob.nopts,extent);
 }  /* get_poly_object */
@@ -401,9 +373,7 @@ Gpoint *extent;
  *                      (must be preallocated)
  */
 
-get_string_extent(object,extent)
-OBJECT *object;
-Gpoint *extent;
+void get_string_extent( OBJECT *object, Gpoint *extent)
 {
         Gpoint pts[6];
         CHAR_OB *ch_ptr;
@@ -448,15 +418,11 @@ Gpoint *extent;
  *                              otherwise
  */
 
-BOOLEAN
-is_object_inbounds(object,extent)
-OBJECT *object;
-Gpoint *extent;
+BOOLEAN is_object_inbounds( OBJECT *object, Gpoint *extent)
 {
         Gpoint ob_extent[2];
 
-        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].get_extent))
-                (object,ob_extent);
+        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].get_extent))(object, ob_extent);
 
         if ((extent[MIN].x < ob_extent[MIN].x) &&
                 (extent[MIN].y < ob_extent[MIN].y) &&

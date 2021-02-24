@@ -23,10 +23,12 @@
  *      get_object_func_tbl_idx
  */
 
+#include "object_tbl.h"
+
 #include "defs.h"
 #include "objects.h"
-#include "object_tbl.h"
 #include "objects_func.h"
+#include "error.h"
 
 int object_func_tbl_sz = 7;
 struct object_func_tbl_entry object_func_tbl[] =
@@ -133,9 +135,7 @@ struct object_func_tbl_entry object_func_tbl[] =
  *  parameters:         key (KEY) - key identifying object type
  */
 
-IDX
-get_object_func_tbl_idx(key)
-KEY key;
+IDX get_object_func_tbl_idx(KEY key)
 {
         IDX idx;
 

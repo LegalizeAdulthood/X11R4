@@ -41,12 +41,13 @@
 #include <xgks.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <strings.h>
 
 #include "changes.h"
-
-extern char *calloc();
-
+#include "error.h"
+#include "prompt.h"
 
 /*
  *  get_char_str
@@ -58,10 +59,7 @@ extern char *calloc();
  *  returns:            str (char *) - ptr to next cahr string
  */
 
-char *
-get_char_str(fd,errno)
-FILE *fd;                               /* file to read from */
-IDX errno;                              /* error message no */
+char *get_char_str( FILE *fd, IDX errno)
 {
         char ln[80];                    /* next input ln */
         char *str;                      /* next char str */
@@ -73,7 +71,7 @@ IDX errno;                              /* error message no */
         /* copy string into str */
         str = (char *) calloc((unsigned) strlen(ln),sizeof(char));
         (void) strncpy(str,ln,strlen(ln) - 1);
-        str[strlen(ln) - 1] = (char) NULL;
+        str[strlen(ln) - 1] = 0;
         if (strlen(str) == 0)
                 exit_error("get_char_str",errno);
 
@@ -90,10 +88,7 @@ IDX errno;                              /* error message no */
  *                      i (int *) - return next integer in i
  */
 
-get_int(fd,i,errno)
-FILE *fd;                               /* file to read from */
-int *i;                                 /* next int in file */
-IDX errno;                              /* error message no */
+void get_int( FILE *fd, int *i, IDX errno)
 {
         char ln[80];                    /* next input ln */
 
@@ -115,10 +110,7 @@ IDX errno;                              /* error message no */
  *                      r (Gfloat *) - return next Gfloat
  */
 
-get_real(fd,r,errno)
-FILE *fd;                               /* file to read from */
-Gfloat *r;                              /* next Gfloat in file */
-IDX errno;                              /* error message no */
+void get_real( FILE *fd, Gfloat *r, IDX errno)
 {
         char ln[80];                    /* next input ln */
 
@@ -140,10 +132,7 @@ IDX errno;                              /* error message no */
  *                      r (Gfloat *) - return next Gfloat
  */
 
-get_real3(fd,r1,r2,r3,errno)
-FILE *fd;                               /* file to read from */
-Gfloat *r1,*r2,*r3;                     /* next Gfloat in file */
-IDX errno;                              /* error message no */
+void get_real3( FILE *fd, Gfloat *r1,Gfloat *r2,Gfloat *r3, IDX errno)
 {
         char ln[80];                    /* next input ln */
 
@@ -166,10 +155,7 @@ IDX errno;                              /* error message no */
  *                      reading int
  */
 
-read_int(fd,i,error)
-FILE *fd;
-int *i;
-BOOLEAN *error;
+void read_int( FILE *fd, int *i, BOOLEAN *error)
 {
         char ln[80];                    /* next input ln */
 
@@ -198,10 +184,7 @@ BOOLEAN *error;
  *                      reading real
  */
 
-read_real(fd,r,error)
-FILE *fd;
-Gfloat *r;
-BOOLEAN *error;
+void read_real( FILE *fd, Gfloat *r, BOOLEAN *error)
 {
         char ln[80];                    /* next input ln */
 
@@ -230,10 +213,7 @@ BOOLEAN *error;
  *                      reading int
  */
 
-read_real2(fd,r1,r2,error)
-FILE *fd;
-Gfloat *r1,*r2;
-BOOLEAN *error;
+void read_real2( FILE *fd, Gfloat *r1,Gfloat *r2, BOOLEAN *error)
 {
         char ln[80];                    /* next input ln */
 
@@ -262,10 +242,7 @@ BOOLEAN *error;
  *                      reading reals
  */
 
-read_real3(fd,r1,r2,r3,error)
-FILE *fd;
-Gfloat *r1,*r2,*r3;
-BOOLEAN *error;
+void read_real3( FILE *fd, Gfloat *r1,Gfloat *r2,Gfloat *r3, BOOLEAN *error)
 {
         char ln[80];                    /* next input ln */
 
@@ -294,10 +271,7 @@ BOOLEAN *error;
  *  returns:            str (char *) - ptr to next cahr string
  */
 
-char *
-read_char_str(fd,error)
-FILE *fd;                               /* file to read from */
-BOOLEAN *error;
+char *read_char_str( FILE *fd, BOOLEAN *error)
 {
         char ln[80];                    /* next input ln */
         char *str;                      /* next char str */
@@ -309,7 +283,7 @@ BOOLEAN *error;
         /* copy string into str */
         str = (char *) calloc((unsigned) strlen(ln),sizeof(char));
         (void) strncpy(str,ln,strlen(ln) - 1);
-        str[strlen(ln) - 1] = (char) NULL;
+        str[strlen(ln) - 1] = 0;
         if (strlen(str) == 0)
         {
                 reprompt(28);
@@ -334,10 +308,7 @@ BOOLEAN *error;
  *                      error (BOOLEAN *) - true if error reading string
  */
 
-read_char(fd,ch,error)
-FILE *fd;                               /* file to read from */
-char *ch;
-BOOLEAN *error;
+void read_char( FILE *fd, char *ch, BOOLEAN *error)
 {
         char ln[80];                    /* next input ln */
 
@@ -349,15 +320,13 @@ BOOLEAN *error;
         {
                 reprompt(28);
                 *error = TRUE;
-                *ch = (char) NULL;
+                *ch = 0;
         }
         else
         {
                 *error = FALSE;
                 *ch = ln[0];
         }
-
-        return;
 }  /* end read_char */
 
 
@@ -370,9 +339,7 @@ BOOLEAN *error;
  *                      i (int) - next integer to write out
  */
 
-write_int(fd,i)
-FILE *fd;
-int i;
+void write_int( FILE *fd, int i)
 {
         fprintf(fd,"%d\n",i);
 }  /* end write_int */
@@ -387,9 +354,7 @@ int i;
  *                      r (Gfloat *) - next real to write out
  */
 
-write_real(fd,r)
-FILE *fd;
-Gfloat r;
+void write_real( FILE *fd, Gfloat r)
 {
         fprintf(fd,"%f\n",r);
 }  /* end write_real */
@@ -404,9 +369,7 @@ Gfloat r;
  *                      r1,r2 (Gfloat) - next two reals to write out
  */
 
-write_real2(fd,r1,r2)
-FILE *fd;
-Gfloat r1,r2;
+void write_real2( FILE *fd, Gfloat r1,Gfloat r2)
 {
         fprintf(fd,"%f %f\n",r1,r2);
 }  /* end write_real2 */
@@ -421,9 +384,7 @@ Gfloat r1,r2;
  *                      r1,r2,r3 (Gfloat) - next 3 reals to write
  */
 
-write_real3(fd,r1,r2,r3)
-FILE *fd;
-Gfloat r1,r2,r3;
+void write_real3( FILE *fd, Gfloat r1, Gfloat r2, Gfloat r3)
 {
         fprintf(fd,"%f %f %f\n",r1,r2,r3);
 }  /* end write_real3 */
@@ -438,9 +399,7 @@ Gfloat r1,r2,r3;
  *                      str (char *) - string to write
  */
 
-write_char_str(fd,str)
-FILE *fd;                               /* file to write to */
-char *str;
+void write_char_str( FILE *fd, char *str)
 {
         fprintf(fd,"%s\n",str);
 }  /* end write_char_str */
@@ -455,9 +414,7 @@ char *str;
  *                      ch (char) - next char to write
  */
 
-write_char(fd,ch)
-FILE *fd;                               /* file to write to */
-char ch;
+void write_char( FILE *fd, char ch)
 {
         fprintf(fd,"%c\n",ch);
 }  /* end write_char */

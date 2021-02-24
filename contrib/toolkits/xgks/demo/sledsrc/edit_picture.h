@@ -21,44 +21,51 @@
  *
  */
 
-extern int edit_picture_init();
+#if !defined(EDIT_PICTURE_H)
+#define EDIT_PICTURE_H
+
+#include "screen_items.h"
+
+extern void edit_picture_init(MENU_ITEM *item);
 
 /* menu item functions */
 
-extern int edit_picture_undo();
-extern int erase();
+extern void edit_picture_undo(MENU_ITEM *item);
+extern void erase(MENU_ITEM *item);
 
-extern int rotate_init();
-extern int rotate_restart();
-extern int rotate_exec();
-extern int rotate_cleanup();
+extern void rotate_init(MENU_ITEM *item);
+extern void rotate_restart(MENU_ITEM *item);
+extern void rotate_exec(Gpoint pt);
+extern void rotate_cleanup(MENU_ITEM *item);
 
-extern int move_init();
-extern int move_restart();
-extern int move_exec();
-extern int move_cleanup();
+extern void move_init(MENU_ITEM *item);
+extern void move_restart(MENU_ITEM *item);
+extern void move_exec(Gpoint pt);
+extern void move_cleanup(MENU_ITEM *item);
 
-extern int copy_init();
-extern int copy_restart();
-extern int copy_exec();
-extern int copy_cleanup();
+extern void copy_init(MENU_ITEM *item);
+extern void copy_restart(MENU_ITEM *item);
+extern void copy_exec(Gpoint pt);
+extern void copy_cleanup(MENU_ITEM *item);
 
-extern int delete_init();
-extern int delete_restart();
-extern int delete_exec();
-extern int delete_cleanup();
+extern void delete_init(MENU_ITEM *item);
+extern void delete_restart(MENU_ITEM *item);
+extern void delete_exec(Gpoint pt);
+extern void delete_cleanup(MENU_ITEM *item);
 
-extern int combine_init();
-extern int combine_restart();
-extern int combine_exec();
-extern int combine_cleanup();
+extern void combine_init(MENU_ITEM *item);
+extern void combine_restart(MENU_ITEM *item);
+extern void combine_exec(Gpoint pt);
+extern void combine_cleanup(MENU_ITEM *item);
 
-extern int split_init();
-extern int split_restart();
-extern int split_exec();
-extern int split_cleanup();
+extern void split_init(MENU_ITEM *item);
+extern void split_restart(MENU_ITEM *item);
+extern void split_exec(Gpoint pt);
+extern void split_cleanup(MENU_ITEM *item);
 
 /* popup functions */
 
-extern int init_angle_popup();
-extern int switch_angle_state();
+extern void init_angle_popup( POPUP *popup);
+extern void switch_angle_state( POPUP *popup, Gpoint pt);
+
+#endif

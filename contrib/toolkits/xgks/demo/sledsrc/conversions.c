@@ -42,8 +42,7 @@
 #include <xgks.h>
 
 
-Gflinter num_to_style(i)
-int i;
+Gflinter num_to_style( int i)
 {
         Gflinter prov;
         if (i == 1)
@@ -53,8 +52,7 @@ int i;
         return(prov);
 }
 
-style_to_num(style)
-Gflinter style;
+int style_to_num( Gflinter style)
 {
         int i;
         if (style == GSOLID)
@@ -65,8 +63,7 @@ Gflinter style;
 }
                 
 
-Gtxver num_to_vert(i)
-int i;
+Gtxver num_to_vert(int i)
 {
         Gtxver prov;
         switch (i)
@@ -82,8 +79,7 @@ int i;
         return(prov);
 }
 
-vert_to_num(ver)
-Gtxver ver;
+int vert_to_num( Gtxver ver)
 {
         int i;
         switch (ver)
@@ -99,8 +95,7 @@ Gtxver ver;
         return(i);
 }
 
-Gtxhor num_to_horz(i)
-int i;
+Gtxhor num_to_horz(int i)
 {
         Gtxhor prov;
         switch (i)
@@ -114,8 +109,7 @@ int i;
         return(prov);
 }
 
-horz_to_num(hor)
-Gtxhor hor;
+int horz_to_num( Gtxhor hor)
 {
         int i;
         switch (hor)
@@ -129,8 +123,7 @@ Gtxhor hor;
         return(i);
 }
 
-Gtxpath num_to_path(i)
-int i;
+Gtxpath num_to_path(int i)
 {
         Gtxpath prov;
         switch (i)
@@ -144,8 +137,7 @@ int i;
         return(prov);
 }
 
-path_to_num(p)
-Gtxpath p;
+int path_to_num( Gtxpath p)
 {
         int i;
         switch (p)
@@ -159,8 +151,7 @@ Gtxpath p;
         return(i);
 }
 
-Gsegvis num_to_vis(i)
-int i;
+Gsegvis num_to_vis( int i)
 {
         Gsegvis vis;
         if (i == 1)
@@ -170,8 +161,7 @@ int i;
         return(vis);
 }
 
-vis_to_num(vis)
-Gsegvis vis;
+int vis_to_num( Gsegvis vis)
 {
         int i;
         if (vis == GVISIBLE)

@@ -28,13 +28,7 @@
 #include "trans.h"      /* Defines MIN,MAX and includes <xgks.h> */
 #include "changes.h"
 
-init_locator(id,dev,pos,ntrans,prompt,xmin,xmax,ymin,ymax) /* ,locdata) */
-WSID id;
-int dev;
-Gpoint *pos;
-IDX ntrans;
-int prompt;
-Gfloat xmin,xmax,ymin,ymax;
+void init_locator(WSID id, int dev, Gpoint *pos, IDX ntrans, int prompt, Gfloat xmin, Gfloat xmax, Gfloat ymin, Gfloat ymax)
 {
         Gloc init;
         Glimit area;
@@ -53,12 +47,7 @@ Gfloat xmin,xmax,ymin,ymax;
         ginitloc(id,dev,&init,prompt,&area,&data);
 }
 
-req_locator(id,dev,status,ntrans,pos)
-WSID id;
-int dev;
-Gistat *status;
-IDX *ntrans;
-Gpoint *pos;
+void req_locator(WSID id, int dev, Gistat *status, IDX *ntrans, Gpoint *pos)
 {
         Gqloc response;
 
@@ -70,11 +59,7 @@ Gpoint *pos;
         pos->y = response.loc.position.y;
 }
 
-BOOLEAN
-in_bounds_delta(ext,point,delt)
-Gpoint *ext;
-Gpoint point;
-Gfloat delt;
+BOOLEAN in_bounds_delta(Gpoint *ext, Gpoint point, Gfloat delt)
 {
         if (((ext[MIN].x - delt) <= point.x) &&
             ((ext[MIN].y - delt) <= point.y) &&

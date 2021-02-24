@@ -30,10 +30,11 @@
 
 #include <xgks.h>
 
-#include "defs.h"
-#include "ws.h"
 #include "color.h"
 
+#include "defs.h"
+#include "ws.h"
+#include "error.h"
 
 /*
  *  these color tbl entries are reserved for the screen
@@ -63,9 +64,7 @@ IDX bgdclr;
  *                      hsv_clr (HSV *) ptr to color in hsv form
  */
 
-rgb_to_hsv(rgb_clr,hsv_clr)
-Gcobundl *rgb_clr;                      /* clr in rgb form */
-HSV *hsv_clr;                           /* color in hsv form */
+void rgb_to_hsv( Gcobundl *rgb_clr, HSV *hsv_clr)
 {
         Gfloat maxi;                    /* max of r,g,b */
         Gfloat mini;                    /* min of r,g,b */
@@ -121,9 +120,7 @@ HSV *hsv_clr;                           /* color in hsv form */
  *                      rgb_clr (RGB*) - ptr to color in rgb clr model
  */
 
-hsv_to_rgb(hsv_clr,rgb_clr)
-HSV *hsv_clr;                           /* color in hsv form */
-Gcobundl *rgb_clr;                      /* color in rgb form */
+void hsv_to_rgb( HSV *hsv_clr, Gcobundl *rgb_clr)
 {
         int integer_part = 0;           /* integer_part of hue */
         Gfloat fractional_part;         /* fractional part of hue */
@@ -200,9 +197,7 @@ Gcobundl *rgb_clr;                      /* color in rgb form */
  *                      rgb_clr (Gcobundl *) - color in rgb form
  */
 
-set_color(idx,rgb_clr)
-IDX idx;                                /* color table index */
-Gcobundl *rgb_clr;                      /* actual color in rgb form */
+void set_color( IDX idx, Gcobundl *rgb_clr)
 {
 
         gsetcolorrep(ws_id,idx,rgb_clr);
@@ -218,9 +213,7 @@ Gcobundl *rgb_clr;                      /* actual color in rgb form */
  *                      rgb_clr (Gcobundl *) - color in rgb form
  */
 
-get_color(idx,rgb_clr)
-IDX idx;                                /* color table index */
-Gcobundl *rgb_clr;                      /* actual color in rgb form */
+void get_color(IDX idx, Gcobundl *rgb_clr)
 {
 
         ginqcolourrep(ws_id,idx,GSET,rgb_clr);
@@ -236,7 +229,7 @@ Gcobundl *rgb_clr;                      /* actual color in rgb form */
  *  parameters:         none
  */
 
-init_screen_clrs()
+void init_screen_clrs(void)
 {
         Gcobundl rgb_clr;
 
@@ -281,9 +274,7 @@ static IDX freeclr = 1;                 /* first unused entry in clr
  *                              clr tbl entries
  */
 
-IDX
-alloc_clr_tbl_entries(n)
-int n;                                  /* number of entries */
+IDX alloc_clr_tbl_entries(int n)
 {
         Gwstables tbl_sz;
 
@@ -309,7 +300,7 @@ int n;                                  /* number of entries */
  *  parameters:         none
  */
 
-get_num_free_clrs()
+int get_num_free_clrs(void)
 {
         Gwstables tbl_sz;
 

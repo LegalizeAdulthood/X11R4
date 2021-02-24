@@ -38,6 +38,8 @@
 #include "trans.h"
 #include "palette.h"
 #include "changes.h"
+#include "error.h"
+#include "io.h"
 
 Gint nrows;                             /* number of rows in
                                            in color table */
@@ -60,8 +62,7 @@ IDX display_fillclr;                    /* fillclr area clr tbl entry */
  *  parameters:         idx (IDX) - index of color to set fgdclr to
  */
 
-set_fgdclr(idx)
-IDX idx;                                /* new fgd clr idx */
+void set_fgdclr(IDX idx)
 {
         Gcobundl rgb_clr;               /* current fgdclr */
 
@@ -80,8 +81,7 @@ IDX idx;                                /* new fgd clr idx */
  *
  *  returns:            index of colorin palette which matches fgdclr
  */
-
-get_fgdclr()
+int get_fgdclr(void)
 {
         return(fgdclr);
 }  /* end get_fgdclr */
@@ -97,8 +97,7 @@ get_fgdclr()
  *  parameters:         idx (IDX) - index of color to set bgdclr to
  */
 
-set_bgdclr(idx)
-IDX idx;                                /* new bgd clr idx */
+void set_bgdclr(IDX idx)
 {
         Gcobundl rgb_clr;               /* current bgdclr */
 
@@ -117,7 +116,7 @@ IDX idx;                                /* new bgd clr idx */
  *  returns:            display_bgdclr (IDX) - index of bgdclr
  */
 
-get_bgdclr()
+int get_bgdclr(void)
 {
         return(display_bgdclr);
 }  /* end get_bgdclr */
@@ -134,8 +133,7 @@ get_bgdclr()
  *  parameters:         idx (IDX) - index of color to set fillclr to
  */
 
-set_fillclr(idx)
-IDX idx;                                /* new fgd clr idx */
+void set_fillclr(IDX idx)
 {
         Gcobundl rgb_clr;                       /* current fillclr */
 
@@ -154,7 +152,7 @@ IDX idx;                                /* new fgd clr idx */
  *  returns:            index of colorin palette which matches fillclr
  */
 
-get_fillclr()
+int get_fillclr(void)
 {
         return(fillclr);
 }  /* end get_fillclr */
@@ -175,8 +173,7 @@ get_fillclr()
  *                              in hsv form
  */
 
-init_palette_clrs(filename)
-char *filename;
+void init_palette_clrs( char *filename)
 {
         FILE *fd;                       /* fd for file containing
                                            colors */
@@ -223,7 +220,7 @@ char *filename;
  *  parameters:         none
  */
 
-init_clr_area_clrs()
+void init_clr_area_clrs(void)
 {
 
         display_fgdclr = alloc_clr_tbl_entries(1);
@@ -247,8 +244,7 @@ init_clr_area_clrs()
  *  returns:            (IDX) - index of palette color in clr tbl
  */
 
-get_clr_idx_from_pt(pt)
-Gpoint pt;
+int get_clr_idx_from_pt( Gpoint pt)
 {
         Gpoint window[2];               /* window[MIN] = (xmin,ymin)
                                            window[MAX] = (xmax,ymax) */

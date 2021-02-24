@@ -30,6 +30,8 @@
 #include "ws.h"
 #include "defs.h"
 #include "trans.h"
+#include "dummies.h"
+#include "prompt.h"
 
 #define LOCATOR_DEV     1
 #define LOCATOR_PROMPT  3
@@ -45,7 +47,7 @@ Gfloat xmax,ymax;       /* workstation viewport */
  *  parameters:         none
  */
 
-initialize_locator()
+void initialize_locator(void)
 {
         Gpoint pt;
 
@@ -88,10 +90,7 @@ initialize_locator()
  *                      pt (Gpoint *) - pt selected in WC
  */
 
-select_pt(transno,pt)
-IDX *transno;                           /* trans used to convert pt
-                                           to WC */
-Gpoint *pt;                             /* pt selected in WC */
+void select_pt( IDX *transno, Gpoint *pt)
 {
         Gistat status;                  /* GOK | GNONE */
 

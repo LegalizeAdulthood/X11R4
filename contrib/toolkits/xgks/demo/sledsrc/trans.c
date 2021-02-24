@@ -39,13 +39,16 @@
  *      is_ident
  */
 
+#include <stdlib.h>
 #include <strings.h>
 
 #include "trans.h"
 #include "functbl.h"
 #include "defs.h"
 #include "ws.h"
+#include "error.h"
 
+void set_viewport( AREA area, Gpoint *viewport);
 
 /*
  *  routines which manage transformations
@@ -67,7 +70,7 @@ TRANS_STK *stk_ptr = (TRANS_STK *) NULL;        /* ptr to stack of
  *  parameters:         none
  */
 
-adjust_screen_tbl_viewports()
+void adjust_screen_tbl_viewports(void)
 {
         Gfloat xmax_dc,ymax_dc;         /* max DC coordinates */
         Gfloat xmax_ndc,ymax_ndc;       /* max ndc coordinates */
@@ -105,8 +108,7 @@ adjust_screen_tbl_viewports()
  *                      y (Gfloat *) - max y in DC coor
  */
 
-get_max_dc_coor(x,y)
-Gfloat *x,*y;                   /* max x and y in DC coor */
+void get_max_dc_coor(Gfloat *x, Gfloat *y)
 {
 
         Gdspsize dsp;
@@ -130,7 +132,7 @@ Gfloat *x,*y;                   /* max x and y in DC coor */
  *  parameters:         none
  */
 
-init_trans_tbls()
+void init_trans_tbls(void)
 {
         Gint maximum;                   /* max trans no available */
         int i;
@@ -158,8 +160,7 @@ init_trans_tbls()
  *
  */
 
-alloc_trans(area)
-AREA area;
+void alloc_trans( AREA area)
 {
         IDX transno;                    /* trans no to be allocated */
         int maximum;                    /* highest numbered trans 
@@ -221,9 +222,7 @@ AREA area;
  *                                    freed
  */
 
-free_trans(area)
-AREA area;                              /* area corresponding
-                                           to trans to be freed */
+void free_trans( AREA area)
 {
         IDX transno;                    /* trans no correponding
                                            to area */
@@ -252,9 +251,7 @@ AREA area;                              /* area corresponding
  *  returns:            area (AREA) - area of selected area
  */
 
-AREA
-get_area_from_transno(transno)
-IDX transno;                    /* transno of selected area */
+AREA get_area_from_transno( IDX transno)
 {
         AREA area;              /* selected area */
 
@@ -272,11 +269,10 @@ IDX transno;                    /* transno of selected area */
  *  description:        set trans no corresponding to area as selected
  *                      transformation (for output)
  *
- *  parameters:         area (AREA) - area
+ *  parameters:         area (AREA) - screen area
  */
 
-activate(area)
-AREA area;                              /* screen area */
+void activate( AREA area)
 {
         gselntran(find_trans(area));
 
@@ -292,7 +288,7 @@ AREA area;                              /* screen area */
  *  parameters:         none
  */
 
-push_curr_trans()
+void push_curr_trans(void)
 {
         TRANS_STK *trans;               /* top stack element */
 
@@ -314,7 +310,7 @@ push_curr_trans()
  *  parameters:         none
  */
 
-pop_curr_trans()
+void pop_curr_trans(void)
 {
         TRANS_STK *trans;
 
@@ -341,8 +337,7 @@ pop_curr_trans()
  *                                   for future identification
  */
 
-find_trans(area)
-AREA area;                              /* screen area */
+int find_trans( AREA area)
 {
         int transno;                    /* trans no corresponding
                                            to area */
@@ -379,10 +374,7 @@ AREA area;                              /* screen area */
  *                      viewport (Gpoint *) - new viewport
  */
 
-set_viewport(area,viewport)
-AREA area;                              /* viewport to set */
-Gpoint *viewport;                       /* viewport[MIN] = (xmin,ymin)
-                                           viewport[MAX] = (xmax,ymax) */
+void set_viewport( AREA area, Gpoint *viewport)
 {
         IDX idx;                        /* index into screen_tbl */
         IDX transno;                    /* trans corresponding to
@@ -426,10 +418,7 @@ Gpoint *viewport;                       /* viewport[MIN] = (xmin,ymin)
  *                      window (Gpoint *) - new window
  */
 
-set_window(area,window)
-AREA area;                              /* window to set */
-Gpoint *window;                         /* window[MIN] = (xmin,ymin)
-                                           window[MAX] = (xmax,ymax) */
+void set_window( AREA area, Gpoint *window)
 {
         IDX idx;                        /* index into screen_tbl */
         IDX transno;                    /* trans corresponding to
@@ -472,9 +461,7 @@ Gpoint *window;                         /* window[MIN] = (xmin,ymin)
  *                      viewport (Gpoint *) - screen area viewport
  */
 
-get_viewport(area,viewport)
-AREA area;                              /* screen area */
-Gpoint *viewport;                       /* screen area viewport */
+void get_viewport( AREA area, Gpoint *viewport)
 {
         IDX idx;                        /* index into screen_tbl */
 
@@ -503,9 +490,7 @@ Gpoint *viewport;                       /* screen area viewport */
  *                      window (Gpoint *) - screen area window
  */
 
-get_window(area,window)
-AREA area;                              /* screen area */
-Gpoint *window;                         /* screen area window */
+void get_window( AREA area, Gpoint *window)
 {
         IDX idx;                        /* index into screen_tbl */
 
@@ -532,8 +517,7 @@ Gpoint *window;                         /* screen area window */
  *                      window and viewport
  */
 
-get_ws_trans(wind,view)
-Gpoint wind[],view[];
+void get_ws_trans( Gpoint wind[], Gpoint view[])
 {
         Gwsti tran;
 
@@ -564,8 +548,7 @@ Gpoint wind[],view[];
  *  returns:            (BOOLEAN) - TRUE if trans is identity trans
  */
 
-is_ident(trans)
-Gfloat *trans;
+int is_ident( Gfloat *trans)
 {
         if ((trans[0] == 1.0) && (trans[1] == 0.0)
                 && (trans[2] == 0.0) && (trans[3] == 0.0)

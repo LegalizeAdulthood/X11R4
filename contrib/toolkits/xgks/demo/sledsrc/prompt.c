@@ -32,7 +32,11 @@
 
 #include <xgks.h>
 
+#include <stdlib.h>
+#include <string.h>
 #include <strings.h>
+
+#include "prompt.h"
 
 #include "key.h"
 #include "draw.h"
@@ -41,6 +45,8 @@
 #include "popup.h"
 #include "functbl.h"
 
+void erase_msg(void);
+void display_msg( IDX clrno);
 
 #define NO_PROMPT -1
 
@@ -112,8 +118,7 @@ IDX msgno2 = NO_PROMPT;                 /* is "prompt_message[msgno1]:
  *  parameters:         msgno (IDX) - msgno2
  */
 
-prompt(msgno)
-IDX msgno;
+void prompt( IDX msgno)
 {
 
         /* if system is not in verbose mode, do not display messages */
@@ -143,8 +148,7 @@ IDX msgno;
  *  parameters:         msgno (IDX) - msgno1
  */
 
-reprompt(msgno)
-IDX msgno;                              /* msgno1 */
+void reprompt( IDX msgno)
 {
         /* if system is not in verbose mode, do not display messages */
 
@@ -168,8 +172,7 @@ IDX msgno;                              /* msgno1 */
  *
  */
 
-full_prompt(new1,new2)
-IDX new1,new2;
+void full_prompt( IDX new1, IDX new2)
 {
         /* if system is not in verbose mode, do not display messages */
 
@@ -192,8 +195,7 @@ IDX new1,new2;
  *  parameters:         (IDX) - color no
  */
 
-display_msg(clrno)
-IDX clrno;                              /* color to use */
+void display_msg( IDX clrno)
 {
         int length;                     /* length of prompt msg */
         char *prompt_str;               /* prompt msg */
@@ -267,7 +269,7 @@ IDX clrno;                              /* color to use */
  *  parameters:         none
  */
 
-erase_msg()
+void erase_msg(void)
 {
         Gpoint window[2];
         Gpoint box[4];
@@ -295,7 +297,7 @@ erase_msg()
  *  parameters:         none
  */
 
-display_msg_area()
+void display_msg_area(void)
 {
         Gpoint window[2];               /* boundary of prompt area 
                                            window */
@@ -332,7 +334,7 @@ display_msg_area()
  *  parameters:         none
  */
 
-rm_msg_area()
+void rm_msg_area(void)
 {
         msgno1 = 0;
 
@@ -352,7 +354,7 @@ rm_msg_area()
  *  parameters:         none
  */
 
-restore_msg_area()
+void restore_msg_area(void)
 {
         /* redraw screen with prompt area */
 

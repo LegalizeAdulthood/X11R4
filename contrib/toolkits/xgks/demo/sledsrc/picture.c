@@ -28,6 +28,7 @@
 #include "key.h"
 #include "draw.h"
 #include "trans.h"
+#include "object_list.h"
 
 /*
  *  display_picture_area
@@ -37,7 +38,7 @@
  *  parameters:         none
  */
 
-display_picture_area()
+void display_picture_area(void)
 {
         Gpoint window[2];               /* picture area window */
         Gpoint box[4];                  /* pts of window */

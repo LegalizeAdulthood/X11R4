@@ -21,21 +21,31 @@
  *
  */
 
+#if !defined(CLR_SEL_FUNC_H)
+#define CLR_SEL_FUNC_H
+
+#include <xgks.h>
+
+#include "clr_selector.h"
+#include "screen_items.h"
+
 /* screen area functions */
 
-extern int clr_wheel_area_exec();
-extern int clr_mixer_area_exec();
-extern int fine_tuner_area_exec();
-extern int clr_selector_pal_area_exec();
+extern  void clr_wheel_area_exec( AREA area, IDX transno, Gpoint pt);
+extern  void clr_mixer_area_exec( AREA area, IDX transno, Gpoint pt);
+extern  void fine_tuner_area_exec( AREA area, IDX transno, Gpoint pt);
+extern  void clr_selector_pal_area_exec( AREA area, IDX transno, Gpoint pt);
 
-extern int display_clr_wheel_area();
-extern int display_clr_mixer_area();
-extern int display_clr_picked_area();
-extern int display_fine_tuner_area();
-extern int display_clr_selector_pal_area();
+extern  void display_clr_picked_area(void);
+extern void display_clr_mixer_area(void);
+extern void display_fine_tuner_area(void);
+extern void display_clr_selector_pal_area(void);
 
 /* clr selector menu functions */
 
-extern int colors_mitem_exec();
-extern int init_colors_menu();
-extern int cleanup_colors_menu();
+extern  void colors_mitem_exec( MENU_ITEM *menu_item);
+extern  void init_colors_menu( AREA area, MENU *menu);
+extern  void cleanup_colors_menu( AREA area, MENU *menu);
+void display_arrow( AREA area, ARROW *arrow, Gfloat new_knob_pos);
+
+#endif

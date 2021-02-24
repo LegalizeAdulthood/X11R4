@@ -38,6 +38,10 @@
 
 #include <xgks.h>
 
+#include <stdlib.h>
+
+#include "popup.h"
+
 #include "key.h"
 #include "draw.h"
 #include "color.h"
@@ -46,7 +50,10 @@
 #include "popup.h"
 #include "functbl.h"
 #include "changes.h"
+#include "prompt.h"
 
+void draw_high_order_digit( Gpoint *extent, int digit, IDX clrno);
+void draw_low_order_digit( Gpoint *extent, int digit, IDX clrno);
 
 /*
  *  add_to_currpoptbl
@@ -56,8 +63,7 @@
  *  parameters:         head_popup (POPUP *) - head of popup list
  */
 
-add_to_currpoptbl(head_popup)
-POPUP *head_popup;
+void add_to_currpoptbl( POPUP *head_popup)
 {
         POPUP *tbl_ptr;
 
@@ -85,8 +91,7 @@ POPUP *head_popup;
  *                              to remove
  */
 
-rm_from_currpoptbl(head_popup)
-POPUP *head_popup;
+void rm_from_currpoptbl( POPUP *head_popup)
 {
         POPUP *tbl_ptr;
 
@@ -118,8 +123,7 @@ POPUP *head_popup;
  *                              be assigned
  */
 
-assign_popup_extent(popup)
-POPUP *popup;
+void assign_popup_extent( POPUP *popup)
 {
         POPUP *tbl_ptr;                 /* ptr into currpoptbl */
         int i;                          /* posiion in currpoptbl */
@@ -162,7 +166,7 @@ POPUP *popup;
  *  parameters:         none
  */
 
-display_popup_area()
+void display_popup_area(void)
 {
         Gpoint window[2];               /* popup area window */
         Gpoint box[4];                  /* pts of window */
@@ -211,11 +215,7 @@ display_popup_area()
  *                      clrno (IDX) - index of color to use
  */
 
-display_popup_text(nlns,lines,extent,clrno)
-int nlns;                               /* no of lines to display */
-char **lines;                           /* text lines to display */
-Gpoint extent[];                        /* popup extent */
-IDX clrno;                              /* clr to use */
+void display_popup_text(int nlns, char **lines, Gpoint extent[], IDX clrno)
 {
         Gpoint center;                  /* popup center */
 
@@ -234,8 +234,7 @@ IDX clrno;                              /* clr to use */
  *  parameters:         extent (Gpoint *) - popup extent
  */
 
-erase_popup_text(extent)
-Gpoint extent[];                        /* popup extent */
+void erase_popup_text( Gpoint extent[])
 {
         Gpoint box[5];                  /* boundary of extent */
 
@@ -263,10 +262,7 @@ Gpoint extent[];                        /* popup extent */
  *                      lines (char **) - text lines
  */
 
-display_popup(popup,nlns,lines)
-POPUP *popup;
-int nlns;                               /* no of lines of text */
-char **lines;                           /* text to display */
+void display_popup( POPUP *popup, int nlns, char **lines)
 {
         Gpoint box[4];                  /* boundary of popup */
 
@@ -309,10 +305,7 @@ char **lines;                           /* text to display */
  *                      state (int) - popup state (i.e value)
  */
 
-display_number_popup(popup,text,state)
-POPUP *popup;
-char *text;
-int state;
+void display_number_popup(POPUP *popup, char *text, int state)
 {
         Gpoint center;
         Gpoint box[4];
@@ -363,10 +356,7 @@ int state;
  *                      text (char **) - pointer to text label
  */
 
-display_header_popup(popup,header_text,text,nlns)
-POPUP *popup;
-char *header_text, **text;
-int nlns;
+void display_header_popup( POPUP *popup, char *header_text, char **text, int nlns)
 {
         Gpoint center;
         Gpoint box[4];
@@ -426,12 +416,7 @@ int nlns;
  *                      extent (Gpoint *) - popup extent
  */
 
-switch_popup_state(state,nostates,nlns,lines,extent)
-int *state;                             /* current popup state */
-int nostates;                           /* no of popup states */
-int nlns;                               /* no of lines to display */
-char **lines;                           /* popup text */
-Gpoint extent[];                        /* popup extent */
+void switch_popup_state(int *state, int nostates, int nlns, char **lines, Gpoint extent[])
 {
         char **ln_ptr;                  /* ptr to appropriate lines */
         int i;
@@ -475,11 +460,7 @@ Gpoint extent[];                        /* popup extent */
  *                      pt (Gpoint) -pt picked by user
  */
 
-switch_number_popup_state(extent,state,pt,mini,maxi)
-Gpoint *extent;
-int *state;
-Gpoint pt;
-int mini,maxi;
+void switch_number_popup_state(Gpoint *extent, int *state, Gpoint pt, int mini, int maxi)
 {
         Gfloat x,y;
         int high_order_digit;
@@ -578,10 +559,7 @@ int mini,maxi;
  */
 
 
-draw_high_order_digit(extent,digit,clrno)
-Gpoint *extent;
-int digit;
-IDX clrno;
+void draw_high_order_digit( Gpoint *extent, int digit, IDX clrno)
 {
         char *string;
         Gfloat x;
@@ -619,10 +597,7 @@ IDX clrno;
  */
 
 
-draw_low_order_digit(extent,digit,clrno)
-Gpoint *extent;
-int digit;
-IDX clrno;
+void draw_low_order_digit( Gpoint *extent, int digit, IDX clrno)
 {
         char *string;
         Gfloat x;
@@ -664,12 +639,7 @@ IDX clrno;
  *                      extent (Gpoint *) - popup extent
  */
 
-switch_header_popup_state(state,nostates,nlns,lines,extent)
-int *state;                             /* current popup state */
-int nostates;                           /* no of popup states */
-int nlns;                               /* no of lines to display */
-char **lines;                           /* popup text */
-Gpoint extent[];                        /* popup extent */
+void switch_header_popup_state( int *state, int nostates, int nlns, char **lines, Gpoint extent[])
 {
         char **ln_ptr;                  /* ptr to appropriate lines */
         int i;
@@ -715,8 +685,7 @@ Gpoint extent[];                        /* popup extent */
  *  parameters:         popup (POPUP *) - popup to erase
  */
 
-erase_popup(popup)
-POPUP *popup;                   /* popup to erase */
+void erase_popup( POPUP *popup)
 {
         Gpoint box[4];          /* pts of popup extent */
 
@@ -749,8 +718,7 @@ POPUP *popup;                   /* popup to erase */
  *  parameters:         poplst (POPUP *) - list of popups to display
  */
 
-display_popups(poplst)
-POPUP *poplst;
+void display_popups( POPUP *poplst)
 {
         POPUP *tbl_ptr;
         IDX idx;
@@ -780,8 +748,7 @@ POPUP *poplst;
  *  parameters:         poplst (POPUP *) - list of popups
  */
 
-erase_popups(poplst)
-POPUP *poplst;
+void erase_popups( POPUP *poplst)
 {
         POPUP *tbl_ptr;
         IDX idx;

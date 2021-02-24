@@ -21,6 +21,8 @@
  *
  * color structs
  */
+#if !defined(COLOR_H)
+#define COLOR_H
 
 #include <xgks.h>
 
@@ -46,3 +48,13 @@ extern IDX grey;
 extern IDX bgdclr;
 extern IDX fgdclr;
 extern IDX fillclr;
+
+IDX alloc_clr_tbl_entries(int n);
+int get_num_free_clrs(void);
+void set_color( IDX idx, Gcobundl *rgb_clr);
+void hsv_to_rgb( HSV *hsv_clr, Gcobundl *rgb_clr);
+void get_color(IDX idx, Gcobundl *rgb_clr);
+void rgb_to_hsv( Gcobundl *rgb_clr, HSV *hsv_clr);
+void init_screen_clrs(void);
+
+#endif

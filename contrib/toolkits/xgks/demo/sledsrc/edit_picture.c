@@ -56,6 +56,8 @@
 
 #include <xgks.h>
 
+#include <stdlib.h>
+
 #include "draw.h"
 #include "objects.h"
 #include "popup.h"
@@ -64,6 +66,19 @@
 #include "key.h"
 #include "defs.h"
 #include "screen_items.h"
+#include "object_list.h"
+#include "prompt.h"
+#include "menu.h"
+#include "draw_menu.h"
+#include "obj_detect.h"
+#include "objects_draw.h"
+#include "main_menu.h"
+#include "obj_rotate.h"
+#include "prompt.h"
+#include "trans_subs.h"
+
+void free_lists(void);
+void enq_comb_ob_list( COMB_OB *comb_ob, COMB_OB_PTR **list);
 
 #define EDIT_PICTURE_UNDO       "edit picture undo menu item"
 
@@ -87,8 +102,7 @@ static BOOLEAN first_pt_picked;
  *
  */
 
-edit_picture_init(menu_item)
-MENU_ITEM *menu_item;
+void edit_picture_init( MENU_ITEM *menu_item)
 {
         if (no_objects() == TRUE)
                 reprompt(20);
@@ -109,8 +123,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - move menu item
  */
 
-move_init(menu_item)
-MENU_ITEM *menu_item;
+void move_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -129,8 +142,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - move menu item
  */
 
-move_restart(menu_item)
-MENU_ITEM *menu_item;
+void move_restart( MENU_ITEM *menu_item)
 {
         if (eq(get_newmitem(),EDIT_PICTURE_UNDO))
         {
@@ -152,8 +164,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint) - pt selected
  */
 
-move_exec(pt)
-Gpoint pt;
+void move_exec( Gpoint pt)
 {
         BOOLEAN hit;
         static COMB_OB *comb_ob;
@@ -206,8 +217,7 @@ Gpoint pt;
  *  parameters:         menu_item (MENU_ITEM *) - move menu item
  */
 
-move_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void move_cleanup( MENU_ITEM *menu_item)
 {
         if (!eq(get_newmitem(),EDIT_PICTURE_UNDO))
         {
@@ -231,8 +241,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - copy menu item
  */
 
-copy_init(menu_item)
-MENU_ITEM *menu_item;
+void copy_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -251,8 +260,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - copy menu item
  */
 
-copy_restart(menu_item)
-MENU_ITEM *menu_item;
+void copy_restart( MENU_ITEM *menu_item)
 {
         if (eq(get_newmitem(),EDIT_PICTURE_UNDO))
         {
@@ -274,8 +282,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint) - pt selected
  */
 
-copy_exec(pt)
-Gpoint pt;
+void copy_exec( Gpoint pt)
 {
         BOOLEAN hit;
         static COMB_OB *comb_ob;
@@ -320,8 +327,7 @@ Gpoint pt;
  *  parameters:         menu_item (MENU_ITEM *) - copy menu item
  */
 
-copy_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void copy_cleanup( MENU_ITEM *menu_item)
 {
         if (!eq(get_newmitem(),EDIT_PICTURE_UNDO))
         {
@@ -345,8 +351,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - delete menu item
  */
 
-delete_init(menu_item)
-MENU_ITEM *menu_item;
+void delete_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -364,8 +369,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - delete menu item
  */
 
-delete_restart(menu_item)
-MENU_ITEM *menu_item;
+void delete_restart( MENU_ITEM *menu_item)
 {
         if (eq(get_newmitem(),EDIT_PICTURE_UNDO))
         {
@@ -383,8 +387,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint) - pt selected
  */
 
-delete_exec(pt)
-Gpoint pt;
+void delete_exec( Gpoint pt)
 {
         BOOLEAN hit;
         COMB_OB *comb_ob;
@@ -413,8 +416,7 @@ Gpoint pt;
  *  parameters:         menu_item (MENU_ITEM *) - delete menu item
  */
 
-delete_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void delete_cleanup( MENU_ITEM *menu_item)
 {
         if (!eq(get_newmitem(),EDIT_PICTURE_UNDO))
         {
@@ -439,8 +441,7 @@ MENU_ITEM *menu_item;
  *
  */
 
-erase(menu_item)
-MENU_ITEM *menu_item;
+void erase( MENU_ITEM *menu_item)
 {
         COMB_OB *comb_ob;
 
@@ -467,8 +468,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - rotate menu item
  */
 
-rotate_init(menu_item)
-MENU_ITEM *menu_item;
+void rotate_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -487,8 +487,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - rotate menu item
  */
 
-rotate_restart(menu_item)
-MENU_ITEM *menu_item;
+void rotate_restart( MENU_ITEM *menu_item)
 {
         if (eq(get_newmitem(),EDIT_PICTURE_UNDO))
         {
@@ -509,8 +508,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint) - pt selected
  */
 
-rotate_exec(pt)
-Gpoint pt;
+void rotate_exec( Gpoint pt)
 {
         BOOLEAN hit;
         COMB_OB *comb_ob;
@@ -548,8 +546,7 @@ Gpoint pt;
  *  parameters:         menu_item (MENU_ITEM *) - rotate menu item
  */
 
-rotate_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void rotate_cleanup( MENU_ITEM *menu_item)
 {
         if (!eq(get_newmitem(),EDIT_PICTURE_UNDO))
         {
@@ -574,8 +571,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - combine menu item
  */
 
-combine_init(menu_item)
-MENU_ITEM *menu_item;
+void combine_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -596,8 +592,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - combine menu item
  */
 
-combine_restart(menu_item)
-MENU_ITEM *menu_item;
+void combine_restart( MENU_ITEM *menu_item)
 {
         COMB_OB *temp_comb_ob;
 
@@ -624,8 +619,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint) - pt selected
  */
 
-combine_exec(pt)
-Gpoint pt;
+void combine_exec( Gpoint pt)
 {
         COMB_OB_PTR *comb_ob_ptr, *temp_comb_ob_ptr;
         COMB_OB *prev_comb_ob;
@@ -760,8 +754,7 @@ Gpoint pt;
  *  parameters:         menu_item (MENU_ITEM *) - combine menu item
  */
 
-combine_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void combine_cleanup( MENU_ITEM *menu_item)
 {
         if (!eq(get_newmitem(),EDIT_PICTURE_UNDO))
         {
@@ -785,8 +778,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - split menu item
  */
 
-split_init(menu_item)
-MENU_ITEM *menu_item;
+void split_init( MENU_ITEM *menu_item)
 {
         set_currmitem(menu_item);
         hilite(menu_item->key);
@@ -804,8 +796,7 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - split menu item
  */
 
-split_restart(menu_item)
-MENU_ITEM *menu_item;
+void split_restart( MENU_ITEM *menu_item)
 {
         if (eq(get_newmitem(),EDIT_PICTURE_UNDO))
         {
@@ -826,8 +817,7 @@ MENU_ITEM *menu_item;
  *  parameters:         pt (Gpoint) - pt selected
  */
 
-split_exec(pt)
-Gpoint pt;
+void split_exec( Gpoint pt)
 {
         BOOLEAN hit;
         COMB_OB *comb_ob;
@@ -875,8 +865,7 @@ Gpoint pt;
  *  parameters:         menu_item (MENU_ITEM *) - split menu item
  */
 
-split_cleanup(menu_item)
-MENU_ITEM *menu_item;
+void split_cleanup( MENU_ITEM *menu_item)
 {
         if (!eq(get_newmitem(),EDIT_PICTURE_UNDO))
         {
@@ -902,9 +891,7 @@ MENU_ITEM *menu_item;
  *                      list (COMB_OB_PTR *) - undo_list or new_list
  */
 
-enq_comb_ob_list(comb_ob,list)
-COMB_OB *comb_ob;
-COMB_OB_PTR **list;
+void enq_comb_ob_list( COMB_OB *comb_ob, COMB_OB_PTR **list)
 {
         COMB_OB_PTR *comb_ob_ptr;
 
@@ -928,8 +915,7 @@ COMB_OB_PTR **list;
  *  parameters:         menu_item (MENU_ITEM *) - undo menu item
  */
 
-edit_picture_undo(menu_item)
-MENU_ITEM *menu_item;
+void edit_picture_undo( MENU_ITEM *menu_item)
 {
         COMB_OB_PTR *comb_ob_ptr;
 
@@ -1008,7 +994,7 @@ MENU_ITEM *menu_item;
  *  parameters:         none
  */
 
-free_lists()
+void free_lists(void)
 {
         COMB_OB_PTR *comb_ob_ptr, *temp;
 
@@ -1051,8 +1037,7 @@ static int max_angle = 90;
  *  parameters:         popup (POPUP *) - line width popup
  */
 
-init_angle_popup(popup)
-POPUP *popup;
+void init_angle_popup( POPUP *popup)
 {
         display_number_popup(popup,"ANGLE",angle);
 }  /* end init_angle popup */
@@ -1066,9 +1051,7 @@ POPUP *popup;
  *  parameters:         popup (POPUP *) - line width popup
  */
 
-switch_angle_state(popup,pt)
-POPUP *popup;
-Gpoint pt;
+void switch_angle_state( POPUP *popup, Gpoint pt)
 {
         switch_number_popup_state(popup->extent,&angle,pt,
                 min_angle,max_angle);
@@ -1086,8 +1069,7 @@ Gpoint pt;
  */
 
 
-Gfloat
-get_rot_angle()
+Gfloat get_rot_angle(void)
 {
         return(angle * (2 * PI) / 360);
 }

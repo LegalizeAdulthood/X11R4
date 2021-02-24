@@ -31,6 +31,10 @@
 
 #include <xgks.h>
 
+#include <stdlib.h>
+
+#include "draw_menu.h"
+
 #include "color.h"
 #include "defs.h"
 #include "key.h"
@@ -39,6 +43,9 @@
 #include "menu.h"
 #include "trans.h"
 #include "functbl.h"
+#include "popup.h"
+
+void display_menu( AREA area, MENU *menu_ptr);
 
 int max_num_menu_entries = 0;           /* max num of entries in menu
                                            including header */
@@ -51,7 +58,7 @@ int max_num_menu_entries = 0;           /* max num of entries in menu
  *  parameters:         none
  */
 
-display_pri_menu()
+void display_pri_menu(void)
 {
         MENU *pri_menu;
 
@@ -72,7 +79,7 @@ display_pri_menu()
  *  parameters:         none
  */
 
-display_sec_menu()
+void display_sec_menu(void)
 {
         MENU *sec_menu;
 
@@ -95,9 +102,7 @@ display_sec_menu()
  *                      menu (MENU *) - menu to display
  */
 
-display_menu_n_popups(area,menu)
-AREA area;
-MENU *menu;
+void display_menu_n_popups( AREA area, MENU *menu)
 {
         POPUP *tbl_ptr;                 /* ptr to popup list */
         IDX idx;                        /* popup_func_tbl index */
@@ -135,9 +140,7 @@ MENU *menu;
  *                      menu (MENU *) - menu to cleanup
  */
 
-cleanup_menu_n_popups(area,menu)
-AREA area;
-MENU *menu;
+void cleanup_menu_n_popups( AREA area, MENU *menu)
 {
         POPUP *tbl_ptr;                 /* ptr to popup list */
         IDX idx;                        /* popup_func_tbl index */
@@ -164,10 +167,7 @@ MENU *menu;
  *                      menu_ptr (MENU) - menu to display
  */
 
-display_menu(area,menu_ptr)
-AREA area;                              /* PRI_MENU_AREA or
-                                           SEC_MENU_AREA */
-MENU *menu_ptr;                         /* menu to display */
+void display_menu( AREA area, MENU *menu_ptr)
 {
         Gpoint window[2];               /* area window */
         Gpoint box[4];                  /* pts of rectangle */
@@ -242,12 +242,10 @@ MENU *menu_ptr;                         /* menu to display */
  *
  *  description:        hilite menu item identified by key
  *
- *  parameters:         key (KEY) - key to menu item
+ *  parameters:         key (KEY) - key of menu item to hilite
  */
 
-hilite(key)
-KEY key;                                /* key of menu item to 
-                                           hilite */
+void hilite( KEY key)
 {
         MENU *menu;                     /* pri_menu or sec_menu */
         AREA area;                      /* PRI_MENU_AREA or
@@ -300,9 +298,7 @@ KEY key;                                /* key of menu item to
  *  parameters:         key (KEY) - key to menu item
  */
 
-unhilite(key)
-KEY key;                                /* key of menu item to 
-                                           unhilite */
+void unhilite( KEY key)
 {
         MENU *menu;                     /* pri_menu or sec_menu */
         AREA area;                      /* PRI_MENU_AREA or

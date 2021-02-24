@@ -43,6 +43,8 @@
 #include "defs.h"
 #include "math.h"
 
+int get_text_bndl_tbl_idx( KEY key);
+
 TEXT_BNDL *text_bndl_tbl;
 
 
@@ -58,10 +60,7 @@ TEXT_BNDL *text_bndl_tbl;
  *                              (return value)
  */
 
-get_font(key,font,precision)
-KEY key;
-IDX *font;
-Gtxprec *precision;
+void get_font( KEY key, IDX *font, Gtxprec *precision)
 {
         IDX idx;
         Gtxbundl text_bundle;
@@ -86,10 +85,7 @@ Gtxprec *precision;
  *                      precision (Gtxprec) - font precision
  */
 
-set_font(key,font,precision)
-KEY key;
-IDX font;
-Gtxprec precision;
+void set_font( KEY key, IDX font, Gtxprec precision)
 {
         IDX idx;
         Gtxbundl text_bundle;
@@ -114,8 +110,7 @@ Gtxprec precision;
  *  parameters:         key (KEY) - key corresponding to bndl tbl index
  */
 
-get_text_bndl_tbl_idx(key)
-KEY key;                                /* key corresponding to index */
+int get_text_bndl_tbl_idx( KEY key)
 {
         IDX idx;                        /* text_bndl_tbl index */
 
@@ -149,8 +144,7 @@ ENUM setting;
         s_aspect_flags(flags);
 } */
 
-set_aspect_flags(setting) /* New GKS version. */
-Gasf setting;
+void set_aspect_flags( Gasf setting)
 {
         Gasfs newfs;
 
@@ -182,9 +176,7 @@ Gasf setting;
  *                              boundary
  */
 
-load_box(box,xmin,xmax,ymin,ymax)
-Gpoint *box;                            /* array of pts to be filled */
-Gfloat xmin,xmax,ymin,ymax;             /* could also be NDCPT */
+void load_box(Gpoint *box, Gfloat xmin, Gfloat xmax, Gfloat ymin, Gfloat ymax)
 {
         box[0].x = xmin;        box[0].y = ymin;
         box[1].x = xmax;        box[1].y = ymin;
@@ -206,12 +198,7 @@ Gfloat xmin,xmax,ymin,ymax;             /* could also be NDCPT */
  *                      key (KEY) - text bundle table key
  */
 
-center_text(nolines,lines,center,clrno,key)
-int nolines;                            /* no of lines to display */
-char **lines;                           /* array of lines */
-Gpoint *center;                         /* center pt */
-IDX clrno;                              /* text color */
-KEY key;                                /* text bundle table key */
+void center_text( int nolines, char **lines, Gpoint *center, IDX clrno, KEY key)
 {
         IDX idx;                        /* text bundle tbl index
                                            containing key */
@@ -304,11 +291,7 @@ KEY key;                                /* text bundle table key */
  *                      key (KEY) - text bundle table key
  */
 
-center_text_vert(line,center,clrno,key)
-char *line;                             /* text line */
-Gpoint *center;                         /* center pt */
-IDX clrno;                              /* text color */
-KEY key;                                /* text bundle table key */
+void center_text_vert( char *line, Gpoint *center, IDX clrno, KEY key)
 {
         IDX idx;                        /* text bundle tbl index
                                            containing key */
@@ -378,10 +361,7 @@ KEY key;                                /* text bundle table key */
  */
 
 
-curve(c,nopts,pts)
-Gpoint *c;
-int nopts;
-Gpoint *pts;
+void curve(Gpoint *c, int nopts, Gpoint *pts)
 {
         Gfloat t;
         Gfloat incr;
@@ -424,11 +404,7 @@ Gpoint *pts;
  *                      pts (Gpoint *) - list of pts
  */
 
-circle(center,rad,nopts,pts)
-Gpoint center;
-Gfloat rad;
-int nopts;
-Gpoint *pts;
+void circle(Gpoint center, Gfloat rad, int nopts, Gpoint *pts)
 {
         conic(center, 2 * rad, 2 * rad, nopts, pts);
 
@@ -451,12 +427,7 @@ Gpoint *pts;
  */
 
 
-conic(center,wd,ht,nopts,pts)
-Gpoint center;
-Gfloat wd;
-Gfloat ht;
-int nopts;
-Gpoint *pts;
+void conic(Gpoint center, Gfloat wd, Gfloat ht, int nopts, Gpoint *pts)
 {
         Gfloat incr;
         int i;
@@ -489,10 +460,7 @@ Gpoint *pts;
  */
 
 
-draw_conic(center,wd,ht)
-Gpoint center;
-Gfloat wd;
-Gfloat ht;
+void draw_conic( Gpoint center, Gfloat wd, Gfloat ht)
 {
         Gpoint pts[NO_CONIC_LNS];
 
@@ -509,9 +477,7 @@ Gfloat ht;
  *                      color and style
  */
 
-set_free_fill_rep(color,style)
-IDX color;                      /* bundle_entry color */
-Gflinter style;                 /* GHOLLOW or GSOLID */
+void set_free_fill_rep( IDX color, Gflinter style)
 {
         Gflbundl repr;
 

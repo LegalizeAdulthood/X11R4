@@ -37,6 +37,10 @@
 
 #include <xgks.h>
 
+#include <stdlib.h>
+
+#include "object_list.h"
+
 #include "defs.h"
 #include "draw.h"
 #include "popup.h"
@@ -45,8 +49,14 @@
 #include "objects.h"
 #include "object_tbl.h"
 #include "screen_items.h"
-
-extern char *calloc();
+#include "trans_subs.h"
+#include "main_menu.h"
+#include "grid.h"
+#include "objects_draw.h"
+#include "trans_subs.h"
+#include "objects_free.h"
+#include "func.h"
+#include "obj_detect.h"
 
 COMB_OB *head = (COMB_OB *) NULL;
 COMB_OB *tail = (COMB_OB *) NULL;
@@ -62,8 +72,7 @@ COMB_OB *tail = (COMB_OB *) NULL;
  *  returns:            comb_ob (COMB_OB *)
  */
 
-COMB_OB *
-alloc_comb_ob()
+COMB_OB * alloc_comb_ob(void)
 {
         COMB_OB *comb_ob;
 
@@ -87,9 +96,7 @@ alloc_comb_ob()
  *  returns:            single_ob (OBJECT *)
  */
 
-OBJECT *
-alloc_single_ob(key)
-KEY key;
+OBJECT *alloc_single_ob( KEY key)
 {
         OBJECT *single_ob;
 
@@ -120,10 +127,7 @@ KEY key;
  *                              (HEAD or TAIL) to add new list to
  */
 
-add_to_comb_ob(comb_ob,object_list,end)
-COMB_OB *comb_ob;                       /* combination object */
-OBJECT *object_list;                    /* list of simple objects */
-int end;                                /* HEAD or TAIL */
+void add_to_comb_ob(COMB_OB *comb_ob, OBJECT *object_list, int end)
 {
         OBJECT *temp_ob;
         OBJECT *end_of_list;
@@ -167,8 +171,7 @@ int end;                                /* HEAD or TAIL */
  *  parameters:         comb_ob (COMB_OB) - combination object to enq
  */
 
-enq_comb_ob(comb_ob)
-COMB_OB *comb_ob;
+void enq_comb_ob( COMB_OB *comb_ob)
 {
         comb_ob->prev = tail;
         comb_ob->next = (COMB_OB *) NULL;
@@ -190,9 +193,7 @@ COMB_OB *comb_ob;
  *                      prev_comb_ob (COMB_OB *) - comb ob to enq after
  */
 
-enq_after(comb_ob,prev_comb_ob)
-COMB_OB *comb_ob;
-COMB_OB *prev_comb_ob;
+void enq_after( COMB_OB *comb_ob, COMB_OB *prev_comb_ob)
 {
         if (tail == prev_comb_ob)
                 tail = comb_ob;
@@ -213,8 +214,7 @@ COMB_OB *prev_comb_ob;
  *  parameters:         comb_ob (COMB_OB) - combination object to deq
  */
 
-deq_comb_ob(comb_ob)
-COMB_OB *comb_ob;
+void deq_comb_ob( COMB_OB *comb_ob)
 {
         if (head == comb_ob)
                 head = comb_ob->next;
@@ -237,7 +237,7 @@ COMB_OB *comb_ob;
  *  parameters:         none
  */
 
-redraw_objects()
+void redraw_objects(void)
 {
         Gpoint window[4];
         Gpoint box[4];
@@ -272,7 +272,7 @@ redraw_objects()
  *  parameters:         none
  */
 
- draw_objects()
+ void draw_objects(void)
  {
         COMB_OB *comb_ob_ptr;
 
@@ -293,8 +293,7 @@ redraw_objects()
  *  parameters: none
  */
 
-OBJECT *
-get_last_object()
+OBJECT * get_last_object(void)
 {
         OBJECT *object;
 
@@ -325,9 +324,7 @@ get_last_object()
  *                      trans (Gfloat *) - transformation matrix
  */
 
-update_trans(comb_ob,trans)
-COMB_OB *comb_ob;
-Gfloat *trans;
+void update_trans( COMB_OB *comb_ob, Gfloat *trans)
 {
         OBJECT *object_ptr;
 
@@ -348,7 +345,7 @@ Gfloat *trans;
  *  parameters:         none
  */
 
-collect_garbage()
+void collect_garbage(void)
 {
         COMB_OB *comb_ob;
         COMB_OB *temp_comb_ob;
@@ -423,9 +420,7 @@ collect_garbage()
  *                      menu (MENU *) - ptr to menu to cleanup
  */
 
-cleanup_menu_n_garbage(area,menu)
-AREA area;
-MENU *menu;
+void cleanup_menu_n_garbage( AREA area, MENU *menu)
 {
         collect_garbage();
         cleanup_menu_n_popups(area,menu);
@@ -445,7 +440,7 @@ MENU *menu;
  *                              false, otherwise
  */
 
-no_objects()
+int no_objects(void)
 {
         return(((head == (COMB_OB *) NULL) ? TRUE : FALSE));
 }  /* end no_objects */
@@ -462,9 +457,7 @@ no_objects()
  *  returns:            list (COMB_OB_PTR *) - list of objects
  */
 
-COMB_OB_PTR *
-get_object_list(extent)
-Gpoint *extent;
+COMB_OB_PTR * get_object_list( Gpoint *extent)
 {
         COMB_OB_PTR *list;
         COMB_OB_PTR *comb_ob_ptr;

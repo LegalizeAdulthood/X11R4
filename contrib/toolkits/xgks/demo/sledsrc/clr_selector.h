@@ -21,6 +21,9 @@
  *
  */
 
+#if !defined(CLR_SELECTOR_H)
+#define CLR_SELECTOR_H
+
 #include <xgks.h>
 
 #include "changes.h"
@@ -64,5 +67,6 @@ extern Gpoint left_extent[2],middle_extent[2],
 	right_extent[2];		/* mixer areas */
 extern Gpoint tuner_extent[2];		/* tuner area */
 extern Gpoint clr_wheel_center;		/* center of clr clr wheel */
-extern Gfloat outside_rad,inside_rad;	/* inside and outside rad of
-					   color wheeel */
+extern Gfloat outside_rad,inside_rad;	/* inside and outside rad of color wheeel */
+
+#endif

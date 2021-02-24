@@ -20,6 +20,8 @@
  * SOFTWARE.
  *
  */
+#if !defined(FUNC_H)
+#define FUNC_H
 
 #include "clr_sel_func.h"
 #include "add_obj_func.h"
@@ -29,50 +31,50 @@
 
 /* screen area functions */
 
-extern int menu_area_exec();
-extern int palette_area_exec();
-extern int picture_area_exec();
-extern int fgdclr_area_exec();
-extern int bgdclr_area_exec();
-extern int fillclr_area_exec();
-extern int popup_area_exec();
+extern void menu_area_exec( AREA area, IDX transno, Gpoint pt);
+extern void palette_area_exec( AREA area, IDX transno, Gpoint pt);
+extern void picture_area_exec( AREA area, IDX transno, Gpoint pt);
+extern void fgdclr_area_exec( AREA area, IDX transno, Gpoint pt);
+extern void bgdclr_area_exec( AREA area, IDX transno, Gpoint pt);
+extern void fillclr_area_exec( AREA area, IDX transno, Gpoint pt);
+extern void popup_area_exec( AREA area, IDX transno, Gpoint pt);
 
-extern int display_pri_menu();
-extern int display_sec_menu();
-extern int display_palette();
-extern int display_picture_area();
-extern int display_popup_area();
-extern int display_fgdclr_area();
-extern int display_bgdclr_area();
-extern int display_fillclr_area();
-extern int display_msg_area();
+extern void display_pri_menu(void);
+extern void display_sec_menu(void);
+extern void display_palette(void);
+extern void display_picture_area(void);
+extern void display_fgdclr_area(void);
+extern void display_bgdclr_area(void);
+extern void display_fillclr_area(void);
+extern void display_msg_area(void);
 
 /* general menu functions */
 
-extern int display_menu_n_popups();
-extern int cleanup_menu_n_popups();
-extern int cleanup_menu_n_garbage();
-extern int display_child_menu();
+extern void display_menu_n_popups( AREA area, MENU *menu);
+extern void cleanup_menu_n_popups( AREA area, MENU *menu);
+extern void cleanup_menu_n_garbage(AREA area, MENU *menu);
 
-extern int area_undo();
-extern int menu_item_undo();
+extern void area_undo(MENU_ITEM *item);
+extern int menu_item_undo(void);
 
 /* main menu functions */
 
-extern int not_implemented();
-extern int quit();
-extern int save();
-extern int retrieve();
-extern int up();
-extern int update();
-extern int create_pic_file();
+extern void not_implemented(MENU_ITEM * mitem_in_progress);
+extern void quit(MENU_ITEM *item);
+extern void save(MENU_ITEM *item);
+extern void retrieve(MENU_ITEM *item);
+extern void up(MENU_ITEM *menu_item);
+extern void update(MENU_ITEM *menu_item);
+extern void create_pic_file(MENU_ITEM *item);
 
 /* popup functions */
 
-extern int init_update_popup();
-extern int switch_update_state();
-extern int init_grid_popup();
-extern int switch_grid_state();
-extern int init_verbose_popup();
-extern int switch_verbose_state();
-extern int erase_popup();
+extern void init_update_popup(POPUP *popup);
+extern void switch_update_state( POPUP *popup, Gpoint pt);
+extern void init_grid_popup(POPUP *popup);
+extern void switch_grid_state( POPUP *popup, Gpoint pt);
+extern void init_verbose_popup(POPUP *popup);
+extern void switch_verbose_state( POPUP *popup, Gpoint pt);
+extern void erase_popup(POPUP *popup);
+
+#endif

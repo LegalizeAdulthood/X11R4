@@ -40,8 +40,7 @@
  *                      list of attributes
  */
 
-get_cur_primitive_attributes(attr) 
-struct prim_attr_val *attr;
+void get_cur_primitive_attributes( struct prim_attr_val *attr)
 {
         i_cur_primitive_attributes(&(attr->error),&(attr->pline_idx),
                 &(attr->pmark_idx),&(attr->text_idx),

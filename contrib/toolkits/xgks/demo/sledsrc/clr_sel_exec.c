@@ -38,14 +38,27 @@
 
 #include <math.h>
 
+#include "clr_selector.h"
+
+#include "palette.h"
+#include "undo.h"
+#include "func.h"
+#include "trans.h"
+#include "menu.h"
+#include "prompt.h"
 #include "screen_items.h"
 #include "functbl.h"
 #include "draw.h"
-#include "clr_selector.h"
 #include "defs.h"
 #include "key.h"
 #include "color.h"
+#include "dummies.h"
 
+int pt_on_clr_wheel( Gpoint pt);
+int arrow_picked( ARROW arrow, Gpoint pt);
+void adjust_middle_clr(void);
+void adjust_tuner_clr(void);
+void set_tuner_clr( Gcobundl rgb_clr);
 
 /*
  *  colors_mitem_exec
@@ -57,8 +70,7 @@
  *
  */
 
-colors_mitem_exec(menu_item)
-MENU_ITEM *menu_item;
+void colors_mitem_exec( MENU_ITEM *menu_item)
 {
         prompt(41);
         switch_sec_menu(menu_item->child);
@@ -81,9 +93,7 @@ MENU_ITEM *menu_item;
  *                      menu (MENU *) - colors menu
  */
 
-init_colors_menu(area,menu)
-AREA area;
-MENU *menu;
+void init_colors_menu( AREA area, MENU *menu)
 {
         /* adjust screen */
 
@@ -127,9 +137,7 @@ MENU *menu;
  *                      menu (MENU *) - menu to cleanup
  */
 
-cleanup_colors_menu(area,menu)
-AREA area;                      /* area containing menu */
-MENU *menu;                     /* colors menu */
+void cleanup_colors_menu( AREA area, MENU *menu)
 {
         /* cleanup menu */
 
@@ -166,10 +174,7 @@ MENU *menu;                     /* colors menu */
  *                      pt (Gpoint) - pt picked
  */
 
-clr_selector_pal_area_exec(area,transno,pt)
-AREA area;
-IDX transno;
-Gpoint pt;
+void clr_selector_pal_area_exec( AREA area, IDX transno, Gpoint pt)
 {
         static Gcobundl old_clr;
         Gcobundl clr;
@@ -209,10 +214,7 @@ Gpoint pt;
  *                      pt (Gpoint) - pt picked
  */
 
-clr_wheel_area_exec(area,transno,pt)
-AREA area;
-IDX transno;
-Gpoint pt;
+void clr_wheel_area_exec( AREA area, IDX transno, Gpoint pt)
 {
         static HSV hsv_clr =
         {
@@ -258,8 +260,7 @@ Gpoint pt;
  *                              false otherwise
  */
 
-pt_on_clr_wheel(pt)
-Gpoint pt;
+int pt_on_clr_wheel( Gpoint pt)
 {
         Gfloat distance;
 
@@ -284,10 +285,7 @@ Gpoint pt;
  *  returns:            hue (Gfloat) - hue of color picked
  */
 
-Gfloat
-find_hue(center,pt)
-Gpoint center;
-Gpoint pt;
+Gfloat find_hue( Gpoint center, Gpoint pt)
 {
         Gfloat x,y;                     /* x and y values after
                                            translating center to
@@ -337,10 +335,7 @@ Gpoint pt;
  *                      pt (Gpoint) - pt picked
  */
 
-clr_mixer_area_exec(area,transno,pt)
-AREA area;
-IDX transno;
-Gpoint pt;
+void clr_mixer_area_exec( AREA area, IDX transno, Gpoint pt)
 {
         static Gfloat old_knob_pos;
         static Gcobundl old_clr;
@@ -457,7 +452,7 @@ Gpoint pt;
  *  parameters:         none
  */
 
-adjust_middle_clr()
+void adjust_middle_clr(void)
 {
         Gfloat p;
         Gcobundl left,right,middle;
@@ -487,10 +482,7 @@ adjust_middle_clr()
  *                      pt (Gpoint) - pt picked
  */
 
-fine_tuner_area_exec(area,transno,pt)
-AREA area;
-IDX transno;
-Gpoint pt;
+void fine_tuner_area_exec( AREA area, IDX transno, Gpoint pt)
 {
         static Gfloat old_knob_pos;
         static Gcobundl old_clr;
@@ -590,8 +582,7 @@ Gpoint pt;
  *  parameters:         rgb_clr (Gcobundl) - clr to set
  */
 
-set_tuner_clr(rgb_clr)
-Gcobundl rgb_clr;
+void set_tuner_clr( Gcobundl rgb_clr)
 {
         HSV hsv_clr;
 
@@ -618,7 +609,7 @@ Gcobundl rgb_clr;
  *  parameters:         none
  */
 
-adjust_tuner_clr()
+void adjust_tuner_clr(void)
 {
         HSV hsv_clr;
         Gcobundl rgb_clr;
@@ -645,9 +636,7 @@ adjust_tuner_clr()
  *  returns:            BOOLEAN - true if arrow picked
  */
 
-arrow_picked(arrow,pt)
-ARROW arrow;
-Gpoint pt;
+int arrow_picked( ARROW arrow, Gpoint pt)
 {
         if (arrow.direction == VERT)
         {

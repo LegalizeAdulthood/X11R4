@@ -25,6 +25,8 @@
 #include <xgks.h>
 #endif
 
+#include "changes.h"
+
 /* This file is not needed at all under new xGKS. */
 
 /* variables needed for call inquire primitive attribute values */
@@ -87,6 +89,13 @@ struct pline_fac_val	/* Is replaced by type "Glnfac." */
 	ENUM *list;
 };
 
+struct font_pair
+{
+    int font;
+    ENUM precision;
+};
+
+typedef struct font_pair FONT_PAIR;
 
 struct text_fac_val	/*  Is replaced by type "Gtxfac." */
 {
@@ -100,3 +109,5 @@ struct text_fac_val	/*  Is replaced by type "Gtxfac." */
 	Gfloat max_expansion;
 	FONT_PAIR *fontpairs;
 };
+
+void get_cur_primitive_attributes( struct prim_attr_val *attr);

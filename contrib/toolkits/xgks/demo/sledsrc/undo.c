@@ -31,13 +31,14 @@
 
 #include <xgks.h>
 
+#include <stdlib.h>
 #include <strings.h>
 
 #include "defs.h"
 #include "functbl.h"
 #include "screen_items.h"
 #include "changes.h"
-
+#include "prompt.h"
 
 static AREA last_action_area = (AREA) NULL;
 static KEY last_action_menu_item = (KEY) NULL;
@@ -56,7 +57,7 @@ static BOOLEAN undo_mode; /* ON = 1, OFF = 0 */
  *  parameters:         none
  */
 
-initialize_undo()
+void initialize_undo(void)
 {
         if (last_action_area != (AREA) NULL)
         {
@@ -83,17 +84,14 @@ initialize_undo()
  *                      (Gpoint) - pt
  */
 
-log_last_area(area,transno,pt)
-AREA area;
-IDX transno;
-Gpoint pt;
+void log_last_area( AREA area, IDX transno, Gpoint pt)
 {
         if (!(eq(last_action_area,area) &&
                 (last_transno == transno) &&
                 (last_pt.x == pt.x)  &&
                 (last_pt.y == pt.y)))
         {
-                if (!(eq(last_action_area,((AREA) NULL))))
+                if (last_action_area != NULL)
                         free(last_action_area);
                 last_action_area = (AREA) calloc((unsigned)
                         (strlen(area) + 1), sizeof(char));
@@ -113,15 +111,13 @@ Gpoint pt;
  *                      (Gpoint) - pt
  */
 
-log_last_menu_item(key,pt)
-KEY key;
-Gpoint pt;
+void log_last_menu_item( KEY key, Gpoint pt)
 {
         if (!(eq(last_action_menu_item,key) &&
                 (last_pt.x == pt.x)  &&
                 (last_pt.y == pt.y)))
         {
-                if (!(eq(last_action_menu_item,((KEY) NULL))))
+                if (last_action_menu_item != NULL)
                         free(last_action_menu_item);
                 last_action_menu_item = (KEY) calloc((unsigned)
                         (strlen(key) + 1), sizeof(char));
@@ -141,15 +137,13 @@ Gpoint pt;
  *  parameters:         menu_item (MENU_ITEM *) - unused
  */
 
-area_undo(menu_item)
-MENU_ITEM *menu_item;
+void area_undo( MENU_ITEM *menu_item)
 {
         undo_mode = ON;
         undo_flag = ((undo_flag == FALSE) ? TRUE : FALSE);
-        if (!eq(last_action_area,(AREA) NULL))
+        if (last_action_area != NULL)
         {
-                screen_tbl[find_screen_tbl_idx(last_action_area)].exec(
-                        last_action_area,last_transno,last_pt);
+                screen_tbl[find_screen_tbl_idx(last_action_area)].exec(last_action_area, last_transno, last_pt);
         }
         else
                 reprompt(1);
@@ -167,12 +161,11 @@ MENU_ITEM *menu_item;
  *  parameters:         menu_item (MENU_ITEM *) - unused
  */
 
-menu_item_undo(menu_item)
-MENU_ITEM *menu_item;
+void menu_item_undo( MENU_ITEM *menu_item)
 {
         undo_mode = ON;
         undo_flag = ((undo_flag == FALSE) ? TRUE : FALSE);
-        if (!eq(last_action_menu_item,(KEY) NULL))
+        if (last_action_menu_item != NULL)
         {
                 (*(menu_item_func_tbl[find_menu_item_func_tbl_idx(
                         last_action_menu_item)].exec))(last_pt);
@@ -192,7 +185,7 @@ MENU_ITEM *menu_item;
  *  parameters:         none
  */
 
-check_undo_flag()
+void check_undo_flag(void)
 {
         if (undo_mode == OFF)
         {
@@ -211,8 +204,7 @@ check_undo_flag()
  *  returns:            (BOOLEAN) - undo_flag
  */
 
-BOOLEAN
-test_undo_flag()
+BOOLEAN test_undo_flag(void)
 {
         return(undo_flag);
 }  /* end test_undo_flag */

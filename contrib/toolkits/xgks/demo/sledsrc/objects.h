@@ -21,12 +21,13 @@
  *
  */
 
+#ifndef OBJECTS_H
+#define OBJECTS_H
+
 #include <xgks.h>
 
 #include "changes.h"
-
-#ifndef _objects
-#define _objects
+#include "screen_items.h"
 
 /*
  *  graphics primitives
@@ -148,10 +149,10 @@ struct comb_ob_ptr
 	COMB_OB_PTR *next;
 };
 
-extern COMB_OB *alloc_comb_ob();
-extern OBJECT *alloc_single_ob();
-extern COMB_OB *copy_comb_ob();
-extern OBJECT *copy_object();
+extern COMB_OB *alloc_comb_ob(void);
+extern OBJECT *alloc_single_ob( KEY key);
+extern COMB_OB *copy_comb_ob( COMB_OB *comb_ob);
+extern OBJECT * copy_object( OBJECT *object);
 
 extern COMB_OB *tail;
 extern COMB_OB *head;

@@ -21,6 +21,9 @@
  *
  */
 
+#if !defined(PALETTE_H)
+#define PALETTE_H
+
 #include <xgks.h>
 
 #include "screen_items.h"
@@ -35,3 +38,15 @@ extern IDX display_bgdclr;
 extern IDX display_fillclr;
 
 extern AREA active_clr_area;
+
+int get_fgdclr(void);
+int get_fillclr(void);
+int get_clr_idx_from_pt( Gpoint pt);
+int get_bgdclr(void);
+void init_palette_clrs( char *filename);
+void init_clr_area_clrs(void);
+void set_fgdclr(IDX idx);
+void set_bgdclr(IDX idx);
+void set_fillclr(IDX idx);
+
+#endif

@@ -27,11 +27,17 @@
 #include <xgks.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <strings.h>
 
 #include "screen_items.h"
 #include "menu.h"
 #include "key.h"
+#include "error.h"
+#include "io.h"
+
+void read_menu(FILE *fd, MENU *parent_menu, MENU_ITEM *parent_menu_item);
 
 
 /*
@@ -43,8 +49,7 @@
  *                                          containing menu info
  */
 
-read_menu_file(filename)
-char *filename;
+void read_menu_file(char *filename)
 {
         FILE *fd;                       /* fd for filename */
 
@@ -78,10 +83,7 @@ char *filename;
  *                              item called from
  */
 
-read_menu(fd,parent_menu,parent_menu_item)
-FILE *fd;                       /* menu file */
-MENU *parent_menu;              /* menu called from */
-MENU_ITEM *parent_menu_item;    /* menu item called from */
+void read_menu(FILE *fd, MENU *parent_menu, MENU_ITEM *parent_menu_item)
 {
         MENU *menu_ptr;         /* menu being read */
         MENU_ITEM *menu_item_ptr;       /* menu item being read */

@@ -27,6 +27,10 @@
  *      copy_text
  */
 
+#include <stdlib.h>
+
+#include "objects_copy.h"
+
 #include "objects.h"
 #include "object_tbl.h"
 #include "screen_items.h"
@@ -42,9 +46,7 @@
  *  returns:            (COMB_OB *) - duplicate comb_ob
  */
 
-COMB_OB *
-copy_comb_ob(comb_ob)
-COMB_OB *comb_ob;
+COMB_OB *copy_comb_ob( COMB_OB *comb_ob)
 {
         COMB_OB *duplicate;
         OBJECT *object_ptr, *dup_ob_ptr;
@@ -83,9 +85,7 @@ COMB_OB *comb_ob;
  *  returns:            (OBJECT *) - duplicate
  */
 
-OBJECT *
-copy_object(object)
-OBJECT *object;
+OBJECT * copy_object( OBJECT *object)
 {
         OBJECT *duplicate;
         int i;
@@ -96,8 +96,7 @@ OBJECT *object;
         for (i=0; i<6; i++)
                 duplicate->trans[i] = object->trans[i];
 
-        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].copy))
-                (object,duplicate);
+        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].copy))(object, duplicate);
         return(duplicate);
 }  /* end copy_object */
 
@@ -113,8 +112,7 @@ OBJECT *object;
  *                              (must be allocated previously)
  */
 
-copy_line(object1,duplicate)
-OBJECT *object1, *duplicate;
+void copy_line(OBJECT *object1, OBJECT *duplicate)
 {
         int i;
 
@@ -141,8 +139,7 @@ OBJECT *object1, *duplicate;
  *                              (must be allocated previously)
  */
 
-copy_poly(object1,duplicate)
-OBJECT *object1, *duplicate;
+void copy_poly(OBJECT *object1, OBJECT *duplicate)
 {
         int i;
 
@@ -171,8 +168,7 @@ OBJECT *object1, *duplicate;
  *                              (must be allocated previously)
  */
 
-copy_text(object1,duplicate)
-OBJECT *object1, *duplicate;
+void copy_text(OBJECT *object1, OBJECT *duplicate)
 {
         CHAR_OB *ch_ptr1, *ch_ptr2;
 

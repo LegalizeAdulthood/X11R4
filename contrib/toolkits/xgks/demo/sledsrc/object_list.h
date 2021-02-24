@@ -20,7 +20,19 @@
  * SOFTWARE.
  *
  */
+#if !defined(OBJECT_LIST_H)
+#define OBJECT_LIST_H
 
 #include "objects.h"
 
-extern OBJECT *get_last_object();
+extern OBJECT *get_last_object(void);
+void enq_comb_ob( COMB_OB *comb_ob);
+void add_to_comb_ob(COMB_OB *comb_ob, OBJECT *object_list, int end);
+void redraw_objects(void);
+void draw_objects(void);
+int no_objects(void);
+void update_trans( COMB_OB *comb_ob, Gfloat *trans);
+void collect_garbage(void);
+void enq_after( COMB_OB *comb_ob, COMB_OB *prev_comb_ob);
+
+#endif

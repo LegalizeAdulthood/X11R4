@@ -21,6 +21,9 @@
  *
  */
 
+#if !defined(DRAW_H)
+#define DRAW_H
+
 #include "screen_items.h"
 #include "clr_sel_draw.h"
 #include "changes.h"
@@ -82,3 +85,17 @@ extern TEXT_BNDL *text_bndl_tbl;	/* list of keys and indices */
 #define	PI	3.1415926536
 
 #define	NO_CONIC_LNS	100
+
+void curve(Gpoint *c, int nopts, Gpoint *pts);
+void load_box(Gpoint *box, Gfloat xmin, Gfloat xmax, Gfloat ymin, Gfloat ymax);
+void circle(Gpoint center, Gfloat rad, int nopts, Gpoint *pts);
+void conic(Gpoint center, Gfloat wd, Gfloat ht, int nopts, Gpoint *pts);
+void get_font( KEY key, IDX *font, Gtxprec *precision);
+void set_font( KEY key, IDX font, Gtxprec precision);
+void set_aspect_flags( Gasf setting);
+void set_free_fill_rep( IDX color, Gflinter style);
+void draw_conic( Gpoint center, Gfloat wd, Gfloat ht);
+void center_text_vert( char *line, Gpoint *center, IDX clrno, KEY key);
+void center_text( int nolines, char **lines, Gpoint *center, IDX clrno, KEY key);
+
+#endif

@@ -21,29 +21,38 @@
  *
  */
 
+#if !defined(OBJECT_TBL_H)
+#define OBJECT_TBL_H
+
+#include <xgks.h>
+
 #include "screen_items.h"
+#include "objects.h"
 
 struct object_func_tbl_entry
 {
 	KEY key;			/* object type key */
-	int (*draw)();			/* draw routine for object */
-	int (*erase)();			/* draw routine for object */
-	int (*detect)();		/* routine to determine if
+	void (*draw)(OBJECT *object);			/* draw routine for object */
+	void (*erase)(OBJECT *object);			/* draw routine for object */
+	int (*detect)(OBJECT *object, Gpoint pt);		/* routine to determine if
 					   object was selected */
-	int (*get_extent)();		/* routine which calculates
+	int (*get_extent)(OBJECT *object, Gpoint extent[2]);		/* routine which calculates
 					   upright rectangular extent
 					   for object */
-	int (*copy)();			/* routine to one object of
+	int (*copy)(OBJECT *object, OBJECT *duplicate);			/* routine to one object of
 					   of type key to another */
-	int (*rotate)();		/* routine to rotate object */
-	int (*free)();			/* routine for freeing
+	void (*rotate)(OBJECT *object, Gpoint pt, Gfloat angle);		/* routine to rotate object */
+	void (*free)(OBJECT *object);			/* routine for freeing
 					   object structure
 					   (such as lineob) */
-	int (*read)();			/* routine to read in object
+	void (*read)(FILE *fd, OBJECT *object, int *error);			/* routine to read in object
 					   of type key */
-	int (*write)();			/* routine to write out object
+	int (*write)(FILE *fd, OBJECT *object);			/* routine to write out object
 					   of type key */
 };
 
 extern int object_func_tbl_sz;
 extern struct object_func_tbl_entry object_func_tbl[];
+IDX get_object_func_tbl_idx(KEY key);
+
+#endif
