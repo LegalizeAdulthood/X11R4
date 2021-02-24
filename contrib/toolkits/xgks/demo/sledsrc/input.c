@@ -27,16 +27,16 @@
 #include <xgks.h>
 
 #include "color.h"
-#include "ws.h"
 #include "defs.h"
-#include "trans.h"
 #include "dummies.h"
 #include "prompt.h"
+#include "trans.h"
+#include "ws.h"
 
-#define LOCATOR_DEV     1
-#define LOCATOR_PROMPT  3
+#define LOCATOR_DEV 1
+#define LOCATOR_PROMPT 3
 
-Gfloat xmax,ymax;       /* workstation viewport */
+Gfloat xmax, ymax; /* workstation viewport */
 
 /*
  *  initialize_locator
@@ -49,17 +49,17 @@ Gfloat xmax,ymax;       /* workstation viewport */
 
 void initialize_locator(void)
 {
-        Gpoint pt;
+    Gpoint pt;
 
-        get_max_dc_coor(&xmax,&ymax);
+    get_max_dc_coor(&xmax, &ymax);
 
-        /* initialize locator device */
+    /* initialize locator device */
 
-        pt.x = 0.5;
-        pt.y = 0.5;
+    pt.x = 0.5;
+    pt.y = 0.5;
 
-        /* Not needed with new xGKS: */
-        /* locdata.ld_attr_flag = GCURRENT;
+    /* Not needed with new xGKS: */
+    /* locdata.ld_attr_flag = GCURRENT;
         locdata.ld_pline_fill = GPOLYLINE;
         locdata.ld_type_interior_asf = GINDIVIDUAL;
         locdata.ld_width_style_asf = GINDIVIDUAL;
@@ -68,17 +68,15 @@ void initialize_locator(void)
         locdata.ld_type_interior = GSOLID;
         locdata.ld_color_idx = white;
         locdata.ld_style_idx = GSOLID;
-        locdata.ld_width = 1.0; */ 
+        locdata.ld_width = 1.0; */
 
+    init_locator(ws_id, LOCATOR_DEV, &pt, DEFAULT_TRANS, LOCATOR_PROMPT,
+        0.0, xmax, 0.0, ymax);
+    /* This function is defined in dummies.c */
 
-        init_locator(ws_id,LOCATOR_DEV,&pt,DEFAULT_TRANS,LOCATOR_PROMPT,
-                0.0,xmax,0.0,ymax);
-        /* This function is defined in dummies.c */
+    gsetlocmode(ws_id, LOCATOR_DEV, GREQUEST, GNOECHO);
 
-        gsetlocmode(ws_id,LOCATOR_DEV,GREQUEST,GNOECHO);
-                
-}  /* end initialize_locator */
-
+} /* end initialize_locator */
 
 /*
  *  select_pt
@@ -90,24 +88,24 @@ void initialize_locator(void)
  *                      pt (Gpoint *) - pt selected in WC
  */
 
-void select_pt( IDX *transno, Gpoint *pt)
+void select_pt(IDX *transno, Gpoint *pt)
 {
-        Gistat status;                  /* GOK | GNONE */
+    Gistat status; /* GOK | GNONE */
 
-        /* keep prompting for input until locator input is legit */
+    /* keep prompting for input until locator input is legit */
 
-        gsetlocmode(ws_id,LOCATOR_DEV,GREQUEST,GECHO);
+    gsetlocmode(ws_id, LOCATOR_DEV, GREQUEST, GECHO);
 
-        req_locator(ws_id,LOCATOR_DEV,&status,transno,pt); /* Defined in dummies.c */
-        while (status != GOK)
-        {
-                reprompt(1);
-                req_locator(ws_id,LOCATOR_DEV,&status,transno,pt);
-        }
+    req_locator(ws_id, LOCATOR_DEV, &status, transno, pt); /* Defined in dummies.c */
+    while (status != GOK)
+    {
+        reprompt(1);
+        req_locator(ws_id, LOCATOR_DEV, &status, transno, pt);
+    }
 
-        gsetlocmode(ws_id,LOCATOR_DEV,GREQUEST,GNOECHO);
+    gsetlocmode(ws_id, LOCATOR_DEV, GREQUEST, GNOECHO);
 
-        init_locator(ws_id,LOCATOR_DEV,pt,*transno,LOCATOR_PROMPT,
-                0.0,xmax,0.0,ymax);     /* Defined in dummies.c */
+    init_locator(ws_id, LOCATOR_DEV, pt, *transno, LOCATOR_PROMPT,
+        0.0, xmax, 0.0, ymax); /* Defined in dummies.c */
 
-}  /* end select_pt */
+} /* end select_pt */

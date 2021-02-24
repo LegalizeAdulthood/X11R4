@@ -33,26 +33,25 @@
 #include "color.h"
 
 #include "defs.h"
-#include "ws.h"
 #include "error.h"
+#include "ws.h"
 
 /*
  *  these color tbl entries are reserved for the screen
  *  they may not be altered by the user
  */
 
-IDX black;                              /* clr tbl idx for black */
-IDX white;                              /* clr tbl idx for white */
-IDX grey;                               /* clr tbl idx for grey */
+IDX black; /* clr tbl idx for black */
+IDX white; /* clr tbl idx for white */
+IDX grey;  /* clr tbl idx for grey */
 
 /*
  *  other important indices
  */
 
-IDX fgdclr;                             /* clr tbl idx for fgd_clr */
-IDX fillclr;                            /* clr tbl idx for fgd_clr */
+IDX fgdclr;  /* clr tbl idx for fgd_clr */
+IDX fillclr; /* clr tbl idx for fgd_clr */
 IDX bgdclr;
-
 
 /*
  *  rgb_to_hsv
@@ -64,52 +63,51 @@ IDX bgdclr;
  *                      hsv_clr (HSV *) ptr to color in hsv form
  */
 
-void rgb_to_hsv( Gcobundl *rgb_clr, HSV *hsv_clr)
+void rgb_to_hsv(Gcobundl *rgb_clr, HSV *hsv_clr)
 {
-        Gfloat maxi;                    /* max of r,g,b */
-        Gfloat mini;                    /* min of r,g,b */
-        Gfloat rc;                      /* dist from red to color */
-        Gfloat gc;                      /* dist from green to color */
-        Gfloat bc;                      /* dist from blue to color */
+    Gfloat maxi; /* max of r,g,b */
+    Gfloat mini; /* min of r,g,b */
+    Gfloat rc;   /* dist from red to color */
+    Gfloat gc;   /* dist from green to color */
+    Gfloat bc;   /* dist from blue to color */
 
-        maxi = max3(rgb_clr->red,rgb_clr->green,rgb_clr->blue);
-        mini = min3(rgb_clr->red,rgb_clr->green,rgb_clr->blue);
+    maxi = max3(rgb_clr->red, rgb_clr->green, rgb_clr->blue);
+    mini = min3(rgb_clr->red, rgb_clr->green, rgb_clr->blue);
 
-        /* assign value */
+    /* assign value */
 
-        hsv_clr->val = maxi;
+    hsv_clr->val = maxi;
 
-        /* assign saturation */
+    /* assign saturation */
 
-        if (maxi != 0)
-                hsv_clr->sat = (maxi - mini) / maxi;
-        else
-                hsv_clr->sat = 0;
+    if (maxi != 0)
+        hsv_clr->sat = (maxi - mini) / maxi;
+    else
+        hsv_clr->sat = 0;
 
-        /* assign hue */
+    /* assign hue */
 
-        if (hsv_clr->sat == 0)
-                hsv_clr->hue = UNDEFINED;       /* achromatic case */
-        else
-        {
-                rc = (maxi - rgb_clr->red) / (maxi - mini);
-                gc = (maxi - rgb_clr->green) / (maxi - mini);
-                bc = (maxi - rgb_clr->blue) / (maxi - mini);
+    if (hsv_clr->sat == 0)
+        hsv_clr->hue = UNDEFINED; /* achromatic case */
+    else
+    {
+        rc = (maxi - rgb_clr->red) / (maxi - mini);
+        gc = (maxi - rgb_clr->green) / (maxi - mini);
+        bc = (maxi - rgb_clr->blue) / (maxi - mini);
 
-                if (rgb_clr->red == maxi)
-                        hsv_clr->hue = bc - gc;
-                else if (rgb_clr->green == maxi)
-                        hsv_clr->hue = 2 + rc - bc;
-                else /* rgb->blue == maxi */
-                        hsv_clr->hue = 4 + gc - rc;
+        if (rgb_clr->red == maxi)
+            hsv_clr->hue = bc - gc;
+        else if (rgb_clr->green == maxi)
+            hsv_clr->hue = 2 + rc - bc;
+        else /* rgb->blue == maxi */
+            hsv_clr->hue = 4 + gc - rc;
 
-                hsv_clr->hue *= 60;
-                if (hsv_clr->hue < 0)
-                        hsv_clr->hue += 360;
-        }  /* end chromatic case */
+        hsv_clr->hue *= 60;
+        if (hsv_clr->hue < 0)
+            hsv_clr->hue += 360;
+    } /* end chromatic case */
 
-}  /* end rgb_to_hsv */
-
+} /* end rgb_to_hsv */
 
 /*
  *  hsv_to_rgb
@@ -120,73 +118,75 @@ void rgb_to_hsv( Gcobundl *rgb_clr, HSV *hsv_clr)
  *                      rgb_clr (RGB*) - ptr to color in rgb clr model
  */
 
-void hsv_to_rgb( HSV *hsv_clr, Gcobundl *rgb_clr)
+void hsv_to_rgb(HSV *hsv_clr, Gcobundl *rgb_clr)
 {
-        int integer_part = 0;           /* integer_part of hue */
-        Gfloat fractional_part;         /* fractional part of hue */
-        Gfloat t1,t2,t3;                        /* temps */
+    int integer_part = 0;   /* integer_part of hue */
+    Gfloat fractional_part; /* fractional part of hue */
+    Gfloat t1, t2, t3;      /* temps */
 
-        if (hsv_clr->sat == 0)
-        {
-                /* achromatic case */
+    if (hsv_clr->sat == 0)
+    {
+        /* achromatic case */
 
-                rgb_clr->red = hsv_clr->val;
-                rgb_clr->green = hsv_clr->val;
-                rgb_clr->blue = hsv_clr->val;
-        }
-        else
-                /* chromatic case */
+        rgb_clr->red = hsv_clr->val;
+        rgb_clr->green = hsv_clr->val;
+        rgb_clr->blue = hsv_clr->val;
+    }
+    else
+        /* chromatic case */
 
-                integer_part = (int) (hsv_clr->hue / 60);
-                fractional_part = (hsv_clr->hue / 60) 
-                        - (Gfloat) integer_part;
-                
-                t1 = hsv_clr->val * (1 - hsv_clr->sat);
-                t2 = hsv_clr->val * (1 - 
-                        (hsv_clr->sat * fractional_part));
-                t3 = hsv_clr->val * (1 - (hsv_clr->sat *
-                        (1 - fractional_part)));
+        integer_part = (int) (hsv_clr->hue / 60);
+    fractional_part = (hsv_clr->hue / 60)
+        - (Gfloat) integer_part;
 
-                /* integer part = sextent
+    t1 = hsv_clr->val * (1 - hsv_clr->sat);
+    t2 = hsv_clr->val * (1 - (hsv_clr->sat * fractional_part));
+    t3 = hsv_clr->val * (1 - (hsv_clr->sat * (1 - fractional_part)));
+
+    /* integer part = sextent
                    and assignment of t1,t2,t3 is based on 
                    which sextent the color is in */
 
-                switch (integer_part)
-                {
-                        case 0:         rgb_clr->red = hsv_clr->val;
-                                        rgb_clr->green = t3;
-                                        rgb_clr->blue = t1;
-                                        break;
+    switch (integer_part)
+    {
+    case 0:
+        rgb_clr->red = hsv_clr->val;
+        rgb_clr->green = t3;
+        rgb_clr->blue = t1;
+        break;
 
-                        case 1:         rgb_clr->red = t2;
-                                        rgb_clr->green = hsv_clr->val;
-                                        rgb_clr->blue = t1;
-                                        break;
+    case 1:
+        rgb_clr->red = t2;
+        rgb_clr->green = hsv_clr->val;
+        rgb_clr->blue = t1;
+        break;
 
-                        case 2:         rgb_clr->red = t1;
-                                        rgb_clr->green = hsv_clr->val;
-                                        rgb_clr->blue = t3;
-                                        break;
+    case 2:
+        rgb_clr->red = t1;
+        rgb_clr->green = hsv_clr->val;
+        rgb_clr->blue = t3;
+        break;
 
-                        case 3:         rgb_clr->red = t1;
-                                        rgb_clr->green = t2;
-                                        rgb_clr->blue = hsv_clr->val;
-                                        break;
+    case 3:
+        rgb_clr->red = t1;
+        rgb_clr->green = t2;
+        rgb_clr->blue = hsv_clr->val;
+        break;
 
-                        case 4:         rgb_clr->red = t3;
-                                        rgb_clr->green = t1;
-                                        rgb_clr->blue = hsv_clr->val;
-                                        break;
+    case 4:
+        rgb_clr->red = t3;
+        rgb_clr->green = t1;
+        rgb_clr->blue = hsv_clr->val;
+        break;
 
-                        case 5:         rgb_clr->red = hsv_clr->val;
-                                        rgb_clr->green = t1;
-                                        rgb_clr->blue = t2;
-                                        break;
+    case 5:
+        rgb_clr->red = hsv_clr->val;
+        rgb_clr->green = t1;
+        rgb_clr->blue = t2;
+        break;
+    }
 
-                }
-
-}  /* end hsv_to_rgb */
-
+} /* end hsv_to_rgb */
 
 /*
  *  set_color
@@ -197,12 +197,10 @@ void hsv_to_rgb( HSV *hsv_clr, Gcobundl *rgb_clr)
  *                      rgb_clr (Gcobundl *) - color in rgb form
  */
 
-void set_color( IDX idx, Gcobundl *rgb_clr)
+void set_color(IDX idx, Gcobundl *rgb_clr)
 {
-
-        gsetcolorrep(ws_id,idx,rgb_clr);
-}  /* end set_color */
-
+    gsetcolorrep(ws_id, idx, rgb_clr);
+} /* end set_color */
 
 /*
  *  get_color
@@ -215,11 +213,9 @@ void set_color( IDX idx, Gcobundl *rgb_clr)
 
 void get_color(IDX idx, Gcobundl *rgb_clr)
 {
+    ginqcolourrep(ws_id, idx, GSET, rgb_clr);
 
-        ginqcolourrep(ws_id,idx,GSET,rgb_clr);
-
-}  /* end get_color */
-
+} /* end get_color */
 
 /*
  *  init_screen_clrs
@@ -231,36 +227,36 @@ void get_color(IDX idx, Gcobundl *rgb_clr)
 
 void init_screen_clrs(void)
 {
-        Gcobundl rgb_clr;
+    Gcobundl rgb_clr;
 
-        black = alloc_clr_tbl_entries(3);
-        white = black + 1;
-        grey = white + 1;
+    black = alloc_clr_tbl_entries(3);
+    white = black + 1;
+    grey = white + 1;
 
-        /* set black */
+    /* set black */
 
-        rgb_clr.red = 0.0;
-        rgb_clr.green = 0.0;
-        rgb_clr.blue = 0.0;
-        set_color(black,&rgb_clr);
+    rgb_clr.red = 0.0;
+    rgb_clr.green = 0.0;
+    rgb_clr.blue = 0.0;
+    set_color(black, &rgb_clr);
 
-        /* set white */
+    /* set white */
 
-        rgb_clr.red = 1.0;
-        rgb_clr.green = 1.0;
-        rgb_clr.blue = 1.0;
-        set_color(white,&rgb_clr);
+    rgb_clr.red = 1.0;
+    rgb_clr.green = 1.0;
+    rgb_clr.blue = 1.0;
+    set_color(white, &rgb_clr);
 
-        /* set grey */
+    /* set grey */
 
-        rgb_clr.red = 0.3;
-        rgb_clr.green = 0.3;
-        rgb_clr.blue = 0.3;
-        set_color(grey,&rgb_clr);
+    rgb_clr.red = 0.3;
+    rgb_clr.green = 0.3;
+    rgb_clr.blue = 0.3;
+    set_color(grey, &rgb_clr);
 
-}  /* end init_screen_clrs */
+} /* end init_screen_clrs */
 
-static IDX freeclr = 1;                 /* first unused entry in clr
+static IDX freeclr = 1; /* first unused entry in clr
                                            tbl */
 
 /*
@@ -276,21 +272,20 @@ static IDX freeclr = 1;                 /* first unused entry in clr
 
 IDX alloc_clr_tbl_entries(int n)
 {
-        Gwstables tbl_sz;
+    Gwstables tbl_sz;
 
-        /* make sure color table limit not exceeded */
+    /* make sure color table limit not exceeded */
 
-        ginqmaxwssttables(ws_type,&tbl_sz);
+    ginqmaxwssttables(ws_type, &tbl_sz);
 
-        if ((freeclr + n) > (tbl_sz.color))
-        {
-                exit_error("alloc_clr_tbl_enties",5);
-        }
+    if ((freeclr + n) > (tbl_sz.color))
+    {
+        exit_error("alloc_clr_tbl_enties", 5);
+    }
 
-        freeclr = freeclr + n;
-        return(freeclr - n);
-};  /* end alloc_clr_tbl_entries */
-
+    freeclr = freeclr + n;
+    return (freeclr - n);
+}; /* end alloc_clr_tbl_entries */
 
 /*
  *  get_num_free_clrs
@@ -302,9 +297,9 @@ IDX alloc_clr_tbl_entries(int n)
 
 int get_num_free_clrs(void)
 {
-        Gwstables tbl_sz;
+    Gwstables tbl_sz;
 
-        ginqmaxwssttables(ws_type,&tbl_sz);
-        return(tbl_sz.color - freeclr);
+    ginqmaxwssttables(ws_type, &tbl_sz);
+    return (tbl_sz.color - freeclr);
 
-}  /* end get_num_free_clrs */
+} /* end get_num_free_clrs */

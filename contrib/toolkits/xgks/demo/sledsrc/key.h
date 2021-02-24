@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -23,12 +23,12 @@
 
 #include "clr_sel_key.h"
 
-#define		PRI_MENU_AREA		"primary menu area"
-#define		SEC_MENU_AREA		"secondary menu area"
-#define		MSG_AREA		"message area"
-#define		PAL_AREA		"palette area"
-#define		PICT_AREA		"picture area"
-#define		FGDCLR_AREA		"fgd clr area"
-#define		BGDCLR_AREA		"bgd clr area"
-#define		FILLCLR_AREA		"fill clr area"
-#define		POPUP_AREA		"popup area"
+#define PRI_MENU_AREA "primary menu area"
+#define SEC_MENU_AREA "secondary menu area"
+#define MSG_AREA "message area"
+#define PAL_AREA "palette area"
+#define PICT_AREA "picture area"
+#define FGDCLR_AREA "fgd clr area"
+#define BGDCLR_AREA "bgd clr area"
+#define FILLCLR_AREA "fill clr area"
+#define POPUP_AREA "popup area"

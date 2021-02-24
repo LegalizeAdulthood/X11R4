@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -31,21 +31,21 @@
 
 /* screen area functions */
 
-extern  void clr_wheel_area_exec( AREA area, IDX transno, Gpoint pt);
-extern  void clr_mixer_area_exec( AREA area, IDX transno, Gpoint pt);
-extern  void fine_tuner_area_exec( AREA area, IDX transno, Gpoint pt);
-extern  void clr_selector_pal_area_exec( AREA area, IDX transno, Gpoint pt);
+extern void clr_wheel_area_exec(AREA area, IDX transno, Gpoint pt);
+extern void clr_mixer_area_exec(AREA area, IDX transno, Gpoint pt);
+extern void fine_tuner_area_exec(AREA area, IDX transno, Gpoint pt);
+extern void clr_selector_pal_area_exec(AREA area, IDX transno, Gpoint pt);
 
-extern  void display_clr_picked_area(void);
+extern void display_clr_picked_area(void);
 extern void display_clr_mixer_area(void);
 extern void display_fine_tuner_area(void);
 extern void display_clr_selector_pal_area(void);
 
 /* clr selector menu functions */
 
-extern  void colors_mitem_exec( MENU_ITEM *menu_item);
-extern  void init_colors_menu( AREA area, MENU *menu);
-extern  void cleanup_colors_menu( AREA area, MENU *menu);
-void display_arrow( AREA area, ARROW *arrow, Gfloat new_knob_pos);
+extern void colors_mitem_exec(MENU_ITEM *menu_item);
+extern void init_colors_menu(AREA area, MENU *menu);
+extern void cleanup_colors_menu(AREA area, MENU *menu);
+void display_arrow(AREA area, ARROW *arrow, Gfloat new_knob_pos);
 
 #endif

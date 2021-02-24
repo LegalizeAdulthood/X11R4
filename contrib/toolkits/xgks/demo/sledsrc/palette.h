@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -28,8 +28,8 @@
 
 #include "screen_items.h"
 
-#define	MAX_PAL_ENTRIES	80
-#define	NOT_ALLOCATED	-1
+#define MAX_PAL_ENTRIES 80
+#define NOT_ALLOCATED -1
 
 extern int nrows, ncols;
 extern IDX palstartclr;
@@ -41,9 +41,9 @@ extern AREA active_clr_area;
 
 int get_fgdclr(void);
 int get_fillclr(void);
-int get_clr_idx_from_pt( Gpoint pt);
+int get_clr_idx_from_pt(Gpoint pt);
 int get_bgdclr(void);
-void init_palette_clrs( char *filename);
+void init_palette_clrs(char *filename);
 void init_clr_area_clrs(void);
 void set_fgdclr(IDX idx);
 void set_bgdclr(IDX idx);

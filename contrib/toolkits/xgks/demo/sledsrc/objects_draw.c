@@ -35,20 +35,19 @@
 
 #include "objects_draw.h"
 
-#include "popup.h"
 #include "color.h"
-#include "objects.h"
-#include "object_tbl.h"
-#include "key.h"
-#include "trans.h"
 #include "draw.h"
-#include "ws.h"
+#include "key.h"
+#include "object_tbl.h"
+#include "objects.h"
 #include "palette.h"
+#include "popup.h"
+#include "trans.h"
 #include "trans_subs.h"
+#include "ws.h"
 
-#define DRAW    0
-#define ERASE   1
-
+#define DRAW 0
+#define ERASE 1
 
 /*
  *  draw_comb_ob
@@ -60,19 +59,18 @@
  *  parameters:         comb_ob (COMB_OB *) - comb_ob to draw
  */
 
-void draw_comb_ob( COMB_OB *comb_ob)
+void draw_comb_ob(COMB_OB *comb_ob)
 {
-        OBJECT *object_ptr;
+    OBJECT *object_ptr;
 
-        for (object_ptr = comb_ob->child;
-                object_ptr != (OBJECT *) NULL;
-                object_ptr = object_ptr->next)
-        {
-                if (object_ptr->visibility == GVISIBLE)
-                        draw_object(object_ptr);
-        }
-}  /* end draw_comb_ob */
-
+    for (object_ptr = comb_ob->child;
+         object_ptr != (OBJECT *) NULL;
+         object_ptr = object_ptr->next)
+    {
+        if (object_ptr->visibility == GVISIBLE)
+            draw_object(object_ptr);
+    }
+} /* end draw_comb_ob */
 
 /*
  *  erase_comb_ob
@@ -84,18 +82,17 @@ void draw_comb_ob( COMB_OB *comb_ob)
  *  parameters:         comb_ob (COMB_OB *) - comb_ob to erase
  */
 
-void erase_comb_ob( COMB_OB *comb_ob)
+void erase_comb_ob(COMB_OB *comb_ob)
 {
-        OBJECT *object_ptr;
+    OBJECT *object_ptr;
 
-        for (object_ptr = comb_ob->child;
-                object_ptr != (OBJECT *) NULL;
-                object_ptr = object_ptr->next)
-        {
-                erase_object(object_ptr);
-        }
-}  /* end erase_comb_ob */
-
+    for (object_ptr = comb_ob->child;
+         object_ptr != (OBJECT *) NULL;
+         object_ptr = object_ptr->next)
+    {
+        erase_object(object_ptr);
+    }
+} /* end erase_comb_ob */
 
 /*
  *  draw_object
@@ -107,9 +104,8 @@ void erase_comb_ob( COMB_OB *comb_ob)
 
 void draw_object(OBJECT *object)
 {
-        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].draw))(object);
-}  /* end draw_object */
-
+    (*(object_func_tbl[get_object_func_tbl_idx(object->key)].draw))(object);
+} /* end draw_object */
 
 /*
  *  erase_object
@@ -121,9 +117,8 @@ void draw_object(OBJECT *object)
 
 void erase_object(OBJECT *object)
 {
-        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].erase))(object);
-}  /* end erase_object */
-
+    (*(object_func_tbl[get_object_func_tbl_idx(object->key)].erase))(object);
+} /* end erase_object */
 
 /*
  *  draw_line
@@ -133,24 +128,23 @@ void erase_object(OBJECT *object)
  *  parameters:         object (OBJECT *) - line object
  */
 
-void draw_line( OBJECT *object)
+void draw_line(OBJECT *object)
 {
-        /* update pts by multiplying them by transformation
+    /* update pts by multiplying them by transformation
            matrix and then set trans to identity matrix */
-        
-        if (!is_ident(object->trans))
-        {
-                pt_mult(object->lineob.pts,object->lineob.nopts,
-                        object->trans);
-                ident(object->trans);
-        }
 
-        gsetlinecolorind(object->lineob.color);
-        gsetlinetype(object->lineob.style);
-        gsetlinewidth((Gfloat) (object->lineob.width));
-        gpolyline(object->lineob.nopts,object->lineob.pts);
-}  /* end draw_line */
+    if (!is_ident(object->trans))
+    {
+        pt_mult(object->lineob.pts, object->lineob.nopts,
+            object->trans);
+        ident(object->trans);
+    }
 
+    gsetlinecolorind(object->lineob.color);
+    gsetlinetype(object->lineob.style);
+    gsetlinewidth((Gfloat)(object->lineob.width));
+    gpolyline(object->lineob.nopts, object->lineob.pts);
+} /* end draw_line */
 
 /*
  *  erase_line
@@ -160,14 +154,13 @@ void draw_line( OBJECT *object)
  *  parameters:         object (OBJECT *) - line object
  */
 
-void erase_line( OBJECT *object)
+void erase_line(OBJECT *object)
 {
-        gsetlinecolorind(get_bgdclr());
-        gsetlinetype(object->lineob.style);
-        gsetlinewidth((Gfloat) object->lineob.width);
-        gpolyline(object->lineob.nopts,object->lineob.pts);
-}  /* end erase_line */
-
+    gsetlinecolorind(get_bgdclr());
+    gsetlinetype(object->lineob.style);
+    gsetlinewidth((Gfloat) object->lineob.width);
+    gpolyline(object->lineob.nopts, object->lineob.pts);
+} /* end erase_line */
 
 /*
  *  draw_poly
@@ -178,28 +171,27 @@ void erase_line( OBJECT *object)
  *                              or conic) object
  */
 
-void draw_poly( OBJECT *object)
+void draw_poly(OBJECT *object)
 {
-        /* update pts by multiplying them by transformation
+    /* update pts by multiplying them by transformation
            matrix and then set trans to identity matrix */
 
-        if (!is_ident(object->trans))
-        {
-                pt_mult(object->polyob.pts,object->polyob.nopts,
-                        object->trans);
-                ident(object->trans);
-        }
+    if (!is_ident(object->trans))
+    {
+        pt_mult(object->polyob.pts, object->polyob.nopts,
+            object->trans);
+        ident(object->trans);
+    }
 
-        gsetfillintstyle(object->polyob.fillstyle);
-        gsetfillcolorind(object->polyob.fillcolor);
-        gfillarea(object->polyob.nopts,object->polyob.pts);
+    gsetfillintstyle(object->polyob.fillstyle);
+    gsetfillcolorind(object->polyob.fillcolor);
+    gfillarea(object->polyob.nopts, object->polyob.pts);
 
-        gsetlinecolorind(object->polyob.linecolor);
-        gsetlinetype(object->polyob.style);
-        gsetlinewidth((Gfloat) (object->polyob.width));
-        gpolyline(object->polyob.nopts,object->polyob.pts);
-}  /* end draw_poly */
-
+    gsetlinecolorind(object->polyob.linecolor);
+    gsetlinetype(object->polyob.style);
+    gsetlinewidth((Gfloat)(object->polyob.width));
+    gpolyline(object->polyob.nopts, object->polyob.pts);
+} /* end draw_poly */
 
 /*
  *  erase_poly
@@ -209,21 +201,20 @@ void draw_poly( OBJECT *object)
  *  parameters:         none
  */
 
-void erase_poly( OBJECT *object)
+void erase_poly(OBJECT *object)
 {
-        if (object->polyob.fillstyle == GSOLID)
-        {
-                gsetfillintstyle(object->polyob.fillstyle);
-                gsetfillcolorind(get_bgdclr());
-                gfillarea(object->polyob.nopts,object->polyob.pts);
-        }
+    if (object->polyob.fillstyle == GSOLID)
+    {
+        gsetfillintstyle(object->polyob.fillstyle);
+        gsetfillcolorind(get_bgdclr());
+        gfillarea(object->polyob.nopts, object->polyob.pts);
+    }
 
-        gsetlinecolorind(get_bgdclr());
-        gsetlinetype(object->polyob.style);
-        gsetlinewidth((Gfloat) object->polyob.width);
-        gpolyline(object->polyob.nopts,object->polyob.pts);
-}  /* end erase_poly */
-
+    gsetlinecolorind(get_bgdclr());
+    gsetlinetype(object->polyob.style);
+    gsetlinewidth((Gfloat) object->polyob.width);
+    gpolyline(object->polyob.nopts, object->polyob.pts);
+} /* end erase_poly */
 
 /*
  *  draw_text
@@ -233,11 +224,10 @@ void erase_poly( OBJECT *object)
  *  parameters:         object (OBJECT *) - text object
  */
 
-void draw_text( OBJECT *object)
+void draw_text(OBJECT *object)
 {
-        display_text(object,DRAW);
-}  /* end draw_text */
-
+    display_text(object, DRAW);
+} /* end draw_text */
 
 /*
  *  erase_text
@@ -247,11 +237,10 @@ void draw_text( OBJECT *object)
  *  parameters:         object (OBJECT *) - text object
  */
 
-void erase_text( OBJECT *object)
+void erase_text(OBJECT *object)
 {
-        display_text(object,ERASE);
-}  /* end erase_text */
-
+    display_text(object, ERASE);
+} /* end erase_text */
 
 /*
  *  display_text
@@ -262,245 +251,251 @@ void erase_text( OBJECT *object)
  *                      draw_erase (int) - DRAW | ERASE
  */
 
-void display_text( OBJECT *object, int draw_erase)
+void display_text(OBJECT *object, int draw_erase)
 {
-        Gtxpath path;
-        Gtxhor horz;
-        Gtxver vert;
-        Gpoint pos;
-        Gfloat dir;
-        Gpoint pt;
-        Gfloat ht = 0;
-        Gfloat wd = 0;
-        CHAR_OB* ch_ptr;
-        Gpoint window[2];
-        char str[2];
-        Gtxfp tfp;
-        Gtxalign align;
+    Gtxpath path;
+    Gtxhor horz;
+    Gtxver vert;
+    Gpoint pos;
+    Gfloat dir;
+    Gpoint pt;
+    Gfloat ht = 0;
+    Gfloat wd = 0;
+    CHAR_OB *ch_ptr;
+    Gpoint window[2];
+    char str[2];
+    Gtxfp tfp;
+    Gtxalign align;
 
+    get_window(PICT_AREA, window);
+    path = object->textob.path;
+    horz = object->textob.horz_just;
+    vert = object->textob.vert_just;
+    pos = object->textob.pos;
 
-        get_window(PICT_AREA,window);
-        path = object->textob.path;
-        horz = object->textob.horz_just;
-        vert = object->textob.vert_just;
-        pos = object->textob.pos;
+    /* find width and height of string (ignoring transformations) */
 
-        /* find width and height of string (ignoring transformations) */
-
-        switch (path)
-        {
-                case GTP_RIGHT:
-                case GTP_LEFT:  wd = 0;
-                                ht = 0;
-                                for (ch_ptr = object->textob.str;
-                                        ch_ptr->next != 
-                                        (struct char_ob *) NULL;
-                                        ch_ptr = ch_ptr->next)
-                                {
-                                        /* add in wd of char */
-                                        wd += ch_ptr->width;
-
-                                        /* add in spacing */
-                                        wd += (ch_ptr->expansion *
-                                                ch_ptr-> height +
-                                                ch_ptr->next->expansion
-                                                * ch_ptr->next->height)
-                                                / 5.0;
-                                        
-                                        /* find max char ht */
-                                        if (ht < ch_ptr->height)
-                                                ht = ch_ptr->height;
-                                }
-                                wd += ch_ptr->width;
-                                if (ht < ch_ptr->height)
-                                        ht = ch_ptr->height;
-                                break;
-
-                case GTP_UP:
-                case GTP_DOWN:  wd = 0;
-                                ht = 0;
-                                for (ch_ptr = object->textob.str;
-                                        ch_ptr->next != 
-                                        (struct char_ob *) NULL;
-                                        ch_ptr = ch_ptr->next)
-                                {
-                                        /* add in ht of char */
-                                        ht += ch_ptr->height;
-
-                                        /* add in spacing */
-                                        ht += (ch_ptr->height +
-                                                ch_ptr->next->height)
-                                                / 40.0;
-                                        
-                                        /* find max char wd */
-                                        if (wd < ch_ptr->width)
-                                                wd = ch_ptr->width;
-                                }
-                                ht += ch_ptr->height;
-                                if (wd < ch_ptr->width)
-                                        wd = ch_ptr->width;
-                                break;
-        }  /* end switch */
-
-        /* find starting x position (ignoring transformation) */
-
-        switch (path)
-        {
-                case GTP_RIGHT: if (horz == GTH_LEFT)
-                                        pt.x = pos.x;
-                                else if (horz == GTH_RIGHT)
-                                        pt.x = pos.x - wd;
-                                else  /* horz == GTH_CENTER */
-                                        pt.x = pos.x - (wd / 2.0);
-                                break;
-
-                case GTP_LEFT:  if (horz == GTH_LEFT)
-                                        pt.x = pos.x + wd;
-                                else if (horz == GTH_RIGHT)
-                                        pt.x = pos.x;
-                                else  /* horz == GTH_CENTER */
-                                        pt.x = pos.x + (wd / 2.0);
-                                break;
-
-                case GTP_UP:
-                case GTP_DOWN:  if (horz == GTH_LEFT)
-                                        pt.x = pos.x + (wd / 2.0);
-                                else if (horz == GTH_RIGHT)
-                                        pt.x = pos.x - (wd / 2.0);
-                                else  /* horz == GTH_CENTER */
-                                        pt.x = pos.x;
-                                break;
-
-        }  /* end switch */
-
-        /* find starting y position (ignoring transformation) */
-
-        switch (path)
-        {
-                case GTP_RIGHT:
-                case GTP_LEFT:  if (vert == GTV_CAP)
-                                        pt.y = pos.y - (ht / 2.0);
-                                else if (vert == GTV_HALF)
-                                        pt.y = pos.y;
-                                else  /* vert == GTV_BASE */
-                                        pt.y = pos.y + (ht / 2.0);
-                                break;
-
-                case GTP_UP:    if (vert == GTV_CAP)
-                                        pt.y = pos.y - ht;
-                                else if (vert == GTV_HALF)
-                                        pt.y = pos.y - (ht / 2.0);
-                                else  /* vert == GTV_BASE */
-                                        pt.y = pos.y;
-                                break;
-
-                case GTP_DOWN:  if (vert == GTV_CAP)
-                                        pt.y = pos.y;
-                                else if (vert == GTV_HALF)
-                                        pt.y = pos.y + (ht / 2.0);
-                                else  /* vert == GTV_BASE */
-                                        pt.y = pos.y + ht;
-                                break;
-
-        }  /* end switch */
-
-        /* calculate center of each char (ignoring transformations) */
-
-        switch (path)
-        {
-                case GTP_RIGHT: dir = 1.0;
-                                break;
-
-                case GTP_LEFT:  dir = -1.0;
-                                break;
-
-                case GTP_UP:    dir = 1.0;
-                                break;
-
-                case GTP_DOWN:  dir = -1.0;
-                                break;
-
-                default:        dir = 1.0;
-        }  /* end switch */
-
-        switch (path)
-        {
-                case GTP_RIGHT: 
-                case GTP_LEFT:  for (ch_ptr = object->textob.str;
-                                        ch_ptr != (struct char_ob *) NULL;
-                                        ch_ptr = ch_ptr->next)
-                                {
-                                        ch_ptr->center.x = pt.x
-                                                + dir * ch_ptr->width
-                                                / 2.0;
-                                        ch_ptr->center.y = pt.y;
-
-                                        if (ch_ptr->next != (struct char_ob *) NULL)
-                                        {
-                                                pt.x += (dir * ch_ptr->width);
-                                                pt.x += dir *
-                                                        (ch_ptr->expansion
-                                                        * ch_ptr-> height +
-                                                        ch_ptr->next->expansion * ch_ptr->next->height) / 5.0;
-                                        }
-                                }
-                                break;
-
-                case GTP_UP:    
-                case GTP_DOWN:  for (ch_ptr = object->textob.str;
-                                        ch_ptr != (struct char_ob *) NULL;
-                                        ch_ptr = ch_ptr->next)
-                                {
-                                        ch_ptr->center.y = pt.y
-                                                + dir * ch_ptr->height
-                                                / 2.0;
-                                        ch_ptr->center.x = pt.x;
-
-                                        if (ch_ptr->next != (struct char_ob *) NULL)
-                                        {
-                                                pt.y += (dir * ch_ptr->height);
-                                                pt.y += dir * (ch_ptr->height +
-                                                        ch_ptr->next->height) / 40.0;
-                                        }
-                                }
-                                break;
-        }  /* end switch */
-
-        /* multiply pts by transformation matrix */
-
+    switch (path)
+    {
+    case GTP_RIGHT:
+    case GTP_LEFT:
+        wd = 0;
+        ht = 0;
         for (ch_ptr = object->textob.str;
-                ch_ptr != (struct char_ob *) NULL;
-                ch_ptr = ch_ptr->next)
+             ch_ptr->next != (struct char_ob *) NULL;
+             ch_ptr = ch_ptr->next)
         {
-                pt_mult(&(ch_ptr->center),1,object->trans);
+            /* add in wd of char */
+            wd += ch_ptr->width;
+
+            /* add in spacing */
+            wd += (ch_ptr->expansion * ch_ptr->height + ch_ptr->next->expansion * ch_ptr->next->height)
+                / 5.0;
+
+            /* find max char ht */
+            if (ht < ch_ptr->height)
+                ht = ch_ptr->height;
         }
+        wd += ch_ptr->width;
+        if (ht < ch_ptr->height)
+            ht = ch_ptr->height;
+        break;
 
-        /* finally - display text */
-
-        align.hor = GTH_CENTER;
-        align.ver = GTV_HALF;
-        gsettextalign(&align);
-
-        gsettextpath(path);
-        gsetcharup(&(object->textob.up_vec));
-
-        str[1] = 0;
+    case GTP_UP:
+    case GTP_DOWN:
+        wd = 0;
+        ht = 0;
         for (ch_ptr = object->textob.str;
-                ch_ptr != (CHAR_OB *) NULL;
-                ch_ptr = ch_ptr->next)
+             ch_ptr->next != (struct char_ob *) NULL;
+             ch_ptr = ch_ptr->next)
         {
-                gsettextcolorind((draw_erase == DRAW) ?
-                        ch_ptr->color : get_bgdclr());
-                gsetcharheight(ch_ptr->height);
+            /* add in ht of char */
+            ht += ch_ptr->height;
 
-                tfp.font = ch_ptr->fontstyle;
-                tfp.prec = GSTROKE;
-                gsettextfontprec(&tfp);
+            /* add in spacing */
+            ht += (ch_ptr->height + ch_ptr->next->height)
+                / 40.0;
 
-                gsetcharexpan(ch_ptr->expansion);
-
-                str[0] = ch_ptr->ch;
-
-                gtext(&(ch_ptr->center),str);
+            /* find max char wd */
+            if (wd < ch_ptr->width)
+                wd = ch_ptr->width;
         }
-}  /* end display_text */
+        ht += ch_ptr->height;
+        if (wd < ch_ptr->width)
+            wd = ch_ptr->width;
+        break;
+    } /* end switch */
+
+    /* find starting x position (ignoring transformation) */
+
+    switch (path)
+    {
+    case GTP_RIGHT:
+        if (horz == GTH_LEFT)
+            pt.x = pos.x;
+        else if (horz == GTH_RIGHT)
+            pt.x = pos.x - wd;
+        else /* horz == GTH_CENTER */
+            pt.x = pos.x - (wd / 2.0);
+        break;
+
+    case GTP_LEFT:
+        if (horz == GTH_LEFT)
+            pt.x = pos.x + wd;
+        else if (horz == GTH_RIGHT)
+            pt.x = pos.x;
+        else /* horz == GTH_CENTER */
+            pt.x = pos.x + (wd / 2.0);
+        break;
+
+    case GTP_UP:
+    case GTP_DOWN:
+        if (horz == GTH_LEFT)
+            pt.x = pos.x + (wd / 2.0);
+        else if (horz == GTH_RIGHT)
+            pt.x = pos.x - (wd / 2.0);
+        else /* horz == GTH_CENTER */
+            pt.x = pos.x;
+        break;
+
+    } /* end switch */
+
+    /* find starting y position (ignoring transformation) */
+
+    switch (path)
+    {
+    case GTP_RIGHT:
+    case GTP_LEFT:
+        if (vert == GTV_CAP)
+            pt.y = pos.y - (ht / 2.0);
+        else if (vert == GTV_HALF)
+            pt.y = pos.y;
+        else /* vert == GTV_BASE */
+            pt.y = pos.y + (ht / 2.0);
+        break;
+
+    case GTP_UP:
+        if (vert == GTV_CAP)
+            pt.y = pos.y - ht;
+        else if (vert == GTV_HALF)
+            pt.y = pos.y - (ht / 2.0);
+        else /* vert == GTV_BASE */
+            pt.y = pos.y;
+        break;
+
+    case GTP_DOWN:
+        if (vert == GTV_CAP)
+            pt.y = pos.y;
+        else if (vert == GTV_HALF)
+            pt.y = pos.y + (ht / 2.0);
+        else /* vert == GTV_BASE */
+            pt.y = pos.y + ht;
+        break;
+
+    } /* end switch */
+
+    /* calculate center of each char (ignoring transformations) */
+
+    switch (path)
+    {
+    case GTP_RIGHT:
+        dir = 1.0;
+        break;
+
+    case GTP_LEFT:
+        dir = -1.0;
+        break;
+
+    case GTP_UP:
+        dir = 1.0;
+        break;
+
+    case GTP_DOWN:
+        dir = -1.0;
+        break;
+
+    default:
+        dir = 1.0;
+    } /* end switch */
+
+    switch (path)
+    {
+    case GTP_RIGHT:
+    case GTP_LEFT:
+        for (ch_ptr = object->textob.str;
+             ch_ptr != (struct char_ob *) NULL;
+             ch_ptr = ch_ptr->next)
+        {
+            ch_ptr->center.x = pt.x
+                + dir * ch_ptr->width
+                    / 2.0;
+            ch_ptr->center.y = pt.y;
+
+            if (ch_ptr->next != (struct char_ob *) NULL)
+            {
+                pt.x += (dir * ch_ptr->width);
+                pt.x += dir * (ch_ptr->expansion
+                                      * ch_ptr->height
+                                  + ch_ptr->next->expansion * ch_ptr->next->height)
+                    / 5.0;
+            }
+        }
+        break;
+
+    case GTP_UP:
+    case GTP_DOWN:
+        for (ch_ptr = object->textob.str;
+             ch_ptr != (struct char_ob *) NULL;
+             ch_ptr = ch_ptr->next)
+        {
+            ch_ptr->center.y = pt.y
+                + dir * ch_ptr->height
+                    / 2.0;
+            ch_ptr->center.x = pt.x;
+
+            if (ch_ptr->next != (struct char_ob *) NULL)
+            {
+                pt.y += (dir * ch_ptr->height);
+                pt.y += dir * (ch_ptr->height + ch_ptr->next->height) / 40.0;
+            }
+        }
+        break;
+    } /* end switch */
+
+    /* multiply pts by transformation matrix */
+
+    for (ch_ptr = object->textob.str;
+         ch_ptr != (struct char_ob *) NULL;
+         ch_ptr = ch_ptr->next)
+    {
+        pt_mult(&(ch_ptr->center), 1, object->trans);
+    }
+
+    /* finally - display text */
+
+    align.hor = GTH_CENTER;
+    align.ver = GTV_HALF;
+    gsettextalign(&align);
+
+    gsettextpath(path);
+    gsetcharup(&(object->textob.up_vec));
+
+    str[1] = 0;
+    for (ch_ptr = object->textob.str;
+         ch_ptr != (CHAR_OB *) NULL;
+         ch_ptr = ch_ptr->next)
+    {
+        gsettextcolorind((draw_erase == DRAW) ? ch_ptr->color : get_bgdclr());
+        gsetcharheight(ch_ptr->height);
+
+        tfp.font = ch_ptr->fontstyle;
+        tfp.prec = GSTROKE;
+        gsettextfontprec(&tfp);
+
+        gsetcharexpan(ch_ptr->expansion);
+
+        str[0] = ch_ptr->ch;
+
+        gtext(&(ch_ptr->center), str);
+    }
+} /* end display_text */

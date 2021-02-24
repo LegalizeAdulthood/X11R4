@@ -34,17 +34,17 @@
 #include <strings.h>
 
 #include "changes.h"
-#include "key.h"
-#include "screen_items.h"
-#include "functbl.h"
-#include "ws.h"
-#include "grid.h"
-#include "color.h"
-#include "trans.h"
-#include "palette.h"
 #include "clr_sel_draw.h"
-#include "prompt.h"
+#include "color.h"
 #include "draw.h"
+#include "functbl.h"
+#include "grid.h"
+#include "key.h"
+#include "palette.h"
+#include "prompt.h"
+#include "screen_items.h"
+#include "trans.h"
+#include "ws.h"
 
 void redraw_all(Gint ws_id, Gredraw redraw);
 void init_gks(void);
@@ -55,91 +55,91 @@ void close_down_gks(void);
 
 char *hostname;
 WSTYPE ws_type;
-WSID ws_id = 1;                         /* ws id no */
-WSID pic_wsid = 2;                      /* pic ws id no */
+WSID ws_id = 1;    /* ws id no */
+WSID pic_wsid = 2; /* pic ws id no */
 
 /*
  *  main
  */
 
-int main( int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-        BOOLEAN picture_read;
-        Gpoint pt;
+    BOOLEAN picture_read;
+    Gpoint pt;
 
-        /* get ws_type */
+    /* get ws_type */
 
-        ws_type = argv[1];
-        hostname = argv[1];
-        
-        /* initialize graphics package */
+    ws_type = argv[1];
+    hostname = argv[1];
 
-        init_gks();
+    /* initialize graphics package */
 
-        /* initialize all variables, colors and tables */
+    init_gks();
 
-        init_screen_clrs();
+    /* initialize all variables, colors and tables */
 
-        /* read in picture description from external file
+    init_screen_clrs();
+
+    /* read in picture description from external file
            if one was specified, otherwise read in standard
            palette colors */
 
-        /* It seems this feature is not implemented right now... */
+    /* It seems this feature is not implemented right now... */
 
-        adjust_screen_tbl_viewports();
-        init_trans_tbls();
+    adjust_screen_tbl_viewports();
+    init_trans_tbls();
 
-        picture_read = FALSE;
+    picture_read = FALSE;
 
-        if (picture_read == FALSE)
-                init_palette_clrs("palette_clrs");
+    if (picture_read == FALSE)
+        init_palette_clrs("palette_clrs");
 
-        init_clr_area_clrs();
-        init_grid();
+    init_clr_area_clrs();
+    init_grid();
 
-        init_clr_selector_clrs();
-        init_bundle_tbls();
+    init_clr_selector_clrs();
+    init_bundle_tbls();
 
-        /* rig to get text to show up with new server */
+    /* rig to get text to show up with new server */
 
-        set_font("popup text key",1,GSTROKE);
-        gsettextind(5);
-        pt.x = 10000.0; pt.y = 10000.0;
-        gtext(&pt,"text");
-        set_font("popup text key",2,GSTROKE);
+    set_font("popup text key", 1, GSTROKE);
+    gsettextind(5);
+    pt.x = 10000.0;
+    pt.y = 10000.0;
+    gtext(&pt, "text");
+    set_font("popup text key", 2, GSTROKE);
 
-        /* draw initial screen area */
+    /* draw initial screen area */
 
-        draw_screen_background();
-        (*(screen_tbl[find_screen_tbl_idx(PAL_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(FGDCLR_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(BGDCLR_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(FILLCLR_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(POPUP_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(PICT_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(MSG_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(PRI_MENU_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(SEC_MENU_AREA)].draw))();
+    draw_screen_background();
+    (*(screen_tbl[find_screen_tbl_idx(PAL_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(FGDCLR_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(BGDCLR_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(FILLCLR_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(POPUP_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(PICT_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(MSG_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(PRI_MENU_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(SEC_MENU_AREA)].draw))();
 
-        /* read in menu hierarchy */
+    /* read in menu hierarchy */
 
-        read_menu_file("menu");
+    read_menu_file("menu");
 
-        /* initialize locator */
+    /* initialize locator */
 
-        initialize_locator();
+    initialize_locator();
 
-        /* all set to go */
+    /* all set to go */
 
-        manage_input();
+    manage_input();
 
-        /* close down */
+    /* close down */
 
-        close_down_gks();
-        exit(0);
+    close_down_gks();
+    exit(0);
 
-}  /* end main */
-
+} /* end main */
 
 /*
  *  init_gks
@@ -153,55 +153,53 @@ int main( int argc, char *argv[])
 
 void init_gks(void)
 {
-        Gfloat xmax_dc,ymax_dc;
-        Glimit win_lim,view_lim;
+    Gfloat xmax_dc, ymax_dc;
+    Glimit win_lim, view_lim;
 
-        /* initialize ws */
+    /* initialize ws */
 
-        gopengks(stderr,0);
-        gopenws(ws_id,hostname,ws_type);
-        gactivatews(ws_id);
+    gopengks(stderr, 0);
+    gopenws(ws_id, hostname, ws_type);
+    gactivatews(ws_id);
 
-        set_aspect_flags(GBUNDLED);
+    set_aspect_flags(GBUNDLED);
 
-        /* set up workstation transformation */
+    /* set up workstation transformation */
 
-        get_max_dc_coor(&xmax_dc,&ymax_dc);
-        if (xmax_dc > ymax_dc)
-        {
-                win_lim.xmin = 0.0;
-                win_lim.xmax = 1.0;
-                win_lim.ymin = 0.0;
-                win_lim.ymax = (ymax_dc/xmax_dc);
-                gsetwswindow(ws_id,&win_lim);
-        }
-        else
-        {
-                win_lim.xmin = 0.0;
-                win_lim.xmax = (xmax_dc/ymax_dc);
-                win_lim.ymin = 0.0;
-                win_lim.ymax = 1.0;
-                gsetwswindow(ws_id,&win_lim);
-        }
-        view_lim.xmin = 0.0;
-        view_lim.xmax = xmax_dc;
-        view_lim.ymin = 0.0;
-        view_lim.ymax = ymax_dc;
-        gsetwsviewport(ws_id,&view_lim);
+    get_max_dc_coor(&xmax_dc, &ymax_dc);
+    if (xmax_dc > ymax_dc)
+    {
+        win_lim.xmin = 0.0;
+        win_lim.xmax = 1.0;
+        win_lim.ymin = 0.0;
+        win_lim.ymax = (ymax_dc / xmax_dc);
+        gsetwswindow(ws_id, &win_lim);
+    }
+    else
+    {
+        win_lim.xmin = 0.0;
+        win_lim.xmax = (xmax_dc / ymax_dc);
+        win_lim.ymin = 0.0;
+        win_lim.ymax = 1.0;
+        gsetwswindow(ws_id, &win_lim);
+    }
+    view_lim.xmin = 0.0;
+    view_lim.xmax = xmax_dc;
+    view_lim.ymin = 0.0;
+    view_lim.ymax = ymax_dc;
+    gsetwsviewport(ws_id, &view_lim);
 
-        /* turn off automatic redraw */
+    /* turn off automatic redraw */
 
-        gsetdeferst(ws_id,GASAP,GALLOWED);
-        gsetclip(GCLIP);
+    gsetdeferst(ws_id, GASAP, GALLOWED);
+    gsetclip(GCLIP);
 
-        /* Set up escape features for redrawing window: */
+    /* Set up escape features for redrawing window: */
 
-        gescstoreprimi(ws_id,GNO);
-        gescredrawnotify(ws_id,redraw_all);
+    gescstoreprimi(ws_id, GNO);
+    gescredrawnotify(ws_id, redraw_all);
 
-
-}  /* end init_gks */
-
+} /* end init_gks */
 
 /*
  *  close_down_gks
@@ -213,11 +211,10 @@ void init_gks(void)
 
 void close_down_gks(void)
 {
-        gdeactivatews(ws_id);
-        gclosews(ws_id);
-        gclosegks();
+    gdeactivatews(ws_id);
+    gclosews(ws_id);
+    gclosegks();
 } /* end close_gks */
-
 
 /*
  * redraw_all
@@ -228,27 +225,25 @@ void close_down_gks(void)
 
 void redraw_all(Gint ws_id, Gredraw redraw)
 {
+    IDX idx;
 
-        IDX idx;
+    draw_screen_background();
+    (*(screen_tbl[find_screen_tbl_idx(PAL_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(FGDCLR_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(BGDCLR_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(FILLCLR_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(POPUP_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(PICT_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(MSG_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(PRI_MENU_AREA)].draw))();
+    (*(screen_tbl[find_screen_tbl_idx(SEC_MENU_AREA)].draw))();
 
-        draw_screen_background();
-        (*(screen_tbl[find_screen_tbl_idx(PAL_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(FGDCLR_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(BGDCLR_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(FILLCLR_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(POPUP_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(PICT_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(MSG_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(PRI_MENU_AREA)].draw))();
-        (*(screen_tbl[find_screen_tbl_idx(SEC_MENU_AREA)].draw))();
-
-        idx = find_screen_tbl_idx(PICT_AREA);
-        if (screen_tbl[idx].is_active == FALSE)
-        {
-                reprompt(1);
-                return;
-        }
-        erase_area(PICT_AREA);
-        (*(screen_tbl[idx].draw))();
+    idx = find_screen_tbl_idx(PICT_AREA);
+    if (screen_tbl[idx].is_active == FALSE)
+    {
+        reprompt(1);
+        return;
+    }
+    erase_area(PICT_AREA);
+    (*(screen_tbl[idx].draw))();
 } /* end redraw_all */
-

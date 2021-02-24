@@ -25,47 +25,44 @@
  *      in_bounds_delta
  */
 
-#include "trans.h"      /* Defines MIN,MAX and includes <xgks.h> */
 #include "changes.h"
+#include "trans.h" /* Defines MIN,MAX and includes <xgks.h> */
 
 void init_locator(WSID id, int dev, Gpoint *pos, IDX ntrans, int prompt, Gfloat xmin, Gfloat xmax, Gfloat ymin, Gfloat ymax)
 {
-        Gloc init;
-        Glimit area;
-        Glocrec data;
-        
-        init.position.x = pos->x;
-        init.position.y = pos->y;
-        init.transform = ntrans;
-        area.xmin = xmin;
-        area.xmax = xmax;
-        area.ymin = ymin;
-        area.ymax = ymax;
+    Gloc init;
+    Glimit area;
+    Glocrec data;
 
-        data.pet3.data = NULL;
+    init.position.x = pos->x;
+    init.position.y = pos->y;
+    init.transform = ntrans;
+    area.xmin = xmin;
+    area.xmax = xmax;
+    area.ymin = ymin;
+    area.ymax = ymax;
 
-        ginitloc(id,dev,&init,prompt,&area,&data);
+    data.pet3.data = NULL;
+
+    ginitloc(id, dev, &init, prompt, &area, &data);
 }
 
 void req_locator(WSID id, int dev, Gistat *status, IDX *ntrans, Gpoint *pos)
 {
-        Gqloc response;
+    Gqloc response;
 
-        greqloc(id,dev,&response);
+    greqloc(id, dev, &response);
 
-        *status = response.status;
-        *ntrans = response.loc.transform;
-        pos->x = response.loc.position.x;
-        pos->y = response.loc.position.y;
+    *status = response.status;
+    *ntrans = response.loc.transform;
+    pos->x = response.loc.position.x;
+    pos->y = response.loc.position.y;
 }
 
 BOOLEAN in_bounds_delta(Gpoint *ext, Gpoint point, Gfloat delt)
 {
-        if (((ext[MIN].x - delt) <= point.x) &&
-            ((ext[MIN].y - delt) <= point.y) &&
-            ((ext[MAX].x + delt) >= point.x) &&
-            ((ext[MAX].y + delt) >= point.y))
-        return(TRUE);
-        else return(FALSE);
+    if (((ext[MIN].x - delt) <= point.x) && ((ext[MIN].y - delt) <= point.y) && ((ext[MAX].x + delt) >= point.x) && ((ext[MAX].y + delt) >= point.y))
+        return (TRUE);
+    else
+        return (FALSE);
 }
-

@@ -30,7 +30,6 @@
 #include "attributes.h"
 #include "ws.h"
 
-
 /*
  *  get_cur_primitive_attributes
  *
@@ -40,18 +39,17 @@
  *                      list of attributes
  */
 
-void get_cur_primitive_attributes( struct prim_attr_val *attr)
+void get_cur_primitive_attributes(struct prim_attr_val *attr)
 {
-        i_cur_primitive_attributes(&(attr->error),&(attr->pline_idx),
-                &(attr->pmark_idx),&(attr->text_idx),
-                &(attr->char_height),&(attr->char_up),
-                &(attr->text_path),&(attr->text_align_horz),
-                &(attr->text_align_vert),&(attr->fill_idx),
-                &(attr->pattern_size), &(attr->pattern_ref_pt),
-                &(attr->pickid));
+    i_cur_primitive_attributes(&(attr->error), &(attr->pline_idx),
+        &(attr->pmark_idx), &(attr->text_idx),
+        &(attr->char_height), &(attr->char_up),
+        &(attr->text_path), &(attr->text_align_horz),
+        &(attr->text_align_vert), &(attr->fill_idx),
+        &(attr->pattern_size), &(attr->pattern_ref_pt),
+        &(attr->pickid));
 
 } /* end get_cur_primitive_attributes */
-
 
 /*
  *  get_cur_individual_attributes
@@ -62,21 +60,18 @@ void get_cur_primitive_attributes( struct prim_attr_val *attr)
  *                      list of attributes
  */
 
-get_cur_individual_attributes(attr)
-struct indiv_attr_val *attr;
+get_cur_individual_attributes(attr) struct indiv_attr_val *attr;
 {
-        i_cur_individual_attributes(&(attr->error),&(attr->pline_type),
-                &(attr->pline_width),&(attr->pline_color),
-                &(attr->pmark_type),&(attr->pmark_size),
-                &(attr->pmark_color),&(attr->text_font),
-                &(attr->text_precision),&(attr->text_expansion),
-                &(attr->text_spacing),&(attr->text_color),
-                &(attr->fill_style),&(attr->fill_style_idx),
-                &(attr->fill_color),attr->aspect_flags);
+    i_cur_individual_attributes(&(attr->error), &(attr->pline_type),
+        &(attr->pline_width), &(attr->pline_color),
+        &(attr->pmark_type), &(attr->pmark_size),
+        &(attr->pmark_color), &(attr->text_font),
+        &(attr->text_precision), &(attr->text_expansion),
+        &(attr->text_spacing), &(attr->text_color),
+        &(attr->fill_style), &(attr->fill_style_idx),
+        &(attr->fill_color), attr->aspect_flags);
 
-}  /* end get_cur_individual_attributes */
-
-
+} /* end get_cur_individual_attributes */
 
 /*
  *  get_max_length_ws_tables
@@ -87,19 +82,16 @@ struct indiv_attr_val *attr;
  *                      list of table sizes
  */
 
-get_max_length_ws_tables(tbl_sz)
-struct state_tbl_sz *tbl_sz;
+get_max_length_ws_tables(tbl_sz) struct state_tbl_sz *tbl_sz;
 {
-        Gint error;
+    Gint error;
 
-        i_max_length_ws_tables(ws_type,&error,&(tbl_sz->pline),
-                &(tbl_sz->pmark),&(tbl_sz->text),
-                &(tbl_sz->fill),&(tbl_sz->pattern),
-                &(tbl_sz->color));
+    i_max_length_ws_tables(ws_type, &error, &(tbl_sz->pline),
+        &(tbl_sz->pmark), &(tbl_sz->text),
+        &(tbl_sz->fill), &(tbl_sz->pattern),
+        &(tbl_sz->color));
 
-}       /* end get_max_length_ws_tables */
-
-
+} /* end get_max_length_ws_tables */
 
 /*
  *  get_pline_fac
@@ -110,16 +102,14 @@ struct state_tbl_sz *tbl_sz;
  *                              to hold info on line facilities
  */
 
-get_pline_fac(attr) 
-struct pline_fac_val *attr;
+get_pline_fac(attr) struct pline_fac_val *attr;
 {
-        Gint error;
+    Gint error;
 
-        i_pline_fac(ws_type,&error,&(attr->ntypes),
-                &(attr->list),&(attr->nwidths),&(attr->nom_width),
-                &(attr->min_width),&(attr->max_width),&(attr->npredef));
-}  /* end get_pline_fac */
-
+    i_pline_fac(ws_type, &error, &(attr->ntypes),
+        &(attr->list), &(attr->nwidths), &(attr->nom_width),
+        &(attr->min_width), &(attr->max_width), &(attr->npredef));
+} /* end get_pline_fac */
 
 /*
  *  get_text_fac
@@ -130,15 +120,13 @@ struct pline_fac_val *attr;
  *                              to hold info on text facilities
  */
 
-get_text_fac(attr) 
-struct text_fac_val *attr;
+get_text_fac(attr) struct text_fac_val *attr;
 {
-        Gint error;
+    Gint error;
 
-        i_text_fac(ws_type,&error,&(attr->nfonts),
-                &(attr->fontpairs), &(attr->nheights),
-                &(attr->min_height), &(attr->max_height),
-                &(attr->nexpansion), &(attr->min_expansion),
-                &(attr->max_expansion), &(attr->npredef));
-}  /* end get_text_fac */
-
+    i_text_fac(ws_type, &error, &(attr->nfonts),
+        &(attr->fontpairs), &(attr->nheights),
+        &(attr->min_height), &(attr->max_height),
+        &(attr->nexpansion), &(attr->min_expansion),
+        &(attr->max_expansion), &(attr->npredef));
+} /* end get_text_fac */

@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -28,52 +28,51 @@
 
 #include "screen_items.h"
 
-#define	MAX_NUM_POPUPS		9	/* max num of popups to be
-					   displayed at one time */
-
+#define MAX_NUM_POPUPS 9 /* max num of popups to be \
+                            displayed at one time */
 
 /*
  *  update states
  */
 
-#define	QUICK_UPDATE		0
-#define	FULL_UPDATE		1
-#define	FINAL_UPDATE		2
+#define QUICK_UPDATE 0
+#define FULL_UPDATE 1
+#define FINAL_UPDATE 2
 
 /*
  *  grid states
  */
 
-#define	GRID_OFF		0
-#define	GRID_ON			1
-#define	SNAP_ON			2
+#define GRID_OFF 0
+#define GRID_ON 1
+#define SNAP_ON 2
 
 /*
  * verbose states
  */
 
-#define	VERBOSE_MODE_OFF	0
-#define	VERBOSE_MODE_ON		1
+#define VERBOSE_MODE_OFF 0
+#define VERBOSE_MODE_ON 1
 
 /*
  * grid color states
  */
 
-#define	WHITE_GRID		0
-#define	GREY_GRID		1
-#define	BLACK_GRID		2
+#define WHITE_GRID 0
+#define GREY_GRID 1
+#define BLACK_GRID 2
 
 extern Gint get_verbose_mode(void);
-void display_popup( POPUP *popup, int nlns, char **lines);
-void display_popups( POPUP *poplst);
-void erase_popups( POPUP *poplst);
+void display_popup(POPUP *popup, int nlns, char **lines);
+void display_popups(POPUP *poplst);
+void erase_popups(POPUP *poplst);
 void display_number_popup(POPUP *popup, char *text, int state);
 void switch_number_popup_state(Gpoint *extent, int *state, Gpoint pt, int mini, int maxi);
 void switch_popup_state(int *state, int nostates, int nlns, char **lines, Gpoint extent[]);
-void display_header_popup( POPUP *popup, char *header_text, char **text, int nlns);
-void switch_header_popup_state( int *state, int nostates, int nlns, char **lines, Gpoint extent[]);
+void display_header_popup(POPUP *popup, char *header_text, char **text, int nlns);
+void switch_header_popup_state(int *state, int nostates, int nlns, char **lines, Gpoint extent[]);
 void display_popup_area(void);
-void add_to_currpoptbl( POPUP *head_popup);
-void rm_from_currpoptbl( POPUP *head_popup);
+void add_to_currpoptbl(POPUP *head_popup);
+void rm_from_currpoptbl(POPUP *head_popup);
 
 #endif

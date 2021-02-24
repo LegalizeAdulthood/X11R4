@@ -30,11 +30,10 @@
 
 #include "obj_rotate.h"
 
-#include "objects.h"
 #include "object_tbl.h"
+#include "objects.h"
 #include "screen_items.h"
 #include "trans_subs.h"
-
 
 /*
  *  rotate_comb_ob
@@ -47,16 +46,15 @@
  *
  */
 
-void rotate_comb_ob( COMB_OB *comb_ob, Gpoint pt, Gfloat angle)
+void rotate_comb_ob(COMB_OB *comb_ob, Gpoint pt, Gfloat angle)
 {
-        OBJECT *object;
+    OBJECT *object;
 
-        for (object = comb_ob->child; object != (OBJECT *) NULL;
-                object = object->next)
-                
-                rotate_object(object,pt,angle);
-}  /* end rotate_comb_ob */
+    for (object = comb_ob->child; object != (OBJECT *) NULL;
+         object = object->next)
 
+        rotate_object(object, pt, angle);
+} /* end rotate_comb_ob */
 
 /*
  *  rotate_object
@@ -68,12 +66,10 @@ void rotate_comb_ob( COMB_OB *comb_ob, Gpoint pt, Gfloat angle)
  *                      angle (Gfloat) - angle of rotation
  */
 
-void rotate_object( OBJECT *object, Gpoint pt, Gfloat angle)
+void rotate_object(OBJECT *object, Gpoint pt, Gfloat angle)
 {
-        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].rotate))
-                (object,pt,angle);
-}  /* end rotate_object */
-
+    (*(object_func_tbl[get_object_func_tbl_idx(object->key)].rotate))(object, pt, angle);
+} /* end rotate_object */
 
 /*
  *  rotate_gen
@@ -85,14 +81,13 @@ void rotate_object( OBJECT *object, Gpoint pt, Gfloat angle)
  *                      angle (Gfloat) - angle of rotation
  */
 
-void rotate_gen( OBJECT *object, Gpoint pt, Gfloat angle)
+void rotate_gen(OBJECT *object, Gpoint pt, Gfloat angle)
 {
-                Gfloat trans[6];
+    Gfloat trans[6];
 
-                s_rot_mat(trans,pt,angle);
-                mat_mult(object->trans,trans,object->trans);
-}  /* end rotate_gen */
-
+    s_rot_mat(trans, pt, angle);
+    mat_mult(object->trans, trans, object->trans);
+} /* end rotate_gen */
 
 /*
  *  rotate_text
@@ -104,18 +99,18 @@ void rotate_gen( OBJECT *object, Gpoint pt, Gfloat angle)
  *                      angle (Gfloat) - angle of rotation
  */
 
-void rotate_text( OBJECT *object, Gpoint pt, Gfloat angle)
+void rotate_text(OBJECT *object, Gpoint pt, Gfloat angle)
 {
-                Gfloat trans[6];
-                Gpoint orig;
+    Gfloat trans[6];
+    Gpoint orig;
 
-                /* rotate view up vector */
+    /* rotate view up vector */
 
-                orig.x = 0.0;
-                orig.y = 0.0;
-                s_rot_mat(trans,orig,angle);
-                pt_mult(&(object->textob.up_vec),1,trans);
+    orig.x = 0.0;
+    orig.y = 0.0;
+    s_rot_mat(trans, orig, angle);
+    pt_mult(&(object->textob.up_vec), 1, trans);
 
-                s_rot_mat(trans,pt,angle);
-                mat_mult(object->trans,trans,object->trans);
-}  /* end rotate_text */
+    s_rot_mat(trans, pt, angle);
+    mat_mult(object->trans, trans, object->trans);
+} /* end rotate_text */

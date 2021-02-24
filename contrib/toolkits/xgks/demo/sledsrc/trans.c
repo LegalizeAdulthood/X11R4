@@ -42,24 +42,22 @@
 #include <stdlib.h>
 #include <strings.h>
 
-#include "trans.h"
-#include "functbl.h"
 #include "defs.h"
-#include "ws.h"
 #include "error.h"
+#include "functbl.h"
+#include "trans.h"
+#include "ws.h"
 
-void set_viewport( AREA area, Gpoint *viewport);
+void set_viewport(AREA area, Gpoint *viewport);
 
 /*
  *  routines which manage transformations
  */
 
-
-AREA *trans_tbl;                        /* tbl of trans and
+AREA *trans_tbl;                         /* tbl of trans and
                                            corresponding areas */
-TRANS_STK *stk_ptr = (TRANS_STK *) NULL;        /* ptr to stack of
+TRANS_STK *stk_ptr = (TRANS_STK *) NULL; /* ptr to stack of
                                                    saved trans */
-
 
 /*
  *  adjust_screen_tbl_viewports
@@ -72,32 +70,31 @@ TRANS_STK *stk_ptr = (TRANS_STK *) NULL;        /* ptr to stack of
 
 void adjust_screen_tbl_viewports(void)
 {
-        Gfloat xmax_dc,ymax_dc;         /* max DC coordinates */
-        Gfloat xmax_ndc,ymax_ndc;       /* max ndc coordinates */
-        int i;
+    Gfloat xmax_dc, ymax_dc;   /* max DC coordinates */
+    Gfloat xmax_ndc, ymax_ndc; /* max ndc coordinates */
+    int i;
 
-        get_max_dc_coor(&xmax_dc,&ymax_dc);
-        if (ymax_dc > xmax_dc)
-        {
-                xmax_ndc = xmax_dc / ymax_dc;
-                ymax_ndc = 1.0;
-        }
-        else
-        {
-                ymax_ndc = ymax_dc / xmax_dc;
-                xmax_ndc = 1.0;
-        }
+    get_max_dc_coor(&xmax_dc, &ymax_dc);
+    if (ymax_dc > xmax_dc)
+    {
+        xmax_ndc = xmax_dc / ymax_dc;
+        ymax_ndc = 1.0;
+    }
+    else
+    {
+        ymax_ndc = ymax_dc / xmax_dc;
+        xmax_ndc = 1.0;
+    }
 
-        for (i=0; i<screen_tbl_sz; i++)
-        {
-                screen_tbl[i].viewport[MIN].x *= xmax_ndc;
-                screen_tbl[i].viewport[MAX].x *= xmax_ndc;
-                screen_tbl[i].viewport[MIN].y *= ymax_ndc;
-                screen_tbl[i].viewport[MAX].y *= ymax_ndc;
-        }
+    for (i = 0; i < screen_tbl_sz; i++)
+    {
+        screen_tbl[i].viewport[MIN].x *= xmax_ndc;
+        screen_tbl[i].viewport[MAX].x *= xmax_ndc;
+        screen_tbl[i].viewport[MIN].y *= ymax_ndc;
+        screen_tbl[i].viewport[MAX].y *= ymax_ndc;
+    }
 
-}  /* adjust_screen_tbl_viewports */
-
+} /* adjust_screen_tbl_viewports */
 
 /*
  *  get_max_dc_coor
@@ -110,19 +107,17 @@ void adjust_screen_tbl_viewports(void)
 
 void get_max_dc_coor(Gfloat *x, Gfloat *y)
 {
+    Gdspsize dsp;
 
-        Gdspsize dsp;
+    ginqdisplayspacesize(ws_type, &dsp);
+    *x = dsp.device.x;
+    *y = dsp.device.y;
 
-        ginqdisplayspacesize(ws_type,&dsp);
-        *x = dsp.device.x;
-        *y = dsp.device.y;
-
-        /* to create 4x5 print  using 8x10film
+    /* to create 4x5 print  using 8x10film
         *x *= .59;
         *y *= .59; */
 
-}  /* get_max_dc_coor */
-
+} /* get_max_dc_coor */
 
 /*
  *  init_trans_tbls
@@ -134,22 +129,21 @@ void get_max_dc_coor(Gfloat *x, Gfloat *y)
 
 void init_trans_tbls(void)
 {
-        Gint maximum;                   /* max trans no available */
-        int i;
+    Gint maximum; /* max trans no available */
+    int i;
 
-        /* inquire how many transformations are available */
+    /* inquire how many transformations are available */
 
-        ginqmaxntrannum(&maximum);
+    ginqmaxntrannum(&maximum);
 
-        /* initialize trans_tbl */
+    /* initialize trans_tbl */
 
-        trans_tbl = (AREA *) calloc((unsigned) (maximum + 1),
-                sizeof(AREA));
-        for (i=0; i<=maximum; i++)
-                trans_tbl[i] = (AREA) NULL;
+    trans_tbl = (AREA *) calloc((unsigned) (maximum + 1),
+        sizeof(AREA));
+    for (i = 0; i <= maximum; i++)
+        trans_tbl[i] = (AREA) NULL;
 
- } /* end init_trans_tbls */
-
+} /* end init_trans_tbls */
 
 /*
  *  alloc_trans
@@ -160,58 +154,54 @@ void init_trans_tbls(void)
  *
  */
 
-void alloc_trans( AREA area)
+void alloc_trans(AREA area)
 {
-        IDX transno;                    /* trans no to be allocated */
-        int maximum;                    /* highest numbered trans 
+    IDX transno;        /* trans no to be allocated */
+    int maximum;        /* highest numbered trans 
                                            available */
-        Gpoint viewport[2];             /* viewport for area */
-        Gpoint window[2];               /* window for area */
+    Gpoint viewport[2]; /* viewport for area */
+    Gpoint window[2];   /* window for area */
 
-        if (find_trans(area) == NON_EXISTENT)
-        {
-                /* inquire how many transformations are available
+    if (find_trans(area) == NON_EXISTENT)
+    {
+        /* inquire how many transformations are available
                    maximum is highest numbered transformation */
 
-                ginqmaxntrannum(&maximum);
+        ginqmaxntrannum(&maximum);
 
-                /* find free entry in trans_tbl */
+        /* find free entry in trans_tbl */
 
-                transno = 0;
-                do
-                        transno++;
-                while ((transno<maximum) &&
-                        (trans_tbl[transno] != (AREA) NULL));
+        transno = 0;
+        do
+            transno++;
+        while ((transno < maximum) && (trans_tbl[transno] != (AREA) NULL));
 
-                /* enter area into trans_tbl */
+        /* enter area into trans_tbl */
 
-                if (trans_tbl[transno] != (AREA) NULL)
-                        exit_error("alloc_trans",0);
-                else
-                {
-                        trans_tbl[transno] = (AREA) calloc((unsigned)
-                                (strlen(area) + 1), sizeof(char));
-                        (void) strcpy(trans_tbl[transno],area);
-                }
-        
-                /* set up normalization transformation */
-
-                get_viewport(area,viewport);
-                set_viewport(area,viewport);
-
-                get_window(area,window);
-                set_window(area,window);
-
-                /* note that area is active (i.e. on screen */
-
-                gsetviewportinputpri(transno,DEFAULT_TRANS,GHIGHER);
-
-                screen_tbl[find_screen_tbl_idx(area)].is_active = TRUE;
+        if (trans_tbl[transno] != (AREA) NULL)
+            exit_error("alloc_trans", 0);
+        else
+        {
+            trans_tbl[transno] = (AREA) calloc((unsigned) (strlen(area) + 1), sizeof(char));
+            (void) strcpy(trans_tbl[transno], area);
         }
 
+        /* set up normalization transformation */
+
+        get_viewport(area, viewport);
+        set_viewport(area, viewport);
+
+        get_window(area, window);
+        set_window(area, window);
+
+        /* note that area is active (i.e. on screen */
+
+        gsetviewportinputpri(transno, DEFAULT_TRANS, GHIGHER);
+
+        screen_tbl[find_screen_tbl_idx(area)].is_active = TRUE;
+    }
+
 } /* end alloc_trans */
-
-
 
 /*
  *  free_trans
@@ -222,23 +212,22 @@ void alloc_trans( AREA area)
  *                                    freed
  */
 
-void free_trans( AREA area)
+void free_trans(AREA area)
 {
-        IDX transno;                    /* trans no correponding
+    IDX transno; /* trans no correponding
                                            to area */
 
-        if (find_trans(area) != NON_EXISTENT)
-        {
-                transno = find_trans(area);
-                gsetviewportinputpri(transno,DEFAULT_TRANS,GLOWER);
+    if (find_trans(area) != NON_EXISTENT)
+    {
+        transno = find_trans(area);
+        gsetviewportinputpri(transno, DEFAULT_TRANS, GLOWER);
 
-                screen_tbl[find_screen_tbl_idx(area)].is_active = FALSE;
-                free((char *) trans_tbl[transno]);
-                trans_tbl[transno] = (AREA) NULL;
-        }
+        screen_tbl[find_screen_tbl_idx(area)].is_active = FALSE;
+        free((char *) trans_tbl[transno]);
+        trans_tbl[transno] = (AREA) NULL;
+    }
 
 } /* end free_trans */
-
 
 /*
  *  get_area_trans
@@ -251,17 +240,15 @@ void free_trans( AREA area)
  *  returns:            area (AREA) - area of selected area
  */
 
-AREA get_area_from_transno( IDX transno)
+AREA get_area_from_transno(IDX transno)
 {
-        AREA area;              /* selected area */
+    AREA area; /* selected area */
 
-        area = (AREA) calloc ((unsigned) 
-                (strlen(trans_tbl[transno]) + 1), sizeof(char));
-        (void) strcpy(area,trans_tbl[transno]);
+    area = (AREA) calloc((unsigned) (strlen(trans_tbl[transno]) + 1), sizeof(char));
+    (void) strcpy(area, trans_tbl[transno]);
 
-        return(area);
-}  /* end get_area_from_transno */
-
+    return (area);
+} /* end get_area_from_transno */
 
 /*
  *  activate
@@ -272,12 +259,11 @@ AREA get_area_from_transno( IDX transno)
  *  parameters:         area (AREA) - screen area
  */
 
-void activate( AREA area)
+void activate(AREA area)
 {
-        gselntran(find_trans(area));
+    gselntran(find_trans(area));
 
-}  /* end activate */
-
+} /* end activate */
 
 /*
  *  push_curr_trans
@@ -290,17 +276,16 @@ void activate( AREA area)
 
 void push_curr_trans(void)
 {
-        TRANS_STK *trans;               /* top stack element */
+    TRANS_STK *trans; /* top stack element */
 
-        /* push currently selected norm trans on stk */
+    /* push currently selected norm trans on stk */
 
-        trans = (TRANS_STK *) calloc(1,sizeof(TRANS_STK));
-        ginqcurntrannum(&(trans->transno));
-        trans->next = stk_ptr;
-        stk_ptr = trans;
+    trans = (TRANS_STK *) calloc(1, sizeof(TRANS_STK));
+    ginqcurntrannum(&(trans->transno));
+    trans->next = stk_ptr;
+    stk_ptr = trans;
 
-}  /* end push_curr_trans */
-
+} /* end push_curr_trans */
 
 /*
  *  pop_curr_trans
@@ -312,21 +297,20 @@ void push_curr_trans(void)
 
 void pop_curr_trans(void)
 {
-        TRANS_STK *trans;
+    TRANS_STK *trans;
 
-        /* if stack is not empty, pop top of stk
+    /* if stack is not empty, pop top of stk
            and set curr trans equal to top of stk */
 
-        if (stk_ptr != (TRANS_STK *) NULL)
-        {
-                trans = stk_ptr;
-                stk_ptr = stk_ptr->next;
-                gselntran(trans->transno);
-                free((char *) trans);
-        }
+    if (stk_ptr != (TRANS_STK *) NULL)
+    {
+        trans = stk_ptr;
+        stk_ptr = stk_ptr->next;
+        gselntran(trans->transno);
+        free((char *) trans);
+    }
 
-}  /* end pop_curr_trans */
-
+} /* end pop_curr_trans */
 
 /*
  *  find_trans
@@ -337,31 +321,30 @@ void pop_curr_trans(void)
  *                                   for future identification
  */
 
-int find_trans( AREA area)
+int find_trans(AREA area)
 {
-        int transno;                    /* trans no corresponding
+    int transno; /* trans no corresponding
                                            to area */
-        int maximum;                    /* highest numbered trans 
+    int maximum; /* highest numbered trans 
                                            available */
 
-        /* inquire how many transformations are available
+    /* inquire how many transformations are available
            maximum is highest numbered transformation */
 
-        ginqmaxntrannum(&maximum);
+    ginqmaxntrannum(&maximum);
 
-        /* find trans no corresponding to area */
+    /* find trans no corresponding to area */
 
-        transno = 0;
-        do
-                transno++;
-        while ((transno < maximum) && !eq(trans_tbl[transno],area));
+    transno = 0;
+    do
+        transno++;
+    while ((transno < maximum) && !eq(trans_tbl[transno], area));
 
-        if (!eq(trans_tbl[transno],area))
-                transno = NON_EXISTENT;
+    if (!eq(trans_tbl[transno], area))
+        transno = NON_EXISTENT;
 
-        return(transno);
-}  /* end find_trans */
-
+    return (transno);
+} /* end find_trans */
 
 /*
  *  set_viewport
@@ -374,38 +357,37 @@ int find_trans( AREA area)
  *                      viewport (Gpoint *) - new viewport
  */
 
-void set_viewport( AREA area, Gpoint *viewport)
+void set_viewport(AREA area, Gpoint *viewport)
 {
-        IDX idx;                        /* index into screen_tbl */
-        IDX transno;                    /* trans corresponding to
+    IDX idx;     /* index into screen_tbl */
+    IDX transno; /* trans corresponding to
                                            screen area */
-        Glimit port;
+    Glimit port;
 
-        /* find screen table entry */
+    /* find screen table entry */
 
-        idx = find_screen_tbl_idx(area);
+    idx = find_screen_tbl_idx(area);
 
-        /* update tbl entry with new viewport value */
+    /* update tbl entry with new viewport value */
 
-        screen_tbl[idx].viewport[MIN].x = viewport[MIN].x;
-        screen_tbl[idx].viewport[MIN].y = viewport[MIN].y;
-        screen_tbl[idx].viewport[MAX].x = viewport[MAX].x;
-        screen_tbl[idx].viewport[MAX].y = viewport[MAX].y;
+    screen_tbl[idx].viewport[MIN].x = viewport[MIN].x;
+    screen_tbl[idx].viewport[MIN].y = viewport[MIN].y;
+    screen_tbl[idx].viewport[MAX].x = viewport[MAX].x;
+    screen_tbl[idx].viewport[MAX].y = viewport[MAX].y;
 
-        /* if transformation allocated, set gks viewport too */
+    /* if transformation allocated, set gks viewport too */
 
-        transno = find_trans(area);
-        if (transno != NON_EXISTENT)
-                {
-                port.xmin = viewport[MIN].x;
-                port.xmax = viewport[MAX].x;
-                port.ymin = viewport[MIN].y;
-                port.ymax = viewport[MAX].y;
-                gsetviewport(transno,&port);
-                }
+    transno = find_trans(area);
+    if (transno != NON_EXISTENT)
+    {
+        port.xmin = viewport[MIN].x;
+        port.xmax = viewport[MAX].x;
+        port.ymin = viewport[MIN].y;
+        port.ymax = viewport[MAX].y;
+        gsetviewport(transno, &port);
+    }
 
-}  /* end set_viewport */
-
+} /* end set_viewport */
 
 /*
  *  set_window
@@ -418,38 +400,37 @@ void set_viewport( AREA area, Gpoint *viewport)
  *                      window (Gpoint *) - new window
  */
 
-void set_window( AREA area, Gpoint *window)
+void set_window(AREA area, Gpoint *window)
 {
-        IDX idx;                        /* index into screen_tbl */
-        IDX transno;                    /* trans corresponding to
+    IDX idx;     /* index into screen_tbl */
+    IDX transno; /* trans corresponding to
                                            screen area */
-        Glimit wind;
+    Glimit wind;
 
-        /* find screen table entry */
+    /* find screen table entry */
 
-        idx = find_screen_tbl_idx(area);
+    idx = find_screen_tbl_idx(area);
 
-        /* update tbl entry with new window value */
+    /* update tbl entry with new window value */
 
-        screen_tbl[idx].window[MIN].x = window[MIN].x;
-        screen_tbl[idx].window[MIN].y = window[MIN].y;
-        screen_tbl[idx].window[MAX].x = window[MAX].x;
-        screen_tbl[idx].window[MAX].y = window[MAX].y;
+    screen_tbl[idx].window[MIN].x = window[MIN].x;
+    screen_tbl[idx].window[MIN].y = window[MIN].y;
+    screen_tbl[idx].window[MAX].x = window[MAX].x;
+    screen_tbl[idx].window[MAX].y = window[MAX].y;
 
-        /* if transformation allocated, set gks window too */
+    /* if transformation allocated, set gks window too */
 
-        transno = find_trans(area);
-        if (transno != NON_EXISTENT)
-                {
-                wind.xmin = window[MIN].x;
-                wind.xmax = window[MAX].x;
-                wind.ymin = window[MIN].y;
-                wind.ymax = window[MAX].y;
-                gsetwindow(transno,&wind);
-                }
+    transno = find_trans(area);
+    if (transno != NON_EXISTENT)
+    {
+        wind.xmin = window[MIN].x;
+        wind.xmax = window[MAX].x;
+        wind.ymin = window[MIN].y;
+        wind.ymax = window[MAX].y;
+        gsetwindow(transno, &wind);
+    }
 
-}  /* end set_window */
-
+} /* end set_window */
 
 /*
  *  get_viewport
@@ -461,24 +442,22 @@ void set_window( AREA area, Gpoint *window)
  *                      viewport (Gpoint *) - screen area viewport
  */
 
-void get_viewport( AREA area, Gpoint *viewport)
+void get_viewport(AREA area, Gpoint *viewport)
 {
-        IDX idx;                        /* index into screen_tbl */
+    IDX idx; /* index into screen_tbl */
 
-        /* find screen table entry */
+    /* find screen table entry */
 
-        idx = find_screen_tbl_idx(area);
+    idx = find_screen_tbl_idx(area);
 
-        /* copy viewport info to return*/
+    /* copy viewport info to return*/
 
-        viewport[MIN].x = screen_tbl[idx].viewport[MIN].x;
-        viewport[MIN].y = screen_tbl[idx].viewport[MIN].y;
-        viewport[MAX].x = screen_tbl[idx].viewport[MAX].x;
-        viewport[MAX].y = screen_tbl[idx].viewport[MAX].y;
+    viewport[MIN].x = screen_tbl[idx].viewport[MIN].x;
+    viewport[MIN].y = screen_tbl[idx].viewport[MIN].y;
+    viewport[MAX].x = screen_tbl[idx].viewport[MAX].x;
+    viewport[MAX].y = screen_tbl[idx].viewport[MAX].y;
 
-}  /* end get_viewport */
-
-
+} /* end get_viewport */
 
 /*
  *  get_window
@@ -490,23 +469,22 @@ void get_viewport( AREA area, Gpoint *viewport)
  *                      window (Gpoint *) - screen area window
  */
 
-void get_window( AREA area, Gpoint *window)
+void get_window(AREA area, Gpoint *window)
 {
-        IDX idx;                        /* index into screen_tbl */
+    IDX idx; /* index into screen_tbl */
 
-        /* find screen table entry */
+    /* find screen table entry */
 
-        idx = find_screen_tbl_idx(area);
+    idx = find_screen_tbl_idx(area);
 
-        /* copy window info to return */
+    /* copy window info to return */
 
-        window[MIN].x = screen_tbl[idx].window[MIN].x;
-        window[MIN].y = screen_tbl[idx].window[MIN].y;
-        window[MAX].x = screen_tbl[idx].window[MAX].x;
-        window[MAX].y = screen_tbl[idx].window[MAX].y;
+    window[MIN].x = screen_tbl[idx].window[MIN].x;
+    window[MIN].y = screen_tbl[idx].window[MIN].y;
+    window[MAX].x = screen_tbl[idx].window[MAX].x;
+    window[MAX].y = screen_tbl[idx].window[MAX].y;
 
-}  /* end get_window */
-
+} /* end get_window */
 
 /*
  *  get_ws_trans
@@ -517,26 +495,25 @@ void get_window( AREA area, Gpoint *window)
  *                      window and viewport
  */
 
-void get_ws_trans( Gpoint wind[], Gpoint view[])
+void get_ws_trans(Gpoint wind[], Gpoint view[])
 {
-        Gwsti tran;
+    Gwsti tran;
 
-        ginqwstran(ws_id,&tran);
-        wind[0].x = tran.current.w.xmin;
-        wind[1].x = tran.current.w.xmax;
-        wind[0].y = tran.current.w.ymin;
-        wind[1].y = tran.current.w.ymax;
-        view[0].x = tran.current.v.xmin;
-        view[1].x = tran.current.v.xmax;
-        view[0].y = tran.current.v.ymin;
-        view[1].y = tran.current.v.ymax;
+    ginqwstran(ws_id, &tran);
+    wind[0].x = tran.current.w.xmin;
+    wind[1].x = tran.current.w.xmax;
+    wind[0].y = tran.current.w.ymin;
+    wind[1].y = tran.current.w.ymax;
+    view[0].x = tran.current.v.xmin;
+    view[1].x = tran.current.v.xmax;
+    view[0].y = tran.current.v.ymin;
+    view[1].y = tran.current.v.ymax;
 
-        printf("ws_window: min = (%.2f, %.2f), max = (%.2f, %.2f)\n",
-                wind[0].x,wind[0].y,wind[1].x,wind[1].y);
-        printf("ws_viewport: min = (%.2f, %.2f), max = (%.2f, %.2f)\n",
-                view[0].x,view[0].y,view[1].x,view[1].y);
-}  /* end get_ws_trans */
-
+    printf("ws_window: min = (%.2f, %.2f), max = (%.2f, %.2f)\n",
+        wind[0].x, wind[0].y, wind[1].x, wind[1].y);
+    printf("ws_viewport: min = (%.2f, %.2f), max = (%.2f, %.2f)\n",
+        view[0].x, view[0].y, view[1].x, view[1].y);
+} /* end get_ws_trans */
 
 /*
  *  is_ident
@@ -548,13 +525,13 @@ void get_ws_trans( Gpoint wind[], Gpoint view[])
  *  returns:            (BOOLEAN) - TRUE if trans is identity trans
  */
 
-int is_ident( Gfloat *trans)
+int is_ident(Gfloat *trans)
 {
-        if ((trans[0] == 1.0) && (trans[1] == 0.0)
-                && (trans[2] == 0.0) && (trans[3] == 0.0)
-                && (trans[4] == 1.0) && (trans[5] == 0.0))
+    if ((trans[0] == 1.0) && (trans[1] == 0.0)
+        && (trans[2] == 0.0) && (trans[3] == 0.0)
+        && (trans[4] == 1.0) && (trans[5] == 0.0))
 
-                return(TRUE);
-        else
-                return(FALSE);
-}  /* end is_ident */
+        return (TRUE);
+    else
+        return (FALSE);
+} /* end is_ident */

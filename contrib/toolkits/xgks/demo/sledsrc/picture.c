@@ -25,10 +25,10 @@
 
 #include <xgks.h>
 
-#include "key.h"
 #include "draw.h"
-#include "trans.h"
+#include "key.h"
 #include "object_list.h"
+#include "trans.h"
 
 /*
  *  display_picture_area
@@ -40,33 +40,33 @@
 
 void display_picture_area(void)
 {
-        Gpoint window[2];               /* picture area window */
-        Gpoint box[4];                  /* pts of window */
+    Gpoint window[2]; /* picture area window */
+    Gpoint box[4];    /* pts of window */
 
-        /* draw screen area */
+    /* draw screen area */
 
-        push_curr_trans();
-        if (find_trans(PICT_AREA) == NON_EXISTENT)
-                alloc_trans(PICT_AREA);
-        activate(PICT_AREA);
+    push_curr_trans();
+    if (find_trans(PICT_AREA) == NON_EXISTENT)
+        alloc_trans(PICT_AREA);
+    activate(PICT_AREA);
 
-        set_aspect_flags(GBUNDLED);
+    set_aspect_flags(GBUNDLED);
 
-        get_viewport(PICT_AREA,window);
-        set_window(PICT_AREA,window);
-        load_box(box,window[MIN].x,window[MAX].x,
-                window[MIN].y,window[MAX].y);
-        gsetfillind(BGDCLR_SOLID);
-        gfillarea(4,box);
-        gsetfillind(WHITE_HOLLOW);
-        gfillarea(4,box);
+    get_viewport(PICT_AREA, window);
+    set_window(PICT_AREA, window);
+    load_box(box, window[MIN].x, window[MAX].x,
+        window[MIN].y, window[MAX].y);
+    gsetfillind(BGDCLR_SOLID);
+    gfillarea(4, box);
+    gsetfillind(WHITE_HOLLOW);
+    gfillarea(4, box);
 
-        set_aspect_flags(GINDIVIDUAL);
+    set_aspect_flags(GINDIVIDUAL);
 
-        /* redraw objects */
+    /* redraw objects */
 
-        redraw_objects();
+    redraw_objects();
 
-        pop_curr_trans();
+    pop_curr_trans();
 
-}  /* end display_picture_area */
+} /* end display_picture_area */

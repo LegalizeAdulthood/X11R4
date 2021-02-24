@@ -3,7 +3,7 @@
 
 #include "screen_items.h"
 
-void hilite( KEY key);
-void unhilite( KEY key) ;
+void hilite(KEY key);
+void unhilite(KEY key);
 
 #endif

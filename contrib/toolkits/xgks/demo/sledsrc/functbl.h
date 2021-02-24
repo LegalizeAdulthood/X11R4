@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -35,40 +35,39 @@
 
 struct popup_tbl_entry
 {
-	KEY key;
-	void (*init)(POPUP *popup);
-	void (*exec)( POPUP *popup, Gpoint pt);
-	void (*cleanup)(POPUP *tbl_ptr);
+    KEY key;
+    void (*init)(POPUP *popup);
+    void (*exec)(POPUP *popup, Gpoint pt);
+    void (*cleanup)(POPUP *tbl_ptr);
 };
 
 extern struct popup_tbl_entry popup_func_tbl[];
 extern int popup_func_tbl_sz;
-extern int find_popup_func_tbl_idx( KEY key);
+extern int find_popup_func_tbl_idx(KEY key);
 
 struct menu_item_tbl_entry
 {
-	KEY key;
-	void (*init)(MENU_ITEM *item);
-	void (*restart)(MENU_ITEM * item);
-	void (*exec)(Gpoint pt);
-	void (*cleanup)(MENU_ITEM * item);
+    KEY key;
+    void (*init)(MENU_ITEM *item);
+    void (*restart)(MENU_ITEM *item);
+    void (*exec)(Gpoint pt);
+    void (*cleanup)(MENU_ITEM *item);
 };
 
 extern struct menu_item_tbl_entry menu_item_func_tbl[];
 extern int menu_item_func_tbl_sz;
-extern int find_menu_item_func_tbl_idx( KEY key);
+extern int find_menu_item_func_tbl_idx(KEY key);
 
 struct menu_tbl_entry
 {
-	KEY key;
-        void (*init)( AREA area, MENU *menu);
-	void (*cleanup)(AREA area, MENU *menu);
+    KEY key;
+    void (*init)(AREA area, MENU *menu);
+    void (*cleanup)(AREA area, MENU *menu);
 };
 
 extern struct menu_tbl_entry menu_func_tbl[];
 extern int menu_func_tbl_sz;
-extern  int find_menu_func_tbl_idx( KEY key);
-
+extern int find_menu_func_tbl_idx(KEY key);
 
 /*
  *  screen areas
@@ -80,19 +79,19 @@ extern  int find_menu_func_tbl_idx( KEY key);
 typedef struct screen_area_tbl_entry SCREEN_AREA_TBL_ENTRY;
 struct screen_area_tbl_entry
 {
-	AREA area;			/* screen area key */
-	void (*draw)(void);			/* func to draw area */
-	void (*exec)(AREA area, IDX transno, Gpoint pt);			/* func to execute */
-	BOOLEAN is_active;		/* true if screen area is
-					   displayed on screen */
-	Gpoint window[2];			/* window[0] = (xmin,ymin)
-					   window[1] = (xmax,ymax) */
-	Gpoint viewport[2];		/* viewport[0] = (xmin,ymin)
-					   viewport[1] = (xmax,ymax) */
+    AREA area;                                       /* screen area key */
+    void (*draw)(void);                              /* func to draw area */
+    void (*exec)(AREA area, IDX transno, Gpoint pt); /* func to execute */
+    BOOLEAN is_active;                               /* true if screen area is
+                                           displayed on screen */
+    Gpoint window[2];                                /* window[0] = (xmin,ymin)
+                                           window[1] = (xmax,ymax) */
+    Gpoint viewport[2];                              /* viewport[0] = (xmin,ymin)
+                                           viewport[1] = (xmax,ymax) */
 };
 
-extern int screen_tbl_sz;		/* screen tbl size */
-extern SCREEN_AREA_TBL_ENTRY screen_tbl[];	/* screen tbl */
-extern IDX find_screen_tbl_idx( AREA area);
+extern int screen_tbl_sz;                  /* screen tbl size */
+extern SCREEN_AREA_TBL_ENTRY screen_tbl[]; /* screen tbl */
+extern IDX find_screen_tbl_idx(AREA area);
 
 #endif

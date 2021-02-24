@@ -37,17 +37,17 @@
 
 #include "color.h"
 #include "defs.h"
-#include "key.h"
-#include "screen_items.h"
 #include "draw.h"
-#include "menu.h"
-#include "trans.h"
 #include "functbl.h"
+#include "key.h"
+#include "menu.h"
 #include "popup.h"
+#include "screen_items.h"
+#include "trans.h"
 
-void display_menu( AREA area, MENU *menu_ptr);
+void display_menu(AREA area, MENU *menu_ptr);
 
-int max_num_menu_entries = 0;           /* max num of entries in menu
+int max_num_menu_entries = 0; /* max num of entries in menu
                                            including header */
 
 /*
@@ -60,16 +60,15 @@ int max_num_menu_entries = 0;           /* max num of entries in menu
 
 void display_pri_menu(void)
 {
-        MENU *pri_menu;
+    MENU *pri_menu;
 
-        pri_menu = get_menu_from_area(PRI_MENU_AREA);
-        if (find_trans(PRI_MENU_AREA) == NON_EXISTENT)
-                alloc_trans(PRI_MENU_AREA);
-        if (pri_menu != (MENU *) NULL)
-                display_menu(PRI_MENU_AREA,pri_menu);
+    pri_menu = get_menu_from_area(PRI_MENU_AREA);
+    if (find_trans(PRI_MENU_AREA) == NON_EXISTENT)
+        alloc_trans(PRI_MENU_AREA);
+    if (pri_menu != (MENU *) NULL)
+        display_menu(PRI_MENU_AREA, pri_menu);
 
-}  /* end display_pri_menu */
-
+} /* end display_pri_menu */
 
 /*
  *  display_sec_menu
@@ -81,16 +80,15 @@ void display_pri_menu(void)
 
 void display_sec_menu(void)
 {
-        MENU *sec_menu;
+    MENU *sec_menu;
 
-        sec_menu = get_menu_from_area(SEC_MENU_AREA);
-        if (find_trans(SEC_MENU_AREA) == NON_EXISTENT)
-                alloc_trans(SEC_MENU_AREA);
-        if (sec_menu != (MENU *) NULL)
-                display_menu(SEC_MENU_AREA,sec_menu);
+    sec_menu = get_menu_from_area(SEC_MENU_AREA);
+    if (find_trans(SEC_MENU_AREA) == NON_EXISTENT)
+        alloc_trans(SEC_MENU_AREA);
+    if (sec_menu != (MENU *) NULL)
+        display_menu(SEC_MENU_AREA, sec_menu);
 
-}  /* end display_sec_menu */
-
+} /* end display_sec_menu */
 
 /*
  *  display_menu_n_popups
@@ -102,30 +100,29 @@ void display_sec_menu(void)
  *                      menu (MENU *) - menu to display
  */
 
-void display_menu_n_popups( AREA area, MENU *menu)
+void display_menu_n_popups(AREA area, MENU *menu)
 {
-        POPUP *tbl_ptr;                 /* ptr to popup list */
-        IDX idx;                        /* popup_func_tbl index */
+    POPUP *tbl_ptr; /* ptr to popup list */
+    IDX idx;        /* popup_func_tbl index */
 
-        set_menu(area,menu);
-        display_menu(area,menu);
+    set_menu(area, menu);
+    display_menu(area, menu);
 
-        if (menu->poplst != (POPUP *) NULL)
-        {
-                add_to_currpoptbl(menu->poplst);
-                if (screen_tbl[find_screen_tbl_idx(POPUP_AREA)].is_active
-                        == TRUE)
-                        for (tbl_ptr = menu->poplst;
-                                tbl_ptr != (POPUP *) NULL;
-                                tbl_ptr = tbl_ptr->next)
-                        {
-                                idx = find_popup_func_tbl_idx(tbl_ptr->key);
-                                (*(popup_func_tbl[idx].init))(tbl_ptr);
-                        }
-        }
+    if (menu->poplst != (POPUP *) NULL)
+    {
+        add_to_currpoptbl(menu->poplst);
+        if (screen_tbl[find_screen_tbl_idx(POPUP_AREA)].is_active
+            == TRUE)
+            for (tbl_ptr = menu->poplst;
+                 tbl_ptr != (POPUP *) NULL;
+                 tbl_ptr = tbl_ptr->next)
+            {
+                idx = find_popup_func_tbl_idx(tbl_ptr->key);
+                (*(popup_func_tbl[idx].init))(tbl_ptr);
+            }
+    }
 
-}  /* end display_menu_n_popups */
-
+} /* end display_menu_n_popups */
 
 /*
  *  cleanup_menu_n_popups
@@ -140,23 +137,23 @@ void display_menu_n_popups( AREA area, MENU *menu)
  *                      menu (MENU *) - menu to cleanup
  */
 
-void cleanup_menu_n_popups( AREA area, MENU *menu)
+void cleanup_menu_n_popups(AREA area, MENU *menu)
 {
-        POPUP *tbl_ptr;                 /* ptr to popup list */
-        IDX idx;                        /* popup_func_tbl index */
+    POPUP *tbl_ptr; /* ptr to popup list */
+    IDX idx;        /* popup_func_tbl index */
 
-        set_menu(area,(MENU *) NULL);
+    set_menu(area, (MENU *) NULL);
 
-        rm_from_currpoptbl(menu->poplst);
-        for (tbl_ptr = menu->poplst;
-                tbl_ptr != (POPUP *) NULL;
-                tbl_ptr = tbl_ptr->next)
-        {
-                idx = find_popup_func_tbl_idx(tbl_ptr->key);
-                (*(popup_func_tbl[idx].cleanup))(tbl_ptr);
-        }
+    rm_from_currpoptbl(menu->poplst);
+    for (tbl_ptr = menu->poplst;
+         tbl_ptr != (POPUP *) NULL;
+         tbl_ptr = tbl_ptr->next)
+    {
+        idx = find_popup_func_tbl_idx(tbl_ptr->key);
+        (*(popup_func_tbl[idx].cleanup))(tbl_ptr);
+    }
 
-}  /* end cleanup_menu_n_popups */
+} /* end cleanup_menu_n_popups */
 /*
  *  display_menu
  *
@@ -167,75 +164,73 @@ void cleanup_menu_n_popups( AREA area, MENU *menu)
  *                      menu_ptr (MENU) - menu to display
  */
 
-void display_menu( AREA area, MENU *menu_ptr)
+void display_menu(AREA area, MENU *menu_ptr)
 {
-        Gpoint window[2];               /* area window */
-        Gpoint box[4];                  /* pts of rectangle */
-        Gfloat ht;                      /* ht of menu item */
+    Gpoint window[2]; /* area window */
+    Gpoint box[4];    /* pts of rectangle */
+    Gfloat ht;        /* ht of menu item */
 
-        Gfloat top, bottom;             /* ymax and ymin of menu item */
-        Gpoint center;                  /* center of menu item */
-        Gint i;
+    Gfloat top, bottom; /* ymax and ymin of menu item */
+    Gpoint center;      /* center of menu item */
+    Gint i;
 
-        /* erase old menu */
+    /* erase old menu */
 
-        erase_area(area);
+    erase_area(area);
 
-        push_curr_trans();
-        activate(area);
-        set_aspect_flags(GBUNDLED);
+    push_curr_trans();
+    activate(area);
+    set_aspect_flags(GBUNDLED);
 
-        get_window(area,window);
+    get_window(area, window);
 
-        /* display menu items in white */
+    /* display menu items in white */
 
-        ht = (window[MAX].y - window[MIN].y) /
-                max_num_menu_entries;
-        bottom = window[MAX].y;
-        center.x = (window[MIN].x + window[MAX].x) / 2;
+    ht = (window[MAX].y - window[MIN].y) / max_num_menu_entries;
+    bottom = window[MAX].y;
+    center.x = (window[MIN].x + window[MAX].x) / 2;
 
-        /* draw menu name in white */
+    /* draw menu name in white */
+
+    top = bottom;
+    bottom = top - ht;
+    load_box(box, window[MIN].x, window[MAX].x,
+        bottom, top);
+    gsetfillind(WHITE_SOLID);
+    gfillarea(4, box);
+
+    /* center and display menu item name */
+
+    center.y = (bottom + top) / 2;
+    center_text(menu_ptr->nlns,
+        menu_ptr->name, &center, black,
+        MENU_TEXT);
+
+    for (i = 0; i < menu_ptr->noitems; i++)
+    {
+        /* outline menu item in white */
 
         top = bottom;
         bottom = top - ht;
-        load_box(box,window[MIN].x,window[MAX].x,
-                bottom,top);
-        gsetfillind(WHITE_SOLID);
-        gfillarea(4,box);
+        load_box(box, window[MIN].x, window[MAX].x,
+            bottom, top);
+        gsetfillind(GREY_SOLID);
+        gfillarea(4, box);
+        gsetfillind(WHITE_HOLLOW);
+        gfillarea(4, box);
 
         /* center and display menu item name */
 
         center.y = (bottom + top) / 2;
-        center_text(menu_ptr->nlns,
-                menu_ptr->name,&center,black,
-                MENU_TEXT);
+        center_text(menu_ptr->item[i].nlns,
+            menu_ptr->item[i].name, &center, white,
+            MENU_TEXT);
+    }
 
-        for (i=0; i< menu_ptr->noitems; i++)
-        {
-                /* outline menu item in white */
+    set_aspect_flags(GINDIVIDUAL);
+    pop_curr_trans();
 
-                top = bottom;
-                bottom = top - ht;
-                load_box(box,window[MIN].x,window[MAX].x,
-                        bottom,top);
-                gsetfillind(GREY_SOLID);
-                gfillarea(4,box);
-                gsetfillind(WHITE_HOLLOW);
-                gfillarea(4,box);
-
-                /* center and display menu item name */
-
-                center.y = (bottom + top) / 2;
-                center_text(menu_ptr->item[i].nlns,
-                        menu_ptr->item[i].name,&center,white,
-                        MENU_TEXT);
-        }
-
-        set_aspect_flags(GINDIVIDUAL);
-        pop_curr_trans();
-
-}  /* end display_menu */
-
+} /* end display_menu */
 
 /*
  *  hilite
@@ -245,50 +240,48 @@ void display_menu( AREA area, MENU *menu_ptr)
  *  parameters:         key (KEY) - key of menu item to hilite
  */
 
-void hilite( KEY key)
+void hilite(KEY key)
 {
-        MENU *menu;                     /* pri_menu or sec_menu */
-        AREA area;                      /* PRI_MENU_AREA or
+    MENU *menu;       /* pri_menu or sec_menu */
+    AREA area;        /* PRI_MENU_AREA or
                                            SEC_MENU_AREA */
-        Gpoint window[2];               /* booundary of area */
-        Gpoint box[4];                  /* pts of box */
-        Gpoint center;                  /* center of menu_item */
-        Gfloat boxht;                   /* height of menu item */
-        Gfloat top;                     /* top of menu item */
-        Gint i;
+    Gpoint window[2]; /* booundary of area */
+    Gpoint box[4];    /* pts of box */
+    Gpoint center;    /* center of menu_item */
+    Gfloat boxht;     /* height of menu item */
+    Gfloat top;       /* top of menu item */
+    Gint i;
 
-        /* determine which menu contains menu_item */
-        /* i will be the index of menu item in menu */
+    /* determine which menu contains menu_item */
+    /* i will be the index of menu item in menu */
 
-        find_menu_item_idx(key,&menu,&i);
-        area = get_area_from_menu(menu);
+    find_menu_item_idx(key, &menu, &i);
+    area = get_area_from_menu(menu);
 
-        push_curr_trans();
-        activate(area);
-        set_aspect_flags(GBUNDLED);
+    push_curr_trans();
+    activate(area);
+    set_aspect_flags(GBUNDLED);
 
-        /* determine boundary of menu item */
+    /* determine boundary of menu item */
 
-        get_window(area,window);
-        free(area);
+    get_window(area, window);
+    free(area);
 
-        boxht = (window[MAX].y - window[MIN].y) / 
-                max_num_menu_entries;
-        top = window[MAX].y - (i + 1) * boxht;
-        load_box(box,window[MIN].x,window[MAX].x,
-                (top - boxht),top);
-        gsetfillind(WHITE_SOLID);
-        gfillarea(4,box);
+    boxht = (window[MAX].y - window[MIN].y) / max_num_menu_entries;
+    top = window[MAX].y - (i + 1) * boxht;
+    load_box(box, window[MIN].x, window[MAX].x,
+        (top - boxht), top);
+    gsetfillind(WHITE_SOLID);
+    gfillarea(4, box);
 
-        center.x = (window[MIN].x + window[MAX].x) / 2;
-        center.y = top - 0.5 * boxht;
-        center_text(menu->item[i].nlns,menu->item[i].name,&center,
-                black,MENU_TEXT);
+    center.x = (window[MIN].x + window[MAX].x) / 2;
+    center.y = top - 0.5 * boxht;
+    center_text(menu->item[i].nlns, menu->item[i].name, &center,
+        black, MENU_TEXT);
 
-        set_aspect_flags(GINDIVIDUAL);
-        pop_curr_trans();
-}  /* end hilite */
-
+    set_aspect_flags(GINDIVIDUAL);
+    pop_curr_trans();
+} /* end hilite */
 
 /*
  *  unhilite
@@ -298,48 +291,47 @@ void hilite( KEY key)
  *  parameters:         key (KEY) - key to menu item
  */
 
-void unhilite( KEY key)
+void unhilite(KEY key)
 {
-        MENU *menu;                     /* pri_menu or sec_menu */
-        AREA area;                      /* PRI_MENU_AREA or
+    MENU *menu;       /* pri_menu or sec_menu */
+    AREA area;        /* PRI_MENU_AREA or
                                            SEC_MENU_AREA */
-        Gpoint window[2];               /* booundary of area */
-        Gpoint box[4];                  /* pts of box */
-        Gpoint center;                  /* center of menu_item */
-        Gfloat boxht;                   /* height of menu item */
-        Gfloat top;                     /* top of menu item */
-        Gint i;
+    Gpoint window[2]; /* booundary of area */
+    Gpoint box[4];    /* pts of box */
+    Gpoint center;    /* center of menu_item */
+    Gfloat boxht;     /* height of menu item */
+    Gfloat top;       /* top of menu item */
+    Gint i;
 
-        /* determine which menu contains menu_item */
-        /* i will be the index of menu item in menu */
+    /* determine which menu contains menu_item */
+    /* i will be the index of menu item in menu */
 
-        find_menu_item_idx(key,&menu,&i);
-        area = get_area_from_menu(menu);
+    find_menu_item_idx(key, &menu, &i);
+    area = get_area_from_menu(menu);
 
-        push_curr_trans();
-        activate(area);
-        set_aspect_flags(GBUNDLED);
+    push_curr_trans();
+    activate(area);
+    set_aspect_flags(GBUNDLED);
 
-        /* determine boundary of menu item */
+    /* determine boundary of menu item */
 
-        get_window(area,window);
-        free(area);
+    get_window(area, window);
+    free(area);
 
-        boxht = (window[MAX].y - window[MIN].y) / 
-                max_num_menu_entries;
-        top = window[MAX].y - (i + 1) * boxht;
-        load_box(box,window[MIN].x,window[MAX].x,
-                (top - boxht),top);
-        gsetfillind(GREY_SOLID);
-        gfillarea(4,box);
-        gsetfillind(WHITE_HOLLOW);
-        gfillarea(4,box);
+    boxht = (window[MAX].y - window[MIN].y) / max_num_menu_entries;
+    top = window[MAX].y - (i + 1) * boxht;
+    load_box(box, window[MIN].x, window[MAX].x,
+        (top - boxht), top);
+    gsetfillind(GREY_SOLID);
+    gfillarea(4, box);
+    gsetfillind(WHITE_HOLLOW);
+    gfillarea(4, box);
 
-        center.x = (window[MIN].x + window[MAX].x) / 2;
-        center.y = top - 0.5 * boxht;
-        center_text(menu->item[i].nlns,menu->item[i].name,&center,
-                white,MENU_TEXT);
+    center.x = (window[MIN].x + window[MAX].x) / 2;
+    center.y = top - 0.5 * boxht;
+    center_text(menu->item[i].nlns, menu->item[i].name, &center,
+        white, MENU_TEXT);
 
-        set_aspect_flags(GINDIVIDUAL);
-        pop_curr_trans();
-}  /* end unhilite */
+    set_aspect_flags(GINDIVIDUAL);
+    pop_curr_trans();
+} /* end unhilite */

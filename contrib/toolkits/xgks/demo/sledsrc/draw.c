@@ -35,18 +35,17 @@
 
 #include <xgks.h>
 
-#include "screen_items.h"
 #include "color.h"
-#include "draw.h"
-#include "ws.h"
-#include "trans.h"
 #include "defs.h"
+#include "draw.h"
 #include "math.h"
+#include "screen_items.h"
+#include "trans.h"
+#include "ws.h"
 
-int get_text_bndl_tbl_idx( KEY key);
+int get_text_bndl_tbl_idx(KEY key);
 
 TEXT_BNDL *text_bndl_tbl;
-
 
 /*
  *  get_font
@@ -60,19 +59,18 @@ TEXT_BNDL *text_bndl_tbl;
  *                              (return value)
  */
 
-void get_font( KEY key, IDX *font, Gtxprec *precision)
+void get_font(KEY key, IDX *font, Gtxprec *precision)
 {
-        IDX idx;
-        Gtxbundl text_bundle;
+    IDX idx;
+    Gtxbundl text_bundle;
 
-        idx = get_text_bndl_tbl_idx(key);
+    idx = get_text_bndl_tbl_idx(key);
 
-        ginqtextrep(ws_id,text_bndl_tbl[idx].idx,GSET,&text_bundle);
+    ginqtextrep(ws_id, text_bndl_tbl[idx].idx, GSET, &text_bundle);
 
-        *font = text_bundle.fp.font;
-        *precision = text_bundle.fp.prec;
-}  /* end get_font */
-
+    *font = text_bundle.fp.font;
+    *precision = text_bundle.fp.prec;
+} /* end get_font */
 
 /*
  *  set_font
@@ -85,21 +83,20 @@ void get_font( KEY key, IDX *font, Gtxprec *precision)
  *                      precision (Gtxprec) - font precision
  */
 
-void set_font( KEY key, IDX font, Gtxprec precision)
+void set_font(KEY key, IDX font, Gtxprec precision)
 {
-        IDX idx;
-        Gtxbundl text_bundle;
+    IDX idx;
+    Gtxbundl text_bundle;
 
-        idx = get_text_bndl_tbl_idx(key);
+    idx = get_text_bndl_tbl_idx(key);
 
-        ginqtextrep(ws_id,text_bndl_tbl[idx].idx,GSET,&text_bundle);
+    ginqtextrep(ws_id, text_bndl_tbl[idx].idx, GSET, &text_bundle);
 
-        text_bundle.fp.font = font;
-        text_bundle.fp.prec = precision;
+    text_bundle.fp.font = font;
+    text_bundle.fp.prec = precision;
 
-        gsettextrep(ws_id,text_bndl_tbl[idx].idx,&text_bundle);
-}  /* end set_font */
-
+    gsettextrep(ws_id, text_bndl_tbl[idx].idx, &text_bundle);
+} /* end set_font */
 
 /*
  *  get_text_bndl_tbl_idx
@@ -110,19 +107,18 @@ void set_font( KEY key, IDX font, Gtxprec precision)
  *  parameters:         key (KEY) - key corresponding to bndl tbl index
  */
 
-int get_text_bndl_tbl_idx( KEY key)
+int get_text_bndl_tbl_idx(KEY key)
 {
-        IDX idx;                        /* text_bndl_tbl index */
+    IDX idx; /* text_bndl_tbl index */
 
-        idx = 0;
-        while (!eq(text_bndl_tbl[idx].key,key)) 
-        {
-                idx++;
-        }
+    idx = 0;
+    while (!eq(text_bndl_tbl[idx].key, key))
+    {
+        idx++;
+    }
 
-        return(idx);
-};  /* end get_text_bndl_tbl_idx */
-
+    return (idx);
+}; /* end get_text_bndl_tbl_idx */
 
 /*
  *  set_aspect_flags
@@ -144,27 +140,26 @@ ENUM setting;
         s_aspect_flags(flags);
 } */
 
-void set_aspect_flags( Gasf setting)
+void set_aspect_flags(Gasf setting)
 {
-        Gasfs newfs;
+    Gasfs newfs;
 
-        newfs.ln_type = setting;
-        newfs.ln_width = setting;
-        newfs.ln_color = setting;
-        newfs.mk_type = setting;
-        newfs.mk_size = setting;
-        newfs.mk_color = setting;
-        newfs.tx_fp = setting;
-        newfs.tx_exp = setting;
-        newfs.tx_space = setting;
-        newfs.tx_color = setting;
-        newfs.fl_inter = setting;
-        newfs.fl_style = setting;
-        newfs.fl_color = setting;
+    newfs.ln_type = setting;
+    newfs.ln_width = setting;
+    newfs.ln_color = setting;
+    newfs.mk_type = setting;
+    newfs.mk_size = setting;
+    newfs.mk_color = setting;
+    newfs.tx_fp = setting;
+    newfs.tx_exp = setting;
+    newfs.tx_space = setting;
+    newfs.tx_color = setting;
+    newfs.fl_inter = setting;
+    newfs.fl_style = setting;
+    newfs.fl_color = setting;
 
-        gsetasf(&newfs);
+    gsetasf(&newfs);
 } /* end set_aspect_flags */
-
 
 /*
  *  load_box
@@ -178,13 +173,16 @@ void set_aspect_flags( Gasf setting)
 
 void load_box(Gpoint *box, Gfloat xmin, Gfloat xmax, Gfloat ymin, Gfloat ymax)
 {
-        box[0].x = xmin;        box[0].y = ymin;
-        box[1].x = xmax;        box[1].y = ymin;
-        box[2].x = xmax;        box[2].y = ymax;
-        box[3].x = xmin;        box[3].y = ymax;
+    box[0].x = xmin;
+    box[0].y = ymin;
+    box[1].x = xmax;
+    box[1].y = ymin;
+    box[2].x = xmax;
+    box[2].y = ymax;
+    box[3].x = xmin;
+    box[3].y = ymax;
 
-}  /* end load_box */
-
+} /* end load_box */
 
 /*
  *  center_text
@@ -198,86 +196,79 @@ void load_box(Gpoint *box, Gfloat xmin, Gfloat xmax, Gfloat ymin, Gfloat ymax)
  *                      key (KEY) - text bundle table key
  */
 
-void center_text( int nolines, char **lines, Gpoint *center, IDX clrno, KEY key)
+void center_text(int nolines, char **lines, Gpoint *center, IDX clrno, KEY key)
 {
-        IDX idx;                        /* text bundle tbl index
+    IDX idx;          /* text bundle tbl index
                                            containing key */
-        Gtxalign align;                 /* text alignment */
-        Gpoint up_vector;               /* up direction for text */
-        Gpriattr attr;
-        Gpoint ln_center;               /* center pt for curr line */
-        Gtxbundl text_bundle;           /* bundle tbl entry for idx */
-        Gfloat vert_spacing;
-        int i;
+    Gtxalign align;   /* text alignment */
+    Gpoint up_vector; /* up direction for text */
+    Gpriattr attr;
+    Gpoint ln_center;     /* center pt for curr line */
+    Gtxbundl text_bundle; /* bundle tbl entry for idx */
+    Gfloat vert_spacing;
+    int i;
 
-        /* find index corresponding to key */
+    /* find index corresponding to key */
 
-        idx = get_text_bndl_tbl_idx(key);
+    idx = get_text_bndl_tbl_idx(key);
 
-        /* since not all text parameters are bundled,
+    /* since not all text parameters are bundled,
            the ones that aren't must be saved and restored */
 
-        ginqprimattr(&attr);
+    ginqprimattr(&attr);
 
-        /* set text parameters */
+    /* set text parameters */
 
-        align.hor = GTH_CENTER;
-        align.ver = GTV_HALF;
-        gsettextalign(&align);
+    align.hor = GTH_CENTER;
+    align.ver = GTV_HALF;
+    gsettextalign(&align);
 
-        up_vector.x = 0.0;
-        up_vector.y = 1.0;
-        gsetcharup(&up_vector);
-        gsettextpath(GTP_RIGHT);
-        gsetcharheight(text_bndl_tbl[idx].char_ht);
+    up_vector.x = 0.0;
+    up_vector.y = 1.0;
+    gsetcharup(&up_vector);
+    gsettextpath(GTP_RIGHT);
+    gsetcharheight(text_bndl_tbl[idx].char_ht);
 
-        /* set text color */
+    /* set text color */
 
-        ginqtextrep(ws_id,text_bndl_tbl[idx].idx,GSET,&text_bundle);
+    ginqtextrep(ws_id, text_bndl_tbl[idx].idx, GSET, &text_bundle);
 
-        text_bundle.color = clrno;
+    text_bundle.color = clrno;
 
-        gsettextrep(ws_id,text_bndl_tbl[idx].idx,&text_bundle);
+    gsettextrep(ws_id, text_bndl_tbl[idx].idx, &text_bundle);
 
-        gsettextind(text_bndl_tbl[idx].idx);
+    gsettextind(text_bndl_tbl[idx].idx);
 
-        /* display text */
+    /* display text */
 
-        vert_spacing = text_bndl_tbl[idx].char_ht * (3.0 / 5.0);
-        ln_center.x = center->x;
-        ln_center.y = center->y + (nolines - 1) / 2.0 *
-                (text_bndl_tbl[idx].char_ht + vert_spacing);
+    vert_spacing = text_bndl_tbl[idx].char_ht * (3.0 / 5.0);
+    ln_center.x = center->x;
+    ln_center.y = center->y + (nolines - 1) / 2.0 * (text_bndl_tbl[idx].char_ht + vert_spacing);
 
-                /*
+    /*
                 printf("ht = %f, expansion = %f, spacing = %f\n",
                         text_bndl_tbl[idx].char_ht,
                         text_bundle.exp,
                         text_bundle.space);
                 */
 
+    for (i = 0; i < nolines; i++)
+    {
+        gtext(&ln_center, *lines);
+        lines++;
+        ln_center.y = ln_center.y - (text_bndl_tbl[idx].char_ht + vert_spacing);
+    };
 
-        for (i=0; i<nolines; i++)
-        {
+    /* restore old text parameters */
 
-                gtext(&ln_center,*lines);
-                lines++;
-                ln_center.y = ln_center.y - 
-                        (text_bndl_tbl[idx].char_ht + vert_spacing);
+    gsettextalign(&attr.align);
 
-        };
+    gsetcharup(&(attr.up));
+    gsettextpath(attr.path);
+    gsetcharheight(attr.height);
+    gsettextind(attr.txindex);
 
-        /* restore old text parameters */
-
-        
-        gsettextalign(&attr.align);
-
-        gsetcharup(&(attr.up));
-        gsettextpath(attr.path);
-        gsetcharheight(attr.height);
-        gsettextind(attr.txindex);
-
-}  /* end center_text */
-
+} /* end center_text */
 
 /*
  *  center_text_vert
@@ -291,61 +282,60 @@ void center_text( int nolines, char **lines, Gpoint *center, IDX clrno, KEY key)
  *                      key (KEY) - text bundle table key
  */
 
-void center_text_vert( char *line, Gpoint *center, IDX clrno, KEY key)
+void center_text_vert(char *line, Gpoint *center, IDX clrno, KEY key)
 {
-        IDX idx;                        /* text bundle tbl index
+    IDX idx;              /* text bundle tbl index
                                            containing key */
-        Gpoint up_vector;               /* up direction for text */
-        Gpriattr attr;                  /* current attributes */
-        Gtxbundl text_bundle;   /* bundle tbl entry for idx */
-        Gtxalign align;
+    Gpoint up_vector;     /* up direction for text */
+    Gpriattr attr;        /* current attributes */
+    Gtxbundl text_bundle; /* bundle tbl entry for idx */
+    Gtxalign align;
 
-        /* find index corresponding to key */
+    /* find index corresponding to key */
 
-        idx = get_text_bndl_tbl_idx(key);
+    idx = get_text_bndl_tbl_idx(key);
 
-        /* since not all text parameters are bundled,
+    /* since not all text parameters are bundled,
            the ones that aren't must be saved and restored */
 
-        ginqprimattr(&attr);
+    ginqprimattr(&attr);
 
-        /* set text parameters */
+    /* set text parameters */
 
-        align.ver = GTV_HALF;
-        align.hor = GTH_CENTER;
-        gsettextalign(&align);
+    align.ver = GTV_HALF;
+    align.hor = GTH_CENTER;
+    gsettextalign(&align);
 
-        up_vector.x = 0.0;
-        up_vector.y = 1.0;
-        gsetcharup(&up_vector);
-        gsettextpath(GTP_DOWN);
-        gsetcharheight(text_bndl_tbl[idx].char_ht);
-        gsettextind(text_bndl_tbl[idx].idx);
+    up_vector.x = 0.0;
+    up_vector.y = 1.0;
+    gsetcharup(&up_vector);
+    gsettextpath(GTP_DOWN);
+    gsetcharheight(text_bndl_tbl[idx].char_ht);
+    gsettextind(text_bndl_tbl[idx].idx);
 
-        /* set text color */
+    /* set text color */
 
-        ginqtextrep(ws_id,text_bndl_tbl[idx].idx,GSET,&text_bundle);
+    ginqtextrep(ws_id, text_bndl_tbl[idx].idx, GSET, &text_bundle);
 
-        text_bundle.color = clrno;
+    text_bundle.color = clrno;
 
-        gsettextrep(ws_id,text_bndl_tbl[idx].idx,&text_bundle);
+    gsettextrep(ws_id, text_bndl_tbl[idx].idx, &text_bundle);
 
-        /* display text */
+    /* display text */
 
-        gtext(center,line);
+    gtext(center, line);
 
-        /* restore old text parameters */
+    /* restore old text parameters */
 
-        /* s_text_alignment(attr.text_align_horz,attr.text_align_vert); */
-        gsettextalign(&attr.align);
+    /* s_text_alignment(attr.text_align_horz,attr.text_align_vert); */
+    gsettextalign(&attr.align);
 
-        gsetcharup(&(attr.up));
-        gsettextpath(attr.path);
-        gsetcharheight(attr.height);
-        gsettextind(attr.txindex);
+    gsetcharup(&(attr.up));
+    gsettextpath(attr.path);
+    gsetcharheight(attr.height);
+    gsettextind(attr.txindex);
 
-}  /* end center_text_vert */
-
+} /* end center_text_vert */
 
 /*
  *  curve
@@ -360,36 +350,34 @@ void center_text_vert( char *line, Gpoint *center, IDX clrno, KEY key)
  *                      pts (Gpoint *) - list of pts
  */
 
-
 void curve(Gpoint *c, int nopts, Gpoint *pts)
 {
-        Gfloat t;
-        Gfloat incr;
-        int i;
+    Gfloat t;
+    Gfloat incr;
+    int i;
 
-        t = 0.0;
-        incr = 1.0 / ((Gfloat) (nopts-1));
+    t = 0.0;
+    incr = 1.0 / ((Gfloat)(nopts - 1));
 
-        /* for (i=0; i<4; i++)
+    /* for (i=0; i<4; i++)
                 printf("c[i] = (%.2f, %.2f)\n",c[i].x,c[i].y); */
 
-        for (i=0; i<nopts; i++)
-        {
-                pts[i].x = (1-t) * (1-t) * (1-t) * c[0].x
-                        + 3 * t * (t-1) * (t-1) * c[1].x
-                        + 3 * t * t * (1-t) * c[2].x
-                        + t * t * t * c[3].x;
+    for (i = 0; i < nopts; i++)
+    {
+        pts[i].x = (1 - t) * (1 - t) * (1 - t) * c[0].x
+            + 3 * t * (t - 1) * (t - 1) * c[1].x
+            + 3 * t * t * (1 - t) * c[2].x
+            + t * t * t * c[3].x;
 
-                pts[i].y = (1-t) * (1-t) * (1-t) * c[0].y
-                        + 3 * t * (t-1) * (t-1) * c[1].y
-                        + 3 * t * t * (1-t) * c[2].y
-                        + t * t * t * c[3].y;
-                
-                t += incr;
-        }
+        pts[i].y = (1 - t) * (1 - t) * (1 - t) * c[0].y
+            + 3 * t * (t - 1) * (t - 1) * c[1].y
+            + 3 * t * t * (1 - t) * c[2].y
+            + t * t * t * c[3].y;
 
-}  /* end curve */
+        t += incr;
+    }
 
+} /* end curve */
 
 /*
  *  circle
@@ -406,11 +394,9 @@ void curve(Gpoint *c, int nopts, Gpoint *pts)
 
 void circle(Gpoint center, Gfloat rad, int nopts, Gpoint *pts)
 {
-        conic(center, 2 * rad, 2 * rad, nopts, pts);
+    conic(center, 2 * rad, 2 * rad, nopts, pts);
 
-
-}  /* end circle */
-
+} /* end circle */
 
 /*
  *  conic
@@ -426,26 +412,24 @@ void circle(Gpoint center, Gfloat rad, int nopts, Gpoint *pts)
  *                      pts (Gpoint *) - list of pts
  */
 
-
 void conic(Gpoint center, Gfloat wd, Gfloat ht, int nopts, Gpoint *pts)
 {
-        Gfloat incr;
-        int i;
+    Gfloat incr;
+    int i;
 
-        wd /= 2.0;
-        ht /= 2.0;
-        incr = (2 * PI) / (nopts - 1);
+    wd /= 2.0;
+    ht /= 2.0;
+    incr = (2 * PI) / (nopts - 1);
 
-        for (i=0; i<(nopts - 1); i++)
-        {
-                pts[i].x = center.x + wd * cos(i * incr);
-                pts[i].y = center.y + ht * sin(i * incr);
-        }
-        pts[(nopts - 1)].x = pts[0].x;
-        pts[(nopts - 1)].y = pts[0].y;
+    for (i = 0; i < (nopts - 1); i++)
+    {
+        pts[i].x = center.x + wd * cos(i * incr);
+        pts[i].y = center.y + ht * sin(i * incr);
+    }
+    pts[(nopts - 1)].x = pts[0].x;
+    pts[(nopts - 1)].y = pts[0].y;
 
-}  /* end conic */
-
+} /* end conic */
 
 /*
  *  draw_conic
@@ -459,15 +443,13 @@ void conic(Gpoint center, Gfloat wd, Gfloat ht, int nopts, Gpoint *pts)
  *                      ht (Gfloat) - height of conic
  */
 
-
-void draw_conic( Gpoint center, Gfloat wd, Gfloat ht)
+void draw_conic(Gpoint center, Gfloat wd, Gfloat ht)
 {
-        Gpoint pts[NO_CONIC_LNS];
+    Gpoint pts[NO_CONIC_LNS];
 
-        conic(center,wd,ht,NO_CONIC_LNS,pts);
-        gfillarea(NO_CONIC_LNS,pts);
-}  /* end draw_conic */
-
+    conic(center, wd, ht, NO_CONIC_LNS, pts);
+    gfillarea(NO_CONIC_LNS, pts);
+} /* end draw_conic */
 
 /*
  *  set_free_fill_rep
@@ -477,13 +459,13 @@ void draw_conic( Gpoint center, Gfloat wd, Gfloat ht)
  *                      color and style
  */
 
-void set_free_fill_rep( IDX color, Gflinter style)
+void set_free_fill_rep(IDX color, Gflinter style)
 {
-        Gflbundl repr;
+    Gflbundl repr;
 
-        repr.inter = style;
-        repr.style = 1;
-        repr.color = color;
+    repr.inter = style;
+    repr.style = 1;
+    repr.color = color;
 
-        gsetfillrep(ws_id,FREE_FILL_AREA_ENTRY,&repr);
-}  /* end set_free_fill_rep */
+    gsetfillrep(ws_id, FREE_FILL_AREA_ENTRY, &repr);
+} /* end set_free_fill_rep */

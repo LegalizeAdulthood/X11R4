@@ -31,26 +31,25 @@
 
 #include <stdio.h>
 
-#include "ws.h"
-#include "color.h"
-#include "key.h"
-#include "defs.h"
-#include "trans.h"
-#include "palette.h"
 #include "changes.h"
+#include "color.h"
+#include "defs.h"
 #include "error.h"
 #include "io.h"
+#include "key.h"
+#include "palette.h"
+#include "trans.h"
+#include "ws.h"
 
-Gint nrows;                             /* number of rows in
+Gint nrows;                      /* number of rows in
                                            in color table */
-Gint ncols;                             /* number of columns in
+Gint ncols;                      /* number of columns in
                                            in color table */
-IDX palstartclr = NOT_ALLOCATED;        /* index of first palette
+IDX palstartclr = NOT_ALLOCATED; /* index of first palette
                                            color in color table */
-IDX display_fgdclr;                     /* fgdclr area clr tbl entry */
-IDX display_bgdclr;                     /* bgdclr area clr tbl entry */
-IDX display_fillclr;                    /* fillclr area clr tbl entry */
-
+IDX display_fgdclr;              /* fgdclr area clr tbl entry */
+IDX display_bgdclr;              /* bgdclr area clr tbl entry */
+IDX display_fillclr;             /* fillclr area clr tbl entry */
 
 /*
  *  set_fgdclr
@@ -64,15 +63,14 @@ IDX display_fillclr;                    /* fillclr area clr tbl entry */
 
 void set_fgdclr(IDX idx)
 {
-        Gcobundl rgb_clr;               /* current fgdclr */
+    Gcobundl rgb_clr; /* current fgdclr */
 
-        fgdclr = idx;
+    fgdclr = idx;
 
-        get_color(idx,&rgb_clr);
-        set_color(display_fgdclr,&rgb_clr);
+    get_color(idx, &rgb_clr);
+    set_color(display_fgdclr, &rgb_clr);
 
-}  /* end set_fgdclr */
-
+} /* end set_fgdclr */
 
 /*
  *  get_fgdclr
@@ -83,9 +81,8 @@ void set_fgdclr(IDX idx)
  */
 int get_fgdclr(void)
 {
-        return(fgdclr);
-}  /* end get_fgdclr */
-
+    return (fgdclr);
+} /* end get_fgdclr */
 
 /*
  *  set_bgdclr
@@ -99,14 +96,13 @@ int get_fgdclr(void)
 
 void set_bgdclr(IDX idx)
 {
-        Gcobundl rgb_clr;               /* current bgdclr */
+    Gcobundl rgb_clr; /* current bgdclr */
 
-        bgdclr = idx;
-        get_color(idx,&rgb_clr);
-        set_color(display_bgdclr,&rgb_clr);
+    bgdclr = idx;
+    get_color(idx, &rgb_clr);
+    set_color(display_bgdclr, &rgb_clr);
 
-}  /* end set_bgdclr */
-
+} /* end set_bgdclr */
 
 /*
  *  get_bgdclr
@@ -118,10 +114,8 @@ void set_bgdclr(IDX idx)
 
 int get_bgdclr(void)
 {
-        return(display_bgdclr);
-}  /* end get_bgdclr */
-
-
+    return (display_bgdclr);
+} /* end get_bgdclr */
 
 /*
  *  set_fillclr
@@ -135,14 +129,13 @@ int get_bgdclr(void)
 
 void set_fillclr(IDX idx)
 {
-        Gcobundl rgb_clr;                       /* current fillclr */
+    Gcobundl rgb_clr; /* current fillclr */
 
-        fillclr = idx;
-        get_color(idx,&rgb_clr);
-        set_color(display_fillclr,&rgb_clr);
+    fillclr = idx;
+    get_color(idx, &rgb_clr);
+    set_color(display_fillclr, &rgb_clr);
 
-}  /* end set_fillclr */
-
+} /* end set_fillclr */
 
 /*
  *  get_fillclr
@@ -154,9 +147,8 @@ void set_fillclr(IDX idx)
 
 int get_fillclr(void)
 {
-        return(fillclr);
-}  /* end get_fillclr */
-
+    return (fillclr);
+} /* end get_fillclr */
 
 /*
  *  init_palette_clrs
@@ -173,43 +165,42 @@ int get_fillclr(void)
  *                              in hsv form
  */
 
-void init_palette_clrs( char *filename)
+void init_palette_clrs(char *filename)
 {
-        FILE *fd;                       /* fd for file containing
+    FILE *fd;         /* fd for file containing
                                            colors */
-        HSV hsv_clr;                    /* color as read in */
-        Gcobundl rgb_clr;               /* same color in rgb form */
-        int i;
+    HSV hsv_clr;      /* color as read in */
+    Gcobundl rgb_clr; /* same color in rgb form */
+    int i;
 
-        /* open file for reading */
+    /* open file for reading */
 
-        fd = fopen(filename,"r");
-        if (fd == (FILE *) NULL)
-                exit_error("init_palette_clrs",6);
+    fd = fopen(filename, "r");
+    if (fd == (FILE *) NULL)
+        exit_error("init_palette_clrs", 6);
 
-        /* read in number of rows and columns */
+    /* read in number of rows and columns */
 
-        get_int(fd,&(nrows),7);
-        get_int(fd,&(ncols),7);
+    get_int(fd, &(nrows), 7);
+    get_int(fd, &(ncols), 7);
 
-        /* read in colors and enter into color table */
+    /* read in colors and enter into color table */
 
-        if (palstartclr == NOT_ALLOCATED)
-                palstartclr = alloc_clr_tbl_entries(MAX_PAL_ENTRIES);
+    if (palstartclr == NOT_ALLOCATED)
+        palstartclr = alloc_clr_tbl_entries(MAX_PAL_ENTRIES);
 
-        for (i=palstartclr; i < (palstartclr + nrows * ncols); i++)
-        {
-                get_real3(fd,&(hsv_clr.hue), &(hsv_clr.sat),
-                        &(hsv_clr.val),7);
-                hsv_to_rgb(&hsv_clr,&rgb_clr);
-                set_color(i,&rgb_clr);
-        }
+    for (i = palstartclr; i < (palstartclr + nrows * ncols); i++)
+    {
+        get_real3(fd, &(hsv_clr.hue), &(hsv_clr.sat),
+            &(hsv_clr.val), 7);
+        hsv_to_rgb(&hsv_clr, &rgb_clr);
+        set_color(i, &rgb_clr);
+    }
 
-        /* close file */
+    /* close file */
 
-        fclose(fd);
-}  /* init_palette_clrs */
-
+    fclose(fd);
+} /* init_palette_clrs */
 
 /*
  *  init_clr_area_clrs
@@ -222,16 +213,14 @@ void init_palette_clrs( char *filename)
 
 void init_clr_area_clrs(void)
 {
+    display_fgdclr = alloc_clr_tbl_entries(1);
+    set_fgdclr(palstartclr);
+    display_bgdclr = alloc_clr_tbl_entries(1);
+    set_bgdclr(black);
+    display_fillclr = alloc_clr_tbl_entries(1);
+    set_fillclr(palstartclr);
 
-        display_fgdclr = alloc_clr_tbl_entries(1);
-        set_fgdclr(palstartclr);
-        display_bgdclr = alloc_clr_tbl_entries(1);
-        set_bgdclr(black);
-        display_fillclr = alloc_clr_tbl_entries(1);
-        set_fillclr(palstartclr);
-
-}  /* end init_clr_area_clrs */
-
+} /* end init_clr_area_clrs */
 
 /*
  *  get_clr_idx_from_pt
@@ -244,28 +233,27 @@ void init_clr_area_clrs(void)
  *  returns:            (IDX) - index of palette color in clr tbl
  */
 
-int get_clr_idx_from_pt( Gpoint pt)
+int get_clr_idx_from_pt(Gpoint pt)
 {
-        Gpoint window[2];               /* window[MIN] = (xmin,ymin)
+    Gpoint window[2]; /* window[MIN] = (xmin,ymin)
                                            window[MAX] = (xmax,ymax) */
 
-        int row, col;                   /* row and col containing pt */
-        Gfloat w, h;                    /* width & height of pal clr */
+    int row, col; /* row and col containing pt */
+    Gfloat w, h;  /* width & height of pal clr */
 
-        /*
+    /*
          * since idx based on row and col of color,
          * determine row and col of selected color
          *
          * rows (columns) are numbered 0...nrows-1 (ncols-1)
          */
-          
-        get_window(PAL_AREA,window);
-        w = (window[MAX].x - window[MIN].x) / ncols;
-        col = min2(((int) (pt.x / w)),(ncols - 1));
-          
-        h = (window[MAX].y - window[MIN].y) / nrows;
-        row = min2(((int) ((window[MAX].y - pt.y) / h)),
-                (nrows - 1));
-        return(palstartclr + row * ncols + col);
-}  /* end get_clr_idx_from_pt */
 
+    get_window(PAL_AREA, window);
+    w = (window[MAX].x - window[MIN].x) / ncols;
+    col = min2(((int) (pt.x / w)), (ncols - 1));
+
+    h = (window[MAX].y - window[MIN].y) / nrows;
+    row = min2(((int) ((window[MAX].y - pt.y) / h)),
+        (nrows - 1));
+    return (palstartclr + row * ncols + col);
+} /* end get_clr_idx_from_pt */

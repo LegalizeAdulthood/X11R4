@@ -42,16 +42,15 @@
  *                      (GKS format)
  */
 
-void ident( Gfloat *trans)
+void ident(Gfloat *trans)
 {
-        trans[0] = 1;
-        trans[1] = 0;
-        trans[2] = 0;
-        trans[3] = 0;
-        trans[4] = 1;
-        trans[5] = 0;
-}  /* end ident */
-
+    trans[0] = 1;
+    trans[1] = 0;
+    trans[2] = 0;
+    trans[3] = 0;
+    trans[4] = 1;
+    trans[5] = 0;
+} /* end ident */
 
 /*
  *  pt_mult
@@ -67,19 +66,18 @@ void ident( Gfloat *trans)
 
 void pt_mult(Gpoint *pts, int nopts, Gfloat *trans)
 {
-        int i;
-        Gfloat x,y;
+    int i;
+    Gfloat x, y;
 
-        for (i=0; i<nopts; i++)
-        {
-                x = pts[i].x;
-                y = pts[i].y;
+    for (i = 0; i < nopts; i++)
+    {
+        x = pts[i].x;
+        y = pts[i].y;
 
-                pts[i].x = trans[0] * x + trans[1] * y + trans[2];
-                pts[i].y = trans[3] * x + trans[4] * y + trans[5];
-        }
-}  /* end pt_mult */
-
+        pts[i].x = trans[0] * x + trans[1] * y + trans[2];
+        pts[i].y = trans[3] * x + trans[4] * y + trans[5];
+    }
+} /* end pt_mult */
 
 /*
  *  mat_mult
@@ -94,20 +92,19 @@ void pt_mult(Gpoint *pts, int nopts, Gfloat *trans)
 
 void mat_mult(Gfloat *mat1, Gfloat *mat2, Gfloat *result)
 {
-        Gfloat temp[6];
-        int i;
+    Gfloat temp[6];
+    int i;
 
-        temp[0] = mat1[0] * mat2[0] + mat1[3] * mat2[1];
-        temp[1] = mat1[1] * mat2[0] + mat1[4] * mat2[1];
-        temp[2] = mat1[2] * mat2[0] + mat1[5] * mat2[1] + mat2[2];
-        temp[3] = mat1[0] * mat2[3] + mat1[3] * mat2[4];
-        temp[4] = mat1[1] * mat2[3] + mat1[4] * mat2[4];
-        temp[5] = mat1[2] * mat2[3] + mat1[5] * mat2[4] + mat2[5];
+    temp[0] = mat1[0] * mat2[0] + mat1[3] * mat2[1];
+    temp[1] = mat1[1] * mat2[0] + mat1[4] * mat2[1];
+    temp[2] = mat1[2] * mat2[0] + mat1[5] * mat2[1] + mat2[2];
+    temp[3] = mat1[0] * mat2[3] + mat1[3] * mat2[4];
+    temp[4] = mat1[1] * mat2[3] + mat1[4] * mat2[4];
+    temp[5] = mat1[2] * mat2[3] + mat1[5] * mat2[4] + mat2[5];
 
-        for (i=0; i<6; i++)
-                result[i] = temp[i];
-}  /* end mat_mult */
-
+    for (i = 0; i < 6; i++)
+        result[i] = temp[i];
+} /* end mat_mult */
 
 /*
  *  s_trans_mat
@@ -119,13 +116,12 @@ void mat_mult(Gfloat *mat1, Gfloat *mat2, Gfloat *result)
  *                      y (Gfloat) - translation in y direction
  */
 
-void s_trans_mat(Gfloat *trans, Gfloat x,Gfloat y)
+void s_trans_mat(Gfloat *trans, Gfloat x, Gfloat y)
 {
-        ident(trans);
-        trans[2] = x;
-        trans[5] = y;
-}  /* end s_trans_mat */
-
+    ident(trans);
+    trans[2] = x;
+    trans[5] = y;
+} /* end s_trans_mat */
 
 /*
  *  s_rot_mat
@@ -139,17 +135,17 @@ void s_trans_mat(Gfloat *trans, Gfloat x,Gfloat y)
 
 void s_rot_mat(Gfloat *trans, Gpoint pt, Gfloat radians)
 {
-        Gfloat sin_theta, cos_theta;
+    Gfloat sin_theta, cos_theta;
 
-        sin_theta = sin(radians);
-        cos_theta = cos(radians);
+    sin_theta = sin(radians);
+    cos_theta = cos(radians);
 
-        trans[0] = cos_theta;
-        trans[1] = - sin_theta;
-        trans[2] = (1.0 - cos_theta) * pt.x
-                + sin_theta * pt.y;
-        trans[3] = sin_theta;
-        trans[4] = cos_theta;
-        trans[5] = (1.0 - cos_theta) * pt.y
-                - sin_theta * pt.x;
-}  /* end s_rot_trans */
+    trans[0] = cos_theta;
+    trans[1] = -sin_theta;
+    trans[2] = (1.0 - cos_theta) * pt.x
+        + sin_theta * pt.y;
+    trans[3] = sin_theta;
+    trans[4] = cos_theta;
+    trans[5] = (1.0 - cos_theta) * pt.y
+        - sin_theta * pt.x;
+} /* end s_rot_trans */

@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -65,7 +65,7 @@ extern void split_cleanup(MENU_ITEM *item);
 
 /* popup functions */
 
-extern void init_angle_popup( POPUP *popup);
-extern void switch_angle_state( POPUP *popup, Gpoint pt);
+extern void init_angle_popup(POPUP *popup);
+extern void switch_angle_state(POPUP *popup, Gpoint pt);
 
 #endif

@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -26,29 +26,29 @@
 
 #include <xgks.h>
 
-#include "screen_items.h"
 #include "objects.h"
+#include "screen_items.h"
 
 struct object_func_tbl_entry
 {
-	KEY key;			/* object type key */
-	void (*draw)(OBJECT *object);			/* draw routine for object */
-	void (*erase)(OBJECT *object);			/* draw routine for object */
-	int (*detect)(OBJECT *object, Gpoint pt);		/* routine to determine if
-					   object was selected */
-	int (*get_extent)(OBJECT *object, Gpoint extent[2]);		/* routine which calculates
-					   upright rectangular extent
-					   for object */
-	int (*copy)(OBJECT *object, OBJECT *duplicate);			/* routine to one object of
-					   of type key to another */
-	void (*rotate)(OBJECT *object, Gpoint pt, Gfloat angle);		/* routine to rotate object */
-	void (*free)(OBJECT *object);			/* routine for freeing
-					   object structure
-					   (such as lineob) */
-	void (*read)(FILE *fd, OBJECT *object, int *error);			/* routine to read in object
-					   of type key */
-	int (*write)(FILE *fd, OBJECT *object);			/* routine to write out object
-					   of type key */
+    KEY key;                                                 /* object type key */
+    void (*draw)(OBJECT *object);                            /* draw routine for object */
+    void (*erase)(OBJECT *object);                           /* draw routine for object */
+    int (*detect)(OBJECT *object, Gpoint pt);                /* routine to determine if
+                                           object was selected */
+    int (*get_extent)(OBJECT *object, Gpoint extent[2]);     /* routine which calculates
+                                           upright rectangular extent
+                                           for object */
+    int (*copy)(OBJECT *object, OBJECT *duplicate);          /* routine to one object of
+                                           of type key to another */
+    void (*rotate)(OBJECT *object, Gpoint pt, Gfloat angle); /* routine to rotate object */
+    void (*free)(OBJECT *object);                            /* routine for freeing
+                                           object structure
+                                           (such as lineob) */
+    void (*read)(FILE *fd, OBJECT *object, int *error);      /* routine to read in object
+                                           of type key */
+    int (*write)(FILE *fd, OBJECT *object);                  /* routine to write out object
+                                           of type key */
 };
 
 extern int object_func_tbl_sz;

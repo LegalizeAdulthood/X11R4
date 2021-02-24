@@ -79,8 +79,7 @@ BOOLEAN override = FALSE;
 BOOLEAN undo;
 MENU_ITEM *mitem_in_progress;
 
-#define ADJUST_GRID_UNDO        "adjust grid undo menu item"
-
+#define ADJUST_GRID_UNDO "adjust grid undo menu item"
 
 /*
  *  init_grid
@@ -91,20 +90,18 @@ MENU_ITEM *mitem_in_progress;
  *  parameters:         none
  */
 
-
 void init_grid(void)
 {
-        Gpoint window[2];
-        Gcobundl rgb;
+    Gpoint window[2];
+    Gcobundl rgb;
 
-        get_window(PICT_AREA,window);
-        grid_pt = window[MIN];
-        grid_color = alloc_clr_tbl_entries(1);
-        get_color(white,&rgb);
-        set_color(grid_color,&rgb);
-        grid_width = (window[MAX].x - window[MIN].x) / 20.0;
-}  /* init_grid */
-
+    get_window(PICT_AREA, window);
+    grid_pt = window[MIN];
+    grid_color = alloc_clr_tbl_entries(1);
+    get_color(white, &rgb);
+    set_color(grid_color, &rgb);
+    grid_width = (window[MAX].x - window[MIN].x) / 20.0;
+} /* init_grid */
 
 /*
  *  get_grid_width
@@ -118,9 +115,8 @@ void init_grid(void)
 
 Gfloat get_grid_width(void)
 {
-        return(grid_width);
-}  /* end get_grid_width */
-
+    return (grid_width);
+} /* end get_grid_width */
 
 /*
  *  get_grid_color
@@ -134,9 +130,8 @@ Gfloat get_grid_width(void)
 
 int get_grid_color(void)
 {
-        return(grid_color);
-}  /* end get_grid_color */
-
+    return (grid_color);
+} /* end get_grid_color */
 
 /*
  *  get_grid_pt
@@ -150,9 +145,8 @@ int get_grid_color(void)
 
 Gpoint get_grid_pt(void)
 {
-        return(grid_pt);
-}  /* end get_grid_pt */
-
+    return (grid_pt);
+} /* end get_grid_pt */
 
 /*
  *  override_snap
@@ -165,9 +159,8 @@ Gpoint get_grid_pt(void)
 
 void override_snap(void)
 {
-        override = TRUE;
-}  /* end override_snap */
-
+    override = TRUE;
+} /* end override_snap */
 
 /*
  *  resume_snap
@@ -180,9 +173,8 @@ void override_snap(void)
 
 void resume_snap(void)
 {
-        override = FALSE;
-}  /* end resume_snap */
-
+    override = FALSE;
+} /* end resume_snap */
 
 /*
  *  get_override_state
@@ -194,9 +186,8 @@ void resume_snap(void)
 
 int get_override_state(void)
 {
-        return(override);
-}  /* end get_override_state */
-
+    return (override);
+} /* end get_override_state */
 
 /*
  *  draw_grid
@@ -207,65 +198,63 @@ int get_override_state(void)
  *  parameters:         none
  */
 
-
 void draw_grid(void)
 {
-        Gfloat width;
-        Gpoint pt;
-        Gpoint window[2];
-        int no_x_pts, no_y_pts;
-        int i,j;
-        int idx;
-        Gpoint *pts;
-        Gmkbundl repr;
+    Gfloat width;
+    Gpoint pt;
+    Gpoint window[2];
+    int no_x_pts, no_y_pts;
+    int i, j;
+    int idx;
+    Gpoint *pts;
+    Gmkbundl repr;
 
-        if (screen_tbl[find_screen_tbl_idx(PICT_AREA)].is_active 
-                != TRUE)
+    if (screen_tbl[find_screen_tbl_idx(PICT_AREA)].is_active
+        != TRUE)
 
-                return;
+        return;
 
-        push_curr_trans();
-        activate(PICT_AREA);
-        set_aspect_flags(GBUNDLED);
+    push_curr_trans();
+    activate(PICT_AREA);
+    set_aspect_flags(GBUNDLED);
 
-        idx = get_grid_color();
-        width = get_grid_width();
-        pt = get_grid_pt();
-        get_window(PICT_AREA,window);
+    idx = get_grid_color();
+    width = get_grid_width();
+    pt = get_grid_pt();
+    get_window(PICT_AREA, window);
 
-        pt.x -= floor((pt.x - window[MIN].x) / width) * width;
-        pt.y -= floor((pt.y - window[MIN].y) / width) * width;
+    pt.x -= floor((pt.x - window[MIN].x) / width) * width;
+    pt.y -= floor((pt.y - window[MIN].y) / width) * width;
 
-        no_x_pts = floor((window[MAX].x - window[MIN].x) / width)
-                + 1;
-        no_y_pts = floor((window[MAX].y - window[MIN].y) / width)
-                + 1;
+    no_x_pts = floor((window[MAX].x - window[MIN].x) / width)
+        + 1;
+    no_y_pts = floor((window[MAX].y - window[MIN].y) / width)
+        + 1;
 
-        pts = (Gpoint *) calloc((unsigned) no_x_pts,
-                sizeof(Gpoint));
+    pts = (Gpoint *) calloc((unsigned) no_x_pts,
+        sizeof(Gpoint));
 
-        for (i=0; i<no_x_pts; i++)
-                pts[i].x = pt.x + i * width;
+    for (i = 0; i < no_x_pts; i++)
+        pts[i].x = pt.x + i * width;
 
-        repr.type = GMK_PLUS;
-        repr.size = 0.3;
-        repr.color = idx;
-        gsetmarkerrep(ws_id,GRID_MARKER,&repr);
+    repr.type = GMK_PLUS;
+    repr.size = 0.3;
+    repr.color = idx;
+    gsetmarkerrep(ws_id, GRID_MARKER, &repr);
 
-        gsetmarkerind(GRID_MARKER);
-        for (i=0; i<no_y_pts; i++)
-        {
-                pts[0].y = pt.y + i * width;
-                for (j=0; j<no_x_pts; j++)
-                        pts[j].y = pts[0].y;
-                gpolymarker(no_x_pts,pts);
-        }
-        free((char *) pts);
+    gsetmarkerind(GRID_MARKER);
+    for (i = 0; i < no_y_pts; i++)
+    {
+        pts[0].y = pt.y + i * width;
+        for (j = 0; j < no_x_pts; j++)
+            pts[j].y = pts[0].y;
+        gpolymarker(no_x_pts, pts);
+    }
+    free((char *) pts);
 
-        set_aspect_flags(GINDIVIDUAL);
-        pop_curr_trans();
-}  /* end draw_grid */
-
+    set_aspect_flags(GINDIVIDUAL);
+    pop_curr_trans();
+} /* end draw_grid */
 
 /*
  *  erase_grid
@@ -276,100 +265,97 @@ void draw_grid(void)
  *  parameters:         none
  */
 
-
 void erase_grid(void)
 {
-        Gfloat width;
-        Gpoint pt;
-        Gpoint window[2];
-        Gpoint box[4];
-        int no_x_pts, no_y_pts;
-        int i,j;
-        int idx;
-        Gpoint *pts;
-        Gmkbundl repr;
+    Gfloat width;
+    Gpoint pt;
+    Gpoint window[2];
+    Gpoint box[4];
+    int no_x_pts, no_y_pts;
+    int i, j;
+    int idx;
+    Gpoint *pts;
+    Gmkbundl repr;
 
-        if (screen_tbl[find_screen_tbl_idx(PICT_AREA)].is_active 
-                != TRUE)
+    if (screen_tbl[find_screen_tbl_idx(PICT_AREA)].is_active
+        != TRUE)
 
-                return;
+        return;
 
-        else if (get_update_mode() != QUICK_UPDATE)
+    else if (get_update_mode() != QUICK_UPDATE)
+    {
+        erase_area(PICT_AREA);
+        push_curr_trans();
+        activate(PICT_AREA);
+        set_aspect_flags(GBUNDLED);
+
+        /* redraw window boundary */
+
+        get_window(PICT_AREA, window);
+        load_box(box, window[MIN].x, window[MAX].x,
+            window[MIN].y, window[MAX].y);
+        gsetfillind(BGDCLR_SOLID);
+        gfillarea(4, box);
+        gsetfillind(WHITE_HOLLOW);
+        gfillarea(4, box);
+
+        /* redraw objects */
+
+        set_aspect_flags(GINDIVIDUAL);
+        draw_objects();
+        pop_curr_trans();
+    }
+    else
+    {
+        push_curr_trans();
+        activate(PICT_AREA);
+        set_aspect_flags(GBUNDLED);
+
+        idx = get_bgdclr();
+        width = get_grid_width();
+        pt = get_grid_pt();
+        get_window(PICT_AREA, window);
+
+        pt.x -= floor((pt.x - window[MIN].x) / width) * width;
+        pt.y -= floor((pt.y - window[MIN].y) / width) * width;
+
+        no_x_pts = floor((window[MAX].x - window[MIN].x)
+                       / width)
+            + 1;
+        no_y_pts = floor((window[MAX].y - window[MIN].y)
+                       / width)
+            + 1;
+
+        pts = (Gpoint *) calloc((unsigned) no_x_pts,
+            sizeof(Gpoint));
+
+        for (i = 0; i < no_x_pts; i++)
+            pts[i].x = pt.x + i * width;
+
+        repr.type = GMK_PLUS;
+        repr.size = 0.3;
+        repr.color = idx;
+        gsetmarkerrep(ws_id, GRID_MARKER, &repr);
+
+        gsetmarkerind(GRID_MARKER);
+        for (i = 0; i < no_y_pts; i++)
         {
-                erase_area(PICT_AREA);
-                push_curr_trans();
-                activate(PICT_AREA);
-                set_aspect_flags(GBUNDLED);
+            pts[0].y = pt.y + i * width;
+            for (j = 0; j < no_x_pts; j++)
+                pts[j].y = pts[0].y;
 
-                /* redraw window boundary */
-
-                get_window(PICT_AREA,window);
-                load_box(box,window[MIN].x,window[MAX].x,
-                        window[MIN].y,window[MAX].y);
-                gsetfillind(BGDCLR_SOLID);
-                gfillarea(4,box);
-                gsetfillind(WHITE_HOLLOW);
-                gfillarea(4,box);
-
-                /* redraw objects */
-
-                set_aspect_flags(GINDIVIDUAL);
-                draw_objects();
-                pop_curr_trans();
-        }
-        else
-        {
-                push_curr_trans();
-                activate(PICT_AREA);
-                set_aspect_flags(GBUNDLED);
-
-                idx = get_bgdclr();
-                width = get_grid_width();
-                pt = get_grid_pt();
-                get_window(PICT_AREA,window);
-
-                pt.x -= floor((pt.x - 
-                        window[MIN].x) / width) * width;
-                pt.y -= floor((pt.y - 
-                        window[MIN].y) / width) * width;
-
-                no_x_pts = floor((window[MAX].x - window[MIN].x)
-                        / width) + 1;
-                no_y_pts = floor((window[MAX].y - window[MIN].y)
-                        / width) + 1;
-
-                pts = (Gpoint *) calloc((unsigned) no_x_pts,
-                        sizeof(Gpoint));
-
-                for (i=0; i<no_x_pts; i++)
-                        pts[i].x = pt.x + i * width;
-
-                repr.type = GMK_PLUS;
-                repr.size = 0.3;
-                repr.color = idx;
-                gsetmarkerrep(ws_id,GRID_MARKER,&repr);
-
-                gsetmarkerind(GRID_MARKER);
-                for (i=0; i<no_y_pts; i++)
-                {
-                        pts[0].y = pt.y + i * width;
-                        for (j=0; j<no_x_pts; j++)
-                                pts[j].y = pts[0].y;
-        
-                        /* points must be drawn in small
+            /* points must be drawn in small
                         groups due to limits on the 
                         size of data packets */
-        
-                        gpolymarker(no_x_pts,pts);
-                }
-                free((char *)pts);
 
-                set_aspect_flags(GINDIVIDUAL);
-                pop_curr_trans();
+            gpolymarker(no_x_pts, pts);
         }
-}  /* end erase_grid */
+        free((char *) pts);
 
-
+        set_aspect_flags(GINDIVIDUAL);
+        pop_curr_trans();
+    }
+} /* end erase_grid */
 
 /*
  *  snap_to_grid
@@ -380,47 +366,44 @@ void erase_grid(void)
  *  parameters:         (Gpoint *) point to convert
  */
 
-void snap_to_grid( Gpoint *pt)
+void snap_to_grid(Gpoint *pt)
 {
-        int d;
-        Gpoint gridpt;
-        Gfloat width;
+    int d;
+    Gpoint gridpt;
+    Gfloat width;
 
-        gridpt = get_grid_pt();
-        width = get_grid_width();
+    gridpt = get_grid_pt();
+    width = get_grid_width();
 
-        d = abs(pt->x - gridpt.x) / grid_width;
+    d = abs(pt->x - gridpt.x) / grid_width;
 
-        if (pt->x < (gridpt.x + width / 2.0))
-                pt->x = gridpt.x;
-        else if ((pt->x - d * width) < ((d + 1) * width - pt->x))
-                pt->x = d * width;
-        else
-                pt->x = (d+1) * width;
+    if (pt->x < (gridpt.x + width / 2.0))
+        pt->x = gridpt.x;
+    else if ((pt->x - d * width) < ((d + 1) * width - pt->x))
+        pt->x = d * width;
+    else
+        pt->x = (d + 1) * width;
 
-        d = abs(pt->y - gridpt.y) / grid_width;
+    d = abs(pt->y - gridpt.y) / grid_width;
 
-        if (pt->y < (gridpt.y + width / 2.0))
-                pt->y = grid_pt.y;
-        else if ((pt->y - d * width) < ((d + 1) * width - pt->y))
-                pt->y = d * width;
-        else
-                pt->y = (d+1) * width;
-}  /* end snap_to_grid */
-
+    if (pt->y < (gridpt.y + width / 2.0))
+        pt->y = grid_pt.y;
+    else if ((pt->y - d * width) < ((d + 1) * width - pt->y))
+        pt->y = d * width;
+    else
+        pt->y = (d + 1) * width;
+} /* end snap_to_grid */
 
 static int grid_color_state = WHITE_GRID;
 
-static char *grid_color_text[] =
-{
-        "WHITE",
-        "GRID",
-        "GREY",
-        "GRID",
-        "BLACK",
-        "GRID"
+static char *grid_color_text[] = {
+    "WHITE",
+    "GRID",
+    "GREY",
+    "GRID",
+    "BLACK",
+    "GRID"
 };
-
 
 /*
  *  init_grid_color_popup
@@ -430,18 +413,17 @@ static char *grid_color_text[] =
  *  parameters:         popup (POPUP *) - grid_color popup
  */
 
-void init_grid_color_popup( POPUP *popup)
+void init_grid_color_popup(POPUP *popup)
 {
-        char **ln_ptr;
-        int i;
+    char **ln_ptr;
+    int i;
 
-        ln_ptr = grid_color_text;
-        for (i=0; i<(2 * grid_color_state); i++)
-                ln_ptr++;
-        display_popup(popup,2,ln_ptr);
+    ln_ptr = grid_color_text;
+    for (i = 0; i < (2 * grid_color_state); i++)
+        ln_ptr++;
+    display_popup(popup, 2, ln_ptr);
 
-}  /* end init_grid_color_popup */
-
+} /* end init_grid_color_popup */
 
 /*
  *  switch_grid_color_state
@@ -453,27 +435,29 @@ void init_grid_color_popup( POPUP *popup)
  *                      pt (Gpoint) - unused
  */
 
-void switch_grid_color_state( POPUP *popup, Gpoint pt)
+void switch_grid_color_state(POPUP *popup, Gpoint pt)
 {
-        Gcobundl rgb;
+    Gcobundl rgb;
 
-        switch_popup_state(&grid_color_state,3,2,grid_color_text,popup->extent);
-        switch (grid_color_state)
-        {
-                case WHITE_GRID:        get_color(white,&rgb);
-                                        set_color(grid_color,&rgb);
-                                        break;
+    switch_popup_state(&grid_color_state, 3, 2, grid_color_text, popup->extent);
+    switch (grid_color_state)
+    {
+    case WHITE_GRID:
+        get_color(white, &rgb);
+        set_color(grid_color, &rgb);
+        break;
 
-                case GREY_GRID:         get_color(grey,&rgb);
-                                        set_color(grid_color,&rgb);
-                                        break;
+    case GREY_GRID:
+        get_color(grey, &rgb);
+        set_color(grid_color, &rgb);
+        break;
 
-                case BLACK_GRID:        get_color(black,&rgb);
-                                        set_color(grid_color,&rgb);
-                                        break;
-        }
-}  /* end switch_grid_color_state */
-
+    case BLACK_GRID:
+        get_color(black, &rgb);
+        set_color(grid_color, &rgb);
+        break;
+    }
+} /* end switch_grid_color_state */
 
 /*
  *  save_old_grid
@@ -485,14 +469,12 @@ void switch_grid_color_state( POPUP *popup, Gpoint pt)
  *  parameters:         none
  */
 
-
 void save_old_grid(void)
 {
-        undo = TRUE;
-        old_grid_pt = grid_pt;
-        old_grid_width = grid_width;
-}  /* end save old grid */
-
+    undo = TRUE;
+    old_grid_pt = grid_pt;
+    old_grid_width = grid_width;
+} /* end save old grid */
 
 /*
  *  move_grid_init
@@ -502,16 +484,15 @@ void save_old_grid(void)
  *  parameters:         menu_item (MENU_ITEM *) - move_grid menu item
  */
 
-void move_grid_init( MENU_ITEM *menu_item)
+void move_grid_init(MENU_ITEM *menu_item)
 {
-        set_currmitem(menu_item);
-        hilite(menu_item->key);
-        push_curr_trans();
-        activate(PICT_AREA);
-        override_snap();
-        prompt(30);
-}  /* end move_grid_init */     
-
+    set_currmitem(menu_item);
+    hilite(menu_item->key);
+    push_curr_trans();
+    activate(PICT_AREA);
+    override_snap();
+    prompt(30);
+} /* end move_grid_init */
 
 /*
  *  move_grid_restart
@@ -521,14 +502,13 @@ void move_grid_init( MENU_ITEM *menu_item)
  *  parameters:         menu_item (MENU_ITEM *) - move_grid menu item
  */
 
-void move_grid_restart( MENU_ITEM *menu_item)
+void move_grid_restart(MENU_ITEM *menu_item)
 {
-        if (eq(get_newmitem(),ADJUST_GRID_UNDO))
-                set_currmitem(menu_item);
-        else
-                prompt(30);
-}  /* end move_grid_restart */  
-
+    if (eq(get_newmitem(), ADJUST_GRID_UNDO))
+        set_currmitem(menu_item);
+    else
+        prompt(30);
+} /* end move_grid_restart */
 
 /*
  *  move_grid_exec
@@ -538,15 +518,14 @@ void move_grid_restart( MENU_ITEM *menu_item)
  *  parameters:         pt (Gpoint) - pt selected
  */
 
-void move_grid_exec( Gpoint pt)
+void move_grid_exec(Gpoint pt)
 {
-        save_old_grid();
-        erase_grid();
-        grid_pt = pt;
-        draw_grid();
-        prompt(30);
-}  /* end move_grid_exec */
-
+    save_old_grid();
+    erase_grid();
+    grid_pt = pt;
+    draw_grid();
+    prompt(30);
+} /* end move_grid_exec */
 
 /*
  *  move_grid_cleanup
@@ -556,22 +535,21 @@ void move_grid_exec( Gpoint pt)
 *  parameters:          menu_item (MENU_ITEM *) - move_grid menu item
 */
 
-void move_grid_cleanup( MENU_ITEM *menu_item)
+void move_grid_cleanup(MENU_ITEM *menu_item)
 {
-if (!eq(get_newmitem(),ADJUST_GRID_UNDO))
-{
+    if (!eq(get_newmitem(), ADJUST_GRID_UNDO))
+    {
         pop_curr_trans();
         unhilite(menu_item->key);
         mitem_in_progress = (MENU_ITEM *) NULL;
         resume_snap();
-}
-else
-{
+    }
+    else
+    {
         mitem_in_progress = menu_item;
-}
-set_currmitem((MENU_ITEM *) NULL);
-}  /* end move_grid_cleanup */
-
+    }
+    set_currmitem((MENU_ITEM *) NULL);
+} /* end move_grid_cleanup */
 
 BOOLEAN first_point_picked;
 
@@ -583,17 +561,16 @@ BOOLEAN first_point_picked;
  *  parameters:         menu_item (MENU_ITEM *) - resize_grid menu item
  */
 
-void resize_grid_init( MENU_ITEM *menu_item)
+void resize_grid_init(MENU_ITEM *menu_item)
 {
-        set_currmitem(menu_item);
-        hilite(menu_item->key);
-        push_curr_trans();
-        activate(PICT_AREA);
-        first_point_picked = FALSE;
-        override_snap();
-        prompt(31);
-}  /* end resize_grid_init */   
-
+    set_currmitem(menu_item);
+    hilite(menu_item->key);
+    push_curr_trans();
+    activate(PICT_AREA);
+    first_point_picked = FALSE;
+    override_snap();
+    prompt(31);
+} /* end resize_grid_init */
 
 /*
  *  resize_grid_restart
@@ -603,15 +580,14 @@ void resize_grid_init( MENU_ITEM *menu_item)
  *  parameters:         menu_item (MENU_ITEM *) - resize_grid menu item
  */
 
-void resize_grid_restart( MENU_ITEM *menu_item)
+void resize_grid_restart(MENU_ITEM *menu_item)
 {
-        if (eq(get_newmitem(),ADJUST_GRID_UNDO))
-                set_currmitem(menu_item);
-        else
-                prompt(31);
-        first_point_picked = FALSE;
-}  /* end resize_grid_restart */        
-
+    if (eq(get_newmitem(), ADJUST_GRID_UNDO))
+        set_currmitem(menu_item);
+    else
+        prompt(31);
+    first_point_picked = FALSE;
+} /* end resize_grid_restart */
 
 /*
  *  resize_grid_exec
@@ -621,31 +597,30 @@ void resize_grid_restart( MENU_ITEM *menu_item)
  *  parameters:         pt (Gpoint) - pt selected
  */
 
-void resize_grid_exec( Gpoint pt)
+void resize_grid_exec(Gpoint pt)
 {
-        static Gpoint first_pt;
-        Gfloat dx, dy;
+    static Gpoint first_pt;
+    Gfloat dx, dy;
 
-        if (!first_point_picked)
-        {
-                snap_to_grid(&pt);
-                first_pt = pt;
-                first_point_picked = TRUE;
-                prompt(32);
-        }
-        else
-        {
-                save_old_grid();
-                erase_grid();
-                dx = abs(first_pt.x - pt.x);
-                dy = abs(first_pt.y - pt.y);
-                grid_width = max2(dx,dy);
-                draw_grid();
-                first_point_picked = FALSE;
-                prompt(31);
-        }
-}  /* end resize_grid_exec */
-
+    if (!first_point_picked)
+    {
+        snap_to_grid(&pt);
+        first_pt = pt;
+        first_point_picked = TRUE;
+        prompt(32);
+    }
+    else
+    {
+        save_old_grid();
+        erase_grid();
+        dx = abs(first_pt.x - pt.x);
+        dy = abs(first_pt.y - pt.y);
+        grid_width = max2(dx, dy);
+        draw_grid();
+        first_point_picked = FALSE;
+        prompt(31);
+    }
+} /* end resize_grid_exec */
 
 /*
  *  resize_grid_cleanup
@@ -655,22 +630,21 @@ void resize_grid_exec( Gpoint pt)
  *  parameters:         menu_item (MENU_ITEM *) - resize_grid menu item
  */
 
-void resize_grid_cleanup( MENU_ITEM *menu_item)
+void resize_grid_cleanup(MENU_ITEM *menu_item)
 {
-        if (!eq(get_newmitem(),ADJUST_GRID_UNDO))
-        {
-                pop_curr_trans();
-                unhilite(menu_item->key);
-                mitem_in_progress = (MENU_ITEM *) NULL;
-                resume_snap();
-        }
-        else
-        {
-                mitem_in_progress = menu_item;
-        }
-        set_currmitem((MENU_ITEM *) NULL);
-}  /* end resize_grid_cleanup */
-
+    if (!eq(get_newmitem(), ADJUST_GRID_UNDO))
+    {
+        pop_curr_trans();
+        unhilite(menu_item->key);
+        mitem_in_progress = (MENU_ITEM *) NULL;
+        resume_snap();
+    }
+    else
+    {
+        mitem_in_progress = menu_item;
+    }
+    set_currmitem((MENU_ITEM *) NULL);
+} /* end resize_grid_cleanup */
 
 /*
  *  adjust_grid_undo
@@ -680,39 +654,39 @@ void resize_grid_cleanup( MENU_ITEM *menu_item)
  *  parameters:         menu_item (MENU_ITEM *) - undo menu item
  */
 
-void adjust_grid_undo( MENU_ITEM *menu_item)
+void adjust_grid_undo(MENU_ITEM *menu_item)
 {
-        Gpoint temppt;
-        Gfloat tempwd;
+    Gpoint temppt;
+    Gfloat tempwd;
 
-        if (undo == TRUE)
-        {
-                hilite(menu_item->key);
-                erase_grid();
+    if (undo == TRUE)
+    {
+        hilite(menu_item->key);
+        erase_grid();
 
-                temppt = grid_pt;
-                grid_pt = old_grid_pt;
-                old_grid_pt = temppt;
+        temppt = grid_pt;
+        grid_pt = old_grid_pt;
+        old_grid_pt = temppt;
 
-                tempwd = grid_width;
-                grid_width = old_grid_width;
-                old_grid_width = tempwd;
+        tempwd = grid_width;
+        grid_width = old_grid_width;
+        old_grid_width = tempwd;
 
-                draw_grid();
-                unhilite(menu_item->key);
-        }
+        draw_grid();
+        unhilite(menu_item->key);
+    }
 
-        /* restart menu item which was in progress when undo was
+    /* restart menu item which was in progress when undo was
            picked */
 
-        if (mitem_in_progress != (MENU_ITEM *) NULL)
-        {
-                menu_item_func_tbl[find_menu_item_func_tbl_idx(
-                        mitem_in_progress->key)].restart(
-                        mitem_in_progress);
-        }
-}  /* end adjust_grid_undo */
-
+    if (mitem_in_progress != (MENU_ITEM *) NULL)
+    {
+        menu_item_func_tbl[find_menu_item_func_tbl_idx(
+                               mitem_in_progress->key)]
+            .restart(
+                mitem_in_progress);
+    }
+} /* end adjust_grid_undo */
 
 /*
  *  adjust_grid
@@ -724,14 +698,13 @@ void adjust_grid_undo( MENU_ITEM *menu_item)
  *  parameters:         menu_item (MENU_ITEM *) - adjust_grid menu item
  */
 
-void adjust_grid( MENU_ITEM *menu_item)
+void adjust_grid(MENU_ITEM *menu_item)
 {
-        if (get_grid_state() == GRID_OFF)
-                reprompt(33);
-        else
-                display_child_menu(menu_item);
-}  /* end adjust_grid */
-
+    if (get_grid_state() == GRID_OFF)
+        reprompt(33);
+    else
+        display_child_menu(menu_item);
+} /* end adjust_grid */
 
 /*
  *  init_grid_menu
@@ -742,9 +715,9 @@ void adjust_grid( MENU_ITEM *menu_item)
  *                      menu (MENU *) - adjust grid menu
  */
 
-void init_grid_menu( AREA area, MENU * menu)
+void init_grid_menu(AREA area, MENU *menu)
 {
-        undo = FALSE;
-        mitem_in_progress = (MENU_ITEM *) NULL;
-        display_menu_n_popups(area,menu);
-}  /* end init_grid_menu */
+    undo = FALSE;
+    mitem_in_progress = (MENU_ITEM *) NULL;
+    display_menu_n_popups(area, menu);
+} /* end init_grid_menu */

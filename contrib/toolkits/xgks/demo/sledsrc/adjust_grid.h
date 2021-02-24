@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -28,22 +28,22 @@
 
 #include "screen_items.h"
 
-extern  void init_grid_color_popup( POPUP *popup);
-extern  void switch_grid_color_state( POPUP *popup, Gpoint pt);
+extern void init_grid_color_popup(POPUP *popup);
+extern void switch_grid_color_state(POPUP *popup, Gpoint pt);
 
-extern  void adjust_grid( MENU_ITEM *menu_item);
-extern  void init_grid_menu( AREA area, MENU * menu);
+extern void adjust_grid(MENU_ITEM *menu_item);
+extern void init_grid_menu(AREA area, MENU *menu);
 
-extern  void move_grid_init( MENU_ITEM *menu_item);
-extern  void move_grid_restart( MENU_ITEM *menu_item);
-extern  void move_grid_exec( Gpoint pt);
-extern  void move_grid_cleanup( MENU_ITEM *menu_item);
+extern void move_grid_init(MENU_ITEM *menu_item);
+extern void move_grid_restart(MENU_ITEM *menu_item);
+extern void move_grid_exec(Gpoint pt);
+extern void move_grid_cleanup(MENU_ITEM *menu_item);
 
-extern  void resize_grid_init( MENU_ITEM *menu_item);
-extern  void resize_grid_restart( MENU_ITEM *menu_item);
-extern  void resize_grid_exec( Gpoint pt);
-extern  void resize_grid_cleanup( MENU_ITEM *menu_item);
+extern void resize_grid_init(MENU_ITEM *menu_item);
+extern void resize_grid_restart(MENU_ITEM *menu_item);
+extern void resize_grid_exec(Gpoint pt);
+extern void resize_grid_cleanup(MENU_ITEM *menu_item);
 
-extern  void adjust_grid_undo( MENU_ITEM *menu_item);
+extern void adjust_grid_undo(MENU_ITEM *menu_item);
 
 #endif

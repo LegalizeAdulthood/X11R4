@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -32,8 +32,8 @@
  *  keys
  */
 
-typedef char *AREA;			/* key for area */
-typedef char *KEY;			/* screen_item key */
+typedef char *AREA; /* key for area */
+typedef char *KEY;  /* screen_item key */
 
 /*
  *  pop ups
@@ -47,17 +47,16 @@ typedef struct popup POPUP;
 
 struct popup
 {
-	KEY key;			/* unique key */	
-	Gpoint extent[2];		/* extent[0] = (xmin,ymin)
-					   extent[1] = (xmax,ymax) */
-	POPUP *next;			/* next popup in tbl */
-	BOOLEAN is_active;		/* true when popup is active */
+    KEY key;           /* unique key */
+    Gpoint extent[2];  /* extent[0] = (xmin,ymin)
+                                           extent[1] = (xmax,ymax) */
+    POPUP *next;       /* next popup in tbl */
+    BOOLEAN is_active; /* true when popup is active */
 };
 
-extern POPUP *currpoptbl;		/* list of popups associated
-					   with current menus and 
-					   menu items */
-
+extern POPUP *currpoptbl; /* list of popups associated
+                                           with current menus and 
+                                           menu items */
 
 /*
  *  menu structures
@@ -70,29 +69,28 @@ typedef struct menu_item MENU_ITEM;
 
 struct menu_item
 {
-	int nlns;			/* nmbr of lns in item name */
-	char **name;			/* name of menu item */
-	KEY key;			/* unique key */	
-	MENU *child;			/* child menu */
-	POPUP *poplst;			/* local popup table */
+    int nlns;      /* nmbr of lns in item name */
+    char **name;   /* name of menu item */
+    KEY key;       /* unique key */
+    MENU *child;   /* child menu */
+    POPUP *poplst; /* local popup table */
 };
 
 struct menu
 {
-	KEY key;			/* unique key */	
-	int nlns;			/* nmbr of lns in menu name */
-	char **name;			/* name of menu */
-	int noitems;			/* nmbr of menu items */
-	struct menu_item *item;		/* list of menu items */
-	MENU *parent;			/* parent menu */
-	POPUP *poplst;			/* local popup table */
+    KEY key;                /* unique key */
+    int nlns;               /* nmbr of lns in menu name */
+    char **name;            /* name of menu */
+    int noitems;            /* nmbr of menu items */
+    struct menu_item *item; /* list of menu items */
+    MENU *parent;           /* parent menu */
+    POPUP *poplst;          /* local popup table */
 };
 
-extern MENU_ITEM *currmitem;		/* current menu item */
-
+extern MENU_ITEM *currmitem; /* current menu item */
 
 extern KEY get_newmitem(void);
-void erase_area( AREA area);
+void erase_area(AREA area);
 void draw_screen_background(void);
 void manage_input(void);
 void signal_done(void);

@@ -37,58 +37,58 @@
 
 #include "obj_detect.h"
 
-#include "objects.h"
-#include "key.h"
-#include "ws.h"
-#include "object_tbl.h"
 #include "defs.h"
-#include "trans.h"
 #include "dummies.h"
+#include "key.h"
+#include "object_tbl.h"
+#include "objects.h"
+#include "trans.h"
+#include "ws.h"
 
-void detect_object( BOOLEAN *hit, COMB_OB **comb_ob, OBJECT **object, Gpoint pt)
+void detect_object(BOOLEAN *hit, COMB_OB **comb_ob, OBJECT **object, Gpoint pt)
 {
-        IDX idx;
-        COMB_OB *comb_ob_ptr;
-        OBJECT *object_ptr;
+    IDX idx;
+    COMB_OB *comb_ob_ptr;
+    OBJECT *object_ptr;
 
-        *object = (OBJECT *) NULL;
-        *comb_ob = (COMB_OB *) NULL;
-        *hit = FALSE;
+    *object = (OBJECT *) NULL;
+    *comb_ob = (COMB_OB *) NULL;
+    *hit = FALSE;
 
-        /* search priority list from tail so that
+    /* search priority list from tail so that
            first object picked has highest display priority */
 
-        for (comb_ob_ptr = tail; ((comb_ob_ptr != (COMB_OB *) NULL)
-                && (*hit == FALSE)); comb_ob_ptr = comb_ob_ptr->prev)
+    for (comb_ob_ptr = tail; ((comb_ob_ptr != (COMB_OB *) NULL)
+             && (*hit == FALSE));
+         comb_ob_ptr = comb_ob_ptr->prev)
+    {
+        if (comb_ob_ptr->visibility == GVISIBLE)
         {
-                if (comb_ob_ptr->visibility == GVISIBLE)
-                {
-                        /* last object in comb_ob has highest display
+            /* last object in comb_ob has highest display
                         priority */
 
-                        for (object_ptr = comb_ob_ptr->child;
-                                object_ptr != (OBJECT *) NULL;
-                                object_ptr = object_ptr->next)
+            for (object_ptr = comb_ob_ptr->child;
+                 object_ptr != (OBJECT *) NULL;
+                 object_ptr = object_ptr->next)
+            {
+                if (object_ptr->visibility == GVISIBLE)
+                {
+                    idx = get_object_func_tbl_idx(object_ptr->key);
+                    if (object_func_tbl[idx].detect != NULL)
+                    {
+                        if ((*(object_func_tbl[idx].detect))(object_ptr, pt) == TRUE)
                         {
-                                if (object_ptr->visibility == GVISIBLE)
-                                {
-                                        idx = get_object_func_tbl_idx(object_ptr->key);
-                                        if (object_func_tbl[idx].detect != NULL)
-                                        {
-                                                if ((*(object_func_tbl[idx].detect))(object_ptr, pt) == TRUE)
-                                                {
-                                                        *object = object_ptr;
-                                                        *comb_ob = comb_ob_ptr;
-                                                        *hit = TRUE;
-                                                }
-                                        }
-                                }
+                            *object = object_ptr;
+                            *comb_ob = comb_ob_ptr;
+                            *hit = TRUE;
                         }
+                    }
                 }
+            }
         }
+    }
 
-}  /* end detect_object */
-
+} /* end detect_object */
 
 /*
  *  detect_single_line
@@ -101,40 +101,39 @@ void detect_object( BOOLEAN *hit, COMB_OB **comb_ob, OBJECT **object, Gpoint pt)
  *  returns:            (BOOLEAN) - TRUE if detected
  */
 
-BOOLEAN detect_single_line( Gpoint *line, Gpoint pt)
+BOOLEAN detect_single_line(Gpoint *line, Gpoint pt)
 {
-        Gpoint extent[2];
-        Gfloat distance;
+    Gpoint extent[2];
+    Gfloat distance;
 
-        /* quick reject test */
+    /* quick reject test */
 
-        get_extent(line,2,extent);
-        if (!in_bounds_delta(extent,pt,DELTA))
-                return(FALSE);
-        
-        /* test distance from pt to line */
+    get_extent(line, 2, extent);
+    if (!in_bounds_delta(extent, pt, DELTA))
+        return (FALSE);
 
-        if (eq_pts(line[0],line[1]))
-        {
-                if (dist(pt,line[0]) <= DELTA)
-                        return(TRUE);
-                else
-                        return(FALSE);
-        }
+    /* test distance from pt to line */
 
-        distance = ((pt.x - line[0].x)
-                * (line[1].y - line[0].y)
-                - (line[1].x - line[0].x) 
-                * (pt.y - line[0].y))
-                / dist(line[0],line[1]);
-        distance = abs(distance);
-
-        if (distance <= DELTA)
-                return(TRUE);
+    if (eq_pts(line[0], line[1]))
+    {
+        if (dist(pt, line[0]) <= DELTA)
+            return (TRUE);
         else
-                return(FALSE);
-}  /* end detect_single_line */
+            return (FALSE);
+    }
 
+    distance = ((pt.x - line[0].x)
+                       * (line[1].y - line[0].y)
+                   - (line[1].x - line[0].x)
+                       * (pt.y - line[0].y))
+        / dist(line[0], line[1]);
+    distance = abs(distance);
+
+    if (distance <= DELTA)
+        return (TRUE);
+    else
+        return (FALSE);
+} /* end detect_single_line */
 
 /*
  *  detect_line
@@ -147,34 +146,32 @@ BOOLEAN detect_single_line( Gpoint *line, Gpoint pt)
  *  returns:            (BOOLEAN) - true if detected
  */
 
-BOOLEAN detect_line( OBJECT *object, Gpoint pt)
+BOOLEAN detect_line(OBJECT *object, Gpoint pt)
 {
-        BOOLEAN matched;
-        Gpoint extent[2];
-        int i;
+    BOOLEAN matched;
+    Gpoint extent[2];
+    int i;
 
-        get_extent(object->lineob.pts,object->lineob.nopts,extent);
-        if (!in_bounds_delta(extent,pt,DELTA))
+    get_extent(object->lineob.pts, object->lineob.nopts, extent);
+    if (!in_bounds_delta(extent, pt, DELTA))
+    {
+        return (FALSE);
+    }
+    else
+    {
+        matched = FALSE;
+        for (i = 0; i < (object->lineob.nopts - 1); i++)
         {
-                return(FALSE);
+            if (detect_single_line(&(object->lineob.pts[i]),
+                    pt))
+            {
+                matched = TRUE;
+                break;
+            }
         }
-        else
-        {
-                matched = FALSE;
-                for (i=0; i < (object->lineob.nopts - 1); i++)
-                {
-                        if (detect_single_line(&(object->lineob.pts[i]),
-                                pt))
-                        {
-                                matched = TRUE;
-                                break;
-                        }
-                }
-
-        }
-        return(matched);
-}  /* end detect_line */
-
+    }
+    return (matched);
+} /* end detect_line */
 
 /*
  *  detect_poly
@@ -187,17 +184,16 @@ BOOLEAN detect_line( OBJECT *object, Gpoint pt)
  *  returns:            (BOOLEAN) - true if detected
  */
 
-BOOLEAN detect_poly( OBJECT *object, Gpoint pt)
+BOOLEAN detect_poly(OBJECT *object, Gpoint pt)
 {
-        Gpoint extent[2];
+    Gpoint extent[2];
 
-        get_extent(object->polyob.pts,object->polyob.nopts,extent);
-        if (in_bounds_delta(extent,pt,DELTA))
-                return(TRUE);
-        else
-                return(FALSE);
-}  /* end detect poly */
-
+    get_extent(object->polyob.pts, object->polyob.nopts, extent);
+    if (in_bounds_delta(extent, pt, DELTA))
+        return (TRUE);
+    else
+        return (FALSE);
+} /* end detect poly */
 
 /*
  *  detect_text
@@ -210,33 +206,32 @@ BOOLEAN detect_poly( OBJECT *object, Gpoint pt)
  *  returns:            (BOOLEAN) - true if detected
  */
 
-BOOLEAN detect_text( OBJECT *object, Gpoint pt)
+BOOLEAN detect_text(OBJECT *object, Gpoint pt)
 {
-        BOOLEAN hit;
-        Gpoint rot_extent[4];
-        CHAR_OB *ch_ptr;
-        Gpoint extent[2];
+    BOOLEAN hit;
+    Gpoint rot_extent[4];
+    CHAR_OB *ch_ptr;
+    Gpoint extent[2];
 
-        hit = FALSE;
-        for (ch_ptr = object->textob.str;
-                ((ch_ptr != (CHAR_OB *) NULL) && !hit);
-                ch_ptr = ch_ptr->next)
-        {
-                /* find text extent */
+    hit = FALSE;
+    for (ch_ptr = object->textob.str;
+         ((ch_ptr != (CHAR_OB *) NULL) && !hit);
+         ch_ptr = ch_ptr->next)
+    {
+        /* find text extent */
 
-                get_text_extent(ch_ptr->ch,ch_ptr->center,
-                        ch_ptr->fontstyle,ch_ptr->height,
-                        ch_ptr->expansion,object->textob.up_vec,
-                        rot_extent);
-                get_extent(rot_extent,4,extent);
-                if (in_bounds_delta(extent,pt,DELTA))
-                        hit = TRUE;
-        }
+        get_text_extent(ch_ptr->ch, ch_ptr->center,
+            ch_ptr->fontstyle, ch_ptr->height,
+            ch_ptr->expansion, object->textob.up_vec,
+            rot_extent);
+        get_extent(rot_extent, 4, extent);
+        if (in_bounds_delta(extent, pt, DELTA))
+            hit = TRUE;
+    }
 
-        return(hit);
+    return (hit);
 
-}  /* end detect_text */
-
+} /* end detect_text */
 
 /*
  *  get_text_extent
@@ -254,76 +249,74 @@ BOOLEAN detect_text( OBJECT *object, Gpoint pt)
  *                      (storage must be preallocated)
  */
 
-void get_text_extent( Gchar ch, Gpoint center, IDX font, Gfloat height, Gfloat expansion, Gpoint up_vec, Gpoint *extent)
+void get_text_extent(Gchar ch, Gpoint center, IDX font, Gfloat height, Gfloat expansion, Gpoint up_vec, Gpoint *extent)
 {
-        Gpriattr prim_attr;
-        Gindattr indiv_attr;
-        Gextent ext;
-        Gchar str[2];
-        Gtxfp tpf;
-        Gtxalign align;
+    Gpriattr prim_attr;
+    Gindattr indiv_attr;
+    Gextent ext;
+    Gchar str[2];
+    Gtxfp tpf;
+    Gtxalign align;
 
-        push_curr_trans();
-        activate(PICT_AREA);
-        ginqprimattr(&prim_attr);
-        ginqindivattr(&indiv_attr);
+    push_curr_trans();
+    activate(PICT_AREA);
+    ginqprimattr(&prim_attr);
+    ginqindivattr(&indiv_attr);
 
-        gsetcharheight(height);
-        gsetcharexpan(expansion);
-        gsetcharup(&up_vec);
+    gsetcharheight(height);
+    gsetcharexpan(expansion);
+    gsetcharup(&up_vec);
 
-        align.hor = GTH_CENTER;
-        align.ver = GTV_HALF;
-        gsettextalign(&align);
+    align.hor = GTH_CENTER;
+    align.ver = GTV_HALF;
+    gsettextalign(&align);
 
-        tpf.font = font;
-        tpf.prec = GSTROKE;
-        gsettextfontprec(&tpf);
+    tpf.font = font;
+    tpf.prec = GSTROKE;
+    gsettextfontprec(&tpf);
 
-        str[0] = ch;
-        str[1] = 0;
+    str[0] = ch;
+    str[1] = 0;
 
-        ginqtextextent(ws_id,center,str,&ext);
-        extent[0] = ext.ll;
-        extent[1] = ext.lr;
-        extent[2] = ext.ur;
-        extent[3] = ext.ul;
+    ginqtextextent(ws_id, center, str, &ext);
+    extent[0] = ext.ll;
+    extent[1] = ext.lr;
+    extent[2] = ext.ur;
+    extent[3] = ext.ul;
 
-        gsetcharheight(prim_attr.height);
-        gsetcharexpan(indiv_attr.chexp);
-        gsetcharup(&(prim_attr.up));
-        gsettextalign(&(prim_attr.align));
+    gsetcharheight(prim_attr.height);
+    gsetcharexpan(indiv_attr.chexp);
+    gsetcharup(&(prim_attr.up));
+    gsettextalign(&(prim_attr.align));
 
-        gsettextfontprec(&(indiv_attr.fp));
+    gsettextfontprec(&(indiv_attr.fp));
 
-        pop_curr_trans();
-}  /* end get_text_extent */
+    pop_curr_trans();
+} /* end get_text_extent */
 
-
-void get_extent( Gpoint *pts, int npts, Gpoint *extent)
+void get_extent(Gpoint *pts, int npts, Gpoint *extent)
 {
-        int i;
+    int i;
 
-        extent[MIN].x = pts[0].x;
-        extent[MIN].y = pts[0].y;
-        extent[MAX].x = pts[0].x;
-        extent[MAX].y = pts[0].y;
+    extent[MIN].x = pts[0].x;
+    extent[MIN].y = pts[0].y;
+    extent[MAX].x = pts[0].x;
+    extent[MAX].y = pts[0].y;
 
-        for (i=1; i<npts; i++)
-        {
-                if (pts[i].x < extent[MIN].x)
-                        extent[MIN].x = pts[i].x;
-                else if (pts[i].x > extent[MAX].x)
-                        extent[MAX].x = pts[i].x;
+    for (i = 1; i < npts; i++)
+    {
+        if (pts[i].x < extent[MIN].x)
+            extent[MIN].x = pts[i].x;
+        else if (pts[i].x > extent[MAX].x)
+            extent[MAX].x = pts[i].x;
 
-                if (pts[i].y < extent[MIN].y)
-                        extent[MIN].y = pts[i].y;
-                else if (pts[i].y > extent[MAX].y)
-                        extent[MAX].y = pts[i].y;
-        }
+        if (pts[i].y < extent[MIN].y)
+            extent[MIN].y = pts[i].y;
+        else if (pts[i].y > extent[MAX].y)
+            extent[MAX].y = pts[i].y;
+    }
 
-}  /* end get_extent */
-
+} /* end get_extent */
 
 /*
  *  get_line_extent
@@ -337,11 +330,10 @@ void get_extent( Gpoint *pts, int npts, Gpoint *extent)
  *                      (must be preallocated)
  */
 
-void get_line_extent( OBJECT *object, Gpoint *extent)
+void get_line_extent(OBJECT *object, Gpoint *extent)
 {
-        get_extent(object->lineob.pts,object->lineob.nopts,extent);
-}  /* get_line_object */
-
+    get_extent(object->lineob.pts, object->lineob.nopts, extent);
+} /* get_line_object */
 
 /*
  *  get_poly_extent
@@ -355,11 +347,10 @@ void get_line_extent( OBJECT *object, Gpoint *extent)
  *                      (must be preallocated)
  */
 
-void get_poly_extent( OBJECT *object, Gpoint *extent)
+void get_poly_extent(OBJECT *object, Gpoint *extent)
 {
-        get_extent(object->polyob.pts,object->polyob.nopts,extent);
-}  /* get_poly_object */
-
+    get_extent(object->polyob.pts, object->polyob.nopts, extent);
+} /* get_poly_object */
 
 /*
  *  get_string_extent
@@ -373,37 +364,36 @@ void get_poly_extent( OBJECT *object, Gpoint *extent)
  *                      (must be preallocated)
  */
 
-void get_string_extent( OBJECT *object, Gpoint *extent)
+void get_string_extent(OBJECT *object, Gpoint *extent)
 {
-        Gpoint pts[6];
-        CHAR_OB *ch_ptr;
-        Gpoint up_vec;
+    Gpoint pts[6];
+    CHAR_OB *ch_ptr;
+    Gpoint up_vec;
 
-        up_vec.x = 0.0;
-        up_vec.y = 1.0;
+    up_vec.x = 0.0;
+    up_vec.y = 1.0;
 
-        for (ch_ptr = object->textob.str; ch_ptr != (CHAR_OB *) NULL;
-                ch_ptr = ch_ptr->next)
+    for (ch_ptr = object->textob.str; ch_ptr != (CHAR_OB *) NULL;
+         ch_ptr = ch_ptr->next)
+    {
+        /* find rotated character extent */
+
+        get_text_extent(ch_ptr->ch, ch_ptr->center,
+            ch_ptr->fontstyle, ch_ptr->height,
+            ch_ptr->expansion, up_vec, pts);
+
+        if (ch_ptr == object->textob.str)
         {
-                /* find rotated character extent */
-
-                get_text_extent(ch_ptr->ch,ch_ptr->center,
-                        ch_ptr->fontstyle,ch_ptr->height,
-                        ch_ptr->expansion,up_vec,pts);
-
-                if (ch_ptr == object->textob.str)
-                {
-                        get_extent(pts,4,extent);
-                }
-                else
-                {
-                        extent[MIN] = pts[4];
-                        extent[MAX] = pts[5];
-                        get_extent(pts,6,extent);
-                }
+            get_extent(pts, 4, extent);
         }
-}  /* end get_string_extent */
-
+        else
+        {
+            extent[MIN] = pts[4];
+            extent[MAX] = pts[5];
+            get_extent(pts, 6, extent);
+        }
+    }
+} /* end get_string_extent */
 
 /*
  * is_object_inbounds
@@ -418,19 +408,16 @@ void get_string_extent( OBJECT *object, Gpoint *extent)
  *                              otherwise
  */
 
-BOOLEAN is_object_inbounds( OBJECT *object, Gpoint *extent)
+BOOLEAN is_object_inbounds(OBJECT *object, Gpoint *extent)
 {
-        Gpoint ob_extent[2];
+    Gpoint ob_extent[2];
 
-        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].get_extent))(object, ob_extent);
+    (*(object_func_tbl[get_object_func_tbl_idx(object->key)].get_extent))(object, ob_extent);
 
-        if ((extent[MIN].x < ob_extent[MIN].x) &&
-                (extent[MIN].y < ob_extent[MIN].y) &&
-                (extent[MAX].x > ob_extent[MAX].x) &&
-                (extent[MAX].y > ob_extent[MAX].y))
-        {
-                return(TRUE);
-        }
-        else    return(FALSE);
-}  /* is_object_inbounds */
-
+    if ((extent[MIN].x < ob_extent[MIN].x) && (extent[MIN].y < ob_extent[MIN].y) && (extent[MAX].x > ob_extent[MAX].x) && (extent[MAX].y > ob_extent[MAX].y))
+    {
+        return (TRUE);
+    }
+    else
+        return (FALSE);
+} /* is_object_inbounds */

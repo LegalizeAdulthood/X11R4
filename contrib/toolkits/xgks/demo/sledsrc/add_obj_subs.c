@@ -40,29 +40,29 @@
  *                      n (int *) - no of fonts with stroke precision
  */
 
-void alloc_stroke_font_tbl( IDX **list, int *n)
+void alloc_stroke_font_tbl(IDX **list, int *n)
 {
-        int i,j;
-        Gtxfac attr;
+    int i, j;
+    Gtxfac attr;
 
-        ginqtextfacil(ws_type,&attr);
+    ginqtextfacil(ws_type, &attr);
 
-        /* count number of fonts with stroke precision */
+    /* count number of fonts with stroke precision */
 
-        *n = 0;
-        for (i=0; i<(attr.fps); i++)
-        {
-                if ((attr.fp_list[i]).prec == GSTROKE)
-                        (*n)++;
-        }
+    *n = 0;
+    for (i = 0; i < (attr.fps); i++)
+    {
+        if ((attr.fp_list[i]).prec == GSTROKE)
+            (*n)++;
+    }
 
-        /* assign stroke font list */
+    /* assign stroke font list */
 
-        *list = (IDX *) calloc((unsigned) *n, sizeof(IDX));
-        j=0;
-        for (i=0; i<attr.fps; i++)
-        {
-                if ((attr.fp_list[i]).prec == GSTROKE)
-                        (*list)[j++] = attr.fp_list[i].font;
-        }
-}  /* end alloc_stroke_font_tbl */
+    *list = (IDX *) calloc((unsigned) *n, sizeof(IDX));
+    j = 0;
+    for (i = 0; i < attr.fps; i++)
+    {
+        if ((attr.fp_list[i]).prec == GSTROKE)
+            (*list)[j++] = attr.fp_list[i].font;
+    }
+} /* end alloc_stroke_font_tbl */

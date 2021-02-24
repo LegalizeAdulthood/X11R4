@@ -30,9 +30,8 @@
 
 #include "objects_free.h"
 
-#include "objects.h"
 #include "object_tbl.h"
-
+#include "objects.h"
 
 /*
  *  free_comb_ob
@@ -44,19 +43,18 @@
 
 void free_comb_ob(COMB_OB *comb_ob)
 {
-        OBJECT *object_ptr,*temp;
+    OBJECT *object_ptr, *temp;
 
-        object_ptr = (OBJECT *) comb_ob->child;
-                
-        while (object_ptr != (OBJECT *) NULL)
-        {
-                temp = object_ptr->next;
-                free_object(object_ptr);
-                object_ptr = temp;
-        }
-        free((char *) comb_ob);
-}  /* end free_comb_ob */
+    object_ptr = (OBJECT *) comb_ob->child;
 
+    while (object_ptr != (OBJECT *) NULL)
+    {
+        temp = object_ptr->next;
+        free_object(object_ptr);
+        object_ptr = temp;
+    }
+    free((char *) comb_ob);
+} /* end free_comb_ob */
 
 /*
  *  free_object
@@ -68,11 +66,10 @@ void free_comb_ob(COMB_OB *comb_ob)
 
 void free_object(OBJECT *object)
 {
-        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].free))(object);
-        free((char *) object->key);
-        free((char *) object);
-}  /* end free_object */
-
+    (*(object_func_tbl[get_object_func_tbl_idx(object->key)].free))(object);
+    free((char *) object->key);
+    free((char *) object);
+} /* end free_object */
 
 /*
  *  free_line
@@ -84,9 +81,8 @@ void free_object(OBJECT *object)
 
 void free_line(OBJECT *object)
 {
-        free((char *) object->lineob.pts);
-}  /* end free_line */
-
+    free((char *) object->lineob.pts);
+} /* end free_line */
 
 /*
  *  free_poly
@@ -98,9 +94,8 @@ void free_line(OBJECT *object)
 
 void free_poly(OBJECT *object)
 {
-        free((char *) object->polyob.pts);
-}  /* end free_poly */
-
+    free((char *) object->polyob.pts);
+} /* end free_poly */
 
 /*
  *  free_text
@@ -112,13 +107,13 @@ void free_poly(OBJECT *object)
 
 void free_text(OBJECT *object)
 {
-        CHAR_OB *ch_ptr,*temp;
+    CHAR_OB *ch_ptr, *temp;
 
-        ch_ptr = object->textob.str; 
-        while (ch_ptr != (CHAR_OB *) NULL)
-        {
-                temp = ch_ptr->next;
-                free((char *) ch_ptr);
-                ch_ptr = temp;
-        }
-}  /* end free_text */
+    ch_ptr = object->textob.str;
+    while (ch_ptr != (CHAR_OB *) NULL)
+    {
+        temp = ch_ptr->next;
+        free((char *) ch_ptr);
+        ch_ptr = temp;
+    }
+} /* end free_text */

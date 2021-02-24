@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -28,19 +28,18 @@
 
 #include "changes.h"
 
-#define UNDEFINED -1			/* arbitrary unused val when
-					   hue is undefined */
+#define UNDEFINED -1 /* arbitrary unused val when \
+                        hue is undefined */
 
 /* color in hsv color model */
 
 typedef struct hsv HSV;
 struct hsv
 {
-	Gfloat hue;			/* hue */
-	Gfloat sat;			/* saturation */
-	Gfloat val;			/* value */
+    Gfloat hue; /* hue */
+    Gfloat sat; /* saturation */
+    Gfloat val; /* value */
 };
-
 
 extern IDX black;
 extern IDX white;
@@ -51,10 +50,10 @@ extern IDX fillclr;
 
 IDX alloc_clr_tbl_entries(int n);
 int get_num_free_clrs(void);
-void set_color( IDX idx, Gcobundl *rgb_clr);
-void hsv_to_rgb( HSV *hsv_clr, Gcobundl *rgb_clr);
+void set_color(IDX idx, Gcobundl *rgb_clr);
+void hsv_to_rgb(HSV *hsv_clr, Gcobundl *rgb_clr);
 void get_color(IDX idx, Gcobundl *rgb_clr);
-void rgb_to_hsv( Gcobundl *rgb_clr, HSV *hsv_clr);
+void rgb_to_hsv(Gcobundl *rgb_clr, HSV *hsv_clr);
 void init_screen_clrs(void);
 
 #endif

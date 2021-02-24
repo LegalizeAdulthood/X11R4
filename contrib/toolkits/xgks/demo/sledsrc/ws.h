@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -29,4 +29,4 @@ extern WSTYPE ws_type;
 
 extern char *hostname;
 
-#define PIC_WS	85
+#define PIC_WS 85

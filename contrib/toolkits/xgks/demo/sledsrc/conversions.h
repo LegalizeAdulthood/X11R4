@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -26,16 +26,16 @@
 
 #include <xgks.h>
 
-Gflinter num_to_style( int i);
+Gflinter num_to_style(int i);
 Gtxver num_to_vert(int i);
 Gtxhor num_to_horz(int i);
 Gtxpath num_to_path(int i);
-Gsegvis num_to_vis( int i);
+Gsegvis num_to_vis(int i);
 
 int style_to_num(Gflinter i);
 int vert_to_num(Gtxver i);
 int horz_to_num(Gtxhor i);
 int path_to_num(Gtxpath i);
-int vis_to_num(Gsegvis i); 
+int vis_to_num(Gsegvis i);
 
 #endif

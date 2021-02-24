@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -31,62 +31,62 @@
 
 /* variables needed for call inquire primitive attribute values */
 
-struct prim_attr_val	/* equivalent to Gpriattr */ 
+struct prim_attr_val /* equivalent to Gpriattr */
 {
-	Gint error;
-	IDX pline_idx;
-	IDX pmark_idx;
-	IDX text_idx;
-	IDX fill_idx;
-	Gfloat char_height;
-	Gpoint char_up;
-	Gpoint pattern_size;
-	Gpoint pattern_ref_pt;
-	ENUM text_path;
-	ENUM text_align_horz;
-	ENUM text_align_vert;
-	PICKID pickid;
+    Gint error;
+    IDX pline_idx;
+    IDX pmark_idx;
+    IDX text_idx;
+    IDX fill_idx;
+    Gfloat char_height;
+    Gpoint char_up;
+    Gpoint pattern_size;
+    Gpoint pattern_ref_pt;
+    ENUM text_path;
+    ENUM text_align_horz;
+    ENUM text_align_vert;
+    PICKID pickid;
 };
 
-struct indiv_attr_val	/* equiv. to Gindattr */
+struct indiv_attr_val /* equiv. to Gindattr */
 {
-	Gint error;
-	ENUM pline_type;
-	ENUM pmark_type;
-	ENUM text_precision;
-	IDX text_font;
-	ENUM aspect_flags[13];
-	Gfloat pline_width;
-	Gfloat pmark_size;
-	Gfloat text_expansion;
-	Gfloat text_spacing;
-	IDX pline_color;
-	IDX pmark_color;
-	IDX text_color;
-	ENUM fill_style;
-	IDX fill_style_idx;
-	IDX fill_color;
+    Gint error;
+    ENUM pline_type;
+    ENUM pmark_type;
+    ENUM text_precision;
+    IDX text_font;
+    ENUM aspect_flags[13];
+    Gfloat pline_width;
+    Gfloat pmark_size;
+    Gfloat text_expansion;
+    Gfloat text_spacing;
+    IDX pline_color;
+    IDX pmark_color;
+    IDX text_color;
+    ENUM fill_style;
+    IDX fill_style_idx;
+    IDX fill_color;
 };
 
-struct state_tbl_sz	/* Is replaced by type "Gwstables." */
+struct state_tbl_sz /* Is replaced by type "Gwstables." */
 {
-	ENUM pline;
-	ENUM pmark;
-	ENUM text;
-	ENUM fill;
-	ENUM pattern;
-	ENUM color;
+    ENUM pline;
+    ENUM pmark;
+    ENUM text;
+    ENUM fill;
+    ENUM pattern;
+    ENUM color;
 };
 
-struct pline_fac_val	/* Is replaced by type "Glnfac." */
+struct pline_fac_val /* Is replaced by type "Glnfac." */
 {
-	Gint ntypes;
-	Gint nwidths;
-	Gint npredef;
-	Gfloat nom_width;
-	Gfloat min_width;
-	Gfloat max_width;
-	ENUM *list;
+    Gint ntypes;
+    Gint nwidths;
+    Gint npredef;
+    Gfloat nom_width;
+    Gfloat min_width;
+    Gfloat max_width;
+    ENUM *list;
 };
 
 struct font_pair
@@ -97,17 +97,17 @@ struct font_pair
 
 typedef struct font_pair FONT_PAIR;
 
-struct text_fac_val	/*  Is replaced by type "Gtxfac." */
+struct text_fac_val /*  Is replaced by type "Gtxfac." */
 {
-	Gint nfonts;
-	Gint nheights;
-	Gint nexpansion;
-	Gint npredef;
-	Gfloat min_height;
-	Gfloat max_height;
-	Gfloat min_expansion;
-	Gfloat max_expansion;
-	FONT_PAIR *fontpairs;
+    Gint nfonts;
+    Gint nheights;
+    Gint nexpansion;
+    Gint npredef;
+    Gfloat min_height;
+    Gfloat max_height;
+    Gfloat min_expansion;
+    Gfloat max_expansion;
+    FONT_PAIR *fontpairs;
 };
 
-void get_cur_primitive_attributes( struct prim_attr_val *attr);
+void get_cur_primitive_attributes(struct prim_attr_val *attr);

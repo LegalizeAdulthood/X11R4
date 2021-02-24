@@ -1,5 +1,5 @@
 /*
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -29,27 +29,25 @@
 
 #include "screen_items.h"
 
-#define NON_EXISTENT	-1
+#define NON_EXISTENT -1
 
 typedef struct trans_stk TRANS_STK;
 struct trans_stk
 {
-	IDX transno;
-	TRANS_STK *next;
+    IDX transno;
+    TRANS_STK *next;
 };
-
 
 /*
 typedef struct extent_holder *EXTENT_PTR;
 struct extent_holder
 {
-	Gpoint pt[2];
-	EXTENT_PTR next;
+        Gpoint pt[2];
+        EXTENT_PTR next;
 };
 */
 
-
-#define DEFAULT_TRANS	0
+#define DEFAULT_TRANS 0
 
 /*
  *  rectangular boundaries are stored as follows:
@@ -60,21 +58,21 @@ struct extent_holder
  *  boundary[MAX].y = ymax
  */
 
-#define MIN		0
-#define MAX		1
+#define MIN 0
+#define MAX 1
 
 void push_curr_trans(void);
-void activate( AREA area);
+void activate(AREA area);
 void pop_curr_trans(void);
-int find_trans( AREA area);
-void alloc_trans( AREA area);
-void get_window( AREA area, Gpoint *window);
-void get_viewport( AREA area, Gpoint *viewport);
-void set_window( AREA area, Gpoint *window);
-void free_trans( AREA area);
+int find_trans(AREA area);
+void alloc_trans(AREA area);
+void get_window(AREA area, Gpoint *window);
+void get_viewport(AREA area, Gpoint *viewport);
+void set_window(AREA area, Gpoint *window);
+void free_trans(AREA area);
 void get_max_dc_coor(Gfloat *x, Gfloat *y);
 void adjust_screen_tbl_viewports(void);
 void init_trans_tbls(void);
-int is_ident( Gfloat *trans);
+int is_ident(Gfloat *trans);
 
 #endif

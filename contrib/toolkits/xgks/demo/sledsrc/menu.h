@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -28,21 +28,21 @@
 
 struct menu_area_tbl_entry
 {
-	AREA area;
-	MENU *menu;
+    AREA area;
+    MENU *menu;
 };
 
 extern struct menu_area_tbl_entry menu_tbl[];
 extern int menu_tbl_sz;
 extern int max_num_menu_entries;
 
-void set_currmitem( MENU_ITEM *menu_item);
+void set_currmitem(MENU_ITEM *menu_item);
 extern void display_child_menu(MENU_ITEM *menu_item);
-extern MENU * get_menu_from_area(AREA area);
+extern MENU *get_menu_from_area(AREA area);
 extern AREA get_area_from_menu(MENU *menu);
-MENU_ITEM * get_parent( MENU *child_menu);
-void switch_sec_menu( MENU *new_menu);
-void set_menu( AREA area, MENU *menu);
-void find_menu_item_idx( KEY key, MENU **menu, IDX *idx);
+MENU_ITEM *get_parent(MENU *child_menu);
+void switch_sec_menu(MENU *new_menu);
+void set_menu(AREA area, MENU *menu);
+void find_menu_item_idx(KEY key, MENU **menu, IDX *idx);
 
 #endif

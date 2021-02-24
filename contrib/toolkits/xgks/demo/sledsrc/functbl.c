@@ -28,10 +28,9 @@
 
 #include <strings.h>
 
-#include "screen_items.h"
-#include "functbl.h"
 #include "defs.h"
-
+#include "functbl.h"
+#include "screen_items.h"
 
 /*
  *  find_screen_tbl_idx
@@ -42,24 +41,24 @@
  *  parameters:         area (AREA) - screen area
  */
 
-int find_screen_tbl_idx( AREA area)
+int find_screen_tbl_idx(AREA area)
 {
-        int i;
+    int i;
 
-        /* look for area in tbl */
+    /* look for area in tbl */
 
-        for (i=0; (!eq(screen_tbl[i].area,area) && i<screen_tbl_sz);
-                i++);
+    for (i = 0; (!eq(screen_tbl[i].area, area) && i < screen_tbl_sz);
+         i++)
+        ;
 
-        /* if found return index, else return -1 */
+    /* if found return index, else return -1 */
 
-        if (eq(screen_tbl[i].area,area))
-                return(i);
-        else
-                return(-1);
+    if (eq(screen_tbl[i].area, area))
+        return (i);
+    else
+        return (-1);
 
-};  /* end find_screen_tbl_idx */
-
+}; /* end find_screen_tbl_idx */
 
 /*
  *  find_popup_func_tbl_idx
@@ -73,19 +72,18 @@ int find_screen_tbl_idx( AREA area)
  *  returns:            idx (IDX) - index of key in popup_func_tbl
  */
 
-int find_popup_func_tbl_idx( KEY key)
+int find_popup_func_tbl_idx(KEY key)
 {
-        IDX idx;
+    IDX idx;
 
-        for (idx=0; (!eq(popup_func_tbl[idx].key,key) && 
-                (idx < popup_func_tbl_sz)); idx++);
+    for (idx = 0; (!eq(popup_func_tbl[idx].key, key) && (idx < popup_func_tbl_sz)); idx++)
+        ;
 
-        if (eq(popup_func_tbl[idx].key,key))
-                return(idx);
-        else
-                return(-1);
-}  /* find_popup_func_tbl_idx */
-
+    if (eq(popup_func_tbl[idx].key, key))
+        return (idx);
+    else
+        return (-1);
+} /* find_popup_func_tbl_idx */
 
 /*
  *  find_menu_item_func_tbl_idx
@@ -99,19 +97,18 @@ int find_popup_func_tbl_idx( KEY key)
  *  returns:            idx (IDX) - index of key in menu_item_func_tbl
  */
 
-int find_menu_item_func_tbl_idx( KEY key)
+int find_menu_item_func_tbl_idx(KEY key)
 {
-        IDX idx;
+    IDX idx;
 
-        for (idx=0; (!eq(menu_item_func_tbl[idx].key,key) && 
-                (idx < menu_item_func_tbl_sz)); idx++);
+    for (idx = 0; (!eq(menu_item_func_tbl[idx].key, key) && (idx < menu_item_func_tbl_sz)); idx++)
+        ;
 
-        if (eq(menu_item_func_tbl[idx].key,key))
-                return(idx);
-        else
-                return(-1);
-}  /* find_menu_item_func_tbl_idx */
-
+    if (eq(menu_item_func_tbl[idx].key, key))
+        return (idx);
+    else
+        return (-1);
+} /* find_menu_item_func_tbl_idx */
 
 /*
  *  find_menu_func_tbl_idx
@@ -125,17 +122,15 @@ int find_menu_item_func_tbl_idx( KEY key)
  *  returns:            idx (IDX) - index of key in menu_func_tbl
  */
 
-int find_menu_func_tbl_idx( KEY key)
+int find_menu_func_tbl_idx(KEY key)
 {
-        IDX idx;
+    IDX idx;
 
-        for (idx=0; (!eq(menu_func_tbl[idx].key,key) && 
-                (idx < menu_func_tbl_sz)); idx++);
+    for (idx = 0; (!eq(menu_func_tbl[idx].key, key) && (idx < menu_func_tbl_sz)); idx++)
+        ;
 
-        if (eq(menu_func_tbl[idx].key,key))
-                return(idx);
-        else
-                return(-1);
-}  /* find_menu_func_tbl_idx */
-
-
+    if (eq(menu_func_tbl[idx].key, key))
+        return (idx);
+    else
+        return (-1);
+} /* find_menu_func_tbl_idx */

@@ -59,25 +59,24 @@
  *  returns:            str (char *) - ptr to next cahr string
  */
 
-char *get_char_str( FILE *fd, IDX errno)
+char *get_char_str(FILE *fd, IDX errno)
 {
-        char ln[80];                    /* next input ln */
-        char *str;                      /* next char str */
+    char ln[80]; /* next input ln */
+    char *str;   /* next char str */
 
-        /* read in input ln and strip off <cr> */
+    /* read in input ln and strip off <cr> */
 
-        fgets(ln,80,fd);
+    fgets(ln, 80, fd);
 
-        /* copy string into str */
-        str = (char *) calloc((unsigned) strlen(ln),sizeof(char));
-        (void) strncpy(str,ln,strlen(ln) - 1);
-        str[strlen(ln) - 1] = 0;
-        if (strlen(str) == 0)
-                exit_error("get_char_str",errno);
+    /* copy string into str */
+    str = (char *) calloc((unsigned) strlen(ln), sizeof(char));
+    (void) strncpy(str, ln, strlen(ln) - 1);
+    str[strlen(ln) - 1] = 0;
+    if (strlen(str) == 0)
+        exit_error("get_char_str", errno);
 
-        return(str);
-}  /* end get_char_str */
-
+    return (str);
+} /* end get_char_str */
 
 /*
  *  get_int
@@ -88,18 +87,17 @@ char *get_char_str( FILE *fd, IDX errno)
  *                      i (int *) - return next integer in i
  */
 
-void get_int( FILE *fd, int *i, IDX errno)
+void get_int(FILE *fd, int *i, IDX errno)
 {
-        char ln[80];                    /* next input ln */
+    char ln[80]; /* next input ln */
 
-        /* read in next input ln */
+    /* read in next input ln */
 
-        fgets(ln,80,fd);
-        if (sscanf(ln,"%d",i) != 1)
-                exit_error("get_int",errno);
+    fgets(ln, 80, fd);
+    if (sscanf(ln, "%d", i) != 1)
+        exit_error("get_int", errno);
 
-}  /* end get_int */
-
+} /* end get_int */
 
 /*
  *  get_real
@@ -110,18 +108,17 @@ void get_int( FILE *fd, int *i, IDX errno)
  *                      r (Gfloat *) - return next Gfloat
  */
 
-void get_real( FILE *fd, Gfloat *r, IDX errno)
+void get_real(FILE *fd, Gfloat *r, IDX errno)
 {
-        char ln[80];                    /* next input ln */
+    char ln[80]; /* next input ln */
 
-        /* read in next input ln */
+    /* read in next input ln */
 
-        fgets(ln,80,fd);
-        if (sscanf(ln,"%f",r) != 1)
-                exit_error("get_real",errno);
+    fgets(ln, 80, fd);
+    if (sscanf(ln, "%f", r) != 1)
+        exit_error("get_real", errno);
 
-}  /* end get_real */
-
+} /* end get_real */
 
 /*
  *  get_real3
@@ -132,17 +129,16 @@ void get_real( FILE *fd, Gfloat *r, IDX errno)
  *                      r (Gfloat *) - return next Gfloat
  */
 
-void get_real3( FILE *fd, Gfloat *r1,Gfloat *r2,Gfloat *r3, IDX errno)
+void get_real3(FILE *fd, Gfloat *r1, Gfloat *r2, Gfloat *r3, IDX errno)
 {
-        char ln[80];                    /* next input ln */
+    char ln[80]; /* next input ln */
 
-        /* read in next input ln */
+    /* read in next input ln */
 
-        fgets(ln,80,fd);
-        if (sscanf(ln,"%f%f%f",r1,r2,r3) != 3)
-                exit_error("get_real3",errno);
-}  /* end get_real3 */
-
+    fgets(ln, 80, fd);
+    if (sscanf(ln, "%f%f%f", r1, r2, r3) != 3)
+        exit_error("get_real3", errno);
+} /* end get_real3 */
 
 /*
  *  read_int
@@ -155,23 +151,22 @@ void get_real3( FILE *fd, Gfloat *r1,Gfloat *r2,Gfloat *r3, IDX errno)
  *                      reading int
  */
 
-void read_int( FILE *fd, int *i, BOOLEAN *error)
+void read_int(FILE *fd, int *i, BOOLEAN *error)
 {
-        char ln[80];                    /* next input ln */
+    char ln[80]; /* next input ln */
 
-        /* read in next input ln */
+    /* read in next input ln */
 
-        fgets(ln,80,fd);
-        if (sscanf(ln,"%d",i) != 1)
-        {
-                reprompt(28);
-                *error = TRUE;
-        }
-        else
-                *error = FALSE;
+    fgets(ln, 80, fd);
+    if (sscanf(ln, "%d", i) != 1)
+    {
+        reprompt(28);
+        *error = TRUE;
+    }
+    else
+        *error = FALSE;
 
-}  /* end read_int */
-
+} /* end read_int */
 
 /*
  *  read_real
@@ -184,23 +179,22 @@ void read_int( FILE *fd, int *i, BOOLEAN *error)
  *                      reading real
  */
 
-void read_real( FILE *fd, Gfloat *r, BOOLEAN *error)
+void read_real(FILE *fd, Gfloat *r, BOOLEAN *error)
 {
-        char ln[80];                    /* next input ln */
+    char ln[80]; /* next input ln */
 
-        /* read in next input ln */
+    /* read in next input ln */
 
-        fgets(ln,80,fd);
-        if (sscanf(ln,"%f",r) != 1)
-        {
-                reprompt(28);
-                *error = TRUE;
-        }
-        else
-                *error = FALSE;
+    fgets(ln, 80, fd);
+    if (sscanf(ln, "%f", r) != 1)
+    {
+        reprompt(28);
+        *error = TRUE;
+    }
+    else
+        *error = FALSE;
 
-}  /* end read_real */
-
+} /* end read_real */
 
 /*
  *  read_real2
@@ -213,23 +207,22 @@ void read_real( FILE *fd, Gfloat *r, BOOLEAN *error)
  *                      reading int
  */
 
-void read_real2( FILE *fd, Gfloat *r1,Gfloat *r2, BOOLEAN *error)
+void read_real2(FILE *fd, Gfloat *r1, Gfloat *r2, BOOLEAN *error)
 {
-        char ln[80];                    /* next input ln */
+    char ln[80]; /* next input ln */
 
-        /* read in next input ln */
+    /* read in next input ln */
 
-        fgets(ln,80,fd);
-        if (sscanf(ln,"%f %f",r1,r2) != 2)
-        {
-                reprompt(28);
-                *error = TRUE;
-        }
-        else
-                *error = FALSE;
+    fgets(ln, 80, fd);
+    if (sscanf(ln, "%f %f", r1, r2) != 2)
+    {
+        reprompt(28);
+        *error = TRUE;
+    }
+    else
+        *error = FALSE;
 
-}  /* end read_real2 */
-
+} /* end read_real2 */
 
 /*
  *  read_real3
@@ -242,23 +235,22 @@ void read_real2( FILE *fd, Gfloat *r1,Gfloat *r2, BOOLEAN *error)
  *                      reading reals
  */
 
-void read_real3( FILE *fd, Gfloat *r1,Gfloat *r2,Gfloat *r3, BOOLEAN *error)
+void read_real3(FILE *fd, Gfloat *r1, Gfloat *r2, Gfloat *r3, BOOLEAN *error)
 {
-        char ln[80];                    /* next input ln */
+    char ln[80]; /* next input ln */
 
-        /* read in next input ln */
+    /* read in next input ln */
 
-        fgets(ln,80,fd);
-        if (sscanf(ln,"%f %f %f",r1,r2,r3) != 3)
-        {
-                reprompt(28);
-                *error = TRUE;
-        }
-        else
-                *error = FALSE;
+    fgets(ln, 80, fd);
+    if (sscanf(ln, "%f %f %f", r1, r2, r3) != 3)
+    {
+        reprompt(28);
+        *error = TRUE;
+    }
+    else
+        *error = FALSE;
 
-}  /* end read_real3 */
-
+} /* end read_real3 */
 
 /*
  *  read_char_str
@@ -271,32 +263,31 @@ void read_real3( FILE *fd, Gfloat *r1,Gfloat *r2,Gfloat *r3, BOOLEAN *error)
  *  returns:            str (char *) - ptr to next cahr string
  */
 
-char *read_char_str( FILE *fd, BOOLEAN *error)
+char *read_char_str(FILE *fd, BOOLEAN *error)
 {
-        char ln[80];                    /* next input ln */
-        char *str;                      /* next char str */
+    char ln[80]; /* next input ln */
+    char *str;   /* next char str */
 
-        /* read in input ln and strip off <cr> */
+    /* read in input ln and strip off <cr> */
 
-        fgets(ln,80,fd);
+    fgets(ln, 80, fd);
 
-        /* copy string into str */
-        str = (char *) calloc((unsigned) strlen(ln),sizeof(char));
-        (void) strncpy(str,ln,strlen(ln) - 1);
-        str[strlen(ln) - 1] = 0;
-        if (strlen(str) == 0)
-        {
-                reprompt(28);
-                *error = TRUE;
-        }
-        else
-        {
-                *error = FALSE;
-        }
+    /* copy string into str */
+    str = (char *) calloc((unsigned) strlen(ln), sizeof(char));
+    (void) strncpy(str, ln, strlen(ln) - 1);
+    str[strlen(ln) - 1] = 0;
+    if (strlen(str) == 0)
+    {
+        reprompt(28);
+        *error = TRUE;
+    }
+    else
+    {
+        *error = FALSE;
+    }
 
-        return(str);
-}  /* end read_char_str */
-
+    return (str);
+} /* end read_char_str */
 
 /*
  *  read_char
@@ -308,27 +299,26 @@ char *read_char_str( FILE *fd, BOOLEAN *error)
  *                      error (BOOLEAN *) - true if error reading string
  */
 
-void read_char( FILE *fd, char *ch, BOOLEAN *error)
+void read_char(FILE *fd, char *ch, BOOLEAN *error)
 {
-        char ln[80];                    /* next input ln */
+    char ln[80]; /* next input ln */
 
-        fgets(ln,80,fd);
+    fgets(ln, 80, fd);
 
-        /* make sure line is not blank */
+    /* make sure line is not blank */
 
-        if ((strlen(ln) - 1) <= 0)
-        {
-                reprompt(28);
-                *error = TRUE;
-                *ch = 0;
-        }
-        else
-        {
-                *error = FALSE;
-                *ch = ln[0];
-        }
-}  /* end read_char */
-
+    if ((strlen(ln) - 1) <= 0)
+    {
+        reprompt(28);
+        *error = TRUE;
+        *ch = 0;
+    }
+    else
+    {
+        *error = FALSE;
+        *ch = ln[0];
+    }
+} /* end read_char */
 
 /*
  *  write_int
@@ -339,11 +329,10 @@ void read_char( FILE *fd, char *ch, BOOLEAN *error)
  *                      i (int) - next integer to write out
  */
 
-void write_int( FILE *fd, int i)
+void write_int(FILE *fd, int i)
 {
-        fprintf(fd,"%d\n",i);
-}  /* end write_int */
-
+    fprintf(fd, "%d\n", i);
+} /* end write_int */
 
 /*
  *  write_real
@@ -354,11 +343,10 @@ void write_int( FILE *fd, int i)
  *                      r (Gfloat *) - next real to write out
  */
 
-void write_real( FILE *fd, Gfloat r)
+void write_real(FILE *fd, Gfloat r)
 {
-        fprintf(fd,"%f\n",r);
-}  /* end write_real */
-
+    fprintf(fd, "%f\n", r);
+} /* end write_real */
 
 /*
  *  write_real2
@@ -369,11 +357,10 @@ void write_real( FILE *fd, Gfloat r)
  *                      r1,r2 (Gfloat) - next two reals to write out
  */
 
-void write_real2( FILE *fd, Gfloat r1,Gfloat r2)
+void write_real2(FILE *fd, Gfloat r1, Gfloat r2)
 {
-        fprintf(fd,"%f %f\n",r1,r2);
-}  /* end write_real2 */
-
+    fprintf(fd, "%f %f\n", r1, r2);
+} /* end write_real2 */
 
 /*
  *  write_real3
@@ -384,11 +371,10 @@ void write_real2( FILE *fd, Gfloat r1,Gfloat r2)
  *                      r1,r2,r3 (Gfloat) - next 3 reals to write
  */
 
-void write_real3( FILE *fd, Gfloat r1, Gfloat r2, Gfloat r3)
+void write_real3(FILE *fd, Gfloat r1, Gfloat r2, Gfloat r3)
 {
-        fprintf(fd,"%f %f %f\n",r1,r2,r3);
-}  /* end write_real3 */
-
+    fprintf(fd, "%f %f %f\n", r1, r2, r3);
+} /* end write_real3 */
 
 /*
  *  write_char_str
@@ -399,11 +385,10 @@ void write_real3( FILE *fd, Gfloat r1, Gfloat r2, Gfloat r3)
  *                      str (char *) - string to write
  */
 
-void write_char_str( FILE *fd, char *str)
+void write_char_str(FILE *fd, char *str)
 {
-        fprintf(fd,"%s\n",str);
-}  /* end write_char_str */
-
+    fprintf(fd, "%s\n", str);
+} /* end write_char_str */
 
 /*
  *  write_char
@@ -414,9 +399,7 @@ void write_char_str( FILE *fd, char *str)
  *                      ch (char) - next char to write
  */
 
-void write_char( FILE *fd, char ch)
+void write_char(FILE *fd, char ch)
 {
-        fprintf(fd,"%c\n",ch);
-}  /* end write_char */
-
-
+    fprintf(fd, "%c\n", ch);
+} /* end write_char */

@@ -1,5 +1,5 @@
 /* 
- *		Copyright IBM Corporation 1989
+ *              Copyright IBM Corporation 1989
  *
  *                      All Rights Reserved
  *
@@ -23,8 +23,8 @@
 
 /* color selector areas */
 
-#define		CLR_WHEEL_AREA		"clr wheel area"
-#define		TUNER_AREA		"fine tuner area"
-#define		MIXER_AREA		"clr mixer area"
-#define		CLR_PICKED_AREA		"clr picked area"
-#define		CLR_SELECTOR_PAL_AREA	"clr selector pal area"
+#define CLR_WHEEL_AREA "clr wheel area"
+#define TUNER_AREA "fine tuner area"
+#define MIXER_AREA "clr mixer area"
+#define CLR_PICKED_AREA "clr picked area"
+#define CLR_SELECTOR_PAL_AREA "clr selector pal area"

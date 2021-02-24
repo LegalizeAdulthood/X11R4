@@ -31,8 +31,8 @@
 
 #include "objects_copy.h"
 
-#include "objects.h"
 #include "object_tbl.h"
+#include "objects.h"
 #include "screen_items.h"
 
 /*
@@ -46,34 +46,33 @@
  *  returns:            (COMB_OB *) - duplicate comb_ob
  */
 
-COMB_OB *copy_comb_ob( COMB_OB *comb_ob)
+COMB_OB *copy_comb_ob(COMB_OB *comb_ob)
 {
-        COMB_OB *duplicate;
-        OBJECT *object_ptr, *dup_ob_ptr;
+    COMB_OB *duplicate;
+    OBJECT *object_ptr, *dup_ob_ptr;
 
-        duplicate = alloc_comb_ob();
-        duplicate->visibility = comb_ob->visibility;
+    duplicate = alloc_comb_ob();
+    duplicate->visibility = comb_ob->visibility;
 
-        duplicate->child = (OBJECT *) NULL;
-        dup_ob_ptr = comb_ob->child;
-        for (object_ptr = comb_ob->child; object_ptr != (OBJECT *) NULL;
-                object_ptr = object_ptr->next)
+    duplicate->child = (OBJECT *) NULL;
+    dup_ob_ptr = comb_ob->child;
+    for (object_ptr = comb_ob->child; object_ptr != (OBJECT *) NULL;
+         object_ptr = object_ptr->next)
+    {
+        if (duplicate->child == (OBJECT *) NULL)
         {
-                if (duplicate->child == (OBJECT *) NULL)
-                {
-                        dup_ob_ptr = copy_object(object_ptr);
-                        duplicate->child = dup_ob_ptr;
-                }
-                else
-                {
-                        dup_ob_ptr->next = copy_object(object_ptr);
-                        dup_ob_ptr = dup_ob_ptr->next;
-                }
-                dup_ob_ptr->parent = duplicate;
+            dup_ob_ptr = copy_object(object_ptr);
+            duplicate->child = dup_ob_ptr;
         }
-        return(duplicate);
-}  /* end copy_comb_ob */
-
+        else
+        {
+            dup_ob_ptr->next = copy_object(object_ptr);
+            dup_ob_ptr = dup_ob_ptr->next;
+        }
+        dup_ob_ptr->parent = duplicate;
+    }
+    return (duplicate);
+} /* end copy_comb_ob */
 
 /*
  *  copy_object
@@ -85,21 +84,20 @@ COMB_OB *copy_comb_ob( COMB_OB *comb_ob)
  *  returns:            (OBJECT *) - duplicate
  */
 
-OBJECT * copy_object( OBJECT *object)
+OBJECT *copy_object(OBJECT *object)
 {
-        OBJECT *duplicate;
-        int i;
+    OBJECT *duplicate;
+    int i;
 
-        duplicate = alloc_single_ob(object->key);
-        duplicate->visibility = object->visibility;
-        
-        for (i=0; i<6; i++)
-                duplicate->trans[i] = object->trans[i];
+    duplicate = alloc_single_ob(object->key);
+    duplicate->visibility = object->visibility;
 
-        (*(object_func_tbl[get_object_func_tbl_idx(object->key)].copy))(object, duplicate);
-        return(duplicate);
-}  /* end copy_object */
+    for (i = 0; i < 6; i++)
+        duplicate->trans[i] = object->trans[i];
 
+    (*(object_func_tbl[get_object_func_tbl_idx(object->key)].copy))(object, duplicate);
+    return (duplicate);
+} /* end copy_object */
 
 /*
  *  copy_line
@@ -114,19 +112,19 @@ OBJECT * copy_object( OBJECT *object)
 
 void copy_line(OBJECT *object1, OBJECT *duplicate)
 {
-        int i;
+    int i;
 
-        duplicate->lineob.color = object1->lineob.color;
-        duplicate->lineob.style = object1->lineob.style;
-        duplicate->lineob.width = object1->lineob.width;
-        duplicate->lineob.nopts = object1->lineob.nopts;
-        duplicate->lineob.pts = (Gpoint *) calloc((unsigned)
-                duplicate->lineob.nopts, sizeof(Gpoint));
-        
-        for (i=0; i < object1->lineob.nopts; i++)
-                duplicate->lineob.pts[i] = object1->lineob.pts[i];
-}  /* end copy_line */
+    duplicate->lineob.color = object1->lineob.color;
+    duplicate->lineob.style = object1->lineob.style;
+    duplicate->lineob.width = object1->lineob.width;
+    duplicate->lineob.nopts = object1->lineob.nopts;
+    duplicate->lineob.pts = (Gpoint *) calloc((unsigned)
+                                                  duplicate->lineob.nopts,
+        sizeof(Gpoint));
 
+    for (i = 0; i < object1->lineob.nopts; i++)
+        duplicate->lineob.pts[i] = object1->lineob.pts[i];
+} /* end copy_line */
 
 /*
  *  copy_poly
@@ -141,21 +139,21 @@ void copy_line(OBJECT *object1, OBJECT *duplicate)
 
 void copy_poly(OBJECT *object1, OBJECT *duplicate)
 {
-        int i;
+    int i;
 
-        duplicate->polyob.linecolor = object1->polyob.linecolor;
-        duplicate->polyob.fillcolor = object1->polyob.fillcolor;
-        duplicate->polyob.fillstyle = object1->polyob.fillstyle;
-        duplicate->polyob.width = object1->polyob.width;
-        duplicate->polyob.style = object1->polyob.style;
-        duplicate->polyob.nopts = object1->polyob.nopts;
-        duplicate->polyob.pts = (Gpoint *) calloc((unsigned)
-                duplicate->polyob.nopts, sizeof(Gpoint));
-        
-        for (i=0; i < object1->polyob.nopts; i++)
-                duplicate->polyob.pts[i] = object1->polyob.pts[i];
-}  /* end copy_poly */
+    duplicate->polyob.linecolor = object1->polyob.linecolor;
+    duplicate->polyob.fillcolor = object1->polyob.fillcolor;
+    duplicate->polyob.fillstyle = object1->polyob.fillstyle;
+    duplicate->polyob.width = object1->polyob.width;
+    duplicate->polyob.style = object1->polyob.style;
+    duplicate->polyob.nopts = object1->polyob.nopts;
+    duplicate->polyob.pts = (Gpoint *) calloc((unsigned)
+                                                  duplicate->polyob.nopts,
+        sizeof(Gpoint));
 
+    for (i = 0; i < object1->polyob.nopts; i++)
+        duplicate->polyob.pts[i] = object1->polyob.pts[i];
+} /* end copy_poly */
 
 /*
  *  copy_text
@@ -170,39 +168,38 @@ void copy_poly(OBJECT *object1, OBJECT *duplicate)
 
 void copy_text(OBJECT *object1, OBJECT *duplicate)
 {
-        CHAR_OB *ch_ptr1, *ch_ptr2;
+    CHAR_OB *ch_ptr1, *ch_ptr2;
 
-        duplicate->textob.path = object1->textob.path;
-        duplicate->textob.vert_just = object1->textob.vert_just;
-        duplicate->textob.horz_just = object1->textob.horz_just;
-        duplicate->textob.pos = object1->textob.pos;
-        duplicate->textob.up_vec = object1->textob.up_vec;
+    duplicate->textob.path = object1->textob.path;
+    duplicate->textob.vert_just = object1->textob.vert_just;
+    duplicate->textob.horz_just = object1->textob.horz_just;
+    duplicate->textob.pos = object1->textob.pos;
+    duplicate->textob.up_vec = object1->textob.up_vec;
 
-        ch_ptr2 = (CHAR_OB *) NULL;
-        for (ch_ptr1 = object1->textob.str; 
-                ch_ptr1 != (CHAR_OB *) NULL;
-                ch_ptr1 = ch_ptr1->next)
+    ch_ptr2 = (CHAR_OB *) NULL;
+    for (ch_ptr1 = object1->textob.str;
+         ch_ptr1 != (CHAR_OB *) NULL;
+         ch_ptr1 = ch_ptr1->next)
+    {
+        if (ch_ptr2 == (CHAR_OB *) NULL)
         {
-                if (ch_ptr2 == (CHAR_OB *) NULL)
-                {
-                        duplicate->textob.str = ch_ptr2 = (CHAR_OB *)
-                                calloc ((unsigned) 1, sizeof(CHAR_OB));
-                }
-                else
-                {
-                        ch_ptr2->next = (CHAR_OB *) calloc((unsigned)
-                                1, sizeof(CHAR_OB));
-                        ch_ptr2 = ch_ptr2->next;
-                }
-
-                ch_ptr2->center = ch_ptr1->center;
-                ch_ptr2->color = ch_ptr1->color;
-                ch_ptr2->height = ch_ptr1->height;
-                ch_ptr2->expansion = ch_ptr1->expansion;
-                ch_ptr2->width = ch_ptr1->width;
-                ch_ptr2->fontstyle = ch_ptr1->fontstyle;
-                ch_ptr2->ch = ch_ptr1->ch;
+            duplicate->textob.str = ch_ptr2 = (CHAR_OB *)
+                calloc((unsigned) 1, sizeof(CHAR_OB));
+        }
+        else
+        {
+            ch_ptr2->next = (CHAR_OB *) calloc((unsigned) 1, sizeof(CHAR_OB));
+            ch_ptr2 = ch_ptr2->next;
         }
 
-        ch_ptr2->next = (CHAR_OB *) NULL;
-}  /* end copy_text */
+        ch_ptr2->center = ch_ptr1->center;
+        ch_ptr2->color = ch_ptr1->color;
+        ch_ptr2->height = ch_ptr1->height;
+        ch_ptr2->expansion = ch_ptr1->expansion;
+        ch_ptr2->width = ch_ptr1->width;
+        ch_ptr2->fontstyle = ch_ptr1->fontstyle;
+        ch_ptr2->ch = ch_ptr1->ch;
+    }
+
+    ch_ptr2->next = (CHAR_OB *) NULL;
+} /* end copy_text */
