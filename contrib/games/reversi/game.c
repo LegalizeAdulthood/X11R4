@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "reversi.h"
+#include "game.h"
 
 boardT	board, saveBoard;
 int	saved;

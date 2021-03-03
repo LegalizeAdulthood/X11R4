@@ -10,7 +10,7 @@
 #include <X11/Xaw/Form.h>
 #include "Reversi.h"
 #include <stdio.h>
-#include "reversi.h"
+#include "game.h"
 
 static Widget	topLevel, mainWindow, boardForm, reversiBoard, rightPane, widgetForm, label, error;
 static Widget	quit, hint, player, undoButton, restart;

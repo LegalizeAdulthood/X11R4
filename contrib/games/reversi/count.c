@@ -4,7 +4,7 @@
  *	count up the board
  */
 
-# include	"reversi.h"
+# include	"game.h"
 
 count (player, board)
 boardT	board;

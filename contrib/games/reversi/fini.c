@@ -4,7 +4,7 @@
  *	count up score and display winner
  */
 
-# include	"reversi.h"
+# include	"game.h"
 
 fini (board)
 boardT	board;
