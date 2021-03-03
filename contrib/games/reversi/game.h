@@ -1,5 +1,5 @@
 /*
- *	reversi.h
+ *	game.h
  *
  *	include file for game program
  */

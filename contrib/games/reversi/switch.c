@@ -1,5 +1,5 @@
 #include <sys/signal.h>
-#include "reversi.h"
+#include "game.h"
 
 static int hasX;
 

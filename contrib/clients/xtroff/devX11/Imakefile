@@ -13,9 +13,9 @@ MAKEDEV = makedev
 LOADFONTS = R I B BI H HB C CB S SS
 LOADOUT = R.out I.out B.out BI.out H.out HB.out C.out CB.out S.out SS.out
 LOADAUX = R.aux I.aux B.aux BI.aux H.aux HB.aux C.aux CB.aux S.aux SS.aux
-MOREFONTS = HO HD CO CD nc nC Nc NC
-MOREOUT = HO.out HD.out CO.out CD.out nc.out nC.out Nc.out NC.out
-MOREAUX = HO.aux HD.aux CO.aux CD.aux nc.aux nC.aux Nc.aux NC.aux
+MOREFONTS = HO HD CO CD nc1 nC2 Nc3 NC4
+MOREOUT = HO.out HD.out CO.out CD.out nc1.out nC2.out Nc3.out NC4.out
+MOREAUX = HO.aux HD.aux CO.aux CD.aux nc1.aux nC2.aux Nc3.aux NC4.aux
 OFILES = DESC.out ${LOADOUT} ${MOREOUT}
 AFILES = ${LOADAUX} ${MOREAUX}
 
